@@ -76,7 +76,7 @@
 	cat.debug("Read dir: " + readDir);
 %>
 
-<div style="font-size:14pt;font-style:sans-serif;padding-top:10px;padding-bottom:10px;">
+<div style="font-size:14pt;font-family:sans-serif;padding-top:10px;padding-bottom:10px;">
     Browse Pages
 </div>
 
@@ -132,7 +132,7 @@
 			<tr bgcolor="#FCF6D3" style="border:thin solid orange;">
 				<td valign="middle" colspan="5">
 				<a href="forms.jsp?<%=up%>">
-					<im3g src="<%=request.getContextPath()%>/resources/images/folder.gif" border="0" width="20" height="20" align="left">..
+					<img src="<%=request.getContextPath()%>/resources/images/folder.gif" border="0" width="20" height="20" align="left">..
 				</a>
 				</td>
 			</tr>				

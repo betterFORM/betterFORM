@@ -3,7 +3,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xforms="http://www.w3.org/2002/xforms"
                 xmlns:bf="http://betterform.sourceforge.net/xforms"
-                exclude-result-prefixes="betterform xforms xsl">
+                exclude-result-prefixes="bf xforms xsl">
 
     <xsl:variable name="data-prefix" select="'d_'"/>
     <xsl:variable name="trigger-prefix" select="'t_'"/>

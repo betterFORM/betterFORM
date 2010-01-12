@@ -4,7 +4,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:bf="http://betterform.sourceforge.net/xforms"
     xmlns:xf="http://www.w3.org/2002/xforms"
-    exclude-result-prefixes="xf betterform xsl">
+    exclude-result-prefixes="xf bf xsl">
 
     <!-- Copyright 2008 - Joern Turner, Lars Windauer
          Licensed under the terms of BSD and Apache 2 Licenses -->
