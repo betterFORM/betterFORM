@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms" 
+            xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>11.9.3.b put submission method to local file (non-normative)</xhtml:title>
+    <xhtml:link href="../../../driverPages/forms/TestSuite11.css" rel="stylesheet" type="text/css"/>
+    <xforms:model id="mod1" >
+    	<xforms:instance>
+    		<car>
+    		  <make>Ford</make>
+    		  <color>blue</color>
+    		</car>
+    	</xforms:instance>
+    	<xforms:submission id="sub1" ref="/car/color" action="myfile.txt" method="put"/>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group>
+      <xforms:label class="title">11.9.3.b put submission method to local file (non-normative)</xforms:label>
+    </xforms:group>
+    <xforms:group>
+    	<xforms:label>
+    	  When you activate the Use Put Method submit control the value &quot;blue&quot; will be submitted to a 
+    	  local file called &quot;myfile.txt&quot;. 
+    	</xforms:label>
+    </xforms:group>
+    <xforms:group>
+      <xforms:submit submission="sub1">
+        <xforms:label>Use Put Method</xforms:label>
+      </xforms:submit>
+    </xforms:group>
+    
+  </xhtml:body>
+</xhtml:html>

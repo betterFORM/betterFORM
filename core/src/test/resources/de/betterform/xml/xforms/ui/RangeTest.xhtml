@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <head>
+        <meta name="author" content="unl at users.sourceforge.net"/>
+        <meta name="description" content="test form for range control"/>
+        <meta name="version" content="$Id: RangeTest.xhtml 3251 2008-07-08 09:26:03Z lasse $"/>
+
+        <xf:model id="model-1">
+            <xf:instance id="instance-1" xmlns="">
+                <data>
+                    <item>0</item>
+                    <item></item>
+                    <item>0</item>
+                    <item></item>
+                    <item>0</item>
+                    <item></item>
+                </data>
+            </xf:instance>
+            <xf:bind id="bind-1" nodeset="item[1]" type="integer"/>
+            <xf:bind id="bind-2" nodeset="item[2]" type="integer"/>
+            <xf:bind id="bind-3" nodeset="item[3]" type="float"/>
+            <xf:bind id="bind-4" nodeset="item[4]" type="float"/>
+            <xf:bind id="bind-5" nodeset="item[5]" type="double"/>
+            <xf:bind id="bind-6" nodeset="item[6]" type="double"/>
+        </xf:model>
+
+    </head>
+    <body>
+        <xf:group>
+            <xf:range id="range-1" bind="bind-1" start="-2" end="2" step="1"/>
+            <xf:range id="range-2" bind="bind-2"/>
+            <xf:range id="range-3" bind="bind-3" start="-2" end="2" step="1"/>
+            <xf:range id="range-4" bind="bind-4"/>
+            <xf:range id="range-5" bind="bind-5" start="-2" end="2" step="1"/>
+            <xf:range id="range-6" bind="bind-6"/>
+        </xf:group>
+    </body>
+</html>

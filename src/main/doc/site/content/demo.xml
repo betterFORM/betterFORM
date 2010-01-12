@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<page title="Demo" id="demo">
+    <teaser name="main">
+        <teaser name="web3">
+            <title>Welcome to the betterForm Demo</title>
+            <para>The demos are still work in progress and will continously be improved and enhanced.</para>
+        </teaser>
+        <para>
+            <table>
+                <tr>
+                    <td><a id="screen1" href="forms/widgets.xhtml" target="_blank"><img src="resources/images/Select1ScreenShotSmall.png" alt="Widgets Demo Form" style="width: 200px; height: 110px;"  border="0" halign="left" /></a></td>
+                    <td><a href="forms/widgets.xhtml">Widgets</a> form shows all simple XForms UI Controls like input, output, select(1).. <a id="screen1" href="forms/widgets.txt" target="_blank">[Source View]</a></td>
+                </tr>
+                <tr>
+                    <td><a id="screen1" href="forms/localization.xhtml" target="_blank"><img src="resources/images/LocalizationScreenShotSmall.png" alt="Localization Demo Form" border="0" style="width: 200px; height: 110px;" halign="left" /></a></td>
+                    <td>betterForm 3 is <a href="forms/localization.xhtml">internationalization</a> and <a href="forms/localization.xhtml">localization</a> enabled <a id="screen1" href="forms/localization.txt" target="_blank">[Source View]</a></td>
+                </tr>
+                <tr>
+                    <td><a id="screen1" href="forms/SemanticWeb.xhtml" target="_blank"><img src="resources/images/SemanticWebScreenShotSmall.png" alt="Semantic Web Demo Form" border="0" style="width: 200px; height: 110px;" halign="left" /></a></td>
+                    <td><a href="forms/SemanticWeb.xhtml">Semantic Web Demo</a> shows how easy XForm Applications can process 3rd party Web 2.0 APIs like Twitter / Atom Feeds ... <a id="screen1" href="forms/SemanticWeb.txt" target="_blank">[Source View]</a></td>
+                </tr>
+            </table>
+        </para>
+    </teaser>
+</page>

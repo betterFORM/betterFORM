@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"      
+      xmlns:ev="http://www.w3.org/2001/xml-events">
+<head>
+    <meta name="author" content="unl at users.sourceforge.net"/>
+    <meta name="description" content="test form for submission"/>
+    <meta name="version" content="$Id$"/>
+    <xf:model>
+        <xf:instance xmlns="">
+            <data>
+                <item>value</item>
+                <ready>beforeready</ready>
+                <construct>2BeConstructed</construct>
+            </data>
+        </xf:instance>
+
+        <xf:submission id="submission-replace-instance" action="echo:foo" method="post" replace="instance"/>
+
+        <xf:submission id="submission-chained" action="echo:foo" method="post" replace="none">
+            <xf:send ev:event="xforms-submit-done" submission="submission-replace-instance"/>
+        </xf:submission>
+
+        <xf:submission id="submission-empty-nodeset" action="echo:foo" method="post" replace="none" ref="empty-nodeset"/>
+
+        <xf:instance id="i-testinstance" xmlns="">
+            <lizenz>
+                <Stime>2006-01-01T00:00:00</Stime>
+            </lizenz>
+
+        </xf:instance>
+
+        <xf:submission id="s-echo-submission"
+                       action="echo:hallo"
+                       method="post"
+                       replace="none"
+                       ref="instance('i-testinstance')">
+            <xf:action ev:event="xforms-submit-done">
+                <xf:setvalue ref="instance('i-testinstance')/Stime" value="now()"/>
+            </xf:action>
+        </xf:submission>
+
+        <xf:action ev:event="xforms-ready">
+            <xf:setvalue ref="instance('i-testinstance')/Stime"
+                         value="IF(seconds-from-dateTime(.) &gt; seconds-from-dateTime(now()) or days-from-date(.) = -1, '1969-12-31T00:00:00', now())"/>
+            <xf:send submission="s-echo-submission"/>
+        </xf:action>
+    </xf:model>
+</head>
+<!--<body style="background:#F0F4EA">-->
+<body style="background:white">
+<xf:output ref="instance('i-testinstance')/Stime">
+    <xf:label>Value:</xf:label>
+</xf:output>
+</body>
+</html>

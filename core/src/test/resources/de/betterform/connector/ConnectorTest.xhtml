@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <title>hello</title>
+        <xforms:model id="C-1">
+            <xforms:submission id="debug" ref="/data/subtext" action="{../foo}" method="post" replace="all"/>
+
+            <xforms:instance xmlns="" id="default">
+                <data>
+                    <foo>http://foo.bar</foo>
+                    <bar>hello from bar</bar>
+                    <subtext>
+                        <subliminal>some illegal stuff as URL</subliminal>
+                    </subtext>
+                </data>
+            </xforms:instance>
+
+            <xforms:submission id="s-other" ref="instance('other')" action="{instance('default')/foo}" method="post"
+                replace="instance"/>
+            <xforms:instance id="other" xmlns="">
+                <data test="foo">
+                    <bar>bar</bar>
+                </data>
+            </xforms:instance>
+        </xforms:model>
+    </head>
+    <body>
+        <xforms:group appearance="full">
+            <xforms:label>Hello</xforms:label>
+
+            <xforms:group appearance="minimal" ref="subtext">
+                <xforms:trigger id="b-load">
+                    <xforms:label>Debug</xforms:label>
+                    <xforms:action>
+                        <xforms:load resource="{subliminal}"/>
+                    </xforms:action>
+                </xforms:trigger>
+                <xforms:trigger id="b-debug">
+                    <xforms:label>Debug</xforms:label>
+                    <xforms:action>
+                        <xforms:send submission="debug"/>
+                    </xforms:action>
+                </xforms:trigger>
+                <xforms:trigger id="b-other">
+                    <xforms:label>Debug</xforms:label>
+                    <xforms:action>
+                        <xforms:send submission="s-other"/>
+                    </xforms:action>
+                </xforms:trigger>
+            </xforms:group>
+        </xforms:group>
+    </body>
+</html>

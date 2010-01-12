@@ -1,0 +1,31 @@
+Index: web/src/main/webapp/resources/styles/xforms.css
+===================================================================
+--- web/src/main/webapp/resources/styles/xforms.css	(revision 3547)
++++ web/src/main/webapp/resources/styles/xforms.css	(working copy)
+@@ -76,10 +76,6 @@
+     display: inline;
+ }
+ 
+-.optional .required-symbol {
+-    display: none;
+-}
+-
+ .help-text {
+     position: absolute;
+     display: none;
+Index: web/src/main/webapp/resources/styles/betterform-theme.css
+===================================================================
+--- web/src/main/webapp/resources/styles/betterform-theme.css	(revision 3547)
++++ web/src/main/webapp/resources/styles/betterform-theme.css	(working copy)
+@@ -241,11 +241,6 @@
+     display: inline;
+ }
+ 
+-.optional .required-symbol {
+-    display: none;
+-}
+-
+-
+ .help-text {
+     width: 300px;
+     border: thin solid gray;

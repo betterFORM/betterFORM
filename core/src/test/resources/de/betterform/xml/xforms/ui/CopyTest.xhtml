@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <meta name="author" content="joern at users.sourceforge.net"/>
+        <meta name="description" content="test form for copy control"/>
+        <meta name="version" content="$Id: CopyTest.xhtml 2631 2007-08-08 13:39:22Z adam $"/>
+
+        <xforms:model id="list_items">
+            <xforms:instance xmlns="">
+                <options>
+                    <email desc="work address">mdubinko@example.info</email>
+                    <email desc="home address">mdubinko@example.org</email>
+                    <email desc="alternate address">nospam@example.net</email>
+                </options>
+            </xforms:instance>
+        </xforms:model>
+        
+        <xforms:model id="form_data">
+            <xforms:instance xmlns="">
+                <user_selection>
+                	<email desc="alternate address">nospam@example.net</email>
+                </user_selection>
+            </xforms:instance>
+        </xforms:model>
+        
+    </head>
+    <body>
+        <xforms:group>
+           
+            <xforms:select ref="." model="form_data">
+                <xforms:label>Send a copy to the following email addresses</xforms:label>
+                <xforms:itemset nodeset="email" model="list_items">
+                    <xforms:label><xforms:output value="concat('Your ', @desc)"/></xforms:label>
+                    <xforms:copy ref="."/>
+                </xforms:itemset>
+            </xforms:select>
+        </xforms:group>
+    </body>
+</html>

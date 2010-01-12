@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <meta name="author" content="unl at users.sourceforge.net"/>
+        <meta name="description" content="test form for group element"/>
+        <meta name="version" content="$Id: GroupTest.xhtml 2272 2006-08-18 23:22:09Z unl $"/>
+
+        <xf:model id="model-1">
+            <xf:instance id="instance-1" xmlns="">
+                <data>
+                    <item/>
+                </data>
+            </xf:instance>
+            <xf:bind id="bind-item" nodeset="item" relevant="false()" readonly="true()" required="true()" constraint="false()"/>
+        </xf:model>
+    </head>
+    <body>
+        <xf:group id="group">
+            <xf:output value="''"/>
+        </xf:group>
+        <xf:group id="group-model-binding" bind="bind-item">
+            <xf:output value="''"/>
+        </xf:group>
+        <xf:group id="group-ui-binding" ref="item">
+            <xf:output value="''"/>
+        </xf:group>
+    </body>
+</html>

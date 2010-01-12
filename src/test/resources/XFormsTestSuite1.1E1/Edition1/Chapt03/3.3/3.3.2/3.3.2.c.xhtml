@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms" 
+            xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>3.3.2.c instance with resource attribute</xhtml:title>
+    <xhtml:link  rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model >
+      <xforms:instance resource="3.3.2.c.data.xml"/>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group>
+      <xforms:label class="title">3.3.2.c instance with resource attribute</xforms:label>
+    </xforms:group>
+    <xforms:group>
+      <xforms:label>
+        You must see three output fields.  The Name output field must have the value &quot;James&quot;,
+        the Age output field must have the value &quot;18&quot;, and the Education output field must have
+        the value &quot;high school&quot;.
+      </xforms:label>
+    </xforms:group>
+    <xforms:group>
+      <xforms:output ref="name">
+        <xforms:label>Name : </xforms:label>
+      </xforms:output>
+    </xforms:group>
+    <xforms:group>
+      <xforms:output ref="age">
+        <xforms:label>Age : </xforms:label>
+      </xforms:output>
+    </xforms:group>
+    <xforms:group>
+      <xforms:output ref="education">
+        <xforms:label>Education : </xforms:label>
+      </xforms:output>
+    </xforms:group>
+  </xhtml:body>
+</xhtml:html>

@@ -1,0 +1,53 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+	  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"               
+      xmlns:xforms="http://www.w3.org/2002/xforms">
+  <xhtml:head>
+    <xhtml:title>10.16.b level attribute of message element</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+       <xforms:instance xmlns="">       
+          <mail>
+          	<attachment/>
+          </mail>
+       </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+	  	<xforms:label class="title">10.16.b level attribute of message element</xforms:label>
+	</xforms:group>
+	<xforms:group>
+		<xforms:label>
+		  The Display Modal Message trigger must display a message that says &quot;Modal Message&quot; when activated. 
+		  The Display Modeless Message trigger must display a message that says &quot;Modeless Message&quot; when 
+		  activated. 
+		  The Display Ephemeral Message trigger must display a message that says &quot;Ephemeral Message&quot; when 
+		  activated. 
+		</xforms:label>
+	</xforms:group>
+	<xforms:trigger>
+		<xforms:label>Display Modal Message</xforms:label>
+		<xforms:action ev:event="DOMActivate">
+			<xforms:message level="modal">Modal Message</xforms:message>
+      	</xforms:action>
+   	</xforms:trigger>
+	<xforms:trigger>
+		<xforms:label>Display Modeless Message</xforms:label>
+		<xforms:action ev:event="DOMActivate">
+			<xforms:message level="modeless">Modeless Message</xforms:message>
+      	</xforms:action>
+   	</xforms:trigger>
+	<xforms:trigger>
+		<xforms:label>Display Ephemeral Message</xforms:label>
+		<xforms:action ev:event="DOMActivate">
+			<xforms:message level="ephemeral">Ephemeral Message</xforms:message>
+      	</xforms:action>
+   	</xforms:trigger>
+
+	
+  </xhtml:body>
+</xhtml:html>

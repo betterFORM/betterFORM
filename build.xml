@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- $Id: build.xml,v 1.90 2006/11/16 23:55:43 joernt Exp $ -->
+<project id="betterform-project" name="betterForm Project" default="package" basedir=".">
+
+    <xmlproperty file="build.properties.xml"
+                 semanticAttributes="true" keepRoot="false"/>
+
+    <property name="core.dir" value="${basedir}/core"/>
+    <property name="web.dir" value="${basedir}/web"/>
+    <property name="convex.dir" value="${basedir}/convex"/>
+    <property name="target.dir" value="${basedir}/target"/>
+    <!-- local Web properties -->
+
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <target name="clean" description="clean build target directory">
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="cleaning up core, web and convex"/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+        <delete dir="${target.dir}"/>
+    </target>
+
+    <target name="clean-all" description="clean build target directory">
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="cleaning up core, web and convex"/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+        <delete dir="${target.dir}"/>
+        <delete dir="${core.dir}/target"/>
+        <delete dir="${web.dir}/target"/>
+        <delete dir="${convex.dir}/target"/>
+    </target>
+
+
+
+    <!-- **************************************** BUILDING JAR **************************************** -->
+    <!-- **************************************** BUILDING JAR **************************************** -->
+    <!-- **************************************** BUILDING JAR **************************************** -->
+    <target name="package" description="package core, web and convex">
+        <ant antfile="${core.dir}/build.xml" target="package" dir="${core.dir}" inheritall="false"/>
+        <ant antfile="${web.dir}/build.xml"  target="package" dir="${web.dir}"  inheritall="false"/>
+        <ant antfile="${convex.dir}/build.xml"  target="package" dir="${convex.dir}"  inheritall="false"/>
+    </target>
+
+    <!-- **************************************** BUILDING JAR **************************************** -->
+    <!-- **************************************** BUILDING JAR **************************************** -->
+    <!-- **************************************** BUILDING JAR **************************************** -->
+    <target name="install-maven-dependencies" description="install all project dependencies into local maven repository">
+        <ant antfile="${basedir}/tools/maven/build.xml"  target="install-maven-dependencies" dir="${basedir}/tools/maven"  inheritall="false"/>
+
+    </target>
+
+    <target name="update-maven-poms" description="update core, web and convex pom.xml">
+        <ant antfile="${basedir}/tools/maven/build.xml"  target="update-core-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
+        <ant antfile="${basedir}/tools/maven/build.xml"  target="update-web-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
+        <ant antfile="${basedir}/tools/maven/build.xml"  target="update-convex-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
+    </target>
+
+
+    <target name="prepare-js">
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="unpacking Dojo..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+        <mkdir dir="${target.dir}"/>
+        <gunzip src="${basedir}/src/main/lib/${properties.dojo}.tar.gz"
+                dest="${target.dir}"/>
+        <untar src="${target.dir}/${properties.dojo}.tar"
+               dest="${target.dir}"/>
+        <delete file="${target.dir}/${properties.dojo}"/>
+        <delete file="${target.dir}/${properties.dojo}.tar"/>
+
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="merging Dojo into tree ..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+        <move todir="${target.dir}/resources/scripts/dijit">
+            <fileset dir="${target.dir}/${properties.dojo}/dijit"/>
+        </move>
+        <move todir="${target.dir}/resources/scripts/dojo">
+            <fileset dir="${target.dir}/${properties.dojo}/dojo"/>
+        </move>
+        <move todir="${target.dir}/resources/scripts/dojox">
+            <fileset dir="${target.dir}/${properties.dojo}/dojox"/>
+        </move>
+
+        <move todir="${target.dir}/resources/scripts/util">
+            <fileset dir="${target.dir}/${properties.dojo}/util"/>
+        </move>
+
+
+        <!-- TODO: refactor as an iteration over all javascript libs in build.properties.xml -->
+
+        <unzip src="${basedir}/src/main/lib/${properties.timeline}.zip" dest="${target.dir}"/>
+        <move todir="${target.dir}/resources/scripts/simile/timeline">
+            <fileset dir="${target.dir}/timeline_2.2.0/timeline_js"/>
+        </move>
+        <move todir="${target.dir}/resources/scripts/simile/timeline">
+            <fileset dir="${target.dir}/timeline_2.2.0/timeline_ajax"/>
+        </move>
+        <delete dir="${target.dir}/timeline_2.2.0"/>
+
+    </target>
+
+
+
+    <target name="generateSite" description="build betterForm Home Webpages">
+        <echo />
+        <echo message="************************************************************************************"/>
+        <echo message="generating pages for homepage"/>
+        <echo message="************************************************************************************"/>
+        <echo />
+
+        <xslt basedir="src/main/doc/site/content"
+              destdir="${basedir}/target"
+              style="${basedir}/src/main/doc/site/xslt/site.xsl"
+              force="true"
+              includes="*.xml"
+              extension=".html">
+            <!--<classpath refid="generator.libs"/>-->
+             <param name="onlineVersion" expression="true"/>
+        </xslt>
+
+        <copy todir="target/resources/images">
+            <fileset dir="src/main/doc/site/images"/>
+        </copy>
+        <copy todir="target/resources/styles">
+            <fileset dir="src/main/doc/site/styles"/>
+        </copy>
+        <copy file="${basedir}/src/test/resources/XFormsTestSuite1.1E1/Edition1/driverPages/Results/results.html" todir="${basedir}/target"/>
+    </target>
+</project>

@@ -1,0 +1,54 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml"
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:ev="http://www.w3.org/2001/xml-events">			
+	<xhtml:head>
+	  <xhtml:title>7.11.2.a event() function with inserted-nodes property</xhtml:title>
+		<xforms:model >
+		  <xforms:instance>
+			<Dates>
+			  <date xsi:type="xsd:date">2006-12-25</date>
+		   	  <date xsi:type="xsd:date">2006-01-01</date>
+			</Dates>
+		  </xforms:instance>
+		  <xforms:action ev:event="xforms-insert">
+			<xforms:setvalue model="description_catcher" ref="insert_description" value="event('inserted-nodes')"/>
+		  </xforms:action>
+		</xforms:model>			 
+		<xforms:model id="description_catcher">
+		  <xforms:instance>
+			<descriptions>
+			  <insert_description/>
+			</descriptions>
+		  </xforms:instance>
+		</xforms:model>
+        <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+	</xhtml:head>	
+	<xhtml:body>
+		<xforms:group>
+			<xforms:label class="title">7.11.2.a event() function with inserted-nodes property</xforms:label>
+		</xforms:group>
+		<xforms:group>
+			<xforms:label>
+			  After you activate the Insert A Date trigger you must see the correct value as output. 
+			</xforms:label>
+		</xforms:group>
+		<xforms:group>
+			<xforms:trigger>
+				<xforms:label>Insert A Date</xforms:label>
+				<xforms:action ev:event="DOMActivate">
+					<xforms:insert nodeset="/Dates/date" at="1" position="before"/>
+				</xforms:action>
+			</xforms:trigger>
+		</xforms:group>
+		<xforms:group>
+            <xforms:label>You must see the XPath expression &quot;/Dates/date&quot; or &quot;2006-01-01&quot; : </xforms:label>
+			<xforms:output model="description_catcher" ref="insert_description">
+				<xforms:label></xforms:label>
+			</xforms:output>
+		</xforms:group>
+		
+	</xhtml:body>
+</xhtml:html>

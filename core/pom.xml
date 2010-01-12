@@ -1,0 +1,557 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>de.betterform</groupId>
+        <artifactId>betterform-project</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.betterform</groupId>
+    <artifactId>betterform-core</artifactId>
+    <version>3.0b2</version>
+    
+    <packaging>jar</packaging>
+
+    <name>betterForm Core</name>
+    <description>betterForm Core Project</description>
+    <inceptionYear>2007</inceptionYear>
+    <url>http://betterform.sourceforge.net</url>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                    <configuration>
+                          <format>{0,date,yyyyMMdd/HHmm}</format>                                        
+                          <items>
+                            <item>timestamp</item>
+                          </items>
+                    </configuration>
+            </plugin>
+     <!--
+            <plugin>
+              <artifactId>maven-antrun-plugin</artifactId>
+              <executions>
+                <execution>
+                  <phase>validate</phase>
+                  <configuration>
+                    <tasks>
+                        <exec executable="svn" output="svnlog.out">
+                              <arg line="info"/>
+                          </exec>
+                          <loadproperties srcFile="svnlog.out">
+                                <filterchain>
+                                  <linecontains>
+                                    <contains value="Revision"/>
+                                  </linecontains>
+                                </filterchain>
+                          </loadproperties>
+                          <delete file="svnlog.out"/>
+                         <echo>SVN Revision ${Revision}</echo>
+                         <filter token="app.name" value="${project.name}"/>
+                         <filter token="app.version" value="${project.version}"/>
+                         <filter token="app.build" value="${buildNumber}"/>
+                         <filter token="revision.number" value="${Revision}"/>
+                         <copy todir="${basedir}/src/main/resources/META-INF" file="${basedir}/src/main/java/version.info" filtering="true" overwrite="true"/>
+                         <echo/>
+                    </tasks>
+                  </configuration>
+                  <goals>
+                    <goal>run</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+-->
+
+        </plugins>
+
+    </build>
+
+
+    <!-- GENERATED DEPENDENCIES - configure libs in ../build.properties.xml -->
+    <dependencies>
+<dependency>
+<groupId>commons-codec</groupId>
+<artifactId>commons-codec</artifactId>
+<version>1.3</version>
+</dependency>
+<dependency>
+<groupId>commons-fileupload</groupId>
+<artifactId>commons-fileupload</artifactId>
+<version>1.1</version>
+</dependency>
+<dependency>
+<groupId>commons-httpclient</groupId>
+<artifactId>commons-httpclient</artifactId>
+<version>3.0.1</version>
+</dependency>
+<dependency>
+<groupId>commons-lang</groupId>
+<artifactId>commons-lang</artifactId>
+<version>2.4</version>
+</dependency>
+<dependency>
+<groupId>commons-logging</groupId>
+<artifactId>commons-logging</artifactId>
+<version>1.0.4</version>
+</dependency>
+<dependency>
+<groupId>commons-logging-api</groupId>
+<artifactId>commons-logging-api</artifactId>
+<version>1.0.4</version>
+</dependency>
+<dependency>
+<groupId>javax.activation</groupId>
+<artifactId>activation</artifactId>
+<version>1.0.2</version>
+</dependency>
+<dependency>
+<groupId>javax.mail</groupId>
+<artifactId>mail</artifactId>
+<version>1.3</version>
+</dependency>
+<dependency>
+<groupId>log4j</groupId>
+<artifactId>log4j</artifactId>
+<version>1.2.13</version>
+</dependency>
+<dependency>
+<groupId>net.sf.saxon</groupId>
+<artifactId>saxon-dom</artifactId>
+<version>9.0</version>
+</dependency>
+<dependency>
+<groupId>net.sf.saxon</groupId>
+<artifactId>saxon</artifactId>
+<version>9.0</version>
+</dependency>
+<dependency>
+<groupId>xerces</groupId>
+<artifactId>xercesImpl</artifactId>
+<version>2.8.0</version>
+</dependency>
+<dependency>
+<groupId>xml-apis</groupId>
+<artifactId>xml-apis</artifactId>
+<version>1.0.b2</version>
+</dependency>
+<dependency>
+<groupId>org.apache.xmlrpc</groupId>
+<artifactId>xmlrpc-common</artifactId>
+<version>3.0</version>
+</dependency>
+<dependency>
+<groupId>org.apache.xmlrpc</groupId>
+<artifactId>xmlrpc-client</artifactId>
+<version>3.0</version>
+</dependency>
+<dependency>
+<groupId>org.apache.xmlrpc</groupId>
+<artifactId>xmlrpc-server</artifactId>
+<version>3.0</version>
+</dependency>
+<dependency>
+<groupId>net.sf.ehcache</groupId>
+<artifactId>ehcache</artifactId>
+<version>1.6.2</version>
+</dependency>
+<dependency>
+<groupId>junit</groupId>
+<artifactId>junit</artifactId>
+<version>3.8.2</version>
+<scope>test</scope>
+</dependency>
+</dependencies>
+    <!-- END OF GENERATED DEPENDENCIES - configure libs in ../build.properties.xml -->
+
+    <developers>
+        <developer>
+            <id>unl</id>
+            <name>Ulrich Nicolas Lissé</name>
+            <email>unl@users.sourceforge.net</email>
+        </developer>
+        <developer>
+            <id>deliriumsky</id>
+            <name>Adam Retter</name>
+            <email/>
+        </developer>
+        <developer>
+            <id>joern</id>
+            <name>Joern Turner</name>
+            <email>joernt@users.sourceforge.net</email>
+            <organization>betterForm Project</organization>
+        </developer>
+        <developer>
+            <id>lars</id>
+            <name>Lars Windauer</name>
+            <email>windauer@users.sourceforge.net</email>
+            <organization>betterForm Project</organization>
+        </developer>
+    </developers>
+    <contributors>
+        <contributor>
+            <name>Willian Boyd</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Oliver Charlet</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Flavio Costa</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Mark Dimon</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Brian Dueck</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Matt Flaherty</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Terence Jacyno</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Gregor Klinke</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Ronald van Kuijk</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Robert Leftwich</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Peter Mikula</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Eduardo Millán</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Chris Picton</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Sophie Ramel</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>John Spackman</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Andrzej Jan Taramina</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Péter Varga</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Suhail Ahmed</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Adrian Baker</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Dario Bahena</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Nick van den Bleeken</name>
+            <organization>Inventive Designers</organization>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Tomislav Bodor</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Michael Bridgen</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Ben Cochran</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Thomas Draier</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Jason Eacott</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Alexander Grosse</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Eric Hanson</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Anja Lehmann</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Yien Lie</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Giota Karadimitriou</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Sabine Krach</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Anselm Kruis</name>
+            <organization>science + computing ag</organization>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Murata Kakoto</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Bettina Leonhardt</name>
+            <organization>science + computing ag</organization>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Lawrence McCay</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Peter Mikhalenko</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Paul Miniato</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Sebastian Ordyniak</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Tanguy Rademakers</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Adam Retter</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Zach Roberts</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Peter Rodgers</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Etienne Schellerup</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Olaf Schreck</name>
+            <organization>syscall ag</organization>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+            <name>Daniel Shane</name>
+        </contributor>
+        <contributor>
+            <name>Robert Simmons</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Karla Smith</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Paul Sterck</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Martin Suter</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Torben Vesterager</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Scott Warren</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Chris Zelenak</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Thomas Ziegert</name>
+            <organization>IBM</organization>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Stefan Zorn</name>
+            <organization>Imatics GmbH</organization>
+
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+    </contributors>
+    <profiles>
+        <profile>
+            <id>test</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <skip>false</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

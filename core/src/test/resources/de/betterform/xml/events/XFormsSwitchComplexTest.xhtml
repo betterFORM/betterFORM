@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:bf="http://betterform.sourceforge.net/xforms">
+<head>
+    <title>Internationalization &amp; Localization</title>
+    <xf:model id="m-1">
+        <xf:instance id="i-1" xmlns="">
+            <data>
+                <items selected="1">
+                    <item value="1">One</item>
+                    <item value="2">Two</item>
+                    <item value="3">Three</item>
+                </items>
+                <result>
+                    <select1>1</select1>
+                    <select2>1</select2>
+                    <select3>1</select3>
+                    <select4>1</select4>
+                </result>
+            </data>
+        </xf:instance>
+
+    </xf:model>
+</head>
+<body class="tundra" style="overflow:hidden;padding:50px;">
+<xf:group>
+    <xf:trigger id="t-setvalue-to-two">
+        <xf:label>setvalue to two</xf:label>
+        <xf:setvalue ref="items/@selected" value="'2'"/>
+    </xf:trigger>
+    <xf:trigger id="t-setvalue-to-three">
+        <xf:label>setvalue to three</xf:label>
+        <xf:setvalue ref="items/@selected" value="'3'"/>
+    </xf:trigger>
+
+    <xf:select1 id="select-1" ref="items/@selected">
+        <xf:label>Select 1 (outer Case)</xf:label>
+        <xf:itemset nodeset="/data/items/item">
+            <xf:label ref="."/>
+            <xf:value ref="@value"/>
+        </xf:itemset>
+        <xf:setvalue ev:event="xforms-value-changed" ref="/data/result/select1" value="/data/items/@selected"/>
+    </xf:select1>
+
+    <xf:select1 id="select-2" ref="items/@selected">
+        <xf:label>Select 2 (outer Case)</xf:label>
+        <xf:itemset nodeset="/data/items/item">
+            <xf:label ref="."/>
+            <xf:value ref="@value"/>
+        </xf:itemset>
+        <xf:setvalue ev:event="xforms-value-changed" ref="/data/result/select2" value="/data/items/@selected"/>
+    </xf:select1>
+
+    <xf:switch>
+        <xf:case id="case1" >
+            <xf:message ev:event="xforms-select" level="ephemeral" ev:target="case1">case 1 selected</xf:message>
+            <xf:trigger appearance="minimal" id="t-case2">
+                <xf:label>Case 2</xf:label>
+                <xf:toggle case="case2"/>
+            </xf:trigger>
+
+            <xf:select1 id="select-3" ref="items/@selected">
+                <xf:label>Select 3 (in Case1)</xf:label>
+                <xf:itemset nodeset="/data/items/item">
+                    <xf:label ref="."/>
+                    <xf:value ref="@value"/>
+                </xf:itemset>
+                <xf:setvalue ev:event="xforms-value-changed" ref="/data/result/select3" value="/data/items/@selected"/>
+            </xf:select1>
+
+        </xf:case>
+        <xf:case id="case2">
+            <xf:message ev:event="xforms-select" level="ephemeral" ev:target="case2">case 2 selected</xf:message>
+            <xf:trigger appearance="minimal" id="t-case1">
+                <xf:label>Case 1</xf:label>
+                <xf:toggle case="case1"/>
+            </xf:trigger>
+
+            <xf:select1 id="select-4" ref="items/@selected">
+                <xf:label>Select 4 (in Case2)</xf:label>
+                <xf:itemset nodeset="/data/items/item">
+                    <xf:label ref="."/>
+                    <xf:value ref="@value"/>
+                </xf:itemset>
+                <xf:setvalue ev:event="xforms-value-changed" ref="/data/result/select4" value="/data/items/@selected"/>
+            </xf:select1>
+        </xf:case>
+    </xf:switch>
+</xf:group>
+</body>
+</html>

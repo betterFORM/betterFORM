@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    author: Joern Turner
+    author: Lars Windauer
+    author: Tobias Krebs
+ -->
+<project id="webtests" name="betterForm Webtests " default="test" basedir="." xmlns:bf="bar">
+
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- ###
+          ATTENTION - the properties below must be set before build.properties.xml
+          is called - DO NOT MOVE
+  ###  -->
+
+    <property name="root.dir" value=".."/>
+    <property name="src.dir" value="../src"/>
+    <property name="core.dir" value="../core"/>
+    <property name="web.dir" value="."/>
+    <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
+
+
+    <!-- local Web properties -->
+    <property name="forms.target" value="forms"/>
+    <property name="lib.dir" value="${basedir}/src/main/lib"/>
+    <property name="target" value="${basedir}/target"/>
+    <property name="webapp.dir" value="${target}/${web.app.name}"/>
+    <property name="targetname" value="${target}/${web.app.name}-${web.app.version}"/>
+    <property name="servlet.container" value="${properties.webappPath}"/>
+
+
+    <path id="saxon.libs" description="classpath for Saxon">
+        <pathelement location="${basedir}/../core/src/main/lib/saxon-9.0.jar"/>
+        <pathelement location="${basedir}/../core/src/main/lib/saxon-dom-9.0.jar"/>
+    </path>
+
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <target name="clean" description="clean build target directory">
+        <ant antfile="build.xml" target="clean" dir="${basedir}" inheritall="false"/>
+    </target>
+
+    <target name="cleanTestClasses">
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="cleaning out test-sources and test-classes"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+        <delete dir="${target}/test-sources"/>
+        <delete dir="${target}/test-classes"/>
+        <mkdir dir="${target}/test-sources"/>
+        <mkdir dir="${target}/test-classes"/>
+    </target>
+
+    <!-- **************************************** SERVERS **************************************** -->
+    <!-- **************************************** SERVERS **************************************** -->
+    <!-- **************************************** SERVERS **************************************** -->
+    <target name="selenium-start">
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="Starting seleniumRC on ${web.test.selenium.server.host}:${web.test.selenium.server.port} via ${web.test.selenium.server.jar}"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+        <!-- this is a 'known location' for this -->
+        <java jar="${web.test.selenium.server.jar}"
+              fork="true"
+              spawn="true">
+        </java>
+
+        <waitfor maxwait="20" maxwaitunit="second">
+            <and>
+                <socket server="${web.test.selenium.server.host}" port="${web.test.selenium.server.port}"/>
+                <http url="http://${web.test.selenium.server.host}:${web.test.selenium.server.port}${web.test.selenium.server.url}" errorsBeginAt="${web.test.selenium.server.errorsBeginAt}"/>
+            </and>
+        </waitfor>
+    </target>
+
+    <target name="selenium-stop">
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="Stopping seleniumRC"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+        <get taskname="selenium-shutdown"
+             src="http://${web.test.selenium.server.host}:${web.test.selenium.server.port}/selenium-server/driver/?cmd=shutDownSeleniumServer"
+             dest="result.txt" ignoreerrors="true"/>
+        <echo taskname="selenium-shutdown" message="DGF Errors during shutdown are expected"/>
+    </target>
+
+    <target name="tomcat-prepare" depends="getTomcat">
+
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="Creating betterform.xml in ${basedir}/target/test-tools/${web.test.tomcat.version}/conf/Catalina/localhost/"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+
+        <echo file="${basedir}/target/test-tools/${web.test.tomcat.version}/conf/server.xml">
+            <![CDATA[<Server port="${web.test.tomcat.shutdownport}" shutdown="SHUTDOWN">
+                        <Service name="Catalina">
+                            <Connector port="${web.test.tomcat.port}" />
+                            <Engine name="Catalina" defaultHost="localhost">
+	                            <Host name="localhost"  appBase="webapps" unpackWARs="true" autoDeploy="true" xmlValidation="false" xmlNamespaceAware="false"/>
+                            </Engine>
+                        </Service>
+                     </Server>]]>
+        </echo>
+
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="Creating betterform.xml in ${basedir}/target/test-tools/${web.test.tomcat.version}/conf/Catalina/localhost/"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+
+        <mkdir dir="${basedir}/target/test-tools/${web.test.tomcat.version}/conf/Catalina/localhost/"/>
+        
+        <echo file="${basedir}/target/test-tools/${web.test.tomcat.version}/conf/Catalina/localhost/betterform.xml">
+            <![CDATA[<Context path="/betterform" docBase="${basedir}/target/betterform"/>]]></echo>
+    </target>
+
+    <target name="tomcat-clean">
+
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="Clean Tomcat directory"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+	<!-- wait for tomcat releasing all files -->
+	<sleep seconds="30"/>
+	<!-- delete unpacked tomcat -->
+	<delete dir="${basedir}/target/test-tools/${web.test.tomcat.version}"/>
+    </target>
+
+     <target name="getTomcat" depends="checkTestProps">
+        <mkdir dir="${basedir}/target/test-tools"/>
+        <get usetimestamp="true" ignoreerrors="true" src="${web.test.tomcat.download-url}" dest="${basedir}/target/test-tools/${web.test.tomcat.version}.zip"/>
+        <unzip src="${basedir}/target/test-tools/${web.test.tomcat.version}.zip" dest="${basedir}/target/test-tools/"/>
+    </target>
+<!-- No Logging ;-(
+    <target name="tomcat-start" depends="tomcat-prepare">
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="Starting tomcat from dir: ${basedir}/target/test-tools/${web.test.tomcat.version}"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+        <java jar="${basedir}/target/test-tools/${web.test.tomcat.version}/bin/bootstrap.jar" fork="true" spawn="false" maxmemory="1024m" output="${web.test.tomcat.version}.OUT" error="${web.test.tomcat.version}.ERROR">
+            <jvmarg value="-Dcatalina.home=${basedir}/target/test-tools/${web.test.tomcat.version}"/>
+	    <arg line="start"/>
+        </java>
+    </target>
+-->
+    <target name="tomcat-start" depends="tomcat-prepare">
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="Starting tomcat from dir: ${basedir}/target/test-tools/${web.test.tomcat.version}"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+        
+	<exec executable="cmd.exe" spawn="true" osfamily="windows">
+		<arg line="/c ${basedir}\target\test-tools\${web.test.tomcat.version}\bin\startup.bat"/>
+		<env key="CATALINA_OPTS" value="-Xms256m -Xmx1024m"/>
+		<env key="CATALINA_HOME" value="${basedir}\target\test-tools\${web.test.tomcat.version}"/>
+	</exec>
+
+	<chmod file="${basedir}/target/test-tools/${web.test.tomcat.version}/bin/catalina.sh" perm="755"/>
+	<chmod file="${basedir}/target/test-tools/${web.test.tomcat.version}/bin/setclasspath.sh" perm="755"/>
+	<chmod file="${basedir}/target/test-tools/${web.test.tomcat.version}/bin/startup.sh" perm="755"/>
+
+	<exec executable="${basedir}/target/test-tools/${web.test.tomcat.version}/bin/startup.sh" spawn="true" osfamily="unix" newenvironment="true">
+		<env key="CATALINA_OPTS" value="-Xms256m -Xmx1024m"/>
+		<env key="CATALINA_HOME" value="${basedir}/target/test-tools/${web.test.tomcat.version}"/>
+	</exec>
+    </target>
+
+    <target name="tomcat-stop">
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="Stopping tomcat from dir: ${basedir}/target/test-tools/${web.test.tomcat.version}"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+        <java jar="${basedir}/target/test-tools/${web.test.tomcat.version}/bin/bootstrap.jar" fork="true">
+            <jvmarg value="-Dcatalina.home=${basedir}/target/test-tools/${web.test.tomcat.version}"/>
+            <arg line="stop"/>
+        </java>
+    </target>
+
+    <!-- **************************************** UTILS AND FIXES **************************************** -->
+    <!-- **************************************** UTILS AND FIXES **************************************** -->
+    <!-- **************************************** UTILS AND FIXES **************************************** -->
+    <target name="prepareFlux">
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="modifiy FluxProcessor for testing"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+
+        <filter token="WEBTEST" value="true"/>
+        <copy tofile="${basedir}/target/betterform/resources/scripts/betterform/FluxProcessor.js" filtering="true"
+              overwrite="true">
+            <file file="${src.dir}/main/resources/scripts/betterform/FluxProcessor.js"/>
+        </copy>
+    </target>
+
+    <target name="prepare-Tests">
+        <ant antfile="build.xml" target="deploy-test-resources" dir="${basedir}" inheritall="false"/>
+
+        <mkdir dir="${basedir}/target/test-classes"/>
+
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="copying test resources..."/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+        <copy description="copy all test resources"
+              todir="${basedir}/target/test-classes"
+              filtering="true"
+              includeemptydirs="false">
+            <fileset dir="${basedir}/src/test/resources"/>
+        </copy>
+
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="copying and modifing WebTestBase"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+
+        <copy file="${basedir}/src/test/java/org/betterform/conformance/WebTestBase.java" tofile="${basedir}/target/test-sources/org/betterform/conformance/WebTestBase.java" overwrite="true">
+          <filterset>
+            <filter token="BROWSER" value="${web.test.selenium.browser}"/>
+            <filter token="SELENIUMHOST" value="${web.test.selenium.server.host}"/>
+            <filter token="HOST" value="${web.test.tomcat.host}"/>
+            <filter token="PORT" value="${web.test.tomcat.port}"/>
+          </filterset>
+        </copy>
+
+    </target>
+
+    <target name="checkTestProps">
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="Testing needed build.properties"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+        <property name="tomcat.download-url" value="${web.test.tomcat.download-url}"/>
+        <condition property="missingProp">
+            <equals arg1="${tomcat.download-url}" arg2="" trim="true"/>
+        </condition>
+        <fail message="Please set web.test.tomcat.download-url in build.properties.xml" if="missingProp"/>
+
+        <property name="tomcat.version" value="${web.test.tomcat.version}"/>
+        <condition property="missingProp">
+            <equals arg1="${tomcat.version}" arg2="" trim="true"/>
+        </condition>
+        <fail message="Please set web.test.tomcat.version in build.properties.xml" if="missingProp"/>
+
+        <property name="tomcat.shutdownport" value="${web.test.tomcat.shutdownport}"/>
+        <condition property="missingProp">
+            <equals arg1="${tomcat.shutdownport}" arg2="" trim="true"/>
+        </condition>
+        <fail message="Please set web.test.tomcat.shutdownport in build.properties.xml" if="missingProp"/>
+
+        <property name="tomcat.port" value="${web.test.tomcat.port}"/>
+        <condition property="missingProp">
+            <equals arg1="${tomcat.port}" arg2="" trim="true"/>
+        </condition>
+        <fail message="Please set web.test.tomcat.port in build.properties.xml" if="missingProp"/>
+
+    </target>
+
+    
+
+
+    <target name="runJUnitTests" description="run generated Selenese unit tests">
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="running generated Selenese unit test suite"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+        <mkdir dir="${basedir}/target/doc/test/classes"/>
+
+        <!-- run junit tests -->
+        <junit description="run junit tests"
+               printsummary="on">
+            <classpath refid="web.test.class.path"/>
+            <formatter type="xml"/>
+            <batchtest fork="yes" todir="${basedir}/target/doc/test/classes">
+                <fileset dir="${basedir}/target/test-classes" includes="**/*Test.class"
+                         excludes="BetterFormXFormsTest.class"/>
+            </batchtest>
+        </junit>
+
+        <!-- generate junit reports -->
+        <junitreport description="generate junit reports"
+                     todir="target/doc/test">
+            <fileset dir="target/doc/test/classes">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report todir="target/doc/test"/>
+        </junitreport>
+
+        <antcall target="selenium-stop"></antcall>
+    </target>
+
+
+    <target name="compileTestClasses">
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="compiling test classes..."/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+        <javac description="compile test files"
+               excludes="org/betterform/agent/**"
+               srcdir="${basedir}/target/test-sources"
+               destdir="${basedir}/target/test-classes"
+               classpathref="web.test.class.path"
+               debug="true"
+               deprecation="true"
+               optimize="off"/>
+    </target>
+
+    <!-- TODO: Check for XX -->
+    <target name="checkChapterNo">
+        <condition property="chapterNo.ok">
+            <isset property="chapterNo"/>
+        </condition>
+        <fail message="Please call ant with -DchapterNo=[XX]" unless="chapterNo.ok"/>
+    </target>
+
+    <target name="checkTestCaseNo">
+        <condition property="testcaseNo.ok">
+            <isset property="testcaseNo"/>
+        </condition>
+        <fail message="Please call ant with -DtestcaseNo=[X.X.X]" unless="testcaseNo.ok"/>
+    </target>
+
+    <target name="copyChapterResources">
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="copying test resources for Chapter ${chapterNo}"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+        <copy description="copy selected test resources"
+              todir="${basedir}/target/test-classes"
+              filtering="true"
+              includeemptydirs="false">
+            <fileset dir="${basedir}/src/test/resources/**/Chapt${chapterNo}"/>
+        </copy>
+    </target>
+
+
+    <target name="generateSeleniumJavaTestsChapter"
+            description="batch generates Java Selenium Test from HTML">
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="generating automated Java test cases for XForms 1.1 Test Suite Chapter ${chapterNo} from Selenium HTML tests"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+
+        <xslt basedir="${root.dir}/src/test/seleniumIDE/conformance/x11edition1"
+              destdir="${basedir}/target/test-sources"
+              style="${root.dir}/tools/XFormsTestSuite/xslt/generateSeleniumJava.xsl"
+              force="true"
+              includes="**/chapt${chapterNo}/*.html"
+              excludes="**/chapter*.html"
+              extension=".java"
+              filedirparameter="filedir"
+              filenameparameter="filename">
+            <classpath refid="saxon.libs"/>
+        </xslt>
+
+        <delete>
+            <fileset dir="${basedir}/target/test-sources" casesensitive="yes" >
+                <include name="**/*.java"/>
+                <exclude name="**/*Test*"/>
+            </fileset>
+        </delete>
+
+        <copy todir="${basedir}/target/test-sources/org/betterform/conformance/xf11/">
+            <fileset dir="${basedir}/target/test-sources" includes="**/*.java"/>
+        </copy>
+
+        <delete includeemptydirs="true">
+            <fileset dir="${basedir}/target/test-sources"
+                     includes="**/*"
+                     excludes="org/**"
+                     casesensitive="yes"/>
+        </delete>
+    </target>
+
+    <target name="generateSeleniumJavaTestsAppendix"
+            description="batch generates Java Selenium Test from HTML for Appendix">
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="generating automated Java test cases for XForms 1.1 Test Suite Appendix from Selenium HTML tests"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+
+        <xslt basedir="${root.dir}/src/test/seleniumIDE/conformance/x11edition1"
+              destdir="${basedir}/target/test-sources"
+              style="${root.dir}/tools/XFormsTestSuite/xslt/generateSeleniumJava.xsl"
+              force="true"
+              includes="**/appendix/*.html"
+              excludes="**/chapter*.html"
+              extension=".java"
+              filedirparameter="filedir"
+              filenameparameter="filename">
+            <classpath refid="saxon.libs"/>
+        </xslt>
+
+        <delete>
+            <fileset dir="${basedir}/target/test-sources" casesensitive="yes" >
+                <include name="**/*.java"/>
+                <exclude name="**/*Test*"/>
+            </fileset>
+        </delete>
+
+        <copy todir="${basedir}/target/test-sources/org/betterform/conformance/xf11/">
+            <fileset dir="${basedir}/target/test-sources" includes="**/*.java"/>
+        </copy>
+
+        <delete includeemptydirs="true">
+            <fileset dir="${basedir}/target/test-sources"
+                     includes="**/*"
+                     excludes="org/**"
+                     casesensitive="yes"/>
+        </delete>
+
+    </target>
+
+
+
+    <target name="generateSeleniumJavaTestSingleTestCase"
+            description="batch generates Java Selenium Test from HTML">
+       <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="generating automated Java test cases for single XForms 1.1 Testcase from Selenium HTML tests"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+
+        <xslt basedir="${root.dir}/src/test/seleniumIDE/conformance/x11edition1"
+              destdir="${basedir}/target/test-sources"
+              style="${root.dir}/tools/XFormsTestSuite/xslt/generateSeleniumJava.xsl"
+              force="true"
+              includes="**/**/${testcaseNo}.html"
+              excludes="**/chapter*.html"
+              extension=".java"
+              filedirparameter="filedir"
+              filenameparameter="filename">
+            <classpath refid="saxon.libs"/>
+        </xslt>
+
+        <delete>
+            <fileset dir="${basedir}/target/test-sources" casesensitive="yes" >
+                <include name="**/*.java"/>
+                <exclude name="**/*Test*"/>
+            </fileset>
+        </delete>
+
+        <copy todir="${basedir}/target/test-sources/org/betterform/conformance/xf11/">
+            <fileset dir="${basedir}/target/test-sources" includes="**/*.java"/>
+        </copy>
+
+        <delete includeemptydirs="true">
+            <fileset dir="${basedir}/target/test-sources"
+                     includes="**/*"
+                     excludes="org/**"
+                     casesensitive="yes"/>
+        </delete>
+
+    </target>
+
+    <!-- **************************************** TEST TARGETS **************************************** -->
+    <!-- **************************************** TEST TARGETS **************************************** -->
+    <!-- **************************************** TEST TARGETS **************************************** -->
+
+        <!-- Run complete Selenium Testsuite for W3C XForm 1.1 Conformance Testsuite -->
+    <target name="test" description="run all unit tests">
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="running webtest suite for all Chapters"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+	<antcall target="testChapterClean">
+	    <param name="chapterNo" value="02"/>
+	</antcall>
+	<antcall target="testChapter">
+	    <param name="chapterNo" value="03"/>
+	</antcall>
+	<antcall target="testChapter">
+	    <param name="chapterNo" value="04"/>
+	</antcall>
+	<antcall target="testChapter">
+	    <param name="chapterNo" value="05"/>
+	</antcall>
+	<antcall target="testChapterClean">
+	    <param name="chapterNo" value="06"/>
+	</antcall>
+	<antcall target="testChapter">
+	    <param name="chapterNo" value="07"/>
+	</antcall>
+	<antcall target="testChapterClean">
+	    <param name="chapterNo" value="08"/>
+	</antcall>
+	<antcall target="testChapter">
+	    <param name="chapterNo" value="09"/>
+	</antcall>
+	<antcall target="testChapterClean">
+	    <param name="chapterNo" value="10"/>
+	</antcall>
+	<antcall target="testChapter">
+	    <param name="chapterNo" value="11"/>
+	</antcall>
+	<antcall target="testAppendix"/>
+    </target>
+
+    <!-- Run a single Chapter of the Selenium Testsuite for W3C XForm 1.1 Conformance Testsuite
+	 Call with -DchapterNo=XX e.g. -DchapterNo=02
+    -->
+    <target name="testChapterClean"
+            depends="tomcat-clean, testChapter"
+            description="cleans tomcat-install and tests a single chapter of XForms Testsuite call with -DchapterNo=[XX] e.g. -DchapterNo=02"/>
+
+    <target name="testChapter"
+            depends="checkChapterNo, cleanTestClasses, generateSeleniumJavaTestsChapter, prepare-Tests, compileTestClasses, tomcat-start, prepareFlux, selenium-start"
+            description="test a single chapter of XForms Testsuite call with -DchapterNo=[XX] e.g. -DchapterNo=02">
+
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="running webtest suite for Chapter ${chapterNo}"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+        <antcall target="runJUnitTests"></antcall>
+        <antcall target="tomcat-stop"></antcall>
+    </target>
+
+    <!-- Run the Appendix Selenium Testcases for W3C XForm 1.1 Conformance Testsuite -->
+    <target name="testAppendix"
+            depends="tomcat-clean, cleanTestClasses, generateSeleniumJavaTestsAppendix, prepare-Tests, compileTestClasses, tomcat-start, prepareFlux, selenium-start"
+            description="test a Appendix of XForms Test suite">
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="running webtest suite for Appendix"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+        <antcall target="runJUnitTests"></antcall>
+        <antcall target="tomcat-stop"></antcall>
+    </target>
+
+    <!-- Run a single Testcase of the Selenium Testsuite for W3C XForm 1.1 Conformance Testsuite
+	 Call with -DtestcaseNo=X.X.X e.g. -DtestcaseNo=2.1.a
+    -->
+    <target name="testTestcase"
+            depends="checkTestCaseNo, tomcat-clean, cleanTestClasses, generateSeleniumJavaTestSingleTestCase, prepare-Tests, compileTestClasses, tomcat-start, prepareFlux, selenium-start"
+            description="test a single tescase of XForms Testsuite call with -DtestcaseNo=[X.X.X] e.g. -DtestcaseNo=8.1.6.2.a">
+        <echo/>
+            <echo message="************************************************************************************************************"/>
+            <echo message="running Test case ${testcaseNo}"/>
+            <echo message="************************************************************************************************************"/>
+            <antcall target="runJUnitTests"></antcall>
+            <antcall target="tomcat-stop"></antcall>
+        <echo/>
+    </target>
+
+    <!-- Generate W3C Result-File for Testsuite Resluts -->
+    <target name="testreport" description="creates a conformance test report">
+
+        <xslt description="merges all result files from original XForms 1.1 testsuite into one"
+              style="${root.dir}/tools/XFormsTestSuite/xslt/combineW3CResults.xsl"
+              force="yes"
+              in="${root.dir}/src/test/resources/XFormsTestSuite1.1E1/Edition1/driverPages/Results/emptyStructure/XF11_01_Results.xml"
+              filedirparameter="filedir"
+              out="${basedir}/target/doc/w3cResults/allResultsTemplate.xml">
+            <classpath refid="saxon.libs"/>
+            <param name="basePath" expression="${basedir}/../src/test/resources/XFormsTestSuite1.1E1/Edition1/driverPages/Results/emptyStructure"/>
+        </xslt>
+
+        <xslt basedir="${root.dir}/src/test/resources/XFormsTestSuite1.1E1/Edition1/driverPages/Results/emptyStructure"
+              style="${root.dir}/tools/XFormsTestSuite/xslt/junit2w3c.xsl"
+              force="true"
+              in="${basedir}/target/doc/w3cResults/allResultsTemplate.xml"
+              out="${basedir}/target/doc/w3cResults/mergedResults.xml"
+              filedirparameter="filedir">
+            <classpath refid="saxon.libs"/>
+            <param name="basePath" expression="${basedir}/target/doc/test"/>
+        </xslt>
+
+
+        <xslt basedir="${basedir}/target/doc/w3cResults/"
+              style="${root.dir}/tools/XFormsTestSuite/xslt/generate-results.xsl"
+              force="true"
+              in="${basedir}/target/doc/w3cResults/mergedResults.xml"
+              out="${basedir}/target/doc/w3cResults/ConformanceReport1.1.html"
+              filedirparameter="filedir"
+              filenameparameter="filename">
+            <classpath refid="saxon.libs"/>
+            <param name="basePath" expression="${basedir}/../src/test/resources/XFormsTestSuite1.1E1/Edition1/driverPages/Results/"/>
+        </xslt>
+
+<!--
+        <copy file="${basedir}/target/doc/w3cResults/ConformanceReport1.1.html"
+              todir="${root.dir}/src/main/doc/site/content/reports"
+                overwrite="true"/>
+-->
+    </target>
+</project>

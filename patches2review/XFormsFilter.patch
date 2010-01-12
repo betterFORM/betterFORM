@@ -1,0 +1,13 @@
+Index: web/src/main/java/de/betterform/agent/web/filter/XFormsFilter.java
+===================================================================
+--- web/src/main/java/de/betterform/agent/web/filter/XFormsFilter.java	(revision 3547)
++++ web/src/main/java/de/betterform/agent/web/filter/XFormsFilter.java	(working copy)
+@@ -159,7 +159,7 @@
+                         if (xFormsSession != null) {
+                             xFormsSession.close(e);
+                         }
+-                        throw new ServletException(e.getMessage());
++                        throw new ServletException(e);
+                     }
+ 
+                     LOG.info("End Render XForm");

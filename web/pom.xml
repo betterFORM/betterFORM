@@ -1,0 +1,675 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>de.betterform</groupId>
+        <artifactId>betterform</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>de.betterform</groupId>
+    <artifactId>betterform</artifactId>
+    <version>3.0.0b2</version>
+    
+    
+
+    <packaging>war</packaging>
+
+    <name>betterForm Web</name>
+    <description>betterForm Web Project</description>
+    <inceptionYear>2007</inceptionYear>
+    <url>http://betterform.sourceforge.net</url>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1-alpha-2</version>
+                <configuration>
+                    <archiveClasses>true</archiveClasses>
+                </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.mortbay.jetty</groupId>
+              <artifactId>maven-jetty-plugin</artifactId>
+              <version>6.1.6</version>
+          </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <format>{0,date,yyyyMMdd/HHmm}</format>
+                    <items>
+                        <item>timestamp</item>
+                    </items>
+                </configuration>
+            </plugin>
+     <!--
+            <plugin>
+              <artifactId>maven-antrun-plugin</artifactId>
+              <executions>
+                <execution>
+                  <phase>validate</phase>
+                  <configuration>
+                      <tasks>
+                          <exec executable="svn" output="svnlog.out">
+                              <arg line="info"/>
+                          </exec>
+                          <loadproperties srcFile="svnlog.out">
+                              <filterchain>
+                                  <linecontains>
+                                      <contains value="Revision"/>
+                                  </linecontains>
+                              </filterchain>
+                          </loadproperties>
+                          <delete file="svnlog.out"/>
+                          <echo>SVN Revision ${Revision}</echo>
+                          <filter token="app.name" value="${project.name}"/>
+                          <filter token="app.version" value="${project.version}"/>
+                          <filter token="app.build" value="${buildNumber}"/>
+                          <filter token="revision.number" value="${Revision}"/>
+                          <copy todir="src/main/resources/META-INF" file="${basedir}/../core/src/main/java/version.info" filtering="true" overwrite="true"/>
+                      </tasks>
+                  </configuration>
+                  <goals>
+                    <goal>run</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+-->
+        </plugins>
+        <finalName>${project.artifactId}</finalName>
+    </build>
+
+    <dependencies>
+<dependency>
+<groupId>de.betterform</groupId>
+<artifactId>betterform-core</artifactId>
+<version>3.0b2</version>
+</dependency>
+<dependency>
+<groupId>dwr</groupId>
+<artifactId>dwr</artifactId>
+<version>2.0.5</version>
+</dependency>
+<dependency>
+<groupId>javax.servlet</groupId>
+<artifactId>servlet-api</artifactId>
+<version>2.4</version>
+<scope>provided</scope>
+</dependency>
+<dependency>
+<groupId>org.seleniumhq.selenium</groupId>
+<artifactId>selenium-java-client-driver</artifactId>
+<version>1.0.1</version>
+<scope>test</scope>
+</dependency>
+<dependency>
+<groupId>commons-codec</groupId>
+<artifactId>commons-codec</artifactId>
+<version>1.3</version>
+</dependency>
+<dependency>
+<groupId>commons-fileupload</groupId>
+<artifactId>commons-fileupload</artifactId>
+<version>1.1</version>
+</dependency>
+<dependency>
+<groupId>commons-httpclient</groupId>
+<artifactId>commons-httpclient</artifactId>
+<version>3.0.1</version>
+</dependency>
+<dependency>
+<groupId>commons-lang</groupId>
+<artifactId>commons-lang</artifactId>
+<version>2.4</version>
+</dependency>
+<dependency>
+<groupId>commons-logging</groupId>
+<artifactId>commons-logging</artifactId>
+<version>1.0.4</version>
+</dependency>
+<dependency>
+<groupId>commons-logging-api</groupId>
+<artifactId>commons-logging-api</artifactId>
+<version>1.0.4</version>
+</dependency>
+<dependency>
+<groupId>javax.activation</groupId>
+<artifactId>activation</artifactId>
+<version>1.0.2</version>
+</dependency>
+<dependency>
+<groupId>javax.mail</groupId>
+<artifactId>mail</artifactId>
+<version>1.3</version>
+</dependency>
+<dependency>
+<groupId>log4j</groupId>
+<artifactId>log4j</artifactId>
+<version>1.2.13</version>
+</dependency>
+<dependency>
+<groupId>net.sf.saxon</groupId>
+<artifactId>saxon-dom</artifactId>
+<version>9.0</version>
+</dependency>
+<dependency>
+<groupId>net.sf.saxon</groupId>
+<artifactId>saxon</artifactId>
+<version>9.0</version>
+</dependency>
+<dependency>
+<groupId>xerces</groupId>
+<artifactId>xercesImpl</artifactId>
+<version>2.8.0</version>
+</dependency>
+<dependency>
+<groupId>xml-apis</groupId>
+<artifactId>xml-apis</artifactId>
+<version>1.0.b2</version>
+</dependency>
+<dependency>
+<groupId>org.apache.xmlrpc</groupId>
+<artifactId>xmlrpc-common</artifactId>
+<version>3.0</version>
+</dependency>
+<dependency>
+<groupId>org.apache.xmlrpc</groupId>
+<artifactId>xmlrpc-client</artifactId>
+<version>3.0</version>
+</dependency>
+<dependency>
+<groupId>org.apache.xmlrpc</groupId>
+<artifactId>xmlrpc-server</artifactId>
+<version>3.0</version>
+</dependency>
+<dependency>
+<groupId>net.sf.ehcache</groupId>
+<artifactId>ehcache</artifactId>
+<version>1.6.2</version>
+</dependency>
+<dependency>
+<groupId>junit</groupId>
+<artifactId>junit</artifactId>
+<version>3.8.2</version>
+<scope>test</scope>
+</dependency>
+</dependencies>
+
+    <developers>
+        <developer>
+            <id>unl</id>
+            <name>Ulrich Nicolas Lissé</name>
+            <email>unl@users.sourceforge.net</email>
+        </developer>
+        <developer>
+            <id>deliriumsky</id>
+            <name>Adam Retter</name>
+            <email/>
+        </developer>
+        <developer>
+            <id>joern</id>
+            <name>Joern Turner</name>
+            <email>joernt@users.sourceforge.net</email>
+        </developer>
+        <developer>
+            <id>lars</id>
+            <name>Lars Windauer</name>
+            <email>windauer@users.sourceforge.net</email>
+        </developer>
+    </developers>
+    <contributors>
+        <contributor>
+            <name>Willian Boyd</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Oliver Charlet</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Flavio Costa</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Mark Dimon</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Brian Dueck</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Terence Jacyno</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Tars Joris</name>
+            <organization>Inventive Designers</organization>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Gregor Klinke</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Leigh Klotz</name>
+            <organization>Xerox</organization>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Ronald van Kuijk</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Robert Leftwich</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Peter Mikula</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Eduardo Millán</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Chris Picton</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Sophie Ramel</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>John Spackman</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Andrzej Jan Taramina</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Péter Varga</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Suhail Ahmed</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Adrian Baker</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Dario Bahena</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Nick van den Bleeken</name>
+            <organization>Inventive Designers</organization>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Tomislav Bodor</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Michael Bridgen</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Ben Cochran</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Thomas Draier</name>
+        </contributor>
+        <contributor>
+            <name>Jason Eacott</name>
+        </contributor>
+        <contributor>
+            <name>Alexander Grosse</name>
+        </contributor>
+        <contributor>
+            <name>Eric Hanson</name>
+        </contributor>
+        <contributor>
+            <name>Anja Lehmann</name>
+        </contributor>
+        <contributor>
+            <name>Yien Lie</name>
+        </contributor>
+        <contributor>
+            <name>Richard Louapre</name>
+        </contributor>
+        <contributor>
+            <name>Giota Karadimitriou</name>
+        </contributor>
+        <contributor>
+            <name>Sabine Krach</name>
+        </contributor>
+        <contributor>
+            <name>Anselm Kruis</name>
+        </contributor>
+        <contributor>
+            <name>Murata Kakoto</name>
+        </contributor>
+        <contributor>
+            <name>Lawrence McCay</name>
+        </contributor>
+        <contributor>
+            <name>Peter Mikhalenko</name>
+        </contributor>
+        <contributor>
+            <name>Paul Miniato</name>
+        </contributor>
+        <contributor>
+            <name>Sebastian Ordyniak</name>
+        </contributor>
+        <contributor>
+            <name>Tanguy Rademakers</name>
+        </contributor>
+        <contributor>
+            <name>Adam Retter</name>
+        </contributor>
+        <contributor>
+            <name>Zach Roberts</name>
+        </contributor>
+        <contributor>
+            <name>Peter Rodgers</name>
+        </contributor>
+        <contributor>
+            <name>Etienne Schellerup</name>
+        </contributor>
+        <contributor>
+            <name>Olaf Schreck</name>
+        </contributor>
+        <contributor>
+            <name>Daniel Shane</name>
+        </contributor>
+        <contributor>
+            <name>Robert Simmons</name>
+        </contributor>
+        <contributor>
+            <name>Karla Smith</name>
+        </contributor>
+        <contributor>
+            <name>Paul Sterck</name>
+        </contributor>
+        <contributor>
+            <name>Martin Suter</name>
+        </contributor>
+        <contributor>
+            <name>Torben Vesterager</name>
+        </contributor>
+        <contributor>
+            <name>Scott Warren</name>
+        </contributor>
+        <contributor>
+            <name>Chris Zelenak</name>
+        </contributor>
+        <contributor>
+            <name>Thomas Ziegert</name>
+        </contributor>
+        <contributor>
+            <name>Stefan Zorn</name>
+        </contributor>
+    </contributors>
+    <!-- Maven Profile Section
+            by default executing the JUnit and Selenium Tests is disabled as well as deploying
+            the sample xforms documents. By default Profiles are enabled by the -P<profile_name>
+            option. See the profile comments for its usage
+     -->
+    <profiles>
+        <profile>
+            <!--
+                Profile to execute all JUnit tests withing the betterForm Web Module
+                Usage:
+                    mvn -Ptest test (simply executes all tests) or
+                    mvn -Ptest surefire-report:report (generates a test result to target/site/surefire-report.html)
+            -->
+            <id>test</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <skip>false</skip>
+                            <excludes>
+                                <exclude>**/conformance/xforms10/*.java</exclude>
+                                <exclude>**/webtest/**/*.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!--
+                Profile to execute all JUnit tests withing the betterForm Web Module
+                Usage sample:
+                    mvn -Pdemo package (creates an exploded webapp and war file both containing the betterform demo forms)
+                    mvn -Ptest jetty:run-exploded (starts up jetty at localhost:8080/betterform including demo forms )
+            -->
+
+            <id>demo</id>
+            <build>
+                <plugins>
+                    <plugin>
+                      <artifactId>maven-antrun-plugin</artifactId>
+                      <executions>
+                        <execution>
+                          <phase>compile</phase>
+                          <configuration>
+                              <tasks>
+                                  <copy todir="${project.build.directory}/${project.build.finalName}/forms" overwrite="true">
+                                      <fileset dir="${basedir}/../src/main/xforms"/>
+                                  </copy>
+                              </tasks>
+                          </configuration>
+                          <goals>
+                            <goal>run</goal>
+                          </goals>
+                        </execution>
+                      </executions>
+                    </plugin>
+
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <!--
+                Profile to execute all JUnit tests withing the betterForm Web Module
+                Usage sample:
+                    mvn -Pdemo package (creates an exploded webapp and war file both containing the betterform demo forms)
+                    mvn -Ptest jetty:run-exploded (starts up jetty at localhost:8080/betterform including demo forms )
+            -->
+            
+            <id>integration-test</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>integration-tests</id>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                                <configuration>
+                                    <skip>false</skip>
+                                    <excludes>
+                                        <exclude>none</exclude>
+                                    </excludes>
+                                    <includes>
+                                        <!--<include>**/conformance/xforms10/*.java</include>-->
+                                        <include>**/conformance/**/*Test.java</include>
+                                    </includes>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>selenium-maven-plugin</artifactId>                        
+                        <executions>
+                            <execution>
+                                <id>start-selenium</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>start-server</goal>
+                                </goals>
+                                <configuration>
+                                    <logOutput>true</logOutput>
+                                    <background>true</background>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <configuration>
+                            <wait>false</wait>
+                            <container>
+                                <containerId>tomcat5x</containerId>
+                                <zipUrlInstaller>
+                                    <url>http://ftp.uni-erlangen.de/pub/mirrors/apache/tomcat/tomcat-5/v5.5.27/bin/apache-tomcat-5.5.27.tar.gz</url>
+                                    <installDir>tomcat-5.5.27</installDir>
+                                </zipUrlInstaller>
+                                <output>${project.build.directory}/tomcat5x.log</output>
+                                <log>${project.build.directory}/cargo.log</log>
+                            </container>
+                            <configuration>
+                                <home>${project.build.directory}/tomcat5x/container</home>
+                                <properties>
+                                    <cargo.logging>high</cargo.logging>
+                                    <cargo.hostname>localhost</cargo.hostname>
+                                    <cargo.servlet.port>8081</cargo.servlet.port>
+                                    <cargo.jvmargs>-Xms128m -Xmx512m -Xdebug -Xnoagent -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n</cargo.jvmargs>
+                                </properties>
+                            </configuration>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>start-container</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                                <configuration>
+                                    <logOutput>true</logOutput>
+                                    <background>true</background>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>stop-container</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+
+            <repositories>
+                <repository>
+                    <id>Codehaus Snapshots</id>
+                    <url>http://snapshots.repository.codehaus.org/</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                </repository>
+            </repositories>
+
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>Codehaus Snapshots</id>
+                    <url>http://snapshots.repository.codehaus.org/</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                    <releases>
+                        <enabled>true</enabled>
+                        <!-- Workaround for MNG-2974, see note below -->
+                    </releases>
+                </pluginRepository>
+            </pluginRepositories>
+
+        </profile>
+    </profiles>
+    <properties>
+        <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
+    </properties>
+</project>

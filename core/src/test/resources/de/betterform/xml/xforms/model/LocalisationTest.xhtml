@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:bf="http://betterform.sourceforge.net/xforms">
+    <head>
+        <xf:model id="foo">
+            <xf:instance id="internal" xmlns="">
+                <data>
+                    <item>string</item>
+                    <item>1</item>
+                    <item>10001.1111111</item>
+                    <item>1.127181727</item>
+                    <item>1.13799898</item>
+                    <item>2004-01-06</item>
+                    <item>2001-04-02T14:34:03+02:00</item>
+                    <item>2001-11-11T10:00:00</item>
+                    <item value="2.3"/>
+                    <repeat>
+                        <item>string</item>
+                        <item>1</item>
+                        <item>10001.1111111</item>
+                        <item>1.127181727</item>
+                        <item>1.13799898</item>
+                        <item>2004-01-06</item>
+                        <item>2001-04-02T14:34:03+02:00</item>
+                        <item>2001-11-11T10:00:00</item>
+                        <item/>
+                    </repeat>
+                </data>
+            </xf:instance>
+
+            <xf:bind nodeset="item[1]"/>
+            <xf:bind nodeset="item[2]" type="integer"/>
+            <xf:bind nodeset="item[3]" type="decimal"/>
+            <xf:bind nodeset="item[4]" type="double"/>
+            <xf:bind nodeset="item[5]" type="float"/>
+            <xf:bind nodeset="item[6]" type="date"/>
+            <xf:bind nodeset="item[7]" type="dateTime"/>
+            <xf:bind nodeset="item[8]" type="dateTime"/>
+            <xf:bind nodeset="item[9]" type="date"/>
+            <xf:bind nodeset="item[9]/@value" type="float"/>
+
+
+
+        </xf:model>
+    </head>
+    <body>
+        <xf:group appearance="full">
+            <xf:label>Localisation Test</xf:label>
+                <xf:output ref="item[1]">
+                    <xf:label>plain string</xf:label>
+                </xf:output>
+                <br/>
+                <xf:output ref="item[2]">
+                    <xf:label>integer - nothing should happen here</xf:label>
+                </xf:output>
+
+                <xf:input id="1" ref="item[3]">
+                    <xf:label>decimal</xf:label>
+                </xf:input>
+
+                <xf:input id="2" ref="item[4]">
+                    <xf:label>double</xf:label>
+                </xf:input>
+
+                <xf:input id="3" ref="item[5]">
+                    <xf:label>float</xf:label>
+                </xf:input>
+
+                <xf:input id="4" ref="item[6]">
+                    <xf:label>date</xf:label>
+                </xf:input>
+
+                <xf:output id="5" value="number(item[3] * 5)">
+                    <xf:label>Unbound value</xf:label>
+                </xf:output>
+
+                <xf:input id="6" ref="item[7]">
+                    <xf:label>datetime</xf:label>
+                </xf:input>
+
+                <xf:input id="7" ref="item[8]">
+                    <xf:label>datetime</xf:label>
+                </xf:input>
+
+                <xf:input id="8" ref="item[9]">
+                    <xf:label>Empty date</xf:label>
+                </xf:input>
+
+                <xf:input id="9" ref="item[9]/@value">
+                    <xf:label>number on attr</xf:label>
+                </xf:input>
+
+
+        </xf:group>
+        <xf:group id="repeated-values" appearance="full">
+            <xf:trigger id="insert-item">
+                <xf:label>Insert</xf:label>
+                <xf:insert nodeset="repeat/item" at="last()" position="after"/>
+                <xf:setvalue ref="repeat/item[index('item-repeat-min')]" value="'13,4'"/>
+            </xf:trigger>
+            
+
+            <xf:group id="repeated-values-min" appearance="minimal">
+                <xf:repeat id="item-repeat-min" nodeset="repeat/item[position() != last()]" appearance="min">
+                    <xf:input ref=".">
+                        <xf:label>Item</xf:label>
+                    </xf:input>
+                </xf:repeat>
+            </xf:group>
+<!--
+            <xf:group id="repeated-values-comp" appearance="compact">
+                <xf:repeat id="item-repeat-comp" nodeset="repeat/item[position() != last()]" appearance="compact">
+                    <xf:input ref=".">
+                        <xf:label>Item</xf:label>
+                    </xf:input>
+                </xf:repeat>
+            </xf:group>
+            <xf:group id="repeated-values-full" appearance="full">
+                <xf:repeat id="item-repeat-full" nodeset="repeat/item[position() != last()]" appearance="full">
+                    <xf:input ref=".">
+                        <xf:label>Item</xf:label>
+                    </xf:input>
+                </xf:repeat>
+            </xf:group>
+-->
+        </xf:group>
+    </body>
+</html>

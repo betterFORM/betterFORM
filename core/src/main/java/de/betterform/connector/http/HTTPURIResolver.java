@@ -1,0 +1,124 @@
+/* Copyright 2008 - Joern Turner, Lars Windauer */
+/* Licensed under the terms of BSD and Apache 2 Licenses */
+package de.betterform.connector.http;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import de.betterform.connector.URIResolver;
+import de.betterform.xml.dom.DOMUtil;
+import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xpath.impl.saxon.XPathUtil;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Map;
+
+/**
+ * This class resolves <code>http</code> URIs. It treats the denoted
+ * <code>http</code> resource as XML and returns the parsed response.
+ * <p/>
+ * If the specified URI contains a fragment part, the specified element
+ * is looked up via the <code>getElementById</code>. Thus, the parsed
+ * response must have an internal DTD subset specifiyng all ID attribute.
+ * Otherwise the element would not be found.
+ *
+ * @author Ulrich Nicolas Liss&eacute;
+ * @version $Id: HTTPURIResolver.java 2873 2007-09-28 09:08:48Z lars $
+ */
+public class HTTPURIResolver extends AbstractHTTPConnector implements URIResolver {
+
+    /**
+     * The logger.
+     */
+    private static Log LOGGER = LogFactory.getLog(HTTPURIResolver.class);
+
+    /**
+     * Performs link traversal of the <code>http</code> URI and returns the result
+     * as a DOM document.
+     *
+     * @return a DOM node parsed from the <code>http</code> URI.
+     * @throws XFormsException if any error occurred during link traversal.
+     */
+    public Object resolve() throws XFormsException {
+        URI uri = null;
+        try {
+            uri = new URI(getURI());
+        } catch (URISyntaxException e) {
+            throw new XFormsException(e);
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getting '" + uri + "'");
+        }
+
+        get(getURIWithoutFragment());
+
+        InputStream responseStream = getResponseBody();
+        Map header = getResponseHeader();
+        String contentType = (String) header.get("Content-Type");
+
+        //todo: check for equality is not sufficient here as contenttype header might contain more info such as charset
+        if (contentType.equalsIgnoreCase("text/plain") || contentType.equalsIgnoreCase("text/html")) {
+            try {
+                return inputStreamToString(responseStream);
+            } catch (IOException e) {
+                throw new XFormsException(e);
+            }
+        } else if (contentType.equalsIgnoreCase("application/xml") || contentType.equalsIgnoreCase("text/xml")) {
+
+            try {
+
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("converting response stream to XML");
+                }
+
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                factory.setNamespaceAware(true);
+                factory.setValidating(false);
+
+                Document document = factory.newDocumentBuilder().parse(responseStream);
+
+                if (uri.getFragment() != null) {
+                    String fragment = uri.getFragment();
+                    //todo: allow access to fragments by other means than using getElementById
+                    Node resultNode = XPathUtil.evaluateAsSingleNode(document,"//*[@id='" + fragment + "']");
+                    if(LOGGER.isDebugEnabled()){
+                        DOMUtil.prettyPrintDOM(resultNode);
+                    }
+                    return resultNode;
+                }
+
+                return document;
+            } catch (Exception e) {
+                throw new XFormsException(e);
+            }
+        }else{
+            LOGGER.warn("URI: " + uri + " couldn't be resolved");
+            return null;
+        }
+
+    }
+
+    private String inputStreamToString(InputStream in) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
+        StringBuilder stringBuilder = new StringBuilder();
+        String line = null;
+
+        while ((line = bufferedReader.readLine()) != null) {
+            stringBuilder.append(line + "\n");
+        }
+
+        bufferedReader.close();
+        return stringBuilder.toString();
+    }
+}
+
+//end of class
+

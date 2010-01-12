@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:ev="http://www.w3.org/2001/xml-events" 
+			xmlns:xforms="http://www.w3.org/2002/xforms" 
+			xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+			xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <xhtml:head>
+    <xhtml:title>11.8.b header element with nodeset attribute</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model >
+    	<xforms:instance>
+    		<data>
+    			<value>one</value>
+    			<value>two</value>
+    			<value>three</value>
+    		</data>
+    	</xforms:instance>
+    	<xforms:submission id="sub1" method="post" action="http://xformstest.org/cgi-bin/echo.sh">
+    	  <xforms:header nodeset="/data/value">
+    	    <xforms:name>myHeader</xforms:name>
+    	    <xforms:value value="."></xforms:value>
+    	  </xforms:header>
+    	</xforms:submission>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">11.8.b header element with nodeset attribute</xforms:label>
+  	</xforms:group>
+  	<xforms:group>
+  	  <xforms:label>
+  	    When you activate the Submit Now submit control the page must be replaced by the form data. Among the 
+  	    variables you must see three headers named &quot;myHeader&quot;. 
+  	  </xforms:label>
+  	</xforms:group>
+  	<xforms:group>
+  	  <xforms:submit submission="sub1">
+  	    <xforms:label>Submit Now</xforms:label>
+  	  </xforms:submit>
+  	</xforms:group>
+  	
+  </xhtml:body>
+</xhtml:html>

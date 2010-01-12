@@ -1,0 +1,67 @@
+Index: web/src/main/webapp/resources/scripts/FluxInterface.js
+===================================================================
+--- web/src/main/webapp/resources/scripts/FluxInterface.js	(revision 3547)
++++ web/src/main/webapp/resources/scripts/FluxInterface.js	(working copy)
+@@ -11,10 +11,6 @@
+ // skip shutdown for load and submission actions (these do it themselves)
+ var skipShutdown = false;
+ 
+-// ***** Messages to the user - you may overwrite these in your forms with inline script blocks
+-var confirmMsg = "There are changed data. Really exit?";
+-
+-
+ /******************************************************************************
+  PAGE init
+  ******************************************************************************/
+@@ -53,14 +49,6 @@
+     dojo.byId("debug-section").appendChild(data.documentElement);
+ }
+ function unload(e) {
+-    if (isDirty) {
+-        var msg = confirmMsg;
+-        if (!e && window.event) {
+-            e = window.event;
+-        }
+-        e.returnValue = msg;
+-        return msg;
+-    }
+ }
+ 
+ function close(){
+@@ -439,25 +427,27 @@
+ var submissionErrors = 0;
+ function _highlightFailedRequired() {
+ 
+-    // show an alert if the user repeatedly sends incomplete data
+-    if (submissionErrors >= 1) {
+-        alert("Please provide values for all required fields.")
+-        submissionErrors = 0;
+-    }
+-
+     //lookup all required fields and check if they contain a value
+     var foo = document.getElementsByClassName("required", "betterformform");
++    var exists = false;
+     for (var i = 0,j = foo.length; i < j; i++) {
+         var control = $(foo[i].id);
+ 
+         var value = getXFormsControlValue(control);
+         if (value == null || value == "") {
+-            new Effect.Pulsate($(foo[i].id + "-label"));
++            var label = $(foo[i].id + "-label");
++            if (label != null)
++            {
++              new Effect.Pulsate(label);
++            }
++            exists = true;
+         }
+ 
+     }
+-    new Effect.Pulsate(document.getElementById("required-msg"));
+-    submissionErrors ++;
++    if (exists)
++    {
++      new Effect.Pulsate(document.getElementById("required-msg"));
++    }
+ }
+ 
+ 

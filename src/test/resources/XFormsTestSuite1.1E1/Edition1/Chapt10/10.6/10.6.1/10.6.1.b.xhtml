@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml"
+            xmlns:xforms="http://www.w3.org/2002/xforms"
+            xmlns:ev="http://www.w3.org/2001/xml-events">
+    <xhtml:head>
+        <xhtml:title>10.6.1.b case element child of the toggle element precedence testing</xhtml:title>
+        <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+        <xforms:model>
+            <xforms:instance xmlns="">
+                <yourname/>
+            </xforms:instance>
+            <xforms:instance id="inst_case" xmlns="">
+                <cases>
+                    <in>in</in>
+                    <out>out</out>
+                    <exit>exit</exit>
+                </cases>
+            </xforms:instance>
+        </xforms:model>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group>
+            <xforms:label class="title">10.6.1.b case element child of the toggle element precedence testing
+            </xforms:label>
+        </xforms:group>
+        <xforms:group>
+            <xforms:label>    <!-- in case I broke this test case, the filename used to be 3.4.b -->
+                Activating different triggers will place the the switch element into different cases. When in the
+                In case, you must see a Go To Out Case trigger. When in the Out case, you must see a Go To Exit Case
+                trigger and a Go To In Case trigger. When in the Exit case, you must see a Go To Out Case trigger.
+            </xforms:label>
+        </xforms:group>
+        <xforms:switch>
+            <xforms:case id="in" selected="true">
+                <xforms:label>You are in the In case</xforms:label>
+                <xforms:group>
+                    <xforms:trigger>
+                        <xforms:label>Go To Out Case</xforms:label>
+                        <xforms:toggle ev:event="DOMActivate" case="out"/>
+                    </xforms:trigger>
+                </xforms:group>
+            </xforms:case>
+            <xforms:case id="out">
+                <xforms:label>You are in the Out case</xforms:label>
+                <xforms:group>
+                    <xforms:trigger id="edit">
+                        <xforms:label>Go To Exit Case</xforms:label>
+                        <!-- case attr in toggle and case element in toggle, element has precedence -->
+                        <xforms:toggle ev:event="DOMActivate" case="in">
+                            <xforms:case>exit</xforms:case>
+                        </xforms:toggle>
+                    </xforms:trigger>
+                    <xforms:trigger id="exit_btn">
+                        <xforms:label>Go To In Case</xforms:label>
+                        <xforms:toggle ev:event="DOMActivate">
+                            <!-- value attr in case element with inline content, value attr has precedence -->
+                            <xforms:case value="instance('inst_case')/in">exit</xforms:case>
+                        </xforms:toggle>
+                    </xforms:trigger>
+                </xforms:group>
+            </xforms:case>
+            <xforms:case id="exit" selected="true">
+                <xforms:label>You are in the Exit case</xforms:label>
+                <xforms:group>
+                    <xforms:trigger id="rtrn_edit">
+                        <xforms:label>Go To Out Case</xforms:label>
+                        <!-- case attr in toggle element with value attr in case element and inline content,
+                                 value attr has precedence -->
+                        <xforms:toggle ev:event="DOMActivate" case="in">
+                            <xforms:case value="instance('inst_case')/out">in</xforms:case>
+                        </xforms:toggle>
+                    </xforms:trigger>
+                </xforms:group>
+            </xforms:case>
+        </xforms:switch>
+    </xhtml:body>
+</xhtml:html>

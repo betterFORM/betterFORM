@@ -1,0 +1,13 @@
+Index: core/src/main/java/de/betterform/xml/xforms/connector/http/HTTPSubmissionHandler.java
+===================================================================
+--- core/src/main/java/de/betterform/xml/xforms/connector/http/HTTPSubmissionHandler.java	(revision 3547)
++++ core/src/main/java/de/betterform/xml/xforms/connector/http/HTTPSubmissionHandler.java	(working copy)
+@@ -193,7 +193,7 @@
+                         break;
+                     }
+                 }
+-                post(getURI(), data.substring(i), contentType);
++                post(getURI(), data.substring(i), contentType, encoding);
+                 
+             } else if (method.equals("form-data-post")) {
+                 post(getURI(), stream.toString(encoding), "multipart/form-data; charset="+encoding, encoding);

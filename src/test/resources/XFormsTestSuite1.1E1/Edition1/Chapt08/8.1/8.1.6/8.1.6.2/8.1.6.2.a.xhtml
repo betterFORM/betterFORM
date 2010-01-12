@@ -1,0 +1,41 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+	  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"               
+      xmlns:xforms="http://www.w3.org/2002/xforms">
+  <xhtml:head>
+    <xhtml:title>8.1.6.2.a mediatype element</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+       <xforms:instance xmlns="">       
+          <mail>
+          	<attachment xsi:type="xsd:base64Binary" filename="" type=""/>
+          </mail>
+       </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group>
+  	    <xforms:label class="title">8.1.6.2.a mediatype element</xforms:label>
+  	</xforms:group>
+	<xforms:group>
+		<xforms:label>
+		  After using the upload control to select a file you must see the file type displayed in the Mediatype output 
+		  control. 
+		</xforms:label>
+	</xforms:group>
+   	<xforms:upload ref="/mail/attachment" mediatype="image/*">
+   		<xforms:label>Select an image to attach</xforms:label>
+   		<xforms:filename ref="@filename"/>
+   		<xforms:mediatype ref="@type"/>
+   	</xforms:upload>
+   	<xforms:group>
+		<xforms:output ref="/mail/attachment/@type">
+			<xforms:label>Mediatype : </xforms:label>
+		</xforms:output>
+	</xforms:group>
+	
+  </xhtml:body>
+</xhtml:html>

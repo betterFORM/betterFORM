@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: build.xml 3351 2008-07-19 19:54:12Z joern $ -->
+<project id="convex" name="betterForm Convex" basedir="." default="deploy">
+
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- global properties -->
+    <!-- classpath properties -->
+    <!-- ###
+            ATTENTION - the properties below must be set before build.properties.xml
+            is called - DO NOT MOVE
+     ###  -->
+    <property name="core.dir" value="../core"/>
+    <property name="web.dir" value="../web"/>
+    <property name="convex.dir" value="."/>
+
+    <xmlproperty file="../build.properties.xml"
+             semanticAttributes="true" keepRoot="false" />
+
+
+    <!-- local Convex properties -->
+    <property file="build.properties"/>
+    <property file="signjar.properties"/>
+    <property name="target" value="${basedir}/target"/>
+    <property name="targetname" value="${target}/${convex.app.name}-${convex.app.version}"/>
+    <property name="forms.target" value="."/>
+    <!--<property name="dojo.name" value="dojo-release-1.1.1"/>-->
+
+    <target name="clean" description="clean build target directory">
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="cleaning up convex..."/>
+        <echo message="************************************************************************************"/>    
+        <echo message="$["/>
+        <echo/>
+        
+        <delete dir="${basedir}/target"/>
+    </target>
+
+
+    <target name="prepare">
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="copying Core classes..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+
+        <tstamp/>
+
+        <delete dir="${target}/classes/"/>
+        <mkdir dir="${target}/classes"/>
+
+        <ant antfile="${core.dir}/build.xml" target="compile" dir="${core.dir}" inheritall="false"/>
+
+        <copy todir="${target}/classes">
+            <fileset dir="${core.dir}/target/classes"/>
+        </copy>
+
+        <!-- set version filter -->
+        <filter token="convex.name" value="${convex.app.name}"/>
+        <filter token="convex.version" value="${convex.app.version}"/>
+        <filter token="app.build" value="${DSTAMP}/${TSTAMP}"/>
+
+        <copy todir="${targetname}"
+              file="${basedir}/src/resources/version.info"
+              filtering="true"
+              overwrite="true"/>
+
+   </target>
+
+    <target name="check.dojo">
+        <echo>Check condition</echo>
+        <condition property="dojo.not.available">
+            <not><available file="${targetname}/resources/scripts/dojo/dojo.js"/></not>
+        </condition>
+    </target>
+
+
+    <target name="prepare-js" depends="check.dojo" if="dojo.not.available">
+        <ant  antfile="build.xml" target="prepare-js" dir=".." inheritall="false"/>
+        <copy  description="copy javascript resources from global directory"
+               todir="${targetname}/resources/scripts"
+               includeemptydirs="true">
+            <fileset dir="../target/resources/scripts">
+                <include name="**/*.*"/>
+            </fileset>
+        </copy>
+    </target>
+
+
+    <target name="compile" depends="prepare" description="compiling Convex classes">
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="compiling Convex classes..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+        
+        <javac srcdir="${basedir}/src/main/java"
+               destdir="${target}/classes"
+               classpathref="convex.class.path"
+               target="${properties.javac.version}"
+               debug="${properties.javac.debug}"
+               deprecation="${properties.javac.deprecation}"
+               optimize="${properties.javac.optimize}"/>
+    </target>
+
+    <target name="package" depends="compile" description="create Convex jar">
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="creating Convex jar..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+
+        <delete file="${targetname}.jar"/>
+        <jar description="package convex jar"
+            jarfile="${targetname}.jar"
+            basedir="${basedir}/target/classes"/>
+
+    </target>
+
+
+    <target name="deploy" depends="package" description="create a runnable installation">
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="creating Convex application layout..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="copying Convex jar..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+        <copy todir="${targetname}/bin"
+              file="${targetname}.jar" overwrite="true"/>
+
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="copying Core jars..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+        <copy todir="${targetname}/bin">
+            <fileset dir="${core.dir}/src/main/lib"/>
+        </copy>
+
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="copying Core resources..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+        <copy todir="${targetname}/resources">
+            <fileset dir="${basedir}/src/resources" excludes="**/*.tar.gz"/>
+            <!--<fileset dir="${basedir}/src/resources" />-->
+        </copy>
+
+         <copy todir="${targetname}/resources">
+            <fileset dir="${basedir}/${properties.rootDir}/src/main/resources"  />
+        </copy>
+
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="copying scripts ..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+
+        <antcall target="prepare-js"/>
+
+<!--
+        <copy todir="${targetname}/resources">
+            <fileset dir="${basedir}/${properties.rootDir}/src/main/resources"  />
+        </copy>
+-->
+        <copy file="${basedir}/convex.policy" todir="${targetname}/bin"/>
+        <copy file="${basedir}/install.bat" todir="${targetname}/bin"/>
+        <copy file="${basedir}/betterform-config.xml" todir="${targetname}/bin"/>
+
+    </target>
+
+    <target name="copy-forms" depends="deploy" description="copy forms">
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="copying forms..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+        <copy todir="${targetname}/${forms.target}"
+              overwrite="true">
+            <fileset dir="${basedir}/${properties.rootDir}/src/main/html"/>
+            <filterset>
+                <filter token="app.name" value="${convex.app.name}"/>
+                <filter token="app.version" value="${convex.app.version}"/>
+                <filter token="applet.archive" value="${convex.app.name}-${convex.app.version}.jar,${runtime.libs}"/>
+            </filterset>
+        </copy>
+    </target>
+
+    <target name="dist" depends="clean, compile, test, javadoc, deploy" description="make a complete distribution">
+        <!-- create dist directory -->
+        <mkdir dir="${basedir}/target/convex-dist"/>
+
+        <!-- copy doc directory -->
+        <copy todir="${target}/doc">
+            <fileset dir="${basedir}/doc"/>
+        </copy>
+
+        <!-- package zip -->
+        <zip basedir="${target}" destfile="${target}-${app.version}.zip"/>
+    </target>
+
+    <target name="javadoc" depends="compile" description="generate source documentation">
+        <javadoc sourcepath="${basedir}/src/main/java" classpathref="build.class.path" destdir="${target}/api">
+            <fileset dir="${basedir}/src/main/java"/>
+        </javadoc>
+    </target>
+
+    <target name="test" depends="compile" description="run all unit tests">
+        <mkdir dir="${basedir}/target/test"/>
+
+        <!-- run junit in batch mode -->
+        <junit printsummary="on">
+            <classpath refid="test.class.path"/>
+            <formatter type="xml"/>
+            <batchtest fork="yes" todir="${basedir}/target/test">
+                <!--<fileset dir="${src.dir}" includes="**/*Test.java"/>-->
+                <fileset dir="${basedir}/src/test" includes="**/*Test.java"/>
+            </batchtest>
+        </junit>
+
+        <!-- create test report directory -->
+        <mkdir dir="${basedir}/target/test"/>
+
+        <!-- generate test report -->
+        <junitreport todir="${basedir}/target/test">
+            <fileset dir="${basedir}/src/test">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <!--<report todir="${doc.dir}/test"/>-->
+            <report todir="${basedir}/target/test/doc"/>
+        </junitreport>
+
+        <!-- remove test results dir -->
+        <delete dir="${basedir}/target/test/doc"/>
+    </target>
+
+    <target name="sign-jars" depends="deploy" description="signs applet jars">
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="signing jars..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+
+        <!-- sign jar -->
+        <!-- todo: existence of keystore must be checked -->
+        <signjar alias="${signjar.alias}" storepass="${signjar.storepass}">
+            <!--<fileset dir="${deploy.dir}/${app.name}-${app.version}/bin" includes="*.jar"/>  -->
+            <fileset dir="${targetname}/bin" includes="*.jar"/>
+        </signjar>
+    </target>
+
+    <!-- this target generates the build.properties for Ant. A call to this target is necessary to update
+    the string listing the libraries on the classpath which is later used for the applet tag. Therefore
+    is should be called once whenever the classpath changes. -->
+    <target name="buildLibParams" description="generate Ant properties file">
+        <ant antfile="${basedir}/src/tools/build.xml" target="buildLibParams"/>
+    </target>
+
+
+    <!--
+        <target name="XHTML2Convex" description="imports forms created by XFormations">
+            <xslt in="${basedir}/src/main/forms/actions-orig.xhtml"
+                out="${basedir}/src/main/forms/actions-new.xhtml"
+                style="${basedir}/src/main/resources/xslt/xhtml2convex.xsl"
+                force="yes" >
+            </xslt>
+
+        </target>
+    -->
+
+</project>

@@ -1,0 +1,50 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"             
+      xmlns:xforms="http://www.w3.org/2002/xforms">
+  	<xhtml:head>
+    	<xhtml:title>8.1.2.c datatype bound to input element</xhtml:title>
+    	<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    	<xforms:model>
+       		<xforms:instance xmlns="">
+ 		    	<data>
+   			   		<date-of-birth xsi:type="xsd:date">1997-12-21</date-of-birth>
+   			   		<confirm xsi:type="xsd:boolean">false</confirm>
+        		</data>
+       		</xforms:instance>
+    	</xforms:model>
+  	</xhtml:head>
+  	<xhtml:body>
+  	    <xforms:group>
+  		    <xforms:label class="title">8.1.2.c datatype bound to input element</xforms:label>
+  		</xforms:group>
+		<xforms:group>
+			<xforms:label>
+			  You must see an input bound to a node of type xsd:date. It 
+			  might be rendered as a calendar control. The default value is 1997-12-21.
+			</xforms:label>
+		</xforms:group>
+		<xforms:group>
+      		<xforms:input ref="/data/date-of-birth">
+         		<xforms:label>Date Of Birth</xforms:label>
+      		</xforms:input>
+      	</xforms:group>
+    	<xforms:group>
+    		<xforms:label>
+    		  You must see an input bound to a node of type boolean.  It might be rendered 
+    		  as a checkbox. The default value is false.
+    		</xforms:label>
+		</xforms:group>
+		<xforms:input ref="/data/confirm">
+     		<xforms:label>Confirm that date of birth is 
+        		<xforms:output ref="/data/date-of-birth">
+        			<xforms:label/>
+        		</xforms:output>
+     		</xforms:label>
+  		</xforms:input>
+		
+  </xhtml:body>
+</xhtml:html>

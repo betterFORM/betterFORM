@@ -1,0 +1,34 @@
+/* Copyright 2008 - Joern Turner, Lars Windauer */
+/* Licensed under the terms of BSD and Apache 2 Licenses */
+package de.betterform.xml.xforms.model.constraints;
+
+import de.betterform.xml.xforms.model.ModelItem;
+
+/**
+ * Provides finer control over model item validation.
+ *
+ * @author Ulrich Nicolas Liss&eacute;
+ * @version $Id: ValidatorMode.java 2100 2006-03-28 16:36:43Z unl $
+ */
+public interface ValidatorMode {
+
+    /**
+     * Decide wether a particular model item has to be validated.
+     *
+     * @param modelItem the model item to be validated.
+     * @return <code>true</true> if the model item has to be validated,
+     * <cdoe>false</code> otherwise.
+     */
+    boolean performValidation(ModelItem modelItem);
+
+    /**
+     * Decide wether validation has to be continued after a particular model
+     * item has been validated.
+     *
+     * @param modelItem the model item which has been validated.
+     * @return <code>true</true> if validation has to be continued,
+     * <cdoe>false</code> otherwise.
+     */
+    boolean continueValidation(ModelItem modelItem);
+
+}

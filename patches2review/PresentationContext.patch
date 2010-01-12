@@ -1,0 +1,32 @@
+Index: web/src/main/webapp/resources/scripts/PresentationContext.js
+===================================================================
+--- web/src/main/webapp/resources/scripts/PresentationContext.js	(revision 3547)
++++ web/src/main/webapp/resources/scripts/PresentationContext.js	(working copy)
+@@ -144,6 +144,8 @@
+         dojo.debug("PresentationContext.prototype.handleStateChanged: Create new " + type + " widget");
+         switch (type) {
+             case "boolean":
++                if (targetName == 'output') break;
++
+                 dojo.require("betterform.widget.Boolean");
+                 if (value != null) {
+                     if (value == "false") {
+@@ -200,6 +202,8 @@
+             case "date":
+             case "time":
+             case "dateTime":
++                if (targetName == 'output') break;
++
+                 dojo.require("betterform.widget.DropdownDatePicker");
+ 
+                 var dateWidget = dojo.widget.createWidget("betterform:DropdownDatePicker",
+@@ -290,8 +294,7 @@
+                         id:targetId + "-value",
+                         widgetId:targetId + "-value",
+                         css:type,
+-                        name:"d_" + targetId,
+-                        title:dojo.byId(targetId + "-value").title
++                        name:"d_" + targetId
+                     },
+                             dojo.byId(targetId),
+                             "last");

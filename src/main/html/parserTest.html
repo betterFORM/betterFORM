@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:bf="http://betterform.sourceforge.net/xforms">
+    <head>
+        <title>Actions</title>
+
+        <script type="text/javascript">
+            var djConfig = {
+            debugAtAllCost: true,
+            isDebug: true };
+        </script>
+
+        <script type="text/javascript" src="resources/script/dojo/dojo.js" djConfig="parseOnLoad:true">&#160;</script>
+
+        <script type="text/javascript">
+//            dojo.registerModulePath("betterform","../betterform");
+            dojo.require("dojo.parser");
+            dojo.require("dijit._Widget");
+            dojo.require("betterform.ConvexProcessor");
+            dojo.require("dijit.layout.ContentPane");
+
+            dojo.addOnLoad(
+                function(){
+                    var processor = new betterform.ConvexProcessor();
+                    processor.init();
+                }
+            )
+        </script>
+        <script type="text/javascript" src="resources/script/convex.js">&#160;</script>
+
+        <style type="text/css">
+            @import "resources/script/dojo/dijit/themes/tundra/tundra.css";
+            @import "resources/script/dojo/dojo/resources/dojo.css";
+            @import "resources/css/convex.css";
+        </style>
+
+        <style type="text/css">
+            .buttons{background:silver;}
+            #switchmsg{font-size:14pt;padding:10px;background:#A42322;color:white;text-align:center;}
+        </style>
+
+    </head>
+    <body class="tundra">
+        <div style="display:none;">
+            <xf:model functions="bf:context">
+                <xf:submission id="s-debug" action="{$contextroot}/resources/jsp/debug-instance.jsp" method="post" replace="all"/>
+                <xf:submission id="s-debug-partial" action="{$contextroot}/resources/jsp/debug-instance.jsp" method="post" replace="all" ref="instance('default')/repeatdata"/>
+                <xf:submission id="s-update" action="{$contextroot}/resources/jsp/generate-instance.jsp" method="post" replace="instance"/>
+                <xf:submission id="s-test" action="{$contextroot}/resources/jsp/return-instance.jsp" method="post" replace="none">
+                    <xf:message ev:event="xforms-submit-done">Your data have been send.</xf:message>
+                </xf:submission>
+
+                <xf:instance xmlns="" id="default">
+                    <data>
+                        <helloworld hw="4711">Hello World</helloworld>
+
+                        <extra>Got it!</extra>
+                        <message>Hello !</message>
+                        <titletext>These are examples of XForms Action usage.</titletext>
+                    </data>
+                </xf:instance>
+
+                <xf:bind id="helloworld" nodeset="helloworld" constraint="string-length(.) &gt; 5" required="true()" type="string"/>
+                <xf:bind id="hw" nodeset="helloworld/@hw" required="true()" type="integer"/>
+                <xf:bind id="extra" nodeset="extra" relevant="count(../repeatdata/input) &gt; 3"/>
+                <xf:bind id="message-action" nodeset="message"/>
+            </xf:model>
+
+        </div>
+
+        <div id="xformsui" class="disabled">
+            <xf:group appearance="full">
+                <xf:label>Hello Dojo XForms World</xf:label>
+
+                <xf:input ref="helloworld" incremental="true" id="firstInput">
+                    <xf:label>input 1</xf:label>
+                </xf:input>
+            </xf:group>
+        </div>
+        <applet name="Convex"
+            code="de.betterform.agent.convex.Convex"
+            codebase="bin"
+            archive="commons-codec-1.3.jar,commons-fileupload-1.1.jar,commons-httpclient-3.0.1.jar,commons-io-1.1.jar,commons-logging-1.0.4.jar,commons-logging-api-1.0.4.jar,javax-activation-1.0.2.jar,javax-mail-1.3.jar,log4j-1.2.13.jar,saxon9-dom.jar,saxon9.jar,xercesImpl-2.8.0.jar,xml-apis.jar,xmlrpc-1.2-b1.jar,Convex-1.0.jar"
+            width="1"
+            height="1"
+            mayscript="true">
+        </applet>
+    </body>
+</html>

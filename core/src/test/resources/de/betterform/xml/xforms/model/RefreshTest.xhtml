@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:bf="http://betterform.sourceforge.net/xforms">
+    <head>
+        <xf:model>
+            <xf:instance id="internal" xmlns="">
+                <data>
+                    <item>1</item>
+                    <item>2</item>
+                    <item>3</item>
+                </data>
+            </xf:instance>
+
+            <xf:instance id="external" xmlns="">
+                <data>
+                    <item>4</item>
+                    <item>5</item>
+                    <item>6</item>
+                    <new>
+                        <item>seven</item>
+                        <item>eight</item>
+                        <item>nine</item>
+                    </new>
+                </data>
+            </xf:instance>
+
+            <xf:bind id="localinstance" nodeset="item[1]"/>
+            <xf:bind id="externalinstance" nodeset="new/item[1]"/>
+
+            <xf:submission id="submission-replace-instance"
+                           action="echo:foo"
+                           method="post"
+                           ref="instance('external')"
+                           instance="internal"
+                           replace="instance"/>
+
+        </xf:model>
+    </head>
+    <body>
+        <xf:group>
+            <xf:label>Refresh Test</xf:label>
+            <xf:group>
+                <xf:label>Original Instance:</xf:label>
+
+                <xf:output id="output1" bind="localinstance">
+                    <xf:label>Bind to local instance</xf:label>
+                </xf:output>
+
+                <xf:output id="output2" ref="item[2]">
+                    <xf:label ref="."/>
+                </xf:output>
+
+                <xf:output id="output3" value="item[1] +1">
+                    <xf:label>Unbound output</xf:label>
+                </xf:output>
+
+                <xf:trigger id="triggerUnbound">
+                    <xf:label>triggering unbound refresh</xf:label>
+                    <xf:setvalue ref="item[1]" value="'10'"/>
+                </xf:trigger>
+                <xf:trigger id="triggerCommon">
+                    <xf:label>triggering commons</xf:label>
+                    <xf:setvalue ref="item[2]" value="'10'"/>
+                </xf:trigger>
+                <xf:trigger id="triggerMultipleSetvalue">
+                    <xf:label>triggering multiple setvalue actions</xf:label>
+                    <xf:action>
+                        <xf:setvalue ref="item[2]" value="'10'"/>
+                        <xf:setvalue ref="item[2]" value="'20'"/>
+                        <xf:setvalue ref="item[2]" value="'30'"/>
+                        <xf:setvalue ref="item[2]" value="'40'"/>
+                    </xf:action>
+
+                </xf:trigger>
+            </xf:group>
+            <xf:group>
+                <xf:label>Output becoming relevant through submission:</xf:label>
+
+                <xf:output id="output4" bind="externalinstance">
+                    <xf:label>Bind to external instance</xf:label>
+                </xf:output>
+                <xf:trigger id="replace-instance">
+                    <xf:label>Trigger Replace Instance</xf:label>
+                    <xf:action>
+                        <xf:send submission="submission-replace-instance"/>
+                    </xf:action>
+                </xf:trigger>
+            </xf:group>
+
+            <xf:trigger id="triggerSwitchCase">
+                <xf:label>Trigger Switch Case</xf:label>
+                <xf:action>
+                   <xf:toggle case="two"/>
+                </xf:action>
+            </xf:trigger>
+
+            <xf:switch id="switch">
+                <xf:case id="one" selected="true">
+                    <xf:output id="output5" ref="item[1]">
+                        <xf:label>bound output</xf:label>
+                    </xf:output>
+                    <xf:output id="output6" value="item[1] +1">
+                        <xf:label>Unbound output</xf:label>
+                    </xf:output>
+                </xf:case>
+                <xf:case id="two">
+                    <xf:output id="output7" ref="item[1]">
+                        <xf:label>bound output</xf:label>
+                    </xf:output>
+                    <xf:output id="output8" value="item[1] +1">
+                        <xf:label>Unbound output</xf:label>
+                    </xf:output>
+                </xf:case>
+            </xf:switch>
+        </xf:group>
+    </body>
+</html>

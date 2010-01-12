@@ -1,0 +1,38 @@
+Index: web/src/main/webapp/resources/scripts/betterform/widget/Upload.js
+===================================================================
+--- web/src/main/webapp/resources/scripts/betterform/widget/Upload.js	(revision 3547)
++++ web/src/main/webapp/resources/scripts/betterform/widget/Upload.js	(working copy)
+@@ -51,13 +51,13 @@
+                 this.inputNode.disabled = true;
+             }
+             else {
+-                var action = confirm("Really upload ?");
+-                if (action) {
++                //var action = confirm("Really upload ?");
++                //if (action) {
+                     this._submitFile(this.inputNode);
+-                }
+-                else {
+-                    this.inputNode.value = "";
+-                }
++                //}
++                //else {
++                //    this.inputNode.value = "";
++                //}
+             }
+         },
+         updateProgress: function (value) {
+Index: web/src/main/webapp/resources/scripts/betterform/widget/templates/HtmlUpload.html
+===================================================================
+--- web/src/main/webapp/resources/scripts/betterform/widget/templates/HtmlUpload.html	(revision 3547)
++++ web/src/main/webapp/resources/scripts/betterform/widget/templates/HtmlUpload.html	(working copy)
+@@ -1,5 +1,5 @@
+-<div>
++<span>
+     <input id="${this.id}" type="file" name="${this.name}" value="" class="value" title="${this.title}" dojoAttachPoint="inputNode" dojoAttachEvent="onChange" xfreadonly="${this.xfreadonly}"/>
+     <div class="progressbar" style="display:none;" dojoAttachPoint="progress"><div class="border"><div dojoAttachPoint="progressBackground" class="background"></div></div></div>
+     <iframe id="UploadTarget" name="UploadTarget" src="" style="width:0px;height:0px;border:0"></iframe>
+-</div>
+\ No newline at end of file
++</span>
+\ No newline at end of file

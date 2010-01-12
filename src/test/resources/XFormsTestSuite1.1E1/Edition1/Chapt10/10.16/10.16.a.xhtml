@@ -1,0 +1,52 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+	  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"               
+      xmlns:xforms="http://www.w3.org/2002/xforms">
+  <xhtml:head>
+    <xhtml:title>10.16.a message element using single node binding</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+       <xforms:instance xmlns="">       
+			<mail>
+				<message>Instance Message</message>
+				<body/>
+			</mail>
+       </xforms:instance>
+       <xforms:bind id="inst_alert" nodeset="/mail/message"/>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+	  	<xforms:label class="title">10.16.a message element using single node binding</xforms:label>
+  	</xforms:group>
+	<xforms:group>
+		<xforms:label>
+		  When activated both triggers must cause you to see a message that says &quot;Instance Message&quot;. 
+	<!-- 
+		(The first message has a bind and inline data, the bind attribute has precedence.
+		The second message has a ref attribute and inline data, the ref attribute has precedence.) -->
+		</xforms:label>
+	</xforms:group>
+
+	<xforms:trigger>
+		<xforms:label>Message with bind attribute</xforms:label>
+		<xforms:action ev:event="DOMActivate">
+			<xforms:message bind="inst_alert" level="modal">
+				Inline Message
+	      	</xforms:message>
+	     </xforms:action>
+   	</xforms:trigger>
+	<xforms:trigger>
+		<xforms:label>Message with ref attribute</xforms:label>
+		<xforms:action ev:event="DOMActivate">
+			<xforms:message ref="message" level="modal">
+				Inline Message
+	      	</xforms:message>
+		</xforms:action>
+   	</xforms:trigger>
+
+  </xhtml:body>
+</xhtml:html>

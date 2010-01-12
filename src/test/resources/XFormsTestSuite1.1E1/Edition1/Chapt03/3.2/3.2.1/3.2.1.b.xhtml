@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms" 
+            xmlns:xhtml="http://www.w3.org/1999/xhtml"
+            xmlns:foreign="http://www.foreignattribute.com/foreign">
+    <xhtml:head>
+        <xhtml:title>3.2.1.b foreign attributes</xhtml:title>
+        <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css" />
+        <xforms:model foreign:test="foreignAttribute">
+            <xforms:instance>
+                <car xmlns="">
+                    <make>Mazda</make>
+                    <color>metallic silver</color>
+                </car>
+            </xforms:instance>
+        </xforms:model>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group>
+            <xforms:label class="title">3.2.1.b foreign attributes</xforms:label>
+        </xforms:group>
+        <xforms:group>
+            <xforms:label>
+            <!-- 
+            	An attribute from a foreign namespace has been added to the XForms model and output in this
+                document. 
+            -->    
+                You must see a value of &quot;Mazda&quot;:
+            </xforms:label>
+        </xforms:group>
+        <xforms:output ref="/car/make" foreign:test="foreignAttribute">
+            <xforms:label></xforms:label>
+        </xforms:output>
+    </xhtml:body>
+</xhtml:html>

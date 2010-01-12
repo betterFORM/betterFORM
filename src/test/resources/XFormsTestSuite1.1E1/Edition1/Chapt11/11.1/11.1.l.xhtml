@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:ev="http://www.w3.org/2001/xml-events" 
+  xmlns:xforms="http://www.w3.org/2002/xforms" 
+  xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xhtml:head>
+        <xhtml:title>11.1.l indent attribute of submission element</xhtml:title>
+        <xhtml:link rel="stylesheet" href="../../driverPages/html/TestSuite11.css" type="text/css" />
+        <xforms:model>
+			<xforms:instance>
+				<car>
+					<make>Acura</make>
+					<year>2005</year>
+					<color>blue</color>
+				</car>
+			</xforms:instance>
+			<xforms:bind id="make_bind" nodeset="/car/make"/>
+			<xforms:bind id="year_bind" nodeset="/car/year"/>
+			<xforms:bind id="color_bind" nodeset="/car/color"/>
+			
+			<xforms:submission id="submit-dont" action="http://xformstest.org/cgi-bin/echo.sh" method="post" 
+			indent="false"/>
+			<xforms:submission id="submit-indent" action="http://xformstest.org/cgi-bin/echo.sh" method="post" 
+			indent="true"/>
+			
+        </xforms:model>
+    </xhtml:head>
+    <xhtml:body>
+    	<xforms:group>
+  			<xforms:label class="title">11.1.l indent attribute of submission element (non-normative)</xforms:label>
+  		</xforms:group>
+  		<xforms:group>
+  			<xforms:label>
+  				Each submit control below replaces the page with the form instance data. The Submit Without indent 
+  				submits the form with a submission element that has an indent attribute set to &quot;no&quot;. 
+  				The Submit With indent submits the form with a submission element that has an indent attribute set 
+  				to &quot;yes&quot;. The differences between the two submissions, if any, are dependent on your renderer. 
+  			</xforms:label>
+  		</xforms:group>
+  		<xforms:submit submission="submit-dont">
+  			<xforms:label>Submit Without indent</xforms:label>
+  		</xforms:submit>
+  		<xforms:submit submission="submit-indent">
+  			<xforms:label>Submit With indent</xforms:label>
+  		</xforms:submit>
+  		
+    </xhtml:body>
+</xhtml:html>

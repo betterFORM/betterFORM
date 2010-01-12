@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:bffn="java:de.betterform.xml.xforms.xpath.BetterFormXPathFunctions">
+    <head>
+        <meta name="author" content="joernt at users.sourceforge.net"/>
+        <meta name="description" content="test form for variable action"/>
+        <meta name="version" content="$Id: $"/>
+
+        <xf:model id="model-1">
+            <xf:instance id="instance-1" xmlns="">
+                <some>
+                    <nodes selected="true">1</nodes>
+                    <result1/>
+                    <result2/>
+                </some>
+            </xf:instance>
+            <xf:instance id="temps" xmlns="">
+                <data>
+                    <counter/>
+                    <accumulator/>
+                </data>
+            </xf:instance>
+        </xf:model>
+    </head>
+    <body>
+    	<xf:group>
+            <xf:action ev:event="betterform-variable-changed">
+                <xf:setvalue ref="result1" value="event('varValue')" if="event('varName')='foo'"/>
+                <xf:setvalue ref="result2" value="bffn:appContext('bar')" if="event('varName')='bar'"/>
+            </xf:action>
+			<xf:trigger id="trigger-variables">
+				<xf:label>Set Variables</xf:label>
+				<xf:action ev:event="DOMActivate">
+                    <xf:setvariable name="foo" select="'bar'"/>
+                    <xf:setvariable name="bar" select="nodes/@selected"/>
+				</xf:action>
+			</xf:trigger>
+        </xf:group>
+    </body>
+</html>

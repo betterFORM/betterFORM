@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/11 XF11TestSuite.xsd" specVersion="1.1"
+    xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/11">
+    <specChapter chapterName="5. " productId="" chapterTitle="Datatypes">
+        <statusSummary>
+            <numNormTotal>0</numNormTotal>
+            <numNormPass>0</numNormPass>
+            <numNormFail>0</numNormFail>
+            <numNormUnknown>0</numNormUnknown>
+            <numBasicTotal>0</numBasicTotal>
+            <numBasicPass>0</numBasicPass>
+            <numBasicFail>0</numBasicFail>
+            <numBasicUnknown>0</numBasicUnknown>
+        </statusSummary>
+        <profile>
+            <specification>XForms 1.1</specification>
+            <normativeOnly>false</normativeOnly>
+            <basicOnly>false</basicOnly>
+        </profile>
+        <testCase>
+            <testCaseSection>5.1</testCaseSection>
+            <testCaseName>5.1.a</testCaseName>
+            <testCaseLink>../../Chapt05/5.1/5.1.a.xhtml</testCaseLink>
+            <testCaseDescription>built-in primitive types</testCaseDescription>
+            <testCaseSpecLinkName>5.1</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#datatypes-schema</testCaseSpecLink>
+            <testCaseBasic>false</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>5.1</testCaseSection>
+            <testCaseName>5.1.b</testCaseName>
+            <testCaseLink>../../Chapt05/5.1/5.1.b.xhtml</testCaseLink>
+            <testCaseDescription>built-in derived types</testCaseDescription>
+            <testCaseSpecLinkName>5.1</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#datatypes-schema</testCaseSpecLink>
+            <testCaseBasic>false</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>5.1</testCaseSection>
+            <testCaseName>5.1.c</testCaseName>
+            <testCaseLink>../../Chapt05/5.1/5.1.c.xhtml</testCaseLink>
+            <testCaseDescription>supported primitive XML schema types in basic processors</testCaseDescription>
+            <testCaseSpecLinkName>5.1</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#datatypes-schema</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>5.1</testCaseSection>
+            <testCaseName>5.1.d</testCaseName>
+            <testCaseLink>../../Chapt05/5.1/5.1.d.xhtml</testCaseLink>
+            <testCaseDescription>supported derived XML schema types in basic processors</testCaseDescription>
+            <testCaseSpecLinkName>5.1</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#datatypes-schema</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+         <testCase>
+            <testCaseSection>5.1</testCaseSection>
+            <testCaseName>5.1.e</testCaseName>
+            <testCaseLink>../../Chapt05/5.1/5.1.e.xhtml</testCaseLink>
+            <testCaseDescription>built-in primitive type via xsi:type</testCaseDescription>
+            <testCaseSpecLinkName>5.1</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#datatypes-schema</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>5.2.1</testCaseSection>
+            <testCaseName>5.2.1.a</testCaseName>
+            <testCaseLink>../../Chapt05/5.2/5.2.1/5.2.1.a.xhtml</testCaseLink>
+            <testCaseDescription>XForms datatypes to allow empty content - built-in primitive types</testCaseDescription>
+            <testCaseSpecLinkName>5.2.1</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#empty-content-types</testCaseSpecLink>
+            <testCaseBasic>false</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>5.2.1</testCaseSection>
+            <testCaseName>5.2.1.b</testCaseName>
+            <testCaseLink>../../Chapt05/5.2/5.2.1/5.2.1.b.xhtml</testCaseLink>
+            <testCaseDescription>XForms datatypes to allow empty content - built-in derived types</testCaseDescription>
+            <testCaseSpecLinkName>5.2.1</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#empty-content-types</testCaseSpecLink>
+            <testCaseBasic>false</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>5.2.1</testCaseSection>
+            <testCaseName>5.2.1.c</testCaseName>
+            <testCaseLink>../../Chapt05/5.2/5.2.1/5.2.1.c.xhtml</testCaseLink>
+            <testCaseDescription>built-in data types which allow empty content for basic processors</testCaseDescription>
+            <testCaseSpecLinkName>5.2.1</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#empty-content-types</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>        
+        <testCase>
+            <testCaseSection>5.2.2</testCaseSection>
+            <testCaseName>5.2.2.a</testCaseName>
+            <testCaseLink>../../Chapt05/5.2/5.2.2/5.2.2.a.xhtml</testCaseLink>
+            <testCaseDescription>listItem datatype</testCaseDescription>
+            <testCaseSpecLinkName>5.2.2</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#dt-listItem</testCaseSpecLink>
+            <testCaseBasic>false</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>5.2.3</testCaseSection>
+            <testCaseName>5.2.3.a</testCaseName>
+            <testCaseLink>../../Chapt05/5.2/5.2.3/5.2.3.a.xhtml</testCaseLink>
+            <testCaseDescription>listItems datatype</testCaseDescription>
+            <testCaseSpecLinkName>5.2.3</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#dt-listItems</testCaseSpecLink>
+            <testCaseBasic>false</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>5.2.4</testCaseSection>
+            <testCaseName>5.2.4.a</testCaseName>
+            <testCaseLink>../../Chapt05/5.2/5.2.4/5.2.4.a.xhtml</testCaseLink>
+            <testCaseDescription>dayTimeDuration datatype</testCaseDescription>
+            <testCaseSpecLinkName>5.2.4</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#dt-dayTimeDuration</testCaseSpecLink>
+            <testCaseBasic>false</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>5.2.5</testCaseSection>
+            <testCaseName>5.2.5.a</testCaseName>
+            <testCaseLink>../../Chapt05/5.2/5.2.5/5.2.5.a.xhtml</testCaseLink>
+            <testCaseDescription>yearMonthDuration datatype</testCaseDescription>
+            <testCaseSpecLinkName>5.2.5</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#dt-yearMonthDuration</testCaseSpecLink>
+            <testCaseBasic>false</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>5.2.6</testCaseSection>
+            <testCaseName>5.2.6.a</testCaseName>
+            <testCaseLink>../../Chapt05/5.2/5.2.6/5.2.6.a.xhtml</testCaseLink>
+            <testCaseDescription>email datatype</testCaseDescription>
+            <testCaseSpecLinkName>5.2.6</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#dt-email</testCaseSpecLink>
+            <testCaseBasic>false</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>5.2.7</testCaseSection>
+            <testCaseName>5.2.7.a</testCaseName>
+            <testCaseLink>../../Chapt05/5.2/5.2.7/5.2.7.a.xhtml</testCaseLink>
+            <testCaseDescription>card-number datatype</testCaseDescription>
+            <testCaseSpecLinkName>5.2.7</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#dt-card-number</testCaseSpecLink>
+            <testCaseBasic>false</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>5.2.7</testCaseSection>
+            <testCaseName>5.2.7.b</testCaseName>
+            <testCaseLink>../../Chapt05/5.2/5.2.7/5.2.7.b.xhtml</testCaseLink>
+            <testCaseDescription>card-number datatype - credit card example</testCaseDescription>
+            <testCaseSpecLinkName>5.2.7</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#dt-card-number</testCaseSpecLink>
+            <testCaseBasic>false</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+
+    </specChapter>
+</testSuite>

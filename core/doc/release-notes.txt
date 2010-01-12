@@ -1,0 +1,83 @@
+This software is OSI Certified Open Source Software.
+
+Release Notes
+=============
+betterForm version 1.5.2
+-------------------
+1.5.2 fixes some issues with Localisation, toggling of nested cases and resolution of binding expressions inside of
+Submission elements. It adds the new Xforms 1.1 schema which is now configurable. Therefore the nil value is now
+valid for a bunch of Schema types like data, double and the like.
+
+Localisation has been improved and now falls back to US locale as default if incoming value cannot be parsed. A new
+appender has been added to logging.
+
+Detailed list of changes can be obtained here:
+https://www.r15z.de/trac/changeset?old_path=tags%2FR-CORE-1-5-1%2Fcore&old=3538&new_path=trunk%2Fbetterform%2Fcore&new=3538#file0
+
+betterForm version 1.5.1
+-------------------
+Submission class now correctly extends BindingElement which fixes a bug with actions in submits.
+
+betterForm version 1.5.0
+-------------------
+Main focus for this release was the migration of the XPath engine from JXPath to Saxon. Along this way most of the
+functions defined by XForms 1.1 have been implemented. The source tree of the project has been completely refactored
+and uses an Ant build process again. Maven builds are an optional addon when certain tools are desired.
+
+All changes can be reviewed at:
+https://www.r15z.de/trac/changeset/3479/trunk/betterform/core/src?old=3479&old_path=tags%2FR-CORE-1-4-0%2Fsrc
+
+
+betterForm version 1.4.0
+-------------------
+This is a maintainance release with fixes a lot of detail issues plus adds some new XForms 1.1 features here and there.
+Most noteable is the migration to Maven 2 as a build tool to improve the build organisation of the rather grown
+ant files. This is intended to ease the integration of betterForm in several different scenarios and provide up-to-date
+versions of betterForm Core in our Maven repository.
+
+betterForm version 1.3.0
+-------------------
+Countless fixes and corrections according to XForms 1.0 (Second Edition) have been made. The overall package structure
+has been refactored a great deal for clarity. More than a dozen bugs have been fixed - some of them being serious ones.
+But also a lot of improvements have been made: the Preprocessor has been removed for efficiency, some new XPath
+functions have been introduced and a new StylesheetCache is in place. A more detailed change list can be found
+ as always in changes.txt.
+
+betterForm version 1.2.0
+-------------------
+Contains corrections to fix the vast majority of the XForms errata and moves betterForm to XForms 1.0 Second Edition.
+Important areas of the source have been refactored for simplification and some performance improvements (100% in some areas). 
+Many new tests have been introduced to ensure the new behaviour and some of the long-standing bugs have been fixed.
+
+betterForm version 1.1.1
+-------------------
+This release mainly established the new modularization and changed build and distribution strategy. BetterForm
+now only contains the core XForms implementation along with all generic resources needed/usefull for any
+XForms processing environment either client- or serverside. Main changes therefore are related to the build-file.
+
+The BetterFormAdapter interface has been refactored to condense some of the experiences with the different integrations.
+Though, this process is still not complete.
+
+betterForm version 1.1.0
+-------------------
+The betterForm distribution has been splitted into core and integration modules. This means that the core
+XForms processor will be distributed as a separate download from now on. Integrations modules such as
+BetterForm-servlet, Chicoon and Convex will include betterForm as a jar-file. Files and tools relevant for multiple
+modules will be kept in the core and exported to the different modules when necessary. 
+
+Some of the unavoidable bugs of a 1.0.0 version have been fixed as well as some new features have been added (which
+justify the 0.2 instead of a 0.1).  
+
+betterForm version 1.0.0
+-------------------
+This is the first production-qualitiy release of BetterForm. A lot of detail-work has been made on the
+core, improving overall stability and efficiency as well as exception-handling. Another
+few gaps to full spec conformance have been closed, e.g. XForms 1.0 Extension Functions now
+also provide the missing date functions.
+
+Known Issues:
+There are still things defined in XForms 1.0 that betterForm does not support. A detailed conformance
+table can be found at:
+http://betterform.sourceforge.net/features.html
+
+[stripped old history -jt]

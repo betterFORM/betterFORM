@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    author: Fabian Otto <fabian.otto<AT>gmail.com> 
+    date:   2009-03-03
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xs="http://www.w3.org/2001/XMLSchema"
+      xmlns:atom="http://www.w3.org/2005/Atom"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+    <title>Feed Atom Reader</title>
+    <style type="text/css">
+        #meta-data{
+            display:block;
+            background:lightsteelblue;
+            border:thin outset steelblue;
+            padding:20px;
+        }
+        #meta-data-label{
+            font-size:12pt;
+        }
+        #meta-data .xfLabel{font-size:12pt;}
+        .subtitle .xfValue {
+            font-weight:bolder;
+            padding:5px;
+            font-size:12pt;
+        }
+        .heading {
+            font-weight:bold;
+            padding:10px 0px;
+            font-size:large;
+            display:block;
+        }
+        .date .xfValue {
+             padding:5px;
+        }
+        .time .xfValue {
+             padding:5px;
+        }
+        .xfMinimalTrigger .xfValue {
+            padding-top:5px;
+        }
+        .xfFullGroup .xfRepeatItem{
+            padding:20px;
+            border:thin dotted steelblue;
+        }
+        .xfRepeatItem .subtitle .xfValue{
+            font-size:12pt;
+        }
+        .articleLink{ padding:5px;}
+        .summary .xfValue{display:block;margin:10px 5px;}
+        .xfRepeatItem{background:#dedeff;}
+        .xfRepeatItem .xfValue{background:#dedeff;}
+        .xfRepeatIndexMouseOver{background:#dedeff;}
+        #reload-value{background:url(../../resources/images/reload.gif) no-repeat center; height:30px;width:30px;}
+        .tundra .dijitButtonNode{
+            background-image:none;
+            position:absolute;
+            right:30px;
+            top:44px;
+            
+        }
+        .tundra .dijitButtonHover{background-image:none;}
+    </style>
+
+    <xf:model id="m-atom">
+        <xf:instance id="i-controller" xmlns="">
+            <data/>
+        </xf:instance>
+
+        <xf:instance id="i-atom-entries" xmlns="">
+            <feed/>
+        </xf:instance>
+
+        <xf:submission id="s-get-data"
+                       ref="instance('i-controller')"
+                       resource="http://rss.golem.de/rss.php?feed=ATOM1.0"
+                       replace="instance"
+                       validate="false"
+                       method="get"
+                       mediatype="application/atom+xml"
+                       instance="i-atom-entries">
+                <xf:message ev:event="xforms-submit-done" level="ephemeral">feed update successful</xf:message>
+                <xf:message ev:event="xforms-submit-error">feed update failed</xf:message>
+            </xf:submission>
+
+        <xf:action ev:event="xforms-ready">
+            <xf:send submission="s-get-data"/>
+        </xf:action>
+
+    </xf:model>
+</head>
+
+<body class="tundra" style="overflow:hidden;">
+
+    <xf:group id="repeatOuter" appearance="full">
+        <xf:label class="heading">Atom Feed Reader</xf:label>
+
+        <div id="compactDescription">
+            Simple Display for ATOM Resources.<br/>
+            Shows Meta Data and lists all entries of an ATOM Resource.
+        </div>
+        <xf:trigger id="reload">
+            <xf:label></xf:label>
+            <xf:hint>Click to reload this feed</xf:hint>
+            <xf:action>
+                <xf:send submission="s-get-data"/>
+            </xf:action>
+        </xf:trigger>
+        <br/>
+
+        <xf:group id="meta-data" appearance="full">
+            <xf:label></xf:label>
+            <xf:output ref="instance('i-atom-entries')/atom:title" class="subtitle">
+                <xf:label>Feed: </xf:label>
+            </xf:output>
+            <br/>
+            <xf:output ref="instance('i-atom-entries')/atom:subtitle" class="subtitle">
+                <xf:label>Subtitle: </xf:label>
+            </xf:output>
+            <br/>
+            <xf:output ref="instance('i-atom-entries')/atom:updated" class="subtitle">
+                <xf:label>Last update: </xf:label>
+            </xf:output>
+        </xf:group>
+        <!--Repeats the data-->
+        <xf:group id="whatever">
+            <xf:repeat nodeset="instance('i-atom-entries')/atom:entry" appearance="full">
+                <xf:group appearance="full">
+                    <xf:output ref="atom:title" class="subtitle">
+                        <xf:label/>
+                    </xf:output>
+                    <xf:group appearance="ca:horizontalTable">
+                        <xf:label/>
+                        <xf:output value="substring(atom:updated,1,10)" class="date">
+                            <xf:label/>
+                        </xf:output>
+                        <xf:output value="substring(atom:updated,12,8)" class="time">
+                            <xf:label/>
+                        </xf:output>
+                    </xf:group>
+                    <xf:output class="summary" ref="atom:summary" mediatype="text/html">
+                        <xf:label/>
+                    </xf:output>                    
+                    <xf:trigger  class="articleLink" appearance="minimal">
+                        <xf:label>full article</xf:label>
+                        <xf:load ref="atom:link/@href" show="new"/>
+                    </xf:trigger>
+                </xf:group>
+            </xf:repeat>
+        </xf:group>
+    </xf:group>
+</body>
+</html>

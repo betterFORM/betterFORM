@@ -1,0 +1,41 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"         
+      xmlns:xforms="http://www.w3.org/2002/xforms"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  	<xhtml:head>
+    	<xhtml:title>8.1.2.b data binding restrictions for input element</xhtml:title>
+    	<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    	<xforms:model>
+       		<xforms:instance xmlns="">
+          		<data>
+             		<picture xsi:type="xsd:base64Binary"/>
+             		<picture2 xsi:type="xsd:hexBinary"/>
+          		</data>
+       		</xforms:instance>
+       		
+    	</xforms:model>
+  	</xhtml:head>
+  	<xhtml:body>
+  	    <xforms:group>
+  		    <xforms:label class="title">8.1.2.b data binding restrictions for input element</xforms:label>
+  		</xforms:group>
+		<xforms:group>
+			<xforms:label>
+				This page has two input controls. One is bound to the data type 64Binary and the other 
+				to the data type hexBinary. Input controls do not correctly bind to these data types. The input 
+				controls must not work correctly, generate an error, not appear on this 
+			    page or otherwise make the problem known. 
+			</xforms:label>	
+		</xforms:group>
+			<xforms:input ref="/data/picture">
+ 				<xforms:label>Picture (type xsd:base64Binary)</xforms:label>
+ 	     	</xforms:input>
+			<xforms:input ref="/data/picture2">
+ 				<xforms:label>Picture2 (type xsd:hexBinary)</xforms:label>
+ 	     	</xforms:input>
+ 	     	
+  	</xhtml:body>
+</xhtml:html>

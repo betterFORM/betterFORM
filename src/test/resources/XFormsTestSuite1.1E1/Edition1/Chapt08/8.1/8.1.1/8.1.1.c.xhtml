@@ -1,0 +1,46 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml"
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xforms="http://www.w3.org/2002/xforms">
+	<xhtml:head>
+		<xhtml:title>8.1.1.c relevant form control becoming non-relevant</xhtml:title>
+		<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+		<xforms:model>
+			<xforms:instance xmlns="">
+				<person-name>
+					<first-name>
+						<title/>
+						<name>Fred</name>
+					</first-name>
+					<last-name/>
+					<switch>2</switch>
+				</person-name>
+			</xforms:instance>
+			<xforms:bind id="fname_bind" nodeset="/person-name/first-name" relevant="/person-name/switch &gt; 1"/>
+			<xforms:setvalue ev:event="xforms-ready" ref="/person-name/switch">0</xforms:setvalue>
+		</xforms:model>
+	</xhtml:head>
+	<xhtml:body>
+		<xforms:group>
+			<xforms:label class="title">8.1.1.c relevant form control becoming non-relevant</xforms:label>
+		</xforms:group>
+		<xforms:group>
+			<xforms:label>
+			  You must see an xforms-disabled message only. 
+			</xforms:label>	
+		</xforms:group>
+		  <xforms:input ref="/person-name/first-name/name">
+			<xforms:label>First Name:</xforms:label>
+			<xforms:message level="modal" ev:event="xforms-disabled">xforms-disabled</xforms:message>
+			<xforms:message level="modal" ev:event="xforms-enabled">xforms-enabled</xforms:message>
+			<xforms:message level="modal" ev:event="xforms-value-changed">xforms-value-changed</xforms:message>
+			<xforms:message level="modal" ev:event="xforms-valid">xforms-valid</xforms:message>
+			<xforms:message level="modal" ev:event="xforms-readwrite">xforms-readwrite</xforms:message>
+			<xforms:message level="modal" ev:event="xforms-optional">xforms-optional</xforms:message>
+			<xforms:message level="modal" ev:event="xforms-in-range">xforms-in-range</xforms:message>
+		  </xforms:input>
+		
+	</xhtml:body>
+</xhtml:html>

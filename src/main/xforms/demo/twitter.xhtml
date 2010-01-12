@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      lang="de">
+<head>
+    <title>Twitter</title>
+	<script type="text/javascript">
+		dojo.require("dijit.dijit"); // optimize: load dijit layer
+		dojo.require("dijit.layout.BorderContainer");
+	</script>
+
+    <style type="text/css">
+        .header {
+            font-family: sans-serif;
+            font-size: x-large;
+            font-weight: bold;
+            font-variant: small-caps;
+			color:#10698F;
+			margin:5px;
+        }
+
+        .subheader {
+            font-family: sans-serif;
+            font-size: large;
+            font-weight: bold;
+            font-variant: small-caps;
+
+        }
+
+        .subtitle .xfValue {
+            font-weight: bolder;
+            padding: 5px;
+        }
+
+        .heading {
+            font-weight: bold;
+            padding: 5px;
+            font-size: large;
+        }
+
+        .date .xfValue {
+            padding: 5px;
+        }
+
+        .time .xfValue {
+            padding: 5px;
+        }
+
+        .xfMinimalTrigger .xfValue {
+            padding-top: 5px;
+        }
+
+        .xfFullRepeat .xfRepeatIndex {
+            background-color: transparent;
+        }
+
+        .xfRepeatIndexMouseOver {
+            background-color: transparent;
+
+        }
+
+        .xfRepeatIndexMouseOver .xfValue {
+            background-color: transparent;
+        }
+
+        .xfRepeatIndex {
+            background-color: transparent;
+        }
+
+        .xfFullRepeat .xfRepeatIndex .xfValue {
+            background-color: transparent;
+        }
+
+        .xfFullRepeat .xfRepeatItem .xfRepeatIndex {
+            background-color: transparent;
+        }
+
+        .xfFullRepeat  .xfRepeatItem .xfRepeatIndex .xfValue {
+            background-color: transparent;
+        }
+
+        .xfFullRepeat  .xfRepeatItem .xfRepeatItem  .xfRepeatIndex {
+            background-color: transparent;
+        }
+
+        .xfRepeatIndex .xfValue {
+            background-color: transparent;
+        }
+
+        .xfRepeatItem .xfRepeatIndex {
+            background-color: transparent;
+        }
+
+        .xfRepeatItem .xfRepeatIndex .xfValue {
+            background-color: transparent;
+        }
+
+        .xfRepeatItem .xfRepeatItem  .xfRepeatIndex {
+            background-color: transparent;
+        }
+
+		.content {
+			-moz-border-radius-bottomleft:5px;
+			-moz-border-radius-topleft:5px;
+			background-color:#FFFFFF;
+			height:96%;
+			width:564px;
+		}
+		#r-twitter-public-timeline {
+			padding:5px 10px 15px;
+		}
+
+		.side_base {
+			background-color: #DDEEF6;
+			border-left: 1px solid #C0DEED;
+			-moz-border-radius-bottomright: 5px;
+			-moz-border-radius-topright: 5px;
+			line-height: 1.2;
+			width: 220px;
+			padding:4px;
+		}
+
+
+		.timeLineMenu {
+			margin-left:10px;
+		}
+        #cuser  .col-1 {
+            width: 400px;
+            padding: 5px;
+        }
+
+        #cuser  .col-2 {
+            width: 200px;
+        }
+
+        #cuser  .col-3 {
+            width: 100px;
+            padding: 5px;
+        }
+
+        .userpic .xfValue {
+            float: left;
+            margin-right: 5px;
+        }
+
+        .userpic .xfLabel {
+            width: 0px;
+        }
+
+        .username .xfValue {
+            font-weight: bold;
+        }
+
+        .tweetcontent .xfValue {
+            font-family: serif;
+        }
+
+        .tweetdate .xfValue {
+            font-size: small;
+            font: italic;
+        }
+
+        .tweet {
+            border-spacing: 2px;
+            background-color: lightsteelblue;
+            -moz-border-radius: 10px 10px 10px 10px;
+			width:96%;
+        }
+
+        .tweet td {
+            padding: 1px 1px 1px 1px;
+        }
+
+		.xfLabel {
+			color: #10698F
+		}
+
+		#search {
+			margin-top:5px;
+		}
+		#search .xfValue {
+			width:120px;
+		}
+
+		#search .xfLabel {
+			width:100px;
+		}
+		#caCopyright {
+			bottom:5px;
+		}
+
+		#userData .xfLabel {
+			margin-right:5px;
+			width:110px;
+		}
+
+		#userData .xfControl {
+			display: block;
+			float: none;
+			margin: 5px;
+			width: 300px;
+		}
+		
+		.status .statusDate .xfLabel {
+			width:42px;
+		}
+
+		.status .statusFrom .xfLabel {
+			width:28px;
+			margin-left:4px;
+		}
+
+		.status .statusAt .xfLabel {
+			width:16px;
+			margin-left:4px;
+		}
+
+		.status .xfLabel,
+		.status .xfValue,
+		.status .xfValue a
+		{
+			font-size:8pt;
+			color:gray;
+			display:block;
+			float:left;
+
+		}
+
+		a{
+			color:#10698F;
+			font-weight:bold;
+		}
+		.loadUser {
+			top:2px;
+			left:6px;
+			position:relative;	
+		}
+        table img{width:50px;height:50px;}
+
+	</style>
+	<xf:model>
+		<xf:instance id="i-twitter-user" xmlns="">
+			<user>
+				<id/>
+				<name/>
+				<screen_name/>
+				<location/>
+				<description/>
+				<profile_image_url/>
+				<url/>
+				<protected/>
+				<followers_count/>
+				<profile_background_color/>
+				<profile_text_color/>
+				<profile_link_color/>
+				<profile_sidebar_fill_color/>
+				<profile_sidebar_border_color/>
+				<friends_count/>
+				<created_at/>
+				<favourites_count/>
+				<utc_offset/>
+				<time_zone/>
+				<profile_background_image_url/>
+				<profile_background_tile/>
+				<statuses_count/>
+				<notifications/>
+				<geo_enabled/>
+				<verified/>
+				<following/>
+				<status>
+					<created_at/>
+					<id/>
+					<text/>
+					<source/>
+					<truncated/>
+					<in_reply_to_status_id/>
+					<in_reply_to_user_id/>
+					<favorited/>
+					<in_reply_to_screen_name/>
+					<geo/>
+				</status>
+			</user>
+		</xf:instance>
+
+		<xf:bind nodeset="instance('i-twitter-user')">
+			<xf:bind nodeset="url" type="anyURI"/>
+		</xf:bind>
+
+		<xf:instance id="i-twitter-user-timeline" xmlns="">
+			<statuses>
+				<status>
+					<created_at/>
+					<id/>
+					<text/>
+					<source/>
+					<truncated/>
+					<in_reply_to_status_id></in_reply_to_status_id>
+					<in_reply_to_user_id></in_reply_to_user_id>
+					<favorited/>
+					<in_reply_to_screen_name/>
+					<user>
+						<id/>
+						<name/>
+						<screen_name/>
+						<location/>
+						<description/>
+						<profile_image_url/>
+						<url/>
+						<profile_sidebar_border_color>181A1E</profile_sidebar_border_color>
+						<friends_count>334</friends_count>
+						<created_at>Tue Feb 05 15:20:22 +0000 2008</created_at>
+						<favourites_count>26</favourites_count>
+						<utc_offset>3600</utc_offset>
+						<time_zone>Berlin</time_zone>
+					</user>
+				</status>
+			</statuses>
+		</xf:instance>
+
+		<xf:instance id="i-controller" xmlns="">
+			<data>
+				<user name=""/>
+			</data>
+		</xf:instance>
+
+
+		<xf:submission id="s-get-twitter-user"
+					   resource="http://twitter.com/users/show/{instance('i-controller')/user/@name}.xml"
+					   method="get"
+					   encoding="utf-8"
+					   replace="instance"
+					   serialization="none"
+					   validate="false">
+			<xf:action ev:event="xforms-submit-done">
+				<xf:message level="ephemeral">loaded user data</xf:message>
+				<xf:send submission="s-get-twitter-user-timeline"/>
+			</xf:action>
+			<xf:message ev:event="xforms-submit-error" level="modal">could not load user data</xf:message>
+		</xf:submission>
+
+		<xf:submission id="s-get-twitter-user-timeline"
+					   resource="http://twitter.com/statuses/user_timeline/{instance('i-controller')/user/@name}.xml"
+					   ref="instance('i-twitter-user-timeline')"
+					   method="get"
+					   serialization="none"
+					   encoding="utf-8"
+					   replace="instance"
+					   validate="false">
+			<xf:action ev:event="xforms-submit-done">
+				<xf:message  level="ephemeral">loaded user timeline data</xf:message>
+				<xf:toggle case="cuser"/>
+			</xf:action>
+
+			<xf:message ev:event="xforms-submit-error" level="modal">failure loading user timeline</xf:message>
+		</xf:submission>
+
+
+		<xf:instance id="i-twitter-public-timeline">
+			<statuses type="array">
+				<status>
+					<created_at/>
+					<id/>
+					<text/>
+					<source/>
+					<truncated/>
+					<in_reply_to_status_id/>
+					<in_reply_to_user_id/>
+					<favorited/>
+					<in_reply_to_screen_name/>
+					<user>
+						<id/>
+						<name/>
+						<screen_name/>
+						<location/>
+						<description/>
+						<profile_image_url/>
+						<url/>
+						<protected/>
+						<followers_count/>
+						<profile_background_color/>
+						<profile_text_color/>
+						<profile_link_color/>
+						<profile_sidebar_fill_color/>
+						<profile_sidebar_border_color/>
+						<friends_count/>
+						<created_at/>
+						<favourites_count/>
+						<utc_offset/>
+						<time_zone/>
+						<profile_background_image_url/>
+						<profile_background_tile/>
+						<statuses_count/>
+						<notifications/>
+						<verified_profile/>
+						<following/>
+					</user>
+				</status>
+			</statuses>
+		</xf:instance>
+
+		<xf:submission id="s-get-twitter-public-timeline"
+					   resource="http://twitter.com/statuses/public_timeline.xml"
+					   method="get"
+					   serialization="none"
+					   encoding="utf-8"
+					   replace="instance"
+					   instance="i-twitter-public-timeline"
+					   validate="false">
+			<!--<xf:message ev:event="xforms-submit-done" level="ephemeral">loaded public timeline</xf:message>-->
+			<xf:message ev:event="xforms-submit-error" level="modal">failure loading public timeline</xf:message>
+		</xf:submission>
+
+		<xf:action ev:event="xforms-ready">
+			<xf:send submission="s-get-twitter-public-timeline"/>
+			<!--<xf:send submission="s-get-twitter-user-timeline"/>-->
+			</xf:action>
+
+	</xf:model>
+</head>
+<body class="tundra">
+
+<div dojoType="dijit.layout.BorderContainer" design="sidebar" style="width: 96%;height:90%;padding:10px;background-color:transparent;">
+	<div dojoType="dijit.layout.ContentPane" region="top" style="height: 50px;border:none;background-color:transparent;" splitter="false">
+		<div class="header">XForms Twitter Sample</div>
+	</div>
+
+	<div dojoType="dijit.layout.ContentPane" region="center" style="bottom:10px;height:80%;left:10px;padding:10px;right:10px;top:77px;background-color:transparent;">
+		<xf:switch id="switch1">
+			<xf:case id="cpublic" selected="true">
+				<xf:label>Public</xf:label>
+				<div id="publicTimeLine" class="caTimeline" dojoType="dijit.layout.ContentPane" >
+					<table>
+						<tr>
+							<td class="content">
+								<xf:repeat id="r-twitter-public-timeline"
+										   nodeset="instance('i-twitter-public-timeline')/status"
+										   appearance="full">
+									<table class="tweet">
+										<tr>
+											<td rowspan="2">
+												<xf:output ref="user/profile_image_url" mediatype="image/*" class="userpic">
+													<xf:label/>
+												</xf:output>
+											</td>
+											<td>
+												<span style="float:left">
+												<xf:trigger appearance="minimal" class="username">
+													<xf:label ref="user/screen_name"/>
+													<xf:action>
+														<xf:setvalue ref="instance('i-controller')/user/@name"
+																	 value="instance('i-twitter-public-timeline')/status[index('r-twitter-public-timeline')]/user/screen_name"/>
+														<xf:recalculate/>
+														<xf:refresh/>
+														<xf:send submission="s-get-twitter-user"/>
+													</xf:action>
+												</xf:trigger>
+												</span><span> </span><xf:output value="IF(string-length(user/name) = 0,'',concat('&#160;&#160;(',user/name,')'))"/>
+											</td>
+
+										</tr>
+										<tr>
+											<td>
+												<xf:output ref="text" mediatype="text/html" class="tweetcontent"/>
+											</td>
+										</tr>
+										<tr>
+											<td/>
+											<td class="status">
+												<xf:output ref="created_at" class="statusDate"><xf:label>created: </xf:label></xf:output>
+												<xf:output ref="source" mediatype="text/html" class="statusFrom"><xf:label> from: </xf:label></xf:output>
+												<xf:output ref="user/location" class="statusAt"><xf:label> at: </xf:label></xf:output>
+											</td>
+										</tr>
+									</table>
+								</xf:repeat>
+							</td>
+							<td class="side_base" valign="top">
+								<div class="timeLineMenu" >
+									<xf:trigger appearance="minimal">
+										<xf:label>Update timeline</xf:label>
+										<xf:send submission="s-get-twitter-public-timeline"/>
+									</xf:trigger>
+									<table>
+										<tr>
+											<td>
+												<xf:select1 id="search" ref="instance('i-controller')/user/@name" appearance="minimal"
+															selection="open">
+													<xf:label>User: </xf:label>
+													<xf:choices>
+														<xf:item>
+															<xf:label/>
+															<xf:value/>
+														</xf:item>
+														<xf:item>
+															<xf:label>windauer</xf:label>
+															<xf:value>windauer</xf:value>
+														</xf:item>
+														<xf:item>
+															<xf:label>betterform</xf:label>
+															<xf:value>betterform</xf:value>
+														</xf:item>
+														<xf:item>
+															<xf:label>existdb</xf:label>
+															<xf:value>existdb</xf:value>
+														</xf:item>
+														<xf:item>
+															<xf:label>mobilemacs</xf:label>
+															<xf:value>mobilemacs</xf:value>
+														</xf:item>
+														<xf:item>
+															<xf:label>spreeblick</xf:label>
+															<xf:value>spreeblick</xf:value>
+														</xf:item>
+													</xf:choices>
+												</xf:select1>
+											</td>
+											<td>
+												<xf:trigger appearance="minimal" class="loadUser">
+													<xf:label>Go</xf:label>
+													<xf:action>
+														<xf:recalculate/>
+														<xf:send submission="s-get-twitter-user"/>
+													</xf:action>
+												</xf:trigger>
+
+											</td>
+										</tr>
+									</table>
+								</div>
+							</td>
+						</tr>
+					</table>
+					</div>
+
+			</xf:case>
+
+
+			<xf:case id="cuser" selected="false">
+				<xf:label>User</xf:label>
+				<table>
+					<tr>
+						<td class="content">
+							<div class="caTimeline" dojoType="dijit.layout.ContentPane" >
+								<xf:repeat id="r-twitter-user-timeline"
+										   nodeset="instance('i-twitter-user-timeline')/status"
+										   appearance="full">
+									<table class="tweet">
+										<tr>
+											<td>
+												<xf:output ref="text" mediatype="text/html" class="tweetcontent"/>
+											</td>
+										</tr>
+										<tr>
+											<td class="status">
+												<xf:output ref="created_at" class="statusDate"><xf:label> created: </xf:label></xf:output>
+												<xf:output ref="source" mediatype="text/html" class="statusFrom"><xf:label> from: </xf:label></xf:output>
+												<xf:output ref="user/location" class="statusAt"><xf:label> at: </xf:label></xf:output>
+											</td>
+										</tr>
+									</table>
+								</xf:repeat>
+							</div>
+						</td>
+						<td class="side_base" valign="top">
+								<div id="userData" class="timeLineMenu" dojoType="dijit.layout.ContentPane">
+								<xf:group ref="instance('i-twitter-user')" >
+                                    <xf:trigger appearance="minimal">
+                                        <xf:label>public timeline</xf:label>
+                                        <xf:toggle case="cpublic"/>
+                                    </xf:trigger>
+                                    
+									<xf:label class="subheader">Twitter Profile:</xf:label>
+									<xf:output ref="profile_image_url" mediatype="image/*">
+										<xf:label/>
+									</xf:output>
+									<xf:output ref="name">
+										<xf:label>Name</xf:label>
+									</xf:output>
+									<xf:output value="screen_name">
+										<xf:label>Nick</xf:label>
+									</xf:output>
+									<xf:output value="id">
+										<xf:label>Id</xf:label>
+									</xf:output>
+									<xf:output ref="location">
+										<xf:label>Location</xf:label>
+									</xf:output>
+									<xf:output ref="url">
+										<xf:label>URL</xf:label>
+									</xf:output>
+									<xf:output ref="followers_count" mediatype="text/html">
+										<xf:label>Followers Count</xf:label>
+									</xf:output>
+									<xf:output ref="friends_count" mediatype="text/html">
+										<xf:label>Friends Count</xf:label>
+									</xf:output>
+									<xf:output ref="favourites_count" mediatype="text/html">
+										<xf:label>Favourites Count</xf:label>
+									</xf:output>
+									<xf:output ref="statuses_count" mediatype="text/html">
+										<xf:label>Tweets Count</xf:label>
+									</xf:output>
+									<xf:output ref="description" mediatype="text/html">
+										<xf:label>Description</xf:label>
+									</xf:output>
+
+								</xf:group>				            
+							</div>
+						</td>
+					</tr>
+				</table>
+			</xf:case>
+		</xf:switch>
+
+	</div>
+</div>
+
+
+
+
+	
+</body>
+</html>

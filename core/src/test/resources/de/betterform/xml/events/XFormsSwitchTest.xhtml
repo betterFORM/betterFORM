@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:bf="http://betterform.sourceforge.net/xforms">
+<head>
+    <title>XForms Switch Test</title>
+    <xf:model id="m-1">
+        <xf:instance id="i-1" xmlns="">
+            <data>
+                <items selected="1">
+                    <item value="1">One</item>
+                    <item value="2">Two</item>
+                    <item value="3">Three</item>
+                </items>
+                <result>
+                    <select1>1</select1>
+                    <case1>1</case1>
+                </result>
+            </data>
+        </xf:instance>
+
+    </xf:model>
+</head>
+<body class="tundra" style="overflow:hidden;padding:50px;">
+<xf:group>
+    <xf:switch>
+        <xf:case id="case1" >
+            <!--<xf:message ev:event="xforms-select" level="ephemeral">case 1 selected</xf:message>-->
+            <xf:setvalue ev:event="xforms-select" ref="/data/result/case1" value="'2'" ev:target="case1"/>
+
+            <xf:select1 id="select-1" ref="items/@selected">
+                <xf:label>Select 1 (in Case1)</xf:label>
+                <xf:itemset nodeset="/data/items/item">
+                    <xf:label ref="."/>
+                    <xf:value ref="@value"/>
+                </xf:itemset>
+                <xf:setvalue ev:event="xforms-value-changed" ref="/data/result/select1" value="/data/items/@selected"/>
+            </xf:select1>
+        </xf:case>
+    </xf:switch>
+</xf:group>
+</body>
+</html>

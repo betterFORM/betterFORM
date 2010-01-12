@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: DefaultFactoryConfig.xml 2797 2007-08-10 12:45:24Z joern $ -->
+<betterform-config>
+    <!--No factoryClass attribute present, so betterForm will use the default factory-->
+    <connectors>
+        <submission-handler scheme="test" class="de.betterform.connector.ConnectorFactoryTestSubmissionHandler"/>
+        <uri-resolver scheme="test" class="de.betterform.connector.ConnectorFactoryTestURIResolver"/>
+    </connectors>
+</betterform-config>

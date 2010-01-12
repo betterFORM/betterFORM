@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<!-- $Id: log4j.xml 3038 2007-12-17 13:17:29Z lars $ -->
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="SHELL" class="org.apache.log4j.ConsoleAppender">
+        <param name="Append" value="false"/>
+        <!--<param name="DatePattern" value="'.'yyyy-MM-dd"/>-->
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%-5p %c %x: %m%n"/>
+        </layout>
+    </appender>
+
+
+    <!--
+        if you don't want to use the file appender leave it commented,
+        otherwise an empty log file will be created anyway.
+    -->
+    <!--
+
+    <appender name="ROLLING_FILE" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="betterform.log"/>
+        <param name="MaxFileSize" value="10MB"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%-5p %c %x: %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="FILE" class="org.apache.log4j.FileAppender">
+        <param name="File" value="betterform.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%-5p %c %x: %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="ASYNC" class="org.apache.log4j.AsyncAppender">
+        <appender-ref ref="SHELL"/>
+    </appender>
+
+    -->
+
+    <!--
+        change to WARN in production environments
+    -->
+    <category name="de.betterform">
+        <priority value="DEBUG"/>
+    </category>
+
+    <root>
+        <priority value="WARN"/>
+        <appender-ref ref="SHELL"/>
+    </root>
+
+</log4j:configuration>

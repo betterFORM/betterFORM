@@ -1,0 +1,55 @@
+<conformanceTests>
+	<description>Due to testing issues with Selenium the results are not always correct when run with Selenium RC.</description>
+    <falseNegative>
+    	<description>The following is a list of false negatives (test that pretent to fail but are actually running correctly when run in Selenium IDE)</description>
+    	<test id="4.2.1.c3">error JSP does not work in RC runner yet</test>
+        <test id="8.1.4.b"></test>
+    	<test id="9.1.1.c"/>
+    	<test id="10.2.b"/>
+    	<test id="10.7.a"/>
+    	<test id="10.7.1.a"/>
+    	<test id="10.7.1.b"/>
+    	<test id="10.8.3.a"/>
+    	<test id="10.8.3.b"/>
+    	<test id="10.17.c"/>
+    	<test id="11.3.a"/>
+    	<test id="11.3.b"/>
+    </falseNegative>
+    <notTestable>
+        <description>ConformanceTest case can't be automated executed by Selenium (IDE / RC) yet</description>
+        <test id="4.6.1.a2"/>
+        <test id="8.1.6.b"/>
+        <test id="8.1.6.c"/>
+        <test id="8.1.6.1.a"/>
+        <test id="8.1.6.2.a"/>
+        <test id="8.1.7.c"/>
+        <test id="8.1.7.d"/>
+        <test id="8.1.7.e"/>
+        <test id="10.14.b"/>
+        <test id="11.9.2.b"/>
+        <test id="11.9.6.a"/>
+    </notTestable>
+
+	<erroneousTest>
+        <description>Conformance Test itself is not correct</description>
+        <test id="10.17.d">needs review. Check if last() within repeat is really bound to repeat item and not to enclosing trigger</test>
+        <test id="10.5.a">xforms-scroll-last/first events are dispatched to often (look like they are dispatched by every repeat-item)</test>
+        <test id="10.8.d">dispatching custom event / event listener within instance</test>
+	</erroneousTest>
+
+
+	<failingTest>
+		<test id="8.1.6.e"></test>
+		<test id="8.1.7.f"></test>
+		<test id="8.1.7.g"></test>
+		<test id="9.3.1.b">initial index for repeat is 1 not 3 / Solution: evaluate initial setindex() action before index() function</test>
+	</failingTest>
+</conformanceTests>
+
+
+
+
+
+
+
+

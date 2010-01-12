@@ -1,0 +1,54 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml"
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xforms="http://www.w3.org/2002/xforms">
+	<xhtml:head>
+		<xhtml:title>6.1.5.a calculate property</xhtml:title>
+		<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+		<xforms:model>
+			<xforms:instance xmlns="">
+				<order>
+					<item>
+						<amount/>
+						<discount/>
+					</item>
+				</order>
+			</xforms:instance>
+			<xforms:bind nodeset="/order/item/discount" calculate="/order/item/amount * 0.5" 
+				relevant="/order/item/amount &gt; 1000"/>
+		</xforms:model>
+	</xhtml:head>
+	<xhtml:body>
+		<xforms:group>
+			<xforms:label class="title">6.1.5.a calculate property</xforms:label>
+		</xforms:group>
+		<xforms:group>
+			<xforms:label>
+				You must see the output &quot;Discount : 750&quot; after you have activated the Enter 1500 trigger. 
+				You must see the output &quot;Discount : 1000&quot; after you have activated the Enter 2000 trigger. 
+			</xforms:label>
+		</xforms:group>
+		
+		<xforms:group>
+			<xforms:trigger>
+				<xforms:label>Enter 250</xforms:label>
+				<xforms:setvalue ref="/order/item/amount" ev:event="DOMActivate">250</xforms:setvalue>
+			</xforms:trigger>
+			<xforms:trigger>
+				<xforms:label>Enter 1500</xforms:label>
+				<xforms:setvalue ref="/order/item/amount" ev:event="DOMActivate">1500</xforms:setvalue>
+			</xforms:trigger>
+			<xforms:trigger>
+				<xforms:label>Enter 2000</xforms:label>
+				<xforms:setvalue ref="/order/item/amount" ev:event="DOMActivate">2000</xforms:setvalue>
+			</xforms:trigger>
+		</xforms:group>
+		
+		<xforms:output ref="/order/item/discount">
+			<xforms:label>Discount : </xforms:label>
+		</xforms:output>
+		
+	</xhtml:body>
+</xhtml:html>

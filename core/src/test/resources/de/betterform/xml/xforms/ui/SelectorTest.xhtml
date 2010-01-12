@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <meta name="author" content="unl at users.sourceforge.net"/>
+        <meta name="description" content="test form for selector elements"/>
+        <meta name="version" content="$Id: SelectorTest.xhtml 2272 2006-08-18 23:22:09Z unl $"/>
+
+        <xf:model id="model-1">
+            <xf:instance id="instance-1" xmlns="">
+                <data>
+                    <result>123</result>
+                    <result>123</result>
+                    <result>123</result>
+                    <result>123</result>
+                </data>
+            </xf:instance>
+            <xf:bind id="bind-result-1" nodeset="result[1]"/>
+            <xf:bind id="bind-result-2" nodeset="result[2]"/>
+            <xf:bind id="bind-result-3" nodeset="result[3]"/>
+            <xf:bind id="bind-result-4" nodeset="result[4]"/>
+            <xf:instance id="instance-2" xmlns="">
+                <data>
+                    <list>
+                        <entry id="123">First</entry>
+                        <entry id="124">Second</entry>
+                        <entry id="125">Third</entry>
+                    </list>
+                </data>
+            </xf:instance>
+            <xf:bind id="bind-entry" nodeset="instance('instance-2')/list/entry">
+                <xf:bind id="bind-label" nodeset="."/>
+                <xf:bind id="bind-value" nodeset="@id" type="integer"/>
+            </xf:bind>
+            <xf:bind id="bind-label-1" nodeset="instance('instance-2')/list/entry[1]"/>
+            <xf:bind id="bind-value-1" nodeset="instance('instance-2')/list/entry[1]/@id"/>
+            <xf:bind id="bind-label-2" nodeset="instance('instance-2')/list/entry[2]"/>
+            <xf:bind id="bind-value-2" nodeset="instance('instance-2')/list/entry[2]/@id"/>
+            <xf:bind id="bind-label-3" nodeset="instance('instance-2')/list/entry[3]"/>
+            <xf:bind id="bind-value-3" nodeset="instance('instance-2')/list/entry[3]/@id"/>
+        </xf:model>
+    </head>
+    <body>
+        <xf:group>
+            <xf:select1 id="select-1" bind="bind-result-1">
+                <xf:label>Select1 with static Items</xf:label>
+                <xf:item id="item-1-1">
+                    <xf:label bind="bind-label-1"/>
+                    <xf:value bind="bind-value-1"/>
+                </xf:item>
+                <xf:item id="item-1-2">
+                    <xf:label bind="bind-label-2"/>
+                    <xf:value bind="bind-value-2"/>
+                </xf:item>
+                <xf:item id="item-1-3">
+                    <xf:label bind="bind-label-3"/>
+                    <xf:value bind="bind-value-3"/>
+                </xf:item>
+            </xf:select1>
+            <xf:select id="select-2" bind="bind-result-2">
+                <xf:label>Select with static Items</xf:label>
+                <xf:item id="item-2-1">
+                    <xf:label bind="bind-label-1"/>
+                    <xf:value bind="bind-value-1"/>
+                </xf:item>
+                <xf:item id="item-2-2">
+                    <xf:label bind="bind-label-2"/>
+                    <xf:value bind="bind-value-2"/>
+                </xf:item>
+                <xf:item id="item-2-3">
+                    <xf:label bind="bind-label-3"/>
+                    <xf:value bind="bind-value-3"/>
+                </xf:item>
+            </xf:select>
+            <xf:select1 id="select-3" bind="bind-result-3">
+                <xf:label>Select1 with dynamic Itemset</xf:label>
+                <xf:itemset bind="bind-entry">
+                    <xf:label bind="bind-label"/>
+                    <xf:value bind="bind-value"/>
+                </xf:itemset>
+            </xf:select1>
+            <xf:select id="select-4" bind="bind-result-4">
+                <xf:label>Select with dynamic Itemset</xf:label>
+                <xf:itemset bind="bind-entry">
+                    <xf:label bind="bind-label"/>
+                    <xf:value bind="bind-value"/>
+                </xf:itemset>
+            </xf:select>
+
+            <xf:trigger id="trigger-1">
+                <xf:setvalue bind="bind-result-1">125</xf:setvalue>
+            </xf:trigger>
+            <xf:trigger id="trigger-2">
+                <xf:setvalue bind="bind-result-2">125</xf:setvalue>
+            </xf:trigger>
+            <xf:trigger id="trigger-3">
+                <xf:setvalue bind="bind-result-3">125</xf:setvalue>
+            </xf:trigger>
+            <xf:trigger id="trigger-4">
+                <xf:setvalue bind="bind-result-4">125</xf:setvalue>
+            </xf:trigger>
+        </xf:group>
+    </body>
+</html>

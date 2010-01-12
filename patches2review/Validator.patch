@@ -1,0 +1,13 @@
+Index: core/src/main/java/de/betterform/xml/xforms/core/Validator.java
+===================================================================
+--- core/src/main/java/de/betterform/xml/xforms/core/Validator.java	(revision 3547)
++++ core/src/main/java/de/betterform/xml/xforms/core/Validator.java	(working copy)
+@@ -325,7 +325,7 @@
+ 
+         // first check xsi:type ...
+         String xsiType = expandName(modelItem.getXSIType());
+-        if (xsiType != null && !isDefaultType(xsiType)) {
++        if (xsiType != null && !isDefaultType(xsiType) && isKnown(modelItem.getXSIType())) {
+             // only check non-string datatypes
+             datatypeValid = checkDatatype(xsiType, value);
+         }

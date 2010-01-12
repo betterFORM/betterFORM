@@ -1,0 +1,32 @@
+Index: web/src/main/webapp/resources/scripts/PresentationContext.js
+===================================================================
+--- web/src/main/webapp/resources/scripts/PresentationContext.js	(revision 3547)
++++ web/src/main/webapp/resources/scripts/PresentationContext.js	(working copy)
+@@ -712,18 +715,20 @@
+ 
+ /**
+  * Called when the clone.onchange() occurs, so we can update the original one.
+- * @param string original_id
+- * @param string clone_id
++ * @param element control
+  */
+-updateSelectionOfOriginal = function(original_id, clone_id) {
++updateSelectionOfOriginal = function(control){
++
+     //selection has changed on the clone so change the selection on the original
++    var clone_id = control.id;
++	var original_id = clone_id.substring(6);
+     var original = document.getElementById(original_id);
+-    var clone = document.getElementById(clone_id);
+ 
+-    for (var i = 0; i < clone.options.length; i++) {
+-        original.options[i].selected = clone.options[i].selected;
++    for (var i = 0; i < control.options.length; i++){
++        original.options[i].selected = control.options[i].selected;
+     }
+-    if (original.onchange) {
++    if (original.onchange){
++
+         setXFormsValue(original, true);
+     }
+ };

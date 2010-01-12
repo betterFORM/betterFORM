@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="purchaseOrder" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:po="purchaseOrder" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+    <xs:element name="purchaseOrder" type="po:purchaseOrderType">
+        <xs:annotation>
+            <xs:documentation>Comment describing your root element</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:complexType name="purchaseOrderType">
+        <xs:sequence>
+            <xs:element name="headerInformation" type="po:headerType"/>
+            <xs:element name="phoneNumber" type="po:phoneNumberType"/>
+        </xs:sequence>
+        <xs:attribute name="customerId" type="xs:string" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="headerType">
+        <xs:sequence>
+            <xs:element name="streetAddress" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Enter the street address.</xs:documentation>
+                    <xs:documentation>For example, 160 Manitoba Street.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="state_or_province" type="po:baseNAState"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="rushDelivery" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="phoneNumberType">
+        <xs:sequence>
+            <xs:element name="areaCode" type="xs:string"/>
+            <xs:element name="number" type="xs:nonNegativeInteger"/>
+            <xs:element name="longEnum" type="po:longEnumType"/>
+            <xs:element name="shortEnum" type="po:shortEnumType"/>
+            <xs:element name="longList" type="po:longListType"/>
+            <xs:element name="shortList" type="po:shortListType"/>
+        </xs:sequence>
+        <xs:attribute name="customerType" type="po:customerType" use="required"/>
+    </xs:complexType>
+    <xs:simpleType name="customerTypeList">
+        <xs:list itemType="po:customerType"/>
+    </xs:simpleType>
+    <xs:simpleType name="customerType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="RESIDENTIAL_CUSTOMER"/>
+            <xs:enumeration value="BUSINESS_CUSTOMER"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="longListType">
+        <xs:list itemType="po:longEnumType"/>
+    </xs:simpleType>
+    <xs:simpleType name="longEnumType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="FIRST_VALUE"/>
+            <xs:enumeration value="SECOND_VALUE"/>
+            <xs:enumeration value="THIRD_VALUE"/>
+            <xs:enumeration value="FOURTH_VALUE"/>
+            <xs:enumeration value="FIFTH_VALUE"/>
+            <xs:enumeration value="SIXTH_VALUE"/>
+            <xs:enumeration value="SEVENTH_VALUE"/>
+            <xs:enumeration value="EIGHTH_VALUE"/>
+            <xs:enumeration value="NINTH_VALUE"/>
+            <xs:enumeration value="TENTH_VALUE"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="shortListType">
+        <xs:list itemType="po:shortEnumType"/>
+    </xs:simpleType>
+    <xs:simpleType name="shortEnumType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="FIRST_VALUE"/>
+            <xs:enumeration value="SECOND_VALUE"/>
+            <xs:enumeration value="THIRD_VALUE"/>
+            <xs:enumeration value="FOURTH_VALUE"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="canadianProvince">
+        <xs:restriction base="po:baseNAState">
+            <xs:enumeration value="Ontario"/>
+            <xs:enumeration value="Saskatchewan"/>
+            <xs:enumeration value="Quebec"/>
+            <xs:enumeration value="Newfoundland"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="usState">
+        <xs:restriction base="po:baseNAState">
+            <xs:enumeration value="New York"/>
+            <xs:enumeration value="California"/>
+            <xs:enumeration value="Oregon"/>
+            <xs:enumeration value="Texas"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="baseNAState">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+</xs:schema>

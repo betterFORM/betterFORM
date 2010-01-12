@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:xf="http://www.w3.org/2002/xforms"
+	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+		>
+	<head>
+		<title>JavaScript Actions</title>
+		<xf:model id="hello-model">
+			<xf:submission id="debug" action="{$contextroot}/jsp/debug-instance.jsp" method="post" replace="all"/>
+			<xf:instance xmlns="">
+				<data>
+					<name/>
+				</data>
+			</xf:instance>
+			<xf:bind id="bind1" nodeset="name" required="true()"/>
+		</xf:model>
+	</head>
+	<body>
+		<xf:group appearance="full">
+			<xf:label>JavaScript Actions</xf:label>
+			<div class="testdesc">Expectations:</div>
+
+			
+			<xf:group id="scriptActionGroup" appearance="full">
+				<xf:trigger>
+					<xf:label>Execute Function</xf:label>
+					<xf:action>
+						<script type="text/javascript">
+							bar();
+						</script>
+					</xf:action>
+				</xf:trigger>
+
+				<xf:trigger>
+					<xf:label>Directly execute JavaScript</xf:label>
+					<xf:action>
+						<script type="text/javascript">
+							document.getElementById("message").innerHTML = "message from Trigger 'Directly execute JavaScript'";
+							document.getElementById("scriptActionGroup").style.color = "red";
+						</script>
+					</xf:action>
+				</xf:trigger>
+
+				<xf:trigger>
+					<xf:label>Execute Function (without surrounding xf:action)</xf:label>
+					<script type="text/javascript">
+						bar();
+					</script>
+				</xf:trigger>
+
+				<xf:trigger>
+					<xf:label>Directly execute JavaScript (without surrounding xf:action)</xf:label>
+					<script type="text/javascript">
+						document.getElementById("message").innerHTML = "message from Trigger 'Directly execute JavaScript'";
+						document.getElementById("scriptActionGroup").style.color = "red";
+					</script>
+				</xf:trigger>
+			</xf:group>
+
+			<div id="message" style="font-size:24pt;"></div>
+
+			<script type="text/javascript">
+				function bar() {
+					document.getElementById("message").innerHTML = "message from Trigger 'Execute Function'";
+					document.getElementById("scriptActionGroup").style.color = "blue";
+				}
+			</script>
+
+		</xf:group>
+	</body>
+</html>

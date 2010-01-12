@@ -1,0 +1,56 @@
+Index: web/src/main/webapp/resources/scripts/dojo-0.4/src/i18n/calendar/nls/et/gregorianExtras.js
+===================================================================
+--- web/src/main/webapp/resources/scripts/dojo-0.4/src/i18n/calendar/nls/et/gregorianExtras.js	(revision 0)
++++ web/src/main/webapp/resources/scripts/dojo-0.4/src/i18n/calendar/nls/et/gregorianExtras.js	(revision 0)
+@@ -0,0 +1,14 @@
++/*
++	Copyright (c) 2004-2006, The Dojo Foundation
++	All Rights Reserved.
++
++	Licensed under the Academic Free License version 2.1 or above OR the
++	modified BSD license. For more information on Dojo licensing, see:
++
++		http://dojotoolkit.org/community/licensing.shtml
++*/
++
++// Dojo-specific extensions to the CLDR
++({
++	'dateFormat-yearOnly': "yyyy"
++})
+\ No newline at end of file
+Index: web/src/main/webapp/resources/scripts/dojo-0.4/src/i18n/calendar/nls/et/gregorian.js
+===================================================================
+--- web/src/main/webapp/resources/scripts/dojo-0.4/src/i18n/calendar/nls/et/gregorian.js	(revision 0)
++++ web/src/main/webapp/resources/scripts/dojo-0.4/src/i18n/calendar/nls/et/gregorian.js	(revision 0)
+@@ -0,0 +1,30 @@
++/*
++	Copyright (c) 2004-2006, The Dojo Foundation
++	All Rights Reserved.
++
++	Licensed under the Academic Free License version 2.1 or above OR the
++	modified BSD license. For more information on Dojo licensing, see:
++
++		http://dojotoolkit.org/community/licensing.shtml
++*/
++
++({
++	'months-format-wide': ["Jaanuar", "Veebruar", "Märts", "Aprill", "Mai", "Juuni", "Juuli", "August", "September", "Oktoober", "November", "Detsember"],
++	'months-format-abbr': ["Jaan", "Veeb", "Mär", "Apr", "Mai", "Juun", "Juul", "Aug", "Sept", "Okt", "Nov", "Dets"],
++	'months-standAlone-narrow': ["J", "V", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
++	'days-format-wide': ["Pühapäev", "Esmaspäev", "Teisipäev", "Kolmapäev", "Neljapäev", "Reede", "Laupäev"],
++	'days-format-abbr': ["Püh", "Esm", "Tei", "Kol", "Nel", "Ree", "Lau"],
++	'days-standAlone-narrow': ["P", "E", "T", "K", "N", "R", "L"],
++
++	'dateFormat-full': "EEEE, d. MMMM yyyy",
++	'dateFormat-long': "d. MMMM yyyy",
++	'dateFormat-medium': "d. MMM yyyy",
++	'dateFormat-short': "dd.MM.yyyy",
++
++	'timeFormat-full': "h:mm:ss a v",
++	'timeFormat-long': "h:mm:ss a z",
++	'timeFormat-medium': "h:mm:ss a",
++	'timeFormat-short': "h:mm a",
++
++	eras: ['EK','PK']
++})
+\ No newline at end of file

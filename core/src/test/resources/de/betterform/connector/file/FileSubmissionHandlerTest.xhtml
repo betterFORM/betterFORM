@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <meta name="author" content="unl at users.sourceforge.net"/>
+        <meta name="description" content="test form for file submission"/>
+        <meta name="version" content="$Id: FileSubmissionHandlerTest.xhtml 2272 2006-08-18 23:22:09Z unl $"/>
+        <xforms:model id="model">
+            <xforms:instance id="instance" xmlns="">
+                <data>
+                    <item>first</item>
+                    <item>between</item>
+                    <item>last</item>
+                </data>
+            </xforms:instance>
+            <xforms:submission id="submission-get" action="FileSubmissionHandlerTestInstance.xml" method="get"/>
+            <xforms:submission id="submission-put" action="FileSubmissionHandlerTest.xml" method="put" replace="none"/>
+        </xforms:model>
+    </head>
+    <body>
+        <h1>Nothing to see ;-)</h1>
+    </body>
+</html>

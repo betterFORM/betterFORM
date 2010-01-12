@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <meta name="author" content="unl at users.sourceforge.net"/>
+        <meta name="description" content="test form for message action"/>
+        <meta name="version" content="$Id: MessageActionTest.xhtml 3457 2008-08-13 15:03:54Z joern $"/>
+        <xf:model id="model">
+            <xf:instance id="instance" xmlns="">
+                <data>
+                    <message>bound</message>
+                </data>
+            </xf:instance>
+            <xf:bind id="bind-message" nodeset="message"/>
+            <xf:message ref="message" ev:event="xforms-model-construct-done"/>
+            <xf:message ev:event="xforms-model-construct-done">yihaa</xf:message>
+        </xf:model>
+    </head>
+    <body>
+        <xf:group>
+            <xf:trigger id="trigger-blank">
+                <xf:label>Show blank message</xf:label>
+                <xf:action>
+                    <xf:message id="message-blank"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="trigger-bound">
+                <xf:label>Show bound message</xf:label>
+                <xf:action>
+                    <xf:message id="message-bound" bind="bind-message"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="trigger-linked">
+                <xf:label>Show linked message</xf:label>
+                <xf:action>
+                    <xf:message id="message-linked" src="MessageActionTestResource.xml"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="trigger-inline">
+                <xf:label>Show inline message</xf:label>
+                <xf:action>
+                    <xf:message id="message-inline">inline</xf:message>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="trigger-ephemeral">
+                <xf:label>Show inline ephemeral message</xf:label>
+                <xf:action>
+                    <xf:message id="message-ephemeral" level="ephemeral">inline</xf:message>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="trigger-modeless">
+                <xf:label>Show inline modeless message</xf:label>
+                <xf:action>
+                    <xf:message id="message-modeless" level="modeless">inline</xf:message>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="trigger-modal">
+                <xf:label>Show inline modal message</xf:label>
+                <xf:action>
+                    <xf:message id="message-modal" level="modal">inline</xf:message>
+                </xf:action>
+            </xf:trigger>
+        </xf:group>
+    </body>
+</html>

@@ -1,0 +1,72 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"             
+      xmlns:xforms="http://www.w3.org/2002/xforms">
+  	<xhtml:head>
+    	<xhtml:title>10.4.e delete element rules</xhtml:title>
+    	<xhtml:link rel="stylesheet" href="../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    	<xforms:model>
+       		<xforms:instance xmlns="">
+				<lines>
+					<line name="a">
+						<price>3.00</price>
+					</line>
+					<line name="b">
+						<price>32.25</price>
+					</line>
+					<line name="c">
+						<price>132.99</price>
+					</line>
+					<line name="d">
+						<price>1320.99</price>
+					</line>
+					<line name="e">
+						<price>13200.99</price>
+					</line>
+					<line name="f">
+						<price>132000.99</price>
+					</line>
+				</lines>
+       		</xforms:instance>
+			<xforms:action ev:event="xforms-delete">
+				<xforms:message level="modal">xforms-delete</xforms:message>
+			</xforms:action>
+    	</xforms:model>
+  	</xhtml:head>
+  	<xhtml:body>
+  		<xforms:group>
+  			<xforms:label class="title">10.4.e delete element rules</xforms:label>
+  		</xforms:group>	
+  		<xforms:group>
+  			<xforms:label>
+  			  When you activate the Delete Item At Index trigger you must see an xforms-delete message. 
+  			  After an item is deleted the Current index must not change unless the last item in the list was 
+  			  deleted, in which case the Current index must point to the new last item. If all items in the list 
+  			  are deleted the Current index must be the number 0. 
+			</xforms:label>	
+  		</xforms:group>
+		<xforms:repeat id="lineset" nodeset="/lines/line">
+			<xforms:group>
+				<xforms:input ref="price">
+					<xforms:label>Line Item</xforms:label>
+				</xforms:input>
+				<xforms:input ref="@name">
+					<xforms:label>Name</xforms:label>
+				</xforms:input>
+			</xforms:group>
+		</xforms:repeat>
+		<xforms:group>
+			<xforms:output value="index('lineset')">
+				<xforms:label>Current index : </xforms:label>
+			</xforms:output>
+		</xforms:group>
+		<xforms:trigger>
+			<xforms:label>Delete Item At Index</xforms:label>
+			<xforms:delete ev:event="DOMActivate" nodeset="/lines/line" at="index('lineset')"/>
+		</xforms:trigger>
+		
+  </xhtml:body>
+</xhtml:html>

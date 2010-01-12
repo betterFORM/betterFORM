@@ -1,0 +1,34 @@
+Index: core/src/main/java/de/betterform/xml/xforms/action/ToggleAction.java
+===================================================================
+--- core/src/main/java/de/betterform/xml/xforms/action/ToggleAction.java	(revision 3547)
++++ core/src/main/java/de/betterform/xml/xforms/action/ToggleAction.java	(working copy)
+@@ -167,21 +167,21 @@
+         Case isSelected = switchElement.getSelected();
+ 
+         // perform selection/deselection
+-        if(!toSelect.getId().equals(isSelected.getId())){
++        //if(!toSelect.getId().equals(isSelected.getId())){
+             isSelected.deselect();
+-        }
++        //}
+ 
+-        if(!isSelected.getId().equals(toSelect.getId())) {
++        //if(!isSelected.getId().equals(toSelect.getId())) {
+             toSelect.select();
+-        }
++        //}
+ 
+         // dispatch xforms-deselect and xforms-select events
+-        if(!toSelect.getId().equals(isSelected.getId())){
++        //if(!toSelect.getId().equals(isSelected.getId())){
+             this.container.dispatch(isSelected.getTarget(), XFormsEventNames.DESELECT, null);
+-        }
+-        if(!isSelected.getId().equals(toSelect.getId())) {
++        //}
++        //if(!isSelected.getId().equals(toSelect.getId())) {
+             this.container.dispatch(toSelect.getTarget(), XFormsEventNames.SELECT, null);
+-        }
++        //}
+ 
+         // dispatch internal betterform event
+         HashMap map = new HashMap();

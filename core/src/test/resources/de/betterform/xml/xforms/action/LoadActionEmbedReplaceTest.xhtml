@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <meta name="author" content="unl at users.sourceforge.net"/>
+        <meta name="description" content="test form for load action"/>
+        <meta name="version" content="$Id: LoadActionTest.xhtml 3460 2008-08-14 09:11:58Z joern $"/>
+    </head>
+    <body>
+    <form action="">
+        <xf:model id="model">
+            <xf:instance xmlns="">
+                <data>
+                    <items>
+                        <item>item 1</item>
+                        <item>item 2</item>
+                        <item>item 3</item>
+                    </items>
+                    <resource>LoadEmbeddedChild.xhtml</resource>
+                </data>
+            </xf:instance>
+        </xf:model>
+
+        <xf:group>
+            <xf:group>
+                <xf:trigger id="t-load">
+                    <xf:load id="loadAction" show="embed" targetid="mountPoint">
+                        <xf:resource value="instance()/resource"/>
+                    </xf:load>
+                </xf:trigger>
+
+                <xf:trigger id="t-unload">
+                    <xf:load targetid="mountPoint" show="none"/>
+                </xf:trigger>
+                <div id="mountPoint"/>
+            </xf:group>
+
+        </xf:group>
+
+    </form>
+
+    </body>
+</html>

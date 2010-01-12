@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <meta name="author" content="unl at users.sourceforge.net"/>
+        <meta name="description" content="test form for output control"/>
+        <meta name="version" content="$Id: OutputTest.xhtml 2823 2007-08-29 21:40:35Z joern $"/>
+
+        <xf:model id="model-1">
+            <xf:instance id="instance-1" xmlns="">
+                <data>
+                    <item foo="bar">1</item>
+                    <item>2</item>
+                    <tree>
+                        <item>foo</item>
+                        <item>bar</item>
+                        <item>baz</item>
+                    </tree>
+                </data>
+            </xf:instance>
+            <xf:bind id="bind-1" nodeset="item[2]"/>
+        </xf:model>
+        <xf:model id="model-2">
+            <xf:instance id="instance-2" xmlns="">
+                <data>
+                    <node>foo</node>
+                </data>
+            </xf:instance>
+        </xf:model>
+    </head>
+    <body>
+        <xf:group>
+            <!-- different output variations -->
+            <xf:output id="output-ui-binding" ref="item"/>
+            <xf:output id="output-ui-attribute-binding" ref="item/@foo"/>
+            <xf:output id="tree-ui-binding" ref="instance('instance-1')/tree" appearance="dojo:tree"/>
+            <xf:output id="output-model-binding" bind="bind-1"/>
+            <xf:output id="output-string-expression-value" value="concat('ex', 'press', 'ion')"/>
+            <xf:output id="output-integer-expression-value" value="sum(item)"/>
+            <xf:output id="output-fraction-expression-value" value="sum(item) div 2"/>
+            <xf:output id="output-nan-expression-value" value="sum(item) div ."/>
+            <xf:output id="output-nodeset-expression-value" value="item[2]"/>
+            <xf:output id="output-empty-nodeset-expression-value" value="non-existing"/>
+            <xf:group ref="item">
+                <xf:output id="output-expression-context-value" value="sum(../item)"/>
+            </xf:group>
+            <xf:group ref="non-existing">
+                <xf:output id="output-expression-empty-nodeset-context-value" value="sum(../item)"/>
+            </xf:group>
+            <xf:output id="output-ui-binding-precedence" ref="item" value="sum(item)"/>
+            <xf:output id="output-model-binding-precedence" bind="bind-1" value="sum(item)"/>
+            <xf:output id="output-unspecified"/>
+
+            <!-- some inputs for modification -->
+            <xf:input id="input-item-1" ref="item[1]"/>
+            <xf:input id="input-item-2" ref="item[2]"/>
+
+            <xf:group model="model-2" ref="instance('instance-2')">
+                <xf:output id="output-model2-ui-binding" ref="node"/>
+                <xf:output id="output-model2-value" value="node"/>
+            </xf:group>
+        </xf:group>
+    </body>
+</html>

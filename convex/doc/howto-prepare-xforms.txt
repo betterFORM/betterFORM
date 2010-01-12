@@ -1,0 +1,24 @@
+Howto prepare your XForms for Convex
+------------------------------------
+To run your XForms with Convex you'll have to prepare them:
+
+1. you'll need to include the following tags in the head section of your form:
+        <link rel="stylesheet" type="text/css" href="css/convex.css"></link>
+        <script type="text/javascript" src="script/convex.js"></script>
+2. the XForms model must be embedded in
+        <script type="text/xml">
+          your model here
+        </script>
+   to keep the browser from interpreting this section
+3. the body section must use a special div where the XForms UI will be integrated after Convex has transformed it
+   into browser consumable markup. This looks like this:
+   	<body>
+        <div id="xformsui" class="disabled">
+        ...your XForms UI here...
+        </div>
+4. finally you have to include the applet tag at the end of the document. For the correct markup please refer to
+   the sample files coming with this preview.
+
+This sounds like a lot of stuff but it should be easy to do all this with a XSLT transformation which is not yet
+included with this preview.           
+

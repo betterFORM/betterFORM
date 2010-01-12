@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+        >
+    <head>
+        <title>Embedding a subform with the load action</title>
+        <meta name="author" content="joernt at users.sourceforge.net"/>
+        <meta name="description" content="XForms demo for embedding subforms with the load action"/>
+    </head>
+    <body>
+    <form action="">
+        <xf:model id="master">
+            <xf:instance id="contact" xmlns="">
+                <data>
+                    <phone number="" type="work"/>
+                    <phone number="" type="mobile"/>
+                    <postaladdress id="1">
+                        <street>Goethestr. 47</street>
+                        <city>Hamburg</city>
+                        <zip>223456</zip>
+                        <country>Germany</country>
+                    </postaladdress>
+                    <postaladdress id="2">
+                        <street>Schillerstr. 47</street>
+                        <city>Berlin</city>
+                        <zip>12234</zip>
+                        <country>Germany</country>
+                    </postaladdress>
+                </data>
+            </xf:instance>
+
+            <xf:submission id="update-subform"
+                           resource="model:address#instance('default')/address"
+                           method="post"
+                           replace="none"
+                           ref="postaladdress">
+            </xf:submission>
+
+        </xf:model>
+
+        <xf:group appearance="full" id="contact">
+            <xf:label>Contact Information:</xf:label>
+            <!--<xf:action ev:event="betterform-load-uri">
+                <xf:message>yep</xf:message>
+            </xf:action>-->
+
+            <xf:input ref="phone[1]/@number">
+                <xf:label>work</xf:label>
+            </xf:input>
+
+            <xf:input ref="phone[2]/@number">
+                <xf:label>mobile</xf:label>
+            </xf:input>
+
+            <xf:trigger>
+                <xf:label>edit Address with subform</xf:label>
+                <xf:action>
+                    <xf:load show="embed" targetid="address">
+                        <xf:resource value="'address.xml'"/>
+                    </xf:load>
+                    <xf:send submission="update-subform"/>
+                </xf:action>
+
+
+            </xf:trigger>
+
+
+            <xf:trigger>
+                <xf:label>load address2.xml</xf:label>
+                <xf:action>
+                    <xf:load show="embed" targetid="address">
+                        <xf:resource value="'address2.xml'"/>
+                    </xf:load>
+                    <xf:setvariable name="foo" select="'bar'"/>
+                </xf:action>
+
+
+            </xf:trigger>
+            
+            <div id="address"></div>
+        </xf:group>
+    </form>
+
+    </body>
+</html>

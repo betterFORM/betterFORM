@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+	    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>7.8.3.a digest() function using sha1, md5, and sha256</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css" />
+    <xforms:model >
+      <xforms:instance xmlns="">
+	<root />
+      </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group>
+      <xforms:label class="title">7.8.3.a digest() function using sha1, md5, and sha256</xforms:label>
+    </xforms:group>
+
+    <xforms:group>
+      <xforms:label>
+	You must see the group label &quot;PASS&quot; for all Tests. 
+	If the function does not return the correct value you will see a group label
+	with the word &quot;FAIL&quot; and the incorrect value.
+      </xforms:label>
+    </xforms:group>
+
+    <xforms:group>
+      <xforms:label>Test 1</xforms:label>
+      <xforms:group ref="self::node()[digest('abc', 'SHA-1', 'hex') = 'a9993e364706816aba3e25717850c26c9cd0d89d']">
+	<xforms:label>Test 1 : PASS</xforms:label>
+      </xforms:group>
+
+      <xforms:group ref="self::node()[digest('abc', 'SHA-1', 'hex') != 'a9993e364706816aba3e25717850c26c9cd0d89d']">
+	<xforms:label>Test 1 : FAIL</xforms:label>
+	<xforms:output value="digest('abc', 'SHA-1', 'hex')">
+	  <xforms:label>Bad Value=</xforms:label>
+	</xforms:output>
+      </xforms:group>
+    </xforms:group>
+
+    <xforms:group>
+      <xforms:label>Test 2</xforms:label>
+      <xforms:group ref="self::node()[digest('abc', 'MD5', 'hex') = '900150983cd24fb0d6963f7d28e17f72']">
+	<xforms:label>Test 2 : PASS </xforms:label>
+      </xforms:group>
+      <xforms:group ref="self::node()[digest('abc', 'MD5', 'hex') != '900150983cd24fb0d6963f7d28e17f72']">
+	<xforms:label>Test 2 : FAIL </xforms:label>
+	<xforms:output value="digest('abc', 'MD5', 'hex')">
+	  <xforms:label>Bad Value=</xforms:label>
+	</xforms:output>
+      </xforms:group>
+    </xforms:group>
+
+
+    <xforms:group>
+      <xforms:label>Test 3</xforms:label>
+      <xforms:group ref="self::node()[digest('abc', 'SHA-256', 'hex') = 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad']">
+	<xforms:label>Test 3 : PASS </xforms:label>
+      </xforms:group>
+      <xforms:group ref="self::node()[digest('abc', 'SHA-256', 'hex') != 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad']">
+	<xforms:label>Test 3 : FAIL </xforms:label>
+	<xforms:output value="digest('abc', 'SHA-256', 'hex')">
+	  <xforms:label>Bad Value=</xforms:label>
+	</xforms:output>
+      </xforms:group>
+    </xforms:group>
+
+    <xforms:group>
+      <xforms:label>Test 4</xforms:label>
+      <xforms:group ref="self::node()[digest('abc', 'SHA-1', 'base64')= 'qZk+NkcGgWq6PiVxeFDCbJzQ2J0=']" >
+	<xforms:label>Test 4 : PASS </xforms:label>
+      </xforms:group>
+      <xforms:group ref="self::node()[digest('abc', 'SHA-1', 'base64')!= 'qZk+NkcGgWq6PiVxeFDCbJzQ2J0=']" >
+	<xforms:label>Test 4 : FAIL </xforms:label>
+	<xforms:output value="digest('abc', 'SHA-1', 'base64')">
+	  <xforms:label>Bad Value=</xforms:label>
+	</xforms:output>
+      </xforms:group>
+    </xforms:group>
+
+    <xforms:group>
+      <xforms:label>Test 5</xforms:label>
+      <xforms:group ref="self::node()[digest('abc', 'MD5', 'base64')='kAFQmDzST7DWlj99KOF/cg==']">
+	<xforms:label>Test 5 : PASS </xforms:label>
+      </xforms:group>
+      <xforms:group ref="self::node()[digest('abc', 'MD5', 'base64')!= 'kAFQmDzST7DWlj99KOF/cg==']">
+	<xforms:label>Test 5 : FAIL </xforms:label>
+	<xforms:output value="digest('abc', 'MD5', 'base64')">
+	  <xforms:label>Bad Value=</xforms:label>
+	</xforms:output>
+      </xforms:group>
+    </xforms:group>
+
+    <xforms:group>
+      <xforms:label>Test 6</xforms:label>
+      <xforms:group ref="self::node()[digest('abc', 'SHA-256', 'base64')='ungWv48Bz+pBQUDeXa4iI7ADYaOWF3qctBD/YfIAFa0=']">
+	<xforms:label>Test 6 : PASS </xforms:label>
+      </xforms:group>
+      <xforms:group ref="self::node()[digest('abc', 'SHA-256', 'base64')!= 'ungWv48Bz+pBQUDeXa4iI7ADYaOWF3qctBD/YfIAFa0=']">
+	<xforms:label>Test 6 : FAIL </xforms:label>
+	<xforms:output value="digest('abc', 'SHA-256', 'base64')">
+	  <xforms:label>Bad Value=</xforms:label>
+	</xforms:output>
+      </xforms:group>
+    </xforms:group>
+  </xhtml:body>
+</xhtml:html>

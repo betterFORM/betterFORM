@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <meta name="author" content="unl at users.sourceforge.net"/>
+        <meta name="description" content="test form for upload control"/>
+        <meta name="version" content="$Id: UploadTest.xhtml 2272 2006-08-18 23:22:09Z unl $"/>
+
+        <xf:model>
+            <xf:instance xmlns="">
+                <data>
+                    <file filename="" mediatype=""/>
+                    <file filename="" mediatype=""/>
+                    <file filename="" mediatype=""/>
+                    <file filename="" mediatype=""/>
+                    <file filename="" mediatype=""/>
+                    <file filename="" mediatype=""/>
+                    <file filename="UploadTest.xhtml" mediatype="application/xhtml+xml"/>
+                </data>
+            </xf:instance>
+            <xf:bind id="bind-1" nodeset="file[1]" type="base64Binary"/>
+            <xf:bind id="bind-2" nodeset="file[2]" type="hexBinary"/>
+            <xf:bind id="bind-3" nodeset="file[3]" type="anyURI"/>
+            <xf:bind id="bind-4" nodeset="file[4]" type="anyURI"/>
+            <xf:bind id="bind-5" nodeset="file[5]" type="anyURI"/>
+            <xf:bind id="bind-6" nodeset="file[6]" type="string"/>
+            <xf:bind id="bind-7" nodeset="file[7]" type="anyURI"/>
+        </xf:model>
+    </head>
+    <body>
+        <xf:group>
+            <xf:upload id="upload-base64" ref="file[1]">
+                <xf:label>Upload (stored as base64Binary)</xf:label>
+                <xf:filename ref="@filename"/>
+                <xf:mediatype ref="@mediatype"/>
+            </xf:upload>
+            <xf:upload id="upload-hex" ref="file[2]">
+                <xf:label>Upload (stored as hexBinary)</xf:label>
+                <xf:filename ref="@filename"/>
+                <xf:mediatype ref="@mediatype"/>
+            </xf:upload>
+            <xf:upload id="upload-uri" ref="file[3]">
+                <xf:label>Upload (stored as URI)</xf:label>
+                <xf:filename ref="@filename"/>
+                <xf:mediatype ref="@mediatype"/>
+            </xf:upload>
+            <xf:upload id="upload-without-filename" ref="file[4]">
+                <xf:label>Upload (without filename)</xf:label>
+                <xf:mediatype ref="@mediatype"/>
+            </xf:upload>
+            <xf:upload id="upload-without-mediatype" ref="file[5]">
+                <xf:label>Upload (without mediatype)</xf:label>
+                <xf:filename ref="@filename"/>
+            </xf:upload>
+            <xf:upload id="upload-wrong" ref="file[6]">
+                <xf:label>Upload (bound to string)</xf:label>
+                <xf:filename ref="@filename"/>
+                <xf:mediatype ref="@mediatype"/>
+            </xf:upload>
+            <xf:upload id="upload-init" ref="file[7]">
+                <xf:label>Upload (init data)</xf:label>
+                <xf:filename ref="@filename"/>
+                <xf:mediatype ref="@mediatype"/>
+            </xf:upload>
+        </xf:group>
+    </body>
+</html>

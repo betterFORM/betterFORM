@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<buglet>
+    <category>linux</category>
+    <reference>self-reference</reference>
+    <subject>no sub</subject>
+    <datum>01.01.10000</datum>
+    <risk>3</risk>
+    <description>this comes from outside</description>
+    <see-also>
+        <urls>
+            <url>link1</url>
+            <url>link2</url>
+            <url>link3</url>
+        </urls>
+    </see-also>
+</buglet>

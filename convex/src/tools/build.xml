@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: build.xml 3351 2008-07-19 19:54:12Z joern $ -->
+<project name="convex" basedir="../../" default="deploy">
+
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- global properties -->
+    <!-- classpath properties -->
+
+
+
+    <!-- this target generates the build.properties for Ant. A call to this target is necessary to update
+    the string listing the libraries on the classpath which is later used for the applet tag. Therefore
+    is should be called once whenever the classpath changes. -->
+    <target name="buildLibParams" description="generate Ant properties file">
+        <xslt in="${basedir}/../build.properties.xml"
+              out="${basedir}/build.new.properties"
+              style="${basedir}/src/tools/buildLibParam.xsl"
+              force="true">
+            <param name="buildprops" expression="${basedir}/../build.properties.xml"/>
+            <classpath location="${basedir}/../core/main/lib/saxon9.jar"/>
+        </xslt>
+
+        <rename src="${basedir}/build.properties" dest="${basedir}/build.properties.old"/>
+        <rename src="${basedir}/build.new.properties" dest="${basedir}/build.properties"/>
+    </target>
+
+
+    <!--
+        <target name="XHTML2Convex" description="imports forms created by XFormations">
+            <xslt in="${basedir}/src/main/forms/actions-orig.xhtml"
+                out="${basedir}/src/main/forms/actions-new.xhtml"
+                style="${basedir}/src/main/resources/xslt/xhtml2convex.xsl"
+                force="yes" >
+            </xslt>
+
+        </target>
+    -->
+
+</project>

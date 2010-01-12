@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+	    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>7.8.4.a hmac() function using sha1, md5, and sha256</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css" />
+    <xforms:model >
+      <xforms:instance xmlns="">
+	<root />
+      </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group>
+      <xforms:label class="title">7.8.4.a hmac() function using sha1, md5, and sha256</xforms:label>
+    </xforms:group>
+
+    <xforms:group>
+      <xforms:label>
+	You must see the group label &quot;PASS&quot; for all Tests. 
+	If the function does not return the correct value you will see a group label
+	with the word &quot;FAIL&quot; and the incorrect value.
+      </xforms:label>
+    </xforms:group>
+
+    <xforms:group>
+      <xforms:group ref="self::node()[hmac('key', 'abc', 'SHA-1', 'hex') = '4fd0b215276ef12f2b3e4c8ecac2811498b656fc']">
+	<xforms:label>Test 1 PASS </xforms:label>
+      </xforms:group>
+      <xforms:group ref="self::node()[hmac('key', 'abc', 'SHA-1', 'hex') != '4fd0b215276ef12f2b3e4c8ecac2811498b656fc']">
+	<xforms:label>Test 1 FAIL: </xforms:label>
+	<xforms:output value="hmac('key', 'abc', 'SHA-1', 'hex')">
+	  <xforms:label>Bad Value =</xforms:label>
+	</xforms:output>
+      </xforms:group>
+    </xforms:group>
+
+    <xforms:group>
+      <xforms:group ref="self::node()[hmac('key', 'abc', 'MD5', 'hex') = 'd2fe98063f876b03193afb49b4979591']">
+	<xforms:label>Test 2 PASS </xforms:label>
+      </xforms:group>
+      <xforms:group ref="self::node()[hmac('key', 'abc', 'MD5', 'hex') != 'd2fe98063f876b03193afb49b4979591']">
+	<xforms:label>Test 2 FAIL: </xforms:label>
+	<xforms:output value="hmac('key', 'abc', 'MD5', 'hex')">
+	  <xforms:label>Bad Value =</xforms:label>
+	</xforms:output>
+      </xforms:group>
+    </xforms:group>
+
+    <xforms:group>
+      <xforms:group ref="self::node()[hmac('key', 'abc', 'SHA-256', 'hex') = '9c196e32dc0175f86f4b1cb89289d6619de6bee699e4c378e68309ed97a1a6ab']">
+	<xforms:label>Test 3 PASS </xforms:label>
+      </xforms:group>
+      <xforms:group ref="self::node()[hmac('key', 'abc', 'SHA-256', 'hex') != '9c196e32dc0175f86f4b1cb89289d6619de6bee699e4c378e68309ed97a1a6ab']">
+	<xforms:label>Test 3 FAIL: </xforms:label>
+	<xforms:output value="hmac('key', 'abc', 'SHA-256', 'hex')">
+	  <xforms:label>Bad Value =</xforms:label>
+	</xforms:output>
+      </xforms:group>
+    </xforms:group>
+
+    <xforms:group>
+      <xforms:group ref="self::node()[hmac('key', 'abc', 'SHA-1', 'base64')='T9CyFSdu8S8rPkyOysKBFJi2Vvw=']">
+	<xforms:label>Test 4 PASS </xforms:label>
+      </xforms:group>
+      <xforms:group ref="self::node()[hmac('key', 'abc', 'SHA-1', 'base64')!='T9CyFSdu8S8rPkyOysKBFJi2Vvw=']">
+	<xforms:label>Test 4 FAIL: </xforms:label>
+	<xforms:output value="hmac('key', 'abc', 'SHA-1', 'base64')">
+	  <xforms:label>Bad Value =</xforms:label>
+	</xforms:output>
+      </xforms:group>
+    </xforms:group>
+
+    <xforms:group>
+      <xforms:group ref="self::node()[hmac('key', 'abc', 'MD5', 'base64')='0v6YBj+HawMZOvtJtJeVkQ==']">
+	<xforms:label>Test 5 PASS </xforms:label>
+      </xforms:group>
+      <xforms:group ref="self::node()[hmac('key', 'abc', 'MD5', 'base64')!='0v6YBj+HawMZOvtJtJeVkQ==']">
+	<xforms:label>Test 5 FAIL: </xforms:label>
+	<xforms:output value="hmac('key', 'abc', 'MD5', 'base64')">
+	  <xforms:label>Bad Value =</xforms:label>
+	</xforms:output>
+      </xforms:group>
+    </xforms:group>
+
+    <xforms:group>
+      <xforms:group ref="self::node()[hmac('key', 'abc', 'SHA-256', 'base64')='nBluMtwBdfhvSxy4konWYZ3mvuaZ5MN45oMJ7Zehpqs=']">
+	<xforms:label>Test 6 PASS </xforms:label>
+      </xforms:group>
+      <xforms:group ref="self::node()[hmac('key', 'abc', 'SHA-256', 'base64')!='nBluMtwBdfhvSxy4konWYZ3mvuaZ5MN45oMJ7Zehpqs=']">
+	<xforms:label>Test 6 FAIL: </xforms:label>
+	<xforms:output value="hmac('key', 'abc', 'SHA-256', 'base64')">
+	  <xforms:label>Bad Value =</xforms:label>
+	</xforms:output>
+      </xforms:group>
+    </xforms:group>
+
+  </xhtml:body>
+</xhtml:html>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <xf:model>
+            <xf:instance id="instance-1" xmlns="">
+                <data>
+                    <item>2</item>
+                    <item>4</item>
+                    <item>1</item>
+                    <item>3</item>
+                    <item>5</item>
+                </data>
+            </xf:instance>
+            <xf:submission id="sort1"
+                           action="xslt:sort-instance.xsl?sort=item&amp;order=ascending"
+                           method="POST"
+                           replace="instance"/>
+            <xf:submission id="sort2"
+                           action="xslt:sort-instance.xsl?sort=item&amp;order=descending"
+                           method="POST"
+                           replace="instance"/>
+        </xf:model>
+    </head>
+    <body>
+        <xf:trigger id="do1">
+            <xf:label>submit</xf:label>
+            <xf:send submission="sort1"/>
+        </xf:trigger>
+        <xf:trigger id="do2">
+            <xf:label>submit</xf:label>
+            <xf:send submission="sort2"/>
+        </xf:trigger>
+    </body>
+</html>

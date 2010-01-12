@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+            xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <xhtml:head>
+        <xhtml:title>3.1.a XForms namespace</xhtml:title>
+        <xhtml:link rel="stylesheet" href="../../driverPages/forms/TestSuite11.css" type="text/css" />
+        <xforms:model>
+            <xforms:instance>
+                <car>
+                    <make>Honda</make>
+                    <year>2005</year>
+                    <color>tango red pearl</color>
+                    <hp>127</hp>
+                </car>
+            </xforms:instance>
+        </xforms:model>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group>
+            <xforms:label class="title">3.1.a XForms namespace</xforms:label>
+        </xforms:group>
+        <xforms:group>
+            <xforms:label>
+            <!-- 
+                An XForms processor must recognize elements and attributes in the XForms namespace.
+                A simple XForms output should appear below, with a value as indicated by the label of 
+                that output.
+            -->
+            	You must see a value of &quot;Honda&quot;:
+            </xforms:label>
+        </xforms:group>
+        <xforms:output ref="/car/make">
+            <xforms:label></xforms:label>
+        </xforms:output>
+    </xhtml:body>
+</xhtml:html>

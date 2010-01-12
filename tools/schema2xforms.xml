@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- $Id: schema2xforms.xml 2543 2007-04-03 21:14:05Z joern $ -->
+<!--
+    NOTE: The development of this utility is stalled due to missing resources.
+    Use at your own risk, and - please - don't blame us if anything doesn't work.
+
+    schema2XForms
+        this target generates an XForm from an W3C XMLSchema document.
+        A number of parameters need to be specified in order for it to work
+        (parameters are passed with -DparameterName=parameterValue):
+
+        - schema2XForms.xform: name of the xform to generate: there must be a
+        directory with this name under the "xforms" directory, and the schema
+        in this directory must be called with this name followed by .xsd
+
+        - schema2XForms.rootTagName: the "root" element name of the XML instance
+        corresponding to this schema
+        schema2XForms.instanceFile and schema2XForms.instanceHref: the instance
+        XML document can be specified either as a file, in which case it will be
+        included in the generated XForms, or as a URI, in which case a "href" link
+        will be set on the "instance" element of the generated XForms
+
+        - schema2XForms.action: this parameter will be set in the "action"
+        attribute of the "submission" element in the generated XForms document
+
+        - schema2XForms.submitMethod: this parameter will be set in the "method"
+        attribute of the "submission" element in the generated XForms document
+
+        - schema2XForms.wrapperType: specify the kind of wrapper elements that will
+        be generated in the XForms document.
+        Default will generate default, platform independant elements, while
+        "HTML" wrapperType will generate an XHTML document
+
+        - schema2XForms.stylesheet: name of the transformation stylesheet to use.
+        If none is specified, the default HTML stylesheet is used.
+
+	- schema2XForms.useSchemaTypes: use types given in the XMLSchema whenever possible
+	for simple types (the XMLSchema will need to be accessible from the XForms)
+-->
+<project name="Schema Builder" default="schema2XForms" basedir=".">
+
+	
+	<!-- ==================================================-->
+    <!-- properties used by the schema2XForms generator
+        (target=schema2Xforms) -->
+    <!-- ================================================== -->
+    <!-- schema2XForms.xform: name of the xform to generate: there must be a directory with this name
+    under the "xforms" directory, and the schema in this directory must be called
+    with this name followed by .xsd -->
+    <property name="schema2XForms.xform" value="buglet"/>
+    <!-- schema2XForms.rootTagName: the "root" element name of the XML instance
+    corresponding to this schema -->
+    <property name="schema2XForms.rootTagName" value="basicSchemaTest"/>
+    <!-- schema2XForms.instanceFile and schema2XForms.instanceHref: the instance
+    XML document can be specified either as a file, in which case it will be
+    included in the generated XForms, or as a URI, in which case a "href" link
+    will be set on the "instance" element of the generated XForms-->
+    <property name="schema2XForms.instanceFile" value=""/>
+    <property name="schema2XForms.instanceHref" value=""/>
+    <!-- schema2XForms.action: this parameter will be set in the "action" attribute
+    of the "submission" element in the generated XForms document -->
+    <property name="schema2XForms.action" value=""/>
+    <!-- schema2XForms.submitMethod: this parameter will be set in the "method"
+    attribute of the "submission" element in the generated XForms document -->
+    <property name="schema2XForms.submitMethod" value=""/>
+    <!-- schema2XForms.wrapperType: specify the kind of wrapper elements that will
+    be generated in the XForms document.
+    Default will generate an XHTML document that works with betterForm -->
+    <property name="schema2XForms.wrapperType" value="HTML"/>
+    <!--schema2XForms.stylesheet: name of the transformation stylesheet to use.
+    If none is specified, the default HTML stylesheet is used.-->
+    <property name="schema2XForms.stylesheet" value=""/>
+    <!--schema2XForms.base: the xml:base attribute of the generated XForms,
+    for example http://localhost:8080/betterform/
+    it is only needed if the "action" or the "instanceHref" parameters are relative
+    -->
+    <property name="schema2XForms.base" value=""/>
+    <!-- schema2XForms.useSchemaTypes: use types given in the XMLSchema whenever possible
+	for simple types (the XMLSchema will need to be accessible from the XForms)-->
+    <property name="schema2XForms.useSchemaTypes" value="true"/>
+
+    <property name="schema2XForms.generated.dir" value="generated"/>
+    <property name="schema2XForms.xforms.dir" value="xforms"/>
+
+    <path id="run.class.path">
+        <fileset dir="lib" includes="*.jar **/*.jar"/>
+        <pathelement path="build"/>
+    </path>
+
+    <!-- ================================================== -->
+    <!--    Schema2XForms                                   -->
+    <!-- generates a complete W3C XForms document from a XML Schema input. -->
+    <!-- ================================================== -->
+    <target name="schema2XForms" description="generate xforms form schema">
+        <ant antfile="core/build.xml" target="build" description="build schema generator" inheritall="false"/>
+
+        <!--
+        <taskdef name="Schema2XForms" classname="de.betterform.tools.schemabuilder.Schema2XForms" classpathref="run.class.path"/>
+        <Schema2XForms
+            inputURI="${schema2XForms.xforms.dir}/${schema2XForms.xform}/${schema2XForms.xform}.xsd"
+            rootTagName="${schema2XForms.rootTagName}"
+            outputFile="${schema2XForms.generated.dir}/${schema2XForms.xform}/${schema2XForms.xform}.xml"
+            instanceFile="${schema2XForms.instanceFile}"
+            instanceHref="${schema2XForms.instanceHref}"
+            action="${schema2XForms.action}"
+            submitMethod="${schema2XForms.submitMethod}"
+            wrapperType="${schema2XForms.wrapperType}"
+            stylesheet="${schema2XForms.stylesheet}"
+            base="${schema2XForms.base}"
+    	    useSchemaTypes="{schema2XForms.useSchemaTypes}"
+            />
+        -->
+        <!-- problem with taskdef: no "fork" possible !
+            -> we have to use java directly because of Xerces version problems (DOMImplementation for xs not found)
+         -->
+        <java fork="yes" classname="de.betterform.tools.schemabuilder.Schema2XForms" classpathref="run.class.path">
+            <arg line="inputURI=${schema2XForms.xforms.dir}/${schema2XForms.xform}/${schema2XForms.xform}.xsd rootTagName=${schema2XForms.rootTagName} outputFile=${schema2XForms.generated.dir}/${schema2XForms.xform}/${schema2XForms.xform}.xml instanceFile=${schema2XForms.instanceFile} instanceHref=${schema2XForms.instanceHref} action=${schema2XForms.action} submitMethod=${schema2XForms.submitMethod} wrapperType=${schema2XForms.wrapperType} stylesheet=${schema2XForms.stylesheet} base=${schema2XForms.base} useSchemaTypes=${schema2XForms.useSchemaTypes}"/>
+        </java>
+
+    </target>
+
+    <!-- new target to transform XForms from XML Schema with XSLT -->
+    <target name="schema2XFormsXSL" description="transform schema to xforms">
+        <style
+            basedir="tools/xs2xf"
+            in="tools/xs2xf/purchaseOrder.xsd"
+            out="tools/xs2xf/purchaseOrder.xhtml"
+            style="tools/xs2xf/Schema2XForms.xsl"
+            force="yes">
+            <param name="targetElement" expression="purchaseOrder"/> 
+        </style>
+    </target>
+
+</project>

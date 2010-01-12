@@ -1,0 +1,1 @@
+@app.name@ @app.version@ [build: @app.build@]

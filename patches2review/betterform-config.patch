@@ -1,0 +1,20 @@
+Index: web/src/main/webapp/WEB-INF/betterform-config.xml
+===================================================================
+--- web/src/main/webapp/WEB-INF/betterform-config.xml	(revision 3547)
++++ web/src/main/webapp/WEB-INF/betterform-config.xml	(working copy)
+@@ -148,6 +148,7 @@
+         -->
+         <uri-resolver scheme="file" class="org.betterform.xml.xforms.connector.file.FileURIResolver"/>
+         <uri-resolver scheme="http" class="org.betterform.xml.xforms.connector.http.HTTPURIResolver"/>
++        <uri-resolver scheme="https" class="org.betterform.xml.xforms.connector.http.HTTPURIResolver"/>
+         <uri-resolver scheme="class" class="org.betterform.util.ClassResourceLoader"/>
+         <uri-resolver scheme="xmlrpc" class="org.betterform.connectors.xmlrpc.XMLRPCURIResolver"/>
+         <uri-resolver scheme="context" class="org.betterform.xml.xforms.connector.context.ContextResolver"/>
+@@ -156,6 +157,7 @@
+         <submission-handler scheme="context" class="org.betterform.xml.xforms.connector.context.ContextSubmissionHandler"/>
+         <submission-handler scheme="file" class="org.betterform.xml.xforms.connector.file.FileSubmissionHandler"/>
+         <submission-handler scheme="http" class="org.betterform.xml.xforms.connector.http.HTTPSubmissionHandler"/>
++        <submission-handler scheme="https" class="org.betterform.xml.xforms.connector.http.HTTPSubmissionHandler"/>
+         <submission-handler scheme="mailto" class="org.betterform.connectors.smtp.SMTPSubmissionHandler"/>
+         <submission-handler scheme="xmlrpc" class="org.betterform.connectors.xmlrpc.XMLRPCSubmissionHandler"/>
+         <submission-handler scheme="echo" class="org.betterform.xml.xforms.connector.echo.EchoSubmissionHandler"/>

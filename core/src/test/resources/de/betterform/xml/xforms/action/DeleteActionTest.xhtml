@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <head>
+        <meta name="author" content="joernt at users.sourceforge.net"/>
+        <meta name="description" content="test form for delete action"/>
+        <meta name="version" content="$Id: DeleteActionTest.xhtml 3474 2008-08-15 22:29:43Z joern $"/>
+        <xf:model id="model-1">
+        	<xf:action ev:event="xforms-delete" ev:observer="instance-1">
+        		<xf:setvalue id="delete-location" ref="instance('instance-event')/delete-location" value="event('delete-location')"/>
+        		<xf:setvalue id="delete-nodes" ref="instance('instance-event')/nodes-deleted" value="count(event('deleted-nodes'))"/>
+        	</xf:action>                                            
+        	<xf:action ev:event="xforms-delete" ev:observer="instance-2">
+        		<xf:setvalue id="delete-location" ref="instance('instance-event')/delete-location" value="event('delete-location')"/>
+        		<xf:setvalue id="delete-nodes" ref="instance('instance-event')/nodes-deleted" value="count(event('deleted-nodes'))"/>
+        	</xf:action>
+            <xf:instance xmlns="" id="instance-1">
+                <data>
+                    <item>My data 1</item>
+                    <item>My data 2</item>
+                    <item>My data 3</item>
+                </data>
+            </xf:instance>
+            <xf:bind id="bind-1" nodeset="item"/>
+            <xf:instance xmlns="" id="instance-2">
+                <data>
+                    <item mutable="1">My data 1</item>
+                    <item mutable="1">My data 2</item>
+                    <item mutable="0">My data 3</item>
+                </data>
+            </xf:instance>
+            <xf:instance xmlns="" id="instance-event">
+                <data>
+                    <delete-location/>
+                    <nodes-deleted/>
+                </data>
+            </xf:instance>
+        </xf:model>
+    </head>
+    <body>
+        <xf:group>
+            <xf:label>Delete variations</xf:label>
+            <xf:repeat id="repeat" nodeset="item">
+                <xf:input ref=".">
+                    <xf:label>Data</xf:label>
+                </xf:input>
+            </xf:repeat>
+            <xf:trigger id="delete-from-empty-nodeset">
+                <xf:label>Delete from empty nodeset</xf:label>
+                <xf:action>
+                    <xf:delete nodeset="non-existing" at="1"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="delete-from-empty-nodeset-with-predicate">
+                <xf:label>Delete from empty nodeset (with predicate)</xf:label>
+                <xf:action>
+                    <xf:delete nodeset="item[.='My data X']" at="1"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="delete-at-negative">
+                <xf:label>Delete at -1</xf:label>
+                <xf:action>
+                    <xf:delete nodeset="item" at="-1"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="delete-at-zero">
+                <xf:label>Delete at 0</xf:label>
+                <xf:action>
+                    <xf:delete nodeset="item" at="0"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="delete-at-second">
+                <xf:label>Delete second</xf:label>
+                <xf:action>
+                    <xf:delete nodeset="item" at="2"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="delete-at-non-existing">
+                <xf:label>Delete non-existing</xf:label>
+                <xf:action>
+                    <xf:delete nodeset="item" at="4"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="delete-at-float">
+                <xf:label>Delete float</xf:label>
+                <xf:action>
+                    <xf:delete nodeset="item" at="1.5"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="delete-at-nan">
+                <xf:label>Delete NaN</xf:label>
+                <xf:action>
+                    <xf:delete nodeset="item" at="NaN"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="delete-whithout-at">
+                <xf:label>Delete second</xf:label>
+                <xf:action>
+                    <xf:delete nodeset="item" />
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="delete-from-other-instance">
+                <xf:label>Delete from other instance</xf:label>
+                <xf:action>
+                    <xf:delete nodeset="instance('instance-2')/item" at="2"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="delete-from-other-instance-with-context">
+                <xf:label>Delete from other instance with context</xf:label>
+                <xf:action>
+                    <xf:delete context="instance('instance-2')" nodeset="item" at="2"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="delete-with-predicate">
+                <xf:label>Delete with predicate expression</xf:label>
+                <xf:action>
+                    <xf:delete nodeset="item[.='My data 2']" at="1"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="delete-with-index-function">
+                <xf:label>Delete with 'index' function</xf:label>
+                <xf:action>
+                    <xf:delete nodeset="item" at="index('repeat')"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="delete-with-last-function">
+                <xf:label>Delete with 'last' function</xf:label>
+                <xf:action>
+                    <xf:delete nodeset="item" at="last()"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="delete-with-if-function">
+                <xf:label>Delete with 'if' function</xf:label>
+                <xf:action>
+                    <xf:delete nodeset="item" at="IF(count(/data/item) &gt; 1, index('repeat'), 0)"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="delete-with-predicate-and-last-function">
+                <xf:label>Delete with predicate expression and 'last' function</xf:label>
+                <xf:action>
+                    <xf:delete nodeset="instance('instance-2')/item[@mutable='1']" at="last()"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="delete-with-bind">
+                <xf:label>Delete with model binding</xf:label>
+                <xf:action>
+                    <xf:delete bind="bind-1" at="2"/>
+                </xf:action>
+            </xf:trigger>
+        </xf:group>
+    </body>
+</html>

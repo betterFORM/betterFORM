@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+  <xhtml:head>
+    <xhtml:title>4.5.1.a5 xforms-binding-exception, illegal binding expression</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+      <xforms:instance id="i_001">
+        <car xmlns="">
+          <make>Honda
+          	<model>S2000</model>
+          </make>
+          <year>2005</year>
+          <color>suzuka blue</color>
+          <hp>240</hp>
+        </car>
+      </xforms:instance>
+      <xforms:message ev:event="xforms-binding-exception" level="modal">xforms-binding-exception</xforms:message>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">4.5.1.a5 xforms-binding-exception, illegal binding expression</xforms:label>
+  	</xforms:group>
+	<xforms:group>
+		<xforms:label>
+		  You must see an xforms-binding-exception message or a fatal error due to an 
+		  xforms-binding-exception. 
+		</xforms:label>
+	</xforms:group>
+    <xforms:output ref="%">
+        <xforms:label>Output : </xforms:label>
+        <xforms:message ev:event="xforms-binding-exception" level="modal">xforms-binding-exception</xforms:message>
+    </xforms:output>
+  </xhtml:body>
+</xhtml:html>
