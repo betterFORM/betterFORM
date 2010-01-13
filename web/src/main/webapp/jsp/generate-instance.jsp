@@ -1,3 +1,8 @@
+<%--
+  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  --%>
+
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
 	<helloworld hw="instance replace test">Ulis</helloworld>

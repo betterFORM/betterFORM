@@ -1,6 +1,11 @@
 <%@ page import="de.betterform.xml.config.Config" %>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page contentType="text/html; ISO-8859-1" session="true" isErrorPage="true" %>
+<%--
+  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  --%>
+
 <html>
 <head>
 	<title>Error Page</title>

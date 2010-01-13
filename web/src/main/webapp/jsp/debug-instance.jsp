@@ -6,6 +6,11 @@
 <%@ page session="true" %>
 <%@ page errorPage="error.jsp" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" %>
+<%--
+  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  --%>
+
 <html>
     <head>
         <title>Instance Data submitted</title>

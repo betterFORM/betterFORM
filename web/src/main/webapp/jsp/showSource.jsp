@@ -2,6 +2,11 @@
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<%--
+  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  --%>
+
 <html>
   <head>
       <title>Simple jsp page</title>
