@@ -1,5 +1,5 @@
 /* Copyright 2008, 2009 - Joern Turner, Lars Windauer */
-/* Licensed under the terms of BSD and Apache 2 Licenses */
+
 
 /**
  *

@@ -1,6 +1,6 @@
 
 /* Copyright 2008 - Joern Turner, Lars Windauer */
-/* Licensed under the terms of BSD and Apache 2 Licenses */
+
 package de.betterform.connector;
 
 import org.apache.commons.logging.Log;

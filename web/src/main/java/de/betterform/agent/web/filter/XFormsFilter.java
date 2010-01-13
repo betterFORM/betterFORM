@@ -3,7 +3,7 @@
  *  Copyright (C) 2006 Adam Retter, Devon Portal Project <adam.retter@devon.gov.uk>
  */
 /* Copyright 2008 - Joern Turner, Lars Windauer */
-/* Licensed under the terms of BSD and Apache 2 Licenses */
+
 package de.betterform.agent.web.filter;
 
 import net.sf.ehcache.CacheManager;

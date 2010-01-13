@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
 package de.betterform.cache;
 
 import org.w3c.dom.Document;

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ */
+/* Licensed under the terms of BSD License */
 // TODO: modularize, introduce oo-like structures
 var DEBUG = true;
 var DATE_DISPLAY_FORMAT = "%d.%m.%Y";

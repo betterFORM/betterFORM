@@ -3,7 +3,7 @@
  * Created on Jan 21, 2004
  *
  *//* Copyright 2008 - Joern Turner, Lars Windauer */
-/* Licensed under the terms of BSD and Apache 2 Licenses */
+
 package de.betterform.connector.http;
 
 import org.apache.commons.httpclient.Header;

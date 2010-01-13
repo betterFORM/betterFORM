@@ -5,7 +5,7 @@
  * Created on August 25, 2004, 11:04 AM
  */
 /* Copyright 2008 - Joern Turner, Lars Windauer */
-/* Licensed under the terms of BSD and Apache 2 Licenses */
+
 package de.betterform.connector;
 
 import de.betterform.connector.serializer.FormDataSerializer;

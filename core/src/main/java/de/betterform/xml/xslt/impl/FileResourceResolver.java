@@ -1,5 +1,5 @@
 /* Copyright 2008 - Joern Turner, Lars Windauer */
-/* Licensed under the terms of BSD and Apache 2 Licenses */
+
 package de.betterform.xml.xslt.impl;
 
 import de.betterform.xml.xforms.exception.XFormsException;

@@ -1,5 +1,5 @@
 /* Copyright 2008 - Joern Turner, Lars Windauer */
-/* Licensed under the terms of BSD and Apache 2 Licenses */
+/* Licensed under the terms of BSD License */
 package de.betterform.agent.convex;
 
 import org.apache.commons.logging.Log;

@@ -1,5 +1,5 @@
 /* Copyright 2009 - Joern Turner */
-/* Licensed under the terms of BSD and Apache 2 Licenses */
+
 
 package de.betterform.agent.web.flux;
 
