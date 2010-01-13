@@ -1,8 +1,13 @@
 
 /*
+ * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
+/*
  * Created on Jan 21, 2004
  *
- *//* Copyright 2008 - Joern Turner, Lars Windauer */
+ */
 
 package de.betterform.connector.http;
 

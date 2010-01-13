@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ */
+
 package de.betterform.connector;
 
 import de.betterform.xml.xforms.model.submission.Submission;

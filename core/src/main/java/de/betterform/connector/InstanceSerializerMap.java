@@ -1,10 +1,15 @@
 
 /*
+ * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
+/*
  * InstanceSerializerMap.java
  *
  * Created on August 25, 2004, 11:04 AM
  */
-/* Copyright 2008 - Joern Turner, Lars Windauer */
+
 
 package de.betterform.connector;
 

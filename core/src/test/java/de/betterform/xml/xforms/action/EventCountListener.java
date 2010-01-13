@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ */
+
 package de.betterform.xml.xforms.action;
 
 import org.w3c.dom.events.EventListener;

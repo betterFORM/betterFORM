@@ -1,4 +1,6 @@
-// Copyright 2010 betterForm
+/*
+ * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ */
 package de.betterform.xml.events;
 
 import de.betterform.xml.events.impl.XercesXMLEvent;
