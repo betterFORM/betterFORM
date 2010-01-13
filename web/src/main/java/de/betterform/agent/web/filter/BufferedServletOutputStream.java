@@ -1,10 +1,9 @@
 /*
-*  XFormsFilter: BufferedServletOutputStream
-*  Copyright (C) 2006 Matthijs Wensveen <m.wensveen@func.nl>
-*
-*
-*/
-/* Copyright 2008 - Joern Turner, Lars Windauer */
+ * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
+
 
 package de.betterform.agent.web.filter;
 

@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
 <xsl:stylesheet version="2.0"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -6,9 +11,6 @@
     xmlns:bf="http://betterform.sourceforge.net/xforms"
     exclude-result-prefixes="xhtml xf bf">
 
-    <!-- Copyright 2008 - Joern Turner, Lars Windauer
-         Licensed under the terms of BSD and Apache 2 Licenses -->
-    
     <xsl:import href="common.xsl"/>
     <xsl:include href="ui.xsl"/>
     <xsl:include href="html-form-controls.xsl"/>

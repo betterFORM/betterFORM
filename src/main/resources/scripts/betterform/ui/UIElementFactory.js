@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
 dojo.provide("betterform.ui.UIElementFactory");
 
 // creates all betterForm Widgets for xf:* UI Controls dependent on datatype and controltype.

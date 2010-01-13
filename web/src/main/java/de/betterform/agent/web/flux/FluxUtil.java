@@ -1,4 +1,7 @@
-/* Copyright 2009 - Joern Turner */
+/*
+ * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
 
 
 package de.betterform.agent.web.flux;

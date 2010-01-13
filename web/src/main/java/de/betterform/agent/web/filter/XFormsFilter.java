@@ -1,8 +1,9 @@
 /*
- *  XFormsFilter
- *  Copyright (C) 2006 Adam Retter, Devon Portal Project <adam.retter@devon.gov.uk>
+ * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
  */
-/* Copyright 2008 - Joern Turner, Lars Windauer */
+
+
 
 package de.betterform.agent.web.filter;
 

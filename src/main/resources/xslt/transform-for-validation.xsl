@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0"
                 xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
@@ -6,9 +11,6 @@
     
     <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
 
-    <!-- Copyright 2008 - Joern Turner, Lars Windauer
-         Licensed under the terms of BSD and Apache 2 Licenses -->
-    
     <!-- put the "schemaLocation" attributes on the root node -->
     <xsl:template match="/*">
 

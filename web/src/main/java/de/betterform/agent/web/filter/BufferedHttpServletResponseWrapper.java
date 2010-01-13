@@ -1,10 +1,9 @@
 /*
- *  XFormsFilter: BufferedHttpServletResponseWrapper
- *  Copyright (C) 2006 Matthijs Wensveen <m.wensveen@func.nl>
- *
- *
+ * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
  */
-/* Copyright 2008 - Joern Turner, Lars Windauer */
+
+
 
 package de.betterform.agent.web.filter;
 
