@@ -26,10 +26,16 @@
 
     <licenses>
         <license>
-            <name>Artistic License</name>
-            <url>http://www.opensource.org/licenses/artistic-license.php</url>
+            <name>BSD License</name>
+            <url>http://www.opensource.org/licenses/bsd-license.php</url>
             <distribution>repo</distribution>
             <comments>A business-friendly OSS license</comments>
+        </license>
+        <license>
+            <name>Apache 2 License</name>
+            <url>http://www.opensource.org/licenses/apache2.0.php</url>
+            <distribution>repo</distribution>
+            <comments>Another business-friendly OSS license</comments>
         </license>
     </licenses>
 
