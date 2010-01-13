@@ -43,7 +43,7 @@
 	<body>
 		<xf:group appearance="full" id="outer">
 			<xf:label id="formlabel">betterForm Context Params - shows usage of <b>bffn:appContext()</b> extension
-				function (see hints for usage)
+				function (hover value to see function syntax)
 			</xf:label>
 
 			<xf:group appearance="full">
@@ -51,6 +51,16 @@
 				<xf:output value="bffn:appContext('requestURI')">
 					<xf:hint>bffn:appContext('requestURI')</xf:hint>
 					<xf:label>Request-URI</xf:label>
+				</xf:output>
+				<br/>
+				<xf:output value="bffn:appContext('requestURL')">
+					<xf:hint>bffn:appContext('requestURL')</xf:hint>
+					<xf:label>Request-URL</xf:label>
+				</xf:output>
+				<br/>
+				<xf:output value="bffn:appContext('queryString')">
+					<xf:hint>bffn:appContext('queryString')</xf:hint>
+					<xf:label>Request-Params</xf:label>
 				</xf:output>
 				<br/>
 				<xf:output value="bffn:appContext('webapp.realpath')">

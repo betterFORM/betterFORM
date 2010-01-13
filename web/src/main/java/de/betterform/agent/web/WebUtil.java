@@ -241,6 +241,8 @@ public class WebUtil {
         //adding the http session id to the context map
         processor.setContextParam(HTTP_SESSION_ID, httpSession.getId());
         processor.setContextParam(WebProcessor.REQUEST_URI, WebUtil.getRequestURI(request));
+        processor.setContextParam(WebProcessor.REQUEST_URL, request.getRequestURL().toString());
+        processor.setContextParam(WebProcessor.QUERY_STRING, (request.getQueryString() != null ? request.getQueryString() : ""));
         processor.setContextParam(WebProcessor.CONTEXTROOT, WebUtil.getContextRoot(request));
 
         if (LOGGER.isDebugEnabled()) {

@@ -59,6 +59,8 @@ public class WebProcessor implements XFormsProcessor, EventListener {
      */
     public static final String USERAGENT = "useragent";
     public static final String REQUEST_URI = "requestURI";
+    public static final String REQUEST_URL = "requestURL";
+    public static final String QUERY_STRING = "queryString";
     public static final String CONTEXTROOT = "contextroot";
     public static final String SESSION_ID = "betterform.session.id";
     public static final String REALPATH = "webapp.realpath";

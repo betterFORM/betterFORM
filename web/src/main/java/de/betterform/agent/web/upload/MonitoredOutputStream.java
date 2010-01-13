@@ -25,7 +25,8 @@ public class MonitoredOutputStream extends OutputStream {
 
     public void write(byte b[], int off, int len) throws IOException {
         target.write(b, off, len);
-        listener.bytesRead(len - off);
+//        listener.bytesRead(len - off);
+        listener.bytesRead(len);
     }
 
     public void write(byte b[]) throws IOException {
