@@ -47,28 +47,28 @@ dojo.declare(
     },
 
     getControlValue:function() {
-        console.debug("betterform.ui.input.Boolean.getControlValue for Control "+ this.id +": ",this.attr('checked') );
+        //console.debug("betterform.ui.input.Boolean.getControlValue for Control "+ this.id +": ",this.attr('checked') );
         var checkedValue = this.attr('checked');
-        console.debug("betterform.ui.input.Boolean.getControlValue: ",checkedValue );
+        //console.debug("betterform.ui.input.Boolean.getControlValue: ",checkedValue );
          var checked;
 
         if(checkedValue == 'true' || checkedValue == true) {
-            console.debug("betterform.ui.input.Boolean.getControlValue: checked", true);      
+            //console.debug("betterform.ui.input.Boolean.getControlValue: checked", true);
             checked = true;
         } else if ( checkedValue == 'false' || checkedValue == false) {
-            console.debug("betterform.ui.input.Boolean.getControlValue: checked", false);
+            //console.debug("betterform.ui.input.Boolean.getControlValue: checked", false);
             checked = false;
         }
 
 
         if(checked == undefined) {
             var value = this.attr('value');
-            console.debug("betterform.ui.input.Boolean value: ",value );
+            //console.debug("betterform.ui.input.Boolean value: ",value );
              if(value == 'true' || value == true) {
-            console.debug("betterform.ui.input.Boolean.getControlValue: checked", true);
+            //console.debug("betterform.ui.input.Boolean.getControlValue: checked", true);
             checked = true;
             } else if ( value == 'false' || value == false) {
-            console.debug("betterform.ui.input.Boolean.getControlValue: checked", false);
+            //console.debug("betterform.ui.input.Boolean.getControlValue: checked", false);
             checked = false;
             }
         }

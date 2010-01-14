@@ -226,7 +226,7 @@
         <echo message="************************************************************************************************************"/>
         <echo/>
 
-        <copy file="${basedir}/src/test/java/org/betterform/conformance/WebTestBase.java" tofile="${basedir}/target/test-sources/org/betterform/conformance/WebTestBase.java" overwrite="true">
+        <copy file="${basedir}/src/test/java/de/betterform/conformance/WebTestBase.java" tofile="${basedir}/target/test-sources/de/betterform/conformance/WebTestBase.java" overwrite="true">
           <filterset>
             <filter token="BROWSER" value="${web.test.selenium.browser}"/>
             <filter token="SELENIUMHOST" value="${web.test.selenium.server.host}"/>
@@ -311,7 +311,7 @@
         <echo message="************************************************************************************************************"/>
         <echo/>
         <javac description="compile test files"
-               excludes="org/betterform/agent/**"
+               excludes="de/betterform/agent/**"
                srcdir="${basedir}/target/test-sources"
                destdir="${basedir}/target/test-classes"
                classpathref="web.test.class.path"
@@ -377,14 +377,14 @@
             </fileset>
         </delete>
 
-        <copy todir="${basedir}/target/test-sources/org/betterform/conformance/xf11/">
+        <copy todir="${basedir}/target/test-sources/de/betterform/conformance/xf11/">
             <fileset dir="${basedir}/target/test-sources" includes="**/*.java"/>
         </copy>
 
         <delete includeemptydirs="true">
             <fileset dir="${basedir}/target/test-sources"
                      includes="**/*"
-                     excludes="org/**"
+                     excludes="de/**"
                      casesensitive="yes"/>
         </delete>
     </target>
@@ -416,14 +416,14 @@
             </fileset>
         </delete>
 
-        <copy todir="${basedir}/target/test-sources/org/betterform/conformance/xf11/">
+        <copy todir="${basedir}/target/test-sources/de/betterform/conformance/xf11/">
             <fileset dir="${basedir}/target/test-sources" includes="**/*.java"/>
         </copy>
 
         <delete includeemptydirs="true">
             <fileset dir="${basedir}/target/test-sources"
                      includes="**/*"
-                     excludes="org/**"
+                     excludes="de/**"
                      casesensitive="yes"/>
         </delete>
 
@@ -458,14 +458,14 @@
             </fileset>
         </delete>
 
-        <copy todir="${basedir}/target/test-sources/org/betterform/conformance/xf11/">
+        <copy todir="${basedir}/target/test-sources/de/betterform/conformance/xf11/">
             <fileset dir="${basedir}/target/test-sources" includes="**/*.java"/>
         </copy>
 
         <delete includeemptydirs="true">
             <fileset dir="${basedir}/target/test-sources"
                      includes="**/*"
-                     excludes="org/**"
+                     excludes="de/**"
                      casesensitive="yes"/>
         </delete>
 

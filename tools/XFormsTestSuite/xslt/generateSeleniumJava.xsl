@@ -3,9 +3,9 @@
     xmlns:html="http://www.w3.org/1999/xhtml"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:bf="http://betterform.sourceforge.net/xforms"
-    exclude-result-prefixes="betterform xsl">
+    exclude-result-prefixes="bf xsl">
 
-    <!-- Copyright 2008 - Joern Turner, Lars Windauer
+    <!-- Copyright 2010 - Joern Turner, Lars Windauer, Tobi Krebs, Fabian Otto
          Licensed under the terms of BSD and Apache 2 Licenses -->
 
     <xsl:param name="rootDir" select="'../../../../../../src/main/xforms'"/>
