@@ -30,7 +30,7 @@ dojo.declare(
     },
 
     postCreate:function() {
-        // console.debug("ComboBox.postCreate");
+        console.debug("ComboBox.postCreate");
         dojo.connect(this.domNode,"onchange", this,"_onChange");
         this.setCurrentValue();
     },
@@ -88,7 +88,7 @@ dojo.declare(
     },
 
     _handleSetControlValue:function(value){
-        // console.debug("ComboBox._handleSetControlValue value: ",value);
+        console.debug("ComboBox._handleSetControlValue value: ",value);
         for(i =0;i<this.domNode.options.length;i++){
             if(this.domNode.options[i].value == value){
                 this.domNode.selectedIndex = i;

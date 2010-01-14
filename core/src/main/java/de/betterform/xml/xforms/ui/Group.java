@@ -6,6 +6,7 @@
 package de.betterform.xml.xforms.ui;
 
 import de.betterform.xml.events.*;
+import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.ui.state.BoundElementState;
@@ -143,7 +144,7 @@ public class Group extends BindingElement implements EventListener,DefaultAction
     }
 
     private String getFirstFocusableControl() throws XFormsException {
-        return XPathUtil.evaluateAsString(this.element,".//*[bf:data/@bf:enabled='true'][1]/@id");
+        return XPathUtil.evaluateAsString(this.element,".//*["+ NamespaceConstants.BETTERFORM_PREFIX +":data/@" + NamespaceConstants.BETTERFORM_PREFIX + ":enabled='true'][1]/@id");
     }
 
     // template methods

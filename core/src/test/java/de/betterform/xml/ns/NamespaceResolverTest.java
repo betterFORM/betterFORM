@@ -72,7 +72,7 @@ public class NamespaceResolverTest extends TestCase {
         assertEquals("wrong 'ev' namespace", "http://www.w3.org/2001/xml-events", map.get("ev"));
         assertEquals("wrong 'xsi' namespace", "http://www.w3.org/2001/XMLSchema-instance", map.get("xsi"));
         assertEquals("wrong 'xsd' namespace", "http://www.w3.org/2001/XMLSchema", map.get("xsd"));
-        assertEquals("wrong 'betterform' namespace", "http://betterform.sourceforge.net/xforms", map.get("betterform"));
+        assertEquals("wrong 'bf' namespace", "http://betterform.sourceforge.net/xforms", map.get("bf"));
         assertEquals("wrong 'test' namespace", "http://tempuri.org/ns2", map.get("test"));
     }
 
@@ -90,7 +90,7 @@ public class NamespaceResolverTest extends TestCase {
         assertEquals("wrong 'ev' namespace", "http://www.w3.org/2001/xml-events", NamespaceResolver.getNamespaceURI(this.root, "ev"));
         assertEquals("wrong 'xsi' namespace", "http://www.w3.org/2001/XMLSchema-instance", NamespaceResolver.getNamespaceURI(this.root, "xsi"));
         assertEquals("wrong 'xsd' namespace", "http://www.w3.org/2001/XMLSchema", NamespaceResolver.getNamespaceURI(this.root, "xsd"));
-        assertEquals("wrong 'betterform' namespace", "http://betterform.sourceforge.net/xforms", NamespaceResolver.getNamespaceURI(this.root, "betterform"));
+        assertEquals("wrong 'bf' namespace", "http://betterform.sourceforge.net/xforms", NamespaceResolver.getNamespaceURI(this.root, "bf"));
 
         assertEquals("wrong 'test' namespace", "http://tempuri.org/ns1", NamespaceResolver.getNamespaceURI(this.root.getOwnerDocument().getDocumentElement(), "test"));
         assertEquals("wrong 'test' namespace", "http://tempuri.org/ns2", NamespaceResolver.getNamespaceURI(this.root, "test"));
@@ -109,7 +109,7 @@ public class NamespaceResolverTest extends TestCase {
         assertEquals("wrong 'ev' namespace", "ev", NamespaceResolver.getPrefix(this.root, "http://www.w3.org/2001/xml-events"));
         assertEquals("wrong 'xsi' namespace", "xsi", NamespaceResolver.getPrefix(this.root, "http://www.w3.org/2001/XMLSchema-instance"));
         assertEquals("wrong 'xsd' namespace", "xsd", NamespaceResolver.getPrefix(this.root, "http://www.w3.org/2001/XMLSchema"));
-        assertEquals("wrong 'betterform' namespace", "betterform", NamespaceResolver.getPrefix(this.root, "http://betterform.sourceforge.net/xforms"));
+        assertEquals("wrong 'bf' namespace", "bf", NamespaceResolver.getPrefix(this.root, "http://betterform.sourceforge.net/xforms"));
 
         assertEquals("wrong 'test' namespace", "test", NamespaceResolver.getPrefix(this.root.getOwnerDocument().getDocumentElement(), "http://tempuri.org/ns1"));
         assertEquals("wrong 'test' namespace", "test", NamespaceResolver.getPrefix(this.root, "http://tempuri.org/ns2"));

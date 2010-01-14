@@ -149,13 +149,13 @@ dojo.declare(
     },
 
     setControlValue:function(value) {
-        // console.debug("ControlValue.setControlValue: [id", this.id, " / value: ",value,"] currentValue: ",this.currentValue, " getControlValue", this.getControlValue());
+        console.debug("ControlValue.setControlValue: [id", this.id, " / value: ",value,"] currentValue: ",this.currentValue, " getControlValue", this.getControlValue());
         if (value != undefined && this.currentValue != value) {
             this.currentValue = value;
             this._handleSetControlValue(value);
         }
         var valueNew = this.getControlValue();
-        // console.debug("betterform.ui.ControlValue.setControlValue ControlId: "+ this.xfControl.id +" valueOld:'" + this.currentValue + "' valueNew:'" + valueNew + "' [update processor:'" + eval(this.currentValue != valueNew) + "']");
+        console.debug("betterform.ui.ControlValue.setControlValue ControlId: "+ this.xfControl.id +" valueOld:'" + this.currentValue + "' valueNew:'" + valueNew + "' [update processor:'" + eval(this.currentValue != valueNew) + "']");
         if (this.currentValue != valueNew) {
             this.xfControl.setControlValue(valueNew);
             this.currentValue = valueNew;

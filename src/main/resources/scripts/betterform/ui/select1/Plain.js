@@ -16,7 +16,7 @@ dojo.declare(
 {
 
     buildRendering:function() {
-        //console.debug("betterform.ui.select1.Plain.buildRendering: Create compact Select1");
+        console.debug("betterform.ui.select1.Plain.buildRendering: Create compact Select1");
         this.domNode = this.srcNodeRef;
     },
 
@@ -62,7 +62,7 @@ dojo.declare(
             return "";
         }
         var value = this.domNode.options[this.domNode.selectedIndex].value;
-        // console.debug("betterform.ui.select1.Plain value: ", value);
+        console.debug("betterform.ui.select1.Plain value: ", value);
         if(value != undefined) {
             return value;
         }else {

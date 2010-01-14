@@ -9,7 +9,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xforms="http://www.w3.org/2002/xforms"
     xmlns:bf="http://betterform.sourceforge.net/xforms"
-    exclude-result-prefixes="xforms betterform xhtml">
+    exclude-result-prefixes="xforms bf xhtml">
 
 
     <xsl:import href="dojo-dev.xsl"/>

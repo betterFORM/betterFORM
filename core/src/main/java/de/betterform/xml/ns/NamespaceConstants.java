@@ -21,7 +21,7 @@ public interface NamespaceConstants {
     /**
      * The betterForm namespace prefix.
      */
-    String BETTERFORM_PREFIX = "betterform";
+    String BETTERFORM_PREFIX = "bf";
 
     /**
      * The XForms namespace.

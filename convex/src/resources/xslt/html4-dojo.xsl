@@ -9,7 +9,7 @@
     xmlns:xforms="http://www.w3.org/2002/xforms"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:bf="http://betterform.sourceforge.net/xforms"
-    exclude-result-prefixes="xhtml xforms betterform xlink">
+    exclude-result-prefixes="xhtml xforms bf xlink">
     <!-- Copyright 2010 betterForm Project-->
 
     <xsl:include href="dojo-ui.xsl"/>

@@ -47,7 +47,7 @@ public class ExampleServer {
     public void addHandler(String props) {
     	try {
 	    	PropertyHandlerMapping phm = new PropertyHandlerMapping();
-	    	phm.load(Thread.currentThread().getContextClassLoader(), "org/betterform/connector/xmlrpc/server/xmlrpc.server.properties");
+	    	phm.load(Thread.currentThread().getContextClassLoader(), "de/betterform/connector/xmlrpc/server/xmlrpc.server.properties");
 	    	XmlRpcServer xmlRpcServer = server.getXmlRpcServer();
 	    	xmlRpcServer.setHandlerMapping(phm);
     	} catch (IOException e){

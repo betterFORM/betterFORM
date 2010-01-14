@@ -190,7 +190,7 @@ public class XPathCache {
             Map.Entry entry = (Map.Entry) it.next();
             independentContext.declareNamespace((String) entry.getKey(), (String) entry.getValue());
         }
-        independentContext.declareNamespace("betterformfn","java:de.betterform.xml.xforms.xpath.BetterFormXPathFunctions");
+        independentContext.declareNamespace("bffn","java:de.betterform.xml.xforms.xpath.BetterFormXPathFunctions");
         // XXX declare variable
 
         independentContext.setFunctionLibrary(fgXFormsFunctionLibrary);
