@@ -37,6 +37,7 @@ dojo.declare(
     tree:null,
     id:null,
     controlValue:null,
+    templateString: null,
 
 
 

@@ -30,6 +30,7 @@ dojo.declare(
 		widgetType: "XFTime",
         templatePath: dojo.uri.dojoUri('../betterform/widget/templates/HtmlTime.html'),
         templateCssPath:  dojo.uri.dojoUri("../betterform/widget/templates/HtmlTime.css"),
+        templateString: null,
 
         // parameters
         id: "",

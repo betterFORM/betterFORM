@@ -14,6 +14,7 @@ dojo.declare(
     rows:5,
     cols:40,
     templatePath: dojo.moduleUrl("betterform", "ui/templates/MinimalTextarea.html"),
+    templateString: null,
 
    postMixInProperties:function() {
         this.inherited(arguments);

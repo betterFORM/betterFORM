@@ -20,6 +20,7 @@ dojo.declare(
     timeDijit:null,
     constraints:null,
     timezone:null,
+    templateString: null,
 
     postMixInProperties:function() {
         this.inherited(arguments);

@@ -19,6 +19,7 @@ dojo.declare(
     instanceId:null,
     modelId:null,
     adjustTimestamp:false,
+    templateString: null,
 
     buildRendering:function() {
         // console.debug("betterform.ui.tree.OPMLTree.buildRendering srcNode:", this.srcNodeRef);

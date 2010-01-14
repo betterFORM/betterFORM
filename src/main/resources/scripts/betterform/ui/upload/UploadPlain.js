@@ -15,6 +15,8 @@ dojo.declare(
 {
 
     templatePath: dojo.moduleUrl("betterform", "ui/templates/HtmlUpload.html"),
+    templateString: null,
+    
     // parameters
     value:"",
     disabledNodes: new Array(),
