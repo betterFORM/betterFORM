@@ -5,7 +5,7 @@
     <distributable/>
     <filter>
         <filter-name>CrossContextFilter</filter-name>
-        <filter-class>org.betterform.agent.web.filter.CrossContextFilter</filter-class>
+        <filter-class>de.betterform.agent.web.filter.CrossContextFilter</filter-class>
         <init-param>
             <param-name>xforms.engine.webcontext</param-name>
             <param-value>chiba</param-value>
