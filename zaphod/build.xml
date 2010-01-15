@@ -18,7 +18,6 @@
     <xmlproperty file="../build.properties.xml"
              semanticAttributes="true" keepRoot="false" />
 
-
     <!-- local Zaphod properties -->
   
     <property name="target" value="${basedir}/target"/>
@@ -49,43 +48,7 @@
         <delete dir="${target}/classes/"/>
         <mkdir dir="${target}/classes"/>
 
-        <!--<ant antfile="${core.dir}/build.xml" target="compile" dir="${core.dir}" inheritall="false"/>-->
-
-        <!--<copy todir="${target}/classes">-->
-            <!--<fileset dir="${core.dir}/target/classes"/>-->
-        <!--</copy>-->
-
-        <!-- set version filter -->
-        <!--<filter token="zaphod.name" value="${zaphod.app.name}"/>-->
-        <!--<filter token="zaphod.version" value="${zaphod.app.version}"/>-->
-        <!--<filter token="app.build" value="${DSTAMP}/${TSTAMP}"/>-->
-
-        <!--<copy todir="${targetname}"-->
-              <!--file="${basedir}/src/resources/version.info"-->
-              <!--filtering="true"-->
-              <!--overwrite="true"/>-->
-
    </target>
-
-    <!--<target name="check.dojo">-->
-        <!--<echo>Check condition</echo>-->
-        <!--<condition property="dojo.not.available">-->
-            <!--<not><available file="${targetname}/resources/scripts/dojo/dojo.js"/></not>-->
-        <!--</condition>-->
-    <!--</target>-->
-
-
-    <!--<target name="prepare-js" depends="check.dojo" if="dojo.not.available">-->
-        <!--<ant  antfile="build.xml" target="prepare-js" dir=".." inheritall="false"/>-->
-        <!--<copy  description="copy javascript resources from global directory"-->
-               <!--todir="${targetname}/resources/scripts"-->
-               <!--includeemptydirs="true">-->
-            <!--<fileset dir="../target/resources/scripts">-->
-                <!--<include name="**/*.*"/>-->
-            <!--</fileset>-->
-        <!--</copy>-->
-    <!--</target>-->
-
 
     <target name="compile" depends="prepare" description="compiling zaphod classes">
         <echo/>
@@ -102,6 +65,8 @@
                deprecation="${properties.javac.deprecation}"
                optimize="${properties.javac.optimize}"/>
     </target>
+
+
 
     <target name="package" depends="compile" description="create zaphod jar">
         <echo/>
@@ -125,14 +90,6 @@
         <echo message="************************************************************************************"/>
         <echo/>
 
-        <!--<echo/>-->
-        <!--<echo message="************************************************************************************"/>-->
-        <!--<echo message="copying zaphod jar..."/>-->
-        <!--<echo message="************************************************************************************"/>-->
-        <!--<echo/>-->
-        <!--&lt;!&ndash;<copy todir="${targetname}/bin"&ndash;&gt;-->
-              <!--file="${targetname}.jar" overwrite="true"/>-->
-
         <echo/>
         <echo message="************************************************************************************"/>
         <echo message="copying Core jars..."/>
@@ -151,7 +108,6 @@
             <fileset dir="${basedir}/src/resources" excludes="**/*.tar.gz"/>
             <!--<fileset dir="${basedir}/src/resources" />-->
         </copy>
-
 
 
         <echo/>
@@ -226,8 +182,5 @@
         <!-- remove test results dir -->
         <delete dir="${basedir}/target/test/doc"/>
     </target>
-
-   
-
 
 </project>
