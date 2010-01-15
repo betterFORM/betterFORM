@@ -6,7 +6,7 @@
  * in your web.xml file:
  * <filter>
 <filter-name>CrossContextFilter</filter-name>
-<filter-class>org.betterform.agent.web.filter.CrossContextFilter</filter-class>
+<filter-class>de.betterform.agent.web.filter.CrossContextFilter</filter-class>
 <init-param>
 <param-name>xforms.engine.webcontext</param-name>
 <param-value>chiba</param-value>
@@ -17,9 +17,9 @@
 <url-pattern>/*</url-pattern>
 </filter-mapping>
  */
-package org.betterform.agent.web.filter;
+package de.betterform.agent.web.filter;
 
-import org.betterform.agent.web.filter.BufferedHttpServletResponseWrapper;
+import de.betterform.agent.web.filter.BufferedHttpServletResponseWrapper;
 
 import java.io.IOException;
 import java.io.PrintStream;

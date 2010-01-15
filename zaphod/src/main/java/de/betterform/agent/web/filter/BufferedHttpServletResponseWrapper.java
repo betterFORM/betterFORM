@@ -6,9 +6,9 @@
  */
 /* Copyright 2008 - Joern Turner, Lars Windauer */
 /* Licensed under the terms of BSD and Apache 2 Licenses */
-package org.betterform.agent.web.filter;
+package de.betterform.agent.web.filter;
 
-import org.betterform.agent.web.filter.BufferedServletOutputStream;
+import de.betterform.agent.web.filter.BufferedServletOutputStream;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
