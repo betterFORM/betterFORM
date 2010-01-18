@@ -9,18 +9,18 @@
     	<xhtml:title>10.8.d dispatch element dispatches custom event that bubbles</xhtml:title>
     	<xhtml:link rel="stylesheet" href="../../driverPages/forms/TestSuite11.css" type="text/css"/>
     	<xforms:model id="mymodel">
-       		<xforms:instance xmlns="">
+       		<xforms:instance xmlns="" id="gohere">
 				<car id="carnode">
-				  <xforms:action ev:event="custom-event">
-				    <xforms:message level="modal">Parent Element</xforms:message>
-				  </xforms:action>
 				  <color id="colornode">
-				    <xforms:action ev:event="custom-event" id="gohere">
-				      <xforms:message level="modal">Child Element</xforms:message>
-				    </xforms:action>
 				  </color>
 				</car>
        		</xforms:instance>
+      	    <xforms:action ev:event="custom-event" ev:observer="gohere">
+				 <xforms:message level="modal">Child Element</xforms:message>
+			</xforms:action>
+			<xforms:action ev:event="custom-event">
+			    <xforms:message level="modal">Parent Element</xforms:message>
+			</xforms:action>
     	</xforms:model>
   	</xhtml:head>
   	<xhtml:body>
