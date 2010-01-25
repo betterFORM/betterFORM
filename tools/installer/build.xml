@@ -1,0 +1,56 @@
+<project name="Installer" default="createInstaller" basedir=".">
+
+    <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
+
+
+    <target name="clean">
+        <delete dir="${basedir}/target"/>
+    </target>
+    <target name="prepare">
+        <!-- ##### building betterForm war for deployment ##### -->
+        <ant antfile="../../web/build.xml" target="package" inheritall="false">
+        </ant>
+
+        <mkdir dir="${basedir}/target/webapp"/>
+        
+        <copy todir="${basedir}/target">
+            <fileset dir="${basedir}/../../web/target/${web.app.name}-${web.app.version}"/>
+        </copy>
+
+        <copy todir="${basedir}/target">
+            <fileset file="${basedir}/../../src/main/license/BSD-license.txt"/>
+        </copy>
+
+        <!--##### fetching jetty from remote ##### -->
+        <get usetimestamp="true" ignoreerrors="true" src="http://dist.codehaus.org/jetty/jetty-6.1.22/jetty-6.1.22.zip"
+             dest="${basedir}/target/jetty.zip"/>
+
+        <!--##### unpacking jetty can move it into a subfolder  - rename it to betterform ##### -->
+        <unzip src="${basedir}/target/jetty.zip"
+               dest="${basedir}/target/jetty" />
+        <move file="${basedir}/target/jetty/jetty-6.1.22" tofile="${basedir}/target/jetty/betterform"/>
+    </target>
+
+    <target name="betterFormWarInstaller" 
+            description="Builds a betterForm Installer for deploying existing webcontainer">
+
+
+        <!-- Allows us to use the IzPack Ant task -->
+        <taskdef name="izpack"
+                 classpath="${basedir}/lib/standalone-compiler.jar"
+                 classname="com.izforge.izpack.ant.IzPackTask"/>
+
+        <!-- We call IzPack -->
+        <echo message="Makes the installer using IzPack"/>
+
+        <izpack input="${basedir}/installer.xml"
+                output="${basedir}/target/betterform-install.jar"
+                installerType="standard"
+                basedir="${basedir}/target"/>
+    </target>
+
+
+
+    
+
+</project>

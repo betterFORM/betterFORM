@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<!--
+  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<installation version="1.0">
+    <!--
+        The info section.
+        The meaning of the tags should be natural ...
+    -->
+
+    <info>
+        <appname>betterForm</appname>
+        <appversion>3.0</appversion>
+        <url>http://www.betterform.de</url>
+        <javaversion>1.5</javaversion>
+    </info>
+
+    <conditions>
+        <condition id="jetty" type="packselection">
+            <packid>jetty</packid>
+        </condition>
+    </conditions>
+
+
+    <!--
+        The gui preferences indication.
+        Sets the installer window to 640x480. It will not be able to change the size.
+    -->
+    <guiprefs width="640" height="480" resizable="no">
+        <modifier key="useButtonIcons" value="no"/>
+  		<modifier key="useLabelIcons" value="no"/>
+  		<modifier key="layoutAnchor" value="NORTHWEST"/>
+  		<modifier key="useHeadingPanel" value="yes"/>
+  		<modifier key="headingImageOnLeft" value="yes"/>
+  		<modifier key="headingLineCount" value="1"/>
+  		<modifier key="headingFontSize" value="1.5"/>
+  		<modifier key="headingBackgroundColor" value="0x00ffffff"/>
+		<modifier key="labelFontSize" value="1.2"/>
+        <modifier key="useButtonIcons" value="yes"/>
+  		<modifier key="useLabelIcons" value="yes"/>
+		<modifier key="labelGap" value="6"/>
+		<modifier key="headingPanelCounter" value="progressbar"/>
+  		<modifier key="headingPanelCounterPos" value="inNavigationPanel"/>
+ 	</guiprefs>
+
+    <!--
+        The locale section.
+        Asks here to include the English and French langpacks.
+    -->
+    <locale>
+        <langpack iso3="deu"/>
+        <langpack iso3="eng"/>
+    </locale>
+
+
+    <!--
+        The resources section.
+        The ids must be these ones if you want to use the LicencePanel and/or the InfoPanel.
+    -->
+
+    <resources>
+    	<res id="Heading.image" src="../resource/logo2.png"/>
+        <res id="LicencePanel.licence" src="BSD-license.txt"/>
+        <res id="Installer.image" src="../resource/logo.png" />
+
+        <!--<res id="Installer.image" src="nice-image.png" />-->
+        <res src="../resource/info-border.png" id="Installer.image.0"/>
+        <res src="../resource/info-border.png" id="Installer.image.1"/>
+        <res src="../resource/pack-border.png" id="Installer.image.2"/>
+        <res src="../resource/pack-border.png" id="Installer.image.3"/>
+        <res src="../resource/installing-border.png" id="Installer.image.4"/>
+        <res src="../resource/finished-border.png" id="Installer.image.5"/>
+
+    </resources>
+
+
+    <!--
+        The panels section.
+        We indicate here which panels we want to use. The order will be respected.
+    -->
+
+    <panels labelFontSize="2.0">
+        <panel classname="HelloPanel"/>
+        <panel classname="LicencePanel"/>
+        <panel classname="TargetPanel"/>
+        <panel classname="PacksPanel"/>
+        <panel classname="InstallPanel"/>
+        <panel classname="FinishPanel"/>
+    </panels>
+
+    <!--
+        The packs section.
+        We specify here our packs.
+    -->
+
+    <packs>
+
+        <pack name="betterForm 3.0" required="yes">
+            <description>betterForm 3.0 webapp install</description>
+            <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/betterform" condition="!jetty" />
+        </pack>
+        
+<!--
+        <pack id="jetty" name="jetty" required="no">
+            <description>Jetty Servlet Container</description>
+            <file src="jetty/betterform" targetdir="$INSTALL_PATH"/>
+            <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/betterform/webapps/betterform"/>
+        </pack>
+
+
+        <pack name="eXist" required="no">
+            <description>betterForm bundled with eXist database</description>
+            <depends packname="jetty"/>
+            <file src="exist.war" unpack="true" targetdir="$INSTALL_PATH/betterform/webapps/exist"/>
+        </pack>
+        
+        <pack name="Forms" required="no">
+            <description>betterForm sample forms</description>
+            <file src="../../../src/main/xforms/demo" targetdir="$INSTALL_PATH/betterform/forms"
+                  condition="!jetty"/>
+            <file src="../../../src/main/xforms/reference" targetdir="$INSTALL_PATH/betterform/forms"
+                  condition="!jetty"/>
+            <file src="../../../src/main/xforms/test" targetdir="$INSTALL_PATH/betterform/forms"
+                  condition="!jetty"/>
+                  
+                  
+            <file src="../../../src/main/xforms/demo" targetdir="$INSTALL_PATH/betterform/webapps/betterform/forms"
+                  condition="jetty"/>
+            <file src="../../../src/main/xforms/reference" targetdir="$INSTALL_PATH/betterform/webapps/betterform/forms"
+                  condition="jetty"/>
+            <file src="../../../src/main/xforms/test" targetdir="$INSTALL_PATH/betterform/webapps/betterform/forms"
+                  condition="jetty"/>
+
+        </pack>
+        
+        <pack name="Testsuite1.1" required="no">
+            <description>official XForms 1.1 Test Suite</description>
+            <file src="../../../src/test/resources/XFormsTestSuite1.1E1" targetdir="$INSTALL_PATH/betterform/forms"
+                  condition="!jetty"/>
+            <file src="../../../src/test/resources/XFormsTestSuite1.1E1" targetdir="$INSTALL_PATH/betterform/webapps/betterform/forms"
+                  condition="jetty"/>
+
+        </pack>
+-->
+    </packs>
+</installation>
+
