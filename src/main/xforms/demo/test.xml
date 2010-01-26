@@ -1,5 +1,5 @@
 <?xml version="1.0"  encoding="UTF-8"?>
 <data xmlns:bf="http://betterform.sourceforge.net/xforms" xmlns="">
     <item>1</item>
-    <bf:include src="../test2.xml"/>
+    <bf:include src="data/test2.xml"/>
 </data>

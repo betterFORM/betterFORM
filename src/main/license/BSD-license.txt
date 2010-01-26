@@ -1,3 +1,5 @@
+The BSD License
+-------------------------------------
 Copyright (c) 2010, betterForm Project (http://www.betterform.de)
 All rights reserved.
 

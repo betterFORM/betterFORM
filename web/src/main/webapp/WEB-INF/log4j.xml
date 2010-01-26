@@ -52,7 +52,7 @@
     </appender>
 -->
 
-
+<!--
     <category name="org.directwebremoting">
         <priority value="WARN"/>
     </category>
@@ -64,9 +64,10 @@
     <logger name="net.sf.ehcache">
         <level value="WARN"/>
     </logger>
+    -->
 
     <root>
-        <priority value="WARN"/>
+        <priority value="ERROR"/>
         <appender-ref ref="SHELL"/>
     </root>
 

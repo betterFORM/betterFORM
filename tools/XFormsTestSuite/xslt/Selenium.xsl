@@ -10,7 +10,7 @@
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:hdlg="http://www.hdlg.info/XML/filesystem"
-        exclude-result-prefixes="betterform xsl ev">
+        exclude-result-prefixes="bf xsl ev">
     <xsl:param name="targetURL" select="''"/>
     <xsl:param name="server" select="''"/>
     <xsl:param name="uriParams" select="''"/>

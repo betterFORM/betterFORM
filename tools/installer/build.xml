@@ -6,16 +6,17 @@
     <target name="clean">
         <delete dir="${basedir}/target"/>
     </target>
-    <target name="prepare">
+    <target name="prepare" description="prepares all files needed for installer EXCEPT exist.war">
         <!-- ##### building betterForm war for deployment ##### -->
         <ant antfile="../../web/build.xml" target="package" inheritall="false">
         </ant>
 
-        <mkdir dir="${basedir}/target/webapp"/>
+        <mkdir dir="${basedir}/target"/>
         
         <copy todir="${basedir}/target">
-            <fileset dir="${basedir}/../../web/target/${web.app.name}-${web.app.version}"/>
+            <fileset file="${basedir}/../../web/target/${web.app.name}-${web.app.version}.war"/>
         </copy>
+        <move file="${basedir}/target/${web.app.name}-${web.app.version}.war" tofile="${basedir}/target/betterform.war"/>
 
         <copy todir="${basedir}/target">
             <fileset file="${basedir}/../../src/main/license/BSD-license.txt"/>

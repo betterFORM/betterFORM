@@ -22,6 +22,9 @@
         <condition id="jetty" type="packselection">
             <packid>jetty</packid>
         </condition>
+        <condition id="bf" type="packselection">
+            <packid>betterForm 3.0</packid>
+        </condition>
     </conditions>
 
 
@@ -29,7 +32,7 @@
         The gui preferences indication.
         Sets the installer window to 640x480. It will not be able to change the size.
     -->
-    <guiprefs width="640" height="480" resizable="no">
+    <guiprefs width="640" height="580" resizable="no">
         <modifier key="useButtonIcons" value="no"/>
   		<modifier key="useLabelIcons" value="no"/>
   		<modifier key="layoutAnchor" value="NORTHWEST"/>
@@ -98,27 +101,31 @@
 
     <packs>
 
-        <pack name="betterForm 3.0" required="yes">
-            <description>betterForm 3.0 webapp install</description>
+        <pack name="betterForm 3.0" required="no">
+            <description>betterForm 3.0 XForms Engine</description>
             <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/betterform" condition="!jetty" />
         </pack>
-        
-<!--
-        <pack id="jetty" name="jetty" required="no">
-            <description>Jetty Servlet Container</description>
-            <file src="jetty/betterform" targetdir="$INSTALL_PATH"/>
-            <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/betterform/webapps/betterform"/>
+
+        <pack name="betterForm 3.0 war" required="no" preselected="no">
+            <description>betterForm 3.0 as war-file</description>
+            <file src="betterform.war" targetdir="$INSTALL_PATH" condition="!jetty+!bf" />
         </pack>
 
+        <pack id="jetty" name="jetty" required="no">
+            <description>Jetty Servlet Container Ver. 6.1.22</description>
+            <fileset dir="jetty/betterform" targetdir="$INSTALL_PATH" includes="*/**"/>
+            <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/webapps/betterform"/>
+        </pack>
 
-        <pack name="eXist" required="no">
-            <description>betterForm bundled with eXist database</description>
+        <pack name="eXist" required="no" preselected="no">
+            <description>eXist 1.4 XML Database</description>
             <depends packname="jetty"/>
-            <file src="exist.war" unpack="true" targetdir="$INSTALL_PATH/betterform/webapps/exist"/>
+            <file src="exist.war" unpack="true" targetdir="$INSTALL_PATH/webapps/exist"/>
         </pack>
         
         <pack name="Forms" required="no">
-            <description>betterForm sample forms</description>
+            <description>betterForm's demo, reference and test forms</description>
+            <depends packname="betterForm 3.0"/>
             <file src="../../../src/main/xforms/demo" targetdir="$INSTALL_PATH/betterform/forms"
                   condition="!jetty"/>
             <file src="../../../src/main/xforms/reference" targetdir="$INSTALL_PATH/betterform/forms"
@@ -127,24 +134,25 @@
                   condition="!jetty"/>
                   
                   
-            <file src="../../../src/main/xforms/demo" targetdir="$INSTALL_PATH/betterform/webapps/betterform/forms"
+            <file src="../../../src/main/xforms/demo" targetdir="$INSTALL_PATH/webapps/betterform/forms"
                   condition="jetty"/>
-            <file src="../../../src/main/xforms/reference" targetdir="$INSTALL_PATH/betterform/webapps/betterform/forms"
+            <file src="../../../src/main/xforms/reference" targetdir="$INSTALL_PATH/webapps/betterform/forms"
                   condition="jetty"/>
-            <file src="../../../src/main/xforms/test" targetdir="$INSTALL_PATH/betterform/webapps/betterform/forms"
+            <file src="../../../src/main/xforms/test" targetdir="$INSTALL_PATH/webapps/betterform/forms"
                   condition="jetty"/>
 
         </pack>
         
-        <pack name="Testsuite1.1" required="no">
-            <description>official XForms 1.1 Test Suite</description>
+        <pack name="Testsuite1.1" required="no" preselected="no">
+            <description>official XForms 1.1 Conformance Test Suite</description>
+            <depends packname="betterForm 3.0"/>
+
             <file src="../../../src/test/resources/XFormsTestSuite1.1E1" targetdir="$INSTALL_PATH/betterform/forms"
                   condition="!jetty"/>
-            <file src="../../../src/test/resources/XFormsTestSuite1.1E1" targetdir="$INSTALL_PATH/betterform/webapps/betterform/forms"
+            <file src="../../../src/test/resources/XFormsTestSuite1.1E1" targetdir="$INSTALL_PATH/webapps/betterform/forms"
                   condition="jetty"/>
 
         </pack>
--->
     </packs>
 </installation>
 
