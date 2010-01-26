@@ -9,6 +9,7 @@ dojo.require("betterform.XFormsProcessor");
 dojo.require("dojo.NodeList-fx");
 dojo.require("betterform.ui.UIElementFactory");
 dojo.require("dojox.layout.FloatingPane");
+dojo.require("dojox.widget.Toaster");
 
 /**
 	All Rights Reserved.

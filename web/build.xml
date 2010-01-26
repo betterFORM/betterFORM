@@ -235,10 +235,11 @@
         <xslt basedir="${basedir}/../src/main/doc/site/content"
               destdir="${webapp.dir}"
               style="${basedir}/../src/main/doc/site/xslt/site.xsl"
+              processor="trax"
               force="true"
               includes="*.xml"
               extension=".html">
-            <!--<classpath refid="generator.libs"/>-->
+            <classpath refid="saxon.libs"/>
             <param name="onlineVersion" expression="${onlineVersion}"/>
         </xslt>
 
@@ -410,19 +411,23 @@
     <!-- **************************************** DOJO TARGETS **************************************** -->
     <!-- **************************************** DOJO TARGETS **************************************** -->
     <!-- **************************************** DOJO TARGETS **************************************** -->
-    <target name="build-dojo" depends="clean, deploy-resources" description="build dojo release">
+    <target name="build-dojo" depends="deploy-resources" description="build dojo release">
         <java classname="org.mozilla.javascript.tools.shell.Main"
               dir="${webapp.dir}/resources/scripts/util/buildscripts"
               classpath="${webapp.dir}/resources/scripts/util/shrinksafe/js.jar:${webapp.dir}/resources/scripts/util/shrinksafe/shrinksafe.jar"
               jvmversion="1.5"
               fork="true"
               maxmemory="512m">
-            <arg value="build.js"/>            
+
+            <arg value="build.js"/>
             <arg value="profile=betterform"/>
-            <arg value="optimize=shrinksafe.keepLines"/>
+            <arg value="localeList='en,us'"/>
+            <arg value="optimize=shrinksafe"/>
+            <arg value="mini=true "/>
+            <arg value="copyTests=false"/>
             <arg value="cssOptimize=comments"/>
             <arg value="action=clean,release"/>
-            <arg value="version=1.3.2"/>
+            <arg value="version=1.3"/>
         </java>
     </target>
 

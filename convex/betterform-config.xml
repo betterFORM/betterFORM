@@ -17,7 +17,7 @@
         <property name="xslt.path" value="resources/xslt"
                   description="directory location for XSLT files relative to context"/>
         <property name="xslt.default" value="dojo.xsl" description="default XSLT file to be used to generate the UI"/>
-        <property name="useragent.default" value="dojo" description="default user agent when no specific one is requested by request param, attribute or header"/>
+        <!--<property name="useragent.default" value="dojo" description="default user agent when no specific one is requested by request param, attribute or header"/>-->
         <property name="xslt.cache.enabled" value="true" description="flag for XSLT caching"/>
 
         <property name="scriptPath" value="/resources/scripts/"

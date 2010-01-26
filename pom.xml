@@ -16,6 +16,7 @@
         <module>core</module>
         <module>convex</module>
         <module>web</module>       
+        <module>xApp</module>       
     </modules>
 
      <organization>
@@ -40,8 +41,8 @@
     </licenses>
 
     <scm>
-        <url>https://www.r15z.de/svn/betterform/unstable/betterform</url>
-        <developerConnection>scm:svn:https://www.r15z.de/svn/betterform/unstable/betterform</developerConnection>
+        <url>https://chiba-project.org/svn/betterform/trunk/</url>
+        <developerConnection>scm:svn:https://chiba-project.org/svn/betterform/trunk/</developerConnection>
         <connection>${project.scm.developerConnection}</connection>
         <tag>HEAD</tag>
     </scm>
@@ -65,10 +66,10 @@
 
 
     <distributionManagement>
-        <downloadUrl>https://www.r15z.de/svn/betterform/branches/web-3.0.0</downloadUrl>
+        <downloadUrl>https://chiba-project.org/svn/betterform/trunk</downloadUrl>
         <repository>
             <id>betterform-dav</id>
-            <url>dav:https://www.r15z.de/svn/betterform/branches/web-3.0.0/</url>
+            <url>dav:https://chiba-project.org/svn/betterform/trunk/</url>
         </repository>
     </distributionManagement>
 
@@ -82,7 +83,7 @@
 
     <issueManagement>
         <system>Trac</system>
-        <url>https://www.r15z.de</url>
+        <url>https://www.chiba-project.org</url>
     </issueManagement>
 
 

@@ -44,12 +44,9 @@
 		<test id="8.1.7.g"></test>
 		<test id="9.3.1.b">initial index for repeat is 1 not 3 / Solution: evaluate initial setindex() action before index() function</test>
 	</failingTest>
+
+    <verify>
+        <test id="10.2.b"></test>
+        <test id="10.3.h"></test>
+    </verify>
 </conformanceTests>
-
-
-
-
-
-
-
-

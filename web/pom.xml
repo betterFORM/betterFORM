@@ -14,7 +14,7 @@
 
     <packaging>war</packaging>
 
-    <name>betterForm Web</name>
+    <name>Web</name>
     <description>betterForm Web Project</description>
     <inceptionYear>2007</inceptionYear>
     <url>http://betterform.sourceforge.net</url>
@@ -53,42 +53,35 @@
                     </items>
                 </configuration>
             </plugin>
-     <!--
             <plugin>
-              <artifactId>maven-antrun-plugin</artifactId>
-              <executions>
-                <execution>
-                  <phase>validate</phase>
-                  <configuration>
-                      <tasks>
-                          <exec executable="svn" output="svnlog.out">
-                              <arg line="info"/>
-                          </exec>
-                          <loadproperties srcFile="svnlog.out">
-                              <filterchain>
-                                  <linecontains>
-                                      <contains value="Revision"/>
-                                  </linecontains>
-                              </filterchain>
-                          </loadproperties>
-                          <delete file="svnlog.out"/>
-                          <echo>SVN Revision ${Revision}</echo>
-                          <filter token="app.name" value="${project.name}"/>
-                          <filter token="app.version" value="${project.version}"/>
-                          <filter token="app.build" value="${buildNumber}"/>
-                          <filter token="revision.number" value="${Revision}"/>
-                          <copy todir="src/main/resources/META-INF" file="${basedir}/../core/src/main/java/version.info" filtering="true" overwrite="true"/>
-                      </tasks>
-                  </configuration>
-                  <goals>
-                    <goal>run</goal>
-                  </goals>
-                </execution>
-              </executions>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <configuration>
+                            <tasks>
+                                <ant antfile="${basedir}/build.xml">
+                                    <target name="exploded-webapp"/>
+                                </ant>
+    <!--
+                                <copy todir="${webapp.dir}/${forms.target}"
+                                      overwrite="true">
+                                    <fileset dir="${basedir}/${properties.rootDir}/src/main/xforms"/>
+                                </copy>
+    -->
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
--->
         </plugins>
         <finalName>${project.artifactId}</finalName>
+
+
     </build>
 
     <dependencies>

@@ -11,7 +11,7 @@ dojo.require("dijit.form.TimeTextBox");
 
 dojo.declare(
         "betterform.ui.input.DateTime",
-        [betterform.ui.ControlValue,dijit._Templated],
+        betterform.ui.ControlValue,
 {
     templatePath: dojo.moduleUrl("betterform", "ui/templates/DateTime.html"),
     id:null,
@@ -20,7 +20,6 @@ dojo.declare(
     timeDijit:null,
     constraints:null,
     timezone:null,
-    templateString: null,
 
     postMixInProperties:function() {
         this.inherited(arguments);
