@@ -325,7 +325,7 @@
             </xsl:if>
             <div id="helpWindow" style="display:none"/>
             <div id="caCopyright">
-                <xsl:text disable-output-escaping="yes">powered by betterForm, &amp;copy; 2001-2009</xsl:text>
+                <xsl:text disable-output-escaping="yes">powered by betterForm, &amp;copy; 2010</xsl:text>
             </div>
 
             <xsl:if test="$debug-enabled='true'">
