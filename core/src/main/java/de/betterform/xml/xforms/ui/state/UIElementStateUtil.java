@@ -363,7 +363,9 @@ public class UIElementStateUtil {
                 }
 
             } else {
-                LOGGER.warn("Type " + tmpType + " cannot be localized");
+                if(LOGGER.isInfoEnabled()) {
+                    LOGGER.info("Type " + tmpType + " cannot be localized");        
+                }
             }
         }
         return value;

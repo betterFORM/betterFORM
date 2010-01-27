@@ -280,10 +280,8 @@
         <delete dir="${webapp.dir}/resources/scripts/dijit"/>
         <delete dir="${webapp.dir}/resources/scripts/dojo"/>
         <delete dir="${webapp.dir}/resources/scripts/dojox"/>
-        <!--
         <delete dir="${webapp.dir}/resources/scripts/util"/>
-        <delete dir="${webapp.dir}/resources/scripts/release/dojo/util"/>
-        -->
+
         <delete includeemptydirs="true">
             <fileset dir="${webapp.dir}/resources/scripts/release/dojo" includes="**/tests/"/>
         </delete>

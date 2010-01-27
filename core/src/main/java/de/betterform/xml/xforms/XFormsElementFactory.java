@@ -77,7 +77,7 @@ public class XFormsElementFactory implements XFormsConstants {
 
         if(name.equals("script")){
             Node parent = element.getParentNode();
-            if(parent.getLocalName().equals(ACTION)){
+            if(parent.getLocalName().equals(ACTION) || parent.getLocalName().equals(TRIGGER) || parent.getLocalName().equals(SUBMISSION)  ){
                 return true;
             }else {
                 return false;
