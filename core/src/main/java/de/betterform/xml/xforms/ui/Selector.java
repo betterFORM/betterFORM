@@ -342,15 +342,11 @@ public class Selector extends AbstractFormControl {
         List items = XPathCache.getInstance().evaluate(elemContext, 1,xPath , extendedPrefixMapping, xpathFunctionContext);
         Iterator iterator = items.iterator();
         Boolean inRange = false;
-        Boolean emptyItemExists = false;
-        Boolean noItemSelected = true;
 
         while (iterator.hasNext()) {
             itemId = ((NodeInfo) iterator.next()).getStringValue();
             item = (Item) this.container.lookup(itemId);
-            if ("".equals(item.getLabel())) {
-                emptyItemExists = true;
-            }
+
             if(item.hasCopyChild()){
                 this.selectHasCopyChilds = true;
             }
@@ -369,7 +365,6 @@ public class Selector extends AbstractFormControl {
                         this.container.dispatch(this.getTarget(), BetterFormEventNames.STATE_CHANGED, map);
                     }
                 }
-                noItemSelected = false;
                 inRange = true;
                 // allow only one first selection for non-multiple selectors
                 selectable = isMultiple();
@@ -384,53 +379,6 @@ public class Selector extends AbstractFormControl {
 
         }
 
-        if(!emptyItemExists &&items != null && items.size() > 0 && !isMultiple()){
-            Document owner = this.element.getOwnerDocument();
-            Element emptyElem = owner.createElementNS(NamespaceConstants.XFORMS_NS,xfNamespacePrefix+":" +ITEM);
-
-            emptyElem.setAttributeNodeNS(owner.createAttributeNS(NamespaceConstants.XFORMS_NS, "generated"));
-
-
-            Element emptyLabel = owner.createElementNS(NamespaceConstants.XFORMS_NS,xfNamespacePrefix+":" +LABEL);
-            emptyElem.appendChild(emptyLabel);
-            item = null;
-
-            if(this.selectHasCopyChilds) {
-                Element emptyCopy = owner.createElementNS(NamespaceConstants.XFORMS_NS,xfNamespacePrefix+":" +COPY);
-                emptyElem.appendChild(emptyCopy);
-
-            }else {
-                Element emptyValue = owner.createElementNS(NamespaceConstants.XFORMS_NS,xfNamespacePrefix+":" +VALUE);
-                emptyElem.appendChild(emptyValue);
-            }
-            if(items != null && items.size() > 0) {
-
-            }
-            itemId = ((NodeInfo) items.get(0)).getStringValue();
-            item = (Item) this.container.lookup(itemId);
-
-            item.getElement().getParentNode().insertBefore(emptyElem,item.getElement());
-            Item emptyItem = (Item) container.getElementFactory().createXFormsElement(emptyElem, getModel());
-
-            if (repeatItemId != null) {
-                emptyItem.setRepeatItemId(repeatItemId);
-                emptyItem.setGeneratedId(model.getContainer().generateId());
-                emptyItem.registerId();
-            }
-            emptyItem.init();
-
-            if(noItemSelected == true) {
-                emptyItem.select();
-                if (dispatch) {
-                    this.container.dispatch(emptyItem.getTarget(), XFormsEventNames.SELECT, null);
-                }
-            }else {
-                emptyItem.deselect();
-                if (dispatch) {
-                    this.container.dispatch(emptyItem.getTarget(), XFormsEventNames.DESELECT, null);
-                }
-            }
-        }
         if(!inRange){
             this.container.dispatch(this.target, XFormsEventNames.OUT_OF_RANGE, null);
         }
@@ -495,13 +443,16 @@ public class Selector extends AbstractFormControl {
 
     private boolean compareSkeletons(Element itemValue, Element boundValue) {
         if(LOGGER.isDebugEnabled()){
-            LOGGER.debug("Prototype Skeleton START");
+            LOGGER.debug("Compare Selector Skeleton itemValue: " + itemValue + " boundValue: " + boundValue);
+/*
+            LOGGER.debug("Compare Selector Skeleton START");
             DOMUtil.prettyPrintDOM(itemValue);
             LOGGER.debug("\nPrototype Skeleton END");
 
             LOGGER.debug("\nData Prototype: START");
             DOMUtil.prettyPrintDOM(boundValue);
             LOGGER.debug("\nData Prototype: END");
+*/
 
         }
         DOMComparator comparator = new DOMComparator();
@@ -516,4 +467,4 @@ public class Selector extends AbstractFormControl {
         return false;
     }
 }
-// end of class
+ // end of class

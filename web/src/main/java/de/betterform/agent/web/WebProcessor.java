@@ -780,13 +780,7 @@ public class WebProcessor implements XFormsProcessor, EventListener {
      * @return the action url to be used in the HTML form
      */
     protected String getActionURL(boolean scripted) {
-        String defaultActionURL = null;
-
-        if (useragent.equalsIgnoreCase("dojo")) {
-            defaultActionURL = WebUtil.getRequestURI(request);
-        } else {
-            defaultActionURL = this.request.getRequestURI();
-        }
+        String defaultActionURL = this.request.getRequestURI();
         String encodedDefaultActionURL = response.encodeURL(defaultActionURL);
         int sessIdx = encodedDefaultActionURL.indexOf(";jsession");
         String sessionId = null;

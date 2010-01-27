@@ -59,6 +59,9 @@ public class PlainHtmlProcessor extends WebProcessor implements EventListener {
      * @throws XFormsException
      */
     public void handleUIEvent(UIEvent event) throws XFormsException {
+        if(LOGGER.isDebugEnabled()) {
+            LOGGER.debug("PlainHtmlProcessor.handleUIEvent event: " + event.getEventName());
+        }
         super.handleUIEvent(event);
 
         if (event.getEventName().equalsIgnoreCase("http-request")) {
@@ -79,6 +82,9 @@ public class PlainHtmlProcessor extends WebProcessor implements EventListener {
      *              event's flow and default action.
      */
     public void handleEvent(Event event) {
+        if(LOGGER.isDebugEnabled()) {
+            LOGGER.debug("PlainHtmlProcessor.handleEvent event type: " + event.getType());
+        }
         super.handleEvent(event);
 
         try {

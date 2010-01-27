@@ -52,19 +52,17 @@
     </appender>
 -->
 
-<!--
     <category name="org.directwebremoting">
-        <priority value="WARN"/>
+        <priority value="ERROR"/>
     </category>
 
     <category name="de.betterform">
-        <priority value="DEBUG"/>
+        <priority value="WARN"/>
     </category>
 
     <logger name="net.sf.ehcache">
-        <level value="WARN"/>
+        <level value="ERROR"/>
     </logger>
-    -->
 
     <root>
         <priority value="ERROR"/>

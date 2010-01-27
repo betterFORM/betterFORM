@@ -13,8 +13,7 @@ dojo.declare(
 {
     label:"",
     templatePath: dojo.moduleUrl("betterform", "ui/templates/HtmlLinkButton.html"),
-    templateString: null,
-    
+
     postMixInProperties:function() {
         this.inherited(arguments);
         this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);

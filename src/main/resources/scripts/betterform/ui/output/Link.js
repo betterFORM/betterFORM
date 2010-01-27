@@ -19,6 +19,7 @@ dojo.declare(
 	// properties and methods
 		// settings
         href: "",
+        label:null,
 		
         templateString:"<span><a href=\"${href}\" target=\"_blank\" dojoAttachPoint=\"containerNode\"></a></span>",
 
@@ -28,8 +29,10 @@ dojo.declare(
         },
 
         postCreate:function() {
-            if(dojo.byId(this.xfControl.id+ "-label") != undefined){
-                this.containerNode.innerHTML = dojo.byId(this.xfControl.id+ "-label").innerHTML;      
+            this.label = dojo.byId(this.xfControl.id+ "-label");
+            if(this.label != undefined){
+                this.containerNode.innerHTML = this.label.innerHTML;
+                this.label.innerHTML = '';
             }
 
         },

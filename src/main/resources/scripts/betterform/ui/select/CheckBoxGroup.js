@@ -25,10 +25,12 @@ dojo.declare(
 {
 
     buildRendering:function() {
+        // console.debug("CheckBoxGroup.buildRendering");
         this.domNode = this.srcNodeRef;
     },
 
     postMixInProperties:function() {
+        // console.debug("CheckBoxGroup.postMixInProperties");
         this.inherited(arguments);
         this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);
         if(dojo.attr(this.srcNodeRef, "incremental") == undefined || dojo.attr(this.srcNodeRef, "incremental") == "" || dojo.attr(this.srcNodeRef, "incremental") == "true" ){
@@ -39,6 +41,7 @@ dojo.declare(
     },
 
     postCreate:function() {
+        // console.debug("CheckBoxGroup.postCreate");
         this.inherited(arguments);
         var tmpValue = "";
         dojo.query("*[checked]", this.domNode).forEach(

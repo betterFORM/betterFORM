@@ -18,7 +18,6 @@ dojo.declare(
         value:"",
         selectWidget:null,
         templatePath: dojo.moduleUrl("betterform", "ui/templates/CheckBox.html"),
-        templateString: null,
 
 
     postMixInProperties:function() {

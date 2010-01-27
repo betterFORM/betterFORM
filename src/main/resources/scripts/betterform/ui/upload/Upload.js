@@ -11,7 +11,6 @@ dojo.require("dijit.form.Button");
 
 dojo.declare(
         "betterform.ui.upload.Upload",
-/*        [betterform.ui.ControlValue,dojox.form.FileInputOverlay],*/
         betterform.ui.ControlValue,
 {
     postMixInProperties:function() {

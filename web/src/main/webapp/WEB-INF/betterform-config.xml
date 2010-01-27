@@ -160,6 +160,11 @@
         <submission-handler scheme="file" class="de.betterform.connector.file.FileSubmissionHandler"/>
         <submission-handler scheme="http" class="de.betterform.connector.http.HTTPSubmissionHandler"/>
         <submission-handler scheme="https" class="de.betterform.connector.http.HTTPSubmissionHandler"/>
+        <!-- HTTPSubmissionHandlerXI evaluates any bf:include within the data to load -->
+<!--
+        <submission-handler scheme="http" class="de.betterform.connector.http.HTTPSubmissionHandlerXI"/>
+        <submission-handler scheme="https" class="de.betterform.connector.http.HTTPSubmissionHandler"/>
+-->
         <submission-handler scheme="mailto" class="de.betterform.connector.smtp.SMTPSubmissionHandler"/>
         <submission-handler scheme="xmlrpc" class="de.betterform.connector.xmlrpc.XMLRPCSubmissionHandler"/>
         <submission-handler scheme="echo" class="de.betterform.connector.echo.EchoSubmissionHandler"/>

@@ -15,7 +15,6 @@ dojo.declare(
 {
 
     templatePath: dojo.moduleUrl("betterform", "ui/templates/HtmlUpload.html"),
-    templateString: null,
     
     // parameters
     value:"",
@@ -28,12 +27,13 @@ dojo.declare(
     progressUpdate:null,
 
     postMixInProperties:function() {
+        // console.debug("Upload.postMixInProperties: this",this);
         this.inherited(arguments);
         this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);
     },
 
     postCreate:function() {
-
+      // console.debug("Upload.postMixInProperties: START this",this);
       this.inherited(arguments);
       dojo.attr(this.inputNode,"name", dojo.attr(this.srcNodeRef,"name"));
       dojo.attr(this.fileName,"id", dojo.attr(this.srcNodeRef,"fileId"));
@@ -96,22 +96,6 @@ dojo.declare(
 
         // disable all controls contained in repeat prototypes to avoid
         // inconsistent updates.
-//        var rPrototypes = document.getElementsByClassName("xfRepeatPrototype", "betterform");
-//        for (var p = 0; p < rPrototypes.length; p++) {
-//            var rControls = document.getElementsByClassName("value", rPrototypes[p].id);
-//            for (var c = 0; c < rControls.length; c++) {
-//                var rControl = dojo.byId(rControls[c]);
-//                if (rControl) {
-//                    // disable control and store for later state restoring
-//                    rControl.disabled = true;
-//                    this.disabledNodes.push(rControl);
-//                }
-//            }
-//        }
-//
-//            // disable all uploads that have a different id than the current
-//        // to avoid re-sending of multiple uploads.
-       // var thisControlId = this.xfControlId;
         var me = this.inputNode;
         dojo.query(".xfUpload.xfReadWrite .xfValue").forEach(function(item) {
             if(item != me){
@@ -124,8 +108,7 @@ dojo.declare(
         this.progress.style.display="block";
         var path = this.inputNode.value;
         var filename = path.substring(path.lastIndexOf("/") + 1);
-
-            //polling betterForm for update information and submit the form
+        //polling betterForm for update information and submit the form
         this.progressUpdate = setInterval("fluxProcessor.fetchProgress('" + this.xfControlId + "','" + filename + "')", 500);
 
         document.forms["betterform"].target = "UploadTarget";
