@@ -44,9 +44,15 @@
         <!-- We call IzPack -->
         <echo message="Makes the installer using IzPack"/>
 
+<!--
         <izpack input="${basedir}/installer.xml"
                 output="${basedir}/target/betterform-install.jar"
                 installerType="web"
+                basedir="${basedir}/target"/>
+-->
+        <izpack input="${basedir}/installer.xml"
+                output="${basedir}/target/betterform-install.jar"
+                installerType="standard"
                 basedir="${basedir}/target"/>
     </target>
 
