@@ -20,47 +20,11 @@
 				<data>
 					<trigger/>
 					<repeated>
-						<item>
-							<select selected="uk">
-								<country name="England" value="uk"/>
-								<country name="Germany" value="de"/>
-								<country name="Guatemala" value="gt"/>
-							</select>
-							<select1 selected="uk">
-								<country name="England" value="uk"/>
-								<country name="Germany" value="de"/>
-								<country name="Guatemala" value="gt"/>
-							</select1>
-						</item>
-						<item>
-							<select selected="fr">
-								<country name="France" value="fr"/>
-								<country name="United States" value="us"/>
-								<country name="Russia" value="ru"/>
-							</select>
-							<select1 selected="fr">
-								<country name="France" value="fr"/>
-								<country name="United States" value="us"/>
-								<country name="Russia" value="ru"/>
-							</select1>
-
-						</item>
-						<item>
-							<select selected="dk">
-								<country name="Denmark" value="dk"/>
-								<country name="Sveden" value="sv"/>
-								<country name="Norway" value="nw"/>
-							</select>
-							<select1 selected="dk">
-								<country name="Denmark" value="dk"/>
-								<country name="Sveden" value="sv"/>
-								<country name="Norway" value="nw"/>
-							</select1>
-
-						</item>
+						<item select="uk" select1="uk"/>
+						<item select="fr" select1="fr"/>
+						<item select="dk" select1="dk"/>
 
 						<countries>
-							<country value=""/>
 							<country value="uk">England</country>
 							<country value="fr">France</country>
 							<country value="dk">Denmark</country>
@@ -151,10 +115,10 @@
         </div>
 
         <xf:group>
-            <xf:label>Repeated Select[1] Controls</xf:label>
+            <xf:label>Repeated Controls</xf:label>
 
 			<xf:repeat id="r-reapeated" nodeset="repeated/item[position() != last()]" appearance="compact">
-				<xf:select1 class="select1Min" ref="select1/@selected" appearance="minimal">
+				<xf:select1 class="select1Min" ref="@select1" appearance="minimal">
 					<xf:label/>
 					<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
 						<xf:label ref="."/>
@@ -162,28 +126,31 @@
 					</xf:itemset>
 				</xf:select1>
 
-				<xf:select1 class="select1Comp" ref="select1/@selected" appearance="compact">
+				<xf:select1 class="select1Comp" ref="@select1" appearance="compact">
 					<xf:label/>
 					<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
 						<xf:label ref="."/>
 						<xf:value ref="@value"/>
 					</xf:itemset>
 				</xf:select1>
-				<xf:select1 class="select1Full" ref="select1/@selected" appearance="full">
+
+				<xf:select1 ref="@select1" appearance="full">
 					<xf:label/>
 					<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
 						<xf:label ref="."/>
 						<xf:value ref="@value"/>
 					</xf:itemset>
 				</xf:select1>
-				<xf:select class="selectMin" ref="select/@selected" appearance="minimal">
+
+				<xf:select ref="@select" appearance="minimal">
 					<xf:label/>
 					<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
 						<xf:label ref="."/>
 						<xf:value ref="@value"/>
 					</xf:itemset>
 				</xf:select>
-				<xf:select class="selectFull" ref="select/@selected" appearance="full">
+
+				<xf:select  ref="@select" appearance="full">
 					<xf:label/>
 					<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
 						<xf:label ref="."/>

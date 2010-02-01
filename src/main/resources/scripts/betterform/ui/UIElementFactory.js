@@ -13,7 +13,7 @@ dojo.declare(
 
     createWidget:function(sourceNode, controlId) {
         // console.debug("Create Widget: ",controlId , " sourceNode: ",sourceNode)
-        var controlType = dojo.attr(sourceNode, "controlType");
+        var controlType = dojo.attr(sourceNode, "controlType");        
 
         var dataType = dojo.attr(sourceNode, "dataType");
 
@@ -40,7 +40,7 @@ dojo.declare(
                 var appearance = dojo.attr(sourceNode,"appearance");
                 if (appearance != undefined && appearance.indexOf("ca") != -1) {
                     inputType = appearance;
-                    //console.debug("Custom Input Type: appearance=" + appearance)
+                    // console.debug("Custom Input Type: appearance=" + appearance)
                 }
 
                 switch (inputType.toLowerCase()) {
@@ -57,7 +57,8 @@ dojo.declare(
                         break;
                     case "caopmltree":
                         // console.debug("UIElementFactory: create new tree");
-                        newWidget = new betterform.ui.tree.Tree({
+                            dojo.require("betterform.ui.tree.OPMLTree");
+                        newWidget = new betterform.ui.tree.OPMLTree({
                             name:controlId + "-value",
                             "class":classValue,
                             xfControlId:controlId

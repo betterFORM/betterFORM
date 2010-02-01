@@ -102,16 +102,10 @@ public class Itemset extends BindingElement {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug(this + " update");
         }
-        Node emptyNode = DOMUtil.getFirstChildElement(this.element);
-        this.element.removeChild(emptyNode);
-
         updateXPathContext();
         updateItemset();
         updateElementState();
         updateChildren();
-
-        Node firstNode  = DOMUtil.getFirstChildElement(this.element);
-        this.element.insertBefore(emptyNode,firstNode);
     }
 
     /**

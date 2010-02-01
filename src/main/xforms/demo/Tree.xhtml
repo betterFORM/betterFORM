@@ -98,9 +98,9 @@
         <xf:label class="subheading">betterForm Tree Control</xf:label>
 
 
-        <xf:output id="geodata" ref="instance('i-tree')" appearance="caOPMLTree">
+        <xf:input id="geodata" ref="instance('i-tree')" appearance="caOPMLTree">
             <xf:label/>
-        </xf:output>
+        </xf:input>
         <br/>
         <xf:output id="location" onclick="" ref="instance('i-controller')/treeSelector">
             <xf:label>Location:</xf:label>
@@ -114,36 +114,34 @@
             </script>
         </xf:output>
     </xf:group>
+	<br/>
     <xf:group appearance="full">
-        <xf:label class="subheading">W3C XForms Tree Markup to implement</xf:label>
-        <pre>
-        <![CDATA[
-        <xf:tree ref="instance('i-tree')" id="t-tree">
-           <xf:label>XForms Tree</xf:label>
-           <xf:treeitem>
-               <xf:label ref="@name"/>
-           </xf:treeitem>
-        </xf:tree>
+        <xf:label class="subheading">Tree &amp; Connector Markup</xf:label>
 
-        <xf:output value="nodeindex('t-tree')">
-            <xf:label>Selected Leaf:</xf:label>
-        </xf:output>
-        ]]>
+<pre>
+<![CDATA[
+<!-- Tree Markup -->
+<xf:input id="geodata" ref="instance('i-tree')" appearance="caOPMLTree">
+	<xf:label/>
+</xf:input>
+
+<!-- Display selected leaf -->
+<xf:output id="location" onclick="" ref="instance('i-controller')/treeSelector">
+	<xf:label>Location:</xf:label>
+	<script type="dojo/method">
+		dojo.connect(dijit.byId("geodata-value"), "valueChanged", updatelocation);
+
+		function updatelocation() {
+			var treeValue = dijit.byId("geodata-value").getControlValue();
+			dijit.byId("location-value").setControlValue(treeValue);
+		}
+
+	</script>
+</xf:output>
+]]>
         </pre>
     </xf:group>
     <br/>
-<!--
-    <div>
-        <div class="subheading">Dojo Tree Markup</div>
-        <pre>
-        <![CDATA[
-            <div dojoType="dojox.data.OpmlStore" url="geography.xml" jsId="geoStore2" label="text"></div>
-            <div dojoType="dijit.tree.ForestStoreModel" jsId="geoModel" store="geoStore" query="{}" rootId="Geography" rootLabel="Geography"></div>
-            <div dojoType="dijit.Tree" model="geoModel"></div>
-        ]]>
-        </pre>
-    </div>
--->
 </xf:group>
 </body>
 </html>

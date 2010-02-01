@@ -33,12 +33,21 @@ dojo.declare(
      * @param contextInfo
      */
     handleStateChanged:function(contextInfo) {
-        // console.warn("TBD: CheckBoxItemSet.handleStateChanged contextInfo", contextInfo);
+        // console.debug("CheckBoxItemSet.handleStateChanged contextInfo", contextInfo);
         if(contextInfo.targetName == "label"){
             dojo.byId(contextInfo.parentId+"-label").innerHTML = contextInfo.value;
         }else if(contextInfo.targetName == "value"){
             dojo.attr(dojo.byId(contextInfo.parentId+"-value"),"value",contextInfo.value);
             dijit.byId(contextInfo.parentId+"-value").currentValue =  contextInfo.value;
+            // make sure that the associated select displays the correct value
+            if(dojo.hasClass(this.domNode.parentNode, "CheckBoxGroup")){
+                var selectDijit = dijit.byId(dojo.attr(this.domNode.parentNode,"id"));
+                // console.debug("CheckBoxItemset SelectDijit: ", selectDijit, " selectDijit.currentValue:",selectDijit.currentValue , " contextInfo.value: ",contextInfo.value);
+                if(selectDijit.currentValue == contextInfo.value) {
+                    selectDijit._handleSetControlValue(contextInfo.value);
+                }
+            }
+
         }else {
             // console.warn("CheckBoxItemset.handleStateChanged: no action taken for contextInfo: ",contextInfo);
         }

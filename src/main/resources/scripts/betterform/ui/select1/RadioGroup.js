@@ -66,10 +66,10 @@ dojo.declare(
         this.handleOnFocus();
     },
 
-    _onBlur:function(){
+    _onBlur:function() {
         this.inherited(arguments);
         if (!this.incremental) {
-        this.handleOnBlur();
+            this.handleOnBlur();
         }
     },
 

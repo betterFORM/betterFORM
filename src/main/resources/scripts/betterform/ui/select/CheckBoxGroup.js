@@ -83,7 +83,7 @@ dojo.declare(
 
         dojo.query(".dijitCheckBoxInput", this.domNode).forEach(
             function(entry) {
-                //console.debug("CheckBoxGroup._handleSetControlValue entry: ", entry, " entry.value", entry.value , " values: ", valueArray, " indexOf: ", dojo.indexOf(valueArray, dijit.byId(entry.id).currentValue));
+				//console.debug("CheckBoxGroup._handleSetControlValue entry: ", entry, " entry.value", entry.value , " values: ", valueArray, " indexOf: ", dojo.indexOf(valueArray, dijit.byId(entry.id).currentValue));
                 if (dojo.indexOf(valueArray, dijit.byId(entry.id).currentValue) != -1) {
                     dijit.byId(entry.id).setChecked(true);
                 } else {

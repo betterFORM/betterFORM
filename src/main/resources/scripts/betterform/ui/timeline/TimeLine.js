@@ -19,10 +19,9 @@ dojo.declare(
     instanceId:null,
     modelId:null,
     adjustTimestamp:false,
-    templateString: null,
 
     buildRendering:function() {
-        // console.debug("betterform.ui.tree.OPMLTree.buildRendering srcNode:", this.srcNodeRef);
+        console.debug("betterform.ui.timeline.TimeLine.buildRendering srcNode:", this.srcNodeRef);
         this.inherited(arguments);
 
 
@@ -37,7 +36,7 @@ dojo.declare(
 
     postCreate:function() {
         this.inherited(arguments);
-        // console.debug("TimeLine.postcreate");
+        console.debug("TimeLine.postcreate");
         this._createInitialTimeline();
     },
 
@@ -46,12 +45,16 @@ dojo.declare(
     },
 
     adjustTimelineToDate:function(currentDate) {
-           var tmpDate = Timeline.DateTime.parseIso8601DateTime(currentDate);
-           this._adjustAndCreateTimeline(tmpDate);
+        var tmpDate = null;
+        if (currentDate != undefined) {
+               tmpDate = Timeline.DateTime.parseIso8601DateTime(currentDate);
+        }
+        //console.debug("TimeLine.adjustTimelineToDate: ", tmpDate);
+        this._adjustAndCreateTimeline(tmpDate);
     },
 
     _updateTimeLine:function(data) {
-        // console.debug("TimeLine._updateTimeLine update event data: ", data);
+        //console.debug("TimeLine._updateTimeLine update event data: ", data);
         // console.dirxml(data);
         this.eventSource = new Timeline.DefaultEventSource();
 
@@ -68,15 +71,19 @@ dojo.declare(
             // console.debug("found event: ", event);
             startDate= dojo.attr(event,"start");
         }
-        this.date = Timeline.DateTime.parseIso8601DateTime(startDate);
+        
+        // console.debug("start Date: ", startDate, " this.date: ", this.date, " parsedDate:", Timeline.DateTime.parseIso8601DateTime(startDate));
+        this.date = startDate;
+        // this.date = Timeline.DateTime.parseIso8601DateTime(startDate);
 
         // console.debug("Timeline._updateTimeline: Adjust Timeline to: ",startDate, " [",Timeline.DateTime.parseIso8601DateTime(startDate)," ]")
         this._adjustAndCreateTimeline(this.date);
         // console.debug("TimeLine.postCreate created Timeline: ", this.timeLine);
-        this.eventSource.loadXML(data, "");
+        this.eventSource.loadXML(data,"");
     },
 
     _adjustAndCreateTimeline:function(currentDate) {
+        // console.debug("TimeLine._adjustAndCreateTimeline: ", currentDate);
         // band info properties
         this.timeZone = 0;
         var bandInfoDay = {
@@ -108,6 +115,7 @@ dojo.declare(
                 timeZone:       this.timeZone
             };
 
+        // console.debug("create BandInfos");
         var bandInfos = [
             Timeline.createBandInfo(bandInfoDay),
             Timeline.createBandInfo(bandInfoMonth),
@@ -122,7 +130,7 @@ dojo.declare(
         bandInfos[2].highlight = true;
         /*bandInfos[2].eventPainter.setLayout(bandInfos[1].eventPainter.getLayout());*/
 
-
+        // console.debug("create aimTimestampValue");
         var aimTimestampValue;
         if(dijit.byId("timestampDijit-value") != undefined) {
             aimTimestampValue = Timeline.DateTime.parseIso8601DateTime(dijit.byId("timestampDijit-value").getControlValue());
@@ -131,6 +139,10 @@ dojo.declare(
             aimTimestampValue =  currentDate;
         }
 
+        if(aimTimestampValue == undefined) {
+            aimTimestampValue = this.date;
+        }
+        // console.debug("aimTimestampValue: ", aimTimestampValue, " this.date: ",this.date);
         for (var i = 0; i < bandInfos.length; i++) {
             bandInfos[i].decorators = [
                 new Timeline.PointHighlightDecorator({
@@ -145,6 +157,9 @@ dojo.declare(
         this.timeLine = Timeline.create(this.timelineNode, bandInfos);
 
     },
+     getControlValue:function() {
+        return this.date;    
+     },
 
     _handleSetControlValue:function(value) {
         // console.debug("betterform.ui.timeline.Timeline._handleSetControlValue: value" + value);

@@ -10,6 +10,7 @@ dojo.require("dijit._Templated");
 dojo.require("betterform.ui.ControlValue");
 dojo.require("dijit.Tree");
 dojo.require("dojox.data.OpmlStore");
+dojo.require("dojox.data.dom");
 
 /*
     CLASS: OPMLTree represents an XForms OPML Tree Control

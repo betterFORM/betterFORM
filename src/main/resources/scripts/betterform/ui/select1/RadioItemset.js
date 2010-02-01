@@ -30,13 +30,13 @@ dojo.declare(
         }else if(contextInfo.targetName == "value"){
             dijit.byId(contextInfo.parentId+"-value")._handleSetControlValue(contextInfo.value);
         }else {
-            // console.warn("RadioItemSet.handleStateChanged: no action taken for contextInfo: ",contextInfo);
+           console.warn("RadioItemSet.handleStateChanged: no action taken for contextInfo: ",contextInfo);
         }
     },
 
 
     handleInsert:function(contextInfo) {
-        console.debug("RadioItemset.insertItem: ",contextInfo);
+        // console.debug("RadioItemset.insertItem: ",contextInfo);
 
         var itemNode = document.createElement("span");
         dojo.addClass(itemNode, "xfSelectorItem");
@@ -45,26 +45,19 @@ dojo.declare(
         dojo.addClass(itemNode, "xfOptional");
         dojo.addClass(itemNode, "xfValid");
         dojo.attr(itemNode, "controltype","radioButtonEntry");
-        console.debug("1");
 
         var generatedIds= contextInfo.generatedIds;
         var itemId = generatedIds[contextInfo.prototypeId];
         dojo.attr(itemNode, "id",itemId );
-        console.debug("2");
         var labelNode = document.createElement("label");
         dojo.addClass(labelNode, "xfLabel");
         dojo.attr(labelNode, "id",itemId+"-label" );
         dojo.attr(labelNode, "for",itemId+"-value" );
         labelNode.innerHTML = contextInfo.label;
-        console.debug("3");
         var myParentNode = this.domNode.parentNode;
-        console.debug("4");
-        while(!dojo.hasClass(myParentNode,"xfFullSelect1")){
-            console.debug("myParentNode",myParentNode);
+        while(!dojo.hasClass(myParentNode,"xfSelect1")){
             myParentNode = myParentNode.parentNode;
         }
-        console.debug("RadioItemset.insertItemset: created node: ", itemNode);
-        console.dirxml(itemNode);
 
         var valueNode = document.createElement("input");
         dojo.addClass(valueNode, "xfValue");
@@ -80,16 +73,6 @@ dojo.declare(
         dojo.place(labelNode,itemNode);
 
         var controlDijit = new betterform.ui.Control({contextInfo:contextInfo}, itemNode);
-/*
-        var valueDijit = new betterform.ui.select1.RadioButton({
-                id:itemId+"-value",
-                name:"d_"+myParentNode.id,
-                "class":"xfValue",
-                value:contextInfo.value,
-                parentId:myParentNode.id
-            },valueNode
-        );
-*/
         dojo.place(itemNode,this.domNode,  contextInfo.position);
     },
     handleDelete:function(contextInfo) {

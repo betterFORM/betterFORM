@@ -108,7 +108,7 @@ dojo.declare(
          }else if(dojo.hasClass(this.domNode,"xfRequired")){
              return true;
          }else {
-             console.error("Container: No required state found")
+             console.warn("Container: No required state found, Container is probably unbound")
          }
      },
 
@@ -119,7 +119,7 @@ dojo.declare(
          }else if(dojo.hasClass(this.domNode,"xfReadOnly")){
              return true;
          }else {
-             console.error("Container: No readonly state found")
+             console.warn("Container: No readonly state found, Container is probably unbound")
          }
      },
 
@@ -130,7 +130,7 @@ dojo.declare(
          }else if(dojo.hasClass(this.domNode,"xfEnabled")){
              return true;
          }else {
-             console.error("Container: No relevant state found")
+             console.warn("Container: No relevant state found, Container is probably unbound")
          }
      },
 
@@ -140,7 +140,7 @@ dojo.declare(
          }else if(dojo.hasClass(this.domNode,"xfValid")){
              return true;
          }else {
-             console.error("Container No validate state found for " + this.id);
+             console.warn("Container No validate state found for " + this.id + " Container is probably unbound");
          }
      },
 

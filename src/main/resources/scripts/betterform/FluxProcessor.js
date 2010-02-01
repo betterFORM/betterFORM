@@ -571,7 +571,7 @@ dojo.declare("betterform.FluxProcessor",
                 }
                 //  special handling for Select controls, check if parent node is selector item
                 else if(dojo.hasClass(parentControlNode,"xfSelectorItem")){
-                    // console.debug("FluxProcessor.handleStateChanged Target Node does not exist, Parent Control is SelectorItem (ParentSelector" + controlNode + ")");
+                    // console.debug("FluxProcessor.handleStateChanged Target Node does not exist, Parent Control is SelectorItem (ParentSelector:" , parentControlNode , ")");
                     dijit.byId(dojo.attr(parentControlNode.parentNode,"id")).handleStateChanged(xmlEvent.contextInfo);
                 }
                 else  {
@@ -627,7 +627,12 @@ dojo.declare("betterform.FluxProcessor",
             else if (itemsetType != undefined && itemsetType == "betterform.ui.select1.RadioItemset") {
                 dojo.require("betterform.ui.select1.RadioItemset");
                 itemsetDijit = new betterform.ui.select1.RadioItemset({contextInfo:xmlEvent.contextInfo}, itemsetDOM);
-            } else {
+            }
+           else if (itemsetType != undefined && itemsetType == "betterform.ui.select.CheckBoxItemset") {
+                dojo.require("betterform.ui.select1.RadioItemset");
+                itemsetDijit = new betterform.ui.select.CheckBoxItemset({contextInfo:xmlEvent.contextInfo}, itemsetDOM);
+            } 
+            else {
                 console.warn("FluxProcessor apply betterform-insert-itemset: Itemset Type " + itemsetType + " not supported yet");
             }
             if (itemsetDijit != undefined) {
