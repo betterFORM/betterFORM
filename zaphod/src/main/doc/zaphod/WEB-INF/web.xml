@@ -10,10 +10,10 @@
             <param-name>xforms.engine.webcontext</param-name>
             <param-value>betterform</param-value>
         </init-param>
-    <init-param><param-name>xforms.engine.servlet</param-name><param-value>/repeater</param-value></init-param>
+        <!--<init-param><param-name>xforms.engine.servlet</param-name><param-value>/repeater</param-value></init-param>-->
         <init-param>
             <param-name>xforms.engine.resources</param-name>
-            <param-value>/SampleApp/forms/forward</param-value>
+            <param-value>/zaphod/forms/forward</param-value>
         </init-param>
         </filter>
     <filter-mapping>

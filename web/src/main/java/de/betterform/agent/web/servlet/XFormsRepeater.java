@@ -2,6 +2,7 @@
 /* Licensed under the terms of BSD and Apache 2 Licenses */
 package de.betterform.agent.web.servlet;
 
+import de.betterform.xml.xforms.exception.XFormsException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import de.betterform.agent.web.WebFactory;
@@ -22,6 +23,7 @@ import javax.servlet.ServletContext;
  * The XFormsRepeater handles forwarded requests from other contexts and interacts with
  * form-processor (XFormsProcessorImpl) for the whole lifetime of a form-filling session.
  * <br>
+ *
  * @author Joern Turner
  * @author Ulrich Nicolas Liss&eacute;
  * @author William Boyd
@@ -105,31 +107,28 @@ public class XFormsRepeater extends HttpServlet {
      * @see de.betterform.xml.xforms.connector.ConnectorFactory
      */
     protected void doGet(HttpServletRequest request,
-            HttpServletResponse response)
+                         HttpServletResponse response)
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
         WebUtil.nonCachingResponse(response);
         HttpSession session = null;
 
-        if (request.getAttribute("Session") != null)
-        {
+        if (request.getAttribute("Session") != null) {
             session = (HttpSession) request.getAttribute("Session");
-        }
-        else
-        {
+        } else {
             session = request.getSession(true);
         }
-        
+
         request.setAttribute(WebFactory.USER_AGENT, useragent);
         System.out.println("request: " + request.getRequestURL().toString());
 
         String url = request.getRequestURL().toString();
         ServletContext context = this.getServletContext();
 
-        if (request.getAttribute("XFormsInputStream") != null)
-        {
-            System.out.println("Request has an extra Stream!: " );
+        if (request.getAttribute("XFormsInputStream") != null) {
+            System.out.println("Request has an extra Stream!: ");
+            System.out.println("Context: " + context.getServletContextName());
         }
 //        XFormsSession xFormsSession = null;
         WebProcessor webProcessor = null;
@@ -145,9 +144,21 @@ public class XFormsRepeater extends HttpServlet {
             webProcessor.init();
             webProcessor.handleRequest();
         } catch (Exception e) {
-            e.printStackTrace();
             if (webProcessor != null) {
-                webProcessor.close(e);
+                // attempt to shutdown processor
+                try {
+                    webProcessor.shutdown();
+                } catch (XFormsException xfe) {
+//                    LOG.error("Could not shutdown Processor: Error: " + xfe.getMessage() + " Cause: " + xfe.getCause());
+                    
+                }
+                // store exception
+                session.setAttribute("betterform.exception", e);
+                session.setAttribute("betterform.referer", request.getRequestURL());
+                //remove session from XFormsSessionManager
+                WebUtil.removeSession(webProcessor.getKey());
+//                context.getRequestDispatcher("/jsp/error.jsp").forward(request,response);
+                throw new ServletException(e);
             }
         }
     }
