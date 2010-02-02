@@ -25,14 +25,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -203,9 +196,98 @@ public class CrossContextFilter implements Filter {
                 */
                 problem = t;
                 t.printStackTrace();
+                if (problem instanceof ServletException && problem.getCause() != null) {
+                    Throwable e = problem.getCause();
+                    printErrorPage(response, request, e);
+                }
             }
         }
         return problem;
+    }
+
+    private void printErrorPage(ServletResponse response, ServletRequest request, Throwable problem) throws IOException {
+        response.setContentType("text/html");
+        ServletOutputStream out = response.getOutputStream();
+        String xformsContext = filterConfig.getInitParameter("xforms.engine.webcontext");
+
+
+        String msg = problem.getMessage();
+        int start = problem.getMessage().indexOf("/");
+        String xpath ="unknown";
+        String cause="";
+        if(msg != null && start > 3){
+            xpath = problem.getMessage().substring(start-1);
+            msg=msg.substring(0,start-3);
+        }
+        if(problem.getCause() != null && problem.getCause().getMessage() != null){
+            cause = problem.getCause().getMessage();
+        }
+
+        out.print("<html>\n" +
+                "<head>\n" +
+                "\t<title>Error Page</title>\n" +
+                "\t<style>\n" +
+                "\tbody{\n" +
+                "        font-family:Tahoma;\n" +
+                "        font-size:14pt;\n" +
+                "        background:url('/" + xformsContext + "/resources/images/bgOne.gif') repeat-x scroll;\n" +
+                "    }\n" +
+                "\tpre { font-size:8pt; }\n" +
+                "    .errorContent{\n" +
+                "        margin-top:50px;\n" +
+                "        width:600px;\n" +
+                "        border:thin solid steelblue;\n" +
+                "        margin-left:auto;\n" +
+                "        margin-right:auto;\n" +
+                "        padding:20px;\n" +
+                "    }\n" +
+                "    .message1{\n" +
+                "        display:block;\n" +
+                "        color:steelblue;\n" +
+                "        font-weight:bold;\n" +
+                "    }\n" +
+                "    .message2{\n" +
+                "        display:block;\n" +
+                "        color:darkred;\n" +
+                "        font-size:12pt;\n" +
+                "        padding-top:30px;\n" +
+                "        font-weight:bold;\n" +
+                "    }\n" +
+                "    .message3{\n" +
+                "        display:block;\n" +
+                "        font-size:10pt;\n" +
+                "        color:steelblue;\n" +
+                "        margin-top:10px;\n" +
+                "    }\n" +
+                "    input{\n" +
+                "        margin-top:20px;\n" +
+                "        margin-left:0;\n" +
+                "        margin-bottom:0;\n" +
+                "    }\n" +
+                "\t</style>\n" +
+                "</head>\n" +
+                "<body>");
+        out.print("<div class=\"errorContent\">\n" +
+                "    <img src=\"/" + xformsContext + "/resources/images/error.png\" width=\"24\" height=\"24\" alt=\"Error\" style=\"float:left;padding-right:5px;\"/>\n" +
+                "    <div class=\"message1\">\n" +
+                "        Oops, an error occured...<br/>\n" +
+                "\n" +
+                "    </div>");    
+        out.print("<div class=\"message2\">" + msg + "</div>\n" +
+                "    <div class=\"message3\"><strong>URL:</strong><br/>" + request.getAttribute("betterform.referer") + "</div>\n" +
+                "    <div class=\"message3\"><strong>Element causing Exception:</strong><br/>" + xpath + "</div>\n" +
+                "    <div class=\"message3\"><strong>Caused by:</strong><br/>" + cause + "</div>\n" +
+                "    <form>\n" +
+                "        <input type=\"button\" value=\"Back\" onClick=\"history.back()\">\n" +
+                "    </form>\n" +
+//                "    <div class=\"message3\">\n" +
+//                "    <a href=\"mailto:<%=Config.getInstance().getProperty(\"admin.mail\") %>?subject=XForms%20Problem%20at%20<%=session.getAttribute(\"betterform.referer\")%>&Body=Message:%0D<%= msg %>%0D%0DElement%20causing%20Exception:%0D<%= xpath %>%0D%0DCaused%20by:%0D<%= URLEncoder.encode(cause,\"UTF-8\") %>\">Report this problem...</a>\n" +
+//                "    </div>\n" +
+                "</div>\n" +
+                "\n" +
+                "</body>\n" +
+                "</html>");
+        response.getOutputStream().close();
     }
 
     private void sendProcessingError(Throwable t, ServletResponse response) {

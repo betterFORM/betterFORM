@@ -52,7 +52,14 @@
 <body>
 <%-- Exception Handler --%>
 <%
-    Exception e=(Exception)session.getAttribute("betterform.exception");
+    Exception e = null;
+    if (session.getAttribute("betterform.exception") != null) {
+        e = (Exception) session.getAttribute("betterform.exception");
+    } else if (request.getAttribute("betterform.exception") != null)
+    {
+        e = (Exception) request.getAttribute("betterform.exception");
+    }
+
 //    response.setContentLength(3000);
 %>
 <div class="errorContent">

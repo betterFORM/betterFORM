@@ -10,6 +10,7 @@ import de.betterform.agent.web.WebProcessor;
 import de.betterform.agent.web.WebUtil;
 import de.betterform.xml.config.XFormsConfigException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -154,10 +155,13 @@ public class XFormsRepeater extends HttpServlet {
                 }
                 // store exception
                 session.setAttribute("betterform.exception", e);
-                session.setAttribute("betterform.referer", request.getRequestURL());
+                request.setAttribute("betterform.exception", e);
+//                request.setAttribute("javax.servlet.jsp.jspException", e);
+                request.setAttribute("betterform.referer", request.getRequestURL().toString());
+                session.setAttribute("betterform.referer", request.getRequestURL().toString());
+
                 //remove session from XFormsSessionManager
                 WebUtil.removeSession(webProcessor.getKey());
-//                context.getRequestDispatcher("/jsp/error.jsp").forward(request,response);
                 throw new ServletException(e);
             }
         }
