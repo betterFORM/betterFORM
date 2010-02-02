@@ -787,7 +787,7 @@
                                     <xsl:attribute name="id">
                                         <xsl:value-of select="concat($repeat-item-id, '-label')"/>
                                     </xsl:attribute>
-                                    <xsl:attribute n    ame="class">
+                                    <xsl:attribute name="class">
                                         <xsl:call-template name="assemble-group-label-classes"/>
                                     </xsl:attribute>
                                     <xsl:apply-templates select="xforms:label"/>

@@ -654,7 +654,7 @@
                 <xsl:if test="$parent/bf:data/@bf:readonly='true'">
                     <xsl:attribute name="disabled">disabled</xsl:attribute>
                 </xsl:if>
-                <xsl:apply-templates select="xforms:label"/>
+                <xsl:apply-templates select="xforms:label" mode="prototype"/>
             </span>
         </span>
     </xsl:template>

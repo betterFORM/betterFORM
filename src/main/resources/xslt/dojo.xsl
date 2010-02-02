@@ -450,6 +450,28 @@
         </span>
     </xsl:template>
 
+     <xsl:template match="xf:output" mode="prototype">
+       <xsl:variable name="id" select="@id"/>
+        <xsl:variable name="control-classes">
+            <xsl:call-template name="assemble-control-classes">
+                <xsl:with-param name="appearance" select="@appearance"/>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:variable name="label-classes">
+            <xsl:call-template name="assemble-label-classes"/>
+        </xsl:variable>
+
+        <span id="{$id}" class="{$control-classes}" controlType="{local-name()}-control">
+            <!--<xsl:if test="not(contains($control-classes,'xsdAnyURI'))">-->
+                <label for="{$id}-value" id="{$id}-label" class="{$label-classes}">
+                    <xsl:apply-templates select="xf:label"/>
+                </label>
+            <!--</xsl:if>-->
+            <xsl:call-template name="buildControl"/>
+            <xsl:copy-of select="xhtml:script"/>
+        </span>
+    </xsl:template>
+
     <!-- ##### TRIGGER / SUBMIT ##### -->
     <!-- ##### TRIGGER / SUBMIT ##### -->
     <!-- ##### TRIGGER / SUBMIT ##### -->
@@ -482,6 +504,26 @@
         <!--<xsl:if test="../bf:data/@bf:required='true'">-->
             <!--<span class="xfRequiredSymbol">*</span>-->
         <!--</xsl:if>-->
+    </xsl:template>
+
+    <xsl:template match="xf:label" mode="prototype">
+        <xsl:choose>
+            <xsl:when test="exists(*)">
+                <xsl:for-each select="*">
+                    <xsl:choose>
+                        <xsl:when test="local-name(.)='output'">
+                            <xsl:apply-templates select="." mode="prototype"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:copy-of select="."/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:for-each>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:copy-of select="."/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <!-- ##### HELP ##### -->
