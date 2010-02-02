@@ -49,7 +49,12 @@ dojo.declare(
                 tmpValue += entry.value + " ";
             }
         );
-        this.setCurrentValue(tmpValue.replace(/\s+$/g, ""));
+
+
+        if(tmpValue != ''){
+            tmpValue = tmpValue.replace(/\s+$/g,"");
+        }        
+        this.setCurrentValue(tmpValue);
     },
 
 

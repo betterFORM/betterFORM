@@ -114,11 +114,10 @@ public class ItemsetTest extends TestCase {
         assertEquals(selectId, "123", XPathUtil.evaluateAsString(host, "//*[@id='" + selectId + "']/bf:data"));
         assertEquals(selectId, "1", XPathUtil.evaluateAsString(host, "count(//*[@id='" + selectId + "']/xf:itemset/bf:data/xf:item)"));
         if(selectId.equals("select-1") || selectId.equals("select-3") || selectId.equals("select-5")){
-            assertEquals(selectId, "4", XPathUtil.evaluateAsString(host, "count(//*[@id='" + selectId + "']/xf:itemset/xf:item)"));
-            assertItem(host, selectId, 1, "false", "", "");
-            assertItem(host, selectId, 2, "true", "First", "123");
-            assertItem(host, selectId, 3, "false", "Second", "124");
-            assertItem(host, selectId, 4, "false", "Third", "125");
+            assertEquals(selectId, "3", XPathUtil.evaluateAsString(host, "count(//*[@id='" + selectId + "']/xf:itemset/xf:item)"));
+            assertItem(host, selectId, 1, "true", "First", "123");
+            assertItem(host, selectId, 2, "false", "Second", "124");
+            assertItem(host, selectId, 3, "false", "Third", "125");
         }
         else {
             assertEquals(selectId, "3", XPathUtil.evaluateAsString(host, "count(//*[@id='" + selectId + "']/xf:itemset/xf:item)"));
@@ -133,11 +132,10 @@ public class ItemsetTest extends TestCase {
 
         assertEquals(selectId, "125", XPathUtil.evaluateAsString(host, "//*[@id='" + selectId + "']/bf:data"));
         if(selectId.equals("select-1") || selectId.equals("select-3") || selectId.equals("select-5")){
-            assertEquals(selectId, "4", XPathUtil.evaluateAsString(host, "count(//*[@id='" + selectId + "']/xf:itemset/xf:item)"));
-            assertItem(host, selectId, 1, "false", "", "");
-            assertItem(host, selectId, 2, "false", "First", "123");
-            assertItem(host, selectId, 3, "false", "Second", "124");
-            assertItem(host, selectId, 4, "true", "Third", "125");
+            assertEquals(selectId, "3", XPathUtil.evaluateAsString(host, "count(//*[@id='" + selectId + "']/xf:itemset/xf:item)"));
+            assertItem(host, selectId, 1, "false", "First", "123");
+            assertItem(host, selectId, 2, "false", "Second", "124");
+            assertItem(host, selectId, 3, "true", "Third", "125");
         }
         else {
             assertEquals(selectId, "3", XPathUtil.evaluateAsString(host, "count(//*[@id='" + selectId + "']/xf:itemset/xf:item)"));
@@ -152,12 +150,11 @@ public class ItemsetTest extends TestCase {
 
         assertEquals(selectId, "123", XPathUtil.evaluateAsString(host, "//*[@id='" + selectId + "']/bf:data"));
         if(selectId.equals("select-1") || selectId.equals("select-3") || selectId.equals("select-5")){
-            assertEquals(selectId, "5", XPathUtil.evaluateAsString(host, "count(//*[@id='" + selectId + "']/xf:itemset/xf:item)"));
-            assertItem(host, selectId, 1, "false", "", "");
-            assertItem(host, selectId, 2, "true", "First", "123");
-            assertItem(host, selectId, 3, "false", "Fourth", "126");
-            assertItem(host, selectId, 4, "false", "Second", "124");
-            assertItem(host, selectId, 5, "false", "Third", "125");
+            assertEquals(selectId, "4", XPathUtil.evaluateAsString(host, "count(//*[@id='" + selectId + "']/xf:itemset/xf:item)"));
+            assertItem(host, selectId, 1, "true", "First", "123");
+            assertItem(host, selectId, 2, "false", "Fourth", "126");
+            assertItem(host, selectId, 3, "false", "Second", "124");
+            assertItem(host, selectId, 4, "false", "Third", "125");
 
         }else {
             assertEquals(selectId, "4", XPathUtil.evaluateAsString(host, "count(//*[@id='" + selectId + "']/xf:itemset/xf:item)"));
@@ -174,10 +171,9 @@ public class ItemsetTest extends TestCase {
 
         assertEquals(selectId, "123", XPathUtil.evaluateAsString(host, "//*[@id='" + selectId + "']/bf:data"));
         if(selectId.equals("select-1") || selectId.equals("select-3") || selectId.equals("select-5")){
-            assertEquals(selectId, "3", XPathUtil.evaluateAsString(host, "count(//*[@id='" + selectId + "']/xf:itemset/xf:item)"));
-            assertItem(host, selectId, 1, "false", "", "");
-            assertItem(host, selectId, 2, "true", "First", "123");
-            assertItem(host, selectId, 3, "false", "Third", "125");
+            assertEquals(selectId, "2", XPathUtil.evaluateAsString(host, "count(//*[@id='" + selectId + "']/xf:itemset/xf:item)"));
+            assertItem(host, selectId, 1, "true", "First", "123");
+            assertItem(host, selectId, 2, "false", "Third", "125");
 
         }else {
             assertEquals(selectId, "2", XPathUtil.evaluateAsString(host, "count(//*[@id='" + selectId + "']/xf:itemset/xf:item)"));

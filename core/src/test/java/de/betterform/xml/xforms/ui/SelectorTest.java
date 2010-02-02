@@ -163,9 +163,8 @@ public class SelectorTest extends TestCase {
         assertEquals("123", selector.getValue());
 
         List result = XPathUtil.evaluate(selector.getElement(), "descendant::xf:item/@id");
-        String item0 = ((NodeInfo) result.get(0)).getStringValue();
-        String item1 = ((NodeInfo) result.get(1)).getStringValue();
-        String item2 = ((NodeInfo) result.get(2)).getStringValue();
+        String item1 = ((NodeInfo) result.get(0)).getStringValue();
+        String item2 = ((NodeInfo) result.get(1)).getStringValue();
         String item3 = ((NodeInfo) result.get(3)).getStringValue();
 
 
