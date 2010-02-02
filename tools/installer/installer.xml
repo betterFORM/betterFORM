@@ -12,11 +12,11 @@
     -->
 
     <info>
-        <appname>Optile</appname>
+        <appname>betterForm</appname>
         <appversion>3.0</appversion>
         <url>http://www.betterform.de</url>
         <javaversion>1.5</javaversion>
-        <!--<webdir>http://localhost:8080/app</webdir>-->
+        <webdir>http://localhost:8080/app</webdir>
     </info>
 
     <conditions>
@@ -24,7 +24,7 @@
             <packid>jetty</packid>
         </condition>
         <condition id="bf" type="packselection">
-            <packid>optile</packid>
+            <packid>betterForm</packid>
         </condition>
     </conditions>
 
@@ -100,9 +100,9 @@
 
     <packs>
 
-        <pack name="optile" required="yes">
-            <description>Optile XForms module</description>
-            <file src="optile.war" unpack="true" targetdir="$INSTALL_PATH/optile" condition="!jetty" />
+        <pack name="betterForm" required="yes">
+            <description>betterForm 3.0 XForms Engine</description>
+            <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/betterform" condition="!jetty" />
         </pack>
 
 <!--
@@ -115,19 +115,16 @@ FOR LATER: installinig the war should switch the above pack off. Did not yet fou
 
         <pack id="jetty" name="jetty" required="no">
             <description>Jetty Servlet Container Ver. 6.1.22</description>
-            <fileset dir="jetty/optile" targetdir="$INSTALL_PATH" includes="*/**"/>
-            <file src="optile.war" unpack="true" targetdir="$INSTALL_PATH/webapps/optile"/>
+            <fileset dir="jetty/betterform" targetdir="$INSTALL_PATH" includes="*/**"/>
+            <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/webapps/betterform"/>
         </pack>
 
-<!--
         <pack name="eXist" required="no" preselected="no">
             <description>eXist 1.4 XML Database</description>
             <depends packname="jetty"/>
             <file src="exist.war" unpack="true" targetdir="$INSTALL_PATH/webapps/exist"/>
         </pack>
--->
 
-<!--
         <pack name="DeveloperPack" required="no" preselected="no">
             <description>adds uncompiled Dojo for full debug capabilities</description>
             <fileset dir="dojo-release-1.3.2-src"
@@ -140,9 +137,7 @@ FOR LATER: installinig the war should switch the above pack off. Did not yet fou
                      condition="jetty"
                      excludes="util/**"/>
         </pack>
--->
 
-<!--
         <pack name="Forms" required="no">
             <description>betterForm's demo, reference and test forms</description>
             <depends packname="betterForm"/>
@@ -163,9 +158,7 @@ FOR LATER: installinig the war should switch the above pack off. Did not yet fou
                   condition="jetty"/>
 
         </pack>
--->
-
-<!--
+        
         <pack name="Testsuite1.1" required="no" preselected="no">
             <description>official XForms 1.1 Conformance Test Suite</description>
             <depends packname="betterForm"/>
@@ -176,7 +169,6 @@ FOR LATER: installinig the war should switch the above pack off. Did not yet fou
                   condition="jetty"/>
 
         </pack>
--->
     </packs>
 </installation>
 
