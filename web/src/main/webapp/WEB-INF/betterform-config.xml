@@ -151,7 +151,6 @@
         <uri-resolver scheme="file" class="de.betterform.connector.file.FileURIResolver"/>
         <uri-resolver scheme="http" class="de.betterform.connector.http.HTTPURIResolver"/>
         <uri-resolver scheme="https" class="de.betterform.connector.http.HTTPURIResolver"/>
-        <uri-resolver scheme="class" class="de.betterform.util.ClassResourceLoader"/>
         <uri-resolver scheme="xmlrpc" class="de.betterform.connector.xmlrpc.XMLRPCURIResolver"/>
         <uri-resolver scheme="context" class="de.betterform.connector.context.ContextResolver"/>
         <uri-resolver scheme="contextobject" class="de.betterform.connector.context.ContextObjectResolver"/>
