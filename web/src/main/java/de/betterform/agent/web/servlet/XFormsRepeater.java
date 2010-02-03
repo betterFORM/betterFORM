@@ -17,7 +17,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Map;
 import javax.servlet.ServletContext;
 
 /**
@@ -105,7 +111,6 @@ public class XFormsRepeater extends HttpServlet {
      * @param response servlet response
      * @throws javax.servlet.ServletException
      * @throws java.io.IOException
-     * @see de.betterform.xml.xforms.connector.ConnectorFactory
      */
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response)
@@ -124,6 +129,90 @@ public class XFormsRepeater extends HttpServlet {
         request.setAttribute(WebFactory.USER_AGENT, useragent);
         System.out.println("request: " + request.getRequestURL().toString());
 
+        if ("GET".equalsIgnoreCase(request.getMethod()) && request.getParameter("submissionResponse") != null) {
+            doSubmissionReplaceAll(request, response);
+        } else {
+            processForm(request, response, session);
+        }
+    }
+
+    protected void doSubmissionReplaceAll(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final Log LOG = LogFactory.getLog(XFormsRepeater.class);
+        HttpSession session = request.getSession(false);
+        WebProcessor webProcessor = WebUtil.getWebProcessor(request, session);
+        if (session != null && webProcessor != null) {
+            if (LOG.isDebugEnabled()) {
+                Enumeration keys = session.getAttributeNames();
+                if (keys.hasMoreElements()) {
+                    LOG.debug("--- existing keys in session --- ");
+                }
+                while (keys.hasMoreElements()) {
+                    String s = (String) keys.nextElement();
+                    LOG.debug("existing sessionkey: " + s + ":" + session.getAttribute(s));
+                }
+            }
+
+            Map submissionResponse = webProcessor.checkForExitEvent().getContextInfo();
+            if (submissionResponse != null) {
+
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug("handling submission/@replace='all'");
+                    Enumeration keys = session.getAttributeNames();
+                    if (keys.hasMoreElements()) {
+                        LOG.debug("--- existing keys in http session  --- ");
+                        while (keys.hasMoreElements()) {
+                            String s = (String) keys.nextElement();
+                            LOG.debug("existing sessionkey: " + s + ":" + session.getAttribute(s));
+                        }
+                    } else {
+                        LOG.debug("--- no keys left in http session  --- ");
+                    }
+                }
+
+                // copy header fields
+                Map headerMap = (Map) submissionResponse.get("header");
+                String name;
+                String value;
+                Iterator iterator = headerMap.keySet().iterator();
+                while (iterator.hasNext()) {
+                    name = (String) iterator.next();
+                    if (name.equalsIgnoreCase("Transfer-Encoding")) {
+                        // Some servers (e.g. WebSphere) may set a "Transfer-Encoding"
+                        // with the value "chunked". This may confuse the client since
+                        // XFormsServlet output is not encoded as "chunked", so this
+                        // header is ignored.
+                        continue;
+                    }
+
+                    value = (String) headerMap.get(name);
+                    if (LOG.isDebugEnabled()) {
+                        LOG.debug("added header: " + name + "=" + value);
+                    }
+
+                    response.setHeader(name, value);
+                }
+
+                // copy body stream
+                InputStream bodyStream = (InputStream) submissionResponse.get("body");
+                OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
+                for (int b = bodyStream.read(); b > -1; b = bodyStream.read()) {
+                    outputStream.write(b);
+                }
+
+                // close streams
+                bodyStream.close();
+                outputStream.close();
+
+                //kill XFormsSession
+                WebUtil.removeSession(webProcessor.getKey());
+                return;
+            }
+        }
+        response.sendError(HttpServletResponse.SC_FORBIDDEN, "no submission response available");
+    }
+
+
+    private void processForm(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException {
         String url = request.getRequestURL().toString();
         ServletContext context = this.getServletContext();
 
@@ -151,12 +240,11 @@ public class XFormsRepeater extends HttpServlet {
                     webProcessor.shutdown();
                 } catch (XFormsException xfe) {
 //                    LOG.error("Could not shutdown Processor: Error: " + xfe.getMessage() + " Cause: " + xfe.getCause());
-                    
+
                 }
                 // store exception
                 session.setAttribute("betterform.exception", e);
                 request.setAttribute("betterform.exception", e);
-//                request.setAttribute("javax.servlet.jsp.jspException", e);
                 request.setAttribute("betterform.referer", request.getRequestURL().toString());
                 session.setAttribute("betterform.referer", request.getRequestURL().toString());
 
