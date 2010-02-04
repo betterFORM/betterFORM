@@ -125,7 +125,7 @@
         <servlet-class>de.betterform.agent.web.servlet.XFormsRepeater</servlet-class>
         <init-param>
             <param-name>useragent</param-name>
-            <param-value>dojodev</param-value>
+            <param-value>dojo</param-value>
         </init-param>
     </servlet>
 	<servlet-mapping>
