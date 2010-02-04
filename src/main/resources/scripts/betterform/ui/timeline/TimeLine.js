@@ -87,31 +87,34 @@ dojo.declare(
         // band info properties
         this.timeZone = 0;
         var bandInfoDay = {
+                overview:       false,
                 intervalUnit:   Timeline.DateTime.DAY,
                 eventSource:    this.eventSource,
                 date:           currentDate,
-                width:          "80%",
+                width:          "50%",
+                showEventText:  true,
                 intervalPixels: 200,
                 timeZone:       this.timeZone
             };
         var bandInfoMonth =  {
                 overview:       true,
                 intervalUnit:   Timeline.DateTime.MONTH,
+                eventSource:    this.eventSource,
                 date:           currentDate,
-                width:          "10%",
+                width:          "25%",
+                showEventText:  true,
                 intervalPixels: 100,
-                /*  eventSource:    this.eventSource, */
                 timeZone:       this.timeZone
             };
 
         var bandInfoYear = {
                 overview:       true,
                 intervalUnit:   Timeline.DateTime.YEAR,
+                eventSource:    this.eventSource,
                 date:           currentDate,
-                width:          "10%",
-                showEventText:  false,
+                width:          "25%",
+                showEventText:  true,
                 intervalPixels: 50,
-                /*  eventSource:    this.eventSource, */
                 timeZone:       this.timeZone
             };
 
@@ -125,10 +128,10 @@ dojo.declare(
 
         bandInfos[1].syncWith = 0;
         bandInfos[1].highlight = true;
-        /*bandInfos[1].eventPainter.setLayout(bandInfos[0].eventPainter.getLayout());*/
+        // bandInfos[1].eventPainter.setLayout(bandInfos[0].eventPainter.getLayout());
         bandInfos[2].syncWith = 1;
         bandInfos[2].highlight = true;
-        /*bandInfos[2].eventPainter.setLayout(bandInfos[1].eventPainter.getLayout());*/
+        // bandInfos[2].eventPainter.setLayout(bandInfos[1].eventPainter.getLayout());
 
         // console.debug("create aimTimestampValue");
         var aimTimestampValue;

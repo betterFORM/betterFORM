@@ -224,8 +224,9 @@
             <fileset dir="../src/test/resources"/>
         </copy>
     </target>
-    
-    <target name="generateSite" description="build betterForm Boilerplate pages">
+
+    <!-- build betterForm Boilerplate pages-->
+    <target name="generateSite">
         <echo/>
         <echo message="************************************************************************************"/>
         <echo message="generating site..."/>
@@ -410,7 +411,7 @@
     <!-- **************************************** DOJO TARGETS **************************************** -->
     <!-- **************************************** DOJO TARGETS **************************************** -->
     <!-- **************************************** DOJO TARGETS **************************************** -->
-    <target name="build-dojo" depends="deploy-resources" description="build dojo release">
+    <target name="build-dojo" depends="deploy-resources" >
         <java classname="org.mozilla.javascript.tools.shell.Main"
               dir="${webapp.dir}/resources/scripts/util/buildscripts"
               classpath="${webapp.dir}/resources/scripts/util/shrinksafe/js.jar:${webapp.dir}/resources/scripts/util/shrinksafe/shrinksafe.jar"

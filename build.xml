@@ -95,16 +95,14 @@
         </move>
 
 
-        <!-- TODO: refactor as an iteration over all javascript libs in build.properties.xml -->
-
         <unzip src="${basedir}/src/main/lib/${properties.timeline}.zip" dest="${target.dir}"/>
         <move todir="${target.dir}/resources/scripts/simile/timeline">
-            <fileset dir="${target.dir}/timeline_2.2.0/timeline_js"/>
+            <fileset dir="${target.dir}/timeline_2.3.0/timeline_js"/>
         </move>
         <move todir="${target.dir}/resources/scripts/simile/timeline">
-            <fileset dir="${target.dir}/timeline_2.2.0/timeline_ajax"/>
+            <fileset dir="${target.dir}/timeline_2.3.0/timeline_ajax"/>
         </move>
-        <delete dir="${target.dir}/timeline_2.2.0"/>
+        <delete dir="${target.dir}/timeline_2.3.0"/>
 
     </target>
 

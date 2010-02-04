@@ -22,9 +22,20 @@
             <fileset file="${basedir}/../../src/main/license/BSD-license.txt"/>
         </copy>
 
+
+        <!-- #### get and unpack dojo -->
+        <gunzip dest="${basedir}/target/${properties.dojo}.tar" src="${basedir}/../../src/main/lib/${properties.dojo}.tar.gz"/>
+        <untar  dest="${basedir}/target/dojo-release" src="${basedir}/target/${properties.dojo}.tar"/>
+        <move  file="${basedir}/target/dojo-release/${properties.dojo}" todir="${basedir}/target"/>
+        <delete dir="${basedir}/target/dojo-release" />
+        <delete file="${basedir}/target/${properties.dojo}.tar" />
+
+
         <!--##### fetching jetty from remote ##### -->
         <get usetimestamp="true" ignoreerrors="true" src="http://dist.codehaus.org/jetty/jetty-6.1.22/jetty-6.1.22.zip"
              dest="${basedir}/target/jetty.zip"/>
+
+
 
         <!--##### unpacking jetty can move it into a subfolder  - rename it to betterform ##### -->
         <unzip src="${basedir}/target/jetty.zip"
@@ -32,7 +43,7 @@
         <move file="${basedir}/target/jetty/jetty-6.1.22" tofile="${basedir}/target/jetty/betterform"/>
     </target>
 
-    <target name="betterFormWarInstaller" 
+    <target name="betterFormWarInstaller"
             description="Builds a betterForm Installer for deploying existing webcontainer">
 
 
@@ -54,6 +65,9 @@
                 output="${basedir}/target/betterform-install.jar"
                 installerType="standard"
                 basedir="${basedir}/target"/>
+
+        <chmod file="${basedir}/target/betterform-install.jar" perm="770"/>
+
     </target>
 
 
