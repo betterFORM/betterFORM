@@ -1,16 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id: build.xml 3351 2008-07-19 19:54:12Z joern $ -->
-<project id="zaphod" name="betterForm Zaphod" basedir="." default="deploy">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    author: Joern Turner
+    author: Lars Windauer
+    author: Fabian Otto
+ -->
+<project id="zaphod" name="betterForm Zaphod" basedir="." default="deploy-resources">
 
     <!-- **************************************** PROPERTIES **************************************** -->
     <!-- **************************************** PROPERTIES **************************************** -->
     <!-- **************************************** PROPERTIES **************************************** -->
-    <!-- global properties -->
-    <!-- classpath properties -->
     <!-- ###
-            ATTENTION - the properties below must be set before build.properties.xml
-            is called - DO NOT MOVE
-     ###  -->
+          ATTENTION - the properties below must be set before build.properties.xml
+          is called - DO NOT MOVE
+  ###  -->
+
+    <property name="root.dir" value=".."/>
+    <property name="src.dir" value="../src"/>
     <property name="core.dir" value="../core"/>
     <property name="web.dir" value="../web"/>
     <property name="zaphod.dir" value="."/>
@@ -19,24 +24,29 @@
              semanticAttributes="true" keepRoot="false" />
 
     <!-- local Zaphod properties -->
-  
+    <property name="forms.target" value="forms"/>
+    <property name="lib.dir" value="${basedir}/src/main/lib"/>
     <property name="target" value="${basedir}/target"/>
+    <property name="webapp.dir" value="${target}/${zaphod.app.name}"/>
     <property name="targetname" value="${target}/${zaphod.app.name}-${zaphod.app.version}"/>
-    <property name="forms.target" value="."/>
-  
+    <property name="servlet.container" value="${properties.webappPath}"/>
+
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
     <target name="clean" description="clean build target directory">
         <echo/>
         <echo message="************************************************************************************"/>
         <echo message="cleaning up zaphod..."/>
-        <echo message="************************************************************************************"/>    
-        <echo message="$["/>
+        <echo message="************************************************************************************"/>
         <echo/>
-        
         <delete dir="${basedir}/target"/>
     </target>
 
-
-    <target name="prepare">
+    <!-- **************************************** PREPARATION **************************************** -->
+    <!-- **************************************** PREPARATION **************************************** -->
+    <!-- **************************************** PREPARATION **************************************** -->
+    <target name="prepare" description="init the build process">
         <echo/>
         <echo message="************************************************************************************"/>
         <echo message="copying Core classes..."/>
@@ -44,28 +54,45 @@
         <echo/>
 
         <tstamp/>
-
-        <delete dir="${target}/classes/"/>
         <mkdir dir="${target}/classes"/>
 
-   </target>
+    </target>
 
-    <target name="compile" depends="prepare" description="compiling zaphod classes">
+    <!-- **************************************** COMPILATION **************************************** -->
+    <!-- **************************************** COMPILATION **************************************** -->
+    <!-- **************************************** COMPILATION **************************************** -->
+
+    <!--
+        Default build.properties setting are as below. If you need to compile with debug settings you can either
+        a. change relevant properties in build.properties.xml or
+        b. call Ant like this: ant compile -Djavac.debug="true"
+
+        javac.debug=off
+        javac.deprecation=off
+        javac.optimize=on
+
+    -->
+
+    <target name="compile" depends="prepare" description="compile all web sources">
         <echo/>
         <echo message="************************************************************************************"/>
         <echo message="compiling zaphod classes..."/>
         <echo message="************************************************************************************"/>
         <echo/>
-        
+
         <javac srcdir="${basedir}/src/main/java"
                destdir="${target}/classes"
-               classpathref="zaphod.class.path"
+               classpathref="web.class.path"
                target="${properties.javac.version}"
                debug="${properties.javac.debug}"
                deprecation="${properties.javac.deprecation}"
-               optimize="${properties.javac.optimize}"/>
+               optimize="${properties.javac.optimize}"
+                />
     </target>
 
+    <!-- **************************************** DEPLOYMENT **************************************** -->
+    <!-- **************************************** DEPLOYMENT **************************************** -->
+    <!-- **************************************** DEPLOYMENT **************************************** -->
 
 
     <target name="package" depends="compile" description="create zaphod jar">
@@ -74,113 +101,208 @@
         <echo message="creating zaphod jar..."/>
         <echo message="************************************************************************************"/>
         <echo/>
+        <mkdir dir="${webapp.dir}"/>
 
-        <delete file="${targetname}.jar"/>
-        <jar description="package zaphod jar"
-            jarfile="${targetname}.jar"
-            basedir="${basedir}/target/classes"/>
+        <!-- copy the webapp directory -->
+        <copy description="copy webapp"
+              todir="${webapp.dir}"
+              filtering="true"
+              includeemptydirs="true">
+            <fileset dir="${basedir}/src/main/webapp"/>
+        </copy>
+
+        <move file="${target}/classes"
+              todir="${webapp.dir}/WEB-INF"
+              description="move betterForm classes to WEB-INF"/>
+
+        <delete file="${webapp.dir}/WEB-INF/classes/log4j.xml"/>
+        <delete file="${webapp.dir}/WEB-INF/classes/log4j.dtd"/>
 
     </target>
 
+    <target name="deploy-resources" depends="exploded-webapp"
+            description="copy all forms from src/main/xforms to webapp dir">
 
-    <target name="deploy" depends="package" description="create a runnable installation">
-        <echo/>
-        <echo message="************************************************************************************"/>
-        <echo message="creating zaphod application layout..."/>
-        <echo message="************************************************************************************"/>
-        <echo/>
-
-        <echo/>
-        <echo message="************************************************************************************"/>
-        <echo message="copying Core jars..."/>
-        <echo message="************************************************************************************"/>
-        <echo/>
-        <copy todir="${targetname}/bin">
-            <fileset dir="${core.dir}/src/main/lib"/>
-        </copy>
-
-        <echo/>
-        <echo message="************************************************************************************"/>
-        <echo message="copying Core resources..."/>
-        <echo message="************************************************************************************"/>
-        <echo/>
-        <copy todir="${targetname}/resources">
-            <fileset dir="${basedir}/src/resources" excludes="**/*.tar.gz"/>
-            <!--<fileset dir="${basedir}/src/resources" />-->
-        </copy>
-
-
-        <echo/>
-        <echo message="************************************************************************************"/>
-        <echo message="copying scripts ..."/>
-        <echo message="************************************************************************************"/>
-        <echo/>
-
-    </target>
-
-    <target name="copy-forms" depends="deploy" description="copy forms">
+        <property name="onlineVersion" value="false"/>
         <echo/>
         <echo message="************************************************************************************"/>
         <echo message="copying forms..."/>
         <echo message="************************************************************************************"/>
         <echo/>
-        <copy todir="${targetname}/${forms.target}"
+        <copy todir="${webapp.dir}/${forms.target}"
               overwrite="true">
-            <fileset dir="${basedir}/${properties.rootDir}/src/main/html"/>
-            <filterset>
-                <filter token="app.name" value="${zaphod.app.name}"/>
-                <filter token="app.version" value="${zaphod.app.version}"/>
-                <filter token="applet.archive" value="${zaphod.app.name}-${zaphod.app.version}.jar,${runtime.libs}"/>
-            </filterset>
+            <fileset dir="${basedir}/${properties.rootDir}/src/main/xforms"/>
         </copy>
     </target>
 
-    <target name="dist" depends="clean, compile, test, javadoc, deploy" description="make a complete distribution">
-        <!-- create dist directory -->
-        <mkdir dir="${basedir}/target/zaphod-dist"/>
+    <target name="exploded-webapp" depends="compile"
+            description="builds an exploded webapp with expanded 'WEB-INF/classes' dir">
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="build deployment structure (exploded war)..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+        <mkdir dir="${webapp.dir}"/>
 
-        <!-- copy doc directory -->
-        <copy todir="${target}/doc">
-            <fileset dir="${basedir}/doc"/>
+        <!-- copy the webapp directory -->
+        <copy description="copy webapp"
+              todir="${webapp.dir}"
+              filtering="true"
+              includeemptydirs="true">
+            <fileset dir="${basedir}/src/main/webapp"/>
         </copy>
 
-        <!-- package zip -->
-        <zip basedir="${target}" destfile="${target}-${app.version}.zip"/>
+        <move file="${target}/classes"
+              todir="${webapp.dir}/WEB-INF"
+              description="move betterForm classes to WEB-INF"/>
+
+        <delete file="${webapp.dir}/WEB-INF/classes/log4j.xml"/>
+        <delete file="${webapp.dir}/WEB-INF/classes/log4j.dtd"/>
     </target>
 
-    <target name="javadoc" depends="compile" description="generate source documentation">
-        <javadoc sourcepath="${basedir}/src/main/java" classpathref="build.class.path" destdir="${target}/api">
-            <fileset dir="${basedir}/src/main/java"/>
-        </javadoc>
+    <target name="deploy-to-servlet-container"
+            depends="deploy-resources"
+            description="copy all resources (including forms) to webapp dir">
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="deploy into servlet container..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+        <copy todir="${servlet.container}/${web.app.name}"
+              overwrite="true">
+            <fileset dir="${webapp.dir}"/>
+        </copy>
     </target>
 
-    <target name="test" depends="compile" description="run all unit tests">
-        <mkdir dir="${basedir}/target/test"/>
 
-        <!-- run junit in batch mode -->
-        <junit printsummary="on">
-            <classpath refid="test.class.path"/>
-            <formatter type="xml"/>
-            <batchtest fork="yes" todir="${basedir}/target/test">
-                <!--<fileset dir="${src.dir}" includes="**/*Test.java"/>-->
-                <fileset dir="${basedir}/src/test" includes="**/*Test.java"/>
-            </batchtest>
-        </junit>
+    <target name="deploy-test-resources"
+            description="copy all official XForms test suite files to webapp dir">
+        <ant antfile="build.xml"
+             target="deploy-resources"
+             dir="${basedir}"
+             inheritall="false"/>
 
-        <!-- create test report directory -->
-        <mkdir dir="${basedir}/target/test"/>
-
-        <!-- generate test report -->
-        <junitreport todir="${basedir}/target/test">
-            <fileset dir="${basedir}/src/test">
-                <include name="TEST-*.xml"/>
-            </fileset>
-            <!--<report todir="${doc.dir}/test"/>-->
-            <report todir="${basedir}/target/test/doc"/>
-        </junitreport>
-
-        <!-- remove test results dir -->
-        <delete dir="${basedir}/target/test/doc"/>
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="copying Test Suites..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+        <copy todir="${webapp.dir}/${forms.target}">
+            <fileset dir="../src/test/resources"/>
+        </copy>
     </target>
+
+    <!-- **************************************** BUILDING JAR **************************************** -->
+    <!-- **************************************** BUILDING JAR **************************************** -->
+    <!-- **************************************** BUILDING JAR **************************************** -->
+
+    <!--<target name="create-war">-->
+        <!--<echo/>-->
+        <!--<echo message="************************************************************************************"/>-->
+        <!--<echo message="creating war-file..."/>-->
+        <!--<echo message="************************************************************************************"/>-->
+        <!--<echo/>-->
+
+        <!--<war warfile="${targetname}.war"-->
+             <!--webxml="${webapp.dir}/WEB-INF/web.xml"-->
+             <!--basedir="${webapp.dir}">-->
+        <!--</war>-->
+    <!--</target>-->
+
+    <!-- **************************************** SOURCE DISTRIBUTION **************************************** -->
+    <!-- **************************************** SOURCE DISTRIBUTION **************************************** -->
+    <!-- **************************************** SOURCE DISTRIBUTION **************************************** -->
+    <!--<target name="prepare-distribute" depends="clean">-->
+        <!--<echo/>-->
+        <!--<echo message="************************************************************************************"/>-->
+        <!--<echo message="preparing distribution..."/>-->
+        <!--<echo message="************************************************************************************"/>-->
+        <!--<echo/>-->
+
+        <!--<echo/>-->
+        <!--<echo message="************************************************************************************"/>-->
+        <!--<echo message="copying source web source tree..."/>-->
+        <!--<echo message="************************************************************************************"/>-->
+        <!--<echo/>-->
+
+        <!--<copy todir="${targetname}/web">-->
+            <!--<fileset dir="${basedir}"/>-->
+        <!--</copy>-->
+
+        <!--<copy file="${basedir}/../build.properties.xml" todir="${targetname}"-->
+              <!--description="copy global build.properties.xml"/>-->
+
+        <!--<echo/>-->
+        <!--<echo message="************************************************************************************"/>-->
+        <!--<echo message="building Core jar for inclusion into web sources..."/>-->
+        <!--<echo message="************************************************************************************"/>-->
+        <!--<echo/>-->
+
+        <!--<ant antfile="${core.dir}/build.xml" target="clean" dir="${core.dir}"/>-->
+        <!--<ant antfile="${core.dir}/build.xml" target="package" dir="${core.dir}" inheritall="false"/>-->
+
+        <!--<copy file="${core.dir}/target/${core.app.name}-${core.app.version}.jar"-->
+              <!--todir="${targetname}/web/src/main/lib"/>-->
+
+        <!--<copy todir="${targetname}/web/src/main/lib" flatten="true">-->
+            <!--<fileset dir="${core.dir}/src/main/lib"/>-->
+        <!--</copy>-->
+    <!--</target>-->
+
+    <!--<target name="distribute" depends="prepare-distribute"-->
+            <!--description="assembles binary and source distributions">-->
+
+        <!--<echo/>-->
+        <!--<echo message="************************************************************************************"/>-->
+        <!--<echo message="creating source distribution..."/>-->
+        <!--<echo message="************************************************************************************"/>-->
+        <!--<echo/>-->
+
+        <!--<echo/>-->
+        <!--<echo message="************************************************************************************"/>-->
+        <!--<echo message="creating gzip..."/>-->
+        <!--<echo message="************************************************************************************"/>-->
+        <!--<echo/>-->
+
+        <!--<tar description="create source tarball"-->
+             <!--tarfile="${targetname}-src.tar"-->
+             <!--basedir="${targetname}"/>-->
+
+        <!--<gzip description="create source tarball"-->
+              <!--zipfile="target/${web.app.name}-${web.app.version}-src.tar.gz"-->
+              <!--src="target/${web.app.name}-${web.app.version}-src.tar"/>-->
+        <!--<delete description="create source tarball"-->
+                <!--file="target/${web.app.name}-${web.app.version}-src.tar"/>-->
+
+        <!--<echo/>-->
+        <!--<echo message="************************************************************************************"/>-->
+        <!--<echo message="creating zip..."/>-->
+        <!--<echo message="************************************************************************************"/>-->
+        <!--<echo/>-->
+
+        <!--<zip description="create source zip"-->
+             <!--zipfile="target/${web.app.name}-${web.app.version}-src.zip"-->
+             <!--basedir="${targetname}"/>-->
+    <!--</target>-->
+
+
+    <!--&lt;!&ndash; **************************************** DOC TARGETS **************************************** &ndash;&gt;-->
+    <!--&lt;!&ndash; **************************************** DOC TARGETS **************************************** &ndash;&gt;-->
+    <!--&lt;!&ndash; **************************************** DOC TARGETS **************************************** &ndash;&gt;-->
+    <!--<target name="doc" depends="compile" description="generate documentation">-->
+        <!--&lt;!&ndash;create deploy directory&ndash;&gt;-->
+        <!--<mkdir dir="${basedir}/target/doc"/>-->
+
+        <!--&lt;!&ndash;generate source code documentation&ndash;&gt;-->
+        <!--<javadoc description="generate api documentation"-->
+                 <!--sourcepath="${basedir}/src/main/java"-->
+                 <!--destdir="${basedir}/target/doc"-->
+                 <!--classpathref="compile.class.path"-->
+                 <!--packagenames="de.betterform.*">-->
+        <!--</javadoc>-->
+
+        <!--&lt;!&ndash;set version filter&ndash;&gt;-->
+        <!--<filter token="app.version" value="${app.version}"/>-->
+    <!--</target>-->
 
 </project>

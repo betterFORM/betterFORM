@@ -160,8 +160,9 @@
 
         <copy todir="${webapp.dir}/WEB-INF/lib" description="copy dependent libraries from Web" flatten="true">
 
-            <!-- todo: need a better solution here - not all libs form web/src/main/lib are runtime relevant.
-   Therefore i copy the only needed lib directly here. -->
+            <!--  TODO: need a better solution here - not all libs form web/src/main/lib are runtime relevant.
+                  Therefore i copy the only needed lib directly here.
+            -->
             <fileset dir="${basedir}/src/main/lib" excludes="**/${core.app.name}-${core.app.version}.jar">
                 <include name="**/dwr*"/>
             </fileset>

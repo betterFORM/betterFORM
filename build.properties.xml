@@ -122,13 +122,6 @@
             <name>zaphod</name>
             <version>1.0</version>
         </app>
-        <compile>
-            <classpath pathid="zaphod.class.path" description="classpath for compiling web classes">
-                <pathelement location="${web.dir}/src/main/lib/servlet-api-2.4.jar" groupid="javax.servlet"
-                             version="2.4" artifactId="servlet-api" scope="provided"/>
-                <path refid="compile.class.path"/>
-            </classpath>
-        </compile>
     </zaphod>
     <!-- TODO: check if needed
     <webtest>
