@@ -13,11 +13,17 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Welcome to Zaphod</title>
+    <style type="text/css">
+        @import "/zaphod/forms/forward/resources/scripts/dijit/themes/soria/soria.css";
+        @import "/zaphod/forms/forward/resources/styles/xforms.css";
+        @import "/zaphod/forms/forward/resources/styles/betterform.css";
+        @import "/zaphod/forms/forward/resources/styles/reference.css";
+    </style>
 </head>
-<body>
+
+<body class="soria" style="margin:30px;overflow:auto;">
 <h1>Zaphod</h1>
 Welcome to Zaphod.
-<h1>Using betterForm in a Cross Context Environment</h1>
 
 <h2>Introduction</h2>
 
@@ -44,8 +50,28 @@ Welcome to Zaphod.
 <h3>Disadvantages</h3>
 
 <ul>
-    <li>the configuring is not simple.</li>
+    <li>the configuring is complex.</li>
 </ul>
+
+<h2>Examples</h2>
+
+The following List of examples show the reference forms of betterForm.s
+
+<ul>
+    <li><a href="forms/reference/Group.xhtml">Group</a></li>
+    <li><a href="forms/reference/Input.xhtml">Input</a></li>
+    <li><a href="forms/reference/Output.xhtml">Output</a></li>
+    <li><a href="forms/reference/Range.xhtml">Range</a></li>
+    <li><a href="forms/reference/Repeat.xhtml">Repeat</a></li>
+    <li><a href="forms/reference/Secret.xhtml">Secret</a></li>
+    <li><a href="forms/reference/Select.xhtml">Select</a></li>
+    <li><a href="forms/reference/Select1.xhtml">Select1</a></li>
+    <li><a href="forms/reference/Switch.xhtml">Switch</a></li>
+    <li><a href="forms/reference/Textarea.xhtml">Textarea</a></li>
+    <li><a href="forms/reference/Trigger.xhtml">Trigger</a></li>
+    <li><a href="forms/reference/Upload.xhtml">Upload</a></li>
+</ul>
+
 
 <h2>Setup</h2>
 
