@@ -114,12 +114,14 @@
         <echo message="generating pages for homepage"/>
         <echo message="************************************************************************************"/>
         <echo />
+		<property name = "trax" value = "org.apache.tools.ant.taskdefs.optional.TraXLiaison"/>
 
         <xslt basedir="src/main/doc/site/content"
               destdir="${basedir}/target"
               style="${basedir}/src/main/doc/site/xslt/site.xsl"
               force="true"
               includes="*.xml"
+	      processor="${trax}"
               extension=".html">
             <!--<classpath refid="generator.libs"/>-->
              <param name="onlineVersion" expression="true"/>

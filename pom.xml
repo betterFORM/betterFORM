@@ -1,15 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>    
     <groupId>de.betterform</groupId>
     <artifactId>betterform-project</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
 
-    <name>betterForm</name>
+    <name>betterForm Project</name>
     <description>betterForm Project</description>
-    <inceptionYear>2008</inceptionYear>
+    <inceptionYear>2010</inceptionYear>
     <url>http://betterform.sourceforge.net</url>
 
     <modules>
@@ -17,6 +17,7 @@
         <module>convex</module>
         <module>web</module>       
         <module>xApp</module>       
+        <module>zaphod</module>       
     </modules>
 
      <organization>
@@ -142,4 +143,11 @@
             </extension>
         </extensions>        
     </build>
+    <dependencies>
+      	<dependency>
+      		<groupId>org.apache.tools.ant</groupId>
+        	<artifactId>ant</artifactId>
+        	<version>1.7.1</version>
+      	</dependency>
+</dependencies>
 </project>

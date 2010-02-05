@@ -18,6 +18,7 @@ import de.betterform.xml.events.impl.XercesXMLEvent;
 import de.betterform.xml.xforms.XFormsConstants;
 import org.w3c.dom.Element;
 
+import javax.swing.*;
 import java.util.*;
 
 
@@ -32,8 +33,11 @@ public class EventQueue {
     public static List<String> HELPER_ELEMENTS = Arrays.asList(XFormsConstants.LABEL, XFormsConstants.HELP, XFormsConstants.HINT, XFormsConstants.ALERT, XFormsConstants.VALUE);
     private List<XMLEvent> eventList;
     protected static Log LOGGER = LogFactory.getLog(EventQueue.class);
+    private List<XMLEvent> loadEmbedEventList;
+
     public EventQueue() {
         this.eventList = new ArrayList<XMLEvent>();
+        this.loadEmbedEventList = new ArrayList<XMLEvent>();
     }
 
     public List<XMLEvent> getEventList() {
@@ -64,7 +68,12 @@ public class EventQueue {
 	
 	        ((XercesXMLEvent) clonedEvent).target=null;
 	        ((XercesXMLEvent) clonedEvent).currentTarget=null;
-	        this.eventList.add(clonedEvent);
+            if(isLoadEmbedEvent(clonedEvent)){
+                this.loadEmbedEventList.add(clonedEvent);
+            }else {
+                this.eventList.add(clonedEvent);    
+            }
+
     	} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -81,10 +90,18 @@ public class EventQueue {
         xmlEvent.initXMLEvent(type,false,false,null);
         xmlEvent.addProperty("targetid",targetId);
         xmlEvent.addProperty("targetName",targetName);
-        this.eventList.add(xmlEvent);
         return xmlEvent;
     }
 
+    private boolean isLoadEmbedEvent(XMLEvent xmlEvent) {
+        if(xmlEvent.getType() == null || xmlEvent.getContextInfo() == null) {
+            return false;
+        }
+        if(xmlEvent.getType().equals(BetterFormEventNames.LOAD_URI) && "embed".equals(xmlEvent.getContextInfo("show"))){
+            return true;
+        }
+        return false;
+    }
 
     /**
      * clean the EventQueue
@@ -108,6 +125,11 @@ public class EventQueue {
         Stack<XMLEvent> aggregatedEmbedEventsStack = new Stack();
         ArrayList<XMLEvent> aggregatedEventList = new ArrayList<XMLEvent>(eventList.size());
 
+        for(XMLEvent xmlEvent: this.loadEmbedEventList){
+            aggregatedEventList.add(xmlEvent);
+        }
+        
+        this.loadEmbedEventList.clear();
 
         for(int i =0;i< eventList.size(); i++) {
             XercesXMLEvent xmlEvent = (XercesXMLEvent) eventList.get(i);

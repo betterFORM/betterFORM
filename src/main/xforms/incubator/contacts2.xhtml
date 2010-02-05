@@ -6,6 +6,7 @@
     <head>
         <title>Embedding a subform with the load action</title>
         <meta name="author" content="joernt at users.sourceforge.net"/>
+        <meta name="author" content="lars.windauer at chiba-project.org"/>
         <meta name="description" content="XForms demo for embedding subforms with the load action"/>
     </head>
     <body>
@@ -13,20 +14,30 @@
         <xf:model id="master">
             <xf:instance id="contact" xmlns="">
                 <data>
-                    <phone number="" type="work"/>
-                    <phone number="" type="mobile"/>
-                    <postaladdress id="1">
+                    <address id="1">
                         <street>Goethestr. 47</street>
                         <city>Hamburg</city>
                         <zip>223456</zip>
                         <country>Germany</country>
-                    </postaladdress>
-                    <postaladdress id="2">
-                        <street>Schillerstr. 47</street>
+                    </address>
+                    <address id="2">
+                        <street>Schillerstr. 42</street>
                         <city>Berlin</city>
                         <zip>12234</zip>
                         <country>Germany</country>
-                    </postaladdress>
+                    </address>
+                    <address id="3">
+                        <street>Passeig de Gràcia 12</street>
+                        <city>Barcelona</city>
+                        <zip>08008</zip>
+                        <country>Spain</country>
+                    </address>
+                    <address id="4">
+                        <street>Hegelweg. 23</street>
+                        <city>Dresden</city>
+                        <zip>01326</zip>
+                        <country>Germany</country>
+                    </address>
                 </data>
             </xf:instance>
 
@@ -34,27 +45,32 @@
                            resource="model:address#instance('default')/address"
                            method="post"
                            replace="none"
-                           ref="postaladdress">
+                           ref="address[index('addresses')]">
             </xf:submission>
 
         </xf:model>
 
         <xf:group appearance="full" id="contact">
-            <xf:label>Contact Information:</xf:label>
-            <!--<xf:action ev:event="betterform-load-uri">
-                <xf:message>yep</xf:message>
-            </xf:action>-->
+            <xf:label>Address Collection:</xf:label>
 
-            <xf:input ref="phone[1]/@number">
-                <xf:label>work</xf:label>
-            </xf:input>
 
-            <xf:input ref="phone[2]/@number">
-                <xf:label>mobile</xf:label>
-            </xf:input>
+			<xf:repeat id="addresses" nodeset="address" appearance="compact">
+				<xf:output ref="street">
+					<xf:label>Street</xf:label>
+				</xf:output>
+				<xf:output ref="zip">
+					<xf:label>ZIP Code</xf:label>
+				</xf:output>
+				<xf:output ref="city">
+					<xf:label>City</xf:label>
+				</xf:output>
+				<xf:output ref="country">
+					<xf:label>Country</xf:label>
+				</xf:output>
+			</xf:repeat>
 
             <xf:trigger>
-                <xf:label>edit Address with subform</xf:label>
+                <xf:label>load selected address [master updates subform]</xf:label>
                 <xf:action>
                     <xf:load show="embed" targetid="address">
                         <xf:resource value="'address.xml'"/>
@@ -67,18 +83,17 @@
 
 
             <xf:trigger>
-                <xf:label>load address2.xml</xf:label>
+                <xf:label>load selected address [subforms updates itself]</xf:label>
                 <xf:action>
                     <xf:load show="embed" targetid="address">
                         <xf:resource value="'address2.xml'"/>
                     </xf:load>
-                    <xf:setvariable name="foo" select="'bar'"/>
                 </xf:action>
-
-
             </xf:trigger>
             
-            <div id="address"></div>
+            <div style="border:1px solid black;display:block;">
+				<div id="address"></div>
+			</div>
         </xf:group>
     </form>
 
