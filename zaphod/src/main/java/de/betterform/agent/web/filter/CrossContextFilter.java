@@ -19,8 +19,6 @@
  */
 package de.betterform.agent.web.filter;
 
-import de.betterform.agent.web.filter.BufferedHttpServletResponseWrapper;
-
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -37,6 +35,7 @@ public class CrossContextFilter implements Filter {
     private static final String ALTERNATIVE_ROOT = "ResourcePath";
 //    private static final String XFORMSBASEURI = "XFormsBaseURI";
     private static final String XFORMSINPUTSTREAM = "XFormsInputStream";
+    private static final String FORWARD_URL = "betterform.base.url";
 
     private static final boolean debug = false;
     // The filter configuration object we are associated with.  If
@@ -50,6 +49,7 @@ public class CrossContextFilter implements Filter {
     private String xformsServlet = null;
     // URL Prefix for URLs getting forwarded.
     private String xformsResources = null;
+
 
     public CrossContextFilter() {
     }
@@ -162,47 +162,61 @@ public class CrossContextFilter implements Filter {
     }
 
     private Throwable forward(FilterChain chain, ServletRequest request, ServletResponse response) throws ServletException, IOException {
-        BufferedHttpServletResponseWrapper bufferedResponse = new BufferedHttpServletResponseWrapper((HttpServletResponse) response);
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
         Throwable problem = null;
-
-        
-        if (httpRequest.getRequestURI().startsWith(xformsResources)) {
-            /* Request is beeing forwarded to chiba. Just changing the URI. 
-               This is most likely an resource like an image or a css file.
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        try {
+            if (httpRequest.getRequestURI().startsWith(xformsResources)) {
+                resourceForward(request, response);
+            } else if (httpRequest.getHeader("betterform-internal") != null) {
+                chain.doFilter(request, response);
+                response.setContentType("text/xml");
+            } else {
+                formForward(chain, request, response);
+            }
+        } catch (Throwable t) {
+            /* If an exception is thrown somewhere down the filter chain,
+               we still want to execute our after processing, and then
+               rethrow the problem after that.
             */
-            String uri = httpRequest.getRequestURI().replace(xformsResources, "");
-            System.out.println("forward to new uri:" + uri);
-            RequestDispatcher dispatcher = context.getRequestDispatcher(uri);
-            dispatcher.forward(request, response);
-        } else {
-            /* Process other filter and send the response to chiba for xforms processing. 
-               Since the filter should only run when a specified URL pattern matches this
-               should be only the case for processing xforms.
-            */ 
-            try {
-                chain.doFilter(request, bufferedResponse);
-                System.out.println("Request: " + httpRequest.getRequestURI());
-                RequestDispatcher dispatcher = context.getRequestDispatcher(xformsServlet);
-                // create and set input stream from buffer for chiba
-                request.setAttribute(XFORMSINPUTSTREAM, bufferedResponse.getInputStream());
-                request.setAttribute(ALTERNATIVE_ROOT, xformsResources);
-                // forward the orignal request and response to chiba's context.
-                dispatcher.forward(request, response);
-            } catch (Throwable t) {
-                /* If an exception is thrown somewhere down the filter chain,
-                   we still want to execute our after processing, and then
-                   rethrow the problem after that.
-                */
-                problem = t;
-                t.printStackTrace();
-                if (problem instanceof ServletException && problem.getCause() != null) {
-                    Throwable e = problem.getCause();
-                    printErrorPage(response, request, e);
-                }
+            problem = t;
+            t.printStackTrace();
+            if (problem instanceof ServletException && problem.getCause() != null) {
+                Throwable e = problem.getCause();
+                printErrorPage(response, request, e);
             }
         }
         return problem;
+    }
+
+    private void formForward(FilterChain chain, ServletRequest request, ServletResponse response) throws IOException, ServletException {
+        /* Process other filter and send the response to chiba for xforms processing.
+           Since the filter should only run when a specified URL pattern matches this
+           should be only the case for processing xforms.
+        */
+        BufferedHttpServletResponseWrapper bufferedResponse = new BufferedHttpServletResponseWrapper((HttpServletResponse) response);
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        chain.doFilter(request, bufferedResponse);
+        System.out.println("Request: " + httpRequest.getRequestURI());
+        System.out.println("Request Content Type: " + httpRequest.getContentType());
+        RequestDispatcher dispatcher = context.getRequestDispatcher(xformsServlet);
+        // create and set input stream from buffer for chiba
+        request.setAttribute(XFORMSINPUTSTREAM, bufferedResponse.getInputStream());
+        request.setAttribute(ALTERNATIVE_ROOT, xformsResources);
+        request.setAttribute(FORWARD_URL, httpRequest.getRequestURL().toString());
+
+        // forward the orignal request and response to chiba's context.
+        dispatcher.forward(request, response);
+    }
+
+    private void resourceForward(ServletRequest request, ServletResponse response) throws ServletException, IOException {
+        /* Request is beeing forwarded to chiba. Just changing the URI.
+           This is most likely an resource like an image or a css file.
+        */
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        String uri = httpRequest.getRequestURI().replace(xformsResources, "");
+        System.out.println("forward to new uri:" + uri);
+        RequestDispatcher dispatcher = context.getRequestDispatcher(uri);
+        dispatcher.forward(request, response);
     }
 
     private void printErrorPage(ServletResponse response, ServletRequest request, Throwable problem) throws IOException {

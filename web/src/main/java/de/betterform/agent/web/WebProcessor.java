@@ -71,6 +71,7 @@ public class WebProcessor implements XFormsProcessor, EventListener {
     public static final String ACTIONURL_PARAM_NAME = "action_url";
     public static final String UIGENERATOR = "betterform.UIGenerator";
     public static final String REFERER = "betterform.referer";
+    public static final String FORWARD_URL = "betterform.base.url";    
     public static final String ADAPTER_PREFIX = "A";
 
     public static final String ALTERNATIVE_ROOT = "ResourcePath";

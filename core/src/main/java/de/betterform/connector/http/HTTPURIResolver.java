@@ -13,8 +13,10 @@ import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,10 +66,10 @@ public class HTTPURIResolver extends AbstractHTTPConnector implements URIResolve
         get(getURIWithoutFragment());
 
         InputStream responseStream = getResponseBody();
-        Map header = getResponseHeader();
-        String contentType = (String) header.get("Content-Type");
+        Map                 header = getResponseHeader();
+        String         contentType = (String) header.get("Content-Type");
+                       contentType = parseContentType(contentType);
 
-        //todo: check for equality is not sufficient here as contenttype header might contain more info such as charset
         if (contentType.equalsIgnoreCase("text/plain") || contentType.equalsIgnoreCase("text/html")) {
             try {
                 return inputStreamToString(responseStream);
@@ -75,30 +77,11 @@ public class HTTPURIResolver extends AbstractHTTPConnector implements URIResolve
                 throw new XFormsException(e);
             }
         } else if (contentType.equalsIgnoreCase("application/xml") || contentType.equalsIgnoreCase("text/xml")) {
-
             try {
-
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("converting response stream to XML");
                 }
-
-                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                factory.setNamespaceAware(true);
-                factory.setValidating(false);
-
-                Document document = factory.newDocumentBuilder().parse(responseStream);
-
-                if (uri.getFragment() != null) {
-                    String fragment = uri.getFragment();
-                    //todo: allow access to fragments by other means than using getElementById
-                    Node resultNode = XPathUtil.evaluateAsSingleNode(document,"//*[@id='" + fragment + "']");
-                    if(LOGGER.isDebugEnabled()){
-                        DOMUtil.prettyPrintDOM(resultNode);
-                    }
-                    return resultNode;
-                }
-
-                return document;
+                return buildDocument(uri, responseStream);
             } catch (Exception e) {
                 throw new XFormsException(e);
             }
@@ -106,7 +89,26 @@ public class HTTPURIResolver extends AbstractHTTPConnector implements URIResolve
             LOGGER.warn("URI: " + uri + " couldn't be resolved");
             return null;
         }
+    }
 
+    private Object buildDocument(URI uri, InputStream responseStream) throws SAXException, IOException, ParserConfigurationException, XFormsException {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setNamespaceAware(true);
+        factory.setValidating(false);
+
+        Document document = factory.newDocumentBuilder().parse(responseStream);
+
+        if (uri.getFragment() != null) {
+            String fragment = uri.getFragment();
+            //todo: allow access to fragments by other means than using getElementById
+            Node resultNode = XPathUtil.evaluateAsSingleNode(document,"//*[@id='" + fragment + "']");
+            if(LOGGER.isDebugEnabled()){
+                DOMUtil.prettyPrintDOM(resultNode);
+            }
+            return resultNode;
+        }
+
+        return document;
     }
 
     private String inputStreamToString(InputStream in) throws IOException {
@@ -120,6 +122,20 @@ public class HTTPURIResolver extends AbstractHTTPConnector implements URIResolve
 
         bufferedReader.close();
         return stringBuilder.toString();
+    }
+
+    /**
+     *
+     * @param contentType is removed of encoding types when present
+     * @return only the mime string without encoding type
+     */
+    private String parseContentType(String contentType)
+    {
+        int semicolonIndex = contentType.indexOf(';');
+        if (semicolonIndex > 0) {
+            contentType = contentType.substring(0, semicolonIndex);
+        }
+        return contentType;
     }
 }
 

@@ -113,7 +113,6 @@ public class LoadAction extends AbstractBoundAction {
                 return;
             }
 
-
             if (this.resource.isAvailable()) {
                 relativeURI = this.resource.getValue();
             }
@@ -169,15 +168,8 @@ public class LoadAction extends AbstractBoundAction {
         //todo: dirty dirty dirty
         String evaluatedTarget =evalAttributeValueTemplates(this.targetAttribute,this.element);
 
-        //load resource from absoluteURI
-        ConnectorFactory factory = ConnectorFactory.getFactory();
-        factory.setContext(this.container.getProcessor().getContext());
-        URIResolver uriResolver = factory.createURIResolver(absoluteURI,this.element);
+        Node embed = getEmbeddedDocument(absoluteURI);
 
-        Node embed = (Node) uriResolver.resolve();
-        if(embed instanceof Document){
-            embed = ((Document)embed).getDocumentElement();
-        }
 
         if(embed == null){
             //todo: review: context info params containing a '-' fail during access in javascript!
@@ -224,6 +216,24 @@ public class LoadAction extends AbstractBoundAction {
 
         this.container.dispatch(this.target, BetterFormEventNames.LOAD_URI, map);
 //        storeInContext(absoluteURI, this.showAttribute);
+    }
+
+    private Node getEmbeddedDocument(String absoluteURI) throws XFormsException {
+        //load resource from absoluteURI
+        ConnectorFactory factory = ConnectorFactory.getFactory();
+        factory.setContext(this.container.getProcessor().getContext());
+        URIResolver uriResolver = factory.createURIResolver(absoluteURI,this.element);
+
+        Object answer = uriResolver.resolve();
+        if ( ! (answer instanceof Node)) {
+            //todo: use better error text
+            throw new XFormsException("Embedded document must be an parsable as DOM.");
+        }
+        Node embed = (Node) answer;
+        if(embed instanceof Document){
+            embed = ((Document)embed).getDocumentElement();
+        }
+        return embed;
     }
 
     private void destroyembeddedModels(Element targetElem) throws XFormsException {
