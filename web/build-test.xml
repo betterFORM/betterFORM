@@ -117,7 +117,7 @@
         <mkdir dir="${basedir}/target/test-tools/${web.test.tomcat.version}/conf/Catalina/localhost/"/>
         
         <echo file="${basedir}/target/test-tools/${web.test.tomcat.version}/conf/Catalina/localhost/betterform.xml">
-            <![CDATA[<Context path="/betterform" docBase="${basedir}/target/betterform"/>]]></echo>
+            <![CDATA[<Context path="/betterform" docBase="${basedir}/target/betterform" crossContext="true"/>]]></echo>
     </target>
 
     <target name="tomcat-clean">
