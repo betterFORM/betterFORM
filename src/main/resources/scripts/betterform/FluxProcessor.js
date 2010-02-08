@@ -178,6 +178,7 @@ dojo.declare("betterform.FluxProcessor",
     },
 
     _handleExceptions:function(msg, exception) {
+        // console.debug("FluxProcessor._handleExceptions msg:",msg, " exception: ", exception);
         if(msg != undefined && exception != undefined ){
             console.error(msg, ' - Exception: ', exception);
         } else if(msg != undefined) {
@@ -433,7 +434,7 @@ dojo.declare("betterform.FluxProcessor",
         window.open(path, "_self");
     },
 
-    _handleBetterFormStateChanged:function(/*XMLEvent*/ xmlEvent){
+     _handleBetterFormStateChanged:function(/*XMLEvent*/ xmlEvent){
         //console.debug("FluxProcessor._handleBetterFormStateChanged: targetId: " + xmlEvent.contextInfo.targetId , " parentId: " , xmlEvent.contextInfo.parentId);
 
 /*

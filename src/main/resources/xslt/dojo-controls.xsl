@@ -270,7 +270,13 @@
 
     <xsl:template name="build-items">
         <xsl:param name="parent"/>
-
+        <xsl:if test="local-name($parent) ='select1' and ($parent/@appearance='minimal' or not(exists($parent/@appearance)))">
+            <option value="">
+                <xsl:if test="string-length($parent/bf:data/text()) = 0">
+                    <xsl:attribute name="selected">selected</xsl:attribute>
+                </xsl:if>
+            </option>
+        </xsl:if>
 		<!-- add an empty item, because otherwise deselection is not possible -->
 <!--
         <xsl:if test="$parent/bf:data/@bf:required='false'">
