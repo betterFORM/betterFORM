@@ -20,7 +20,7 @@
                     <xsl:when test="$server = 'sourceforge'">
                         <meta name="verify-v1" content="bj1zGpSozojt7Vp/Sr5DOAkm/MYVA0sYoSYqsR+OpDk=" />
                     </xsl:when>
-                    <xsl:when test="$server = 'r15zJetty'">
+                    <xsl:when test="$server = 'betterFormJetty'">
                         <meta name="verify-v1" content="B3mrB2hDtjj34soDgSMppdcIXDbKK4N6Ebh9btMxZR8=" />
                     </xsl:when>
                 </xsl:choose>
@@ -187,7 +187,7 @@
                             var pageTracker = _gat._getTracker("UA-6761283-1");
                         </xsl:when>
                         <!-- todo: fix page tracking -->
-                        <xsl:when test="$server = 'r15zJetty'">
+                        <xsl:when test="$server = 'betterFormJetty'">
                             var pageTracker = _gat._getTracker("UA-6761316-1");
                         </xsl:when>
                     </xsl:choose>

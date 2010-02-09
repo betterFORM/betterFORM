@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    author: Joern Turner
+    author: Lars Windauer
+
+    todo: copy web.xml with useragent="dojo" during package
+ -->
+<project id="xapp" name="xApp" default="deploy-resources" basedir=".">
+
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- ###
+          ATTENTION - the properties below must be set before build.properties.xml
+          is called - DO NOT MOVE
+  ###  -->
+
+    <property name="root.dir" value=".."/>
+    <property name="src.dir" value="../src"/>
+    <property name="core.dir" value="../core"/>
+    <property name="web.dir" value="."/>
+    <property name="dojo.name" value="dojo-release-1.2.3"/>
+    <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
+
+
+    <!-- local Web properties -->
+    <property name="forms.target" value="forms"/>
+    <property name="lib.dir" value="${basedir}/src/main/lib"/>
+    <property name="target" value="${basedir}/target"/>
+    <property name="webapp.dir" value="${target}/${xapp.app.name}"/>
+    <property name="targetname" value="${target}/${web.app.name}-${web.app.version}"/>
+    <property name="servlet.container" value="${properties.webappPath}"/>
+
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <target name="clean" description="clean build target directory">
+        <echo/>
+        <echo message="####################################################################################"/>
+        <echo message="cleaning up xApp..."/>
+        <echo message="####################################################################################"/>
+        <echo/>
+        <delete dir="${basedir}/../web/target"/>
+        <delete dir="${basedir}/target"/>
+    </target>
+
+    <!-- **************************************** PREPARATION **************************************** -->
+    <!-- **************************************** PREPARATION **************************************** -->
+    <!-- **************************************** PREPARATION **************************************** -->
+    <target name="prepare">
+        <ant antfile="${basedir}/../web/build.xml" target="exploded-webapp" dir="${basedir}/../web" inheritall="false">
+            <property name="webapp.dir" value="${basedir}/target/${xapp.app.name}"/>
+            <property name="target.dir" value="${basedir}/target"/>
+        </ant>
+    </target>
+
+    <target name="prepare-xApp">
+        <!-- copy xApp webapp dir to target -->
+        <copy todir="${basedir}/target/${xapp.app.name}"
+              overwrite="true">
+            <fileset dir="${basedir}/src/main/webapp"/>
+        </copy>
+
+        <!-- copy optional xApp resources that may exist to overwrite the originals from betterForm web -->
+        <copy todir="${basedir}/target/${xapp.app.name}/resources" overwrite="true">
+            <fileset dir="${basedir}/src/main/webapp/resources"/>
+        </copy>
+    </target>
+
+    <!-- **************************************** COMPILATION **************************************** -->
+    <!-- **************************************** COMPILATION **************************************** -->
+    <!-- **************************************** COMPILATION **************************************** -->
+
+    <!--
+        Default build.properties setting are as below. If you need to compile with debug settings you can either
+        a. change relevant properties in build.properties.xml or
+        b. call Ant like this: ant compile -Djavac.debug="true"
+
+        javac.debug=off
+        javac.deprecation=off
+        javac.optimize=on
+
+    -->
+    <target name="compile">
+        <echo/>
+        <echo message="####################################################################################"/>
+        <echo message="compiling xApp classes..."/>
+        <echo message="####################################################################################"/>
+        <echo/>
+        <mkdir dir="${basedir}/target/${xapp.app.name}/WEB-INF/classes"/>
+        <javac description="compile source files"
+               srcdir="${basedir}/src/main/java"
+               destdir="${basedir}/target/${xapp.app.name}/WEB-INF/classes"
+               classpathref="web.class.path"
+               target="${properties.javac.version}"
+               debug="${properties.javac.debug}"
+               deprecation="${properties.javac.deprecation}"
+               optimize="${properties.javac.optimize}"
+                />
+    </target>
+
+    <target name="deploy-resources" depends="prepare, compile" description="copy all forms from src/main/xforms to webapp dir">
+        <antcall target="prepare-xApp"/>
+    </target>
+    
+
+    <target name="create-war" depends="deploy-resources" description="creates a not optimized war-file for interims release and development purposes">
+        <ant antfile="${basedir}/../web/build.xml" target="create-war" dir="${basedir}/../web" inheritall="false">
+            <property name="targetname" value="${basedir}/target/${xapp.app.name}"/>
+            <property name="webapp.dir" value="${basedir}/target/${xapp.app.name}"/>
+        </ant>
+    </target>
+
+    <target name="package" depends="clean" description="builds an optimized version of the war-file with compiled JavaScript">
+        <antcall target="compile">
+            <param name="properties.javac.debug" value="false"/>
+            <param name="properties.javac.optimize" value="true"/>
+        </antcall>
+
+        <echo/>
+        <echo message="####################################################################################"/>
+        <echo message="preparing xApp. Copying local resources and the webapp dir."/>
+        <echo message="####################################################################################"/>
+        <echo/>
+        <antcall target="prepare-xApp"/>
+
+        <echo/>
+        <echo message="####################################################################################"/>
+        <echo message="compiling JavaScript..."/>
+        <echo message="####################################################################################"/>
+        <echo/>
+        <ant antfile="${basedir}/../web/build.xml" target="build-dojo" dir="${basedir}/../web" inheritall="false">
+            <property name="webapp.dir" value="${basedir}/target/${xapp.app.name}"/>
+        </ant>
+
+        <echo/>
+        <echo message="####################################################################################"/>
+        <echo message="deleting uncompiled JavaScript sources from tree"/>
+        <echo message="####################################################################################"/>
+        <echo/>
+        <delete dir="${basedir}/target/${xapp.app.name}/resources/scripts/betterform"/>
+        <delete dir="${basedir}/target/${xapp.app.name}/resources/scripts/dijit"/>
+        <delete dir="${basedir}/target/${xapp.app.name}/resources/scripts/dojo"/>
+        <delete dir="${basedir}/target/${xapp.app.name}/resources/scripts/dojox"/>
+        <delete dir="${basedir}/target/${xapp.app.name}/resources/scripts/util"/>
+        <delete dir="${basedir}/target/${xapp.app.name}/resources/scripts/release/dojo/util"/>
+
+
+        <!-- !!!!!!! copy production web.xml to WEB-INF before packaging -->
+        <copy file="${basedir}/src/main/webapp/WEB-INF/web-production.xml"
+              todir="${basedir}/target/${xapp.app.name}/WEB-INF"/>
+        <move  file="${basedir}/target/${xapp.app.name}/WEB-INF/web-production.xml"
+               tofile="${basedir}/target/${xapp.app.name}/WEB-INF/web.xml"/>
+        
+        <ant antfile="${basedir}/../web/build.xml" target="create-war" dir="${basedir}/../web" inheritall="false">
+            <property name="targetname" value="${basedir}/target/${xapp.app.name}"/>
+            <property name="webapp.dir" value="${basedir}/target/${xapp.app.name}"/>
+        </ant>
+    </target>
+
+
+</project>

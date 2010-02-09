@@ -368,10 +368,10 @@
             <td>
                 <xf:trigger id="reportBug">
                     <xf:label>Report a Bug</xf:label>
-                    <xf:load resource="https://r15z.de/trac/newticket" show="new"/>
+                    <xf:load resource="https://chiba-project.org/trac/newticket" show="new"/>
 
                     <!--
-                    <xf:load resource="https://r15z.de/trac/newticket?summary=Repeat%20Test%20Bug&amp;description=Please%20describe%20the%20bug%20you%20experienced%20here.%20Don%27t%20forget%20to%20note%20which%20steps%20brought%20up%20the%20error" show="new"/>
+                    <xf:load resource="https://chiba-project.org/trac/newticket?summary=Repeat%20Test%20Bug&amp;description=Please%20describe%20the%20bug%20you%20experienced%20here.%20Don%27t%20forget%20to%20note%20which%20steps%20brought%20up%20the%20error" show="new"/>
     -->
                 </xf:trigger>
             </td>
@@ -543,7 +543,7 @@
 
 
         <xf:output appearance="caLink"
-                   value="IF(substring(ts:testCaseNote,1,1) = '#',concat('https://www.r15z.de/trac/ticket/',substring(ts:testCaseNote,2,string-length(ts:testCaseNote))),'')">
+                   value="IF(substring(ts:testCaseNote,1,1) = '#',concat('https://chiba-project.org/trac/ticket/',substring(ts:testCaseNote,2,string-length(ts:testCaseNote))),'')">
             <xf:label></xf:label>
         </xf:output>
     </xf:repeat>

@@ -71,7 +71,7 @@ public class EventQueue {
             if(isLoadEmbedEvent(clonedEvent)){
                 this.loadEmbedEventList.add(clonedEvent);
             }else {
-                this.eventList.add(clonedEvent);    
+	        this.eventList.add(clonedEvent);
             }
 
     	} catch (CloneNotSupportedException e) {
@@ -90,6 +90,7 @@ public class EventQueue {
         xmlEvent.initXMLEvent(type,false,false,null);
         xmlEvent.addProperty("targetid",targetId);
         xmlEvent.addProperty("targetName",targetName);
+        this.eventList.add(xmlEvent);
         return xmlEvent;
     }
 
@@ -128,7 +129,7 @@ public class EventQueue {
         for(XMLEvent xmlEvent: this.loadEmbedEventList){
             aggregatedEventList.add(xmlEvent);
         }
-        
+
         this.loadEmbedEventList.clear();
 
         for(int i =0;i< eventList.size(); i++) {

@@ -16,8 +16,8 @@
         <module>core</module>
         <module>convex</module>
         <module>web</module>       
-        <module>xApp</module>       
-        <module>zaphod</module>       
+        <module>xApp</module>
+        <module>zaphod</module>
     </modules>
 
      <organization>
@@ -84,7 +84,7 @@
 
     <issueManagement>
         <system>Trac</system>
-        <url>https://www.chiba-project.org</url>
+        <url>https://chiba-project.org/trac</url>
     </issueManagement>
 
 

@@ -34,7 +34,7 @@
         <version><xsl:value-of select="document($buildprops)/root//app/version[../name=$module]"/></version>
     </xsl:template>
 
-    <xsl:template match="mvn:dependencies">
+    <xsl:template match="mvn:project/mvn:dependencies">
         <dependencies>
             <xsl:choose>
                 <xsl:when test="$module = document($buildprops)/root/web/app/name">

@@ -62,11 +62,13 @@
     </target>
 
     <target name="prepare-dojo" depends="check.dojo" if="dojo.not.available">
-        <ant antfile="build.xml" target="prepare-js" dir=".." inheritall="false"/>
+        <ant antfile="build.xml" target="prepare-js" dir=".." inheritall="false">
+            <property name="target.dir" value="${target}"/>
+        </ant>
         <copy description="copy javascript resources from global directory"
               todir="${webapp.dir}/resources/scripts"
               includeemptydirs="true">
-            <fileset dir="../target/resources/scripts">
+            <fileset dir="${basedir}/target/resources/scripts">
                 <include name="**/*.*"/>
             </fileset>
         </copy>
@@ -160,9 +162,9 @@
 
         <copy todir="${webapp.dir}/WEB-INF/lib" description="copy dependent libraries from Web" flatten="true">
 
-            <!--  TODO: need a better solution here - not all libs form web/src/main/lib are runtime relevant.
-                  Therefore i copy the only needed lib directly here.
-            -->
+            <!-- todo: need a better solution here - not all libs form web/src/main/lib are runtime relevant.
+   						Therefore only needed libs are copied directly here.
+			-->
             <fileset dir="${basedir}/src/main/lib" excludes="**/${core.app.name}-${core.app.version}.jar">
                 <include name="**/dwr*"/>
             </fileset>
@@ -224,7 +226,7 @@
             <fileset dir="../src/test/resources"/>
         </copy>
     </target>
-
+    
     <!-- build betterForm Boilerplate pages-->
     <target name="generateSite">
         <echo/>
@@ -233,16 +235,18 @@
         <echo message="************************************************************************************"/>
         <echo/>
 
+        <property name = "trax" value = "org.apache.tools.ant.taskdefs.optional.TraXLiaison"/>
 
         <xslt basedir="${basedir}/../src/main/doc/site/content"
               destdir="${webapp.dir}"
               style="${basedir}/../src/main/doc/site/xslt/site.xsl"
-              processor="trax"
               force="true"
               includes="*.xml"
+              processor="${trax}"
               extension=".html">
-            <classpath refid="saxon.libs"/>
-            <param name="onlineVersion" expression="${onlineVersion}"/>
+            <!--<classpath refid="generator.libs"/>-->
+             <classpath refid="saxon.libs"/>
+             <param name="onlineVersion" expression="true"/>
         </xslt>
 
         <copy todir="${webapp.dir}/resources/images">

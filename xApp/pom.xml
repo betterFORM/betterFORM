@@ -15,7 +15,7 @@
 
     <packaging>war</packaging>
 
-    <name>xApp</name>
+    <name>betterFORM xApp</name>
     <description>betterForm xApp Project</description>
     <inceptionYear>2010</inceptionYear>
     <url>http://betterform.sourceforge.net</url>
@@ -54,11 +54,38 @@
                     </items>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <configuration>
+                            <tasks>
+                                <ant antfile="${basedir}/build.xml">
+                                    <target name="package"/>
+                                </ant>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.ant</groupId>
+                        <artifactId>ant-trax</artifactId>
+                        <version>1.7.1</version>
+                        <scope>provided</scope>
+                    </dependency>
+                </dependencies>                
+            </plugin>
         </plugins>
         <finalName>${project.artifactId}</finalName>
     </build>
 
-    <dependencies>            
+    <dependencies>
         <dependency>
             <groupId>de.betterform</groupId>
             <artifactId>betterform-core</artifactId>

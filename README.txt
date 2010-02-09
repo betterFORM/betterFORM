@@ -58,4 +58,4 @@ For more detailed informations see
     - User Guide (doc/betterFormUserGuide)
     - Cookbook (doc/betterFormCookBook)
     - Developer Guide (doc/betterFormDeveloperGuide)
-    - Wiki (https://r15z.de/trac)
+    - Wiki (https://chiba-project.org/trac)
