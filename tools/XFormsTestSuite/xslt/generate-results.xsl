@@ -173,6 +173,75 @@
                         <tr>
                             <td>Product:</td>
                             <td><xsl:value-of select="$config//product-id"/></td>
+                            <td rowspan="6">
+                                <div>
+                                   <script type="text/javascript">
+                                     dojo.require("dojox.charting.Chart2D");
+                                     dojo.require("dojox.charting.plot2d.Pie");
+                                     dojo.require("dojox.charting.action2d.Highlight");
+                                     dojo.require("dojox.charting.action2d.MoveSlice");
+                                     dojo.require("dojox.charting.action2d.Tooltip");
+                                     dojo.require("dojox.charting.themes.MiamiNice");
+                                     dojo.require("dojox.charting.widget.Legend");
+
+                                     createChart = function(passed, failed, unknown) {
+                                       var chart = new dojox.charting.Chart2D("conformanceChart"),
+                                           sum   = passed + failed + unknown;
+
+                                       chart.addPlot("default", {
+                                           labels: true,
+                                           ticks: true,
+                                           type: "Pie",
+                                           font: "normal normal 11pt Tahoma",
+                                           fontColor: "black",
+                                           labelOffset: -50,
+                                           radius: 50,
+                                           fill: "lemonchiffon"
+                                       });
+                                       var numbers = [
+                                         {
+                                           y: passed,
+                                           stroke: {color: "black" },
+                                           fill: "chartreuse",
+                                           tooltip: passed + " tests passed",
+                                           text: ((passed / sum) * 100).toFixed(0) + "% passed"
+                                         },
+                                         {
+                                           y: failed,
+                                           stroke: {color: "black" }, 
+                                           fill: "orangered",
+                                           tooltip: failed + " tests failed",
+                                           text: ((failed / sum) * 100).toFixed(0) + "% failed"
+                                         },
+                                         {
+                                           y: unknown,
+                                           stroke: {color: "black"}, 
+                                           fill: "#DDD",
+                                           tooltip: unknown + " tests unknown",
+                                           text: ((unknown / sum) * 100).toFixed(0) + "% unknown"
+                                         }
+                                       ];
+                                       chart.addSeries("Results", numbers);
+                                       var anim_a = new dojox.charting.action2d.MoveSlice(chart, "default");
+                                       var anim_b = new dojox.charting.action2d.Highlight(chart, "default");
+                                       var anim_c = new dojox.charting.action2d.Tooltip(chart, "default");
+                                       chart.render();
+                                       // Do not show the legend!
+                                       // var legend = new dojox.charting.widget.Legend({
+                                       //                                              chart: chart },"conformanceLegend");
+                                       return chart;
+                                     }
+                                     dojo.addOnLoad(function(){
+                                         createChart( $passed,
+                                                      $failed,
+                                                      $unknown);
+                                     });
+                                   </script>
+                                   <div id="conformanceChart" style="width: 150px; height: 150px;"></div>
+                                   <!-- do not show the legend -->
+                                   <!-- <div id="conformanceLegend"></div> -->
+                               </div>
+                            </td>
                         </tr>
                         <tr>
                             <td>Useragent:</td>
