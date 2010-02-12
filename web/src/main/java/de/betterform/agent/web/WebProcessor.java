@@ -736,6 +736,9 @@ public class WebProcessor implements XFormsProcessor, EventListener {
         if (request.getParameter("debug") != null && configuration.getProperty("betterform.debug-allowed").equals("true")) {
             generator.setParameter("debug-enabled", "true");
         }
+
+        generator.setParameter("baseURI", getBaseURI());
+
         String selectorPrefix = Config.getInstance().getProperty(HttpRequestHandler.SELECTOR_PREFIX_PROPERTY,
                 HttpRequestHandler.SELECTOR_PREFIX_DEFAULT);
         generator.setParameter("selector-prefix", selectorPrefix);

@@ -3,7 +3,6 @@
   ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
-
 <xsl:stylesheet version="2.0"
                 xmlns:xhtml="http://www.w3.org/1999/xhtml"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -30,6 +29,8 @@
     <xsl:param name="contextroot" select="''"/>
 
     <xsl:param name="sessionKey" select="''"/>
+
+    <xsl:param name="baseURI" select="''"/>
 
     <!-- ### this url will be used to build the form action attribute ### -->
     <xsl:param name="action-url" select="'http://localhost:8080/betterform-1.0.0/XFormsServlet'"/>
@@ -93,10 +94,10 @@
             </title>
 
             <!-- copy base if present -->
-            <xsl:if test="xhtml:base">
+            <xsl:if test="$baseURI != ''">
                 <base>
                     <xsl:attribute name="href">
-                        <xsl:value-of select="xhtml:base/@href"/>
+                        <xsl:value-of select="$baseURI"/>
                     </xsl:attribute>
                 </base>
             </xsl:if>
