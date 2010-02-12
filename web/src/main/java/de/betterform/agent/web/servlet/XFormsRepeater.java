@@ -219,7 +219,7 @@ public class XFormsRepeater extends HttpServlet {
         if (request.getAttribute("XFormsInputStream") != null) {
             System.out.println("Request has an extra Stream!: ");
             System.out.println("Context: " + context.getServletContextName());
-            System.out.println("Original Request URL: " + request.getAttribute("xforms.base.url"));
+            System.out.println("Original Request URL: " + request.getAttribute("betterform.base.url"));
             url = (String) request.getAttribute(WebProcessor.FORWARD_URL);
         }
 //        XFormsSession xFormsSession = null;
