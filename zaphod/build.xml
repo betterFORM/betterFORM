@@ -101,23 +101,30 @@
         <echo message="creating zaphod jar..."/>
         <echo message="************************************************************************************"/>
         <echo/>
-        <mkdir dir="${webapp.dir}"/>
+        <mkdir dir="${webapp.dir}/WEB-INF/lib"/>
 
         <!-- copy the webapp directory -->
-        <copy description="copy webapp"
+        <!--<copy description="copy webapp"
               todir="${webapp.dir}"
               filtering="true"
               includeemptydirs="true">
             <fileset dir="${basedir}/src/main/webapp"/>
         </copy>
+        -->
 
-        <move file="${target}/classes"
-              todir="${webapp.dir}/WEB-INF"
-              description="move betterForm classes to WEB-INF"/>
+        <!--<mkdir  dir="${target}/jar/resources" />-->
+        <!--<copy todir="${target}/jar/resources">-->
+            <!--<fileset dir="${root.dir}/src/main/resources/"/> -->
+        <!--</copy>-->
 
-        <delete file="${webapp.dir}/WEB-INF/classes/log4j.xml"/>
-        <delete file="${webapp.dir}/WEB-INF/classes/log4j.dtd"/>
+        <jar destfile="${webapp.dir}/WEB-INF/lib/zaphod.jar">
+            <fileset dir="${target}/classes" />
+            <fileset dir="${root.dir}/src/main/"
+                     includes="resources/*/**"/>
+        </jar>
 
+        <delete dir="${webapp.dir}/WEB-INF/classes"/>  
+       
     </target>
 
     <target name="deploy-resources" depends="exploded-webapp"
@@ -168,7 +175,7 @@
         <echo message="deploy into servlet container..."/>
         <echo message="************************************************************************************"/>
         <echo/>
-        <copy todir="${servlet.container}/${web.app.name}"
+        <copy todir="${servlet.container}/${zaphod.app.name}"
               overwrite="true">
             <fileset dir="${webapp.dir}"/>
         </copy>
