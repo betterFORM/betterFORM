@@ -19,10 +19,7 @@
  */
 package de.betterform.agent.web.filter;
 
-import java.io.IOException;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -133,8 +130,7 @@ public class CrossContextFilter implements Filter {
         this.context = getFilterConfig().getServletContext().getContext("/" + xformsContext);
 
         if (context == null) {
-            System.out.println("ERROR: Could not access the context " + xformsContext + ". " + CrossContextFilter.message);
-            throw new ServletException("Could not access context " + xformsContext + ". ");
+//            throw new ServletException("Could not access context " + xformsContext + ". ");
         }
         // If not set "/repeater" is used!
         if (filterConfig.getInitParameter("xforms.engine.servlet") != null) {
@@ -164,11 +160,15 @@ public class CrossContextFilter implements Filter {
     private Throwable forward(FilterChain chain, ServletRequest request, ServletResponse response) throws ServletException, IOException {
         Throwable problem = null;
         HttpServletRequest httpRequest = (HttpServletRequest) request;
+        // Dispatch request to betterForm.
+        log("Zaphod: Request" + httpRequest.getRequestURI());
         try {
             if (httpRequest.getRequestURI().startsWith(xformsResources)) {
                 resourceForward(request, response);
             } else if (httpRequest.getHeader("betterform-internal") != null) {
+                log("Zaphod: betterForm Request! Calling other filter(s) an setting content-type to 'text/xml' ");
                 chain.doFilter(request, response);
+                log("Zaphod: Request Content Type: " + response.getContentType());
                 response.setContentType("text/xml");
             } else {
                 formForward(chain, request, response);
@@ -195,28 +195,68 @@ public class CrossContextFilter implements Filter {
         */
         BufferedHttpServletResponseWrapper bufferedResponse = new BufferedHttpServletResponseWrapper((HttpServletResponse) response);
         HttpServletRequest httpRequest = (HttpServletRequest) request;
+        log("Zaphod: Calling other filter(s) and sending the result to betterForm: " + httpRequest.getContentType());
         chain.doFilter(request, bufferedResponse);
-        System.out.println("Request: " + httpRequest.getRequestURI());
-        System.out.println("Request Content Type: " + httpRequest.getContentType());
-        RequestDispatcher dispatcher = context.getRequestDispatcher(xformsServlet);
-        // create and set input stream from buffer for chiba
-        request.setAttribute(XFORMSINPUTSTREAM, bufferedResponse.getInputStream());
-        request.setAttribute(ALTERNATIVE_ROOT, xformsResources);
-        request.setAttribute(FORWARD_URL, httpRequest.getRequestURL().toString());
+        if (isXML(bufferedResponse)) {
+            // create and set input stream from buffer for chiba
+            RequestDispatcher dispatcher = context.getRequestDispatcher(xformsServlet);
+            request.setAttribute(XFORMSINPUTSTREAM, bufferedResponse.getInputStream());
+            request.setAttribute(ALTERNATIVE_ROOT, xformsResources);
+            request.setAttribute(FORWARD_URL, httpRequest.getRequestURL().toString());
 
-        // forward the orignal request and response to chiba's context.
-        dispatcher.forward(request, response);
+            // forward the orignal request and response to chiba's context.
+            dispatcher.forward(request, response);
+        } else {
+            chain.doFilter(request, response);
+        }
     }
 
+
     private void resourceForward(ServletRequest request, ServletResponse response) throws ServletException, IOException {
-        /* Request is beeing forwarded to chiba. Just changing the URI.
+        /* Request is being forwarded to chiba. Just changing the URI.
            This is most likely an resource like an image or a css file.
         */
+
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String uri = httpRequest.getRequestURI().replace(xformsResources, "");
-        System.out.println("forward to new uri:" + uri);
-        RequestDispatcher dispatcher = context.getRequestDispatcher(uri);
-        dispatcher.forward(request, response);
+
+        if (this.getClass().getResource(uri) != null) {
+            log("Zaphod: Sending resource directly '" + uri +"' file from Jar");
+            sendResource(response, uri);
+        } else {
+            RequestDispatcher dispatcher = context.getRequestDispatcher(uri);
+            dispatcher.forward(request, response);
+        }
+    }
+
+    private void sendResource(ServletResponse response, String uri) throws IOException {
+        BufferedInputStream inStream   = new BufferedInputStream(this.getClass().getResourceAsStream(uri));
+        BufferedOutputStream outStream = new BufferedOutputStream(response.getOutputStream());
+        int byte_;
+
+        while ((byte_ = inStream.read()) != -1) {
+            outStream.write(byte_);
+        }
+
+        outStream.flush();
+        outStream.close();
+        return;
+    }
+
+    private Boolean isXML(ServletResponse response) {
+        /*
+          %q{application/xml application/xhtml+xml text/xml}.include? response.content_type
+        */
+        String type = response.getContentType();
+        if (type.compareToIgnoreCase("application/xml") == 0) {
+            return true;
+        } else if (type.compareToIgnoreCase("text/xml") == 0) {
+            return true;
+        } else if (type.compareToIgnoreCase("application/xhtml+xml") == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void printErrorPage(ServletResponse response, ServletRequest request, Throwable problem) throws IOException {
