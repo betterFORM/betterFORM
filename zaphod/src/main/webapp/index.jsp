@@ -64,11 +64,7 @@
 </div>
 
 <div>
-
-
-    <h1>Zaphod</h1>
-
-    Welcome to Zaphod.
+    <h1>Welcome to Zaphod</h1>
 
     <h2>Introduction</h2>
 
