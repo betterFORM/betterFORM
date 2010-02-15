@@ -155,7 +155,6 @@
         <uri-resolver scheme="context" class="de.betterform.connector.context.ContextResolver"/>
         <uri-resolver scheme="contextobject" class="de.betterform.connector.context.ContextObjectResolver"/>
 
-        <submission-handler scheme="context" class="de.betterform.connector.context.ContextSubmissionHandler"/>
         <submission-handler scheme="file" class="de.betterform.connector.file.FileSubmissionHandler"/>
         <submission-handler scheme="http" class="de.betterform.connector.http.HTTPSubmissionHandler"/>
         <submission-handler scheme="https" class="de.betterform.connector.http.HTTPSubmissionHandler"/>
@@ -164,9 +163,11 @@
         <submission-handler scheme="http" class="de.betterform.connector.http.HTTPSubmissionHandlerXI"/>
         <submission-handler scheme="https" class="de.betterform.connector.http.HTTPSubmissionHandler"/>
 -->
-        <submission-handler scheme="mailto" class="de.betterform.connector.smtp.SMTPSubmissionHandler"/>
         <submission-handler scheme="xmlrpc" class="de.betterform.connector.xmlrpc.XMLRPCSubmissionHandler"/>
+        <submission-handler scheme="context" class="de.betterform.connector.context.ContextSubmissionHandler"/>
+        <submission-handler scheme="mailto" class="de.betterform.connector.smtp.SMTPSubmissionHandler"/>
         <submission-handler scheme="echo" class="de.betterform.connector.echo.EchoSubmissionHandler"/>
+        <submission-handler scheme="exec" class="de.betterform.connector.exec.ExecSubmissionHandler"/>
         <submission-handler scheme="xslt" class="de.betterform.connector.xslt.XSLTSubmissionHandler"/>
         <submission-handler scheme="model" class="de.betterform.connector.ModelSubmissionHandler"/>
         <!--        <submission-handler scheme="jms" class="de.betterform.connector.jms.JMSSubmissionHandler"/>-->
