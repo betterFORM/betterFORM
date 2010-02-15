@@ -136,7 +136,7 @@
     </error-messages>
 
     <!-- todo: rename this section to 'useragents' -->
-    <stylesheets>
+    <useragents>
         <!--
             Maps internal names to external file-names.
             The internal name is used by the framework to identify
@@ -144,11 +144,11 @@
         -->
 
         <!-- Standard stylesheet used for simple HTML 3.2 compatible Browsers without Javascript support -->
-        <stylesheet name="html" value="html4.xsl"/>
-        <stylesheet name="dojo" value="dojo.xsl"/>
+        <useragent name="html" value="html4.xsl"/>
+        <useragent name="dojo" value="dojo.xsl"/>
         <!--<stylesheet name="dojodev" value="dojo-dev.xsl"/>-->
-        <stylesheet name="dojodev" value="XFormsForHTML.xsl"/>
-    </stylesheets>
+        <useragent name="dojodev" value="XFormsForHTML.xsl"/>
+    </useragents>
 
     <connectors>
         <!--

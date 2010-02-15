@@ -123,26 +123,17 @@
                  value="Sorry your session expired. Press Reload to start over."/>
     </error-messages>
 
-    <useragents default="dojodev">
-        <useragent name="html" transform="html4.xsl"/>
-        <useragent name="dojo" transform="dojo.xsl"/>
-        <useragent name="dojodev" transform="dojo-dev.xsl"/>
+    <!--
+        Maps internal names to external file-names.
+        The internal name is used by the framework to identify
+        entities and resolve these to the associated filenames.
+    -->
+    <!-- Standard stylesheet used for simple HTML 3.2 compatible Browsers without Javascript support -->
+    <useragents>
+        <useragent name="html" value="html4.xsl"/>
+        <useragent name="dojo" value="dojo.xsl"/>
+        <useragent name="dojodev" value="dojo-dev.xsl"/>
     </useragents>
-
-    <!-- todo: rename this section to 'useragents' -->
-    <stylesheets>
-        <!--
-            Maps internal names to external file-names.
-            The internal name is used by the framework to identify
-            entities and resolve these to the associated filenames.
-        -->
-
-        <!-- Standard stylesheet used for simple HTML 3.2 compatible Browsers without Javascript support -->
-        <stylesheet name="html" value="html4.xsl"/>
-        <stylesheet name="dojo" value="dojo.xsl"/>
-        <stylesheet name="dojodev" value="dojo-dev.xsl"/>
-        <!--<stylesheet name="dojodev" value="XFormsForHTML.xsl"/>-->
-    </stylesheets>
 
     <connectors>
         <!--

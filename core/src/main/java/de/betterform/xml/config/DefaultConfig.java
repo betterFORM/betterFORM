@@ -48,16 +48,11 @@ public class DefaultConfig extends Config {
 			
 			NodeInfo context = getDocumentElementContext(document);
 			
-			this.properties = load(context, "properties/property", "name",
-					"value");
-			this.stylesheets = load(context, "stylesheets/stylesheet", "name",
-					"value");
-			this.uriResolvers = load(context, "connectors/uri-resolver",
-					"scheme", "class");
-			this.submissionHandlers = load(context,
-					"connectors/submission-handler", "scheme", "class");
-			this.errorMessages = load(context, "error-messages/message", "id",
-					"value");
+			this.properties = load(context, "properties/property", "name", "value");
+			this.useragents = load(context, "useragents/useragent", "name", "value");
+			this.uriResolvers = load(context, "connectors/uri-resolver", "scheme", "class");
+			this.submissionHandlers = load(context, "connectors/submission-handler", "scheme", "class");
+			this.errorMessages = load(context, "error-messages/message", "id", "value");
 
 			//this.actions = load (context,"actions/action", "name", "class");
 			//this.generators = load(context, "generators/generator", "name",

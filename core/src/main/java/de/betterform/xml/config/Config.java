@@ -48,9 +48,9 @@ public abstract class Config {
 	protected HashMap properties;
 
 	/**
-	 * The stylesheets lookup map.
+	 * The useragent lookup map.
 	 */
-	protected HashMap stylesheets;
+	protected HashMap useragents;
 
 	/**
 	 * The submission handlers lookup map.
@@ -95,7 +95,7 @@ public abstract class Config {
 	 */
 	protected InstanceSerializerMap instanceSerializerMap;
 
-	/**
+    /**
 	 * Provides a default constructor for subclasses.
 	 */
 	protected Config() throws XFormsConfigException {
@@ -233,7 +233,7 @@ public abstract class Config {
 	 * @return the specifed stylesheet value.
 	 */
 	public String getStylesheet(String key) {
-		return (String) this.stylesheets.get(key);
+		return (String) this.useragents.get(key);
 	}
 
 	/**

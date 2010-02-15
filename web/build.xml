@@ -239,14 +239,13 @@
 
         <xslt basedir="${basedir}/../src/main/doc/site/content"
               destdir="${webapp.dir}"
-              style="${basedir}/../src/main/doc/site/xslt/site.xsl"
+			  style="${basedir}/../src/main/doc/site/xslt/site.xsl"
+              processor="${trax}"
               force="true"
               includes="*.xml"
-              processor="${trax}"
               extension=".html">
-            <!--<classpath refid="generator.libs"/>-->
              <classpath refid="saxon.libs"/>
-             <param name="onlineVersion" expression="true"/>
+            <param name="onlineVersion" expression="${onlineVersion}"/>
         </xslt>
 
         <copy todir="${webapp.dir}/resources/images">
