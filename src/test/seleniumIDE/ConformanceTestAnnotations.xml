@@ -2,6 +2,7 @@
 	<description>Due to testing issues with Selenium the results are not always correct when run with Selenium RC.</description>
     <falseNegative>
     	<description>The following is a list of false negatives (test that pretent to fail but are actually running correctly when run in Selenium IDE)</description>
+    	<test id="4.2.1.b2">error JSP does not work in RC runner yet</test>
     	<test id="4.2.1.c3">error JSP does not work in RC runner yet</test>
         <test id="8.1.4.b"></test>
     	<test id="9.1.1.c"/>
@@ -15,8 +16,10 @@
     	<test id="11.3.a"/>
     	<test id="11.3.b"/>
     </falseNegative>
+
     <notTestable>
         <description>ConformanceTest case can't be automated executed by Selenium (IDE / RC) yet</description>
+        <test id="4.3.6.b"/>
         <test id="4.6.1.a2"/>
         <test id="8.1.6.b"/>
         <test id="8.1.6.c"/>
@@ -39,6 +42,7 @@
 
 
 	<failingTest>
+		<test id="4.8.1.a"></test>
 		<test id="8.1.6.e"></test>
 		<test id="8.1.7.f"></test>
 		<test id="8.1.7.g"></test>
