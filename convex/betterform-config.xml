@@ -16,12 +16,12 @@
 
         <property name="xslt.path" value="resources/xslt"
                   description="directory location for XSLT files relative to context"/>
-        <property name="xslt.default" value="dojo.xsl" description="default XSLT file to be used to generate the UI"/>
-        <!--<property name="useragent.default" value="dojo" description="default user agent when no specific one is requested by request param, attribute or header"/>-->
+
         <property name="xslt.cache.enabled" value="true" description="flag for XSLT caching"/>
 
         <property name="scriptPath" value="/resources/scripts/"
                   description="directory for script files relative to context"/>
+
         <property name="CSSPath" value="/resources/styles/"
                   description="directory for betterForm CSS files relative to context"/>
 
@@ -31,11 +31,13 @@
           Thus XFormsSessions won't expire with this setting though the Http Session might still time out making the
           XFormsSession unavailable.
           -->
+        <!-- DEPRECATED -->
+<!--
         <property name="sessionChecking" value="120000"
                   description="the amount of time (in millis) between runs of wipe() method checking for expired XForms sessions"/>
         <property name="sessionTimeout" value="600000"
                   description="the amount of time of inactivity before XFormsSession expires"/>
-<!--
+
         <property name="sessionManager" value="de.betterform.agent.web.session.impl.DefaultXFormsSessionManagerImpl"
                   description="fully qualified classname of XFormsSessionManager implementation"/>
 -->
@@ -51,13 +53,6 @@
 
         <property name="filter.ignoreResponseBody" value="false"
                   description="if 'true' XFormsFilter will not check reponse body for XForms markup"/>
-
-        <!--
-        script.param allows to define the string which is used to signal betterForm Web if scripting is wanted. By default
-        this param string is 'js' and if it's found on a GET request to betterForm Web a FluxProcessor will be created.
-        -->
-        <property name="script.param" value="betterformjs"
-                  description="string used for the param which signals scripted processing"/>
 
         <!--
                    Language selection rules at runtime:
@@ -89,7 +84,8 @@
             Note: If you extend stylesheets and use custom xpath extensions, compilation can become
             a problem cause XSLTC has limitations in this area.
         -->
-        <property name="betterform.stylesheets.compiled" value="true"/>
+        <!-- DEPRECATED -->
+        <!-- <property name="betterform.stylesheets.compiled" value="true"/> -->
 
         <!-- ********* web processor properties ********* -->
         <!--
@@ -111,7 +107,8 @@
 
             The default is to initialize all <case> elements.
         -->
-        <property name="betterform.ui.initializeDeselectedCases" value="true"/>
+        <!-- DEPRECATED -->
+        <!-- <property name="betterform.ui.initializeDeselectedCases" value="true"/>-->
 
         <!-- generate default alert Elements for UI controls. default is false -->
         <property name="betterform.ui.generateDefaultAlerts" value="false"/>
@@ -122,7 +119,8 @@
         <property name="betterform.ui.defaultAlertText" value="The specified value is invalid"/>
 
         <!-- this property allows to switch between compressed and uncompressed JavaScript operation -->
-        <property name="betterform.js.compressed" value="@js-compressed@"/>
+        <!-- DEPRECATED -->
+        <!-- <property name="betterform.js.compressed" value="@js-compressed@"/> -->
     </properties>
 
     <error-messages>
@@ -135,18 +133,15 @@
                  value="Sorry your session expired. Press Reload to start over."/>
     </error-messages>
 
-    <!-- todo: rename this section to 'useragents' -->
-    <useragents>
         <!--
             Maps internal names to external file-names.
             The internal name is used by the framework to identify
             entities and resolve these to the associated filenames.
         -->
-
         <!-- Standard stylesheet used for simple HTML 3.2 compatible Browsers without Javascript support -->
+    <useragents>
         <useragent name="html" value="html4.xsl"/>
         <useragent name="dojo" value="dojo.xsl"/>
-        <!--<stylesheet name="dojodev" value="dojo-dev.xsl"/>-->
         <useragent name="dojodev" value="XFormsForHTML.xsl"/>
     </useragents>
 

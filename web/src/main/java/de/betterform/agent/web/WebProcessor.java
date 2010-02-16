@@ -212,9 +212,9 @@ public class WebProcessor implements XFormsProcessor, EventListener {
             setXForms(result.getNode());
 
         } catch (XFormsException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         } catch (URISyntaxException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
 
     }
@@ -760,9 +760,6 @@ public class WebProcessor implements XFormsProcessor, EventListener {
         if (cssPath != null) {
             generator.setParameter("CSSPath", cssPath);
         }
-
-//        String compressedJS = Config.getInstance().getProperty("betterform.js.compressed", "false");
-//        generator.setParameter("js-compressed", compressedJS);
 
         return generator;
     }

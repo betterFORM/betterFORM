@@ -36,8 +36,7 @@ public class WebFactory {
     public static final String BETTERFORM_SUBMISSION_RESPONSE = "betterform.submission.response";
     public static final String XSLT_CACHE_PROPERTY = "xslt.cache.enabled";
     public static final String XSLT_PATH_PROPERTY = "xslt.path";
-    public static final String XSLT_DEFAULT_PROPERTY = "xslt.default";
-    public static final String PROCESSOR_BASE_PROPERTY = "defaultProcessorBase";
+
     public static final String UPLOADDIR_PROPERTY = "uploadDir";
     public static final String RELATIVE_URI_PROPERTY = "forms.uri.relative";
     public static final String SCRIPT_PATH_PROPERTY = "scriptPath";
@@ -56,7 +55,6 @@ public class WebFactory {
     public static final String USER_AGENT = "useragent";
     public static final String PARSE_RESPONSE_BODY = "betterform.filter.parseResponseBody";
     public static final String IGNORE_RESPONSE_BODY = "betterform.filter.ignoreResponseBody";
-    public static final String ACCEPT = "accept.header";
     public static final String ACCEPT_CONTENTTYPE = "acceptContentTypePattern";
     public static final String ALL_XML_TYPES = "all_xml";
     private String userAgentId;
@@ -141,8 +139,6 @@ public class WebFactory {
 
         
         boolean xsltCacheEnabled = Config.getInstance().getProperty(WebFactory.XSLT_CACHE_PROPERTY).equalsIgnoreCase("true");
-//        String resourcesPath = Config.getInstance().getProperty("resources.dir.name");
-//        String xsltPath = resourcesPath + "/" + Config.getInstance().getProperty(WebFactory.XSLT_PATH_PROPERTY);
         String xsltPath = Config.getInstance().getProperty(WebFactory.XSLT_PATH_PROPERTY);
         String xsltDefault = Config.getInstance().getStylesheet(this.userAgentId);
 

@@ -60,11 +60,6 @@
               overwrite="true">
             <fileset dir="${basedir}/src/main/webapp"/>
         </copy>
-
-        <!-- copy optional xApp resources that may exist to overwrite the originals from betterForm web -->
-        <copy todir="${basedir}/target/${xapp.app.name}/resources" overwrite="true">
-            <fileset dir="${basedir}/src/main/webapp/resources"/>
-        </copy>
     </target>
 
     <!-- **************************************** COMPILATION **************************************** -->

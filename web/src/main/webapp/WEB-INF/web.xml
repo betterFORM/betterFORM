@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <display-name>betterForm</display-name>
     <context-param>
 		<param-name>betterform.configfile</param-name>
@@ -64,6 +65,7 @@
             <param-value>true</param-value>
         </init-param>
 
+        <!-- DEPRECATED -->
 <!--
 		This entry may be uncommented to use relative paths in the served html-forms. Remember change the
 		betterform.forms.uri.relative parameter of XFormsServlet as well.
@@ -96,6 +98,14 @@
 
 
 <!--
+	<servlet-mapping>
+        <servlet-name>foo</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+-->
+
+
+<!--
     This is an example servlet that can be used in conjunction with XFormsFilter by
     attaching the filter to this Servlet. This only parses the requested form document
     and passes the DOM along as a request attribute that will be picked up by the XFormsFilter.
@@ -114,18 +124,12 @@
         <servlet-class>de.betterform.agent.web.servlet.ViewServlet</servlet-class>
     </servlet>
 
-<!--
-	<servlet-mapping>
-        <servlet-name>foo</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
--->
     <servlet>
         <servlet-name>XFormsServlet</servlet-name>
         <servlet-class>de.betterform.agent.web.servlet.XFormsRepeater</servlet-class>
         <init-param>
             <param-name>useragent</param-name>
-            <param-value>dojo</param-value>
+            <param-value>dojodev</param-value>
         </init-param>
     </servlet>
 	<servlet-mapping>

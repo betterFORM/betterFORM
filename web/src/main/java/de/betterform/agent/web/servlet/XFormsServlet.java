@@ -110,7 +110,7 @@ public class XFormsServlet extends HttpServlet {
      * @param response servlet response
      * @throws javax.servlet.ServletException
      * @throws java.io.IOException
-     * @see de.betterform.xml.xforms.connector.ConnectorFactory
+     * @see de.betterform.connector.ConnectorFactory
      */
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response)
@@ -123,16 +123,8 @@ public class XFormsServlet extends HttpServlet {
 
         request.setAttribute(WebFactory.USER_AGENT, useragent);
 
-//        XFormsSession xFormsSession = null;
         WebProcessor webProcessor = null;
         try {
-//            XFormsSessionManager sessionManager = DefaultXFormsSessionManagerImpl.getXFormsSessionManager();
-//            xFormsSession = sessionManager.createXFormsSession(request, response, session);
-//            xFormsSession = WebFactory.createXFormsSession(request, response, session);
-//            xFormsSession.setXForms();
-//            xFormsSession.init();
-//            xFormsSession.handleRequest();
-
             webProcessor = WebFactory.createWebProcessor(request);
             webProcessor.setRequest(request);
             webProcessor.setResponse(response);
