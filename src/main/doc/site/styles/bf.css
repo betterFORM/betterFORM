@@ -1,4 +1,10 @@
 
+/*
+ * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
+/*
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
 	background: transparent;
 	border: 0 none;
@@ -11,6 +17,130 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	padding: 0;
 	vertical-align: baseline;
 }
+*/
+*{
+    font-family:sans-serif;
+}
+a:link{
+    border:none;
+}
+
+body{
+    padding:0;
+    margin:0;
+    color:#363636;
+}
+
+.page {
+    margin:0;
+    padding:0;
+    display:block;
+}
+.pageMarginBox{
+    width:760px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#header,
+#content,
+#footer {
+    /*width:760px;*/
+    width:100%
+/*
+    margin-left:auto;
+    margin-right:auto;
+*/
+}
+
+
+.index #content{
+    background:#d3d3d3;
+    text-align:center;
+    height:380px;
+}
+
+#shadowTop{
+    width:760px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom:35px;
+}
+#columnLeft{
+    width:226px;
+    text-align:left;
+    padding-right:119px;
+    float:left;
+    margin-top:4px;
+}
+#teaser{
+    width:100%;
+    background:#e7e8e8;
+    padding:15px;
+    width:210px;
+    font-size:9pt;
+}
+#heading{
+    font-size:14pt;
+    color:#7ba841;
+    margin-bottom:5px;
+}
+#leftText{
+    width:240px;
+    margin-top:26px;
+    line-height:1.5;
+    font-size:10pt;
+}
+#columnRight{
+    width:258px;
+    float:left;
+    text-align:left;
+    padding-right:119px;
+}
+#columnRight img{
+    border:none;
+    margin-bottom:3px;
+}
+
+#footer{
+    text-align:center;
+    background:#565656;
+    height:500px;
+    overflow:hidden;
+}
+#shadowBottom{
+    width:760px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#bottomMenu{
+    display:block;
+    float:right;
+    font-size:9pt;
+    color:white;
+    margin-top:30px;
+    
+}
+#bottomMenu a {
+	color:#FFFFFF;
+	background: transparent;
+}
+#bottomMenu a:link{
+    text-decoration:none;
+}
+
+#bottomMenu a:focus,
+#bottomMenu a:hover,
+#bottomMenu a:active {
+	color: #4D87C7;
+	background-color: transparent;
+	text-decoration: underline;
+    
+}
+
+
+
 h1, h2, h3, h4, h5, h6 {
 	font-family: Helvetica, Arial, sans-serif;
 	font-weight: bold;
@@ -34,24 +164,52 @@ h2 {
 	
 }
 
-body {
-	color: #444444;
-	background: #D7E0CD url(../images/bg_green.png) repeat-x fixed left top;
-	padding: 10px 0;
-	overflow-y: scroll;
-	display: block;
-
+.languages{
+    display:block;
+    height:29px;
+    width:760px;
+    text-align:right;
+    margin-left:auto;
+    margin-right:auto;
 }
 
+.logoBar{
+    height:90px;
+    
+}
+#topnav {
+    font-size:9pt;
+    float:right;
+    width:480px;
+    position:relative;
+    top:-10px;
+    text-align:right;
+}
+#topnav a {
+	color: #999;
+	font-weight: normal;
+	background: transparent;
+	text-decoration: none;
+}
+
+#topnav a:focus,
+#topnav a:hover,
+#topnav a:active {
+	text-decoration: underline;
+	background-color: transparent;
+}
+
+
+
 #bfMask {
-	background:  url(../images/betterformMark.png) repeat-x fixed left top;	
+	background:  url(../../../../../web/src/main/webapp/images/betterformMark.png) repeat-x fixed left top;
 }
 
 .content {
 	width:700px;
 }
 .note {
-	background: #E9FAD0 url(../images/betterform_icon49x49.png) no-repeat scroll 20px center;
+	background: #E9FAD0 url(../../../../../web/src/main/webapp/images/betterform_icon49x49.png) no-repeat scroll 20px center;
 	border-bottom: 1px solid #AEE756;
 	border-top: 1px solid #AEE756;
 	color: #525252;
@@ -68,65 +226,32 @@ body {
 	padding:14px 20px 16px 67px !important;
 }
 
+/*
 .page_margins {
 	background: #FFFFFF;
-	max-width: 1024px;
-	min-width: 740px;
-	margin: 0 auto;
-	text-align: left;
+    width:760px;
+	margin-left:auto;
+    margin-right:auto;
 }
+*/
 
-.page {
-	padding: 10px;
-}
 
+/*
 #header {
-	border-bottom:thin;
-	border-bottom-color:black;
-	border-bottom-style:solid;
-	background: #FFFFFF;
-	color: #000000;
-	padding: 20px 2em 1em 20px;
-	position: relative;
 }
 
+*/
+/*
 #header #topnav {
-	position: absolute;
-	right: 10px;
-	bottom: 10px;
+    float:right;
+    font-size:9pt;
 }
-
-#header,
-#main,
-#footer {
-	clear: both;
-}
+*/
 
 
-#topnav {
-	background: transparent;
-	color: #AAAAAA;
-	text-align: right;
-}
 
-#topnav a {
-	color: #999;
-	font-weight: normal;
-	background: transparent;
-	text-decoration: none;
-}
 
-#topnav a:focus,
-#topnav a:hover,
-#topnav a:active {
-	text-decoration: underline;
-	background-color: transparent;
-}
-
-#main {
-	background: #FFFFFF none repeat scroll 0 0;
-	padding: 10px 0;
-}
+/*
 #footer {
 	background:#494949;
 	border-top:5px solid #EFEFEF;
@@ -136,18 +261,7 @@ body {
 	height:40px;
 	padding:5px;
 }
-#footer a {
-	color:#FFFFFF;
-	background: transparent;
-}
-
-#footer a:focus,
-#footer a:hover,
-#footer a:active {
-	color: #4D87C7;
-	background-color: transparent;
-	text-decoration: underline;
-}
+*/
 .bfMask {
 	width:300px;
 	height:100px;
