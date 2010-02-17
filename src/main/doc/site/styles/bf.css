@@ -1,0 +1,154 @@
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+	background: transparent;
+	border: 0 none;
+	font-size: 100%;
+	font-style: inherit;
+	font-weight: inherit;
+	margin: 0;
+	outline-style: none;
+	outline-width: 0;
+	padding: 0;
+	vertical-align: baseline;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-family: Helvetica, Arial, sans-serif;
+	font-weight: bold;
+}
+
+h1 {
+	color: #525252;
+	font-size: 2.462em;
+	letter-spacing: -0.03em;
+	line-height: 1.19em;
+	margin-bottom: 15px;
+	display:block;
+	font-weight:bold;
+}
+h2 {
+	color: #2C2C2C;
+	font-size: 1.286em;
+	line-height: 1.056em;
+	padding: 9px 0 10px;
+	display:block;
+	
+}
+
+body {
+	color: #444444;
+	background: #D7E0CD url(../images/bg_green.png) repeat-x fixed left top;
+	padding: 10px 0;
+	overflow-y: scroll;
+	display: block;
+
+}
+
+#bfMask {
+	background:  url(../images/betterformMark.png) repeat-x fixed left top;	
+}
+
+.content {
+	width:700px;
+}
+.note {
+	background: #E9FAD0 url(../images/betterform_icon49x49.png) no-repeat scroll 20px center;
+	border-bottom: 1px solid #AEE756;
+	border-top: 1px solid #AEE756;
+	color: #525252;
+	font-weight: bold;
+	height:40px;
+	margin:1.31em 0 1.45em 50px !important;
+	padding:14px 20px 16px 90px !important;
+}
+#downloadNote {
+	width:55%;
+}
+#content p .note {
+	margin:1.31em 0 1.45em !important;
+	padding:14px 20px 16px 67px !important;
+}
+
+.page_margins {
+	background: #FFFFFF;
+	max-width: 1024px;
+	min-width: 740px;
+	margin: 0 auto;
+	text-align: left;
+}
+
+.page {
+	padding: 10px;
+}
+
+#header {
+	border-bottom:thin;
+	border-bottom-color:black;
+	border-bottom-style:solid;
+	background: #FFFFFF;
+	color: #000000;
+	padding: 20px 2em 1em 20px;
+	position: relative;
+}
+
+#header #topnav {
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+}
+
+#header,
+#main,
+#footer {
+	clear: both;
+}
+
+
+#topnav {
+	background: transparent;
+	color: #AAAAAA;
+	text-align: right;
+}
+
+#topnav a {
+	color: #999;
+	font-weight: normal;
+	background: transparent;
+	text-decoration: none;
+}
+
+#topnav a:focus,
+#topnav a:hover,
+#topnav a:active {
+	text-decoration: underline;
+	background-color: transparent;
+}
+
+#main {
+	background: #FFFFFF none repeat scroll 0 0;
+	padding: 10px 0;
+}
+#footer {
+	background:#494949;
+	border-top:5px solid #EFEFEF;
+	color:#FFFFFF;;
+	line-height:1.5em;
+	padding:10px 20px;
+	height:40px;
+	padding:5px;
+}
+#footer a {
+	color:#FFFFFF;
+	background: transparent;
+}
+
+#footer a:focus,
+#footer a:hover,
+#footer a:active {
+	color: #4D87C7;
+	background-color: transparent;
+	text-decoration: underline;
+}
+.bfMask {
+	width:300px;
+	height:100px;
+}
