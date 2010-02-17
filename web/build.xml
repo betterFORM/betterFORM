@@ -188,7 +188,6 @@
             description="copy all forms from src/main/xforms to webapp dir">
 
         <property name="onlineVersion" value="false"/>
-        <antcall target="generateSite"/>
         <echo/>
         <echo message="************************************************************************************"/>
         <echo message="copying forms..."/>
@@ -227,38 +226,6 @@
         </copy>
     </target>
     
-    <!-- build betterForm Boilerplate pages-->
-    <target name="generateSite">
-        <echo/>
-        <echo message="************************************************************************************"/>
-        <echo message="generating site..."/>
-        <echo message="************************************************************************************"/>
-        <echo/>
-
-        <property name = "trax" value = "org.apache.tools.ant.taskdefs.optional.TraXLiaison"/>
-
-        <xslt basedir="${basedir}/../src/main/doc/site/content"
-              destdir="${webapp.dir}"
-			  style="${basedir}/../src/main/doc/site/xslt/site.xsl"
-              processor="${trax}"
-              force="true"
-              includes="*.xml"
-              extension=".html">
-             <classpath refid="saxon.libs"/>
-            <param name="onlineVersion" expression="${onlineVersion}"/>
-        </xslt>
-
-        <copy todir="${webapp.dir}/resources/images">
-            <fileset dir="${basedir}/../src/main/doc/site/images"/>
-        </copy>
-        <copy todir="${webapp.dir}/resources/styles">
-            <fileset dir="${basedir}/../src/main/doc/site/styles"/>
-        </copy>
-        <copy todir="${webapp.dir}/reports">
-            <fileset dir="${basedir}/../src/main/doc/site/content/reports"/>
-        </copy>
-
-    </target>
 
     <!-- **************************************** BUILDING JAR **************************************** -->
     <!-- **************************************** BUILDING JAR **************************************** -->

@@ -108,6 +108,7 @@
 
 
 
+<!--
     <target name="generateSite" description="build betterForm Home Webpages">
         <echo />
         <echo message="************************************************************************************"/>
@@ -123,16 +124,17 @@
               includes="*.xml"
 	      processor="${trax}"
               extension=".html">
-            <!--<classpath refid="generator.libs"/>-->
+            &lt;!&ndash;<classpath refid="generator.libs"/>&ndash;&gt;
              <param name="onlineVersion" expression="true"/>
         </xslt>
 
         <copy todir="target/resources/images">
-            <fileset dir="src/main/doc/site/images"/>
+            <fileset dir="web/src/main/webapp/images"/>
         </copy>
         <copy todir="target/resources/styles">
-            <fileset dir="src/main/doc/site/styles"/>
+            <fileset dir="web/src/main/webapp/styles"/>
         </copy>
         <copy file="${basedir}/src/test/resources/XFormsTestSuite1.1E1/Edition1/driverPages/Results/results.html" todir="${basedir}/target"/>
     </target>
+-->
 </project>
