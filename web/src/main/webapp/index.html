@@ -1,63 +1,84 @@
-<html>
-    <head>
-        <title>betterForm Home</title>
-        <link rel="stylesheet" id="themeStyles" href="resources/scripts/dijit/themes/tundra/tundra.css">
+<!--
+  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
 
-        <script type="text/javascript" src="resources/scripts/dojo/dojo.js"
-                djConfig="isDebug:true, parseOnLoad: true"></script>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta name="Author" content="Joern Turner">
+		<meta name="Author" content="Lars Windauer">
+		<meta name="description" content="betterFORM ">
+		<meta name="keywords" content="betterFORM, xforms, forms, xhtml, xpath, xslt, dojo, dojotoolkit, web, semantic, semantic web, ">
 
-        <script type="text/javascript" language="JavaScript">
-            dojo.require("dijit.layout.BorderContainer");
-            dojo.require("dijit.layout.ContentPane");
-        </script>
+		<title>betterFORM</title>
 
-        <style type="text/css">
-            html, body, #main{
-                width: 100%;	/* make the body expand to fill the visible window */
-                height: 100%;
-                overflow: hidden;	/* erase window level scrollbars */
-                padding: 0 0 0 0;
-                margin: 0 0 0 0;
-                font: 10pt Arial,Myriad,Tahoma,Verdana,sans-serif;
-            }
+		<link REV="made" HREF="mailto:info@betterform.de">
+		<link rel="SHORTCUT ICON" href="images/betterform.ico">
+		<link rel="ICON" href="images/betterform.ico" type="image/x-icon">
+		<link rel="stylesheet" type="text/css" href="styles/bf.css">
 
-            
-            #menu{
-                height:100px;
-                background-color:#dddddd;
-                border-bottom:thin solid gray;
-                text-align:center;
-            }
+	</head>
+	<body style="overflow:hidden;" class="index">
+		<div class="page">
 
-        </style>
-    </head>
-
-    <body bgcolor="#FFFFFF" text="#000000" link="#666666" vlink="#999999" alink="#000000">
-
-        <div dojotype="dijit.layout.BorderContainer" id="main">
-            <div id="menu"
-                 dojoType="dijit.layout.ContentPane"
-                 region="top">
-
-                
-                <a href="jsp/forms.jsp" target="content"><img src="foo" alt="View"></a>
-                <img src="foo" alt="Create">
-                <img src="foo" alt="Admin">
-                <img src="foo" alt="Docs">
+            <div id="header">
+                <div class="pageMarginBox">
+                    <div class="languages">
+                        <img src="images/en.png" alt="english"/>
+                        <img src="images/de.png" alt="deutsch">
+                    </div>
+                    <div class="logoBar">
+                        <img src="images/logo.png" alt="betterFORM project" />
+                        <div id="topnav">Full and Open Source Implementation of W3C XForms 1.1 for the Enterprise</div>
+                    </div>
+                </div>
             </div>
+            
 
-             <div id="content"
-                     dojoType="dijit.layout.ContentPane"
-                     region="center"
-                     href="jsp/forms.jsp"
-                     style="width:100%;height:100%;"
-                     frameborder="0">
-             </div>
-        </div>
-        <!--<iframe id="content" src="jsp/forms.jsp"></iframe>-->
-    </body>
+
+			<div id="content">
+                <img id="shadowTop" src="images/shad_top.jpg" alt=""/>
+                <div class="pageMarginBox">
+                    <div id="columnLeft">
+                        <div id="teaser">
+                            <div id="heading">19 February 2010</div>
+                            The betterFORM project released its first version codenamed <b>lightSteelBlue</b>.
+                            
+                        </div>
+
+                        <div id="leftText">
+                            betterFORM allows easy creation of highly dynamic Web 2.0 user interfaces
+                            with attractive controls and application-like layout. You can add validations,
+                            calculations, action and events to build complete webapplications in a declarative way.
+                        </div>
+
+                    </div>
+                    <div id="columnRight">
+                        <a href="forms/demo.xhtml"><img src="images/b_tryit.png" alt="try it"/></a>
+                        <a href="download.html"><img src="images/b_getit.png" alt="get it"/></a>
+                        <a href="product.html"><img src="images/b_exploreit.png" alt="explore it"/></a>
+
+                    </div>
+                </div>
+			</div>
+			<div id="footer">
+                <img id="shadowBottom" src="images/shad_bottom.jpg" alt=""/>
+
+                <div class="pageMarginBox">
+                    <span id="bottomMenu">
+                        &#169; 2010 betterFORM&#160;&#160; | &#160;&#160;
+                        <!--<a href="index.html">home</a>&#160; | &#160;&#160;-->
+                        <a href="support.html">Support</a>&#160; | &#160;&#160;
+                        <!--<a href="download.html">download</a>&#160; | &#160;&#160;-->
+                        <!--<a href="doc.html">documentation</a>&#160; | &#160;&#160;-->
+                        <a href="whoweare.html">who we are</a>&#160; | &#160;&#160;
+                        <a href="contact.html">contact / impressum</a>
+                    </span>
+                </div>
+			</div>
+		</div>
+	</body>
 </html>
-
-
-
-
