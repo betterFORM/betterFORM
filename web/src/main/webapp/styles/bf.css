@@ -30,12 +30,21 @@ body{
     padding:0;
     margin:0;
     color:#363636;
+    overflow:auto;
+    /*height:100%;*/
 }
 
 .page {
     margin:0;
     padding:0;
     display:block;
+    /*position:relative;*/
+    /*overflow:auto;*/
+}
+.page #header{
+    background:white;
+    position:fixed;
+    top:0;
 }
 .pageMarginBox{
     width:760px;
@@ -54,10 +63,43 @@ body{
 */
 }
 
+#topnav {
+    font-size:9pt;
+    float:right;
+    width:480px;
+    position:relative;
+    top:-10px;
+    text-align:right;
+}
+#topnav a {
+	color: #999;
+	font-weight: normal;
+	background: transparent;
+	text-decoration: none;
+}
+
+#topnav a:focus,
+#topnav a:hover,
+#topnav a:active {
+	text-decoration: underline;
+	background-color: transparent;
+    color:#488aa6;
+}
+
+
 #content{
     background:#d3d3d3;
     text-align:center;
-    height:420px;
+    /*height:80%;*/
+    margin-top:121px;
+    /*margin-bottom:120px;*/
+    /*overflow:auto;*/
+    display:block;
+    /*min-height:600px;*/
+}
+#content .contentBody{
+    text-align:left;
+    padding-top:35px;
 }
 
 .index #content{
@@ -78,7 +120,10 @@ body{
     margin-left:auto;
     margin-right:auto;
     margin-bottom:15px;
+    position:fixed;
+    left:170px;
 }
+
 
 #columnLeft{
     width:226px;
@@ -87,6 +132,10 @@ body{
     float:left;
     margin-top:4px;
 }
+.index #columnLeft{
+    padding-top:35px;
+}
+
 #teaser{
     width:100%;
     background:#e7e8e8;
@@ -111,6 +160,10 @@ body{
     text-align:left;
     padding-right:119px;
 }
+.index #columnRight{
+    padding-top:35px;
+}
+
 #columnRight img{
     border:none;
     margin-bottom:3px;
@@ -119,8 +172,9 @@ body{
 #footer{
     text-align:center;
     background:#565656;
-    height:500px;
+    height:120px;
     overflow:hidden;
+    padding-bottom:50px;
 }
 #shadowBottom{
     width:760px;
@@ -139,15 +193,13 @@ body{
 #bottomMenu a {
 	color:#FFFFFF;
 	background: transparent;
-}
-#bottomMenu a:link{
     text-decoration:none;
 }
 
 #bottomMenu a:focus,
 #bottomMenu a:hover,
 #bottomMenu a:active {
-	color: #4D87C7;
+	color: #488aa6;
 	background-color: transparent;
 	text-decoration: underline;
     
@@ -163,25 +215,35 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
 }
 
-h1 {
-	color: #525252;
-	font-size: 2.462em;
+h1 {              
+	color: #2C2C2C;
+	font-size: 1.6em;
+    font-variant:small-caps;
 	letter-spacing: -0.03em;
 	line-height: 1.19em;
-	margin-bottom: 15px;
+	/*margin-bottom: 15px;*/
 	display:block;
 	font-weight:bold;
 }
 h2 {
-	color: #2C2C2C;
-	font-size: 1.286em;
+	color: #525252;
+	font-size: 1.2em;
 	line-height: 1.056em;
-	padding: 9px 0 10px;
+	padding-top:9px;
 	display:block;
-	
+
 }
 
 .languages{
+    margin-top:2px;
+    display:block;
+    height:29px;
+    width:760px;
+    text-align:right;
+    margin-left:auto;
+    margin-right:auto;
+}
+.index .languages{
     display:block;
     height:29px;
     width:760px;
@@ -193,27 +255,6 @@ h2 {
 .logoBar{
     height:90px;
     
-}
-#topnav {
-    font-size:9pt;
-    float:right;
-    width:480px;
-    position:relative;
-    top:-10px;
-    text-align:right;
-}
-#topnav a {
-	color: #999;
-	font-weight: normal;
-	background: transparent;
-	text-decoration: none;
-}
-
-#topnav a:focus,
-#topnav a:hover,
-#topnav a:active {
-	text-decoration: underline;
-	background-color: transparent;
 }
 
 
@@ -282,4 +323,14 @@ h2 {
 .bfMask {
 	width:300px;
 	height:100px;
+}
+
+/* ############################  page specific ############################## */
+.downloads #columnLeft{
+    padding:0;
+    width:335px;
+}
+.downloads h2{
+    padding-top:9px;
+    
 }
