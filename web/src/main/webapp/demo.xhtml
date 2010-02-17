@@ -1,41 +1,37 @@
-<!--
-  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
-  ~ Licensed under the terms of BSD License
-  -->
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns:ev="http://www.w3.org/2001/xml-events"
       xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<meta name="Author" content="Joern Turner">
-		<meta name="Author" content="Lars Windauer">
-		<meta name="description" content="betterFORM ">
-		<meta name="keywords" content="betterFORM, xforms, forms, xhtml, xpath, xslt, dojo, dojotoolkit, web, semantic, semantic web, ">
+		<meta name="Author" content="Joern Turner"/>
+		<meta name="Author" content="Lars Windauer"/>
+		<meta name="description" content="betterFORM "/>
+		<meta name="keywords" content="betterFORM, xforms, forms, xhtml, xpath, xslt, dojo, dojotoolkit, web, semantic, semantic web, "/>
 
 		<title>betterFORM Demo</title>
 
-		<link REV="made" HREF="mailto:info@betterform.de">
-		<link rel="SHORTCUT ICON" href="../images/betterform.ico">
-		<link rel="ICON" href="../images/betterform.ico" type="image/x-icon">
-		<link rel="stylesheet" type="text/css" href="../styles/bf.css">
+		<link REV="made" HREF="mailto:info@betterform.de"/>
+		<link rel="SHORTCUT ICON" href="images/betterform.ico"/>
+		<link rel="ICON" href="images/betterform.ico" type="image/x-icon"/>
+		<link rel="stylesheet" type="text/css" href="styles/bf.css"/>
+        <link rel="stylesheet" type="text/css" href="resources/styles/reference.css" />
 
         <style type="text/css">
             #demoTarget{
                 display:block;
-                width:800px;
-                height:600px;
+                width:750px;
+                height:350px;
                 overflow:auto;
                 padding:10px;
                 border:thin solid #bbbbbb;
+                text-align:left;
+                background:white;
             }
             .backgroundImage{
                 width:100%;
                 height:100%;
-                background:transparent url(../../resources/images/play.png) no-repeat 50%;
+                background:transparent url(resources/images/play.png) no-repeat 50%;
             }
             #demoTrigger{display:none;}
         </style>
@@ -60,7 +56,7 @@
             <xf:trigger id="demoTrigger">
                 <xf:label>run demo</xf:label>
                 <xf:load show="embed" targetid="demoTarget">
-                    <xf:resource value="'../reference/Input.xhtml#xforms'"/>
+                    <xf:resource value="'forms/reference/Input.xhtml#xforms'"/>
                 </xf:load>
             </xf:trigger>
 
@@ -69,11 +65,11 @@
             <div id="header">
                 <div class="pageMarginBox">
                     <div class="languages">
-                        <img src="../images/en.png" alt="english"/>
-                        <img src="../images/de.png" alt="deutsch">
+                        <img src="images/en.png" alt="english"/>
+                        <img src="images/de.png" alt="deutsch"/>
                     </div>
                     <div class="logoBar">
-                        <img src="../images/logo.png" alt="betterFORM project" />
+                        <img src="images/logo.png" alt="betterFORM project" />
                         <div id="topnav">Full and Open Source Implementation of W3C XForms 1.1 for the Enterprise</div>
                     </div>
                 </div>
@@ -82,7 +78,7 @@
 
 
 			<div id="content">
-                <img id="shadowTop" src="../images/shad_top.jpg" alt=""/>
+                <img id="shadowTop" src="images/shad_top.jpg" alt=""/>
                 <div class="pageMarginBox">
                     <div id="demoTarget" onclick="fluxProcessor.dispatchEvent('demoTrigger');">
                         <div class="backgroundImage"></div>
@@ -90,7 +86,7 @@
                 </div>
 			</div>
 			<div id="footer">
-                <img id="shadowBottom" src="../images/shad_bottom.jpg" alt=""/>
+                <img id="shadowBottom" src="images/shad_bottom.jpg" alt=""/>
 
                 <div class="pageMarginBox">
                     <span id="bottomMenu">
