@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Chiba XForms
+Built-By: Lars Windauer
+Build-Jdk: 1.5.0_07
+Main-Class: de/betterform/server/Server
+Class-Path: bin/ant-1.6.5.jar bin/BrowserLauncher2.jar bin/commons-jxpath-1.2.jar bin/core-3.1.1.jar bin/jetty.jar bin/jetty-util.jar bin/jsp-2.1-glassfish-9.1.1.B60.25.p2.jar bin/jsp-2.1-jetty-6.1.22.jar bin/jsp-api-2.1-glassfish-9.1.1.B60.25.p2.jar bin/servlet-api-2.5.jar
+

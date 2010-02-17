@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- $Id: build.xml,v 1.90 2006/11/16 23:55:43 joernt Exp $ -->
+<project name="betterFORM Jetty Server" default="package" basedir="." >
+
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- **************************************** PROPERTIES **************************************** -->
+
+
+    <xmlproperty file="build.properties.xml"
+             semanticAttributes="true" keepRoot="false" />
+
+    <property name="target" value="${basedir}/target"/>
+    <property name="app.path" value="${basedir}/target/server/${server.app.name}"/>
+    <property name="dist.name" value="${server.app.name}-${server.app.version}"/>
+
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <target name="clean" description="clean build target directory">
+        <echo />
+        <echo message="************************************************************************************"/>
+        <echo message="cleaning up Core"/>
+        <echo message="************************************************************************************"/>
+        <echo />
+        <delete dir="${basedir}/target"/>
+    </target>
+
+    <!-- **************************************** PREPARATION **************************************** -->
+    <!-- **************************************** PREPARATION **************************************** -->
+    <!-- **************************************** PREPARATION **************************************** -->
+    <target name="prepare">
+        <mkdir dir="${basedir}/target"/>
+        <get usetimestamp="true" ignoreerrors="true" src="http://dist.codehaus.org/jetty/jetty-6.1.22/jetty-6.1.22.zip"
+             dest="${basedir}/target/jetty.zip"/>
+
+
+        <!--##### unpacking jetty can move it into a subfolder  - rename it to betterform ##### -->
+        <unzip src="${basedir}/target/jetty.zip" dest="${basedir}/target/jetty" />
+         <copy file="${basedir}/target/jetty/jetty-6.1.22/lib/jetty-6.1.22.jar" tofile="src/main/lib/jetty.jar"/>
+         <copy file="${basedir}/target/jetty/jetty-6.1.22/lib/jetty-util-6.1.22.jar" tofile="src/main/lib/jetty-util.jar"/> 
+         <copy file="${basedir}/target/jetty/jetty-6.1.22/lib/servlet-api-2.5-20081211.jar" tofile="src/main/lib/servlet-api-2.5.jar"/> 
+         <copy file="${basedir}/target/jetty/jetty-6.1.22/lib/jsp-2.1/ant-1.6.5.jar" tofile="src/main/lib/ant-1.6.5.jar"/>
+         <copy file="${basedir}/target/jetty/jetty-6.1.22/lib/jsp-2.1/jsp-2.1-jetty-6.1.22.jar" tofile="src/main/lib/jsp-2.1-6.0.2.jar"/>         
+
+
+
+
+        <echo />
+        <echo message="************************************************************************************"/>
+        <echo message="copying Core resources"/>
+        <echo message="************************************************************************************"/>
+        <echo />
+        
+        <mkdir dir="${basedir}/target/classes"/>
+        <copy  todir="${basedir}/target/classes/META-INF" file="${basedir}/src/main/resources/META-INF/MANIFEST.MF"/>
+        <mkdir dir="${app.path}"/>
+
+        <!-- copy all resources -->
+        <copy description="copy login.conf" todir="${app.path}/bin" file="${basedir}/src/main/resources/META-INF/login.conf"/>
+        <copy description="copy dependent libs" todir="${app.path}/bin" flatten="true">
+            <fileset dir="${basedir}/src/main/lib" />
+        </copy>
+        <mkdir dir="${app.path}/logs"/>
+        <mkdir dir="${app.path}/web/root"/>
+
+    </target>
+
+    <!-- **************************************** COMPILATION **************************************** -->
+    <!-- **************************************** COMPILATION **************************************** -->
+    <!-- **************************************** COMPILATION **************************************** -->
+
+    <!--
+        Default build.properties setting are as below. If you need to compile with debug settings you can either
+        a. change ../build.properties.xml or
+        b. call Ant like this: ant compile -Djavac.debug="true"
+
+    -->
+    <target name="compile" depends="prepare" description="compile all core sources">
+
+        <echo />
+        <echo message="************************************************************************************"/>
+        <echo message="compiling Server classes"/>
+        <echo message="************************************************************************************"/>
+        <echo />
+        
+        <javac description="compile source files"
+            srcdir="${basedir}/src/main/java"
+            destdir="${basedir}/target/classes"
+            classpathref="compile.class.path"
+            debug="${properties.javac.debug}"
+            deprecation="${properties.javac.deprecation}"
+            optimize="${properties.javac.optimize}"/>
+    </target>
+
+    <!-- **************************************** BUILDING JAR **************************************** -->
+    <!-- **************************************** BUILDING JAR **************************************** -->
+    <!-- **************************************** BUILDING JAR **************************************** -->
+    <target name="package" depends="compile" description="create jar file(s)">
+        <echo />
+        <echo message="************************************************************************************"/>
+        <echo message="building executable Server jar"/>
+        <echo message="************************************************************************************"/>
+        <echo />
+
+        <jar description="package server jar" manifest="${basedir}/src/main/resources/META-INF/MANIFEST.MF"
+            jarfile="${target}/${dist.name}.jar"
+            basedir="${basedir}/target/classes"/>
+        <copy tofile="${app.path}/server.jar" file="${basedir}/target/${dist.name}.jar"/>
+    </target>
+
+    <!-- ****************************************  DISTRIBUTION **************************************** -->
+    <!-- ****************************************  DISTRIBUTION **************************************** -->
+    <!-- ****************************************  DISTRIBUTION **************************************** -->
+
+    <target name="distribute" depends="package" description="assembles binary distributions">
+        <echo />
+        <echo message="************************************************************************************"/>
+        <echo message="creating distribution files"/>
+        <echo message="************************************************************************************"/>
+        <echo />
+
+        <!-- create binary tarball -->
+        <tar description="create binary tarball"
+            tarfile="${target}/${dist.name}-bin.tar"
+            basedir="${basedir}/target/server"/>
+
+        <gzip description="create binary tarball"
+            zipfile="${target}/${dist.name}-bin.tar.gz"
+            src="${target}/${dist.name}-bin.tar"/>
+
+        <!-- create binary zip -->
+        <zip zipfile="${target}/${dist.name}-bin.zip" description="create binary zip">
+            <tarfileset src="${target}/${dist.name}-bin.tar"/>
+        </zip>
+
+
+        <delete description="create binary tarball"
+            file="${target}/${dist.name}-bin.tar"/>
+    </target>
+
+
+</project>
