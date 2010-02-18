@@ -31,9 +31,12 @@ body{
     margin:0;
     color:#363636;
     overflow:auto;
+    background:#565656;
     /*height:100%;*/
 }
-
+p{
+    padding:0;margin-top:0.4em;margin-bottom:0.4em;
+}
 .page {
     margin:0;
     padding:0;
@@ -219,7 +222,7 @@ h1 {
 	color: #2C2C2C;
 	font-size: 1.6em;
     font-variant:small-caps;
-	letter-spacing: -0.03em;
+	letter-spacing: 0.2em;
 	line-height: 1.19em;
 	/*margin-bottom: 15px;*/
 	display:block;
@@ -231,6 +234,7 @@ h2 {
 	line-height: 1.056em;
 	padding-top:9px;
 	display:block;
+    letter-spacing:0.05em;
 
 }
 
