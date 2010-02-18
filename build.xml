@@ -8,6 +8,7 @@
     <property name="core.dir" value="${basedir}/core"/>
     <property name="web.dir" value="${basedir}/web"/>
     <property name="convex.dir" value="${basedir}/convex"/>
+    <property name="server.dir" value="${basedir}/tools/server"/>
     <property name="target.dir" value="${basedir}/target"/>
     <!-- local Web properties -->
 
@@ -58,6 +59,7 @@
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-core-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-web-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-convex-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
+        <ant antfile="${basedir}/tools/maven/build.xml"  target="update-server-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
     </target>
 
 
@@ -106,35 +108,4 @@
 
     </target>
 
-
-
-<!--
-    <target name="generateSite" description="build betterForm Home Webpages">
-        <echo />
-        <echo message="************************************************************************************"/>
-        <echo message="generating pages for homepage"/>
-        <echo message="************************************************************************************"/>
-        <echo />
-		<property name = "trax" value = "org.apache.tools.ant.taskdefs.optional.TraXLiaison"/>
-
-        <xslt basedir="src/main/doc/site/content"
-              destdir="${basedir}/target"
-              style="${basedir}/src/main/doc/site/xslt/site.xsl"
-              force="true"
-              includes="*.xml"
-	      processor="${trax}"
-              extension=".html">
-            &lt;!&ndash;<classpath refid="generator.libs"/>&ndash;&gt;
-             <param name="onlineVersion" expression="true"/>
-        </xslt>
-
-        <copy todir="target/resources/images">
-            <fileset dir="web/src/main/webapp/images"/>
-        </copy>
-        <copy todir="target/resources/styles">
-            <fileset dir="web/src/main/webapp/styles"/>
-        </copy>
-        <copy file="${basedir}/src/test/resources/XFormsTestSuite1.1E1/Edition1/driverPages/Results/results.html" todir="${basedir}/target"/>
-    </target>
--->
 </project>

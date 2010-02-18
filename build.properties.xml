@@ -101,6 +101,21 @@
             </classpath>
         </test>
     </web>
+    <server>
+        <app>
+            <name>server</name>
+            <version>1.0</version>
+        </app>
+        <compile>
+            <classpath pathid="server.class.path" description="classpath for compiling betterFORM server classes">
+                <!-- needed for embedded server -->
+                <pathelement location="${server.dir}/src/main/lib/BrowserLauncher2.jar" groupid="BrowserLauncher" version="2.0" artifactId="BrowserLauncher" scope="provided"/>
+                <pathelement location="${server.dir}/src/main/lib/commons-jxpath-1.2.jar" groupid="apache-commons" version="1.2" artifactId="jxpath" scope="provided"/>
+                <pathelement location="${server.dir}/src/main/lib/jetty.jar" groupid="org.mortbay.jetty" version="6.1.22" artifactId="jetty" scope="provided"/>
+                <pathelement location="${server.dir}/src/main/lib/jetty-util.jar" groupid="org.mortbay.jetty" version="6.1.22" artifactId="jetty-util" scope="provided"/>
+            </classpath>
+        </compile>
+    </server>
     <convex>
         <app>
             <name>convex</name>
