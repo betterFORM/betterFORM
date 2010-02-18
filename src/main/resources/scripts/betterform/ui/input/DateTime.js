@@ -42,15 +42,10 @@ dojo.declare(
     },
 
     _onBlur:function(){
-        // console.debug("DateTime._onBlur getControlValue:",this.getControlValue());
-        if(this.hideAlertOnFocus) {
-            this.hideAlert();
-        }
-        this.focused = false;
-        this.setControlValue();
-        this.handleEmptyRequired();
-        fluxProcessor.dispatchEventType(this.xfControl.id,"DOMFocusOut");
-        
+        this.inherited(arguments);
+        this.incremental = false;
+        this.handleOnBlur();
+
     },
 
     applyValues:function(value) {

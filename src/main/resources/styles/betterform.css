@@ -169,11 +169,12 @@ a.active {
 /* ********************* GENERAL XFORMS MIP AND COMMON-CHILD STYLES ************ */
 /* ***************************************************************************** */
 
-.xfInvalid .xfValue {
-    background-color:#F9F7BA;
-}
-
+.xfInvalid .xfValue,
+.xfInvalid .xfCheckBoxValue,
+.xfInvalid .xfRadioLabel,
+.xfInvalid .xfCheckBoxLabel,
 .xfInvalid .dijitTextBox {
+    background-color:#F9F7BA; !important;
 }
 
 .xfInvalidIcon {
@@ -185,6 +186,7 @@ a.active {
 .caDisplayInvalid {
     background-color: #F9F7BA !important;
 }
+
 
 /* for tundra checkboxes */
 .tundra .dijitCheckBox,
@@ -373,19 +375,39 @@ a.active {
 }
 
 .xfMinimalGroup .xfGroupLabel {
+	/*display:block;*/
 }
 
 .xfMinimalGroup .xfControl{
-    
+/*
+	display:block;
+	float:left;
+*/
+
 }
-.xfMinimalGroup .xfControl .xfLabel{
+.xfMinimalGroup .xfControl > .xfLabel{
+/*
+	float:left;
+*/
 }
+
 
 .xfMinimalGroup .xfDisabled {
     display: none;
 }
 
+.xfMinimalGroup .xfDateTimeControl {
+/*
+	display:inline;
+*/
+}
 
+.xfDateTimeControl   {
+	display:inline;
+}
+.xfDateTimeControl > xfLabel {
+	float:left;
+}
 /* ############################## COMPACT GROUP STYLES ############################## */
 /* ############################## COMPACT GROUP STYLES ############################## */
 /* ############################## COMPACT GROUP STYLES ############################## */
@@ -399,21 +421,25 @@ a.active {
 }
 
 .xfCompactGroup .xfControl{
+	clear:both;
     display:inline;
 }
 
 .xfCompactGroup .xfControl .xfLabel {
+	clear:both;
     display: block;
     float: none;
     margin-left:0.2em;
     aargin-top:0.3em;
 }
 
+/*
 .xfCompactGroup div {
     display: block;
     float: left;
     clear: none;
 }
+*/
 
 .xfCompactGroup .xfDisabled {
     display: none;
@@ -427,6 +453,7 @@ a.active {
 
 .xfFullGroup .xfControl {
     display:block;
+	clear:both;
 }
 
 .xfFullGroup .xfLabel {
@@ -454,10 +481,12 @@ a.active {
     float:none;
 }
 
+/*
 .xfFullGroup  .xfFullSelect1 .xfSelectorItem .xfLabel {
     float:none;
     display:inline;
 }
+*/
 
 .xfFullGroup .xfControl .xfValue {
 
@@ -470,12 +499,15 @@ a.active {
 
 .xfGroup {
     margin:0;
-    padding:0;            x
+    padding:0;            
 }
 /* ############################## CUSTOM GROUP STYLES ############################## */
 /* ############################## CUSTOM GROUP STYLES ############################## */
 /* ############################## CUSTOM GROUP STYLES ############################## */
 
+.caHorizontalTableValue > .xfControl > .xfLabel{
+	display:none;
+}
 .caVerticalTable .caHorizontalColumn .xfLabel{
     display:none;
 }
@@ -765,34 +797,11 @@ delete actions to */
 /* ***************************************************************************** */
 /* ***************************************************************************** */
 
-.xfFullSelect1 .xfValue,
-.xfFullSelect .xfValue {
-    background: transparent;
-    /*float:left;*/
-    margin-right:5px;
-}
-
+.xfFullSelect  .xfValue .xfSelectorItem,
 .xfFullSelect1 .xfValue .xfSelectorItem {
-   clear:both;
+    clear:both;
 	display:block;
 }
-.xfFullSelect1 > .xfLabel {
-    float:left
-}
-
-.xfFullSelect1 .xfLabel {
-/*
-    float:none;
-    display: block;                 
-    float:none;
-    clear:both;
-    width:80px;
-*/
-
-    margin-right: 5px;
-    margin-top: 3px;
-}
-
 
 .xfReadWrite .dijitRadio, .xfReadWrite .dijitRadioIcon {
     background-image: url( ../images/checkmark.png );

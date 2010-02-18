@@ -76,7 +76,7 @@
 
             </xsl:when>
             <xsl:when test="@appearance='full'">
-                <div id="{$id}-value"
+                <span id="{$id}-value"
                       controlType="select1RadioButton"
                       class="xfValue"                      
                       incremental="{$incremental}">
@@ -86,7 +86,7 @@
                         <xsl:with-param name="parent" select="$parent"/>
                         <xsl:with-param name="navindex" select="$navindex"/>
                     </xsl:call-template>
-                </div>
+                </span>
                     <!-- handle itemset prototype -->
                     <xsl:if test="not(ancestor::xforms:repeat)">
                         <xsl:for-each select="xforms:itemset/bf:data/xforms:item">
@@ -423,7 +423,7 @@
 </xsl:text>
         <span id="{@id}" class="xfSelectorItem">
             <input id="{@id}-value"
-                   class="xfValue"
+                   class="xfCheckBoxValue"
                    type="checkbox"
                    tabindex="0"
                    selectWidgetId="{$parent/@id}-value"
@@ -450,7 +450,7 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </input>
-            <label id="{@id}-label" for="{@id}-value" class="xfLabel">
+            <label id="{@id}-label" for="{@id}-value" class="xfCheckBoxLabel">
                 <xsl:if test="$parent/bf:data/@bf:readonly='true'">
                     <xsl:attribute name="disabled">disabled</xsl:attribute>
                 </xsl:if>
@@ -560,14 +560,14 @@
     	<xsl:param name="parent"/><script type="text/javascript">dojo.require("betterform.ui.select1.RadioItemset");</script><xsl:text>
 </xsl:text>
 
-		<div id="{@id}" dojoType="betterform.ui.select1.RadioItemset">
+		<span id="{@id}" dojoType="betterform.ui.select1.RadioItemset" class="xfRadioItemset">
 			<xsl:for-each select="xforms:item">
 				<xsl:call-template name="build-radiobuttons-item">
 	           		<xsl:with-param name="name" select="$name"/>
 	           		<xsl:with-param name="parent" select="$parent"/>
 				</xsl:call-template>
 			</xsl:for-each>
-		</div>
+		</span>
 	</xsl:template>
 
 	<xsl:template name="build-radiobuttons-item">
@@ -579,7 +579,7 @@
               class="xfSelectorItem"
               controlType="radioButtonEntry">
             <input id="{@id}-value"
-                   class="xfValue"
+                   class="xfRadioValue"
                    dataType="radio"
                    controlType="radio"
                    parentId="{$parentId}"
@@ -608,7 +608,7 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </input>
-            <label id="{@id}-label" for="{@id}-value" class="xfLabel">
+            <label id="{@id}-label" for="{@id}-value" class="xfRadioLabel">
                 <xsl:if test="$parent/bf:data/@bf:readonly='true'">
                     <xsl:attribute name="disabled">disabled</xsl:attribute>
                 </xsl:if>

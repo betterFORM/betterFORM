@@ -28,19 +28,12 @@ dojo.declare(
     
     _onFocus:function() {
         this.inherited(arguments);
-        //this.handleOnFocus(["above", "below"]);
         this.handleOnFocus();
     },
 
     _onBlur:function(){
-        //console.debug("Date._onBlur");
-        if(this.hideAlertOnFocus) {
-            this.hideAlert();
-        }
-        this.focused = false;
-        this.setControlValue();
-        this.handleEmptyRequired();
-        fluxProcessor.dispatchEventType(this.xfControl.id,"DOMFocusOut");
+        this.incremental = false;
+        this.handleOnBlur();
         this.inherited(arguments);
     },
 

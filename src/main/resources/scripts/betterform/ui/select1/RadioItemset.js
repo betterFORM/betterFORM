@@ -50,7 +50,7 @@ dojo.declare(
         var itemId = generatedIds[contextInfo.prototypeId];
         dojo.attr(itemNode, "id",itemId );
         var labelNode = document.createElement("label");
-        dojo.addClass(labelNode, "xfLabel");
+        dojo.addClass(labelNode, "xfRadioLabel");
         dojo.attr(labelNode, "id",itemId+"-label" );
         dojo.attr(labelNode, "for",itemId+"-value" );
         labelNode.innerHTML = contextInfo.label;
@@ -63,7 +63,10 @@ dojo.declare(
         console.dirxml(itemNode);
 
         var valueNode = document.createElement("input");
-        dojo.addClass(valueNode, "xfValue");
+        if(dojo.hasClass(valueNode, "xfValue")) {
+            dojo.removeClass(valueNode, "xfValue");
+        }
+        dojo.addClass(valueNode, "xfRadioValue");
         dojo.attr(valueNode, "id",itemId+"-value" );
         dojo.attr(valueNode, "selected","false");
         dojo.attr(valueNode, "parentId",myParentNode.id);

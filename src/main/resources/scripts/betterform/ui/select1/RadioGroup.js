@@ -47,7 +47,7 @@ dojo.declare(
                     // dojo.attr(xfNode,"name", name);
                     var optionId = dojo.attr(xfNode,"id");
                     var optionvalue = [0];
-                    dojo.query(".xfValue",xfNode).attr("name",name);
+                    dojo.query(".xfRadioValue",xfNode).attr("name",name);
                     
                     var option = new betterform.ui.Control({id:optionId,
                                                        value:dojo.attr(xfNode,"value")
@@ -105,7 +105,7 @@ dojo.declare(
     /* update UI control value after value change by processor */
     _handleSetControlValue:function(value) {
         // console.debug("RadioGroup._handleSetControlValue value:",value, " this.id: ", this.id);
-        var radioItems = dojo.query(".xfValue", this.domNode);
+        var radioItems = dojo.query(".xfRadioValue", this.domNode);
         for(i=0;i<radioItems.length;i++){
             //var optionValue = dojo.attr(dojo.query(".dijitCheckBoxInput",radioItems[i])[0],"value");
             var optionDijitId = dojo.attr(radioItems[i],"widgetId");
@@ -122,7 +122,7 @@ dojo.declare(
     /* update UI MIP after value change by processor */
     applyState:function(){
         // console.debug("RadioGroup.applyState [id:"+this.id+" / object:",this,"]");
-        var radioItems = dojo.query(".xfValue", this.domNode);
+        var radioItems = dojo.query(".xfRadioValue", this.domNode);
         for(i=0;i<radioItems.length;i++){
             var optionDOM = dojo.byId(dojo.attr(radioItems[i],"widgetId"));
             // console.debug("OptionDOM: ", optionDOM, " radioItem["+i+"]" ,radioItems[i]);

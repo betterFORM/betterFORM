@@ -73,7 +73,7 @@ dojo.declare(
         // console.debug("CheckBoxItemset.handleInsert [id: ",this.id, " / parentNode:",myParentNode,"]");
         var valueNode = new betterform.ui.select.CheckBox({
                 id:itemId+"-value",
-                "class":"xfValue",
+                "class":"xfCheckBoxValue",
                 type:"checkbox",
                 value:contextInfo.value,
                 selectWidgetId:myParentNode.id,
@@ -85,7 +85,7 @@ dojo.declare(
         dojo.place(valueNode.domNode,itemNode);
         // create Label
         var labelNode = document.createElement("span");
-        dojo.addClass(labelNode, "xfLabel");
+        dojo.addClass(labelNode, "xfCheckBoxLabel");
         dojo.attr(labelNode,"id",itemId + "-label");
         labelNode.innerHTML = contextInfo.label;
 
