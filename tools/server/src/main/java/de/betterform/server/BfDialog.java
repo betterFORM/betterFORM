@@ -30,7 +30,7 @@ public class BfDialog extends JFrame implements ActionListener {
     // betterform_icon_118x118.png  : 120, 150
     static final Dimension WINDOW_SIZE = new Dimension(120, 150);
     private static final String TRIGGER_ICON = "betterform_icon_118x118.png";
-    private static final String TRIGGER_ROLLOVER_ICON = "betterform_icon_118x118-RollOver2.png";
+    private static final String TRIGGER_ROLLOVER_ICON = "betterform_icon_118x118-RollOver.png";
 
 /*
     static final String TITLE = "betterFORM Server 1.0";

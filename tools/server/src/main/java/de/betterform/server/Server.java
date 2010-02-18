@@ -40,11 +40,11 @@ public class Server extends Frame implements ActionListener {
             System.out.println("g is null");
             return;
         }
-        for(int i=0; i<100; i++) {
+        for(int i=0; i<10; i++) {
             renderSplashFrame(g, i);
             splash.update();
             try {
-                Thread.sleep(10);
+                Thread.sleep(50);
             }
             catch(InterruptedException ie) {
             }
@@ -94,7 +94,6 @@ public class Server extends Frame implements ActionListener {
         g.drawString("Loading "+comps[(frame/5)%3]+"...", 120, 150);
     }
 
-    @Override
     public void actionPerformed(ActionEvent ae) {
         System.exit(0);
     }

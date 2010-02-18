@@ -14,6 +14,13 @@
 
     <artifactId>zaphod</artifactId>
     <version>1.0</version>
+    <name>betterFORM zaphod</name>
+
+    <packaging>war</packaging>
+    <description>betterForm Server Project</description>
+    <inceptionYear>2010</inceptionYear>
+    <url>http://betterform.sourceforge.net</url>
+
 
     <dependencies>
              <dependency>

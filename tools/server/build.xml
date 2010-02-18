@@ -31,10 +31,12 @@
     <!-- **************************************** PREPARATION **************************************** -->
     <target name="prepare">
         <mkdir dir="${basedir}/target"/>
+<!--
         <get usetimestamp="true" ignoreerrors="true" src="http://dist.codehaus.org/jetty/jetty-6.1.22/jetty-6.1.22.zip"
              dest="${basedir}/target/jetty.zip"/>
 
         <unzip src="${basedir}/target/jetty.zip" dest="${basedir}/target/jetty" />
+-->
          <copy file="${basedir}/target/jetty/jetty-6.1.22/lib/jetty-6.1.22.jar" tofile="src/main/lib/jetty.jar"/>
          <copy file="${basedir}/target/jetty/jetty-6.1.22/lib/jetty-util-6.1.22.jar" tofile="src/main/lib/jetty-util.jar"/> 
          <copy file="${basedir}/target/jetty/jetty-6.1.22/lib/servlet-api-2.5-20081211.jar" tofile="src/main/lib/servlet-api-2.5.jar"/>

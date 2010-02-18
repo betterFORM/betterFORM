@@ -63,6 +63,10 @@
                 <path refid="compile.class.path"/>
                 <pathelement location="${web.dir}/src/main/lib/dwr-2.0.5.jar" groupid="dwr" version="2.0.5" artifactId="dwr"/>
                 <pathelement location="${web.dir}/src/main/lib/servlet-api-2.4.jar" groupid="javax.servlet" version="2.4" artifactId="servlet-api" scope="provided"/>
+
+                <!-- needed for embedded server -->
+                <pathelement location="${web.dir}/../tools/server/src/main/lib/BrowserLauncher2.jar" groupid="BrowserLauncher" version="2.0" artifactId="BrowserLauncher" scope="provided"/>
+                <pathelement location="${web.dir}/../tools/server/src/main/lib/commons-jxpath-1.2.jar" groupid="apache-commons" version="1.2" artifactId="jxpath" scope="provided"/>
             </classpath>
         </compile>
         <test>
@@ -70,7 +74,7 @@
             
             <selenium>
               <!-- which browser to use for tests -->
-              <browser>*firefox</browser>
+              <browser>*googlechrome</browser>
               <!--server properties -->
               <server>
                 <jar>${basedir}/src/main/lib/selenium-server.jar</jar>
