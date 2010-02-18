@@ -3,9 +3,9 @@
       <title>XForms TestSuite Results (Edition 1)</title>
       <style type="text/css">
          @import "http://ajax.googleapis.com/ajax/libs/dojo/1.2/dijit/themes/tundra/tundra.css";
-         @import "http://ajax.googleapis.com/ajax/libs/dojo/1.2/dojo/resources/dojo.css"
-         
+         @import "http://ajax.googleapis.com/ajax/libs/dojo/1.2/dojo/resources/dojo.css";
       </style>
+
       <style type="text/css">
          body{
          font-family:sans-serif;
@@ -17,7 +17,8 @@
          }
          
          td{
-         background-color:lightSteelBlue;
+         background-color:#dddddd;
+         padding:3px;
          }
          .totals td{
          text-align:center;
@@ -29,10 +30,10 @@
          .numNormPass, .numBasicPass, .Passed {background:chartreuse;}
          .numNormFail, .numBasicFail, .Failed {background:orangered;}
          .numNormUnknown, .numBasicUnknown, .Unknown{background:#ddd;}
-         .Passed {background:chartreuse;}
-         .Failed {background:orangered;}
+         .Passed {background:#7ba841;}
+         .Failed {background:#c56f46;}
          .Manual {background:darkgreen;}
-         .Unknown{background:#ddd;}
+         .Unknown{background:#e7e8e8;}
          
          .testConfig {
          background-color:White;
@@ -67,11 +68,13 @@
          }
          #summary{
          font-size:12pt;
-         background-color:SteelBlue;
+         background-color:#727272;
+         color:white;
          padding:10px;
          }
          .chapterHeader{
-         background:SteelBlue;
+         background:#727272;
+         color:white;
          font-size:12pt;
          padding:10px;
          }
@@ -137,21 +140,21 @@
                         {
                         y: passed,
                         stroke: {color: "black" },
-                        fill: "chartreuse",
+                        fill: "#7ba841",
                         tooltip: passed + " tests passed",
                         text: ((passed / sum) * 100).toFixed(0) + "% passed"
                         },
                         {
                         y: failed,
                         stroke: {color: "black" }, 
-                        fill: "orangered",
+                        fill: "#c56f46",
                         tooltip: failed + " tests failed",
                         text: ((failed / sum) * 100).toFixed(0) + "% failed"
                         },
                         {
                         y: unknown,
                         stroke: {color: "black"}, 
-                        fill: "#DDD",
+                        fill: "#e7e8e8",
                         tooltip: unknown + " tests unknown",
                         text: ((unknown / sum) * 100).toFixed(0) + "% unknown"
                         }

@@ -6,89 +6,93 @@
          @import "http://ajax.googleapis.com/ajax/libs/dojo/1.2/dojo/resources/dojo.css"
          
       </style>
-      <style type="text/css">
-         body{
-         font-family:sans-serif;
-         margin:50px;
-         background:url(resources/images/bgOne.gif) repeat-x fixed;
-         }
-         table{
-         width:800px;
-         }
-         
-         td{
-         background-color:lightSteelBlue;
-         }
-         .totals td{
-         text-align:center;
-         font-weight:bold;
-         font-size:12pt;
-         padding:10px;
-         }
-         .true{font-weight:bold;}
-         .numNormPass, .numBasicPass, .Passed {background:chartreuse;}
-         .numNormFail, .numBasicFail, .Failed {background:orangered;}
-         .numNormUnknown, .numBasicUnknown, .Unknown{background:#ddd;}
-         .Passed {background:chartreuse;}
-         .Failed {background:orangered;}
-         .Manual {background:darkgreen;}
-         .Unknown{background:#ddd;}
-         
-         .testConfig {
-         background-color:White;
-         border:1px solid black;
-         margin-bottom:10px;
-         padding:10px;
-         width:775px;
-         }
-         .testConfig .header {
-         border-bottom:1px solid;
-         display:block;
-         font-size:large;
-         font-variant:small-caps;
-         margin-bottom:5px;
-         }
-         .testConfig div {
-         display:block;
-         font-size:10pt;
-         font-weigth:bolder;
-         }
-         .testConfig table{
-         width:100%;
-         }
-         .testConfig td{
-         background:White;
-         }
-         .pageheader {
-         display:block;
-         font-size:x-large;
-         font-weight:bold;
-         margin-bottom:20px;
-         }
-         #summary{
-         font-size:12pt;
-         background-color:SteelBlue;
-         padding:10px;
-         }
-         .chapterHeader{
-         background:SteelBlue;
-         font-size:12pt;
-         padding:10px;
-         }
-         .
-         .Note{
-         text-align:center;
-         font-size:8pt;
-         display:none;
-         }
-         .dijitTooltipContainer{
-         padding:3px;
-         background:lightyellow;
-         border:thin solid lightsteelblue;
-         font-size:11pt;
-         }
-         
-      </style>
+       <style type="text/css">
+          body{
+          font-family:sans-serif;
+          margin:50px;
+          background:url(resources/images/bgOne.gif) repeat-x fixed;
+          }
+          table{
+          width:800px;
+          }
+
+          td{
+          background-color:#dddddd;
+          padding:3px;
+          }
+          .totals td{
+          text-align:center;
+          font-weight:bold;
+          font-size:12pt;
+          padding:10px;
+          }
+          .true{font-weight:bold;}
+          .numNormPass, .numBasicPass, .Passed {background:chartreuse;}
+          .numNormFail, .numBasicFail, .Failed {background:orangered;}
+          .numNormUnknown, .numBasicUnknown, .Unknown{background:#ddd;}
+          .Passed {background:#7ba841;}
+          .Failed {background:#c56f46;}
+          .Manual {background:darkgreen;}
+          .Unknown{background:#e7e8e8;}
+
+          .testConfig {
+          background-color:White;
+          border:1px solid black;
+          margin-bottom:10px;
+          padding:10px;
+          width:775px;
+          }
+          .testConfig .header {
+          border-bottom:1px solid;
+          display:block;
+          font-size:large;
+          font-variant:small-caps;
+          margin-bottom:5px;
+          }
+          .testConfig div {
+          display:block;
+          font-size:10pt;
+          font-weigth:bolder;
+          }
+          .testConfig table{
+          width:100%;
+          }
+          .testConfig td{
+          background:White;
+          }
+          .pageheader {
+          display:block;
+          font-size:x-large;
+          font-weight:bold;
+          margin-bottom:20px;
+          }
+          #summary{
+          font-size:12pt;
+          background-color:#727272;
+          color:white;
+          padding:10px;
+          }
+          .chapterHeader{
+          background:#727272;
+          color:white;
+          font-size:12pt;
+          padding:10px;
+          }
+          .
+          .Note{
+          text-align:center;
+          font-size:8pt;
+          display:none;
+          }
+          .dijitTooltipContainer{
+          padding:3px;
+          background:lightyellow;
+          border:thin solid lightsteelblue;
+          font-size:11pt;
+          }
+
+       </style>
+
       <script type="text/javascript"
               src="http://ajax.googleapis.com/ajax/libs/dojo/1.2/dojo/dojo.xd.js"
               djConfig="parseOnLoad: true"></script>
@@ -118,11 +122,11 @@
                         dojo.require("dojox.charting.action2d.Tooltip");
                         dojo.require("dojox.charting.themes.MiamiNice");
                         dojo.require("dojox.charting.widget.Legend");
-                        
+
                         createChart = function(passed, failed, unknown) {
                         var chart = new dojox.charting.Chart2D("conformanceChart"),
                         sum   = passed + failed + unknown;
-                        
+
                         chart.addPlot("default", {
                         labels: true,
                         ticks: true,
@@ -137,21 +141,21 @@
                         {
                         y: passed,
                         stroke: {color: "black" },
-                        fill: "chartreuse",
+                        fill: "#7ba841",
                         tooltip: passed + " tests passed",
                         text: ((passed / sum) * 100).toFixed(0) + "% passed"
                         },
                         {
                         y: failed,
-                        stroke: {color: "black" }, 
-                        fill: "orangered",
+                        stroke: {color: "black" },
+                        fill: "#c56f46",
                         tooltip: failed + " tests failed",
                         text: ((failed / sum) * 100).toFixed(0) + "% failed"
                         },
                         {
                         y: unknown,
-                        stroke: {color: "black"}, 
-                        fill: "#DDD",
+                        stroke: {color: "black"},
+                        fill: "#e7e8e8",
                         tooltip: unknown + " tests unknown",
                         text: ((unknown / sum) * 100).toFixed(0) + "% unknown"
                         }
@@ -167,9 +171,9 @@
                         return chart;
                         }
                         dojo.addOnLoad(function(){
-                        createChart( 404,15,0);                        
+                        createChart( 405, 14,0);
                         });
-                        
+
                      </script>
                      <div id="conformanceChart" style="width: 150px; height: 150px;"></div>
                   </div>
