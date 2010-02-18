@@ -4,85 +4,49 @@ import org.mortbay.jetty.Connector;
 import org.mortbay.jetty.Handler;
 import org.mortbay.jetty.NCSARequestLog;
 import org.mortbay.jetty.Server;
-import org.mortbay.jetty.deployer.WebAppDeployer;
 import org.mortbay.jetty.handler.ContextHandlerCollection;
 import org.mortbay.jetty.handler.DefaultHandler;
 import org.mortbay.jetty.handler.HandlerCollection;
 import org.mortbay.jetty.handler.RequestLogHandler;
 import org.mortbay.jetty.nio.SelectChannelConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
-import org.mortbay.thread.BoundedThreadPool;
+import org.mortbay.thread.QueuedThreadPool;
+import org.mortbay.thread.ThreadPool;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 import org.apache.commons.jxpath.JXPathContext;
 
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 
 public class JettyCtrl {
     private Server server;
     private static JettyCtrl instance;
-    private String status = JettyProperties.STATUS_STOPPED;
-
-
-    public static void main(String[] args) throws IOException {
-/*
-        try {
-            JettyCtrl.getInstance().start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-*/
-        String home = new File(".").getAbsolutePath();
-        System.out.println("Path " + home);
-        //File loginConf = new File(home + "/bin/login.conf");
-
-    }
-
-    private static String readFileAsString(String filePath)
-       throws java.io.IOException{
-           StringBuffer fileData = new StringBuffer(1000);
-           return fileData.toString();
-       }
+    static final String STATUS_RUNNING = "running";
+    static final String STATUS_STOPPED = "stopped";
+    private String status = STATUS_STOPPED;
+    private static int PORT = 45898;
+    private String WORKING_DIRECTORY;
 
 
     private JettyCtrl() {
         this.server = new Server();
+        WORKING_DIRECTORY = new File(".").getAbsolutePath();
+        this.server.setAttribute("JETTY_HOME", WORKING_DIRECTORY);
 
-        //todo: make dynamic
-        //String home = "/Users/jinx/Desktop/risk-web/deploy/standalone/risk-web";
-        String home = new File(".").getAbsolutePath();
-        this.server.setAttribute("JETTY_HOME", home);
-/*
-        File loginConf = new File(home + "/bin/login.conf");
-        System.setProperty("java.security.auth.login.config", loginConf.getAbsolutePath());
-*/
-
-        int port;
         try {
-            String configFile = new File(home + "/web/root/WEB-INF/dbConfig.xml").getAbsolutePath();
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = null;
-            builder = factory.newDocumentBuilder();
-            Document configDoc = null;
-            configDoc = builder.parse(configFile);
-            JXPathContext jxContext = JXPathContext.newContext(configDoc);
-            port = Integer.parseInt(jxContext.getValue("/dbconfig/databases/database[1]/@port").toString());
-            System.out.println("Server Port: " + port);
-            JettyProperties.setPort(port);
-        } catch (IOException e) {
-            System.out.println("Error receiving Server Port from config. Port is now: " + JettyProperties.getPort());
-        } catch (ParserConfigurationException e) {
+            String pathToConfig = new File(WORKING_DIRECTORY + "/bin/server-conf.xml").getAbsolutePath();
+            // create DOM of XML
+            Document config = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(pathToConfig);
+
+            // grep port from config
+            JXPathContext jxContext = JXPathContext.newContext(config);
+            PORT = Integer.parseInt(jxContext.getValue("/server/port").toString());
+        }
+        catch (Exception e) {
             e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace(); 
         }
 
-
-        BoundedThreadPool threadPool = new BoundedThreadPool();
-        threadPool.setMaxThreads(100);
+        ThreadPool threadPool = new QueuedThreadPool();
         server.setThreadPool(threadPool);
 
         //setup realm
@@ -93,7 +57,7 @@ public class JettyCtrl {
 */
 
         Connector connector = new SelectChannelConnector();
-        connector.setPort(JettyProperties.getPort());
+        connector.setPort(PORT);
 
         server.setConnectors(new Connector[]{connector});
 
@@ -118,6 +82,7 @@ public class JettyCtrl {
 
     }
 
+
     public static JettyCtrl getInstance() {
         if (instance == null) {
             return instance = new JettyCtrl();
@@ -138,14 +103,14 @@ public class JettyCtrl {
         server.setSendServerVersion(true);
 
         if (server.isStarted()) {
-            this.status = JettyProperties.STATUS_STARTED;
+            this.status = STATUS_RUNNING;
         }
 
     }
 
     public void stop() throws Exception {
         server.stop();
-        this.status = JettyProperties.STATUS_STOPPED;
+        this.status = STATUS_STOPPED;
     }
 
     public String getStatus() {
@@ -156,7 +121,10 @@ public class JettyCtrl {
         return server.isRunning();
     }
 
-    public boolean isStarted() {
-        return server.isStarted();
+    public int getPort() {
+        return PORT;
+    }
+    public String getWorkDir() {
+        return WORKING_DIRECTORY;
     }
 }

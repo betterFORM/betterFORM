@@ -10,7 +10,7 @@
     </properties>
     <server>
         <app>
-            <name>server</name>
+            <name>betterform</name>
             <version>1.2</version>
         </app>
         <compile>

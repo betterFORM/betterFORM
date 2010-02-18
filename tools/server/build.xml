@@ -34,17 +34,13 @@
         <get usetimestamp="true" ignoreerrors="true" src="http://dist.codehaus.org/jetty/jetty-6.1.22/jetty-6.1.22.zip"
              dest="${basedir}/target/jetty.zip"/>
 
-
-        <!--##### unpacking jetty can move it into a subfolder  - rename it to betterform ##### -->
         <unzip src="${basedir}/target/jetty.zip" dest="${basedir}/target/jetty" />
          <copy file="${basedir}/target/jetty/jetty-6.1.22/lib/jetty-6.1.22.jar" tofile="src/main/lib/jetty.jar"/>
          <copy file="${basedir}/target/jetty/jetty-6.1.22/lib/jetty-util-6.1.22.jar" tofile="src/main/lib/jetty-util.jar"/> 
-         <copy file="${basedir}/target/jetty/jetty-6.1.22/lib/servlet-api-2.5-20081211.jar" tofile="src/main/lib/servlet-api-2.5.jar"/> 
-         <copy file="${basedir}/target/jetty/jetty-6.1.22/lib/jsp-2.1/ant-1.6.5.jar" tofile="src/main/lib/ant-1.6.5.jar"/>
-         <copy file="${basedir}/target/jetty/jetty-6.1.22/lib/jsp-2.1/jsp-2.1-jetty-6.1.22.jar" tofile="src/main/lib/jsp-2.1-6.0.2.jar"/>         
-
-
-
+         <copy file="${basedir}/target/jetty/jetty-6.1.22/lib/servlet-api-2.5-20081211.jar" tofile="src/main/lib/servlet-api-2.5.jar"/>
+         <copy todir="src/main/lib" flatten="true">
+             <fileset dir="${basedir}/target/jetty/jetty-6.1.22/lib/jsp-2.1"/>
+         </copy>
 
         <echo />
         <echo message="************************************************************************************"/>
@@ -58,8 +54,15 @@
 
         <!-- copy all resources -->
         <copy description="copy login.conf" todir="${app.path}/bin" file="${basedir}/src/main/resources/META-INF/login.conf"/>
+        <copy description="server.conf" todir="${app.path}/bin" file="${basedir}/src/main/resources/META-INF/server-conf.xml"/>
+
         <copy description="copy dependent libs" todir="${app.path}/bin" flatten="true">
             <fileset dir="${basedir}/src/main/lib" />
+        </copy>
+
+        <mkdir dir="${app.path}/images"/>
+        <copy description="copy images" todir="${app.path}/images">
+            <fileset dir="${basedir}/src/main/resources/images" />
         </copy>
         <mkdir dir="${app.path}/logs"/>
         <mkdir dir="${app.path}/web/root"/>
@@ -103,10 +106,14 @@
         <echo message="************************************************************************************"/>
         <echo />
 
-        <jar description="package server jar" manifest="${basedir}/src/main/resources/META-INF/MANIFEST.MF"
-            jarfile="${target}/${dist.name}.jar"
-            basedir="${basedir}/target/classes"/>
-        <copy tofile="${app.path}/server.jar" file="${basedir}/target/${dist.name}.jar"/>
+        <jar description="package server jar"
+             manifest="${basedir}/src/main/resources/META-INF/MANIFEST.MF"
+             jarfile="${target}/${dist.name}.jar"
+             basedir="${basedir}/target/classes">
+            <fileset dir="${basedir}/src/main/resources"/>
+        </jar>
+        <copy tofile="${app.path}/${server.app.name}.jar" 
+              file="${basedir}/target/${dist.name}.jar"/>
     </target>
 
     <!-- ****************************************  DISTRIBUTION **************************************** -->
