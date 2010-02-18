@@ -7,57 +7,216 @@
       xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns:ev="http://www.w3.org/2001/xml-events"
       xml:lang="en" lang="en">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<meta name="Author" content="Joern Turner"/>
-		<meta name="Author" content="Lars Windauer"/>
-		<meta name="description" content="betterFORM "/>
-		<meta name="keywords" content="betterFORM, xforms, forms, xhtml, xpath, xslt, dojo, dojotoolkit, web, semantic, semantic web, "/>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="Author" content="Joern Turner"/>
+    <meta name="Author" content="Lars Windauer"/>
+    <meta name="description" content="betterFORM "/>
+    <meta name="keywords"
+          content="betterFORM, xforms, forms, xhtml, xpath, xslt, dojo, dojotoolkit, web, semantic, semantic web, "/>
 
-		<title>betterFORM Demo</title>
+    <title>betterFORM Product</title>
 
-		<link REV="made" HREF="mailto:info@betterform.de"/>
-		<link rel="SHORTCUT ICON" href="images/betterform.ico"/>
-		<link rel="ICON" href="images/betterform.ico" type="image/x-icon"/>
-		<link rel="stylesheet" type="text/css" href="styles/bf.css"/>
+    <link REV="made" HREF="mailto:info@betterform.de"/>
+    <link rel="SHORTCUT ICON" href="images/betterform.ico"/>
+    <link rel="ICON" href="images/betterform.ico" type="image/x-icon"/>
+    <style type="text/css">
+        @import "http://ajax.googleapis.com/ajax/libs/dojo/1.4/dijit/themes/tundra/tundra.css";
+        @import "http://ajax.googleapis.com/ajax/libs/dojo/1.4/dojo/resources/dojo.css";
+    </style>
+    <link rel="stylesheet" type="text/css" href="styles/bf.css"/>
 
-	</head>
-	<body style="overflow:hidden;">
-		<div class="page">
+    <script type="text/javascript"
+            src="http://ajax.googleapis.com/ajax/libs/dojo/1.4/dojo/dojo.xd.js"
+            djConfig="parseOnLoad: true"></script>
+    <script type="text/javascript">
+        dojo.require("dojo.parser");
+        dojo.require("dijit.TitlePane");
+        dojo.require("dojo.fx");
+        dojo.require("dijit.Tooltip");
 
-            <div id="header">
-                <div class="pageMarginBox">
-                    <div class="languages">
-                        <img src="images/en.png" alt="english"/>
-                        <img src="images/de.png" alt="deutsch"/>
-                    </div>
-                    <div class="logoBar">
-                        <img src="images/logo.png" alt="betterFORM project" />
-                        <div id="topnav">
-                            <a href="index.html">home</a><span class="menuDevider"> | </span>
-                            <a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>
-                            <a href="download-old.html">download</a><span class="menuDevider"> | </span>
-                            <a href="product.html">product</a><span class="menuDevider"> | </span>
-                            <a href="support.html">support</a><span class="menuDevider"> | </span>
-                            <a href="whoweare-old.html">who we are</a><span class="menuDevider"> | </span>
-                            <a href="contact.html">contact / impressum</a>
-                        </div>
+    </script>
+
+    <script type="text/javascript">
+        dojo.require("dojox.charting.Chart2D");
+        dojo.require("dojox.charting.plot2d.Pie");
+        dojo.require("dojox.charting.action2d.Highlight");
+        dojo.require("dojox.charting.action2d.MoveSlice");
+        dojo.require("dojox.charting.action2d.Tooltip");
+        dojo.require("dojox.charting.themes.MiamiNice");
+        dojo.require("dojox.charting.widget.Legend");
+
+        createChart = function(elem, passed, failed, unknown) {
+            var chart = new dojox.charting.Chart2D(elem),
+                    sum = passed + failed + unknown;
+
+            chart.addPlot("default", {
+                labels: false,
+                ticks: true,
+                type: "Pie",
+                font: "normal normal 11pt Tahoma",
+                fontColor: "black",
+                radius: 40,
+                fill: "white"
+            });
+            var numbers = [
+                {
+                    y: passed,
+                    stroke: {color: "black" },
+                    fill: "#7ba841",
+                    tooltip: ((passed / sum) * 100).toFixed(0) + "%",
+                    text: ((passed / sum) * 100).toFixed(0) + "%"
+                },
+                {
+                    y: failed,
+                    stroke: {color: "black" },
+                    fill: "#c56f46",
+                    tooltip: ((failed / sum) * 100).toFixed(0) + "%",
+                    text: ((failed / sum) * 100).toFixed(0) + "%"
+                },
+                {
+                    y: unknown,
+                    stroke: {color: "black"},
+                    fill: "#e7e8e8",
+                    tooltip: ((unknown / sum) * 100).toFixed(0) + "%",
+                    text: ((unknown / sum) * 100).toFixed(0) + "%"
+                }
+            ];
+            chart.addSeries("Results", numbers);
+            var anim_a = new dojox.charting.action2d.MoveSlice(chart, "default");
+            var anim_b = new dojox.charting.action2d.Highlight(chart, "default");
+            var anim_c = new dojox.charting.action2d.Tooltip(chart, "default");
+            chart.render();
+            // Do not show the legend!
+            //                 var legend = new dojox.charting.widget.Legend({
+            //                                                              chart: chart },"Firefox 2.6 on XP");
+            return chart;
+        }
+        dojo.addOnLoad(function() {
+            createChart("conformanceFF3", 411, 8, 0);
+            createChart("conformanceFF35", 405, 14, 0);
+            createChart("conformanceChrome", 404, 15, 0);
+            createChart("conformanceChrome5", 404, 15, 0);
+            createChart("conformanceIE", 398, 21, 0);
+        });
+
+    </script>
+</head>
+<body class="tundra">
+    <div class="page">
+
+        <div id="header">
+            <div class="pageMarginBox">
+                <div class="languages">
+                    <img src="images/en.png" alt="english"/>
+                    <img src="images/de.png" alt="deutsch"/>
+                </div>
+                <div class="logoBar">
+                    <img src="images/logo.png" alt="betterFORM project"/>
+
+                    <div id="topnav">
+                        <a href="index.html">home</a><span class="menuDevider"> | </span>
+                        <a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>
+                        <a href="download.html">download</a><span class="menuDevider"> | </span>
+                        <a href="product.html">product</a><span class="menuDevider"> | </span>
+                        <a href="support.html">support</a><span class="menuDevider"> | </span>
+                        <a href="whoweare-old.html">who we are</a><span class="menuDevider"> | </span>
+                        <a href="contact.html">contact / impressum</a>
                     </div>
                 </div>
             </div>
+        </div>
 
-			<div id="content">
-                <img id="shadowTop" src="images/shad_top.jpg" alt=""/>
+        <div id="content" class="contact">
+            <img id="shadowTop" src="images/shad_top.jpg" alt=""/>
 
-                <!-- ######################### Content here ################################## -->
-                <!-- ######################### Content here ################################## -->
-                <!-- ######################### Content here ################################## -->
-                <!-- ######################### Content here ################################## -->
-                <!-- ######################### Content here ################################## -->
+            <!-- ######################### Content here ################################## -->
+            <!-- ######################### Content here ################################## -->
+            <!-- ######################### Content here ################################## -->
+            <!-- ######################### Content here ################################## -->
+            <!-- ######################### Content here ################################## -->
+            <div class="pageMarginBox">
+                <div class="contentBody">
+                    <h1>Product</h1>
 
-			</div>
+                    <h2>Features</h2>
 
-			<div id="footer">
+                    <div class="list">easy installation</div>
+                    <div class="list">rapid webapplication development</div>
+                    <div class="list">absolutely no script programming required</div>
+                    <div class="list">supports dynamically loaded subforms</div>
+                    <div class="list">no plugins - runs in every major browser withhout installation</div>
+                    <div class="list">advanced datatyping, validation and calculation support</div>
+                    <div class="list">conformant to XForms 1.1 Recommendation</div>
+                    <div class="list">Open Source under business-friendly BSD or Apache 2 license</div>
+                    <div class="list">fully accessible UI controls</div>
+
+
+                    <h2>Documentation</h2>
+                    <p>All documentation is available in pdf format. Please download below.</p>
+                    <a href="betterFormUserGuide.pdf"><span class="downloadButton">UserGuide</span></a>
+                    <a href="betterFormDeveloperGuide.pdf"><span class="downloadButton">DeveloperGuide</span></a>
+                    <a href="CSSReference.pdf"><span class="downloadButton">CSS Reference</span></a>
+
+                    <h2>XForms 1.1 Conformance</h2>
+                    <p>
+                        betterFORM has been extensively tested against the official XForms 1.1 Test Suite
+                        Edition 1.
+                    </p>
+
+                    <p>
+                        The full test reports can be browsed below by clicking on the chart. Single test cases can be run directly
+                        from the report by clicking on the link on the left side of the table.
+                    </p>
+
+                    <table id="conformanceTable">
+                        <tr bgcolor="#565656" style="color:white;">
+                            <th>Firefox 3.0 on OSX</th>
+                            <th>Firefox 3.6 on XP</th>
+                            <th>Chrome 4.0 on XP</th>
+                            <th>Chrome 5.0 on OSX</th>
+                            <th>IE 7 on XP</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="reports/Firefox-3.0-Mac-OS-X-10.6-ConformanceReport1.1.html"><div id="conformanceFF3" class="conformanceCell" style="width:125px;height:125px;margin-right:25px;"></div></a>
+                            </td>
+                            <td>
+                                <a href="reports/Firefox-3.6-Windows-XP-ConformanceReport1.1.html"><div id="conformanceFF35" class="conformanceCell" style="width:125px;height:125px;margin-right:25px;"></div></a>
+                            </td>
+                            <td>
+                                <a href="reports/Google-Chrome-4.0-Windows-XP-ConformanceReport1.1.html"><div id="conformanceChrome" class="conformanceCell" style="width:125px;height:125px;margin-right:25px;"></div></a>
+                            </td>
+                            <td>
+                                <a href="reports/Google-Chrome-5.0-Mac-OS-X-10.6-ConformanceReport1.1.html"><div id="conformanceChrome5" class="conformanceCell" style="width:125px;height:125px;margin-right:25px;"></div></a>
+                            </td>
+                            <td>
+                                <a href="reports/Internet-Explorer-7-Windows-XP-ConformanceReport1.1.html"><div id="conformanceIE" class="conformanceCell" style="width:125px;height:125px;margin-right:25px;"></div></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <div class="legend" style="background:#7ba841;">passed</div>
+                                <div class="legend" style="background:#c56f46;">failed</div>
+                                <div class="legend" style="background:#e7e8e8;">unknown</div>
+                            </td>
+                        </tr>
+                    </table>
+
+
+                    <h2>Trac</h2>
+
+                    <h2>Sourceforge</h2>
+
+                    <div id="columnLeft">
+                    </div>
+                    <div id="columnRight">
+                    </div>
+                </div>
+
+
+            </div>
+            <div id="footer">
                 <img id="shadowBottom" src="images/shad_bottom.jpg" alt=""/>
 
                 <div class="pageMarginBox">
@@ -65,14 +224,15 @@
                         &#169; 2010 betterFORM<span class="menuDevider"> | </span>
                         <a href="index.html">home</a><span class="menuDevider"> | </span>
                         <a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>
-                        <a href="download-old.html">download</a><span class="menuDevider"> | </span>
+                        <a href="download.html">download</a><span class="menuDevider"> | </span>
                         <a href="product.html">product</a><span class="menuDevider"> | </span>
                         <a href="support.html">support</a><span class="menuDevider"> | </span>
                         <a href="whoweare-old.html">who we are</a><span class="menuDevider"> | </span>
                         <a href="contact.html">contact / impressum</a>
                     </span>
                 </div>
-			</div>
-		</div>
-	</body>
+            </div>
+
+        </div>
+</body>
 </html>

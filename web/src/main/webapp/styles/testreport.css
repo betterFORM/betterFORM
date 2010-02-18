@@ -1,0 +1,136 @@
+body {
+    font-family: sans-serif;
+    /*margin: 50px;*/
+}
+.report td{
+    font-size:9pt;
+    background:white;
+}
+.report td a{
+    color:#363636;
+    text-decoration:underline;
+
+}
+.report td a:hover{
+    text-decoration:underline;
+    color:#488aa6;
+}
+
+table {
+    width: 100%;
+}
+.devider{
+    clear:both;
+    height:20px;
+}
+td {
+    background-color: lightSteelBlue;
+}
+
+.totals td {
+    text-align: center;
+    font-weight: bold;
+    font-size: 12pt;
+    padding: 10px;
+}
+
+.noWrap{
+    white-space:nowrap;
+}
+.true {
+    font-weight: bold;
+}
+
+.numNormPass, .numBasicPass, .Passed {
+    background: #7ba841 !important;
+}
+
+.numNormFail, .numBasicFail, .Failed {
+    background: #c56f46 !important;
+}
+
+.numNormUnknown, .numBasicUnknown, .Unknown {
+    background: #e7e8e8 !important;
+}
+
+.Passed {
+    background: #7ba841 !important;
+}
+
+.Failed {
+    background: #c56f46 !important;
+}
+
+.Manual {
+    background: darkgreen;
+}
+
+.Unknown {
+    background: #e7e8e8 !important;
+}
+
+.testConfig {
+/*         background-color:LemonChiffon;*/
+    border: 1px solid black;
+    margin-bottom: 10px;
+    padding: 10px;
+    background:white;
+}
+
+.testConfig .header {
+    border-bottom: 1px solid;
+    display: block;
+    font-size: large;
+    font-variant: small-caps;
+    margin-bottom: 5px;
+}
+
+.testConfig div {
+    display: block;
+    font-size: 10pt;
+    font-weigth: bolder;
+}
+
+.testConfig table {
+    width: 100%;
+}
+
+.testConfig td {
+    background: White;
+}
+
+.pageheader {
+    display: block;
+    font-size: x-large;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#summary {
+    font-size: 12pt;
+    background-color: SteelBlue;
+    padding: 10px !important;
+}
+
+.chapterHeader {
+    background: SteelBlue;
+    font-size: 12pt;
+    padding: 10px;
+}
+
+.Note {
+    text-align: center;
+    font-size: 8pt;
+    display: none;
+}
+
+.dijitTooltipContainer {
+    padding: 3px;
+    background: lightyellow;
+    border: thin solid lightsteelblue;
+    font-size: 11pt;
+}
+.lastUpdate{
+    display:inline;
+    white-space:nowrap;
+}

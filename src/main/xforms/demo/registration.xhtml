@@ -5,81 +5,217 @@
   -->
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:xf="http://www.w3.org/2002/xforms"
-    xmlns:ev="http://www.w3.org/2001/xml-events"    
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <head>
         <title>hello</title>
 
         <style type="text/css">
-            .xfControl *{
-                font-size:20pt;
+            table {
+                border-collapse: collapse;
             }
+
+            .tundra * {
+                font-size: 11pt;
+                font-family: sans-serif;
+                color: #666666;
+            }
+
+            .tundra .dijitButtonNode {
+                -moz-border-radius: 5px;
+                -webkit-border-radius: 5px;
+            }
+
+            .tundra .dijitTextBoxFocused,
+            .tundra .dijitComboBoxFocused,
+            .tundra .dijitSpinnerFocused,
+            .tundra .dijitSpinnerUpArrowActive,
+            .tundra .dijitSpinnerDownArrowActive,
+            .tundra .dijitTextAreaFocused {
+                border-color: gray;
+            }
+
+            .dijitFocused {
+                background-color: #aaa;
+            }
+
+            .caVerticalTable {
+                border: none;
+                padding: 20px;
+                padding-bottom: 0px;
+                width: 640px;
+                margin-top: 10px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .caVerticalTable td {
+            /*padding-bottom:5px;*/
+            }
+
+            .caVerticalTableLabel {
+                padding-right: 5px;
+                width: 25%;
+            }
+
+            .caVerticalTableValue {
+                width: 35%;
+            }
+
+            .bfVerticalTableInfo {
+                width: 40%;
+            }
+
+            .xfValue {
+                padding: 5px;
+                -moz-border-radius-topleft: 8px;
+                -moz-border-radius-bottomleft: 8px;
+                -webkit-border-top-left-radius: 8px;
+                -webkit-border-bottom-left-radius: 8px;
+                -moz-border-radius-topright: 8px;
+                -moz-border-radius-bottomright: 8px;
+                -webkit-border-top-right-radius: 8px;
+                -webkit-border-bottom-right-radius: 8px;
+            }
+
+            .xfInvalid .xfValue {
+                background: white;
+            }
+
+            .xfAlert {
+                display: block;
+                background: #FFCFCF;
+                color: #801B1B;
+                padding: 9px 0px 8px 30px;
+                -moz-border-radius-topright: 8px;
+                -moz-border-radius-bottomright: 8px;
+                -webkit-border-top-right-radius: 8px;
+                -webkit-border-bottom-right-radius: 8px;
+                background: #FFCFCF url(../../resources/images/error.png) no-repeat 3%;
+
+            }
+
+            .xfHint {
+                display: block;
+                background: #F2F2F2 url(../../resources/images/right.png) no-repeat 3%;
+                color: #666666;
+                padding: 9px 0px 8px 30px;
+                -moz-border-radius-topright: 8px;
+                -moz-border-radius-bottomright: 8px;
+                -webkit-border-top-right-radius: 8px;
+                -webkit-border-bottom-right-radius: 8px;
+            }
+
+            .info {
+                display: block;
+                background: #F0FEE9 url(../../resources/images/checkmark.png) no-repeat 3%;
+                color: #666666;
+                padding: 9px 0px 8px 30px;
+                -moz-border-radius-topright: 8px;
+                -moz-border-radius-bottomright: 8px;
+                -webkit-border-top-right-radius: 8px;
+                -webkit-border-bottom-right-radius: 8px;
+
+            }
+
+            .tundra .xfAlert,
+            .tundra .xfHint,
+            .tundra .xfHelp,
+            .tundra .info {
+                font-size: 9pt;
+                font-family: sans-serif;
+            }
+
+            .xfControl, .xfAlert, .xfHint, .info {
+                margin-bottom: 8px;
+            }
+
+            .xfGroupLabel {
+                font-size: 13pt;
+                border-bottom: thin solid #999999;
+                padding-bottom: 5px;
+                color: #333333;
+            }
+
+            .xfTriggerMiddleColumnTrigger {
+                float: right;
+            }
+
+            .xfRequired .xfValue {
+                background: lightsteelblue;
+            }
+
         </style>
     </head>
     <body>
-        <div style="display:none">
-            <xf:model id="model-1">
-                <xf:instance>
-                    <data xmlns="">
-                        <firstname></firstname>
-                        <lastname></lastname>
-                        <alias></alias>
-                        <email></email>
-                        <pass1/>
-                        <pass2/>
-                    </data>
-                </xf:instance>
+        <div id="xforms">
+            <div style="display:none">
+                <xf:model id="model-1">
+                    <xf:instance>
+                        <data xmlns="">
+                            <firstname></firstname>
+                            <lastname></lastname>
+                            <alias></alias>
+                            <email></email>
+                            <pass1/>
+                            <pass2/>
+                        </data>
+                    </xf:instance>
 
-                <xf:bind nodeset="alias" constraint="string-length(.) &gt; 3" required="true()"/>
-                <xf:bind nodeset="email" type="email" required="true()"/>
+                    <xf:bind nodeset="alias" constraint="string-length(.) &gt; 3" required="true()"/>
+                    <xf:bind nodeset="email" type="email" required="true()"/>
+                    <xf:bind nodeset="pass1" constraint="string-length(.) &gt; 6" required="true()"/>
+                    <xf:bind nodeset="pass2" constraint=". = ../pass1" required="true()"/>
 
-                <xf:submission id="s-send" replace="instance" resource="echo:test" method="get">
-                    <xf:action ev:event="xforms-submit-error">
-                        <xf:message level="ephemeral">Registration failed. Please fill in the values.</xf:message>
-                    </xf:action>
-                    <xf:action ev:event="xforms-submit-done">
-                        <xf:message level="ephemeral">You have been registered successfully.</xf:message>
-                    </xf:action>
-                </xf:submission>
-                
-                <xf:setfocus control="first" ev:event="xforms-ready"/>
-            </xf:model>
+                    <xf:submission id="s-send" replace="instance" resource="echo:test" method="get">
+                        <xf:action ev:event="xforms-submit-error">
+                            <xf:message level="ephemeral">Registration failed. Please fill in the values.</xf:message>
+                        </xf:action>
+                        <xf:action ev:event="xforms-submit-done">
+                            <xf:message level="ephemeral">You have been registered successfully.</xf:message>
+                        </xf:action>
+                    </xf:submission>
+
+                    <xf:setfocus control="first" ev:event="xforms-ready"/>
+                </xf:model>
+            </div>
+
+            <xf:group appearance="ca:verticalTable">
+                <xf:label>Registration</xf:label>
+                <xf:input ref="firstname" id="first">
+                    <xf:label>Firstname:</xf:label>
+                    <xf:hint>enter your firstname</xf:hint>
+                </xf:input>
+                <xf:input ref="lastname">
+                    <xf:label>Lastname:</xf:label>
+                    <xf:hint>enter your lastname</xf:hint>
+                </xf:input>
+                <xf:input ref="alias">
+                    <xf:label>Username:</xf:label>
+                    <xf:hint>please choose a unique username</xf:hint>
+                    <xf:alert>please choose a username longer than 3 characters</xf:alert>
+                </xf:input>
+                <xf:input ref="email">
+                    <xf:label>Email:</xf:label>
+                    <xf:alert>is not a valid email address</xf:alert>
+                </xf:input>
+                <xf:input ref="pass1">
+                    <xf:label>choose a password:</xf:label>
+                    <xf:alert>password must be at least 6 characters</xf:alert>
+                    <xf:hint>more than 6 characters required</xf:hint>
+                </xf:input>
+                <xf:input ref="pass2">
+                    <xf:label>retype your password:</xf:label>
+                    <xf:hint>please retype your password</xf:hint>
+                    <xf:alert>passwords do not match asdjlfsj ljsldfj lks lkfjlk sdflk j ljflkjlksdfj lkj</xf:alert>
+                </xf:input>
+                <xf:trigger appearance="triggerMiddleColumn">
+                    <xf:label>register</xf:label>
+                    <xf:send submission="s-send"/>
+                </xf:trigger>
+            </xf:group>
         </div>
-
-        <xf:group appearance="minimal">
-            <xf:input ref="firstname" id="first">
-                <xf:label>Firstname:</xf:label>
-                <xf:hint>enter your firstname</xf:hint>
-            </xf:input>
-            <xf:input ref="lastname">
-                <xf:label>Lastname:</xf:label>
-                <xf:hint>enter your lastname</xf:hint>
-            </xf:input>
-            <xf:input ref="alias">
-                <xf:label>Username:</xf:label>
-                <xf:hint>please choose a unique username</xf:hint>
-                <xf:alert>please choose a username longer than 3 characters</xf:alert>
-            </xf:input>
-            <xf:input ref="email">
-                <xf:label>Email:</xf:label>
-                <xf:alert>is not a valid email address</xf:alert>
-            </xf:input>
-            <xf:input ref="pass1">
-                <xf:label>choose a password:</xf:label>
-                <xf:alert>password is too short</xf:alert>
-                <xf:hint>please choose a password with more than 6 characters</xf:hint>
-            </xf:input>
-            <xf:input ref="pass2">
-                <xf:label>retype your password:</xf:label>
-                <xf:hint>please retype your password</xf:hint>
-                <xf:alert>passwords do not match</xf:alert>
-            </xf:input>
-            <xf:trigger>
-                <xf:label>register</xf:label>
-                <xf:send submission="s-send"/>
-            </xf:trigger>
-        </xf:group>
     </body>
 </html>
