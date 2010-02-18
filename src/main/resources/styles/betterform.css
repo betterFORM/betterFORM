@@ -190,35 +190,12 @@ a.active {
 
 /* for tundra checkboxes */
 .tundra .dijitCheckBox,
-    .tundra .dijitCheckBoxIcon /* inside a toggle button */
-{
+.tundra .dijitCheckBoxIcon {
     background-image: url( '../images/checkmarkNoBorder.png' ); /* checkbox sprite image */
     border: 1px solid gray;
     height: 14px;
     width: 14px;
 
-}
-/* matches select labels */
-.xfSelect .xfLabel {
-    display: block;
-    margin-right: 5px;
-    margin-top: 3px;
-}
-
-/* matches select items */
-.xfSelect .xfValue .xfSelectorItem {
-    float: left;
-    padding: 3px;
-}
-
-/* matches select items */
-.xfFullSelect .xfValue .xfSelectorItem {
-    float: none;
-}
-
-/* matches select item labels */
-.xfSelectorItem .xfLabel {
-    padding: 3px;
 }
 
 /* matches selection open controls in tundra */
@@ -238,11 +215,6 @@ a.active {
 .tundra .xfSelectOpen .dijitTextBox{
     width: 140px;
 }
-
-.xfSelectOpen > .xfLabel {
-    /*height:50px;*/
-}
-
 
 
 /*********** styles character used for signaling 'required' (normally '*') ***********/
@@ -562,6 +534,9 @@ a.active {
     display:none;
 }
 
+.xfGroupLabel {
+	display:block;
+}
 
 /* ***************************************************************************** */
 /* ***************************************************************************** */
@@ -797,10 +772,12 @@ delete actions to */
 /* ***************************************************************************** */
 /* ***************************************************************************** */
 
-.xfFullSelect  .xfValue .xfSelectorItem,
-.xfFullSelect1 .xfValue .xfSelectorItem {
+.xfFullSelect .xfValue .xfSelectorItem,
+.xfFullSelect1 .xfValue .xfSelectorItem, {
+/*
     clear:both;
 	display:block;
+*/
 }
 
 .xfReadWrite .dijitRadio, .xfReadWrite .dijitRadioIcon {
