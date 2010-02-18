@@ -32,15 +32,16 @@
 
 
         <!--##### fetching jetty from remote ##### -->
+<!--
         <get usetimestamp="true" ignoreerrors="true" src="http://dist.codehaus.org/jetty/jetty-6.1.22/jetty-6.1.22.zip"
              dest="${basedir}/target/jetty.zip"/>
-
-
-
-        <!--##### unpacking jetty can move it into a subfolder  - rename it to betterform ##### -->
+        &lt;!&ndash;##### unpacking jetty can move it into a subfolder  - rename it to betterform ##### &ndash;&gt;
         <unzip src="${basedir}/target/jetty.zip"
                dest="${basedir}/target/jetty" />
         <move file="${basedir}/target/jetty/jetty-6.1.22" tofile="${basedir}/target/jetty/betterform"/>
+-->
+        <ant antfile="${basedir}/../server/build.xml" target="package" inheritall="false"/>
+        <move  file="${basedir}/../server/target/server/betterform" tofile="${basedir}/target/jetty/betterform"/>
     </target>
 
     <target name="betterFormWarInstaller"
