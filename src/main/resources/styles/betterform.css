@@ -24,9 +24,10 @@ body{
     /*height: 100%;*/
     margin: 30px;
     padding: 0;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
+/*
 #fluxProcessor {
     width: 100%;
     height: 100%;
@@ -36,6 +37,7 @@ body{
     position: absolute;
     z-index: 999;
 }
+*/
 
 #caLogo {
     display: block;

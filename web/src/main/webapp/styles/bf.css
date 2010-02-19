@@ -58,6 +58,8 @@ p{
     background:white;
     position:fixed;
     top:0;
+    z-index:999;
+    border-bottom:thin dotted;
 }
 .pageMarginBox{
     width:760px;
@@ -113,6 +115,7 @@ p{
 #content .contentBody{
     text-align:left;
     padding-top:35px;
+    position:relative;
 }
 #content .contentBody div{
     padding-bottom:30px;
@@ -356,6 +359,12 @@ h3{
 }
 
 /* ############################  page specific ############################## */
+#osiLogo{
+    position:absolute;
+    top:39px;
+    right:0;
+    z-index:0;
+}
 .downloads #columnLeft{
     padding:0;
     width:335px;
