@@ -106,7 +106,7 @@ public abstract class AbstractBoundAction extends AbstractAction implements Bind
      *          in case an XPathException happens during evaluation
      */
     protected void updateXPathContext() throws XFormsException {
-        if (isBound()) {
+//        if (isBound()) {
         	this.evalInscopeContext = evalInScopeContext();
             final String relativeExpr = getBindingExpression();
             try {
@@ -118,7 +118,7 @@ public abstract class AbstractBoundAction extends AbstractAction implements Bind
             catch (XFormsException e) {
                 throw new XFormsException(e);
             }
-        }
+//        }
     }
 
 //    public int getPosition() {

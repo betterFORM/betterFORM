@@ -6,6 +6,7 @@
 package de.betterform.xml.xforms.action;
 
 
+import de.betterform.xml.xforms.ui.RepeatItem;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import de.betterform.connector.ConnectorFactory;
@@ -101,13 +102,23 @@ public class LoadAction extends AbstractBoundAction {
             if("none".equals(this.showAttribute)){
               //todo: dirty dirty dirty
                 String evaluatedTarget =evalAttributeValueTemplates(this.targetAttribute,this.element);
-                Element targetElem = this.container.getElementById(evaluatedTarget);
+//                Element targetElem = this.container.getElementById(evaluatedTarget);
+                Element targetElem = getTargetElement(evaluatedTarget);
                 destroyembeddedModels(targetElem);
                 DOMUtil.removeAllChildren(targetElem);
                 HashMap map = new HashMap();
-              
+
+
+
                 map.put("show", this.showAttribute);
-                map.put("xlinkTarget", evaluatedTarget);
+                if(isRepeated()){
+                    map.put("nameTarget",evaluatedTarget);
+                    String idForNamedElement = getXFormsAttribute(getTargetElement(evaluatedTarget),"id");
+                    map.put("xlinkTarget", idForNamedElement);
+
+                }else{
+                    map.put("xlinkTarget", evaluatedTarget);
+                }
 
                 this.container.dispatch(this.target, BetterFormEventNames.LOAD_URI, map);
                 return;
@@ -167,7 +178,9 @@ public class LoadAction extends AbstractBoundAction {
         }
         //todo: dirty dirty dirty
         String evaluatedTarget =evalAttributeValueTemplates(this.targetAttribute,this.element);
-
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("targetid evaluated to: " + evaluatedTarget);
+        }
         Node embed = getEmbeddedDocument(absoluteURI);
 
 
@@ -179,10 +192,8 @@ public class LoadAction extends AbstractBoundAction {
             return;
         }
         
-        Node embeddedNode;
-        Element targetElem;
-        // ##### try to interpret the targetAttribute value as an idref ##### -->
-        targetElem = this.container.getElementById(evaluatedTarget);
+        Element embeddedNode;
+        Element targetElem = getTargetElement(evaluatedTarget);
 
         // destroy existing embedded form within targetNode
         if(targetElem.hasChildNodes()){
@@ -191,20 +202,23 @@ public class LoadAction extends AbstractBoundAction {
         }
 
         // import referenced embedded form into host document
-        embeddedNode = this.container.getDocument().importNode(embed,true);
+        embeddedNode = (Element) this.container.getDocument().importNode(embed,true);
 
         //import namespaces
         NamespaceResolver.applyNamespaces(targetElem.getOwnerDocument().getDocumentElement(), (Element) embeddedNode);
 
         // keep original targetElem id within hostdoc
-        ((Element)embeddedNode).setAttributeNS(null,"id", targetElem.getAttributeNS(null,"id"));
+        embeddedNode.setAttributeNS(null,"id", targetElem.getAttributeNS(null,"id"));
+        //copy all Attributes that might have been on original mountPoint to embedded node
+        DOMUtil.copyAttributes(targetElem, embeddedNode,null);
         targetElem.getParentNode().replaceChild(embeddedNode,targetElem);
 
 
         map.put("uri", absoluteURI);
         map.put("show", this.showAttribute);
         map.put("targetElement", embeddedNode);
-        map.put("xlinkTarget", evaluatedTarget);
+        map.put("nameTarget",evaluatedTarget);
+        map.put("xlinkTarget", getXFormsAttribute(targetElem,"id"));
 
         this.container.dispatch((EventTarget) embeddedNode, BetterFormEventNames.EMBED, map);
         //create model for it
@@ -216,6 +230,28 @@ public class LoadAction extends AbstractBoundAction {
 
         this.container.dispatch(this.target, BetterFormEventNames.LOAD_URI, map);
 //        storeInContext(absoluteURI, this.showAttribute);
+    }
+
+    /**
+     * fetches the Element that is the target for embedding. This Element will be replaced by the markup
+     * to be embedded or all of its contents is erased in case of an 'unload'.
+     * @param evaluatedTarget the targetid of a load action can be a AVT expression and be evaluated. The result
+     * is treated as an idref to an Element.
+     * @return
+     * @throws XFormsException
+     */
+    private Element getTargetElement(String evaluatedTarget) throws XFormsException {
+        Element targetElem=null;
+        if(isRepeated()){
+            String itemId = getRepeatItemId();
+            RepeatItem item = (RepeatItem) container.lookup(itemId);
+            int pos = item.getPosition();
+            targetElem = (Element) XPathUtil.evaluateAsSingleNode(item.getElement().getOwnerDocument() ,"//*[@name='" + evaluatedTarget + "']");
+        }else{
+        // ##### try to interpret the targetAttribute value as an idref ##### -->
+            targetElem = this.container.getElementById(evaluatedTarget);
+        }
+        return targetElem;
     }
 
     private Node getEmbeddedDocument(String absoluteURI) throws XFormsException {

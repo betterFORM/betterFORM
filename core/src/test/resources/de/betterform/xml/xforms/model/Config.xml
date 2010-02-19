@@ -32,6 +32,7 @@
         <submission-handler scheme="mailto" class="de.betterform.connector.smtp.SMTPSubmissionHandler"/>
         <submission-handler scheme="xmlrpc" class="de.betterform.connector.xmlrpc.XMLRPCSubmissionHandler"/>
         <submission-handler scheme="echo" class="de.betterform.connector.echo.EchoSubmissionHandler"/>
+        <submission-handler scheme="exec" class="de.betterform.connector.exec.ExecSubmissionHandler"/>
 	    <submission-handler scheme="xslt" class="de.betterform.connector.xslt.XSLTSubmissionHandler"/>
     </connectors>
     <extension-functions>

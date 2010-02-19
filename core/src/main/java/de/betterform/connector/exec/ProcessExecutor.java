@@ -82,4 +82,11 @@ public class ProcessExecutor {
         }
     }
 
+    /*
+     * Static Wrapper method
+     */
+    public static int executeStatic(File dir, String command, OutputStream output, OutputStream error)  throws IOException, InterruptedException {
+        ProcessExecutor executor = new ProcessExecutor();
+        return executor.execute(dir, command, output, error);
+    }
 }

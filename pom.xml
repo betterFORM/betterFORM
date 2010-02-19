@@ -16,7 +16,6 @@
         <module>core</module>
         <module>convex</module>
         <module>web</module>       
-        <module>tools</module>       
         <module>xApp</module>
         <module>zaphod</module>
     </modules>
