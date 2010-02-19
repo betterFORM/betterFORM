@@ -16,11 +16,11 @@ public class Server extends Frame implements ActionListener {
     public static void main(String[] args) {
 
         try {
-            showSplitScreen();
+            /*showSplitScreen();*/
             BfDialog bfDialog = null;
             bfDialog = bfDialog.getInstance();
             bfDialog.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            showSplitScreen();
+
             bfDialog.setVisible(true);
             bfDialog.toFront();
         }
@@ -30,6 +30,7 @@ public class Server extends Frame implements ActionListener {
     }
 
 
+/*
     private static void showSplitScreen() {
         SplashScreen splash = SplashScreen.getSplashScreen();
         if (splash == null) {
@@ -52,6 +53,7 @@ public class Server extends Frame implements ActionListener {
         splash.close();
 
     }
+*/
     private static void handleExecption(Exception e) {
         JDialog dialog = new JDialog();
         dialog.setSize(300, 300);
