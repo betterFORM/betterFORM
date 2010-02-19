@@ -4,75 +4,437 @@
   -->
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:xf="http://www.w3.org/2002/xforms"
-      xmlns:ev="http://www.w3.org/2001/xml-events"
-      xml:lang="en" lang="en">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<meta name="Author" content="Joern Turner"/>
-		<meta name="Author" content="Lars Windauer"/>
-		<meta name="description" content="betterFORM "/>
-		<meta name="keywords" content="betterFORM, xforms, forms, xhtml, xpath, xslt, dojo, dojotoolkit, web, semantic, semantic web, "/>
+	  xmlns:xf="http://www.w3.org/2002/xforms"
+	  xmlns:ev="http://www.w3.org/2001/xml-events"
+	  xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="Author" content="Joern Turner"/>
+	<meta name="Author" content="Lars Windauer"/>
+	<meta name="description" content="betterFORM "/>
+	<meta name="keywords"
+		  content="who we are, about,  betterFORM, xforms, forms, xhtml, xpath, xslt, dojo, dojotoolkit, web, semantic, semantic web, turner, joern turner, lars windauer, "/>
 
-		<title>betterFORM Demo</title>
+	<title>About betterFORM</title>
 
-		<link REV="made" HREF="mailto:info@betterform.de"/>
-		<link rel="SHORTCUT ICON" href="images/betterform.ico"/>
-		<link rel="ICON" href="images/betterform.ico" type="image/x-icon"/>
-		<link rel="stylesheet" type="text/css" href="styles/bf.css"/>
+	<link REV="made" HREF="mailto:info@betterform.de"/>
+	<link rel="SHORTCUT ICON" href="images/betterform.ico"/>
+	<link rel="ICON" href="images/betterform.ico" type="image/x-icon"/>
+	<link rel="stylesheet" type="text/css" href="styles/bf.css"/>
 
-	</head>
-	<body style="overflow:hidden;">
-		<div class="page">
 
-            <div id="header">
-                <div class="pageMarginBox">
-                    <div class="languages">
-                        <img src="images/en.png" alt="english"/>
-                        <img src="images/de.png" alt="deutsch"/>
-                    </div>
-                    <div class="logoBar">
-                        <img src="images/logo.png" alt="betterFORM project" />
-                        <div id="topnav">
-                            <a href="index.html">home</a><span class="menuDevider"> | </span>
-                            <a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>
-                            <a href="download-old.html">download</a><span class="menuDevider"> | </span>
-                            <a href="product.html">product</a><span class="menuDevider"> | </span>
-                            <a href="support.html">support</a><span class="menuDevider"> | </span>
-                            <a href="whoweare-old.html">who we are</a><span class="menuDevider"> | </span>
-                            <a href="contact.html">contact / impressum</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+	<style type="text/css">
+		body {
+			background: #D3D3D3;
+		}
 
-			<div id="content">
-                <img id="shadowTop" src="images/shad_top.jpg" alt=""/>
+		body, div, table, thead, tbody, tfoot, tr, th, td, p {
+			font-family: sans-serif;
+			font-size: small;
+		}
 
-                <!-- ######################### Content here ################################## -->
-                <!-- ######################### Content here ################################## -->
-                <!-- ######################### Content here ################################## -->
-                <!-- ######################### Content here ################################## -->
-                <!-- ######################### Content here ################################## -->
+		#topnav {
+			top: 30px
+		}
+
+		.tableHeading {
+			font-family: sans-serif;
+			font-size: large;
+		}
+
+		.tableHeadingLine2 {
+			display: block;
+			font-size: small;
+			font-variant: small-caps;
+			padding-top: 5px;
+		}
+
+		.subTableHeading {
+			color: scrollbar;
+			font-family: arial, sans-serif;
+			font-size: 13px;
+			font-style: italic;
+			font-weight: bold;
+			line-height: 105%;
+		}
+
+		.contentBody a {
+			margin-top: 0px;
+		}
+
+		.tableContent img {
+			padding-right: 5px;
+			border: none;
+		}
+
+		.page #header {
+			position: inherit;
+		}
+
+		#shadowTop {
+			position: inherit;
+		}
+
+		#content {
+			margin-top: 0px;
+			padding-top: 0px;
+		}
+
+		#content .contentBody {
+			padding-top: 0px;
+		}
+
+		.outertr {
+			vertical-align: top;
+		}
+
+		.outertd {
+			vertical-align: top;
+			background:white;
+			 -webkit-border-radius:10px;
+			 -moz-border-radius:10px;
+		}
+
+		}
+
+		td {
+			padding: 5px;
+		}
+
+		.col-1 {
+			clear: both;
+			display: block;
+			padding: 10px 20px 5px 5px;
+			text-align: right;
+			vertical-align: top;
+			width: 80px;
+		}
+
+		.col-2 {
+			padding-left: 10px;
+			padding-right: 10px;
+			padding-top: 10px;
+			text-align: left;
+			vertical-align: top;
+			width: 450px;
+		}
+
+		#footer {
+			position: inherit;
+			bottom: 0px;
+			height: 40px;
+			padding-bottom: 18px;
+
+		}
+
+		.logo {
+			float: left;
+			margin-top: 10;
+		}
+		.splitterHorizontal {
+			display:block;
+			width:10px;
+		}
+		.splitterVertical {
+			/*background:blue;*/
+		}
+		.pageMarginBox {
+			900px;
+		}
+		.network {
+			cursor:pointer;
+			cursor:hand;
+		}
+
+	</style>
+
+</head>
+<body>
+	<div class="page">
+
+		<div id="header">
+			<div class="pageMarginBox logoBar">
+				<img class="logo" src="images/logo.png" alt="betterFORM project"/>
+
+				<div class="languages">
+					<img src="images/en.png" alt="english"/>
+					<img src="images/de.png" alt="deutsch"/>
+				</div>
+
+				<div id="topnav">
+					<a href="index.html">home</a><span class="menuDevider"> | </span>
+					<a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>
+					<a href="download.html">download</a><span class="menuDevider"> | </span>
+					<a href="product.html">product</a><span class="menuDevider"> | </span>
+					<a href="support.html">support</a><span class="menuDevider"> | </span>
+					<a href="whoweare.html">who we are</a><span class="menuDevider"> | </span>
+					<a href="contact.html">contact / impressum</a>
+				</div>
+			</div>
+		</div>
+
+		<div id="content" class="whoweare">
+			<img id="shadowTop" src="images/shad_top.jpg" alt=""/>
+
+			<!-- ######################### Content here ################################## -->
+			<!-- ######################### Content here ################################## -->
+			<!-- ######################### Content here ################################## -->
+			<!-- ######################### Content here ################################## -->
+			<!-- ######################### Content here ################################## -->
+			<div class="pageMarginBox">
+				<div class="contentBody">
+
+
+					<h1>Who We Are</h1>
+
+
+					<!--
+						<p></p>
+						<p></p>
+						<p></p>
+-->
+
+					<table id="outer">
+						<tr class="outertr">
+							<td class="outertd">
+								<table  border="0" cellspacing="0" cols="2" >
+									<tr>
+										<td class="col-1">
+											<img src="images/personTemplate.png" alt="Joern Turner"/>
+										</td>
+										<td class="col-2 tableHeading">Joern Turner</td>
+									</tr>
+									<tr>
+										<td class="col-1 subTableHeading">birthday</td>
+										<td class="col-2 tableContent"/>
+									</tr>
+									<tr>
+										<td class="col-1 subTableHeading">about</td>
+										<td class="col-2 tableContent">Lorem ipsum dolor sit amet, ligula suspendisse
+											nulla pretium, rhoncus tempor placerat fermentum, enim integer ad vestibulum
+											volutpat. Nisl rhoncus turpis est, vel elit, congue wisi enim nunc ultricies
+											sit, magna tincidunt. Maecenas aliquam maecenas ligula nostra, accumsan
+											taciti.
+										</td>
+									</tr>
+									<tr>
+										<td class="col-1 subTableHeading">vCard</td>
+										<td class="col-2 tableContent">
+											<a href="images/vcard/JoernTurner_vCard.zip"
+											   title="Joern Turner vCard" class="network">
+												<img src="images/logo_vcard.jpg"/>
+											</a>
+										</td>
+									</tr>
+
+									<tr>
+										<td class="col-1 subTableHeading">networks</td>
+										<td class="col-2 tableContent">
+											<a href="http://de.linkedin.com/in/Turner" title="Joern@linkedin.com"
+											   class="network">
+												<img src="images/logo_linked_in.jpg"/>
+											</a>
+											<a href="https://www.xing.com/profile/Joern_Turner"
+											   title="Joern@xing.com" class="network">
+												<img src="images/logo_xing.jpg"/>
+											</a>
+											<a href="http://twitter.com/Turner" title="Joern@twitter"
+											   class="network">
+												<img src="images/logo_twitter.jpg"/>
+											</a>
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td class="splitterHorizontal">&nbsp;</td>
+							<td class="outertd">
+								<table  border="0" cellspacing="0" >
+									<tr>
+										<td  class="col-1">
+											<img src="images/personLars.jpg" alt="Lars Windauer"/>
+										</td>
+										<td class="col-2 tableHeading">Lars Windauer
+											<br/>
+											<span class="tableHeadingLine2">XForms Maniac</span>
+
+										</td>
+									</tr>
+									<tr>
+										<td class="col-1 subTableHeading">birthday</td>
+										<td class="col-2 tableContent">25. July 1977</td>
+									</tr>
+									<tr>
+										<td class="col-1 subTableHeading">about</td>
+										<td class="col-2 tableContent">
+											Lars is a passionate nerd interested into anything about technology, especially about Java &amp; iPhone stuff. He is
+											programming in various languages for at about 15 years and joined the XForms
+											world in 2006 working for Joern Turner. Together with Joern he founded the
+											betterFORM project in 2009.
+										</td>
+									</tr>
+									<tr>
+										<td class="col-1 subTableHeading">vCard</td>
+										<td class="col-2 tableContent">
+											<a href="images/vcard/LarsWindauer_vCard.zip" title="Lars Windauer vCard"
+											   class="network">
+												<img src="images/logo_vcard.jpg"/>
+											</a>
+										</td>
+									</tr>
+
+									<tr>
+										<td class="col-1 subTableHeading">networks</td>
+										<td class="col-2 tableContent">
+											<a href="http://de.linkedin.com/in/windauer" title="lars@linkedin.com"
+											   class="network">
+												<img src="images/logo_linked_in.jpg"/>
+											</a>
+											<a href="https://www.xing.com/profile/Lars_Windauer"
+											   title="lars@xing.com" class="network">
+												<img src="images/logo_xing.jpg"/>
+											</a>
+											<a href="http://twitter.com/windauer" title="lars@twitter"
+											   class="network">
+												<img src="images/logo_twitter.jpg"/>
+											</a>
+											<a href="http://facebook.com/lars.windauer" title="lars@facebook"
+											   class="network">
+												<img src="images/logo_facebook.jpg"/>
+											</a>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td class="splitterVertical" colspan="3">&nbsp;</td>
+						</tr>
+						<tr class="outertr">
+							<td class="outertd">
+								<table  border="0" cellspacing="0" cols="2" >
+									<tr>
+										<td class="col-1">
+											<img src="images/personTemplate.png" alt="Tobias Krebs"/>
+										</td>
+										<td class="col-2 tableHeading">Tobias Krebs</td>
+									</tr>
+									<tr>
+										<td class="col-1 subTableHeading">birthday</td>
+										<td class="col-2 tableContent"/>
+									</tr>
+									<tr>
+										<td class="col-1 subTableHeading">about</td>
+										<td class="col-2 tableContent">Lorem ipsum dolor sit amet, ligula suspendisse
+											nulla pretium, rhoncus tempor placerat fermentum, enim integer ad vestibulum
+											volutpat. Nisl rhoncus turpis est, vel elit, congue wisi enim nunc ultricies
+											sit, magna tincidunt. Maecenas aliquam maecenas ligula nostra, accumsan
+											taciti.
+										</td>
+									</tr>
+									<tr>
+										<td class="col-1 subTableHeading">vCard</td>
+										<td class="col-2 tableContent">
+											<a href="images/vcard/tobiaskrebs_vCard.zip"
+											   title="Tobias Krebs vCard" class="network">
+												<img src="images/logo_vcard.jpg"/>
+											</a>
+										</td>
+									</tr>
+
+									<tr>
+										<td class="col-1 subTableHeading">networks</td>
+										<td class="col-2 tableContent">
+											<a href="http://de.linkedin.com/in/krebs" title="tobias@linkedin.com"
+											   class="network">
+												<img src="images/logo_linked_in.jpg"/>
+											</a>
+											<a href="https://www.xing.com/profile/tobias_krebs"
+											   title="tobias@xing.com" class="network">
+												<img src="images/logo_xing.jpg"/>
+											</a>
+											<a href="http://twitter.com/krebs" title="tobias@twitter"
+											   class="network">
+												<img src="images/logo_twitter.jpg"/>
+											</a>
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td class="splitterHorizontal">&nbsp;</td>
+							<td class="outertd">
+								<table  border="0" cellspacing="0" cols="2" >
+									<tr>
+										<td class="col-1">
+											<img src="images/personTemplate.png" alt="Fabian Otto"/>
+										</td>
+										<td class="col-2 tableHeading">Fabian Otto</td>
+									</tr>
+									<tr>
+										<td class="col-1 subTableHeading">birthday</td>
+										<td class="col-2 tableContent"/>
+									</tr>
+									<tr>
+										<td class="col-1 subTableHeading">about</td>
+										<td class="col-2 tableContent">Lorem ipsum dolor sit amet, ligula suspendisse
+											nulla pretium, rhoncus tempor placerat fermentum, enim integer ad vestibulum
+											volutpat. Nisl rhoncus turpis est, vel elit, congue wisi enim nunc ultricies
+											sit, magna tincidunt. Maecenas aliquam maecenas ligula nostra, accumsan
+											taciti.
+										</td>
+									</tr>
+									<tr>
+										<td class="col-1 subTableHeading">vCard</td>
+										<td class="col-2 tableContent">
+											<a href="images/vcard/FabianOtto_vCard.zip"
+											   title="Fabian Otto vCard" class="network">
+												<img src="images/logo_vcard.jpg"/>
+											</a>
+										</td>
+									</tr>
+
+									<tr>
+										<td class="col-1 subTableHeading">networks</td>
+										<td class="col-2 tableContent">
+											<a href="http://de.linkedin.com/in/Otto" title="Fabian@linkedin.com"
+											   class="network">
+												<img src="images/logo_linked_in.jpg"/>
+											</a>
+											<a href="https://www.xing.com/profile/Fabian_Otto"
+											   title="Fabian@xing.com" class="network">
+												<img src="images/logo_xing.jpg"/>
+											</a>
+											<a href="http://twitter.com/Otto" title="Fabian@twitter"
+											   class="network">
+												<img src="images/logo_twitter.jpg"/>
+											</a>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+
+				</div>
+
 
 			</div>
+		</div>
+		<div id="footer">
+			<img id="shadowBottom" src="images/shad_bottom.jpg" alt=""/>
 
-			<div id="footer">
-                <img id="shadowBottom" src="images/shad_bottom.jpg" alt=""/>
-
-                <div class="pageMarginBox">
+			<div class="pageMarginBox">
                     <span id="bottomMenu">
                         &#169; 2010 betterFORM<span class="menuDevider"> | </span>
                         <a href="index.html">home</a><span class="menuDevider"> | </span>
                         <a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>
-                        <a href="download-old.html">download</a><span class="menuDevider"> | </span>
+                        <a href="download.html">download</a><span class="menuDevider"> | </span>
                         <a href="product.html">product</a><span class="menuDevider"> | </span>
                         <a href="support.html">support</a><span class="menuDevider"> | </span>
-                        <a href="whoweare-old.html">who we are</a><span class="menuDevider"> | </span>
+                        <a href="whoweare.html">who we are</a><span class="menuDevider"> | </span>
                         <a href="contact.html">contact / impressum</a>
                     </span>
-                </div>
 			</div>
 		</div>
-	</body>
+	</div>
+</body>
 </html>

@@ -7,46 +7,142 @@
       xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns:ev="http://www.w3.org/2001/xml-events"
       xml:lang="en" lang="en">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<meta name="Author" content="Joern Turner"/>
-		<meta name="Author" content="Lars Windauer"/>
-		<meta name="description" content="betterFORM "/>
-		<meta name="keywords" content="betterFORM, xforms, forms, xhtml, xpath, xslt, dojo, dojotoolkit, web, semantic, semantic web, "/>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="Author" content="Joern Turner"/>
+        <meta name="Author" content="Lars Windauer"/>
+        <meta name="description" content="betterFORM "/>
+        <meta name="keywords"
+              content="support, betterFORM, xforms, forms, xhtml, xpath, xslt, dojo, dojotoolkit, web, semantic, semantic web, turner, joern turner, lars windauer, "/>
 
-		<title>betterFORM Demo</title>
+        <title>Support</title>
 
-		<link REV="made" HREF="mailto:info@betterform.de"/>
-		<link rel="SHORTCUT ICON" href="images/betterform.ico"/>
-		<link rel="ICON" href="images/betterform.ico" type="image/x-icon"/>
-		<link rel="stylesheet" type="text/css" href="styles/bf.css"/>
+        <link REV="made" HREF="mailto:info@betterform.de"/>
+        <link rel="SHORTCUT ICON" href="images/betterform.ico"/>
+        <link rel="ICON" href="images/betterform.ico" type="image/x-icon"/>
+        <link rel="stylesheet" type="text/css" href="styles/bf.css"/>
 
-	</head>
-	<body style="overflow:hidden;">
-		<div class="page">
+
+		<style type="text/css">
+
+			body {
+				background:#D3D3D3;
+			}
+
+			body, div, table, thead, tbody, tfoot, tr, th, td, p {
+				font-family: "Verdana";
+				font-size: small;
+			}
+
+			#topnav {
+				top:30px
+			}
+			.tableHeading {
+				background:#999999;
+				color:#ffffff;
+				font-weight:bold;
+				font-size:large;
+			}
+			.subTableHeading {
+				background:#e6e6e6;
+				font-weight:bold;
+			}
+
+			.page #header {
+				position:inherit;
+			}
+
+			#shadowTop {
+				position:inherit;
+			}
+			#content  {
+				margin-top:0px;
+				padding-top:0px;
+			}
+			#content .contentBody {
+				padding-top:0px;
+			}
+			td {
+				padding:5px;
+			}
+
+			.col-1 {
+				border-top: 1px solid black;
+				border-bottom: 1px solid black;
+				border-left: 1px solid black;
+				text-align: left;
+				width: 230px;
+				vertical-align:middle;
+				text-align:left;
+
+			}
+
+			.col-2 {
+				border-top: 1px solid black;
+				border-bottom: 1px solid black;
+				width: 100px;
+				vertical-align:middle;
+				text-align:center;
+			}
+
+			.col-3 {
+				border-top: 1px solid black;
+				border-bottom: 1px solid black;
+				text-align:center;
+				width: 114px;
+				vertical-align:middle;
+				text-align:center;
+			}
+
+			.col-4 {
+				border-top: 1px solid black;
+				border-bottom: 1px solid black;
+				border-right: 1px solid black;
+				text-align: center;
+				width: 142px;
+				vertical-align:middle;
+				text-align:center;
+			}
+
+			#footer {
+    			position:inherit;
+    			bottom:0px;
+				height:40px;
+				padding-bottom:18px;
+
+			}
+
+			.logo {
+				float: left;margin-top:10;
+			}
+
+		</style>
+
+    </head>
+    <body>
+        <div class="page">
 
             <div id="header">
-                <div class="pageMarginBox">
-                    <div class="languages">
+                <div class="pageMarginBox logoBar">
+                    <img class="logo" src="images/logo.png" alt="betterFORM project"/>
+					<div class="languages">
                         <img src="images/en.png" alt="english"/>
                         <img src="images/de.png" alt="deutsch"/>
                     </div>
-                    <div class="logoBar">
-                        <img src="images/logo.png" alt="betterFORM project" />
-                        <div id="topnav">
-                            <a href="index.html">home</a><span class="menuDevider"> | </span>
-                            <a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>
-                            <a href="download-old.html">download</a><span class="menuDevider"> | </span>
-                            <a href="product.html">product</a><span class="menuDevider"> | </span>
-                            <a href="support.html">support</a><span class="menuDevider"> | </span>
-                            <a href="whoweare-old.html">who we are</a><span class="menuDevider"> | </span>
-                            <a href="contact.html">contact / impressum</a>
-                        </div>
-                    </div>
+
+					<div id="topnav">
+						<a href="index.html">home</a><span class="menuDevider"> | </span>
+						<a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>
+						<a href="download.html">download</a><span class="menuDevider"> | </span>
+						<a href="product.html">product</a><span class="menuDevider"> | </span>
+						<a href="support.html">support</a><span class="menuDevider"> | </span>
+						<a href="whoweare.html">who we are</a><span class="menuDevider"> | </span>
+						<a href="contact.html">contact / impressum</a>
+					</div>
                 </div>
             </div>
 
-			<div id="content">
+            <div id="content" class="content">
                 <img id="shadowTop" src="images/shad_top.jpg" alt=""/>
 
                 <!-- ######################### Content here ################################## -->
@@ -54,25 +150,215 @@
                 <!-- ######################### Content here ################################## -->
                 <!-- ######################### Content here ################################## -->
                 <!-- ######################### Content here ################################## -->
-
-			</div>
-
-			<div id="footer">
-                <img id="shadowBottom" src="images/shad_bottom.jpg" alt=""/>
-
                 <div class="pageMarginBox">
+                    <div class="contentBody">
+
+
+                        <h1>Support</h1>
+							<table frame="void" border="0" cellspacing="0" cols="4" rules="none">
+							<tbody>
+								<tr>
+									<td class="col-1 tableHeading">Package:</td>
+									<td class="col-2 tableHeading">Boost</td>
+									<td class="col-3 tableHeading">Startup</td>
+									<td class="col-4 tableHeading">Company</td>
+								</tr>
+								<tr>
+									<td class="col-1 subTableHeading">Support Features</td>
+									<td class="col-2 subTableHeading">&nbsp;</td>
+									<td class="col-3 subTableHeading">&nbsp;</td>
+									<td class="col-4 subTableHeading">&nbsp;</td>
+
+								</tr>
+								<tr>
+									<td class="col-1">Ask thhe Experts</td>
+									<td class="col-2">x</td>
+									<td class="col-3">x</td>
+									<td class="col-4">x</td>
+								</tr>
+<!--
+								<tr>
+									<td class="col-1">Solve the Problem</td>
+									<td class="col-2">x</td>
+									<td class="col-3">x</td>
+									<td class="col-4">x</td>
+								</tr>
+-->
+								<tr>
+									<td class="col-1">Talk with the Leaders</td>
+									<td class="col-2">&nbsp;</td>
+									<td class="col-3">&nbsp;</td>
+									<td class="col-4">x</td>
+								</tr>
+
+								<tr>
+									<td class="col-1">Support Days included</td>
+									<td class="col-2">1</td>
+									<td class="col-3">5</td>
+									<td class="col-4">12</td>
+								</tr>
+
+								<tr>
+									<td class="col-1 subTableHeading">Technologies</td>
+									<td class="col-2 subTableHeading">&nbsp;</td>
+									<td class="col-3 subTableHeading">&nbsp;</td>
+									<td class="col-4 subTableHeading">&nbsp;</td>
+
+								</tr>
+								<tr>
+									<td class="col-1">XML Derivates (XForms, XSLT, XPath, XQuerry) &amp; Web (HTML , CSS, JavaScript)</td>
+									<td class="col-2">x</td>
+									<td class="col-3">x</td>
+									<td class="col-4">x</td>
+								</tr>
+
+<!--
+								<tr>
+									<td class="col-1">XML Derivates (XForms, XSLT, XPath, XQuerry)</td>
+									<td class="col-2">x</td>
+									<td class="col-3">x</td>
+									<td class="col-4">x</td>
+								</tr>
+								<tr>
+									<td class="col-1">Web (HTML , CSS, JavaScript)</td>
+									<td class="col-2">x</td>
+									<td class="col-3">x</td>
+									<td class="col-4">x</td>
+								</tr>
+
+-->
+								<tr>
+									<td class="col-1">Inside Chiba</td>
+									<td class="col-2">&nbsp;</td>
+									<td class="col-3">&nbsp;</td>
+									<td class="col-4">x</td>
+								</tr>
+
+								<tr>
+									<td class="col-1 subTableHeading">Communication</td>
+									<td class="col-2 subTableHeading">&nbsp;</td>
+									<td class="col-3 subTableHeading">&nbsp;</td>
+									<td class="col-4 subTableHeading">&nbsp;</td>
+
+								</tr>
+
+								<tr>
+									<td class="col-1">Acknowledge the Problem (working days)</td>
+									<td class="col-2">5</td>
+									<td class="col-3">3</td>
+									<td class="col-4">1</td>
+								</tr>
+								<tr>
+									<td class="col-1">Mail Contact</td>
+									<td class="col-2">x</td>
+									<td class="col-3">x</td>
+									<td class="col-4">x</td>
+								</tr>
+
+<!--
+								<tr>
+									<td class="col-1">Chat Contact</td>
+									<td class="col-2"></td>
+									<td class="col-3"></td>
+									<td class="col-4">x</td>
+								</tr>
+-->
+
+								<tr>
+									<td class="col-1">Live Contact (Chat / Phone)</td>
+									<td class="col-2">&nbsp;</td>
+									<td class="col-3">&nbsp;</td>
+									<td class="col-4">x</td>
+								</tr>
+
+								<tr>
+									<td class="col-1">Support Duration (Month)</td>
+									<td class="col-2">1</td>
+									<td class="col-3">3</td>
+									<td class="col-4">12</td>
+								</tr>
+
+								<tr>
+									<td class="col-1 subTableHeading">Price</td>
+									<td class="col-2 subTableHeading">&nbsp;</td>
+									<td class="col-3 subTableHeading">&nbsp;</td>
+									<td class="col-4 subTableHeading">&nbsp;</td>
+
+								</tr>
+
+								<tr>
+									<td class="col-1">Basispreis*</td>
+									<td class="col-2">500</td>
+									<td class="col-3">4000</td>
+									<td class="col-4">9800</td>
+								</tr>
+
+<!--
+								<tr>
+									<td class="col-1">
+										<ul>Extra Support Day*</ul>
+									</td>
+									<td class="col-2">850</td>
+									<td class="col-3">750</td>
+									<td class="col-4">600</td>
+								</tr>
+
+								<tr>
+									<td class="col-1">Extra Developer Day*</td>
+									<td class="col-2">850</td>
+									<td class="col-3">850</td>
+									<td class="col-4">800</td>
+								</tr>
+-->
+							</tbody>
+						</table>
+						<br/>
+						<br/>
+						<br/>
+						<br/>
+						<br/>
+						<br/>
+                        <!--<div id="columnLeft">-->
+							<!---->
+                        <!--</div>-->
+<!--
+                        <div id="columnRight">
+                            <p>responsible for content:</p>
+
+                            <p>
+                                Joern Turner<br/>
+                                Tax ID Number: DE 24/565/60323
+                            </p>
+
+                            <p>
+                                Lars Windauer<br/>
+                                Tax ID Number: DE 23/593/60145
+                            </p>
+                        </div>
+-->
+                    </div>
+
+
+                </div>
+
+
+                <div id="footer">
+                    <img id="shadowBottom" src="images/shad_bottom.jpg" alt=""/>
+
+                    <div class="pageMarginBox">
                     <span id="bottomMenu">
                         &#169; 2010 betterFORM<span class="menuDevider"> | </span>
                         <a href="index.html">home</a><span class="menuDevider"> | </span>
                         <a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>
-                        <a href="download-old.html">download</a><span class="menuDevider"> | </span>
+                        <a href="download.html">download</a><span class="menuDevider"> | </span>
                         <a href="product.html">product</a><span class="menuDevider"> | </span>
                         <a href="support.html">support</a><span class="menuDevider"> | </span>
-                        <a href="whoweare-old.html">who we are</a><span class="menuDevider"> | </span>
+                        <a href="whoweare.html">who we are</a><span class="menuDevider"> | </span>
                         <a href="contact.html">contact / impressum</a>
                     </span>
+                    </div>
                 </div>
-			</div>
-		</div>
-	</body>
+
+            </div>
+    </body>
 </html>
