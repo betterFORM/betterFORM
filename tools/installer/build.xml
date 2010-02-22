@@ -8,8 +8,7 @@
     </target>
     <target name="prepare" description="prepares all files needed for installer EXCEPT exist.war">
         <!-- ##### building betterForm war for deployment ##### -->
-        <ant antfile="../../web/build.xml" target="package" inheritall="false">
-        </ant>
+        <ant antfile="../../web/build.xml" target="package" inheritall="false"/>
 
         <mkdir dir="${basedir}/target"/>
         
@@ -32,20 +31,19 @@
 
 
         <!--##### fetching jetty from remote ##### -->
+<!--
         <get usetimestamp="true" ignoreerrors="true" src="http://dist.codehaus.org/jetty/jetty-6.1.22/jetty-6.1.22.zip"
              dest="${basedir}/target/jetty.zip"/>
 
-
-
-        <!--##### unpacking jetty can move it into a subfolder  - rename it to betterform ##### -->
+        &lt;!&ndash;##### unpacking jetty can move it into a subfolder  - rename it to betterform ##### &ndash;&gt;
         <unzip src="${basedir}/target/jetty.zip"
                dest="${basedir}/target/jetty" />
 
-<!--
-        <ant antfile="${basedir}/../server/build.xml" target="package" inheritall="false"/>
-        <move  file="${basedir}/../server/target/server/betterform" tofile="${basedir}/target/jetty/betterform"/>
--->
         <move file="${basedir}/target/jetty/jetty-6.1.22" tofile="${basedir}/target/jetty/betterform"/>
+
+-->
+        <unzip src="lib/bfServer-1.2-bin.zip" dest="${basedir}/target/jetty"/>
+
 
     </target>
 
