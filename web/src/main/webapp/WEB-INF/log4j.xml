@@ -56,16 +56,20 @@
         <priority value="ERROR"/>
     </category>
 
-    <category name="de.betterform">
-        <priority value="WARN"/>
+    <category name="de.betterform.xml.xforms">
+        <priority value="DEBUG"/>
     </category>
 
+<!--
     <logger name="net.sf.ehcache">
         <level value="ERROR"/>
     </logger>
-
+-->
+    <category name="de.betterform.web">
+        <priority value="DEBUG"/>
+    </category>
     <root>
-        <priority value="ERROR"/>
+        <priority value="DEBUG"/>
         <appender-ref ref="SHELL"/>
     </root>
 

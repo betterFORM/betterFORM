@@ -9,6 +9,8 @@ body {
 .report td a{
     color:#363636;
     text-decoration:underline;
+    padding:0;
+    margin:0;
 
 }
 .report td a:hover{
@@ -70,11 +72,10 @@ td {
 }
 
 .testConfig {
-/*         background-color:LemonChiffon;*/
-    border: 1px solid black;
     margin-bottom: 10px;
-    padding: 10px;
+    padding: 0 !important;
     background:white;
+
 }
 
 .testConfig .header {
@@ -83,6 +84,9 @@ td {
     font-size: large;
     font-variant: small-caps;
     margin-bottom: 5px;
+    background:#488aa6;
+    color:white;
+    padding:3px;
 }
 
 .testConfig div {
@@ -97,6 +101,7 @@ td {
 
 .testConfig td {
     background: White;
+    font-size:11pt;
 }
 
 .pageheader {
@@ -108,14 +113,20 @@ td {
 
 #summary {
     font-size: 12pt;
-    background-color: SteelBlue;
+    background-color: #488aa6;
     padding: 10px !important;
+    color:white;
+}
+#summary div{
+    padding:0 !important;
 }
 
+
 .chapterHeader {
-    background: SteelBlue;
+    background: #488aa6 !important;
     font-size: 12pt;
     padding: 10px;
+    color:white;
 }
 
 .Note {

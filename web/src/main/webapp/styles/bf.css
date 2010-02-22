@@ -47,6 +47,10 @@ p{
     margin-top:0.3em;
     margin-bottom:0.3em;
 }
+
+ul{
+    list-style-image:url(../images/list.png);
+}
 .page {
     margin:0;
     padding:0;
@@ -436,7 +440,29 @@ h3{
     font-size:8pt;
 
 }
+#product #content .linkbox{
+    background:#488aa6;
+    color:white;
+    display:block;                                                                                                  
+    margin:0;
+    padding:10px;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+}
+#product #content .linkbox a{
+    text-decoration:underline;
+    float:none;
+    
+}
+
 /*
 .tundra .dijitTooltip .dijitTooltipContents{
     background:lightyellow;
 }*/
+#sourceforge a{
+    color:black;
+}
+#sourceforge a img{
+    vertical-align:top;
+}
+

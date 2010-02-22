@@ -2,6 +2,8 @@
   ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xf="http://www.w3.org/2002/xforms"
@@ -102,7 +104,7 @@
 
     </script>
 </head>
-<body class="tundra">
+<body class="tundra" id="product">
     <div class="page">
 
         <div id="header">
@@ -127,7 +129,7 @@
             </div>
         </div>
 
-        <div id="content" class="contact">
+        <div id="content">
             <img id="shadowTop" src="images/shad_top.jpg" alt=""/>
 
             <!-- ######################### Content here ################################## -->
@@ -140,29 +142,34 @@
                     <img src="images/osi-certified-72x60.png" alt="OSI certified" id="osiLogo"/>
                     <h1>Product</h1>
 
-                    <h2>Features</h2>
+                    <h2 name="features">Features</h2>
 
-                    <div class="list">easy installation</div>
-                    <div class="list">dynamically loaded subforms</div>
-                    <div class="list">rapid webapplication development</div>
-                    <div class="list">absolutely no script programming required</div>
-                    <div class="list">no plugins - runs in every major browser withhout installation</div>
-                    <div class="list">advanced datatyping, validation and calculation support</div>
-                    <div class="list">dependency engine for complex validations</div>
-                    <div class="list">conformant to XForms 1.1 Recommendation</div>
-                    <div class="list">seemless integration</div>
-                    <div class="list">deployable in a separate webcontext</div>
-                    <div class="list">fully accessible UI controls</div>
-                    <div class="list">Open Source under business-friendly BSD or Apache 2 license</div>
+                    <ul>
+                        <li>easy installation</li>
+                        <li>dynamically loaded subforms</li>
+                        <li>rapid webapplication development</li>
+                        <li>absolutely no script programming required</li>
+                        <li>no plugins - runs in every major browser withhout installation</li>
+                        <li>advanced datatyping, validation and calculation support</li>
+                        <li>dependency engine for complex validations</li>
+                        <li>conformant to XForms 1.1 Recommendation</li>
+                        <li>seemless integration</li>
+                        <li>deployable in a separate webcontext</li>
+                        <li>fully accessible UI controls</li>
+                        <li>Open Source under business-friendly BSD or Apache 2 license</li>
+                    </ul>
 
 
-                    <h2>Documentation</h2>
+                    <h2 name="documentation">Documentation</h2>
                     <p>All documentation is available in pdf format. Please download below.</p>
-                    <a href="betterFormUserGuide.pdf"><span class="downloadButton">UserGuide</span></a>
-                    <a href="betterFormDeveloperGuide.pdf"><span class="downloadButton">DeveloperGuide</span></a>
-                    <a href="CSSReference.pdf"><span class="downloadButton">CSS Reference</span></a>
+                    <a href="doc/betterFormUserGuide.pdf"><span class="downloadButton">UserGuide</span></a>
+                    <a href="doc/betterFormDeveloperGuide.pdf"><span class="downloadButton">DeveloperGuide</span></a>
+                    <a href="doc/betterFormCSSReference.pdf"><span class="downloadButton">CSS Reference</span></a>
 
-                    <h2>XForms 1.1 Conformance</h2>
+                    <h2 name="conformance">XForms 1.1 Conformance</h2>
+                    <p>
+                        Piece of cake? Here are our conformance pies.
+                    </p>
                     <p>
                         betterFORM has been extensively tested against the official XForms 1.1 Test Suite
                         Edition 1.
@@ -207,10 +214,50 @@
                         </tr>
                     </table>
 
+                    <h2 name="svn">Subversion repository</h2>
+                    <p>
+                        Our Subversion repository can be found here:
+                        <div class="linkbox">http://www.betterform.de/svn/betterform</div>
+                    </p>
+                    <p>
+                        You may browse the sources under:
+                        <div class="linkbox">
+                            <a href="https://www.betterform.de/trac/browser">https://www.betterform.de/trac/browser</a>
+                        </div>
+                    </p>
+                    
+                    <p>
+                        As usual all development takes place on the 'trunk'. Every release will
+                        be available as branch.
+                    </p>
+                    <p>
+                        If you are willing to contribute please contact us via the mailing list.
+                    </p>
 
-                    <h2>Trac</h2>
+                    <h2 name="trac">Trac / Wiki</h2>
+                    <p>
+                        Looking for answers not found elsewhere?
+                    </p>
+                    <p>
+                        Our trac installation is the most up-to-date source if you are interested in what's
+                        currently going on. You can:
+                    </p>
+                    <ul>
+                        <li>read articles on our Wiki. Here you may find short how tos, the FAQ and other small bits
+                        of documentation </li>
+                        <li>browse the timeline which shows you changes of Wiki pages, Commits and tickets</li>
+                        <li>see our milestones plan with associated tickets</li>
+                        <li>browse the source repository</li>
+                    </ul>
 
-                    <h2>Sourceforge</h2>
+                    <h2 name="sourceforge">Sourceforge</h2>
+
+                    <p id="sourceforge">
+                        <a href="http://sourceforge.net/">
+                                Project Web Hosted by <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=285077&amp;type=3" alt="SourceForge.net" />
+                        </a>
+                    </p>
+
 
                     <div id="columnLeft">
                     </div>
