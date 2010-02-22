@@ -1,0 +1,218 @@
+/* Atom Demo */
+.atomReload {
+	height: 30px;
+	width: 30px;
+	padding: 10px;
+	float: right;
+}
+
+.atomReload button {
+	height: 30px;
+	width: 30px;
+	background: url(../../resources/images/reload.gif) no-repeat center;
+}
+
+.atomSubtitle .xfLabel {
+	font-weight: bold;
+	font-size: medium;
+	display: block;
+}
+
+.atomSubtitle .xfValue {
+	font-weight: bolder;
+	padding: 5px;
+	font-size: 12pt;
+}
+
+.atomData {
+	display: block;
+	padding: 20px;
+}
+
+.atomPadding .xfValue {
+	padding: 5px;
+}
+
+.atomArticleLink {
+	padding: 5px;
+}
+
+.atomArticleLink .xfValue {
+	padding-top: 5px;
+}
+
+/* Contacts */
+.contactsRepeatHeader {
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+
+.contactsRepeat {
+	border: 1px solid black;
+	padding: 5px;
+	width: 100%;
+}
+
+.contactsRepeat .xfRepeatHeader {
+	padding: 5px;
+}
+
+.contactsRepeat .xfRepeatItem .xfValue {
+	padding: 3px;
+	display: block;
+}
+
+.contactsSubForm {
+	border: 1px solid black;
+	display: block;
+}
+
+.contactsSubForm .xfGroupLabel {
+	padding: 5px;
+	font-weight: bold;
+	font-size: 12pt;
+}
+
+.contactsSubForm .xfLabel {
+	padding: 3px 3px 3px 8px;
+	width: 7em;
+}
+
+.contactsFullGroup .xfLabel {
+	width: 7em;
+}
+
+.contactsTriggerGroup {
+	display: block;
+	text-align: center;
+	padding: 5px;
+}
+
+.contactsMasterTrigger {
+	display: inline;
+	text-align: center;
+	width: 200px;
+	padding-right: 15px;
+}
+
+.contactsMasterTrigger button {
+	background: url(../../resources/images/001_22.png) no-repeat 5px 5px;
+	display: block;
+	height: 30px;
+	line-height: 29px;
+	text-decoration: none;
+	width: 200px;
+	text-indent: 15px;
+}
+
+.contactsSubTrigger {
+	display: inline;
+	text-align: center;
+	width: 200px;
+	padding-right: 15px;
+}
+
+.contactsSubTrigger button {
+	background: url(../../resources/images/001_22.png) no-repeat 5px 5px;
+	display: block;
+	height: 30px;
+	line-height: 29px;
+	text-decoration: none;
+	width: 200px;
+	text-indent: 15px;
+
+}
+
+.contactsUpdateMasterTrigger {
+	display: inline;
+	text-align: center;
+	width: 200px;
+}
+
+.contactsUpdateMasterTrigger button {
+	background: url(../../resources/images/001_24.png) no-repeat 5px 5px;
+	display: block;
+	height: 30px;
+	line-height: 29px;
+	text-decoration: none;
+	width: 200px;
+	text-indent: 15px;
+}
+
+/* Order List */
+.orderListHeader {
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+
+.orderListRepeat {
+	border: 1px solid black;
+	padding: 5px;
+	width: 100%;
+}
+
+.orderListRepeat .xfRepeatHeader {
+	padding: 5px;
+}
+
+.orderListRepeat .xfRepeatItem .xfValue {
+	padding: 3px;
+	display: block;
+}
+
+.orderListTriggerGroup {
+	display: block;
+	text-align: center;
+	padding: 5px;
+}
+
+.orderListAddTrigger {
+	display: inline;
+	text-align: center;
+	width: 200px;
+	padding-right: 15px;
+}
+
+.orderListAddTrigger button {
+	background: url(../../resources/images/001_01.png) no-repeat 5px 5px;
+	display: block;
+	height: 30px;
+	line-height: 29px;
+	text-decoration: none;
+	width: 200px;
+	text-indent: 15px;
+}
+
+.orderListDelTrigger {
+	display: inline;
+	text-align: center;
+	width: 200px;
+	padding-right: 15px;
+}
+
+.orderListDelTrigger button {
+	background: url(../../resources/images/001_02.png) no-repeat 5px 5px;
+	display: block;
+	height: 30px;
+	line-height: 29px;
+	text-decoration: none;
+	width: 200px;
+	text-indent: 15px;
+
+}
+
+.orderListResetTrigger {
+	display: inline;
+	text-align: center;
+	width: 200px;
+}
+
+.orderListResetTrigger button {
+	background: url(../../resources/images/001_39.png) no-repeat 5px 5px;
+	display: block;
+	height: 30px;
+	line-height: 29px;
+	text-decoration: none;
+	width: 200px;
+	text-indent: 15px;
+}

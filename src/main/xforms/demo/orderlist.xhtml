@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: orderlist.xhtml 2521 2007-03-26 09:05:09Z joernt $ -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:xf="http://www.w3.org/2002/xforms"
+	  xmlns:ev="http://www.w3.org/2001/xml-events">
+<head>
+	<title>Order List</title>
+	<meta name="author" content="joernt at users.sourceforge.net"/>
+	<meta name="author" content="lars.windauer at chiba-project.org"/>
+	<meta name="author" content="tobias.krebs at betterform.de"/>
+	<meta name="author" content="fabian.otto at betterform.de"/>
+
+	<meta name="description" content="XForms demo of a simple order list"/>
+
+	<link rel="stylesheet" type="text/css" href="../../styles/bf.css"/>
+	<link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css"/>
+	<link rel="stylesheet" type="text/css" href="../../resources/styles/demo.css"/>
+
+</head>
+<body class="soria" style="margin:30px;">
+<div id="xforms">
+<div style="display:none">
+	<xf:model>
+		<xf:instance xmlns="">
+			<order>
+				<item amount="1" price="1.50" sum="0" tax="0">pencil</item>
+				<item amount="1" price="2.50" sum="" tax="0">ballpoint_pen</item>
+				<item amount="1" price="50.00" sum="0" tax="0">fountain-pen</item>
+				<item amount="1" price="0" sum="0" tax="0"/>
+			</order>
+		</xf:instance>
+
+		<xf:instance id="shippingAndTaxes">
+			<order xmlns=""/>
+		</xf:instance>
+
+		<xf:instance id="countries">
+			<contries xmlns="">
+				<country>
+					<name>Albania</name>
+					<shipping>12.50</shipping>
+					<tax>10.0</tax>
+				</country>
+				<country>
+					<name>Belgium</name>
+					<shipping>8.00</shipping>
+					<tax>20.0</tax>
+				</country>
+				<country>
+					<name>Cuba</name>
+					<shipping>30.00</shipping>
+					<tax>0.0</tax>
+				</country>
+				<country>
+					<name>Denmark</name>
+					<shipping>10.00</shipping>
+					<tax>21.0</tax>
+				</country>
+				<country>
+					<name>Estonia</name>
+					<shipping>15.00</shipping>
+					<tax>7.0</tax>
+				</country>
+				<country>
+					<name>France</name>
+					<shipping>8.50</shipping>
+					<tax>16.0</tax>
+				</country>
+				<country>
+					<name>Germany</name>
+					<shipping>4.40</shipping>
+					<tax>19.0</tax>
+				</country>
+				<country>
+					<name>Gibraltar</name>
+					<shipping>13.25</shipping>
+					<tax>12.5</tax>
+				</country>
+				<country>
+					<name>Hungary</name>
+					<shipping>14.00</shipping>
+					<tax>6.2</tax>
+				</country>
+				<country>
+					<name>Italy</name>
+					<shipping>8.00</shipping>
+					<tax>16.0</tax>
+				</country>
+				<country>
+					<name>Japan</name>
+					<shipping>40.00</shipping>
+					<tax>21.5</tax>
+				</country>
+				<country>
+					<name>Spain</name>
+					<shipping>9.00</shipping>
+					<tax>14.0</tax>
+				</country>
+			</contries>
+		</xf:instance>
+
+		<xf:bind id="items" nodeset="item[position()!=last()]">
+			<xf:bind id="article" nodeset="." required="true()"/>
+			<xf:bind id="amount" nodeset="@amount" type="integer" required="true()" constraint=". &lt; 100"/>
+			<xf:bind id="price" nodeset="@price" type="float"/>
+			<xf:bind id="tax" nodeset="@tax" type="float"/>
+			<xf:bind id="sum" nodeset="@sum" calculate="../@amount * ../@price" type="float"/>
+		</xf:bind>
+	</xf:model>
+</div>
+<div class="Section" dojotype="dijit.layout.ContentPane">
+	<xf:group appearance="full">
+		<div class="Headline">Order List:</div>
+
+		<div class="description">
+			A simple calculated Order List with slightly formatted output.
+		</div>
+
+		<div class="orderListCountrySelect">
+			<xf:select1 appearance="minimal" ref="instance('shippingAndTaxes')">
+				<xf:label id="country">Ship to:</xf:label>
+				<xf:itemset nodeset="instance('countries')/country">
+					<xf:label ref="name"/>
+					<xf:copy ref="."/>
+				</xf:itemset>
+			</xf:select1>
+		</div>
+
+		<br/>
+		<xf:input ref="instance('shippingAndTaxes')/country/name">
+			<xf:label>Name:</xf:label>
+		</xf:input>
+		<br/>
+
+		<xf:group appearance="minimal">
+			<xf:repeat id="repeatid" bind="items" appearance="compact" class="orderListRepeat">
+				<xf:select1 bind="article">
+					<xf:label class="contactsRepeatHeader">Article</xf:label>
+					<xf:choices>
+						<xf:item>
+							<xf:label>Eraser</xf:label>
+							<xf:value>eraser</xf:value>
+							<xf:setvalue ev:event="xforms-select" bind="price">0.50</xf:setvalue>
+						</xf:item>
+						<xf:item>
+							<xf:label>Pencil</xf:label>
+							<xf:value>pencil</xf:value>
+							<xf:setvalue ev:event="xforms-select" bind="price">1.50</xf:setvalue>
+						</xf:item>
+						<xf:item>
+							<xf:label>Ballpoint pen</xf:label>
+							<xf:value>ballpoint_pen</xf:value>
+							<xf:setvalue ev:event="xforms-select" bind="price">2.49</xf:setvalue>
+						</xf:item>
+						<xf:item>
+							<xf:label>Spiral notebook (leather binding)</xf:label>
+							<xf:value>spiral_notebook</xf:value>
+							<xf:setvalue ev:event="xforms-select" bind="price">3.99</xf:setvalue>
+						</xf:item>
+						<xf:item>
+							<xf:label>Fountain pen</xf:label>
+							<xf:value>fountain-pen</xf:value>
+							<xf:setvalue ev:event="xforms-select" bind="price">50.00</xf:setvalue>
+						</xf:item>
+						<xf:item>
+							<xf:label>Shredder</xf:label>
+							<xf:value>shredder</xf:value>
+							<xf:setvalue ev:event="xforms-select" bind="price">69.98</xf:setvalue>
+						</xf:item>
+					</xf:choices>
+				</xf:select1>
+				<xf:input bind="amount" incremental="true">
+					<xf:label class="contactsRepeatHeader">Amount</xf:label>
+					<xf:alert>You can order a maximum of 99 items in one order</xf:alert>
+				</xf:input>
+				<xf:output value="format-number(@price, '€ 0.00')" class="text-right">
+					<xf:label class="contactsRepeatHeader">Price</xf:label>
+				</xf:output>
+				<xf:output value="format-number(@tax, '€ 0.00')" class="text-right">
+					<xf:label class="contactsRepeatHeader">Tax</xf:label>
+				</xf:output>
+				<xf:output value="format-number(@sum, '€ 0.00')" class="text-right">
+					<xf:label class="contactsRepeatHeader">Sum</xf:label>
+				</xf:output>
+			</xf:repeat>
+
+			<xf:output id="total" value="format-number(sum(/order/item/@sum), '€ 0.00')">
+				<xf:label class="contactsRepeatHeader">Total Price:</xf:label>
+			</xf:output>
+		</xf:group>
+	</xf:group>
+
+	<xf:group appearance="minimal" class="orderListTriggerGroup">
+		<xf:trigger class="orderListAddTrigger">
+			<xf:label>Add item</xf:label>
+			<xf:action>
+				<xf:insert bind="items" at="last()" position="after"/>
+			</xf:action>
+		</xf:trigger>
+		<xf:trigger class="orderListDelTrigger">>
+			<xf:label>Delete item</xf:label>
+			<xf:action>
+				<xf:delete bind="items" at="index('repeatid')"/>
+			</xf:action>
+		</xf:trigger>
+		<xf:trigger class="orderListResetTrigger">>
+			<xf:label>Reset</xf:label>
+			<xf:action>
+				<xf:reset/>
+			</xf:action>
+		</xf:trigger>
+	</xf:group>
+
+</div>
+</div>
+</body>
+</html>
