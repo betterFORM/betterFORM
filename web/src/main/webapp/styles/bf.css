@@ -444,21 +444,24 @@ h3{
     background:#488aa6;
     color:white;
     display:block;                                                                                                  
-    margin:0;
     padding:10px;
     -moz-border-radius:10px;
     -webkit-border-radius:10px;
+    margin:0 0 25px;
 }
+
 #product #content .linkbox a{
     text-decoration:underline;
     float:none;
     
 }
 
-/*
-.tundra .dijitTooltip .dijitTooltipContents{
-    background:lightyellow;
-}*/
+#sourceforge{
+    margin-top:20px;
+    margin-bottom:20px;
+    float:right;
+}
+
 #sourceforge a{
     color:black;
 }
