@@ -312,6 +312,17 @@ a.active {
     display: none;
 }
 
+.xfLabel {
+	display:inline;
+}
+
+.xfDateTimeControl   {
+	display:inline;
+}
+.xfDateTimeControl > xfLabel {
+	float:left;
+}
+
 /* ***************************************************************************** */
 /* ***************************************************************************** */
 /* ***************************************************************************** */
@@ -336,51 +347,12 @@ a.active {
     margin-top:0.4em;
 }
 
-/* ############################# #MINIMAL GROUP STYLES ############################## */
-/* ############################# #MINIMAL GROUP STYLES ############################## */
-/* ############################# #MINIMAL GROUP STYLES ############################## */
-/* ############################# #MINIMAL GROUP STYLES ############################## */
-
-.xfMinimalGroup {
-    /*display:block;*/
-    /* WARNING: leaf display none uncomment, otherwise xfDisabled will not work!!
-    display:none;
-    */
-}
+/* ############################## Minimal GROUP STYLES ############################## */
+/* ############################## Minimal GROUP STYLES ############################## */
+/* ############################## Minimal GROUP STYLES ############################## */
 
 .xfMinimalGroup .xfGroupLabel {
-	/*display:block;*/
-}
-
-.xfMinimalGroup .xfControl{
-/*
 	display:block;
-	float:left;
-*/
-
-}
-.xfMinimalGroup .xfControl > .xfLabel{
-/*
-	float:left;
-*/
-}
-
-
-.xfMinimalGroup .xfDisabled {
-    display: none;
-}
-
-.xfMinimalGroup .xfDateTimeControl {
-/*
-	display:inline;
-*/
-}
-
-.xfDateTimeControl   {
-	display:inline;
-}
-.xfDateTimeControl > xfLabel {
-	float:left;
 }
 /* ############################## COMPACT GROUP STYLES ############################## */
 /* ############################## COMPACT GROUP STYLES ############################## */
@@ -389,7 +361,7 @@ a.active {
 .xfCompactGroup {
 }
 
-.xfCompactGroup .xfGroupLabel{
+.xfCompactGroup .xfGroupLabel {
     display:block;
     width:100%;
 }
@@ -422,7 +394,8 @@ a.active {
 /* ############################## FULL GROUP STYLES ############################## */
 /* ############################## FULL GROUP STYLES ############################## */
 /* ############################## FULL GROUP STYLES ############################## */
-.xfFullGroup {
+.xfFullGroup .xfGroupLabel{
+	display:block;
 }
 
 .xfFullGroup .xfControl {
@@ -433,9 +406,6 @@ a.active {
 .xfFullGroup .xfLabel {
     width: 10em;
     float: left;
-}
-
-.xfFullGroup .xfValue {
 }
 
 .xfFullGroup .xfDisabled {
@@ -473,7 +443,7 @@ a.active {
 
 .xfGroup {
     margin:0;
-    padding:0;            
+    padding:0;
 }
 /* ############################## CUSTOM GROUP STYLES ############################## */
 /* ############################## CUSTOM GROUP STYLES ############################## */
@@ -536,9 +506,6 @@ a.active {
     display:none;
 }
 
-.xfGroupLabel {
-	display:block;
-}
 
 /* ***************************************************************************** */
 /* ***************************************************************************** */
@@ -777,7 +744,7 @@ delete actions to */
 .xfFullSelect .xfValue .xfSelectorItem,
 .xfFullSelect1 .xfValue .xfSelectorItem, {
 /*
-    clear:both;
+   clear:both;
 	display:block;
 */
 }
