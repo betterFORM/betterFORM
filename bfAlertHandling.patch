@@ -1,0 +1,2659 @@
+Index: src/main/resources/scripts/betterform/ui/textarea/MinimalTextarea.js
+===================================================================
+--- src/main/resources/scripts/betterform/ui/textarea/MinimalTextarea.js	(revision 28)
++++ src/main/resources/scripts/betterform/ui/textarea/MinimalTextarea.js	Sun Feb 21 17:41:28 CET 2010
+@@ -23,7 +23,7 @@
+ 
+     postCreate:function() {
+         this.inherited(arguments);
+-        this.setInitialValue(this.srcNodeRef.innerHTML);
++        // this.setInitialValue(this.srcNodeRef.innerHTML);
+         this.inputNode.value = this.srcNodeRef.innerHTML;
+         dojo.connect(this.domNode,"onkeypress", this,"_valueChanged");
+     },
+@@ -52,11 +52,11 @@
+     applyState:function() {
+         // console.debug("betterform.ui.textarea.MinimalTextarea.applyState",this);
+         if (this.xfControl.isReadonly()) {
+-            dojo.attr(this.domNode,"readonly","readonly");
+-        } else if(dojo.hasAttr(this.domNode,"readonly")) {
+-            dojo.removeAttr(this.domNode,"readonly");
+-        }else if(dojo.hasAttr(this.domNode,"disabled")) {
+-            dojo.removeAttr(this.domNode,"disabled");
++            dojo.attr(this.inputNode,"disabled","disabled");            
++        } else if(dojo.hasAttr(this.inputNode,"readonly")) {
++            dojo.removeAttr(this.inputNode,"disabled");
++        }else if(dojo.hasAttr(this.inputNode,"disabled")) {
++            dojo.removeAttr(this.inputNode,"disabled");
+         }
+     },
+ 
+Index: src/main/resources/scripts/betterform/ui/input/DateTime.js
+===================================================================
+--- src/main/resources/scripts/betterform/ui/input/DateTime.js	(revision 140)
++++ src/main/resources/scripts/betterform/ui/input/DateTime.js	Sun Feb 21 22:43:58 CET 2010
+@@ -42,14 +42,12 @@
+     },
+ 
+     _onBlur:function(){
+-        this.inherited(arguments);
+         this.incremental = false;
+-        this.handleOnBlur();
+-
++        this.handleOnBlur()
+     },
+ 
+     applyValues:function(value) {
+-        // console.debug("DateTime.applyValues value",value);
++        console.debug("DateTime.applyValues value",value);
+         if(value.indexOf("+") !=-1){
+             this.timezone = value.substring(value.indexOf("+"),value.length);
+             value = value.substring(0,value.indexOf("+"));
+@@ -149,7 +147,7 @@
+     },
+ 
+     _handleSetControlValue:function(value) {
+-        // console.debug("_handleSetControlValue value",value);
++         console.debug("_handleSetControlValue value",value);
+         if(this.miliseconds && value.indexOf(".") != -1){
+             value = value.substring(0,value.indexOf("."));
+         }
+@@ -164,7 +162,8 @@
+         OVERWRITTEN CONTROLVALUE FUNCTIONS
+      */
+ 
++/*
+-    handleOnFocus:function() {
++ handleOnFocus:function() {
+         this.focused = true;
+         //storing current control id for handling help
+         // console.debug("storing current control id:", this.id);
+@@ -173,40 +172,28 @@
+         if (!this.xfControl.isValid()) {
+             dojo.addClass(this.dateDijit.domNode, "caDisplayInvalid");
+             dojo.addClass(this.timeDijit.domNode, "caDisplayInvalid");
++            // PUBLISH SUBSCRIBE
++            // dojo.publish("/xf/alert/show/"+this.xfControl.id,[this.xfControl.id,true]);
+             this.showAlert();
+         }
+         fluxProcessor.dispatchEventType(this.xfControl.id,"DOMFocusIn");
+ 
+     },
+-    
++
++    */
+-
++    
++
+     /*
+      only needs to check if XForms MIP readonly is true and disable control in that case. The value itself
+      is already present and other MIPs are entirely managed through CSS.
+      */
+-    displayValidity:function(/*Boolean*/ valid) {
+-        // console.debug("ControlValue.displayValidity (id:" + this.id +")");
+-        if (valid) {
+-            dojo.removeClass(this.dateDijit.domNode, "caDisplayInvalid");
+-            dojo.removeClass(this.timeDijit.domNode, "caDisplayInvalid");
+-            this.hideAlert();
+-        } else {
+-            dojo.addClass(this.dateDijit.domNode, "caDisplayInvalid");
+-            dojo.addClass(this.timeDijit.domNode, "caDisplayInvalid");
+-
+-            if(this.focused || !this.hideAlertOnFocus){
+-                this.showAlert();
+-            }
+-        }
+-    },
+-
+     applyState:function() {
+         if (this.xfControl.isReadonly()) {
+             this.dateDijit.attr("disabled",true);
+             this.timeDijit.attr("disabled",true);
+         } else {
+             this.dateDijit.attr("disabled",false);
+-            this.timeDijit.attr("disabled",false);                        
++            this.timeDijit.attr("disabled",false);
+         }
+     }
+ 
+Index: src/main/resources/styles/betterform-table.css
+===================================================================
+--- src/main/resources/styles/betterform-table.css	Mon Feb 22 10:58:31 CET 2010
++++ src/main/resources/styles/betterform-table.css	Mon Feb 22 10:58:31 CET 2010
+@@ -0,0 +1,271 @@
++body {
++	background:white;
++}
++table{
++    border-collapse:collapse;
++}
++
++.tundra *{
++    font-size:11pt;
++    font-family:sans-serif;
++}
++
++.tundra .dijitButtonNode{
++    -moz-border-radius:5px;
++    -webkit-border-radius:5px;
++}
++
++
++.tundra .dijitTextBoxFocused,
++.tundra .dijitComboBoxFocused,
++.tundra .dijitSpinnerFocused,
++.tundra .dijitSpinnerUpArrowActive,
++.tundra .dijitSpinnerDownArrowActive,
++.tundra .dijitTextAreaFocused {
++	border-color:gray;
++}
++
++.tundra .dijitTabContainerTop-container {
++	border:none;
++}
++
++.dijitFocused{
++    background-color:#aaa;
++}
++
++.xfRepeatIndex .caLoading {
++    position:absolute;
++    z-index:999;
++    padding: 3px;
++    padding-top:6px;
++    right:40px;
++}
++
++
++
++.xfRepeatIndexMouseOver{
++    background:transparent;
++}
++
++
++
++.xfRepeatIndexMouseOver .xfValue{
++    background-color:transparent;
++    color:black;
++}
++
++.xfMinimalGroup{
++    display:block;
++    background:#efefef;
++    height:34px;
++    padding:5px;
++    margin-bottom:3px;
++    -moz-border-radius:30px;
++    -webkit-border-radius:30px;
++}
++
++select{
++    margin-left:3px;
++    margin-top:3px;
++    width:200px;
++	-moz-border-radius-topleft:8px;
++	-moz-border-radius-topright:8px;
++	-moz-border-radius-bottomleft:8px;
++	-moz-border-radius-bottomright:8px;
++	-webkit-border-top-left-radius:8px;
++	-webkit-border-top-right-radius:8px;
++	-webkit-border-bottom-left-radius:8px;
++	-webkit-border-bottom-right-radius:8px;
++}
++
++.caVerticalTable{
++    border:none;
++    padding:20px;
++    padding-bottom:0px;
++    width:640px;
++    margin-top:10px;
++    margin-left:26px;
++}
++.caVerticalTable td{
++    /*padding-bottom:5px;*/
++}
++.caVerticalTableLabel{
++    padding-right:5px;
++    width:25%;
++}
++.caVerticalTableValue{
++    width:35%;
++}
++.caVerticalTableInfo{
++    width:40%;
++}
++
++.xfValue{
++    padding:5px;
++    -moz-border-radius-topleft:8px;
++    -moz-border-radius-bottomleft:8px;
++    -webkit-border-top-left-radius:8px;
++    -webkit-border-bottom-left-radius:8px;
++    -moz-border-radius-topright:8px;
++    -moz-border-radius-bottomright:8px;
++    -webkit-border-top-right-radius:8px;
++    -webkit-border-bottom-right-radius:8px;
++}
++
++.xfInvalid .xfValue{
++    background-color:white;
++}
++
++.xfAlert{
++    display:block;
++    background:#FFCFCF;
++    color:#801B1B;
++    padding:9px 0px 8px 8px;
++    -moz-border-radius-topright:8px;
++    -moz-border-radius-bottomright:8px;
++    -webkit-border-top-right-radius:8px;
++    -webkit-border-bottom-right-radius:8px;
++
++}
++
++.xfHint{
++    display:block;
++    background:#F2F2F2 url(../images/hint.gif) no-repeat 5%;
++    color:#666666;
++    padding:9px 0px 8px 30px;
++    -moz-border-radius-topright:8px;
++    -moz-border-radius-bottomright:8px;
++    -webkit-border-top-right-radius:8px;
++    -webkit-border-bottom-right-radius:8px;
++}
++.info{
++    display:block;
++    background:#F0FEE9 url(../images/ok.gif) no-repeat 5%;
++    color:#666666;
++    padding:9px 0px 8px 30px;
++    -moz-border-radius-topright:8px;
++    -moz-border-radius-bottomright:8px;
++    -webkit-border-top-right-radius:8px;
++    -webkit-border-bottom-right-radius:8px;
++
++}
++
++.tundra .xfAlert,
++.tundra .xfHint,
++.tundra .xfHelp,
++.tundra .info
++{
++	font-size:9pt;
++	font-family:sans-serif;
++}
++.xfControl, .xfAlert, .xfHint, .info{
++    margin-bottom:8px;
++}
++
++
++.caHorizontalColumn {
++    width:99%
++}
++
++
++.caHorizontalColumn .caHorizontalTableValue{
++    width:50%;
++}
++
++.caHorizontalColumn .caHorizontalTableValue select{
++    width:99%;
++    margin-left:2px;
++    margin-bottom:8px;
++
++}
++
++.verticalButtonTable{
++    border:none;
++    padding-left: 20px;
++    padding-bottom: 20px;
++    width:100%;
++}
++
++.col1 {
++    width:45%
++}
++
++.col2 {
++    float:right;
++}
++
++.col3 {
++    width:42%
++}
++
++table .dijitButton .dijitButtonNode, table .dijitComboButton .dijitButtonNode  {
++    -moz-border-radius:8px 8px 8px 8px;
++    -webkit-border-radius:8px 8px 8px 8px;
++}
++
++.xfMinimalGroup .xfControl .xfLabel {
++    /*display:none;*/
++    margin:0;
++    padding:0;
++    float:right;
++    display:block;
++}
++
++
++.xfRepeatIndex{
++    background-color:transparent;
++}
++.xfRepeatIndex .xfValue {
++    background-color:none;
++}
++
++
++.xfFullRepeat{
++    display:inline;
++}
++
++.groupRepeat{
++    width:800px;
++}
++
++.xfRepeatHeader{
++    display:none;
++}
++
++
++.bfVerticalTableInfo{
++    width:45%;
++}
++
++.imageTrigger {
++    height:30px;
++    background:#efefef;
++    padding:1px;
++}
++.imageTrigger .dijitButtonNode {
++    background:none;
++    border:none;
++    padding:0;
++    padding-left:3px;
++    padding-right:3px;
++}
++
++.imageTrigger .dijitButtonNode img {
++    height: 30px;
++}
++
++.imageTrigger .dijitButton {
++    margin:0;
++}
++.tundra .dijitButtonHover{
++    background:transparent;
++}
++.tundra .dijitHover{
++    background:transparent;
++}
++.xfDisabled{
++    display:none;
++}
++.xfDisabled .xfLabel{
++    display:none;
++}
+Index: core/src/main/resources/META-INF/version.info
+===================================================================
+--- core/src/main/resources/META-INF/version.info	(revision 150)
++++ core/src/main/resources/META-INF/version.info	Mon Feb 22 18:59:38 CET 2010
+@@ -1,1 +1,1 @@
+-betterform-core 3.0.0 [build: 20100219/1805]
++betterform-core 3.0.0 [build: 20100222/1859]
+Index: src/main/resources/scripts/betterform/ui/select1/Plain.js
+===================================================================
+--- src/main/resources/scripts/betterform/ui/select1/Plain.js	(revision 29)
++++ src/main/resources/scripts/betterform/ui/select1/Plain.js	Mon Feb 22 00:34:38 CET 2010
+@@ -16,7 +16,7 @@
+ {
+ 
+     buildRendering:function() {
+-        console.debug("betterform.ui.select1.Plain.buildRendering: Create compact Select1");
++        // console.debug("betterform.ui.select1.Plain.buildRendering: Create compact Select1");
+         this.domNode = this.srcNodeRef;
+     },
+ 
+@@ -71,18 +71,6 @@
+     },
+ 
+ 
+-    displayValidity:function(/*Boolean*/ valid) {
+-        if (valid) {
+-            dojo.removeClass(this.domNode, "caDisplayInvalid");
+-            this.hideAlert();
+-        } else {
+-            dojo.addClass(this.domNode, "caDisplayInvalid");
+-            if(this.focused || !this.hideAlertOnFocus){
+-                this.showAlert();
+-            }
+-        }
+-    },
+-
+     applyState:function(){
+         if(this.xfControl.isReadonly()){
+             dojo.attr(this.domNode,"disabled","disabled");
+Index: src/main/xforms/test/AlertsComplex.xhtml
+===================================================================
+--- src/main/xforms/test/AlertsComplex.xhtml	(revision 141)
++++ src/main/xforms/test/AlertsComplex.xhtml	Fri Feb 19 18:18:43 CET 2010
+@@ -22,7 +22,7 @@
+ 			<xf:instance id="i-1" xmlns="">
+ 				<data>
+ 					<trigger/>
+-					<repeated>
++					<repeated relevant="true" readonly="false" constraint="true">
+ 						<item>
+ 							<input/>
+ 							<input/>
+@@ -68,17 +68,18 @@
+ 					</repeated>
+ 				</data>
+ 			</xf:instance>
+-			<xf:bind nodeset="repeated/item">
+-				<xf:bind nodeset="input[1]" constraint="string-length(.) &gt; 0"/>
+-				<xf:bind nodeset="input[2]" constraint="boolean-from-string(.) = true()" type="boolean"/>
+-				<xf:bind nodeset="input[3]" constraint="string-length(.) &gt; 0" type="date"/>
+-				<xf:bind nodeset="input[4]" constraint="string-length(.) &gt; 0" type="dateTime"/>
+-				<xf:bind nodeset="select1[1]" constraint=". = 'uk'"/>
+-				<xf:bind nodeset="select1[2]" constraint=". = 'uk'"/>
+-				<xf:bind nodeset="select1[3]" constraint=". = 'uk'"/>
+-				<xf:bind nodeset="select[1]" constraint=". = 'uk'"/>
+-				<xf:bind nodeset="select[2]" constraint=". = 'uk'"/>
++			<xf:bind nodeset="repeated/item" relevant="boolean-from-string(../@relevant)" readonly="boolean-from-string(../@readonly)">
+ 
++				<xf:bind nodeset="input[1]" constraint="string-length(.) &gt; 0 or boolean-from-string(../../@constraint)"/>
++				<xf:bind nodeset="input[2]" constraint="boolean-from-string(.) = true() or boolean-from-string(../../@constraint)" type="xf:boolean"/>
++				<xf:bind nodeset="input[3]" constraint="string-length(.) &gt; 0 or boolean-from-string(../../@constraint)" type="xf:date"/>
++				<xf:bind nodeset="input[4]" constraint="string-length(.) &gt; 0 or boolean-from-string(../../@constraint)" type="xf:dateTime"/>
++				<xf:bind nodeset="select1[1]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
++				<xf:bind nodeset="select1[2]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
++				<xf:bind nodeset="select1[3]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
++				<xf:bind nodeset="select[1]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
++				<xf:bind nodeset="select[2]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
++
+ 			</xf:bind>
+ 
+         <xf:submission id="s-debug" action="{$contextroot}/resources/jsp/debug-instance.jsp"
+@@ -95,13 +96,20 @@
+ 				<tr>
+ 					<td>
+ 						<xf:trigger>
+-							<xf:label>no appearance</xf:label>
++							<xf:label>no group</xf:label>
+ 							<xf:toggle case="noGroup"/>
+ 						</xf:trigger>
+ 
+ 					</td>
+ 					<td>
+ 						<xf:trigger>
++							<xf:label>no appearance</xf:label>
++							<xf:toggle case="noAppearance"/>
++						</xf:trigger>
++
++					</td>
++					<td>
++						<xf:trigger>
+ 							<xf:label>minimal</xf:label>
+ 							<xf:toggle case="minimalGroup"/>
+ 						</xf:trigger>
+@@ -124,22 +132,141 @@
+ 					<td>
+ 						<xf:trigger>
+ 							<xf:label>horizontal</xf:label>
+-							<xf:toggle case="horizontalColumn"/>
++							<xf:toggle case="horizontalTable"/>
+ 						</xf:trigger>
+ 
+ 					</td>
+ 					<td>
+ 						<xf:trigger>
+ 							<xf:label>vertical</xf:label>
+-							<xf:toggle case="verticalColumn"/>
++							<xf:toggle case="verticalTable"/>
+ 						</xf:trigger>
+ 
+ 					</td>
+ 				</tr>
++				<tr>
++					<td>
++					 	<xf:trigger>
++							 <xf:label>Relevance</xf:label>
++							 <xf:setvalue ref="repeated/@relevant" value="IF(.='true','false', 'true')" />
++					 	</xf:trigger>
++					</td>
++					<td>
++						<xf:trigger>
++							<xf:label>Readonly</xf:label>
++							<xf:setvalue ref="repeated/@readonly" value="IF(.='true','false', 'true')" />
++						</xf:trigger>
++
++					</td>
++					<td>
++						<xf:trigger>
++							<xf:label>Constraint</xf:label>
++							<xf:setvalue ref="repeated/@constraint" value="IF(.='true','false', 'true')" />
++						</xf:trigger>
++
++					</td>
++					<td>
++
++					</td>
++					<td>
++
++					</td>
++					<td>
++
++					</td>
++					<td>
++
++					</td>
++				</tr>
+ 			</table>
+ 		</xf:group>
+ 		<xf:switch>
+ 			<xf:case id="noGroup" selected="true">
++					<label for="noGroup" class="xfGroupLabel">without Group</label>
++
++					<xf:input ref="repeated/item[1]/input[1]">
++						<xf:label>Input 1:</xf:label>
++						<xf:alert>minimalGroup Input 1 Alert</xf:alert>
++						<xf:hint>minimalGroup Input 1 Hint </xf:hint>
++						<xf:help>minimalGroup Input 1 Help</xf:help>
++					</xf:input>
++					<xf:input ref="repeated/item[1]/input[2]">
++						<xf:label>Input 2:</xf:label>
++						<xf:alert>minimalGroup Input 2 Alert</xf:alert>
++						<xf:hint>minimalGroup Input 2 Hint </xf:hint>
++						<xf:help>minimalGroup Input 2 Help</xf:help>
++					</xf:input>
++					<xf:input ref="repeated/item[1]/input[3]">
++						<xf:label>Input 3:</xf:label>
++						<xf:alert>minimalGroup Input 3 Alert</xf:alert>
++						<xf:hint>minimalGroup Input 3 Hint </xf:hint>
++						<xf:help>minimalGroup Input 3 Help</xf:help>
++					</xf:input>
++					<xf:input ref="repeated/item[1]/input[4]">
++						<xf:label>Input 4:</xf:label>
++						<xf:alert>minimalGroup Input 4 Alert</xf:alert>
++						<xf:hint>minimalGroup Input 4 Hint </xf:hint>
++						<xf:help>minimalGroup Input 4 Help</xf:help>
++					</xf:input>
++
++					<xf:select1 class="select1Min" ref="repeated/item[1]/select1[1]" appearance="minimal">
++						<xf:label>Select1</xf:label>
++						<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
++							<xf:label ref="."/>
++							<xf:value ref="@value"/>
++						</xf:itemset>
++						<xf:alert>minimalGroup Select1 1 Alert</xf:alert>
++						<xf:hint>minimalGroup Select1 1 Hint </xf:hint>
++						<xf:help>minimalGroup Select1 1 Help</xf:help>
++
++					</xf:select1>
++
++
++					<xf:select1 class="select1Comp" ref="repeated/item[1]/select1[2]" appearance="compact">
++						<xf:label>Select1 [2]</xf:label>
++						<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
++							<xf:label ref="."/>
++							<xf:value ref="@value"/>
++						</xf:itemset>
++						<xf:alert>minimalGroup Select1 2 Alert</xf:alert>
++						<xf:hint>minimalGroup Select1 2 Hint </xf:hint>
++						<xf:help>minimalGroup Select1 2 Help</xf:help>
++					</xf:select1>
++
++					<xf:select1 class="select1Full" ref="repeated/item[1]/select1[3]" appearance="full">
++						<xf:label>Select1 [3]</xf:label>
++						<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
++							<xf:label ref="."/>
++							<xf:value ref="@value"/>
++						</xf:itemset>
++						<xf:alert>minimalGroup Select1 3 Alert</xf:alert>
++						<xf:hint>minimalGroup Select1 3 Hint </xf:hint>
++						<xf:help>minimalGroup Select1 3 Help</xf:help>
++					</xf:select1>
++
++
++					<xf:select class="selectMin" ref="repeated/item[1]/select[1]" appearance="minimal">
++						<xf:label>Select [1]</xf:label>
++						<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
++							<xf:label ref="."/>
++							<xf:value ref="@value"/>
++						</xf:itemset>
++						<xf:alert>minimalGroup Select 1 Alert</xf:alert>
++						<xf:hint>minimalGroup Select 1 Hint </xf:hint>
++						<xf:help>minimalGroup Select 1 Help</xf:help>
++					</xf:select>
++					<xf:select class="selectFull" ref="repeated/item[1]/select[2]" appearance="full">
++						<xf:label>Select [2]</xf:label>
++						<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
++							<xf:label ref="."/>
++							<xf:value ref="@value"/>
++						</xf:itemset>
++						<xf:alert>minimalGroup Select 2 Alert</xf:alert>
++						<xf:hint>minimalGroup Select 2 Hint </xf:hint>
++						<xf:help>minimalGroup Select 2 Help</xf:help>
++					</xf:select>
++			</xf:case>
++			<xf:case id="noAppearance" >
+ 				<xf:group ref=".">
+ 					<xf:label>Group without appearance</xf:label>
+ 
+@@ -488,9 +615,9 @@
+ 
+ 				</xf:group>
+ 			</xf:case>
+-			<xf:case id="horizontalColumn">
+-				<xf:group ref="repeated/item[1]" appearance="ca:horizontalColumn">
+-					<xf:label>HorizontalColumn Group</xf:label>
++			<xf:case id="horizontalTable">
++				<xf:group ref="repeated/item[1]" appearance="ca:horizontalTable">
++					<xf:label>horizontalTable Group</xf:label>
+ 
+ 					<xf:input ref="input[1]">
+ 						<xf:label>Input 1:</xf:label>
+@@ -576,9 +703,9 @@
+ 
+ 				</xf:group>
+ 			</xf:case>
+-			<xf:case id="verticalColumn">
+-				<xf:group ref="repeated/item[1]" appearance="ca:verticalColumn">
+-					<xf:label>VerticalColumn Group</xf:label>
++			<xf:case id="verticalTable">
++				<xf:group ref="repeated/item[1]" appearance="ca:verticalTable">
++					<xf:label>verticalTable Group</xf:label>
+ 
+ 					<xf:input ref="input[1]">
+ 						<xf:label>Input 1:</xf:label>
+Index: src/main/resources/xslt/dojo-dev.xsl
+===================================================================
+--- src/main/resources/xslt/dojo-dev.xsl	(revision 24)
++++ src/main/resources/xslt/dojo-dev.xsl	Mon Feb 22 13:15:24 CET 2010
+@@ -59,6 +59,8 @@
+                 dojo.require("betterform.ui.util");
+                 // needed for alert Handling
+                 dojo.require("dijit.Tooltip");
++                dojo.require("betterform.ui.container.Repeat");
++                dojo.require("betterform.ui.container.RepeatItem");
+ 
+                 <!--dojo.require("betterform.ui.container.Container");-->
+ 
+Index: src/main/resources/scripts/betterform/FluxProcessor.js
+===================================================================
+--- src/main/resources/scripts/betterform/FluxProcessor.js	(revision 79)
++++ src/main/resources/scripts/betterform/FluxProcessor.js	Mon Feb 22 13:15:24 CET 2010
+@@ -6,6 +6,8 @@
+ dojo.provide("betterform.FluxProcessor");
+ 
+ dojo.require("betterform.XFormsProcessor");
++dojo.require("betterform.mip.ValidityStateTable");
++dojo.require("betterform.mip.ValidityStateToolTip");
+ dojo.require("dojo.NodeList-fx");
+ dojo.require("betterform.ui.UIElementFactory");
+ dojo.require("dojox.layout.FloatingPane");
+@@ -32,7 +34,9 @@
+     webtest:'@WEBTEST@',
+     isReady:false,
+     contextroot:"",
++    validityToolTip:null,
++    validityTable:null,
+-     
++
+ /*
+     keepAlive: function() {
+         if(dwr.engine){
+@@ -52,6 +56,20 @@
+             dojo.connect(window,"onunload",this, "close");
+         }
+         this.skipshutdown = false;
++
++        // decide which Validity State Handler to implement;
++        dojo.require("betterform.mip.ValidityStateToolTip");
++        this.validityToolTip = new betterform.mip.ValidityStateToolTip({});
++
++        dojo.require("betterform.mip.ValidityStateTable");
++        this.validityTable = new betterform.mip.ValidityStateTable({});
++
++        console.debug("Validity State Handler created:",
++                    "\nToolTip " ,this.validityStateHandler,
++                    "\nTable " , this.validityStateHandler);
++
++
++
+         try {
+             console.debug("contextroot + \"/Flux\": " + fluxAttribute("contextroot") + "/Flux" );
+             Flux._path = fluxAttribute("contextroot") + "/Flux";
+@@ -166,10 +184,18 @@
+         // console.debug("FluxProcessor._useLoadingMessage");
+         try {
+             dwr.engine.setPreHook(function() {
+-                document.getElementById('indicator').className = 'xfEnabled';
++                dojo.query(".xfRepeatIndex *[name='indicator']").forEach(
++                     function(item, index, array){
++                          dojo.style(item,"display","block");
++                     }
++                );
+             });
+             dwr.engine.setPostHook(function() {
+-                document.getElementById('indicator').className = 'xfDisabled';
++                dojo.query("*[name='indicator']").forEach(
++                     function(item, index, array){
++                         dojo.style(item,"display","none");
++                     }
++                );
+             });
+         }
+         catch(ex){
+@@ -225,17 +251,25 @@
+                     case "DOMFocusIn"               : fluxProcessor._handleDOMFocusIn(xmlEvent); break;
+                     case "xforms-out-of-range"      : fluxProcessor._handleOutOfRange(xmlEvent);break;
+                     case "xforms-in-range"          :fluxProcessor._handleInRange(xmlEvent);break;
++                    case "xforms-valid"             : dojo.publish("/xf/validity/"+xmlEvent.contextInfo.targetId,[xmlEvent.contextInfo.targetId,true,"applyChanges"]);break;
++                    case "xforms-invalid"           : dojo.publish("/xf/validity/"+xmlEvent.contextInfo.targetId,[xmlEvent.contextInfo.targetId,false,"applyChanges"]);break;
+ 
++/*
++                    case "xforms-invalid"           :fluxProcessor._handleValidity(xmlEvent,false);break;
++                    case "xforms-valid"             :fluxProcessor._handleValidity(xmlEvent,true);break;
++
++                    case "xforms-valid"             : dojo.publish("/xf/alert/hide/"+xmlEvent.contextInfo.targetId,[xmlEvent.contextInfo.targetId]);break;
++                    case "xforms-invalid"           : dojo.publish("/xf/alert/show/"+xmlEvent.contextInfo.targetId,[xmlEvent.contextInfo.targetId]);break;
++*/
++
+                     /* default handling for known events */
+                     case "betterform-id-generated"       :
+                     case "DOMActivate"              :
+                     case "xforms-select"            :
+                     case "xforms-deselect"          :
+                     case "DOMFocusOut"              :
+-                    case "xforms-invalid"           :
+                     case "xforms-model-construct"   :
+-                    case "xforms-model-construct-done":
+-                    case "xforms-valid"             :  break;
++                    case "xforms-model-construct-done":break;
+                     case "xforms-ready"             :  this.isReady=true;break; //not perfect - should be on XFormsModelElement
+                     case "xforms-submit"            :
+                     case "xforms-submit-done"       : break;
+@@ -248,6 +282,13 @@
+         console.groupEnd();
+     },
+ 
++    _handleValidity:function(xmlEvent, validity) {
++        var control = dijit.byId(xmlEvent.contextInfo.targetId);
++        if(control != undefined) {
++            control._handleSetValidProperty(validity);
++        }
++    },
++
+     _handleBindingException:function(xmlEvent){
+         if(this.webtest != 'true') {
+             console.error("xforms-binding-exception at " + xmlEvent.contextInfo.targetId + " - " + xmlEvent.contextInfo.defaultinfo);
+@@ -285,26 +326,39 @@
+             to embed an existing form into the running form
+          */
+         else if(xmlEvent.contextInfo.show == "embed"){
++            // getting target from event - can be either the value of a 'name' or 'id' Attribute
+             var xlinkTarget = xmlEvent.contextInfo.xlinkTarget;
+-            // remove existing child of mount point
+-            this._unloadDOM(xmlEvent.contextInfo.xlinkTarget);
+-                
++
++            //determine the DOM Element in the client DOM which is the target for embedding
++            var targetid ;
++            if(dojo.byId(xlinkTarget) != undefined){
++                targetid=xlinkTarget;
++            }else{
++                // if we reach here the xlinkTarget is no idref but the value of a name Attrbute that needs resolving
++                // to an id.
++                var tmp = dojo.query("*[name='" + xlinkTarget + "']")[0];
++                targetid = tmp.id;
++                console.debug("target id for embedding is: ",targetid);
++            }
+ 
+-            var htmlEntryPoint = dojo.byId(xlinkTarget);
+-            // HACK to replace mountPoint with the embeded form (because FluxProcessor returns XML to insert as String)
+-            // TODO: replace hack
++            this._unloadDOM(targetid);
+ 
++            //get original Element in master DOM
++            var htmlEntryPoint = dojo.byId(targetid);
+             htmlEntryPoint.innerHTML = xmlEvent.contextInfo.targetElement;
+             dojo.attr(htmlEntryPoint, "id", xlinkTarget + "Old");
+-            var domToReplace = dojo.byId(xlinkTarget);
+-            // console.debug("betterform-load-uri show=embed : inserting DOM into target: " ,domToReplace);
+-            // console.dirxml(domToReplace);
++            var nodesToEmbed = dojo.byId(targetid);
++
+             dojo.require("dojo.parser");
+             dojo.parser.parse(htmlEntryPoint);
+ 
+-            dojo.place(domToReplace, htmlEntryPoint, "before");
+-            htmlEntryPoint.parentNode.removeChild(htmlEntryPoint);
++            dojo.place(nodesToEmbed, htmlEntryPoint, "before");
++            dojo.fx.wipeIn({node: nodesToEmbed,duration: 500}).play();
+-
++            
++            //copy classes from mountpoint
++            var classes = dojo.attr(htmlEntryPoint,"class");
++            dojo.attr(nodesToEmbed,"class",classes);
++            htmlEntryPoint.parentNode.removeChild(htmlEntryPoint);
+         }
+         /*  xf:load show=none
+               to unload (loaded) subforms
+@@ -362,6 +416,7 @@
+             this.logTestMessage(message);
+         }
+     },
++
+     _handleOutOfRange:function(xmlEvent){
+ /*
+         var message = "Value for ui control '" + xmlEvent.contextInfo.targetName + "' (id:"+xmlEvent.contextInfo.targetId+") is out of range";
+@@ -500,9 +555,9 @@
+                     console.warn("FluxProcessor._handleBetterFormStateChanged: don't know how to handle xmlEvent: ",xmlEvent, " for target: " + xmlEvent.contextInfo.targetId +" [",xmlEvent.contextInfo.targetName , "]");
+                 }
+         }
+-
++        // HANDLING XF:COPY FOR ALL SELECTS
+         else if(xmlEvent.contextInfo.targetName != undefined  && xmlEvent.contextInfo.targetName == "select1" && xmlEvent.contextInfo.copyItem != undefined){
+-            // console.debug("FluxProcessor._handleBetterFormStateChanged xf:copy handling: xmlEvent: ",xmlEvent, " contextInfo: ", xmlEvent.contextInfo);
++            console.debug("FluxProcessor._handleBetterFormStateChanged xf:copy handling: xmlEvent: ",xmlEvent, " contextInfo: ", xmlEvent.contextInfo);
+             var warningMsg = "FluxProcessor._handleBetterFormStateChanged: Select1 ControlValue " + xmlEvent.contextInfo.targetId + "-value: No item selected"
+             var select1 = dojo.byId(xmlEvent.contextInfo.targetId+"-value");
+             if(select1 != undefined) {
+Index: src/main/resources/scripts/betterform/ui/trigger/LinkButton.js
+===================================================================
+--- src/main/resources/scripts/betterform/ui/trigger/LinkButton.js	(revision 45)
++++ src/main/resources/scripts/betterform/ui/trigger/LinkButton.js	Sun Feb 21 17:13:02 CET 2010
+@@ -34,15 +34,6 @@
+         }
+     },
+ 
+-    applyState:function(){
+-        if(this.xfControl.isReadonly()){
+-            dojo.attr(this.domNode,"disabled","disabled");
+-        }else{
+-             this.domNode.removeAttribute("disabled");
+-        }
+-    },
+-
+-
+     getControlValue:function(){
+         console.warn("TBD: betterform.ui.trigger.Button.getControlValue");
+         return dojo.attr(this.domNode,"value");
+Index: web/src/main/webapp/WEB-INF/web.xml
+===================================================================
+--- web/src/main/webapp/WEB-INF/web.xml	(revision 128)
++++ web/src/main/webapp/WEB-INF/web.xml	Fri Feb 19 18:58:38 CET 2010
+@@ -1,6 +1,5 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+-<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
++<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+     <display-name>betterForm</display-name>
+     <context-param>
+ 		<param-name>betterform.configfile</param-name>
+@@ -25,7 +24,7 @@
+ 		<filter-class>de.betterform.agent.web.filter.XFormsFilter</filter-class>
+         <init-param>
+             <param-name>useragent</param-name>
+-            <param-value>dojo</param-value>
++            <param-value>dojodev</param-value>
+         </init-param>
+     </filter>
+ 
+@@ -65,7 +64,6 @@
+             <param-value>true</param-value>
+         </init-param>
+ 
+-        <!-- DEPRECATED -->
+ <!--
+ 		This entry may be uncommented to use relative paths in the served html-forms. Remember change the
+ 		betterform.forms.uri.relative parameter of XFormsServlet as well.
+@@ -98,14 +96,6 @@
+ 
+ 
+ <!--
+-	<servlet-mapping>
+-        <servlet-name>foo</servlet-name>
+-        <url-pattern>/</url-pattern>
+-    </servlet-mapping>
+--->
+-
+-
+-<!--
+     This is an example servlet that can be used in conjunction with XFormsFilter by
+     attaching the filter to this Servlet. This only parses the requested form document
+     and passes the DOM along as a request attribute that will be picked up by the XFormsFilter.
+@@ -124,12 +114,18 @@
+         <servlet-class>de.betterform.agent.web.servlet.ViewServlet</servlet-class>
+     </servlet>
+ 
++<!--
++	<servlet-mapping>
++        <servlet-name>foo</servlet-name>
++        <url-pattern>/</url-pattern>
++    </servlet-mapping>
++-->
+     <servlet>
+         <servlet-name>XFormsServlet</servlet-name>
+         <servlet-class>de.betterform.agent.web.servlet.XFormsRepeater</servlet-class>
+         <init-param>
+             <param-name>useragent</param-name>
+-            <param-value>dojo</param-value>
++            <param-value>dojodev</param-value>
+         </init-param>
+     </servlet>
+ 	<servlet-mapping>
+Index: src/main/resources/scripts/betterform/ui/select/MultiSelect.js
+===================================================================
+--- src/main/resources/scripts/betterform/ui/select/MultiSelect.js	(revision 24)
++++ src/main/resources/scripts/betterform/ui/select/MultiSelect.js	Fri Feb 19 18:16:01 CET 2010
+@@ -97,7 +97,7 @@
+ 
+     getControlValue:function() {
+         // console.debug("MultiSelect.getControlValue() this.getValue():",this.getValue());
+-        var returnvalue = this.getValue().join(" ");
++        var returnvalue = this.attr('value').join(" ");
+         if(this.openSelection) {
+             if(this.freeTextValue == "" && returnvalue == undefined){
+                 returnvalue = "";
+Index: src/main/resources/scripts/betterform/ui/ControlValue.js
+===================================================================
+--- src/main/resources/scripts/betterform/ui/ControlValue.js	(revision 29)
++++ src/main/resources/scripts/betterform/ui/ControlValue.js	Mon Feb 22 00:24:11 CET 2010
+@@ -22,10 +22,8 @@
+     name:"",
+     xfControl:null,
+     incremental:false,
+-    currentValue:"",
++    currentValue:"",    
+-    alertTooltip:null,
+     focused:false,
+-    hideAlertOnFocus:false,
+ 
+ 
+     applyProperties:function(xfControl, node) {
+@@ -54,34 +52,44 @@
+         this.domNode.focus();
+     },
+ 
++
+     handleOnFocus:function() {
+         //storing current control id for handling help
+-        // console.debug("ControlValue.handleOnFocus storing current control id:", this.id);
++        // console.debug("ControlValue.handleOnFocus storing current control id:", this.id, " value: ",this.currentValue);
++
+         fluxProcessor.currentControlId = this.xfControl.id;
+-        if (!this.xfControl.isValid()) {
+-            dojo.addClass(this.focusNode, "caDisplayInvalid");
+-            this.showAlert();
++
++        if(!this.focused){
++            fluxProcessor.dispatchEventType(this.xfControl.id,"DOMFocusIn");
+         }
+ 
+-        if(!this.focused){  fluxProcessor.dispatchEventType(this.xfControl.id,"DOMFocusIn");}
+         this.focused = true;
++
++        dojo.publish("/xf/validity/"+this.xfControl.id,[this.xfControl.id, this.xfControl.isValid(), "onFocus"]);
+     },
+ 
++    /*
++    * - show alert if any
++    * - hide hint if any
++    */
++    /*former handle onBlur */
++
+     handleOnBlur:function() {
+         // console.debug("ControlValue.handleOnBlur");
+-        if(this.hideAlertOnFocus){
+-            this.hideAlert();
+-        }
+         this.focused = false;
++
++        dojo.publish("/xf/validity/"+this.xfControl.id,[this.xfControl.id,this.xfControl.isValid(),"onBlur"]);
++
++
+         if(!this.incremental){
+             this.setControlValue();
+         }
+-        this.handleEmptyRequired();
++        // TODO: change handleEmpmtyRequired to activeCommonChild logic
++        // this.handleEmptyRequired();
+         fluxProcessor.dispatchEventType(this.xfControl.id,"DOMFocusOut");
+-
+-        //add 'xfRequiredEmpty' class
+     },
+     
++    // TODO: change handleEmpmtyRequired to activeCommonChild logic
+     handleEmptyRequired:function() {
+         // console.debug("handleEmptyRequired: isRequired=" + this.xfControl.isRequired(), " currentValue: ",this.currentValue, " getValue: ",this.getControlValue());
+         if (this.xfControl.isRequired() && this.currentValue == "" && this.getControlValue() == "") {
+@@ -106,61 +114,36 @@
+         }
+     },
+ 
+-    showAlert:function() {
+-        if (this.alertTooltip == undefined) {
+-            this.alertTooltip = new dijit._MasterTooltip();
+-        }
+-        var alert = dojo.byId(this.xfControl.id + '-alert');
+-        if (alert != undefined) {
+-            this.alertTooltip.show(alert.innerHTML, this.domNode);
+-        }
+-    },
+ 
+-
+-    hideAlert:function() {
+-        if (this.alertTooltip != undefined) {
+-            this.alertTooltip.hide(this.domNode);
+-        }
+-    },
+-
+     /*
+      only needs to check if XForms MIP readonly is true and disable control in that case. The value itself
+      is already present and other MIPs are entirely managed through CSS.
+      */
+-    displayValidity:function(/*Boolean*/ valid) {
+-        // console.debug("ControlValue.displayValidity (id:" + this.id +")");
+-        if (valid) {
+-            dojo.removeClass(this.domNode, "caDisplayInvalid");
+-            this.hideAlert();
+-        } else {
+-            dojo.addClass(this.domNode, "caDisplayInvalid");
+-            if(this.focused || !this.hideAlertOnFocus){
+-                this.showAlert();
+-            }
+-        }
+-    },
+-
+     applyState:function() {
++        // console.debug("ControlValue.applyState (id:" + this.id +")");
+         if (this.xfControl.isReadonly()) {
+             this.attr('disabled', true);
++            this.attr('readonly', true);
+         } else {
+             this.attr('disabled', false);
++            this.attr('readonly', false);
+         }
+     },
+ 
+     setControlValue:function(value) {
+-        console.debug("ControlValue.setControlValue: [id", this.id, " / value: ",value,"] currentValue: ",this.currentValue, " getControlValue", this.getControlValue());
++        // console.debug("ControlValue.setControlValue: [id", this.id, " / value: ",value,"] currentValue: ",this.currentValue, " getControlValue", this.getControlValue());
+         if (value != undefined && this.currentValue != value) {
+             this.currentValue = value;
+             this._handleSetControlValue(value);
+         }
+         var valueNew = this.getControlValue();
+-        console.debug("betterform.ui.ControlValue.setControlValue ControlId: "+ this.xfControl.id +" valueOld:'" + this.currentValue + "' valueNew:'" + valueNew + "' [update processor:'" + eval(this.currentValue != valueNew) + "']");
++        // console.debug("betterform.ui.ControlValue.setControlValue ControlId: "+ this.xfControl.id +" valueOld:'" + this.currentValue + "' valueNew:'" + valueNew + "' [update processor:'" + eval(this.currentValue != valueNew) + "']");
+         if (this.currentValue != valueNew) {
+             this.xfControl.setControlValue(valueNew);
+             this.currentValue = valueNew;
+         }
+     },
++
+     _setLabel:function(value) {
+         var label = dojo.byId(this.xfControl.id + "-label");
+         if (label != undefined && value != undefined) {
+Index: web/src/main/java/de/betterform/agent/web/event/EventQueue.java
+===================================================================
+--- web/src/main/java/de/betterform/agent/web/event/EventQueue.java	(revision 83)
++++ web/src/main/java/de/betterform/agent/web/event/EventQueue.java	Mon Feb 22 13:30:37 CET 2010
+@@ -71,7 +71,7 @@
+             if(isLoadEmbedEvent(clonedEvent)){
+                 this.loadEmbedEventList.add(clonedEvent);
+             }else {
+-	        this.eventList.add(clonedEvent);
++                this.eventList.add(clonedEvent);    
+             }
+ 
+     	} catch (CloneNotSupportedException e) {
+@@ -98,7 +98,7 @@
+         if(xmlEvent.getType() == null || xmlEvent.getContextInfo() == null) {
+             return false;
+         }
+-        if(xmlEvent.getType().equals(BetterFormEventNames.LOAD_URI) && "embed".equals(xmlEvent.getContextInfo("show"))){
++        if(xmlEvent.getType().equals(BetterFormEventNames.LOAD_URI) &&( "embed".equals(xmlEvent.getContextInfo("show")) || "none".equals(xmlEvent.getContextInfo("show")))){
+             return true;
+         }
+         return false;
+@@ -129,7 +129,7 @@
+         for(XMLEvent xmlEvent: this.loadEmbedEventList){
+             aggregatedEventList.add(xmlEvent);
+         }
+-
++        
+         this.loadEmbedEventList.clear();
+ 
+         for(int i =0;i< eventList.size(); i++) {
+Index: src/main/resources/scripts/betterform/mip/Validity.js
+===================================================================
+--- src/main/resources/scripts/betterform/mip/Validity.js	Mon Feb 22 01:01:54 CET 2010
++++ src/main/resources/scripts/betterform/mip/Validity.js	Mon Feb 22 01:01:54 CET 2010
+@@ -0,0 +1,41 @@
++dojo.provide("betterform.mip.Validity");
++dojo.require("dijit._Widget");
++
++
++dojo.declare("betterform.mip.Validity",
++        dijit._Widget,
++{
++   
++    adjustValidateState:function(id,valid,action) {
++        // console.debug("Validity.adjustValidateState: id: ", id, " valid: ", valid, " action:",action);
++     
++        var control = dijit.byId(id);
++        if(valid == undefined || control == undefined) {
++            console.warn("Validity.adjustValidateState valid state could not be applied: id: ", id, " valid: ", valid, " action:",action);
++        }
++        if(valid == true) {
++            betterform.ui.util.replaceClass(control.domNode, "xfInvalid","xfValid");
++            this.handleValid(id,action,control);
++        }else if(valid == false){
++            betterform.ui.util.replaceClass(control.domNode, "xfValid", "xfInvalid");
++            this.handleInvalid(id,action,control);
++        } else {
++            console.warn("Validity.adjustValidateState unknown valid state could not be applied: id: ", id, " valid: ", valid, " action:",action)
++        }
++    },
++
++    /*
++     ###########################################################################################################
++     ####################                     Abstract Methods                              ####################
++     ####################      Methods must be implemented by extending Classes             ####################
++     ###########################################################################################################
++     */
++    handleValid:function(id,action,control){
++        console.error("betterform.ui.ControlValue: abstract methods _handleSetControlValue() must be implemented by extending class ", this);
++    },
++    handleInvalid:function() {
++        console.error("betterform.ui.ControlValue: abstract methods getControlValue() must be implemented by extending class ", this);
++    }
++
++
++});
+Index: core/src/main/java/de/betterform/xml/xforms/model/Model.java
+===================================================================
+--- core/src/main/java/de/betterform/xml/xforms/model/Model.java	(revision 23)
++++ core/src/main/java/de/betterform/xml/xforms/model/Model.java	Mon Feb 22 11:53:25 CET 2010
+@@ -1098,7 +1098,8 @@
+     }
+ 
+     private XSLoader getSchemaLoader() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+-         System.setProperty(DOMImplementationRegistry.PROPERTY, "org.apache.xerces.dom.DOMXSImplementationSourceImpl");
++        //  System.setProperty(DOMImplementationRegistry.PROPERTY, "org.apache.xerces.dom.DOMXSImplementationSourceImpl");
++
+         DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
+         XSImplementation implementation = (XSImplementation) registry.getDOMImplementation("XS-Loader");
+         XSLoader loader = implementation.createXSLoader(null);
+Index: src/main/resources/scripts/betterform/XFormsModelElement.js
+===================================================================
+--- src/main/resources/scripts/betterform/XFormsModelElement.js	(revision 24)
++++ src/main/resources/scripts/betterform/XFormsModelElement.js	Fri Feb 19 17:02:27 CET 2010
+@@ -68,12 +68,19 @@
+     },
+     _useLoadingMessage:function(){
+         dwr.engine.setPreHook(function() {
+-             document.getElementById('indicator').className = 'xfEnabled';
++                dojo.query(".xfRepeatIndex *[name='indicator']").forEach(
++                     function(item, index, array){
++                          dojo.style(item,"display","block");
++                     }
++                );
+-        });
++            });
+-
+-        dwr.engine.setPostHook(function() {
++            dwr.engine.setPostHook(function() {
+-             document.getElementById('indicator').className = 'xfDisabled';
++                dojo.query("*[name='indicator']").forEach(
++                     function(item, index, array){
++                         dojo.style(item,"display","none");
++                     }
++                );
+-        });
++            });
+     }
+ 
+ });
+Index: src/main/resources/scripts/betterform/ui/select1/RadioGroup.js
+===================================================================
+--- src/main/resources/scripts/betterform/ui/select1/RadioGroup.js	(revision 140)
++++ src/main/resources/scripts/betterform/ui/select1/RadioGroup.js	Sun Feb 21 17:13:02 CET 2010
+@@ -68,9 +68,7 @@
+ 
+     _onBlur:function() {
+         this.inherited(arguments);
+-        if (!this.incremental) {
+             this.handleOnBlur();
+-        }
+     },
+ 
+     _setRadioGroupValue:function() {
+@@ -127,7 +125,7 @@
+             var optionDOM = dojo.byId(dojo.attr(radioItems[i],"widgetId"));
+             // console.debug("OptionDOM: ", optionDOM, " radioItem["+i+"]" ,radioItems[i]);
+ 
+-            if(this.xfControl.isReadonly() && optionDOM != undefined){
++           if (this.xfControl.isReadonly() && optionDOM != undefined){
+                 dojo.attr(optionDOM,"disabled","disabled");
+             } else if(optionDOM != undefined){
+                  optionDOM.removeAttribute("disabled");
+Index: src/test/resources/XFormsTestSuite1.1E1/Edition1/driverPages/Results/useragents/XF11_10_Results-Linux-Debian-2-6.29-Iceweasel-3.0.xml
+===================================================================
+--- src/test/resources/XFormsTestSuite1.1E1/Edition1/driverPages/Results/useragents/XF11_10_Results-Linux-Debian-2-6.29-Iceweasel-3.0.xml	(revision 9)
++++ src/test/resources/XFormsTestSuite1.1E1/Edition1/driverPages/Results/useragents/XF11_10_Results-Linux-Debian-2-6.29-Iceweasel-3.0.xml	Sun Feb 21 21:25:06 CET 2010
+@@ -293,7 +293,7 @@
+             <testCaseStatus>Failed</testCaseStatus>
+             <testCaseDate>2009-06-22</testCaseDate>
+             <testCaseRequired>true</testCaseRequired>
+-            <testCaseNote>node is undefiend message</testCaseNote>
++            <testCaseNote>node is undefined message</testCaseNote>
+         </testCase>
+         <testCase>
+             <testCaseSection>10.3</testCaseSection>
+@@ -996,4 +996,4 @@
+             <testCaseNote/>
+         </testCase>
+     </specChapter>
+-</testSuite>
+\ No newline at end of file
++</testSuite>
+Index: src/main/resources/scripts/betterform/ui/input/Date.js
+===================================================================
+--- src/main/resources/scripts/betterform/ui/input/Date.js	(revision 140)
++++ src/main/resources/scripts/betterform/ui/input/Date.js	Mon Feb 22 01:13:33 CET 2010
+@@ -37,6 +37,9 @@
+         this.inherited(arguments);
+     },
+ 
++    /* overwritten function of superclass ValidationTextBox */
++    validate: function(/*Boolean*/ isFocused){},
++
+     getControlValue:function(){
+         // console.debug("chiab.ui.input.Date.getControlValue for Control "+ this.id +": ",this.getValue() + " attr: ",this.attr('value'));
+         var currentDate;
+@@ -59,7 +62,8 @@
+             this._setValueAttr("");    
+         }
+         else {
+-            this._setValueAttr(dojo.date.stamp.fromISOString(date,this.constraint));
++            // this._setValueAttr(dojo.date.stamp.fromISOString(date,this.constraint));
++            this._setValueAttr(this.parse(date, this.constraints), false, date);
+         }
+     }
+ 
+Index: src/main/resources/scripts/betterform/ui/Control.js
+===================================================================
+--- src/main/resources/scripts/betterform/ui/Control.js	(revision 24)
++++ src/main/resources/scripts/betterform/ui/Control.js	Mon Feb 22 01:47:01 CET 2010
+@@ -46,6 +46,7 @@
+     contextInfo:null,
+     tabindex:0,
+     appearance:"",
++    activeCommonChild:"init",
+ 
+     buildRendering: function(){
+             // we already have the srcNodeRef, so lets just
+@@ -68,79 +69,96 @@
+             if(controlValueTemplate == undefined){
+                 controlValueTemplate = dojo.query(".xfValue", this.domNode)[0];
+             }
+-            // ControlValue node does not exist
++            // Child node CntrolValue does not exist, ControlValueTemplate is created dynamicly
+             if (controlValueTemplate == undefined) {
+-               // console.debug("Control.postCreate XFControl " + this.id + " has no value node! Value node is created based on ContextInfo: ", this.contextInfo, " domNode:",this.domNode);
++                controlValueTemplate = this._createControlValueTemplate();
++            }
++            // ControlValue node exists and a dijit is created
++            else {
++                this.dataType = betterform.ui.util.removeNamespace(dojo.attr(controlValueTemplate, "datatype"));
++                this.controlType = dojo.attr(controlValueTemplate, "controltype");
++            }
+ 
++            this.controlValue = fluxProcessor.factory.createWidget(controlValueTemplate, this.id);
++
++            if(this.controlValue != undefined){
++                // apply MIP states
++                this.controlValue.applyState();
++            }
++            
++            var validityState =dijit.byId('betterFORM_ValidityStateTable');
++            // console.debug("subscribte to ValidityState dijit: ", validityState);
++            dojo.subscribe("/xf/validity/"+this.id ,validityState, "adjustValidateState");
++            dojo.publish("/xf/validity/"+this.id,[
++		    							this.id,
++		    							this.isValid(),"init"
++									]
++						);
++        }
++    },
++
++    /**
++     * Create a ControlValue template of properties taken from Control 
++     */
++    _createControlValueTemplate:function() {
++        console.debug("Control.createControlValueTemplate XFControl " + this.id + " has no value node! Value node is created based on ContextInfo: ", this.contextInfo, " domNode:",this.domNode);
++
+-                // prepare Control Node
++        // prepare Control Node
+-                if(this.contextInfo.type != undefined && this.contextInfo.type !=""){
++        if (this.contextInfo.type != undefined && this.contextInfo.type != "") {
+-                    var cssDataType = betterform.ui.util.removeNamespace(this.contextInfo.type);
++            var cssDataType = betterform.ui.util.removeNamespace(this.contextInfo.type);
+-                    cssDataType = "xsd" + cssDataType.replace(/^[a-z]/,cssDataType.substring(0,1).toUpperCase())
++            cssDataType = "xsd" + cssDataType.replace(/^[a-z]/, cssDataType.substring(0, 1).toUpperCase())
+-                    if(dojo.hasClass(this.domNode, "xsd")){
++            if (dojo.hasClass(this.domNode, "xsd")) {
+-                        betterform.ui.util.replaceClass(this.domNode, "xsd",cssDataType);
++                betterform.ui.util.replaceClass(this.domNode, "xsd", cssDataType);
+-                    }else {
++            } else {
+-                        dojo.addClass(this.domNode, cssDataType);
+-                    }
++                dojo.addClass(this.domNode, cssDataType);
++            }
+-                } else if(dojo.hasClass(this.domNode, "xsd")){
++        } else if (dojo.hasClass(this.domNode, "xsd")) {
+-                    console.warn("Control.postCreate Control " + this.id + " has no type but xsd on it's prototype");
+-                }
+-                this._updateMIPClasses();
++            console.warn("Control.postCreate Control " + this.id + " has no type but xsd on it's prototype");
++        }
++        this._updateMIPClasses();
+-                controlValueTemplate = document.createElement("div");
+ 
++        var controlValueTemplate = document.createElement("div");
++
+-                this.dataType = betterform.ui.util.removeNamespace(this.contextInfo.type);
+-                this.controlType = this.contextInfo.targetName;
++        this.dataType = betterform.ui.util.removeNamespace(this.contextInfo.type);
++        this.controlType = this.contextInfo.targetName;
+ 
+-                // add attributes
+-                dojo.attr(controlValueTemplate, "dataType", this.dataType);
++        // add attributes
++        dojo.attr(controlValueTemplate, "dataType", this.dataType);
+-                dojo.attr(controlValueTemplate, "controlType", this.controlType );
++        dojo.attr(controlValueTemplate, "controlType", this.controlType);
+-                if(this.contextInfo.value != undefined && this.dataType == "date") {
++        if (this.contextInfo.value != undefined && this.dataType == "date") {
+-                    this.controlType = dojo.attr(controlValueTemplate, "schemaValue", this.contextInfo.schemaValue);
+-                }
++            this.controlType = dojo.attr(controlValueTemplate, "schemaValue", this.contextInfo.schemaValue);
++        }
+-                if(this.contextInfo.targetId != undefined) {
++        if (this.contextInfo.targetId != undefined) {
+-                    this.controlType = dojo.attr(controlValueTemplate, "id", this.contextInfo.targetId+"-value");
++            this.controlType = dojo.attr(controlValueTemplate, "id", this.contextInfo.targetId + "-value");
+-                }
++        }
+-                if(dojo.attr(this.domNode, "appearance")!=undefined) {
++        if (dojo.attr(this.domNode, "appearance") != undefined) {
+-                    this.appearance = dojo.attr(this.domNode, "appearance");
+-                    dojo.attr(controlValueTemplate, "appearance", this.appearance);
+-                }
++            this.appearance = dojo.attr(this.domNode, "appearance");
++            dojo.attr(controlValueTemplate, "appearance", this.appearance);
++        }
+-                if(dojo.attr(this.domNode, "mediatype")!=undefined) {
++        if (dojo.attr(this.domNode, "mediatype") != undefined) {
+-                    this.appearance = dojo.attr(this.domNode, "mediatype");
+-                    dojo.attr(controlValueTemplate, "mediatype", this.appearance);
+-                }
++            this.appearance = dojo.attr(this.domNode, "mediatype");
++            dojo.attr(controlValueTemplate, "mediatype", this.appearance);
++        }
+ 
+-                // place value as child of valueNode
++        // place value as child of valueNode
+-                if(this.contextInfo.targetName != "trigger") {
++        if (this.contextInfo.targetName != "trigger") {
+-                    controlValueTemplate.innerHTML = this.contextInfo.value;
++            controlValueTemplate.innerHTML = this.contextInfo.value;
+-                }else {
++        } else {
+-                    // console.debug("this.contextInfo.targetName == trigger contextinfo: ", this.contextInfo, " controlValueTemplate: ",controlValueTemplate);
++            // console.debug("this.contextInfo.targetName == trigger contextinfo: ", this.contextInfo, " controlValueTemplate: ",controlValueTemplate);
+-                    dojo.attr(controlValueTemplate,"label" ,this.srcNodeRef.innerHTML);
++            dojo.attr(controlValueTemplate, "label", this.srcNodeRef.innerHTML);
+-                    this.domNode.innerHTML = ""; 
+-                }
++            this.domNode.innerHTML = "";
++        }
+ 
+-                // add classes
+-                dojo.addClass(controlValueTemplate, "xfValue");
+-                // insert ControlValue node
++        // add classes
++        dojo.addClass(controlValueTemplate, "xfValue");
++        // insert ControlValue node
+-                dojo.place(controlValueTemplate,this.domNode);
++        dojo.place(controlValueTemplate, this.domNode);
+ 
+-                // incremental handling
++        // incremental handling
+-                if(dojo.hasClass(this.domNode,"xfIncremental")) {
++        if (dojo.hasClass(this.domNode, "xfIncremental")) {
+-                    dojo.attr(controlValueTemplate,"incremental","true");
++            dojo.attr(controlValueTemplate, "incremental", "true");
+-                }
++        }
+-                this.controlValue = fluxProcessor.factory.createWidget(controlValueTemplate, this.id);
+-                // console.debug("Created ControlValue:",this.controlValue);
+-
+-            }
+-            // ControlValue node does allready exist
+-            else {
+-                this.dataType = betterform.ui.util.removeNamespace(dojo.attr(controlValueTemplate, "datatype"));
+-                this.controlType = dojo.attr(controlValueTemplate, "controltype");
+-                this.controlValue = fluxProcessor.factory.createWidget(controlValueTemplate, this.id);                
+-            }
+-            if(this.controlValue != undefined){
+-                this.controlValue.applyState();
+-            }
+-
+-        }
++        return controlValueTemplate;
+     },
+ 
+     
+@@ -223,11 +241,10 @@
+             this._handleHelperChanged(contextInfo);
+         }else{
+             this.value =  contextInfo["value"];
+-            this.valid = contextInfo["valid"];
+             this.readonly = contextInfo["readonly"];
+             this.required = contextInfo["required"];
+             this.relevant = contextInfo["enabled"];
+-            // console.debug("Control.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant), " contextInfo:",contextInfo;
++            // console.debug("Control.handleStateChanged value:",this.value," readonly:",this.readonly," required:",this.required, " relevant:",this.relevant), " contextInfo:",contextInfo;
+             
+             if(contextInfo["targetName"]=="input" && this.value != null){
+                 var noNSType = betterform.ui.util.removeNamespace(contextInfo["type"]);
+@@ -242,10 +259,6 @@
+             }else if(this.value != null) {
+                 this._handleSetControlValue(this.value);
+             }
+-
+-            if (this.valid != null) {
+-                this._handleSetValidProperty(eval(this.valid));
+-            }
+             if (this.readonly != null) {
+                 this._handleSetReadonlyProperty(eval(this.readonly));
+             }
+@@ -325,45 +338,26 @@
+     },
+ 
+ 
+-
+-    _handleSetValidProperty:function(){
+-        // console.debug("Control._handleSetValidProperty (id:"+this.id+")");
+-        if (this.valid == "true") {
+-            betterform.ui.util.replaceClass(this.domNode, "xfInvalid", "xfValid");
+-            this.controlValue.displayValidity(true);
+-            dojo.publish("/xf/valid",[this])
+-        }
+-        else {
+-            betterform.ui.util.replaceClass(this.domNode, "xfValid", "xfInvalid");
+-            this.controlValue.displayValidity(false);
+-            dojo.publish("/xf/invalid",[this])
+-        }
+-
+-    },
+-
+     _handleSetReadonlyProperty: function(){
+         if (eval(this.readonly) == false) {
+             betterform.ui.util.replaceClass(this.domNode, "xfReadOnly", "xfReadWrite");
+-            // dojo.publish("/xf/readwrite",[this])
+         }
+         else {
+             betterform.ui.util.replaceClass(this.domNode, "xfReadWrite", "xfReadOnly");
+-            // dojo.publish("/xf/readonly",[this])
+         }
+         this.controlValue.applyState();
+     },
+ 
++
+     _handleSetRequiredProperty:function(){
+         if (this.required == "true") {
+             betterform.ui.util.replaceClass(this.domNode, "xfOptional", "xfRequired");
+-            // dojo.publish("/xf/required",[this])
+         }
+         else {
+             betterform.ui.util.replaceClass(this.domNode, "xfRequired", "xfOptional");
+             if(dojo.hasClass(this.domNode, "xfRequiredEmpty")) {
+                 dojo.removeClass(this.domNode, "xfRequiredEmpty");
+             }
+-            // dojo.publish("/xf/optional",[this])
+         }
+     },
+ 
+@@ -374,16 +368,13 @@
+         if (this.relevant == "true") {
+             betterform.ui.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");
+             betterform.ui.util.replaceClass(label, "xfDisabled", "xfEnabled");
+-            if(!this.isValid()&& this.controlValue.focused == true){
+-                this.controlValue.showAlert();
++
++            dojo.publish("/xf/validity/"+this.id,[this.id,this.isValid(),"enabled"]);
+-            }
++        }
+-            // dojo.publish("/xf/enabled",[this])
+-        }
+         else {
+             betterform.ui.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");
+             betterform.ui.util.replaceClass(label, "xfEnabled", "xfDisabled");
+-            this.controlValue.hideAlert();
+-            // dojo.publish("/xf/disabled",[this])
++            dojo.publish("/xf/validity/"+this.id,[this.id,this.isValid(),"enabled"]);
+         }
+     },
+ 
+@@ -491,7 +482,40 @@
+ 
+     _setValueChild:function( value) {
+         console.warn("TBD: Control._setValueChild value:"+ value);
++    },
++
++    _handleBorders:function(state) {
++
++        if (state == "info" || state == "hint" || state == "alert") {
++             this._angularBorders(state);
++
++        } else {
++            this._roundBorders(state);
+-    }
++        }
++    },
++
++
++    _roundBorders:function(state) {
++        console.debug("Control._roundBorders: id:", this.id + "-value");
++        dojo.style(dojo.byId(this.id + "-value"), "MozBorderRadiusTopright", "8px");
++        dojo.style(dojo.byId(this.id + "-value"), "MozBorderRadiusBottomright", "8px");
++        dojo.style(dojo.byId(this.id + "-value"), "WebkitBorderTopRightRadius", "8px");
++        dojo.style(dojo.byId(this.id + "-value"), "WebkitBorderBottomRightRadius", "8px");
++    },
++
++    _angularBorders:function(state) {
++        console.debug("Control._angularBorders: id:", this.id + "-value");
++        var mip = dojo.byId(this.id + "-" + state);
++        if (mip != undefined && mip.innerHTML != '') {
++            dojo.style(dojo.byId(this.id + "-value"), "MozBorderRadiusTopright", "0px");
++            dojo.style(dojo.byId(this.id + "-value"), "MozBorderRadiusBottomright", "0px");
++            dojo.style(dojo.byId(this.id + "-value"), "WebkitBorderTopRightRadius", "0px");
++            dojo.style(dojo.byId(this.id + "-value"), "WebkitBorderBottomRightRadius", "0px");
++        } else {
++            this._roundBorders(state);
++        }
++    }
++
+ });
+ 
+ 
+Index: core/src/main/resources/META-INF/services/org.w3c.dom.DOMImplementationSourceList
+===================================================================
+--- core/src/main/resources/META-INF/services/org.w3c.dom.DOMImplementationSourceList	Mon Feb 22 11:53:06 CET 2010
++++ core/src/main/resources/META-INF/services/org.w3c.dom.DOMImplementationSourceList	Mon Feb 22 11:53:06 CET 2010
+@@ -0,0 +1,1 @@
++org.apache.xerces.dom.DOMXSImplementationSourceImpl
+Index: src/main/resources/scripts/betterform/ui/select1/ComboBox.js
+===================================================================
+--- src/main/resources/scripts/betterform/ui/select1/ComboBox.js	(revision 29)
++++ src/main/resources/scripts/betterform/ui/select1/ComboBox.js	Sun Feb 21 21:44:59 CET 2010
+@@ -30,7 +30,7 @@
+     },
+ 
+     postCreate:function() {
+-        console.debug("ComboBox.postCreate");
++        // console.debug("ComboBox.postCreate");
+         dojo.connect(this.domNode,"onchange", this,"_onChange");
+         this.setCurrentValue();
+     },
+@@ -63,37 +63,13 @@
+         }
+     },
+ 
+-
+-    displayValidity:function(/*Boolean*/ valid) {
+-        // console.debug("ComboBox.displayValidity, this", this);
+-        if (valid) {
+-            dojo.removeClass(this.domNode, "caDisplayInvalid");
+-            this.hideAlert();
+-        } else {
+-            dojo.addClass(this.domNode, "caDisplayInvalid");
+-            if(this.focused || !this.hideAlertOnFocus){
+-                this.showAlert();
+-            }
+-        }
+-    },
+-
+-
+-
+-    applyState:function(){
+-        if(this.xfControl.isReadonly()){
+-            dojo.attr(this.domNode,"disabled","disabled");
+-        }else{
+-             this.domNode.removeAttribute("disabled");
+-        }
+-    },
+-
+     _handleSetControlValue:function(value){
+         console.debug("ComboBox._handleSetControlValue value: ",value);
+         for(i =0;i<this.domNode.options.length;i++){
+             if(this.domNode.options[i].value == value){
+                 this.domNode.selectedIndex = i;
+-            }
+-        }
++        }
++    }
+     }
+ });
+ 
+Index: src/main/xforms/test/AlertsSimple.xhtml
+===================================================================
+--- src/main/xforms/test/AlertsSimple.xhtml	(revision 140)
++++ src/main/xforms/test/AlertsSimple.xhtml	Mon Feb 22 02:07:38 CET 2010
+@@ -8,11 +8,22 @@
+     <head>
+         <title>Alerts Simple </title>
+ 
++        <style type="text/css">
++			.xfGroupLabel {
++				font-size:large;
++				font-weight:bolder;
++			}
++
++
++
++        </style>
++		<link rel="stylesheet" type="text/css" href="../../resources/styles/betterform-table.css"/>
++
+-        <xf:model>
++		<xf:model>
+ 			<xf:instance id="i-1" xmlns="">
+ 				<data>
+ 					<trigger/>
+-					<repeated>
++					<repeated relevant="true" readonly="false" constraint="false">
+ 						<item>
+ 							<input/>
+ 							<input/>
+@@ -24,7 +35,11 @@
+ 							<select/>
+ 							<select/>
+ 							<select/>
++							<textarea/>
++							<output/>
++							<upload/>
+ 						</item>
++
+ 						<countries>
+ 							<country value="uk">England</country>
+ 							<country value="fr">France</country>
+@@ -33,111 +48,167 @@
+ 					</repeated>
+ 				</data>
+ 			</xf:instance>
+-			<xf:bind nodeset="repeated/item">
+-				<xf:bind nodeset="input[1]" constraint="string-length(.) &gt; 0"/>
+-				<xf:bind nodeset="input[2]" constraint="boolean-from-string(.) = true()" type="boolean"/>
+-				<xf:bind nodeset="input[3]" constraint="string-length(.) &gt; 0" type="date"/>
+-				<xf:bind nodeset="input[4]" constraint="string-length(.) &gt; 0" type="dateTime"/>
+-				<xf:bind nodeset="select1[1]" constraint=". = 'uk'"/>
+-				<xf:bind nodeset="select1[2]" constraint=". = 'uk'"/>
+-				<xf:bind nodeset="select1[3]" constraint=". = 'uk'"/>
+-				<xf:bind nodeset="select[1]" constraint=". = 'uk'"/>
+-				<xf:bind nodeset="select[2]" constraint=". = 'uk'"/>
++			<xf:bind nodeset="repeated/item" relevant="boolean-from-string(../@relevant)" readonly="boolean-from-string(../@readonly)">
++				<xf:bind nodeset="input[1]" constraint="string-length(.) &gt; 4 or boolean-from-string(../../@constraint)" type="string"/>
++				<xf:bind nodeset="input[2]" constraint="boolean-from-string(.) = true() or boolean-from-string(../../@constraint)" type="xf:boolean"/>
++				<xf:bind nodeset="input[3]" constraint="string-length(.) &gt; 4 or boolean-from-string(../../@constraint)" type="xf:date"/>
++				<xf:bind nodeset="input[4]" constraint="string-length(.) &gt; 4 or boolean-from-string(../../@constraint)" type="xf:dateTime"/>
++				<xf:bind nodeset="select1[1]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
++				<xf:bind nodeset="select1[2]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
++				<xf:bind nodeset="select1[3]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
++				<xf:bind nodeset="select[1]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
++				<xf:bind nodeset="select[2]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
++				<xf:bind nodeset="output[1]" constraint="string-length(.) &gt; 12 or boolean-from-string(../../@constraint)"/>
++				<xf:bind nodeset="textarea[1]" constraint="string-length(.) &gt; 4 or boolean-from-string(../../@constraint)"/>
+ 
+ 			</xf:bind>
+ 
+-        <xf:submission id="s-debug" action="{$contextroot}/resources/jsp/debug-instance.jsp"
+-                       method="post" replace="all"
+-                       validate="false"/>
+-        </xf:model>
++		<xf:submission id="s-debug" action="{$contextroot}/resources/jsp/debug-instance.jsp"
++					   method="post" replace="all"
++					   validate="false"/>
++		</xf:model>
++
+     </head>
+     <body class="tundra"  style="overflow:hidden;" >
+     <div>
+         <h2>Alert Simple Test</h2>
+-		<xf:group ref="." appearance="full">
+-			<xf:label>Minimal Group</xf:label>
++		<table>
++			<tr>
++				<td>
++					<xf:trigger>
++						<xf:label>Relevance</xf:label>
++						<xf:setvalue ref="repeated/@relevant" value="IF(.='true','false', 'true')"/>
++					</xf:trigger>
++				</td>
++				<td>
++					<xf:trigger>
++						<xf:label>Readonly</xf:label>
++						<xf:setvalue ref="repeated/@readonly" value="IF(.='true','false', 'true')"/>
++					</xf:trigger>
++
++				</td>
++				<td>
++					<xf:trigger>
++						<xf:label>Constraint</xf:label>
++						<xf:setvalue ref="repeated/@constraint" value="IF(.='true','false', 'true')"/>
++					</xf:trigger>
++
++				</td>
++			</tr>
++		</table>
++		<p>For a valid Input / Date and Date TIme insert more then 5 characters into the field</p>
++		<p>For a valid Boolean set state selected</p>
++		<p>For a valid Select(1) choose (only!) England</p>
++
++		<xf:group  appearance="ca:verticalTable">
++			<xf:label/>
+ 				<xf:input ref="repeated/item[1]/input[1]">
+ 					<xf:label>Input 1:</xf:label>
+-					<xf:alert>minimalGroup Input 1 Alert</xf:alert>
+-					<xf:hint>minimalGroup Input 1 Hint </xf:hint>
+-					<xf:help>minimalGroup Input 1 Help</xf:help>
++					<xf:alert>Input 1 <b>Alert</b></xf:alert>
++					<xf:hint>Input 1 <b>Hint</b></xf:hint>
++					<xf:help>Input 1 Help</xf:help>
+ 				</xf:input>
++
+ 				<xf:input ref="repeated/item[1]/input[2]">
+ 					<xf:label>Input 2:</xf:label>
+-					<xf:alert>minimalGroup Input 2 Alert</xf:alert>
+-					<xf:hint>minimalGroup Input 2 Hint </xf:hint>
+-					<xf:help>minimalGroup Input 2 Help</xf:help>
++					<xf:alert>Input 2 <b>Alert</b></xf:alert>
++					<xf:hint>Input 2 <b>Hint</b></xf:hint>
++					<xf:help>Input 2 Help</xf:help>
+ 				</xf:input>
++
+ 				<xf:input ref="repeated/item[1]/input[3]">
+ 					<xf:label>Input 3:</xf:label>
+-					<xf:alert>minimalGroup Input 3 Alert</xf:alert>
+-					<xf:hint>minimalGroup Input 3 Hint </xf:hint>
+-					<xf:help>minimalGroup Input 3 Help</xf:help>
++					<xf:alert>Input 3 <b>Alert</b></xf:alert>
++					<xf:hint>Input 3 <b>Hint</b></xf:hint>
++					<xf:help>Input 3 Help</xf:help>
+ 				</xf:input>
++			
+ 				<xf:input ref="repeated/item[1]/input[4]">
+ 					<xf:label>Input 4:</xf:label>
+-					<xf:alert>minimalGroup Input 4 Alert</xf:alert>
+-					<xf:hint>minimalGroup Input 4 Hint </xf:hint>
+-					<xf:help>minimalGroup Input 4 Help</xf:help>
++					<xf:alert>Input 4 <b>Alert</b></xf:alert>
++					<xf:hint>Input 4 <b>Hint</b></xf:hint>
++					<xf:help>Input 4 Help</xf:help>
+ 				</xf:input>
+ 
+-				<xf:select1 class="select1Min" ref="repeated/item[1]/select1[1]" appearance="minimal">
++				<xf:select1  ref="repeated/item[1]/select1[1]" appearance="minimal">
+ 					<xf:label>Select1</xf:label>
+ 					<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
+ 						<xf:label ref="."/>
+ 						<xf:value ref="@value"/>
+ 					</xf:itemset>
+-					<xf:alert>minimalGroup Select1 1 Alert</xf:alert>
+-					<xf:hint>minimalGroup Select1 1 Hint </xf:hint>
+-					<xf:help>minimalGroup Select1 1 Help</xf:help>
++					<xf:alert>Select1 1 <b>Alert</b></xf:alert>
++					<xf:hint>Select1 1 <b>Hint</b></xf:hint>
++					<xf:help>Select1 1 Help</xf:help>
+ 
+ 				</xf:select1>
+ 
+ 
+-				<xf:select1 class="select1Comp" ref="repeated/item[1]/select1[2]" appearance="compact">
++				<xf:select1 ref="repeated/item[1]/select1[2]" appearance="compact">
+ 					<xf:label>Select1 [2]</xf:label>
+ 					<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
+ 						<xf:label ref="."/>
+ 						<xf:value ref="@value"/>
+ 					</xf:itemset>
+-					<xf:alert>minimalGroup Select1 2 Alert</xf:alert>
+-					<xf:hint>minimalGroup Select1 2 Hint </xf:hint>
+-					<xf:help>minimalGroup Select1 2 Help</xf:help>
++					<xf:choices>
++						<xf:item>
++							<xf:label>One</xf:label>
++							<xf:value>One</xf:value>
++						</xf:item>
++						<xf:item>
++							<xf:label>Two</xf:label>
++							<xf:value>Two</xf:value>
++						</xf:item>
++					</xf:choices>
++					<xf:alert>Select1 2 <b>Alert</b></xf:alert>
++					<xf:hint>Select1 2 <b>Hint</b></xf:hint>
++					<xf:help>Select1 2 Help</xf:help>
+ 				</xf:select1>
+ 
+-				<xf:select1 class="select1Full" ref="repeated/item[1]/select1[3]" appearance="full">
++				<xf:select1 ref="repeated/item[1]/select1[3]" appearance="full">
+ 					<xf:label>Select1 [3]</xf:label>
+ 					<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
+ 						<xf:label ref="."/>
+ 						<xf:value ref="@value"/>
+ 					</xf:itemset>
+-					<xf:alert>minimalGroup Select1 3 Alert</xf:alert>
+-					<xf:hint>minimalGroup Select1 3 Hint </xf:hint>
+-					<xf:help>minimalGroup Select1 3 Help</xf:help>
++					<xf:alert>Select1 3 <b>Alert</b></xf:alert>
++					<xf:hint>Select1 3 <b>Hint</b></xf:hint>
++					<xf:help>Select1 3 Help</xf:help>
+ 				</xf:select1>
+ 
+ 
+-				<xf:select class="selectMin" ref="repeated/item[1]/select[1]" appearance="minimal">
++				<xf:select  ref="repeated/item[1]/select[1]" appearance="minimal">
+ 					<xf:label>Select [1]</xf:label>
+ 					<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
+ 						<xf:label ref="."/>
+ 						<xf:value ref="@value"/>
+ 					</xf:itemset>
+-					<xf:alert>minimalGroup Select 1 Alert</xf:alert>
+-					<xf:hint>minimalGroup Select 1 Hint </xf:hint>
+-					<xf:help>minimalGroup Select 1 Help</xf:help>
++					<xf:alert> Select 1 <b>Alert</b></xf:alert>
++					<xf:hint> Select 1 <b>Hint</b></xf:hint>
++					<xf:help> Select 1 Help</xf:help>
+ 				</xf:select>
+ 
+-				<xf:select class="selectFull" ref="repeated/item[1]/select[2]" appearance="full">
++				<xf:select ref="repeated/item[1]/select[2]" appearance="full">
+ 					<xf:label>Select [2]</xf:label>
+ 					<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
+ 						<xf:label ref="."/>
+ 						<xf:value ref="@value"/>
+ 					</xf:itemset>
+-					<xf:alert>minimalGroup Select 2 Alert</xf:alert>
+-					<xf:hint>minimalGroup Select 2 Hint </xf:hint>
+-					<xf:help>minimalGroup Select 2 Help</xf:help>
++					<xf:alert> Select 2 <b>Alert</b></xf:alert>
++					<xf:hint> Select 2 <b>Hint</b></xf:hint>
++					<xf:help> Select 2 Help</xf:help>
+ 				</xf:select>
++				<xf:output  ref="repeated/item[1]/output[1]" appearance="minimal">
++					<xf:label>Output [1]</xf:label>
++					<xf:alert>Output 1 <b>Alert</b></xf:alert>
++					<xf:hint>Output 1 <b>Hint</b></xf:hint>
++					<xf:help>Output 1 Help</xf:help>
++				</xf:output>
++				<xf:textarea ref="repeated/item[1]/textarea[1]" appearance="minimal">
++					<xf:label>Textarea [1]</xf:label>
++					<xf:alert>Textarea 1 <b>Alert</b></xf:alert>
++					<xf:hint>Textarea 1 <b>Hint</b></xf:hint>
++					<xf:help>Textarea 1 Help</xf:help>
++				</xf:textarea>
+ 
+ 			</xf:group>
+     </div>
+Index: src/main/resources/scripts/betterform/mip/MipChain.txt
+===================================================================
+--- src/main/resources/scripts/betterform/mip/MipChain.txt	Mon Feb 22 00:40:26 CET 2010
++++ src/main/resources/scripts/betterform/mip/MipChain.txt	Mon Feb 22 00:40:26 CET 2010
+@@ -0,0 +1,61 @@
++
++	FluxProcessor.constructor {
++        var validityStateHandler = "table";
++        switch(validityStateHandler){
++            case "dialog":
++                        dojo.require("betterform.mip.ValidityStateDialog");
++                        new betterform.mip.ValidityStateDialog({id:"betterFORM_ValidityState"});
++                        break;
++            case "table":
++                        dojo.require("betterform.mip.ValidityStateTable");
++                        this.alert = new betterform.mip.ValidityStateTable({id:"betterFORM_ValidityState"});
++                        break;
++        }
++	
++	}
++
++	- XForms UI Controlls all have an attribute dojoType="betterform.ui.Control"
++		Control.postCreate() {
++
++			// create ControlValue dijit
++	 		(Control
++	 			ControlValue.postMixInProperties() calls
++					ControlValue.applyProperties() (
++							connect ControlValue with Control Dijit, handles incremental and tabindex
++						)
++				}
++
++			// appply (readonly state)
++			ControlValue.applyState
++				- ControlValue.applyState handles only(!) Readonly property
++				=> alerts werden nicht angezeigt, controls haben gelben hintergrund
++
++			// subscribe to validity
++            dojo.subscribe("/xf/validity/"+this.id ,validityState, "adjustValidateState");
++	 			
++
++
++
++		handleOnFocus()
++		    dojo.publish("/xf/validity/"+this.xfControl.id,[
++		    							this.xfControl.id,
++		    							this.xfControl.isValid(),
++		    							"onFocus"
++									]
++						);
++
++		handleOnBlur()
++			dojo.publish("/xf/validity/"+this.xfControl.id,[
++										this.xfControl.id,
++										this.xfControl.isValid(),
++										"onBlur"
++									]
++						);
++
++		fluxProcessor.applyState()
++			dojo.publish("/xf/validity/"+xmlEvent.contextInfo.targetId,[
++										xmlEvent.contextInfo.targetId,
++										true,
++										"applyChanges"
++									]
++						);
+Index: src/main/resources/scripts/betterform/mip/ValidityStateTable.js
+===================================================================
+--- src/main/resources/scripts/betterform/mip/ValidityStateTable.js	Mon Feb 22 01:47:01 CET 2010
++++ src/main/resources/scripts/betterform/mip/ValidityStateTable.js	Mon Feb 22 01:47:01 CET 2010
+@@ -0,0 +1,120 @@
++dojo.provide("betterform.mip.ValidityStateTable");
++
++dojo.require("dijit._Widget");
++dojo.require("betterform.mip.Validity");
++
++dojo.declare("betterform.mip.ValidityStateTable",
++        [dijit._Widget,betterform.mip.Validity],
++{
++    id:"betterFORM_ValidityStateTable",
++
++
++    adjustValidateState:function(id,valid,action) {
++        //console.debug("betterform.mip.ValidityStateTable.adjustValidateState [id:" + id , " valid: ", valid, " action: " + action + "]");
++        if(action == "init") {
++            console.debug("Validity.adjustValidateState: init id: ", id, " valid: ", valid, " action:",action);
++            return
++        }
++        this.inherited(arguments);
++    },
++
++
++    handleValid:function(id,action,control){
++        // console.debug("betterform.mip.ValidityStateTable.handleValidState[id:" + id , " action: " + action + "]");
++
++        if(action =="applyChanges") {
++            this._showState(id, "none");
++            
++        }else {
++            this._showState(id, "info");
++        }
++    },
++
++    handleInvalid:function(id,action,control) {
++        // console.debug("betterform.mip.ValidityStateTable.handleInvalidState[id:" + id , " action: " + action + "]");
++        // control.controlValue.focused
++        if (action == "onFocus") {
++            this._showState(id, "hint");
++        }
++        else if(action == "onBlur") {
++            this._showState(id, "none");
++        }
++        else if(action =="applyChanges"){
++            // console.debug("betterform.mip.ValidityStateTable.invalid action: applyChanges focused = true: dispaly alert [id:" + id , " action: " + action + "]")
++            this._showState(id, "alert");
++        }
++        else {
++            // console.debug("betterform.mip.ValidityStateTable.invalid action: unknwon action: dispaly alert [id:" + id , " action: " , action , "]");
++            this._showState(id, "alert");
++
++        }
++    },
++
++    _showState:function(id, state) {
++        // console.debug("ValidityStateTable._showState: state:", state);
++        this._handleBorders(id,state);
++        if (state == "alert") {
++            this._display(id,"hint", "none");
++            this._display(id,"info", "none");
++            this._display(id,"alert", "block");
++        }
++        else if (state == "hint") {
++            this._display(id,"alert", "none");
++            this._display(id,"info", "none");
++            this._display(id,"hint", "block");
++        }
++        else if (state == "info") {
++            this._display(id,"alert", "none");
++            this._display(id,"hint", "none");
++            this._display(id,"info", "block");
++        }
++        else if (state == "none") {
++            this._display(id,"alert", "none");
++            this._display(id,"hint", "none");
++            this._display(id,"info", "none");
++        } else {
++            console.warn("State '" + state + "' for Control " + id + " is unknown");
++        }
++        dijit.byId(id).activeCommonChild = state;
++    },
++
++    _display:function(id, commonChild, show) {
++        var mip = dojo.byId(id + "-" + commonChild);
++        if (mip != undefined && mip.innerHTML != '') {
++            dojo.style(mip, "display", show);
++        } else {
++            console.warn(id + "-" + commonChild + " is not defined for Control " + id);
++        }
++    },
++    
++    _handleBorders:function(id, state) {
++        if (state == "info" || state == "hint" || state == "alert") {
++             this._angularBorders(id,state);
++
++        } else {
++            this._roundBorders(id, state);
++        }
++    },
++    
++    _roundBorders:function(id, state) {
++        console.debug("Control._roundBorders: id:", id + "-value");
++        dojo.style(dojo.byId(id + "-value"), "MozBorderRadiusTopright", "8px");
++        dojo.style(dojo.byId(id + "-value"), "MozBorderRadiusBottomright", "8px");
++        dojo.style(dojo.byId(id + "-value"), "WebkitBorderTopRightRadius", "8px");
++        dojo.style(dojo.byId(id + "-value"), "WebkitBorderBottomRightRadius", "8px");
++    },
++
++    _angularBorders:function(id, state) {
++        console.debug("Control._angularBorders: id:", id + "-value");
++        var mip = dojo.byId(id + "-" + state);
++        if (mip != undefined && mip.innerHTML != '') {
++            dojo.style(dojo.byId(id + "-value"), "MozBorderRadiusTopright", "0px");
++            dojo.style(dojo.byId(id + "-value"), "MozBorderRadiusBottomright", "0px");
++            dojo.style(dojo.byId(id + "-value"), "WebkitBorderTopRightRadius", "0px");
++            dojo.style(dojo.byId(id + "-value"), "WebkitBorderBottomRightRadius", "0px");
++        } else {
++            this._roundBorders(state);
++        }
++    }
++    
++});
+Index: src/main/xforms/reference/Switch.xhtml
+===================================================================
+--- src/main/xforms/reference/Switch.xhtml	(revision 125)
++++ src/main/xforms/reference/Switch.xhtml	Mon Feb 22 18:46:47 CET 2010
+@@ -31,10 +31,12 @@
+             #color4 {
+                 background:lightpink;
+             }
++
+             .xfTrigger {
+                 float:left;
+                 margin:5px;
+             }
++
+             #menu {
+                 height:80px;
+             }
+@@ -53,6 +55,8 @@
+ 			.blockLabel {
+ 				display:block;
+ 			}
++			
++
+         </style>
+        
+ 
+@@ -104,7 +108,7 @@
+                     <div class="Sample">
+                         <xf:group>
+                             <xf:label class="blockLabel">Switch / Case</xf:label>
+-                            <xf:group id="menu" appearance="full">
++                            <xf:group id="menu" appearance="minimal">
+                                 <xf:label class="blockLabel">Triggers outside Switch / Case</xf:label>
+                                 <xf:trigger>
+                                     <xf:label>Case 1</xf:label>
+Index: src/main/resources/scripts/betterform/ui/range/Rating.js
+===================================================================
+--- src/main/resources/scripts/betterform/ui/range/Rating.js	(revision 24)
++++ src/main/resources/scripts/betterform/ui/range/Rating.js	Fri Feb 19 18:58:37 CET 2010
+@@ -32,9 +32,7 @@
+ 
+     _onBlur:function(){
+         this.inherited(arguments);
+-        if (!this.incremental) {
+         this.handleOnBlur();
+-        }
+     },
+    
+     getControlValue:function() {
+Index: src/main/xforms/reference/Group.xhtml
+===================================================================
+--- src/main/xforms/reference/Group.xhtml	(revision 125)
++++ src/main/xforms/reference/Group.xhtml	Mon Feb 22 19:00:53 CET 2010
+@@ -52,6 +52,15 @@
+             .caLabelColumn{
+                 white-space:nowrap;
+             }
++/*
++			#VerticalGroupHTML  {
++				border:1px solid black;
++			}
++			#VerticalGroupHTML  td {
++				border-bottom:1px solid black;				
++			}
++*/
++
+         </style>
+     </head>
+     <body class="soria">
+@@ -337,7 +346,7 @@
+                     problems.
+                 </div>
+                 <div class="Sample">
+-                    <xf:group ref="grouped-data" appearance="ca:verticalTable">
++                    <xf:group ref="grouped-data"  appearance="ca:verticalTable">
+                         <xf:label><b>Vertical Group</b> rendered as HTML Table</xf:label>
+                         <xf:input ref="a">
+                             <xf:label>A-label</xf:label>
+@@ -390,11 +399,9 @@
+                 <div class="description">This is more complex sample using vertical table layout with
+                 nested groups and HTML Elements in between. Please note that HTML Elements found in the group
+                 will take span the whole width of the table.</div>
+-                <div class="Sample">
+-                    <xf:group ref="grouped-data" appearance="ca:verticalTable">
+-                        <xf:label>
+-                            <b>Vertical Group</b> rendered as HTML Table
+-                        </xf:label>
++                <div class="Sample VerticalGroupHTML">
++                    <xf:group ref="grouped-data" id="VerticalGroupHTML" appearance="ca:verticalTable">
++                        <xf:label><b>Vertical Group</b> rendered as HTML Table</xf:label>
+                         <xf:input ref="a">
+                             <xf:label>A-label</xf:label>
+                         </xf:input>
+Index: web/src/main/java/de/betterform/agent/web/flux/FluxFacade.java
+===================================================================
+--- web/src/main/java/de/betterform/agent/web/flux/FluxFacade.java	(revision 24)
++++ web/src/main/java/de/betterform/agent/web/flux/FluxFacade.java	Mon Feb 22 13:30:38 CET 2010
+@@ -20,6 +20,8 @@
+ import de.betterform.xml.xforms.exception.XFormsException;
+ import org.directwebremoting.WebContextFactory;
+ import org.w3c.dom.Document;
++import org.w3c.dom.Element;
++import de.betterform.xml.dom.DOMUtil;
+ 
+ import javax.servlet.http.HttpSession;
+ import java.util.*;
+@@ -193,7 +195,11 @@
+ 
+     public org.w3c.dom.Element getXFormsDOM(String sessionKey) throws FluxException {
+         try {
+-            return ((Document) FluxUtil.getProcessor(sessionKey).getXForms()).getDocumentElement();
++            Element resultElem = ((Document) FluxUtil.getProcessor(sessionKey).getXForms()).getDocumentElement();
++            if(LOGGER.isDebugEnabled()) {
++                DOMUtil.prettyPrintDOM(resultElem);
++            }
++            return resultElem;
+         } catch (XFormsException e) {
+             throw new FluxException(e);
+         }
+Index: src/main/resources/scripts/betterform/ui/output/Plain.js
+===================================================================
+--- src/main/resources/scripts/betterform/ui/output/Plain.js	(revision 24)
++++ src/main/resources/scripts/betterform/ui/output/Plain.js	Sun Feb 21 21:55:38 CET 2010
+@@ -52,21 +52,7 @@
+     
+     applyState:function(){
+         /* overwritten with no content because outputs are allways readonly */
+-    },
+-
+-    displayValidity:function(/*Boolean*/ valid) {
+-        // console.debug("Plain.displayValidity (id:" + this.id +")");
+-        if (valid) {
+-            dojo.removeClass(this.domNode, "caDisplayInvalid");
+-            this.hideAlert();
+-        } else {
+-            dojo.addClass(this.domNode, "caDisplayInvalid");
+-            this.showAlert();
+-        }
++    }
+-    }
+-
+-
+-
+ });
+ 
+ 
+Index: src/main/resources/xslt/dojo-controls.xsl
+===================================================================
+--- src/main/resources/xslt/dojo-controls.xsl	(revision 140)
++++ src/main/resources/xslt/dojo-controls.xsl	Fri Feb 19 18:40:07 CET 2010
+@@ -246,6 +246,7 @@
+                         </span>
+                 </xsl:when>
+                 <xsl:otherwise>
++                    <xsl:variable name="source" select="if (contains(@mediatype, 'image/')) then xforms:label else $src"/>
+                     <button id="{$id}-value"
+                             appearance="{@appearance}"
+                             controlType="trigger"
+@@ -256,7 +257,7 @@
+                             title="{$hint}"
+                             navindex="{$navindex}"
+                             accesskey="{@accesskey}"
+-                            source="{$src}"/>
++                            source="{$source}"/>
+                 </xsl:otherwise>
+             </xsl:choose>
+         </div>
+@@ -318,7 +319,7 @@
+     <xsl:template name="build-items-itemset">
+         <script type="text/javascript">dojo.require("betterform.ui.select.OptGroup");</script><xsl:text>
+ </xsl:text>
+-		<optgroup id="{@id}" dojoType="betterform.ui.select.OptGroup">
++		<optgroup id="{@id}" dojoType="betterform.ui.select.OptGroup" label="">
+ 			<xsl:for-each select="xforms:item">
+ 				<xsl:call-template name="build-items-item"/>
+             </xsl:for-each>
+@@ -449,7 +450,10 @@
+                         <xsl:apply-templates select="$parent/xforms:hint"/>
+                     </xsl:otherwise>
+                 </xsl:choose>
++                <xsl:text> </xsl:text>
++
+             </input>
++
+             <label id="{@id}-label" for="{@id}-value" class="xfCheckBoxLabel">
+                 <xsl:if test="$parent/bf:data/@bf:readonly='true'">
+                     <xsl:attribute name="disabled">disabled</xsl:attribute>
+@@ -493,6 +497,7 @@
+                 </xsl:if>
+                 <xsl:attribute name="onclick">setXFormsValue(this);</xsl:attribute>
+                 <xsl:attribute name="onkeydown">DWRUtil.onReturn(event, submitFunction);</xsl:attribute>
++                <xsl:text> </xsl:text>
+             </input>
+             <span id="{@item-id}-label" class="xfLabel">
+                 <xsl:if test="$parent/bf:data/@bf:readonly='true'">
+Index: core/src/main/resources/META-INF/services/javax.xml.parsers.SAXParserFactory
+===================================================================
+--- core/src/main/resources/META-INF/services/javax.xml.parsers.SAXParserFactory	Mon Feb 22 14:48:36 CET 2010
++++ core/src/main/resources/META-INF/services/javax.xml.parsers.SAXParserFactory	Mon Feb 22 14:48:36 CET 2010
+@@ -0,0 +1,1 @@
++org.apache.xerces.jaxp.SAXParserFactoryImpl
+Index: src/main/resources/scripts/betterform/ui/select/CheckBoxGroup.js
+===================================================================
+--- src/main/resources/scripts/betterform/ui/select/CheckBoxGroup.js	(revision 61)
++++ src/main/resources/scripts/betterform/ui/select/CheckBoxGroup.js	Fri Feb 19 18:26:25 CET 2010
+@@ -59,15 +59,15 @@
+ 
+ 
+     _onFocus:function() {
++        //console.debug("CheckBoxGroup._onFocus()");
+         this.inherited(arguments);
+         this.handleOnFocus();
+     },
+ 
+     _onBlur:function() {
++        // console.debug("CheckBoxGroup._onBlur()");
+         this.inherited(arguments);
+-        if (!this.incremental) {
+               this.handleOnBlur();
+-        }
+     },
+ 
+     getControlValue:function() {
+Index: src/main/resources/scripts/betterform/ui/UIElementFactory.js
+===================================================================
+--- src/main/resources/scripts/betterform/ui/UIElementFactory.js	(revision 54)
++++ src/main/resources/scripts/betterform/ui/UIElementFactory.js	Sun Feb 21 17:38:02 CET 2010
+@@ -436,6 +436,7 @@
+             case "textarea":
+ // todo: fixme: textarea mediatype="dojo" makes no sense - should be an appearance instead
+                 if(dojo.attr(sourceNode,"appearance")=="minimal" && mediatype != 'text/html' && mediatype !=  'dojo') {
++                    dojo.require("betterform.ui.textarea.MinimalTextarea");
+                     newWidget = new betterform.ui.textarea. MinimalTextarea({
+                         name:controlId + "-value",
+                         rows:5,
+Index: src/main/resources/xslt/dojo.xsl
+===================================================================
+--- src/main/resources/xslt/dojo.xsl	(revision 89)
++++ src/main/resources/xslt/dojo.xsl	Mon Feb 22 00:55:19 CET 2010
+@@ -3,6 +3,7 @@
+   ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+   ~ Licensed under the terms of BSD License
+   -->
++
+ <xsl:stylesheet version="2.0"
+                 xmlns:xhtml="http://www.w3.org/1999/xhtml"
+                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+@@ -30,8 +31,6 @@
+ 
+     <xsl:param name="sessionKey" select="''"/>
+ 
+-    <xsl:param name="baseURI" select="''"/>
+-
+     <!-- ### this url will be used to build the form action attribute ### -->
+     <xsl:param name="action-url" select="'http://localhost:8080/betterform-1.0.0/XFormsServlet'"/>
+ 
+@@ -94,10 +93,10 @@
+             </title>
+ 
+             <!-- copy base if present -->
+-            <xsl:if test="$baseURI != ''">
++            <xsl:if test="xhtml:base">
+                 <base>
+                     <xsl:attribute name="href">
+-                        <xsl:value-of select="$baseURI"/>
++                        <xsl:value-of select="xhtml:base/@href"/>
+                     </xsl:attribute>
+                 </base>
+             </xsl:if>
+@@ -273,10 +272,12 @@
+         </xsl:variable>
+         <body class="{$theme}">
+             <xsl:copy-of select="@*"/>
++<!--
+             <div id="caLoading" class="disabled">
+                 <img src="{concat($contextroot,'/resources/images/indicator.gif')}" class="xfDisabled" id="indicator"
+                      alt="loading"/>
+             </div>
++-->
+             <!-- Toaster widget for ephemeral messages -->
+             <script>dojo.require("dojox.widget.Toaster");</script><xsl:text>
+ </xsl:text>
+@@ -343,6 +344,15 @@
+                     </xsl:for-each>
+                 </div>
+             </xsl:if>
++            <div id="bfAlerts" style="display:none;">
++                <xsl:for-each select="//xf:alert">
++                    <!--<xsl:message>create alert for <xsl:value-of select="../@id"/>: <xsl:value-of select="."/></xsl:message>-->
++<!--                    <span id="{../@id}-alert" class="xfAlert" style="display:none;"><xsl:value-of select="."/></span>-->
++                </xsl:for-each>
++            </div>
++            <div id="bfAlertConsole" style="background:yellow;">
++            </div>
++
+         </body>
+     </xsl:template>
+ 
+@@ -424,6 +434,8 @@
+             </label>
+ 
+             <xsl:call-template name="buildControl"/>
++            <!--<xsl:apply-templates select="xf:alert"/>-->
++
+             <xsl:copy-of select="xhtml:script"/>
+         </span>
+     </xsl:template>
+@@ -447,11 +459,12 @@
+                 </label>
+             <!--</xsl:if>-->
+             <xsl:call-template name="buildControl"/>
++            <xsl:apply-templates select="xf:alert"/>
+             <xsl:copy-of select="xhtml:script"/>
+         </span>
+     </xsl:template>
+ 
+-     <xsl:template match="xf:output" mode="prototype">
++    <xsl:template match="xf:output" mode="prototype">
+        <xsl:variable name="id" select="@id"/>
+         <xsl:variable name="control-classes">
+             <xsl:call-template name="assemble-control-classes">
+@@ -487,6 +500,7 @@
+         <xsl:call-template name="trigger">
+             <xsl:with-param name="classes" select="$control-classes"/>
+         </xsl:call-template>
++        <!--<xsl:apply-templates select="xf:alert"/> -->
+     </xsl:template>
+ 
+     <!-- ######################################################################################################## -->
+@@ -546,6 +560,7 @@
+     <!-- ####################################################################################################### -->
+ 
+     <xsl:template name="buildControl">
++        <xsl:param name="pos"/>
+         <xsl:apply-templates select="xf:help"/>
+ 
+         <xsl:variable name="id" select="@id"/>
+@@ -560,6 +575,13 @@
+         <xsl:variable name="accesskey" select="if (exists(@accesskey)) then @accesskey else 'none'"/>
+ 
+         <xsl:choose>
++            <xsl:when test="$lname='input'and @appearance='groupSelector'">
++                <input type="radio"
++                       dojoType="dijit.form.RadioButton"
++                       name="selectedGroup"
++                       value="{$pos}"
++                       onclick="alert({$pos});"/>
++            </xsl:when>
+             <xsl:when test="$lname='input' or
+                             $lname='output' or
+                             $lname='secret' or
+@@ -635,7 +657,7 @@
+ 
+                 </div>
+                 <!--<div style="display:none;" id="{concat($id,'-hint')}"><xsl:value-of select="xf:hint"/></div>-->
+-                <xsl:apply-templates select="xf:alert"/>
++                <!--<xsl:apply-templates select="xf:alert"/>-->
+             </xsl:when>
+ 
+ 
+@@ -701,22 +723,22 @@
+ 
+                 </div>
+                 <div style="display:none;" id="{concat($id,'-hint')}"><xsl:value-of select="xf:hint"/></div>
+-                <xsl:apply-templates select="xf:alert"/>
++                <!--<xsl:apply-templates select="xf:alert"/>-->
+             </xsl:when>
+             <xsl:when test="local-name()='select'">
+                 <xsl:call-template name="select"/>
+-                <xsl:apply-templates select="xf:alert"/>
++                <!--<xsl:apply-templates select="xf:alert"/>-->
+             </xsl:when>
+             <xsl:when test="local-name()='select1'">
+                 <xsl:call-template name="select1"/>
+-                <xsl:apply-templates select="xf:alert"/>
++                <!--<xsl:apply-templates select="xf:alert"/>-->
+             </xsl:when>
+             <xsl:when test="local-name()='repeat'">
+                 <xsl:apply-templates select="."/>
+             </xsl:when>
+             <xsl:when test="local-name()='group'">
+                 <xsl:apply-templates select="."/>
+-                <xsl:apply-templates select="xf:alert"/>
++                <!--<xsl:apply-templates select="xf:alert"/>-->
+             </xsl:when>
+             <xsl:when test="local-name()='switch'">
+                 <xsl:apply-templates select="."/>
+Index: src/main/resources/xslt/dojo-ui.xsl
+===================================================================
+--- src/main/resources/xslt/dojo-ui.xsl	(revision 63)
++++ src/main/resources/xslt/dojo-ui.xsl	Mon Feb 22 00:55:54 CET 2010
+@@ -115,7 +115,7 @@
+         <script type="text/javascript">dojo.require("betterform.ui.container.Group");</script><xsl:text>
+ </xsl:text>
+ 
+-        <table class="xfContainer caVerticalTable {$mip-classes}" id="{$group-id}" dojoType="betterform.ui.container.Group">
++        <table cellspacing="0" cellpadding="0" class="xfContainer caVerticalTable {$mip-classes}" id="{$group-id}" dojoType="betterform.ui.container.Group">
+             <xsl:if test="exists(xforms:label)">
+                 <caption class="xfGroupLabel"><xsl:apply-templates select="./xforms:label"/></caption>
+             </xsl:if>
+@@ -129,29 +129,58 @@
+                      of the first control into the lefthand column -->
+                     <xsl:when test="local-name()='group' and ./@appearance='ca:horizontalColumn'">
+                         <tr>
+-                            <td class="caLabelColumn">
++                            <td class="caVerticalTableLabel">
+                                <!-- use the label of the nested group for the left column -->
+                                 <xsl:value-of select="xforms:label"/>
+                             </td>
+-                            <td>
++                            <td class="caVerticalTableValue">
+                                 <xsl:apply-templates select="."/>
+                             </td>
++                            <td class="bfVerticalTableInfo">
++                                <!-- '### custom HACK for project ### not generic!!!!!! -->
++                                <xsl:for-each select="xforms:select1[last()]">
++                                    <span class="xfAlert" style="display:none;" id="{concat(@id,'-alert')}">
++                                        <xsl:value-of select="xforms:alert"/>
++                                    </span>
++                                    <span class="xfHint" style="display:none;" id="{concat(@id,'-hint')}">
++                                        <xsl:value-of select="xforms:hint"/>
++                                    </span>
++                                    <span class="info" style="display:none;" id="{concat(@id,'-info')}">ok</span>
++                                </xsl:for-each>
++                            </td>
+                         </tr>
+                     </xsl:when>
+                     <xsl:when test="local-name()='group' or local-name()='repeat' or local-name()='switch'">
+                         <tr>
+-                            <td colspan="2">
++                            <td colspan="3">
+                                 <xsl:apply-templates select="."/>
+                             </td>
+                         </tr>
+                     </xsl:when>
+                     <xsl:when test="namespace-uri()='http://www.w3.org/1999/xhtml'">
+                         <tr>
+-                            <td colspan="2">
++                            <td colspan="3">
+                                 <xsl:apply-templates select="."/>
+                             </td>
+                         </tr>
+                     </xsl:when>
++                    <xsl:when test="local-name()='trigger' and ./@appearance='triggerMiddleColumn'">
++                        <tr>
++                            <td class="caVerticalTableValue" colspan="2">
++                                 <span class="xfAlert" style="display:none;" id="{concat(@id,'-alert')}">
++                                    <xsl:value-of select="xforms:alert"/>
++                                </span>
++                                <span class="xfHint" style="display:none;" id="{concat(@id,'-hint')}">
++                                    <xsl:value-of select="xforms:hint"/>
++                                </span>
++                                <span class="info" style="display:none;" id="{concat(@id,'-info')}">ok</span>
++                                <xsl:apply-templates select="." />
++                            </td>
++                            <td class="bfVerticalTableInfo">
++
++                            </td>
++                        </tr>
++                    </xsl:when>
+                     <xsl:otherwise>
+                         <xsl:if test="exists(node())">
+                         <tr>
+@@ -161,6 +190,15 @@
+                             <td class="caVerticalTableValue">
+                                 <xsl:apply-templates select="." mode="table"/>
+                             </td>
++                            <td class="bfVerticalTableInfo">
++                                <span class="xfAlert" style="display:none;" id="{concat(@id,'-alert')}">
++                                    <xsl:value-of select="xforms:alert"/>
++                                </span>
++                                <span class="xfHint" style="display:none;" id="{concat(@id,'-hint')}">
++                                    <xsl:value-of select="xforms:hint"/>
++                                </span>
++                                <span class="info" style="display:none;" id="{concat(@id,'-info')}">ok</span>
++                            </td>
+                         </tr>
+                         </xsl:if>
+                     </xsl:otherwise>
+@@ -194,7 +232,7 @@
+     <!--<xsl:template match="bf:data" mode="table" priority="10"/>-->
+ 
+     <!-- ######################################################################################################## -->
+-    <!-- ####################################### custom group with vertical layout ############################## -->
++    <!-- ####################################### custom group with horizontal layout ############################## -->
+     <!-- ######################################################################################################## -->
+ 
+ 
+@@ -635,7 +673,7 @@
+                 </xsl:choose>
+             </xsl:variable>
+ 
+-            <td valign="top" class="{$col-classes}">
++            <td class="{$col-classes}">
+                 <xsl:apply-templates select="." mode="compact-repeat"/>
+            </td>
+         </xsl:for-each>
+Index: convex/src/main/java/de/betterform/agent/convex/Convex.java
+===================================================================
+--- convex/src/main/java/de/betterform/agent/convex/Convex.java	(revision 22)
++++ convex/src/main/java/de/betterform/agent/convex/Convex.java	Mon Feb 22 11:56:49 CET 2010
+@@ -513,7 +513,7 @@
+         URI stylesheetURI = new URI(getCodeBase().toString()).resolve(stylesheetParameter);
+ 
+         TransformerService transformerService = new CachingTransformerService(new FileResourceResolver());
+-        System.setProperty("javax.xml.transform.TransformerFactory", "net.sf.saxon.TransformerFactoryImpl");
++        // System.setProperty("javax.xml.transform.TransformerFactory", "net.sf.saxon.TransformerFactoryImpl");
+         Transformer transformer = transformerService.getTransformer(stylesheetURI);
+ 
+ 
+Index: src/main/resources/scripts/betterform/mip/ValidityStateToolTip.js
+===================================================================
+--- src/main/resources/scripts/betterform/mip/ValidityStateToolTip.js	Mon Feb 22 00:59:55 CET 2010
++++ src/main/resources/scripts/betterform/mip/ValidityStateToolTip.js	Mon Feb 22 00:59:55 CET 2010
+@@ -0,0 +1,42 @@
++dojo.provide("betterform.mip.ValidityStateToolTip");
++dojo.require("dijit._Widget");
++
++dojo.require("betterform.mip.Validity");
++
++dojo.declare("betterform.mip.ValidityStateToolTip",
++        [dijit._Widget, betterform.mip.Validity],
++{
++    id:"betterFORM_ValidityStateToolTip",
++
++    adjustValidateState:function(id,valid,action) {
++        // console.debug("betterform.mip.ValidityStateToolTip.adjustValidateState [id:" + id , " valid: ", valid, " action: " + action + "]");
++        this.inherited(arguments);
++    },
++
++    handleValid:function(id,action,control){
++        // console.debug("betterform.mip.ValidityStateToolTip.valid [id:" + id , " action: " + action + "]");
++        var alertDijit = undefined;
++        alertDijit = dijit.byId(id + "-MasterToolTip-alert");
++        if (alertDijit != undefined) {
++            alertDijit.hide(dojo.byId(id+"-value"));
++        }
++    },
++
++    handleInvalid:function(id,action,control){
++        // console.debug("betterform.mip.ValidityStateToolTip.invalid [id:" + id , " action: " + action + "]");
++        var alertTooltip = dijit.byId(id+"-MasterToolTip-alert");
++        if(alertTooltip == undefined) {
++            alertTooltip = new dijit._MasterTooltip({id:id+"-MasterToolTip-alert"});
++        }
++        var alert = dojo.byId(id + '-alert');
++        if (alert != undefined) {
++            // console.debug("ValidityStateToolTip.invalid: controlValue is focused: ",control.controlValue.focused);
++            if((control.controlValue.focused)){
++                alertTooltip.show(alert.innerHTML, dojo.byId(id+"-value"));
++            }else {
++                alertTooltip.hide(dojo.byId(id+"-value"));
++            }
++        }
++    }
++
++});
