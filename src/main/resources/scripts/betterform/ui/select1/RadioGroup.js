@@ -68,9 +68,7 @@ dojo.declare(
 
     _onBlur:function() {
         this.inherited(arguments);
-        if (!this.incremental) {
             this.handleOnBlur();
-        }
     },
 
     _setRadioGroupValue:function() {
@@ -127,7 +125,7 @@ dojo.declare(
             var optionDOM = dojo.byId(dojo.attr(radioItems[i],"widgetId"));
             // console.debug("OptionDOM: ", optionDOM, " radioItem["+i+"]" ,radioItems[i]);
 
-            if(this.xfControl.isReadonly() && optionDOM != undefined){
+           if (this.xfControl.isReadonly() && optionDOM != undefined){
                 dojo.attr(optionDOM,"disabled","disabled");
             } else if(optionDOM != undefined){
                  optionDOM.removeAttribute("disabled");

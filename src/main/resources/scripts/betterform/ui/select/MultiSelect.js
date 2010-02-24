@@ -97,7 +97,7 @@ dojo.declare(
 
     getControlValue:function() {
         // console.debug("MultiSelect.getControlValue() this.getValue():",this.getValue());
-        var returnvalue = this.getValue().join(" ");
+        var returnvalue = this.attr('value').join(" ");
         if(this.openSelection) {
             if(this.freeTextValue == "" && returnvalue == undefined){
                 returnvalue = "";

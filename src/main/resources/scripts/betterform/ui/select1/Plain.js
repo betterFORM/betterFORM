@@ -16,7 +16,7 @@ dojo.declare(
 {
 
     buildRendering:function() {
-        console.debug("betterform.ui.select1.Plain.buildRendering: Create compact Select1");
+        // console.debug("betterform.ui.select1.Plain.buildRendering: Create compact Select1");
         this.domNode = this.srcNodeRef;
     },
 
@@ -70,18 +70,6 @@ dojo.declare(
         }
     },
 
-
-    displayValidity:function(/*Boolean*/ valid) {
-        if (valid) {
-            dojo.removeClass(this.domNode, "caDisplayInvalid");
-            this.hideAlert();
-        } else {
-            dojo.addClass(this.domNode, "caDisplayInvalid");
-            if(this.focused || !this.hideAlertOnFocus){
-                this.showAlert();
-            }
-        }
-    },
 
     applyState:function(){
         if(this.xfControl.isReadonly()){

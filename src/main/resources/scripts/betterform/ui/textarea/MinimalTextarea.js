@@ -23,7 +23,6 @@ dojo.declare(
 
     postCreate:function() {
         this.inherited(arguments);
-        this.setInitialValue(this.srcNodeRef.innerHTML);
         this.inputNode.value = this.srcNodeRef.innerHTML;
         dojo.connect(this.domNode,"onkeypress", this,"_valueChanged");
     },
@@ -52,11 +51,11 @@ dojo.declare(
     applyState:function() {
         // console.debug("betterform.ui.textarea.MinimalTextarea.applyState",this);
         if (this.xfControl.isReadonly()) {
-            dojo.attr(this.domNode,"readonly","readonly");
-        } else if(dojo.hasAttr(this.domNode,"readonly")) {
-            dojo.removeAttr(this.domNode,"readonly");
-        }else if(dojo.hasAttr(this.domNode,"disabled")) {
-            dojo.removeAttr(this.domNode,"disabled");
+            dojo.attr(this.inputNode,"disabled","disabled");            
+        } else if(dojo.hasAttr(this.inputNode,"readonly")) {
+            dojo.removeAttr(this.inputNode,"disabled");
+        }else if(dojo.hasAttr(this.inputNode,"disabled")) {
+            dojo.removeAttr(this.inputNode,"disabled");
         }
     },
 

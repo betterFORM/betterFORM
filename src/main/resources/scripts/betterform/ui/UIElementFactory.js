@@ -436,6 +436,7 @@ dojo.declare(
             case "textarea":
 // todo: fixme: textarea mediatype="dojo" makes no sense - should be an appearance instead
                 if(dojo.attr(sourceNode,"appearance")=="minimal" && mediatype != 'text/html' && mediatype !=  'dojo') {
+                    dojo.require("betterform.ui.textarea.MinimalTextarea");
                     newWidget = new betterform.ui.textarea. MinimalTextarea({
                         name:controlId + "-value",
                         rows:5,

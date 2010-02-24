@@ -59,15 +59,15 @@ dojo.declare(
 
 
     _onFocus:function() {
+        //console.debug("CheckBoxGroup._onFocus()");
         this.inherited(arguments);
         this.handleOnFocus();
     },
 
     _onBlur:function() {
-        this.inherited(arguments);
-        if (!this.incremental) {
-              this.handleOnBlur();
-        }
+        // console.debug("CheckBoxGroup._onBlur()");
+    	this.inherited(arguments);
+	    this.handleOnBlur();
     },
 
     getControlValue:function() {

@@ -246,6 +246,7 @@
                         </span>
                 </xsl:when>
                 <xsl:otherwise>
+                    <xsl:variable name="source" select="if (contains(@mediatype, 'image/')) then xforms:label else $src"/>
                     <button id="{$id}-value"
                             appearance="{@appearance}"
                             controlType="trigger"
@@ -256,7 +257,7 @@
                             title="{$hint}"
                             navindex="{$navindex}"
                             accesskey="{@accesskey}"
-                            source="{$src}"/>
+                            source="{$source}"/>
                 </xsl:otherwise>
             </xsl:choose>
         </div>
@@ -318,7 +319,7 @@
     <xsl:template name="build-items-itemset">
         <script type="text/javascript">dojo.require("betterform.ui.select.OptGroup");</script><xsl:text>
 </xsl:text>
-		<optgroup id="{@id}" dojoType="betterform.ui.select.OptGroup">
+		<optgroup id="{@id}" dojoType="betterform.ui.select.OptGroup" label="">
 			<xsl:for-each select="xforms:item">
 				<xsl:call-template name="build-items-item"/>
             </xsl:for-each>
@@ -449,7 +450,10 @@
                         <xsl:apply-templates select="$parent/xforms:hint"/>
                     </xsl:otherwise>
                 </xsl:choose>
+                <xsl:text> </xsl:text>
+
             </input>
+
             <label id="{@id}-label" for="{@id}-value" class="xfCheckBoxLabel">
                 <xsl:if test="$parent/bf:data/@bf:readonly='true'">
                     <xsl:attribute name="disabled">disabled</xsl:attribute>
@@ -493,6 +497,7 @@
                 </xsl:if>
                 <xsl:attribute name="onclick">setXFormsValue(this);</xsl:attribute>
                 <xsl:attribute name="onkeydown">DWRUtil.onReturn(event, submitFunction);</xsl:attribute>
+                <xsl:text> </xsl:text>
             </input>
             <span id="{@item-id}-label" class="xfLabel">
                 <xsl:if test="$parent/bf:data/@bf:readonly='true'">

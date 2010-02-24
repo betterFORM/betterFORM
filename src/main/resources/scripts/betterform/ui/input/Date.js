@@ -37,6 +37,9 @@ dojo.declare(
         this.inherited(arguments);
     },
 
+    /* overwritten function of SuperClass ValidationTextBox */
+    validate: function(/*Boolean*/ isFocused){},
+
     getControlValue:function(){
         // console.debug("chiab.ui.input.Date.getControlValue for Control "+ this.id +": ",this.getValue() + " attr: ",this.attr('value'));
         var currentDate;
@@ -60,6 +63,7 @@ dojo.declare(
         }
         else {
             this._setValueAttr(dojo.date.stamp.fromISOString(date,this.constraint));
+            // this._setValueAttr(this.parse(date, this.constraints), false, date);
         }
     }
 

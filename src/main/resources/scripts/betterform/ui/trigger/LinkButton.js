@@ -34,15 +34,6 @@ dojo.declare(
         }
     },
 
-    applyState:function(){
-        if(this.xfControl.isReadonly()){
-            dojo.attr(this.domNode,"disabled","disabled");
-        }else{
-             this.domNode.removeAttribute("disabled");
-        }
-    },
-
-
     getControlValue:function(){
         console.warn("TBD: betterform.ui.trigger.Button.getControlValue");
         return dojo.attr(this.domNode,"value");
