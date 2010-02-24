@@ -22,7 +22,7 @@
 			<xf:instance id="i-1" xmlns="">
 				<data>
 					<trigger/>
-					<repeated relevant="true" readonly="false" constraint="true">
+					<repeated relevant="true" readonly="false" constraint="false">
 						<item>
 							<input/>
 							<input/>
@@ -35,31 +35,6 @@
 							<select/>
 							<select/>
 						</item>
-						<item>
-							<input/>
-							<input/>
-							<input/>
-							<input/>
-							<select1/>
-							<select1/>
-							<select1/>
-							<select/>
-							<select/>
-							<select/>
-						</item>
-						<item>
-							<input/>
-							<input/>
-							<input/>
-							<input/>
-							<select1/>
-							<select1/>
-							<select1/>
-							<select/>
-							<select/>
-							<select/>
-						</item>
-
 						<countries>
 							<country value="uk">England</country>
 							<country value="fr">France</country>
@@ -70,10 +45,10 @@
 			</xf:instance>
 			<xf:bind nodeset="repeated/item" relevant="boolean-from-string(../@relevant)" readonly="boolean-from-string(../@readonly)">
 
-				<xf:bind nodeset="input[1]" constraint="string-length(.) &gt; 0 or boolean-from-string(../../@constraint)"/>
+				<xf:bind nodeset="input[1]" constraint="string-length(.) &gt; 4 or boolean-from-string(../../@constraint)"/>
 				<xf:bind nodeset="input[2]" constraint="boolean-from-string(.) = true() or boolean-from-string(../../@constraint)" type="xf:boolean"/>
-				<xf:bind nodeset="input[3]" constraint="string-length(.) &gt; 0 or boolean-from-string(../../@constraint)" type="xf:date"/>
-				<xf:bind nodeset="input[4]" constraint="string-length(.) &gt; 0 or boolean-from-string(../../@constraint)" type="xf:dateTime"/>
+				<xf:bind nodeset="input[3]" constraint="string-length(.) &gt; 4 or boolean-from-string(../../@constraint)" type="xf:date"/>
+				<xf:bind nodeset="input[4]" constraint="string-length(.) &gt; 4 or boolean-from-string(../../@constraint)" type="xf:dateTime"/>
 				<xf:bind nodeset="select1[1]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
 				<xf:bind nodeset="select1[2]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
 				<xf:bind nodeset="select1[3]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
@@ -87,7 +62,7 @@
                        validate="false"/>
         </xf:model>
     </head>
-    <body class="tundra"  style="overflow:hidden;" >
+    <body class="tundra ToolTipAlert"  style="overflow:hidden;" >
     <div>
         <h1>Alert Test</h1>
 		<xf:group>

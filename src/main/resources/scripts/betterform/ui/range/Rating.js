@@ -32,9 +32,7 @@ dojo.declare(
 
     _onBlur:function(){
         this.inherited(arguments);
-        if (!this.incremental) {
         this.handleOnBlur();
-        }
     },
    
     getControlValue:function() {

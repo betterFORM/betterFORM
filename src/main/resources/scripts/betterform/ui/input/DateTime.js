@@ -42,10 +42,8 @@ dojo.declare(
     },
 
     _onBlur:function(){
-        this.inherited(arguments);
         this.incremental = false;
-        this.handleOnBlur();
-
+        this.handleOnBlur()
     },
 
     applyValues:function(value) {
@@ -149,7 +147,7 @@ dojo.declare(
     },
 
     _handleSetControlValue:function(value) {
-        // console.debug("_handleSetControlValue value",value);
+         console.debug("_handleSetControlValue value",value);
         if(this.miliseconds && value.indexOf(".") != -1){
             value = value.substring(0,value.indexOf("."));
         }
@@ -157,56 +155,17 @@ dojo.declare(
         this.applyValues(value);
     },
 
-
-    /*
-        OVERWRITTEN CONTROLVALUE FUNCTIONS
-        OVERWRITTEN CONTROLVALUE FUNCTIONS
-        OVERWRITTEN CONTROLVALUE FUNCTIONS
-     */
-
-    handleOnFocus:function() {
-        this.focused = true;
-        //storing current control id for handling help
-        // console.debug("storing current control id:", this.id);
-        fluxProcessor.currentControlId = this.xfControl.id;
-
-        if (!this.xfControl.isValid()) {
-            dojo.addClass(this.dateDijit.domNode, "caDisplayInvalid");
-            dojo.addClass(this.timeDijit.domNode, "caDisplayInvalid");
-            this.showAlert();
-        }
-        fluxProcessor.dispatchEventType(this.xfControl.id,"DOMFocusIn");
-
-    },
-    
-
     /*
      only needs to check if XForms MIP readonly is true and disable control in that case. The value itself
      is already present and other MIPs are entirely managed through CSS.
      */
-    displayValidity:function(/*Boolean*/ valid) {
-        // console.debug("ControlValue.displayValidity (id:" + this.id +")");
-        if (valid) {
-            dojo.removeClass(this.dateDijit.domNode, "caDisplayInvalid");
-            dojo.removeClass(this.timeDijit.domNode, "caDisplayInvalid");
-            this.hideAlert();
-        } else {
-            dojo.addClass(this.dateDijit.domNode, "caDisplayInvalid");
-            dojo.addClass(this.timeDijit.domNode, "caDisplayInvalid");
-
-            if(this.focused || !this.hideAlertOnFocus){
-                this.showAlert();
-            }
-        }
-    },
-
     applyState:function() {
         if (this.xfControl.isReadonly()) {
             this.dateDijit.attr("disabled",true);
             this.timeDijit.attr("disabled",true);
         } else {
             this.dateDijit.attr("disabled",false);
-            this.timeDijit.attr("disabled",false);                        
+            this.timeDijit.attr("disabled",false);
         }
     }
 

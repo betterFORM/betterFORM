@@ -213,6 +213,7 @@
                 <script type="text/javascript">
                     var djConfig = {
                     debugAtAllCost:<xsl:value-of select="$debug-enabled"/>,
+                    locale:'en',
                     isDebug:<xsl:value-of select="$debug-enabled"/>,
                     baseUrl:"<xsl:value-of select="concat($contextroot,$scriptPath,'release/dojo/')"/>",
                     modulePaths:{"betterform":"betterform"},
@@ -226,6 +227,7 @@
                 <script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/dojo/dojo.js')}">
                     var djConfig = {
                         debugAtAllCost:<xsl:value-of select="$debug-enabled"/>,
+                        locale:'en',
                         isDebug:<xsl:value-of select="$debug-enabled"/>,
                         parseOnLoad:false
                     };
@@ -343,6 +345,12 @@
                     </xsl:for-each>
                 </div>
             </xsl:if>
+            <div id="bfAlerts" style="display:none;">
+                <xsl:for-each select="//xhtml:body//xf:*/xf:alert">
+                    <xsl:apply-templates select="."/>
+                    <!--<span id="{../@id}-alert" class="xfAlert" style="display:none;"><xsl:apply-templates/></span>-->
+                </xsl:for-each>
+            </div>
         </body>
     </xsl:template>
 
@@ -451,7 +459,7 @@
         </span>
     </xsl:template>
 
-     <xsl:template match="xf:output" mode="prototype">
+    <xsl:template match="xf:output" mode="prototype">
        <xsl:variable name="id" select="@id"/>
         <xsl:variable name="control-classes">
             <xsl:call-template name="assemble-control-classes">
@@ -538,8 +546,9 @@
     <!-- ##### ALERT ##### -->
     <!-- ##### ALERT ##### -->
     <xsl:template match="xf:alert">
-        <span id="{../@id}-alert" class="xfAlert" style="display:none;"><xsl:value-of select="."/></span>
+        <span id="{../@id}-alert" class="xfAlert" style="display:none;"><xsl:apply-templates/></span>
     </xsl:template>
+
 
     <!-- ####################################################################################################### -->
     <!-- #####################################  HELPER TEMPLATES '############################################## -->
@@ -567,7 +576,7 @@
                             $lname='textarea' or
                             $lname='upload'">
 
-                <div id="{concat($id,'-value')}"
+                <span id="{concat($id,'-value')}"
                      class="xfValue"
                      dataType="{$datatype}"
                      controlType="{$lname}"
@@ -633,9 +642,9 @@
                         </xsl:otherwise>
                     </xsl:choose>
 
-                </div>
+                </span>
                 <!--<div style="display:none;" id="{concat($id,'-hint')}"><xsl:value-of select="xf:hint"/></div>-->
-                <xsl:apply-templates select="xf:alert"/>
+                <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
 
 
@@ -659,7 +668,7 @@
                     </xsl:if>
                 </button>
                 <div style="display:none;" id="{concat($id,'-hint')}"><xsl:value-of select="xf:hint"/></div>
-                <xsl:apply-templates select="xf:alert"/>
+                <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
 
             <xsl:when test="local-name()='range'">
@@ -701,22 +710,22 @@
 
                 </div>
                 <div style="display:none;" id="{concat($id,'-hint')}"><xsl:value-of select="xf:hint"/></div>
-                <xsl:apply-templates select="xf:alert"/>
+                <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
             <xsl:when test="local-name()='select'">
                 <xsl:call-template name="select"/>
-                <xsl:apply-templates select="xf:alert"/>
+                <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
             <xsl:when test="local-name()='select1'">
                 <xsl:call-template name="select1"/>
-                <xsl:apply-templates select="xf:alert"/>
+                <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
             <xsl:when test="local-name()='repeat'">
                 <xsl:apply-templates select="."/>
             </xsl:when>
             <xsl:when test="local-name()='group'">
                 <xsl:apply-templates select="."/>
-                <xsl:apply-templates select="xf:alert"/>
+                <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
             <xsl:when test="local-name()='switch'">
                 <xsl:apply-templates select="."/>

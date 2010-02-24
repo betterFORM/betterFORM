@@ -52,21 +52,7 @@ dojo.declare(
     
     applyState:function(){
         /* overwritten with no content because outputs are allways readonly */
-    },
-
-    displayValidity:function(/*Boolean*/ valid) {
-        // console.debug("Plain.displayValidity (id:" + this.id +")");
-        if (valid) {
-            dojo.removeClass(this.domNode, "caDisplayInvalid");
-            this.hideAlert();
-        } else {
-            dojo.addClass(this.domNode, "caDisplayInvalid");
-            this.showAlert();
-        }
     }
-
-
-
 });
 
 

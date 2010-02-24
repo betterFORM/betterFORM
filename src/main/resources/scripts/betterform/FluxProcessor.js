@@ -32,7 +32,11 @@ dojo.declare("betterform.FluxProcessor",
     webtest:'@WEBTEST@',
     isReady:false,
     contextroot:"",
-     
+    toolTipAlert:null,
+    inlineAlert:null,
+    globalAlert:null,
+    bowlAlert:null,
+
 /*
     keepAlive: function() {
         if(dwr.engine){
@@ -52,6 +56,58 @@ dojo.declare("betterform.FluxProcessor",
             dojo.connect(window,"onunload",this, "close");
         }
         this.skipshutdown = false;
+
+        //#########    ALERT IMPLEMENTATION  #############
+        //#########    ALERT IMPLEMENTATION  #############
+        var toolTipAlertEnabled = dojo.query(".ToolTipAlert" ,dojo.doc)[0];
+        var defaultAlertHandler = false;
+        if(toolTipAlertEnabled != undefined) {
+            console.debug("Enabled ToolTipAlert");
+            defaultAlertHandler = true;
+            dojo.require("betterform.ui.common.ToolTipAlert");
+            this.toolTipAlert = new betterform.ui.common.ToolTipAlert({});
+
+            dojo.subscribe("/xf/valid",this.toolTipAlert, "handleValid");
+            dojo.subscribe("/xf/invalid",this.toolTipAlert, "handleInvalid");
+        }
+
+        var globalAlertEnabled = dojo.query(".GlobalAlert" ,dojo.doc)[0];
+        if(globalAlertEnabled != undefined) {
+            console.debug("Enabled GlobalAlert");
+            defaultAlertHandler = true;
+            dojo.require("betterform.ui.common.GlobalAlert");
+            this.globalAlert = new betterform.ui.common.GlobalAlert({});
+
+            dojo.subscribe("/xf/valid",this.globalAlert, "handleValid");
+            dojo.subscribe("/xf/invalid",this.globalAlert, "handleInvalid");
+        }
+
+        var bowlAlertEnabled = dojo.query(".BowlAlert" ,dojo.doc)[0];
+        if(bowlAlertEnabled != undefined) {
+            console.debug("Enabled BowlAlert");
+            defaultAlertHandler = true;
+            dojo.require("betterform.ui.common.BowlAlert");
+            this.bowlAlert = new betterform.ui.common.BowlAlert({});
+
+            dojo.subscribe("/xf/valid",this.bowlAlert, "handleValid");
+            dojo.subscribe("/xf/invalid",this.bowlAlert, "handleInvalid");
+        }
+
+
+        var inlineAlertEnabled = dojo.query(".InlineAlert" ,dojo.doc)[0];
+        if(inlineAlertEnabled != undefined || (toolTipAlertEnabled == undefined && globalAlertEnabled == undefined && bowlAlertEnabled == undefined)) {
+            console.debug("Enabled InlineAlert");
+            defaultAlertHandler = true;
+            dojo.require("betterform.ui.common.InlineAlert");
+            this.inlineAlert = new betterform.ui.common.InlineAlert({});
+
+            dojo.subscribe("/xf/valid",this.inlineAlert, "handleValid");
+            dojo.subscribe("/xf/invalid",this.inlineAlert, "handleInvalid");
+        }
+
+        //#########    ALERT IMPLEMENTATION  END #############
+        //#########    ALERT IMPLEMENTATION  END #############
+
         try {
             console.debug("contextroot + \"/Flux\": " + fluxAttribute("contextroot") + "/Flux" );
             Flux._path = fluxAttribute("contextroot") + "/Flux";
@@ -225,6 +281,8 @@ dojo.declare("betterform.FluxProcessor",
                     case "DOMFocusIn"               : fluxProcessor._handleDOMFocusIn(xmlEvent); break;
                     case "xforms-out-of-range"      : fluxProcessor._handleOutOfRange(xmlEvent);break;
                     case "xforms-in-range"          :fluxProcessor._handleInRange(xmlEvent);break;
+                    case "xforms-invalid"           :fluxProcessor._handleValidity(xmlEvent,false);break;
+                    case "xforms-valid"             :fluxProcessor._handleValidity(xmlEvent,true);break;
 
                     /* default handling for known events */
                     case "betterform-id-generated"       :
@@ -232,10 +290,8 @@ dojo.declare("betterform.FluxProcessor",
                     case "xforms-select"            :
                     case "xforms-deselect"          :
                     case "DOMFocusOut"              :
-                    case "xforms-invalid"           :
                     case "xforms-model-construct"   :
-                    case "xforms-model-construct-done":
-                    case "xforms-valid"             :  break;
+                    case "xforms-model-construct-done":break;
                     case "xforms-ready"             :  this.isReady=true;break; //not perfect - should be on XFormsModelElement
                     case "xforms-submit"            :
                     case "xforms-submit-done"       : break;
@@ -246,6 +302,14 @@ dojo.declare("betterform.FluxProcessor",
             }
         );
         console.groupEnd();
+    },
+
+    _handleValidity:function(xmlEvent, validity) {
+        console.debug("FluxProcessor._handleValidity for Control id: ",xmlEvent.contextInfo.targetId, " xmlEvent:",xmlEvent );
+        var control = dijit.byId(xmlEvent.contextInfo.targetId);
+        if(control != undefined) {
+            control._handleSetValidProperty(validity);
+        }
     },
 
     _handleBindingException:function(xmlEvent){
@@ -285,26 +349,39 @@ dojo.declare("betterform.FluxProcessor",
             to embed an existing form into the running form
          */
         else if(xmlEvent.contextInfo.show == "embed"){
+            // getting target from event - can be either the value of a 'name' or 'id' Attribute
             var xlinkTarget = xmlEvent.contextInfo.xlinkTarget;
-            // remove existing child of mount point
-            this._unloadDOM(xmlEvent.contextInfo.xlinkTarget);
-                
 
-            var htmlEntryPoint = dojo.byId(xlinkTarget);
-            // HACK to replace mountPoint with the embeded form (because FluxProcessor returns XML to insert as String)
-            // TODO: replace hack
+            //determine the DOM Element in the client DOM which is the target for embedding
+            var targetid ;
+            if(dojo.byId(xlinkTarget) != undefined){
+                targetid=xlinkTarget;
+            }else{
+                // if we reach here the xlinkTarget is no idref but the value of a name Attrbute that needs resolving
+                // to an id.
+                var tmp = dojo.query("*[name='" + xlinkTarget + "']")[0];
+                targetid = tmp.id;
+                console.debug("target id for embedding is: ",targetid);
+            }
 
+            this._unloadDOM(targetid);
+
+            //get original Element in master DOM
+            var htmlEntryPoint = dojo.byId(targetid);
             htmlEntryPoint.innerHTML = xmlEvent.contextInfo.targetElement;
             dojo.attr(htmlEntryPoint, "id", xlinkTarget + "Old");
-            var domToReplace = dojo.byId(xlinkTarget);
-            // console.debug("betterform-load-uri show=embed : inserting DOM into target: " ,domToReplace);
-            // console.dirxml(domToReplace);
+            var nodesToEmbed = dojo.byId(targetid);
+
             dojo.require("dojo.parser");
             dojo.parser.parse(htmlEntryPoint);
 
-            dojo.place(domToReplace, htmlEntryPoint, "before");
+            dojo.place(nodesToEmbed, htmlEntryPoint, "before");
+            dojo.fx.wipeIn({node: nodesToEmbed,duration: 500}).play();
+            
+            //copy classes from mountpoint
+            var classes = dojo.attr(htmlEntryPoint,"class");
+            dojo.attr(nodesToEmbed,"class",classes);
             htmlEntryPoint.parentNode.removeChild(htmlEntryPoint);
-
         }
         /*  xf:load show=none
               to unload (loaded) subforms
@@ -362,6 +439,7 @@ dojo.declare("betterform.FluxProcessor",
             this.logTestMessage(message);
         }
     },
+
     _handleOutOfRange:function(xmlEvent){
 /*
         var message = "Value for ui control '" + xmlEvent.contextInfo.targetName + "' (id:"+xmlEvent.contextInfo.targetId+") is out of range";
@@ -500,9 +578,9 @@ dojo.declare("betterform.FluxProcessor",
                     console.warn("FluxProcessor._handleBetterFormStateChanged: don't know how to handle xmlEvent: ",xmlEvent, " for target: " + xmlEvent.contextInfo.targetId +" [",xmlEvent.contextInfo.targetName , "]");
                 }
         }
-
+        // HANDLING XF:COPY FOR ALL SELECTS
         else if(xmlEvent.contextInfo.targetName != undefined  && xmlEvent.contextInfo.targetName == "select1" && xmlEvent.contextInfo.copyItem != undefined){
-            // console.debug("FluxProcessor._handleBetterFormStateChanged xf:copy handling: xmlEvent: ",xmlEvent, " contextInfo: ", xmlEvent.contextInfo);
+            console.debug("FluxProcessor._handleBetterFormStateChanged xf:copy handling: xmlEvent: ",xmlEvent, " contextInfo: ", xmlEvent.contextInfo);
             var warningMsg = "FluxProcessor._handleBetterFormStateChanged: Select1 ControlValue " + xmlEvent.contextInfo.targetId + "-value: No item selected"
             var select1 = dojo.byId(xmlEvent.contextInfo.targetId+"-value");
             if(select1 != undefined) {

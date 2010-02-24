@@ -68,79 +68,98 @@ dojo.declare(
             if(controlValueTemplate == undefined){
                 controlValueTemplate = dojo.query(".xfValue", this.domNode)[0];
             }
-            // ControlValue node does not exist
+            // Child node CntrolValue does not exist, ControlValueTemplate is created dynamicly
             if (controlValueTemplate == undefined) {
-               // console.debug("Control.postCreate XFControl " + this.id + " has no value node! Value node is created based on ContextInfo: ", this.contextInfo, " domNode:",this.domNode);
-
-                // prepare Control Node
-                if(this.contextInfo.type != undefined && this.contextInfo.type !=""){
-                    var cssDataType = betterform.ui.util.removeNamespace(this.contextInfo.type);
-                    cssDataType = "xsd" + cssDataType.replace(/^[a-z]/,cssDataType.substring(0,1).toUpperCase())
-                    if(dojo.hasClass(this.domNode, "xsd")){
-                        betterform.ui.util.replaceClass(this.domNode, "xsd",cssDataType);
-                    }else {
-                        dojo.addClass(this.domNode, cssDataType);
-                    }
-                } else if(dojo.hasClass(this.domNode, "xsd")){
-                    console.warn("Control.postCreate Control " + this.id + " has no type but xsd on it's prototype");
-                }
-                this._updateMIPClasses();
-                controlValueTemplate = document.createElement("div");
-
-                this.dataType = betterform.ui.util.removeNamespace(this.contextInfo.type);
-                this.controlType = this.contextInfo.targetName;
-
-                // add attributes
-                dojo.attr(controlValueTemplate, "dataType", this.dataType);
-                dojo.attr(controlValueTemplate, "controlType", this.controlType );
-                if(this.contextInfo.value != undefined && this.dataType == "date") {
-                    this.controlType = dojo.attr(controlValueTemplate, "schemaValue", this.contextInfo.schemaValue);
-                }
-                if(this.contextInfo.targetId != undefined) {
-                    this.controlType = dojo.attr(controlValueTemplate, "id", this.contextInfo.targetId+"-value");
-                }
-                if(dojo.attr(this.domNode, "appearance")!=undefined) {
-                    this.appearance = dojo.attr(this.domNode, "appearance");
-                    dojo.attr(controlValueTemplate, "appearance", this.appearance);
-                }
-                if(dojo.attr(this.domNode, "mediatype")!=undefined) {
-                    this.appearance = dojo.attr(this.domNode, "mediatype");
-                    dojo.attr(controlValueTemplate, "mediatype", this.appearance);
-                }
-
-                // place value as child of valueNode
-                if(this.contextInfo.targetName != "trigger") {
-                    controlValueTemplate.innerHTML = this.contextInfo.value;
-                }else {
-                    // console.debug("this.contextInfo.targetName == trigger contextinfo: ", this.contextInfo, " controlValueTemplate: ",controlValueTemplate);
-                    dojo.attr(controlValueTemplate,"label" ,this.srcNodeRef.innerHTML);
-                    this.domNode.innerHTML = ""; 
-                }
-
-                // add classes
-                dojo.addClass(controlValueTemplate, "xfValue");
-                // insert ControlValue node
-                dojo.place(controlValueTemplate,this.domNode);
-
-                // incremental handling
-                if(dojo.hasClass(this.domNode,"xfIncremental")) {
-                    dojo.attr(controlValueTemplate,"incremental","true");
-                }
-                this.controlValue = fluxProcessor.factory.createWidget(controlValueTemplate, this.id);
-                // console.debug("Created ControlValue:",this.controlValue);
-
+                controlValueTemplate = this._createControlValueTemplate();
             }
-            // ControlValue node does allready exist
+            // ControlValue node exists and a dijit is created
             else {
                 this.dataType = betterform.ui.util.removeNamespace(dojo.attr(controlValueTemplate, "datatype"));
                 this.controlType = dojo.attr(controlValueTemplate, "controltype");
-                this.controlValue = fluxProcessor.factory.createWidget(controlValueTemplate, this.id);                
-            }
-            if(this.controlValue != undefined){
-                this.controlValue.applyState();
             }
 
+            this.controlValue = fluxProcessor.factory.createWidget(controlValueTemplate, this.id);
+
+            if(this.controlValue != undefined){
+                // apply MIP states
+                this.controlValue.applyState();
+            }else {
+                console.error("ControlValue for Control " + id + " could not be created");
+            }
         }
+
+        if(this.isValid()) {
+            dojo.publish("/xf/valid",[this.id,"init"]);    
+        }else {
+            dojo.publish("/xf/invalid",[this.id,"init"]);
+        }
+
+
+    },
+
+    /**
+     * Create a ControlValue template of properties taken from Control 
+     */
+    _createControlValueTemplate:function() {
+        console.debug("Control.createControlValueTemplate XFControl " + this.id + " has no value node! Value node is created based on ContextInfo: ", this.contextInfo, " domNode:",this.domNode);
+
+        // prepare Control Node
+        if (this.contextInfo.type != undefined && this.contextInfo.type != "") {
+            var cssDataType = betterform.ui.util.removeNamespace(this.contextInfo.type);
+            cssDataType = "xsd" + cssDataType.replace(/^[a-z]/, cssDataType.substring(0, 1).toUpperCase())
+            if (dojo.hasClass(this.domNode, "xsd")) {
+                betterform.ui.util.replaceClass(this.domNode, "xsd", cssDataType);
+            } else {
+                dojo.addClass(this.domNode, cssDataType);
+            }
+        } else if (dojo.hasClass(this.domNode, "xsd")) {
+            console.warn("Control.postCreate Control " + this.id + " has no type but xsd on it's prototype");
+        }
+        this._updateMIPClasses();
+        // verify that span is ok
+        // var controlValueTemplate = document.createElement("div");
+        var controlValueTemplate = document.createElement("span");
+
+        this.dataType = betterform.ui.util.removeNamespace(this.contextInfo.type);
+        this.controlType = this.contextInfo.targetName;
+
+        // add attributes
+        dojo.attr(controlValueTemplate, "dataType", this.dataType);
+        dojo.attr(controlValueTemplate, "controlType", this.controlType);
+        if (this.contextInfo.value != undefined && this.dataType == "date") {
+            this.controlType = dojo.attr(controlValueTemplate, "schemaValue", this.contextInfo.schemaValue);
+        }
+        if (this.contextInfo.targetId != undefined) {
+            this.controlType = dojo.attr(controlValueTemplate, "id", this.contextInfo.targetId + "-value");
+        }
+        if (dojo.attr(this.domNode, "appearance") != undefined) {
+            this.appearance = dojo.attr(this.domNode, "appearance");
+            dojo.attr(controlValueTemplate, "appearance", this.appearance);
+        }
+        if (dojo.attr(this.domNode, "mediatype") != undefined) {
+            this.appearance = dojo.attr(this.domNode, "mediatype");
+            dojo.attr(controlValueTemplate, "mediatype", this.appearance);
+        }
+
+        // place value as child of valueNode
+        if (this.contextInfo.targetName != "trigger") {
+            controlValueTemplate.innerHTML = this.contextInfo.value;
+        } else {
+            // console.debug("this.contextInfo.targetName == trigger contextinfo: ", this.contextInfo, " controlValueTemplate: ",controlValueTemplate);
+            dojo.attr(controlValueTemplate, "label", this.srcNodeRef.innerHTML);
+            this.domNode.innerHTML = "";
+        }
+
+        // add classes
+        dojo.addClass(controlValueTemplate, "xfValue");
+        // insert ControlValue node
+        dojo.place(controlValueTemplate, this.domNode);
+
+        // incremental handling
+        if (dojo.hasClass(this.domNode, "xfIncremental")) {
+            dojo.attr(controlValueTemplate, "incremental", "true");
+        }
+        return controlValueTemplate;
     },
 
     
@@ -165,10 +184,6 @@ dojo.declare(
         if(dojo.hasClass(targetNode,"readonly")){
             console.debug(this, " is readonly");
         }
-
-        *//*
-        ...
-        *//*
     },*/
 
     isRequired:function(){
@@ -326,17 +341,15 @@ dojo.declare(
 
 
 
-    _handleSetValidProperty:function(){
-        // console.debug("Control._handleSetValidProperty (id:"+this.id+")");
-        if (this.valid == "true") {
+    _handleSetValidProperty:function(validity){
+        console.debug("Control._handleSetValidProperty [id:"+this.id+ " valid: ",validity, "]");
+        if (validity) {
             betterform.ui.util.replaceClass(this.domNode, "xfInvalid", "xfValid");
-            this.controlValue.displayValidity(true);
-            dojo.publish("/xf/valid",[this])
+			dojo.publish("/xf/valid",[this.id,"applyChanges"]);
         }
         else {
             betterform.ui.util.replaceClass(this.domNode, "xfValid", "xfInvalid");
-            this.controlValue.displayValidity(false);
-            dojo.publish("/xf/invalid",[this])
+			dojo.publish("/xf/invalid",[this.id,"applyChanges"]);
         }
 
     },
@@ -344,11 +357,9 @@ dojo.declare(
     _handleSetReadonlyProperty: function(){
         if (eval(this.readonly) == false) {
             betterform.ui.util.replaceClass(this.domNode, "xfReadOnly", "xfReadWrite");
-            // dojo.publish("/xf/readwrite",[this])
         }
         else {
             betterform.ui.util.replaceClass(this.domNode, "xfReadWrite", "xfReadOnly");
-            // dojo.publish("/xf/readonly",[this])
         }
         this.controlValue.applyState();
     },
@@ -356,14 +367,12 @@ dojo.declare(
     _handleSetRequiredProperty:function(){
         if (this.required == "true") {
             betterform.ui.util.replaceClass(this.domNode, "xfOptional", "xfRequired");
-            // dojo.publish("/xf/required",[this])
         }
         else {
             betterform.ui.util.replaceClass(this.domNode, "xfRequired", "xfOptional");
             if(dojo.hasClass(this.domNode, "xfRequiredEmpty")) {
                 dojo.removeClass(this.domNode, "xfRequiredEmpty");
             }
-            // dojo.publish("/xf/optional",[this])
         }
     },
 
@@ -374,16 +383,10 @@ dojo.declare(
         if (this.relevant == "true") {
             betterform.ui.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");
             betterform.ui.util.replaceClass(label, "xfDisabled", "xfEnabled");
-            if(!this.isValid()&& this.controlValue.focused == true){
-                this.controlValue.showAlert();
-            }
-            // dojo.publish("/xf/enabled",[this])
         }
         else {
             betterform.ui.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");
             betterform.ui.util.replaceClass(label, "xfEnabled", "xfDisabled");
-            this.controlValue.hideAlert();
-            // dojo.publish("/xf/disabled",[this])
         }
     },
 
@@ -491,7 +494,7 @@ dojo.declare(
 
     _setValueChild:function( value) {
         console.warn("TBD: Control._setValueChild value:"+ value);
-    }
+        }
 });
 
 

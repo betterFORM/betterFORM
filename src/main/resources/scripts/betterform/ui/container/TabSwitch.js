@@ -64,6 +64,7 @@ dojo.declare("betterform.ui.container.TabSwitch",
             return;
         }
         var affectedTabDijit = dijit.byId(dojo.attr(affectedTab,"id"));
+/*
         if(affectedTabDijit != undefined) {
             var affectedTabCtrl = dijit.byId(affectedTabDijit.controlButton.id);
             if(affectedTabCtrl){
@@ -76,6 +77,7 @@ dojo.declare("betterform.ui.container.TabSwitch",
                 }
             }            
         }
+*/
     },
 
     toggleCase:function(contextInfo){

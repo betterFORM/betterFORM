@@ -69,11 +69,11 @@ dojo.declare("betterform.XFormsModelElement",
     _useLoadingMessage:function(){
         dwr.engine.setPreHook(function() {
              document.getElementById('indicator').className = 'xfEnabled';
-        });
+            });
 
-        dwr.engine.setPostHook(function() {
+            dwr.engine.setPostHook(function() {
              document.getElementById('indicator').className = 'xfDisabled';
-        });
+            });
     }
 
 });

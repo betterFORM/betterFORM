@@ -176,19 +176,18 @@ a.active {
 .xfInvalid .xfRadioLabel,
 .xfInvalid .xfCheckBoxLabel,
 .xfInvalid .dijitTextBox {
-    background-color:#F9F7BA; !important;
+    /*
+    	background-color:#F9F7BA; !important;
+	*/
 }
 
-.xfInvalidIcon {
-    margin-left: 5px;
-    height: 14px;
-    width: 14px;
-}
+.tundra .xfControl .bfInvalidControl,
+.tundra .xfControl .bfInvalidControl .xfDateTextBox,
+.tundra .xfControl .bfInvalidControl .xfTimeTextBox{
+	/*border:1px solid #801B1B*/
+	background:#FFE2CF;
 
-.caDisplayInvalid {
-    background-color: #F9F7BA !important;
 }
-
 
 /* for tundra checkboxes */
 .tundra .dijitCheckBox,

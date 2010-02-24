@@ -38,6 +38,7 @@
         <script type="text/javascript">
             var djConfig = {
                 debugAtAllCost:<xsl:value-of select="$debug-enabled"/>,
+                locale:'en',
                 isDebug:<xsl:value-of select="$debug-enabled"/>,
                 parseOnLoad:false
             };
@@ -59,6 +60,8 @@
                 dojo.require("betterform.ui.util");
                 // needed for alert Handling
                 dojo.require("dijit.Tooltip");
+                dojo.require("betterform.ui.container.Repeat");
+                dojo.require("betterform.ui.container.RepeatItem");
 
                 <!--dojo.require("betterform.ui.container.Container");-->
 

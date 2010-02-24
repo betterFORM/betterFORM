@@ -285,11 +285,9 @@ dojo.declare(
         // console.debug("Repeat.handleStateChanged relevant:",relevant);
         if (relevant) {
             betterform.ui.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");
-            // dojo.publish("/xf/enabled",[this])
         }
         else {
             betterform.ui.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");            
-            // dojo.publish("/xf/disabled",[this])
         }
 
      },

@@ -194,7 +194,7 @@
     <!--<xsl:template match="bf:data" mode="table" priority="10"/>-->
 
     <!-- ######################################################################################################## -->
-    <!-- ####################################### custom group with vertical layout ############################## -->
+    <!-- ####################################### custom group with horizontal layout ############################## -->
     <!-- ######################################################################################################## -->
 
 
@@ -400,7 +400,7 @@
                             <xsl:call-template name="select1"/>
                 </xsl:when>
             </xsl:choose>
-            <xsl:apply-templates select="xforms:alert"/>
+            <!--<xsl:apply-templates select="xforms:alert"/>-->
         </div>
     </xsl:template>
 
@@ -504,15 +504,15 @@
             <xsl:apply-templates select="xforms:hint"/>            
             <label class="xfLabel"><xsl:apply-templates select="xforms:label"/></label>
             <xsl:apply-templates select="xforms:help"/>
-            <xsl:apply-templates select="xforms:alert"/>
+            <!--<xsl:apply-templates select="xforms:alert"/>-->
             <xsl:choose>
                 <xsl:when test="'select' = local-name()">
                         <xsl:call-template name="select"/>
-                        <xsl:apply-templates select="xforms:alert"/>
+                        <!--<xsl:apply-templates select="xforms:alert"/>-->
                 </xsl:when>
                 <xsl:when test="'select1' = local-name()">
                             <xsl:call-template name="select1"/>
-                            <xsl:apply-templates select="xforms:alert"/>
+                            <!--<xsl:apply-templates select="xforms:alert"/>-->
                 </xsl:when>
             </xsl:choose>
         </div>
