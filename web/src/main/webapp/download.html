@@ -23,7 +23,12 @@
         <link rel="SHORTCUT ICON" href="images/betterform.ico"/>
         <link rel="ICON" href="images/betterform.ico" type="image/x-icon"/>
         <link rel="stylesheet" type="text/css" href="styles/bf.css"/>
-
+		<style type="text/css">
+			.contentBody a {
+				color:black;
+				float:none;
+			}
+		</style>
     </head>
     <body>
         <div class="page">
@@ -90,15 +95,32 @@
                                 options including <strong>Jetty</strong>, the <strong>eXist XML Database</strong>, the <strong>Dojo Toolkit</strong> and more.
                             </p>
 
+							<p>
+								For a quick installation select <b>'betterFORM'</b>, <b>'Jetty'</b> and <b>'Forms'</b>
+								at the <b>"Select Installation Packages"</b> screen and finish the installation. Switch
+								to the choosen installation directory, execute the start.jar and point your browser to
+								<a href="http://localhost:8080/betterform">localhost:8080/betterform</a>. That's
+								it!<br/>
+							</p>
+
+<!--
                             <p>
                                 You need a Java installation (1.5 or higher) to execute the installer.
                             </p>
+-->
 
                             <h2>Web Archive (war-file)</h2>
 
                             <p>
                                 For those that already have a webcontainer this download provides an optimized
                                 war build ready for deployment.
+                            </p>
+
+
+                            <h2>The Core (jar-file)</h2>
+
+                            <p>
+                                Use the betterFORM core to process XForms within your Java application.
                             </p>
                         </div>
                     </div>

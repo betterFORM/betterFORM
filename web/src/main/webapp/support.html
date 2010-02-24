@@ -22,23 +22,23 @@
         <link REV="made" HREF="mailto:info@betterform.de"/>
         <link rel="SHORTCUT ICON" href="images/betterform.ico"/>
         <link rel="ICON" href="images/betterform.ico" type="image/x-icon"/>
+    <style type="text/css">
+        @import "http://ajax.googleapis.com/ajax/libs/dojo/1.4/dijit/themes/tundra/tundra.css";
+        @import "http://ajax.googleapis.com/ajax/libs/dojo/1.4/dojo/resources/dojo.css";
+    </style>
         <link rel="stylesheet" type="text/css" href="styles/bf.css"/>
 
+    <script type="text/javascript"
+            src="http://ajax.googleapis.com/ajax/libs/dojo/1.4/dojo/dojo.xd.js"
+            djConfig="parseOnLoad: true"></script>
+    <script type="text/javascript">
+        dojo.require("dojo.parser");
+        dojo.require("dijit.TitlePane");
+        dojo.require("dojo.fx");
+        dojo.require("dijit.Tooltip");
 
+    </script>
 		<style type="text/css">
-
-			body {
-				background:#D3D3D3;
-			}
-
-			body, div, table, thead, tbody, tfoot, tr, th, td, p {
-				font-family: "Verdana";
-				font-size: small;
-			}
-
-			#topnav {
-				top:30px
-			}
 			.tableHeading {
 				background:#999999;
 				color:#ffffff;
@@ -50,24 +50,6 @@
 				font-weight:bold;
 			}
 
-			.page #header {
-				position:inherit;
-			}
-
-			#shadowTop {
-				position:inherit;
-			}
-			#content  {
-				margin-top:0px;
-				padding-top:0px;
-			}
-			#content .contentBody {
-				padding-top:0px;
-			}
-			#content .contentBody a {
-				color:#AAAAAA;
-				float:none;
-			}
 			td {
 				padding:5px;
 			}
@@ -109,32 +91,25 @@
 				vertical-align:middle;
 				text-align:center;
 			}
-
-			#footer {
-    			position:inherit;
-    			bottom:0px;
-				height:40px;
-				padding-bottom:18px;
-
+			.contentBody a {
+				color:black;
+				float:none;
+				text-decoration:underline;
 			}
-
-			.logo {
-				float: left;margin-top:10;
-			}
-
 		</style>
 
     </head>
-    <body>
+<body class="tundra" id="support">
         <div class="page">
 
             <div id="header">
-                <div class="pageMarginBox logoBar">
-                    <img class="logo" src="images/logo.png" alt="betterFORM project"/>
+            <div class="pageMarginBox">
 					<div class="languages">
                         <img src="images/en.png" alt="english"/>
                         <img src="images/de.png" alt="deutsch"/>
                     </div>
+                <div class="logoBar">
+                    <img src="images/logo.png" alt="betterFORM project"/>
 
 					<div id="topnav">
 						<a href="index.html">home</a><span class="menuDevider"> | </span>
@@ -147,36 +122,41 @@
 					</div>
                 </div>
             </div>
+        </div>
 
-            <div id="content" class="content">
-                <img id="shadowTop" src="images/shad_top.jpg" alt=""/>
+			<div id="content" class="content">
+				<img id="shadowTop" src="images/shad_top.jpg" alt=""/>
 
-                <!-- ######################### Content here ################################## -->
-                <!-- ######################### Content here ################################## -->
-                <!-- ######################### Content here ################################## -->
-                <!-- ######################### Content here ################################## -->
-                <!-- ######################### Content here ################################## -->
-                <div class="pageMarginBox">
-                    <div class="contentBody">
+				<!-- ######################### Content here ################################## -->
+				<!-- ######################### Content here ################################## -->
+				<!-- ######################### Content here ################################## -->
+				<!-- ######################### Content here ################################## -->
+				<!-- ######################### Content here ################################## -->
+				<div class="pageMarginBox">
+					<div class="contentBody">
 
 
-                        <h1>Support &amp; Service</h1>
+						<h1>Support &amp; Service</h1>
+
 						<p>We supply various services around XForms and enterprise Web Development</p>
-<!--
+						<!--
 							<p>&lt;<b>Development</b> /&gt; of enterprise application systems or components in contract with customers</p>
 							<p>&lt;<b>Consultancy</b> /&gt; in the architecture of software systems based on XForms.</p>
 							<p>&lt;<b>Training</b> /&gt; in the use of Betterform</p>
 -->
 
-							<div class="list">Development of state of the art enterprise application systems or components in contract with customers</div>
-							<div class="list">Consultancy in the architecture of software systems based on XForms</div>
-							<div class="list">Training in the usage of betterBFORM</div>
+						<div class="list">Development of state of the art enterprise application systems or components
+							in contract with customers
+						</div>
+						<div class="list">Consultancy in the architecture of software systems based on XForms</div>
+						<div class="list">Training in the usage of betterBFORM</div>
 
-							<p>see our support range or <a href="contact.html">contact us</a> directly for more detailed information</p>
+						<p>see our support range or <a href="contact.html">contact us</a> directly for more detailed
+							information</p>
 
 
-							<h2>Support Range</h2>
-							<table frame="void" border="0" cellspacing="0" cols="4" rules="none">
+						<h2>Support Range</h2>
+						<table frame="void" border="0" cellspacing="0" cols="4" rules="none">
 							<tbody>
 								<tr>
 									<td class="col-1 tableHeading">Package:</td>
@@ -197,7 +177,7 @@
 									<td class="col-3">x</td>
 									<td class="col-4">x</td>
 								</tr>
-<!--
+								<!--
 								<tr>
 									<td class="col-1">Solve the Problem</td>
 									<td class="col-2">x</td>
@@ -227,13 +207,15 @@
 
 								</tr>
 								<tr>
-									<td class="col-1">XML Derivates (XForms, XSLT, XPath, XQuerry) &amp; Web (HTML , CSS, JavaScript)</td>
+									<td class="col-1">XML Derivates (XForms, XSLT, XPath, XQuerry) &amp; Web (HTML ,
+										CSS, JavaScript)
+									</td>
 									<td class="col-2">x</td>
 									<td class="col-3">x</td>
 									<td class="col-4">x</td>
 								</tr>
 
-<!--
+								<!--
 								<tr>
 									<td class="col-1">XML Derivates (XForms, XSLT, XPath, XQuerry)</td>
 									<td class="col-2">x</td>
@@ -276,7 +258,7 @@
 									<td class="col-4">x</td>
 								</tr>
 
-<!--
+								<!--
 								<tr>
 									<td class="col-1">Chat Contact</td>
 									<td class="col-2"></td>
@@ -314,7 +296,7 @@
 									<td class="col-4">9800</td>
 								</tr>
 
-<!--
+								<!--
 								<tr>
 									<td class="col-1">
 										<ul>Extra Support Day*</ul>
@@ -333,41 +315,19 @@
 -->
 							</tbody>
 						</table>
-						<br/>
 
-						<br/>
-						<br/>
-						<br/>
-						<br/>
-						<br/>
-                        <!--<div id="columnLeft">-->
-							<!---->
-                        <!--</div>-->
-<!--
-                        <div id="columnRight">
-                            <p>responsible for content:</p>
-
-                            <p>
-                                Joern Turner<br/>
-                                Tax ID Number: DE 24/565/60323
-                            </p>
-
-                            <p>
-                                Lars Windauer<br/>
-                                Tax ID Number: DE 23/593/60145
-                            </p>
-                        </div>
--->
-                    </div>
+						<!-- ##### a bit of space ###### -->
+						<div class="devider"></div>
+					</div>
 
 
-                </div>
+				</div>
 
+			</div>
+			<div id="footer">
+				<img id="shadowBottom" src="images/shad_bottom.jpg" alt=""/>
 
-                <div id="footer">
-                    <img id="shadowBottom" src="images/shad_bottom.jpg" alt=""/>
-
-                    <div class="pageMarginBox">
+				<div class="pageMarginBox">
                     <span id="bottomMenu">
                         &#169; 2010 betterFORM<span class="menuDevider"> | </span>
                         <a href="index.html">home</a><span class="menuDevider"> | </span>
@@ -378,9 +338,9 @@
                         <a href="whoweare.html">who we are</a><span class="menuDevider"> | </span>
                         <a href="contact.html">contact / impressum</a>
                     </span>
-                    </div>
-                </div>
+				</div>
+			</div>
 
-            </div>
+		</div>
     </body>
 </html>

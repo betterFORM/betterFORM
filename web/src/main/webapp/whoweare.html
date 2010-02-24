@@ -22,25 +22,24 @@
 	<link REV="made" HREF="mailto:info@betterform.de"/>
 	<link rel="SHORTCUT ICON" href="images/betterform.ico"/>
 	<link rel="ICON" href="images/betterform.ico" type="image/x-icon"/>
+    <style type="text/css">
+        @import "http://ajax.googleapis.com/ajax/libs/dojo/1.4/dijit/themes/tundra/tundra.css";
+        @import "http://ajax.googleapis.com/ajax/libs/dojo/1.4/dojo/resources/dojo.css";
+    </style>
 	<link rel="stylesheet" type="text/css" href="styles/bf.css"/>
 
+    <script type="text/javascript"
+            src="http://ajax.googleapis.com/ajax/libs/dojo/1.4/dojo/dojo.xd.js"
+            djConfig="parseOnLoad: true"></script>
+    <script type="text/javascript">
+        dojo.require("dojo.parser");
+        dojo.require("dijit.TitlePane");
+        dojo.require("dojo.fx");
+        dojo.require("dijit.Tooltip");
 
+    </script>
 	<style type="text/css">
-		body {
-			background: #D3D3D3;
-		}
-
-		body, div, table, thead, tbody, tfoot, tr, th, td, p {
-			font-family: sans-serif;
-			font-size: small;
-		}
-
-		#topnav {
-			top: 30px
-		}
-
 		.tableHeading {
-			font-family: sans-serif;
 			font-size: large;
 		}
 
@@ -60,31 +59,6 @@
 			line-height: 105%;
 		}
 
-		.contentBody a {
-			margin-top: 0px;
-		}
-
-		.tableContent img {
-			padding-right: 5px;
-			border: none;
-		}
-
-		.page #header {
-			position: inherit;
-		}
-
-		#shadowTop {
-			position: inherit;
-		}
-
-		#content {
-			margin-top: 0px;
-			padding-top: 0px;
-		}
-
-		#content .contentBody {
-			padding-top: 0px;
-		}
 
 		.outertr {
 			vertical-align: top;
@@ -95,8 +69,6 @@
 			background:white;
 			 -webkit-border-radius:10px;
 			 -moz-border-radius:10px;
-		}
-
 		}
 
 		td {
@@ -121,27 +93,12 @@
 			width: 450px;
 		}
 
-		#footer {
-			position: inherit;
-			bottom: 0px;
-			height: 40px;
-			padding-bottom: 18px;
-
-		}
-
-		.logo {
-			float: left;
-			margin-top: 10;
-		}
 		.splitterHorizontal {
 			display:block;
 			width:10px;
 		}
 		.splitterVertical {
 			/*background:blue;*/
-		}
-		.pageMarginBox {
-			900px;
 		}
 		.network {
 			cursor:pointer;
@@ -151,31 +108,32 @@
 	</style>
 
 </head>
-<body>
+<body class="tundra" id="whoweare">
 	<div class="page">
 
 		<div id="header">
-			<div class="pageMarginBox logoBar">
-				<img class="logo" src="images/logo.png" alt="betterFORM project"/>
-
+			<div class="pageMarginBox">
 				<div class="languages">
 					<img src="images/en.png" alt="english"/>
 					<img src="images/de.png" alt="deutsch"/>
 				</div>
+				<div class="logoBar">
+					<img src="images/logo.png" alt="betterFORM project"/>
 
-				<div id="topnav">
-					<a href="index.html">home</a><span class="menuDevider"> | </span>
-					<a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>
-					<a href="download.html">download</a><span class="menuDevider"> | </span>
-					<a href="product.html">product</a><span class="menuDevider"> | </span>
-					<a href="support.html">support</a><span class="menuDevider"> | </span>
-					<a href="whoweare.html">who we are</a><span class="menuDevider"> | </span>
-					<a href="contact.html">contact / impressum</a>
+					<div id="topnav">
+						<a href="index.html">home</a><span class="menuDevider"> | </span>
+						<a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>
+						<a href="download.html">download</a><span class="menuDevider"> | </span>
+						<a href="product.html">product</a><span class="menuDevider"> | </span>
+						<a href="support.html">support</a><span class="menuDevider"> | </span>
+						<a href="whoweare.html">who we are</a><span class="menuDevider"> | </span>
+						<a href="contact.html">contact / impressum</a>
+					</div>
 				</div>
 			</div>
 		</div>
 
-		<div id="content" class="whoweare">
+		<div id="content" class="content">
 			<img id="shadowTop" src="images/shad_top.jpg" alt=""/>
 
 			<!-- ######################### Content here ################################## -->
@@ -186,20 +144,12 @@
 			<div class="pageMarginBox">
 				<div class="contentBody">
 
-
 					<h1>Who We Are</h1>
-
-
-					<!--
-						<p></p>
-						<p></p>
-						<p></p>
--->
 
 					<table id="outer">
 						<tr class="outertr">
 							<td class="outertd">
-								<table  border="0" cellspacing="0" cols="2" >
+								<table border="0" cellspacing="0" cols="2">
 									<tr>
 										<td class="col-1">
 											<img src="images/personTemplate.png" alt="Joern Turner"/>
@@ -250,9 +200,9 @@
 							</td>
 							<td class="splitterHorizontal">&nbsp;</td>
 							<td class="outertd">
-								<table  border="0" cellspacing="0" >
+								<table border="0" cellspacing="0">
 									<tr>
-										<td  class="col-1">
+										<td class="col-1">
 											<img src="images/personLars.jpg" alt="Lars Windauer"/>
 										</td>
 										<td class="col-2 tableHeading">Lars Windauer
@@ -268,7 +218,9 @@
 									<tr>
 										<td class="col-1 subTableHeading">about</td>
 										<td class="col-2 tableContent">
-											Lars is a passionate nerd interested into anything about technology, especially about Java &amp; iPhone stuff. He is
+											Lars is a passionate nerd interested into anything about technology, especially
+											about Java
+											&amp; iPhone stuff. He is
 											programming in various languages for at about 15 years and joined the XForms
 											world in 2006 working for Joern Turner. Together with Joern he founded the
 											betterFORM project in 2009.
@@ -313,7 +265,7 @@
 						</tr>
 						<tr class="outertr">
 							<td class="outertd">
-								<table  border="0" cellspacing="0" cols="2" >
+								<table border="0" cellspacing="0" cols="2">
 									<tr>
 										<td class="col-1">
 											<img src="images/personTemplate.png" alt="Tobias Krebs"/>
@@ -364,7 +316,7 @@
 							</td>
 							<td class="splitterHorizontal">&nbsp;</td>
 							<td class="outertd">
-								<table  border="0" cellspacing="0" cols="2" >
+								<table border="0" cellspacing="0" cols="2">
 									<tr>
 										<td class="col-1">
 											<img src="images/personTemplate.png" alt="Fabian Otto"/>
@@ -416,27 +368,28 @@
 						</tr>
 					</table>
 
+					<!-- ##### a bit of space ###### -->
+					<div class="devider"></div>
 				</div>
-
-
 			</div>
 		</div>
 		<div id="footer">
 			<img id="shadowBottom" src="images/shad_bottom.jpg" alt=""/>
 
 			<div class="pageMarginBox">
-                    <span id="bottomMenu">
-                        &#169; 2010 betterFORM<span class="menuDevider"> | </span>
-                        <a href="index.html">home</a><span class="menuDevider"> | </span>
-                        <a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>
-                        <a href="download.html">download</a><span class="menuDevider"> | </span>
-                        <a href="product.html">product</a><span class="menuDevider"> | </span>
-                        <a href="support.html">support</a><span class="menuDevider"> | </span>
-                        <a href="whoweare.html">who we are</a><span class="menuDevider"> | </span>
-                        <a href="contact.html">contact / impressum</a>
-                    </span>
+				<span id="bottomMenu">
+					&#169; 2010 betterFORM<span class="menuDevider"> | </span>
+					<a href="index.html">home</a><span class="menuDevider"> | </span>
+					<a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>
+					<a href="download.html">download</a><span class="menuDevider"> | </span>
+					<a href="product.html">product</a><span class="menuDevider"> | </span>
+					<a href="support.html">support</a><span class="menuDevider"> | </span>
+					<a href="whoweare.html">who we are</a><span class="menuDevider"> | </span>
+					<a href="contact.html">contact / impressum</a>
+				</span>
 			</div>
 		</div>
+
 	</div>
 </body>
 </html>
