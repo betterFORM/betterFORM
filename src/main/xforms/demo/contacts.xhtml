@@ -115,7 +115,7 @@
 						<xf:label>push address to subform</xf:label>
 						<xf:action>
 							<xf:load show="embed" targetid="address">
-								<xf:resource value="'/forms/demo/contacts_subform_1.xml'"/>
+								<xf:resource value="concat(bffn:appContext('contextroot'),'/forms/demo/contacts_subform_1.xml')"/>
 							</xf:load>
 							<xf:send submission="update-subform"/>
 						</xf:action>
@@ -125,7 +125,7 @@
 						<xf:label>pull address from master</xf:label>
 						<xf:action>
 							<xf:load show="embed" targetid="address">
-								<xf:resource value="'/forms/demo/contacts_subform_2.xml'"/>
+								<xf:resource value="concat(bffn:appContext('contextroot'),'/forms/demo/contacts_subform_2.xml')"/>
 							</xf:load>
 						</xf:action>
 					</xf:trigger>
