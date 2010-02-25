@@ -8,6 +8,7 @@ dojo.declare("betterform.ui.common.ToolTipAlert",
         // console.debug("betterform.ui.common.ToolTipAlert.valid [id:" + id , " action: " + action + " control: ", control, "]");
         var alertDijit = undefined;
         alertDijit = dijit.byId(id + "-MasterToolTip-alert");
+
         if (alertDijit != undefined) {
             alertDijit.hide(control.domNode);
         }
@@ -29,6 +30,9 @@ dojo.declare("betterform.ui.common.ToolTipAlert",
         var alert = dojo.byId(id + '-alert');
         // console.debug("betterform.ui.common.ToolTipAlert.invalid [alertTooltip:" + alertTooltip , " alertNode: " + alert + "]");
         if (alert != undefined) {
+            if(action == "xfDisabled") {
+                alertTooltip.hide(control.domNode);
+            }
             if(action=="onFocus" && (control.getControlValue() != '')){
                 alertTooltip.show(alert.innerHTML, dojo.byId(id+"-value"));
             }

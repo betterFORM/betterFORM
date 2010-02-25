@@ -101,13 +101,6 @@
         </xsl:choose>
     </xsl:template>
 
-    <!-- ### handle hint ### -->
-    <xsl:template match="xf:hint">
-        <xsl:attribute name="title">
-            <xsl:value-of select="normalize-space(.)"/>
-        </xsl:attribute>
-    </xsl:template>
-
     <xsl:template name="getMeta">
         <xsl:variable name="uc">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
         <xsl:variable name="lc">abcdefghijklmnopqrstuvwxyz</xsl:variable>

@@ -106,7 +106,7 @@
     <!-- ####################################### custom group with vertical layout ############################## -->
     <!-- ######################################################################################################## -->
 
-    <xsl:template match="xforms:group[@appearance='ca:verticalTable']" priority="15">
+    <xsl:template match="xforms:group[@appearance='bf:verticalTable']" priority="15">
         <xsl:variable name="group-id" select="@id"/>
 
         <xsl:variable name="mip-classes">
@@ -115,15 +115,12 @@
         <script type="text/javascript">dojo.require("betterform.ui.container.Group");</script><xsl:text>
 </xsl:text>
 
-        <table class="xfContainer caVerticalTable {$mip-classes}" id="{$group-id}" dojoType="betterform.ui.container.Group">
+        <table cellspacing="0" cellpadding="0" class="xfContainer caVerticalTable {$mip-classes}" id="{$group-id}" dojoType="betterform.ui.container.Group">
             <xsl:if test="exists(xforms:label)">
                 <caption class="xfGroupLabel"><xsl:apply-templates select="./xforms:label"/></caption>
             </xsl:if>
-            <!--<xsl:for-each select="*[position() &gt; 1]">-->
-
             <tbody>
             <xsl:for-each select="*[not(local-name()='label')]">
-                <!--<xsl:for-each select="*[position() &gt; 1 and *[position() != last()]]">-->
                 <xsl:choose>
                     <!-- if we got a group with appearance ca:horizontalColumn we put the label
                      of the first control into the lefthand column -->
@@ -140,14 +137,14 @@
                     </xsl:when>
                     <xsl:when test="local-name()='group' or local-name()='repeat' or local-name()='switch'">
                         <tr>
-                            <td colspan="2">
+                            <td colspan="3">
                                 <xsl:apply-templates select="."/>
                             </td>
                         </tr>
                     </xsl:when>
                     <xsl:when test="namespace-uri()='http://www.w3.org/1999/xhtml'">
                         <tr>
-                            <td colspan="2">
+                            <td colspan="3">
                                 <xsl:apply-templates select="."/>
                             </td>
                         </tr>
@@ -156,10 +153,23 @@
                         <xsl:if test="exists(node())">
                         <tr>
                             <td class="caVerticalTableLabel">
-                                <xsl:apply-templates select="xforms:label"/>
+                                <xsl:variable name="label-classes">
+                                    <xsl:call-template name="assemble-label-classes"/>
+                                </xsl:variable>
+                                <xsl:if test="local-name(.) != 'trigger'">
+                                    <label id="{@id}-label" for="{@id}-value" class="{$label-classes}">
+                                        <xsl:apply-templates select="xforms:label"/>
+                                    </label>                                    
+                                </xsl:if>
                             </td>
                             <td class="caVerticalTableValue">
                                 <xsl:apply-templates select="." mode="table"/>
+                            </td>
+                            <td class="bfVerticalTableInfo">
+                                <span id="{concat(@id,'-alertAttachPoint')}" style="display:none;" class="alertAttachPointVertical"/>
+                                <xsl:apply-templates select="xforms:hint"/>
+                                <xsl:apply-templates select="xforms:help"/>
+                                <span class="info" style="display:none;" id="{concat(@id,'-info')}">ok</span>
                             </td>
                         </tr>
                         </xsl:if>
@@ -168,6 +178,19 @@
             </xsl:for-each>
             </tbody>
         </table>
+    </xsl:template>
+
+
+    <xsl:template match="xforms:trigger" mode="table">
+        <xsl:variable name="control-classes">
+            <xsl:call-template name="assemble-control-classes">
+                <xsl:with-param name="appearance" select="@appearance"/>
+            </xsl:call-template>
+        </xsl:variable>
+
+        <xsl:call-template name="trigger">
+            <xsl:with-param name="classes" select="$control-classes"/>
+        </xsl:call-template>
     </xsl:template>
 
 
@@ -225,7 +248,7 @@
                 <!--<td colspan="{count(*[position() &gt; 1 and position() &lt; last()])}" class="caHorizontalTableHeader">-->
                 <!--<td colspan="{count(*[position() &gt; 1]) -1}" class="xfGroupLabel">-->
                 <td colspan="{count(*[position() &gt; 1])}" class="xfGroupLabel">
-                    <xsl:if test="exists(xforms:label) and not(@appearance='ca:horizontalColumn')">
+                    <xsl:if test="exists(xforms:label) and @appearance !='ca:horizontalColumn'">
                         <xsl:apply-templates select="./xforms:label"/>
                     </xsl:if>
                 </td>
@@ -233,10 +256,12 @@
             <tr>
                 <!--<xsl:for-each select="*[position() &gt; 1 and position() &lt; last()]/xforms:label">-->
                 <!--<xsl:for-each select="*[position() &gt; 1]/xforms:label">-->
-                <xsl:for-each select="*[position() &gt; 1]/xforms:label">
+                <xsl:for-each select="*[position() &gt; 1]">
                 <!--<xsl:for-each select="*[position() &gt; 1]">-->
-                    <td class="caHorizontalTableLabel  caTableCol{position()}">
-                        <xsl:apply-templates select="."/>
+                    <td class="caHorizontalTableLabel  caTableCol{position()}">                        
+                        <xsl:if test="local-name(.) != 'trigger'">
+                            <label id="{@id}-label" for="{@id}-value" class="xfTableLable"><xsl:apply-templates select="xforms:label"/></label>
+                        </xsl:if>
                     </td>
                 </xsl:for-each>
             </tr>
@@ -387,7 +412,6 @@
             <xsl:call-template name="assemble-control-classes"/>
         </xsl:variable>
 
-        <!-- NEU -->
         <xsl:variable name="htmlElem">
             <xsl:choose>
                 <xsl:when test="local-name()='output'">span</xsl:when>
@@ -404,8 +428,6 @@
             <xsl:attribute name="appearance" select="@appearance"/>
             <xsl:attribute name="dojoAttachEvent">onfocus:_onFocus</xsl:attribute>
 
-            <xsl:apply-templates select="xforms:hint"/>
-            <xsl:apply-templates select="xforms:help"/>
             <xsl:choose>
                 <xsl:when test="'output' = local-name() and exists(@mediatype)">
                         <xsl:attribute name="mediatype" select="@mediatype"/>
@@ -417,29 +439,13 @@
                             <xsl:call-template name="select1"/>
                 </xsl:when>
             </xsl:choose>
-            <!--<xsl:apply-templates select="xforms:alert"/>-->
+            <span id="{$id}-alertAttachPoint" style="display:none;" class="alertAttachPoint"/>
+            <xsl:apply-templates select="xforms:hint"/>
+            <xsl:apply-templates select="xforms:help"/>
 
         </xsl:element>
 
-
-        <!-- NEU -->
-        <!-- <div id="{$id}" class="{$control-classes} xfRepeated" controlType="{local-name()}" dojoAttachEvent='onfocus:_onFocus' appearance="{@appearance}">
-            <xsl:apply-templates select="xforms:hint"/>
-            <xsl:apply-templates select="xforms:help"/>
-            <xsl:choose>
-                <xsl:when test="'output' = local-name() and exists(@mediatype)">
-                        <xsl:attribute name="mediatype" select="@mediatype"/>
-                </xsl:when>
-                <xsl:when test="'select' = local-name()">
-                        <xsl:call-template name="select"/>
-                </xsl:when>
-                <xsl:when test="'select1' = local-name()">
-                            <xsl:call-template name="select1"/>
-                </xsl:when>
-            </xsl:choose>
-            <xsl:apply-templates select="xforms:alert"/>
-        </div>    -->
-    </xsl:template>
+	</xsl:template>
 
     <xsl:template match="xforms:group" mode="repeated-compact-prototype">
         <xsl:variable name="id" select="@id"/>
@@ -448,8 +454,6 @@
         </xsl:variable>
         <xsl:variable name="appearance" select="@appearance"/>
 
-
-        <!-- NEU -->
         <xsl:variable name="htmlElem">
             <xsl:choose>
                 <xsl:when test="$appearance='minimal'">span</xsl:when>
@@ -457,7 +461,6 @@
             </xsl:choose>
         </xsl:variable>
 
-        <xsl:message terminate="no">XXXXX: Apperance:<xsl:value-of select="$appearance"/></xsl:message>
 
         <xsl:element name="{$htmlElem}">
             <xsl:attribute name="id" select="$id"/>
@@ -469,14 +472,6 @@
             <xsl:apply-templates select="*[not(self::xforms:label)]" mode="repeated-compact-prototype"/>
         </xsl:element>
 
-        <!-- NEU -->
-        <!--
-        <div id="{$id}" class="{$control-classes} xfRepeated" controlType="{local-name()}" appearance="{@appearance}" dojoAttachEvent='onfocus:_onFocus'> -->
-            <!-- prevent xforms:label for groups within compact repeat-->
-        <!--
-            <xsl:apply-templates select="*[not(self::xforms:label)]" mode="repeated-compact-prototype"/>
-        </div>
-        -->
     </xsl:template>
 
     <xsl:template match="xforms:switch" mode="repeated-compact-prototype">
@@ -566,16 +561,16 @@
                 <xsl:otherwise>div</xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <xsl:message>LN: <xsl:value-of select="local-name()"/> htmlElem: <xsl:value-of select="$htmlElem"/></xsl:message>
+
         <xsl:element name="{$htmlElem}">
             <xsl:attribute name="id" select="$id"/>
             <xsl:attribute name="class" select="concat($control-classes,' xfRepeated')"/>
             <xsl:attribute name="controlType" select="local-name()"/>
             <xsl:attribute name="appearance" select="@appearance"/>
+            <xsl:attribute name="title" select="normalize-space(xforms:hint)"/>
             <xsl:attribute name="dojoAttachEvent">onfocus:_onFocus</xsl:attribute>
 
             <xsl:if test="'output' = local-name() and exists(@mediatype)"><xsl:attribute name="mediatype" select="@mediatype"/></xsl:if>
-            <xsl:apply-templates select="xforms:hint"/>
             <label class="xfLabel"><xsl:apply-templates select="xforms:label"/></label>
             <xsl:apply-templates select="xforms:help"/>
             <!--<xsl:apply-templates select="xforms:alert"/>-->
@@ -589,6 +584,9 @@
                             <!--<xsl:apply-templates select="xforms:alert"/>-->
                 </xsl:when>
             </xsl:choose>
+			<span id="{$id}-alertAttachPoint" style="display:none;" class="alertAttachPoint"/>
+            <xsl:apply-templates select="xforms:help"/>
+            <xsl:apply-templates select="xforms:hint"/>
 
         </xsl:element>
     </xsl:template>
@@ -606,8 +604,6 @@
             </xsl:choose>
         </xsl:variable>
 
-        <xsl:message terminate="no">XXXXX: Apperance:<xsl:value-of select="$appearance"/></xsl:message>
-
         <xsl:variable name="group-classes">
             <xsl:call-template name="assemble-compound-classes">
                 <xsl:with-param name="appearance" select="@appearance"/>
@@ -615,17 +611,20 @@
         </xsl:variable>
 
         <xsl:element name="{$htmlElem}">
-            <xsl:attribute name="id" select="$id"/>
-            <xsl:attribute name="class" select="concat($group-classes,' xfRepeated dijitContentPane')"/>
-            <xsl:attribute name="controlType" select="local-name()"/>
-            <xsl:attribute name="appearance" select="$appearance"/>
-            <xsl:attribute name="dojoAttachEvent">onfocus:_onFocus</xsl:attribute>
-            <xsl:element name="{$htmlElem}">
-            <xsl:attribute name="class">xfGroupLabel</xsl:attribute>
-                <xsl:apply-templates select="xforms:label"/>
-            </xsl:element>
-            <xsl:apply-templates select="*[not(self::xforms:label)]" mode="repeated-full-prototype"/>
-        </xsl:element>
+             <xsl:attribute name="id" select="$id"/>
+             <xsl:attribute name="class" select="concat($group-classes,' xfRepeated dijitContentPane')"/>
+             <xsl:attribute name="controlType" select="local-name()"/>
+             <xsl:attribute name="appearance" select="$appearance"/>
+             <xsl:attribute name="dojoAttachEvent">onfocus:_onFocus</xsl:attribute>
+
+             <xsl:element name="{$htmlElem}">
+	             <xsl:attribute name="class">xfGroupLabel</xsl:attribute>
+                 <xsl:apply-templates select="xforms:label"/>
+             </xsl:element>
+
+             <xsl:apply-templates select="*[not(self::xforms:label)]" mode="repeated-full-prototype"/>
+         </xsl:element>
+
 
     </xsl:template>
 
@@ -680,9 +679,7 @@
         </div>
     </xsl:template>
 
-    <xsl:template match="xforms:trigger"
-                  mode="repeated-full-prototype"
-                  priority="10">
+    <xsl:template match="xforms:trigger"  mode="repeated-full-prototype" priority="10">
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="appearance">
             <xsl:choose>
@@ -744,6 +741,10 @@
             </label>
 
             <xsl:call-template name="buildControl"/>
+            <span id="{$id}-alertAttachPoint" style="display:none;" class="alertAttachPoint"/>
+            <xsl:apply-templates select="xforms:help"/>
+            <xsl:apply-templates select="xforms:hint"/>
+
         </div>
     </xsl:template>
 

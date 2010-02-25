@@ -41,6 +41,21 @@
 							<output></output>
 							<upload></upload>
 						</item>
+						<item>
+							<input></input>
+							<input/>
+							<input></input>
+							<input/>
+							<select1/>
+							<select1/>
+							<select1/>
+							<select/>
+							<select/>
+							<select/>
+							<textarea></textarea>
+							<output></output>
+							<upload></upload>
+						</item>
 
 						<countries>
 							<country value="uk">England</country>
@@ -129,124 +144,128 @@
 		<p>For a valid Select(1) choose (only!) England</p>
 
 <!--		<xf:group  appearance="bf:verticalTable">-->
-		<xf:group  appearance="minimal">
-			<xf:label/>
-				<xf:input ref="repeated/item[1]/input[1]" incremental="true">
-					<xf:label>Input 1 (incremental):</xf:label>
-					<xf:alert>Input 1 <b>Alert</b>  (incremental)</xf:alert>
-					<xf:hint>Input 1 <b>Hint</b>  (incremental)</xf:hint>
-					<xf:help>Input 1 Help  (incremental)</xf:help>
-				</xf:input>
+		<xf:repeat nodeset="repeated/item" appearance="full">
+			<xf:group  appearance="minimal">
+				<xf:label/>
+					<xf:input ref="input[1]" incremental="true">
+						<xf:label>Input 1 (incremental):</xf:label>
+						<xf:alert>Input 1 <b>Alert</b>  (incremental)</xf:alert>
+						<xf:hint>Input 1 <b>Hint</b>  (incremental)</xf:hint>
+						<xf:help>Input 1 Help  (incremental)</xf:help>
+					</xf:input>
 
-				<xf:input ref="repeated/item[1]/input[1]">
-					<xf:label>Input 1:</xf:label>
-					<xf:alert>Input 1 <b>Alert</b></xf:alert>
-					<xf:hint>Input 1 <b>Hint</b></xf:hint>
-					<xf:help>Input 1 Help</xf:help>
-				</xf:input>
+					<xf:input ref="input[1]">
+						<xf:label>Input 1:</xf:label>
+						<xf:alert>Input 1 <b>Alert</b></xf:alert>
+						<xf:hint>Input 1 <b>Hint</b></xf:hint>
+						<xf:help>Input 1 Help</xf:help>
+					</xf:input>
 
-				<xf:input ref="repeated/item[1]/input[2]">
-					<xf:label>Input 2:</xf:label>
-					<xf:alert>Input 2 <b>Alert</b></xf:alert>
-					<xf:hint>Input 2 <b>Hint</b></xf:hint>
-					<xf:help>Input 2 Help</xf:help>
-				</xf:input>
+					<xf:input ref="input[2]">
+						<xf:label>Input 2:</xf:label>
+						<xf:alert>Input 2 <b>Alert</b></xf:alert>
+						<xf:hint>Input 2 <b>Hint</b></xf:hint>
+						<xf:help>Input 2 Help</xf:help>
+					</xf:input>
 
-				<xf:input ref="repeated/item[1]/input[3]">
-					<xf:label>Input 3:</xf:label>
-					<xf:alert>Input 3 <b>Alert</b></xf:alert>
-					<xf:hint>Input 3 <b>Hint</b></xf:hint>
-					<xf:help>Input 3 Help</xf:help>
-				</xf:input>
-			
-				<xf:input ref="repeated/item[1]/input[4]">
-					<xf:label>Input 4:</xf:label>
-					<xf:alert>Input 4 <b>Alert</b></xf:alert>
-					<xf:hint>Input 4 <b>Hint</b></xf:hint>
-					<xf:help>Input 4 Help</xf:help>
-				</xf:input>
+					<xf:input ref="input[3]">
+						<xf:label>Input 3:</xf:label>
+						<xf:alert>Input 3 <b>Alert</b></xf:alert>
+						<xf:hint>Input 3 <b>Hint</b></xf:hint>
+						<xf:help>Input 3 Help</xf:help>
+					</xf:input>
 
-				<xf:select1  ref="repeated/item[1]/select1[1]" appearance="minimal">
-					<xf:label>Select1</xf:label>
-					<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
-						<xf:label ref="."/>
-						<xf:value ref="@value"/>
-					</xf:itemset>
-					<xf:alert>Select1 1 <b>Alert</b></xf:alert>
-					<xf:hint>Select1 1 <b>Hint</b></xf:hint>
-					<xf:help>Select1 1 Help</xf:help>
+					<xf:input ref="input[4]">
+						<xf:label>Input 4:</xf:label>
+						<xf:alert>Input 4 <b>Alert</b></xf:alert>
+						<xf:hint>Input 4 <b>Hint</b></xf:hint>
+						<xf:help>Input 4 Help</xf:help>
+					</xf:input>
 
-				</xf:select1>
+					<xf:select1  ref="select1[1]" appearance="minimal">
+						<xf:label>Select1</xf:label>
+						<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
+							<xf:label ref="."/>
+							<xf:value ref="@value"/>
+						</xf:itemset>
+						<xf:alert>Select1 1 <b>Alert</b></xf:alert>
+						<xf:hint>Select1 1 <b>Hint</b></xf:hint>
+						<xf:help>Select1 1 Help</xf:help>
 
-
-				<xf:select1 ref="repeated/item[1]/select1[2]" appearance="compact">
-					<xf:label>Select1 [2]</xf:label>
-					<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
-						<xf:label ref="."/>
-						<xf:value ref="@value"/>
-					</xf:itemset>
-					<xf:choices>
-						<xf:item>
-							<xf:label>One</xf:label>
-							<xf:value>One</xf:value>
-						</xf:item>
-						<xf:item>
-							<xf:label>Two</xf:label>
-							<xf:value>Two</xf:value>
-						</xf:item>
-					</xf:choices>
-					<xf:alert>Select1 2 <b>Alert</b></xf:alert>
-					<xf:hint>Select1 2 <b>Hint</b></xf:hint>
-					<xf:help>Select1 2 Help</xf:help>
-				</xf:select1>
-
-				<xf:select1 ref="repeated/item[1]/select1[3]" appearance="full">
-					<xf:label>Select1 [3]</xf:label>
-					<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
-						<xf:label ref="."/>
-						<xf:value ref="@value"/>
-					</xf:itemset>
-					<xf:alert>Select1 3 <b>Alert</b></xf:alert>
-					<xf:hint>Select1 3 <b>Hint</b></xf:hint>
-					<xf:help>Select1 3 Help</xf:help>
-				</xf:select1>
+					</xf:select1>
 
 
-				<xf:select  ref="repeated/item[1]/select[1]" appearance="minimal">
-					<xf:label>Select [1]</xf:label>
-					<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
-						<xf:label ref="."/>
-						<xf:value ref="@value"/>
-					</xf:itemset>
-					<xf:alert> Select 1 <b>Alert</b></xf:alert>
-					<xf:hint> Select 1 <b>Hint</b></xf:hint>
-					<xf:help> Select 1 Help</xf:help>
-				</xf:select>
+					<xf:select1 ref="select1[2]" appearance="compact">
+						<xf:label>Select1 [2]</xf:label>
+						<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
+							<xf:label ref="."/>
+							<xf:value ref="@value"/>
+						</xf:itemset>
+						<xf:choices>
+							<xf:item>
+								<xf:label>One</xf:label>
+								<xf:value>One</xf:value>
+							</xf:item>
+							<xf:item>
+								<xf:label>Two</xf:label>
+								<xf:value>Two</xf:value>
+							</xf:item>
+						</xf:choices>
+						<xf:alert>Select1 2 <b>Alert</b></xf:alert>
+						<xf:hint>Select1 2 <b>Hint</b></xf:hint>
+						<xf:help>Select1 2 Help</xf:help>
+					</xf:select1>
 
-				<xf:select ref="repeated/item[1]/select[2]" appearance="full">
-					<xf:label>Select [2]</xf:label>
-					<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
-						<xf:label ref="."/>
-						<xf:value ref="@value"/>
-					</xf:itemset>
-					<xf:alert> Select 2 <b>Alert</b></xf:alert>
-					<xf:hint> Select 2 <b>Hint</b></xf:hint>
-					<xf:help> Select 2 Help</xf:help>
-				</xf:select>
-				<xf:output  ref="repeated/item[1]/output[1]" appearance="minimal">
-					<xf:label>Output [1]</xf:label>
-					<xf:alert>Output 1 <b>Alert</b></xf:alert>
-					<xf:hint>Output 1 <b>Hint</b></xf:hint>
-					<xf:help>Output 1 Help</xf:help>
-				</xf:output>
-				<xf:textarea ref="repeated/item[1]/textarea[1]" appearance="minimal">
-					<xf:label>Textarea [1]</xf:label>
-					<xf:alert>Textarea 1 <b>Alert</b></xf:alert>
-					<xf:hint>Textarea 1 <b>Hint</b></xf:hint>
-					<xf:help>Textarea 1 Help</xf:help>
-				</xf:textarea>
+<!--
+					<xf:select1 ref="select1[3]" appearance="full">
+						<xf:label>Select1 [3]</xf:label>
+						<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
+							<xf:label ref="."/>
+							<xf:value ref="@value"/>
+						</xf:itemset>
+						<xf:alert>Select1 3 <b>Alert</b></xf:alert>
+						<xf:hint>Select1 3 <b>Hint</b></xf:hint>
+						<xf:help>Select1 3 Help</xf:help>
+					</xf:select1>
 
-			</xf:group>
+
+					<xf:select  ref="select[1]" appearance="minimal">
+						<xf:label>Select [1]</xf:label>
+						<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
+							<xf:label ref="."/>
+							<xf:value ref="@value"/>
+						</xf:itemset>
+						<xf:alert> Select 1 <b>Alert</b></xf:alert>
+						<xf:hint> Select 1 <b>Hint</b></xf:hint>
+						<xf:help> Select 1 Help</xf:help>
+					</xf:select>
+
+					<xf:select ref="select[2]" appearance="full">
+						<xf:label>Select [2]</xf:label>
+						<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
+							<xf:label ref="."/>
+							<xf:value ref="@value"/>
+						</xf:itemset>
+						<xf:alert> Select 2 <b>Alert</b></xf:alert>
+						<xf:hint> Select 2 <b>Hint</b></xf:hint>
+						<xf:help> Select 2 Help</xf:help>
+					</xf:select>
+					<xf:output  ref="output[1]" appearance="minimal">
+						<xf:label>Output [1]</xf:label>
+						<xf:alert>Output 1 <b>Alert</b></xf:alert>
+						<xf:hint>Output 1 <b>Hint</b></xf:hint>
+						<xf:help>Output 1 Help</xf:help>
+					</xf:output>
+					<xf:textarea ref="textarea[1]" appearance="minimal">
+						<xf:label>Textarea [1]</xf:label>
+						<xf:alert>Textarea 1 <b>Alert</b></xf:alert>
+						<xf:hint>Textarea 1 <b>Hint</b></xf:hint>
+						<xf:help>Textarea 1 Help</xf:help>
+					</xf:textarea>
+-->
+
+				</xf:group>
+		</xf:repeat>
     </div>
             <xf:trigger appearance="full">
                 <xf:label>Validate</xf:label>

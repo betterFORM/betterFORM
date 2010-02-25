@@ -87,21 +87,18 @@ dojo.declare(
                 console.error("ControlValue for Control " + id + " could not be created");
             }
         }
-
         if(this.isValid()) {
-            dojo.publish("/xf/valid",[this.id,"init"]);    
+            dojo.publish("/xf/valid",[this.id,"init"]);
         }else {
             dojo.publish("/xf/invalid",[this.id,"init"]);
         }
-
-
     },
 
     /**
      * Create a ControlValue template of properties taken from Control 
      */
     _createControlValueTemplate:function() {
-        console.debug("Control.createControlValueTemplate XFControl " + this.id + " has no value node! Value node is created based on ContextInfo: ", this.contextInfo, " domNode:",this.domNode);
+        // console.debug("Control.createControlValueTemplate XFControl " + this.id + " has no value node! Value node is created based on ContextInfo: ", this.contextInfo, " domNode:",this.domNode);
 
         // prepare Control Node
         if (this.contextInfo.type != undefined && this.contextInfo.type != "") {
@@ -261,6 +258,7 @@ dojo.declare(
             if (this.valid != null) {
                 this._handleSetValidProperty(eval(this.valid));
             }
+
             if (this.readonly != null) {
                 this._handleSetReadonlyProperty(eval(this.readonly));
             }
@@ -272,14 +270,6 @@ dojo.declare(
             }
 
         }
-    },
-
-    _onFocus:function(){
-        /* console.debug("Control._onFocus()); */
-    },
-
-    _onBlur:function(){
-        /* console.debug("Control._onBlur()); */
     },
 
     getControlValue:function(){
@@ -311,7 +301,7 @@ dojo.declare(
         } else if (this.dataType != dataType && !(this.dataType == "" && dataType == "string")) {
             // console.debug("datatype for existing dijit changed this.dataType: " , this.dataType + "  dataType: ", dataType);
 
-            var controlValueNode = document.createElement("div");
+            var controlValueNode = document.createElement("span");
             dojo.attr(controlValueNode, "dataType", dataType);
             dojo.attr(controlValueNode, "controlType", this.controlType);
             dojo.attr(controlValueNode, "id", this.id + "-value");
@@ -342,7 +332,7 @@ dojo.declare(
 
 
     _handleSetValidProperty:function(validity){
-        console.debug("Control._handleSetValidProperty [id:"+this.id+ " valid: ",validity, "]");
+        // console.debug("Control._handleSetValidProperty [id:"+this.id+ " valid: ",validity, "]");
         if (validity) {
             betterform.ui.util.replaceClass(this.domNode, "xfInvalid", "xfValid");
 			dojo.publish("/xf/valid",[this.id,"applyChanges"]);
@@ -376,18 +366,36 @@ dojo.declare(
         }
     },
 
-    _handleSetEnabledProperty: function(){
+    _handleSetEnabledProperty:function(enabled){
+        // console.debug("_handleSetEnabledProperty  enabled:",enabled)
         var targetId = this.id;
         var label = dojo.byId(targetId + "-label");
 
-        if (this.relevant == "true") {
+        if (enabled) {
+            if(dojo.hasClass(label,"xfDisabled")){
+                betterform.ui.util.replaceClass(label, "xfDisabled", "xfEnabled");
+            }else {
+                dojo.addClass(label, "xfEnabled");
+            }
             betterform.ui.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");
-            betterform.ui.util.replaceClass(label, "xfDisabled", "xfEnabled");
         }
         else {
             betterform.ui.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");
-            betterform.ui.util.replaceClass(label, "xfEnabled", "xfDisabled");
+            if(dojo.hasClass(label,"xfEnabled")){
+                betterform.ui.util.replaceClass(label, "xfEnabled", "xfDisabled");
+            }else {
+                dojo.addClass(label, "xfDisabled");
+            }
+
+            if(this.isValid()){
+                dojo.publish("/xf/valid", [this.id, "xfDisabled"]);
+            }else {
+                dojo.publish("/xf/invalid", [this.id, "xfDisabled"]);
+            }
         }
+
+
+
     },
 
     _handleHelperChanged: function(properties){

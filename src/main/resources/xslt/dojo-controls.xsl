@@ -55,11 +55,10 @@
                         dataType="{$datatype}"
                         controlType="select1List"
                         class="xfValue"
-                        title="{xforms:hint}"
+                        title="{normalize-space(xforms:hint)}"
                         tabindex="{$navindex}"
                         schemaValue="{bf:data/@bf:schema-value}"
                         incremental="{$incremental}">
-                    <xsl:apply-templates select="xforms:hint"/>
                     <xsl:call-template name="build-items">
                         <xsl:with-param name="parent" select="$parent"/>
                     </xsl:call-template>
@@ -113,7 +112,7 @@
                                 size="1"
                                 dataType="{$datatype}"
                                 controlType="select1ComboBoxOpen"
-                                title="{xforms:hint}"
+                                title="{normalize-space(xforms:hint)}"
                                 tabindex="{$navindex}"
                                 schemaValue="{bf:data/@bf:schema-value}"
                                 autocomplete="true"
@@ -130,7 +129,7 @@
                                 class="xfValue"
                                 dataType="{$datatype}"
                                 controlType="select1ComboBox"
-                                title="{xforms:hint}"
+                                title="{normalize-space(xforms:hint)}"
                                 tabindex="{$navindex}"
                                 schemaValue="{bf:data/@bf:schema-value}"
                                 incremental="{$incremental}">
@@ -164,7 +163,7 @@
                       selection="{$selection}"
                       controlType="selectCheckBox"
                       dataType="{$datatype}"
-                      title="{xforms:hint}"
+                      title="{normalize-space(xforms:hint)}"
                       schemaValue="{bf:data/@bf:schema-value}"
                       incremental="{$incremental}">
                     <xsl:for-each select="$parent/xforms:item|$parent/xforms:choices|$parent/xforms:itemset">
@@ -194,7 +193,7 @@
                         controlType="selectList"
                         dataType="{$datatype}"
                         class="xfValue"
-                        title="{xforms:hint}"
+                        title="{normalize-space(xforms:hint)}"
                         tabindex="{$navindex}"
                         schemaValue="{bf:data/@bf:schema-value}"
                         selection="{$selection}"
@@ -352,7 +351,7 @@
                 <xsl:otherwise><xsl:value-of select="xforms:value"/></xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <option id="{@id}" value="{$itemValue}" title="{xforms:hint}" class="xfSelectorItem">
+        <option id="{@id}" value="{$itemValue}" title="{normalize-space(xforms:hint)}" class="xfSelectorItem">
             <xsl:if test="@selected='true'">
                 <xsl:attribute name="selected">selected</xsl:attribute>
             </xsl:if>
@@ -373,7 +372,7 @@
     	          	</xsl:when>
         	      	<xsl:otherwise>
             	   		<xsl:attribute name="value" select="normalize-space(xforms:value)"/>
-              			<xsl:attribute name="title" select="xforms:hint"/>
+              			<xsl:attribute name="title" select="normalize-space(xforms:hint)"/>
                 	</xsl:otherwise>
 				</xsl:choose>
                 <xsl:if test="@selected='true'">
@@ -446,6 +445,7 @@
                    class="xfCheckBoxValue"
                    type="checkbox"
                    tabindex="0"
+
                    selectWidgetId="{$parent/@id}-value"
                    name="{$name}"
                    dojotype="betterform.ui.select.CheckBox">
@@ -461,14 +461,12 @@
 	    	    		<xsl:attribute name="value" select="xforms:value"/>
     	    		</xsl:otherwise>
         	    </xsl:choose>
-                <xsl:choose>
-                    <xsl:when test="xforms:hint">
-                        <xsl:apply-templates select="xforms:hint"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:apply-templates select="$parent/xforms:hint"/>
-                    </xsl:otherwise>
-                </xsl:choose>
+                <xsl:attribute name="title">
+                    <xsl:choose>
+                        <xsl:when test="xforms:hint"><xsl:value-of select="normalize-space(xforms:hint)"/></xsl:when>
+                        <xsl:otherwise><xsl:value-of select="normalize-space($parent/xforms:hint)"/></xsl:otherwise>
+                    </xsl:choose>
+                </xsl:attribute>
                 <xsl:text> </xsl:text>
 
             </input>
@@ -501,10 +499,10 @@
                 <xsl:attribute name="title">
                     <xsl:choose>
                         <xsl:when test="xforms:hint">
-                            <xsl:value-of select="xforms:hint"/>
+                            <xsl:value-of select="normalize-space(xforms:hint)"/>
                         </xsl:when>
                         <xsl:otherwise>
-                            <xsl:value-of select="$parent/xforms:hint"/>
+                            <xsl:value-of select="normalize-space($parent/xforms:hint)"/>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:attribute>
@@ -615,22 +613,17 @@
                         <xsl:value-of select="$navindex"/>
                     </xsl:attribute>
                 </xsl:if>
-                <xsl:choose>
-        			<xsl:when test="xforms:copy">
-           				<xsl:attribute name="value" select="xforms:copy/@id"/>
-	            	</xsl:when>
-    	        	<xsl:otherwise>
-	    	    		<xsl:attribute name="value" select="xforms:value"/>
-    	    		</xsl:otherwise>
-        	    </xsl:choose>
-                <xsl:choose>
-                    <xsl:when test="xforms:hint">
-                        <xsl:apply-templates select="xforms:hint"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:apply-templates select="$parent/xforms:hint"/>
-                    </xsl:otherwise>
-                </xsl:choose>
+                <xsl:attribute name="value">
+                    <xsl:choose>
+                        <xsl:when test="xforms:copy"><xsl:value-of select="xforms:copy/@id"/></xsl:when>
+                        <xsl:otherwise><xsl:value-of select="normalize-space(xforms:value)"/></xsl:otherwise>
+                    </xsl:choose>
+                </xsl:attribute>
+                <xsl:attribute name="title">
+                    <xsl:choose>
+                        <xsl:when test="xforms:hint"><xsl:value-of select="normalize-space(xforms:hint)"/></xsl:when>
+                        <xsl:otherwise><xsl:value-of select="normalize-space($parent/xforms:hint)"/></xsl:otherwise></xsl:choose>
+                </xsl:attribute>
             </input>
             <label id="{@id}-label" for="{@id}-value" class="xfRadioLabel">
                 <xsl:if test="$parent/bf:data/@bf:readonly='true'">
@@ -655,23 +648,20 @@
                     </xsl:attribute>
                 </xsl:if>
 
-                <xsl:choose>
-					<xsl:when test="xforms:copy">
-   						<xsl:attribute name="value" select="xforms:copy/@id"/>
-	            	</xsl:when>
-    	        	<xsl:otherwise>
-	    	    		<xsl:attribute name="value" select="xforms:value"/>
-    	    		</xsl:otherwise>
-        	    </xsl:choose>
-                <xsl:choose>
-                    <xsl:when test="xforms:hint">
-                        <xsl:apply-templates select="xforms:hint"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:apply-templates select="$parent/xforms:hint"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-                <xsl:if test="$parent/bf:data/@bf:readonly='true'">
+
+                <xsl:attribute name="value">
+                    <xsl:choose>
+                        <xsl:when test="xforms:copy"><xsl:value-of select="xforms:copy/@id"/></xsl:when>
+                        <xsl:otherwise><xsl:value-of select="normalize-space(xforms:value)"/></xsl:otherwise>
+                    </xsl:choose>
+                </xsl:attribute>
+                <xsl:attribute name="title">
+                    <xsl:choose>
+                        <xsl:when test="xforms:hint"><xsl:value-of select="normalize-space(xforms:hint)"/></xsl:when>
+                        <xsl:otherwise><xsl:value-of select="normalize-space($parent/xforms:hint)"/></xsl:otherwise></xsl:choose>
+                </xsl:attribute>
+
+              <xsl:if test="$parent/bf:data/@bf:readonly='true'">
                     <xsl:attribute name="disabled">disabled</xsl:attribute>
                 </xsl:if>
                 <xsl:if test="@selected='true'">

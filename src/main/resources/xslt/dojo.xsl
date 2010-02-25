@@ -432,6 +432,10 @@
             </label>
 
             <xsl:call-template name="buildControl"/>
+            <span id="{$id}-alertAttachPoint" style="display:none;" class="alertAttachPoint"/>
+            <xsl:apply-templates select="xf:help"/>
+            <xsl:apply-templates select="xf:hint"/>
+
             <xsl:copy-of select="xhtml:script"/>
         </span>
     </xsl:template>
@@ -449,12 +453,14 @@
         </xsl:variable>
 
         <span id="{$id}" class="{$control-classes}" dojoType="betterform.ui.Control">
-            <!--<xsl:if test="not(contains($control-classes,'xsdAnyURI'))">-->
                 <label for="{$id}-value" id="{$id}-label" class="{$label-classes}">
                     <xsl:apply-templates select="xf:label"/>
                 </label>
-            <!--</xsl:if>-->
             <xsl:call-template name="buildControl"/>
+            <span id="{$id}-alertAttachPoint" style="display:none;" class="alertAttachPoint"/>
+            <xsl:apply-templates select="xf:help"/>
+            <xsl:apply-templates select="xf:hint"/>
+
             <xsl:copy-of select="xhtml:script"/>
         </span>
     </xsl:template>
@@ -471,12 +477,14 @@
         </xsl:variable>
 
         <span id="{$id}" class="{$control-classes}" controlType="{local-name()}-control">
-            <!--<xsl:if test="not(contains($control-classes,'xsdAnyURI'))">-->
                 <label for="{$id}-value" id="{$id}-label" class="{$label-classes}">
                     <xsl:apply-templates select="xf:label"/>
                 </label>
-            <!--</xsl:if>-->
             <xsl:call-template name="buildControl"/>
+            <span id="{$id}-alertAttachPoint" style="display:none;" class="alertAttachPoint"/>
+            <xsl:apply-templates select="xf:help"/>
+            <xsl:apply-templates select="xf:hint"/>
+
             <xsl:copy-of select="xhtml:script"/>
         </span>
     </xsl:template>
@@ -539,7 +547,7 @@
     <!-- ##### HELP ##### -->
     <!-- ##### HELP ##### -->
     <xsl:template match="xf:help">
-        <span id="{../@id}-help" style="display:none"><xsl:value-of select="."/></span>
+        <span id="{../@id}-help" class="xfHelp" style="display:none;"><xsl:apply-templates/></span>
     </xsl:template>
 
     <!-- ##### ALERT ##### -->
@@ -549,14 +557,21 @@
         <span id="{../@id}-alert" class="xfAlert" style="display:none;"><xsl:apply-templates/></span>
     </xsl:template>
 
+    <!-- ##### HINT ##### -->
+    <!-- ##### HINT ##### -->
+    <!-- ##### HINT ##### -->
+    <xsl:template match="xf:hint">
+        <span id="{../@id}-hint" class="xfHint" style="display:none"><xsl:apply-templates/></span>
+    </xsl:template>
+
+
+
 
     <!-- ####################################################################################################### -->
     <!-- #####################################  HELPER TEMPLATES '############################################## -->
     <!-- ####################################################################################################### -->
 
     <xsl:template name="buildControl">
-        <xsl:apply-templates select="xf:help"/>
-
         <xsl:variable name="id" select="@id"/>
 
         <xsl:variable name="datatype">
@@ -584,7 +599,7 @@
                      name="{$name}"
                      incremental="{$incremental}"
                      tabindex="{$navindex}"
-                     title="{xf:hint}">
+                     title="{normalize-space(xf:hint)}">
 
                     <xsl:if test="$accesskey != ' none'">
                         <xsl:attribute name="accessKey"><xsl:value-of select="$accesskey"/></xsl:attribute>
@@ -644,7 +659,6 @@
 
                 </span>
                 <!--<div style="display:none;" id="{concat($id,'-hint')}"><xsl:value-of select="xf:hint"/></div>-->
-                <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
 
 
@@ -661,14 +675,14 @@
                      name="{$name}"
                      tabindex="{$navindex}"
                      value="{bf:data/text()}"
-                     title="{xf:hint}"
+                     title="{normalize-space(xf:hint)}"
                      type="button">
                     <xsl:if test="$accesskey != ' none'">
                         <xsl:attribute name="accessKey"><xsl:value-of select="$accesskey"/></xsl:attribute>
                     </xsl:if>
                 </button>
-                <div style="display:none;" id="{concat($id,'-hint')}"><xsl:value-of select="xf:hint"/></div>
-                <!--<xsl:apply-templates select="xf:alert"/>-->
+                <!--<div style="display:none;" id="{concat($id,'-hint')}"><xsl:value-of select="xf:hint"/></div>-->
+                <xsl:apply-templates select="xf:hint"/>
             </xsl:when>
 
             <xsl:when test="local-name()='range'">
@@ -690,13 +704,12 @@
                      end="{$end}"
                      step="{$step}"
                      value="{$value}"
-                     title="{xf:hint}">
+                     title="{normalize-space(xf:hint)}">
                     <xsl:if test="$accesskey != ' none'">
                         <xsl:attribute name="accessKey"><xsl:value-of select="$accesskey"/></xsl:attribute>
                     </xsl:if>
 
-<!--
-                    <ol dojoType="dijit.form.HorizontalRuleLabels" container="topDecoration"
+<!--                  <ol dojoType="dijit.form.HorizontalRuleLabels" container="topDecoration"
                         style="height:1em;font-size:75%;color:gray;">
                         <xsl:if test="$start">
                             <li><xsl:value-of select="$start"/></li>
@@ -705,32 +718,26 @@
                         <xsl:if test="$end">
                             <li><xsl:value-of select="$end"/></li>
                         </xsl:if>
-                    </ol>
--->
-
+                    </ol>-->
                 </div>
-                <div style="display:none;" id="{concat($id,'-hint')}"><xsl:value-of select="xf:hint"/></div>
-                <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
             <xsl:when test="local-name()='select'">
                 <xsl:call-template name="select"/>
-                <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
             <xsl:when test="local-name()='select1'">
                 <xsl:call-template name="select1"/>
-                <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
             <xsl:when test="local-name()='repeat'">
                 <xsl:apply-templates select="."/>
             </xsl:when>
             <xsl:when test="local-name()='group'">
                 <xsl:apply-templates select="."/>
-                <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
             <xsl:when test="local-name()='switch'">
                 <xsl:apply-templates select="."/>
             </xsl:when>
         </xsl:choose>
+
     </xsl:template>
 
 </xsl:stylesheet>

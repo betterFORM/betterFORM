@@ -183,10 +183,24 @@ a.active {
 
 .tundra .xfControl .bfInvalidControl,
 .tundra .xfControl .bfInvalidControl .xfDateTextBox,
+.tundra .xfMinimalTextarea .bfInvalidControl .xfValue,
 .tundra .xfControl .bfInvalidControl .xfTimeTextBox{
 	/*border:1px solid #801B1B*/
 	background:#FFE2CF;
 
+}
+
+.alertAttachPoint {
+	/*background:red;*/
+}
+.alertAttachPointVertical {
+	/*display:inline;*/
+}
+.xfAlert {
+	/*background:yellow;*/
+	border:1px solid #801B1B;
+	color:#801B1B;
+	margin:3px;
 }
 
 /* for tundra checkboxes */
@@ -604,6 +618,14 @@ a.active {
     clear: both;
     /*display: block;*/
     padding: 5px;
+}
+.xfFullRepeat .xfRepeatItem  .xfControl {
+	clear:both;
+	display:block;	
+}
+.xfFullRepeat .xfRepeatItem  .xfMinimalGroup .xfControl {
+	clear:none;
+	display:inline-block;	
 }
 
 /* applies only to compact repeat and matches an empty cell at the right of the repeat table to dock insert and
