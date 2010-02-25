@@ -1,0 +1,523 @@
+<!--
+  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+<!--
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://localhost:8080/betterform/resources/dtd/xhtml1-transitional.dtd">
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+	  xmlns:atom="http://www.w3.org/2005/Atom"
+      xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta name="Author" content="Joern Turner"/>
+		<meta name="Author" content="Lars Windauer"/>
+		<meta name="description" content="betterFORM "/>
+		<meta name="keywords" content="betterFORM, xforms, forms, xhtml, xpath, xslt, dojo, dojotoolkit, web, semantic, semantic web, "/>
+
+		<title>betterFORM XFormsFeatureExplorer</title>
+
+		<link REV="made" HREF="mailto:info@betterform.de"/>
+		<link rel="SHORTCUT ICON" href="../../images/betterform.ico"/>
+		<link rel="ICON" href="../../images/betterform.ico" type="image/x-icon"/>
+		<link rel="stylesheet" type="text/css" href="../../styles/bf.css"/>
+        <link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css" />
+		<link rel="stylesheet" type="text/css" href="../../resources/styles/demo.css" />
+
+        <style type="text/css">
+            #demoTarget{
+                display:block;
+                width:750px;
+                height:350px;
+                overflow:auto;
+                padding:10px;
+                border:thin solid #bbbbbb;
+                text-align:left;
+                background:white;
+            }
+            .backgroundImage{
+                width:100%;
+                height:100%;
+                background:transparent url(../../resources/images/play.png) no-repeat 50%;
+            }
+            #demoTrigger{display:none;}
+        </style>
+
+
+        <script type="text/javascript">
+            dojo.require("dojox.highlight");
+            dojo.require("dojox.highlight.languages.xml");
+            //dojo.require("dojox.highlight.languages._static");
+            //dojo.require("dojox.highlight.languages._dynamic");
+            //dojo.require("dojox.highlight.languages._www");
+            dojo.addOnLoad(function() {
+                dojo.query("code").forEach(dojox.highlight.init);
+            });
+
+            dojo.require("dijit.form.Button");
+            dojo.require("dijit.TitlePane");
+            dojo.require('dijit.layout.ContentPane');
+            dojo.require("betterform.ui.select.OptGroup");
+            dojo.require("betterform.ui.select1.RadioItemset");
+            dojo.require("betterform.ui.select.CheckBoxItemset");
+            dojo.require("betterform.ui.container.Switch");
+            dojo.require("betterform.ui.container.Repeat");
+            dojo.require("betterform.ui.container.RepeatItem");
+
+            function addToDocument(id){
+               var model = dojo.query(".xfModel", dojo.doc)[0];
+               dijit.byId(dojo.attr(model, "id")).getInstanceAsString(id,
+                   function(data){
+                       dojo.byId("instanceData").innerHTML=data;
+                   });
+            }
+
+        </script>
+        <style type="text/css">
+            #controlMount, #containerMount {
+/*
+                margin-top: 20px;
+                width:600px;
+*/
+            }
+            .caTabContainer {
+                height:600px;
+                margin:20px;
+            }
+            .overview .xfTrigger button{width:200px;text-align:right;}
+            #controlPane  .dijitTitlePaneContentInner{background:#eeeeff;color:steelblue;}
+            #containerPane .dijitTitlePaneContentInner{background:#eeeeff;color:steelblue;}
+
+            #XFormsFeatureExplorer .pageMarginBox{
+                text-align:left;
+            }
+            .devider{padding:10px;}
+            .Section{
+                float:left;
+                clear:both;
+                width:680px;
+            }
+            .Section a{
+                color:#666666;
+                text-decoration:underline;
+            }
+            #XFormsFeatureExplorer .pagetitle{
+                margin-top:5px;
+                width:680px;
+            }
+            .dijitTitlePane .dijitTitlePane {
+                margin:0;
+            }
+            #widgetsContainer{
+                margin-top:5px;
+                height:620px;
+                color:#666;
+            }
+            #XFormsFeatureExplorer .caTabContainer{
+                height:600px;
+                margin:0;
+            }
+            .dijitTabPaneWrapper{
+                /*height:600px;*/
+            }
+            #controlPane *,#containerPane *{
+                color:#488aa6;
+            }
+            #controlPane > .dijitTitlePaneTitle,#containerPane > .dijitTitlePaneTitle{
+                font-size:1.1em;
+                font-style:italic;
+            }
+            #uploadMount{
+                
+            }
+            .blocked{
+                /*position:absolute;*/
+                display:block;
+                background:white none repeat scroll 0 0;
+                color:#999999;
+                font-size:9em;
+                height:800px;
+                margin-top:50px;
+                overflow:hidden;
+                position:absolute;
+                text-align:center;
+                width:95%;
+                opacity:0.5;
+            }
+        </style>
+</head>
+<body class="soria" id="XFormsFeatureExplorer">
+
+   <div class="page">
+        <div id="header">
+            <div class="pageMarginBox">
+                <div class="languages">
+                    <img src="../../images/en.png" alt="english"/>
+                    <img src="../../images/de.png" alt="deutsch"/>
+                </div>
+                <div class="logoBar">
+                    <img src="../../images/logo.png" alt="betterFORM project"/>
+
+                    <div id="topnav">
+                        <a href="../../index.xhtml">home</a><span class="menuDevider"> | </span>
+                        <a href="../../demo.xhtml">demo</a><span class="menuDevider"> | </span>
+                        <a href="../../download.html">download</a><span class="menuDevider"> | </span>
+                        <a href="../../product.html">product</a><span class="menuDevider"> | </span>
+                        <a href="../../support.html">support</a><span class="menuDevider"> | </span>
+                        <a href="../../whoweare.html">who we are</a><span class="menuDevider"> | </span>
+                        <a href="../../contact.html">contact / impressum</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content" >
+            <img id="shadowTop" src="images/shad_top.jpg" alt=""/>
+
+            <!-- ######################### Content here ################################## -->
+            <!-- ######################### Content here ################################## -->
+            <!-- ######################### Content here ################################## -->
+            <!-- ######################### Content here ################################## -->
+            <!-- ######################### Content here ################################## -->
+                <div class="pageMarginBox">
+                    <div class="contentBody">
+                        <div dojotype="dijit.layout.ContentPane" id="widgetsContainer">
+                            <div style="display:none">
+                                <xf:model>
+                                    <xf:instance id="i-control">
+                                        <data xmlns="">
+                                            <file name="Input.xhtml"/>
+                                            <file name="Output.xhtml"/>
+                                            <file name="Range.xhtml"/>
+                                            <file name="Secret.xhtml"/>
+                                            <file name="Select.xhtml"/>
+                                            <file name="Select1.xhtml"/>
+                                            <file name="Textarea.xhtml"/>
+                                            <file name="Trigger.xhtml"/>
+                                            <file name="Upload.xhtml"/>
+                                        </data>
+                                    </xf:instance>
+                                    <xf:instance id="i-container">
+                                        <data xmlns="">
+                                            <file name="Group.xhtml"/>
+                                            <file name="Repeat.xhtml"/>
+                                            <file name="Switch.xhtml"/>
+                                        </data>
+                                    </xf:instance>
+
+                                </xf:model>
+                            </div>
+
+                            <div style="display:none;">
+                                <xf:trigger id="t-intro">
+                                    <xf:label/>
+                                    <xf:toggle case="intro"/>
+                                </xf:trigger>
+                                <xf:trigger id="t-control">
+                                    <xf:label/>
+                                    <xf:toggle case="control"/>
+                                </xf:trigger>
+                                <xf:trigger id="t-container">
+                                    <xf:label/>
+                                    <xf:toggle case="container"/>
+                                </xf:trigger>
+                            </div>
+                            <xf:switch appearance="dijit:TabContainer" id="featureTabContainer">
+
+                                <xf:case id="intro" selected="true">
+                                    <xf:label>INTRO</xf:label>
+
+                                    <div style="margin:10px;font-size:14pt;border:thin dotted;padding:0px 50px 50px 50px;background-color:#eee;height:80%;">
+                                        <br/>
+                                        XForms Feature Explorer
+                                        <br/><br/>
+
+                                        <div style="font-size:11pt;">
+                                            Welcome to the XForms Feature Explorer!<br/><br/>
+
+
+                                        </div>
+                                    </div>
+                                </xf:case>
+
+                                <xf:case id="control">
+                                    <xf:label>Controls</xf:label>
+
+
+                                    <div id="controlPane" class="Subsection" dojotype="dijit.TitlePane" open="true" duration="1000"
+                                         title="XForms control reference">
+
+
+                                        <xf:group ref="instance('i-control')" appearance="minimal">
+                                            <table class="overview">
+                                                <tr>
+                                                    <td>
+                                                        <xf:trigger ref="file[1]">
+                                                            <xf:label ref="./@name"/>
+                                                            <xf:action>
+                                                                <xf:load show="embed" targetid="controlMount">
+                                                                    <xf:resource value="'Input.xhtml#xforms'"/>
+                                                                </xf:load>
+                                                                <script type="text/javascript">
+                                                                    dojo.attr(dijit.byId('controlPane'), "open", "false");
+                                                                </script>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </td>
+                                                    <td>
+                                                        The input Element
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <xf:trigger ref="file[2]">
+                                                            <xf:label ref="./@name"/>
+                                                            <xf:action>
+                                                                <xf:load show="embed" targetid="controlMount">
+                                                                    <xf:resource value="'Output.xhtml#xforms'"/>
+                                                                </xf:load>
+                                                                <script type="text/javascript">
+                                                                    dojo.attr(dijit.byId('controlPane'), "open", "false");
+                                                                </script>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </td>
+                                                    <td>
+                                                        The output Element
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <xf:trigger ref="file[3]">
+                                                            <xf:label ref="./@name"/>
+                                                            <xf:action>
+                                                                <xf:load show="embed" targetid="controlMount">
+                                                                    <xf:resource value="'Range.xhtml#xforms'"/>
+                                                                </xf:load>
+                                                                <script type="text/javascript">
+                                                                    dojo.attr(dijit.byId('controlPane'), "open", "false");
+                                                                </script>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </td>
+                                                    <td>
+                                                        The range Element
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <xf:trigger ref="file[4]">
+                                                            <xf:label ref="./@name"/>
+                                                            <xf:action>
+                                                                <xf:load show="embed" targetid="controlMount">
+                                                                    <xf:resource value="'Secret.xhtml#xforms'"/>
+                                                                </xf:load>
+                                                                <script type="text/javascript">
+                                                                    dojo.attr(dijit.byId('controlPane'), "open", "false");
+                                                                </script>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </td>
+                                                    <td>
+                                                        The secret Element
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <xf:trigger ref="file[5]">
+                                                            <xf:label ref="./@name"/>
+                                                            <xf:action>
+                                                                <xf:load show="embed" targetid="controlMount">
+                                                                    <xf:resource value="'Select.xhtml#xforms'"/>
+                                                                </xf:load>
+                                                                <script type="text/javascript">
+                                                                    dojo.attr(dijit.byId('controlPane'), "open", "false");
+                                                                </script>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </td>
+                                                    <td>
+                                                        The select Element
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <xf:trigger ref="file[6]">
+                                                            <xf:label ref="./@name"/>
+                                                            <xf:action>
+                                                                <xf:load show="embed" targetid="controlMount">
+                                                                    <xf:resource value="'Select1.xhtml#xforms'"/>
+                                                                </xf:load>
+                                                                <script type="text/javascript">
+                                                                    dojo.attr(dijit.byId('controlPane'), "open", "false");
+                                                                </script>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </td>
+                                                    <td>
+                                                        The select1 Element
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <xf:trigger ref="file[7]">
+                                                            <xf:label ref="./@name"/>
+                                                            <xf:action>
+                                                                <xf:load show="embed" targetid="controlMount">
+                                                                    <xf:resource value="'Textarea.xhtml#xforms'"/>
+                                                                </xf:load>
+                                                                <script type="text/javascript">
+                                                                    dojo.attr(dijit.byId('controlPane'), "open", "false");
+                                                                </script>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </td>
+                                                    <td>
+                                                        The textarea Element
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <xf:trigger ref="file[8]">
+                                                            <xf:label ref="./@name"/>
+                                                            <xf:action>
+                                                                <xf:load show="embed" targetid="controlMount">
+                                                                    <xf:resource value="'Trigger.xhtml#xforms'"/>
+                                                                </xf:load>
+                                                                <script type="text/javascript">
+                                                                    dojo.attr(dijit.byId('controlPane'), "open", "false");
+                                                                </script>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </td>
+                                                    <td>
+                                                        The trigger Element
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <xf:trigger ref="file[9]">
+                                                            <xf:label ref="./@name"/>
+                                                            <xf:action>
+                                                                <xf:load show="embed" targetid="controlMount">
+                                                                    <xf:resource value="'Upload.xhtml#xforms'"/>
+                                                                </xf:load>
+                                                                <script type="text/javascript">
+                                                                    dojo.attr(dijit.byId('controlPane'), "open", "false");
+                                                                    dojo.removeAttr(dojo.byId('blocked'),"style");
+                                                                </script>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </td>
+                                                    <td>
+                                                        The upload Element
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </xf:group>
+                                    </div>
+
+                                    <div id="controlMount"/>
+                                </xf:case>
+
+
+                                <xf:case id="container">
+                                    <xf:label>group | repeat | switch</xf:label>
+
+                                    <div id="containerPane" class="Subsection" dojotype="dijit.TitlePane" open="true" duration="1000"
+                                         title="XForms group | repeat | switch ">
+                                        <xf:group ref="instance('i-container')" appearance="minimal">
+                                            <table class="overview">
+                                                <tr>
+                                                    <td>
+                                                        <xf:trigger ref="file[1]">
+                                                            <xf:label ref="./@name"/>
+                                                            <xf:action>
+                                                                <xf:load show="embed" targetid="containerMount">
+                                                                    <xf:resource value="'Group.xhtml#xforms'"/>
+                                                                </xf:load>
+                                                                <script type="text/javascript">
+                                                                    dojo.attr(dijit.byId('containerPane'), "open", "false");
+                                                                </script>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </td>
+                                                    <td>
+                                                        The group Element
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <xf:trigger ref="file[2]">
+                                                            <xf:label ref="./@name"/>
+                                                            <xf:action>
+                                                                <xf:load show="embed" targetid="containerMount">
+                                                                    <xf:resource value="'Repeat.xhtml#xforms'"/>
+                                                                </xf:load>
+                                                                <script type="text/javascript">
+                                                                    dojo.attr(dijit.byId('containerPane'), "open", "false");
+                                                                </script>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </td>
+                                                    <td>
+                                                        The repeat Element
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <xf:trigger ref="file[3]">
+                                                            <xf:label ref="./@name"/>
+                                                            <xf:action>
+                                                                <xf:load show="embed" targetid="containerMount">
+                                                                    <xf:resource value="'Switch.xhtml#xforms'"/>
+                                                                </xf:load>
+                                                                <script type="text/javascript">
+                                                                    dojo.attr(dijit.byId('containerPane'), "open", "false");
+                                                                </script>
+                                                            </xf:action>
+                                                        </xf:trigger>
+                                                    </td>
+                                                    <td>
+                                                        The switch Element
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </xf:group>
+                                    </div>
+
+                                    <div id="containerMount"/>
+                                </xf:case>
+
+
+                            </xf:switch>
+                            <div class="devider"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        <div id="footer">
+            <img id="shadowBottom" src="images/shad_bottom.jpg" alt=""/>
+
+            <div class="pageMarginBox">
+            <span id="bottomMenu">
+                &#169; 2010 betterFORM<span class="menuDevider"> | </span>
+                <a href="../../index.html">home</a><span class="menuDevider"> | </span>
+                <a href="../../demo.xhtml">demo</a><span class="menuDevider"> | </span>
+                <a href="../../download.html">download</a><span class="menuDevider"> | </span>
+                <a href="../../product.html">product</a><span class="menuDevider"> | </span>
+                <a href="../../support.html">support</a><span class="menuDevider"> | </span>
+                <a href="../../whoweare.html">who we are</a><span class="menuDevider"> | </span>
+                <a href="../../contact.html">contact / impressum</a>
+            </span>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

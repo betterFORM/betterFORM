@@ -130,10 +130,12 @@
             <fileset dir="${basedir}/src/main/webapp"/>
         </copy>
 
+<!--
         <copy description="copy test result reports"
               todir="${webapp.dir}/reports">
             <fileset dir="${root.dir}/src/main/doc/site/content/reports"/>
         </copy>
+-->
         <copy description="copy resources from global 'src' directory"
               todir="${webapp.dir}/resources"
               includeemptydirs="true">
