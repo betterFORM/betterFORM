@@ -455,6 +455,7 @@ h3{
     float:left;
     line-height:28px;
     font-size:8pt;
+    display:none;
 
 }
 #product #content .linkbox{
