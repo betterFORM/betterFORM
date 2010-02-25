@@ -15,7 +15,6 @@
 	<title>Feed Atom Reader</title>
 
 	<link rel="stylesheet" type="text/css" href="../../styles/bf.css"/>
-	<link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css" />
 	<link rel="stylesheet" type="text/css" href="../../resources/styles/demo.css"/>
 </head>
 
@@ -53,8 +52,11 @@
 		<xf:group id="repeatOuter" appearance="full">
 			<div class="Section">
 				<div class="Headline">Atom Feed Reader</div>
-				Simple Display for ATOM Resources.
-				Shows Meta Data and lists all entries of an ATOM Resource.
+
+                <div class="description">
+				    Simple Display for ATOM Resources.<br/>
+				    Shows Meta Data and lists all entries of an ATOM Resource.
+                </div>                    
 			</div>
 
 			<div class="Section">
@@ -132,7 +134,7 @@
 										<xf:label/>
 									</xf:output>
 								</xf:group>
-								<xf:output class="summary" ref="atom:summary" mediatype="text/html">
+								<xf:output class="atomPadding" ref="atom:summary" mediatype="text/html">
 									<xf:label/>
 								</xf:output>
 								<xf:trigger class="atomArticleLink" appearance="minimal">

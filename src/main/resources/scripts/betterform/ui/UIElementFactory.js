@@ -13,7 +13,7 @@ dojo.declare(
 
     createWidget:function(sourceNode, controlId) {
         // console.debug("Create Widget: ",controlId , " sourceNode: ",sourceNode)
-        var controlType = dojo.attr(sourceNode, "controlType");        
+        var controlType = dojo.attr(sourceNode, "controlType");
 
         var dataType = dojo.attr(sourceNode, "dataType");
 
@@ -488,7 +488,16 @@ dojo.declare(
                         title:dojo.attr(sourceNode,"title"),
                         xfControlId:controlId
                     }, sourceNode);
-                    
+                } else if (dojo.attr(sourceNode,"appearance")=="imageTrigger") {
+                    dojo.require("betterform.ui.trigger.ImageButton");
+                    newWidget = new betterform.ui.trigger.ImageButton({
+                        id:dojo.attr(sourceNode, "id"),
+                        name:dojo.attr(sourceNode, "name")+"-value",
+                        label:dojo.attr(sourceNode, "label"),
+                        title:dojo.attr(sourceNode,"title"),
+                        xfControlId:controlId
+                    }, sourceNode);
+                    console.dirxml(sourceNode);
                 }else {
                     dojo.require("betterform.ui.trigger.Button");
                     dojo.require("dijit.form.Button");

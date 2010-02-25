@@ -14,11 +14,10 @@
 
 
     <link rel="stylesheet" type="text/css" href="../../styles/bf.css"/>
-    <link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css"/>
     <link rel="stylesheet" type="text/css" href="../../resources/styles/demo.css"/>
 
     <script type="text/javascript">
-        dojo.require("dijit.layout.Dialog");
+        dojo.require("dijit.Dialog");
     </script>
 </head>
 <body class="soria" style="margin:30px;">
@@ -27,12 +26,20 @@
     <xf:model>
         <xf:instance xmlns="">
             <order>
-                <item amount="1" price="1.50" taxValue="0" sum="0">pencil</item>
+                <item amount="1" price="0.50" taxValue="0" sum="0">eraser</item>
                 <item amount="1" price="2.50" taxValue="0" sum="">ballpoint_pen</item>
-                <item amount="1" price="50.00" taxValue="0" sum="0">fountain-pen</item>
+                <item amount="1" price="50.00" taxValue="0" sum="0">fountain_pen</item>
                 <item amount="1" price="0" taxValue="0" sum="0"/>
             </order>
         </xf:instance>
+
+        <xf:bind id="items" nodeset="item[position()!=last()]">
+            <xf:bind id="article" nodeset="." required="true()"/>
+            <xf:bind id="amount" nodeset="@amount" type="integer" required="true()" constraint=". &lt; 100"/>
+            <xf:bind id="price" nodeset="@price" type="float"/>
+            <xf:bind id="taxValue" nodeset="@taxValue" calculate="../@amount * ../@price * instance('shippingAndTaxes')/country/tax" type="float"/>
+            <xf:bind id="sum" nodeset="@sum" calculate="../@amount * ../@price * ( 1 + instance('shippingAndTaxes')/country/tax)" type="float"/>
+        </xf:bind>
 
         <xf:instance id="shippingAndTaxes">
             <order xmlns="">
@@ -44,18 +51,41 @@
             </order>
         </xf:instance>
 
+        <xf:bind nodeset="instance('shippingAndTaxes')/country/tax" type="float"/>
+        
         <xf:instance id="template">
             <order xmlns="">
                 <item amount="1" price="1.50" taxValue="0" sum="0">pencil</item>
             </order>
         </xf:instance>
 
+        <!--
+        <xf:instance id="items">
+            <items xmlns="">
+                <item price="0.50">Eraser</item>
+                <item price="1.50">Pencil</item>
+                <item price="2.49">Ballpoint pen</item>
+                <item price="3.99">Spiral notebook</item>
+                <item price="50.00">Fountain pen</item>
+                <item price="69.98">Shredder</item>
+                <template>Eraser</template>
+            </items>
+        </xf:instance>
+
+        <xf:bind id="articles" nodeset="instance('items')"/>
+        
         <xf:instance id="userItem">
             <order xmlns="">
-                <item amount="0" price="0" taxValue="0" sum="0"/>
+                <item price="0"/>
             </order>
         </xf:instance>
 
+        <xf:bind nodeset="instance('userItem')/item">
+            <xf:bind nodeset="." type="normalizedString" constraint="string-length(.) &gt; 1"/>
+            <xf:bind nodeset="@price" type="float" constraint=". &gt; 0"/>
+        </xf:bind>
+        -->
+        
         <xf:instance id="countries">
             <contries xmlns="">
                 <country>
@@ -121,17 +151,10 @@
             </contries>
         </xf:instance>
 
-        <xf:bind nodeset="instance('shippingAndTaxes')/country/tax" type="float"/>
 
-        <xf:bind id="items" nodeset="item[position()!=last()]">
-            <xf:bind id="article" nodeset="." required="true()"/>
-            <xf:bind id="amount" nodeset="@amount" type="integer" required="true()" constraint=". &lt; 100"/>
-            <xf:bind id="price" nodeset="@price" type="float"/>
-            <xf:bind id="taxValue" nodeset="@taxValue"
-                     calculate="../@amount * ../@price * instance('shippingAndTaxes')/country/tax" type="float"/>
-            <xf:bind id="sum" nodeset="@sum"
-                     calculate="../@amount * ../@price * ( 1 + instance('shippingAndTaxes')/country/tax)" type="float"/>
-        </xf:bind>
+
+
+
     </xf:model>
 </div>
 <div class="Section" dojotype="dijit.layout.ContentPane">
@@ -157,7 +180,7 @@
 
         <xf:group appearance="minimal">
             <xf:repeat id="repeatid" bind="items" appearance="compact" class="orderListRepeat">
-                <xf:select1 bind="article">
+              <xf:select1 bind="article">
                     <xf:label class="contactsRepeatHeader">Article</xf:label>
                     <xf:hint>Choose the item you wish to add to the orderlist</xf:hint>
                     <xf:choices>
@@ -183,7 +206,7 @@
                         </xf:item>
                         <xf:item>
                             <xf:label>Fountain pen</xf:label>
-                            <xf:value>fountain-pen</xf:value>
+                            <xf:value>fountain_pen</xf:value>
                             <xf:setvalue ev:event="xforms-select" bind="price">50.00</xf:setvalue>
                         </xf:item>
                         <xf:item>
@@ -193,10 +216,21 @@
                         </xf:item>
                     </xf:choices>
                 </xf:select1>
+                <!--
+                <xf:select1 bind="article">
+                    <xf:label class="contactsRepeatHeader">Article</xf:label>
+                    <xf:hint>Choose the article you wish to add to the orderlist</xf:hint>
+                    <xf:itemset nodeset="instance('items')/item">
+                        <xf:label ref="."/>
+                        <xf:value ref="."/>
+
+                    </xf:itemset>
+                </xf:select1>
+                -->
                 <xf:input bind="amount" incremental="true">
                     <xf:label class="contactsRepeatHeader">Amount</xf:label>
-                    <xf:hint>Enter the amount of items you would like to buy. (99 items max)</xf:hint>
-                    <xf:alert>You can order a maximum of 99 items in one order</xf:alert>
+                    <xf:hint>Enter the amount of articles you would like to buy (99 items max)</xf:hint>
+                    <xf:alert>You can order a maximum of 99 articles in one order</xf:alert>
                 </xf:input>
                 <xf:output value="format-number(@price, '€ 0.00')" class="text-right">
                     <xf:label class="contactsRepeatHeader">Price</xf:label>
@@ -225,9 +259,22 @@
         </xf:group>
     </xf:group>
 
+
     <xf:group appearance="minimal" class="orderListTriggerGroup">
+        <!--
+        <xf:trigger class="orderListNewTrigger">
+            <xf:label>New item</xf:label>
+            <xf:hint>Create new article for articlelist</xf:hint>
+            <xf:action>
+                <script type="text/javascript">
+                    dijit.byId("itemDialog").show();
+                </script>
+            </xf:action>
+        </xf:trigger>
+        -->
         <xf:trigger class="orderListAddTrigger">
             <xf:label>Add item</xf:label>
+            <xf:hint>Adds a new article to the orderlist</xf:hint>
             <xf:action>
                 <xf:insert bind="items" at="last()" position="after" origin="instance('template')/item"
                            if="exists(instance()/item)"/>
@@ -237,51 +284,66 @@
         </xf:trigger>
         <xf:trigger class="orderListDelTrigger">>
             <xf:label>Delete item</xf:label>
+            <xf:hint>Deletes selected article from orderlist</xf:hint>
             <xf:action>
                 <xf:delete bind="items" at="index('repeatid')"/>
             </xf:action>
         </xf:trigger>
         <xf:trigger class="orderListResetTrigger">>
             <xf:label>Reset</xf:label>
+            <xf:hint>Resets demo to inital state</xf:hint>
             <xf:action>
                 <xf:reset/>
             </xf:action>
         </xf:trigger>
 
+
+
+
          <div style="float:left;padding-right:5px;">
-        <xf:trigger class="itemDialog">
-            <xf:label>Deviations</xf:label>
-            <xf:action>
-                <script type="text/javascript">
-                    dijit.byId("itemDialog").show();
-                </script>
-            </xf:action>
-        </xf:trigger>
+
     </div>
 
-    <div id="itemDialog" dojoType="dijit.Dialog" title="Insert new item to product list">
-        <xf:group appearance="full" id="insertDeviation">
-            <xf:input ref="instance('userItem')/item/">
-                <xf:label>Item name:</xf:label>
+    <!--
+    <div id="itemDialog" dojoType="dijit.Dialog" title="Insert new article into articlelist">
+        <xf:group appearance="full" ref="instance('userItem')/item">
+            <xf:input ref=".">
+                <xf:label>Article name:</xf:label>
+                <xf:hint>Enter the name of the new article</xf:hint>
+                <xf:alert>Please enter an article name</xf:alert>
             </xf:input>
-            <xf:input ref="">
-                <xf:label>Item price:</xf:label>
+            <xf:input ref="@price">
+                <xf:label>Article price:</xf:label>
+                <xf:hint>Enter the price of the new article</xf:hint>
             </xf:input>
 
-            <xf:trigger class="orderListAddTrigger">
-                <xf:label>Add item</xf:label>
-                <xf:action>
-                    <xf:insert bind="items" at="last()" position="after" origin="instance('template')/item"
-                               if="exists(instance()/item)"/>
-                    <xf:insert context="/order" at="last()" position="after" origin="instance('template')/item"
-                               if="count(instance()/item) = 1"/>
-                </xf:action>
-            </xf:trigger>
+            <xf:group appearance="minimal" class="orderListTriggerGroup">
+                <xf:trigger class="orderListOKTrigger">
+                    <xf:label>Add new article</xf:label>
+                    <xf:hint>Add the article to the articlelist</xf:hint>
+                    <xf:action>
+                        <script type="text/javascript">
+                            dijit.byId("itemDialog").hide();
+                        </script>
+                        <xf:insert context="instance('items')" origin="instance('userItem')/item"/>
+                        <xf:setvalue ref="instance('userItem')/item"></xf:setvalue>
+                        <xf:setvalue ref="instance('userItem')/item/@price" value="'0'"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger class="orderListAbortTrigger">>
+                    <xf:label>Abort</xf:label>
+                    <xf:hint>Close dialog</xf:hint>
+                    <xf:action>
+                        <script type="text/javascript">
+                            dijit.byId("itemDialog").hide();
+                        </script>
+                    </xf:action>
+                </xf:trigger>
+            </xf:group>
         </xf:group>
     </div>
+    -->
     </xf:group>
-
-
 
 
 </div>

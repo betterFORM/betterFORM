@@ -386,7 +386,24 @@
         <xsl:variable name="control-classes">
             <xsl:call-template name="assemble-control-classes"/>
         </xsl:variable>
-        <div id="{$id}" class="{$control-classes} xfRepeated" controlType="{local-name()}" dojoAttachEvent='onfocus:_onFocus' appearance="{@appearance}">
+
+        <!-- NEU -->
+        <xsl:variable name="htmlElem">
+            <xsl:choose>
+                <xsl:when test="local-name()='output'">span</xsl:when>
+                <xsl:otherwise>div</xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
+        <xsl:message>LN: <xsl:value-of select="local-name()"/> htmlElem: <xsl:value-of select="$htmlElem"/></xsl:message>
+
+        <xsl:element name="{$htmlElem}">
+            <xsl:attribute name="id" select="$id"/>
+            <xsl:attribute name="class" select="concat($control-classes,' xfRepeated')"/>
+            <xsl:attribute name="controlType" select="local-name()"/>
+            <xsl:attribute name="appearance" select="@appearance"/>
+            <xsl:attribute name="dojoAttachEvent">onfocus:_onFocus</xsl:attribute>
+
             <xsl:apply-templates select="xforms:hint"/>
             <xsl:apply-templates select="xforms:help"/>
             <xsl:choose>
@@ -401,7 +418,27 @@
                 </xsl:when>
             </xsl:choose>
             <!--<xsl:apply-templates select="xforms:alert"/>-->
-        </div>
+
+        </xsl:element>
+
+
+        <!-- NEU -->
+        <!-- <div id="{$id}" class="{$control-classes} xfRepeated" controlType="{local-name()}" dojoAttachEvent='onfocus:_onFocus' appearance="{@appearance}">
+            <xsl:apply-templates select="xforms:hint"/>
+            <xsl:apply-templates select="xforms:help"/>
+            <xsl:choose>
+                <xsl:when test="'output' = local-name() and exists(@mediatype)">
+                        <xsl:attribute name="mediatype" select="@mediatype"/>
+                </xsl:when>
+                <xsl:when test="'select' = local-name()">
+                        <xsl:call-template name="select"/>
+                </xsl:when>
+                <xsl:when test="'select1' = local-name()">
+                            <xsl:call-template name="select1"/>
+                </xsl:when>
+            </xsl:choose>
+            <xsl:apply-templates select="xforms:alert"/>
+        </div>    -->
     </xsl:template>
 
     <xsl:template match="xforms:group" mode="repeated-compact-prototype">
@@ -409,13 +446,37 @@
         <xsl:variable name="control-classes">
             <xsl:call-template name="assemble-control-classes"/>
         </xsl:variable>
-        
-        <div id="{$id}" class="{$control-classes} xfRepeated" controlType="{local-name()}" appearance="{@appearance}" dojoAttachEvent='onfocus:_onFocus'>
+        <xsl:variable name="appearance" select="@appearance"/>
+
+
+        <!-- NEU -->
+        <xsl:variable name="htmlElem">
+            <xsl:choose>
+                <xsl:when test="$appearance='minimal'">span</xsl:when>
+                <xsl:otherwise>div</xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
+        <xsl:message terminate="no">XXXXX: Apperance:<xsl:value-of select="$appearance"/></xsl:message>
+
+        <xsl:element name="{$htmlElem}">
+            <xsl:attribute name="id" select="$id"/>
+            <xsl:attribute name="class" select="concat($control-classes,' xfRepeated')"/>
+            <xsl:attribute name="controlType" select="local-name()"/>
+            <xsl:attribute name="appearance" select="$appearance"/>
+            <xsl:attribute name="dojoAttachEvent">onfocus:_onFocus</xsl:attribute>
             <!-- prevent xforms:label for groups within compact repeat-->
             <xsl:apply-templates select="*[not(self::xforms:label)]" mode="repeated-compact-prototype"/>
+        </xsl:element>
+
+        <!-- NEU -->
+        <!--
+        <div id="{$id}" class="{$control-classes} xfRepeated" controlType="{local-name()}" appearance="{@appearance}" dojoAttachEvent='onfocus:_onFocus'> -->
+            <!-- prevent xforms:label for groups within compact repeat-->
+        <!--
+            <xsl:apply-templates select="*[not(self::xforms:label)]" mode="repeated-compact-prototype"/>
         </div>
-        
-        
+        -->
     </xsl:template>
 
     <xsl:template match="xforms:switch" mode="repeated-compact-prototype">
@@ -499,9 +560,22 @@
             <xsl:call-template name="assemble-control-classes"/>
         </xsl:variable>
 
-        <div id="{$id}" class="{$control-classes} xfRepeated" controlType="{local-name()}" appearance="{@appearance}" dojoAttachEvent='onfocus:_onFocus'>
+        <xsl:variable name="htmlElem">
+            <xsl:choose>
+                <xsl:when test="local-name()='output'">span</xsl:when>
+                <xsl:otherwise>div</xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:message>LN: <xsl:value-of select="local-name()"/> htmlElem: <xsl:value-of select="$htmlElem"/></xsl:message>
+        <xsl:element name="{$htmlElem}">
+            <xsl:attribute name="id" select="$id"/>
+            <xsl:attribute name="class" select="concat($control-classes,' xfRepeated')"/>
+            <xsl:attribute name="controlType" select="local-name()"/>
+            <xsl:attribute name="appearance" select="@appearance"/>
+            <xsl:attribute name="dojoAttachEvent">onfocus:_onFocus</xsl:attribute>
+
             <xsl:if test="'output' = local-name() and exists(@mediatype)"><xsl:attribute name="mediatype" select="@mediatype"/></xsl:if>
-            <xsl:apply-templates select="xforms:hint"/>            
+            <xsl:apply-templates select="xforms:hint"/>
             <label class="xfLabel"><xsl:apply-templates select="xforms:label"/></label>
             <xsl:apply-templates select="xforms:help"/>
             <!--<xsl:apply-templates select="xforms:alert"/>-->
@@ -515,9 +589,8 @@
                             <!--<xsl:apply-templates select="xforms:alert"/>-->
                 </xsl:when>
             </xsl:choose>
-        </div>
 
-
+        </xsl:element>
     </xsl:template>
 
     <xsl:template match="xforms:group"
@@ -526,16 +599,33 @@
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="appearance" select="@appearance"/>
 
+        <xsl:variable name="htmlElem">
+            <xsl:choose>
+                <xsl:when test="$appearance='minimal'">span</xsl:when>
+                <xsl:otherwise>div</xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
+        <xsl:message terminate="no">XXXXX: Apperance:<xsl:value-of select="$appearance"/></xsl:message>
+
         <xsl:variable name="group-classes">
             <xsl:call-template name="assemble-compound-classes">
                 <xsl:with-param name="appearance" select="@appearance"/>
             </xsl:call-template>
         </xsl:variable>
 
-        <div id="{$id}" class="{$group-classes} xfRepeated dijitContentPane" controlType="{local-name()}" appearance="{$appearance}" dojoAttachEvent='onfocus:_onFocus'>
-            <div class="xfGroupLabel"><xsl:apply-templates select="xforms:label"/></div>
+        <xsl:element name="{$htmlElem}">
+            <xsl:attribute name="id" select="$id"/>
+            <xsl:attribute name="class" select="concat($group-classes,' xfRepeated dijitContentPane')"/>
+            <xsl:attribute name="controlType" select="local-name()"/>
+            <xsl:attribute name="appearance" select="$appearance"/>
+            <xsl:attribute name="dojoAttachEvent">onfocus:_onFocus</xsl:attribute>
+            <xsl:element name="{$htmlElem}">
+            <xsl:attribute name="class">xfGroupLabel</xsl:attribute>
+                <xsl:apply-templates select="xforms:label"/>
+            </xsl:element>
             <xsl:apply-templates select="*[not(self::xforms:label)]" mode="repeated-full-prototype"/>
-        </div>
+        </xsl:element>
 
     </xsl:template>
 

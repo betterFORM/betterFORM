@@ -229,7 +229,7 @@
                 <xsl:with-param name="appearance" select="$appearance"/>
             </xsl:call-template>
         </xsl:variable>
-        <div id="{$id}" class="{$control-classes}" dojoType="betterform.ui.Control">
+        <span id="{$id}" class="{$control-classes}" dojoType="betterform.ui.Control">
         <!-- minimal appearance only supported in scripted mode -->
             <xsl:choose>
                 <xsl:when test="$appearance='minimal'">
@@ -237,13 +237,32 @@
                               appearance="{@appearance}"
                               controlType="minimalTrigger"
                               name="{$name}"
-                              class="xfValue"
+                              class="xfValue {@class}"
                               title="{$hint}"
                               navindex="{$navindex}"
                               accesskey="{@accesskey}"
                               label="{xforms:label}"
-                              source="{$src}">                            
+                              source="{$src}">
+                              <xsl:apply-templates select="@*[not(name()='class')][not(name()='id')][not(name()='appearance')][not(name()='src')]"/>
                         </span>
+                </xsl:when>
+                <xsl:when test="$appearance='imageTrigger'">
+                    <button id="{$id}-value"
+                            appearance="{@appearance}"
+                            controlType="trigger"
+                            label="{xforms:label}"
+                            name="{$name}"
+                            type="button"
+                            class="xfValue"
+                            title="{$hint}"
+                            navindex="{$navindex}"
+                            accesskey="{@accesskey}"
+                            source="{$src}">
+                            <xsl:apply-templates select="@*[not(name()='class')][not(name()='id')][not(name()='appearance')][not(name()='src')]"/>
+                        <span id="{$id}-label" class="buttonLabel">
+                            <xsl:apply-templates select="xforms:label"/>
+                        </span>
+                    </button>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:variable name="source" select="if (contains(@mediatype, 'image/')) then xforms:label else $src"/>
@@ -260,7 +279,7 @@
                             source="{$source}"/>
                 </xsl:otherwise>
             </xsl:choose>
-        </div>
+        </span>
     </xsl:template>
 
 
