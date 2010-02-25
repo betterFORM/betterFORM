@@ -248,6 +248,7 @@
 <body class="tundra">
 <xf:group appearance="full">
     <div style="float:left;right:150px;position:absolute;">
+<!--
         <xf:select1 id="lang-selector" ref="@locale" appearance="minimal" incremental="true">
             <xf:label ref="instance('i-text')/lang"/>
             <xf:item>
@@ -265,8 +266,27 @@
                 </xf:action>
             </xf:item>
         </xf:select1>
+-->
     </div>
 
+	<xf:trigger>
+		<xf:label>Lang = EN</xf:label>
+		<xf:action>
+			<script type="text/javascript">
+				fluxProcessor.setLocale("en");
+			</script>
+		</xf:action>
+
+	</xf:trigger>
+	<xf:trigger>
+		<xf:label>Lang = DE</xf:label>
+		<xf:action>
+			<script type="text/javascript">
+				fluxProcessor.setLocale("de");
+			</script>
+		</xf:action>
+
+	</xf:trigger>
     <xf:output class="welcomeMsg" ref="instance('i-text')/welcome"/>
 
     <xf:output class="textMsg" ref="instance('i-text')/content1"/>

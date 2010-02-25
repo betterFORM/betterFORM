@@ -122,9 +122,9 @@
             <tbody>
             <xsl:for-each select="*[not(local-name()='label')]">
                 <xsl:choose>
-                    <!-- if we got a group with appearance ca:horizontalColumn we put the label
+                    <!-- if we got a group with appearance bf:horizontalColumn we put the label
                      of the first control into the lefthand column -->
-                    <xsl:when test="local-name()='group' and ./@appearance='ca:horizontalColumn'">
+                    <xsl:when test="local-name()='group' and ./@appearance='bf:horizontalColumn'">
                         <tr>
                             <td class="caLabelColumn">
                                <!-- use the label of the nested group for the left column -->
@@ -224,12 +224,12 @@
     <!-- appearance horizontalColumn allows to be nested into a verticalTable and display its labels in the left
     column of the vertical table. All other controls will be wrapped in a horizontal group and be written to the
     right column. -->
-    <xsl:template match="xforms:group[@appearance='ca:horizontalColumn']" priority="15">
+    <xsl:template match="xforms:group[@appearance='bf:horizontalColumn']" priority="15">
         <xsl:call-template name="horizontalTable"/>
     </xsl:template>
 
     <!-- this template is used for horizontalTable AND for horizontalColumn appearance -->
-    <xsl:template match="xforms:group[@appearance='ca:horizontalTable']" priority="15" name="horizontalTable">
+    <xsl:template match="xforms:group[@appearance='bf:horizontalTable']" priority="15" name="horizontalTable">
 <!--
         <xsl:if test="exists(xforms:group)">
             <xsl:message terminate="yes">ERROR: This custom group appearance may not have child groups</xsl:message>
@@ -242,13 +242,13 @@
 </xsl:text>
         
 
-        <xsl:variable name="realAppearance" select="if(@appearance='ca:horizontalTable') then 'caHorizontalTable' else 'caHorizontalColumn'"/>
+        <xsl:variable name="realAppearance" select="if(@appearance='bf:horizontalTable') then 'caHorizontalTable' else 'caHorizontalColumn'"/>
         <table class="xfContainer {$realAppearance} {$mip-classes}" dojoType="betterform.ui.container.Group">
             <tr>
                 <!--<td colspan="{count(*[position() &gt; 1 and position() &lt; last()])}" class="caHorizontalTableHeader">-->
                 <!--<td colspan="{count(*[position() &gt; 1]) -1}" class="xfGroupLabel">-->
                 <td colspan="{count(*[position() &gt; 1])}" class="xfGroupLabel">
-                    <xsl:if test="exists(xforms:label) and @appearance !='ca:horizontalColumn'">
+                    <xsl:if test="exists(xforms:label) and @appearance !='bf:horizontalColumn'">
                         <xsl:apply-templates select="./xforms:label"/>
                     </xsl:if>
                 </td>

@@ -65,10 +65,10 @@
         </div>
 
 
-        <xf:group appearance="ca:verticalTable" id="main">
+        <xf:group appearance="bf:verticalTable" id="main">
             <xf:label>XForms Engine Configuration</xf:label>
 
-            <xf:group appearance="ca:verticalTable" id="environment">
+            <xf:group appearance="bf:verticalTable" id="environment">
                 <xf:label>Environment Parameters</xf:label>
                 <xf:output value="bffn:appContext('requestURI')">
                     <xf:hint>bffn:appContext('requestURI')</xf:hint>
@@ -92,7 +92,7 @@
                 </xf:output>
             </xf:group>
 
-            <xf:group appearance="ca:verticalTable">
+            <xf:group appearance="bf:verticalTable">
                     <xf:label>web.xml Settings</xf:label>
                     <xf:output
                             ref="instance('webxml')/j2ee:context-param[j2ee:param-name[.='betterform.configfile']]/j2ee:param-value">
