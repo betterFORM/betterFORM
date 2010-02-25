@@ -71,17 +71,6 @@
         <rename src="${project.dir}/convex/pom.new.xml" dest="${project.dir}/convex/pom.xml"/>
     </target>
 
-    <target name="update-server-pom" description="update the server pom.xml file with dependencies from build.properties.xml">
-        <xslt in="${project.dir}/tools/server/pom.xml"
-              out="${project.dir}/tools/server/pom.new.xml"
-              style="${project.dir}/tools/maven/updatePOM.xsl"
-              force="true">
-            <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
-            <param name="module" expression="${server.app.name}"/>
-        </xslt>
-        <rename src="${project.dir}/tools/server/pom.xml" dest="${project.dir}/tools/server/pom.xml.old"/>
-        <rename src="${project.dir}/tools/server/pom.new.xml" dest="${project.dir}/tools/server/pom.xml"/>
-    </target>
 
     <target name="create-core-install" depends="update-core-pom">
         <xslt in="${project.dir}/core/build.xml"
@@ -121,20 +110,6 @@
         </xslt>
     </target>
 
-    <target name="create-server-install" depends="update-server-pom">
-        <xslt in="${project.dir}/tools/server/build.xml"
-              out="${project.dir}/tools/server/install-files.xml"
-              style="${project.dir}/tools/maven/install-libs.xsl"
-              force="true">
-            <classpath refid="generator.libs"/>
-            <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
-            <param name="core.dir" expression="${project.dir}/core"/>
-            <param name="convex.dir" expression="${project.dir}/convex"/>
-            <param name="server.dir" expression="${project.dir}/tools/server"/>
-            <param name="module" expression="${server.app.name}"/>
-        </xslt>
-    </target>
-
     <target name="create-maven-install">
         <antcall target="create-core-install"/>
         <antcall target="create-web-install"/>
@@ -156,11 +131,6 @@
         <delete file="${project.dir}/convex/install-files.xml"/>
     </target>
 
-    <target name="install-server-dependencies" depends="create-server-install" description="installs server dependencies for Maven">
-        <ant antfile="${project.dir}/tools/server/build.xml" target="package" dir="${project.dir}/tools/server" inheritall="false"/>
-        <ant antfile="${project.dir}/tools/server/install-files.xml" target="install-dependencies"/>
-        <!--<delete file="${project.dir}/tools/server/install-files.xml"/>-->
-    </target>
 
 
     <target name="install-maven-dependencies" depends="create-maven-install"
@@ -172,9 +142,6 @@
         <ant antfile="${project.dir}/core/build.xml" target="package" dir="${project.dir}/core" inheritall="false"/>
         <antcall target="install-web-dependencies"/>
         <antcall target="install-convex-dependencies"/>
-
-        <antcall target="install-server-dependencies"/>
-
     </target>
 
 

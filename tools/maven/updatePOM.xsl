@@ -68,27 +68,15 @@
                         </dependency>
                     </xsl:for-each>
                 </xsl:when>
-                <xsl:when test="$module = document($buildprops)/root/server/app/name">
-                    <xsl:for-each select="document($buildprops)/root/server//pathelement[@artifactId]">
-                        <dependency>
-                            <groupId><xsl:value-of select="@groupid"/></groupId>
-                            <artifactId><xsl:value-of select="@artifactId"/></artifactId>
-                            <version><xsl:value-of select="@version"/></version>
-                            <xsl:if test="string-length(@scope)&gt; 0"><scope><xsl:value-of select="@scope"/></scope></xsl:if>
-                        </dependency>
-                    </xsl:for-each>
-                </xsl:when>
             </xsl:choose>
-            <xsl:if test="not($module = document($buildprops)/root/server/app/name)">
-                <xsl:for-each select="document($buildprops)/root/core//pathelement[@artifactId]">
-                    <dependency>
-                        <groupId><xsl:value-of select="@groupid"/></groupId>
-                        <artifactId><xsl:value-of select="@artifactId"/></artifactId>
-                        <version><xsl:value-of select="@version"/></version>
-                        <xsl:if test="string-length(@scope)&gt; 0"><scope><xsl:value-of select="@scope"/></scope></xsl:if>
-                    </dependency>
-                </xsl:for-each>
-            </xsl:if>
+            <xsl:for-each select="document($buildprops)/root/core//pathelement[@artifactId]">
+                <dependency>
+                    <groupId><xsl:value-of select="@groupid"/></groupId>
+                    <artifactId><xsl:value-of select="@artifactId"/></artifactId>
+                    <version><xsl:value-of select="@version"/></version>
+                    <xsl:if test="string-length(@scope)&gt; 0"><scope><xsl:value-of select="@scope"/></scope></xsl:if>
+                </dependency>
+            </xsl:for-each>
         </dependencies>
     </xsl:template>
 
