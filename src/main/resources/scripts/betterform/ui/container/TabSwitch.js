@@ -13,17 +13,15 @@ dojo.require("betterform.ui.container.Container");
 dojo.declare("betterform.ui.container.TabSwitch",
         [betterform.ui.container.Container,dijit.layout.TabContainer],
 {
-
-    topics:[],
-
-
-
     postCreate: function(/*Event*/ evt){
         this.inherited(arguments);
         dojo.connect(this.tablist, "onSelectChild", this, "onTabClicked");
-        this.topics[0] = dojo.subscribe("/xf/invalid",this,"_handleInvalid");
-        this.topics[1] = dojo.subscribe("/xf/valid", this,"_handleValid");
 
+    },
+
+    startup: function(){
+      this.inherited(arguments);
+      console.debug("Started TabSwitch Container");
     },
 
     onTabClicked:function(/*Event*/ evt){
