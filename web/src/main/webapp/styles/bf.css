@@ -60,11 +60,16 @@ ul{
 }
 .page #header{
     background:white;
-    position:fixed;
+    position:inherit;
     top:0;
     z-index:999;
     border-bottom:thin dotted;
+    padding-top:29px;
 }
+#index .page #header{
+    padding-top:0;
+}
+
 .pageMarginBox{
     width:760px;
     margin-left:auto;
@@ -109,31 +114,28 @@ ul{
 #content{
     background:#d3d3d3;
     text-align:center;
-    /*height:80%;*/
-    margin-top:121px;
-    /*margin-bottom:120px;*/
-    /*overflow:auto;*/
+    /*margin-top:121px;*/
     display:block;
-    /*min-height:600px;*/
+    float:left;
 }
 #content .contentBody{
     text-align:left;
-    padding-top:35px;
+    /*padding-top:35px;*/
     position:relative;
 }
 #content .contentBody div{
-    padding-bottom:30px;
+    /*padding-bottom:30px;*/
 }
 
 
-.index #content{
+#index #content{
     background:#d3d3d3;
     text-align:center;
     height:380px;
 }
 
 
-.index #shadowTop{
+#index #shadowTop{
     width:760px;
     margin-left:auto;
     margin-right:auto;
@@ -144,7 +146,7 @@ ul{
     margin-left:auto;
     margin-right:auto;
     margin-bottom:15px;
-    position:fixed;
+    position:inherit;
     left:260px;
 }
 
@@ -156,8 +158,9 @@ ul{
     float:left;
     margin-top:4px;
 }
-.index #columnLeft{
-    padding-top:35px;
+#index #columnLeft{
+    /*padding-top:35px;*/
+    width:188px;
 }
 
 #teaser{
@@ -184,8 +187,8 @@ ul{
     text-align:left;
     padding-right:119px;
 }
-.index #columnRight{
-    padding-top:35px;
+#index #columnRight{
+    /*padding-top:35px;*/
 }
 
 #columnRight img{
@@ -211,7 +214,7 @@ ul{
     float:right;
     font-size:10pt;
     color:white;
-    margin-top:30px;
+    margin-top:10px;
     
 }
 #bottomMenu a {
@@ -239,7 +242,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
 }
 
-h1 {              
+#content h1 {              
 	color: #2C2C2C;
 	font-size: 1.6em;
     font-variant:small-caps;
@@ -280,13 +283,14 @@ h3{
     margin-left:auto;
     margin-right:auto;
 }
-.index .languages{
+#index .languages{
     display:block;
     height:29px;
     width:760px;
     text-align:right;
     margin-left:auto;
     margin-right:auto;
+    padding-top:2px;
 }
 
 .logoBar{
@@ -403,7 +407,20 @@ h3{
     width:150px;
     padding-left:13px;
     display:block;
-    padding-top:17px
+    padding-top:17px;
+}
+.exploreButton{
+    background:transparent url(../images/b_exploreit_ohne_klein.png) no-repeat scroll 0 0;
+    font-size:9pt;
+    font-weight:bold;
+    height:40px;
+    padding:10px;
+    width:150px;
+    padding-left:13px;
+    display:block;
+    padding-top:15px;
+    margin-top: 4px;
+
 }
 
 #conformanceTable{
