@@ -57,6 +57,13 @@ p{
 ul{
     list-style-image:url(../images/list.png);
 }
+
+.listitem {
+	background:transparent url(../images/list.png) no-repeat scroll -2px 4px;
+	color:red;
+	clear:both;
+}
+
 .page {
     margin:0;
     padding:0;
@@ -304,28 +311,11 @@ h3{
     
 }
 
-
-
-#bfMask {
-	background:  url(../../../../../web/src/main/webapp/images/betterformMark.png) repeat-x fixed left top;
-}
-
 .content {
 	width:700px;
 }
-.note {
-	background: #E9FAD0 url(../../../../../web/src/main/webapp/images/betterform_icon49x49.png) no-repeat scroll 20px center;
-	border-bottom: 1px solid #AEE756;
-	border-top: 1px solid #AEE756;
-	color: #525252;
-	font-weight: bold;
-	height:40px;
-	margin:1.31em 0 1.45em 50px !important;
-	padding:14px 20px 16px 90px !important;
-}
-#downloadNote {
-	width:55%;
-}
+
+
 #content p .note {
 	margin:1.31em 0 1.45em !important;
 	padding:14px 20px 16px 67px !important;

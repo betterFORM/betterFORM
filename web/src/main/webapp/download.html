@@ -24,9 +24,144 @@
         <link rel="ICON" href="images/betterform.ico" type="image/x-icon"/>
         <link rel="stylesheet" type="text/css" href="styles/bf.css"/>
 		<style type="text/css">
+				/*
 			.contentBody a {
 				color:black;
 				float:none;
+			}
+*/
+			.downloadButton {
+				height: 26px;
+				padding: 15px 4px 6px 18px;
+				width: 134px;
+			}
+
+			.downloadBfButton {
+				height: 32px;
+				padding: 15px 4px 6px 18px;
+				width: 240px;
+
+			}
+
+			.box {
+				/*
+				vertical-align: top;
+				background:#E7E8E8 none repeat scroll 0 0;
+				padding:10px;
+				-webkit-border-radius:10px;
+				-moz-border-radius:10px;
+				-moz-background-clip:border;
+				-moz-background-inline-policy:continuous;
+*/
+
+			}
+
+			.boxRight {
+				padding-right: 10px;
+				padding-left: 10px;
+				width: 200px;
+			}
+
+			.boxRightEntry {
+				padding: 0px;
+				margin: 0px;
+			}
+
+			.boxRightEntryHeading {
+				font-variant: small-caps;
+				color: #488AA6;
+
+			}
+
+			.splitterHorizontal {
+				margin: 0px;
+				padding: 0px;
+				width: 15px;
+			}
+
+			.splitterVertical {
+				width: 45px;
+				padding: 0px;
+				margin: 0px;
+				clear: both;
+				border: none;
+
+			}
+
+			.boxLeft {
+				width: 680px;
+			}
+
+			.downloadBox {
+				background: #b0c4de;
+				-moz-border-radius-bottomleft: 10px;
+				-moz-border-radius-bottomright: 10px;
+				-moz-border-radius-topleft: 10px;
+				-moz-border-radius-topright: 10px;
+				width:200px;
+			}
+
+			.downloadBoxLogoWrapper {
+				display: block;
+				position: relative;
+				width: 130px;
+			}
+
+			.downloadBoxLogo {
+				background: transparent url(images/bf_logo_145x59.png) no-repeat scroll 0 0;
+				position: absolute;
+				display: block;
+				height: 48px;
+				left: -5px;
+				padding-left: 0;
+				width: 136px;
+			}
+
+			.downloadBoxSubtitle {
+				font-size: smaller;
+				font-style: italic;
+				font-weight: normal;
+				left: 97px;
+				position: absolute;
+				top: 52px;
+			}
+
+			.downloadBoxText {
+				font-weight: lighter;
+				font-style: italic;
+				height: 82px;
+
+			}
+
+			.header1 {
+
+				color: #525252;
+				display: block;
+				font-family: serif;
+				font-size: 1.1em;
+				font-size-adjust: none;
+				font-style: normal;
+				font-variant: normal;
+				font-weight: bold;
+				letter-spacing: 0.05em;
+				line-height: 1.056em;
+				padding-top: 35px;
+			}
+
+			.header2 {
+				clear: both;
+				color: #525252;
+				display: block;
+				font-family: Helvetica, Arial, sans-serif;
+				font-size: 0.9em;
+				font-size-adjust: none;
+				font-style: normal;
+				font-variant: normal;
+				font-weight: bold;
+				letter-spacing: 0.05em;
+				line-height: 1.056em;
+				padding-top: 5px;
+
 			}
 		</style>
     </head>
@@ -66,71 +201,111 @@
                 <div class="pageMarginBox">
                     <div class="contentBody">
                         <div>
-                            <h1>Downloads</h1>
+							<table>
+								<tr>
+									<td valign="top" class="box boxleft">
+										<h1>Downloads</h1>
 
-                            <h2>
-                                betterFORM lightSteelBlue (Version 3.0)
-                            </h2>
 
-                            <h2>Requirements</h2>
-                            <ul>
-                                <li>You need a Java (Version 1.5 or higher) installation to execute betterFORM and the
-                                    WebInstaller.
-                                </li>
-                                <li>Make sure your system is configured to execute jar-files to use the WebInstaller
-                                </li>
-                            </ul>
+										<div class="downloadBox">
+											<table>
+												<tr>
+													<td class="downloadBoxText" valign="middle">download</td>
+													<td valign="top" class="downloadBoxLogoWrapper">
+														<span class="downloadBoxLogo"></span>
+														<span class="downloadBoxSubtitle">lightSteelBlue</span>
+													</td>
+													<td class="downloadBoxText" valign="middle">3.0</td>
+												</tr>
+											</table>
+										</div>
 
-                            <h2>WebInstaller</h2>
+										<div class="header2">the xform ways to build the web</div>
 
-                            <p>
-                                Download just what you need.
-                                The WebInstaller is itself a small download which lets you choose which components to
-                                install.
-                            </p>
-
-                            <p>
-                                It will guide you through the installation process and supports a variety of
-                                installation
-                                options including <strong>Jetty</strong>, the <strong>eXist XML Database</strong>, the <strong>Dojo Toolkit</strong> and more.
-                            </p>
-
-							<p>
-								For a quick installation select <b>'betterFORM'</b>, <b>'Jetty'</b> and <b>'Forms'</b>
-								at the <b>"Select Installation Packages"</b> screen and finish the installation. Switch
-								to the choosen installation directory, execute the start.jar and point your browser to
-								<a href="http://localhost:8080/betterform">localhost:8080/betterform</a>. That's
-								it!<br/>
-							</p>
 
 <!--
-                            <p>
-                                You need a Java installation (1.5 or higher) to execute the installer.
-                            </p>
--->
+											<h2 class="step1">on your marks!</h2>
 
-                            <h2>Web Archive (war-file)</h2>
+											<p>Download  <a href="http://sourceforge.net/projects/betterform/files">betterFORM Version 3.0</a> If you are running an earlier version of betterFORM - or any other application running on
+												port 8080, you need to shut it down. </p>
 
-                            <p>
-                                For those that already have a webcontainer this download provides an optimized
-                                war build ready for deployment.
-                            </p>
+											<h2 class="step2">get set!</h2>
 
+											<p>Double-click on the downloaded <b>betterform-installer.jar</b> to execute it.
+												If a warning dialog opens, click <b>Continue</b> and follow the install instructions.At the <b>"Select Installation Packages"</b> screen select <b>'betterFORM'</b>, <b>'Jetty'</b> and <b>'Forms'</b> and finish the installation.
+											</p>
 
-                            <h2>The Core (jar-file)</h2>
+											<h2 class="step3">go!</h2>
+											Switch to the choosen installation directory, execute the start.jar and point your browser to <a href="http://localhost:8080/betterform">localhost:8080/betterform</a>. That's it!<br/><br/>
+											<br/>
+											<i><b>If you experience any problems make sure start.jar is executable, the Java Runtime Environment is installed and take a look at chapter "Troubleshooting" of the <a href="userguide.pdf">betterFORM User Guide</a></b></i>
 
-                            <p>
-                                Use the betterFORM core to process XForms within your Java application.
-                            </p>
+										
+-->                                                    
+										<h2>Requirements</h2>
+										<div class="listitem">You need <!--<a href="http://www.java.com">Java</a>--> to run betterFORM</div>
+										<div><div class="listitem">You need a Java (Version 1.5 or higher) installation to execute betterFORM and the
+												WebInstaller.
+											</div>
+										<div class="listitem">Make sure your system is configured to execute jar-files to use the WebInstaller
+											</div>
+
+										<h2>WebInstaller</h2>
+
+										<p>
+											Download just what you need.
+											The WebInstaller is itself a small download which lets you choose which components to
+											install.
+										</p>
+
+										<p>
+											It will guide you through the installation process and supports a variety of
+											installation
+											options including <strong>Jetty</strong>, the <strong>eXist XML Database</strong>, the <strong>Dojo Toolkit</strong> and more.
+										</p>
+
+										<p>
+											For a quick installation select <b>'betterFORM'</b>, <b>'Jetty'</b> and <b>'Forms'</b>
+											at the <b>"Select Installation Packages"</b> screen and finish the installation. Switch
+											to the choosen installation directory, execute the start.jar and point your browser to
+											<a href="http://localhost:8080/betterform">localhost:8080/betterform</a>. That's
+											it!<br/>
+										</p>
+
+									</td>
+									<td class="splitterVertical"> </td>
+									<td valign="top" class="box boxRight">
+										<table valign="top" style="padding:0px;margin:0px;border:none;">
+											<tr>
+												<td class="boxRightEntry" valign="top">
+													<div class="boxRightEntryHeading">Web Application Archive</div>
+													<p>
+														For those that already have a webcontainer betterFORM provides an optimized web application archive (WAR) build ready for deployment.
+													</p>
+													 <div style="width:98%;height:60px;">
+														 <span style="float:left;height:2px;width:15px;"></span>
+														 <a href="/path/to/betterfrom/war"><span class="downloadButton">download war</span></a></div>
+												</td>
+											</tr>
+											<tr>
+												<td class="splitterHorizontal">&nbsp;</td>
+											</tr>
+											<tr>
+												<td class="boxRightEntry" valign="top">
+													<div class="boxRightEntryHeading">XForms Core</div>
+
+													<p>for <b>XForms enabled</b> Java applications simply download the betterFORM Core and at it on your classpath.</p>
+													<div style="width:98%;height:60px;">
+														<span style="float:left;height:2px;width:15px;"></span>
+														<a href="/path/to/betterfrom/war"><span class="downloadButton">download core</span></a></div>													
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
                         </div>
                     </div>
-                    <!--
-                                    <div id="columnLeft">
-
-                                    </div>
-                                    <div id="columnRight">
-                                    </div>
-                    -->
                 </div>
 
 
