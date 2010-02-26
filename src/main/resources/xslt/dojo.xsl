@@ -94,6 +94,7 @@
             </title>
 
             <!-- copy base if present -->
+<!--
             <xsl:if test="$baseURI != ''">
                 <base>
                     <xsl:attribute name="href">
@@ -101,6 +102,7 @@
                     </xsl:attribute>
                 </base>
             </xsl:if>
+-->
 
             <xsl:choose>
                 <xsl:when test="$useCDN='true'">
@@ -177,7 +179,7 @@
                         // THE FOLLOWING CALL HAS BEEN MOVED INTO CONSTRUCTOR OF FLUXPROCESSOR.JS
                         //Flux.init(dojo.attr(dojo.byId("fluxProcessor"),"sessionKey"),dijit.byId("fluxProcessor").applyChanges);
                         dojo.parser.parse();
-                        hideLoader();
+                        <!--hideLoader();-->
                     });
                 });
             </script><xsl:text>
@@ -275,6 +277,7 @@
         </xsl:variable>
         <body class="{$theme}">
             <xsl:copy-of select="@*"/>
+            <xsl:comment>powered by betterFORM</xsl:comment>
             <div id="caLoading" class="disabled">
                 <img src="{concat($contextroot,'/resources/images/indicator.gif')}" class="xfDisabled" id="indicator"
                      alt="loading"/>
@@ -295,42 +298,43 @@
                     of this form.
                 </div>
             </noscript>
+            <div id="formWrapper">
+                <div dojotype="betterform.FluxProcessor" jsId="fluxProcessor" id="fluxProcessor" sessionkey="{$sessionKey}" contextroot="{$contextroot}">
 
-            <div dojotype="betterform.FluxProcessor" jsId="fluxProcessor" id="fluxProcessor" sessionkey="{$sessionKey}" contextroot="{$contextroot}"/>
+                    <xsl:for-each select="//xf:model">
+                        <div class="xfModel" style="display:none" id="{@id}" jsId="{@id}" dojoType="betterform.XFormsModelElement"/>
+                     </xsl:for-each>
 
-            <xsl:for-each select="//xf:model">
-                <div class="xfModel" style="display:none" id="{@id}" jsId="{@id}" dojoType="betterform.XFormsModelElement"/>
-             </xsl:for-each>
+                     <xsl:variable name="outermostNodeset"
+                                  select=".//xf:*[not(xf:model)][not(ancestor::xf:*)]"/>
 
-             <xsl:variable name="outermostNodeset"
-                          select=".//xf:*[not(xf:model)][not(ancestor::xf:*)]"/>
-
-            <!-- detect how many outermost XForms elements we have in the body -->
-            <xsl:choose>
-                <xsl:when test="count($outermostNodeset) = 1">
-                    <!-- match any body content and defer creation of form tag for XForms processing.
-                     This option allows to mix HTML forms with XForms markup. -->
-                    <!-- todo: issue to revisit: this obviously does not work in case there's only one xforms control in the document. In that case the necessary form tag is not written. -->
-                    <!-- hack solution: add an output that you style invisible to the form to make it work again. -->
-                    <xsl:apply-templates mode="inline"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <!-- in case there are multiple outermost xforms elements we are forced to create
-                     the form tag for the XForms processing.-->
-                    <xsl:call-template name="createForm"/>
-                </xsl:otherwise>
-            </xsl:choose>
-            <xsl:if test="exists(//xf:help)"><script type="text/javascript">dojo.require("dijit.form.Button");</script><xsl:text>
-</xsl:text>
-                <div id="helpTrigger">
-                    <a href="javascript:fluxProcessor.showHelp();"><img src="{concat($contextroot,'/resources/images/help.png')}" alt="Help"/></a>
-                </div>                
-            </xsl:if>
-            <div id="helpWindow" style="display:none"/>
-            <div id="caCopyright">
-                <xsl:text disable-output-escaping="yes">powered by betterForm, &amp;copy; 2010</xsl:text>
+                    <!-- detect how many outermost XForms elements we have in the body -->
+                    <xsl:choose>
+                        <xsl:when test="count($outermostNodeset) = 1">
+                            <!-- match any body content and defer creation of form tag for XForms processing.
+                             This option allows to mix HTML forms with XForms markup. -->
+                            <!-- todo: issue to revisit: this obviously does not work in case there's only one xforms control in the document. In that case the necessary form tag is not written. -->
+                            <!-- hack solution: add an output that you style invisible to the form to make it work again. -->
+                            <xsl:apply-templates mode="inline"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <!-- in case there are multiple outermost xforms elements we are forced to create
+                             the form tag for the XForms processing.-->
+                            <xsl:call-template name="createForm"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:if test="exists(//xf:help)"><script type="text/javascript">dojo.require("dijit.form.Button");</script><xsl:text>
+    </xsl:text>
+                        <div id="helpTrigger">
+                            <a href="javascript:fluxProcessor.showHelp();"><img src="{concat($contextroot,'/resources/images/help.png')}" alt="Help"/></a>
+                        </div>
+                    </xsl:if>
+                    <div id="helpWindow" style="display:none"/>
+                    <div id="caCopyright">
+                        <xsl:text disable-output-escaping="yes">powered by betterFORM, &amp;copy; 2010</xsl:text>
+                    </div>
+                </div>
             </div>
-
             <xsl:if test="$debug-enabled='true'">
                 <div id="debug-pane" style="width:100%;border:thin dotted;">
                     <script type="text/javascript">dojo.require("dijit.form.Button");</script><xsl:text>

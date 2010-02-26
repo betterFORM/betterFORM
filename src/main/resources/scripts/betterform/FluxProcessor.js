@@ -311,7 +311,7 @@ dojo.declare("betterform.FluxProcessor",
                     case "DOMFocusOut"              :
                     case "xforms-model-construct"   :
                     case "xforms-model-construct-done":break;
-                    case "xforms-ready"             :  this.isReady=true;break; //not perfect - should be on XFormsModelElement
+                    case "xforms-ready"             : this.isReady=true;dojo.publish("/xf/ready");break; //not perfect - should be on XFormsModelElement
                     case "xforms-submit"            :
                     case "xforms-submit-done"       : break;
 

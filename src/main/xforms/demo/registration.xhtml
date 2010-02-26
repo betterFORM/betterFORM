@@ -12,162 +12,10 @@
 <head>
     <title>Registration </title>
 
-    <style type="text/css">
-        table {
-            border-collapse: collapse;
-        }
-
-        .tundra * {
-            font-size: 11pt;
-            font-family: sans-serif;
-            color: #666666;
-        }
-
-        .tundra .dijitButtonNode {
-            -moz-border-radius: 5px;
-            -webkit-border-radius: 5px;
-        }
-
-        .tundra .dijitTextBoxFocused,
-        .tundra .dijitComboBoxFocused,
-        .tundra .dijitSpinnerFocused,
-        .tundra .dijitSpinnerUpArrowActive,
-        .tundra .dijitSpinnerDownArrowActive,
-        .tundra .dijitTextAreaFocused {
-            border-color: gray;
-        }
-
-        .tundra .dijitInputField input, .tundra .dijitTextBox, .tundra .dijitComboBox, .tundra .dijitSpinner {
-            margin: 0;
-        }
-
-        .caVerticalTable {
-            border: none;
-            padding: 20px;
-            padding-bottom: 0px;
-            width: 640px;
-            margin-top: 10px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .caVerticalTable td {
-        /*padding-bottom:5px;*/
-        }
-
-        .caVerticalTableLabel {
-            padding-right: 5px;
-            width: 25%;
-        }
-
-        .caVerticalTableValue {
-            width: 35%;
-        }
-
-        .bfVerticalTableInfo {
-            width: 40%;
-        }
-
-        .xfValue {
-            padding: 5px;
-            -moz-border-radius-topleft: 8px;
-            -moz-border-radius-bottomleft: 8px;
-            -webkit-border-top-left-radius: 8px;
-            -webkit-border-bottom-left-radius: 8px;
-            -moz-border-radius-topright: 8px;
-            -moz-border-radius-bottomright: 8px;
-            -webkit-border-top-right-radius: 8px;
-            -webkit-border-bottom-right-radius: 8px;
-        }
-
-        .xfInvalid .xfValue {
-            background: white;
-        }
-
-        .xfAlert {
-            display: block;
-            background: #FFCFCF;
-            color: #801B1B;
-            padding: 5px 0px 8px 30px;
-            -moz-border-radius-topright: 8px;
-            -moz-border-radius-bottomright: 8px;
-            -webkit-border-top-right-radius: 8px;
-            -webkit-border-bottom-right-radius: 8px;
-            background: #FFCFCF url(../../resources/images/error.png) no-repeat 3% 6px;
-            margin: 0;
-            overflow: hidden;
-            white-space: nowrap;
-            width: 140px;
-        }
-
-        .xfHint {
-            display: block;
-            background: #F2F2F2 url(../../resources/images/hint.png) no-repeat 3% 6px;
-            color: #666666;
-            padding: 7px 0px 8px 30px;
-            -moz-border-radius-topright: 8px;
-            -moz-border-radius-bottomright: 8px;
-            -webkit-border-top-right-radius: 8px;
-            -webkit-border-bottom-right-radius: 8px;
-            margin: 0;
-            overflow: hidden;
-            white-space: nowrap;
-            width: 140px;
-        }
-
-        .info {
-            display: block;
-            background: #F0FEE9 url(../../resources/images/ok.png) no-repeat 3% 6px;
-            color: #666666;
-            padding: 7px 0px 8px 30px;
-            -moz-border-radius-topright: 8px;
-            -moz-border-radius-bottomright: 8px;
-            -webkit-border-top-right-radius: 8px;
-            -webkit-border-bottom-right-radius: 8px;
-            margin: 0;
-            overflow: hidden;
-            white-space: nowrap;           
-            width: 140px;
-        }
-
-        .tundra .xfAlert,
-        .tundra .xfHint,
-        .tundra .xfHelp,
-        .tundra .info {
-            font-size: 9pt;
-            font-family: sans-serif;
-        }
-
-        .xfControl, .xfAlert, .xfHint, .info {
-            margin-bottom: 8px;
-        }
-
-        .xfGroupLabel {
-            font-size: 13pt;
-            border-bottom: thin solid #999999;
-            padding-bottom: 5px;
-            color: #333333;
-        }
-
-        .xfTriggerMiddleColumnTrigger {
-            float: right;
-        }
-
-        .xfRequired .xfValue {
-        /*background: #F2F2F2;*/
-        }
-
-        .dijitFocused {
-            background-color: #F2F2F2 !important;
-        }
-
-        td, td span {
-        /*    position: relative; */
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="../../resources/styles/registration.css"/>
 </head>
 <body>
-<div id="xforms" class="InlineRoundBordersAlert">
+<div id="xforms">
     <div style="display:none">
         <xf:model id="model-1">
             <xf:instance>
@@ -202,7 +50,7 @@
         </xf:model>
     </div>
 
-    <xf:group appearance="bf:verticalTable">
+    <xf:group appearance="bf:verticalTable" class="InlineRoundBordersAlert">
         <xf:label>Registration</xf:label>
         <xf:input id="first" ref="firstname">
             <xf:label>Firstname:</xf:label>
