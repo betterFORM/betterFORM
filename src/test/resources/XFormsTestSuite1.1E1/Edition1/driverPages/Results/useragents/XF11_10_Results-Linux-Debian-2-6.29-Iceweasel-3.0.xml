@@ -293,7 +293,7 @@
             <testCaseStatus>Failed</testCaseStatus>
             <testCaseDate>2009-06-22</testCaseDate>
             <testCaseRequired>true</testCaseRequired>
-            <testCaseNote>node is undefiend message</testCaseNote>
+            <testCaseNote>node is undefined message</testCaseNote>
         </testCase>
         <testCase>
             <testCaseSection>10.3</testCaseSection>

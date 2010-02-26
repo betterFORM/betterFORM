@@ -367,26 +367,31 @@ dojo.declare(
     },
 
     _handleSetEnabledProperty:function(enabled){
-        // console.debug("_handleSetEnabledProperty  enabled:",enabled)
+        // console.debug("_handleSetEnabledProperty  enabled:",enabled, " domNode: ",this.domNode);
         var targetId = this.id;
         var label = dojo.byId(targetId + "-label");
 
         if (enabled) {
-            if(dojo.hasClass(label,"xfDisabled")){
-                betterform.ui.util.replaceClass(label, "xfDisabled", "xfEnabled");
-            }else {
-                dojo.addClass(label, "xfEnabled");
+            if(label != undefined) {
+                if(dojo.hasClass(label,"xfDisabled")){
+                    betterform.ui.util.replaceClass(label, "xfDisabled", "xfEnabled");
+                }else {
+                    dojo.addClass(label, "xfEnabled");
+                }
             }
+
             betterform.ui.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");
         }
         else {
-            betterform.ui.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");
-            if(dojo.hasClass(label,"xfEnabled")){
-                betterform.ui.util.replaceClass(label, "xfEnabled", "xfDisabled");
-            }else {
-                dojo.addClass(label, "xfDisabled");
+            if(label != undefined) {
+                if (dojo.hasClass(label, "xfEnabled")) {
+                    betterform.ui.util.replaceClass(label, "xfEnabled", "xfDisabled");
+                } else {
+                    dojo.addClass(label, "xfDisabled");
+                }
             }
 
+            betterform.ui.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");
             if(this.isValid()){
                 dojo.publish("/xf/valid", [this.id, "xfDisabled"]);
             }else {

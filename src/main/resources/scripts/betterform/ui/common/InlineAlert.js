@@ -83,7 +83,7 @@ dojo.declare("betterform.ui.common.InlineAlert",
             if(action =="applyChanges" ){
                 console.debug("handleInvalid for applyChanges: id: ", id);
                 this._showState(id,"alert");
-                dojo.addClass(control.controlValue.domNode,"bfInvalidControl");                
+                dojo.addClass(control.controlValue.domNode,"bfInvalidControl");
             }
             else if(action == "onFocus"){
                 this._showState(id,"alert");
@@ -99,7 +99,7 @@ dojo.declare("betterform.ui.common.InlineAlert",
             dojo.place(alertNode, alertAttachPoint);
             dojo.attr(alertNode, "style", "");
         }
-        return alertNode;    
+        return alertNode;
 
 
     },
@@ -107,7 +107,6 @@ dojo.declare("betterform.ui.common.InlineAlert",
     _showState:function(id, state) {
         // console.debug("ValidityStateTable._showState: state:", state);
 
-        this._handleBorders(id,state);
         if (state == "alert") {
             this._display(id,"hint", "none");
             this._display(id,"info", "none");
@@ -133,7 +132,7 @@ dojo.declare("betterform.ui.common.InlineAlert",
             this._display(id,"info", "none");
         } else {
             console.warn("State '" + state + "' for Control " + id + " is unknown");
-        }        
+        }
     },
 
     _display:function(id, commonChild, show) {
@@ -143,38 +142,6 @@ dojo.declare("betterform.ui.common.InlineAlert",
         } else {
             // console.warn(id + "-" + commonChild + " is not defined for Control " + id);
         }
-    },
-    
-    _handleBorders:function(id, state) {
-/*
-        if (state == "info" || state == "hint" || state == "alert") {
-             this._angularBorders(id,state);
-
-        } else {
-            this._roundBorders(id, state);
-        }
-*/
-    },
-    
-    _roundBorders:function(id, state) {
-        // console.debug("Control._roundBorders: id:", id + "-value");
-        dojo.style(dojo.byId(id + "-value"), "MozBorderRadiusTopright", "8px");
-        dojo.style(dojo.byId(id + "-value"), "MozBorderRadiusBottomright", "8px");
-        dojo.style(dojo.byId(id + "-value"), "WebkitBorderTopRightRadius", "8px");
-        dojo.style(dojo.byId(id + "-value"), "WebkitBorderBottomRightRadius", "8px");
-    },
-
-    _angularBorders:function(id, state) {
-        // console.debug("Control._angularBorders: id:", id + "-value");
-        var mip = dojo.byId(id + "-" + state);
-        if (mip != undefined && mip.innerHTML != '') {
-            dojo.style(dojo.byId(id + "-value"), "MozBorderRadiusTopright", "0px");
-            dojo.style(dojo.byId(id + "-value"), "MozBorderRadiusBottomright", "0px");
-            dojo.style(dojo.byId(id + "-value"), "WebkitBorderTopRightRadius", "0px");
-            dojo.style(dojo.byId(id + "-value"), "WebkitBorderBottomRightRadius", "0px");
-        } else {
-            this._roundBorders(state);
-        }
     }
-    
+
 });

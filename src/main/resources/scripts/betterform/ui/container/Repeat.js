@@ -141,7 +141,10 @@ dojo.declare(
                     }else if(idAtt.indexOf("-help")!= -1){
                         idPrefix = idAtt.substring(0,idAtt.indexOf("-help"));
                         idAppendix = "-help";
-                    }else if(idAtt.indexOf("-alert")!= -1){
+                    }else if(idAtt.indexOf("-alertAttachPoint")!= -1){
+                        idPrefix = idAtt.substring(0,idAtt.indexOf("-alertAttachPoint"));
+                        idAppendix = "-alertAttachPoint";
+                    } else if(idAtt.indexOf("-alert")!= -1){
                         idPrefix = idAtt.substring(0,idAtt.indexOf("-alert"));
                         idAppendix = "-alert";
                     } else {
