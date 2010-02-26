@@ -6,7 +6,7 @@ dojo.declare("betterform.ui.common.InlineAlert",
         dijit._Widget,
 {
     handleValid:function(id,action){
-        console.debug("betterform.ui.common.InlineAlert.handleValidState[id:" + id , " action: " + action + "]");
+        // console.debug("betterform.ui.common.InlineAlert.handleValidState[id:" + id , " action: " + action + "]");
 
         if(action == "xfDisabled") {
             this._showState(id, "none");

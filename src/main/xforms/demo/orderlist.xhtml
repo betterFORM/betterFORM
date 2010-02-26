@@ -24,7 +24,7 @@
 <div id="xforms">
 <div style="display:none">
     <xf:model>
-        <xf:instance xmlns="">
+        <xf:instance id="orderlist" xmlns="">
             <order>
                 <item amount="1" price="0.50" taxValue="0" sum="0">eraser</item>
                 <item amount="1" price="2.50" taxValue="0" sum="">ballpoint_pen</item>
@@ -157,7 +157,19 @@
         </xf:instance>
 
 
+		<xf:instance id="result">
+			<data xmlns="">
+				<taxtotal/>
+				<netpricetotal/>
+				<sumtotal/>
+			</data>
+		</xf:instance>
 
+		<xf:bind nodeset="instance('result')">
+			<xf:bind nodeset="taxtotal" calculate="sum(instance('orderlist')/item/@sum) * instance('shippingAndTaxes')/country/tax" type="float"/>
+			<xf:bind nodeset="netpricetotal" calculate="sum(instance('orderlist')/item/@sum) - (sum(instance('orderlist')/item/@sum) * instance('shippingAndTaxes')/country/tax)" type="float"/>
+			<xf:bind nodeset="sumtotal" calculate="sum(instance('orderlist')/item/@sum) + instance('shippingAndTaxes')/country/shipping" type="float"/>
+		</xf:bind>
 
 
     </xf:model>
@@ -252,12 +264,21 @@
             </xf:repeat>
 
             <div class="orderlistRepeatFooter">
-                <xf:output id="shipping" value="format-number(instance('shippingAndTaxes')/country/shipping, '€ 0.00')">
-                    <xf:label class="orderlistRepeatFooter">Shipping:</xf:label>
+                <xf:output id="totalSum"
+                           value="format-number(instance('result')/netpricetotal, '€ 0.00')">
+                    <xf:label>Net Price:</xf:label>
                 </xf:output>
+                <xf:output id="totalTax"
+                           value="format-number(instance('result')/taxtotal, '€ 0.00')">
+                    <xf:label>+ Total Tax:</xf:label>
+                </xf:output>
+				<xf:output id="shipping" value="format-number(instance('shippingAndTaxes')/country/shipping, '€ 0.00')">
+					<xf:label class="orderlistRepeatFooter">+ Shipping:</xf:label>
+				</xf:output>
+				
                 <xf:output id="total"
-                           value="format-number(sum(/order/item/@sum) + instance('shippingAndTaxes')/country/shipping, '€ 0.00')">
-                    <xf:label>Total:</xf:label>
+                           value="format-number(instance('result')/sumtotal, '€ 0.00')">
+                    <xf:label>= Total:</xf:label>
                 </xf:output>
             </div>
 
