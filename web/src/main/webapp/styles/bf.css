@@ -18,6 +18,12 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	vertical-align: baseline;
 }
 */
+
+.devider{
+    clear:both;
+    margin-bottom:20px;
+}
+
 .tundra *{
 }
 *{
@@ -391,6 +397,7 @@ h3{
     line-height:1;
 }
 */
+
 .contentBody a{
     text-decoration:none;
     color:white;
@@ -485,5 +492,9 @@ h3{
 }
 #sourceforge a img{
     vertical-align:top;
+}
+#whoweare .tableContent p{
+    line-height:1em;
+    text-align:justify;
 }
 
