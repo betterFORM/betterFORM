@@ -116,7 +116,7 @@
                 <country>
                     <name>Estonia</name>
                     <shipping>15.00</shipping>
-                    <tax>0.7</tax>
+                    <tax>0.07</tax>
                 </country>
                 <country>
                     <name>France</name>
@@ -298,38 +298,42 @@
             </xf:action>
         </xf:trigger>
         -->
-        <xf:trigger class="orderListAddTrigger">
-            <xf:label>Add item</xf:label>
-            <xf:hint>Adds a new article to the orderlist</xf:hint>
-            <xf:action>
-                <xf:insert bind="items" at="last()" position="after" origin="instance('template')/item"
-                           if="exists(instance()/item)"/>
-                <xf:insert context="/order" at="last()" position="after" origin="instance('template')/item"
-                           if="count(instance()/item) = 1"/>
-            </xf:action>
-        </xf:trigger>
-        <xf:trigger class="orderListDelTrigger">>
-            <xf:label>Delete item</xf:label>
-            <xf:hint>Deletes selected article from orderlist</xf:hint>
-            <xf:action>
-                <xf:delete bind="items" at="index('repeatid')"/>
-            </xf:action>
-        </xf:trigger>
-        <xf:trigger class="orderListResetTrigger">>
-            <xf:label>Reset</xf:label>
-            <xf:hint>Resets demo to inital state</xf:hint>
-            <xf:action>
-                <xf:reset/>
-            </xf:action>
-        </xf:trigger>
-
-
-
-
-         <div style="float:left;padding-right:5px;">
-
-    </div>
-
+        <table>
+            <tr>
+                <td class="orderListSpacerLeft"/>
+                <td>
+                    <xf:trigger class="orderListAddTrigger">
+                        <xf:label>Add item</xf:label>
+                        <xf:hint>Adds a new article to the orderlist</xf:hint>
+                        <xf:action>
+                            <xf:insert bind="items" at="last()" position="after" origin="instance('template')/item"
+                                       if="exists(instance()/item)"/>
+                            <xf:insert context="/order" at="last()" position="after" origin="instance('template')/item"
+                                       if="count(instance()/item) = 1"/>
+                        </xf:action>
+                    </xf:trigger>
+                </td>
+                <td>
+                    <xf:trigger class="orderListDelTrigger">>
+                        <xf:label>Delete item</xf:label>
+                        <xf:hint>Deletes selected article from orderlist</xf:hint>
+                        <xf:action>
+                            <xf:delete bind="items" at="index('repeatid')"/>
+                        </xf:action>
+                    </xf:trigger>
+                </td>
+                <td>
+                    <xf:trigger class="orderListResetTrigger">>
+                        <xf:label>Reset</xf:label>
+                        <xf:hint>Resets demo to inital state</xf:hint>
+                        <xf:action>
+                            <xf:reset/>
+                        </xf:action>
+                    </xf:trigger>
+                </td>
+                <td class="orderListSpacerRight"/>
+            </tr>
+        </table>
     <!--
     <div id="itemDialog" dojoType="dijit.Dialog" title="Insert new article into articlelist">
         <xf:group appearance="full" ref="instance('userItem')/item">

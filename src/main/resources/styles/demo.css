@@ -116,6 +116,9 @@
 .contactsFullGroup .xfLabel {
     width: 7em;
 }
+.contactsSpacerLeft {
+    width:20px;
+}
 
 .contactsTriggerGroup {
     display: block;
@@ -126,7 +129,7 @@
 .contactsMasterTrigger {
     display: inline;
     text-align: center;
-    width: 200px;
+    width: 210px;
     padding-right: 15px;
 }
 
@@ -136,14 +139,14 @@
     height: 30px;
     line-height: 29px;
     text-decoration: none;
-    width: 200px;
+    width: 210px;
     text-indent: 15px;
 }
 
 .contactsSubTrigger {
     display: inline;
     text-align: center;
-    width: 200px;
+    width: 210px;
     padding-right: 15px;
 }
 
@@ -153,7 +156,7 @@
     height: 30px;
     line-height: 29px;
     text-decoration: none;
-    width: 200px;
+    width: 210px;
     text-indent: 15px;
 
 }
@@ -161,7 +164,8 @@
 .contactsUpdateMasterTrigger {
     display: inline;
     text-align: center;
-    width: 200px;
+    width: 210px;
+    padding-right: 15px;
 }
 
 .contactsUpdateMasterTrigger button {
@@ -170,7 +174,7 @@
     height: 30px;
     line-height: 29px;
     text-decoration: none;
-    width: 200px;
+    width: 210px;
     text-indent: 15px;
 }
 
@@ -220,6 +224,10 @@
     width: 86% !important; /* Dirty */
     font-weight: bold;
     padding-top: 0px !important;
+}
+
+.orderListSpacerLeft {
+    width:105px;
 }
 
 .orderListTriggerGroup {
@@ -286,6 +294,7 @@
     display: inline;
     text-align: center;
     width: 150px;
+    padding-right: 15px;
 }
 
 .orderListResetTrigger button {
@@ -364,7 +373,7 @@
     display: block;
     height: 23px;
     width: 150px;
-    line-height: 29px;
+    line-height: 19px;
     text-decoration: none;
     text-indent: 15px;
 }
@@ -379,7 +388,7 @@
     background: url(../../resources/images/001_60.png) no-repeat 1px 1px;
     display: block;
     height: 23px;
-    line-height: 29px;
+    line-height: 19px;
     text-decoration: none;
     width: 47px;
     text-indent: 10px;

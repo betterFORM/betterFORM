@@ -97,9 +97,21 @@ dojo.declare("betterform.FluxProcessor",
             console.warn("!! WARNING: BOWL ALERT HANDLER NOT IMPLEMENTED YET !!!");
         }
 
+        var inlineRoundBordersAlertEnabled = dojo.query(".InlineRoundBordersAlert" ,dojo.doc)[0];
+        if(inlineRoundBordersAlertEnabled != undefined) {
+            defaultAlertHandler = true;
+            dojo.require("betterform.ui.common.InlineRoundBordersAlert");
+            this.inlineRoundBordersAlert = new betterform.ui.common.InlineRoundBordersAlert({});
+
+            dojo.subscribe("/xf/valid",this.inlineRoundBordersAlert, "handleValid");
+            dojo.subscribe("/xf/invalid",this.inlineRoundBordersAlert, "handleInvalid");
+            // console.debug("Enabled BowlAlert Handler", this.bowlAlert);
+            console.warn("!! WARNING: BOWL ALERT HANDLER NOT IMPLEMENTED YET !!!");
+        }
+
 
         var inlineAlertEnabled = dojo.query(".InlineAlert" ,dojo.doc)[0];
-        if(inlineAlertEnabled != undefined || (toolTipAlertEnabled == undefined && globalAlertEnabled == undefined && bowlAlertEnabled == undefined)) {
+        if(inlineAlertEnabled != undefined || (toolTipAlertEnabled == undefined && globalAlertEnabled == undefined && bowlAlertEnabled == undefined && inlineRoundBordersAlertEnabled == undefined)) {
 
             defaultAlertHandler = true;
             dojo.require("betterform.ui.common.InlineAlert");
