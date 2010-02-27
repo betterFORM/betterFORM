@@ -16,16 +16,16 @@ dojo.declare("betterform.ui.common.InlineRoundBordersAlert",
     },
 
     _placeAlert:function(id) {
-        // console.debug("InlineRoundBordersAlert._placeAlert()");
+        console.debug("InlineRoundBordersAlert._placeAlert()");
         var alertAttachPoint = dojo.byId(id + "-alertAttachPoint");
         var alertNode = dojo.byId(id + "-alert");
         if (alertNode != undefined && alertAttachPoint != undefined && !alertAttachPoint.hasChildNodes()) {
-            dojo.place(alertNode, alertAttachPoint);
+            alertAttachPoint.appendChild(alertNode);
             dojo.attr(alertNode, "style", "");
         }
 
         this._connectHandlers(alertNode);
-
+        console.debug("END InlineRoundBordersAlert._placeAlert()");
         //alertNode.onclick =  betterform.ui.util.showFullAlertDemo;
         return alertNode;
     },

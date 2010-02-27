@@ -14,9 +14,9 @@
 
     <link rel="stylesheet" type="text/css" href="../../resources/styles/registration.css"/>
 </head>
-<body >
+<body>
 <div id="xforms">
-    <div id="registration">
+    <div id="registration" class="InlineRoundBordersAlert">
     <div style="display:none">
         <xf:model id="model-1">
             <xf:instance>
@@ -51,42 +51,42 @@
         </xf:model>
     </div>
 
-    <xf:group appearance="bf:verticalTable" class="InlineRoundBordersAlert">
-        <xf:label>Registration</xf:label>
-        <xf:input id="first" ref="firstname">
-            <xf:label>Firstname:</xf:label>
-            <xf:hint>enter your firstname</xf:hint>
-        </xf:input>
-        <xf:input ref="lastname">
-            <xf:label>Lastname:</xf:label>
-            <xf:hint>enter your lastname</xf:hint>
-        </xf:input>
-        <xf:input ref="alias">
-            <xf:label>Username:</xf:label>
-            <xf:hint>please choose a unique username</xf:hint>
-            <xf:alert>please choose a username longer than 3 characters</xf:alert>
-        </xf:input>
-        <xf:input ref="email">
-            <xf:label>Email:</xf:label>
-            <xf:alert>is not a valid email address</xf:alert>
-			<xf:hint>enter a valid email address</xf:hint>
-        </xf:input>
-        <xf:input ref="pass1">
-            <xf:label>choose a password:</xf:label>
-            <xf:alert>password must be at least 6 characters</xf:alert>
-            <xf:hint>more than 6 characters required</xf:hint>
-        </xf:input>
-        <xf:input ref="pass2">
-            <xf:label>retype your password:</xf:label>
-            <xf:hint>please retype your password</xf:hint>
-            <xf:alert>passwords do not match</xf:alert>
-        </xf:input>
-        <xf:trigger appearance="triggerMiddleColumn">
-            <xf:label>register</xf:label>
-            <xf:send submission="s-send"/>
-        </xf:trigger>
-    </xf:group>
-    </div>
+    <xf:group appearance="bf:verticalTable">
+			<xf:label>Registration</xf:label>
+			<xf:input id="first" ref="firstname">
+				<xf:label>Firstname:</xf:label>
+				<xf:hint>enter your firstname</xf:hint>
+			</xf:input>
+			<xf:input ref="lastname">
+				<xf:label>Lastname:</xf:label>
+				<xf:hint>enter your lastname</xf:hint>
+			</xf:input>
+			<xf:input ref="alias">
+				<xf:label>Username:</xf:label>
+				<xf:hint>please choose a unique username</xf:hint>
+				<xf:alert>please choose a username longer than 3 characters</xf:alert>
+			</xf:input>
+			<xf:input ref="email">
+				<xf:label>Email:</xf:label>
+				<xf:alert>is not a valid email address</xf:alert>
+				<xf:hint>enter a valid email address</xf:hint>
+			</xf:input>
+			<xf:input ref="pass1">
+				<xf:label>choose a password:</xf:label>
+				<xf:alert>password must be at least 6 characters</xf:alert>
+				<xf:hint>more than 6 characters required</xf:hint>
+			</xf:input>
+			<xf:input ref="pass2">
+				<xf:label>retype your password:</xf:label>
+				<xf:hint>please retype your password</xf:hint>
+				<xf:alert>passwords do not match</xf:alert>
+			</xf:input>
+			<xf:trigger appearance="triggerMiddleColumn">
+				<xf:label>register</xf:label>
+				<xf:send submission="s-send"/>
+			</xf:trigger>
+		</xf:group>
+	</div>
 </div>
 </body>
 </html>
