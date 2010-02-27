@@ -83,32 +83,19 @@
     <!-- ####################################################################################################### -->
     <!-- ##################################### TEMPLATES ####################################################### -->
     <!-- ####################################################################################################### -->
-    <xsl:template match="/xhtml:*">
-            <xsl:choose>
-                <xsl:when test="not(exists(xhtml:body))">
-                    <!-- #### fragment mode - we're coming from an load embed ### -->
-                    <xsl:copy>
-                        <xsl:apply-templates/>
-                        <div style="display:none;">
-                            <xsl:for-each select="//xf:*/xf:alert">
-                                <xsl:apply-templates select="."/>
-                            </xsl:for-each>
-                        </div>
-                        
-                    </xsl:copy>
-                </xsl:when>
-                <xsl:otherwise>
-                    <!-- ### the standard case - we got a full document ###-->
-                        <html>
-                            <xsl:apply-templates/>
-                        </html>
-                </xsl:otherwise>
-            </xsl:choose>
-    </xsl:template>
-    <xsl:template name="loadEmbed">
-
+<!--
+    <xsl:template match="/xhtml:div/xhtml:div">
+            <xsl:copy>
+				<xsl:apply-templates/>
+					<div style="display:none;">
+						<xsl:for-each select="//xf:*/xf:alert">
+							<xsl:apply-templates select="."/>
+						</xsl:for-each>
+					</div>
+				</xsl:copy>
     </xsl:template>
 
+-->
     <xsl:template match="xhtml:head">
         <head>
             <!-- copy all meta tags except 'contenttype' -->

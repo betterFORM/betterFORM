@@ -106,7 +106,9 @@
                 }).play();
 				if(dojo.byId("registration") != undefined){
 					fluxProcessor.setInlineRoundBorderAlertHandler();
-				} 
+				}else {
+					fluxProcessor.setToolTipAlertHandler();
+				}
             });
             dojo.fadeOut({
                 node: "demoTarget",
