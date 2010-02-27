@@ -590,7 +590,7 @@
     <!-- ##### HINT ##### -->
     <!-- ##### HINT ##### -->
     <xsl:template match="xf:hint">
-        <xsl:message terminate="no">parentId: <xsl:value-of select="../@id"/>  id: <xsl:value-of select="@id"/> </xsl:message>
+        <!--<xsl:message terminate="no">parentId: <xsl:value-of select="../@id"/>  id: <xsl:value-of select="@id"/> </xsl:message>-->
         <span id="{../@id}-hint" class="xfHint" style="display:none"><xsl:apply-templates/></span>
     </xsl:template>
 
