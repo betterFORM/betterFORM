@@ -83,25 +83,30 @@
     <!-- ####################################################################################################### -->
     <!-- ##################################### TEMPLATES ####################################################### -->
     <!-- ####################################################################################################### -->
-    <xsl:template match="/*">
-        <xsl:copy>
-            <xsl:copy-of select="@*"/>
+    <xsl:template match="/xhtml:*">
             <xsl:choose>
                 <xsl:when test="not(exists(xhtml:body))">
                     <!-- #### fragment mode - we're coming from an load embed ### -->
-                    <xsl:apply-templates/>
-                    <div style="display:none;">
-                        <xsl:for-each select="//xf:*/xf:alert">
-                            <xsl:apply-templates select="."/>
-                        </xsl:for-each>
-                    </div>
+                    <xsl:copy>
+                        <xsl:apply-templates/>
+                        <div style="display:none;">
+                            <xsl:for-each select="//xf:*/xf:alert">
+                                <xsl:apply-templates select="."/>
+                            </xsl:for-each>
+                        </div>
+                        
+                    </xsl:copy>
                 </xsl:when>
                 <xsl:otherwise>
                     <!-- ### the standard case - we got a full document ###-->
-                    <xsl:apply-templates/>
+                        <html>
+                            <xsl:apply-templates/>
+                        </html>
                 </xsl:otherwise>
             </xsl:choose>
-        </xsl:copy>
+    </xsl:template>
+    <xsl:template name="loadEmbed">
+
     </xsl:template>
 
     <xsl:template match="xhtml:head">
@@ -585,6 +590,7 @@
     <!-- ##### HINT ##### -->
     <!-- ##### HINT ##### -->
     <xsl:template match="xf:hint">
+        <xsl:message terminate="no">parentId: <xsl:value-of select="../@id"/>  id: <xsl:value-of select="@id"/> </xsl:message>
         <span id="{../@id}-hint" class="xfHint" style="display:none"><xsl:apply-templates/></span>
     </xsl:template>
 

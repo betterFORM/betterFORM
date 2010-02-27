@@ -8,13 +8,10 @@
 	  xmlns:atom="http://www.w3.org/2005/Atom"
       xml:lang="en" lang="en">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<meta name="Author" content="Joern Turner"/>
-		<meta name="Author" content="Lars Windauer"/>
-		<meta name="description" content="betterFORM "/>
-		<meta name="keywords" content="betterFORM, xforms, forms, xhtml, xpath, xslt, dojo, dojotoolkit, web, semantic, semantic web, "/>
-
 		<title>betterFORM Demo</title>
+
+
+
 
 		<link REV="made" HREF="mailto:info@betterform.de"/>
 		<link rel="SHORTCUT ICON" href="images/betterform.ico"/>
@@ -106,7 +103,10 @@
                 dojo.fadeIn({
                     node: "demoTarget",
                     duration:1000
-                }).play()
+                }).play();
+				if(dojo.byId("registration") != undefined){
+					fluxProcessor.setInlineRoundBorderAlertHandler();
+				} 
             });
             dojo.fadeOut({
                 node: "demoTarget",

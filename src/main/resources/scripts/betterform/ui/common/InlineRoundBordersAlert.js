@@ -16,7 +16,7 @@ dojo.declare("betterform.ui.common.InlineRoundBordersAlert",
     },
 
     _placeAlert:function(id) {
-        console.debug("InlineRoundBordersAlert._placeAlert()");
+        // console.debug("InlineRoundBordersAlert._placeAlert()");
         var alertAttachPoint = dojo.byId(id + "-alertAttachPoint");
         var alertNode = dojo.byId(id + "-alert");
         if (alertNode != undefined && alertAttachPoint != undefined && !alertAttachPoint.hasChildNodes()) {
@@ -25,13 +25,13 @@ dojo.declare("betterform.ui.common.InlineRoundBordersAlert",
         }
 
         this._connectHandlers(alertNode);
-        console.debug("END InlineRoundBordersAlert._placeAlert()");
+        // console.debug("END InlineRoundBordersAlert._placeAlert()", alertNode);
         //alertNode.onclick =  betterform.ui.util.showFullAlertDemo;
         return alertNode;
     },
 
     _showState:function(id, state) {
-        console.debug("InlineRoundBordersAlert._showState: state:", state);
+        // console.debug("InlineRoundBordersAlert._showState: state:", state);
 
         this._handleBorders(id, state);
         if (state == "alert") {
@@ -59,7 +59,7 @@ dojo.declare("betterform.ui.common.InlineRoundBordersAlert",
             this._display(id, "hint", "none");
             this._display(id, "info", "none");
         } else {
-            console.warn("State '" + state + "' for Control " + id + " is unknown");
+            // console.warn("State '" + state + "' for Control " + id + " is unknown");
         }
     },
 
@@ -126,10 +126,10 @@ dojo.declare("betterform.ui.common.InlineRoundBordersAlert",
             //dojo.coords(node, coordsNew);
 
 
-            console.debug(heightBefore);
-            console.debug(dojo.style(node, "height"));
+            // console.debug(heightBefore);
+            // console.debug(dojo.style(node, "height"));
             if (heightBefore < dojo.style(node, "height")) {
-                console.debug("manipulating borders");
+                // console.debug("manipulating borders");
                 dojo.style(node, "MozBorderRadiusBottomleft", "8px");
                 dojo.style(node, "WebkitBorderBottomLeftRadius", "8px");
             }

@@ -7,27 +7,30 @@
     border-collapse: collapse;
 }
 
-#registration .tundra * {
+.tundra #registration * {
     font-size: 11pt;
     font-family: sans-serif;
     color: #666666;
 }
 
-#registration .tundra .dijitButtonNode {
+.tundra #registration .dijitButtonNode {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
 }
 
-#registration .tundra .dijitTextBoxFocused,
-#registration .tundra .dijitComboBoxFocused,
-#registration .tundra .dijitSpinnerFocused,
-#registration .tundra .dijitSpinnerUpArrowActive,
-#registration .tundra .dijitSpinnerDownArrowActive,
-#registration .tundra .dijitTextAreaFocused {
+.tundra #registration .dijitTextBoxFocused,
+.tundra #registration .dijitComboBoxFocused,
+.tundra #registration .dijitSpinnerFocused,
+.tundra #registration .dijitSpinnerUpArrowActive,
+.tundra #registration .dijitSpinnerDownArrowActive,
+.tundra #registration .dijitTextAreaFocused {
     border-color: gray;
 }
 
-#registration .tundra .dijitInputField input, .tundra .dijitTextBox, .tundra .dijitComboBox, .tundra .dijitSpinner {
+.tundra #registration .dijitInputField input,
+.tundra #registration .dijitTextBox,
+.tundra #registration .dijitComboBox,
+.tundra #registration .dijitSpinner {
     margin: 0;
 }
 
@@ -120,10 +123,10 @@
     width: 140px;
 }
 
-#registration .tundra .xfAlert,
-#registration .tundra .xfHint,
-#registration .tundra .xfHelp,
-#registration .tundra .info {
+.tundra #registration  .xfAlert,
+.tundra #registration  .xfHint,
+.tundra #registration  .xfHelp,
+.tundra #registration  .info {
     font-size: 9pt;
     font-family: sans-serif;
 }
