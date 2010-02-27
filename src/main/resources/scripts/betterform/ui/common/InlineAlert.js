@@ -11,12 +11,15 @@ dojo.declare("betterform.ui.common.InlineAlert",
         if(action == "xfDisabled") {
             this._showState(id, "none");
         }
-
-        if(action =="onFocus" && dijit.byId(id).getControlValue == ''){
+        var control = dijit.byId(id);
+        if(action =="onFocus" && control.getControlValue() == ''){
                 this._showState(id, "hint");
         }
-        else if(action =="applyChanges" || action=="applyChanges" || action=="onBlur") {
+        else if((action =="applyChanges" || action=="onBlur") && control.getControlValue() != '') {
             this._showState(id, "info");
+        }
+        else if((action =="applyChanges" || action=="onBlur") && control.getControlValue() == '') {
+            this._showState(id, "none");
         }
 
         var controlValue = dijit.byId(id+"-value");
@@ -93,6 +96,7 @@ dojo.declare("betterform.ui.common.InlineAlert",
     },
 
     _placeAlert:function(id) {
+        // console.debug("InlineAlert._placeAlert()");
         var alertAttachPoint = dojo.byId(id+"-alertAttachPoint");
         var alertNode = dojo.byId(id+"-alert");
         if(alertNode != undefined && alertAttachPoint != undefined && !alertAttachPoint.hasChildNodes()){
@@ -105,7 +109,7 @@ dojo.declare("betterform.ui.common.InlineAlert",
     },
 
     _showState:function(id, state) {
-        // console.debug("ValidityStateTable._showState: state:", state);
+        // console.debug("InlineAlert._showState: state:", state);
 
         if (state == "alert") {
             this._display(id,"hint", "none");

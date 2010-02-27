@@ -32,10 +32,8 @@ dojo.declare("betterform.FluxProcessor",
     webtest:'@WEBTEST@',
     isReady:false,
     contextroot:"",
-    toolTipAlert:null,
-    inlineAlert:null,
-    globalAlert:null,
-    bowlAlert:null,
+    defaultAlertHandler:null,
+    subscribers:[],
 
 /*
     keepAlive: function() {
@@ -60,67 +58,41 @@ dojo.declare("betterform.FluxProcessor",
         //#########    ALERT IMPLEMENTATION  #############
         //#########    ALERT IMPLEMENTATION  #############
         var toolTipAlertEnabled = dojo.query(".ToolTipAlert" ,dojo.doc)[0];
-        var defaultAlertHandler = false;
         if(toolTipAlertEnabled != undefined) {
-
-            defaultAlertHandler = true;
             dojo.require("betterform.ui.common.ToolTipAlert");
-            this.toolTipAlert = new betterform.ui.common.ToolTipAlert({});
-
-            dojo.subscribe("/xf/valid",this.toolTipAlert, "handleValid");
-            dojo.subscribe("/xf/invalid",this.toolTipAlert, "handleInvalid");
+            this.defaultAlertHandler = new betterform.ui.common.ToolTipAlert({});
             console.debug("Enabled ToolTipAlert Handler ", this.toolTipAlert);
-
         }
 
         var globalAlertEnabled = dojo.query(".GlobalAlert" ,dojo.doc)[0];
         if(globalAlertEnabled != undefined) {
-            defaultAlertHandler = true;
             dojo.require("betterform.ui.common.GlobalAlert");
-            this.globalAlert = new betterform.ui.common.GlobalAlert({});
-
-            dojo.subscribe("/xf/valid",this.globalAlert, "handleValid");
-            dojo.subscribe("/xf/invalid",this.globalAlert, "handleInvalid");
+            this.defaultAlertHandler = new betterform.ui.common.GlobalAlert({});
             console.warn("!! WARNING: GLOBAL ALERT HANDLER NOT IMPLEMENTED YET !!!");
-
         }
 
         var bowlAlertEnabled = dojo.query(".BowlAlert" ,dojo.doc)[0];
         if(bowlAlertEnabled != undefined) {
-            defaultAlertHandler = true;
             dojo.require("betterform.ui.common.BowlAlert");
-            this.bowlAlert = new betterform.ui.common.BowlAlert({});
-
-            dojo.subscribe("/xf/valid",this.bowlAlert, "handleValid");
-            dojo.subscribe("/xf/invalid",this.bowlAlert, "handleInvalid");
-            // console.debug("Enabled BowlAlert Handler", this.bowlAlert);
+            this.defaultAlertHandler = new betterform.ui.common.BowlAlert({});
             console.warn("!! WARNING: BOWL ALERT HANDLER NOT IMPLEMENTED YET !!!");
         }
 
         var inlineRoundBordersAlertEnabled = dojo.query(".InlineRoundBordersAlert" ,dojo.doc)[0];
         if(inlineRoundBordersAlertEnabled != undefined) {
-            defaultAlertHandler = true;
             dojo.require("betterform.ui.common.InlineRoundBordersAlert");
-            this.inlineRoundBordersAlert = new betterform.ui.common.InlineRoundBordersAlert({});
-
-            dojo.subscribe("/xf/valid",this.inlineRoundBordersAlert, "handleValid");
-            dojo.subscribe("/xf/invalid",this.inlineRoundBordersAlert, "handleInvalid");
-            // console.debug("Enabled BowlAlert Handler", this.bowlAlert);
+            this.defaultAlertHandler = new betterform.ui.common.InlineRoundBordersAlert({});
             console.warn("!! WARNING: BOWL ALERT HANDLER NOT IMPLEMENTED YET !!!");
         }
 
-
         var inlineAlertEnabled = dojo.query(".InlineAlert" ,dojo.doc)[0];
-        if(inlineAlertEnabled != undefined || (toolTipAlertEnabled == undefined && globalAlertEnabled == undefined && bowlAlertEnabled == undefined && inlineRoundBordersAlertEnabled == undefined)) {
-
-            defaultAlertHandler = true;
+        if(inlineAlertEnabled != undefined || (this.defaultAlertHandler == undefined)) {
             dojo.require("betterform.ui.common.InlineAlert");
-            this.inlineAlert = new betterform.ui.common.InlineAlert({});
-
-            dojo.subscribe("/xf/valid",this.inlineAlert, "handleValid");
-            dojo.subscribe("/xf/invalid",this.inlineAlert, "handleInvalid");
-            console.debug("Enabled InlineAlert Handler",this.inlineAlert );
+             this.defaultAlertHandler = new betterform.ui.common.InlineAlert({});
+            // console.debug("Enabled InlineAlert Handler",this.defaultAlertHandler );
         }
+        this.subscribers[0] = dojo.subscribe("/xf/valid",this.defaultAlertHandler, "handleValid");
+        this.subscribers[1] = dojo.subscribe("/xf/invalid",this.defaultAlertHandler, "handleInvalid");
 
         //#########    ALERT IMPLEMENTATION  END #############
         //#########    ALERT IMPLEMENTATION  END #############
@@ -132,6 +104,17 @@ dojo.declare("betterform.FluxProcessor",
         }catch(ex) {
             fluxProcessor._handleExceptions("Failure executing initcall within Flux Constructor ", ex);
         }
+    },
+
+    setInlineRoundBorderAlertHandler:function(){
+        if(this.defaultAlertHandler != undefined){
+            dojo.unsubscribe(this.subscribers[0]);
+            dojo.unsubscribe(this.subscribers[1]);
+        }
+        dojo.require("betterform.ui.common.InlineRoundBordersAlert");
+        this.inlineRoundBordersAlert = new betterform.ui.common.InlineRoundBordersAlert({});
+        this.subscribers[0] = dojo.subscribe("/xf/valid",this.inlineRoundBordersAlert, "handleValid");
+        this.subscribers[1] = dojo.subscribe("/xf/invalid",this.inlineRoundBordersAlert, "handleInvalid");
     },
 
     handleUnload:function(evt) {

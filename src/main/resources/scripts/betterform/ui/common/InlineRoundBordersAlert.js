@@ -16,6 +16,7 @@ dojo.declare("betterform.ui.common.InlineRoundBordersAlert",
     },
 
     _placeAlert:function(id) {
+        // console.debug("InlineRoundBordersAlert._placeAlert()");
         var alertAttachPoint = dojo.byId(id + "-alertAttachPoint");
         var alertNode = dojo.byId(id + "-alert");
         if (alertNode != undefined && alertAttachPoint != undefined && !alertAttachPoint.hasChildNodes()) {

@@ -83,6 +83,26 @@
     <!-- ####################################################################################################### -->
     <!-- ##################################### TEMPLATES ####################################################### -->
     <!-- ####################################################################################################### -->
+    <xsl:template match="/*">
+        <xsl:copy>
+            <xsl:copy-of select="@*"/>
+            <xsl:choose>
+                <xsl:when test="not(exists(xhtml:body))">
+                    <!-- #### fragment mode - we're coming from an load embed ### -->
+                    <xsl:apply-templates/>
+                    <div style="display:none;">
+                        <xsl:for-each select="//xf:*/xf:alert">
+                            <xsl:apply-templates select="."/>
+                        </xsl:for-each>
+                    </div>
+                </xsl:when>
+                <xsl:otherwise>
+                    <!-- ### the standard case - we got a full document ###-->
+                    <xsl:apply-templates/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:copy>
+    </xsl:template>
 
     <xsl:template match="xhtml:head">
         <head>
@@ -517,7 +537,7 @@
     <!-- ##### LABEL ##### -->
     <!-- ##### LABEL ##### -->
     <!-- ##### LABEL ##### -->
-    <xsl:template match="xf:label">
+    <xsl:template match="xf:label">         
         <!-- match all inline markup and content -->
         <xsl:apply-templates/>
 
