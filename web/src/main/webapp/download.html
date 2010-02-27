@@ -180,7 +180,7 @@
                         <div id="topnav">
                             <a href="index.html">home</a><span class="menuDevider"> | </span>
                             <a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>
-                            <a href="download.html">download</a><span class="menuDevider"> | </span>
+                            <a href="download.html" style="color:#488aa6">download</a><span class="menuDevider"> | </span>
                             <a href="product.html">product</a><span class="menuDevider"> | </span>
                             <a href="support.html">support</a><span class="menuDevider"> | </span>
                             <a href="whoweare.html">who we are</a><span class="menuDevider"> | </span>
@@ -222,56 +222,54 @@
 
 										<div class="header2">the xform ways to build the web</div>
 
+										<div class="webinstaller">
+											<h2>WebInstaller</h2>
 
-<!--
-											<h2 class="step1">on your marks!</h2>
-
-											<p>Download  <a href="http://sourceforge.net/projects/betterform/files">betterFORM Version 3.0</a> If you are running an earlier version of betterFORM - or any other application running on
-												port 8080, you need to shut it down. </p>
-
-											<h2 class="step2">get set!</h2>
-
-											<p>Double-click on the downloaded <b>betterform-installer.jar</b> to execute it.
-												If a warning dialog opens, click <b>Continue</b> and follow the install instructions.At the <b>"Select Installation Packages"</b> screen select <b>'betterFORM'</b>, <b>'Jetty'</b> and <b>'Forms'</b> and finish the installation.
+											<p>
+												Download just what you need.
+												The WebInstaller is itself a small download which lets you choose which
+												components to
+												install.
 											</p>
 
-											<h2 class="step3">go!</h2>
-											Switch to the choosen installation directory, execute the start.jar and point your browser to <a href="http://localhost:8080/betterform">localhost:8080/betterform</a>. That's it!<br/><br/>
-											<br/>
-											<i><b>If you experience any problems make sure start.jar is executable, the Java Runtime Environment is installed and take a look at chapter "Troubleshooting" of the <a href="userguide.pdf">betterFORM User Guide</a></b></i>
+											<p>
+												It will guide you through the installation process and supports a
+												variety of
+												installation
+												options including <strong>Jetty</strong>, the <strong>eXist XML
+												Database</strong>, the <strong>Dojo Toolkit</strong> and more.
+											</p>
 
-										
--->                                                    
-										<h2>Requirements</h2>
-										<div class="listitem">You need <!--<a href="http://www.java.com">Java</a>--> to run betterFORM</div>
-										<div><div class="listitem">You need a Java (Version 1.5 or higher) installation to execute betterFORM and the
-												WebInstaller.
+											<p>
+												For a quick installation select <b>'betterFORM'</b>, <b>'Jetty'</b> and
+												<b>'Forms'</b>
+												at the <b>"Select Installation Packages"</b> screen and finish the
+												installation. Switch
+												to the choosen installation directory, execute the start.jar and point
+												your browser to
+												<a href="http://localhost:8080/betterform">localhost:8080/betterform</a>.
+												That's
+												it!<br/>
+											</p>
+
+										</div>
+										<div class="requirements">
+											<h2>Requirements</h2>
+
+											<div class="listitem">You need <!--<a href="http://www.java.com">Java</a>-->
+												to run betterFORM
 											</div>
-										<div class="listitem">Make sure your system is configured to execute jar-files to use the WebInstaller
+											<div>
+												<div class="listitem">You need a Java (Version 1.5 or higher)
+													installation to execute betterFORM and the
+													WebInstaller.
+												</div>
+												<div class="listitem">Make sure your system is configured to execute
+													jar-files to use the WebInstaller
+												</div>
+
 											</div>
-
-										<h2>WebInstaller</h2>
-
-										<p>
-											Download just what you need.
-											The WebInstaller is itself a small download which lets you choose which components to
-											install.
-										</p>
-
-										<p>
-											It will guide you through the installation process and supports a variety of
-											installation
-											options including <strong>Jetty</strong>, the <strong>eXist XML Database</strong>, the <strong>Dojo Toolkit</strong> and more.
-										</p>
-
-										<p>
-											For a quick installation select <b>'betterFORM'</b>, <b>'Jetty'</b> and <b>'Forms'</b>
-											at the <b>"Select Installation Packages"</b> screen and finish the installation. Switch
-											to the choosen installation directory, execute the start.jar and point your browser to
-											<a href="http://localhost:8080/betterform">localhost:8080/betterform</a>. That's
-											it!<br/>
-										</p>
-
+										</div>
 									</td>
 									<td class="splitterVertical"> </td>
 									<td valign="top" class="box boxRight">
@@ -282,7 +280,7 @@
 													<p>
 														For those that already have a webcontainer betterFORM provides an optimized web application archive (WAR) build ready for deployment.
 													</p>
-													 <div style="width:98%;height:60px;">
+													 <div style="width:98%;height:60px;" class="downloadButtonWrapper">
 														 <span style="float:left;height:2px;width:15px;"></span>
 														 <a href="/path/to/betterfrom/war"><span class="downloadButton">download war</span></a></div>
 												</td>
@@ -295,7 +293,7 @@
 													<div class="boxRightEntryHeading">XForms Core</div>
 
 													<p>for <b>XForms enabled</b> Java applications simply download the betterFORM Core and at it on your classpath.</p>
-													<div style="width:98%;height:60px;">
+													<div style="width:98%;height:60px;" class="downloadButtonWrapper">
 														<span style="float:left;height:2px;width:15px;"></span>
 														<a href="/path/to/betterfrom/war"><span class="downloadButton">download core</span></a></div>													
 												</td>
@@ -318,7 +316,7 @@
                             &#169; 2010 betterFORM<span class="menuDevider"> | </span>
                             <a href="index.html">home</a><span class="menuDevider"> | </span>
                             <a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>
-                            <a href="download.html">download</a><span class="menuDevider"> | </span>
+                            <a href="download.html" style="color:#488aa6">download</a><span class="menuDevider"> | </span>
                             <a href="product.html">product</a><span class="menuDevider"> | </span>
                             <a href="support.html">support</a><span class="menuDevider"> | </span>
                             <a href="whoweare.html">who we are</a><span class="menuDevider"> | </span>

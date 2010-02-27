@@ -29,7 +29,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 *{
     font-family:sans-serif;
 }
-a:link{
+#content a:link{
     border:none;
 }
 
@@ -59,9 +59,11 @@ ul{
 }
 
 .listitem {
-	background:transparent url(../images/list.png) no-repeat scroll -2px 4px;
-	color:red;
-	clear:both;
+	background: transparent url(../images/list.png) no-repeat scroll -2px 4px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 13px;
+
 }
 
 .page {
@@ -138,6 +140,29 @@ ul{
 }
 #content .contentBody div{
     /*padding-bottom:30px;*/
+}
+
+
+#content a {
+	color: #999;
+	font-weight: normal;
+	background: transparent;
+	text-decoration: none;
+}
+
+#content a:focus,
+#content a:hover,
+#content a:active {
+	text-decoration: underline;
+	background-color: transparent;
+    color:#488aa6;
+}
+
+#content .linkbox a{
+    text-decoration:none;
+    color:white;
+    float:left;
+    margin-top:10px;
 }
 
 
@@ -388,12 +413,23 @@ h3{
 }
 */
 
-.contentBody a{
-    text-decoration:none;
-    color:white;
-    float:left;
-    margin-top:10px;
+#content .linkImage:visited,
+#content .linkImage:active,
+#content .linkImage:focus,
+#content .linkImage {
+	color:transparent;
 }
+
+#content .downloadButtonWrapper  a:visited,
+#content  .downloadButtonWrapper a:active,
+#content  .downloadButtonWrapper a:focus,
+#content  .downloadButtonWrapper a {
+	text-decoration:none;
+	color:white;
+	float:left;
+	margin-top:10px;
+}
+
 
 .downloadButton {
     background:transparent url(../images/b_getit_ohne_klein.png) no-repeat scroll 0 0;
