@@ -3,35 +3,35 @@
  * Licensed under the terms of BSD License
  */
 
-table {
+#registration table {
     border-collapse: collapse;
 }
 
-.tundra * {
+#registration .tundra * {
     font-size: 11pt;
     font-family: sans-serif;
     color: #666666;
 }
 
-.tundra .dijitButtonNode {
+#registration .tundra .dijitButtonNode {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
 }
 
-.tundra .dijitTextBoxFocused,
-.tundra .dijitComboBoxFocused,
-.tundra .dijitSpinnerFocused,
-.tundra .dijitSpinnerUpArrowActive,
-.tundra .dijitSpinnerDownArrowActive,
-.tundra .dijitTextAreaFocused {
+#registration .tundra .dijitTextBoxFocused,
+#registration .tundra .dijitComboBoxFocused,
+#registration .tundra .dijitSpinnerFocused,
+#registration .tundra .dijitSpinnerUpArrowActive,
+#registration .tundra .dijitSpinnerDownArrowActive,
+#registration .tundra .dijitTextAreaFocused {
     border-color: gray;
 }
 
-.tundra .dijitInputField input, .tundra .dijitTextBox, .tundra .dijitComboBox, .tundra .dijitSpinner {
+#registration .tundra .dijitInputField input, .tundra .dijitTextBox, .tundra .dijitComboBox, .tundra .dijitSpinner {
     margin: 0;
 }
 
-.caVerticalTable {
+#registration .caVerticalTable {
     border: none;
     padding: 20px;
     padding-bottom: 0px;
@@ -41,24 +41,24 @@ table {
     margin-right: auto;
 }
 
-.caVerticalTable td {
+#registration .caVerticalTable td {
 /*padding-bottom:5px;*/
 }
 
-.caVerticalTableLabel {
+#registration .caVerticalTableLabel {
     padding-right: 5px;
     width: 25%;
 }
 
-.caVerticalTableValue {
+#registration .caVerticalTableValue {
     width: 35%;
 }
 
-.bfVerticalTableInfo {
+#registration .bfVerticalTableInfo {
     width: 40%;
 }
 
-.xfValue {
+#registration .xfValue {
     padding: 5px;
     -moz-border-radius-topleft: 8px;
     -moz-border-radius-bottomleft: 8px;
@@ -70,11 +70,11 @@ table {
     -webkit-border-bottom-right-radius: 8px;
 }
 
-.xfInvalid .xfValue {
+#registration .xfInvalid .xfValue {
     background: white;
 }
 
-.xfAlert {
+#registration .xfAlert {
     display: block;
     background: #FFCFCF;
     color: #801B1B;
@@ -90,7 +90,7 @@ table {
     width: 140px;
 }
 
-.xfHint {
+#registration .xfHint {
     display: block;
     background: #F2F2F2 url(../../resources/images/hint.png) no-repeat 3% 6px;
     color: #666666;
@@ -105,7 +105,7 @@ table {
     width: 140px;
 }
 
-.info {
+#registration .info {
     display: block;
     background: #F0FEE9 url(../../resources/images/ok.png) no-repeat 3% 6px;
     color: #666666;
@@ -120,37 +120,37 @@ table {
     width: 140px;
 }
 
-.tundra .xfAlert,
-.tundra .xfHint,
-.tundra .xfHelp,
-.tundra .info {
+#registration .tundra .xfAlert,
+#registration .tundra .xfHint,
+#registration .tundra .xfHelp,
+#registration .tundra .info {
     font-size: 9pt;
     font-family: sans-serif;
 }
 
-.xfControl, .xfAlert, .xfHint, .info {
+#registration .xfControl, #registration .xfAlert, #registration .xfHint, #registration .info {
     margin-bottom: 8px;
 }
 
-.xfGroupLabel {
+#registration .xfGroupLabel {
     font-size: 13pt;
     border-bottom: thin solid #999999;
     padding-bottom: 5px;
     color: #333333;
 }
 
-.xfTriggerMiddleColumnTrigger {
+#registration .xfTriggerMiddleColumnTrigger {
     float: right;
 }
 
-.xfRequired .xfValue {
+#registration .xfRequired .xfValue {
 /*background: #F2F2F2;*/
 }
 
-.dijitFocused {
+#registration .dijitFocused {
     background-color: #F2F2F2 !important;
 }
 
-td, td span {
+#registration td, td span {
 /*    position: relative; */
 }

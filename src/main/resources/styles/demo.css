@@ -187,7 +187,7 @@
 .orderListCountrySelect .xfLabel {
     display: block;
     text-align: right !important;
-    width: 86% !important; /* Dirty */
+    width: 85% !important; /* Dirty */
 }
 
 .orderListHeader {
@@ -207,7 +207,7 @@
 
 .orderListRepeat .xfRepeatItem .xfValue {
     padding: 3px;
-    display: block;
+    width:130px;
 }
 
 .orderlistRepeatFooter {
@@ -342,6 +342,8 @@
 
 }
 
+
+
 /*#### Twitter Demo #### */
 #xforms .twitter {
     background: none repeat scroll 0 0 white;
@@ -365,7 +367,7 @@
 
 .twitterSearch {
     display: inline-block;
-    padding-left:242px;
+    padding-left:207px;
 }
 
 .twitterReload button {
