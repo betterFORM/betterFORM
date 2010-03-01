@@ -54,7 +54,7 @@
 }
 
 #registration .caVerticalTableValue {
-    width: 25%;
+    width: 24%;
 }
 
 #registration .bfVerticalTableInfo {
@@ -83,48 +83,49 @@
     display: block;
     background: #FFCFCF;
     color: #801B1B;
-    padding: 5px 0px 8px 30px;
+    padding: 8px 0px 8px 30px;
     -moz-border-radius-topright: 8px;
     -moz-border-radius-bottomright: 8px;
     -webkit-border-top-right-radius: 8px;
     -webkit-border-bottom-right-radius: 8px;
-    background: #FFCFCF url(../../resources/images/error.png) no-repeat 3% 6px;
+    background: #FFCFCF url(../../resources/images/error.png) no-repeat 3% 7px;
     margin: 0;
-    overflow: hidden;
+    /*overflow: hidden; */
     white-space: nowrap;
-    width: 120px;
+    width: 180px;
+	border: 0px;
 }
 
 #registration .xfHint {
     display: block;
-    background: #F2F2F2 url(../../resources/images/hint.png) no-repeat 3% 6px;
+    background: #F2F2F2 url(../../resources/images/hint.png) no-repeat 3% 7px;
     color: #666666;
-    padding: 7px 0px 8px 30px;
+    padding: 8px 0px 8px 30px;
     -moz-border-radius-topright: 8px;
     -moz-border-radius-bottomright: 8px;
     -webkit-border-top-right-radius: 8px;
     -webkit-border-bottom-right-radius: 8px;
     margin: 0;
-    overflow: hidden;
+    /*overflow: hidden;*/
     white-space: nowrap;
-    width: 120px;
+    width: 180px;
 }
 
 
 
 #registration .info {
     display: block;
-    background: #F0FEE9 url(../../resources/images/ok.png) no-repeat 3% 6px;
+    background: #F0FEE9 url(../../resources/images/ok.png) no-repeat 3% 7px;
     color: #666666;
-    padding: 7px 0px 8px 30px;
+    padding: 8px 0px 8px 30px;
     -moz-border-radius-topright: 8px;
     -moz-border-radius-bottomright: 8px;
     -webkit-border-top-right-radius: 8px;
     -webkit-border-bottom-right-radius: 8px;
     margin: 0;
-    overflow: hidden;
+    /*overflow: hidden;*/
     white-space: nowrap;
-    width: 120px;
+    width: 180px;
 }
 .xfControl {
 	position:relative;
@@ -168,5 +169,6 @@
 #registration .dijitTextBox,
 #registration .dijitComboBox,
 #registration .dijitSpinner  {
-    width: 100%;
+    width: 10em;
 }
+

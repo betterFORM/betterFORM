@@ -104,8 +104,8 @@ dojo.declare("betterform.ui.common.InlineRoundBordersAlert",
         var mip = dojo.byId(id + "-" + commonChild);
         if (mip != undefined && mip.innerHTML != '') {
             dojo.style(mip, "display", show);
-            dojo.style(mip, "position", "static");
-            dojo.style(mip, "whiteSpace", "nowrap");
+          //  dojo.style(mip, "position", "static");
+          //  dojo.style(mip, "whiteSpace", "nowrap");
 
         } else {
             console.warn(id + "-" + commonChild + " is not defined for Control " + id);
