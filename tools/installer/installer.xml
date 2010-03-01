@@ -64,17 +64,20 @@
     -->
 
     <resources>
-    	<res id="Heading.image" src="../resource/logo2.png"/>
+    	<res id="Heading.image" src="../resource/bf_logo_145x59.png"/>
         <res id="LicencePanel.licence" src="BSD-license.txt"/>
+        <res id="HTMLInfoPanel.readme" src="../resource/readme.html"/>
+        <res id="HTMLHelloPanel.welcome" src="../resource/welcome.html"/>
+
         <res id="Installer.image" src="../resource/logo.png" />
 
-        <!--<res id="Installer.image" src="nice-image.png" />-->
+        <res id="Installer.image" src="../resource/info-border.png" />
         <res src="../resource/info-border.png" id="Installer.image.0"/>
         <res src="../resource/info-border.png" id="Installer.image.1"/>
         <res src="../resource/pack-border.png" id="Installer.image.2"/>
         <res src="../resource/pack-border.png" id="Installer.image.3"/>
-        <res src="../resource/installing-border.png" id="Installer.image.4"/>
-        <res src="../resource/finished-border.png" id="Installer.image.5"/>
+        <res src="../resource/pack-border.png" id="Installer.image.4"/>
+        <res src="../resource/pack-border.png" id="Installer.image.5"/>
 
     </resources>
 
@@ -85,9 +88,10 @@
     -->
 
     <panels labelFontSize="2.0">
-        <panel classname="HelloPanel"/>
+        <panel classname="HTMLHelloPanel" id="welcome"/>
         <panel classname="LicencePanel"/>
         <panel classname="TargetPanel"/>
+        <panel classname="HTMLInfoPanel" id="readme" />
         <panel classname="PacksPanel"/>
         <panel classname="InstallPanel"/>
         <panel classname="FinishPanel"/>
@@ -113,7 +117,7 @@ FOR LATER: installinig the war should switch the above pack off. Did not yet fou
         </pack>
 -->
 
-        <pack id="jetty" name="jetty" required="no">
+        <pack id="jetty" name="Jetty" required="no">
             <description>Jetty Servlet Container Ver. 6.1.22</description>
             <fileset dir="jetty/betterform" targetdir="$INSTALL_PATH" includes="*/**"/>
 
