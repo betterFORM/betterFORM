@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+~ Licensed under the terms of BSD License
+-->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns:ev="http://www.w3.org/2001/xml-events"
@@ -6,10 +10,10 @@
       xmlns:xsd="http://www.w3.org/2001/XMLSchema"
       lang="de">
 <head>
-<title>Twitter</title>
+    <title>Twitter</title>
 
-<link rel="stylesheet" type="text/css" href="../../styles/bf.css"/>
-<link rel="stylesheet" type="text/css" href="../../resources/styles/demo.css"/>
+    <link rel="stylesheet" type="text/css" href="../../styles/bf.css"/>
+    <link rel="stylesheet" type="text/css" href="../../resources/styles/demo.css"/>
 
 </head>
 <body class="tundra">
@@ -187,10 +191,12 @@
             <xf:message ev:event="xforms-submit-error" level="modal">failure loading public timeline</xf:message>
         </xf:submission>
 
+        <!--
         <xf:action ev:event="xforms-ready">
             <xf:send submission="s-get-twitter-public-timeline"/>
-            <!--<xf:send submission="s-get-twitter-user-timeline"/>-->
+            
         </xf:action>
+    -->
 
     </xf:model>
 </div>
@@ -220,7 +226,8 @@
                         </xf:trigger>
 
 
-                        <xf:select1 class="twitterSearch" ref="instance('i-controller')/user/@name" appearance="minimal" selection="open">
+                        <xf:select1 class="twitterSearch" ref="instance('i-controller')/user/@name" appearance="minimal"
+                                    selection="open">
                             <xf:label>User:</xf:label>
                             <xf:choices>
                                 <xf:item>
@@ -236,7 +243,7 @@
                                     <xf:value>betterform2010</xf:value>
                                 </xf:item>
                                 <xf:item>
-                                    <xf:label>existdb</xf:label>                  
+                                    <xf:label>existdb</xf:label>
                                     <xf:value>existdb</xf:value>
                                 </xf:item>
                                 <xf:item>
@@ -257,22 +264,22 @@
                                 <xf:send submission="s-get-twitter-user"/>
                             </xf:action>
                         </xf:trigger>
-                        </div>
-                        <table class="twitterContentTable">
-                            <tr>
-                                <td>
-                                    <xf:repeat id="r-twitter-public-timeline"
-                                               nodeset="instance('i-twitter-public-timeline')/status"
-                                               appearance="full">
-                                        <table>
-                                            <tr>
-                                                <td rowspan="2" class="twitterUserIcon">
-                                                    <xf:output ref="user/profile_image_url"
-                                                               mediatype="image/*">
-                                                        <xf:label/>
-                                                    </xf:output>
-                                                </td>
-                                                <td class="twitterContent">
+                    </div>
+                    <table class="twitterContentTable">
+                        <tr>
+                            <td>
+                                <xf:repeat id="r-twitter-public-timeline"
+                                           nodeset="instance('i-twitter-public-timeline')/status"
+                                           appearance="full">
+                                    <table>
+                                        <tr>
+                                            <td rowspan="2" class="twitterUserIcon">
+                                                <xf:output ref="user/profile_image_url"
+                                                           mediatype="image/*">
+                                                    <xf:label/>
+                                                </xf:output>
+                                            </td>
+                                            <td class="twitterContent">
 												<span style="float:left">
 												<xf:trigger appearance="minimal">
                                                     <xf:label ref="user/screen_name"/>
@@ -285,39 +292,39 @@
                                                     </xf:action>
                                                 </xf:trigger>
 												</span><span> </span>
-                                                    <xf:output
-                                                            value="IF(string-length(user/name) = 0,'',concat('&#160;&#160;(',user/name,')'))"/>
-                                                </td>
+                                                <xf:output
+                                                        value="IF(string-length(user/name) = 0,'',concat('&#160;&#160;(',user/name,')'))"/>
+                                            </td>
 
-                                            </tr>
-                                            <tr>
-                                                <td class="twitterTweet">
-                                                    <xf:output ref="text" mediatype="text/html"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="twitterUserIcon"/>
-                                                <td class="twitterStatus">
-                                                    <xf:group appearance="minimal">
-                                                        <xf:output value="substring-before(created_at, '+')">
-                                                            <xf:label>created:</xf:label>
-                                                        </xf:output>
-                                                        <xf:output ref="source" mediatype="text/html">
-                                                            <xf:label> from:</xf:label>
-                                                        </xf:output>
-                                                        <xf:output ref="user/location">
-                                                            <xf:label> at:</xf:label>
-                                                        </xf:output>
-                                                    </xf:group>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </xf:repeat>
-                                </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="twitterTweet">
+                                                <xf:output ref="text" mediatype="text/html"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="twitterUserIcon"/>
+                                            <td class="twitterStatus">
+                                                <xf:group appearance="minimal">
+                                                    <xf:output value="substring-before(created_at, '+')">
+                                                        <xf:label>created:</xf:label>
+                                                    </xf:output>
+                                                    <xf:output ref="source" mediatype="text/html">
+                                                        <xf:label> from:</xf:label>
+                                                    </xf:output>
+                                                    <xf:output ref="user/location">
+                                                        <xf:label> at:</xf:label>
+                                                    </xf:output>
+                                                </xf:group>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </xf:repeat>
+                            </td>
 
 
-                            </tr>
-                        </table>                   
+                        </tr>
+                    </table>
                 </td>
             </tr>
         </table>
@@ -328,40 +335,40 @@
 
 <xf:case id="cuser" selected="false">
     <xf:label>User</xf:label>
-    <div class="Sample" >
-    <table>
-        <tr>
-            <td class="twitterUserContent">
-                <div>
-                    <xf:repeat id="r-twitter-user-timeline"
-                               nodeset="instance('i-twitter-user-timeline')/status"
-                               appearance="full">
-                        <table>
-                            <tr>
-                                <td  class="twitterTweet">
-                                    <xf:output ref="text" mediatype="text/html"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="twitterStatus">
-                                    <xf:group appearance="minimal">
-                                        <xf:output value="substring-before(created_at, '+')">
-                                            <xf:label>created:</xf:label>
-                                        </xf:output>
-                                        <xf:output ref="source" mediatype="text/html">
-                                            <xf:label> from:</xf:label>
-                                        </xf:output>
-                                        <xf:output ref="user/location">
-                                            <xf:label> at:</xf:label>
-                                        </xf:output>
-                                    </xf:group>
-                                </td>
-                            </tr>
-                        </table>
-                    </xf:repeat>
-                </div>
-            </td>
-            <td valign="top" class="twitterUserInfo">
+    <div class="Sample">
+        <table>
+            <tr>
+                <td class="twitterUserContent">
+                    <div>
+                        <xf:repeat id="r-twitter-user-timeline"
+                                   nodeset="instance('i-twitter-user-timeline')/status"
+                                   appearance="full">
+                            <table>
+                                <tr>
+                                    <td class="twitterTweet">
+                                        <xf:output ref="text" mediatype="text/html"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="twitterStatus">
+                                        <xf:group appearance="minimal">
+                                            <xf:output value="substring-before(created_at, '+')">
+                                                <xf:label>created:</xf:label>
+                                            </xf:output>
+                                            <xf:output ref="source" mediatype="text/html">
+                                                <xf:label> from:</xf:label>
+                                            </xf:output>
+                                            <xf:output ref="user/location">
+                                                <xf:label> at:</xf:label>
+                                            </xf:output>
+                                        </xf:group>
+                                    </td>
+                                </tr>
+                            </table>
+                        </xf:repeat>
+                    </div>
+                </td>
+                <td valign="top" class="twitterUserInfo">
                     <xf:group ref="instance('i-twitter-user')">
                         <xf:label/>
                         <xf:trigger class="twitterPublic">
@@ -407,10 +414,10 @@
                         </xf:output>
 
                     </xf:group>
-                
-            </td>
-        </tr>
-    </table>
+
+                </td>
+            </tr>
+        </table>
     </div>
 </xf:case>
 </xf:switch>

@@ -45,20 +45,20 @@
 }
 
 #registration .caVerticalTable td {
-/*padding-bottom:5px;*/
+    padding-top:10px;
 }
 
 #registration .caVerticalTableLabel {
     padding-right: 5px;
-    width: 25%;
+    width: 23%;
 }
 
 #registration .caVerticalTableValue {
-    width: 35%;
+    width: 25%;
 }
 
 #registration .bfVerticalTableInfo {
-    width: 40%;
+    width: 120px;
 	position:relative;
 
 }
@@ -92,7 +92,7 @@
     margin: 0;
     overflow: hidden;
     white-space: nowrap;
-    width: 140px;
+    width: 120px;
 }
 
 #registration .xfHint {
@@ -107,7 +107,7 @@
     margin: 0;
     overflow: hidden;
     white-space: nowrap;
-    width: 140px;
+    width: 120px;
 }
 
 
@@ -124,7 +124,7 @@
     margin: 0;
     overflow: hidden;
     white-space: nowrap;
-    width: 140px;
+    width: 120px;
 }
 .xfControl {
 	position:relative;
@@ -144,7 +144,7 @@
 
 #registration .xfGroupLabel {
     font-size: 13pt;
-    border-bottom: thin solid #999999;
+    border-bottom: 4px double #999999;
     padding-bottom: 5px;
     color: #333333;
 }
@@ -163,4 +163,10 @@
 
 #registration td, td span {
 /*    position: relative; */
+}
+
+#registration .dijitTextBox,
+#registration .dijitComboBox,
+#registration .dijitSpinner  {
+    width: 100%;
 }

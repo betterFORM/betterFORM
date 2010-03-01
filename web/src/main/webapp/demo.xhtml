@@ -5,64 +5,64 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns:ev="http://www.w3.org/2001/xml-events"
-	  xmlns:atom="http://www.w3.org/2005/Atom"
+      xmlns:atom="http://www.w3.org/2005/Atom"
       xml:lang="en" lang="en">
-	<head>
-		<title>betterFORM Demo</title>
+<head>
+    <title>betterFORM Demo</title>
 
 
+    <link REV="made" HREF="mailto:info@betterform.de"/>
+    <link rel="SHORTCUT ICON" href="images/betterform.ico"/>
+    <link rel="ICON" href="images/betterform.ico" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css" href="styles/bf.css"/>
+    <link rel="stylesheet" type="text/css" href="resources/styles/reference.css"/>
+    <link rel="stylesheet" type="text/css" href="resources/styles/demo.css"/>
+    <link rel="stylesheet" type="text/css" href="resources/styles/registration.css"/>
+
+    <style type="text/css">
+        #demoTarget {
+            height: 400px;
+            overflow: auto; /*padding:10px;*/
+            border: thin solid #bbbbbb; /*text-align:left;*/
+            background: white;
+            min-height: 400px;
+            max-height: 400px;
+            padding: 10px;
+        }
 
 
-		<link REV="made" HREF="mailto:info@betterform.de"/>
-		<link rel="SHORTCUT ICON" href="images/betterform.ico"/>
-		<link rel="ICON" href="images/betterform.ico" type="image/x-icon"/>
-		<link rel="stylesheet" type="text/css" href="styles/bf.css"/>
-        <link rel="stylesheet" type="text/css" href="resources/styles/reference.css" />
-		<link rel="stylesheet" type="text/css" href="resources/styles/demo.css" />
-		<link rel="stylesheet" type="text/css" href="resources/styles/registration.css" />
+        .backgroundImage {
+            width: 100%;
+            height: 100%;
+            background: transparent url(resources/images/play.png) no-repeat 50%;
+        }
+        #demoWrapper {
+            position: relative;
+            width: 750px;
+            height: 421px;
+            min-height: 421px;
+            max-height: 421px;
+            float: left;
+            border: 1px dotted #666;
+            margin-bottom: 20px;
+            background: url(resources/images/ajax-loader.gif) no-repeat center center;
+        }
 
-        <style type="text/css">
-            #demoTarget{
-                height:400px;
-                overflow:auto;
-                /*padding:10px;*/
-                border:thin solid #bbbbbb;
-                /*text-align:left;*/
-                background:white;
-                min-height:400px;
-                max-height:400px;
-                padding:10px;
-            }
+        #demoTrigger {
+            display: none;
+        }
 
+        #content {
+            min-height: 500px;
+        }
+        #backTrigger {
+            position: absolute;
+            float: right;
+        }
 
-            .backgroundImage{
-                width:100%;
-                height:100%;
-                background:transparent url(resources/images/play.png) no-repeat 50%;
-            }
-            #demoWrapper{
-                position:relative;
-                width:750px;
-                height:421px;
-                min-height:421px;
-                max-height:421px;
-                float:left;
-                border:1px dotted #666;
-                margin-bottom:20px;
-                background:url(resources/images/ajax-loader.gif) no-repeat center center;
-            }
-            #demoTrigger{display:none;}
-            #content{
-                min-height:500px;
-            }
-            #backTrigger{
-                position:absolute;
-                float:right;
-            }
+    </style>
 
-        </style>
-
-		<script type="text/javascript">
+    <script type="text/javascript">
         dojo.require("dojox.highlight");
         dojo.require("dojox.highlight.languages.xml");
         //dojo.require("dojox.highlight.languages._static");
@@ -80,192 +80,194 @@
         dojo.require("betterform.ui.select.OptGroup");
         dojo.require("betterform.ui.select1.RadioItemset");
         dojo.require("betterform.ui.select.CheckBoxItemset");
-		dojo.require("betterform.ui.util");
+        dojo.require("betterform.ui.util");
         dojo.require("betterform.ui.container.Switch");
         dojo.require("betterform.ui.container.Repeat");
         dojo.require("betterform.ui.container.RepeatItem");
-		dojo.require("betterform.ui.container.TabSwitch");
-		dojo.require("betterform.ui.container.Group");
-		dojo.require("dojox.layout.RotatorContainer");
+        dojo.require("betterform.ui.container.TabSwitch");
+        dojo.require("betterform.ui.container.Group");
+        dojo.require("dojox.layout.RotatorContainer");
 
-        function addToDocument(id){
-           var model = dojo.query(".xfModel", dojo.doc)[0];
-           dijit.byId(dojo.attr(model, "id")).getInstanceAsString(id,
-               function(data){
-                   dojo.byId("instanceData").innerHTML=data;
-               });
+        function addToDocument(id) {
+            var model = dojo.query(".xfModel", dojo.doc)[0];
+            dijit.byId(dojo.attr(model, "id")).getInstanceAsString(id,
+                    function(data) {
+                        dojo.byId("instanceData").innerHTML = data;
+                    });
         }
 
-        function runDemo(/*string*/demo){
-            dojo.subscribe("/xf/ready",function(data){
-                dojo.removeClass(dojo.byId("demoTarget"),"demoOverlay");
-                dojo.style("demoTarget","opacity",0);
+        function runDemo(/*string*/demo) {
+            dojo.subscribe("/xf/ready", function(data) {
+                dojo.removeClass(dojo.byId("demoTarget"), "demoOverlay");
+                dojo.style("demoTarget", "opacity", 0);
                 dojo.fadeIn({
                     node: "demoTarget",
                     duration:1000
                 }).play();
-				if(dojo.byId("registration") != undefined){
-					fluxProcessor.setInlineRoundBorderAlertHandler();
-				}else {
-					fluxProcessor.setToolTipAlertHandler();
-				}
+                if (dojo.byId("registration") != undefined) {
+                    fluxProcessor.setInlineRoundBorderAlertHandler();
+                } else {
+                    fluxProcessor.setToolTipAlertHandler();
+                }
             });
             dojo.fadeOut({
                 node: "demoTarget",
                 duration:200,
-                onBegin: function(){
+                onBegin: function() {
                     fluxProcessor.dispatchEvent(demo + 'DemoTrigger');
                 }
             }).play();
 
         }
 
-        function backToDemo(){
+        function backToDemo() {
             fluxProcessor.dispatchEvent('backTrigger');
         }
     </script>
 
 
-	</head>
-	<body id="demo">
-		<div class="page">
-            <div style="display:none">
-                <xf:model id="model-1">
-                    <xf:instance>
-                        <data xmlns="">
-                        </data>
-                    </xf:instance>
-                </xf:model>
-                <div id="template" onclick="runDemo();" class="backgroundImage"></div>
+</head>
+<body id="demo">
+<div class="page">
+    <div style="display:none">
+        <xf:model id="model-1">
+            <xf:instance>
+                <data xmlns="">
+                </data>
+            </xf:instance>
+        </xf:model>
+        <div id="template" onclick="runDemo();" class="backgroundImage"></div>
 
-                <xf:trigger id="contactsDemoTrigger">
-                    <xf:label>run demo</xf:label>
-                    <xf:toggle case="c-demoArea"/>
-                    <xf:load show="embed" targetid="demoTarget">
-                        <xf:resource value="'forms/demo/contacts.xhtml#xforms'"/>
-                    </xf:load>
-                </xf:trigger>
-                <xf:trigger id="orderlistDemoTrigger">
-                    <xf:label>run demo</xf:label>
-                    <xf:toggle case="c-demoArea"/>
-                    <xf:load show="embed" targetid="demoTarget">
-                        <xf:resource value="'forms/demo/orderlist.xhtml#xforms'"/>
-                    </xf:load>
-                </xf:trigger>
-                <xf:trigger id="registrationDemoTrigger">
-                    <xf:label>run demo</xf:label>
-                    <xf:toggle case="c-demoArea"/>
-                    <xf:load show="embed" targetid="demoTarget">
-                        <xf:resource value="'forms/demo/registration.xhtml#xforms'"/>
-                    </xf:load>
-                </xf:trigger>
-                <xf:trigger id="twitterDemoTrigger">
-                    <xf:label>run demo</xf:label>
-                    <xf:toggle case="c-demoArea"/>
-                    <xf:load show="embed" targetid="demoTarget">
-                        <xf:resource value="'forms/demo/twitter.xhtml#xforms'"/>
-                    </xf:load>
-                </xf:trigger>
+        <xf:trigger id="contactsDemoTrigger">
+            <xf:label>run demo</xf:label>
+            <xf:toggle case="c-demoArea"/>
+            <xf:load show="embed" targetid="demoTarget">
+                <xf:resource value="'forms/demo/contacts.xhtml#xforms'"/>
+            </xf:load>
+        </xf:trigger>
+        <xf:trigger id="orderlistDemoTrigger">
+            <xf:label>run demo</xf:label>
+            <xf:toggle case="c-demoArea"/>
+            <xf:load show="embed" targetid="demoTarget">
+                <xf:resource value="'forms/demo/orderlist.xhtml#xforms'"/>
+            </xf:load>
+        </xf:trigger>
+        <xf:trigger id="registrationDemoTrigger">
+            <xf:label>run demo</xf:label>
+            <xf:toggle case="c-demoArea"/>
+            <xf:load show="embed" targetid="demoTarget">
+                <xf:resource value="'forms/demo/registration.xhtml#xforms'"/>
+            </xf:load>
+        </xf:trigger>
+        <xf:trigger id="twitterDemoTrigger">
+            <xf:label>run demo</xf:label>
+            <xf:toggle case="c-demoArea"/>
+            <xf:load show="embed" targetid="demoTarget">
+                <xf:resource value="'forms/demo/twitter.xhtml#xforms'"/>
+            </xf:load>
+        </xf:trigger>
+    </div>
+
+
+    <xf:trigger id="backTrigger" appearance="minimal">
+        <xf:label/>
+        <xf:action>
+            <xf:toggle case="c-overview"/>
+            <xf:load show="none" targetid="demoTarget"/>
+            <script type="text/javascript">
+
+                var template = dojo.clone(dojo.byId("template"));
+                console.debug("replace template: ", template);
+                var demoTarget = dojo.byId("demoTarget");
+                console.debug("replace template: ", demoTarget);
+                //demoWrapper.appendChild(template);
+                dojo.attr(demoTarget, "style", "");
+                demoTarget.appendChild(template);
+                // dojo.place(template, demoTarget);
+                // dojo.attr(template,"id","demoTarget");
+            </script>
+        </xf:action>
+    </xf:trigger>
+
+    <div id="header">
+        <div class="pageMarginBox">
+            <div class="languages">
+                <img src="images/en.png" alt="english"/>
+                <img src="images/de.png" alt="deutsch"/>
             </div>
-
-
-
-            <xf:trigger id="backTrigger" appearance="minimal">
-                <xf:label/>
-                <xf:action>
-                    <xf:toggle case="c-overview"/>
-                    <xf:load show="none" targetid="demoTarget"/>
-                    <script type="text/javascript">
-
-                        var template = dojo.clone(dojo.byId("template"));
-                        console.debug("replace template: ", template);
-                        var demoTarget = dojo.byId("demoTarget");
-                        console.debug("replace template: ", demoTarget);
-                        //demoWrapper.appendChild(template);
-                        dojo.attr(demoTarget,"style", "");
-                        demoTarget.appendChild(template);
-                         // dojo.place(template, demoTarget);
-                         // dojo.attr(template,"id","demoTarget");
-                    </script>
-                </xf:action>
-            </xf:trigger>
-
-            <div id="header">
-                <div class="pageMarginBox">
-                    <div class="languages">
-                        <img src="images/en.png" alt="english"/>
-                        <img src="images/de.png" alt="deutsch"/>
-                    </div>
-                    <div class="logoBar">
-                        <img src="images/logo.png" alt="betterFORM project" />
-                        <div id="topnav">
-                            <a href="index.html">home</a><span class="menuDevider"> | </span>
-                            <a href="demo.xhtml" style="color:#488aa6">demo</a><span class="menuDevider"> | </span>
-                            <a href="download.html">download</a><span class="menuDevider"> | </span>
-                            <a href="product.html">product</a><span class="menuDevider"> | </span>
-                            <a href="support.html">support</a><span class="menuDevider"> | </span>
-                            <a href="whoweare.html">who we are</a><span class="menuDevider"> | </span>
-                            <a href="contact.html">contact / impressum</a>
-                        </div>
-                    </div>
+            <div class="logoBar">
+                <img src="images/logo.png" alt="betterFORM project"/>
+                <div id="topnav">
+                    <a href="index.html">home</a><span class="menuDevider"> | </span>
+                    <a href="demo.xhtml" style="color:#488aa6">demo</a><span class="menuDevider"> | </span>
+                    <a href="download.html">download</a><span class="menuDevider"> | </span>
+                    <a href="product.html">product</a><span class="menuDevider"> | </span>
+                    <a href="support.html">support</a><span class="menuDevider"> | </span>
+                    <a href="whoweare.html">who we are</a><span class="menuDevider"> | </span>
+                    <a href="contact.html">contact / impressum</a>
                 </div>
             </div>
+        </div>
+    </div>
 
-			<div id="content">
-                <img id="shadowTop" src="images/shad_top.jpg" alt=""/>
-                <div class="pageMarginBox">
-                    <div class="contentBody">
+    <div id="content">
+        <img id="shadowTop" src="images/shad_top.jpg" alt=""/>
+        <div class="pageMarginBox">
+            <div class="contentBody">
 
-                    <!-- ######################### Content here ################################## -->
-                    <!-- ######################### Content here ################################## -->
-                    <!-- ######################### Content here ################################## -->
-                    <!-- ######################### Content here ################################## -->
-                    <!-- ######################### Content here ################################## -->
-                    <h1>Demo</h1>
+                <!-- ######################### Content here ################################## -->
+                <!-- ######################### Content here ################################## -->
+                <!-- ######################### Content here ################################## -->
+                <!-- ######################### Content here ################################## -->
+                <!-- ######################### Content here ################################## -->
+                <h1>Demo</h1>
 
-                    <xf:switch>
-                        <xf:case id="c-overview" selected="true">
-                            <h2>click the screenshot to run the demo</h2>
-
-
-                           <a href="javascript:runDemo('contacts');"><img src="images/contacts-r-grey.png" alt="contacts"/></a>
-                           <a href="javascript:runDemo('registration');"><img src="images/reg-l-grey.png" alt="registration"/></a>
-                           <a href="javascript:runDemo('orderlist');"><img src="images/orderlist-r-grey.png" alt="orderlist"/></a>
-                           <a href="javascript:runDemo('twitter');"><img src="images/twitter-l-grey.png" alt="Twitter Client"/></a>
-                            
-                        </xf:case>
-                        <xf:case id="c-demoArea">
-                            <div id="demoWrapper">
-                                <div id="demoTarget">
-                                    <div onclick="runDemo();" class="backgroundImage"></div>
-                                </div>
-                            </div>     
-                            <xf:trigger>
-                                <xf:label>close</xf:label>
-                                <xf:toggle case="c-overview"/>
-                                <script type="text/javascript">
-                                    backToDemo();
-                                </script>
-                            </xf:trigger>
-                        </xf:case>
-                    </xf:switch>
+                <xf:switch>
+                    <xf:case id="c-overview" selected="true">
+                        <h2>click the screenshot to run the demo</h2>
 
 
+                        <a href="javascript:runDemo('contacts');"><img src="images/contacts-r-grey.png" alt="contacts"/></a>
+                        <a href="javascript:runDemo('registration');"><img src="images/reg-l-grey.png"
+                                                                           alt="registration"/></a>
+                        <a href="javascript:runDemo('orderlist');"><img src="images/orderlist-r-grey.png"
+                                                                        alt="orderlist"/></a>
+                        <a href="javascript:runDemo('twitter');"><img src="images/twitter-l-grey.png"
+                                                                      alt="Twitter Client"/></a>
+
+                    </xf:case>
+                    <xf:case id="c-demoArea">
+                        <div id="demoWrapper">
+                            <div id="demoTarget">
+                                <div onclick="runDemo();" class="backgroundImage"></div>
+                            </div>
+                        </div>
+                        <xf:trigger>
+                            <xf:label>close</xf:label>
+                            <xf:toggle case="c-overview"/>
+                            <script type="text/javascript">
+                                backToDemo();
+                            </script>
+                        </xf:trigger>
+                    </xf:case>
+                </xf:switch>
 
 
-                    <!-- ######################### Content end ################################## -->
-                    <!-- ######################### Content end ################################## -->
-                    <!-- ######################### Content end ################################## -->
-                    <!-- ######################### Content end ################################## -->
-                    <!-- ######################### Content end ################################## -->
-                    </div>
-				</div>
-			</div>
 
-			<div id="footer">
-                <img id="shadowBottom" src="images/shad_bottom.jpg" alt=""/>
 
-                <div class="pageMarginBox">
+                <!-- ######################### Content end ################################## -->
+                <!-- ######################### Content end ################################## -->
+                <!-- ######################### Content end ################################## -->
+                <!-- ######################### Content end ################################## -->
+                <!-- ######################### Content end ################################## -->
+            </div>
+        </div>
+    </div>
+
+    <div id="footer">
+        <img id="shadowBottom" src="images/shad_bottom.jpg" alt=""/>
+
+        <div class="pageMarginBox">
                     <span id="bottomMenu">
                         &#169; 2010 betterFORM<span class="menuDevider"> | </span>
                         <a href="index.html">home</a><span class="menuDevider"> | </span>
@@ -276,8 +278,8 @@
                         <a href="whoweare.html">who we are</a><span class="menuDevider"> | </span>
                         <a href="contact.html">contact / impressum</a>
                     </span>
-                </div>
-			</div>
-		</div>
-	</body>
+        </div>
+    </div>
+</div>
+</body>
 </html>

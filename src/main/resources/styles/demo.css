@@ -10,6 +10,14 @@
     width: 750px;
 }
 
+.dijitContentPane {
+    overflow: hidden;
+}
+
+.xfFullRepeat .xfRepeatItem .xfControl  {
+    clear:none;
+}
+
 .Headline {
     font-size:   16pt;
     font-weight: bold;
