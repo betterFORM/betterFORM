@@ -3,8 +3,13 @@ dojo.provide("betterform.ui.common.InlineAlert");
 dojo.require("dijit._Widget");
 
 dojo.declare("betterform.ui.common.InlineAlert",
-        dijit._Widget,
+        null,
 {
+
+    constructor:function() {
+        // console.debug("creating Inline Alert handler");
+    },
+
     handleValid:function(id,action){
         // console.debug("betterform.ui.common.InlineAlert.handleValidState[id:" + id , " action: " + action + "]");
 
@@ -30,9 +35,9 @@ dojo.declare("betterform.ui.common.InlineAlert",
     },
 
     handleInvalid:function(id,action) {
-        console.debug("betterform.ui.common.InlineAlert.handleInvalidState[id:" + id , " action: " + action + "]");
+        // console.debug("betterform.ui.common.InlineAlert.handleInvalidState[id:" + id , " action: " + action + "]");
         var control = dijit.byId(id);
-        var alert = this._placeAlert(id);
+        var alert = dojo.byId(id-"alert");
 
         if(alert == undefined) {
             return;
@@ -46,11 +51,11 @@ dojo.declare("betterform.ui.common.InlineAlert",
 
         //##### SHOW ALL ALERTS IN RESPONSE TO SUBMIT ERRORS #######
         if(action == "submitError") {
-            this._showState(id, "alertAttachPoint")
+            this._showState(id, "alert")
         }
 
         var emptyValue;
-        console.debug("handle Invalid: " + id , " action: " + action + " value: " , control.getControlValue(), "]");
+        // console.debug("handle Invalid: " + id , " action: " + action + " value: " , control.getControlValue(), "]");
         if((control.getControlValue() == undefined || control.getControlValue() == '') && !(dojo.hasClass(control.domNode,"xsdBoolean"))){
             emptyValue = true;
         }else {
@@ -84,7 +89,7 @@ dojo.declare("betterform.ui.common.InlineAlert",
         //##### SHOW ALERT #######
         else {
             if(action =="applyChanges" ){
-                console.debug("handleInvalid for applyChanges: id: ", id);
+                // console.debug("handleInvalid for applyChanges: id: ", id);
                 this._showState(id,"alert");
                 dojo.addClass(control.controlValue.domNode,"bfInvalidControl");
             }
@@ -95,18 +100,6 @@ dojo.declare("betterform.ui.common.InlineAlert",
 
     },
 
-    _placeAlert:function(id) {
-        console.debug("InlineAlert._placeAlert()");
-        var alertAttachPoint = dojo.byId(id+"-alertAttachPoint");
-        var alertNode = dojo.byId(id+"-alert");
-        if(alertNode != undefined && alertAttachPoint != undefined && !alertAttachPoint.hasChildNodes()){
-            dojo.place(alertNode, alertAttachPoint);
-            dojo.attr(alertNode, "style", "");
-        }
-        return alertNode;
-
-
-    },
 
     _showState:function(id, state) {
         // console.debug("InlineAlert._showState: state:", state);
@@ -114,24 +107,21 @@ dojo.declare("betterform.ui.common.InlineAlert",
         if (state == "alert") {
             this._display(id,"hint", "none");
             this._display(id,"info", "none");
-            var alertAttachPoint = dojo.byId(id+"-alertAttachPoint")
-            dojo.attr(alertAttachPoint,"style","");
+            this._display(id,"alert", "inline");
         }
         else if (state == "hint") {
-            this._display(id,"alertAttachPoint", "none");
+            this._display(id,"alert", "none");
             this._display(id,"info", "none");
-            // this._display(id,"hint", "block");
-            var hintAttachPoint = dojo.byId(id+"-hint")
-            dojo.attr(hintAttachPoint,"style","");
+            this._display(id,"hint", "inline");
 
         }
         else if (state == "info") {
-            this._display(id,"alertAttachPoint", "none");
+            this._display(id,"alert", "none");
             this._display(id,"hint", "none");
-            this._display(id,"info", "block");
+            this._display(id,"info", "inline");
         }
         else if (state == "none") {
-            this._display(id,"alertAttachPoint", "none");
+            this._display(id,"alert", "none");
             this._display(id,"hint", "none");
             this._display(id,"info", "none");
         } else {

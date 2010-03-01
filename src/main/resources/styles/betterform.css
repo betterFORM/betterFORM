@@ -190,18 +190,12 @@ a.active {
 
 }
 
-.alertAttachPoint {
-	/*background:red;*/
-}
-.alertAttachPointVertical {
-	/*display:inline;*/
-}
 .xfAlert {
 	/*background:yellow;*/
 	border:1px solid #801B1B;
 	color:#801B1B;
 	margin:3px;
-}
+  }
 
 /* for tundra checkboxes */
 .tundra .dijitCheckBox,

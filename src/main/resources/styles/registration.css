@@ -122,6 +122,9 @@
     white-space: nowrap;
     width: 140px;
 }
+.xfControl {
+	position:relative;
+}
 
 .tundra #registration  .xfAlert,
 .tundra #registration  .xfHint,

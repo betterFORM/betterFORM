@@ -166,7 +166,7 @@
                                 <xsl:apply-templates select="." mode="table"/>
                             </td>
                             <td class="bfVerticalTableInfo">
-                                <span id="{concat(@id,'-alertAttachPoint')}" style="display:none;" class="alertAttachPointVertical"/>
+                                <xsl:apply-templates select="xforms:alert"/>
                                 <xsl:apply-templates select="xforms:hint"/>
                                 <xsl:apply-templates select="xforms:help"/>
                                 <span class="info" style="display:none;" id="{concat(@id,'-info')}">ok</span>
@@ -439,7 +439,7 @@
                             <xsl:call-template name="select1"/>
                 </xsl:when>
             </xsl:choose>
-            <span id="{$id}-alertAttachPoint" style="display:none;" class="alertAttachPoint"/>
+            <xsl:apply-templates select="xforms:alert"/>
             <xsl:apply-templates select="xforms:hint"/>
             <xsl:apply-templates select="xforms:help"/>
 
@@ -572,7 +572,7 @@
 
             <xsl:if test="'output' = local-name() and exists(@mediatype)"><xsl:attribute name="mediatype" select="@mediatype"/></xsl:if>
             <label class="xfLabel"><xsl:apply-templates select="xforms:label"/></label>
-            <xsl:apply-templates select="xforms:help"/>
+
             <!--<xsl:apply-templates select="xforms:alert"/>-->
             <xsl:choose>
                 <xsl:when test="'select' = local-name()">
@@ -584,9 +584,10 @@
                             <!--<xsl:apply-templates select="xforms:alert"/>-->
                 </xsl:when>
             </xsl:choose>
-			<span id="{$id}-alertAttachPoint" style="display:none;" class="alertAttachPoint"/>
-            <xsl:apply-templates select="xforms:help"/>
+
+            <xsl:apply-templates select="xforms:alert"/>
             <xsl:apply-templates select="xforms:hint"/>
+            <xsl:apply-templates select="xforms:help"/>
 
         </xsl:element>
     </xsl:template>
@@ -741,9 +742,10 @@
             </label>
 
             <xsl:call-template name="buildControl"/>
-            <span id="{$id}-alertAttachPoint" style="display:none;" class="alertAttachPoint"/>
-            <xsl:apply-templates select="xforms:help"/>
+            <xsl:apply-templates select="xforms:alert"/>
             <xsl:apply-templates select="xforms:hint"/>
+            <xsl:apply-templates select="xforms:help"/>
+
 
         </div>
     </xsl:template>

@@ -83,19 +83,6 @@
     <!-- ####################################################################################################### -->
     <!-- ##################################### TEMPLATES ####################################################### -->
     <!-- ####################################################################################################### -->
-<!--
-    <xsl:template match="/xhtml:div/xhtml:div">
-            <xsl:copy>
-				<xsl:apply-templates/>
-					<div style="display:none;">
-						<xsl:for-each select="//xf:*/xf:alert">
-							<xsl:apply-templates select="."/>
-						</xsl:for-each>
-					</div>
-				</xsl:copy>
-    </xsl:template>
-
--->
     <xsl:template match="xhtml:head">
         <head>
             <!-- copy all meta tags except 'contenttype' -->
@@ -361,12 +348,6 @@
                     </xsl:for-each>
                 </div>
             </xsl:if>
-            <div id="bfAlerts" style="display:none;">
-                <xsl:for-each select="//xhtml:body//xf:*/xf:alert">
-                    <xsl:apply-templates select="."/>
-                    <!--<span id="{../@id}-alert" class="xfAlert" style="display:none;"><xsl:apply-templates/></span>-->
-                </xsl:for-each>
-            </div>
         </body>
     </xsl:template>
 
@@ -448,7 +429,7 @@
             </label>
 
             <xsl:call-template name="buildControl"/>
-            <span id="{$id}-alertAttachPoint" style="display:none;" class="alertAttachPoint"/>
+            <xsl:apply-templates select="xf:alert"/>
             <xsl:apply-templates select="xf:help"/>
             <xsl:apply-templates select="xf:hint"/>
 
@@ -473,7 +454,8 @@
                     <xsl:apply-templates select="xf:label"/>
                 </label>
             <xsl:call-template name="buildControl"/>
-            <span id="{$id}-alertAttachPoint" style="display:none;" class="alertAttachPoint"/>
+
+            <xsl:apply-templates select="xf:alert"/>
             <xsl:apply-templates select="xf:help"/>
             <xsl:apply-templates select="xf:hint"/>
 

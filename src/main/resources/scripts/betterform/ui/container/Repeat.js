@@ -141,18 +141,15 @@ dojo.declare(
                     }else if(idAtt.indexOf("-help")!= -1){
                         idPrefix = idAtt.substring(0,idAtt.indexOf("-help"));
                         idAppendix = "-help";
-                    }else if(idAtt.indexOf("-alertAttachPoint")!= -1){
-                        idPrefix = idAtt.substring(0,idAtt.indexOf("-alertAttachPoint"));
-                        idAppendix = "-alertAttachPoint";
                     } else if(idAtt.indexOf("-alert")!= -1){
                         idPrefix = idAtt.substring(0,idAtt.indexOf("-alert"));
                         idAppendix = "-alert";
                     } else {
-                        // console.warn("Repeat._replacePrototypeIds Failure replaceing Id! Id to replace: ", idAtt, " generatedIds: ", generatedIds);
+                        console.warn("Repeat._replacePrototypeIds Failure replaceing Id! Id to replace: ", idAtt, " generatedIds: ", generatedIds);
                         return;
                     }
 
-                    // console.debug("original Id: " + idAtt + " prefix:: " + idPrefix + " appendix:" +idAppendix);;
+                    //console.debug("original Id: " + idAtt + " prefix:: " + idPrefix + " appendix:" +idAppendix);;
                     var generatedId = generatedIds[idPrefix]+  idAppendix;
                     // console.debug("original Id: " + idAtt + " generatedId: " + generatedId);
                     dojo.attr(xfNode, "id", generatedId);

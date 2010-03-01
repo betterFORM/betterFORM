@@ -57,12 +57,6 @@ dojo.declare("betterform.FluxProcessor",
 
         //#########    ALERT IMPLEMENTATION  #############
         //#########    ALERT IMPLEMENTATION  #############
-        var toolTipAlertEnabled = dojo.query(".ToolTipAlert" ,dojo.doc)[0];
-        if(toolTipAlertEnabled != undefined) {
-            dojo.require("betterform.ui.common.ToolTipAlert");
-            this.defaultAlertHandler = new betterform.ui.common.ToolTipAlert({});
-            console.debug("Enabled ToolTipAlert Handler ", this.defaultAlertHandler);
-        }
 
         var globalAlertEnabled = dojo.query(".GlobalAlert" ,dojo.doc)[0];
         if(globalAlertEnabled != undefined) {
@@ -86,11 +80,20 @@ dojo.declare("betterform.FluxProcessor",
         }
 
         var inlineAlertEnabled = dojo.query(".InlineAlert" ,dojo.doc)[0];
-        if(inlineAlertEnabled != undefined || (this.defaultAlertHandler == undefined)) {
+        if(inlineAlertEnabled != undefined ) {
             dojo.require("betterform.ui.common.InlineAlert");
              this.defaultAlertHandler = new betterform.ui.common.InlineAlert({});
-            // console.debug("Enabled InlineAlert Handler",this.defaultAlertHandler );
+            console.debug("Enabled InlineTipAlert Handler ", this.defaultAlertHandler);
+
         }
+
+        var toolTipAlertEnabled = dojo.query(".ToolTipAlert" ,dojo.doc)[0];
+        if(toolTipAlertEnabled != undefined || (this.defaultAlertHandler == undefined)) {
+            dojo.require("betterform.ui.common.ToolTipAlert");
+            this.defaultAlertHandler = new betterform.ui.common.ToolTipAlert({});
+            console.debug("Enabled ToolTipAlert Handler ", this.defaultAlertHandler);
+        }
+
         this.subscribers[0] = dojo.subscribe("/xf/valid",this.defaultAlertHandler, "handleValid");
         this.subscribers[1] = dojo.subscribe("/xf/invalid",this.defaultAlertHandler, "handleInvalid");
 
@@ -295,7 +298,7 @@ dojo.declare("betterform.FluxProcessor",
                     case "xforms-submit-error"      : fluxProcessor._handleSubmitError(xmlEvent); break;
                     case "DOMFocusIn"               : fluxProcessor._handleDOMFocusIn(xmlEvent); break;
                     case "xforms-out-of-range"      : fluxProcessor._handleOutOfRange(xmlEvent);break;
-                    case "xforms-in-range"          :fluxProcessor._handleInRange(xmlEvent);break;
+                    case "xforms-in-range"          : fluxProcessor._handleInRange(xmlEvent);break;
                     case "xforms-invalid"           :
                     case "xforms-valid"             :validityEvents[index] = xmlEvent; index++;break;
 
