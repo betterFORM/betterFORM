@@ -59,6 +59,8 @@
 
 #registration .bfVerticalTableInfo {
     width: 40%;
+	position:relative;
+
 }
 
 #registration .xfValue {
@@ -107,6 +109,8 @@
     white-space: nowrap;
     width: 140px;
 }
+
+
 
 #registration .info {
     display: block;

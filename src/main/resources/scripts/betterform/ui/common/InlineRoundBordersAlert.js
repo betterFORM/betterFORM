@@ -29,7 +29,7 @@ dojo.declare("betterform.ui.common.InlineRoundBordersAlert",
                     var coords = dojo.coords(this);
                     var heightBefore = coords.h - 9;
                     dojo.style(this, "whiteSpace", "normal");
-                    dojo.style(this, "position", "absolute");
+                     dojo.style(this, "position", "absolute");
                     var top = coords.y;
 
                     dojo.style(this, "top", top + "px");
@@ -76,7 +76,7 @@ dojo.declare("betterform.ui.common.InlineRoundBordersAlert",
         if (state == "alert") {
             this._display(id, "hint", "none");
             this._display(id, "info", "none");
-            this._display(id, "alert", "inline");
+            this._display(id, "alert", "block");
         }
         else if (state == "hint") {
             this._display(id, "alert", "none");

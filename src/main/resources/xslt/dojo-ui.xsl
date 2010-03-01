@@ -152,7 +152,7 @@
                     <xsl:otherwise>
                         <xsl:if test="exists(node())">
                         <tr>
-                            <td class="caVerticalTableLabel">
+                            <td class="caVerticalTableLabel" valign="top">
                                 <xsl:variable name="label-classes">
                                     <xsl:call-template name="assemble-label-classes"/>
                                 </xsl:variable>
@@ -162,10 +162,10 @@
                                     </label>                                    
                                 </xsl:if>
                             </td>
-                            <td class="caVerticalTableValue">
+                            <td class="caVerticalTableValue" valign="top">
                                 <xsl:apply-templates select="." mode="table"/>
                             </td>
-                            <td class="bfVerticalTableInfo">
+                            <td class="bfVerticalTableInfo" valign="top">
                                 <xsl:apply-templates select="xforms:alert"/>
                                 <xsl:apply-templates select="xforms:hint"/>
                                 <xsl:apply-templates select="xforms:help"/>
