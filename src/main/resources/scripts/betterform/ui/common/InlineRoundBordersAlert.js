@@ -9,65 +9,66 @@ dojo.declare("betterform.ui.common.InlineRoundBordersAlert",
 
 
 
-    constructor:function() {
-        // console.debug("creating InlineRoundBorderAlert handler");
-        var zoomBehavior = dojo.behavior.add({
-            'span.xfAlert': {
-                onmouseenter: function(evt) {
-                    console.debug("InlineRoundBordersAlert.onMouseEnter behaviour: ", this, " evt: ", evt);
-/*
-                    var textBigger = dojo.animateProperty(
-                        {
-                          node: this,duration: 1000,
-                          properties: {
-                            fontSize: {end: 25, unit: "px"}
-                          }
-                        });
-                    textBigger.play();
-*/
-
-                    var coords = dojo.coords(this);
-                    var heightBefore = coords.h - 9;
-                    dojo.style(this, "whiteSpace", "normal");
-                     dojo.style(this, "position", "absolute");
-                    var top = coords.y;
-
-                    dojo.style(this, "top", top + "px");
-
-                    // console.debug("HeightBefore: ", heightBefore, " dojo.style(this, 'height'):",dojo.style(this, "height"));
-
-
-                    if (heightBefore < dojo.style(this, "height")) {
-                        // console.debug("manipulating borders");
-                        dojo.style(this, "MozBorderRadiusBottomleft", "8px");
-                        dojo.style(this, "WebkitBorderBottomLeftRadius", "8px");
-                    }
-                },
-
-                onmouseleave:function(evt) {
-                     console.debug("InlineRoundBordersAlert.onmouseleave: node:",this);
-
-/*
-                    var textSmaller = dojo.animateProperty(
-                      {
-                        node: this,duration: 1000,
-                        properties: {
-                          fontSize: {end: 10, unit: "px"}
-                        }
-                      });
-                    textSmaller.play();
-*/
-
-                     dojo.style(this, "whiteSpace", "nowrap");
-                     dojo.style(this, "MozBorderRadiusBottomleft", "0px");
-                     dojo.style(this, "WebkitBorderBottomLeftRadius", "0px");
-                }
-
-            }
-        });
-        dojo.behavior.add(zoomBehavior);
-        dojo.behavior.apply();
-    },
+//    constructor:function() {
+//        // console.debug("creating InlineRoundBorderAlert handler");
+//      
+//        var zoomBehavior = dojo.behavior.add({
+//            'span.xfAlert': {
+//                onmouseenter: function(evt) {
+//                    console.debug("InlineRoundBordersAlert.onMouseEnter behaviour: ", this, " evt: ", evt);
+///*
+//                    var textBigger = dojo.animateProperty(
+//                        {
+//                          node: this,duration: 1000,
+//                          properties: {
+//                            fontSize: {end: 25, unit: "px"}
+//                          }
+//                        });
+//                    textBigger.play();
+//*/
+//
+//                    var coords = dojo.coords(this);
+//                    var heightBefore = coords.h - 9;
+//                    dojo.style(this, "whiteSpace", "normal");
+//                     dojo.style(this, "position", "absolute");
+//                    var top = coords.y;
+//
+//                    dojo.style(this, "top", top + "px");
+//
+//                    // console.debug("HeightBefore: ", heightBefore, " dojo.style(this, 'height'):",dojo.style(this, "height"));
+//
+//
+//                    if (heightBefore < dojo.style(this, "height")) {
+//                        // console.debug("manipulating borders");
+//                        dojo.style(this, "MozBorderRadiusBottomleft", "8px");
+//                        dojo.style(this, "WebkitBorderBottomLeftRadius", "8px");
+//                    }
+//                },
+//
+//                onmouseleave:function(evt) {
+//                     console.debug("InlineRoundBordersAlert.onmouseleave: node:",this);
+//
+///*
+//                    var textSmaller = dojo.animateProperty(
+//                      {
+//                        node: this,duration: 1000,
+//                        properties: {
+//                          fontSize: {end: 10, unit: "px"}
+//                        }
+//                      });
+//                    textSmaller.play();
+//*/
+//
+//                     dojo.style(this, "whiteSpace", "nowrap");
+//                     dojo.style(this, "MozBorderRadiusBottomleft", "0px");
+//                     dojo.style(this, "WebkitBorderBottomLeftRadius", "0px");
+//                }
+//
+//            }
+//        });
+//        dojo.behavior.add(zoomBehavior);
+//        dojo.behavior.apply();
+//    },
 
     _showState:function(id, state) {
         // console.debug("InlineRoundBordersAlert._showState: state:", state);
