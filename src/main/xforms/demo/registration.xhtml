@@ -33,7 +33,7 @@
             <xf:bind nodeset="alias" constraint="string-length(.) &gt; 3" required="true()"/>
             <xf:bind nodeset="email" type="email" required="true()"/>
             <xf:bind nodeset="pass1" constraint="string-length(.) &gt; 6" required="true()"/>
-            <xf:bind nodeset="pass2" constraint=". = ../pass1" required="true()"/>
+            <xf:bind nodeset="pass2" constraint=". = ../pass1 and string-length(.) &gt; 6" required="true()"/>
 
             <xf:submission id="s-send" replace="instance" resource="echo:test" method="get">
                 <xf:action ev:event="xforms-submit-error">
@@ -79,7 +79,7 @@
 			<xf:secret ref="pass2">
 				<xf:label>reenter password:</xf:label>
 				<xf:hint>please retype your password</xf:hint>
-				<xf:alert>passwords do not match</xf:alert>
+				<xf:alert>password is to short or does not match</xf:alert>
 			</xf:secret>
 			<xf:trigger appearance="triggerMiddleColumn">
 				<xf:label>register</xf:label>

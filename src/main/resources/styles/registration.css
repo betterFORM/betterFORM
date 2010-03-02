@@ -83,7 +83,7 @@
     display: block;
     background: #FFCFCF;
     color: #801B1B;
-    padding: 8px 0px 8px 30px;
+    padding: 6px 0px 8px 30px;
     -moz-border-radius-topright: 8px;
     -moz-border-radius-bottomright: 8px;
     -webkit-border-top-right-radius: 8px;
@@ -92,7 +92,7 @@
     margin: 0;
     /*overflow: hidden; */
     white-space: nowrap;
-    width: 180px;
+    width: 190px;
 	border: 0px;
 }
 
@@ -100,7 +100,7 @@
     display: block;
     background: #F2F2F2 url(../../resources/images/hint.png) no-repeat 3% 7px;
     color: #666666;
-    padding: 8px 0px 8px 30px;
+    padding: 6px 0px 8px 30px;
     -moz-border-radius-topright: 8px;
     -moz-border-radius-bottomright: 8px;
     -webkit-border-top-right-radius: 8px;
@@ -108,7 +108,7 @@
     margin: 0;
     /*overflow: hidden;*/
     white-space: nowrap;
-    width: 180px;
+    width: 190px;
 }
 
 
@@ -117,7 +117,7 @@
     display: block;
     background: #F0FEE9 url(../../resources/images/ok.png) no-repeat 3% 7px;
     color: #666666;
-    padding: 8px 0px 8px 30px;
+    padding: 6px 0px 8px 30px;
     -moz-border-radius-topright: 8px;
     -moz-border-radius-bottomright: 8px;
     -webkit-border-top-right-radius: 8px;
@@ -125,7 +125,7 @@
     margin: 0;
     /*overflow: hidden;*/
     white-space: nowrap;
-    width: 180px;
+    width: 190px;
 }
 .xfControl {
 	position:relative;
