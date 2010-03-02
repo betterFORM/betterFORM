@@ -27,7 +27,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 .tundra *{
 }
 *{
-    font-family:sans-serif;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
 
@@ -105,8 +105,11 @@ ul{
     float:right;
     width:480px;
     position:relative;
-    top:-10px;
+    top:42px;
     text-align:right;
+}
+#logoBar #logo{
+    float:left;
 }
 #topnav a {
 	color: #999;
@@ -122,7 +125,10 @@ ul{
 	background-color: transparent;
     color:#488aa6;
 }
-
+#index #topnav{
+    letter-spacing:0.51em;
+    font-size:11pt;
+}
 
 #content{
     background:#d3d3d3;
@@ -193,7 +199,7 @@ ul{
 #columnLeft{
     width:226px;
     text-align:left;
-    padding-right:119px;
+    padding-right:121px;
     float:left;
     margin-top:4px;
 }
@@ -241,8 +247,8 @@ ul{
     height:120px;
     /*
     moves the footer in Webkit browsern to the far right.
-    overflow:hidden;
     */
+    overflow:hidden;
     padding-bottom:50px;
 }
 #shadowBottom{
@@ -335,7 +341,7 @@ h3{
     padding-top:2px;
 }
 
-.logoBar{
+#logoBar{
     height:90px;
     
 }
