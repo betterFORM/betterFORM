@@ -18,7 +18,7 @@
         <move file="${basedir}/target/${web.app.name}-${web.app.version}.war" tofile="${basedir}/target/betterform.war"/>
 
         <copy todir="${basedir}/target">
-            <fileset file="${basedir}/../../src/main/license/BSD-license.txt"/>
+            <fileset file="${basedir}/resource/BSD-license-inlined.txt"/>
         </copy>
 
 
