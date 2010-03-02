@@ -238,7 +238,10 @@ ul{
     text-align:center;
     background:#565656;
     height:120px;
+    /*
+    moves the footer in Webkit browsern to the far right.
     overflow:hidden;
+    */
     padding-bottom:50px;
 }
 #shadowBottom{
