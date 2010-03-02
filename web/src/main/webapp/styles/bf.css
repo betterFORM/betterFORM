@@ -29,9 +29,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 *{
     font-family:sans-serif;
 }
-#content a:link{
-    border:none;
-}
+
 
 body{
     background-image:none;
@@ -142,9 +140,12 @@ ul{
     /*padding-bottom:30px;*/
 }
 
+#content a:link{
+    border:none;
+}
 
 #content a {
-	color: #999;
+	color: #488aa6;
 	font-weight: normal;
 	background: transparent;
 	text-decoration: none;
