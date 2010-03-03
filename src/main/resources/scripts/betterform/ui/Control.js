@@ -322,6 +322,7 @@ dojo.declare(
     },
 
     _handleSetControlValue:function(value){
+        // console.debug("handleSetControlValue: " + this.controlValue.currentValue + " value: " + value);
         if(this.controlValue.currentValue != value) {
             this.controlValue.currentValue = value;
             this.controlValue._handleSetControlValue(value);

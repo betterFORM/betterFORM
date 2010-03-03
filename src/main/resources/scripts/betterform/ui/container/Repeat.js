@@ -145,7 +145,7 @@ dojo.declare(
                         idPrefix = idAtt.substring(0,idAtt.indexOf("-alert"));
                         idAppendix = "-alert";
                     } else {
-                        console.warn("Repeat._replacePrototypeIds Failure replaceing Id! Id to replace: ", idAtt, " generatedIds: ", generatedIds);
+                        // console.warn("Repeat._replacePrototypeIds Failure replaceing Id! Id to replace: ", idAtt, " generatedIds: ", generatedIds);
                         return;
                     }
 

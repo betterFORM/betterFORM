@@ -16,7 +16,7 @@ dojo.declare(
     {
         src:"",
         alt:"",
-        templateString:"<img src=\"${src}\" alt=\"${alt}\" class=\"xfValue\"></img>",
+        templateString:"<img src=\"${src}\" alt=\"${alt}\" class=\"xfValue\"/>",
 
 
     postMixInProperties:function() {
