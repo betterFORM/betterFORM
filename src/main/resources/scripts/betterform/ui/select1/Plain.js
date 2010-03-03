@@ -61,7 +61,7 @@ dojo.declare(
             return "";
         }
         var value = this.domNode.options[this.domNode.selectedIndex].value;
-        console.debug("betterform.ui.select1.Plain value: ", value);
+        // console.debug("betterform.ui.select1.Plain value: ", value);
         if(value != undefined) {
             return value;
         }else {

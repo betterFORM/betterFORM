@@ -85,20 +85,19 @@ dojo.declare(
 
         var outputControls = dojo.query("[controltype='output-control']", prototype);
 
-        if (outputControls != undefined && outputControls != "") {
-            //var index=0;
-            // for (index=0; index<=outputControls.length; index++) {
-                var item =  outputControls[0].cloneNode(true);
-                
-                dojo.attr(item,"id",generatedIds[item.id]);
-                dojo.attr(item,"parentId", myParentNode.id);
-                dojo.attr(item,"parentid", myParentNode.id);
-            
+        if (outputControls != undefined && outputControls != "") {            
+            for (var index = 0; index <= outputControls.length; index++) {
+                var item = outputControls[i].cloneNode(true);
+
+                dojo.attr(item, "id", generatedIds[item.id]);
+                dojo.attr(item, "parentId", myParentNode.id);
+                dojo.attr(item, "parentid", myParentNode.id);
+
                 this._replacePrototypeIds(item, generatedIds);
                 console.dirxml(item);
 
                 dojo.place(item, labelNode);
-          // }
+            }
         }
 
         var controlDijit = new betterform.ui.Control({contextInfo:contextInfo}, itemNode);
@@ -149,6 +148,7 @@ dojo.declare(
 
                     var forAtt = dojo.attr(xfNode, "for");
                     //console.debug("forAtt: ", forAtt)
+
                     if (forAtt != undefined && generatedIds[forAtt] != undefined) {
                         dojo.attr(xfNode, "for", generatedIds[forAtt]);
                     }
