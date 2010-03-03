@@ -59,7 +59,7 @@ dojo.declare(
 
 
     _onFocus:function() {
-        //console.debug("CheckBoxGroup._onFocus()");
+       //console.debug("CheckBoxGroup._onFocus()");
         this.inherited(arguments);
         this.handleOnFocus();
     },
@@ -104,6 +104,7 @@ dojo.declare(
         dojo.forEach(selectedItems, function(item, index, array) {
             var id = dojo.attr(item, "id");
             id = id.substring(0,id.length-6);
+            // console.debug("calculating existing ids: " + ids, " new id: ",id);
             if(ids == undefined) {
                 ids = id;
             }else {
@@ -112,7 +113,7 @@ dojo.declare(
         });
         if(ids == undefined) {
             ids = "";
-        }        
+        }
         // console.debug("CheckBoxGroup._setCheckBoxGroupValue selectedItems: ", ids);
         fluxProcessor.dispatchEventType(this.xfControl.id, "DOMActivate", ids);
 
