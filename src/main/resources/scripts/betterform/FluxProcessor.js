@@ -668,6 +668,7 @@ dojo.declare("betterform.FluxProcessor",
 
 
         else if(xmlEvent.contextInfo.parentId != undefined && xmlEvent.contextInfo.parentId != "" ) {
+            // console.debug("FluxProcessor.handleStateChanged: xmlEvent.contextInfo.parentId = " + xmlEvent.contextInfo.parentId);
             var parentDijit = dijit.byId(xmlEvent.contextInfo.parentId);
             // parent dijit does exist and executes handleStateChanged
             if(parentDijit != undefined) {
@@ -690,14 +691,6 @@ dojo.declare("betterform.FluxProcessor",
                 }
             }
         }
-        else if(xmlEvent.contextInfo.targetName != undefined &&xmlEvent.contextInfo.targetName.indexOf("copy") != -1) {
-/*
-                    console.debug("FluxProcessor._handleBetterFormStateChanged: xforms:copy: value: ", xmlEvent.contextInfo.value);
-                    if(xmlEvent.contextInfo.value != undefined) {
-                        console.dirxml(xmlEvent.contextInfo.value);
-		}
-*/
-                }
         else  {
             console.error("FluxProcessor betterform-state-changed Error: Processor does not know how to handle betterform-state-changed based on xmlEvent " , xmlEvent.contextInfo.targetId);
         }

@@ -5,6 +5,7 @@
 
 package de.betterform.xml.xforms.ui.state;
 
+import de.betterform.xml.dom.DOMComparator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.config.Config;
@@ -90,9 +91,18 @@ public class UIElementStateUtil {
     }
 
     public static boolean hasValueChanged(Object currentValue, Object newValue) {
-        return (currentValue == null && newValue != null) ||
-                (currentValue != null && newValue == null) ||
-                (currentValue != null && !currentValue.equals(newValue));
+        if(currentValue instanceof Element && newValue instanceof Element){
+            DOMComparator comparator = new DOMComparator();
+            comparator.setIgnoreNamespaceDeclarations(true);
+            boolean result = !comparator.compare(((Element)currentValue), ((Element)newValue));
+            return result;
+        }else if(newValue instanceof Element || currentValue instanceof Element) {
+            return false;
+        }else {
+            return (currentValue == null && newValue != null) ||
+                    (currentValue != null && newValue == null) ||
+                    (currentValue != null && !currentValue.equals(newValue));
+        }
     }
 
     public static boolean hasTypeChanged(String currentType, String newType) {

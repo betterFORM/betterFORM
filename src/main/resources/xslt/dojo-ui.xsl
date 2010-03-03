@@ -1125,7 +1125,8 @@
                     </xsl:choose>
                 </xsl:variable><script type="text/javascript">dojo.require("dijit.layout.ContentPane");</script><xsl:text>
 </xsl:text>
-                <div dojoType="dijit.layout.ContentPane" style="width:100%;height:100%;" class="xfCase" caseId="{@id}" selected="{$selected}" title="{xforms:label}" onscroll="betterform.ui.util.closeSelect1(this);">
+                <!--<div dojoType="dijit.layout.ContentPane" style="width:100%;height:100%;" class="xfCase" caseId="{@id}" selected="{$selected}" title="{xforms:label}" onscroll="betterform.ui.util.closeSelect1(this);">-->
+                <div dojoType="dijit.layout.ContentPane" style="width:100%;height:100%;" class="xfCase" caseId="{@id}" selected="{$selected}" title="{xforms:label}">
                     <xsl:apply-templates select="*[not(self::xforms:label)]"/>
                 </div>
 			</xsl:for-each>
