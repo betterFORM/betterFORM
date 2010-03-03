@@ -57,7 +57,6 @@ dojo.declare(
     },
 
     getControlValue:function(){
-       var value
         if(this.domNode.selectedIndex == undefined || this.domNode.selectedIndex == -1){
             return "";
         }

@@ -24,8 +24,9 @@ dojo.declare(
     values:"",
 
     handleStateChanged:function(contextInfo) {
+
 /*
-       console.debug("OptGroup.handleInsert this:", this,
+       console.debug("OptGroup.handleStateChanged this:", this,
                                              "\n\tcontextInfo: ",contextInfo,
                                              "\n\toriginalId: ",contextInfo.originalId,
                                              "\n\tposition: ",contextInfo.position,
@@ -36,16 +37,33 @@ dojo.declare(
                                              "\n\tvalue: ",contextInfo.value
         );
 */
-        if(contextInfo.targetName == "label"){
-            dojo.byId(contextInfo.parentId).innerHTML = contextInfo.value;
-        }else if(contextInfo.targetName == "value"){
-            dojo.attr(dojo.byId(contextInfo.parentId),"value",contextInfo.value);
+        var parentNode = dojo.byId(contextInfo.parentId);
+        // console.debug("OptGroup.handleStateChagend: parentNode: ", parentNode);
+        if(contextInfo.targetName == "label" && parentNode != undefined){
+            var select = dojo.byId(dojo.attr(this.domNode.parentNode,"id"));
+            var i;
+            for(i=0; i<select.length; i++){
+                if(contextInfo.parentId == dojo.attr(select.options[i], "id")){
+                    select.options[i].text = contextInfo.value;
+                }
+            }
+        }else if(contextInfo.targetName == "value" && parentNode != undefined){
+            dojo.attr(parentNode,"value",contextInfo.value);
+
+            // console.debug("OptGroup.handleInsert parent: " ,parentNode , " parent value: " + dojo.attr(parent, "value"));
             // make sure that the associated select displays the correct value
+
             if(dojo.hasClass(this.domNode.parentNode.localName == "select")){
                 var selectDijit = dijit.byId(dojo.attr(this.domNode.parentNode,"id"));
+/*
+                console.debug("found selectDijit: " + selectDijit);
+                console.debug("Compare values: selectDijit.currentValue: " + selectDijit.currentValue  + "  contextInfo.value:" + contextInfo.value);
+*/
                 if(selectDijit.currentValue == contextInfo.value) {
                     selectDijit._handleSetControlValue(contextInfo.value);
                 }
+            }else {
+                console.warn("OptGroup.handleInsert parentNode is not select");
             }
 
         }else {
@@ -56,7 +74,7 @@ dojo.declare(
 
     handleInsert:function(contextInfo) {
 /*
-       console.debug("OptGroup.handleInsert this:", this,
+        console.debug("OptGroup.handleInsert this:", this,
                                              "\n\tcontextInfo: ",contextInfo,
                                              "\n\tgeneratedIds: ",contextInfo.generatedIds,
                                              "\n\toriginalId: ",contextInfo.originalId,
@@ -74,7 +92,7 @@ dojo.declare(
 
         var generatedIds= contextInfo.generatedIds;
         var prototype = dojo.query(".xfSelectorPrototype",dojo.byId(contextInfo.originalId + "-prototype"))[0];
-        //console.debug("generatedIds: ",generatedIds, " prototype:",prototype, " newId: ",generatedIds[contextInfo.prototypeId]);
+        // console.debug("generatedIds: ",generatedIds, " prototype:",prototype, " newId: ",generatedIds[contextInfo.prototypeId]);
         if(generatedIds != undefined) {
             dojo.attr(itemNode, "id", generatedIds[contextInfo.prototypeId]);
 
@@ -91,10 +109,14 @@ dojo.declare(
             }
         }
 
+
         if(contextInfo.label != undefined) {
-            itemNode.innerHTML = contextInfo.label;
+            dojo.query(".xfSelectorItem", itemNode).addContent(contextInfo.label);
+            // console.debug("OptGroup.handleInsert: label:" + contextInfo.label + " for new created option" );
+
         }
         if(contextInfo.value != undefined) {
+            // console.debug("OptGroup.insertNode: value: ", value);
             dojo.attr(itemNode, "value", contextInfo.value);
         }
 

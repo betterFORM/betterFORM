@@ -21,7 +21,7 @@ dojo.declare(
 
 
     postMixInProperties:function() {
-        // console.debug("CheckBox.postMixInProperties");
+       //console.debug("CheckBox.postMixInProperties");
         this.inherited(arguments);
         // console.debug("CheckBox srcNodeRef this.selectWidgetId:",this.selectWidgetId, " this.srcNodeRef:",this.srcNodeRef);
         this.selectWidget = dijit.byId(this.selectWidgetId);

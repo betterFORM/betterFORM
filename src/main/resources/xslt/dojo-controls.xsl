@@ -8,7 +8,8 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xforms="http://www.w3.org/2002/xforms"
                 xmlns:bf="http://betterform.sourceforge.net/xforms"
-                exclude-result-prefixes="bf xforms xsl">
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                exclude-result-prefixes="bf xforms xsl xsd">
 
     <xsl:variable name="data-prefix" select="'d_'"/>
     <xsl:variable name="trigger-prefix" select="'t_'"/>
@@ -47,6 +48,11 @@
         </xsl:variable>
         <xsl:variable name="datatype"><xsl:call-template name="getType"/></xsl:variable>
 
+        <xsl:if test="exists(.//xforms:itemset)"><xsl:text>
+</xsl:text>            <script type="text/javascript">dojo.require("betterform.ui.select.OptGroup");</script><xsl:text>
+</xsl:text>
+        </xsl:if>
+        
         <xsl:choose>
             <xsl:when test="@appearance='compact'">
                 <select id="{concat($id,'-value')}"
@@ -153,6 +159,11 @@
         <xsl:variable name="incremental" select="if (exists(@incremental)) then @incremental else 'true'"/>
         <xsl:variable name="schemaValue" select="bf:data/@bf:schema-value"/>
         <xsl:variable name="datatype"><xsl:call-template name="getType"/></xsl:variable>
+
+        <xsl:if test="exists(.//xforms:itemset)">
+            <script type="text/javascript">dojo.require("betterform.ui.select.OptGroup");</script><xsl:text>
+</xsl:text>
+        </xsl:if>
         <xsl:choose>
             <!-- only 'full' is supported as explicit case and renders a group of checkboxes. All other values
             of appearance will be matched and represented as a list control. -->
@@ -291,11 +302,18 @@
         <xsl:param name="parent"/>
         <xsl:if test="local-name($parent) ='select1' and ($parent/@appearance='minimal' or not(exists($parent/@appearance)))">
 
-            <xsl:variable name="hasEmptyLabel">
-                <xsl:for-each select="$parent/*//xforms:label">
+            <xsl:variable name="aggregatedEmptyLabel" >
+                <xsl:for-each select="$parent//*[not(exists(ancestor::bf:data))]/xforms:label">
                     <xsl:if test=". =''">true</xsl:if>
                 </xsl:for-each>
             </xsl:variable>
+            <xsl:variable name="hasEmptyLabel" as="xsd:boolean">
+                <xsl:choose>
+                    <xsl:when test="contains($aggregatedEmptyLabel, 'true')">true</xsl:when>
+                    <xsl:otherwise>false</xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+
             <xsl:if test="not($hasEmptyLabel)">
                 <option value="" class="xfSelectorItem">
                     <xsl:if test="string-length($parent/bf:data/text()) = 0">
@@ -343,8 +361,6 @@
 	</xsl:template>
 
     <xsl:template name="build-items-itemset">
-        <script type="text/javascript">dojo.require("betterform.ui.select.OptGroup");</script><xsl:text>
-</xsl:text>
 		<optgroup id="{@id}" dojoType="betterform.ui.select.OptGroup" label="">
 			<xsl:for-each select="xforms:item">
 				<xsl:call-template name="build-items-item"/>

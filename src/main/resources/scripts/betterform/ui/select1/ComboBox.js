@@ -46,6 +46,7 @@ dojo.declare(
     },
 
     _onChange:function() {
+        // console.debug("ComboBox._onChange: this:",this);
         var selectedNode = this.domNode.options[this.domNode.selectedIndex];
         fluxProcessor.dispatchEventType(this.xfControl.id, "DOMActivate", dojo.attr(selectedNode,"id"));
 
@@ -64,12 +65,13 @@ dojo.declare(
     },
 
     _handleSetControlValue:function(value){
-        // console.debug("ComboBox._handleSetControlValue value: ",value);
+        // console.debug("ComboBox._handleSetControlValue value: " +value + " this.domNode.options.length: ",this.domNode.options.length);
         for(i =0;i<this.domNode.options.length;i++){
+            // console.debug("ComboBox._handleSetControlValue optValue: " + this.domNode.options[i].value + " selectIndex: " +this.domNode.selectedIndex);
             if(this.domNode.options[i].value == value){
                 this.domNode.selectedIndex = i;
+            }
         }
-    }
     }
 });
 
