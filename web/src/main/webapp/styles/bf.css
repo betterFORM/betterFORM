@@ -104,11 +104,7 @@ ul{
 }
 
 #topnav {
-    font-size:10pt;
-    float:right;
-    width:480px;
-    position:relative;
-    /*top:44px;*/
+    font-size:11pt;
     text-align:right;
     margin-top:-12px;
 }
