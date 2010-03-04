@@ -261,10 +261,10 @@ public class XFormsFunctionLibrary implements FunctionLibrary {
             e = register("{" + NamespaceConstants.XFORMS_NS + "}boolean-from-string", BooleanFromString.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
             arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
             // TODO: move to betterForm Namespace, if needed implement BetterFormFunctionLibrary to register functions
-            e = register("{" + NamespaceConstants.XFORMS_NS + "}locationPath", LocationPath.class, 0, 1, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+            e = register("{" + NamespaceConstants.BETTERFORM_NS + "}locationPath", LocationPath.class, 0, 1, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
             arg(e, 0,Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE);
             // TODO: move to betterForm Namespace, if needed implement BetterFormFunctionLibrary to register functions
-            e = register("{" + NamespaceConstants.XFORMS_NS + "}instanceOfModel", InstanceOfModel.class, 0, 2, 2, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
+            e = register("{" + NamespaceConstants.BETTERFORM_NS + "}instanceOfModel", InstanceOfModel.class, 0, 2, 2, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
             arg(e, 0,BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
             arg(e, 1,BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
 

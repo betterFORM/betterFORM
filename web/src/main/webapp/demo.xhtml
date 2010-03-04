@@ -86,7 +86,6 @@
         dojo.require("betterform.ui.container.RepeatItem");
         dojo.require("betterform.ui.container.TabSwitch");
         dojo.require("betterform.ui.container.Group");
-        dojo.require("dojox.layout.RotatorContainer");
 
         function addToDocument(id) {
             var model = dojo.query(".xfModel", dojo.doc)[0];
@@ -125,7 +124,16 @@
         }
     </script>
 
-
+    <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        try {
+        var pageTracker = _gat._getTracker("UA-15044944-1");
+        pageTracker._trackPageview();
+        } catch(err) {}
+    </script>
 </head>
 <body id="demo">
 <div class="page">
