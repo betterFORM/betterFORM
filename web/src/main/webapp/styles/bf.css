@@ -24,8 +24,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     margin-bottom:20px;
 }
 
-.tundra *{
-}
 *{
     font-family:Arial, Helvetica, sans-serif;
 }
@@ -173,6 +171,7 @@ ul{
 
 #content a:focus,
 #content a:hover,
+#content a:visited,
 #content a:active {
 	text-decoration: underline;
 	background-color: transparent;
