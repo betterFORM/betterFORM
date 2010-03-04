@@ -27,13 +27,15 @@
                     <email></email>
                     <pass1/>
                     <pass2/>
+                    <agreement/>
                 </data>
             </xf:instance>
 
             <xf:bind nodeset="alias" constraint="string-length(.) &gt; 3" required="true()"/>
             <xf:bind nodeset="email" type="email" required="true()"/>
             <xf:bind nodeset="pass1" constraint="string-length(.) &gt; 6" required="true()"/>
-            <xf:bind nodeset="pass2" constraint=". = ../pass1 and string-length(.) &gt; 6" required="true()"/>
+            <xf:bind nodeset="pass2" constraint=". = ../pass1" required="true()"/>
+            <xf:bind nodeset="agreement" type="boolean" />
 
             <xf:submission id="s-send" replace="instance" resource="echo:test" method="get">
                 <xf:action ev:event="xforms-submit-error">
@@ -51,8 +53,11 @@
         </xf:model>
     </div>
 
+    <div id="signin">
+        Already a member? Sign in here
+    </div>
     <xf:group appearance="bf:verticalTable">
-			<xf:label>Registration</xf:label>
+			<xf:label>Join the group<span id="subtitle">Enjoy being a part of it!</span></xf:label>
 			<xf:input id="first" ref="firstname">
 				<xf:label>Firstname:</xf:label>
 				<xf:hint>enter your firstname</xf:hint>
@@ -79,10 +84,11 @@
 			<xf:secret ref="pass2">
 				<xf:label>reenter password:</xf:label>
 				<xf:hint>please retype your password</xf:hint>
-				<xf:alert>password is to short or does not match</xf:alert>
+				<xf:alert>password does not match</xf:alert>
 			</xf:secret>
 			<xf:trigger appearance="triggerMiddleColumn">
-				<xf:label>register</xf:label>
+				<xf:label>Create my account</xf:label>
+                <xf:hint>Be calm - this is just a demo! ;)</xf:hint>
 				<xf:send submission="s-send"/>
 			</xf:trigger>
 		</xf:group>

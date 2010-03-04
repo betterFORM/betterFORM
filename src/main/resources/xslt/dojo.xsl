@@ -84,6 +84,9 @@
     <!-- ##################################### TEMPLATES ####################################################### -->
     <!-- ####################################################################################################### -->
     <xsl:template match="xhtml:head">
+
+        <xsl:comment> *** powered by betterFORM, &amp;copy; 2010 *** </xsl:comment>
+
         <head>
             <!-- copy all meta tags except 'contenttype' -->
             <xsl:call-template name="getMeta"/>
@@ -276,7 +279,6 @@
         </xsl:variable>
         <body class="{$theme}">
             <xsl:copy-of select="@*"/>
-            <xsl:comment>powered by betterFORM</xsl:comment>
             <div id="caLoading" class="disabled">
                 <img src="{concat($contextroot,'/resources/images/indicator.gif')}" class="xfDisabled" id="indicator"
                      alt="loading"/>
@@ -329,9 +331,11 @@
                         </div>
                     </xsl:if>
                     <div id="helpWindow" style="display:none"/>
+<!--
                     <div id="caCopyright">
                         <xsl:text disable-output-escaping="yes">powered by betterFORM, &amp;copy; 2010</xsl:text>
                     </div>
+-->
                 </div>
             </div>
             <xsl:if test="$debug-enabled='true'">

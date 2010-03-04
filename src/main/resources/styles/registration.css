@@ -33,17 +33,30 @@
 .tundra #registration .dijitSpinner {
     margin: 0;
 }
-
+#registration #signin{
+    float:right;
+    font-size:8pt;
+    margin:0;
+    padding:0;
+    text-align:right;
+    width:216px;
+    color:blue;
+    text-decoration:underline;
+}
 #registration .caVerticalTable {
     border: none;
     padding: 20px;
     padding-bottom: 0px;
-    width: 640px;
+    width: 700px;
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
 }
-
+#registration #subtitle{
+    display:block;
+    font-size:8pt;
+    
+}
 #registration .caVerticalTable td {
     padding-top:10px;
 }
@@ -51,6 +64,7 @@
 #registration .caVerticalTableLabel {
     padding-right: 5px;
     width: 23%;
+    text-align:right;
 }
 
 #registration .caVerticalTableValue {
@@ -78,29 +92,38 @@
 #registration .xfInvalid .xfValue {
     background: white;
 }
+.tundra #registration  .xfAlert,
+.tundra #registration  .xfHint,
+.tundra #registration  .xfHelp,
+.tundra #registration  .info {
+    font-size: 9pt;
+    font-family: sans-serif;
+    width:95%;
+    padding: 7px 0px 5px 30px;
+    height:15px;
+    border:solid 1px;
+}
 
 #registration .xfAlert {
     display: block;
     background: #FFCFCF;
     color: #801B1B;
-    padding: 6px 0px 8px 30px;
     -moz-border-radius-topright: 8px;
     -moz-border-radius-bottomright: 8px;
     -webkit-border-top-right-radius: 8px;
     -webkit-border-bottom-right-radius: 8px;
-    background: #FFCFCF url(../../resources/images/error.png) no-repeat 3% 7px;
+    background: #FFCFCF url(../../resources/images/error.png) no-repeat scroll 2% 5px;
     margin: 0;
     /*overflow: hidden; */
     white-space: nowrap;
-    width: 190px;
-	border: 0px;
+    width: 100%;
+	border-color:#E5A3A3 !important;
 }
 
 #registration .xfHint {
     display: block;
     background: #F2F2F2 url(../../resources/images/hint.png) no-repeat 3% 7px;
     color: #666666;
-    padding: 6px 0px 8px 30px;
     -moz-border-radius-topright: 8px;
     -moz-border-radius-bottomright: 8px;
     -webkit-border-top-right-radius: 8px;
@@ -109,6 +132,8 @@
     /*overflow: hidden;*/
     white-space: nowrap;
     width: 190px;
+    border-color:#DBDBDB !important;
+
 }
 
 
@@ -117,7 +142,6 @@
     display: block;
     background: #F0FEE9 url(../../resources/images/ok.png) no-repeat 3% 7px;
     color: #666666;
-    padding: 6px 0px 8px 30px;
     -moz-border-radius-topright: 8px;
     -moz-border-radius-bottomright: 8px;
     -webkit-border-top-right-radius: 8px;
@@ -126,26 +150,20 @@
     /*overflow: hidden;*/
     white-space: nowrap;
     width: 190px;
+    border-color:#E1EFDB !important;
 }
 .xfControl {
 	position:relative;
 }
 
-.tundra #registration  .xfAlert,
-.tundra #registration  .xfHint,
-.tundra #registration  .xfHelp,
-.tundra #registration  .info {
-    font-size: 9pt;
-    font-family: sans-serif;
-}
 
 #registration .xfControl, #registration .xfAlert, #registration .xfHint, #registration .info {
     margin-bottom: 8px;
 }
 
 #registration .xfGroupLabel {
-    font-size: 13pt;
-    border-bottom: 4px double #999999;
+    font-size: 1.5em;
+    /*border-bottom: 4px double #999999;*/
     padding-bottom: 5px;
     color: #333333;
 }
@@ -156,6 +174,7 @@
 
 #registration .xfRequired .xfValue {
 /*background: #F2F2F2;*/
+    height:17px;
 }
 
 #registration .dijitFocused {
@@ -166,9 +185,14 @@
 /*    position: relative; */
 }
 
+/*
 #registration .dijitTextBox,
 #registration .dijitComboBox,
 #registration .dijitSpinner  {
     width: 10em;
 }
-
+*/
+.xfLabel{
+    padding-top:6px;
+    display:block;
+}
