@@ -73,11 +73,14 @@ ul{
 }
 .page #header{
     background:white;
+/*
     position:inherit;
     top:0;
     z-index:999;
+*/
     border-bottom:thin dotted;
     padding-top:2px;
+    float:left;
 }
 #index .page #header{
     padding-top:0;
@@ -105,12 +108,23 @@ ul{
     float:right;
     width:480px;
     position:relative;
-    top:42px;
+    /*top:44px;*/
     text-align:right;
+    margin-top:-12px;
 }
-#logoBar #logo{
+#logoBar{
+    height:90px;
+}
+
+
+/*
+.logoBar{
+    
+}
+.logoBar #logo{
     float:left;
 }
+*/
 #topnav a {
 	color: #999;
 	font-weight: normal;
@@ -243,13 +257,14 @@ ul{
 
 #footer{
     text-align:center;
-    background:#565656;
+    background:#565656 url(../images/bg_footer.jpg);
     height:120px;
     /*
     moves the footer in Webkit browsern to the far right.
     */
     overflow:hidden;
     padding-bottom:50px;
+    float:left;
 }
 #shadowBottom{
     width:760px;
@@ -341,11 +356,6 @@ h3{
     padding-top:2px;
 }
 
-#logoBar{
-    height:90px;
-    
-}
-
 .content {
 	width:700px;
 }
@@ -398,12 +408,6 @@ h3{
 }
 
 /* ############################  page specific ############################## */
-#osiLogo{
-    position:absolute;
-    top:39px;
-    right:0;
-    z-index:0;
-}
 .downloads #columnLeft{
     padding:0;
     width:335px;
@@ -501,6 +505,21 @@ h3{
     display:none;
 
 }
+#demo #backToDemo{
+    text-align:center;
+    color:white;
+}
+#demo #backToDemo .dijitButtonHover{
+    background:transparent;
+}
+#demo #backToDemo .dijitButtonNode{
+    background:none;
+}
+#demo #backToDemo-value{
+    width:145px;
+    height:39px;
+    background: transparent url(../images/b_tryit_ohne_klein.png) no-repeat;
+}
 #product #content .linkbox{
     background:#488aa6;
     color:white;
@@ -523,14 +542,34 @@ h3{
     float:right;
 }
 
-#sourceforge a{
+#prodcut #sourceforge a{
     color:black;
 }
-#sourceforge a img{
+#product #sourceforge a img{
     vertical-align:top;
+}
+#product #otherlogos{
+    position:relative;
+    width:100%;
+    text-align:center;
+}
+#product #otherlogos #jetbrains{
+    width:33%;
+    float:left;
+}
+#product #otherlogos #osi{
+    width:33%;
+}
+#product #otherlogos #sourceforge{
+    width:33%;
+    float:right;
 }
 #whoweare .tableContent p{
     line-height:1em;
     text-align:justify;
+}
+
+#XFormsFeatureExplorer .dijitContentPane{
+    overflow:auto;
 }
 
