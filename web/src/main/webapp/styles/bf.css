@@ -407,14 +407,52 @@ h3{
 }
 
 /* ############################  page specific ############################## */
-.downloads #columnLeft{
-    padding:0;
-    width:335px;
-}
-.downloads h2{
-    padding-top:9px;
+#download #boxleft{
+    float:left;
+    width:480px;
+    padding-right:70px;
+    margin-bottom:20px;
     
 }
+#download #boxright{
+    text-align:left;
+    float:left;
+    width:180px
+
+}
+#download .downloadBox {
+    background: transparent url(../images/downloadButton.png) no-repeat scroll 0 0;
+    width:378px;
+    height:78px;
+}
+#download .downloadBox #download{
+    font-size:14pt;
+    color:white;
+    font-size:14pt;
+    padding:20px 0 0 22px;
+    margin:0;
+}
+#download .downloadBox #downloadSubtext{
+    color:lightsteelblue;
+    padding-left:22px;
+}
+#download .header1 {
+    color: #488AA6;
+    display: block;
+    font-size: x-large;
+    letter-spacing: 0.03em;
+    padding-top: 12px;
+    text-align: right;
+}
+#download .boxRightEntryHeading {
+    font-variant: small-caps;
+    color: #488AA6;
+}
+#download .downloadRightBar{
+    float:left;
+    
+}
+
 
 /*
 .contact .contentBody{
@@ -440,23 +478,22 @@ h3{
 	text-decoration:none;
 	color:white;
 	float:left;
-	margin-top:10px;
 }
 
 
 .downloadButton {
-    background:transparent url(../images/b_getit_ohne_klein.png) no-repeat scroll 0 0;
+    background:transparent url(../images/b_getit_170.png) no-repeat scroll 0 0;
     font-size:9pt;
     font-weight:bold;
     height:40px;
     padding:10px;
-    width:150px;
+    width:160px;
     padding-left:13px;
     display:block;
-    padding-top:17px;
+    padding-top:12px;
 }
 .exploreButton{
-    background:transparent url(../images/b_exploreit_ohne_klein.png) no-repeat scroll 0 0;
+    background:transparent url(../images/b_exploreit_170.png) no-repeat scroll 0 0;
     font-size:9pt;
     font-weight:bold;
     height:40px;
@@ -464,8 +501,7 @@ h3{
     width:150px;
     padding-left:13px;
     display:block;
-    padding-top:15px;
-    margin-top: 4px;
+    padding-top:12px;
 
 }
 
@@ -565,7 +601,7 @@ h3{
 }
 #whoweare .tableContent p{
     line-height:1em;
-    text-align:justify;
+    text-align:left;
 }
 
 #XFormsFeatureExplorer .dijitContentPane{
