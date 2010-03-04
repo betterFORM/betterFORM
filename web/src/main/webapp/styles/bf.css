@@ -269,7 +269,7 @@ ul{
     margin-right:auto;
 }
 
-#bottomMenu{
+.page #bottomMenu{
     display:block;
     float:right;
     font-size:10pt;
@@ -277,15 +277,15 @@ ul{
     margin-top:10px;
     
 }
-#bottomMenu a {
+.page #bottomMenu a {
 	color:#FFFFFF;
 	background: transparent;
     text-decoration:none;
 }
 
-#bottomMenu a:focus,
-#bottomMenu a:hover,
-#bottomMenu a:active {
+.page #bottomMenu a:focus,
+.page #bottomMenu a:hover,
+.page #bottomMenu a:active {
 	color: #488aa6;
 	background-color: transparent;
 	text-decoration: underline;

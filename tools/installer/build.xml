@@ -1,4 +1,4 @@
-<project name="Installer" default="createInstaller" basedir=".">
+<project name="Installer" default="betterFormWarInstaller" basedir=".">
 
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
@@ -8,6 +8,7 @@
     </target>
     <target name="prepare" description="prepares all files needed for installer EXCEPT exist.war">
         <!-- ##### building betterForm war for deployment ##### -->
+        <mkdir dir="${basedir}/target"/>
         <ant antfile="../../web/build.xml" target="package" inheritall="false"/>
 
         <mkdir dir="${basedir}/target"/>
@@ -17,7 +18,7 @@
         </copy>
         <move file="${basedir}/target/${web.app.name}-${web.app.version}.war" tofile="${basedir}/target/betterform.war"/>
 
-        <copy todir="${basedir}/target">
+        <copy tofile="${basedir}/target/BSD-license.txt">
             <fileset file="${basedir}/resource/BSD-license-inlined.txt"/>
         </copy>
 
@@ -30,19 +31,8 @@
         <delete file="${basedir}/target/${properties.dojo}.tar" />
 
 
-        <!--##### fetching jetty from remote ##### -->
-<!--
-        <get usetimestamp="true" ignoreerrors="true" src="http://dist.codehaus.org/jetty/jetty-6.1.22/jetty-6.1.22.zip"
-             dest="${basedir}/target/jetty.zip"/>
-
-        &lt;!&ndash;##### unpacking jetty can move it into a subfolder  - rename it to betterform ##### &ndash;&gt;
-        <unzip src="${basedir}/target/jetty.zip"
-               dest="${basedir}/target/jetty" />
-
-        <move file="${basedir}/target/jetty/jetty-6.1.22" tofile="${basedir}/target/jetty/betterform"/>
-
--->
-        <unzip src="lib/bfServer-1.2-bin.zip" dest="${basedir}/target/jetty"/>
+        <mkdir dir="${basedir}/target/jetty"/>
+        <unzip src="${basedir}/lib/bfServer-1.2-bin.zip" dest="${basedir}/target/jetty"/>
 
 
     </target>
