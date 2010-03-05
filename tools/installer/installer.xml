@@ -124,13 +124,11 @@ FOR LATER: installinig the war should switch the above pack off. Did not yet fou
             <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/web/root"/>
         </pack>
 
-<!--
         <pack name="eXist" required="no" preselected="no">
             <description>eXist 1.4 XML Database</description>
-            <depends packname="jetty"/>
-            <file src="exist.war" unpack="true" targetdir="$INSTALL_PATH/webapps/exist"/>
+            <depends packname="Jetty"/>
+            <file src="exist.war" unpack="true" targetdir="$INSTALL_PATH/web/exist"/>
         </pack>
--->
 
         <pack name="DeveloperPack" required="no" preselected="no">
             <description>adds uncompiled Dojo for full debug capabilities</description>
