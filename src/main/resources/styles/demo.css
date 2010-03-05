@@ -187,12 +187,12 @@
 }
 
 /* Order List */
-.orderListCountrySelect {
+.orderListRegionSelect {
     display: block;
     text-align: right;
 }
 
-.orderListCountrySelect .xfLabel {
+.orderListRegionSelect .xfLabel {
     display: block;
     text-align: right !important;
     width: 85% !important; /* Dirty */

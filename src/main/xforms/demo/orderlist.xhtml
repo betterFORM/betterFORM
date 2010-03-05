@@ -7,7 +7,7 @@
       xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns:ev="http://www.w3.org/2001/xml-events">
 <head>
-    <title>Order List</title>
+    <title>Shopping cart</title>
     <meta name="author" content="joernt at users.sourceforge.net"/>
     <meta name="author" content="lars.windauer at chiba-project.org"/>
     <meta name="author" content="tobias.krebs at betterform.de"/>
@@ -40,21 +40,21 @@
             <xf:bind id="article" nodeset="." required="true()"/>
             <xf:bind id="amount" nodeset="@amount" type="integer" required="true()" constraint=". &lt; 100"/>
             <xf:bind id="price" nodeset="@price" type="float"/>
-            <xf:bind id="taxValue" nodeset="@taxValue" calculate="../@amount * ../@price * instance('shippingAndTaxes')/country/tax" type="float"/>
-            <xf:bind id="sum" nodeset="@sum" calculate="../@amount * ../@price * ( 1 + instance('shippingAndTaxes')/country/tax)" type="float"/>
+            <xf:bind id="taxValue" nodeset="@taxValue" calculate="../@amount * ../@price * instance('shippingAndTaxes')/region/tax" type="float"/>
+            <xf:bind id="sum" nodeset="@sum" calculate="../@amount * ../@price * ( 1 + instance('shippingAndTaxes')/region/tax)" type="float"/>
         </xf:bind>
 
         <xf:instance id="shippingAndTaxes">
             <order xmlns="">
-                <country>
-                    <name>Germany</name>
+                <region>
+                    <name>Region 7</name>
                     <shipping>4.40</shipping>
                     <tax>0.19</tax>
-                </country>
+                </region>
             </order>
         </xf:instance>
 
-        <xf:bind nodeset="instance('shippingAndTaxes')/country/tax" type="float"/>
+        <xf:bind nodeset="instance('shippingAndTaxes')/region/tax" type="float"/>
         
         <xf:instance id="template">
             <order xmlns="">
@@ -91,71 +91,71 @@
 
         <xf:instance id="countries">
             <contries xmlns="">
-                <country>
+                <region>
                     <name/>
                     <shipping>0.0</shipping>
                     <tax>0.0</tax>
-                </country>
-                <country>
-                    <name>Albania</name>
+                </region>
+                <region>
+                    <name>Region 1</name>
                     <shipping>12.50</shipping>
                     <tax>0.1</tax>
-                </country>
-                <country>
-                    <name>Belgium</name>
+                </region>
+                <region>
+                    <name>Region 2</name>
                     <shipping>8.00</shipping>
                     <tax>0.2</tax>
-                </country>
-                <country>
-                    <name>Cuba</name>
+                </region>
+                <region>
+                    <name>Region 3</name>
                     <shipping>30.00</shipping>
                     <tax>0.0</tax>
-                </country>
-                <country>
-                    <name>Denmark</name>
+                </region>
+                <region>
+                    <name>Region 4</name>
                     <shipping>10.00</shipping>
                     <tax>0.21</tax>
-                </country>
-                <country>
-                    <name>Estonia</name>
+                </region>
+                <region>
+                    <name>Region 5</name>
                     <shipping>15.00</shipping>
                     <tax>0.07</tax>
-                </country>
-                <country>
-                    <name>France</name>
+                </region>
+                <region>
+                    <name>Region 6</name>
                     <shipping>8.50</shipping>
                     <tax>0.16</tax>
-                </country>
-                <country>
-                    <name>Germany</name>
+                </region>
+                <region>
+                    <name>Region 7</name>
                     <shipping>4.40</shipping>
                     <tax>0.19</tax>
-                </country>
-                <country>
-                    <name>Gibraltar</name>
+                </region>
+                <region>
+                    <name>Region 8</name>
                     <shipping>13.25</shipping>
                     <tax>0.125</tax>
-                </country>
-                <country>
-                    <name>Hungary</name>
+                </region>
+                <region>
+                    <name>Region 9</name>
                     <shipping>14.00</shipping>
                     <tax>0.062</tax>
-                </country>
-                <country>
-                    <name>Italy</name>
+                </region>
+                <region>
+                    <name>Region 10</name>
                     <shipping>0.08</shipping>
                     <tax>0.16</tax>
-                </country>
-                <country>
-                    <name>Japan</name>
+                </region>
+                <region>
+                    <name>Region 11</name>
                     <shipping>40.00</shipping>
                     <tax>0.215</tax>
-                </country>
-                <country>
-                    <name>Spain</name>
+                </region>
+                <region>
+                    <name>Region 12</name>
                     <shipping>9.00</shipping>
                     <tax>0.14</tax>
-                </country>
+                </region>
             </contries>
         </xf:instance>
 
@@ -169,9 +169,9 @@
 		</xf:instance>
 
 		<xf:bind nodeset="instance('result')">
-			<xf:bind nodeset="taxtotal" calculate="sum(instance('orderlist')/item/@sum) * instance('shippingAndTaxes')/country/tax" type="float"/>
-			<xf:bind nodeset="netpricetotal" calculate="sum(instance('orderlist')/item/@sum) - (sum(instance('orderlist')/item/@sum) * instance('shippingAndTaxes')/country/tax)" type="float"/>
-			<xf:bind nodeset="sumtotal" calculate="sum(instance('orderlist')/item/@sum) + instance('shippingAndTaxes')/country/shipping" type="float"/>
+			<xf:bind nodeset="taxtotal" calculate="sum(instance('orderlist')/item/@sum) * instance('shippingAndTaxes')/region/tax" type="float"/>
+			<xf:bind nodeset="netpricetotal" calculate="sum(instance('orderlist')/item/@sum) - (sum(instance('orderlist')/item/@sum) * instance('shippingAndTaxes')/region/tax)" type="float"/>
+			<xf:bind nodeset="sumtotal" calculate="sum(instance('orderlist')/item/@sum) + instance('shippingAndTaxes')/region/shipping" type="float"/>
 		</xf:bind>
 
 
@@ -179,19 +179,19 @@
 </div>
 <div class="Section" dojotype="dijit.layout.ContentPane">
     <xf:group appearance="full" class="contactsFullGroup">
-        <div class="Headline">Order List:</div>
+        <div class="Headline">Shopping cart:</div>
 
         <div class="description">
-            A simple calculated Order List with slightly formatted output.<br/>
-            Tax and Shipping costs get calculated dependent on the country you choose.
+            A simple calculated shopping cart with slightly formatted output.<br/>
+            Tax and shipping costs get calculated dependent on the region you choose.
         </div>
         <br/>
 
-        <div class="orderListCountrySelect">
+        <div class="orderListRegionSelect">
             <xf:select1 appearance="minimal" ref="instance('shippingAndTaxes')">
-                <xf:label id="country">Ship to:</xf:label>
-                <xf:hint>Choose your country for correct Tax and Shipping cost calculation</xf:hint>
-                <xf:itemset nodeset="instance('countries')/country">
+                <xf:label id="region">Ship to:</xf:label>
+                <xf:hint>Choose your region for correct tax and shipping cost calculation</xf:hint>
+                <xf:itemset nodeset="instance('countries')/region">
                     <xf:label ref="name"/>
                     <xf:copy ref="."/>
                 </xf:itemset>
@@ -202,7 +202,7 @@
             <xf:repeat id="repeatid" bind="items" appearance="compact" class="orderListRepeat">
               <xf:select1 bind="article">
                     <xf:label class="contactsRepeatHeader">Article</xf:label>
-                    <xf:hint>Choose the item you wish to add to the orderlist</xf:hint>
+                    <xf:hint>Choose the article you wish to add to the shopping cart</xf:hint>
                     <xf:choices>
                         <xf:item>
                             <xf:label>Eraser</xf:label>
@@ -255,7 +255,7 @@
                 <xf:output value="format-number(@price, '€ 0.00')" class="text-right">
                     <xf:label class="contactsRepeatHeader">Price</xf:label>
                 </xf:output>
-                <xf:output value="format-number(instance('shippingAndTaxes')/country/tax , '0.00%')" class="text-right">
+                <xf:output value="format-number(instance('shippingAndTaxes')/region/tax , '0.00%')" class="text-right">
                     <xf:label class="contactsRepeatHeader">Tax %</xf:label>
                 </xf:output>
                 <xf:output value="format-number(@taxValue, '€ 0.00')" class="text-right">
@@ -269,13 +269,13 @@
             <div class="orderlistRepeatFooter">
                 <xf:output id="totalSum"
                            value="format-number(instance('result')/netpricetotal, '€ 0.00')">
-                    <xf:label>Net Price:</xf:label>
+                    <xf:label>Net price:</xf:label>
                 </xf:output>
                 <xf:output id="totalTax"
                            value="format-number(instance('result')/taxtotal, '€ 0.00')">
-                    <xf:label>+ Total Tax:</xf:label>
+                    <xf:label>+ Total tax:</xf:label>
                 </xf:output>
-				<xf:output id="shipping" value="format-number(instance('shippingAndTaxes')/country/shipping, '€ 0.00')">
+				<xf:output id="shipping" value="format-number(instance('shippingAndTaxes')/region/shipping, '€ 0.00')">
 					<xf:label class="orderlistRepeatFooter">+ Shipping:</xf:label>
 				</xf:output>
 				
@@ -307,7 +307,7 @@
                 <td>
                     <xf:trigger class="orderListAddTrigger">
                         <xf:label>Add item</xf:label>
-                        <xf:hint>Adds a new article to the orderlist</xf:hint>
+                        <xf:hint>Adds a new article to the shopping cart</xf:hint>
                         <xf:action>
                             <xf:insert bind="items" at="last()" position="after" origin="instance('template')/item"
                                        if="exists(instance()/item)"/>
@@ -319,7 +319,7 @@
                 <td>
                     <xf:trigger class="orderListDelTrigger">>
                         <xf:label>Delete item</xf:label>
-                        <xf:hint>Deletes selected article from orderlist</xf:hint>
+                        <xf:hint>Deletes selected article from shopping cart</xf:hint>
                         <xf:action>
                             <xf:delete bind="items" at="index('repeatid')"/>
                         </xf:action>
