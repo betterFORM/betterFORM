@@ -41,11 +41,13 @@ body{
     overflow:auto;
     background:#565656;
     font-size:10pt;
-
+	text-align:center;
     /*height:100%;*/
 }
 .tundra body{
     font-size:12pt;
+    padding:0;
+    margin:0;
 }
 
 p{
@@ -92,6 +94,7 @@ ul{
     width:760px;
     margin-left:auto;
     margin-right:auto;
+	text-align:left;
 }
 
 #header,
@@ -125,7 +128,7 @@ ul{
 
 /*
 .logoBar{
-    
+
 }
 .logoBar #logo{
     float:left;
@@ -222,7 +225,7 @@ ul{
 #columnLeft{
     width:226px;
     text-align:left;
-    padding-right:121px;
+    padding-right:119px;
     float:left;
     margin-top:4px;
 }
@@ -266,19 +269,25 @@ ul{
 
 #footer{
     text-align:center;
+/*
     background:#565656 url(../images/bg_footer.jpg);
+*/
     height:120px;
+	background:#565656;
     /*
     moves the footer in Webkit browsern to the far right.
     */
+
     overflow:hidden;
+    margin:0;
+    padding:0;
     padding-bottom:50px;
     float:left;
 }
 #shadowBottom{
     width:760px;
-    margin-left:auto;
-    margin-right:auto;
+	padding:0;
+    margin:0;
 }
 
 .page #bottomMenu{
@@ -287,7 +296,7 @@ ul{
     font-size:10pt;
     color:white;
     margin-top:10px;
-    
+
 }
 .page #bottomMenu a {
 	color:#FFFFFF;
@@ -301,7 +310,7 @@ ul{
 	color: #488aa6;
 	background-color: transparent;
 	text-decoration: underline;
-    
+
 }
 
 .menuDevider{
@@ -314,7 +323,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
 }
 
-#content h1 {              
+#content h1 {
 	color: #2C2C2C;
 	font-size: 1.6em;
     font-variant:small-caps;
@@ -422,7 +431,7 @@ h3{
     width:480px;
     padding-right:70px;
     margin-bottom:20px;
-    
+
 }
 #download #boxright{
     text-align:left;
@@ -460,7 +469,7 @@ h3{
 }
 #download .downloadRightBar{
     float:left;
-    
+
 }
 
 
@@ -568,7 +577,7 @@ h3{
 #product #content .linkbox{
     background:#488aa6;
     color:white;
-    display:block;                                                                                                  
+    display:block;
     padding:10px;
     -moz-border-radius:10px;
     -webkit-border-radius:10px;
@@ -578,7 +587,7 @@ h3{
 #product #content .linkbox a{
     text-decoration:underline;
     float:none;
-    
+
 }
 
 #sourceforge{

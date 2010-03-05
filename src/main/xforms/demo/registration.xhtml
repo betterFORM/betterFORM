@@ -27,22 +27,25 @@
                     <email></email>
                     <pass1/>
                     <pass2/>
-                    <agreement/>
+                    <agreement>true</agreement>
                 </data>
             </xf:instance>
 
             <xf:bind nodeset="alias" constraint="string-length(.) &gt; 3" required="true()"/>
             <xf:bind nodeset="email" type="email" required="true()"/>
-            <xf:bind nodeset="pass1" constraint="string-length(.) &gt; 6" required="true()"/>
+            <xf:bind nodeset="pass1" constraint="string-length(.) &gt;= 6" required="true()"/>
             <xf:bind nodeset="pass2" constraint=". = ../pass1" required="true()"/>
             <xf:bind nodeset="agreement" type="boolean" />
 
-            <xf:submission id="s-send" replace="instance" resource="echo:test" method="get">
+            <xf:submission id="s-send"
+						   replace="instance"
+						   resource="echo:test"
+						   method="get">
                 <xf:action ev:event="xforms-submit-error">
-                    <xf:message level="ephemeral">Registration failed. Please fill in the values.</xf:message>
+                    <xf:message>Registration failed. Please fill in valid values</xf:message>
                 </xf:action>
                 <xf:action ev:event="xforms-submit-done">
-                    <xf:message level="ephemeral">You have been registered successfully.</xf:message>
+                    <xf:message>You have been registered successfully.</xf:message>
                 </xf:action>
             </xf:submission>
 
