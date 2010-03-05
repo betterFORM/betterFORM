@@ -51,8 +51,8 @@
             <div id="header">
                 <div class="pageMarginBox">
                     <div class="languages">
-                        <img src="../images/en.png" alt="english"/>
-                        <img src="../images/de.png" alt="deutsch"/>
+                        <img src="../images/en.png" class="langSelector" alt="english"/>
+                        <img src="../images/de.png" class="langSelector" alt="deutsch"/>
                     </div>
                     <div id="logoBar">
                         <img src="../images/logo.png" alt="betterFORM project"/>
@@ -63,8 +63,7 @@
                             <a href="../download.html">download</a><span class="menuDevider"> | </span>
                             <a href="../product.html">product</a><span class="menuDevider"> | </span>
                             <a href="../support.html">support</a><span class="menuDevider"> | </span>
-                            <a href="../whoweare-old.html">who we are</a><span class="menuDevider"> | </span>
-                            <a href="../contact.html">contact / impressum</a>
+                            <a href="../whoweare.html">who we are</a><span class="menuDevider"></span>
                         </div>
                     </div>
                 </div>
@@ -111,7 +110,7 @@
                         fontColor: "black",
                         labelOffset: -50,
                         radius: 50,
-                        fill: "white"
+                        fill: "lemonchiffon"
                         });
                         var numbers = [
                         {
@@ -141,13 +140,10 @@
                         var anim_b = new dojox.charting.action2d.Highlight(chart, "default");
                         var anim_c = new dojox.charting.action2d.Tooltip(chart, "default");
                         chart.render();
-                        // Do not show the legend!
-                        // var legend = new dojox.charting.widget.Legend({
-                        //                                              chart: chart },"conformanceLegend");
                         return chart;
                         }
                         dojo.addOnLoad(function(){
-                        createChart( 405, 14,0);
+                        createChart( 398, 21,0);
                         });
 
                      </script>

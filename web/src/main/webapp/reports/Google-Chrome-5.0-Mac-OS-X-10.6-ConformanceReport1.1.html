@@ -52,8 +52,8 @@
             <div id="header">
                 <div class="pageMarginBox">
                     <div class="languages">
-                        <img src="../images/en.png" alt="english"/>
-                        <img src="../images/de.png" alt="deutsch"/>
+                        <img src="../images/en.png" class="langSelector" alt="english"/>
+                        <img src="../images/de.png" class="langSelector" alt="deutsch"/>
                     </div>
                     <div id="logoBar">
                         <img src="../images/logo.png" alt="betterFORM project"/>
@@ -61,11 +61,10 @@
                         <div id="topnav">
                             <a href="../index.html">home</a><span class="menuDevider"> | </span>
                             <a href="../demo.xhtml">demo</a><span class="menuDevider"> | </span>
-                            <a href="../ownload.html">download</a><span class="menuDevider"> | </span>
+                            <a href="../download.html">download</a><span class="menuDevider"> | </span>
                             <a href="../product.html">product</a><span class="menuDevider"> | </span>
                             <a href="../support.html">support</a><span class="menuDevider"> | </span>
-                            <a href="../whoweare-old.html">who we are</a><span class="menuDevider"> | </span>
-                            <a href="../contact.html">contact / impressum</a>
+                            <a href="../whoweare.html">who we are</a><span class="menuDevider"></span>
                         </div>
                     </div>
                 </div>
@@ -81,6 +80,7 @@
                     <!-- ######################### Content here ################################## -->
                     <!-- ######################### Content here ################################## -->
                     <!-- ######################### Content here ################################## -->
+
       <div class="pageheader">XForms 1.1 TestSuite Edition 1 Results for Chrome 5.0</div>
       <div class="testConfig">
          <div class="header">Test Summary</div>
@@ -111,27 +111,27 @@
                         fontColor: "black",
                         labelOffset: -50,
                         radius: 50,
-                        fill: "white"
+                        fill: "lemonchiffon"
                         });
                         var numbers = [
                         {
                         y: passed,
                         stroke: {color: "black" },
-                        fill: "chartreuse",
+                        fill: "#7ba841",
                         tooltip: passed + " tests passed",
                         text: ((passed / sum) * 100).toFixed(0) + "% passed"
                         },
                         {
                         y: failed,
                         stroke: {color: "black" }, 
-                        fill: "orangered",
-                        tooltip: failed + " tests failed",
+                           fill: "#c56f46",
+                     tooltip: failed + " tests failed",
                         text: ((failed / sum) * 100).toFixed(0) + "% failed"
                         },
                         {
                         y: unknown,
                         stroke: {color: "black"}, 
-                        fill: "#DDD",
+                        fill: "#e7e8e8",
                         tooltip: unknown + " tests unknown",
                         text: ((unknown / sum) * 100).toFixed(0) + "% unknown"
                         }
@@ -141,9 +141,6 @@
                         var anim_b = new dojox.charting.action2d.Highlight(chart, "default");
                         var anim_c = new dojox.charting.action2d.Tooltip(chart, "default");
                         chart.render();
-                        // Do not show the legend!
-                        // var legend = new dojox.charting.widget.Legend({
-                        //                                              chart: chart },"conformanceLegend");
                         return chart;
                         }
                         dojo.addOnLoad(function(){
