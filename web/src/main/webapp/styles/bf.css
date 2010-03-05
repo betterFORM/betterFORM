@@ -175,7 +175,8 @@ ul{
     border:none;
 }
 
-#content a {
+#content a,
+#content a:visited {
 	color: #488aa6;
 	font-weight: normal;
 	background: transparent;
@@ -184,12 +185,12 @@ ul{
 
 #content a:focus,
 #content a:hover,
-#content a:visited,
 #content a:active {
 	text-decoration: underline;
 	background-color: transparent;
     color:#488aa6;
 }
+
 
 #content .linkbox a{
     text-decoration:none;
@@ -436,7 +437,7 @@ h3{
 #download #boxright{
     text-align:left;
     float:left;
-    width:180px
+    width:200px;
 
 }
 #download .downloadBox {
@@ -458,7 +459,7 @@ h3{
 #download .header1 {
     color: #488AA6;
     display: block;
-    font-size: x-large;
+    font-size: 1.8em;
     letter-spacing: 0.03em;
     padding-top: 12px;
     text-align: right;
@@ -506,19 +507,27 @@ h3{
     font-weight:bold;
     height:40px;
     padding:10px;
-    width:160px;
-    padding-left:13px;
+    width:180px;
+    padding-left:10px;
     display:block;
     padding-top:12px;
 }
-.exploreButton{
+#product .downloadButton {
+    width:170px;
+    padding:10px;
+    width:168px;
+    padding-left:10px;
+
+}
+
+#product .exploreButton{
     background:transparent url(../images/b_exploreit_170.png) no-repeat scroll 0 0;
     font-size:9pt;
     font-weight:bold;
     height:40px;
     padding:10px;
-    width:150px;
-    padding-left:13px;
+    width:168px;
+    padding-left:10px;
     display:block;
     padding-top:12px;
 
@@ -528,21 +537,11 @@ h3{
     width:100%;
 }
 #conformanceTable th{
-    text-align:center;
     padding:5px;
 }
 #conformanceTable td{
-    text-align:center;
     background:white;
-    width:20%;
 }
-/*
-.conformanceCell{
-    width: 150px;
-    height: 150px;
-    margin-left:12px;
-}
-*/
 
 .list{
     background:url(../images/list.png) no-repeat left top;
@@ -584,10 +583,13 @@ h3{
     margin:0 0 25px;
 }
 
-#product #content .linkbox a{
+#product #content .linkbox a,
+#product #content .linkbox a:focus,
+#product #content .linkbox a:hover,
+#product #content .linkbox a:active {
     text-decoration:underline;
     float:none;
-
+	color:white;
 }
 
 #sourceforge{
@@ -625,5 +627,9 @@ h3{
 
 #XFormsFeatureExplorer .dijitContentPane{
     overflow:auto;
+}
+
+#XFormsFeatureExplorer  #widgetsContainer {
+	overflow:hidden;
 }
 

@@ -22,23 +22,23 @@
         <xf:bind nodeset="title" type="string"/>
         <xf:bind nodeset="firstNames" type="string" required="true()" relevant="true()"/>
         <xf:bind nodeset="name" type="string" required="true()" relevant="true()"/>
-        <xf:bind nodeset="street" type="string" readonly="true()"/>
-        <xf:bind nodeset="city" type="string" readonly="true()"/>
-        <xf:bind nodeset="zip" type="integer" readonly="true()"/>
-        <xf:bind nodeset="country" type="string" readonly="true()"/>
+        <xf:bind nodeset="street" type="string" />
+        <xf:bind nodeset="city" type="string" />
+        <xf:bind nodeset="zip" type="integer" />
+        <xf:bind nodeset="country" type="string" />
 
         <xf:submission id="s-load-from-master"
                        resource="model:master#instance('contact')/data/address[index('addresses')]"
                        replace="instance"
                        method="get">
-            <xf:message ev:event="xforms-submit-done" level="ephemeral">Subform has updated itself.</xf:message>
+            <!--<xf:message ev:event="xforms-submit-done" level="ephemeral">Subform has updated itself.</xf:message>-->
         </xf:submission>
 
         <xf:submission id="s-update-master"
                        resource="model:master#instance('contact')/data/address[index('addresses')]"
                        replace="none"
                        method="post">
-            <xf:message ev:event="xforms-submit-done" level="ephemeral">Subform has updated Master.</xf:message>
+            <!--<xf:message ev:event="xforms-submit-done" level="ephemeral">Subform has updated Master.</xf:message>-->
         </xf:submission>
 
         <xf:send ev:event="xforms-ready" submission="s-load-from-master"/>

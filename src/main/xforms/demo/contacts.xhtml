@@ -66,8 +66,7 @@
 								   method="post"
 								   replace="none"
 								   ref="address[index('addresses')]">
-						<xf:message ev:event="xforms-submit-done" level="ephemeral">Masterform has updated Subform.
-						</xf:message>
+						<!--<xf:message ev:event="xforms-submit-done" level="ephemeral">Masterform has updated Subform.</xf:message>-->
 					</xf:submission>
 
 				</xf:model>
@@ -113,6 +112,7 @@
                     <table>
                         <tr>
                             <td class="contactsSpacerLeft"/>
+<!--
                             <td>
                                 <xf:trigger class="contactsMasterTrigger">
                                     <xf:label>push address to subform</xf:label>
@@ -125,6 +125,7 @@
                                     </xf:action>
                                 </xf:trigger>
                             </td>
+-->
                             <td>
                                 <xf:trigger class="contactsSubTrigger">
                                     <xf:label>pull address from master</xf:label>

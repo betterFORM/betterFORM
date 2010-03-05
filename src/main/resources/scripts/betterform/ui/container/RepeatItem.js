@@ -32,6 +32,7 @@ dojo.declare(
             // TODO: verify if this._attachTemplateNodes(this.domNode) can really be removed, remove it in all other controls
             // this._attachTemplateNodes(this.domNode);
         },
+/*
         postCreate:function() {
             // console.debug("betterform.ui.container.RepeatItem.postCreate: appearance: ",this.appearance);
             dojo.connect(this.domNode, "onmouseover", this, "_onMouseOver");
@@ -50,7 +51,7 @@ dojo.declare(
             }
         },
 
-        _onKeyDown:function(/*Event*/event) {
+        _onKeyDown:function( event) {
             var keycode;
             if (window.event) {
                 keycode = window.event.keyCode;
@@ -67,6 +68,7 @@ dojo.declare(
             }
         },
 
+*/
 
         /* extension point to overwrite handleStateChanged for containers */
         handleStateChanged:function(contextInfo) {
