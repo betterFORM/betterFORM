@@ -72,7 +72,9 @@ public class FileSubmissionHandler extends AbstractConnector implements Submissi
                     // create input stream from directory listing
                     Document document = FileURIResolver.buildDirectoryListing(file);
                     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                    DOMUtil.prettyPrintDOM(document, outputStream);
+                    if(LOGGER.isDebugEnabled()){
+                        DOMUtil.prettyPrintDOM(document, outputStream);
+                    }                    
                     inputStream = new ByteArrayInputStream(outputStream.toByteArray());
                 }
                 else {

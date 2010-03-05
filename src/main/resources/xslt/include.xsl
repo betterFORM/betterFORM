@@ -23,8 +23,10 @@
     -->
     <xsl:strip-space elements="*"/>
     <xsl:template match="/">
+<!--
         <xsl:message>processing include directives.....</xsl:message>
         <xsl:message>inclusion root: <xsl:value-of select="$root"/></xsl:message>
+-->
         <xsl:copy>
             <xsl:apply-templates/>
         </xsl:copy>
@@ -45,7 +47,7 @@
                 <xsl:otherwise><xsl:value-of select="@src"/></xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <xsl:message>File is <xsl:value-of select="$file"/></xsl:message>
+        <!--<xsl:message>File is <xsl:value-of select="$file"/></xsl:message>-->
 
         <xsl:variable name="resource">
             <xsl:choose>
@@ -61,7 +63,7 @@
             </xsl:choose>
         </xsl:variable>
 
-        <xsl:message>including URI:<xsl:value-of select="$resource"/></xsl:message>
+        <!--<xsl:message>including URI:<xsl:value-of select="$resource"/></xsl:message>-->
 
         <xsl:variable name="fragmentId" select="substring-after(@src,'#')"/>
         <xsl:choose>

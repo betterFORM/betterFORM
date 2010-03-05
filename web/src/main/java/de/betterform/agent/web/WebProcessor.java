@@ -370,13 +370,13 @@ public class WebProcessor implements XFormsProcessor, EventListener {
             LOGGER.debug("Event " + event.getEventName() + " dispatched");
             LOGGER.debug("Event target: " + event.getId());
             /*   try {
-            if(this.xformsProcessor != null){
-            DOMUtil.prettyPrintDOM(this.xformsProcessor.getXMLContainer(),System.out);
-            }
-            } catch (TransformerException e) {
-            throw new XFormsException(e);
-            }
-            }  */
+                    if(this.xformsProcessor != null){
+                        DOMUtil.prettyPrintDOM(this.xformsProcessor.getXMLContainer(),System.out);
+                    }
+                } catch (TransformerException e) {
+                    throw new XFormsException(e);
+                }
+                */
         }
     }
 

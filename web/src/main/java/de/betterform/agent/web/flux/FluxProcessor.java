@@ -211,7 +211,10 @@ public class FluxProcessor extends WebProcessor {
                             String parentId = ((Element) target.getParentNode()).getAttributeNS(null, "id");
                             xmlEvent.addProperty("parentId", parentId);
                         } else if (control instanceof BindingElement) {
-                            DOMUtil.prettyPrintDOM(control.getElement());
+                            if(LOGGER.isDebugEnabled()) {
+                                DOMUtil.prettyPrintDOM(control.getElement());
+                            }
+                            
                             Element bfData = DOMUtil.getChildElement(control.getElement(), NamespaceConstants.BETTERFORM_PREFIX+":data");
                             String internalType = bfData.getAttributeNS(NamespaceConstants.BETTERFORM_NS, "type");
                             xmlEvent.addProperty("type", internalType);

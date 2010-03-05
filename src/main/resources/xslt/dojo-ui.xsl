@@ -418,9 +418,7 @@
                 <xsl:otherwise>div</xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-
-        <xsl:message>LN: <xsl:value-of select="local-name()"/> htmlElem: <xsl:value-of select="$htmlElem"/></xsl:message>
-
+        
         <xsl:element name="{$htmlElem}">
             <xsl:attribute name="id" select="$id"/>
             <xsl:attribute name="class" select="concat($control-classes,' xfRepeated')"/>
