@@ -324,6 +324,19 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
 }
 
+h2 a{
+	font-family: Helvetica, Arial, sans-serif;
+	font-weight: bold;
+	clear:both;
+	color:#525252;
+	display:block;
+	font-size:1.2em;
+	letter-spacing:0.05em;
+	line-height:1.056em;
+	margin-top:10px;
+	padding-top:9px;
+}
+
 #content h1 {
 	color: #2C2C2C;
 	font-size: 1.6em;
