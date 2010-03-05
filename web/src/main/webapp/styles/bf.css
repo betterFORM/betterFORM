@@ -501,13 +501,20 @@ h3{
 #content .linkImage {
 	color:transparent;
 }
-
+#product #content .downloadButtonWrapper .exploreButton,
+#content .downloadButtonWrapper  a .downloadButton {
+	color:white;
+}
+#download #content #boxleft .downloadBox a,
+#download #content #boxleft .downloadBox a:visited,
+#download #content #boxleft .downloadBox a:active,
+#download #content #boxleft .downloadBox a:focus,
 #content .downloadButtonWrapper  a:visited,
 #content  .downloadButtonWrapper a:active,
 #content  .downloadButtonWrapper a:focus,
 #content  .downloadButtonWrapper a {
 	text-decoration:none;
-	color:white;
+	color:transparent;
 	float:left;
 }
 
