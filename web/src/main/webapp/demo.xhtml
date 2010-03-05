@@ -158,11 +158,11 @@
                 <xf:resource value="'forms/demo/registration.xhtml#xforms'"/>
             </xf:load>
         </xf:trigger>
-        <xf:trigger id="twitterDemoTrigger">
+        <xf:trigger id="featureExplorerDemoTrigger">
             <xf:label>run demo</xf:label>
             <xf:toggle case="c-demoArea"/>
-            <xf:load show="embed" targetid="demoTarget">
-                <xf:resource value="'forms/demo/twitter.xhtml#xforms'"/>
+            <xf:load show="replace" >
+                <xf:resource value="'forms/reference/XFormsFeatureExplorer.xhtml'"/>
             </xf:load>
         </xf:trigger>
     </div>
@@ -229,11 +229,11 @@
 
                         <a href="javascript:runDemo('contacts');"><img src="images/add-l.png" alt="contacts"/></a>
                         <a href="javascript:runDemo('registration');"><img src="images/reg-r.png"
-                                                                           alt="registration"/></a>
+                                                                           alt="Registration"/></a>
                         <a href="javascript:runDemo('orderlist');"><img src="images/ord-l.png"
                                                                         alt="orderlist"/></a>
-                        <a href="javascript:runDemo('twitter');"><img src="images/fea-r.png"
-                                                                      alt="Twitter Client"/></a>
+                        <a href="javascript:runDemo('featureExplorer');"><img src="images/fea-r.png"
+                                                                      alt="XFormsFeatureExplorer"/></a>
 
                     </xf:case>
                     <xf:case id="c-demoArea">
