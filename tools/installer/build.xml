@@ -57,7 +57,7 @@
 -->
         <izpack input="${basedir}/installer.xml"
                 output="${basedir}/target/betterform-install.jar"
-                installerType="standard"
+                installerType="web"
                 basedir="${basedir}/target"/>
 
         <chmod file="${basedir}/target/betterform-install.jar" perm="770"/>

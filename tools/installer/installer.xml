@@ -16,7 +16,7 @@
         <appversion>3.0</appversion>
         <url>http://www.betterform.de</url>
         <javaversion>1.5</javaversion>
-        <webdir>http://www.betterform.de/packs</webdir>
+        <webdir>http://localhost:8080/betterform/packs</webdir>
     </info>
 
     <conditions>
