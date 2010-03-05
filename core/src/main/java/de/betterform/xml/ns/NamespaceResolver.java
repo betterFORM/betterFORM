@@ -177,6 +177,9 @@ public class NamespaceResolver {
      * @return an expanded name for the given qualified name.
      */
     public static String getExpandedName(Element context, String name) {
+        if(name == null) {
+            return null;
+        }
         int separator = name.indexOf(':');
         String prefix = separator > -1 ? name.substring(0, separator) : null;
         String localName = separator > -1 ? name.substring(separator + 1) : name;
