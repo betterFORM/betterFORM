@@ -19,8 +19,8 @@
 
 
         <style type="text/css">
-           @import "http://ajax.googleapis.com/ajax/libs/dojo/1.2/dijit/themes/tundra/tundra.css";
-           @import "http://ajax.googleapis.com/ajax/libs/dojo/1.2/dojo/resources/dojo.css";
+           @import "../resources/scripts/release/dojo/dijit/themes/tundra/tundra.css";
+           @import "../resources/scripts/release/dojo/dojo/resources/dojo.css";
         </style>
 
         <link REV="made" HREF="mailto:info@betterform.de"/>
@@ -28,9 +28,15 @@
         <link rel="ICON" href="../images/betterform.ico" type="image/x-icon"/>
         <link rel="stylesheet" type="text/css" href="../styles/bf.css"/>
         <link rel="stylesheet" type="text/css" href="../styles/testreport.css"/>
-        <script type="text/javascript"
-                src="http://ajax.googleapis.com/ajax/libs/dojo/1.2/dojo/dojo.xd.js"
-                djConfig="parseOnLoad: true"></script>
+		<script type="text/javascript" src="../resources/scripts/release/dojo/dojo/dojo.js">
+				var djConfig= {
+					parseOnLoad: true,
+					locale:'en',
+					isDebug:false,
+					debugAtAllCost:false
+				};
+		</script>
+
         <script type="text/javascript">
            dojo.require("dojo.parser");
            dojo.require("dijit.TitlePane");

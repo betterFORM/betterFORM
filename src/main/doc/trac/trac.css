@@ -141,8 +141,6 @@ banner a:active {
     color: #7ba841;
 }
 
-h1, h2, h3, h4, h5, h6 {
-
 
 /* VARIOUS MIXED STYLES */
 #footer {
@@ -154,8 +152,30 @@ h1, h2, h3, h4, h5, h6 {
 #main .nav ul {
 	font-size:11px;
 }
+
 em,
 .wiki em, 
-#main .wiki em {
+#main .wiki em, 
+#main dt em {
 	color:#488aa6 !important;
+}
+
+#main dd.changeset .changes {
+	color:black;
+	font-size:110%;
+}
+
+#main dd.changeset p  {
+	font-size:130%;
+	font-weight:bold;
+	color:black;
+}
+
+.timeline h2 {
+	background-color:transparent;
+	border-bottom:4px solid #488AA6;
+	color:black;
+	font-size:105%;
+	padding:5px;
+	width:80%;
 }

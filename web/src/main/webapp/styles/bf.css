@@ -26,7 +26,9 @@ a img{
     margin-bottom:20px;
 }
 
-*{
+
+*,
+.tundra *{
     font-family:Arial, Helvetica, sans-serif;
 }
 
@@ -108,10 +110,18 @@ ul{
     text-align:right;
     margin-top:-12px;
 }
+
+#topnav .menuDevider {
+    font-size:11pt;
+}
+
 #logoBar{
     height:90px;
 }
 
+.langSelector {
+	display:none;
+}
 
 /*
 .logoBar{
@@ -126,6 +136,8 @@ ul{
 	font-weight: normal;
 	background: transparent;
 	text-decoration: none;
+	font-size:11pt;
+
 }
 
 #topnav a:focus,
