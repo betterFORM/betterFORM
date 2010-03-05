@@ -140,7 +140,7 @@
         </copy>
 
         <move file="${target}" tofile="${target}/${dist.name}"/>
-        <copy todir="${target}/${dist.name}" file="${target}/${dist.name}/classes/version.info"/>
+        <copy todir="${target}/${dist.name}" file="${target}/${dist.name}/classes/META-INF/version.info"/>
         <delete dir="${target}/${dist.name}/classes"/>
 
     </target>
