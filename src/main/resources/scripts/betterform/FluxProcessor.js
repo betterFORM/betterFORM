@@ -10,6 +10,11 @@ dojo.require("dojo.NodeList-fx");
 dojo.require("betterform.ui.UIElementFactory");
 dojo.require("dojox.layout.FloatingPane");
 dojo.require("dojox.widget.Toaster");
+dojo.require("betterform.ui.common.GlobalAlert");
+dojo.require("betterform.ui.common.BowlAlert");
+dojo.require("betterform.ui.common.InlineRoundBordersAlert");
+dojo.require("betterform.ui.common.InlineAlert");
+dojo.require("betterform.ui.common.ToolTipAlert");
 
 /**
 	All Rights Reserved.
@@ -125,6 +130,7 @@ dojo.declare("betterform.FluxProcessor",
             dojo.unsubscribe(this.subscribers[0]);
             dojo.unsubscribe(this.subscribers[1]);
         }
+        this.defaultAlertHandler == undefined;
         dojo.require("betterform.ui.common.ToolTipAlert");
         this.defaultAlertHandler = new betterform.ui.common.ToolTipAlert({});
         console.debug("Enabled ToolTipAlert Handler ", this.defaultAlertHandler);

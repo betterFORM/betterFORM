@@ -505,14 +505,19 @@ h3{
 #content .downloadButtonWrapper  a .downloadButton {
 	color:white;
 }
-#header #logoBar #linkLogo,
-#header #logoBar #linkLogo:visited,
-#header #logoBar #linkLogo:active,
-#header #logoBar #linkLogo:focus,
 #index #columnRight a,
 #index #columnRight a:visited,
 #index #columnRight a:active,
 #index #columnRight a:focus,
+#header #logoBar #linkLogo,
+#header #logoBar #linkLogo:visited,
+#header #logoBar #linkLogo:active,
+#header #logoBar #linkLogo:focus {
+	text-decoration:none;
+	color:transparent;
+}
+
+
 #download #content #boxleft .downloadBox a,
 #download #content #boxleft .downloadBox a:visited,
 #download #content #boxleft .downloadBox a:active,
@@ -540,7 +545,6 @@ h3{
 }
 #product .downloadButton {
     width:170px;
-    padding:10px;
     width:168px;
     padding-left:10px;
 
