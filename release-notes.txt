@@ -10,3 +10,7 @@ the PDF documenation.
 
 betterFORM is tested against a test suite of about 560 unit tests and more than 400 feature tests which have been
 run on Firefox 3.0 + 3.6, IE 7, Chrome 4+5 and Safari 4.
+
+Chrome, Firefox and Safari work equally well. IE 6 support has been dropped and IE 7 might still have some detail issues.
+The forms also run on iPhone 3G, 3GS but have not been optimized for those yet.
+
