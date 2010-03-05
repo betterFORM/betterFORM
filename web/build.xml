@@ -247,9 +247,7 @@
         <echo message="************************************************************************************"/>
         <echo/>
         <delete dir="${webapp.dir}/forms/apps"/>
-        <delete dir="${webapp.dir}/forms/demo"/>
         <delete dir="${webapp.dir}/forms/incubator"/>
-        <delete dir="${webapp.dir}/forms/reference"/>
         <delete dir="${webapp.dir}/forms/test"/>
         <delete dir="${webapp.dir}/forms/v3"/>
 
