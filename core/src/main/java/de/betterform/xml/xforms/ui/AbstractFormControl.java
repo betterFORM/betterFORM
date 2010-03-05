@@ -20,6 +20,7 @@ import de.betterform.xml.xforms.ui.state.UIElementStateUtil;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -257,7 +258,10 @@ public abstract class AbstractFormControl extends BindingElement implements Defa
                 NumberFormat formatter = NumberFormat.getNumberInstance(locale);
                 formatter.setMaximumFractionDigits(Double.SIZE);
                 Number num = null;
+
                 try {
+                    //test if value is really a number
+                    BigDecimal tmpNumber = new BigDecimal(value);
                     num = formatter.parse(value);
                 } catch (ParseException e) {
                     //try the default locale - else fail with ParseException
@@ -268,6 +272,9 @@ public abstract class AbstractFormControl extends BindingElement implements Defa
                     num = null;
                     num = formatter.parse(value);
 */
+                    AbstractUIElement.LOGGER.warn("value: '" + value + "' could not be parsed for locale: " + locale);
+                    return value;
+                } catch (NumberFormatException nfe) {
                     AbstractUIElement.LOGGER.warn("value: '" + value + "' could not be parsed for locale: " + locale);
                     return value;
                 }
