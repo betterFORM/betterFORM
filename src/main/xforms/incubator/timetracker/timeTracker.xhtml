@@ -157,11 +157,18 @@
 
         <xf:instance id="i-tasks">
             <data xmlns="">
-                <project>
-                    <name/>
-                </project>
+            
             </data>
         </xf:instance>
+
+        <xf:bind nodeset="instance('i-tasks')/project/task">
+            <xf:bind nodeset="billable" type="boolean"/>
+        </xf:bind>
+
+
+        <xf:bind nodeset="instance('i-tasks')/project/task[1]/billable"
+                 type="xf:boolean" />
+
 
         <xf:instance id="i-query-tasks">
             <data xmlns="">
@@ -334,7 +341,7 @@
         </xf:case>
 
         <xf:case id="cTask" selected="true">
-            <xf:label>Task</xf:label>
+            <xf:label>Create</xf:label>
             <xf:group ref="task">
                 <xf:label class="subheader">Create Task</xf:label>
                 <table id="task-table" >
@@ -563,7 +570,7 @@
             </xf:group>
         </xf:case>
         <xf:case id="cResults" selected="false">
-        <xf:label>Results</xf:label>
+        <xf:label>Listing</xf:label>
         <xf:group>
             <xf:label class="subheader">TimeTracker Results</xf:label>
             <table>
@@ -606,14 +613,22 @@
                 <xf:output ref="status">
                     <xf:label>Status</xf:label>
                 </xf:output>
-                <xf:output ref="billable">
+                <xf:input ref="billable">
                     <xf:label>Billable</xf:label>
-                </xf:output>
+                </xf:input>
+
+                <!--<xf:output ref="billable">-->
+                    <!--<xf:label>Billable</xf:label>-->
+                <!--</xf:output>-->
                 <!--<xf:output ref="billed/@date">-->
                     <!--<xf:label>Billed</xf:label>-->
                 <!--</xf:output>-->
 
             </xf:repeat>
+
+            <xf:input ref="instance('i-tasks')/project/task[1]/billable">
+                <xf:label>TEST</xf:label>
+            </xf:input>
 
             <xf:trigger>
                 <xf:label>Print Internal</xf:label>
