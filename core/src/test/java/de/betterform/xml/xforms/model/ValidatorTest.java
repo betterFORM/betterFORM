@@ -360,6 +360,18 @@ public class ValidatorTest extends BetterFormTestCase {
         modelItem.setValue("");
         validator.validate(modelItem);
         assertEquals(false, modelItem.isValid());
+
+        modelItem.setValue("4711xx");
+        validator.validate(modelItem);
+        assertEquals(false, modelItem.isValid());
+
+        modelItem.setValue("xx4711");
+        validator.validate(modelItem);
+        assertEquals(false, modelItem.isValid());
+
+        modelItem.setValue("xx4711xx");
+        validator.validate(modelItem);
+        assertEquals(false, modelItem.isValid()); 
     }
 
     /**

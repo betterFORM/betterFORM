@@ -68,7 +68,7 @@ public class LocalisationTest extends TestCase {
     }
 
 
-    public void testUpdateInvalidNumber() throws Exception {
+    public void testUpdateInvalidDate() throws Exception {
         //feed invalid number value
         try {
             this.xformsProcesssorImpl.setControlValue("4", "x23.21");

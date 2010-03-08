@@ -44,6 +44,7 @@ public abstract class WebTestBase extends SeleneseTestCase {
     }
 
     public void tearDown() throws Exception {
+        printFileName();
         selenium.stop();
         selenium = null;
     }
@@ -112,4 +113,41 @@ public abstract class WebTestBase extends SeleneseTestCase {
             Thread.sleep(1000);
         }
     }
+
+    protected void printFileName() {
+        final String firefox = "firefox";
+        final String safari = "safari";
+        final String msie = "msie";
+
+        String userAgent = selenium.getEval("navigator.userAgent").toLowerCase();
+        String fileName;
+
+        //Detect OS
+        if (userAgent.toLowerCase().contains("linux")) {
+            fileName = "Linux_";
+        } else if (userAgent.toLowerCase().contains("mac")) {
+            fileName = "MacOS_";
+        } else if (userAgent.toLowerCase().contains("win")) {
+            fileName = "Windows_";
+        } else {
+            fileName = "Unknown_";
+        }
+
+        //Detect Browser and Version
+        if (userAgent.toLowerCase().contains(firefox)) {
+            int index = userAgent.indexOf(firefox)+ firefox.length() + 1;
+            fileName = fileName + "Firefox_"+ userAgent.substring(index);
+        } else if (userAgent.toLowerCase().contains(safari)) {
+            int index = userAgent.indexOf(safari) + safari.length();
+            fileName = fileName + "Safari_"+ userAgent.substring(index + 1, index +2);
+        } else if (userAgent.toLowerCase().contains(msie)) {
+            int index = userAgent.indexOf(msie) + msie.length();
+            fileName = fileName + "MSIE_"+ userAgent.substring(index +1, index +3);            
+        } else {
+            fileName = fileName + "Unknown";
+        }
+
+        System.out.print(fileName);
+    }
+
 }

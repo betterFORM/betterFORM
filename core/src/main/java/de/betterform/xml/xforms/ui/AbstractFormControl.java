@@ -26,7 +26,9 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.Locale;
+import java.util.Scanner;
 
 /**
  * Base class for all form controls.
@@ -260,9 +262,13 @@ public abstract class AbstractFormControl extends BindingElement implements Defa
                 Number num = null;
 
                 try {
-                    //test if value is really a number
-                    BigDecimal tmpNumber = new BigDecimal(value);
-                    num = formatter.parse(value);
+                   Scanner scanner = new Scanner(value);
+                   scanner.useLocale(locale);
+                   BigDecimal tmpNumber = scanner.nextBigDecimal();
+
+                   num = formatter.parse(value);
+                   //test if value is really a number
+
                 } catch (ParseException e) {
                     //try the default locale - else fail with ParseException
 /*
@@ -275,6 +281,9 @@ public abstract class AbstractFormControl extends BindingElement implements Defa
                     AbstractUIElement.LOGGER.warn("value: '" + value + "' could not be parsed for locale: " + locale);
                     return value;
                 } catch (NumberFormatException nfe) {
+                    AbstractUIElement.LOGGER.warn("value: '" + value + "' could not be parsed for locale: " + locale);
+                    return value;
+                } catch (InputMismatchException ime) {
                     AbstractUIElement.LOGGER.warn("value: '" + value + "' could not be parsed for locale: " + locale);
                     return value;
                 }

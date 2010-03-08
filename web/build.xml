@@ -17,7 +17,6 @@
     <property name="src.dir" value="../src"/>
     <property name="core.dir" value="../core"/>
     <property name="web.dir" value="."/>
-    <property name="dojo.name" value="dojo-release-1.2.3"/>
     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
 
