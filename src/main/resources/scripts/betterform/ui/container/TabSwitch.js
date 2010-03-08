@@ -13,6 +13,7 @@ dojo.require("betterform.ui.container.Container");
 dojo.declare("betterform.ui.container.TabSwitch",
         [betterform.ui.container.Container,dijit.layout.TabContainer],
 {
+    serverUpdate:false,
     postCreate: function(/*Event*/ evt){
         this.inherited(arguments);
         dojo.connect(this.tablist, "onSelectChild", this, "onTabClicked");
@@ -26,9 +27,10 @@ dojo.declare("betterform.ui.container.TabSwitch",
 
     onTabClicked:function(/*Event*/ evt){
         // console.debug("TabSwitch.onTabClicked event: ",evt);
-        var btnToActivate = "t-" + dojo.attr(dojo.byId(evt.id),"caseid");         
-        fluxProcessor.dispatchEvent(btnToActivate);
-
+        if(!this.serverUpdate){
+            var btnToActivate = "t-" + dojo.attr(dojo.byId(evt.id),"caseid");
+            fluxProcessor.dispatchEvent(btnToActivate);
+        }
     },
     /* extension point to overwrite handleStateChanged for containers */
     handleStateChanged:function(contextInfo) {
@@ -82,7 +84,9 @@ dojo.declare("betterform.ui.container.TabSwitch",
         // console.debug("betterform.ui.container.TabSwitch.toggleCase", contextInfo, " this:",this);
 		var case2selectNode = dojo.query("div[caseid='"+ contextInfo.selected + "']",this.domNode)[0];
         var case2selectDijit = dijit.byId(dojo.attr(case2selectNode,"id"));
+        this.serverUpdate = true;
         this.selectChild(case2selectDijit);
+        this.serverUpdate = false;
     }
 
 });
