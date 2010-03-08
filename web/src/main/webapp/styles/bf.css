@@ -134,31 +134,83 @@ ul{
     float:left;
 }
 */
-#topnav a {
-	color: #999;
-	font-weight: normal;
-	background: transparent;
-	text-decoration: none;
-	font-size:11pt;
 
-}
-
-#topnav a:focus,
-#topnav a:hover,
-#topnav a:active {
-	text-decoration: underline;
-	background-color: transparent;
-    color:#488aa6;
-}
 #index #topnav{
     letter-spacing:0.51em;
     font-size:11pt;
 }
 
+/*
+	##################################################
+	############  LINK STYLING    ####################
+	##################################################
+*/
+
+a,
+a:visited {
+	font-family: Helvetica, Arial, sans-serif;
+	color:#488AA6;
+	text-decoration:none;
+	background-color: transparent;
+}
+
+a:active,
+a:focus,
+a:hover{
+	text-decoration:underline;
+}
+
+#topnav a,
+#topnav a:visited {
+	color: #999;
+	font-size:11pt;
+}
+
+#topnav a:focus,
+#topnav a:hover,
+#topnav a:active {
+    color:#488aa6;
+}
+
+#header .link,
+#content .link {
+	color:transparent;
+}
+
+#content .linkbox a,
+#bottomMenu a,
+#bottomMenu a:focus,
+#bottomMenu a:hover,
+#bottomMenu a:visited,
+#bottomMenu a:active {
+	color:white
+}
+
+#content .h2Link,
+#content .h2Link:focus,
+#content .h2Link:active,
+#content .h2Link:hover{
+	text-decoration:none;
+	clear:both;
+	color:#525252;
+	display:block;
+	font-size:1.2em;
+	letter-spacing:0.05em;
+	line-height:1.056em;
+	margin-top:10px;
+	padding-top:9px;
+}
+
+/*
+	##################################################
+	###########   END LINK STYLING    ################
+	##################################################
+*/
+
+
 #content{
     background:#d3d3d3;
     text-align:center;
-    /*margin-top:121px;*/
     display:block;
     float:left;
 }
@@ -170,35 +222,6 @@ ul{
 #content .contentBody div{
     /*padding-bottom:30px;*/
 }
-
-#content a:link{
-    border:none;
-}
-
-#content a,
-#content a:visited {
-	color: #488aa6;
-	font-weight: normal;
-	background: transparent;
-	text-decoration: none;
-}
-
-#content a:focus,
-#content a:hover,
-#content a:active {
-	text-decoration: underline;
-	background-color: transparent;
-    color:#488aa6;
-}
-
-
-#content .linkbox a{
-    text-decoration:none;
-    color:white;
-    float:left;
-    margin-top:10px;
-}
-
 
 #index #content{
     background:#d3d3d3;
@@ -299,20 +322,7 @@ ul{
     margin-top:10px;
 
 }
-.page #bottomMenu a {
-	color:#FFFFFF;
-	background: transparent;
-    text-decoration:none;
-}
 
-.page #bottomMenu a:focus,
-.page #bottomMenu a:hover,
-.page #bottomMenu a:active {
-	color: #488aa6;
-	background-color: transparent;
-	text-decoration: underline;
-
-}
 
 .menuDevider{
     font-weight:bold;
@@ -324,16 +334,6 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
 }
 
-#product #content h2 a,
-#product #content h2 a:focus,
-#product #content h2 a:hover,
-#product #content h2 a:visited,
-#product #content h2 a:active {
-	font-family: Helvetica, Arial, sans-serif;
-	color:#525252;
-	font-weight:bold;
-	text-decoration:none;
-}
 
 #content h1 {
 	color: #2C2C2C;
@@ -396,42 +396,6 @@ h3{
 	padding:14px 20px 16px 67px !important;
 }
 
-/*
-.page_margins {
-	background: #FFFFFF;
-    width:760px;
-	margin-left:auto;
-    margin-right:auto;
-}
-*/
-
-
-/*
-#header {
-}
-
-*/
-/*
-#header #topnav {
-    float:right;
-    font-size:9pt;
-}
-*/
-
-
-
-
-/*
-#footer {
-	background:#494949;
-	border-top:5px solid #EFEFEF;
-	color:#FFFFFF;;
-	line-height:1.5em;
-	padding:10px 20px;
-	height:40px;
-	padding:5px;
-}
-*/
 .bfMask {
 	width:300px;
 	height:100px;
@@ -484,54 +448,13 @@ h3{
 
 }
 
-
-/*
-.contact .contentBody{
-    margin-bottom:20px;
-    text-align:left;
-}
-.contact .contentBody li{
-    line-height:1;
-}
-*/
-
-#content .linkImage:visited,
-#content .linkImage:active,
-#content .linkImage:focus,
-#content .linkImage {
-	color:transparent;
-}
-#product #content .downloadButtonWrapper .exploreButton,
-#content .downloadButtonWrapper  a .downloadButton {
-	color:white;
-}
-#index #columnRight a,
-#index #columnRight a:visited,
-#index #columnRight a:active,
-#index #columnRight a:focus,
-#header #logoBar #linkLogo,
-#header #logoBar #linkLogo:visited,
-#header #logoBar #linkLogo:active,
-#header #logoBar #linkLogo:focus {
-	text-decoration:none;
-	color:transparent;
-}
-
-
-#download #content #boxleft .downloadBox a,
-#download #content #boxleft .downloadBox a:visited,
-#download #content #boxleft .downloadBox a:active,
-#download #content #boxleft .downloadBox a:focus,
-#content .downloadButtonWrapper  a:visited,
-#content  .downloadButtonWrapper a:active,
-#content  .downloadButtonWrapper a:focus,
-#content  .downloadButtonWrapper a {
-	text-decoration:none;
-	color:transparent;
+.downloadButtonWrapper {
 	float:left;
 }
 
-
+#content .buttonText {
+	color:white;
+}
 .downloadButton {
     background:transparent url(../images/b_getit_170.png) no-repeat scroll 0 0;
     font-size:9pt;
@@ -544,8 +467,7 @@ h3{
     padding-top:12px;
 }
 #product .downloadButton {
-    width:170px;
-    width:168px;
+    width:170px;    
     padding-left:10px;
 
 }
@@ -613,14 +535,6 @@ h3{
     margin:0 0 25px;
 }
 
-#product #content .linkbox a,
-#product #content .linkbox a:focus,
-#product #content .linkbox a:hover,
-#product #content .linkbox a:active {
-    text-decoration:underline;
-    float:none;
-	color:white;
-}
 
 #sourceforge{
     margin-top:20px;
