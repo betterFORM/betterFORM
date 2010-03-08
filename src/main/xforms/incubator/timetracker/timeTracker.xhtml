@@ -19,8 +19,58 @@
             border-bottom: thin solid gray;
         }
 
+        tr.xfRepeatHeader  td {
+            font-weight: bold;
+            padding-right: 5px;
+        }
+
         .caTabContainer {
             overflow: hidden;
+        }
+
+        tr.xfRepeatItem  td {
+            padding-right: 5px;
+        }
+
+        /* date column */
+        .caTableCol-1 {
+            text-align: left;
+            width: 11ex;
+        }
+
+        /* time column */
+        .caTableCol-2 {
+            text-align: right;
+        }
+
+        /* time column */
+        .caTableCol-3 {
+            text-align: left;
+        }
+
+        /* time column */
+        .caTableCol-4 {
+            text-align: left;
+        }
+
+        /* note column */
+        .caTableCol-5 {
+            overflow: hidden;
+        }
+
+        /* time column */
+        .caTableCol-6 {
+            text-align: left;
+        }
+
+        /* time column */
+        .caTableCol-7 {
+            text-align: right;
+        }
+
+        #task-table span.xfControl {
+            display: block;
+            margin-left: 5px;
         }
 
         /*.subheader {*/
@@ -262,12 +312,15 @@
 </div>
 
 
-<div dojoType="dijit.layout.BorderContainer" design="sidebar" style="width: 90%; height: 700px; padding: 10px;">
-<div dojoType="dijit.layout.ContentPane" region="top" style="height: 50px;" splitter="false">
+<!--<div dojoType="dijit.layout.BorderContainer" design="sidebar" style="width: 90%; height: 700px; padding: 10px;">-->
+<div  style="width: 90%; height: 700px; padding: 10px;">
+<!--<div dojoType="dijit.layout.ContentPane" region="top" style="height: 50px;" splitter="false">-->
+<div style="height: 50px;" >
     <div class="header">TimeTracker 0.2</div>
 </div>
 
-<div dojoType="dijit.layout.ContentPane" region="center" style="padding:10px;height:90%;">
+<!--<div dojoType="dijit.layout.ContentPane" region="center" style="padding:10px;height:90%;">-->
+<div style="padding:10px;height:90%;">
     <xf:switch appearance="dijit:TabContainer" id="switch1" style="height:90%">
         <xf:case name="switch-toggles" id="switch-toggles" selected="false">
             <xf:trigger id="t-cTask">
@@ -426,15 +479,7 @@
                             </xf:select>
                         </td>
                     </tr>
-                    <tr>
-                        <td align="right">Note</td>
-                        <td>
-                            <xf:textarea ref="note" mediatype="dojo" style="width:200px;">
-                                <xf:label></xf:label>
-                                <xf:hint>What has been done?</xf:hint>
-                            </xf:textarea>
-                        </td>
-                    </tr>
+
                     <tr>
                         <td align="right">Status</td>
                         <td>
@@ -462,6 +507,15 @@
                                 <xf:label></xf:label>
                                 <xf:hint>True if task can be billed to Customer</xf:hint>
                             </xf:input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">Note</td>
+                        <td>
+                            <xf:textarea ref="note" mediatype="dojo" style="width:200px;">
+                                <xf:label></xf:label>
+                                <xf:hint>What has been done?</xf:hint>
+                            </xf:textarea>
                         </td>
                     </tr>
                     <tr>
@@ -537,7 +591,7 @@
                 <xf:output ref="date">
                     <xf:label>Date</xf:label>
                 </xf:output>
-                <xf:output value="concat(duration/@hours,':',duration/@minutes)">
+                <xf:output value="concat(format-number(duration/@hours,'00'),':',format-number(duration/@minutes, '00'))">
                     <xf:label>Duration</xf:label>
                 </xf:output>
                 <xf:output ref="who">
@@ -555,9 +609,9 @@
                 <xf:output ref="billable">
                     <xf:label>Billable</xf:label>
                 </xf:output>
-                <xf:output ref="billed/@date">
-                    <xf:label>Billed</xf:label>
-                </xf:output>
+                <!--<xf:output ref="billed/@date">-->
+                    <!--<xf:label>Billed</xf:label>-->
+                <!--</xf:output>-->
 
             </xf:repeat>
 
