@@ -409,7 +409,7 @@ public class XFormsExtensionFunctionsTest extends BetterFormTestCase {
     //XXX add test case for choose
 
     public void testInstanceOfModel() throws Exception {
-        assertEquals("second", evaluateInDefaultContextAsString("bf:instanceOfModel('second','default2')/second"));
+        assertEquals("second", evaluateInDefaultContextAsString("instanceOfModel('second','default2')/second"));
     }
 
 
