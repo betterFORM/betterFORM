@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <head>
+        <title>TimeTracker</title>
+		<style type="text/css">
+			.xfGroupLabel{
+				font-size:14pt;
+				color:gray;
+				border-bottom:thin solid gray;
+				margin-bottom:30px;
+			}
+			.xfControl{
+				padding:4px;
+			}
+			#errorReport-value{
+				border:thin solid;
+				display:block;
+				background:red;
+			}
+		</style>
+    </head>
+    <body>
+		<div style="display:none">
+			<xf:model>
+
+				<xf:instance id="i-tasks">
+					<data xmlns="">
+						<project>
+							<name/>
+						</project>
+					</data>
+				</xf:instance>
+
+				<xf:instance id="i-query-tasks">
+					<data xmlns="">
+						<project/>
+					</data>
+				</xf:instance>
+
+				<xf:instance id="i-project"
+                     src="http://golem.local:8080/exist/rest/db/timetracking/i-project.xml"/>
+
+                <xf:instance id="i-who"
+                     src="http://golem.local:8080/exist/rest/db/timetracking/i-who.xml" />
+
+				<xf:instance id="i-print-result">
+					<data/>
+				</xf:instance>
+
+
+				<xf:instance id="i-controller">
+					<data xmlns="">
+						<error hasError="false"><![CDATA[]]></error>
+					</data>
+				</xf:instance>
+				<xf:bind nodeset="instance('i-controller')/error" relevant="@hasError='true'"/>
+
+				<!-- Submission to receive all tasks allocated to a specified project -->
+				<xf:submission id="s-get-tasks"
+							   resource="http://golem.local:8080/exist/rest/db/test/timetracker.xql?project={instance('i-query-tasks')/project}"
+							   method="post"
+							   replace="instance"
+							   instance="i-tasks">
+
+					<xf:action ev:event="xforms-submit-done">
+						<xf:message level="ephemeral">Received data from eXist DB</xf:message>
+					</xf:action>
+					<xf:message ev:event="xforms-submit-error">Failure received tasks froms eXist XML DB</xf:message>				
+				</xf:submission>
+
+
+				<!-- Submission to create HTML output for choosen tasks -->
+				<xf:submission id="s-format-tasks"
+					    ref="instance('i-tasks')"
+						action="xslt:timetracker.xsl?nocache=true"
+						method="GET"
+						replace="instance"
+						instance="i-print-result"
+						validate="false">
+
+					<xf:action ev:event="xforms-submit-done">
+						<xf:recalculate/>
+						<xf:send submission="s-save-in-webapp" />
+					</xf:action>
+					<xf:message ev:event="xforms-submit-error">Failure transforming Tasks to HTML</xf:message>
+				</xf:submission>
+
+				<!-- Submission to write HTML output to the filesystem -->
+				<xf:submission id="s-save-in-webapp"
+					   action="{$webapp.realpath}/results.html"
+					   method="put"
+					   replace="none"
+					   ref="instance('i-print-result')">
+					<xf:action ev:event="xforms-submit-done">
+						<xf:load resource="{$contextroot}/results.html" show="new"/>
+					</xf:action>
+					<xf:message ev:event="xforms-submit-error">Error while saving Test Restults in Webapp Directory</xf:message>
+				</xf:submission>
+
+			</xf:model>
+		</div>
+		
+        <xf:group appearance="full">
+            <xf:label>TimeTracker Results</xf:label>
+			<table>
+				<tr>
+					<td align="right">Project</td>
+					<td>
+						<xf:select1 id="project" ref="instance('i-query-tasks')/project" appearance="minimal">
+							<xf:label/>
+							<xf:itemset nodeset="instance('i-project')/project">
+								<xf:label ref="."/>
+								<xf:value ref="."/>
+							</xf:itemset>
+							<xf:send submission="s-get-tasks" ev:event="xforms-value-changed" if="string-length(instance('i-query-tasks')/project) &gt; 0"/>
+						</xf:select1>
+					</td>
+				</tr>
+			</table>
+
+			<xf:output ref="instance('i-tasks')/project/duration">
+				<xf:label>Overall Time:</xf:label>
+			</xf:output>
+
+			<xf:repeat nodeset="instance('i-tasks')/project/task" appearance="compact">
+				<xf:output ref="date">
+					<xf:label>Date</xf:label>
+				</xf:output>
+				<xf:output value="concat(
+				                    format-number(duration/@hours, '00'),
+				                    ':',
+				                    format-number(duration/@minutes, '00')
+				                  )">
+					<xf:label>Duration</xf:label>
+				</xf:output>
+				<xf:output ref="who">
+					<xf:label>User(s)</xf:label>
+				</xf:output>
+				<xf:output ref="what">
+					<xf:label>Task</xf:label>
+				</xf:output>
+				<xf:output ref="note">
+					<xf:label>Note</xf:label>
+				</xf:output>
+				<xf:output ref="billed">
+					<xf:label>Billed</xf:label>
+				</xf:output>
+				<xf:output ref="status">
+					<xf:label>Status</xf:label>
+				</xf:output>
+			</xf:repeat>
+
+			<xf:trigger>
+				<xf:label>Print</xf:label>
+				<xf:send submission="s-format-tasks"/>
+			</xf:trigger>
+
+			<xf:output mediatype="text/html" ref="instance('i-controller')/error" id="errorReport" />
+       </xf:group>
+    </body>
+</html>
