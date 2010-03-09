@@ -18,32 +18,13 @@
         <title>betterFORM Testuite results for Firefox 3.6</title>
 
 
-        <style type="text/css">
-            @import "../resources/scripts/release/dojo/dijit/themes/tundra/tundra.css";
-            @import "../resources/scripts/release/dojo/dojo/resources/dojo.css";
-        </style>
-
         <link REV="made" HREF="mailto:info@betterform.de"/>
         <link rel="SHORTCUT ICON" href="../images/betterform.ico"/>
         <link rel="ICON" href="../images/betterform.ico" type="image/x-icon"/>
         <link rel="stylesheet" type="text/css" href="../styles/bf.css"/>
         <link rel="stylesheet" type="text/css" href="../styles/testreport.css"/>
-		<script type="text/javascript" src="../resources/scripts/release/dojo/dojo/dojo.js">
-				var djConfig= {
-					parseOnLoad: true,
-					locale:'en',
-					isDebug:false,
-					debugAtAllCost:false
-				};
-		</script>
-        <script type="text/javascript">
-            dojo.require("dojo.parser");
-            dojo.require("dijit.TitlePane");
-            dojo.require("dojo.fx");
-            dojo.require("dijit.Tooltip");
 
-        </script>
-
+		
     </head>
         <body>
         
@@ -89,67 +70,6 @@
                     <td>betterForm LightSteelBlue</td>
                     <td rowspan="6">
                         <div>
-                            <script type="text/javascript">
-                                dojo.require("dojox.charting.Chart2D");
-                                dojo.require("dojox.charting.plot2d.Pie");
-                                dojo.require("dojox.charting.action2d.Highlight");
-                                dojo.require("dojox.charting.action2d.MoveSlice");
-                                dojo.require("dojox.charting.action2d.Tooltip");
-                                dojo.require("dojox.charting.themes.MiamiNice");
-                                dojo.require("dojox.charting.widget.Legend");
-    
-                                createChart = function(passed, failed, unknown) {
-                                    var chart = new dojox.charting.Chart2D("conformanceChart"),
-                                            sum = passed + failed + unknown;
-    
-                                    chart.addPlot("default", {
-                                        labels: true,
-                                        ticks: true,
-                                        type: "Pie",
-                                        font: "normal normal 11pt Tahoma",
-                                        fontColor: "black",
-                                        labelOffset: -50,
-                                        radius: 50,
-                                        fill: "white"
-                                    });
-                                    var numbers = [
-                                        {
-                                            y: passed,
-                                            stroke: {color: "black" },
-                                            fill: "#7ba841",
-                                            tooltip: passed + " tests passed",
-                                            text: ((passed / sum) * 100).toFixed(0) + "% passed"
-                                        },
-                                        {
-                                            y: failed,
-                                            stroke: {color: "black" },
-                                            fill: "#c56f46",
-                                            tooltip: failed + " tests failed",
-                                            text: ((failed / sum) * 100).toFixed(0) + "% failed"
-                                        },
-                                        {
-                                            y: unknown,
-                                            stroke: {color: "black"},
-                                            fill: "#e7e8e8",
-                                            tooltip: unknown + " tests unknown",
-                                            text: ((unknown / sum) * 100).toFixed(0) + "% unknown"
-                                        }
-                                    ];
-                                    chart.addSeries("Results", numbers);
-                                    var anim_a = new dojox.charting.action2d.MoveSlice(chart, "default");
-                                    var anim_b = new dojox.charting.action2d.Highlight(chart, "default");
-                                    var anim_c = new dojox.charting.action2d.Tooltip(chart, "default");
-                                    chart.render();
-                                    // Do not show the legend!
-                                    // var legend = new dojox.charting.widget.Legend({
-                                    //                                              chart: chart },"conformanceLegend");
-                                    return chart;
-                                }
-                                dojo.addOnLoad(function() {
-                                    createChart(405, 14, 0);
-                                });
-    
-                            </script>
                             <div id="conformanceChart" style="width: 150px; height: 150px;"></div>
                         </div>
                     </td>

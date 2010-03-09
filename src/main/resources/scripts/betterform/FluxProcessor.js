@@ -115,28 +115,29 @@ dojo.declare("betterform.FluxProcessor",
     },
 
     setInlineRoundBorderAlertHandler:function(){
-        if(this.defaultAlertHandler != undefined){
-            dojo.unsubscribe(this.subscribers[0]);
-            dojo.unsubscribe(this.subscribers[1]);
-        }
+        //console.debug("setInlineRoundBorderAlertHandler");
+        this.unsubscribeFromAlertHandler();
         dojo.require("betterform.ui.common.InlineRoundBordersAlert");
         this.defaultAlertHandler = new betterform.ui.common.InlineRoundBordersAlert({});
         this.subscribers[0] = dojo.subscribe("/xf/valid",this.defaultAlertHandler, "handleValid");
         this.subscribers[1] = dojo.subscribe("/xf/invalid",this.defaultAlertHandler, "handleInvalid");
     },
 
+
     setToolTipAlertHandler:function(){
-        if(this.defaultAlertHandler != undefined){
-            dojo.unsubscribe(this.subscribers[0]);
-            dojo.unsubscribe(this.subscribers[1]);
-        }
+       // console.debug("setToolTipAlertHandler");
+        this.unsubscribeFromAlertHandler();
         this.defaultAlertHandler == undefined;
         dojo.require("betterform.ui.common.ToolTipAlert");
         this.defaultAlertHandler = new betterform.ui.common.ToolTipAlert({});
-        console.debug("Enabled ToolTipAlert Handler ", this.defaultAlertHandler);
-
         this.subscribers[0] = dojo.subscribe("/xf/valid",this.defaultAlertHandler, "handleValid");
         this.subscribers[1] = dojo.subscribe("/xf/invalid",this.defaultAlertHandler, "handleInvalid");
+    },
+
+    unsubscribeFromAlertHandler:function() {
+        for(var i= 0; i < this.subscribers.length; i++) {
+            dojo.unsubscribe(this.subscribers[i]);
+        }
     },
 
     handleUnload:function(evt) {

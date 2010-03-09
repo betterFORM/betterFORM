@@ -8,7 +8,19 @@
       xmlns:atom="http://www.w3.org/2005/Atom"
       xml:lang="en" lang="en">
 <head>
-    <title>betterFORM Demo</title>
+    <title>betterFORM Demo XForms: Address, Registration, FeatureExplorer</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> </meta>
+	<meta name="Author" content="Joern Turner"> </meta>
+	<meta name="Author" content="Lars Windauer"> </meta>
+	<meta name="publisher" content="betterFORM Project"></meta>
+	<meta name="description" content=" betterFORM allows easy creation of highly dynamic Web 2.0 user interfaces with attractive controls. Add validations, calculations, actions and events to build webapplications."></meta>
+	<meta name="keywords" content="betterFORM, xforms, forms, form, xhtml, xpath, xslt, xslt2.0, dojo, dojotoolkit, java, javascript, xml, schema, web, web2.0, web2, web3.0, web3, semantic, semantic web, joern turner, turner, lars windauer, ajax, xforms processor, processor"></meta>
+	<meta name="copyright" content="betterForm Project"></meta>
+	<meta name="content-language" content="en"></meta>
+	<meta name="robots" content="all"></meta>
+	<meta http-equiv="expires" content="Wed, 9 Feb 2011 12:21:57 GMT"></meta>
+	<meta name="revisit-after" content="3 days"></meta>
+	<meta name="google-site-verification" content="L5gmOYcZv-vwF2q0e-qSIXx8ecpKUN8A7lrW4ia9YR0" />
 
 
     <link REV="made" HREF="mailto:info@betterform.de"/>
@@ -66,6 +78,7 @@
     </style>
 
     <script type="text/javascript">
+		var xfReadySubscribers;
         dojo.require("dojox.highlight");
         dojo.require("dojox.highlight.languages.xml");
         //dojo.require("dojox.highlight.languages._static");
@@ -98,8 +111,14 @@
                     });
         }
 
+
         function runDemo(/*string*/demo) {
-            dojo.subscribe("/xf/ready", function(data) {
+			if(xfReadySubscribers != undefined) {
+				dojo.unsubscribe(xfReadySubscribers);
+				xfReadySubscribers = null;
+			}
+
+            xfReadySubscribers = dojo.subscribe("/xf/ready", function(data) {
                 dojo.removeClass(dojo.byId("demoTarget"), "demoOverlay");
                 dojo.style("demoTarget", "opacity", 0);
                 dojo.fadeIn({
@@ -179,9 +198,9 @@
             <script type="text/javascript">
 
                 var template = dojo.clone(dojo.byId("template"));
-                console.debug("replace template: ", template);
+                // console.debug("replace template (1): ", template);
                 var demoTarget = dojo.byId("demoTarget");
-                console.debug("replace template: ", demoTarget);
+                // console.debug("replace template: (2)", demoTarget);
                 //demoWrapper.appendChild(template);
                 dojo.attr(demoTarget, "style", "");
                 demoTarget.appendChild(template);
@@ -239,7 +258,7 @@
                     <xf:case id="c-demoArea">
                         <div id="demoWrapper">
                             <div id="demoTarget">
-                                <div onclick="runDemo();" class="backgroundImage"></div>
+                                <!--<div onclick="runDemo();" class="backgroundImage"></div>-->
                             </div>
                         </div>
                         <xf:trigger id="backToDemo">
