@@ -15,9 +15,12 @@
 }
 
 .xfFullRepeat .xfRepeatItem .xfControl  {
-    clear:none;
+    clear:both;
 }
-
+.xfFullRepeat .xfRepeatItem {
+	display:block;
+	position:relative;
+}
 .Headline {
     font-size:   16pt;
     font-weight: bold;
@@ -93,7 +96,9 @@
 .contactsRepeat {
     border: 1px solid black;
     padding: 5px;
-    width: 100%;
+    width: 100%;	
+	display:block;
+	
 }
 
 .contactsRepeat .xfRepeatHeader {

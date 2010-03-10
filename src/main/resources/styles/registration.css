@@ -152,10 +152,6 @@
     width: 190px;
     border-color:#E1EFDB !important;
 }
-.xfControl {
-	position:relative;
-}
-
 
 #registration .xfControl, #registration .xfAlert, #registration .xfHint, #registration .info {
     margin-bottom: 8px;

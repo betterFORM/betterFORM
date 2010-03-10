@@ -264,15 +264,19 @@
               file="${basedir}/../src/test/resources/XFormsTestSuite1.1E1/Edition1/driverPages/Results/results.html"/>
 
 
+<!--
         <copy todir="${webapp.dir}/forms">
             <fileset dir="${webapp.dir}/forms"/>
             <globmapper from="*.xhtml" to="*.txt"/>
         </copy>
+-->
 
+<!--
         <copy todir="${webapp.dir}/${forms.target}">
             <fileset dir="../src/test/resources"/>
         </copy>
-        
+-->
+
         <antcall target="create-war"/>
     </target>
 

@@ -525,6 +525,13 @@ h3{
     height:39px;
     background: transparent url(../images/b_tryit_ohne_klein.png) no-repeat;
 }
+
+#demo #backToDemo #backToDemo-value_label {
+	text-align:left;
+	width:75px;
+	color:white;
+}
+
 #product #content .linkbox{
     background:#488aa6;
     color:white;
