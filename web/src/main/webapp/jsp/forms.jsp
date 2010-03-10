@@ -202,12 +202,12 @@
                                 %>
                                     <tr class="file">
                                         <td width="25%">
-                                            <a href="<%=request.getContextPath()%>/<%=uri%>/<%=aFile.getName()%>?" onclick="this.href=this.href.substring(0,this.href.indexOf('?'));">
+                                            <a href="<%=request.getContextPath()%>/<%=uri%>/<%=aFile.getName()%>?" onclick="this.href=this.href.substring(0,this.href.indexOf('?'));" target="_blank">
                                                 <%=aFile.getName()%>
                                             </a>
                                         </td>
                                         <td width="25%">
-                                                <a href="<%=request.getContextPath()%>/<%=uri%>/<%=aFile.getName()%>?source=true">source</a>
+                                                <a href="<%=request.getContextPath()%>/<%=uri%>/<%=aFile.getName()%>?source=true" target="_blank">source</a>
                                         </td>
 
                                         <td><%= ""+ DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.MEDIUM).format(new Date(f.lastModified())) %></td>
