@@ -584,3 +584,32 @@ h3{
 	overflow:hidden;
 }
 
+#formsbrowser table{
+    width:100%;
+    padding:0;
+    margin:0 0 30px 0;
+    background:#E7E8E8;
+    border:thin dotted;
+    
+    
+}
+#formsbrowser .formBrowserHeader{
+    padding-bottom:10px;
+    background:#488AA6;
+    color:white;
+    padding:5px;
+    font-size:12pt;
+}
+#formsbrowser .directory td{
+
+}
+#formsbrowser .file td{
+    background:white;
+}
+#formsbrowser .directory .textLink{
+    display:inline-block;
+    margin-bottom:10px;
+    vertical-align:middle;
+}
+
+

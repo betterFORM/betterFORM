@@ -2,18 +2,6 @@
   ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   --%>
-<!--
-  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
-  ~ Licensed under the terms of BSD License
-  -->
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<!--
-  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
-  ~ Licensed under the terms of BSD License
-  -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -44,13 +32,6 @@
 
 
         <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/styles/betterform-styles.css"/>
-        <style type="text/css">
-            .formBrowserHeader {
-                font-size:12pt;
-                font-weight:bold;
-                text-decoration:underline;
-            }
-        </style>
 
     </head>
     <%@ page import="org.apache.commons.logging.Log"%>
@@ -63,7 +44,7 @@
     <%@ page import="java.util.Enumeration" %>
     <%@ page session="true"%>
 
-    <body>
+    <body id="formsbrowser">
         <div class="page">
 
             <div id="header">
@@ -98,10 +79,12 @@
                 <div class="pageMarginBox">
                     <div class="contentBody">
                         <h1>Forms Browser</h1>
+<%--
                         <table width="100%" height="85%" cellpadding="10" cellspacing="0" border="0">
                         <tr>
 
                         <td valign="top">
+--%>
                     <%!
                         static Log cat = LogFactory.getLog("de.betterform.agent.web.jsp");
 
@@ -133,7 +116,7 @@
                         cat.debug("Read dir: " + readDir);
                     %>
 
-                    <table style="border:thin solid #565656;padding:4px;" cellspacing="1" cellpadding="2" width="100%">
+                    <table>
                         <tr>
                             <td class="formBrowserHeader" colspan="3">
                                 <span id="path">/<%=uri%>
@@ -158,10 +141,9 @@
                                 up=uri.substring(0,uri.lastIndexOf("/"));
                                 %>
                                 <tr>
-                                    <td valign="middle" colspan="5">
-                                    <a href="forms.jsp?<%=up%>">
-                                        <img src="<%=request.getContextPath()%>/resources/images/folder.gif" border="0" width="20" height="20" align="left">..
-                                    </a>
+                                    <td class="directory" colspan="3">
+                                    <a href="forms.jsp?<%=up%>"><img src="<%=request.getContextPath()%>/resources/images/folder.gif" border="0"></a>
+                                    <a class="textLink" href="forms.jsp?<%=up%>">..</a>
                                     </td>
                                 </tr>
                                 <%
@@ -175,12 +157,10 @@
                                 %>
 
                                     <tr class="directory">
-                                        <td valign="middle" colspan="5">
-                                        <a href="<%=request.getContextPath()%>/jsp/forms.jsp?<%=uri%>/<%=aFile.getName()%>">
-                                            <img src="<%=request.getContextPath()%>/resources/images/folder.gif" border="0" width="20" height="20" align="left"><%=aFile.getName()%>
-                                        </a>
+                                        <td colspan="3">
+                                            <a href="<%=request.getContextPath()%>/jsp/forms.jsp?<%=uri%>/<%=aFile.getName()%>"><img src="<%=request.getContextPath()%>/resources/images/folder.gif" border="0"></a>
+                                            <a class="textLink" href="<%=request.getContextPath()%>/jsp/forms.jsp?<%=uri%>/<%=aFile.getName()%>"><%=aFile.getName()%></a>
                                         </td>
-
                                     </tr>
                                 <%
                                 }
@@ -227,7 +207,7 @@
                     <a href="upload">Upload some Data into this directory!</a>
 
                     --%>
-                    </td></tr></table>
+                    <%--</td></tr></table>--%>
                     </div>
                 </div>
             </div>
