@@ -420,7 +420,7 @@ h3{
     width:378px;
     height:78px;
 }
-#download .downloadBox #download{
+#download .downloadBox #downloadText{
     font-size:14pt;
     color:white;
     font-size:14pt;
@@ -431,6 +431,7 @@ h3{
     color:lightsteelblue;
     padding-left:22px;
 }
+
 #download .header1 {
     color: #488AA6;
     display: block;
