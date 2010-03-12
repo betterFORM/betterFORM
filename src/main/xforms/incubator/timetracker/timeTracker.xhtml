@@ -173,8 +173,18 @@
         <xf:instance id="i-query-tasks">
             <data xmlns="">
                 <project/>
+                <worker/>
+                <start/>
+                <end/>
+                <billable/>
             </data>
         </xf:instance>
+
+        <xf:bind nodeset="instance('i-query-tasks')">
+            <xf:bind nodeset="start"     type="xf:date" />
+            <xf:bind nodeset="end"       type="xf:date" />
+            <xf:bind nodeset="billable " type="xf:boolean" />
+        </xf:bind>
 
         <xf:instance id="i-print-result">
             <data/>
@@ -183,8 +193,8 @@
         <xf:instance id="i-project"
                      src="http://golem.local:8080/exist/rest/db/timetracking/i-project.xml"/>
         
-        <xf:instance id="i-who"
-                     src="http://golem.local:8080/exist/rest/db/timetracking/i-who.xml" />
+        <xf:instance id="i-worker"
+                     src="http://golem.local:8080/exist/rest/db/timetracking/i-worker.xml" />
         
         <xf:instance id="i-controller">
             <data xmlns="">
@@ -459,7 +469,7 @@
                         <td>
                             <xf:select ref="who" appearance="full">
                                 <xf:label></xf:label>
-                                <xf:itemset nodeset="instance('i-who')/worker">
+                                <xf:itemset nodeset="instance('i-worker')/worker">
                                     <xf:label ref="."/>
                                     <xf:value ref="."/>
                                 </xf:itemset>
@@ -575,7 +585,13 @@
             <xf:label class="subheader">TimeTracker Results</xf:label>
             <table>
                 <tr>
-                    <td align="right">Project</td>
+                    <td align="left">Project</td>
+                    <td align="left">Worker</td>
+                    <td align="left">Start</td>
+                    <td align="left">End</td>
+                    <td align="left">Billable</td>
+                </tr>
+                <tr>
                     <td>
                         <xf:select1 id="projectToDisplay" ref="instance('i-query-tasks')/project" appearance="minimal">
                             <xf:label/>
@@ -583,9 +599,40 @@
                                 <xf:label ref="."/>
                                 <xf:value ref="."/>
                             </xf:itemset>
-                            <xf:send submission="s-get-tasks" ev:event="xforms-value-changed"
-                                     if="string-length(instance('i-query-tasks')/project) &gt; 0"/>
                         </xf:select1>
+                    </td>
+                    <td>
+                        <xf:select1 id="personToDisplay" ref="instance('i-query-tasks')/worker" appearance="minimal">
+                            <xf:label/>
+                            <xf:itemset nodeset="instance('i-worker')/worker">
+                                <xf:label ref="."/>
+                                <xf:value ref="."/>
+                            </xf:itemset>
+                        </xf:select1>
+                    </td>
+                    <td>
+                        <xf:input ref="instance('i-query-tasks')/start">
+                            <xf:label/>
+                        </xf:input>
+                    </td>
+                    <td>
+                        <xf:input ref="instance('i-query-tasks')/end">
+                            <xf:label/>
+                        </xf:input>
+                    </td>
+                    <td>
+                        <xf:input ref="instance('i-query-tasks')/billable">
+                            <xf:label/>
+                        </xf:input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <xf:trigger>
+                            <xf:label>Go</xf:label>
+                                <xf:send submission="s-get-tasks"
+                                         if="string-length(instance('i-query-tasks')/project) &gt; 0"/>
+                        </xf:trigger>
                     </td>
                 </tr>
             </table>
