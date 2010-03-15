@@ -438,7 +438,7 @@ h3{
     font-size:14pt;
     padding:20px 0 0 22px;
     margin:0;
-}
+}   
 #download .downloadBox #downloadSubtext{
     color:lightsteelblue;
     padding-left:22px;
@@ -473,6 +473,16 @@ h3{
 .downloadButtonWrapper {
 	float:left;
 }
+
+#documentation .downloadButtonWrapper {
+	float:none;
+}
+
+#documentation .downloadButtonWrapper .buttonText {
+	text-align:left;
+}
+
+
 
 #content .buttonText {
 	color:white;
