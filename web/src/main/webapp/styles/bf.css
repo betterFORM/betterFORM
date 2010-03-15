@@ -341,7 +341,7 @@ h1, h2, h3, h4, h5, h6 {
 	color: #2C2C2C;
 	font-size: 1.6em;
     font-variant:small-caps;
-	letter-spacing: 0.2em;
+	letter-spacing: 0.05em;
 	line-height: 1.19em;
 	/*margin-bottom: 15px;*/
 	display:block;
@@ -419,6 +419,14 @@ h3{
     width:200px;
 
 }
+#product #boxright .menuRightImage{	
+	display:block;
+	padding-top:4px;
+	text-align:left;
+	width:99%;
+	overflow:hidden;
+}
+
 #download .downloadBox {
     background: transparent url(../images/downloadButton.png) no-repeat scroll 0 0;
     width:378px;
