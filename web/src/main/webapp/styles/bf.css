@@ -312,6 +312,8 @@ a:hover{
     width:760px;
 	padding:0;
     margin:0;
+	display:block;
+	padding:0 0 0 20%;
 }
 
 .page #bottomMenu{
@@ -402,6 +404,7 @@ h3{
 }
 
 /* ############################  page specific ############################## */
+#product #boxleft,
 #download #boxleft{
     float:left;
     width:480px;
@@ -409,6 +412,7 @@ h3{
     margin-bottom:20px;
 
 }
+#product #boxright,
 #download #boxright{
     text-align:left;
     float:left;
@@ -440,12 +444,21 @@ h3{
     padding-top: 12px;
     text-align: right;
 }
+#product .boxRightEntryHeading,
 #download .boxRightEntryHeading {
     font-variant: small-caps;
     color: #488AA6;
 }
+#product .downloadRightBar,
 #download .downloadRightBar{
     float:left;
+
+}
+#product .downloadRightBar {
+	padding-top:10px;
+}
+#product .downloadRightBar .boxRightEntryHeadingLink a{
+	text-decoration:underline;
 
 }
 
