@@ -132,22 +132,14 @@ FOR LATER: installinig the war should switch the above pack off. Did not yet fou
 
         <pack name="DeveloperPack" required="no" preselected="no">
             <description>adds uncompiled Dojo for full debug capabilities</description>
-       <!--     <fileset dir="dojo-release-1.3.3-src"
+           <fileset dir="dojo-release-1.3.3-src"
                      targetdir="$INSTALL_PATH/betterform/resources/scripts"
                      condition="!jetty"
                      excludes="util/**"/>
             <fileset dir="dojo-release-1.3.3-src"
                       targetdir="$INSTALL_PATH/web/root/resources/scripts"
                      condition="jetty"
-                     excludes="util/**"/> -->
-            <fileset dir="dojo-release-1.3.2-src"
-                     targetdir="$INSTALL_PATH/betterform/resources/scripts"
-                     condition="!jetty"
-                     excludes="util/**"/>
-            <fileset dir="dojo-release-1.3.2-src"
-                      targetdir="$INSTALL_PATH/web/root/resources/scripts"
-                     condition="jetty"
-                     excludes="util/**"/>
+                     excludes="util/**"/> 
         </pack>
 
         <pack name="Forms" required="no">
