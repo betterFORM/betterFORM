@@ -161,6 +161,7 @@
 
 	<xsl:template match="dir">
 		<div class="dir">
+<!--
 			<xsl:element name="a">
 				<xsl:attribute name="title">Checkout: <xsl:value-of select="@href"/></xsl:attribute>
 				<xsl:attribute name="style">float:right;clear:both;</xsl:attribute>
@@ -170,8 +171,9 @@
 				</xsl:attribute>
 				<img src="/menucheckout.ico"/>
 			</xsl:element>
+-->
 			<xsl:element name="a">
-				<xsl:attribute name="style">margin-right: 22px</xsl:attribute>
+				<!--<xsl:attribute name="style">margin-right: 22px</xsl:attribute>-->
 				<xsl:attribute name="href">
 					<xsl:value-of select="@href"/>
 				</xsl:attribute>
