@@ -11,7 +11,7 @@
             <!-- TODO: to be implemented in all javac tasks -->
             <version>1.5</version>
         </javac>
-        <dojo>dojo-release-1.3.2-src</dojo>
+        <dojo>dojo-release-1.3.3-src</dojo>
         <!-- <dojo>dojo-release-1.3.3-src</dojo> -->
         <!--<dojo>dojo-release-1.3.2-src</dojo>-->
 
