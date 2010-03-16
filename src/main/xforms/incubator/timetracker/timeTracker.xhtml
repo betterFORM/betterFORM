@@ -183,7 +183,7 @@
         <xf:bind nodeset="instance('i-query-tasks')">
             <xf:bind nodeset="start"     type="xf:date" />
             <xf:bind nodeset="end"       type="xf:date" />
-            <xf:bind nodeset="billable " type="xf:boolean" />
+            <xf:bind nodeset="billable " type="xf:boolean" readonly="true()"/>
         </xf:bind>
 
         <xf:instance id="i-print-result">
@@ -203,6 +203,13 @@
             </data>
         </xf:instance>
         <xf:bind nodeset="instance('i-controller')/error" relevant="@hasError='true'"/>
+
+        <xf:instance id="i-test-query">
+            <data xmlns="">
+                <projects>aixm Chiba</projects>
+                <worker>Fabian</worker>
+            </data>
+        </xf:instance>
 
         <xf:submission id="s-add"
                        resource="http://golem.local:8080/exist/rest/db/timetracking/tasks/task/{instance('i-controller')/timestamp}.xml"
@@ -254,11 +261,13 @@
                        method="get"
                        replace="instance"
                        instance="i-task"/>
+        
 
         <!-- Submission to receive all tasks allocated to a specified project -->
         <xf:submission id="s-get-tasks"
-                       resource="http://golem.local:8080/exist/rest/db/test/timetracker.xql?project={instance('i-query-tasks')/project}"
-                       method="post"
+                       ref="instance('i-test-query')"
+                       resource="http://golem.local:8080/exist/rest/db/timetracking/query.xql"
+                       method="form-data-post"
                        replace="instance"
                        instance="i-tasks"
                        validate="false">
@@ -593,22 +602,22 @@
                 </tr>
                 <tr>
                     <td>
-                        <xf:select1 id="projectToDisplay" ref="instance('i-query-tasks')/project" appearance="minimal">
+                        <xf:select id="projectToDisplay" ref="instance('i-query-tasks')/project" appearance="full">
                             <xf:label/>
                             <xf:itemset nodeset="instance('i-project')/project">
                                 <xf:label ref="."/>
                                 <xf:value ref="."/>
                             </xf:itemset>
-                        </xf:select1>
+                        </xf:select>
                     </td>
                     <td>
-                        <xf:select1 id="personToDisplay" ref="instance('i-query-tasks')/worker" appearance="minimal">
+                        <xf:select id="personToDisplay" ref="instance('i-query-tasks')/worker" appearance="full">
                             <xf:label/>
                             <xf:itemset nodeset="instance('i-worker')/worker">
                                 <xf:label ref="."/>
                                 <xf:value ref="."/>
                             </xf:itemset>
-                        </xf:select1>
+                        </xf:select>
                     </td>
                     <td>
                         <xf:input ref="instance('i-query-tasks')/start">
@@ -637,7 +646,7 @@
                 </tr>
             </table>
 
-            <xf:output ref="instance('i-tasks')/project/duration">
+            <xf:output ref="instance('i-tasks')/project/@totalTime">
                 <xf:label>Overall Time:</xf:label>
             </xf:output>
 
@@ -673,18 +682,14 @@
 
             </xf:repeat>
 
-            <xf:input ref="instance('i-tasks')/project/task[1]/billable">
-                <xf:label>TEST</xf:label>
-            </xf:input>
-
-            <xf:trigger>
-                <xf:label>Print Internal</xf:label>
-                <xf:send submission="s-print-internal"/>
-            </xf:trigger>
-            <xf:trigger>
-                <xf:label>Print Customer</xf:label>
-                <xf:send submission="s-print-customer"/>
-            </xf:trigger>
+            <!--<xf:trigger>-->
+                <!--<xf:label>Print Internal</xf:label>-->
+                <!--<xf:send submission="s-print-internal"/>-->
+            <!--</xf:trigger>-->
+            <!--<xf:trigger>-->
+                <!--<xf:label>Print Customer</xf:label>-->
+                <!--<xf:send submission="s-print-customer"/>-->
+            <!--</xf:trigger>-->
             <xf:output mediatype="text/html" ref="instance('i-controller')/error" id="errorReportResult"/>
         </xf:group>
      </xf:case>
