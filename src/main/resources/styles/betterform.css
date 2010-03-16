@@ -901,13 +901,14 @@ delete actions to */
     overflow: hidden
 }
 
-#xfTextareaHTML .xfValue {
+.xfTextareaHTML .xfValue {
     height: 240px;
     width: 500px;
 }
 
-#xfTextareaHTML iframe{
-    height:195px;    
+.xfTextarea .RichTextEditable iframe {
+	background-color:white;
+	height:195px;
 }
 
 

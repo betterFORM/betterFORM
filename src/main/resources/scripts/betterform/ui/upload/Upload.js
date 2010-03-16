@@ -16,6 +16,7 @@ dojo.declare(
     postMixInProperties:function() {
         this.inherited(arguments);
         this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);
+        dojo.removeClass(this.domNode, "xfValue");
     },
 
     _onFocus:function() {

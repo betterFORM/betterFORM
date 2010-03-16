@@ -18,7 +18,13 @@
             #mips .xfTrigger .dijitButtonContents {
                 width: 200px;
             }
-            .blocked{display:none;}
+            .blocked{
+				display:block;
+				color:darkred;
+				font-weight:bold;
+				text-align:center;
+				font-size:large;
+			}
         </style>
 
         <link rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
@@ -39,7 +45,8 @@
     <body class="soria" style="margin:30px;">
 
         <div id="xforms">
-            <div class="blocked">disabled for security reasons</div>
+            <div class="blocked" >disabled for security reasons.<br/>remove readonly="true" from: <br/>&lt;xf:bind nodeset="items" readonly="true()"&gt; to activate</div>
+
 
             <div style="display:none;">
                 <xf:model id="model-1">
@@ -53,7 +60,7 @@
                         </data>
                     </xf:instance>
 
-                    <xf:bind nodeset="items">
+                    <xf:bind nodeset="items" readonly="true()">
                         <xf:bind nodeset="item[1]" type="anyURI"/>
                         <xf:bind nodeset="item[2]" type="base64Binary"/>
                         <xf:bind nodeset="item[3]" type="hexBinary"/>
@@ -100,7 +107,7 @@
                             <xf:output ref="items/item[1]/@type">
                                 <xf:label>Type: </xf:label>
                             </xf:output>
-                            <xf:output ref="items/item[1]">
+                            <xf:output value="items/item[1]">
                                 <xf:label>Download Link: </xf:label>
                             </xf:output>
 

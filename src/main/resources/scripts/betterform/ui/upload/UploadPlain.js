@@ -38,6 +38,7 @@ dojo.declare(
       dojo.attr(this.inputNode,"name", dojo.attr(this.srcNodeRef,"name"));
       dojo.attr(this.fileName,"id", dojo.attr(this.srcNodeRef,"fileId"));
       dojo.attr(this.fileName,"value", dojo.attr(this.srcNodeRef,"fileValue"));
+      dojo.removeClass(this.domNode, "xfValue");
 
     },
 
