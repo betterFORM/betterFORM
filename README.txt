@@ -1,10 +1,10 @@
-+==========================================================================================+
-+==========================================================================================+
-+=======================                                      =============================+
-+=======================    betterForm Project Quickstart Guide ===========================+
-+=======================                                      =============================+
-+==========================================================================================+
-+==========================================================================================+
++============================================================================================+
++============================================================================================+
++=======================                                        =============================+
++=======================    betterForm Project Quickstart Guide =============================+
++=======================                                        =============================+
++============================================================================================+
++============================================================================================+
 
 
 +--------------------------------------------------------------------------------------+
@@ -16,46 +16,20 @@ Minimal Requirements
 
 
 +--------------------------------------------------------------------------------------+
-Apache Ant Targets
+betterFORM lightSteelBlue Web Application Archive
 +--------------------------------------------------------------------------------------+
-To execute a target simply call ant <target-name> in the betterform project root directory e.g. ant clean
 
-- clean
-    cleans up all target directories
-
-- package
-    creates betterform-core-[version].jar in core/target and betterform-web-[version].war in web/target
-
-- update-maven-poms
-    if any libraries in build.properites.xml were added / deleted or changed update-maven-poms is needed to sync the
-    Ant build.xml and Maven pom.xml file
-
-- install-maven-dependencies [depends on installed Maven2]
-    installs all needed Maven2 dependencies into your local Maven repository
-
-
-
-
-+--------------------------------------------------------------------------------------+
-Apache Maven Goals
-+--------------------------------------------------------------------------------------+
-To execute a goal simply call mvn <goal-name> in the betterform project root directory e.g. mvn idea:idea
-
-- idea:idea
-    Create IntelliJ project files
-
-- eclipse:eclipse
-    Create Eclipse project files 
-
-
+- to compile betterFORM and package it as a Web Application Archive switch to the directory web and execute:
+	ant package
+  The created WAR file will be available at ./web/target/betterform-3.0.0
+  see web/README.txt for further information about available ant targets
+  
 
 
 +--------------------------------------------------------------------------------------+
 Further Information
 +--------------------------------------------------------------------------------------+
 For more detailed informations see
-    - README.txt in core, web and convex for detailed information how to build each module
-    - User Guide (doc/betterFormUserGuide)
-    - Cookbook (doc/betterFormCookBook)
-    - Developer Guide (doc/betterFormDeveloperGuide)
-    - Wiki (https://chiba-project.org/trac)
+    - User Guide (web/src/main/webapp/doc/betterFormUserGuide)
+    - Developer Guide (web/src/main/webapp/doc/betterFormDeveloperGuide)
+    - Wiki (https://betterform.de/trac)
