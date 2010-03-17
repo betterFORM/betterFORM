@@ -6,14 +6,14 @@
                 xmlns:ts="http://www.w3c.org/MarkUp/Forms/XForms/Test/11"
                 exclude-result-prefixes="html ev xsl xf">
 
-    <!-- Copyright 2008 Lars Windauer, Joern Turner -->
+    <!-- Copyright 2010 Lars Windauer, Joern Turner -->
     <xsl:output method="xhtml" omit-xml-declaration="yes" indent="yes"/>
 
     <xsl:variable name="project" select="/data/project/name"/>
     <xsl:template match="/">
         <html>
             <head>
-                <title>Chiba <xsl:value-of select="$project"/> Timetracker</title>
+                <title>betterFORM <xsl:value-of select="$project"/>Timetracker</title>
                 <style type="text/css">
                     body{
                         font-family:sans-serif;
@@ -87,8 +87,6 @@
             <td><xsl:value-of select="status"/></td>
             <td><xsl:value-of select="billable"/></td>
             <td><xsl:value-of select="billed/@date"/></td>
-
-
         </tr>
     </xsl:template>
 </xsl:stylesheet>

@@ -72,6 +72,9 @@
             display: block;
             margin-left: 5px;
         }
+		.xsdDate .xfValue {
+			width:80px;
+		}
 
         /*.subheader {*/
             /*font-size: 14pt;*/
@@ -136,6 +139,18 @@
             <xf:bind nodeset="created" type="xf:dateTime" required="true()"/>
         </xf:bind>
 
+
+		<xf:instance id="i-controller">
+			<data xmlns="">
+				<error hasError="false"><![CDATA[]]></error>
+				<dbPath>localhost:8080/exist/rest/db/timetracking</dbPath>
+				<timestamp/>
+			</data>
+		</xf:instance>
+		<xf:bind nodeset="instance('i-controller')/error" relevant="@hasError='true'"/>
+		
+
+
         <xf:instance id="i-task-empty">
             <data xmlns="">
                 <task>
@@ -161,14 +176,9 @@
             </data>
         </xf:instance>
 
-        <xf:bind nodeset="instance('i-tasks')/project/task">
-            <xf:bind nodeset="billable" type="boolean"/>
+        <xf:bind nodeset="instance('i-tasks')" >
+            <xf:bind nodeset="project/task/billable" type="boolean" readonly="true()"/>
         </xf:bind>
-
-
-        <xf:bind nodeset="instance('i-tasks')/project/task[1]/billable"
-                 type="xf:boolean" />
-
 
         <xf:instance id="i-query-tasks">
             <data xmlns="">
@@ -191,28 +201,21 @@
         </xf:instance>
 
         <xf:instance id="i-project"
-                     src="http://golem.local:8080/exist/rest/db/timetracking/i-project.xml"/>
+                     src="http://{instance('i-controller')/dbPath}/i-project.xml"/>
         
         <xf:instance id="i-worker"
-                     src="http://golem.local:8080/exist/rest/db/timetracking/i-worker.xml" />
+                     src="http://{instance('i-controller')/dbPath}/i-worker.xml" />
         
-        <xf:instance id="i-controller">
-            <data xmlns="">
-                <error hasError="false"><![CDATA[]]></error>
-                <timestamp/>
-            </data>
-        </xf:instance>
-        <xf:bind nodeset="instance('i-controller')/error" relevant="@hasError='true'"/>
 
         <xf:instance id="i-test-query">
             <data xmlns="">
-                <projects>aixm Chiba</projects>
-                <worker>Fabian</worker>
+                <projects>project1 project2</projects>
+                <worker>User1</worker>
             </data>
         </xf:instance>
 
         <xf:submission id="s-add"
-                       resource="http://golem.local:8080/exist/rest/db/timetracking/tasks/task/{instance('i-controller')/timestamp}.xml"
+                       resource="http://{instance('i-controller')/dbPath}/tasks/task/{instance('i-controller')/timestamp}.xml"
                        method="put"
                        replace="none">
             <xf:action ev:event="xforms-submit">
@@ -240,11 +243,13 @@
                     )" />
                 <xf:message level="ephemeral" >Creating timestamp DONE <xf:output ref="instance('i-controller')/timestamp"/></xf:message>
             </xf:action>
+
             <xf:action ev:event="xforms-submit-done">
                 <xf:message level="ephemeral">Data stored</xf:message>
                 <xf:toggle case="default"/>
                 <xf:send submission="s-clean"/>
             </xf:action>
+
             <xf:action ev:event="xforms-submit-error" if="instance('i-controller')/error/@hasError='true'">
                 <xf:setvalue ref="instance('i-controller')/error/@hasError" value="'true'"/>
                 <xf:setvalue ref="instance('i-controller')/error" value="event('response-reason-phrase')"/>
@@ -266,7 +271,7 @@
         <!-- Submission to receive all tasks allocated to a specified project -->
         <xf:submission id="s-get-tasks"
                        ref="instance('i-test-query')"
-                       resource="http://golem.local:8080/exist/rest/db/timetracking/query.xql"
+                       resource="http://{instance('i-controller')/dbPath}/query.xql"
                        method="form-data-post"
                        replace="instance"
                        instance="i-tasks"
@@ -276,37 +281,6 @@
                 <xf:message level="ephemeral">Received data from eXist DB</xf:message>
             </xf:action>
             <xf:message ev:event="xforms-submit-error">Failure received tasks froms eXist XML DB</xf:message>
-        </xf:submission>
-
-        <!-- Submission to create HTML output for choosen tasks -->
-        <xf:submission id="s-print-internal"
-                       ref="instance('i-tasks')"
-                       action="xslt:timetracker.xsl?nocache=true"
-                       method="GET"
-                       replace="instance"
-                       instance="i-print-result"
-                       validate="false">
-
-            <xf:action ev:event="xforms-submit-done">
-                <xf:recalculate/>
-                <xf:send submission="s-save-in-webapp"/>
-            </xf:action>
-            <xf:message ev:event="xforms-submit-error">Failure transforming Tasks to HTML</xf:message>
-        </xf:submission>
-
-        <xf:submission id="s-print-customer"
-                       ref="instance('i-tasks')"
-                       action="xslt:timetrackerCustomers.xsl?nocache=true"
-                       method="GET"
-                       replace="instance"
-                       instance="i-print-result"
-                       validate="false">
-
-            <xf:action ev:event="xforms-submit-done">
-                <xf:recalculate/>
-                <xf:send submission="s-save-in-webapp"/>
-            </xf:action>
-            <xf:message ev:event="xforms-submit-error">Failure transforming Tasks to HTML</xf:message>
         </xf:submission>
 
         <!-- Submission to write HTML output to the filesystem -->
@@ -325,27 +299,15 @@
             <xf:setfocus control="date"/>
             <xf:setvalue ref="task/date" value="substring(now(),1,10)"/>
         </xf:action>
-
-        <!-- create the i-who instance in the database -->
-        <!--<xf:submission id="s-create-projects-instance"-->
-                       <!--resource="http://golem.local:8080/exist/rest/db/timetracking/i-project.xml"-->
-                       <!--method="put"-->
-                       <!--ref="instance('i-project')"-->
-                       <!--replace="none"-->
-                       <!--validate="false"/>-->
-
     </xf:model>
 </div>
 
 
-<!--<div dojoType="dijit.layout.BorderContainer" design="sidebar" style="width: 90%; height: 700px; padding: 10px;">-->
 <div  style="width: 90%; height: 700px; padding: 10px;">
-<!--<div dojoType="dijit.layout.ContentPane" region="top" style="height: 50px;" splitter="false">-->
 <div style="height: 50px;" >
     <div class="header">TimeTracker 0.2</div>
 </div>
 
-<!--<div dojoType="dijit.layout.ContentPane" region="center" style="padding:10px;height:90%;">-->
 <div style="padding:10px;height:90%;">
     <xf:switch appearance="dijit:TabContainer" id="switch1" style="height:90%">
         <xf:case name="switch-toggles" id="switch-toggles" selected="false">
@@ -390,7 +352,7 @@
                         </td>
                         <td>
                             <xf:select1 ref="duration/@hours" style="float:left;">
-                                <xf:label></xf:label>
+                                <xf:label/>
                                 <xf:item>
                                     <xf:label>0</xf:label>
                                     <xf:value>0</xf:value>
@@ -453,7 +415,7 @@
                                 </xf:item>
                             </xf:select1>
                             <xf:select1 ref="duration/@minutes" appearance="mininmal">
-                                <xf:label></xf:label>
+                                <xf:label/>
                                 <xf:item>
                                     <xf:label>0</xf:label>
                                     <xf:value>0</xf:value>
@@ -477,7 +439,7 @@
                         <td align="right">Who</td>
                         <td>
                             <xf:select ref="who" appearance="full">
-                                <xf:label></xf:label>
+                                <xf:label/>
                                 <xf:itemset nodeset="instance('i-worker')/worker">
                                     <xf:label ref="."/>
                                     <xf:value ref="."/>
@@ -489,7 +451,7 @@
                         <td align="right">What</td>
                         <td>
                             <xf:select ref="what" appearance="full">
-                                <xf:label></xf:label>
+                                <xf:label/>
                                 <xf:item>
                                     <xf:label>Bug Fix</xf:label>
                                     <xf:value>bugfix</xf:value>
@@ -510,7 +472,7 @@
                         <td align="right">Status</td>
                         <td>
                             <xf:select1 ref="status">
-                                <xf:label></xf:label>
+                                <xf:label/>
                                 <xf:item>
                                     <xf:label/>
                                     <xf:value/>
@@ -530,7 +492,7 @@
                         <td align="right">Billable</td>
                         <td>
                             <xf:input ref="billable">
-                                <xf:label></xf:label>
+                                <xf:label/>
                                 <xf:hint>True if task can be billed to Customer</xf:hint>
                             </xf:input>
                         </td>
@@ -539,7 +501,7 @@
                         <td align="right">Note</td>
                         <td>
                             <xf:textarea ref="note" mediatype="dojo" style="width:200px;">
-                                <xf:label></xf:label>
+                                <xf:label/>
                                 <xf:hint>What has been done?</xf:hint>
                             </xf:textarea>
                         </td>
@@ -551,13 +513,7 @@
                                 <xf:toggle case="doIt"/>
                             </xf:trigger>
                         </td>
-                        <td>
-                            <!--Just for creating instances in eXist!-->
-                            <!--<xf:trigger>-->
-                                        <!--<xf:label>Create Projects Instance</xf:label>-->
-                                        <!--<xf:send submission="s-create-projects-instance"/>-->
-                                    <!--</xf:trigger>-->
-                        </td>
+                        <td> </td>
                     </tr>
                 </table>
                 <xf:switch>
@@ -594,14 +550,13 @@
             <xf:label class="subheader">TimeTracker Results</xf:label>
             <table>
                 <tr>
-                    <td align="left">Project</td>
-                    <td align="left">Worker</td>
-                    <td align="left">Start</td>
-                    <td align="left">End</td>
-                    <td align="left">Billable</td>
+                    <td align="left" style="border-right: 1px solid black;width:90px">Project</td>
+                    <td align="left" style="border-right: 1px solid black; width: 60px;padding-left:5px">Worker</td>
+                    <td align="left" style="border-right: 1px solid black; width: 50px; padding-left: 5px;">Start / End</td>
+                    <td align="left" style="width:90px;padding-left: 5px;">Billable</td>
                 </tr>
                 <tr>
-                    <td>
+                    <td style="border-right: 1px solid black;width:90px" valign="top">
                         <xf:select id="projectToDisplay" ref="instance('i-query-tasks')/project" appearance="full">
                             <xf:label/>
                             <xf:itemset nodeset="instance('i-project')/project">
@@ -610,7 +565,7 @@
                             </xf:itemset>
                         </xf:select>
                     </td>
-                    <td>
+                    <td style="border-right: 1px solid black; width: 60px;padding-left:5px" valign="top">
                         <xf:select id="personToDisplay" ref="instance('i-query-tasks')/worker" appearance="full">
                             <xf:label/>
                             <xf:itemset nodeset="instance('i-worker')/worker">
@@ -619,17 +574,16 @@
                             </xf:itemset>
                         </xf:select>
                     </td>
-                    <td>
+                    <td style="border-right: 1px solid black; width: 50px; padding-left: 5px;" valign="top">
                         <xf:input ref="instance('i-query-tasks')/start">
                             <xf:label/>
                         </xf:input>
+						<br/>
+						<xf:input ref="instance('i-query-tasks')/end">
+							<xf:label/>
+						</xf:input>
                     </td>
-                    <td>
-                        <xf:input ref="instance('i-query-tasks')/end">
-                            <xf:label/>
-                        </xf:input>
-                    </td>
-                    <td>
+                    <td align="left" style="width:90px;padding-left: 5px;" valign="top">
                         <xf:input ref="instance('i-query-tasks')/billable">
                             <xf:label/>
                         </xf:input>
@@ -672,24 +626,7 @@
                 <xf:input ref="billable">
                     <xf:label>Billable</xf:label>
                 </xf:input>
-
-                <!--<xf:output ref="billable">-->
-                    <!--<xf:label>Billable</xf:label>-->
-                <!--</xf:output>-->
-                <!--<xf:output ref="billed/@date">-->
-                    <!--<xf:label>Billed</xf:label>-->
-                <!--</xf:output>-->
-
             </xf:repeat>
-
-            <!--<xf:trigger>-->
-                <!--<xf:label>Print Internal</xf:label>-->
-                <!--<xf:send submission="s-print-internal"/>-->
-            <!--</xf:trigger>-->
-            <!--<xf:trigger>-->
-                <!--<xf:label>Print Customer</xf:label>-->
-                <!--<xf:send submission="s-print-customer"/>-->
-            <!--</xf:trigger>-->
             <xf:output mediatype="text/html" ref="instance('i-controller')/error" id="errorReportResult"/>
         </xf:group>
      </xf:case>
