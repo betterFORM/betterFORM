@@ -170,6 +170,8 @@
         <app>
             <name>zaphod</name>
             <version>1.0</version>
+            <!-- ### installerType must be either 'standard' or 'web'. Default value is 'web' ### -->
+            <installerType>web</installerType>
         </app>
     </zaphod>
     <xapp>
