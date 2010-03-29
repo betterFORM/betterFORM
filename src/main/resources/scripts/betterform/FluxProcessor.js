@@ -81,7 +81,6 @@ dojo.declare("betterform.FluxProcessor",
         if(inlineRoundBordersAlertEnabled != undefined) {
             dojo.require("betterform.ui.common.InlineRoundBordersAlert");
             this.defaultAlertHandler = new betterform.ui.common.InlineRoundBordersAlert({});
-            console.warn("!! WARNING: BOWL ALERT HANDLER NOT IMPLEMENTED YET !!!");
         }
 
         var inlineAlertEnabled = dojo.query(".InlineAlert" ,dojo.doc)[0];
@@ -317,7 +316,7 @@ dojo.declare("betterform.FluxProcessor",
                     case "DOMFocusOut"              :
                     case "xforms-model-construct"   :
                     case "xforms-model-construct-done":break;
-                    case "xforms-ready"             : this.isReady=true;dojo.publish("/xf/ready");break; //not perfect - should be on XFormsModelElement
+                    case "xforms-ready"             : this.isReady=true;dojo.publish("/xf/ready",[]);break; //not perfect - should be on XFormsModelElement
                     case "xforms-submit"            :
                     case "xforms-submit-done"       : break;
 
@@ -416,6 +415,7 @@ dojo.declare("betterform.FluxProcessor",
 
             dojo.place(nodesToEmbed, htmlEntryPoint, "before");
             dojo.fx.wipeIn({node: nodesToEmbed,duration: 500}).play();
+			// dojo.style(nodesToEmbed,"display","block");
             
             //copy classes from mountpoint
             var classes = dojo.attr(htmlEntryPoint,"class");
@@ -440,20 +440,29 @@ dojo.declare("betterform.FluxProcessor",
         if(htmlEntryPoint == undefined) {
             return;
         }
-        dojo.query("*[widgetid]", htmlEntryPoint).forEach(
+        var widgetID = "widgetid";
+        if(dojo.isIE){
+            widgetID = "widgetId"
+        }
+
+        var widgets = dojo.query("*["+widgetID +"]", htmlEntryPoint);
+
+        dojo.forEach(widgets,
             function(item) {
-				// console.debug("FluxProcessor._unloadDOM: item", item);
-                var childDijit = dijit.byId(dojo.attr(item, 'id'));
-                if (childDijit != undefined) {
-                    // console.debug("FluxProcessor._unloadDOM: destroy ", childDijit);
-                    childDijit.destroy();
-                }else {
-                    // console.debug("FluxProcessor._unloadDOM: ChildDijit is null ");
-                    childDijit = dijit.byId(dojo.attr(item, 'widgetid'));
-					if(childDijit != undefined){
-				 		childDijit.destroy();
-                	}
-        	    }
+                if(item != undefined) {
+                    var childDijit = dijit.byId(dojo.attr(item, 'id'));
+                    if (childDijit != undefined) {
+                        // console.debug("FluxProcessor._unloadDOM: destroy ", childDijit);
+                        childDijit.destroy();
+                    }else {
+                        // console.debug("FluxProcessor._unloadDOM: ChildDijit is null ");
+                        childDijit = dijit.byId(dojo.attr(item, widgetID));
+                        if(childDijit != undefined){
+                             childDijit.destroy();
+                        }
+                    }
+
+                }
 			}
         );
         while (htmlEntryPoint.hasChildNodes()){ htmlEntryPoint.removeChild(htmlEntryPoint.firstChild); }

@@ -17,8 +17,6 @@ import de.betterform.xml.events.impl.DefaultXMLEventInitializer;
 import de.betterform.xml.events.impl.XercesXMLEvent;
 import de.betterform.xml.xforms.XFormsConstants;
 import org.w3c.dom.Element;
-
-import javax.swing.*;
 import java.util.*;
 
 
@@ -138,7 +136,7 @@ public class EventQueue {
             XercesXMLEvent xmlEventToAdd = new XercesXMLEvent();
             // Map PROTOTYPE_CLONED event to betterform-insert-repeatitem or betterform-insert-itemset event
             // and copy event properties to new created XMLEvent
-            if(xmlEvent.getType().equals(BetterFormEventNames.PROTOTYPE_CLONED)){
+            if(xmlEvent.getType().equals    (BetterFormEventNames.PROTOTYPE_CLONED)){
                 if(xmlEvent.getContextInfo("targetName").equals(XFormsConstants.REPEAT)){
                     xmlEventToAdd.initXMLEvent("betterform-insert-repeatitem", xmlEvent.getBubbles(), xmlEvent.getCancelable(), xmlEvent.getContextInfo());
                 }

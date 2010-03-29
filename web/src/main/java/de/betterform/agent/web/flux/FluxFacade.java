@@ -6,20 +6,22 @@
 
 package de.betterform.agent.web.flux;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import de.betterform.agent.web.event.DefaultUIEventImpl;
-import de.betterform.agent.web.event.UIEvent;
-import de.betterform.agent.web.event.EventQueue;
-import de.betterform.agent.web.WebUtil;
 import de.betterform.agent.web.WebProcessor;
+import de.betterform.agent.web.WebUtil;
+import de.betterform.agent.web.event.DefaultUIEventImpl;
+import de.betterform.agent.web.event.EventQueue;
+import de.betterform.agent.web.event.UIEvent;
 import de.betterform.agent.web.upload.UploadInfo;
+import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.XMLEvent;
 import de.betterform.xml.events.impl.XercesXMLEventFactory;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.directwebremoting.WebContextFactory;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.servlet.http.HttpSession;
 import java.util.*;
@@ -62,6 +64,7 @@ public class FluxFacade {
     }
 
     //todo: should be named 'dispatchActivateEvent'
+
     public List<XMLEvent> dispatchEvent(String id, String sessionKey) throws XFormsException {
 
         FluxProcessor processor = null;
@@ -86,7 +89,7 @@ public class FluxFacade {
     }
 
     public List<XMLEvent> dispatchEventType(String id, String eventType, String sessionKey) throws XFormsException {
-        return dispatchEventTypeWithContext(id,eventType,sessionKey,null);
+        return dispatchEventTypeWithContext(id, eventType, sessionKey, null);
     }
 
     public List<XMLEvent> dispatchEventTypeWithContext(String id, String eventType, String sessionKey, String contextInfo) throws XFormsException {
@@ -99,13 +102,12 @@ public class FluxFacade {
         }
         try {
 
-            if(contextInfo != null) {
+            if (contextInfo != null) {
                 Map params = new HashMap(1);
                 params.put("context-info", contextInfo);
-                processor.dispatch(id,eventType,params,true,false);
-            }
-            else {
-                processor.dispatch(id,eventType);
+                processor.dispatch(id, eventType, params, true, false);
+            } else {
+                processor.dispatch(id, eventType);
             }
         }
         catch (XFormsException e) {
@@ -193,7 +195,11 @@ public class FluxFacade {
 
     public org.w3c.dom.Element getXFormsDOM(String sessionKey) throws FluxException {
         try {
-            return ((Document) FluxUtil.getProcessor(sessionKey).getXForms()).getDocumentElement();
+            Element resultElem = ((Document) FluxUtil.getProcessor(sessionKey).getXForms()).getDocumentElement();
+            if (LOGGER.isDebugEnabled()) {
+                DOMUtil.prettyPrintDOM(resultElem);
+            }
+            return resultElem;
         } catch (XFormsException e) {
             throw new FluxException(e);
         }
