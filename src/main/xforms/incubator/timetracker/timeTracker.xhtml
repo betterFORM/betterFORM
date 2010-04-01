@@ -75,6 +75,9 @@
 		.xsdDate .xfValue {
 			width:80px;
 		}
+		.listing .xfSelectorItem {
+			display:block;
+		}
 
         /*.subheader {*/
             /*font-size: 14pt;*/
@@ -193,7 +196,7 @@
         <xf:bind nodeset="instance('i-query-tasks')">
             <xf:bind nodeset="start"     type="xf:date" />
             <xf:bind nodeset="end"       type="xf:date" />
-            <xf:bind nodeset="billable " type="xf:boolean" readonly="true()"/>
+            <xf:bind nodeset="billable " type="xf:boolean" />
         </xf:bind>
 
         <xf:instance id="i-print-result">
@@ -546,13 +549,13 @@
         </xf:case>
         <xf:case id="cResults" selected="false">
         <xf:label>Listing</xf:label>
-        <xf:group>
+        <xf:group class="listing">
             <xf:label class="subheader">TimeTracker Results</xf:label>
             <table>
                 <tr>
-                    <td align="left" style="border-right: 1px solid black;width:90px">Project</td>
-                    <td align="left" style="border-right: 1px solid black; width: 60px;padding-left:5px">Worker</td>
-                    <td align="left" style="border-right: 1px solid black; width: 50px; padding-left: 5px;">Start / End</td>
+                    <td align="left" style="border-right: 1px solid black;border-bottom: 1px solid black;width:90px">Project</td>
+                    <td align="left" style="border-right: 1px solid black;border-bottom: 1px solid black;width: 70px;padding-left:5px">Worker</td>
+                    <td align="left" style="border-right: 1px solid black;border-bottom: 1px solid black;width: 50px; padding-left: 5px;">Start / End</td>
                     <td align="left" style="width:90px;padding-left: 5px;">Billable</td>
                 </tr>
                 <tr>
