@@ -1,0 +1,50 @@
+<project name="betterFORM As eXist module Installer" default="deploy2exist" basedir=".">
+
+    <property name="server.dir" value="../.."/>
+    <property name="target.dir" value="${basedir}/target"/>
+    <property name="bfSrc.dir" value="${target.dir}/betterform"/>
+
+    <path id="classpath.core">
+        <fileset dir="${server.dir}/lib/core">
+            <include name="*.jar"/>
+        </fileset>
+        <pathelement path="${server.dir}/exist.jar"/>
+        <pathelement path="${server.dir}/exist-optional.jar"/>
+    </path>
+
+    <typedef resource="org/exist/ant/antlib.xml" uri="http://exist-db.org/ant">
+        <classpath refid="classpath.core"/>
+    </typedef>
+
+    <target name="deploy2exist" xmlns:xmldb="http://exist-db.org/ant" description="deploys betterform into an existing eXist XML Db installation">
+		<xdb:store xmlns:xdb="http://exist-db.org/ant"
+                   uri="xmldb:exist://localhost:8080/exist/xmlrpc/db/xforms/betterform/resources"
+                   createsubcollections="true"
+                   createcollection="true" >
+			<fileset dir="${bfSrc.dir}/resources" includes="**/*.*"/>
+
+		</xdb:store>
+		<xdb:store xmlns:xdb="http://exist-db.org/ant"
+                   uri="xmldb:exist://localhost:8080/exist/xmlrpc/db/xforms/betterform/forms"
+                   createsubcollections="true"
+                   createcollection="true" >
+			<fileset dir="${bfSrc.dir}/forms" includes="**/*.*"/>
+
+		</xdb:store>
+
+        <!-- TODO:
+           JARs platzieren
+           betterform-config in web.xml referenzieren
+           filter-mapping
+           error.jsp richtig positionieren
+
+           in eXist/src/org/exist/start/start.config:
+                extensions/betterform/target/betterform/WEB-INF/lib/*	allways
+                extensions/betterform/target/betterform/WEB-INF/classes	allways         
+
+            copy resources & forms to eXist/webapp (will be placed within exist db later)
+        -->
+
+
+    </target>
+</project>
