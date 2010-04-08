@@ -245,12 +245,8 @@
         <echo message="clean up package..."/>
         <echo message="************************************************************************************"/>
         <echo/>
-        <delete dir="${webapp.dir}/forms/apps"/>
         <delete dir="${webapp.dir}/forms/incubator"/>
         <delete dir="${webapp.dir}/forms/test"/>
-        <delete dir="${webapp.dir}/forms/v3"/>
-
-
         <delete dir="${webapp.dir}/resources/scripts/betterform"/>
         <delete dir="${webapp.dir}/resources/scripts/dijit"/>
         <delete dir="${webapp.dir}/resources/scripts/dojo"/>

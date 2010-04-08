@@ -254,6 +254,9 @@
 
         <!-- run junit tests -->
         <junit description="run junit tests"
+            maxmemory="256m"
+            fork="no"
+            showoutput="no"
             printsummary="on">
             <classpath refid="test.class.path"/>
             <formatter type="xml"/>

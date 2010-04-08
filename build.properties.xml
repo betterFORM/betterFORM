@@ -26,21 +26,20 @@
             <classpath pathid="compile.class.path" description="classpath for compiling core classes">
                 <pathelement path="${core.dir}/target/classes"/>
                 <pathelement location="${core.dir}/src/main/lib/commons-codec-1.3.jar" groupid="commons-codec" version="1.3" artifactId="commons-codec"/>
-                <pathelement location="${core.dir}/src/main/lib/commons-fileupload-1.1.jar" groupid="commons-fileupload" version="1.1" artifactId="commons-fileupload"/>
-                <pathelement location="${core.dir}/src/main/lib/commons-httpclient-3.0.1.jar" groupid="commons-httpclient" version="3.0.1" artifactId="commons-httpclient"/>
+                <pathelement location="${core.dir}/src/main/lib/commons-fileupload-1.2.1.jar" groupid="commons-fileupload" version="1.2.1" artifactId="commons-fileupload"/>
+                <pathelement location="${core.dir}/src/main/lib/commons-httpclient-3.1.jar" groupid="commons-httpclient" version="3.1" artifactId="commons-httpclient"/>
                 <pathelement location="${core.dir}/src/main/lib/commons-lang-2.4.jar" groupid="commons-lang" version="2.4" artifactId="commons-lang"/>
-                <pathelement location="${core.dir}/src/main/lib/commons-logging-1.0.4.jar" groupid="commons-logging" version="1.0.4" artifactId="commons-logging"/>
-                <pathelement location="${core.dir}/src/main/lib/commons-logging-api-1.0.4.jar" groupid="commons-logging-api" version="1.0.4" artifactId="commons-logging-api"/>
-                <pathelement location="${core.dir}/src/main/lib/javax-activation-1.0.2.jar" groupid="javax.activation" version="1.0.2" artifactId="activation"/>
-                <pathelement location="${core.dir}/src/main/lib/javax-mail-1.3.jar" groupid="javax.mail" version="1.3" artifactId="mail"/>
-                <pathelement location="${core.dir}/src/main/lib/log4j-1.2.13.jar" groupid="log4j" version="1.2.13" artifactId="log4j"/>
+                <pathelement location="${core.dir}/src/main/lib/commons-logging-1.1.1.jar" groupid="commons-logging" version="1.1.1" artifactId="commons-logging"/>
+                <pathelement location="${core.dir}/src/main/lib/activation-1.1.1.jar" groupid="javax.activation" version="1.1.1" artifactId="activation"/>
+                <pathelement location="${core.dir}/src/main/lib/mail-1.4.2.jar" groupid="javax.mail" version="1.4.2" artifactId="mail"/>
+                <pathelement location="${core.dir}/src/main/lib/log4j-1.2.15.jar" groupid="log4j" version="1.2.15" artifactId="log4j"/>
                 <pathelement location="${core.dir}/src/main/lib/saxon-dom-9.0.jar" groupid="net.sf.saxon" version="9.0" artifactId="saxon-dom"/>
                 <pathelement location="${core.dir}/src/main/lib/saxon-9.0.jar" groupid="net.sf.saxon" version="9.0" artifactId="saxon"/>
-                <pathelement location="${core.dir}/src/main/lib/xercesImpl-2.8.0.jar" groupid="xerces" version="2.8.0" artifactId="xercesImpl"/>
-                <pathelement location="${core.dir}/src/main/lib/xml-apis-1.0.b2.jar" groupid="xml-apis" artifactId="xml-apis" version="1.0.b2"/>
-                <pathelement location="${core.dir}/src/main/lib/xmlrpc-common-3.0.jar" groupid="org.apache.xmlrpc" version="3.0" artifactId="xmlrpc-common"/>
-                <pathelement location="${core.dir}/src/main/lib/xmlrpc-client-3.0.jar" groupid="org.apache.xmlrpc" version="3.0" artifactId="xmlrpc-client"/>
-                <pathelement location="${core.dir}/src/main/lib/xmlrpc-server-3.0.jar" groupid="org.apache.xmlrpc" version="3.0" artifactId="xmlrpc-server"/>
+                <pathelement location="${core.dir}/src/main/lib/xercesImpl-2.9.1.jar" groupid="xerces" version="2.9.1" artifactId="xercesImpl"/>
+                <pathelement location="${core.dir}/src/main/lib/xml-apis-1.3.04.jar" groupid="xml-apis" artifactId="xml-apis" version="1.3.04"/>
+                <pathelement location="${core.dir}/src/main/lib/xmlrpc-common-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-common"/>
+                <pathelement location="${core.dir}/src/main/lib/xmlrpc-client-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-client"/>
+                <pathelement location="${core.dir}/src/main/lib/xmlrpc-server-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-server"/>
                 <pathelement location="${core.dir}/src/main/lib/ehcache-1.6.2.jar" groupid="net.sf.ehcache" version="1.6.2" artifactId="ehcache"/>
             </classpath>
         </compile>
@@ -91,11 +90,11 @@
                 <host>localhost</host>
             </tomcat>
             
+<!--
             <classpath pathid="web.test.class.path" description="classpath for compiling web classes">
                 <path refid="web.class.path"/>
                 <path refid="test.class.path"/>            
                 <pathelement path="${web.dir}/target/test-classes"/>
-                <!-- <pathelement location="${web.dir}/src/main/lib/selenium-java-client-driver-1.0.1.jar" groupid="org.seleniumhq.selenium" version="1.0.1" artifactId="selenium-java-client-driver" scope="test"/> -->
                 <pathelement location="${web.dir}/src/main/lib/webtest/webdriver/bcprov-jdk15-135.jar"
                              groupid="org.seleniumhq.selenium" version="135" artifactId="bcprov"/>
                 <pathelement location="${web.dir}/src/main/lib/webtest/webdriver/commons-codec-1.4.jar"
@@ -152,6 +151,7 @@
                              groupid="org.seleniumhq.selenium" version="1.3.04" artifactId="xml-apis"/>
 
             </classpath>
+-->
         </test>
     </web>
     <convex>

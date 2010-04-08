@@ -1,4 +1,4 @@
-<project name="eXist xml db Installer" default="deploy2exist" basedir=".">
+<project name="betterFORM eXist XMLDB Module" default="package" basedir=".">
 
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
@@ -7,38 +7,49 @@
     <property name="target.dir" value="${basedir}/target"/>
     <property name="webapp.dir" value="${basedir}/target/${web.app.name}"/>
 
-    <target name="prepare-exist-deployment"
+    <target name="package"
             description="creates a zip archive to be dropped into eXist">
-            <ant antfile="${web.dir}/build.xml" target="clean" dir="${web.dir}" inheritall="false"/>
+
+        <ant antfile="${web.dir}/build.xml" target="clean" dir="${web.dir}" inheritall="false"/>
+
+        <ant antfile="${web.dir}/build.xml" target="build-dojo" dir="${web.dir}" inheritall="false">
+                <property name="target.dir" value="${target.dir}"/>
+                <property name="webapp.dir" value="${webapp.dir}"/>
+        </ant>
 
 
-            <ant antfile="${web.dir}/build.xml" target="build-dojo" dir="${web.dir}" inheritall="false">
-                    <property name="target.dir" value="${target.dir}"/>
-                    <property name="webapp.dir" value="${webapp.dir}"/>
-            </ant>
-
-            <delete dir="${webapp.dir}/forms/apps"/>
-            <delete dir="${webapp.dir}/forms/incubator"/>
-            <delete dir="${webapp.dir}/forms/test"/>
-            <delete dir="${webapp.dir}/forms/v3"/>
 
 
-            <delete dir="${webapp.dir}/resources/scripts/betterform"/>
-            <delete dir="${webapp.dir}/resources/scripts/dijit"/>
-            <delete dir="${webapp.dir}/resources/scripts/dojo"/>
-            <delete dir="${webapp.dir}/resources/scripts/dojox"/>
-            <delete dir="${webapp.dir}/resources/scripts/util"/>
+        <delete includeemptydirs="true" failonerror="false">
+            <!-- delete forms not relevant for the betterFORM release -->
+            <fileset dir="${webapp.dir}/forms/incubator"/>
+            <fileset dir="${webapp.dir}/forms/test"/>
 
-            <delete includeemptydirs="true">
-                <fileset dir="${webapp.dir}/resources/scripts/release/dojo" includes="**/tests/"/>
-            </delete>
-        <delete includeemptydirs="true">
-            <fileset dir="${webapp.dir}/resources/scripts/release/dojo/dojox/atom" includes="**/tests/"/>
+            <!-- delete not relevant JavaScript sources -->
             <fileset dir="${webapp.dir}/resources/scripts/release/dojo" includes="**/tests/"/>
+            <fileset dir="${webapp.dir}/resources/scripts/release/dojo/dojox/atom" includes="**/tests/"/>
+            <fileset dir="${webapp.dir}/resources/scripts/betterform"/>
+            <fileset dir="${webapp.dir}/resources/scripts/dijit"/>
+            <fileset dir="${webapp.dir}/resources/scripts/dojo"/>
+            <fileset dir="${webapp.dir}/resources/scripts/dojox"/>
+            <fileset dir="${webapp.dir}/resources/scripts/util"/>
+
+            <!-- delete all libs eXist 1.4 brings with -->
+            <fileset dir="${webapp.dir}/WEB-INF/lib" includes="commons-logging-* ,
+                                                               log4j-* ,
+                                                               xercesImpl-* ,
+                                                               xml-apis-* ,
+                                                               xmlrpc-* ,
+                                                               commons-codec-* ,
+                                                               commons-fileupload-* ,
+                                                               commons-httpclient-* ,
+                                                               activation-* ,
+                                                               mail-*
+                                                               " />
         </delete>
 
-            <zip basedir="${webapp.dir}" zipfile="${webapp.dir}.zip"/>
-        
+        <zip basedir="${webapp.dir}" zipfile="${webapp.dir}.zip"/>
+
     </target>
 
     
