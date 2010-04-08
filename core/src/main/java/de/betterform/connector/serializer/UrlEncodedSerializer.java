@@ -22,7 +22,7 @@ import java.net.URLEncoder;
 public class UrlEncodedSerializer implements InstanceSerializer {
 
     public void serialize(Submission submission, Node instance,
-                          OutputStream stream, String defaultEncoding) throws Exception {
+                          SerializerRequestWrapper wrapper, String defaultEncoding) throws Exception {
         if (instance == null)
             return;
 
@@ -44,7 +44,7 @@ public class UrlEncodedSerializer implements InstanceSerializer {
             separator = submission.getSeparator();
         }
 
-        PrintWriter writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(stream, defaultEncoding)));
+        PrintWriter writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(wrapper.getBodyStream(), defaultEncoding)));
         
         /* Traverse the tree */
         serializeNode(writer, instance, separator);

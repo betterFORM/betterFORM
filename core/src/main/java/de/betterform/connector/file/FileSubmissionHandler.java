@@ -5,6 +5,7 @@
 
 package de.betterform.connector.file;
 
+import de.betterform.connector.serializer.SerializerRequestWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import de.betterform.connector.AbstractConnector;
@@ -108,8 +109,9 @@ public class FileSubmissionHandler extends AbstractConnector implements Submissi
 
                 // create output steam and serialize instance data
                 FileOutputStream stream = new FileOutputStream(new File(fileName));
-                serialize(submission, instance, stream);
-                stream.close();
+                SerializerRequestWrapper wrapper = new SerializerRequestWrapper(stream);
+                serialize(submission, instance, wrapper);
+                wrapper.getBodyStream().close();
             }
             catch (Exception e) {
                 throw new XFormsException(e);

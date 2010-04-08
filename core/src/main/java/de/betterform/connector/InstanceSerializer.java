@@ -5,6 +5,7 @@
 
 package de.betterform.connector;
 
+import de.betterform.connector.serializer.SerializerRequestWrapper;
 import de.betterform.xml.xforms.model.submission.Submission;
 import org.w3c.dom.Node;
 
@@ -20,14 +21,14 @@ import java.io.OutputStream;
 public interface InstanceSerializer {
 
     /**
-     * Serialize instance into the OuputStream <tt>stream</tt>
+     * Serialize instance into the <tt>SerializerWrapperObject</tt>
      *
-     * @param submission      submission information.
-     * @param instance        instance to serialize.
-     * @param stream          stream to write into.
-     * @param defaultEncoding use this encoding in case user did not provide one.
+     * @param submission                submission information.
+     * @param instance                  instance to serialize.
+     * @param serializerRequestWrapper  object to write into.
+     * @param defaultEncoding           use this encoding in case user did not provide one.
      */
-    void serialize(Submission submission, Node instance, OutputStream stream,
+    void serialize(Submission submission, Node instance, SerializerRequestWrapper serializerRequestWrapper,    
                    String defaultEncoding) throws Exception;
 
 }

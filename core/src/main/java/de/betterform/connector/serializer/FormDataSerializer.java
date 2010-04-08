@@ -40,11 +40,11 @@ public class FormDataSerializer implements InstanceSerializer {
      *
      * @param submission
      * @param instance
-     * @param stream
+     * @param wrapper
      * @param defaultEncoding
      * @throws Exception on error
      */
-    public void serialize(Submission submission, Node instance, OutputStream stream, String defaultEncoding) throws Exception {
+    public void serialize(Submission submission, Node instance, SerializerRequestWrapper wrapper, String defaultEncoding) throws Exception {
         // sanity checks
         if (instance == null) {
             return;
@@ -83,14 +83,8 @@ public class FormDataSerializer implements InstanceSerializer {
         }
         writer.print("\r\n--" + boundary + "--");
         writer.flush();
-
-        // write to the stream
-        String header = "Content-Type: multipart/form-data;\r\n"
-                + "\tcharset=\"" + encoding + "\";\r\n"
-                + "\tboundary=\"" + boundary + "\";\r\n"
-                + "Content-Length: " + bos.size() + "\r\n\r\n";
-        stream.write(header.getBytes(encoding));
-        bos.writeTo(stream);
+        bos.writeTo(wrapper.getBodyStream());
+        wrapper.addHeader("internal-boundary-mark", boundary);
     }
 
     protected void serializeElement(PrintWriter writer, Element element,

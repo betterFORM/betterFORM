@@ -327,11 +327,9 @@ public class AbstractHTTPConnector extends AbstractConnector {
     }
 
     private void configureRequest(EntityEnclosingMethod httpMethod, String body, String type, String encoding) throws UnsupportedEncodingException {
-        httpMethod.setRequestBody(body);
-        httpMethod.setRequestHeader(new Header("Content-Type", type));
+        StringRequestEntity entity = new StringRequestEntity(body, type, encoding);
+        httpMethod.setRequestEntity(entity);
         httpMethod.setRequestHeader(new Header("Content-Length", String.valueOf(body.getBytes(encoding).length)));
-
-//        httpMethod.setRequestHeader(new Header("User-Agent", XFormsProcessorImpl.getAppInfo()));
     }
 
 }

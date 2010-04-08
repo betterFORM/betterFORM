@@ -5,6 +5,7 @@
 
 package de.betterform.connector.http;
 
+import de.betterform.connector.serializer.SerializerRequestWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import de.betterform.connector.SubmissionHandler;
@@ -56,8 +57,9 @@ public class HTTPSubmissionHandler extends AbstractHTTPConnector implements Subm
                 encoding = getDefaultEncoding();
             }
 
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            serialize(submission, instance, stream);
+            SerializerRequestWrapper wrapper = new SerializerRequestWrapper(new ByteArrayOutputStream());
+            serialize(submission, instance, wrapper);
+            ByteArrayOutputStream stream = (ByteArrayOutputStream) wrapper.getBodyStream();
 
             /*
              * Some extension mechanism here could be handy 
@@ -78,7 +80,7 @@ public class HTTPSubmissionHandler extends AbstractHTTPConnector implements Subm
                 if(getURI().indexOf("?") == -1 && streamNotEmpty){
                     get(getURI() + "?" + stream.toString(encoding));
                 }else if(streamNotEmpty){
-                    get(getURI() + "&" + stream.toString(encoding));                                        
+                    get(getURI() + "&" + stream.toString(encoding));
                 }else{
                     get(getURI());
                 }
@@ -134,7 +136,12 @@ public class HTTPSubmissionHandler extends AbstractHTTPConnector implements Subm
             // HTTP  FORM-DATA-POST            
             else if (method.equals("form-data-post")) {
                 if(streamNotEmpty){
-                    post(getURI(), stream.toString(encoding), "multipart/form-data; charset="+encoding, encoding);
+                    String type = "multipart/form-data; charset=" + encoding;
+                    String boundary = wrapper.getHeader("internal-boundary-mark");
+                    if (! "".equals(boundary)) {
+                        type = type + "; boundary=" + boundary;
+                    }
+                    post(getURI(), stream.toString(encoding), type, encoding);
                 }else {
                     post(getURI(), "multipart/form-data; charset="+encoding, encoding);
                 }
@@ -152,7 +159,7 @@ public class HTTPSubmissionHandler extends AbstractHTTPConnector implements Subm
             	if(getURI().indexOf("?") == -1 && streamNotEmpty){
                     delete(getURI() + "?" + stream.toString(encoding));
                 }else if(streamNotEmpty){
-                	delete(getURI() + "&" + stream.toString(encoding));                                        
+                	delete(getURI() + "&" + stream.toString(encoding));
                 }else {
                     delete(getURI());
                 }

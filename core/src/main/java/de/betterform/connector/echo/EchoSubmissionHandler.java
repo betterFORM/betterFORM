@@ -7,6 +7,7 @@ package de.betterform.connector.echo;
 
 import de.betterform.connector.AbstractConnector;
 import de.betterform.connector.SubmissionHandler;
+import de.betterform.connector.serializer.SerializerRequestWrapper;
 import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.submission.Submission;
@@ -35,11 +36,11 @@ public class EchoSubmissionHandler extends AbstractConnector implements Submissi
      */
     public Map submit(Submission submission, Node instance) throws XFormsException {
         try {
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            serialize(submission, instance, outputStream);
+            SerializerRequestWrapper wrapper = new SerializerRequestWrapper(new ByteArrayOutputStream());
+            serialize(submission, instance, wrapper);
 
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-            outputStream.close();
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(((ByteArrayOutputStream) wrapper.getBodyStream()).toByteArray());
+            wrapper.getBodyStream().close();
 
             Map response = new HashMap();
             response.put(XFormsProcessor.SUBMISSION_RESPONSE_STREAM, inputStream);

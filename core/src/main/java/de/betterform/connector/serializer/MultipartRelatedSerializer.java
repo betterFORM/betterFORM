@@ -33,7 +33,7 @@ import java.util.Map;
  */
 public class MultipartRelatedSerializer implements InstanceSerializer {
 
-    public void serialize(Submission submission, Node node, OutputStream outputStream, String defaultEncoding) throws Exception {
+    public void serialize(Submission submission, Node node, SerializerRequestWrapper wrapper, String defaultEncoding) throws Exception {
         Map cache = new HashMap();
         MimeMultipart multipart = new MimeMultipart();
 
@@ -59,8 +59,9 @@ public class MultipartRelatedSerializer implements InstanceSerializer {
         part.setFileName("instance.xml");
 
         multipart.setSubType("related; type=\"" + submission.getMediatype() + "\"; start=\"instance.xml@start\"");
-        outputStream.write(("Content-Type: " + multipart.getContentType() + "\n\nThis is a MIME message.\n").getBytes(encoding));
-        multipart.writeTo(outputStream);
+        // FIXME: Is this a global http header or a local mime header?
+        wrapper.getBodyStream().write(("Content-Type: " + multipart.getContentType() + "\n\nThis is a MIME message.\n").getBytes(encoding));
+        multipart.writeTo(wrapper.getBodyStream());
     }
 
     protected byte[] serializeXML(MimeMultipart multipart, Map cache,
@@ -73,9 +74,10 @@ public class MultipartRelatedSerializer implements InstanceSerializer {
             visitNode(cache, instance, multipart);
         }
 
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        SerializerRequestWrapper wrapper = new SerializerRequestWrapper(new ByteArrayOutputStream());
         XMLSerializer serializer = new XMLSerializer();
-        serializer.serialize(submission, instance, stream, encoding);
+        serializer.serialize(submission, instance, wrapper, encoding);
+        ByteArrayOutputStream stream = (ByteArrayOutputStream) wrapper.getBodyStream();        
         return stream.toByteArray();
     }
 

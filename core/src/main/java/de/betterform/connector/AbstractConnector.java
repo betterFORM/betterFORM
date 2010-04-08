@@ -5,6 +5,7 @@
 
 package de.betterform.connector;
 
+import de.betterform.connector.serializer.SerializerRequestWrapper;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.exception.XFormsException;
@@ -163,7 +164,7 @@ public class AbstractConnector implements Connector {
         return this.uri.substring(0, fragmentIndex);
     }
 
-    protected final void serialize(Submission submission, Node instance, OutputStream stream) throws Exception {
+    protected final void serialize(Submission submission, Node instance, SerializerRequestWrapper wrapper) throws Exception {
         if(submission.getSerialization() != null && submission.getSerialization().equalsIgnoreCase("none")){
             return;
         }
@@ -189,7 +190,7 @@ public class AbstractConnector implements Connector {
                     + mediatype + "' at: " + DOMUtil.getCanonicalPath(submission.getElement()));
         }
 
-        serializer.serialize(submission, instance, stream, getDefaultEncoding());
+        serializer.serialize(submission, instance, wrapper, getDefaultEncoding());
     }
 
     /**

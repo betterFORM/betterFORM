@@ -6,6 +6,7 @@
 package de.betterform.connector.smtp;
 
 
+import de.betterform.connector.serializer.SerializerRequestWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import de.betterform.connector.AbstractConnector;
@@ -95,8 +96,10 @@ public class SMTPSubmissionHandler extends AbstractConnector implements Submissi
                 encoding = submission.getEncoding();
             }
 
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            serialize(submission, instance, stream);
+            SerializerRequestWrapper wrapper = new SerializerRequestWrapper(new ByteArrayOutputStream());
+            serialize(submission, instance, wrapper);
+            ByteArrayOutputStream stream = (ByteArrayOutputStream) wrapper.getBodyStream();
+
 
             /*
              * Some extension mechanism here could be handy

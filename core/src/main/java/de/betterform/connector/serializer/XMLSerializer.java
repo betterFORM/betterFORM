@@ -25,7 +25,7 @@ import java.io.OutputStream;
 public class XMLSerializer implements InstanceSerializer {
 
     public void serialize(Submission submission, Node instance,
-                          OutputStream stream, String defaultEncoding) throws Exception {
+                         SerializerRequestWrapper wrapper, String defaultEncoding) throws Exception {
     	
     	if(instance.getNodeType() == Node.ELEMENT_NODE || instance.getNodeType() == Node.DOCUMENT_NODE) {
 	        Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -55,10 +55,10 @@ public class XMLSerializer implements InstanceSerializer {
 	            transformer.setOutputProperty(OutputKeys.CDATA_SECTION_ELEMENTS, submission.getCDATASectionElements());
 	        }
 	
-	        transformer.transform(new DOMSource(instance), new StreamResult(stream));
+	        transformer.transform(new DOMSource(instance), new StreamResult(wrapper.getBodyStream()));
     	}
     	else {
-    		stream.write(instance.getTextContent().getBytes(defaultEncoding));
+    		wrapper.getBodyStream().write(instance.getTextContent().getBytes(defaultEncoding));
     	}
     }
 }
