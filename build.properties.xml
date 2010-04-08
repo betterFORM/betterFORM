@@ -70,11 +70,11 @@
             
             <selenium>
               <!-- which browser to use for tests -->
-              <browser>*googlechrome</browser>
+              <browser>*firefox</browser>
               <!--server properties -->
               <server>
 <!--                <jar>${basedir}/src/main/lib/selenium-server-1.0.1.jar</jar> -->
-                <jar>${basedir}/src/main/lib/webtest/webdriver/selenium-server-standalone-2.0a2.jar</jar>
+                <jar>${basedir}/src/main/lib/selenium/selenium-server-standalone-2.0a2.jar</jar>
                 <host>localhost</host>
                 <port>4444</port>
                 <url>/selenium-server/core/index.html</url>
@@ -83,8 +83,8 @@
             </selenium>
             <!-- home of the tomcat-server which serves testpages -->
             <tomcat>
-                <download-url>http://ftp-stud.hs-esslingen.de/pub/Mirrors/ftp.apache.org/dist/tomcat/tomcat-6/v6.0.20/bin/apache-tomcat-6.0.20.zip</download-url>
-                <version>apache-tomcat-6.0.20</version>
+                <download-url>http://ftp-stud.hs-esslingen.de/pub/Mirrors/ftp.apache.org/dist/tomcat/tomcat-6/v6.0.26/bin/apache-tomcat-6.0.26.zip</download-url>
+                <version>apache-tomcat-6.0.26</version>
                 <shutdownport>42000</shutdownport>
                 <port>42042</port>
                 <host>localhost</host>
