@@ -37,8 +37,7 @@ import module namespace util="http://exist-db.org/xquery/util";
           <created>2010-03-12T15:45:21.515+01:00</created>
       </task>
   </data>
-  
-  :)
+:)
 
 
 declare function local:equal-or-true($key, $value) as xs:boolean
@@ -55,7 +54,6 @@ declare function local:tasks() as node()*
     let $billable-p  := xs:string(request:get-parameter("billable", ()))
     let $worker-p    := xs:string(request:get-parameter("worker", ""))
     let $worker-s    := tokenize($worker-p, '\s')
-    
 
     for $task in collection("/db/timetracking/tasks/task")//task
     for $w in tokenize($task/who, "\s")
@@ -83,47 +81,46 @@ declare function local:billing($hours as xs:integer, $minutes as xs:integer, $da
 as element()
 {
     let $hourlyRate   := $dailyRate div 8
-    
     let $nettoHours   := $hours * $hourlyRate
     let $nettoMinutes := ($minutes div 60) * $hourlyRate
     return 
-    	<billing>
-			    <dailyRate>{$dailyRate}</dailyRate>
-			    <hourlyRate>{$hourlyRate}</hourlyRate>
-			    <nettoHours>{$nettoHours}</nettoHours>
-			    <nettoMinutes>{$nettoMinutes}</nettoMinutes>
-			    <bill>€ {$nettoHours + $nettoMinutes}</bill>
-			</billing>
+	<billing>
+          <dailyRate>{$dailyRate}</dailyRate>
+          <hourlyRate>{$hourlyRate}</hourlyRate>
+          <nettoHours>{$nettoHours}</nettoHours>
+          <nettoMinutes>{$nettoMinutes}</nettoMinutes>
+          <bill>€ {$nettoHours + $nettoMinutes}</bill>
+	</billing>
 };
 
 
-declare function local:main() as element()?
-  {
-	  let $selectedTasks     := local:tasks()
-	  let $hoursInMinutes    := local:hours-in-minutes($selectedTasks)
-	  let $minutes           := sum($selectedTasks//duration/@minutes)
-	  let $totalMinutes      := $hoursInMinutes + $minutes
-	  
-    
-    let $totalHours        := $totalMinutes idiv 60
-    let $remainingMinutes  := $totalMinutes mod 60
-    let $totalTime         := concat($totalHours,':',$remainingMinutes)
-    let $days              := $totalHours idiv 8
-    let $billing           := local:billing($totalHours, $remainingMinutes)
-	return
-		<project days="{$days}"
-		         totalTime="{$totalTime}"
-             totalMinutes="{$totalMinutes}"
-             remainingMinutes="{$remainingMinutes}"
-             >
-   	 { for $z in $selectedTasks
-				let $date := $z/date
-				order by $date
-				return $z }
-     { $billing }
-			</project>
+declare function local:main()
+as element()?
+{
+  let $selectedTasks     := local:tasks()
+  let $hoursInMinutes    := local:hours-in-minutes($selectedTasks)
+  let $minutes           := sum($selectedTasks//duration/@minutes)
+  let $totalMinutes      := $hoursInMinutes + $minutes
+  let $totalHours        := $totalMinutes idiv 60
+  let $remainingMinutes  := $totalMinutes mod 60
+  let $totalTime         := concat($totalHours,':',$remainingMinutes)
+  let $days              := $totalHours idiv 8
+  let $billing           := local:billing($totalHours, $remainingMinutes)
+
+  return
+  <project days="{$days}"
+           totalTime="{$totalTime}"
+           totalMinutes="{$totalMinutes}"
+           remainingMinutes="{$remainingMinutes}">
+  { for $z in $selectedTasks
+    let $date := $z/date
+    order by $date
+    return $z
+  }
+  { $billing }
+  </project>
 };
 
 <data>
-	{ local:main() }
+ { local:main() }
 </data>

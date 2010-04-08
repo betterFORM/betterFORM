@@ -146,7 +146,7 @@
 		<xf:instance id="i-controller">
 			<data xmlns="">
 				<error hasError="false"><![CDATA[]]></error>
-				<dbPath>localhost:8080/exist/rest/db/timetracking</dbPath>
+				<dbPath>golem:8080/exist/rest/db/timetracking</dbPath>
 				<timestamp/>
 			</data>
 		</xf:instance>
@@ -185,7 +185,7 @@
 
         <xf:instance id="i-query-tasks">
             <data xmlns="">
-                <project/>
+                <projects/>
                 <worker/>
                 <start/>
                 <end/>
@@ -208,14 +208,6 @@
         
         <xf:instance id="i-worker"
                      src="http://{instance('i-controller')/dbPath}/i-worker.xml" />
-        
-
-        <xf:instance id="i-test-query">
-            <data xmlns="">
-                <projects>project1 project2</projects>
-                <worker>User1</worker>
-            </data>
-        </xf:instance>
 
         <xf:submission id="s-add"
                        resource="http://{instance('i-controller')/dbPath}/tasks/task/{instance('i-controller')/timestamp}.xml"
@@ -273,12 +265,13 @@
 
         <!-- Submission to receive all tasks allocated to a specified project -->
         <xf:submission id="s-get-tasks"
-                       ref="instance('i-test-query')"
+                       ref="instance('i-query-tasks')"
                        resource="http://{instance('i-controller')/dbPath}/query.xql"
-                       method="form-data-post"
                        replace="instance"
                        instance="i-tasks"
+                       method="form-data-post"
                        validate="false">
+
 
             <xf:action ev:event="xforms-submit-done">
                 <xf:message level="ephemeral">Received data from eXist DB</xf:message>
@@ -560,7 +553,7 @@
                 </tr>
                 <tr>
                     <td style="border-right: 1px solid black;width:90px" valign="top">
-                        <xf:select id="projectToDisplay" ref="instance('i-query-tasks')/project" appearance="full">
+                        <xf:select id="projectToDisplay" ref="instance('i-query-tasks')/projects" appearance="full">
                             <xf:label/>
                             <xf:itemset nodeset="instance('i-project')/project">
                                 <xf:label ref="."/>
@@ -597,7 +590,8 @@
                         <xf:trigger>
                             <xf:label>Go</xf:label>
                                 <xf:send submission="s-get-tasks"
-                                         if="string-length(instance('i-query-tasks')/project) &gt; 0"/>
+
+									/>
                         </xf:trigger>
                     </td>
                 </tr>
