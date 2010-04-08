@@ -12,6 +12,10 @@
         <pathelement location="${webapp.dir}/WEB-INF/lib/saxon-dom-9.0.jar"/>
     </path>
 
+    <target name="clean">
+        <delete dir="${target.dir}" failonerror="false"/>
+    </target>
+
     <target name="package"
             description="creates a zip archive to be dropped into eXist">
 
@@ -59,8 +63,15 @@
                                                                mail-*" />
         </delete>
 
-        <zip basedir="${webapp.dir}" zipfile="${webapp.dir}.zip"/>
+        <zip basedir="${webapp.dir}" zipfile="${webapp.dir}-3.0.0.zip"/>
 
+
+
+    </target>
+
+    <target name="exist-resources">
+        <mkdir dir="${target.dir}/exist"/> 
+      <zip basedir="${basedir}/betterform" zipfile="${target.dir}/exist/betterform.zip"/>
     </target>
 
     

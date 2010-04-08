@@ -18,7 +18,6 @@
             <xsl:otherwise>
                 <xsl:result-document href="{$webxml.path}.original" encoding="UTF-8"><xsl:copy-of select="."/></xsl:result-document>
                 <xsl:copy>
-                    <xsl:apply-templates select="@*"/>
                     <xsl:apply-templates/>
                 </xsl:copy>
             </xsl:otherwise>
