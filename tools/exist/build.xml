@@ -9,7 +9,6 @@
 
     <target name="prepare-exist-deployment"
             description="creates a zip archive to be dropped into eXist">
-<!--
             <ant antfile="${web.dir}/build.xml" target="clean" dir="${web.dir}" inheritall="false"/>
 
 
@@ -33,7 +32,6 @@
             <delete includeemptydirs="true">
                 <fileset dir="${webapp.dir}/resources/scripts/release/dojo" includes="**/tests/"/>
             </delete>
--->
         <delete includeemptydirs="true">
             <fileset dir="${webapp.dir}/resources/scripts/release/dojo/dojox/atom" includes="**/tests/"/>
             <fileset dir="${webapp.dir}/resources/scripts/release/dojo" includes="**/tests/"/>

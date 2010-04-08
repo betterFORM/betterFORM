@@ -1,0 +1,103 @@
+<project name="betterFORM As eXist module Installer" default="deploy2exist" basedir=".">
+
+    <property name="server.dir" value="../.."/>
+    <property name="exist.web.xml" value="${server.dir}/webapp/WEB-INF/web.xml"/>
+
+    <property name="bf.shortname" value="betterform"/>
+    <property name="bf.version" value="3.0.0"/>
+
+
+    <property name="target.dir" value="${basedir}/target"/>
+    <property name="bf.name" value="${bf.shortname}-${bf.version}"/>
+    <property name="bfSrc.dir" value="${target.dir}/betterform"/>
+
+    <property name="bf.release.name" value="betterform-3.0.0"/>
+    <property name="bf.download.url" value="http://www.betterform.de/dist/${bf.name}.zip"/>
+
+    <path id="generator.libs" description="classpath for compiling core classes">
+        <pathelement location="${target.dir}/betterform/WEB-INF/lib/saxon-9.0.jar"/>
+        <pathelement location="${target.dir}/betterform/WEB-INF/lib/saxon-dom-9.0.jar"/>
+    </path>
+
+
+    <path id="classpath.exist">
+        <fileset dir="${server.dir}/lib/core">
+            <include name="*.jar"/>
+        </fileset>
+        <pathelement path="${server.dir}/exist.jar"/>
+        <pathelement path="${server.dir}/exist-optional.jar"/>
+    </path>
+
+    <typedef resource="org/exist/ant/antlib.xml" uri="http://exist-db.org/ant">
+        <classpath refid="classpath.exist"/>
+    </typedef>
+
+
+
+
+    <target name="install" description="install betterFORM into an existing eXist XML Db installation">
+        <echo message="************************************************************************************"/>
+        <echo message="download betterFORM distribution"/>
+        <echo message="************************************************************************************"/>
+
+        <antcall target="download_betterFORM_release"/>
+
+        <echo message="************************************************************************************"/>
+        <echo message="add betterFORM config parameters to eXist to ${exist.web.xml}"/>
+        <echo message="************************************************************************************"/>
+
+        <antcall target="patchWebXml"/>
+
+        <echo message="************************************************************************************"/>
+        <echo message="deploy betterFORM resources into running eXist XML DB"/>
+        <echo message="************************************************************************************"/>
+
+        <antcall target="deploy2exist"/>
+
+    </target>
+
+
+    <target name="uninstall" xmlns:xmldb="http://exist-db.org/ant" description="uninstall betterform from an existing eXist XML Db installation">
+        <delete file="${target.dir}"/>
+        <delete file="${exist.web.xml}"/>
+        <move file="${exist.web.xml}.original" tofile="${exist.web.xml}"/>
+
+        <xdb:remove uri="xmldb:exist://localhost:8080/exist/xmlrpc/db" collection="xforms" xmlns:xdb="http://exist-db.org/ant"/>
+    </target>
+
+    <target name="download_betterFORM_release">
+        <get usetimestamp="true" ignoreerrors="true"  src="${bf.download.url}"  dest="${basedir}/target/${bf.name}"/>
+        <unzip src="${target.dir}/${bf.name}.zip" dest="${target.dir}/${bf.shortname}"/>
+    </target>
+
+    <target name="patchWebXml">
+        <xslt in="${exist.web.xml}" out="${exist.web.xml}.bf" force="true"
+              style="${basedir}/MergeWebXML.xsl">
+            <classpath refid="generator.libs"/>
+            <param name="webxml.path" expression="${exist.web.xml}"/>
+        </xslt>
+        <delete file="${exist.web.xml}"/>
+        <move file="${exist.web.xml}.bf" tofile="${exist.web.xml}"/>
+    </target>
+
+
+    <!-- deploys betterform resources into an existing and running eXist XML Db installation -->
+    <target name="deploy2exist" xmlns:xmldb="http://exist-db.org/ant">
+		<xdb:store xmlns:xdb="http://exist-db.org/ant"
+                   uri="xmldb:exist://localhost:8080/exist/xmlrpc/db/xforms/betterform/resources"
+                   createsubcollections="true"
+                   createcollection="true"
+                   type="binary">
+			<fileset dir="${bfSrc.dir}/resources" includes="**/*.*"/>
+		</xdb:store>
+
+		<xdb:store xmlns:xdb="http://exist-db.org/ant"
+                   uri="xmldb:exist://localhost:8080/exist/xmlrpc/db/xforms/betterform/forms"
+                   createsubcollections="true"
+                   createcollection="true" >
+			<fileset dir="${bfSrc.dir}/forms" includes="**/*.*"/>
+
+		</xdb:store>
+    </target>
+
+</project>
