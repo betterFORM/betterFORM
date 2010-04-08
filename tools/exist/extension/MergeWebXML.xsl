@@ -73,8 +73,8 @@
         </servlet>
 
         <servlet>
-            <servlet-name>XFormsRequest</servlet-name>
-            <servlet-class>de.betterform.agent.web.servlet.XFormsRequestServlet</servlet-class>
+            <servlet-name>XFormsRequestURI</servlet-name>
+            <servlet-class>de.betterform.agent.web.servlet.XFormsRequestURIServlet</servlet-class>
         </servlet>
     </xsl:template>
 
@@ -100,6 +100,11 @@
         <servlet-mapping>
             <servlet-name>Flux</servlet-name>
             <url-pattern>/Flux/*</url-pattern>
+        </servlet-mapping>
+
+        <servlet-mapping>
+            <servlet-name>XFormsRequestURI</servlet-name>
+            <url-pattern>/forms/*</url-pattern>
         </servlet-mapping>
 
         <error-page>
