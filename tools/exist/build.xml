@@ -56,8 +56,7 @@
                                                                commons-fileupload-* ,
                                                                commons-httpclient-* ,
                                                                activation-* ,
-                                                               mail-*
-                                                               " />
+                                                               mail-*" />
         </delete>
 
         <zip basedir="${webapp.dir}" zipfile="${webapp.dir}.zip"/>

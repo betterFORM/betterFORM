@@ -15,8 +15,8 @@
     <property name="bf.download.url" value="http://www.betterform.de/dist/${bf.name}.zip"/>
 
     <path id="generator.libs" description="classpath for compiling core classes">
-        <pathelement location="${target.dir}/betterform/WEB-INF/lib/saxon-9.0.jar"/>
-        <pathelement location="${target.dir}/betterform/WEB-INF/lib/saxon-dom-9.0.jar"/>
+        <pathelement location="${bfSrc.dir}/WEB-INF/lib/saxon-9.0.jar"/>
+        <pathelement location="${bfSrc.dir}/WEB-INF/lib/saxon-dom-9.0.jar"/>
     </path>
 
 
@@ -64,7 +64,7 @@
 
     <target name="download_betterFORM_release">
         <get usetimestamp="true" ignoreerrors="true"  src="${bf.download.url}"  dest="${basedir}/target/${bf.name}"/>
-        <unzip src="${target.dir}/${bf.name}.zip" dest="${target.dir}/${bf.shortname}"/>
+        <unzip src="${bfSrc.dir}.zip" dest="${bfSrc.dir}"/>
     </target>
 
     <target name="patchWebXml">
