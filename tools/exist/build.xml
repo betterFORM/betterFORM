@@ -7,6 +7,11 @@
     <property name="target.dir" value="${basedir}/target"/>
     <property name="webapp.dir" value="${basedir}/target/${web.app.name}"/>
 
+    <path id="generator.libs" description="classpath for compiling core classes">
+        <pathelement location="${webapp.dir}/WEB-INF/lib/saxon-9.0.jar"/>
+        <pathelement location="${webapp.dir}/WEB-INF/lib/saxon-dom-9.0.jar"/>
+    </path>
+
     <target name="package"
             description="creates a zip archive to be dropped into eXist">
 
@@ -18,6 +23,13 @@
         </ant>
 
 
+        <move file="${webapp.dir}/WEB-INF/betterform-config.xml" todir="${target.dir}"/>
+        <xslt in="${target.dir}/betterform-config.xml"
+              out="${webapp.dir}/WEB-INF/betterform-config.xml"
+              force="true"
+              style="${basedir}/UpdateBetterFORMConfig.xsl">
+            <classpath refid="generator.libs"/>
+        </xslt>
 
 
         <delete includeemptydirs="true" failonerror="false">
