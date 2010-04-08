@@ -137,8 +137,11 @@
         <copy file="${bfSrc.dir}/WEB-INF/dwr20.dtd" todir="${exist.rootdir}/webapp/WEB-INF"/>
         <copy file="${bfSrc.dir}/WEB-INF/log4j.xml" todir="${exist.rootdir}/webapp/WEB-INF"/>
         <copy file="${bfSrc.dir}/WEB-INF/log4j.dtd" todir="${exist.rootdir}/webapp/WEB-INF"/>
+        <copy file="${basedir}/sample/xfGuess.xql" tofile="${exist.rootdir}/webapp/xquery/xfGuess.xql" />
+
         <mkdir dir="${basedir}/uninstall"/>
         <move file="${exist.rootdir}/lib/cocoon/ehcache-1.1.jar" tofile="${basedir}/uninstall/ehcache-1.1.jar" />
+
     </target>
 
 

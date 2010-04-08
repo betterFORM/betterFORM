@@ -16,7 +16,7 @@
         <delete dir="${target.dir}" failonerror="false"/>
     </target>
 
-    <target name="package"
+    <target name="package" depends="exist-resources"
             description="creates a zip archive to be dropped into eXist">
 
         <ant antfile="${web.dir}/build.xml" target="clean" dir="${web.dir}" inheritall="false"/>
