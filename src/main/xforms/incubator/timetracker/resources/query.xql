@@ -40,13 +40,17 @@ import module namespace util="http://exist-db.org/xquery/util";
 :)
 
 
+(: returns true when value is empty otherwise compares 
+   key with value :)
 declare function local:equal-or-true($key, $value) as xs:boolean
 {
-   if (empty($value))
-   then true()
-   else $value = $key
+   if (empty($value)) then
+     true()
+   else
+     $value = $key
 };
 
+(: returns the list of selected tasks :)
 declare function local:tasks() as node()*
 {
     session:create(),
@@ -57,12 +61,21 @@ declare function local:tasks() as node()*
 
     for $task in collection("/db/timetracking/tasks/task")//task
     for $w in tokenize($task/who, "\s")
+    (: let $date := $task/date :) 
     where local:equal-or-true($task/project, $projects) and 
           local:equal-or-true($w, $worker-s) and
           local:equal-or-true($task/billable, $billable-p)
+    (: order by $task/date  :)
     return $task
 };
 
+(: simple wrapper around local:tasks since i was not to able to order it in one query :)
+declare function local:ordered-tasks() as node()*
+{
+    for $z in  local:tasks()
+    order by $z/date
+    return $z
+};
 
 declare function local:hours-in-minutes($tasks as node()*) as xs:integer
 {
@@ -94,33 +107,28 @@ as element()
 };
 
 
-declare function local:main()
+declare function local:project()
 as element()?
 {
-  let $selectedTasks     := local:tasks()
-  let $hoursInMinutes    := local:hours-in-minutes($selectedTasks)
-  let $minutes           := sum($selectedTasks//duration/@minutes)
-  let $totalMinutes      := $hoursInMinutes + $minutes
+  let $tasks             := local:ordered-tasks()
+  let $hoursInMinutes    := local:hours-in-minutes($tasks)
+  let $totalMinutes      := $hoursInMinutes + sum($tasks//duration/@minutes)
   let $totalHours        := $totalMinutes idiv 60
   let $remainingMinutes  := $totalMinutes mod 60
   let $totalTime         := concat($totalHours,':',$remainingMinutes)
   let $days              := $totalHours idiv 8
-  let $billing           := local:billing($totalHours, $remainingMinutes)
 
   return
   <project days="{$days}"
            totalTime="{$totalTime}"
            totalMinutes="{$totalMinutes}"
            remainingMinutes="{$remainingMinutes}">
-  { for $z in $selectedTasks
-    let $date := $z/date
-    order by $date
-    return $z
-  }
-  { $billing }
+    { $selectedTasks }
+    { local:billing($totalHours, $remainingMinutes) }
   </project>
 };
 
+(: returns data root element for replacing instance in timetracker form :)
 <data>
- { local:main() }
+ { local:project() }
 </data>
