@@ -1,4 +1,4 @@
-<project name="betterFORM eXist XMLDB Module" default="package" basedir=".">
+<project name="eXist extension builder" default="package" basedir=".">
 
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
