@@ -1,7 +1,7 @@
 <project name="betterFORM As eXist module Installer" default="deploy2exist" basedir=".">
 
-    <property name="server.dir" value="../.."/>
-    <property name="exist.web.xml" value="${server.dir}/webapp/WEB-INF/web.xml"/>
+    <property name="exist.rootdir" value="../.."/>
+    <property name="exist.web.xml" value="${exist.rootdir}/webapp/WEB-INF/web.xml"/>
 
     <property name="bf.shortname" value="betterform"/>
     <property name="bf.version" value="3.0.0"/>
@@ -21,19 +21,16 @@
 
 
     <path id="classpath.exist">
-        <fileset dir="${server.dir}/lib/core">
+        <fileset dir="${exist.rootdir}/lib/core">
             <include name="*.jar"/>
         </fileset>
-        <pathelement path="${server.dir}/exist.jar"/>
-        <pathelement path="${server.dir}/exist-optional.jar"/>
+        <pathelement path="${exist.rootdir}/exist.jar"/>
+        <pathelement path="${exist.rootdir}/exist-optional.jar"/>
     </path>
 
     <typedef resource="org/exist/ant/antlib.xml" uri="http://exist-db.org/ant">
         <classpath refid="classpath.exist"/>
     </typedef>
-
-
-
 
     <target name="install" description="install betterFORM into an existing eXist XML Db installation">
         <echo message="************************************************************************************"/>
@@ -98,6 +95,18 @@
 			<fileset dir="${bfSrc.dir}/forms" includes="**/*.*"/>
 
 		</xdb:store>
+    </target>
+
+    <target  name="patchStartConfig">
+        <copy file="${exist.rootdir}/src/org/exist/start/start.config" todir="${exist.rootdir}"/>
+
+        <concat destfile="${exist.rootdir}/start.config">
+            <filelist dir="${exist.rootdir}/src/org/exist/start"
+		         files="start.config"/>
+            <filelist dir="${exist.rootdir}/src/org/exist/start"
+		         files="start.config.betterform"/>
+
+        </concat>
     </target>
 
 </project>
