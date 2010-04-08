@@ -48,7 +48,12 @@ declare function local:main() as node()?
 		    local:random(100)
 };
 
-<html>
+request:set-attribute("betterform.filter.parseResponseBody", "true"),
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:bffn="java:de.betterform.xml.xforms.xpath.BetterFormXPathFunctions"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      >
     <head><title>Number Guessing</title></head>
     <body>
     	<div style="display:none;">
@@ -58,27 +63,29 @@ declare function local:main() as node()?
     		  			<input/>
     		  		</data>
     		  	</xf:instance>
-
-    		  	<xf:submission id="guess"
-    		  					method="get"
-    		  					resource="{session:encode-url(request:get-uri())}"
-    		  	/>
-
+                <xf:bind nodeset="input" type="integer" constraint=". &gt;= 0 and . &lt;= 100"/>
+    		  	<xf:action ev:event="xforms-ready">
+    		  		<xf:setvalue ref="input" value="bffn:appContext('guess')"/>    		  		    		  		
+    		  	</xf:action>
 		  	</xf:model>
     	</div>
         <form action="">
         	<xf:group appearance="full">
         		<xf:label>Guess a number</xf:label>
-        		<xf:input ref="input" name="guess size="3">
+        		<xf:input ref="input" name="guess" size="3" incremental="true">
         			<xf:label>Number:</xf:label>
+        			<xf:alert>Value must be a number between 0 and 100</xf:alert>
 				</xf:input>
 				<xf:trigger>
-					<xf:label>Submit<xf:label>
-					<xf:send submission="guess"/>
+					<xf:label>Submit</xf:label>
+					  <xf:load show="replace" if="number(input) &gt; 0">
+						  <xf:resource value="concat('http://localhost:8080/exist/xquery/xfGuess.xql?guess=',instance()/input)"/>
+					  </xf:load>
+					  <xf:message if="not(number(input))">The input value must be a positive number</xf:message>
 				</xf:trigger>
         	</xf:group>
         </form>
-        { local:main() }
+        { local:main()}
         <p id="view-source"><a href="xfGuess.xql/source">View source</a></p>
     </body>
 </html>
