@@ -32,20 +32,21 @@
             padding-right: 5px;
         }
 
-        /* date column */
+		/* project column */
         .caTableCol-1 {
             text-align: left;
             width: 11ex;
         }
 
-        /* time column */
+        /* date column */
         .caTableCol-2 {
-            text-align: right;
+            text-align: left;
+            width: 11ex;
         }
 
         /* time column */
         .caTableCol-3 {
-            text-align: left;
+            text-align: right;
         }
 
         /* time column */
@@ -53,18 +54,23 @@
             text-align: left;
         }
 
-        /* note column */
+        /* time column */
         .caTableCol-5 {
+            text-align: left;
+        }
+
+        /* note column */
+        .caTableCol-6 {
             overflow: hidden;
         }
 
         /* time column */
-        .caTableCol-6 {
+        .caTableCol-7 {
             text-align: left;
         }
 
         /* time column */
-        .caTableCol-7 {
+        .caTableCol-8 {
             text-align: right;
         }
 
@@ -75,31 +81,21 @@
 		.xsdDate .xfValue {
 			width:80px;
 		}
+
 		.listing .xfSelectorItem {
 			display:block;
 		}
 
-        /*.subheader {*/
-            /*font-size: 14pt;*/
-            /*color: gray;*/
-            /*border-bottom: thin solid gray;*/
-            /*margin-bottom: 30px;*/
+		#overall-time-label {
+			display: inline;
+			margin-right: 2em;
+		}
 
-        /*}*/
+		#result-list {
+			height: 390px;
+			overflow-y: scroll;
+		}
 
-        /*.xfControl {*/
-            /*padding: 4px;*/
-        /*}*/
-
-        /*#errorReport-value {*/
-            /*border: thin solid;*/
-            /*display: block;*/
-            /*background: red;*/
-        /*}*/
-
-        /*#caCopyright {*/
-            /*bottom: 5px;*/
-        /*}*/
     </style>
 </head>
 <body>
@@ -128,10 +124,6 @@
 
         <xf:bind nodeset="task">
             <xf:bind nodeset="date" type="xf:date"/>
-            <!--
-				<xf:bind nodeset="start" type="xf:time" constraint=". &lt; ../end"/>
-				<xf:bind nodeset="end" type="xf:time" constraint=". &gt; ../start"/>
--->
             <xf:bind nodeset="duration/@hours" type="integer" constraint=". != 0 or ../@minutes != 0"/>
             <xf:bind nodeset="duration/@minutes" type="integer" constraint=". != 0 or ../@hours != 0"/>
             <xf:bind nodeset="who" required="true()"/>
@@ -151,8 +143,6 @@
 			</data>
 		</xf:instance>
 		<xf:bind nodeset="instance('i-controller')/error" relevant="@hasError='true'"/>
-		
-
 
         <xf:instance id="i-task-empty">
             <data xmlns="">
@@ -175,7 +165,7 @@
 
         <xf:instance id="i-tasks">
             <data xmlns="">
-            
+
             </data>
         </xf:instance>
 
@@ -205,7 +195,7 @@
 
         <xf:instance id="i-project"
                      src="http://{instance('i-controller')/dbPath}/i-project.xml"/>
-        
+
         <xf:instance id="i-worker"
                      src="http://{instance('i-controller')/dbPath}/i-worker.xml" />
 
@@ -261,7 +251,7 @@
                        method="get"
                        replace="instance"
                        instance="i-task"/>
-        
+
 
         <!-- Submission to receive all tasks allocated to a specified project -->
         <xf:submission id="s-get-tasks"
@@ -305,333 +295,342 @@
 </div>
 
 <div style="padding:10px;height:90%;">
-    <xf:switch appearance="dijit:TabContainer" id="switch1" style="height:90%">
-        <xf:case name="switch-toggles" id="switch-toggles" selected="false">
-            <xf:trigger id="t-cTask">
-                <xf:label/>
-                <xf:toggle case="cTask"/>
-            </xf:trigger>
-            <xf:trigger id="t-cResults">
-                <xf:label/>
-                <xf:toggle case="cResults"/>
-            </xf:trigger>
-        </xf:case>
+<xf:switch appearance="dijit:TabContainer" id="switch1" style="height:90%">
+<xf:case name="switch-toggles" id="switch-toggles" selected="false">
+	<xf:trigger id="t-cTask">
+		<xf:label/>
+		<xf:toggle case="cTask"/>
+	</xf:trigger>
+	<xf:trigger id="t-cResults">
+		<xf:label/>
+		<xf:toggle case="cResults"/>
+	</xf:trigger>
+</xf:case>
 
-        <xf:case id="cTask" selected="true">
-            <xf:label>Create</xf:label>
-            <xf:group ref="task">
-                <xf:label class="subheader">Create Task</xf:label>
-                <table id="task-table" >
-                    <tr>
-                        <td align="right">Date</td>
-                        <td>
-                            <xf:input id="date" ref="date">
-                                <xf:label/>
-                            </xf:input>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">Project</td>
-                        <td>
-                            <xf:select1 id="project" ref="project" appearance="minimal">
-                                <xf:label/>
-                                <xf:itemset nodeset="instance('i-project')/project">
-                                    <xf:label ref="."/>
-                                    <xf:value ref="."/>
-                                </xf:itemset>
-                            </xf:select1>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">
-                            Hours/Minutes
-                        </td>
-                        <td>
-                            <xf:select1 ref="duration/@hours" style="float:left;">
-                                <xf:label/>
-                                <xf:item>
-                                    <xf:label>0</xf:label>
-                                    <xf:value>0</xf:value>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>1</xf:label>
-                                    <xf:value>1</xf:value>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>2</xf:label>
-                                    <xf:value>2</xf:value>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>3</xf:label>
-                                    <xf:value>3</xf:value>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>4</xf:label>
-                                    <xf:value>4</xf:value>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>5</xf:label>
-                                    <xf:value>5</xf:value>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>6</xf:label>
-                                    <xf:value>6</xf:value>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>7</xf:label>
-                                    <xf:value>7</xf:value>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>8</xf:label>
-                                    <xf:value>8</xf:value>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>9</xf:label>
-                                    <xf:value>9</xf:value>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>10</xf:label>
-                                    <xf:value>10</xf:value>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>11</xf:label>
-                                    <xf:value>11</xf:value>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>12</xf:label>
-                                    <xf:value>12</xf:value>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>13</xf:label>
-                                    <xf:value>13</xf:value>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>14</xf:label>
-                                    <xf:value>14</xf:value>
-                                </xf:item>
-                            </xf:select1>
-                            <xf:select1 ref="duration/@minutes" appearance="mininmal">
-                                <xf:label/>
-                                <xf:item>
-                                    <xf:label>0</xf:label>
-                                    <xf:value>0</xf:value>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>15</xf:label>
-                                    <xf:value>15</xf:value>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>30</xf:label>
-                                    <xf:value>30</xf:value>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>45</xf:label>
-                                    <xf:value>45</xf:value>
-                                </xf:item>
-                            </xf:select1>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">Who</td>
-                        <td>
-                            <xf:select ref="who" appearance="full">
-                                <xf:label/>
-                                <xf:itemset nodeset="instance('i-worker')/worker">
-                                    <xf:label ref="."/>
-                                    <xf:value ref="."/>
-                                </xf:itemset>
-                            </xf:select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">What</td>
-                        <td>
-                            <xf:select ref="what" appearance="full">
-                                <xf:label/>
-                                <xf:item>
-                                    <xf:label>Bug Fix</xf:label>
-                                    <xf:value>bugfix</xf:value>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>Feature</xf:label>
-                                    <xf:value>feature</xf:value>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>Support</xf:label>
-                                    <xf:value>support</xf:value>
-                                </xf:item>
-                            </xf:select>
-                        </td>
-                    </tr>
+<xf:case id="cTask" selected="true">
+<xf:label>Create</xf:label>
+<xf:group ref="task">
+<xf:label class="subheader">Create Task</xf:label>
+<table id="task-table">
+	<tr>
+		<td align="right">Date</td>
+		<td>
+			<xf:input id="date" ref="date">
+				<xf:label/>
+			</xf:input>
+		</td>
+	</tr>
+	<tr>
+		<td align="right">Project</td>
+		<td>
+			<xf:select1 id="project" ref="project" appearance="minimal">
+				<xf:label/>
+				<xf:itemset nodeset="instance('i-project')/project">
+					<xf:label ref="."/>
+					<xf:value ref="."/>
+				</xf:itemset>
+			</xf:select1>
+		</td>
+	</tr>
+	<tr>
+		<td align="right">
+			Hours/Minutes
+		</td>
+		<td>
+			<xf:select1 ref="duration/@hours" style="float:left;">
+				<xf:label/>
+				<xf:item>
+					<xf:label>0</xf:label>
+					<xf:value>0</xf:value>
+				</xf:item>
+				<xf:item>
+					<xf:label>1</xf:label>
+					<xf:value>1</xf:value>
+				</xf:item>
+				<xf:item>
+					<xf:label>2</xf:label>
+					<xf:value>2</xf:value>
+				</xf:item>
+				<xf:item>
+					<xf:label>3</xf:label>
+					<xf:value>3</xf:value>
+				</xf:item>
+				<xf:item>
+					<xf:label>4</xf:label>
+					<xf:value>4</xf:value>
+				</xf:item>
+				<xf:item>
+					<xf:label>5</xf:label>
+					<xf:value>5</xf:value>
+				</xf:item>
+				<xf:item>
+					<xf:label>6</xf:label>
+					<xf:value>6</xf:value>
+				</xf:item>
+				<xf:item>
+					<xf:label>7</xf:label>
+					<xf:value>7</xf:value>
+				</xf:item>
+				<xf:item>
+					<xf:label>8</xf:label>
+					<xf:value>8</xf:value>
+				</xf:item>
+				<xf:item>
+					<xf:label>9</xf:label>
+					<xf:value>9</xf:value>
+				</xf:item>
+				<xf:item>
+					<xf:label>10</xf:label>
+					<xf:value>10</xf:value>
+				</xf:item>
+				<xf:item>
+					<xf:label>11</xf:label>
+					<xf:value>11</xf:value>
+				</xf:item>
+				<xf:item>
+					<xf:label>12</xf:label>
+					<xf:value>12</xf:value>
+				</xf:item>
+				<xf:item>
+					<xf:label>13</xf:label>
+					<xf:value>13</xf:value>
+				</xf:item>
+				<xf:item>
+					<xf:label>14</xf:label>
+					<xf:value>14</xf:value>
+				</xf:item>
+			</xf:select1>
+			<xf:select1 ref="duration/@minutes" appearance="mininmal">
+				<xf:label/>
+				<xf:item>
+					<xf:label>0</xf:label>
+					<xf:value>0</xf:value>
+				</xf:item>
+				<xf:item>
+					<xf:label>15</xf:label>
+					<xf:value>15</xf:value>
+				</xf:item>
+				<xf:item>
+					<xf:label>30</xf:label>
+					<xf:value>30</xf:value>
+				</xf:item>
+				<xf:item>
+					<xf:label>45</xf:label>
+					<xf:value>45</xf:value>
+				</xf:item>
+			</xf:select1>
+		</td>
+	</tr>
+	<tr>
+		<td align="right">Who</td>
+		<td>
+			<xf:select ref="who" appearance="full">
+				<xf:label/>
+				<xf:itemset nodeset="instance('i-worker')/worker">
+					<xf:label ref="."/>
+					<xf:value ref="."/>
+				</xf:itemset>
+			</xf:select>
+		</td>
+	</tr>
+	<tr>
+		<td align="right">What</td>
+		<td>
+			<xf:select ref="what" appearance="full">
+				<xf:label/>
+				<xf:item>
+					<xf:label>Bug Fix</xf:label>
+					<xf:value>bugfix</xf:value>
+				</xf:item>
+				<xf:item>
+					<xf:label>Feature</xf:label>
+					<xf:value>feature</xf:value>
+				</xf:item>
+				<xf:item>
+					<xf:label>Support</xf:label>
+					<xf:value>support</xf:value>
+				</xf:item>
+			</xf:select>
+		</td>
+	</tr>
 
-                    <tr>
-                        <td align="right">Status</td>
-                        <td>
-                            <xf:select1 ref="status">
-                                <xf:label/>
-                                <xf:item>
-                                    <xf:label/>
-                                    <xf:value/>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>in progress</xf:label>
-                                    <xf:value>inprogress</xf:value>
-                                </xf:item>
-                                <xf:item>
-                                    <xf:label>completed</xf:label>
-                                    <xf:value>completed</xf:value>
-                                </xf:item>
-                            </xf:select1>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">Billable</td>
-                        <td>
-                            <xf:input ref="billable">
-                                <xf:label/>
-                                <xf:hint>True if task can be billed to Customer</xf:hint>
-                            </xf:input>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">Note</td>
-                        <td>
-                            <xf:textarea ref="note" mediatype="dojo" style="width:200px;">
-                                <xf:label/>
-                                <xf:hint>What has been done?</xf:hint>
-                            </xf:textarea>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">
-                            <xf:trigger style="padding-right:0;">
-                                <xf:label>Add</xf:label>
-                                <xf:toggle case="doIt"/>
-                            </xf:trigger>
-                        </td>
-                        <td> </td>
-                    </tr>
-                </table>
-                <xf:switch>
-                    <xf:case id="default" selected="true"/>
-                    <xf:case id="doIt">
-                        <div style="font-weight:bold;">
-                            Really add?
-                        </div>
-                        <table>
-                            <tr>
-                                <td>
-                                    <xf:trigger>
-                                        <xf:label>Yes</xf:label>
-                                        <xf:send submission="s-add"/>
-                                    </xf:trigger>
-                                </td>
-                                <td>
-                                    <xf:trigger>
-                                        <xf:label>Cancel</xf:label>
-                                        <xf:toggle case="default"/>
-                                    </xf:trigger>
-                                </td>
-                            </tr>
-                        </table>
+	<tr>
+		<td align="right">Status</td>
+		<td>
+			<xf:select1 ref="status">
+				<xf:label/>
+				<xf:item>
+					<xf:label/>
+					<xf:value/>
+				</xf:item>
+				<xf:item>
+					<xf:label>in progress</xf:label>
+					<xf:value>inprogress</xf:value>
+				</xf:item>
+				<xf:item>
+					<xf:label>completed</xf:label>
+					<xf:value>completed</xf:value>
+				</xf:item>
+			</xf:select1>
+		</td>
+	</tr>
+	<tr>
+		<td align="right">Billable</td>
+		<td>
+			<xf:input ref="billable">
+				<xf:label/>
+				<xf:hint>True if task can be billed to Customer</xf:hint>
+			</xf:input>
+		</td>
+	</tr>
+	<tr>
+		<td align="right">Note</td>
+		<td>
+			<xf:textarea ref="note" mediatype="dojo" style="width:200px;">
+				<xf:label/>
+				<xf:hint>What has been done?</xf:hint>
+			</xf:textarea>
+		</td>
+	</tr>
+	<tr>
+		<td align="right">
+			<xf:trigger style="padding-right:0;">
+				<xf:label>Add</xf:label>
+				<xf:toggle case="doIt"/>
+			</xf:trigger>
+		</td>
+		<td></td>
+	</tr>
+</table>
+<xf:switch>
+	<xf:case id="default" selected="true"/>
+	<xf:case id="doIt">
+		<div style="font-weight:bold;">
+			Really add?
+		</div>
+		<table>
+			<tr>
+				<td>
+					<xf:trigger>
+						<xf:label>Yes</xf:label>
+						<xf:send submission="s-add"/>
+					</xf:trigger>
+				</td>
+				<td>
+					<xf:trigger>
+						<xf:label>Cancel</xf:label>
+						<xf:toggle case="default"/>
+					</xf:trigger>
+				</td>
+			</tr>
+		</table>
 
-                    </xf:case>
-                </xf:switch>
-                <xf:output mediatype="text/html" ref="instance('i-controller')/error" id="errorReport"/>
-            </xf:group>
-        </xf:case>
-        <xf:case id="cResults" selected="false">
-        <xf:label>Listing</xf:label>
-        <xf:group class="listing">
-            <xf:label class="subheader">TimeTracker Results</xf:label>
-            <table>
-                <tr>
-                    <td align="left" style="border-right: 1px solid black;border-bottom: 1px solid black;width:90px">Project</td>
-                    <td align="left" style="border-right: 1px solid black;border-bottom: 1px solid black;width: 70px;padding-left:5px">Worker</td>
-                    <td align="left" style="border-right: 1px solid black;border-bottom: 1px solid black;width: 50px; padding-left: 5px;">Start / End</td>
-                    <td align="left" style="width:90px;padding-left: 5px;">Billable</td>
-                </tr>
-                <tr>
-                    <td style="border-right: 1px solid black;width:90px" valign="top">
-                        <xf:select id="projectToDisplay" ref="instance('i-query-tasks')/projects" appearance="full">
-                            <xf:label/>
-                            <xf:itemset nodeset="instance('i-project')/project">
-                                <xf:label ref="."/>
-                                <xf:value ref="."/>
-                            </xf:itemset>
-                        </xf:select>
-                    </td>
-                    <td style="border-right: 1px solid black; width: 60px;padding-left:5px" valign="top">
-                        <xf:select id="personToDisplay" ref="instance('i-query-tasks')/worker" appearance="full">
-                            <xf:label/>
-                            <xf:itemset nodeset="instance('i-worker')/worker">
-                                <xf:label ref="."/>
-                                <xf:value ref="."/>
-                            </xf:itemset>
-                        </xf:select>
-                    </td>
-                    <td style="border-right: 1px solid black; width: 50px; padding-left: 5px;" valign="top">
-                        <xf:input ref="instance('i-query-tasks')/start">
-                            <xf:label/>
-                        </xf:input>
-						<br/>
-						<xf:input ref="instance('i-query-tasks')/end">
-							<xf:label/>
-						</xf:input>
-                    </td>
-                    <td align="left" style="width:90px;padding-left: 5px;" valign="top">
-                        <xf:input ref="instance('i-query-tasks')/billable">
-                            <xf:label/>
-                        </xf:input>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <xf:trigger>
-                            <xf:label>Go</xf:label>
-                                <xf:send submission="s-get-tasks"
+	</xf:case>
+</xf:switch>
+<xf:output mediatype="text/html" ref="instance('i-controller')/error" id="errorReport"/>
+</xf:group>
+</xf:case>
+<xf:case id="cResults" selected="false">
+<xf:label>Listing</xf:label>
+<xf:group class="listing">
+	<xf:label class="subheader">TimeTracker Results</xf:label>
+	<table>
+		<tr>
+			<td align="left" style="border-right: 1px solid black;border-bottom: 1px solid black;width:90px">Project
+			</td>
+			<td align="left"
+				style="border-right: 1px solid black;border-bottom: 1px solid black;width: 70px;padding-left:5px">Worker
+			</td>
+			<td align="left"
+				style="border-right: 1px solid black;border-bottom: 1px solid black;width: 50px; padding-left: 5px;">
+				Start / End
+			</td>
+			<td align="left" style="width:90px;padding-left: 5px;">Billable</td>
+		</tr>
+		<tr>
+			<td style="border-right: 1px solid black;width:90px" valign="top">
+				<xf:select id="projectToDisplay" ref="instance('i-query-tasks')/projects" appearance="full">
+					<xf:label/>
+					<xf:itemset nodeset="instance('i-project')/project">
+						<xf:label ref="."/>
+						<xf:value ref="."/>
+					</xf:itemset>
+				</xf:select>
+			</td>
+			<td style="border-right: 1px solid black; width: 60px;padding-left:5px" valign="top">
+				<xf:select id="personToDisplay" ref="instance('i-query-tasks')/worker" appearance="full">
+					<xf:label/>
+					<xf:itemset nodeset="instance('i-worker')/worker">
+						<xf:label ref="."/>
+						<xf:value ref="."/>
+					</xf:itemset>
+				</xf:select>
+			</td>
+			<td style="border-right: 1px solid black; width: 50px; padding-left: 5px;" valign="top">
+				<xf:input ref="instance('i-query-tasks')/start">
+					<xf:label/>
+				</xf:input>
+				<br/>
+				<xf:input ref="instance('i-query-tasks')/end">
+					<xf:label/>
+				</xf:input>
+			</td>
+			<td align="left" style="width:90px;padding-left: 5px;" valign="top">
+				<xf:input ref="instance('i-query-tasks')/billable">
+					<xf:label/>
+				</xf:input>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<xf:trigger>
+					<xf:label>Search</xf:label>
+					<xf:send submission="s-get-tasks"/>
+				</xf:trigger>
+			</td>
+		</tr>
+	</table>
 
-									/>
-                        </xf:trigger>
-                    </td>
-                </tr>
-            </table>
-
-            <xf:output ref="instance('i-tasks')/project/@totalTime">
-                <xf:label>Overall Time:</xf:label>
-            </xf:output>
-
-            <xf:repeat nodeset="instance('i-tasks')/project/task" appearance="compact">
-                <xf:output ref="date">
-                    <xf:label>Date</xf:label>
-                </xf:output>
-                <xf:output value="concat(format-number(duration/@hours,'00'),':',format-number(duration/@minutes, '00'))">
-                    <xf:label>Duration</xf:label>
-                </xf:output>
-                <xf:output ref="who">
-                    <xf:label>User(s)</xf:label>
-                </xf:output>
-                <xf:output ref="what">
-                    <xf:label>Task</xf:label>
-                </xf:output>
-                <xf:output ref="note">
-                    <xf:label>Note</xf:label>
-                </xf:output>
-                <xf:output ref="status">
-                    <xf:label>Status</xf:label>
-                </xf:output>
-                <xf:input ref="billable">
-                    <xf:label>Billable</xf:label>
-                </xf:input>
-            </xf:repeat>
-            <xf:output mediatype="text/html" ref="instance('i-controller')/error" id="errorReportResult"/>
-        </xf:group>
-     </xf:case>
-  </xf:switch>
+	<xf:output id="overall-time" ref="instance('i-tasks')/project/@totalTime">
+		<xf:label>Overall Time:</xf:label>
+	</xf:output>
+	<hr/>
+	<div id="result-list">
+		<xf:repeat nodeset="instance('i-tasks')/project/task" appearance="compact">
+			<xf:output ref="project">
+				<xf:label>Project</xf:label>
+			</xf:output>
+			<xf:output ref="date">
+				<xf:label>Date</xf:label>
+			</xf:output>
+			<xf:output value="concat(format-number(duration/@hours,'00'),':',format-number(duration/@minutes, '00'))">
+				<xf:label>Duration</xf:label>
+			</xf:output>
+			<xf:output ref="who">
+				<xf:label>User(s)</xf:label>
+			</xf:output>
+			<xf:output ref="what">
+				<xf:label>Task</xf:label>
+			</xf:output>
+			<xf:output ref="note">
+				<xf:label>Note</xf:label>
+			</xf:output>
+			<xf:output ref="status">
+				<xf:label>Status</xf:label>
+			</xf:output>
+			<xf:input ref="billable">
+				<xf:label>Billable</xf:label>
+			</xf:input>
+		</xf:repeat>
+		<xf:output mediatype="text/html" ref="instance('i-controller')/error" id="errorReportResult"/>
+	</div>
+</xf:group>
+</xf:case>
+</xf:switch>
 </div>
 
 </div>
 
 
 </body>
-</html>
+		</html>
