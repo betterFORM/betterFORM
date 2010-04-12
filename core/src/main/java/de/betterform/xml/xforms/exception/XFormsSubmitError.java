@@ -47,7 +47,7 @@ public class XFormsSubmitError extends XFormsErrorIndication {
      * @param info    the context information.
      */
     public XFormsSubmitError(String message, Exception cause, EventTarget target, Object info) {
-        super(messagePre  + message + "- " + DOMUtil.getCanonicalPath((Node) target), cause, target, info);
+        super(messagePre  + message + XFormsErrorIndication.DEVIDER + DOMUtil.getCanonicalPath((Node) target), cause, target, info);
         this.id = "xforms-submit-error";
     }
 

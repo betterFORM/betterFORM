@@ -39,7 +39,7 @@ public class XFormsComputeException extends XFormsErrorIndication {
      * @param info    the context information.
      */
     public XFormsComputeException(String message, Exception cause, EventTarget target, Object info) {
-        super(messagePre + message  + " - " + DOMUtil.getCanonicalPath((Node) target), cause, target, info);
+        super(messagePre + message  + XFormsErrorIndication.DEVIDER + DOMUtil.getCanonicalPath((Node) target), cause, target, info);
         this.id = XFormsEventNames.COMPUTE_EXCEPTION;
     }
 

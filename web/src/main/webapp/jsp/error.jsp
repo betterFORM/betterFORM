@@ -23,6 +23,7 @@
         margin-left:auto;
         margin-right:auto;
         padding:20px;
+        overflow:hidden;
     }
     .message1{
         display:block;
@@ -57,7 +58,7 @@
 
     </div>
     <%
-        String msg = ((Exception)session.getAttribute("betterform.exception")).getMessage();
+        String msg = exception.getMessage();
         int start = msg.indexOf("::");
         String xpath ="unknown";
         String cause="";

@@ -30,6 +30,7 @@ import org.w3c.dom.events.EventTarget;
  * @version $Id: XFormsErrorIndication.java 3253 2008-07-08 09:26:40Z lasse $
  */
 public abstract class XFormsErrorIndication extends XFormsException {
+    public static String DEVIDER = "::";
     /**
      * The exception state.
      */
