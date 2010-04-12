@@ -7,6 +7,8 @@
 
 package de.betterform.agent.web.filter;
 
+import de.betterform.agent.web.WebUtil;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import javax.servlet.ServletOutputStream;
@@ -173,14 +175,9 @@ public class BufferedHttpServletResponseWrapper extends HttpServletResponseWrapp
         strMediaType = strMediaType.toLowerCase();
         strSubType = strSubType.toLowerCase();
         // see RFC 3023 for details
-        isXML = strSubType.endsWith("+xml")
-		|| ((strMediaType.equals("text")
-		|| strMediaType.equals("application"))
-		&& (strSubType.equals("xml")
-		|| strSubType.equals("xml-external-parsed-entity")));
-
-        return isXML;
+        return WebUtil.isMediaTypeXML(strMediaType);
     }
+
 
     public InputStream getInputStream() {
         return new ByteArrayInputStream(this.getData());

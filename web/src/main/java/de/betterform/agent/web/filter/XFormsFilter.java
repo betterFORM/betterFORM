@@ -109,12 +109,13 @@ public class XFormsFilter implements Filter {
             LOG.warn("Request from internal betterForm HTTP Client arrived in XFormsFilter");
             String requestURI = request.getRequestURI();
 
-            if(requestURI.endsWith(".xhtml")){
-                srvResponse.setContentType("text/xml");
-            }else if(requestURI.endsWith(".txt")){
-                srvResponse.setContentType("text/plain");
+            String mimeType = webFactory.getServletContext().getMimeType(requestURI);
+
+            if(mimeType != null){
+                srvResponse.setContentType(mimeType);
             }else{
                 LOG.warn("no contenttype set for internal request");
+                throw new ServletException("Contenttype of " + requestURI + " unknown. Please configure your webcontainer appropriately.");
             }
 
             HttpServletResponseWrapper resp = new HttpServletResponseWrapper((HttpServletResponse) srvResponse) {

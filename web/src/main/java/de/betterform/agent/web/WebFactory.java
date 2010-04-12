@@ -64,6 +64,10 @@ public class WebFactory {
     }
 
 
+    public ServletContext getServletContext(){
+        return this.servletContext;
+    }
+
     public void setServletContext(ServletContext servletContext) {
         this.servletContext = servletContext;
     }

@@ -286,4 +286,16 @@ public class WebUtil {
         }
 
     }
+
+    public static boolean isMediaTypeXML(String s) {
+        boolean isXML;
+        isXML = s.endsWith("+xml")
+		|| ((s.equals("text")
+		|| s.equals("application"))
+		&& (s.equals("xml")
+		|| s.equals("xml-external-parsed-entity")));
+
+        return isXML;
+    }
+
 }
