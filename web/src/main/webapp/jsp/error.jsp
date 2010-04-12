@@ -50,18 +50,6 @@
 	</style>
 </head>
 <body>
-<%-- Exception Handler --%>
-<%
-    Exception e = null;
-    if (session.getAttribute("betterform.exception") != null) {
-        e = (Exception) session.getAttribute("betterform.exception");
-    } else if (request.getAttribute("betterform.exception") != null)
-    {
-        e = (Exception) request.getAttribute("betterform.exception");
-    }
-
-//    response.setContentLength(3000);
-%>
 <div class="errorContent">
     <img src="<%=request.getContextPath()%>/resources/images/error.png" width="24" height="24" alt="Error" style="float:left;padding-right:5px;"/>
     <div class="message1">
@@ -69,13 +57,13 @@
 
     </div>
     <%
-        String msg = e.getMessage();
-        int start = e.getMessage().indexOf("/");
+        String msg = ((Exception)session.getAttribute("betterform.exception")).getMessage();
+        int start = msg.indexOf("::");
         String xpath ="unknown";
         String cause="";
         if(msg != null && start > 3){
-            xpath = e.getMessage().substring(start-1);
-            msg=msg.substring(0,start-3);
+            xpath = msg.substring(start+2);
+            msg=msg.substring(0,start);
         }
         if(exception.getCause() != null && exception.getCause().getMessage() != null){
             cause = exception.getCause().getMessage();
