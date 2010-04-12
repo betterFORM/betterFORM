@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"    
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <head>
+        <title>XRX App Starter</title>
+
+        <style type="text/css">
+            .xfControl *{
+                font-size:20pt;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="display:none">
+            <!-- ##### model ##### -->
+            <!-- ##### model ##### -->
+            <!-- ##### model ##### -->
+        <xf:model id="m-AppModel">
+            <!--
+                Conventions used in this form are taken from the 'Beginners Guide to XRX':
+                - root for all apps defaults to '/db/apps'
+                - rootCollection for a single app defaults to /db/apps + APPNAME (/data/app/@name) as taken by the user
+
+
+                following collections and files will be created
+                - a app-info.xml file in the application root collection
+                -  a collection /db/apps/APPNAME/views
+                  - a file named 'list-items.xq'
+                - a collection /db/apps/APPNAME/edit (where most forms will live)
+                - a collection /db/apps/APPNAME/search
+            -->
+
+            <xf:instance id="i-appInfo">
+                <data xmlns="">
+                    <app name="" rootCollection="">
+                        <description></description>
+                        <version></version>
+                        <authors>
+                            <author/>
+                        </authors>
+                        <license></license>
+                        <dependencies>
+                            <dependency/>
+                        </dependencies>
+                    </app>
+                </data>
+            </xf:instance>
+            
+            <xf:bind nodeset="instance('i-appInfo')">
+                <xf:bind nodeset="app/@name" required="true()" />
+                <xf:bind nodeset="app/@rootCollection" calculate="concat(instance('i-globalSettings')/global/appsCollection,'/',../@name)"/>
+            </xf:bind>
+
+            <xf:instance id="i-globalSettings">
+                <data xmlns="">
+                    <global>
+                        <appsCollection>/db/apps</appsCollection>
+                    </global>
+                </data>
+            </xf:instance>
+            
+
+            <xf:submission id="s-createApplication" replace="none" resource="{$contextroot}/betterform/createApp.xq" method="post">
+                
+            </xf:submission>
+
+        </xf:model>
+        </div>
+        <!-- ##### ui ##### -->
+        <!-- ##### ui ##### -->
+        <!-- ##### ui ##### -->
+        <xf:group appearance="bf:verticalTable">
+             <xf:input ref="app/@name">
+                 <xf:label>Application name</xf:label>
+                 <xf:hint>should not contain spaces</xf:hint>
+             </xf:input>
+            
+            <xf:trigger>
+                <xf:label>create App</xf:label>
+                <xf:send submission="s-createApplication"/>
+            </xf:trigger>
+        </xf:group>
+    </body>
+</html>
