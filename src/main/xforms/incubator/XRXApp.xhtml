@@ -63,12 +63,33 @@
             </xf:instance>
             
 
-            <xf:submission id="s-createApplication" replace="none" resource="{$contextroot}/betterform/createApp.xq" method="post">
+            <xf:submission id="s-createApplication"
+                           ref="instance()"
+                           replace="none"
+                           resource="{$contextroot}/betterform/createApp.xq"
+                           method="post">
+                <!-- todo: improve error-messaging with event() function giving more informative hints about the actual problem -->
+                <xf:message level="modal" ev:event="xforms-submit-error">failed to create app-info in database.</xf:message>
+                <xf:send submission="s-createDefaultCollections" ev:event="sforms-submit-done"/>
                 
             </xf:submission>
 
+            <!--##### the XQuery will create the appropriate collections ##### -->
+            <xf:submission id="s-createDefaultCollections"
+                           ref="instance()"
+                           method="put"
+                           replace="none"
+                           resource="{$contextroot}/betterform/xrx/createDefaultCollections.xq"
+                           validate="false"
+                           serialization="none" />
+            <!-- todo: improve error-messaging with event() function giving more informative hints about the actual problem -->
+            <xf:message level="modal" ev:event="xforms-submit-error">failed to create default collections in database.</xf:message>
+            <xf:action ev:event="xforms-submit-done">
+                <!-- ##### create-->
+            </xf:action>
         </xf:model>
         </div>
+        
         <!-- ##### ui ##### -->
         <!-- ##### ui ##### -->
         <!-- ##### ui ##### -->
