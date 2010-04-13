@@ -111,6 +111,11 @@ public class XFormsFilter implements Filter {
 
             String mimeType = webFactory.getServletContext().getMimeType(requestURI);
 
+            if(LOG.isDebugEnabled()){
+                LOG.debug("request URI: " + requestURI);
+                LOG.debug("mimetType: " + mimeType);
+            }
+
             if(mimeType != null){
                 srvResponse.setContentType(mimeType);
             }else{
@@ -118,12 +123,8 @@ public class XFormsFilter implements Filter {
                 throw new ServletException("Contenttype of " + requestURI + " unknown. Please configure your webcontainer appropriately.");
             }
 
-            HttpServletResponseWrapper resp = new HttpServletResponseWrapper((HttpServletResponse) srvResponse) {
-                public void setContentType(String s) {
-                    return;
-                }
-            };
-            filterChain.doFilter(srvRequest, resp);
+
+            filterChain.doFilter(srvRequest, srvResponse);
             return;
         }
 
@@ -215,7 +216,7 @@ public class XFormsFilter implements Filter {
                                 LOG.error("Could not shutdown Processor: Error: " + xfe.getMessage() + " Cause: " + xfe.getCause());
                             }
                             // store exception
-                            session.setAttribute("betterform.exception", e);
+                            session.setAttribute("betterform.exception", e.getMessage());
                             session.setAttribute("betterform.referer", request.getRequestURL());
                             //remove session from XFormsSessionManager
                             WebUtil.removeSession(webProcessor.getKey());

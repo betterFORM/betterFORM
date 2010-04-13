@@ -319,6 +319,9 @@ public class AbstractHTTPConnector extends AbstractConnector {
         this.responseHeader = new HashMap();
 
         for (int index = 0; index < responseHeaders.length; index++) {
+            if(LOGGER.isDebugEnabled()){
+                LOGGER.debug("reponse header :: " + responseHeaders[index].getName() + " : value = " + responseHeaders[index].getValue());
+            }
             responseHeader.put(responseHeaders[index].getName(), responseHeaders[index].getValue());
         }
 
