@@ -12,7 +12,7 @@ import java.io.ByteArrayOutputStream;
  * Author: Fabian Otto, Tobi Krebs
  * Date: Apr 8, 2010
  */
-public class SerializeTest extends TestCase {
+abstract public class SerializeTest extends TestCase {
     protected FormDataSerializer serializer;
     private XFormsProcessorImpl xformsProcesssorImpl;
     protected Submission submission;

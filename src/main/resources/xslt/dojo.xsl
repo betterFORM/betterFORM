@@ -181,6 +181,9 @@
                         // THE FOLLOWING CALL HAS BEEN MOVED INTO CONSTRUCTOR OF FLUXPROCESSOR.JS
                         //Flux.init(dojo.attr(dojo.byId("fluxProcessor"),"sessionKey"),dijit.byId("fluxProcessor").applyChanges);
                         dojo.parser.parse();
+
+                        Flux._path = dojo.attr(dojo.byId("fluxProcessor"), "contextroot") + "/Flux";
+                        Flux.init( dojo.attr(dojo.byId("fluxProcessor"),"sessionkey"), dojo.hitch(fluxProcessor,fluxProcessor.applyChanges));
                         <!--hideLoader();-->
                     });
                 });
@@ -515,7 +518,7 @@
     <!-- ##### LABEL ##### -->
     <!-- ##### LABEL ##### -->
     <!-- ##### LABEL ##### -->
-    <xsl:template match="xf:label">         
+    <xsl:template match="xf:label">
         <!-- match all inline markup and content -->
         <xsl:apply-templates/>
 

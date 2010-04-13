@@ -50,9 +50,11 @@ dojo.declare("betterform.FluxProcessor",
     },
 */
     constructor:function() {
+        /*
         var fluxAttribute = function(attribute) {
                 return dojo.attr(dojo.byId("fluxProcessor"), attribute);
         };
+        */
         this.factory = new betterform.ui.UIElementFactory();
         if(this.webtest != 'true') {
             dojo.connect(window,"onbeforeunload", this, "handleUnload");
@@ -104,13 +106,14 @@ dojo.declare("betterform.FluxProcessor",
         //#########    ALERT IMPLEMENTATION  END #############
         //#########    ALERT IMPLEMENTATION  END #############
 
-        try {
+       //Moved to dojo.xsl after dojo.parse(); 
+       /* try {
             console.debug("contextroot + \"/Flux\": " + fluxAttribute("contextroot") + "/Flux" );
             Flux._path = fluxAttribute("contextroot") + "/Flux";
             Flux.init( fluxAttribute("sessionkey"), dojo.hitch(this,this.applyChanges));
         }catch(ex) {
             fluxProcessor._handleExceptions("Failure executing initcall within Flux Constructor ", ex);
-        }
+        }*/
     },
 
     setInlineRoundBorderAlertHandler:function(){
@@ -809,8 +812,11 @@ dojo.declare("betterform.FluxProcessor",
         xfControlId = xmlEvent.contextInfo.targetId + "-value";
         if(dijit.byId(xfControlId) != undefined) {
             dijit.byId(xfControlId)._handleDOMFocusIn();
-        }else {
-            dojo.byId(xfControlId).focus();
+        }else if (dojo.byId(xfControlId) != undefined) {
+            var domControlValue = dojo.byId(xfControlId)
+            domControlValue.focus();
+        } else {
+            console.warn("FluxProcessor._handleDOMFocusIn no Element found for id:", xfControlId);
         }
     },
 
