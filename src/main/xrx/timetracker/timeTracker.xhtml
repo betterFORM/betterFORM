@@ -138,7 +138,7 @@
 		<xf:instance id="i-controller">
 			<data xmlns="">
 				<error hasError="false"><![CDATA[]]></error>
-				<dbPath>golem:8080/exist/rest/db/timetracking</dbPath>
+				<dbPath>localhost:8080/exist/rest/db/betterform/apps/timetracking</dbPath>
 				<timestamp/>
 			</data>
 		</xf:instance>
@@ -256,7 +256,7 @@
         <!-- Submission to receive all tasks allocated to a specified project -->
         <xf:submission id="s-get-tasks"
                        ref="instance('i-query-tasks')"
-                       resource="http://{instance('i-controller')/dbPath}/query.xql"
+                       resource="http://{instance('i-controller')/dbPath}/search.xql"
                        replace="instance"
                        instance="i-tasks"
                        method="form-data-post"
