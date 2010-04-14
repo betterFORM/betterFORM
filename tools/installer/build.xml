@@ -34,6 +34,13 @@
         <mkdir dir="${basedir}/target/jetty"/>
         <unzip src="${basedir}/lib/bfServer-1.2-bin.zip" dest="${basedir}/target/jetty"/>
 
+        <mkdir dir="${basedir}/target/bf-resources/"/>
+        <copy description="copy betterform script resources"
+              todir="${basedir}/target/bf-resources"
+              filtering="true"
+              includeemptydirs="true">
+            <fileset dir="${basedir}/../../src/main/resources/scripts/betterform/"/>
+        </copy>
 
     </target>
 
