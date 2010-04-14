@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<data xmlns:xf="http://www.w3.org/2002/xforms" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:bf="http://betterform.sourceforge.net/xforms">
-    <worker>User1</worker>
-    <worker>User2</worker>
-    <worker>User3</worker>
-    <worker>User4</worker>
-</data>
