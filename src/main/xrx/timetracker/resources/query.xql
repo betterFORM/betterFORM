@@ -62,7 +62,7 @@ declare function local:tasks() as node()*
     let $worker-p    := xs:string(request:get-parameter("worker", ""))
     let $worker-s    := tokenize($worker-p, '\s')
 
-    for $task in collection("/db/timetracking/tasks/task")//task
+    for $task in collection("/db/timetracking/task")//task
     for $w in tokenize($task/who, "\s")
         (: let $date := $task/date :) 
         where local:equal-or-true($task/project, $projects) and 

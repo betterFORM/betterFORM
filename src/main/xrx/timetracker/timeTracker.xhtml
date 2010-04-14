@@ -200,7 +200,7 @@
                      src="http://{instance('i-controller')/dbPath}/i-worker.xml" />
 
         <xf:submission id="s-add"
-                       resource="http://{instance('i-controller')/dbPath}/tasks/task/{instance('i-controller')/timestamp}.xml"
+                       resource="http://{instance('i-controller')/dbPath}/task/{instance('i-controller')/timestamp}.xml"
                        method="put"
                        replace="none">
             <xf:action ev:event="xforms-submit">

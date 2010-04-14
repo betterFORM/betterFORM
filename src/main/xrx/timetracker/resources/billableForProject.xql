@@ -20,7 +20,7 @@ declare function local:tasks() as node()*
     let $billable          := xs:string(request:get-parameter("billable", ""))
     let $worker            := tokenize(xs:string(request:get-parameter("worker", "")), '\s')
 
-    for $t in collection("/db/timetracking/tasks/task")//task
+    for $t in collection("/db/timetracking/task")//task
     where local:match($t/project, $projects, true()) (: and
           local:match($t/billable, $billable, true()) and
           local:match($t/who, $worker, true())          :)
