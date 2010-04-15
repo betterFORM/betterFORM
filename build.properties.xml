@@ -71,6 +71,7 @@
             <selenium>
               <!-- which browser to use for tests -->
               <browser>*firefox</browser>
+              <url-to-test-forms>/betterform/forms</url-to-test-forms>
               <!--server properties -->
               <server>
 <!--                <jar>${basedir}/src/main/lib/selenium-server-1.0.1.jar</jar> -->
@@ -187,6 +188,10 @@
         <url>/betterform/forms</url>
     </webtest>
     -->
-
+    <installer>
+        <exist>
+            <jar>/home/zwobit/Downloads/eXist-setup-1.4.0-rev10440.jar</jar>
+        </exist>
+    </installer>
 </root>
 

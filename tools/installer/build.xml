@@ -7,7 +7,9 @@
         <delete dir="${basedir}/target"/>
     </target>
     <target name="prepare" description="prepares all files needed for installer EXCEPT exist.war">
+
         <!-- ##### building betterForm war for deployment ##### -->
+        
         <mkdir dir="${basedir}/target"/>
         <ant antfile="../../web/build.xml" target="package" inheritall="false"/>
 
@@ -41,6 +43,18 @@
               includeemptydirs="true">
             <fileset dir="${basedir}/../../src/main/resources/scripts/betterform/"/>
         </copy>
+
+        <mkdir dir="${basedir}/target/bf-eXist/"/>
+        <java jar="${installer.exist.jar}"
+              fork="true"
+              spawn="false">
+            <arg line="-p ${basedir}/target/bf-eXist/"/>
+        </java>
+        <mkdir dir="${basedir}/target/bf-eXist/extensions/betterform"/>
+        <copy todir="${basedir}/target/bf-eXist/extensions/betterform">
+            <fileset dir="${basedir}/../exist/betterform"/>
+          </copy>
+        <ant dir="${basedir}/target/bf-eXist/extensions/betterform/" target="install"/> 
 
     </target>
 

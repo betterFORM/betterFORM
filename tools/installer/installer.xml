@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 
-<!--
+<!--       
   ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
@@ -28,7 +28,12 @@
         </condition>
     </conditions>
 
-
+    <variables>
+        <variable name="JETTY_HOME" value="$EXIST_HOME/tools/jetty"/>
+        <variable name="JDKPathPanel.skipIfValid" value="yes"/>
+        <variable name="JDKPathPanel.minVersion" value="1.5"/>
+        <variable name="dataDir" value="webapp/WEB-INF/data" />
+    </variables>
     <!--
         The gui preferences indication.
         Sets the installer window to 640x480. It will not be able to change the size.
@@ -104,7 +109,7 @@
 
     <packs>
 
-        <pack name="betterForm" required="yes">
+        <pack name="betterForm" required="no">
             <description>betterForm 3.0 XForms Engine</description>
             <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/betterform" condition="!jetty" />
         </pack>
@@ -124,10 +129,164 @@ FOR LATER: installinig the war should switch the above pack off. Did not yet fou
             <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/web/root"/>
         </pack>
 
+        <!--
         <pack name="eXist" required="no" preselected="no">
             <description>eXist 1.4 XML Database</description>
             <depends packname="Jetty"/>
             <file src="exist.war" unpack="true" targetdir="$INSTALL_PATH/web/exist"/>
+        </pack>
+        -->
+        <pack name="betterFORM-eXist-bundle" required="no" preselected="yes">
+            <description>Everything needed for the database core, including Jetty + Cocoon</description>
+            <fileset targetdir="$INSTALL_PATH" dir="bf-eXist">
+                <include name="client.properties.tmpl"/>
+                <include name="client.properties"/>
+                <include name="backup.properties"/>
+                <include name="build.properties"/>
+                <include name="server.xml.tmpl"/>
+                <include name="server.xml"/>
+                <include name="conf.xml.tmpl"/>
+                <include name="descriptor.xml.tmpl"/>
+                <include name="descriptor.xml"/>
+                <include name="build.xml"/>
+                <include name="log4j.xml"/>
+                <include name="log4j.dtd"/>
+                <include name="LICENSE"/>
+                <include name="README"/>
+                <include name="VERSION.txt"/>
+                <include name="exist.jar"/>
+                <include name="exist-optional.jar"/>
+                <include name="exist-modules.jar"/>
+                <include name="exist-fluent.jar"/>
+                <include name="start.jar"/>
+                <include name="examples.jar"/>
+                <include name="mime-types.xml.tmpl"/>
+                <include name="mime-types.xml"/>
+                <include name="atom-example.xq"/>
+                <include name="atom-services.xml"/>
+                <include name="lib/"/>
+                <include name="samples/**"/>
+                <include name="schema/"/>
+                <include name="thirdparty/"/>
+                <exclude name="**/CVS/"/>
+                <exclude name="**/*~"/>
+                <exclude name="**/*.log*"/>
+                <exclude name="**/.*"/>
+                <include name="start.config"/>
+            </fileset>
+            <fileset targetdir="$INSTALL_PATH/extensions" dir="bf-eXist/extensions">
+                <exclude name="**/*~"/>
+                <exclude name="**/.*"/>
+                <exclude name="**/CVS/"/>
+                <exclude name=".*"/>
+                <exclude name="**/src/"/>       
+                <exclude name="**/javadoc/"/>
+                <!-- preferred to have explicit one explicit include but .... -->
+                <exclude name="indexes/**/lib/g*.jar"/>
+                <exclude name="indexes/**/lib/j*.jar"/>
+                <exclude name="indexes/**/lib/v*.jar"/>
+            </fileset>
+            <fileset targetdir="$INSTALL_PATH/build/scripts" dir="bf-eXist/build/scripts">
+                <exclude name="**/.*"/>
+                <exclude name="**/*~"/>
+            </fileset>
+            <fileset targetdir="$INSTALL_PATH/tools" dir="bf-eXist/tools">
+                <include name="**/*.jar"/>
+                <include name="wrapper/**"/>
+                <include name="requestlog/**"/>
+                <include name="rulesets/**"/>
+                <include name="ant/**"/>
+                <include name="XFormsFilter/**"/>
+                <exclude name="ant/lib/javasvn*.jar"/>
+                <include name="jetty/**"/>
+                <exclude name="jetty/logs/*"/>
+                <exclude name="ircbot/**"/>
+                <exclude name="ant/lib/svnkit*.jar"/>
+                <include name="jmx/**"/>
+                <exclude name="jmx/classes/**"/>
+            </fileset>
+            <fileset targetdir="$INSTALL_PATH/webapp" dir="bf-eXist/webapp">
+                <exclude name="**/*.dbx"/>
+                <exclude name="**/*.log*"/>
+                <exclude name="api/**"/>
+                <!--exclude name="xqts/**"/-->
+                <exclude name="**/CVS/"/>
+                <exclude name="**/*~"/>
+            </fileset>
+            <fileset targetdir="$INSTALL_PATH/webapp/WEB-INF" dir="bf-eXist/webapp/WEB-INF">
+                <include name="data/"/>
+                <include name="logs/"/>
+                <exclude name="**/*.dbx"/>
+                <exclude name="**/CVS/"/>
+                <exclude name="**/*.log"/>
+            </fileset>
+            <file src="bf-eXist/installer/conf.xml" targetdir="$INSTALL_PATH"/>
+            <file src="bf-eXist/installer/index.html" targetdir="$INSTALL_PATH"/>
+            <file src="bf-eXist/installer/icon.bmp" targetdir="$INSTALL_PATH"/>
+            <file src="bf-eXist/installer/install.xml.tmpl" targetdir="$INSTALL_PATH/installer"/>
+            <file src="bf-eXist/tools/izpack/build.xml" targetdir="$INSTALL_PATH/tools/izpack"/>
+
+            <fileset dir="bf-eXist/installer/scripts" targetdir="$INSTALL_PATH/bin">
+                <include name="setup.sh"/>
+                <include name="setup.bat"/>
+            </fileset>
+            <fileset dir="bf-eXist/installer/scripts" targetdir="$INSTALL_PATH/bin">
+                <include name="client.sh"/>
+                <include name="startup.sh"/>
+                <include name="server.sh"/>
+                <include name="shutdown.sh"/>
+                <include name="backup.sh"/>
+                <include name="client.bat"/>
+                <include name="startup.bat"/>
+                <include name="server.bat"/>
+                <include name="shutdown.bat"/>
+                <include name="backup.bat"/>
+            </fileset>
+            <fileset dir="bf-eXist/bin/functions.d" targetdir="$INSTALL_PATH/bin/functions.d">
+                <include name="*.sh"/>
+            </fileset>
+            <fileset dir="bf-eXist/bin/batch.d" targetdir="$INSTALL_PATH/bin/batch.d">
+                <include name="*.bat"/>
+            </fileset>
+            <file src="bf-eXist/installer/scripts/build.sh" targetdir="$INSTALL_PATH"/>
+            <file src="bf-eXist/installer/scripts/build.bat" targetdir="$INSTALL_PATH"/>
+            <parsable type="shell" targetfile="$INSTALL_PATH/bin/client.sh"/>
+            <parsable type="shell" targetfile="$INSTALL_PATH/bin/startup.sh"/>
+            <parsable type="shell" targetfile="$INSTALL_PATH/bin/server.sh"/>
+            <parsable type="shell" targetfile="$INSTALL_PATH/bin/shutdown.sh"/>
+            <parsable type="shell" targetfile="$INSTALL_PATH/bin/backup.sh"/>
+            <parsable type="shell" targetfile="$INSTALL_PATH/build.sh"/>
+            <parsable type="shell" targetfile="$INSTALL_PATH/bin/setup.sh"/>
+            <parsable targetfile="$INSTALL_PATH/bin/client.bat"/>
+            <parsable targetfile="$INSTALL_PATH/bin/startup.bat"/>
+            <parsable targetfile="$INSTALL_PATH/bin/server.bat"/>
+            <parsable targetfile="$INSTALL_PATH/bin/shutdown.bat"/>
+            <parsable targetfile="$INSTALL_PATH/bin/backup.bat"/>
+            <parsable targetfile="$INSTALL_PATH/bin/setup.bat"/>
+            <parsable targetfile="$INSTALL_PATH/build.bat"/>
+
+            <parsable type="xml" targetfile="$INSTALL_PATH/conf.xml"/>
+
+
+            <singlefile src="bf-eXist/tools/wrapper/conf/wrapper.conf.install"
+                target="$INSTALL_PATH/tools/wrapper/conf/wrapper.conf" override="true"/>
+            <parsable targetfile="$INSTALL_PATH/tools/wrapper/conf/wrapper.conf"/>
+            <executable targetfile="$INSTALL_PATH/bin/client.sh" stage="never" os="unix"/>
+            <executable targetfile="$INSTALL_PATH/bin/setup.sh" stage="never" os="unix"/>
+            <executable targetfile="$INSTALL_PATH/bin/startup.sh" stage="never" os="unix"/>
+            <executable targetfile="$INSTALL_PATH/bin/server.sh" stage="never" os="unix"/>
+            <executable targetfile="$INSTALL_PATH/bin/shutdown.sh" stage="never" os="unix"/>
+            <executable targetfile="$INSTALL_PATH/bin/backup.sh" stage="never" os="unix"/>
+            <executable targetfile="$INSTALL_PATH/bin/functions.d/eXist-settings.sh" stage="never"
+                os="unix"/>
+            <executable targetfile="$INSTALL_PATH/bin/functions.d/getopt-settings.sh" stage="never"
+                os="unix"/>
+            <executable targetfile="$INSTALL_PATH/bin/functions.d/jmx-settings.sh" stage="never"
+                os="unix"/>
+            <executable targetfile="$INSTALL_PATH/build.sh" stage="never" os="unix"/>
+            <executable targetfile="$INSTALL_PATH/tools/wrapper/bin/wrapper" stage="never" os="unix"/>
+            <executable targetfile="$INSTALL_PATH/tools/wrapper/bin/exist.sh" stage="never"
+                os="unix"/>
         </pack>
 
         <pack name="DeveloperPack" required="no" preselected="no">

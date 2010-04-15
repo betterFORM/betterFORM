@@ -361,16 +361,26 @@
         </copy>
     </target>
 
+    <target name="generateSeleniumHTMLTestsChapter"
+            description="batch generates HTML Selenium Test from HTML-Templates">
+        <copy todir="${basedir}/target/test-sources/seleniumIDE/conformance/x11edition1/chapt${chapterNo}/" overwrite="true" filtering="true">
+            <fileset dir="${basedir}/../src/test/seleniumIDE/conformance/x11edition1/chapt${chapterNo}/" includes="*.html"/>
+            <filterset>
+                <filter token="URL-TO-TEST-FORMS" value="${web.test.selenium.url-to-test-forms}"/>            
+            </filterset>
+        </copy>
+    </target>
+
 
     <target name="generateSeleniumJavaTestsChapter"
-            description="batch generates Java Selenium Test from HTML">
+            description="batch generates Java Selenium Test from HTML" depends="generateSeleniumHTMLTestsChapter">
         <echo/>
         <echo message="************************************************************************************************************"/>
         <echo message="generating automated Java test cases for XForms 1.1 Test Suite Chapter ${chapterNo} from Selenium HTML tests"/>
         <echo message="************************************************************************************************************"/>
         <echo/>
 
-        <xslt basedir="${root.dir}/src/test/seleniumIDE/conformance/x11edition1"
+        <xslt basedir="${basedir}/target/test-sources/seleniumIDE/conformance/x11edition1"
               destdir="${basedir}/target/test-sources"
               style="${root.dir}/tools/XFormsTestSuite/xslt/generateSeleniumJava.xsl"
               force="true"
@@ -401,15 +411,26 @@
         </delete>
     </target>
 
+    <target name="generateSeleniumHTMLTestsAppendix"
+            description="batch generates HTML Selenium Test from HTML-Templates">
+        <copy todir="${basedir}/target/test-sources/seleniumIDE/conformance/x11edition1/appendix/" overwrite="true" filtering="true">
+            <fileset dir="${basedir}/../src/test/seleniumIDE/conformance/x11edition1/appendix/" includes="*.html"/>
+            <filterset>
+                <filter token="URL-TO-TEST-FORMS" value="${web.test.selenium.url-to-test-forms}"/>
+            </filterset>
+        </copy>
+    </target>
+
     <target name="generateSeleniumJavaTestsAppendix"
-            description="batch generates Java Selenium Test from HTML for Appendix">
+            description="batch generates Java Selenium Test from HTML for Appendix"
+            depends="generateSeleniumHTMLTestsAppendix">
         <echo/>
         <echo message="************************************************************************************************************"/>
         <echo message="generating automated Java test cases for XForms 1.1 Test Suite Appendix from Selenium HTML tests"/>
         <echo message="************************************************************************************************************"/>
         <echo/>
 
-        <xslt basedir="${root.dir}/src/test/seleniumIDE/conformance/x11edition1"
+        <xslt basedir="${basedir}/target/test-sources/seleniumIDE/conformance/x11edition1/"
               destdir="${basedir}/target/test-sources"
               style="${root.dir}/tools/XFormsTestSuite/xslt/generateSeleniumJava.xsl"
               force="true"
