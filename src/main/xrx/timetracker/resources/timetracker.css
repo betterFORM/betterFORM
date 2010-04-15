@@ -1,0 +1,83 @@
+.header {
+	font-size: 16pt;
+	color: gray;
+	border-bottom: thin solid gray;
+}
+
+tr.xfRepeatHeader  td {
+	font-weight: bold;
+	padding-right: 5px;
+}
+
+.caTabContainer {
+	overflow: hidden;
+}
+
+tr.xfRepeatItem  td {
+	padding-right: 5px;
+}
+
+/* project column */
+.caTableCol-1 {
+	text-align: left;
+	width: 11ex;
+}
+
+/* date column */
+.caTableCol-2 {
+	text-align: left;
+	width: 11ex;
+}
+
+/* time column */
+.caTableCol-3 {
+	text-align: right;
+}
+
+/* time column */
+.caTableCol-4 {
+	text-align: left;
+}
+
+/* time column */
+.caTableCol-5 {
+	text-align: left;
+}
+
+/* note column */
+.caTableCol-6 {
+	overflow: hidden;
+}
+
+/* time column */
+.caTableCol-7 {
+	text-align: left;
+}
+
+/* time column */
+.caTableCol-8 {
+	text-align: right;
+}
+
+#task-table span.xfControl {
+	display: block;
+	margin-left: 5px;
+}
+.xsdDate .xfValue {
+	width:80px;
+}
+
+.listing .xfSelectorItem {
+	display:block;
+}
+
+#overall-time-label {
+	display: inline;
+	margin-right: 2em;
+}
+
+#result-list {
+	height: 390px;
+	overflow-y: scroll;
+}
+

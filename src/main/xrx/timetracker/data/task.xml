@@ -1,0 +1,17 @@
+<data>
+    <task>
+        <id/>
+        <date/>
+        <project/>
+        <start/>
+        <end/>
+        <duration hours="0" minutes="0"/>
+        <who/>
+        <what/>
+        <note/>
+        <billable/>
+        <billed date=""/>
+        <status/>
+        <created/>
+    </task>
+</data>

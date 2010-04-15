@@ -113,14 +113,14 @@ public class XFormsFilter implements Filter {
 
             if(LOG.isDebugEnabled()){
                 LOG.debug("request URI: " + requestURI);
-                LOG.debug("mimetType: " + mimeType);
+                LOG.debug("mimeType: " + mimeType);
             }
 
             if(mimeType != null){
                 srvResponse.setContentType(mimeType);
             }else{
                 LOG.warn("no contenttype set for internal request");
-                throw new ServletException("Contenttype of " + requestURI + " unknown. Please configure your webcontainer appropriately.");
+//                throw new ServletException("Contenttype of " + requestURI + " unknown. Please configure your webcontainer appropriately.");
             }
 
 

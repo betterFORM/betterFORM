@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns:xf="http://www.w3.org/2002/xforms" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:bf="http://betterform.sourceforge.net/xforms">
     <task>
+        <id>1</id>
         <date>2010-03-17</date>
         <project>Project 2</project>
         <start/>
@@ -12,6 +13,7 @@
         <billable>true</billable>
         <billed date=""/>
         <status>completed</status>
-        <created>2010-03-17T13:54:20.314+01:00</created>
+        <created>20100317-135612</created>
+
     </task>
 </data>

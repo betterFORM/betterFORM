@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <app name="xfTimeTracker" rootCollection="">
     <description>XRX Timetracker Sample</description>
     <version>0.2</version>
@@ -11,4 +12,5 @@
     <dependencies>
         <dependency/>
     </dependencies>
+    <dbPath></dbPath>
 </app>
