@@ -320,7 +320,7 @@ public class AbstractHTTPConnector extends AbstractConnector {
 
         for (int index = 0; index < responseHeaders.length; index++) {
             if(LOGGER.isDebugEnabled()){
-                LOGGER.debug("reponse header :: " + responseHeaders[index].getName() + " : value = " + responseHeaders[index].getValue());
+                LOGGER.debug("response header :: " + responseHeaders[index].getName() + " : value = " + responseHeaders[index].getValue());
             }
             responseHeader.put(responseHeaders[index].getName(), responseHeaders[index].getValue());
         }
