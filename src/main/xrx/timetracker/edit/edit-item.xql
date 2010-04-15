@@ -8,7 +8,7 @@ declare option exist:serialize "method=xhtml media-type=text/xml";
 
 declare function local:timestamp() as xs:string{
       let $timestamp := request:get-parameter("timestamp", "")
-      let $path2resource := concat("/exist/rest/db/betterform/apps/timetracker/data/task?_query=/data/task",encode-for-uri('['), "created='" ,$timestamp,"'",encode-for-uri(']'))
+      let $path2resource := concat("/exist/rest/db/betterform/apps/timetracker/data/task?_query=/*/task",encode-for-uri('['), "created='" ,$timestamp,"'",encode-for-uri(']'))
       return $path2resource
 };
 
@@ -43,7 +43,7 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                   <xf:bind nodeset="billable" type="xf:boolean"/>
                   <xf:bind nodeset="billed" type="xf:boolean"/>
                   <xf:bind nodeset="billed/@date" type="xf:date"/>
-                  <xf:bind nodeset="created" type="xf:dateTime" required="true()"/>
+                  <xf:bind nodeset="created" required="true()"/>
               </xf:bind>
 
 			 
@@ -66,7 +66,7 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
         <xf:submission id="s-add"
                        method="put"
                        replace="none">
-		    <xf:resource value="concat('/exist/rest/db/betterform/apps/timetracker/data/task/', instance('i-controller')/timestamp, '.xml')"/>
+		    <xf:resource value="concat('/exist/rest/db/betterform/apps/timetracker/data/task/', instance('i-task')/task/created, '.xml')"/>
 
             <xf:header>
                 <xf:name>username</xf:name>
@@ -80,39 +80,25 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                 <xf:name>realm</xf:name>
                 <xf:value>exist</xf:value>
             </xf:header>
-            <xf:action ev:event="xforms-submit">
+
+            <xf:action ev:event="xforms-submit" if="'{local:mode()}' = 'new'">
                 <xf:message level="ephemeral">Creating timestamp</xf:message>
-                <xf:setvalue ref="instance('i-task')/task/created" value="now()"/>
-                <xf:setvalue ref="instance('i-controller')/timestamp" value="concat(
-                    year-from-dateTime(instance('i-task')/task/created),
-                    IF( month-from-dateTime(instance('i-task')/task/created) &gt; 9,
-                        month-from-dateTime(instance('i-task')/task/created),
-                        concat('0', month-from-dateTime(instance('i-task')/task/created))
-                    ),
-                    IF( day-from-dateTime(instance('i-task')/task/created) &gt; 9,
-                        day-from-dateTime(instance('i-task')/task/created),
-                        concat('0', day-from-dateTime(instance('i-task')/task/created))
-                    ),
-                    '-',
-                    IF( hours-from-dateTime(instance('i-task')/task/created) &gt; 9,
-                        hours-from-dateTime(instance('i-task')/task/created),
-                        concat('0', hours-from-dateTime(instance('i-task')/task/created))
-                    ),
-                    IF( minutes-from-dateTime(instance('i-task')/task/created) &gt; 9,
-                        minutes-from-dateTime(instance('i-task')/task/created),
-                        concat('0', minutes-from-dateTime(instance('i-task')/task/created))
-                    ),
-                    IF( seconds-from-dateTime(instance('i-task')/task/created) &gt; 9,
-                        seconds-from-dateTime(instance('i-task')/task/created),
-                        concat('0', seconds-from-dateTime(instance('i-task')/task/created))
-                    )
-                    )" />
-                <xf:message level="ephemeral" >Creating timestamp DONE <xf:output ref="instance('i-controller')/timestamp"/></xf:message>
+                <xf:setvalue ref="instance('i-task')/task/created" value="now()" />
+                <xf:recalculate/>
+				<xf:setvalue ref="instance('i-task')/task/created" value="concat(
+					year-from-dateTime(.),
+					substring(.,6,2),
+					substring(.,9,2),
+					'-',
+					substring(.,12,2),
+					substring(.,15,2),
+					substring(.,18,2)
+					)" />
             </xf:action>
 
             <xf:action ev:event="xforms-submit-done">
                 <xf:message level="ephemeral">Data stored</xf:message>
-                <xf:send submission="s-save-controller" if="'{local:mode()}' = 'new'"/>
+				<xf:send submission="s-clean" if="'{local:mode()}' = 'new'"/>
 			</xf:action>
 
             <xf:action ev:event="xforms-submit-error" if="instance('i-controller')/error/@hasError='true'">
@@ -124,38 +110,6 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                 <xf:message>The form has not been filled in correctly</xf:message>
             </xf:action>
         </xf:submission>
-
-        <xf:submission id="s-save-controller"
-        			   ref="instance('i-controller')"
-        			   resource="/exist/rest/db/betterform/apps/timetracker/data/controller.xml"
-                       method="put"
-                       replace="none">
-            <xf:header>
-                <xf:name>username</xf:name>
-                <xf:value>admin</xf:value>
-            </xf:header>
-            <xf:header>
-                <xf:name>password</xf:name>
-                <xf:value>admin</xf:value>
-            </xf:header>
-            <xf:header>
-                <xf:name>realm</xf:name>
-                <xf:value>exist</xf:value>
-            </xf:header>
-
-            <xf:action ev:event="xforms-submit">
-				<xf:setvalue ref="instance('i-controller')/next-id" value="number(.) + 1"/>
-            </xf:action>
-
-            <xf:action ev:event="xforms-submit-done">
-                <xf:send submission="s-clean"/>
-            </xf:action>
-
-            <xf:action ev:event="xforms-submit-error">
-				<xf:message>Failure incrementing task id</xf:message>
-            </xf:action>
-
-		</xf:submission>
 
         <xf:submission id="s-clean"
                        ref="instance('i-task')"
@@ -180,7 +134,7 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
     <a href="../views/list-items.xql">back</a><br/>
 
         <xf:group ref="task">
-            <xf:label class="subheader">Edit Task <xf:output ref="task/id"/></xf:label>
+            <xf:label class="subheader">Edit Task <xf:output ref="instance()/task/id"/></xf:label>
 
             <xf:group id="task-table" appearance="bf:verticalTable">
                 <xf:input id="date" ref="date">
@@ -360,7 +314,6 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
 					</xf:trigger>
 				</xf:case>
 			</xf:switch>
-
 			<xf:output mediatype="text/html" ref="instance('i-controller')/error" id="errorReport"/>
 
         </xf:group>

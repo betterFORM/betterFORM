@@ -13,7 +13,7 @@
             </fileset>
         </copy>
 
-        <copy tofile="/Volumes/db/system/config/db/apps/term/data/collection.xconf" includeemptydirs="true" overwrite="true">
+        <copy tofile="/Volumes/db/system/config/db/betterform/apps/timetracker/data/task/collection.xconf" includeemptydirs="true" overwrite="true">
             <fileset file="${basedir}/timetracker/lucene/collection.xconf" />
         </copy>
     </target>

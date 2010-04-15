@@ -9,7 +9,7 @@ declare option exist:serialize "method=xhtml media-type=text/html indent=yes";
     <body>
        <h1>Tasks</h1>
        <div class="menu">
-       		<a href="../edit/edit-item.xql?mode=new">new task</a>
+       		<a href="../edit/edit-item.xql?mode=new">new task</a> - <a href="../search/search-form.html">search</a>
        </div>
        <table border="1">
        	 <tr>
@@ -21,7 +21,7 @@ declare option exist:serialize "method=xhtml media-type=text/html indent=yes";
        	    <td>Note</td>
        	    <td>Billable</td>
        	    <td>Status</td>
-       	    <td></td>
+       	    <td colspan="2"> </td>
        	 </tr>
        	 {
          for $task in collection('/db/betterform/apps/timetracker/data/task')//task
@@ -40,6 +40,7 @@ declare option exist:serialize "method=xhtml media-type=text/html indent=yes";
 				<td>{$task/billable}</td>
 				<td>{$task/status}</td>
        		    <td><a href="../edit/edit-item.xql?timestamp={$task/created}&amp;mode=edit">edit</a></td>
+       		    <td><a href="../edit/delete-confirm.xql?timestamp={$task/created}&amp;mode=edit">delete</a></td>
        		</tr>
        }</table>
     </body>
