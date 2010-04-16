@@ -2,6 +2,9 @@
 
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
+    <property name="exist.dir" value="/Applications/eXist"/>
+    <property name="exist.bfExtension.dir" value="${exist.dir}/extensions/betterform/target/betterform"/>
+    <property name="exist.webapp.dir" value="${exist.dir}/webapp"/>
     <property name="web.dir" value="${basedir}/../../web"/>
     <property name="core.dir" value="${basedir}/../../core"/>
     <property name="target.dir" value="${basedir}/target"/>
@@ -74,6 +77,25 @@
       <zip basedir="${basedir}/betterform" zipfile="${target.dir}/exist/betterform.zip"/>
     </target>
 
+    <target name="deploy-into-installed-eXist" depends="package" description="copies betterFORM 'forms', 'resources' and 'Java classes' to the configured eXist xml db">
+
+        <copy todir="${exist.webapp.dir}/forms">
+            <fileset dir="${webapp.dir}/forms"/>
+        </copy>
+
+        <copy todir="${exist.webapp.dir}/resources">
+            <fileset dir="${webapp.dir}/resources"/>
+        </copy>
+
+        <delete  dir="${exist.bfExtension.dir}/WEB-INF/classes"/>
+        <copy todir="${exist.bfExtension.dir}/WEB-INF/classes">
+            <fileset dir="${webapp.dir}/WEB-INF/classes"/>
+        </copy>
+
+
+
+
+    </target>
     
 
 </project>
