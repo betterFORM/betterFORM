@@ -71,16 +71,16 @@
     <!-- copy unmatched mixed markup, comments, whitespace, and text -->
     <!-- ### copy elements from the xhtml2 namespace to html (without any namespace) by re-creating the     ### -->
     <!-- ### elements. Other Elements are just copied with their original namespaces.                       ### -->
-    <xsl:template match="*|@*|text()" name="handle-foreign-elements">
+    <xsl:template match="node()|@*|text()" name="handle-foreign-elements">
         <xsl:choose>
             <xsl:when test="namespace-uri(.)='http://www.w3.org/1999/xhtml'">
                 <xsl:element name="{local-name(.)}" namespace="">
-                    <xsl:apply-templates select="*|@*|text()"/>
+                    <xsl:apply-templates select="node()|@*|text()"/>
                 </xsl:element>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:copy>
-                    <xsl:apply-templates select="*|@*|text()"/>
+                    <xsl:apply-templates select="node()|@*|text()"/>
                 </xsl:copy>
             </xsl:otherwise>
         </xsl:choose>
@@ -90,12 +90,12 @@
         <xsl:choose>
             <xsl:when test="namespace-uri(.)='http://www.w3.org/1999/xhtml'">
                 <xsl:element name="{local-name(.)}" namespace="">
-                    <xsl:apply-templates select="*|@*|text()" mode="inline"/>
+                    <xsl:apply-templates select="node()|@*|text()" mode="inline"/>
                 </xsl:element>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:copy>
-                    <xsl:apply-templates select="*|@*|text()" mode="inline"/>
+                    <xsl:apply-templates select="node()|@*|text()" mode="inline"/>
                 </xsl:copy>
             </xsl:otherwise>
         </xsl:choose>
@@ -155,7 +155,7 @@
                         </xsl:attribute>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:apply-templates/>
+                        <xsl:apply-templates mode="inline"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </script>
