@@ -86,7 +86,7 @@
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template match="*|@*|text()" mode="inline">
+    <xsl:template match="node()|@*|text()" mode="inline">
         <xsl:choose>
             <xsl:when test="namespace-uri(.)='http://www.w3.org/1999/xhtml'">
                 <xsl:element name="{local-name(.)}" namespace="">

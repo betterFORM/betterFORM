@@ -30,6 +30,7 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
       <title>Edit Task</title>
     </head>
     <body>
+    	<div id="xforms">
         <div style="display:none">
             <xf:model>
                 <xf:instance id="i-task" src="/exist/rest/db/betterform/apps/timetracker/data/task.xml"/>
@@ -129,12 +130,7 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
         </xf:model>
     </div>
 
-
-
-    <a href="../views/list-items.xql">back</a><br/>
-
         <xf:group ref="task">
-            <xf:label class="subheader">Edit Task <xf:output ref="instance()/task/id"/></xf:label>
 
             <xf:group id="task-table" appearance="bf:verticalTable">
                 <xf:input id="date" ref="date">
@@ -317,5 +313,6 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
 			<xf:output mediatype="text/html" ref="instance('i-controller')/error" id="errorReport"/>
 
         </xf:group>
+        </div>
     </body>
 </html>

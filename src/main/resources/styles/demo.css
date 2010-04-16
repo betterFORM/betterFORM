@@ -1,3 +1,46 @@
+#demoTarget {
+	 height: 400px;
+	 overflow: auto; /*padding:10px;*/
+	 border: thin solid #bbbbbb; /*text-align:left;*/
+	 background: white;
+	 min-height: 400px;
+	 max-height: 400px;
+	 padding: 10px;
+ }
+
+
+ .backgroundImage {
+	 width: 100%;
+	 height: 100%;
+	 background: transparent url(resources/images/play.png) no-repeat 50%;
+ }
+ #demoWrapper {
+	 position: relative;
+	 width: 750px;
+	 height: 421px;
+	 min-height: 421px;
+	 max-height: 421px;
+	 float: left;
+	 border: 1px dotted #666;
+	 /*margin-bottom: 20px;*/
+	 background: url(resources/images/ajax-loader.gif) no-repeat center center;
+ }
+
+ #demoTrigger {
+	 display: none;
+ }
+
+ #content {
+	 min-height: 500px;
+ }
+ #backTrigger {
+	 position: absolute;
+	 float: right;
+ }
+ .tundra .dijitButtonNode {
+	 border:none;
+ }
+
 #xforms {
     background: none repeat scroll 0 0 white;
     border: thin solid #BBBBBB;
