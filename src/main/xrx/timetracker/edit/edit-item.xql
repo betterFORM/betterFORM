@@ -30,13 +30,14 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
       <title>Edit Task</title>
     </head>
     <body>
-    	<div id="xforms">
+    	<div id="xforms" style="height:360px;">
         <div style="display:none">
             <xf:model>
                 <xf:instance id="i-task" src="/exist/rest/db/betterform/apps/timetracker/data/task.xml"/>
 
               <xf:bind nodeset="task">
-                  <xf:bind nodeset="date" type="xf:date"/>
+                  <xf:bind nodeset="date" type="xf:date" required="true()" />
+                  <xf:bind nodeset="project" required="true()" />
                   <xf:bind nodeset="duration/@hours" type="integer" constraint=". != 0 or ../@minutes != 0"/>
                   <xf:bind nodeset="duration/@minutes" type="integer" constraint=". != 0 or ../@hours != 0"/>
                   <xf:bind nodeset="who" required="true()"/>
@@ -134,13 +135,13 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
 
             <xf:group id="task-table" appearance="bf:verticalTable">
                 <xf:input id="date" ref="date">
-                    <xf:label>Data</xf:label>
-                    <xf:alert>Date is missing</xf:alert>
+                    <xf:label>Date</xf:label>
+                    <xf:alert>a valid Date is required</xf:alert>
                 </xf:input>
 
                 <xf:select1 id="project" ref="project" appearance="minimal">
                     <xf:label>Project</xf:label>
-					<xf:alert>Project is missing</xf:alert>
+					<xf:alert>a project must be selected</xf:alert>
                     <xf:itemset nodeset="instance('i-project')/project">
                         <xf:label ref="."/>
                         <xf:value ref="."/>
