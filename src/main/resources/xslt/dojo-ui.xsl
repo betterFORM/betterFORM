@@ -319,7 +319,9 @@
                cellspacing="0"
                >
             <!-- build table header -->
-            <xsl:for-each select="bf:data/xforms:group[@appearance='repeated'][1]">
+            <!-- <xsl:for-each select="bf:data/xforms:group[@appearance='repeated'][1]"> -->
+            <!-- Don´t use Prototype for RepeatHeader but first Repeatitem -->
+            <xsl:for-each select="xforms:group[@appearance='repeated'][1]">
                 <tr class="xfRepeatHeader">
                     <xsl:call-template name="processCompactHeader"/>
                 </tr>
@@ -383,7 +385,12 @@
 
         <table style="display:none;">
             <tr class="xfRepeatHeader">
-                <xsl:call-template name="processCompactHeader" />
+                <!-- build table header -->
+                <!-- <xsl:for-each select="bf:data/xforms:group[@appearance='repeated'][1]"> -->
+                <!-- Don´t use Prototype for RepeatHeader but first Repeatitem -->
+                <xsl:for-each select="xforms:group[@appearance='repeated'][1]">
+                    <xsl:call-template name="processCompactHeader" />
+                </xsl:for-each>
             </tr>
             <tr id="{$id}-prototype" class="xfRepeatPrototype xfDisabled xfReadWrite xfOptional xfValid">
                 <xsl:for-each select="xforms:*">

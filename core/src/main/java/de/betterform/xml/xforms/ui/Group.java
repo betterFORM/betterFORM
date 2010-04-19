@@ -120,7 +120,7 @@ public class Group extends BindingElement implements EventListener,DefaultAction
             try {
                 this.container.dispatch(getFirstFocusableControl(),DOMEventNames.FOCUS_IN);
             } catch (XFormsException e) {
-                    LOGGER.warn("silently failed DOMFocusOut");
+                    LOGGER.warn("silently failed DOMFocusIn");
             }
             return;
         }
@@ -181,13 +181,21 @@ public class Group extends BindingElement implements EventListener,DefaultAction
                     }
                     if(event.getEventPhase() == Event.BUBBLING_PHASE){
                         String current = this.container.getFocussedContainerId();
+                        boolean sendDomFocusIn = false;
                         if(current != null && !(current.equals(this.id))){
                             String focusedGroupId = this.container.getFocussedContainerId();
                             if(this.container.lookup(focusedGroupId) != null) {
-                                this.container.dispatch(focusedGroupId,DOMEventNames.FOCUS_OUT);    
+                                this.container.dispatch(focusedGroupId,DOMEventNames.FOCUS_OUT);
                             }
+                            sendDomFocusIn = true;
                         }
                         this.container.setFocussedContainerId(this.id);
+                        if (sendDomFocusIn) {
+                            String focusedGroupId = this.container.getFocussedContainerId();
+                            if(this.container.lookup(focusedGroupId) != null) {
+                                this.container.dispatch(focusedGroupId,DOMEventNames.FOCUS_IN);
+                            }
+                        }
                         event.stopPropagation();
                     }
                 }else if (DOMEventNames.FOCUS_OUT.equals(type)){
