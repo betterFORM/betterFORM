@@ -84,7 +84,7 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                 }
             }).play();
             dijit.byId("addTaskDialog").show();
-			}
+		}
 
         -->
     </script>
@@ -99,9 +99,51 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                 <data xmlns="">
                 </data>
             </xf:instance>
+
+
+            <xf:instance id="i-task" xmlns="">
+				<data/>
+            </xf:instance>
+
+			<xf:instance id="i-query-tasks">
+				<data xmlns="">
+					<projects/>
+					<worker/>
+					<start/>
+					<end/>
+					<billable/>
+				</data>
+			</xf:instance>
+
+			<xf:bind nodeset="instance('i-query-tasks')">
+				<xf:bind nodeset="start"     type="xf:date" />
+				<xf:bind nodeset="end"       type="xf:date" />
+				<xf:bind nodeset="billable " type="xf:boolean" />
+			</xf:bind>
+
+			<xf:instance id="i-project"
+                     src="/exist/rest/db/betterform/apps/timetracker/data/project.xml" />
+
+        	<xf:instance id="i-worker"
+                     src="/exist/rest/db/betterform/apps/timetracker/data/worker.xml" />
+
+
+        <xf:submission id="s-get-tasks"
+                       ref="instance('i-query-tasks')"
+                       resource="/exist/rest/db/betterform/apps/timetracker/search/search-org.xql"
+                       replace="instance"
+                       instance="i-tasks"
+                       method="form-data-post"
+                       validate="false">
+            <xf:action ev:event="xforms-submit-done">
+                <xf:message level="ephemeral">Received data from eXist DB</xf:message>
+            </xf:action>
+            <xf:message ev:event="xforms-submit-error">Failure received tasks froms eXist XML DB</xf:message>
+        </xf:submission>
+
         </xf:model>
 
-        <xf:trigger id="contactsDemoTrigger">
+		<xf:trigger id="contactsDemoTrigger">
             <xf:label>Overview</xf:label>
             <xf:toggle case="c-demoArea"/>
             <xf:load show="embed" targetid="embedTarget">
@@ -134,7 +176,7 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
         <img id="shadowTop" src="/exist/resources/images/shad_top.jpg" alt=""/>
         <div class="pageMarginBox">
             <div class="contentBody">
-				<div id="toolbar1" dojoType="dijit.Toolbar">
+        <div id="toolbar1" dojoType="dijit.Toolbar">
 
 					<div id="addBtn" dojoType="dijit.form.Button" showLabel="true" onclick="embed('addTask');">
 						<span>New Task</span>
@@ -151,6 +193,58 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                     <xf:case id="c-overview" selected="true">
                     </xf:case>
                     <xf:case id="c-demoArea">
+						<table>
+							<tr>
+								<td align="left" style="border-right: 1px solid black;border-bottom: 1px solid black;width:90px">Project</td>
+								<td align="left"
+									style="border-right: 1px solid black;border-bottom: 1px solid black;width: 70px;padding-left:5px">Worker</td>
+								<td align="left"
+									style="border-right: 1px solid black;border-bottom: 1px solid black;width: 50px; padding-left: 5px;">Start / End</td>
+								<td align="left" style="width:90px;padding-left: 5px;">Billable</td>
+							</tr>
+							<tr>
+								<td style="border-right: 1px solid black;width:90px" valign="top">
+									<xf:select id="projectToDisplay" ref="instance('i-query-tasks')/projects" appearance="full">
+										<xf:label/>
+										<xf:itemset nodeset="instance('i-project')/project">
+											<xf:label ref="."/>
+											<xf:value ref="."/>
+										</xf:itemset>
+									</xf:select>
+								</td>
+								<td style="border-right: 1px solid black; width: 60px;padding-left:5px" valign="top">
+									<xf:select id="personToDisplay" ref="instance('i-query-tasks')/worker" appearance="full">
+										<xf:label/>
+										<xf:itemset nodeset="instance('i-worker')/worker">
+											<xf:label ref="."/>
+											<xf:value ref="."/>
+										</xf:itemset>
+									</xf:select>
+								</td>
+								<td style="border-right: 1px solid black; width: 50px; padding-left: 5px;" valign="top">
+									<xf:input ref="instance('i-query-tasks')/start">
+										<xf:label/>
+									</xf:input>
+									<br/>
+									<xf:input ref="instance('i-query-tasks')/end">
+										<xf:label/>
+									</xf:input>
+								</td>
+								<td align="left" style="width:90px;padding-left: 5px;" valign="top">
+									<xf:input ref="instance('i-query-tasks')/billable">
+										<xf:label/>
+									</xf:input>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<xf:trigger>
+										<xf:label>Search</xf:label>
+										<xf:send submission="s-get-tasks"/>
+									</xf:trigger>
+								</td>
+							</tr>
+						</table>
 						<div id="demoWrapper">
 							<div id="embedTarget">
 								<!--<div onclick="runDemo();" class="backgroundImage"></div>-->

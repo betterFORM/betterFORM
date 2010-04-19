@@ -16,9 +16,14 @@
             <!-- an index boost can be used to give matches in the
             name a higher score. This means a name match will have higher rank then
             an match in the definition. -->
-            <text match="//task/note" boost="2"/>
+
+            <text match="//task/date"/>
+            <text match="//task/project"/>
             <text match="//task/who"/>
             <text match="//task/what"/>
+            <text match="//task/note" boost="2"/>
+            <text match="//task/status"/>
+            <text match="//task/created"/>
         </lucene>
     </index>
 </collection>
