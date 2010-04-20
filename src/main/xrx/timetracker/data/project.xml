@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns:xf="http://www.w3.org/2002/xforms" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:bf="http://betterform.sourceforge.net/xforms">
-    <project>Project 1</project>
-    <project>Project 2</project>
-    <project>Project 3</project>
-    <project>Project 4</project>
+    <project id="1">Project 1</project>
+    <project id="2">Project 2</project>
+    <project id="3">Project 3</project>
+    <project id="4">Project 4</project>
 </data>
