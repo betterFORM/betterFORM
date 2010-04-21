@@ -5,6 +5,11 @@
 
 package de.betterform.xml.xforms;
 
+import de.betterform.xml.events.DOMEventNames;
+import de.betterform.xml.xforms.ui.AbstractFormControl;
+import de.betterform.xml.xforms.ui.Group;
+import de.betterform.xml.xforms.ui.Repeat;
+import de.betterform.xml.xforms.ui.Switch;
 import net.sf.saxon.Configuration;
 import net.sf.saxon.dom.DocumentWrapper;
 import org.apache.commons.logging.Log;
@@ -326,6 +331,7 @@ public class Container {
      */
     public boolean dispatch(String targetId, String eventType) throws XFormsException {
         return dispatch(targetId, eventType, null);
+
     }
 
     /**
@@ -357,6 +363,33 @@ public class Container {
      * @throws XFormsException if the target node could not be found.
      */
     public boolean dispatch(String targetId, String eventType, Object info, boolean bubbles, boolean cancelable) throws XFormsException {
+        XFormsElement xFormsElement = lookup(targetId);
+        if(xFormsElement != null && xFormsElement instanceof AbstractFormControl && (DOMEventNames.FOCUS_IN.equals(eventType) || DOMEventNames.FOCUS_OUT.equals(eventType))){
+            //fetch parent XForms Element if any
+            XFormsElement parent = xFormsElement.getEnclosingXFormsContainer();
+            if(parent == null) {
+                if(focussedContainerId != null){
+                    dispatch(focussedContainerId,DOMEventNames.FOCUS_OUT);
+                }
+                focussedContainerId = null;
+            }
+            //todo: ...or switch or repeat
+            else if(parent instanceof Group || parent instanceof Switch || parent instanceof Repeat){
+                //check if parent group is already focussed
+                if(!(parent.getId().equals(focussedContainerId))){
+                    if(focussedContainerId != null) {
+                        dispatch(focussedContainerId,DOMEventNames.FOCUS_OUT);    
+                    }
+                    //remember current group
+                    this.focussedContainerId = parent.getId();
+                    //if not dispatch to group
+                    if(DOMEventNames.FOCUS_IN.equals(eventType)) {
+                        dispatch(parent.getId(),DOMEventNames.FOCUS_IN);    
+                    }
+                }
+            }
+        }
+
         EventTarget eventTarget = lookupEventTarget(targetId);
         if (eventTarget != null) {
             return dispatch(eventTarget, eventType, info, bubbles, cancelable);
@@ -396,7 +429,6 @@ public class Container {
     public boolean dispatch(EventTarget eventTarget, String eventType, Object info, boolean bubbles, boolean cancelable) throws XFormsException {
         boolean result = false;
         XFormsException xFormsException = null;
-
         try {
         	fEventInfoStack.push(new EventInfo(eventTarget, eventType, info, bubbles, cancelable));
             result = this.eventService.dispatch(eventTarget, eventType, bubbles, cancelable, info);

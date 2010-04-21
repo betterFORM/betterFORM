@@ -17,6 +17,8 @@ import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.model.ModelItem;
 import de.betterform.xml.xforms.ui.state.BoundElementState;
 import de.betterform.xml.xforms.ui.state.UIElementStateUtil;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
 
@@ -38,6 +40,7 @@ import java.util.Scanner;
  * @version $Id: AbstractFormControl.java 3506 2008-08-29 15:51:38Z lars $
  */
 public abstract class AbstractFormControl extends BindingElement implements DefaultAction {
+       private static Log LOGGER = LogFactory.getLog(AbstractFormControl.class);
 
     /**
      * Creates a new abstract form control.
@@ -278,13 +281,13 @@ public abstract class AbstractFormControl extends BindingElement implements Defa
                     num = null;
                     num = formatter.parse(value);
 */
-                    AbstractUIElement.LOGGER.warn("value: '" + value + "' could not be parsed for locale: " + locale);
+                    LOGGER.warn("value: '" + value + "' could not be parsed for locale: " + locale);
                     return value;
                 } catch (NumberFormatException nfe) {
-                    AbstractUIElement.LOGGER.warn("value: '" + value + "' could not be parsed for locale: " + locale);
+                    LOGGER.warn("value: '" + value + "' could not be parsed for locale: " + locale);
                     return value;
                 } catch (InputMismatchException ime) {
-                    AbstractUIElement.LOGGER.warn("value: '" + value + "' could not be parsed for locale: " + locale);
+                    LOGGER.warn("value: '" + value + "' could not be parsed for locale: " + locale);
                     return value;
                 }
                 return num.toString();
@@ -334,6 +337,6 @@ public abstract class AbstractFormControl extends BindingElement implements Defa
         }
         return value;
     }
-}
+                }
 
 // end of class

@@ -5,6 +5,7 @@
 
 package de.betterform.xml.xforms;
 
+import de.betterform.xml.xforms.ui.*;
 import org.apache.commons.logging.Log;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
@@ -14,10 +15,6 @@ import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.model.bind.Binding;
 import de.betterform.xml.xforms.model.bind.BindingResolver;
-import de.betterform.xml.xforms.ui.BindingElement;
-import de.betterform.xml.xforms.ui.Group;
-import de.betterform.xml.xforms.ui.Item;
-import de.betterform.xml.xforms.ui.RepeatItem;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import de.betterform.xml.xpath.XPathUtil;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
@@ -500,6 +497,36 @@ public abstract class XFormsElement implements XFormsConstants {
     }
 
 
+
+    public XFormsElement getEnclosingXFormsContainer() {
+        Node currentNode = this.getElement();
+        XFormsElement enclosingContainer = null;
+        while (true) {
+            Node parentNode = currentNode.getParentNode();
+
+            if (parentNode == null) {
+                break;
+            }
+
+            if (!(parentNode instanceof Element)) {
+                break;
+            }
+
+            Element elementImpl = (Element) parentNode;
+            Object containerObject = elementImpl.getUserData("");
+            if(containerObject instanceof Group || containerObject instanceof Switch || containerObject instanceof Repeat){
+                enclosingContainer = (XFormsElement) containerObject;
+                break;
+            }
+            currentNode = parentNode;
+        }
+        return enclosingContainer;
+
+
+    }
+
+
+
     /**
      * Returns the context expression.
      * This method is introduced on {@link XFormsElement} to make it future proof. In XForms 1.2 context will be allowed on all XForms elements,
@@ -511,7 +538,7 @@ public abstract class XFormsElement implements XFormsConstants {
     	return null;
     	//return getXFormsAttribute(CONTEXT_ATTRIBUTE); // Uncomment this when XForms 1.2 allows context everywhere
     }
-    
+
 }
 
 // end of class

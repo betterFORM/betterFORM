@@ -24,7 +24,7 @@ import org.apache.commons.logging.LogFactory;
  * @author Ulrich Nicolas Liss&eacute;
  * @version $Id: Group.java 3253 2008-07-08 09:26:40Z lasse $
  */
-public class Group extends BindingElement implements EventListener,DefaultAction {
+public class Group extends BindingElement implements DefaultAction {
     private static final Log LOGGER = LogFactory.getLog(Group.class);
     private boolean hasFocus=false;
 
@@ -49,8 +49,6 @@ public class Group extends BindingElement implements EventListener,DefaultAction
     @Override
     public void dispose() throws XFormsException {
         super.dispose();
-        ((EventTarget)this.element).removeEventListener(DOMEventNames.FOCUS_IN, this, false);
-        ((EventTarget)this.element).removeEventListener(DOMEventNames.FOCUS_OUT, this, false);
     }
 
     /**
@@ -60,10 +58,6 @@ public class Group extends BindingElement implements EventListener,DefaultAction
      */
     public void init() throws XFormsException {
         super.init();
-        //todo: should probably only registered in case there's an action handler for this group for focus events
-        ((EventTarget)this.element).addEventListener(DOMEventNames.FOCUS_IN, this, false);
-        ((EventTarget)this.element).addEventListener(DOMEventNames.FOCUS_OUT, this, false);
-
         initializeActions();
     }
 
@@ -167,59 +161,6 @@ public class Group extends BindingElement implements EventListener,DefaultAction
      */
     protected Log getLogger() {
         return LOGGER;
-    }
-
-    public void handleEvent(Event event) {
-        try {
-            if (event instanceof XMLEvent) {
-                XMLEvent xmlEvent = (XMLEvent) event;
-                String type = xmlEvent.getType();
-
-                if (DOMEventNames.FOCUS_IN.equals(type)) {
-                    if(LOGGER.isDebugEnabled()){
-                        LOGGER.debug("Group catching DOMFocusIn: " + this.id);
-                    }
-                    if(event.getEventPhase() == Event.BUBBLING_PHASE){
-                        String current = this.container.getFocussedContainerId();
-                        boolean sendDomFocusIn = false;
-                        if(current != null && !(current.equals(this.id))){
-                            String focusedGroupId = this.container.getFocussedContainerId();
-                            if(this.container.lookup(focusedGroupId) != null) {
-                                this.container.dispatch(focusedGroupId,DOMEventNames.FOCUS_OUT);
-                            }
-                            sendDomFocusIn = true;
-                        }
-                        this.container.setFocussedContainerId(this.id);
-                        if (sendDomFocusIn) {
-                            String focusedGroupId = this.container.getFocussedContainerId();
-                            if(this.container.lookup(focusedGroupId) != null) {
-                                this.container.dispatch(focusedGroupId,DOMEventNames.FOCUS_IN);
-                            }
-                        }
-                        event.stopPropagation();
-                    }
-                }else if (DOMEventNames.FOCUS_OUT.equals(type)){
-                    if(LOGGER.isDebugEnabled()){
-                        LOGGER.debug("Group catching DOMFocusOut: " + this.id);
-                    }
-//                    String current = this.container.getFocussedContainerId();
-//
-//                    if(current != null && current.equals(this.container.getFocussedContainerId()) && this.container.getFocussedControlId() == null){
-//                        this.container.setFocussedContainerId(null);
-//                        this.container.dispatch(current,DOMEventNames.FOCUS_OUT);
-//                    }
-//                    event.stopPropagation();
-
-
-//                    if(this.container.getFocussedControlId() == null){
-//                        this.container.dispatch("dummy",XFormsEventNames.FOCUS);
-//                    }
-//                    event.stopPropagation();
-                }
-            }
-        }catch(Exception e){
-            this.container.handleEventException(e);
-        }
     }
 }
 
