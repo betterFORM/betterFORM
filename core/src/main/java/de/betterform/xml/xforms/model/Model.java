@@ -80,7 +80,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
     private UpdateSequencer updateSequencer;
     private static int modelItemCounter = 0;
 
-	private static XSModel defaultSchema = null;
+    private static XSModel defaultSchema = null;
     private List refreshedItems;
 
     /**
@@ -137,7 +137,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
      * @return the instance-object for given id.
      */
     public Instance getInstance(String id) {
-        if(this.instances == null) {
+        if (this.instances == null) {
             return null;
         }
         if ((id == null) || "".equals(id)) {
@@ -155,7 +155,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
         return null;
     }
 
-    public List getInstances(){
+    public List getInstances() {
         return this.instances;
     }
 
@@ -179,10 +179,10 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
         String expression = XPathUtil.getInstanceParameter(path);
         if (expression != null) {
             // evaluate expression and lookup instance
-            if(expression.equals("") || expression.equals("''")){
+            if (expression.equals("") || expression.equals("''")) {
                 return getDefaultInstance().getId();
-            }else{
-                String value =  XPathCache.getInstance().evaluateAsString(getDefaultInstance().getRootContext(), "string(" + expression + ")");
+            } else {
+                String value = XPathCache.getInstance().evaluateAsString(getDefaultInstance().getRootContext(), "string(" + expression + ")");
                 String realId = null;
                 Instance instance = getInstance(value);
                 if (instance != null) {
@@ -191,13 +191,13 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
 
                 return realId;
             }
-                
+
         }
         Instance defaultInstance = getDefaultInstance();
-        if(defaultInstance== null) {
+        if (defaultInstance == null) {
             return "default";
         }
-        
+
         // get real id of default instance
         return getDefaultInstance().getId();
     }
@@ -240,7 +240,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
      * <li>All linked Schemas of this Model in order of their occurrence in the
      * <tt>xforms:schema</tt> attribute.</li> <li>All inline Schemas of this
      * Model in document order.</li> </ol>
-     * 
+     *
      * Note: use the schema's in a synchronized block on Model.class  (synchronized(Model.class ) { } )
      *
      * @return a list of Schemas associated with this Model.
@@ -284,7 +284,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
     public Instance addInstance(String id) throws XFormsException {
         // create instance node
         Element instanceNode = this.element.getOwnerDocument()
-                .createElementNS(NamespaceConstants.XFORMS_NS, (this.xformsPrefix!=null?this.xformsPrefix:NamespaceConstants.XFORMS_PREFIX) + ":" + INSTANCE);
+                .createElementNS(NamespaceConstants.XFORMS_NS, (this.xformsPrefix != null ? this.xformsPrefix : NamespaceConstants.XFORMS_PREFIX) + ":" + INSTANCE);
 
         // ensure id
         String realId = id;
@@ -354,7 +354,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
             getLogger().debug(this + " init");
         }
         this.refreshedItems = new ArrayList();
-        
+
         this.updateSequencer = new UpdateSequencer(this);
 
         initializeDefaultAction();
@@ -370,17 +370,17 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
         if (getLogger().isDebugEnabled()) {
             getLogger().debug(this + " dispose");
         }
-        this.instances=null;
-        this.modelBindings=null;
-        this.mainGraph=null;
-        this.validator=null;
+        this.instances = null;
+        this.modelBindings = null;
+        this.mainGraph = null;
+        this.validator = null;
         this.changed = null;
-        this.schemas=null;
-        this.updateHandler=null;
-        this.updateSequencer=null;
+        this.schemas = null;
+        this.updateHandler = null;
+        this.updateSequencer = null;
 
         disposeDefaultAction();
-        this.element.setUserData("",null,null);
+        this.element.setUserData("", null, null);
     }
 
     // lifecycle template methods
@@ -415,7 +415,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
      * function in question or wrong parameter are used.
      *
      * @throws XFormsComputeException in case one of the listed functions cannot
-     * be found or loaded
+     *                                be found or loaded
      */
     protected void initializeExtensionFunctions() throws XFormsComputeException {
         String functions = getXFormsAttribute(XFormsConstants.FUNCTIONS);
@@ -632,7 +632,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
                 return;
             }
 
-            Initializer.updateUIElements(this.container.getDocument().getDocumentElement(),this);
+            Initializer.updateUIElements(this.container.getDocument().getDocumentElement(), this);
 
             if (this.instances != null) {
                 Instance instance;
@@ -662,7 +662,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug(this + " #################### END REFRESH Model " + this.id + " ####################");
             }
-		}
+        }
         catch (Exception e) {
             this.updateSequencer.reset();
             this.container.handleEventException(e);
@@ -686,7 +686,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
      * @param event the event.
      */
     public void performDefault(Event event) {
-        if(LOGGER.isDebugEnabled()){
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("performing default action for: >>>>> " + event.getType().toUpperCase() + " <<<<<");
         }
         try {
@@ -788,9 +788,9 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
 
         // The default schema is shared between all models of all forms, and isn't thread safe, so we need synchronization here.
         // We cache the default model bcz. it takes quite some time to construct it.
-        synchronized(Model.class) {
-	        // set datatypes for validation
-	        getValidator().setDatatypes(getNamedDatatypes(this.schemas));
+        synchronized (Model.class) {
+            // set datatypes for validation
+            getValidator().setDatatypes(getNamedDatatypes(this.schemas));
         }
 
 
@@ -798,10 +798,10 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
         this.instances = new ArrayList();
 
         // todo: move to static method in initializer
-		List<Element> instanceElements = getAllInstanceElements();
+        List<Element> instanceElements = getAllInstanceElements();
         int count = instanceElements.size();
-        
-        if(count > 0){
+
+        if (count > 0) {
             for (int index = 0; index < count; index++) {
                 Element xformsInstance = instanceElements.get(index);
                 createInstanceObject(xformsInstance);
@@ -809,34 +809,34 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
 
         }
 
-		// todo: initialize p3p ?
-		// initialize binds and submissions (actions should be initialized already)
-		Initializer.initializeBindElements(this, this.element, new SaxonReferenceFinderImpl());
-		Initializer.initializeActionElements(this, this.element);
-		Initializer.initializeSubmissionElements(this, this.element);
+        // todo: initialize p3p ?
+        // initialize binds and submissions (actions should be initialized already)
+        Initializer.initializeBindElements(this, this.element, new SaxonReferenceFinderImpl());
+        Initializer.initializeActionElements(this, this.element);
+        Initializer.initializeSubmissionElements(this, this.element);
 
-		rebuild();
-		recalculate();
-		revalidate();
+        rebuild();
+        recalculate();
+        revalidate();
     }
 
-	/**
-	 * @return
-	 */
-	private List<Element> getAllInstanceElements() {
-		List<Element> result = new ArrayList<Element>();
-		for(Node it = getElement().getFirstChild(); it != null; it = it.getNextSibling()) {
-			if (it.getNodeType() != Node.ELEMENT_NODE) {
-				continue;
-			}
-			
-			Element el = (Element)it;
-			if(NamespaceConstants.XFORMS_NS.equals(it.getNamespaceURI()) && XFormsConstants.INSTANCE.equals(el.getLocalName())) {
-				result.add(el);
-			}
-		}
-		return result;
-	}
+    /**
+     * @return
+     */
+    private List<Element> getAllInstanceElements() {
+        List<Element> result = new ArrayList<Element>();
+        for (Node it = getElement().getFirstChild(); it != null; it = it.getNextSibling()) {
+            if (it.getNodeType() != Node.ELEMENT_NODE) {
+                continue;
+            }
+
+            Element el = (Element) it;
+            if (NamespaceConstants.XFORMS_NS.equals(it.getNamespaceURI()) && XFormsConstants.INSTANCE.equals(el.getLocalName())) {
+                result.add(el);
+            }
+        }
+        return result;
+    }
 
     private void createInstanceObject(Element xformsInstance) throws XFormsException {
         Instance instance = (Instance) this.container.getElementFactory().createXFormsElement(xformsInstance, this);
@@ -856,8 +856,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
             }
 
             // process only once for all models
-        }
-        else {
+        } else {
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug(this + " model construct done: starting ui initialization");
             }
@@ -887,8 +886,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
                 instance = (Instance) this.instances.get(index);
                 instance.storeInitialInstance();
 
-                try
-                {
+                try {
                     // init state keeping on model items
                     iterator = instance.iterateModelItems();
                     while (iterator.hasNext()) {
@@ -897,7 +895,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
                         modelItem.getRefreshView().reset();
                     }
                 }
-                catch(XFormsException e) {
+                catch (XFormsException e) {
                     LOGGER.error(e.getMessage(), e);
                 }
             }
@@ -935,18 +933,18 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
 
     private void loadDefaultSchema(List list) throws XFormsException {
         try {
-        	synchronized(Model.class) {
-	            if (this.defaultSchema == null) {
-	        		// todo: still a hack
-		            InputStream stream = Config.class.getResourceAsStream(Config.getInstance().getProperty("xforms.schema"));
-		            this.defaultSchema = loadSchema(stream);
-	            }
-	
-	            if (this.defaultSchema == null) {
-	                throw new NullPointerException("resource not found");
-	            }
-	            list.add(this.defaultSchema);
-        	}
+            synchronized (Model.class) {
+                if (this.defaultSchema == null) {
+                    // todo: still a hack
+                    InputStream stream = Config.class.getResourceAsStream(Config.getInstance().getProperty("xforms.schema"));
+                    this.defaultSchema = loadSchema(stream);
+                }
+
+                if (this.defaultSchema == null) {
+                    throw new NullPointerException("resource not found");
+                }
+                list.add(this.defaultSchema);
+            }
         }
         catch (Exception e) {
             throw new XFormsLinkException("could not load default schema", e, this.target, null);
@@ -969,8 +967,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
                         String id = schemaURI.substring(1);
                         Element element = this.container.getElementById(id);
                         schema = loadSchema(element);
-                    }
-                    else {
+                    } else {
                         // resolve URI
                         schema = loadSchema(schemaURI);
                     }
@@ -983,7 +980,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
             }
         }
         catch (Exception e) {
-            throw new XFormsLinkException("could not load linked schema", e , this.target, schemaURI);
+            throw new XFormsLinkException("could not load linked schema", e, this.target, schemaURI);
         }
     }
 
@@ -1064,7 +1061,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
     }
 
     public void addRefreshItem(RefreshView changed) {
-        if(LOGGER.isDebugEnabled()) {
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("add refreshView " + changed.toString());
         }
         this.refreshedItems.add(changed);
@@ -1098,7 +1095,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
     }
 
     private XSLoader getSchemaLoader() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
-         System.setProperty(DOMImplementationRegistry.PROPERTY, "org.apache.xerces.dom.DOMXSImplementationSourceImpl");
+        //  System.setProperty(DOMImplementationRegistry.PROPERTY, "org.apache.xerces.dom.DOMXSImplementationSourceImpl");
         DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
         XSImplementation implementation = (XSImplementation) registry.getDOMImplementation("XS-Loader");
         XSLoader loader = implementation.createXSLoader(null);
