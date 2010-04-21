@@ -62,14 +62,15 @@ declare function local:tasks() as node()*
     let $worker-p    := xs:string(request:get-parameter("worker", ""))
     let $worker-s    := tokenize($worker-p, '\s')
 
-    for $task in collection("/db/timetracking/task")//task
+    for $task in collection("/db/betterform/apps/timetracker/data/task")//task
     for $w in tokenize($task/who, "\s")
         (: let $date := $task/date :) 
         where local:equal-or-true($task/project, $projects) and 
               local:equal-or-true($w, $worker-s) and
               local:equal-or-true($task/billable, $billable-p)
         (: order by $task/date  :)
-        return $task
+        return
+            $task
 };
 
 (: simple wrapper around local:tasks since i was not to able to order it in one query :)
@@ -113,8 +114,7 @@ as element()
 
 
 (: produces a list of tasks filtered http parameters :)
-declare function local:project()
-as element()?
+declare function local:project() as element()?
 {
   let $tasks             := local:ordered-tasks()
   let $hoursInMinutes    := local:hours-in-minutes($tasks)
@@ -125,16 +125,110 @@ as element()?
   let $days              := $totalHours idiv 8
 
   return
-  <project days="{$days}"
-           totalTime="{$totalTime}"
-           totalMinutes="{$totalMinutes}"
-           remainingMinutes="{$remainingMinutes}">
-    { $tasks }
-    { local:billing($totalHours, $remainingMinutes) }
-  </project>
+        <div>
+        <h1>TimeTracker Results</h1>
+        <h2>Time Table</h2>
+        <table id="timeTable" >
+            <tr class="tableHeader">
+                <td>Days</td>
+                <td>Total Time</td>
+                <td>Total Minutes</td>
+                <td>Remaining Minutes</td>
+            </tr>
+            <tr>
+                <td>{$days}</td>
+                <td>{$totalTime}</td>
+                <td>{$totalMinutes}</td>
+                <td>{$remainingMinutes}</td>
+            </tr>
+        </table>
+        <br/>
+
+        <h2>Money Table</h2>
+        <table id="moneyTable" >
+            <tr class="tableHeader">
+                <td>Daily Rate</td>
+                <td>Hourly Rate</td>
+                <td>Netto Hours</td>
+                <td>Bill</td>
+            </tr>
+                {
+                     let $billingResult := local:billing($totalHours, $remainingMinutes)
+                    return
+                    <tr>
+                        <td>{data($billingResult/dailyRate)}</td>
+                        <td>{data($billingResult/hourlyRate)}</td>
+                        <td>{data($billingResult/nettoHours)}</td>
+                        <td>{data($billingResult/bill)}</td>
+                    </tr>
+                }
+
+        </table>
+
+        <br/>
+        <h2>Details Table</h2>
+        <table id="detailsTable" >
+            <tr class="tableHeader">
+               <td>Date</td>
+               <td>Project</td>
+               <td>Who</td>
+               <td>Duration</td>
+               <td>What</td>
+               <td>Note</td>
+               <td>Billable</td>
+               <td>Status</td>
+            </tr>
+
+            {
+                for $task in local:tasks()
+                return
+                    <tr>
+                        <td class="col-1">{data($task/date)}</td>
+                        <td class="col-2">{data($task/project)}</td>
+                        <td class="col-3">{data($task/who)}</td>
+                        <td class="col-4">{data($task/duration/@hours)}:{data($task/duration/@minutes)}</td>
+                        <td class="col-5">{data($task/what)}</td>
+                        <td class="col-6">{data($task/note)}</td>
+                        <td class="col-7">{data($task/billable)}</td>
+                        <td class="col-8">{data($task/status)}</td>
+                    </tr>
+            }
+          </table>
+    </div>
 };
 
 (: returns data root element for replacing instance in timetracker form :)
-<data>
+<html>
+<head>
+    <title>Search</title>
+    <style type="text/css">
+        <!--
+        #timeTable td,
+        #moneyTable td,
+        #detailsTable td {
+            border-bottom :1px solid black;
+        }
+
+
+        body * {
+            margin:10px;
+        }
+        td {
+            padding:5px;
+        }
+        .tableHeader {
+            font-size: 12pt;
+            font-weight: bold;
+            border-bottom: thin solid gray;
+        }
+        .col-6 {
+            width:250px;
+        }
+
+        -->
+    </style>
+</head>
+<body>
  { local:project() }
-</data>
+</body> 
+</html>

@@ -5,14 +5,15 @@
     <property name="exist.dir" value="/Applications/eXist"/>
     <property name="exist.bfExtension.dir" value="${exist.dir}/extensions/betterform/target/betterform"/>
     <property name="exist.webapp.dir" value="${exist.dir}/webapp"/>
+    <property name="tasks.dir" value="/Users/dev/Desktop/task"/>
     <property name="web.dir" value="${basedir}/../../web"/>
     <property name="core.dir" value="${basedir}/../../core"/>
     <property name="target.dir" value="${basedir}/target"/>
     <property name="webapp.dir" value="${basedir}/target/${web.app.name}"/>
 
     <path id="generator.libs" description="classpath for compiling core classes">
-        <pathelement location="${webapp.dir}/WEB-INF/lib/saxon-9.0.jar"/>
-        <pathelement location="${webapp.dir}/WEB-INF/lib/saxon-dom-9.0.jar"/>
+        <pathelement location="${core.dir}/src/main/lib/saxon-9.0.jar"/>
+        <pathelement location="${core.dir}/src/main/lib/saxon-dom-9.0.jar"/>
     </path>
 
     <target name="clean">
@@ -91,11 +92,30 @@
         <copy todir="${exist.bfExtension.dir}/WEB-INF/classes">
             <fileset dir="${webapp.dir}/WEB-INF/classes"/>
         </copy>
+    </target>
 
+    <!--
+        target to transform existing tasks to the new format
+        WARNING: before execution configure the tasks.dir property to point to your
+                existing tasks
+    -->
+    <target  name="transformExistingTasks" >
+		<mkdir  dir="${tasks.dir}/../taskEmpty"/>
+		<mkdir  dir="${tasks.dir}/../taskSorted"/>
 
-
+        <xslt basedir="${tasks.dir}"
+              destdir="${tasks.dir}/../taskEmpty"
+              style="${basedir}/TransformTasks.xsl"
+              force="true"
+              includes="*.xml"
+              extension=".xml"
+              filenameparameter="filename"
+              filedirparameter="filedir">
+            <classpath refid="generator.libs"/>
+            <param name="resultDir" expression="${tasks.dir}/../taskSorted"/>
+        </xslt>
+        <delete dir="${tasks.dir}/../taskEmpty"/>
 
     </target>
-    
 
 </project>
