@@ -155,6 +155,9 @@
                         </xsl:attribute>
                     </xsl:when>
                     <xsl:otherwise>
+                        <xsl:attribute name="type">
+                            <xsl:value-of select="@type"/>
+                        </xsl:attribute>
                         <xsl:apply-templates mode="inline"/>
                     </xsl:otherwise>
                 </xsl:choose>
