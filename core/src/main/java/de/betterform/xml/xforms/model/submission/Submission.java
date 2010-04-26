@@ -35,7 +35,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.events.Event;
 
+import javax.xml.transform.TransformerException;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.*;
 
 
@@ -69,6 +72,7 @@ public class Submission extends BindingElement implements DefaultAction {
     protected ArrayList<Header> submissionHeaders = new ArrayList<Header>();
     private String targetModelId;
     private String serialization;
+    private static final String EMBEDNODE = "embedElement";
 
     /**
      * Creates a new Submission object.
@@ -333,23 +337,36 @@ public class Submission extends BindingElement implements DefaultAction {
 
         // get optional version attribute
         this.version = getXFormsAttribute(VERSION_ATTRIBUTE);
+        if(this.version == null){
+            this.version = "1.0"; // setting default
+        }
 
         // get optional indent attribute
         String indentAttribute = getXFormsAttribute(INDENT_ATTRIBUTE);
         if (indentAttribute != null) {
             this.indent = Boolean.valueOf(indentAttribute);
+        } else {
+            this.indent = false; // setting default
         }
 
         // get optional mediatype attribute
         this.mediatype = getXFormsAttribute(MEDIATYPE_ATTRIBUTE);
+        if(this.mediatype == null){
+            this.mediatype = "application/xml"; //setting default
+        }
 
         // get optional encoding attribute
         this.encoding = getXFormsAttribute(ENCODING_ATTRIBUTE);
+        if(this.encoding == null){
+            this.encoding = "UTF-8"; // setting default
+        }
 
         // get optional omit-xml-declaration attribute
         String omitxmldeclarationAttribute = getXFormsAttribute(OMIT_XML_DECLARATION_ATTRIBUTE);
         if (omitxmldeclarationAttribute != null) {
             this.omitxmldeclaration = "true".equals(omitxmldeclarationAttribute) || "1".equals(omitxmldeclarationAttribute);
+        }else{
+            this.omitxmldeclaration = false;
         }
 
         // get optional standalone attribute
@@ -442,16 +459,25 @@ public class Submission extends BindingElement implements DefaultAction {
             }
         }
 
+        // ##### validation and serailization must be handled together #####
+        this.validate = true; //default
+
+        //get serialization attribute. If serialization is 'none' validate defaults to false
+        this.serialization = getXFormsAttribute(SERIALIZATION_ATTRIBUTE);
+        if(this.serialization != null && this.serialization.equalsIgnoreCase("none")){
+            this.validate = false; // setting default when not serialized that might get overwritten by evaluation of validateAttribute below
+        }
+
         // get optional validate attribute
         String validateAttribute = getXFormsAttribute(VALIDATE_ATTRIBUTE);
-        this.validate = validateAttribute != null ? Boolean.valueOf(validateAttribute) : Boolean.TRUE;
+        if(validateAttribute != null){
+            this.validate = Boolean.valueOf(validateAttribute);
+        }
 
         // get optional relevant attribute
         String relevantAttribute = getXFormsAttribute(RELEVANT_ATTRIBUTE);
         this.relevant = relevantAttribute != null ? Boolean.valueOf(relevantAttribute) : Boolean.TRUE;
 
-        //get serialization attribute
-        this.serialization = getXFormsAttribute(SERIALIZATION_ATTRIBUTE);
     }
 
     /**
@@ -618,11 +644,15 @@ public class Submission extends BindingElement implements DefaultAction {
             submitReplaceNone(response);
             return;
         }
+        if (this.replace.equals("embedHTML")){
+            submitReplaceEmbedHTML(response);
+            return;
+        }
 
         throw new XFormsSubmitError("unknown replace mode " + this.replace, this.getTarget(), XFormsSubmitError.constructInfoObject(this.element, this.container, locationPath, XFormsConstants.VALIDATION_ERROR, getResourceURI()));
     }
 
-	/**
+    /**
 	 * @return
 	 * @throws XFormsException
 	 */
@@ -806,22 +836,7 @@ public class Submission extends BindingElement implements DefaultAction {
             getLogger().debug(this + " submit: replacing instance");
         }
 
-        Document responseInstance;
-        try {
-
-            if(response.containsKey(XFormsProcessor.SUBMISSION_RESPONSE_DOCUMENT)){
-                responseInstance = (Document) response.get(XFormsProcessor.SUBMISSION_RESPONSE_DOCUMENT);
-            }else{
-                InputStream responseStream = (InputStream) response.get(XFormsProcessor.SUBMISSION_RESPONSE_STREAM);
-                responseInstance = DOMUtil.parseInputStream(responseStream, true, false);
-                responseStream.close();
-            }
-        }
-        catch (Exception e) {
-            // todo: check for response media type (needs submission response
-            // refactoring) in order to dispatch xforms-link-exception
-            throw new XFormsSubmitError("instance parsing failed", e, this.getTarget(), XFormsSubmitError.constructInfoObject(this.element, this.container, locationPath, XFormsConstants.PARSE_ERROR, getResourceURI(), 200d, null, "", ""));
-        }
+        Document responseInstance = getResponseAsDocument(response);
 
         // replace instance
         if(this.targetModelId != null) {
@@ -850,6 +865,72 @@ public class Submission extends BindingElement implements DefaultAction {
         // dispatch xforms-submit-done
         this.container.dispatch(this.target, XFormsEventNames.SUBMIT_DONE, constructEventInfo(response));
     }
+
+    private Document getResponseAsDocument(Map response) throws XFormsException {
+        Document responseInstance;
+        try {
+
+            if(response.containsKey(XFormsProcessor.SUBMISSION_RESPONSE_DOCUMENT)){
+                responseInstance = (Document) response.get(XFormsProcessor.SUBMISSION_RESPONSE_DOCUMENT);
+            }else{
+                InputStream responseStream = (InputStream) response.get(XFormsProcessor.SUBMISSION_RESPONSE_STREAM);
+                responseInstance = DOMUtil.parseInputStream(responseStream, true, false);
+                responseStream.close();
+            }
+        }
+        catch (Exception e) {
+            // todo: check for response media type (needs submission response
+            // refactoring) in order to dispatch xforms-link-exception
+            throw new XFormsSubmitError("instance parsing failed", e, this.getTarget(), XFormsSubmitError.constructInfoObject(this.element, this.container, locationPath, XFormsConstants.PARSE_ERROR, getResourceURI(), 200d, null, "", ""));
+        }
+        return responseInstance;
+    }
+
+    private void submitReplaceEmbedHTML(Map response) throws XFormsException{
+        // check for targetid
+        String targetid = getXFormsAttribute(TARGETID_ATTRIBUTE);
+        String resource = getResource();
+        Map eventInfo = new HashMap();
+        String error = null;
+
+        if (targetid == null) {
+            error = "targetId";
+        }else if(resource == null){
+            error = "resource";
+        }else if(resource.indexOf("#") == -1) {
+            error = "fragment id";    
+        }
+        if(error != null && error.length() > 0) {
+            eventInfo.put(XFormsConstants.ERROR_TYPE, "no " +  error + "defined for submission resource");
+            this.container.dispatch(this.target, XFormsEventNames.SUBMIT_ERROR, eventInfo);
+            return;
+        }
+
+        // detected a fragment so extract that from our result Document
+        String fragmentid = resource.substring(resource.indexOf("#")+1);
+        Document result = getResponseAsDocument(response);
+
+
+        Node  embedElement = DOMUtil.getFragment(result,fragmentid);
+
+        // Map eventInfo = constructEventInfo(response);
+
+
+        OutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            DOMUtil.prettyPrintDOM(embedElement,outputStream);
+        } catch (TransformerException e) {
+            throw new XFormsException(e);
+        }
+
+        eventInfo.put(EMBEDNODE,outputStream.toString());
+        eventInfo.put("embedTarget",targetid);
+
+        // dispatch xforms-submit-done
+        this.container.dispatch(this.target, XFormsEventNames.SUBMIT_DONE, eventInfo);
+
+    }
+
     
     private void updateInstanceAndModel(Model referedModel, Document responseInstance) throws XFormsException {
         if (this.targetExpr != null) {

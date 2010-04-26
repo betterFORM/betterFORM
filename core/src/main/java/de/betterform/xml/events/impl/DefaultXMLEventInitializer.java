@@ -69,7 +69,7 @@ public class DefaultXMLEventInitializer implements XMLEventInitializer {
         INITIALIZATION_RULES.put(XFormsEventNames.IN_RANGE, new boolean[]{true, false, false});
         INITIALIZATION_RULES.put(XFormsEventNames.OUT_OF_RANGE, new boolean[]{true, false, false});
         INITIALIZATION_RULES.put(XFormsEventNames.OUTPUT_ERROR, new boolean[]{true, false, false});
-        INITIALIZATION_RULES.put(XFormsEventNames.SUBMIT_DONE, new boolean[]{true, false, false});
+//        INITIALIZATION_RULES.put(XFormsEventNames.SUBMIT_DONE, new boolean[]{true, false, true});
         INITIALIZATION_RULES.put(XFormsEventNames.SUBMIT_ERROR, new boolean[]{true, false, true});
 
         // Error Indications

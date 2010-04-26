@@ -320,8 +320,8 @@ dojo.declare("betterform.FluxProcessor",
                     case "xforms-model-construct"   :
                     case "xforms-model-construct-done":break;
                     case "xforms-ready"             : this.isReady=true;dojo.publish("/xf/ready",[]);break; //not perfect - should be on XFormsModelElement
-                    case "xforms-submit"            :
-                    case "xforms-submit-done"       : break;
+                    case "xforms-submit"            : break;
+                    case "xforms-submit-done"       : fluxProcessor._handleSubmitDone(xmlEvent);break;
 
                     /* Unknow XMLEvent: */
                     default                         : console.error("Event " + xmlEvent.type + " unknown [Event:",xmlEvent, "]"); break;
@@ -419,7 +419,7 @@ dojo.declare("betterform.FluxProcessor",
             dojo.place(nodesToEmbed, htmlEntryPoint, "before");
             dojo.fx.wipeIn({node: nodesToEmbed,duration: 500}).play();
 			// dojo.style(nodesToEmbed,"display","block");
-            
+
             //copy classes from mountpoint
             var classes = dojo.attr(htmlEntryPoint,"class");
             dojo.attr(nodesToEmbed,"class",classes);
@@ -437,6 +437,34 @@ dojo.declare("betterform.FluxProcessor",
         }
     },
 
+    _handleSubmitDone:function(xmlEvent){
+        if(xmlEvent.contextInfo.embedTarget == undefined) {
+            return;
+        }
+        var target  = xmlEvent.contextInfo.embedTarget;
+        var content = xmlEvent.contextInfo.embedElement;
+
+
+        //determine the DOM Element in the client DOM which is the target for embedding
+        var targetid ;
+        if(dojo.byId(target) != undefined){
+            targetid=target;
+        }else{
+            // if we reach here the target is no idref but the value of a name Attrbute that needs resolving
+            // to an id.
+            var tmp = dojo.query("*[name='" + target + "']")[0];
+            targetid = tmp.id;
+            console.debug("target id for embedding is: ",targetid);
+        }
+
+       this._unloadDOM(targetid);
+
+        //get original Element in master DOM
+        var htmlEntryPoint = dojo.byId(targetid);
+        htmlEntryPoint.innerHTML = content;
+        dojo.require("dojo.parser");
+        dojo.parser.parse(htmlEntryPoint);
+    },
 
     _unloadDOM:function(target) {
         var htmlEntryPoint = dojo.byId(target);

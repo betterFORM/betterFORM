@@ -5,6 +5,8 @@
 
 package de.betterform.xml.dom;
 
+import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import org.w3c.dom.*;
 import org.w3c.dom.traversal.NodeFilter;
 import org.xml.sax.InputSource;
@@ -31,6 +33,14 @@ import java.util.List;
  * @version $Id: DOMUtil.java 3476 2008-08-18 21:53:47Z joern $
  */
 public class DOMUtil {
+
+
+    public static Node getFragment(Document in, String fragmentId) throws XFormsException {
+
+        Node node = XPathUtil.evaluateAsSingleNode(in,"//*[@id='" + fragmentId + "']");
+        // DOMUtil.prettyPrintDOM(node);
+        return node;
+    }
 
     /**
      * __UNDOCUMENTED__
