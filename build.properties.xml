@@ -172,8 +172,6 @@
         <app>
             <name>zaphod</name>
             <version>1.0</version>
-            <!-- ### installerType must be either 'standard' or 'web'. Default value is 'web' ### -->
-            <installerType>web</installerType>
         </app>
     </zaphod>
     <xapp>
@@ -189,6 +187,8 @@
     </webtest>
     -->
     <installer>
+        <!-- ### installerType must be either 'standard' or 'web'. Default value is 'web' ### -->
+        <installerType>web</installerType>
         <exist>
             <jar>/home/zwobit/Downloads/eXist-setup-1.4.0-rev10440.jar</jar>
         </exist>
