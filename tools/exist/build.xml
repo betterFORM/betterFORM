@@ -20,7 +20,7 @@
         <delete dir="${target.dir}" failonerror="false"/>
     </target>
 
-    <target name="package" depends="exist-resources"
+    <target name="package" depends="create-exist-extension"
             description="creates a zip archive to be dropped into eXist">
 
         <ant antfile="${web.dir}/build.xml" target="clean" dir="${web.dir}" inheritall="false"/>
@@ -73,7 +73,7 @@
 
     </target>
 
-    <target name="exist-resources">
+    <target name="create-exist-extension">
         <mkdir dir="${target.dir}/exist"/> 
       <zip basedir="${basedir}/betterform" zipfile="${target.dir}/exist/betterform.zip"/>
     </target>
