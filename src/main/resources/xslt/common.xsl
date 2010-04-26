@@ -71,31 +71,31 @@
     <!-- copy unmatched mixed markup, comments, whitespace, and text -->
     <!-- ### copy elements from the xhtml2 namespace to html (without any namespace) by re-creating the     ### -->
     <!-- ### elements. Other Elements are just copied with their original namespaces.                       ### -->
-    <xsl:template match="node()|@*|text()" name="handle-foreign-elements">
+    <xsl:template match="*|@*|text()|comment()" name="handle-foreign-elements">
         <xsl:choose>
             <xsl:when test="namespace-uri(.)='http://www.w3.org/1999/xhtml'">
                 <xsl:element name="{local-name(.)}" namespace="">
-                    <xsl:apply-templates select="node()|@*|text()"/>
+                    <xsl:apply-templates select="*|@*|text()|comment()"/>
                 </xsl:element>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:copy>
-                    <xsl:apply-templates select="node()|@*|text()"/>
+                    <xsl:apply-templates select="*|@*|text()|comment()"/>
                 </xsl:copy>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template match="node()|@*|text()" mode="inline">
+    <xsl:template match="*|@*|text()|comment()" mode="inline">
         <xsl:choose>
             <xsl:when test="namespace-uri(.)='http://www.w3.org/1999/xhtml'">
                 <xsl:element name="{local-name(.)}" namespace="">
-                    <xsl:apply-templates select="node()|@*|text()" mode="inline"/>
+                    <xsl:apply-templates select="*|@*|text()|comment()" mode="inline"/>
                 </xsl:element>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:copy>
-                    <xsl:apply-templates select="node()|@*|text()" mode="inline"/>
+                    <xsl:apply-templates select="*|@*|text()|comment()" mode="inline"/>
                 </xsl:copy>
             </xsl:otherwise>
         </xsl:choose>
@@ -145,22 +145,15 @@
         <!-- copy inline javascript -->
         <xsl:for-each select="xhtml:script">
             <script>
-                <xsl:choose>
-                    <xsl:when test="@src">
-                        <xsl:attribute name="type">
-                            <xsl:value-of select="@type"/>
-                        </xsl:attribute>
-                        <xsl:attribute name="src">
-                            <xsl:value-of select="@src"/>
-                        </xsl:attribute>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:attribute name="type">
-                            <xsl:value-of select="@type"/>
-                        </xsl:attribute>
-                        <xsl:apply-templates mode="inline"/>
-                    </xsl:otherwise>
-                </xsl:choose>
+                    <xsl:attribute name="type">
+                        <xsl:value-of select="@type"/>
+                    </xsl:attribute>
+                    <xsl:if test="@src">
+                    <xsl:attribute name="src">
+                        <xsl:value-of select="@src"/>
+                    </xsl:attribute>
+                    </xsl:if>   
+                    <xsl:apply-templates mode="inline"/>
             </script>
                 <xsl:text>
 </xsl:text>
