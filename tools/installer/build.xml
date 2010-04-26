@@ -1,4 +1,4 @@
-<project name="Installer" default="betterFormWarInstaller" basedir=".">
+<project name="Installer" default="create-betterFormInstaller" basedir=".">
 
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
@@ -58,7 +58,7 @@
 
     </target>
 
-    <target name="betterFormWarInstaller"
+    <target name="create-betterFormInstaller"
             description="Builds a betterForm Installer for deploying existing webcontainer">
 
 
@@ -78,7 +78,7 @@
 -->
         <izpack input="${basedir}/installer.xml"
                 output="${basedir}/target/betterform-install.jar"
-                installerType="${zaphod.app.installerType}"
+                installerType="${installer.installerType}"
                 basedir="${basedir}/target"/>
 
         <chmod file="${basedir}/target/betterform-install.jar" perm="770"/>
