@@ -153,7 +153,7 @@
         <!-- HTTPSubmissionHandlerXI evaluates any bf:include within the data to load -->
 <!--
         <submission-handler scheme="http" class="de.betterform.connector.http.HTTPSubmissionHandlerXI"/>
-        <submission-handler scheme="https" class="de.betterform.connector.http.HTTPSubmissionHandler"/>
+        <submission-handler scheme="https" class="de.betterform.connector.http.HTTPSubmissionHandlerXI"/>
 -->
         <submission-handler scheme="xmlrpc" class="de.betterform.connector.xmlrpc.XMLRPCSubmissionHandler"/>
 <!--
