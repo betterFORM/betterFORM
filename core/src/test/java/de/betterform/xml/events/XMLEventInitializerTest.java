@@ -522,7 +522,7 @@ public class XMLEventInitializerTest extends TestCase {
         assertEquals(XFormsEventNames.SUBMIT_DONE, this.xmlEvent.getType());
         assertEquals(true, this.xmlEvent.getBubbles());
         assertEquals(false, this.xmlEvent.getCancelable());
-        assertEquals(null, this.xmlEvent.getContextInfo(XMLEvent.DIRTY_DEFAULT_INFO));
+        assertEquals("context", this.xmlEvent.getContextInfo(XMLEvent.DIRTY_DEFAULT_INFO));
     }
 
     /**

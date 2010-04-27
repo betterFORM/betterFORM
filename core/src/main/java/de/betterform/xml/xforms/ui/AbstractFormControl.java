@@ -212,6 +212,7 @@ public abstract class AbstractFormControl extends BindingElement implements Defa
             return;
         }
         if (event.getType().equals(XFormsEventNames.FOCUS)) {
+/*
             //giving focus if we're relevant
             try{
                 if(UIElementStateUtil.getModelItem(this) != null && UIElementStateUtil.getModelItem(this).isRelevant()){
@@ -225,6 +226,7 @@ public abstract class AbstractFormControl extends BindingElement implements Defa
             }catch (XFormsException e){
                 getLogger().warn("Exeption occured during dispatch of FOCUS_IN event");
             }
+*/
             return;
         }
         if (event.getType().equals(XFormsEventNames.HELP)) {
