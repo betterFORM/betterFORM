@@ -82,12 +82,22 @@
         <delete dir="${exist.rootdir}/webapp/resources/styles" failonerror="false"/>
         <delete dir="${exist.rootdir}/webapp/resources/xsd" failonerror="false"/>
         <delete dir="${exist.rootdir}/webapp/resources/xslt" failonerror="false"/>
-
-
         <move file="${basedir}/uninstall/web.xml" tofile="${exist.web.xml}"/>
         <move file="${basedir}/uninstall/ehcache-1.1.jar" tofile="${exist.rootdir}/lib/cocoon/ehcache-1.1.jar"/>
 
-        <!--<xdb:remove uri="xmldb:exist://localhost:8080/exist/xmlrpc/db" collection="xforms" xmlns:xdb="http://exist-db.org/ant"/>-->
+        <!--delete start.config from exist dir-->
+        <delete file="${exist.rootdir}/start.config"/>
+
+        <!--delete files from WEB-INF-->
+        <delete file="${exist.rootdir}/webapp/WEB-INF/betterform-config.xml"/>
+        <delete file="${exist.rootdir}/webapp/WEB-INF/dwr.xml"/>
+        <delete file="${exist.rootdir}/webapp/WEB-INF/dwr20.dtd"/>
+        <delete file="${exist.rootdir}/webapp/WEB-INF/log4j.dtd"/>
+        <delete file="${exist.rootdir}/webapp/WEB-INF/log4j.xml"/>
+        <delete file="${exist.rootdir}/webapp/WEB-INF/web.xml.original"/>
+
+        <!--delete sample file-->
+        <delete file="${exist.rootdir}/webapp/xquery/xfGuess.xql"/>
     </target>
 
 
