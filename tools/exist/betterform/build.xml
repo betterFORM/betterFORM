@@ -39,10 +39,10 @@
 
     <target name="install" description="install betterFORM into an existing eXist XML Db installation">
         <echo message="************************************************************************************"/>
-        <echo message="download betterFORM distribution"/>
+        <echo message="download and unzip betterFORM distribution"/>
         <echo message="************************************************************************************"/>
 
-        <antcall target="download_betterFORM_release"/>
+        <antcall target="unzip_betterFORM_release"/>
 
         <echo message="************************************************************************************"/>
         <echo message="add betterFORM config parameters to eXist to ${exist.web.xml}"/>
@@ -90,10 +90,16 @@
         <!--<xdb:remove uri="xmldb:exist://localhost:8080/exist/xmlrpc/db" collection="xforms" xmlns:xdb="http://exist-db.org/ant"/>-->
     </target>
 
-    <target name="download_betterFORM_release">
+
+    <target name="unzip_betterFORM_release" unless="betterFormAvailable">
+        <available property="betterFormAvailable" file="${bfSrc.dir}.zip"/>
+        <antcall  target="download_betterFORM_release"/>
+        <unzip src="${bfSrc.dir}.zip" dest="${bfSrc.dir}"/>
+    </target>
+
+    <target name="download_betterFORM_release" unless="betterFormAvailable">
         <mkdir dir="${target.dir}"/>
         <get usetimestamp="true" ignoreerrors="true"  src="${bf.download.url}"  dest="${bfSrc.dir}.zip"/>
-        <unzip src="${bfSrc.dir}.zip" dest="${bfSrc.dir}"/>
     </target>
 
     <target name="patchWebXml">
