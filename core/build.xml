@@ -80,8 +80,8 @@
 
         <echo>SVN Revision ${Revision}</echo>
 -->
-        <filter token="app.name" value="${core.app.name}"/>
-        <filter token="app.version" value="${core.app.version}"/>
+        <filter token="app.name" value="${web.app.name}"/>
+        <filter token="app.version" value="${web.app.version}"/>
         <filter token="app.build" value="${DSTAMP}/${TSTAMP}"/>
         <!-- <filter token="revision.number" value="${Revision}"/> -->
 

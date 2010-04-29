@@ -2,9 +2,12 @@
 
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
-    <property name="exist.dir" value="/Applications/eXist"/>
+    <!-- >>>>> These properties only apply to the targets that deal with deployment into *existing* eXist installation-->
+    <property name="exist.dir" value="/Users/dev/Desktop/temp/eXist"/>
     <property name="exist.bfExtension.dir" value="${exist.dir}/extensions/betterform/target/betterform"/>
     <property name="exist.webapp.dir" value="${exist.dir}/webapp"/>
+    <!-- <<<<< These properties only apply to the targets that deal with deployment into *existing* eXist installation-->
+
     <property name="tasks.dir" value="/Users/dev/Desktop/task"/>
     <property name="web.dir" value="${basedir}/../../web"/>
     <property name="core.dir" value="${basedir}/../../core"/>
@@ -20,18 +23,10 @@
         <delete dir="${target.dir}" failonerror="false"/>
     </target>
 
-    <target name="package" depends="create-exist-extension"
-            description="creates a zip archive to be dropped into eXist">
-
-        <ant antfile="${web.dir}/build.xml" target="clean" dir="${web.dir}" inheritall="false"/>
-
-        <ant antfile="${web.dir}/build.xml" target="build-dojo" dir="${web.dir}" inheritall="false">
-                <property name="target.dir" value="${target.dir}"/>
-                <property name="webapp.dir" value="${webapp.dir}"/>
-        </ant>
-
-
+    <target name="cleanup" description="cleans target-dir from unneeded clutter">
         <move file="${webapp.dir}/WEB-INF/betterform-config.xml" todir="${target.dir}"/>
+        <copy file="${webapp.dir}/WEB-INF/classes/META-INF/version.info" todir="${webapp.dir}"/>
+        
         <xslt in="${target.dir}/betterform-config.xml"
               out="${webapp.dir}/WEB-INF/betterform-config.xml"
               force="true"
@@ -39,8 +34,9 @@
             <classpath refid="generator.libs"/>
         </xslt>
 
-
         <delete includeemptydirs="true" failonerror="false">
+            <!--delete default betterform-config.xml from target-->
+            <fileset file="${target.dir}/betterform-config.xml"/>
             <!-- delete forms not relevant for the betterFORM release -->
             <fileset dir="${webapp.dir}/forms/incubator"/>
             <fileset dir="${webapp.dir}/forms/test"/>
@@ -66,31 +62,62 @@
                                                                activation-* ,
                                                                mail-*" />
         </delete>
-
-        <zip basedir="${webapp.dir}" zipfile="${webapp.dir}-3.0.0.zip"/>
-
-
-
     </target>
 
-    <target name="create-exist-extension">
-        <mkdir dir="${target.dir}/exist"/> 
-      <zip basedir="${basedir}/betterform" zipfile="${target.dir}/exist/betterform.zip"/>
+    <target name="package" depends="create-exist-extension" description="creates a zip archive used by the extension-installer ant-file">
+        <ant antfile="${web.dir}/build.xml" target="clean" dir="${web.dir}" inheritall="false"/>
+        <ant antfile="${web.dir}/build.xml" target="build-dojo" dir="${web.dir}" inheritall="false">
+                <property name="target.dir" value="${target.dir}"/>
+                <property name="webapp.dir" value="${webapp.dir}"/>
+        </ant>
+        <antcall target="cleanup"/>
+        <zip basedir="${webapp.dir}" zipfile="${webapp.dir}.zip"/>
     </target>
 
-    <target name="deploy-into-installed-eXist" depends="package" description="copies betterFORM 'forms', 'resources' and 'Java classes' to the configured eXist xml db">
+    <target name="create-exist-extension" description="creates a zip archive of the eXist-extension installer">
+        <mkdir dir="${target.dir}/exist-extension-installer"/>
+      <zip basedir="${basedir}/betterform" zipfile="${target.dir}/exist-extension-installer/betterform.zip"/>
+    </target>
 
-        <copy todir="${exist.webapp.dir}/forms">
-            <fileset dir="${webapp.dir}/forms"/>
+    <target name="deploy-into-installed-eXist" description="copies betterFORM 'forms', 'resources' and 'Java classes' to the configured eXist xml db">
+         <available property="extensionInstalled" file="${exist.bfExtension.dir}/target/betterform/version.info"/>
+    </target>
+
+    <target name="install-into-eXist" unless="extensionInstalled">
+        <copy file="${web.dir}/src/main/resources/META-INF/version.info" todir="${exist.bfExtension.dir}"/>
+
+        <ant antfile="${web.dir}/build.xml" target="compile" dir="${web.dir}" inheritall="false">
+                <property name="target.dir" value="${target.dir}"/>
+                <property name="webapp.dir" value="${webapp.dir}"/>
+        </ant>
+
+        <copy todir="${exist.webapp.dir}/forms" overwrite="true">
+            <fileset dir="../../src/main/xforms"/>
         </copy>
 
         <copy todir="${exist.webapp.dir}/resources">
-            <fileset dir="${webapp.dir}/resources"/>
+            <fileset dir="../../src/main/resources"/>
         </copy>
 
-        <delete  dir="${exist.bfExtension.dir}/WEB-INF/classes"/>
-        <copy todir="${exist.bfExtension.dir}/WEB-INF/classes">
-            <fileset dir="${webapp.dir}/WEB-INF/classes"/>
+        <copy description="copy images seperately to avoid filtering"
+              todir="${webapp.dir}/resources"
+              overwrite="true"
+              filtering="false">
+            <fileset dir="../../src/main/resources">
+                <include name="**/*.gif"/>
+                <include name="**/*.png"/>
+                <include name="**/*.jpg"/>
+            </fileset>
+        </copy>
+
+        <!-- copy core classes -->
+        <copy todir="${exist.bfExtension.dir}/WEB-INF/classes" overwrite="true">
+            <fileset dir="${core.dir}/target/classes"/>
+        </copy>
+
+        <!-- copy web classes -->
+        <copy todir="${exist.bfExtension.dir}/WEB-INF/classes" overwrite="true">
+            <fileset dir="${web.dir}/target/classes"/>
         </copy>
     </target>
 

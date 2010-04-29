@@ -98,6 +98,7 @@
 
         <!--delete sample file-->
         <delete file="${exist.rootdir}/webapp/xquery/xfGuess.xql"/>
+        <echo message="!!!!! To fully remove betterFORM from eXist you have to delete the 'betterform' directory and 'betterform.zip' from EXIST_HOME/extensions !!!!!"/>
     </target>
 
 

@@ -136,10 +136,23 @@ tr.xfRepeatItem  td {
 	text-align: right;
 }
 
-#task-table span.xfControl {
+#task-table{
+	height:380px;
+}
+#task-table span .xfControl {
 	display: block;
 	/*margin-left: 5px;*/
 }
+#task-table .xfValue{
+	width:100%;
+}
+#task-table .caHorizontalColumn{
+	width:100%;
+}
+#task-table .caHorizontalColumn  .xfValue{
+	width:50%;
+}
+
 .xsdDate .xfValue {
 	width:80px;
 }

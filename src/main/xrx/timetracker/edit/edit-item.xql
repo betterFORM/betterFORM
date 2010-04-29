@@ -28,9 +28,16 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
         xmlns:ev="http://www.w3.org/2001/xml-events">
    <head>
       <title>Edit Task</title>
+       <link rel="stylesheet" type="text/css" href="/exist/resources/styles/bf.css"/>
+       <link rel="stylesheet" type="text/css" href="/exist/resources/styles/demo.css"/>
+       <link rel="stylesheet" type="text/css"
+             href="/exist/rest/db/betterform/apps/timetracker/resources/timetracker.css"/>
+       <link rel="stylesheet" type="text/css"
+             href="/exist/rest/db/betterform/apps/timetracker/resources/InlineRoundBordersAlert.css"/>
+       
     </head>
-    <body>
-    	<div id="xforms" style="height:360px;">
+    <body class="tundra InlineRoundBordersAlert">
+    	<div id="xforms" style="height:400px;">
         <div style="display:none">
             <xf:model>
                 <xf:instance id="i-task" src="/exist/rest/db/betterform/apps/timetracker/data/task.xml"/>
@@ -151,7 +158,7 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                     </xf:itemset>
                 </xf:select1>
 
-                <xf:group appearance="bf:cellWrapper">
+                <xf:group appearance="bf:horizontalColumn">
                     <xf:label>Hours/Minutes</xf:label>
                     <xf:alert>Hours are missing</xf:alert>
                     <xf:hint>how many hours did it take?</xf:hint>
