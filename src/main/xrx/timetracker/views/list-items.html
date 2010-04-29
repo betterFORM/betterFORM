@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "../resources/xsd/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <title>Dojo DnD: simple drag handles</title>
+        <style type="text/css">
+            @import "http://ajax.googleapis.com/ajax/libs/dojo/1.4/dojo/resources/dojo.css";
+
+        </style>
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.4/dojo/dojo.xd.js"
+                djConfig="parseOnLoad: true"></script>
+        <script type="text/javascript">
+                dojo.require("dojox.grid.DataGrid");
+                dojo.require("dojox.data.XmlStore");
+
+                var layoutBooks = [
+                    [{
+                    field: "date",
+                    name: "Date",
+                    width: 10,
+                    formatter: function(item) {
+                        return item.toString();
+                    }
+                },
+                {
+                    field: "project",
+                    name: "Project",
+                    width: 10,
+                    formatter: function(item) {
+                        return item.toString();
+                    }
+                }
+                ]];
+
+//            dojo.addOnLoad(init);
+
+        </script>
+    </head>
+    <body>
+        <div id="pagecontent">
+            <div dojoType="dojox.data.XmlStore"
+                 url="/exist/rest/db/betterform/apps/timetracker/data/task?_query=//task"
+                 jsId="taskStore" label="title">
+            </div>
+            <div id="grid" style="width: 400px; height: 300px;" dojoType="dojox.grid.DataGrid"
+                 store="taskStore" structure="layoutBooks" query="{}" rowsPerPage="40">
+            </div>
+        </div>
+    </body>
+</html> 
