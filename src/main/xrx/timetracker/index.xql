@@ -58,6 +58,82 @@ xquery version "1.0";
             dojo.require("betterform.ui.container.RepeatItem");
             dojo.require("betterform.ui.container.TabSwitch");
             dojo.require("betterform.ui.container.Group");
+            dojo.require("dojox.grid.DataGrid");
+            dojo.require("dojox.data.XmlStore");
+
+            var layoutTasks = [
+					[{
+						field: "date",
+						name: "Date",
+						width: 10,
+						formatter: function(item) {
+							return item.toString();
+						}
+					},
+					{
+						field: "project",
+						name: "Project",
+						width: 10,
+						formatter: function(item) {
+							return item.toString();
+						}
+					},
+					{
+						field: "hours",
+						name: "Hours",
+						width: 10,
+						formatter: function(item) {
+							return item.toString();
+						}
+					},
+					{
+						field: "minutes",
+						name: "Minutes",
+						width: 10,
+						formatter: function(item) {
+							return item.toString();
+						}
+					},
+					{
+						field: "who",
+						name: "Who",
+						width: 10,
+						formatter: function(item) {
+							return item.toString();
+						}
+					},
+					{
+						field: "what",
+						name: "Description",
+						width: 10,
+						formatter: function(item) {
+							return item.toString();
+						}
+					},
+/*
+					{
+						field: "note",
+						name: "Note",
+						width: 10,
+						formatter: function(item) {
+							return item.toString();
+						}
+					},
+*/
+					{
+						field: "status",
+						name: "Status",
+						width: 10,
+						formatter: function(item) {
+							return item.toString();
+						}
+					}
+            ]];
+
+            function openTask(e){
+				var item = e.grid.getItem(e.rowIndex);
+				alert(taskStore.getValue(item,"created"));
+			}
 
             function addToDocument(id) {
                 var model = dojo.query(".xfModel", dojo.doc)[0];
@@ -118,7 +194,7 @@ xquery version "1.0";
                     <xf:label>Overview</xf:label>
                     <xf:toggle case="c-embedArea"/>
                     <xf:load show="embed" targetid="embedInline">
-                        <xf:resource value="'/exist/rest/db/betterform/apps/timetracker/views/list-items.xql#xforms'"/>
+                        <xf:resource value="'/exist/rest/db/betterform/apps/timetracker/views/list-items-html.xql#pagecontent'"/>
                     </xf:load>
                 </xf:trigger>
 

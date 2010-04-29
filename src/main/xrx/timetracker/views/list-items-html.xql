@@ -1,5 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "../resources/xsd/xhtml1-transitional.dtd">
+xquery version "1.0";
+        declare option exist:serialize "method=xhtml media-type=text/xml";
+
+        request:set-attribute("betterform.filter.parseResponseBody", "true"),
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xf="http://www.w3.org/2002/xforms">
     <head>
@@ -85,14 +87,14 @@
                  url="/exist/rest/db/betterform/apps/timetracker/data/task?_query=//task&amp;_howmany=-1&amp;_xsl=/db/betterform/apps/timetracker/views/flattenAttributes.xsl"
                  jsId="taskStore"
 				 label="title"
-				 attributeMap="{'duration.@hours':'@hours'}">
+				 attributeMap="{{'duration.@hours':'@hours'}}">
             </div>
             <div id="grid"
 				 style="width: 100%; height: 100%;"
 				 dojoType="dojox.grid.DataGrid"
                  store="taskStore"
 				 structure="layoutTasks"
-				 query="{}"
+				 query="{{}}"
 				 rowsPerPage="40"
 				 rowSelector="20px">
 				<script type="dojo/method" event="onRowDblClick" args="e">
