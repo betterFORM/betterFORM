@@ -11,6 +11,7 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
 	<link rel="stylesheet" type="text/css" href="/exist/resources/styles/bf.css"/>
 	<link rel="stylesheet" type="text/css" href="/exist/resources/styles/demo.css"/>
 	<link rel="stylesheet" type="text/css" href="/exist/rest/db/betterform/apps/timetracker/resources/timetracker.css"/>
+	<link rel="stylesheet" type="text/css" href="/exist/rest/db/betterform/apps/timetracker/resources/InlineRoundBordersAlert.css"/>
 
     <script type="text/javascript">
     	<!--
@@ -18,6 +19,8 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
 		dojo.require("dijit.Declaration");
 		dojo.require("dijit.Toolbar");
 		dojo.require("dijit.ToolbarSeparator");
+        dojo.require("dijit.Dialog");
+
 
 		dojo.require("dijit.form.Button");
 		dojo.require("dijit.form.DropDownButton");
@@ -62,196 +65,105 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                     });
         }
 
-		function embed(targetTrigger){
-			var targetMount = dojo.byId("embedTarget");
-			if(xfReadySubscribers != undefined) {
-				dojo.unsubscribe(xfReadySubscribers);
-				xfReadySubscribers = null;
-			}
+		function embed(targetTrigger,targetMount){
+
+		    if(targetMount == "embedDialog"){
+                dijit.byId("taskDialog").show();
+            }
+            
+            var targetMount =  dojo.byId(targetMount);
+            if(xfReadySubscribers != undefined) {
+                dojo.unsubscribe(xfReadySubscribers);
+                xfReadySubscribers = null;
+            }
 
             xfReadySubscribers = dojo.subscribe("/xf/ready", function(data) {
                 dojo.style(targetMount, "opacity", 0);
                 dojo.fadeIn({
                     node: targetMount,
-                    duration:1000
+                    duration:100
                 }).play();
             });
             dojo.fadeOut({
                 node: targetMount,
-                duration:200,
+                duration:100,
                 onBegin: function() {
                     fluxProcessor.dispatchEvent(targetTrigger);
                 }
             }).play();
-            dijit.byId("addTaskDialog").show();
-		}
+        }
 
         -->
     </script>
 
 
 </head>
-<body id="demo">
+<body id="timetracker" class="tundra InlineRoundBordersAlert">
 <div class="page">
-    <div style="display:block">
+
+    <!-- ***** hidden triggers ***** -->
+    <!-- ***** hidden triggers ***** -->
+    <!-- ***** hidden triggers ***** -->
+    <div style="display:none;">
         <xf:model id="model-1">
             <xf:instance>
                 <data xmlns="">
                 </data>
             </xf:instance>
-
-
-            <xf:instance id="i-task" xmlns="">
-				<data/>
-            </xf:instance>
-
-			<xf:instance id="i-query-tasks">
-				<data xmlns="">
-					<projects/>
-					<worker/>
-					<start/>
-					<end/>
-					<billable/>
-				</data>
-			</xf:instance>
-
-			<xf:bind nodeset="instance('i-query-tasks')">
-				<xf:bind nodeset="start"     type="xf:date" />
-				<xf:bind nodeset="end"       type="xf:date" />
-				<xf:bind nodeset="billable " type="xf:boolean" />
-			</xf:bind>
-
-			<xf:instance id="i-project"
-                     src="/exist/rest/db/betterform/apps/timetracker/data/project.xml" />
-
-        	<xf:instance id="i-worker"
-                     src="/exist/rest/db/betterform/apps/timetracker/data/worker.xml" />
-
-
-        <xf:submission id="s-get-tasks"
-                       ref="instance('i-query-tasks')"
-                       resource="/exist/rest/db/betterform/apps/timetracker/search/search-org.xql"
-                       replace="instance"
-                       instance="i-tasks"
-                       method="form-data-post"
-                       validate="false">
-            <xf:action ev:event="xforms-submit-done">
-                <xf:message level="ephemeral">Received data from eXist DB</xf:message>
-            </xf:action>
-            <xf:message ev:event="xforms-submit-error">Failure received tasks froms eXist XML DB</xf:message>
-        </xf:submission>
-
         </xf:model>
 
-		<xf:trigger id="contactsDemoTrigger">
+        <xf:trigger id="overviewTrigger">
             <xf:label>Overview</xf:label>
-            <xf:toggle case="c-demoArea"/>
-            <xf:load show="embed" targetid="embedTarget">
+            <xf:toggle case="c-embedArea"/>
+            <xf:load show="embed" targetid="embedInline">
                 <xf:resource value="'/exist/rest/db/betterform/apps/timetracker/views/list-items.xql#xforms'"/>
             </xf:load>
         </xf:trigger>
+
         <xf:trigger id="addTask">
             <xf:label>add Task</xf:label>
-            <xf:toggle case="c-demoArea"/>
-            <xf:load show="embed" targetid="embedTarget">
-                <xf:resource value="'/exist/rest/db/betterform/apps/timetracker/edit/edit-item.xql#xforms'"/>
+            <xf:load show="embed" targetid="embedDialog">
+                <xf:resource value="'/exist/rest/db/betterform/apps/timetracker/edit/edit-item.xql#xforms?mode=new'"/>
             </xf:load>
         </xf:trigger>
     </div>
 
-    <div id="header">
-        <!-- <div class="pageMarginBox" dojoType="dijit.layout.ContentPane">
-            <div id="logoBar">
-                <a href="index.html" class="link" id="linkLogo"><img id="logo" src="images/logo.png" alt="betterFORM TimeTracker"/></a>
-                <div id="topnav">
-					<a href="edit/edit-item.xql?mode=new">new task</a><span class="menuDevider"> | </span>
-                    <a href="search/search-form.html">search</a>
-                </div>
-            </div>
-        </div>
-        -->
-    </div>
 
+    <!-- ######################### Content here ################################## -->
+    <!-- ######################### Content here ################################## -->
+    <!-- ######################### Content here ################################## -->
+    <!-- ######################### Content here ################################## -->
+    <!-- ######################### Content here ################################## -->
     <div id="content">
         <img id="shadowTop" src="/exist/resources/images/shad_top.jpg" alt=""/>
-        <div class="pageMarginBox">
-            <div class="contentBody">
-        <div id="toolbar1" dojoType="dijit.Toolbar">
 
-					<div id="addBtn" dojoType="dijit.form.Button" showLabel="true" onclick="embed('addTask');">
-						<span>New Task</span>
-					</div>
-				</div>
+            <div id="toolbar" dojoType="dijit.Toolbar">
+                <div id="overviewBtn" dojoType="dijit.form.Button" showLabel="true" onclick="embed('overviewTrigger','embedInline');">
+                    <span>Overview</span>
+                </div>
+                <div id="addBtn" dojoType="dijit.form.Button" showLabel="true" onclick="embed('addTask','embedDialog');">
+                    <span>New Task</span>
+                </div>
+                <div id="searchBtn" dojoType="dijit.form.Button" showLabel="true" onclick="alert('todo');">
+                    <span>Search</span>
+                </div>
+                <div id="settingsBtn" dojoType="dijit.form.Button" showLabel="true" onclick="alert('todo');">
+                    <span>Settings</span>
+                </div>
+            </div>
 
-                <!-- ######################### Content here ################################## -->
-                <!-- ######################### Content here ################################## -->
-                <!-- ######################### Content here ################################## -->
-                <!-- ######################### Content here ################################## -->
-                <!-- ######################### Content here ################################## -->
+            <div id="taskDialog" dojotype="dijit.Dialog" style="width:610px;height:460px;">
+                <div id="embedDialog"></div>
+             </div>
 
-                <xf:switch>
-                    <xf:case id="c-overview" selected="true">
-                    </xf:case>
-                    <xf:case id="c-demoArea">
-						<table>
-							<tr>
-								<td align="left" style="border-right: 1px solid black;border-bottom: 1px solid black;width:90px">Project</td>
-								<td align="left"
-									style="border-right: 1px solid black;border-bottom: 1px solid black;width: 70px;padding-left:5px">Worker</td>
-								<td align="left"
-									style="border-right: 1px solid black;border-bottom: 1px solid black;width: 50px; padding-left: 5px;">Start / End</td>
-								<td align="left" style="width:90px;padding-left: 5px;">Billable</td>
-							</tr>
-							<tr>
-								<td style="border-right: 1px solid black;width:90px" valign="top">
-									<xf:select id="projectToDisplay" ref="instance('i-query-tasks')/projects" appearance="full">
-										<xf:label/>
-										<xf:itemset nodeset="instance('i-project')/project">
-											<xf:label ref="."/>
-											<xf:value ref="."/>
-										</xf:itemset>
-									</xf:select>
-								</td>
-								<td style="border-right: 1px solid black; width: 60px;padding-left:5px" valign="top">
-									<xf:select id="personToDisplay" ref="instance('i-query-tasks')/worker" appearance="full">
-										<xf:label/>
-										<xf:itemset nodeset="instance('i-worker')/worker">
-											<xf:label ref="."/>
-											<xf:value ref="."/>
-										</xf:itemset>
-									</xf:select>
-								</td>
-								<td style="border-right: 1px solid black; width: 50px; padding-left: 5px;" valign="top">
-									<xf:input ref="instance('i-query-tasks')/start">
-										<xf:label/>
-									</xf:input>
-									<br/>
-									<xf:input ref="instance('i-query-tasks')/end">
-										<xf:label/>
-									</xf:input>
-								</td>
-								<td align="left" style="width:90px;padding-left: 5px;" valign="top">
-									<xf:input ref="instance('i-query-tasks')/billable">
-										<xf:label/>
-									</xf:input>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<xf:trigger>
-										<xf:label>Search</xf:label>
-										<xf:send submission="s-get-tasks"/>
-									</xf:trigger>
-								</td>
-							</tr>
-						</table>
-						<div id="demoWrapper">
-							<div id="embedTarget">
-								<!--<div onclick="runDemo();" class="backgroundImage"></div>-->
-							</div>
-						</div>
-                    </xf:case>
-                </xf:switch>
+            <xf:switch>
+                <xf:case id="c-overview" selected="true">
+                </xf:case>
+                <xf:case id="c-embedArea">
+                    <!-- @@@@@@@@@@@@@@@@@@@@@  MOUNTPOINT @@@@@@@@@@@@@@@@@@ -->
+                    <div id="embedInline"></div>
+                </xf:case>
+            </xf:switch>
 
 
 
@@ -264,15 +176,12 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
             </div>
         </div>
     </div>
+    <!-- ######################### Content end ################################## -->
+    <!-- ######################### Content end ################################## -->
+    <!-- ######################### Content end ################################## -->
+    <!-- ######################### Content end ################################## -->
+    <!-- ######################### Content end ################################## -->
 
-<!--
-    <div id="footer">
-        <img id="shadowBottom" src="images/shad_bottom.jpg" alt=""/>
-
-        <div class="pageMarginBox">
-        </div>
-    </div>
-    -->
 </div>
 </body>
 </html>

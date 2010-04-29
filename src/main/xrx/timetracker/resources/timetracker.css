@@ -1,8 +1,18 @@
+body{
+    margin:0;
+    padding:0;
+}
+#formWrapper{
+    padding:0;
+    margin:0;
+    
+
+}
 #content {
 	-moz-background-clip:border;
 	-moz-background-inline-policy:continuous;
 	-moz-background-origin:padding;
-	background:#D3D3D3 none repeat scroll 0 0;
+	background:transparent none repeat scroll 0 0;
 	display:block;
 	height:400px;
 	margin-left:auto;
@@ -11,9 +21,6 @@
 	overflow:auto;
 	width:800px;
 	float:none;
-}
-.dijitToolbar{
-	width:400px;
 }
 
 .pageMarginBox{
@@ -35,7 +42,49 @@ tr.xfRepeatHeader  td {
 #embedTarget{
 	height:600px;
 }
+#embedDialog{
+    width:600px;
+    height:400px;
+}
 
+.InlineRoundBordersAlert #embedDialog  .caVerticalTable {
+    border: none;
+    padding: 20px;
+    padding-bottom: 0px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#embedDialog .xfGroup{
+    display:block;
+}
+
+#embedDialog .dijitDialogPaneContent{
+    overflow:auto;
+}
+#embedDialog .caVerticalTableLabel{
+    width:100px;
+}
+#embedDialog .caVerticalTableValue{
+    width:250px;
+}
+
+#embedDialog .bfVerticalTableInfo{
+    width:200px;
+}
+
+#embedDialog .xfControl .xfValue{
+    width:100%;
+}
+
+#embedDialog .caLabelColumn{
+    text-align:right;
+    padding-right:5px;
+}
+#embedDialog .bfCellWrapperValue .xfValue{
+    width:125px;
+}
 
 .caTabContainer {
 	overflow: hidden;
@@ -89,7 +138,7 @@ tr.xfRepeatItem  td {
 
 #task-table span.xfControl {
 	display: block;
-	margin-left: 5px;
+	/*margin-left: 5px;*/
 }
 .xsdDate .xfValue {
 	width:80px;
@@ -109,3 +158,9 @@ tr.xfRepeatItem  td {
 	overflow-y: scroll;
 }
 
+.dijitButton{
+    margin:0.2em 0;
+}
+.tundra .embedDialog .dijitCheckBox{
+    width:20px;
+}

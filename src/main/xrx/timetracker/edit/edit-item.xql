@@ -43,18 +43,15 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                   <xf:bind nodeset="who" required="true()"/>
                   <xf:bind nodeset="what" required="true()"/>
                   <xf:bind nodeset="billable" type="xf:boolean"/>
-                  <xf:bind nodeset="billed" type="xf:boolean"/>
-                  <xf:bind nodeset="billed/@date" type="xf:date"/>
                   <xf:bind nodeset="created" required="true()"/>
               </xf:bind>
-
 			 
 
               <xf:submission id="s-get-task"
                              method="get"
                              resource="{local:timestamp()}"
-                             validate="false"
-                             replace="instance">
+                             replace="instance"
+                             serialization="none">
                              <!--
                              	 <xf:resource value="concat('/exist/rest/db/betterform/apps/timetracker/data/task?_query=/data/task', encode-for-uri('['),'created=', '{local:timestamp()}',encode-for-uri(']') )"/>
 							 -->
@@ -67,7 +64,8 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
 
         <xf:submission id="s-add"
                        method="put"
-                       replace="none">
+                       replace="none"
+                       validate="false">
 		    <xf:resource value="concat('/exist/rest/db/betterform/apps/timetracker/data/task/', instance('i-task')/task/created, '.xml')"/>
 
             <xf:header>
@@ -76,7 +74,7 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
             </xf:header>
             <xf:header>
                 <xf:name>password</xf:name>
-                <xf:value>admin</xf:value>
+                <xf:value>Atai42!</xf:value>
             </xf:header>
             <xf:header>
                 <xf:name>realm</xf:name>
@@ -101,6 +99,9 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
             <xf:action ev:event="xforms-submit-done">
                 <xf:message level="ephemeral">Data stored</xf:message>
 				<xf:send submission="s-clean" if="'{local:mode()}' = 'new'"/>
+                <script type="text/javascript">
+                    dijit.byId("taskDialog").hide();
+                </script>
 			</xf:action>
 
             <xf:action ev:event="xforms-submit-error" if="instance('i-controller')/error/@hasError='true'">
@@ -137,20 +138,23 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                 <xf:input id="date" ref="date">
                     <xf:label>Date</xf:label>
                     <xf:alert>a valid Date is required</xf:alert>
+                    <xf:hint>pick the date to report</xf:hint>
                 </xf:input>
 
                 <xf:select1 id="project" ref="project" appearance="minimal">
                     <xf:label>Project</xf:label>
 					<xf:alert>a project must be selected</xf:alert>
+                    <xf:hint>select the project</xf:hint>
                     <xf:itemset nodeset="instance('i-project')/project">
                         <xf:label ref="."/>
                         <xf:value ref="."/>
                     </xf:itemset>
                 </xf:select1>
 
-                <xf:group appearance="bf:horizontalColumn">
+                <xf:group appearance="bf:cellWrapper">
                     <xf:label>Hours/Minutes</xf:label>
                     <xf:alert>Hours are missing</xf:alert>
+                    <xf:hint>how many hours did it take?</xf:hint>
                     <xf:select1 ref="duration/@hours" style="float:left;">
                         <xf:label/>
                         <xf:item>
@@ -237,18 +241,20 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                     </xf:select1>
                 </xf:group>
 
-                <xf:select ref="who" appearance="full">
+                <xf:select ref="who" appearance="minimal">
                     <xf:label>Who</xf:label>
                     <xf:alert>Who value is missing</xf:alert>
+                    <xf:hint>who has worked on the task?</xf:hint>
                     <xf:itemset nodeset="instance('i-worker')/worker">
                         <xf:label ref="."/>
                         <xf:value ref="."/>
                     </xf:itemset>
                 </xf:select>
 
-                <xf:select ref="what" appearance="full">
+                <xf:select ref="what" appearance="minimal">
                     <xf:label>What</xf:label>
                     <xf:alert>What value is missing</xf:alert>
+                    <xf:hint>what has been done?</xf:hint>
                     <xf:item>
                         <xf:label>Bug Fix</xf:label>
                         <xf:value>bugfix</xf:value>
@@ -265,6 +271,7 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
 
                 <xf:select1 ref="status">
                     <xf:label>Status</xf:label>
+                    <xf:hint>please select the status for this task</xf:hint>
                     <xf:alert>Status value is missing</xf:alert>
                     <xf:item>
                         <xf:label/>
@@ -283,34 +290,22 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                 <xf:input ref="billable">
                     <xf:label>Billable</xf:label>
                     <xf:alert>Billable value is missing</xf:alert>
-                    <xf:hint>True if task can be billed to Customer</xf:hint>
+                    <xf:hint>can this billed to Customer?</xf:hint>
                 </xf:input>
 
-                <xf:textarea ref="note" mediatype="dojo" style="width:200px;">
+                <xf:textarea ref="note" mediatype="dojo">
                     <xf:label>Note</xf:label>
                     <xf:alert>Note value is invalid</xf:alert>
-                    <xf:hint>What has been done?</xf:hint>
+                    <xf:hint>more details about the task</xf:hint>
                 </xf:textarea>
 
 			<xf:trigger style="padding-right:0;">
 				<xf:label>Save</xf:label>
-				<xf:toggle case="doIt"/>
+                <xf:action>
+                    <xf:send submission="s-add"/>
+                </xf:action>
 			</xf:trigger>
             </xf:group>
-			<xf:switch>
-				<xf:case id="default" selected="true"/>
-				<xf:case id="doIt" selected="false">
-					<div style="font-weight:bold;">Really add?</div>
-					<xf:trigger>
-						<xf:label>Yes</xf:label>
-						<xf:send submission="s-add"/>
-					</xf:trigger>
-					<xf:trigger>
-						<xf:label>Cancel</xf:label>
-						<xf:toggle case="default"/>
-					</xf:trigger>
-				</xf:case>
-			</xf:switch>
 			<xf:output mediatype="text/html" ref="instance('i-controller')/error" id="errorReport"/>
 
         </xf:group>
