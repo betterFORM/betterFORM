@@ -1,11 +1,19 @@
 xquery version "1.0";
-        declare option exist:serialize "method=xhtml media-type=text/xml";
 
-        request:set-attribute("betterform.filter.parseResponseBody", "true"),
+declare option exist:serialize "method=html media-type=text/html";
+
+request:set-attribute("betterform.filter.parseResponseBody", "true"),
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xf="http://www.w3.org/2002/xforms">
     <head>
         <title>Dojo DnD: simple drag handles</title>
+        <style type="text/css">
+            @import "http://ajax.googleapis.com/ajax/libs/dojo/1.4/dojo/resources/dojo.css";
+			@import "http://ajax.googleapis.com/ajax/libs/dojo/1.4/dojox/grid/resources/Grid.css";
+			@import "http://ajax.googleapis.com/ajax/libs/dojo/1.4/dojox/grid/resources/tundraGrid.css";
+
+        </style>
+        
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.4/dojo/dojo.xd.js"
                 djConfig="parseOnLoad: true"></script>
         <script type="text/javascript">
@@ -82,24 +90,28 @@ xquery version "1.0";
         </script>
     </head>
     <body class="tundra">
+
         <div id="pagecontent">
-            <div dojoType="dojox.data.XmlStore"
-                 url="/exist/rest/db/betterform/apps/timetracker/data/task?_query=//task&amp;_howmany=-1&amp;_xsl=/db/betterform/apps/timetracker/views/flattenAttributes.xsl"
-                 jsId="taskStore"
-				 label="title"
-				 attributeMap="{{'duration.@hours':'@hours'}}">
-            </div>
-            <div id="grid"
-				 style="width: 100%; height: 100%;"
-				 dojoType="dojox.grid.DataGrid"
-                 store="taskStore"
-				 structure="layoutTasks"
-				 query="{{}}"
-				 rowsPerPage="40"
-				 rowSelector="20px">
-				<script type="dojo/method" event="onRowDblClick" args="e">
-					openTask(e);
-				</script>
+            <div id="wrapper">
+                <div dojoType="dojox.data.XmlStore"
+                     url="/exist/rest/db/betterform/apps/timetracker/data/task?_query=//task&amp;_howmany=5&amp;_xsl=/db/betterform/apps/timetracker/views/flattenAttributes.xsl"
+                     jsId="taskStore"
+                     label="title"
+                     attributeMap="{{'duration.@hours':'@hours'}}">
+                </div>
+                <div id="grid"
+                     style="width: 100%; height: 100%;"
+                     dojoType="dojox.grid.DataGrid"
+                     store="taskStore"
+                     structure="layoutTasks"
+                     query="{{}}"
+                     rowsPerPage="40"
+                     rowSelector="20px">
+                    <script type="dojo/method" event="onRowDblClick" args="e">
+                        openTask(e);
+                    </script>
+                </div>
+
             </div>
         </div>
     </body>

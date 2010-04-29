@@ -17,7 +17,7 @@ xquery version "1.0";
 
         <script type="text/javascript">
             <!--
-            dojo.require("dijit.dijit"); // optimize: load dijit layer
+            dojo.require("dijit.dijit"); 
             dojo.require("dijit.Declaration");
             dojo.require("dijit.Toolbar");
             dojo.require("dijit.ToolbarSeparator");
@@ -37,17 +37,8 @@ xquery version "1.0";
 
 
             var xfReadySubscribers;
-            dojo.require("dojox.highlight");
-            dojo.require("dojox.highlight.languages.xml");
-            //dojo.require("dojox.highlight.languages._static");
-            //dojo.require("dojox.highlight.languages._dynamic");
-            //dojo.require("dojox.highlight.languages._www");
-            dojo.addOnLoad(function() {
-                dojo.query("code").forEach(dojox.highlight.init);
-            });
 
             dojo.require("dijit.form.Button");
-            dojo.require("dijit.TitlePane");
             dojo.require('dijit.layout.ContentPane');
             dojo.require("betterform.ui.select.OptGroup");
             dojo.require("betterform.ui.select1.RadioItemset");
@@ -194,7 +185,7 @@ xquery version "1.0";
                     <xf:label>Overview</xf:label>
                     <xf:toggle case="c-embedArea"/>
                     <xf:load show="embed" targetid="embedInline">
-                        <xf:resource value="'/exist/rest/db/betterform/apps/timetracker/views/list-items-html.xql#pagecontent'"/>
+                        <xf:resource value="'/exist/rest/db/betterform/apps/timetracker/views/list-items.xhtml#pagecontent'"/>
                     </xf:load>
                 </xf:trigger>
 
