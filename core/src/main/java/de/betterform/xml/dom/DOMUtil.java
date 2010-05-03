@@ -970,10 +970,7 @@ public class DOMUtil {
      */
     public static Document parseString(String input, boolean namespaces, boolean validating)
             throws ParserConfigurationException, IOException, SAXException {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setNamespaceAware(true);
-        factory.setValidating(false);
-        return factory.newDocumentBuilder().parse(new InputSource(new StringReader(input)));
+        return createDocumentBuilder(true,false).parse(new InputSource(new StringReader(input)));
     }
 
 
