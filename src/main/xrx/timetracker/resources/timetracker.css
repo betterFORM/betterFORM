@@ -11,15 +11,11 @@ body{
 #content {
 	-moz-background-clip:border;
 	-moz-background-inline-policy:continuous;
-	-moz-background-origin:padding;
 	background:transparent none repeat scroll 0 0;
 	display:block;
-	height:400px;
-	margin-left:auto;
-	margin-right:auto;
-	margin-top:50px;
+	height:100%;
 	overflow:auto;
-	width:800px;
+	width:100%;
 	float:none;
 }
 
@@ -37,6 +33,10 @@ body{
 tr.xfRepeatHeader  td {
 	font-weight: bold;
 	padding-right: 5px;
+}
+
+#embedInline{
+    padding:10px;
 }
 
 #embedTarget{
@@ -176,4 +176,18 @@ tr.xfRepeatItem  td {
 }
 .tundra .embedDialog .dijitCheckBox{
     width:20px;
+}
+
+/*data table (list-items.xql) styles*/
+#taskTable{
+    border:none;
+    border-collapse:collapse;
+
+}
+#taskTable th,#taskTable td{
+    padding:5px;
+    border:thin solid steelBlue;
+}
+#taskTable th{
+    background:#b0c4de;
 }

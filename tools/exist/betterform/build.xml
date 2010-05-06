@@ -73,12 +73,24 @@
 
     </target>
 
+    <target name="install-xrx" description="installs sample XRX applications">
+        <unzip src="${target.dir}/xrx.zip" dest="${target.dir}/xrx"/>
+        <xdb:store xmlns:xdb="http://exist-db.org/ant"
+                   uri="xmldb:exist://localhost:8080/exist/xmlrpc/db/betterform/apps"
+                   createsubcollections="true"
+                   createcollection="true"
+                    user="admin"
+                password="Atai42!">
+            <fileset dir="${target.dir}/xrx" includes="**/*.*"/>
+        </xdb:store>
+    </target>
 
     <target name="uninstall" xmlns:xmldb="http://exist-db.org/ant" description="uninstall betterFORM">
         <delete dir="${target.dir}" failonerror="false"/>
         <delete file="${exist.web.xml}" failonerror="false"/>
         <delete dir="${exist.rootdir}/webapp/forms" failonerror="false"/>
         <delete dir="${exist.rootdir}/webapp/resources/images" failonerror="false"/>
+        <delete dir="${exist.rootdir}/webapp/resources/scripts" failonerror="false"/>
         <delete dir="${exist.rootdir}/webapp/resources/styles" failonerror="false"/>
         <delete dir="${exist.rootdir}/webapp/resources/xsd" failonerror="false"/>
         <delete dir="${exist.rootdir}/webapp/resources/xslt" failonerror="false"/>

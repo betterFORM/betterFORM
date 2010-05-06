@@ -3,12 +3,13 @@
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
     <!-- >>>>> These properties only apply to the targets that deal with deployment into *existing* eXist installation-->
-    <property name="exist.dir" value="/Users/dev/Desktop/temp/eXist"/>
+    <property name="exist.dir" value="/Applications/eXist"/>
     <property name="exist.bfExtension.dir" value="${exist.dir}/extensions/betterform/target/betterform"/>
     <property name="exist.webapp.dir" value="${exist.dir}/webapp"/>
     <!-- <<<<< These properties only apply to the targets that deal with deployment into *existing* eXist installation-->
 
     <property name="tasks.dir" value="/Users/dev/Desktop/task"/>
+    <property name="src.dir" value="${basedir}/../../src"/>
     <property name="web.dir" value="${basedir}/../../web"/>
     <property name="core.dir" value="${basedir}/../../core"/>
     <property name="target.dir" value="${basedir}/target"/>
@@ -72,6 +73,11 @@
         </ant>
         <antcall target="cleanup"/>
         <zip basedir="${webapp.dir}" zipfile="${webapp.dir}.zip"/>
+        <antcall target="package-xrx"/>
+    </target>
+    
+    <target  name="package-xrx">
+        <zip basedir="${src.dir}/main/xrx" zipfile="target/xrx.zip" excludes="build.xml"/>
     </target>
 
     <target name="create-exist-extension" description="creates a zip archive of the eXist-extension installer">
@@ -83,10 +89,11 @@
          <available property="extensionInstalled" file="${exist.bfExtension.dir}/target/betterform/version.info"/>
     </target>
 
+    <!--todo: should depend on web build.xml to create a fully working debug copy to install-->
     <target name="install-into-eXist" unless="extensionInstalled">
-        <copy file="${web.dir}/src/main/resources/META-INF/version.info" todir="${exist.bfExtension.dir}"/>
+        <!--<copy file="${core.dir}/src/main/resources/META-INF/version.info" todir="${exist.bfExtension.dir}"/>-->
 
-        <ant antfile="${web.dir}/build.xml" target="compile" dir="${web.dir}" inheritall="false">
+        <ant antfile="${web.dir}/build.xml" target="deploy-resources" dir="${web.dir}" inheritall="false">
                 <property name="target.dir" value="${target.dir}"/>
                 <property name="webapp.dir" value="${webapp.dir}"/>
         </ant>
@@ -96,7 +103,7 @@
         </copy>
 
         <copy todir="${exist.webapp.dir}/resources">
-            <fileset dir="../../src/main/resources"/>
+            <fileset dir="${target.dir}/betterform/resources"/>
         </copy>
 
         <copy description="copy images seperately to avoid filtering"
@@ -110,15 +117,11 @@
             </fileset>
         </copy>
 
-        <!-- copy core classes -->
+        <!-- copy classes -->
         <copy todir="${exist.bfExtension.dir}/WEB-INF/classes" overwrite="true">
-            <fileset dir="${core.dir}/target/classes"/>
+            <fileset dir="${target.dir}/betterform/WEB-INF/classes"/>
         </copy>
 
-        <!-- copy web classes -->
-        <copy todir="${exist.bfExtension.dir}/WEB-INF/classes" overwrite="true">
-            <fileset dir="${web.dir}/target/classes"/>
-        </copy>
     </target>
 
     <!--

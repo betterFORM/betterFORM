@@ -1,23 +1,28 @@
 xquery version "1.0";
-        declare option exist:serialize "method=xhtml media-type=text/xml";
+declare option exist:serialize "method=xhtml media-type=text/xml";
 
-        request:set-attribute("betterform.filter.parseResponseBody", "true"),
+request:set-attribute("betterform.filter.parseResponseBody", "true"),
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns:ev="http://www.w3.org/2001/xml-events"
       xml:lang="en">
     <head>
         <title>betterFORM Demo XForms: Address, Registration, FeatureExplorer</title>
+
+        <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.4/dojox/grid/resources/Grid.css"/>
+        <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.4/dojox/grid/resources/tundraGrid.css"/>
         <link rel="stylesheet" type="text/css" href="/exist/resources/styles/bf.css"/>
         <link rel="stylesheet" type="text/css" href="/exist/resources/styles/demo.css"/>
         <link rel="stylesheet" type="text/css"
-              href="/exist/rest/db/betterform/apps/timetracker/resources/timetracker.css"/>
-        <link rel="stylesheet" type="text/css"
               href="/exist/rest/db/betterform/apps/timetracker/resources/InlineRoundBordersAlert.css"/>
+        <link rel="stylesheet" type="text/css"
+              href="/exist/rest/db/betterform/apps/timetracker/resources/timetracker.css"/>
 
+       
         <script type="text/javascript">
             <!--
-            dojo.require("dijit.dijit"); 
+            dojo.require("dojo.parser");
+            dojo.require("dijit.dijit");
             dojo.require("dijit.Declaration");
             dojo.require("dijit.Toolbar");
             dojo.require("dijit.ToolbarSeparator");
@@ -64,7 +69,6 @@ xquery version "1.0";
 					{
 						field: "project",
 						name: "Project",
-						width: 10,
 						formatter: function(item) {
 							return item.toString();
 						}
@@ -72,7 +76,6 @@ xquery version "1.0";
 					{
 						field: "hours",
 						name: "Hours",
-						width: 10,
 						formatter: function(item) {
 							return item.toString();
 						}
@@ -80,7 +83,6 @@ xquery version "1.0";
 					{
 						field: "minutes",
 						name: "Minutes",
-						width: 10,
 						formatter: function(item) {
 							return item.toString();
 						}
@@ -88,7 +90,6 @@ xquery version "1.0";
 					{
 						field: "who",
 						name: "Who",
-						width: 10,
 						formatter: function(item) {
 							return item.toString();
 						}
@@ -96,25 +97,13 @@ xquery version "1.0";
 					{
 						field: "what",
 						name: "Description",
-						width: 10,
 						formatter: function(item) {
 							return item.toString();
 						}
 					},
-/*
-					{
-						field: "note",
-						name: "Note",
-						width: 10,
-						formatter: function(item) {
-							return item.toString();
-						}
-					},
-*/
 					{
 						field: "status",
 						name: "Status",
-						width: 10,
 						formatter: function(item) {
 							return item.toString();
 						}
@@ -141,6 +130,7 @@ xquery version "1.0";
                 }
 
                 var targetMount =  dojo.byId(targetMount);
+                dojo.parser.parse(targetMount);
                 if(xfReadySubscribers != undefined) {
                     dojo.unsubscribe(xfReadySubscribers);
                     xfReadySubscribers = null;
@@ -160,14 +150,16 @@ xquery version "1.0";
                         fluxProcessor.dispatchEvent(targetTrigger);
                     }
                 }).play();
+
             }
 
-            -->
+            // -->
         </script>
 
 
     </head>
-    <body id="timetracker" class="tundra InlineRoundBordersAlert">
+    <body id="timetracker" class="tundra">
+
         <div class="page">
 
             <!-- ***** hidden triggers ***** -->
@@ -177,25 +169,52 @@ xquery version "1.0";
                 <xf:model id="model-1">
                     <xf:instance>
                         <data xmlns="">
+                            <project/>
+                            <from/>
+                            <to/>
+                            <howmany>10</howmany>
                         </data>
                     </xf:instance>
+                    <xf:instance id="i-query">
+                        <data xmlns="">
+                            <_query>//task</_query>
+                            <_howmany/>
+                            <_xsl>/db/betterform/apps/timetracker/views/list-items.xsl</_xsl>
+                        </data>
+                    </xf:instance>
+                    <xf:submission id="s-query-tasks-rest"
+                                    resource="/exist/rest/db/betterform/apps/timetracker/data/task"
+                                    method="get"
+                                    replace="embedHTML"
+                                    targetid="embedInline"
+                                    ref="instance('i-query')"
+                                    validate="false">
+                        <xf:action ev:event="xforms-submit-done">
+                            <xf:refresh/>
+                        </xf:action>
+                    </xf:submission>
+                    <xf:submission id="s-query-tasks"
+                                    resource="/exist/rest/db/betterform/apps/timetracker/views/list-items.xql"
+                                    method="get"
+                                    replace="embedHTML"
+                                    targetid="embedInline"
+                                    ref="instance()"
+                                    validate="false">
+                        <xf:action ev:event="xforms-submit-done">
+                            <xf:toggle case="c-embedArea"/>
+                        </xf:action>
+                    </xf:submission>
                 </xf:model>
 
-                <xf:trigger id="overviewTrigger">
-                    <xf:label>Overview</xf:label>
-                    <xf:toggle case="c-embedArea"/>
-                    <xf:load show="embed" targetid="embedInline">
-                        <xf:resource value="'/exist/rest/db/betterform/apps/timetracker/views/list-items.xhtml#pagecontent'"/>
-                    </xf:load>
-                </xf:trigger>
-
                 <xf:trigger id="addTask">
-                    <xf:label>add Task</xf:label>
+                    <xf:label>new</xf:label>
                     <xf:load show="embed" targetid="embedDialog">
                         <xf:resource
                                 value="'/exist/rest/db/betterform/apps/timetracker/edit/edit-item.xql#xforms?mode=new'"/>
                     </xf:load>
                 </xf:trigger>
+
+
             </div>
 
 
@@ -205,7 +224,15 @@ xquery version "1.0";
             <!-- ######################### Content here ################################## -->
             <!-- ######################### Content here ################################## -->
             <div id="content">
-                <img id="shadowTop" src="/exist/resources/images/shad_top.jpg" alt=""/>
+                <xf:trigger id="overviewTrigger">
+                    <xf:label>Overview</xf:label>
+                    <xf:send submission="s-query-tasks"/>
+
+<!--                    <xf:toggle case="c-embedArea"/>
+                    <xf:load show="embed" targetid="embedInline">
+                        <xf:resource value="concat('/exist/rest/db/betterform/apps/timetracker/data/task?_query=//task&amp;_howmany=',instance()/howmany,'&amp;_xsl=/db/betterform/apps/timetracker/views/list-items.xsl')"/>
+                    </xf:load> -->
+                </xf:trigger>
 
                 <div id="toolbar" dojoType="dijit.Toolbar">
                     <div id="overviewBtn" dojoType="dijit.form.Button" showLabel="true"
@@ -223,20 +250,29 @@ xquery version "1.0";
                         <span>Settings</span>
                     </div>
                 </div>
+                <img id="shadowTop" src="/exist/rest/db/betterform/apps/timetracker/resources/images/shad_top.jpg" alt=""/>
 
                 <div id="taskDialog" dojotype="dijit.Dialog" style="width:610px;height:460px;">
                     <div id="embedDialog"></div>
                 </div>
 
                 <xf:switch>
-                    <xf:case id="c-overview" selected="true">
+                    <xf:case id="c-overview">
                     </xf:case>
-                    <xf:case id="c-embedArea">
+                    <xf:case id="c-embedArea"  selected="true">
                         <!-- @@@@@@@@@@@@@@@@@@@@@  MOUNTPOINT @@@@@@@@@@@@@@@@@@ -->
+
                         <div id="embedInline"></div>
+
+                        <xf:input ref="howmany">
+                            <xf:label/>
+                             <xf:load show="embed" targetid="embedInline" ev:event="xforms-value-changed">
+                                 <xf:resource value="concat('/exist/rest/db/betterform/apps/timetracker/data/task?_query=//task&amp;_howmany=',instance()/howmany,'&amp;_xsl=/db/betterform/apps/timetracker/views/list-items.xsl')"/>
+                             </xf:load>
+
+                        </xf:input>
                     </xf:case>
                 </xf:switch>
-
 
                 <!-- ######################### Content end ################################## -->
                 <!-- ######################### Content end ################################## -->

@@ -29,7 +29,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.events.EventTarget;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.HashMap;
 
 
@@ -254,6 +257,16 @@ public class LoadAction extends AbstractBoundAction {
         return targetElem;
     }
 
+    /**
+     * fetches a resources with the help of a Connector. For HTML the response will be a string containing markup that
+     * needs to be parsed.
+     * <br><br>
+     * If a fragment is given on the URI only the resulting part of the response is returned.
+     *
+     * @param absoluteURI
+     * @return a Node
+     * @throws XFormsException
+     */
     private Node getEmbeddedDocument(String absoluteURI) throws XFormsException {
         //load resource from absoluteURI
         ConnectorFactory factory = ConnectorFactory.getFactory();
@@ -261,14 +274,35 @@ public class LoadAction extends AbstractBoundAction {
         URIResolver uriResolver = factory.createURIResolver(absoluteURI,this.element);
 
         Object answer = uriResolver.resolve();
-        if ( ! (answer instanceof Node)) {
-            //todo: use better error text
-            throw new XFormsException("Embedded document must be an parsable as DOM.");
+        Node embed=null;
+        if(answer instanceof Node){
+            embed = (Node) answer;
+        }else if(answer instanceof String){
+            // we got some plain HTML and this is returned as a string
+            try {
+                embed = DOMUtil.parseString((String)answer,true,false);
+            } catch (ParserConfigurationException e) {
+                throw new XFormsException(e);
+            } catch (IOException e) {
+                throw new XFormsException(e);
+            } catch (SAXException e) {
+                throw new XFormsException(e);
+            }
+
         }
-        Node embed = (Node) answer;
+        if(embed instanceof Document && absoluteURI.indexOf("#") != -1){
+            String s = absoluteURI.substring(absoluteURI.indexOf("#")+1);
+            embed = DOMUtil.getFragment((Document) embed,s);
+        }
+
+        if(embed == null){
+            throw new XFormsException("content returned from URI could not be recognized");
+        }
         if(embed instanceof Document){
             embed = ((Document)embed).getDocumentElement();
         }
+
+
         return embed;
     }
 

@@ -897,21 +897,22 @@ public class Submission extends BindingElement implements DefaultAction {
             error = "targetId";
         }else if(resource == null){
             error = "resource";
-        }else if(resource.indexOf("#") == -1) {
-            error = "fragment id";    
         }
+
         if(error != null && error.length() > 0) {
             eventInfo.put(XFormsConstants.ERROR_TYPE, "no " +  error + "defined for submission resource");
             this.container.dispatch(this.target, XFormsEventNames.SUBMIT_ERROR, eventInfo);
             return;
         }
 
-        // detected a fragment so extract that from our result Document
-        String fragmentid = resource.substring(resource.indexOf("#")+1);
         Document result = getResponseAsDocument(response);
-
-
-        Node  embedElement = DOMUtil.getFragment(result,fragmentid);
+        Node embedElement = result.getDocumentElement();
+        
+        if(resource.indexOf("#") != -1){
+            // detected a fragment so extract that from our result Document
+            String fragmentid = resource.substring(resource.indexOf("#")+1);
+            embedElement = DOMUtil.getFragment(result,fragmentid);
+        }
 
         // Map eventInfo = constructEventInfo(response);
 

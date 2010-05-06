@@ -20,64 +20,6 @@
                 dojo.require("dojox.grid.DataGrid");
                 dojo.require("dojox.data.XmlStore");
 
-					var layoutTasks = [
-					[{
-						field: "date",
-						name: "Date",
-						width: 10,
-						formatter: function(item) {
-							return item.toString();
-						}
-					},
-					{
-						field: "project",
-						name: "Project",
-						width: 10,
-						formatter: function(item) {
-							return item.toString();
-						}
-					},
-					{
-						field: "hours",
-						name: "Hours",
-						width: 10,
-						formatter: function(item) {
-							return item.toString();
-						}
-					},
-					{
-						field: "minutes",
-						name: "Minutes",
-						width: 10,
-						formatter: function(item) {
-							return item.toString();
-						}
-					},
-					{
-						field: "who",
-						name: "Who",
-						width: 10,
-						formatter: function(item) {
-							return item.toString();
-						}
-					},
-					{
-						field: "what",
-						name: "Description",
-						width: 10,
-						formatter: function(item) {
-							return item.toString();
-						}
-					},
-					{
-						field: "status",
-						name: "Status",
-						width: 10,
-						formatter: function(item) {
-							return item.toString();
-						}
-					}
-					]];
 
 					function openTask(e){
 						var item = e.grid.getItem(e.rowIndex);
@@ -95,7 +37,7 @@
 					 url="/exist/rest/db/betterform/apps/timetracker/data/task?_query=//task&amp;_howmany=-1&amp;_xsl=/db/betterform/apps/timetracker/views/flattenAttributes.xsl"
 					 jsId="taskStore"
 					 label="title"
-					 attributeMap="{'duration.@hours':'@hours'}">
+					 >
 				</div>
 				<div id="grid"
 					 style="width: 100%; height: 100%;"
@@ -109,6 +51,66 @@
 						openTask(e);
 					</script>
 				</div>
+                <script type="text/javascript">
+                    var layoutTasks = [
+                    [{
+                        field: "date",
+                        name: "Date",
+                        width: 10,
+                        formatter: function(item) {
+                            return item.toString();
+                        }
+                    },
+                    {
+                        field: "project",
+                        name: "Project",
+                        width: 10,
+                        formatter: function(item) {
+                            return item.toString();
+                        }
+                    },
+                    {
+                        field: "hours",
+                        name: "Hours",
+                        width: 10,
+                        formatter: function(item) {
+                            return item.toString();
+                        }
+                    },
+                    {
+                        field: "minutes",
+                        name: "Minutes",
+                        width: 10,
+                        formatter: function(item) {
+                            return item.toString();
+                        }
+                    },
+                    {
+                        field: "who",
+                        name: "Who",
+                        width: 10,
+                        formatter: function(item) {
+                            return item.toString();
+                        }
+                    },
+                    {
+                        field: "what",
+                        name: "Description",
+                        width: 10,
+                        formatter: function(item) {
+                            return item.toString();
+                        }
+                    },
+                    {
+                        field: "status",
+                        name: "Status",
+                        width: 10,
+                        formatter: function(item) {
+                            return item.toString();
+                        }
+                    }
+                    ]];
+                </script>
 			</div>
 		</div>
 	</body>

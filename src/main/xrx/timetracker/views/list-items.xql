@@ -33,20 +33,23 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
         xmlns:ev="http://www.w3.org/2001/xml-events">
    <head>
       <title>All Tasks</title>
+      <link rel="stylesheet" type="text/css"
+                href="/exist/rest/db/betterform/apps/timetracker/resources/timetracker.css"/>
+
     </head>
     <body>
-    	<div id="xforms">
-		   <table border="1">
+    	<div id="dataTable">
+		   <table id="taskTable">
 			 <tr>
-				<td>Date</td>
-				<td>Project</td>
-				<td>Who</td>
-				<td>Duration</td>
-				<td>What</td>
-				<td>Note</td>
-				<td>Billable</td>
-				<td>Status</td>
-				<td colspan="2"> </td>
+				<th>Date</th>
+				<th>Project</th>
+				<th>Who</th>
+				<th>Duration</th>
+				<th>What</th>
+				<th>Note</th>
+				<th>Billable</th>
+				<th>Status</th>
+				<th colspan="2"> </th>
 			 </tr>
 			 {local:main()}
 		 </table>
