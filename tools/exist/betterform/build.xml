@@ -211,6 +211,9 @@
 
 
     <target  name="patchStartConfig">
+        <move file="${basedir}/start.config.betterform" tofile="${exist.rootdir}/start.config"/>
+<!-- DO NOT REMOVE: This would be the preferred way to use the start.config but it is only available if sources of eXist have been
+installed. Therefore we maintain our own full copy for now.
         <copy file="${exist.rootdir}/src/org/exist/start/start.config" todir="${exist.rootdir}"/>
 
         <concat destfile="${exist.rootdir}/start.config">
@@ -220,6 +223,7 @@
 		         files="start.config.betterform"/>
 
         </concat>
+-->
     </target>
 
 </project>
