@@ -5,6 +5,7 @@
 
 <project name="betterFORM As eXist module Installer" default="install" basedir=".">
 
+    <property name="pass" value="betterform"/>
     <property name="exist.rootdir" value="../.."/>
     <property name="exist.web.xml" value="${exist.rootdir}/webapp/WEB-INF/web.xml"/>
 
@@ -74,16 +75,31 @@
     </target>
 
     <target name="install-xrx" description="installs sample XRX applications">
-        <unzip src="${target.dir}/xrx.zip" dest="${target.dir}/xrx"/>
+        <unzip src="${target.dir}/xrx.zip" dest="${target.dir}/xrx" />
+
         <xdb:store xmlns:xdb="http://exist-db.org/ant"
                    uri="xmldb:exist://localhost:8080/exist/xmlrpc/db/betterform/apps"
                    createsubcollections="true"
                    createcollection="true"
-                    user="admin"
-                password="Atai42!">
-            <fileset dir="${target.dir}/xrx" includes="**/*.*"/>
+                   user="admin"
+                   password="${pass}">
+            <fileset dir="${target.dir}/xrx" includes="**/*.*">
+                <exclude name="lucene"/>
+                <exclude name="lucene/collection.xconf"/>
+            </fileset>
+        </xdb:store>
+
+        <!--timetracker lucene indexes-->
+        <xdb:store xmlns:xdb="http://exist-db.org/ant"
+                   uri="xmldb:exist://localhost:8080/exist/xmlrpc/db/system/config/db/betterform/apps/timetracker/data/task"
+                   createsubcollections="true"
+                   createcollection="true"
+                   user="admin"
+                   password="${pass}">
+            <fileset dir="${target.dir}/xrx/timetracker/lucene" includes="*.*"/>
         </xdb:store>
     </target>
+
 
     <target name="uninstall" xmlns:xmldb="http://exist-db.org/ant" description="uninstall betterFORM">
         <delete dir="${target.dir}" failonerror="false"/>
@@ -94,22 +110,37 @@
         <delete dir="${exist.rootdir}/webapp/resources/styles" failonerror="false"/>
         <delete dir="${exist.rootdir}/webapp/resources/xsd" failonerror="false"/>
         <delete dir="${exist.rootdir}/webapp/resources/xslt" failonerror="false"/>
-        <move file="${basedir}/uninstall/web.xml" tofile="${exist.web.xml}"/>
-        <move file="${basedir}/uninstall/ehcache-1.1.jar" tofile="${exist.rootdir}/lib/cocoon/ehcache-1.1.jar"/>
+        <move file="${basedir}/uninstall/web.xml" tofile="${exist.web.xml}" failonerror="false"/>
+        <move file="${basedir}/uninstall/ehcache-1.1.jar" tofile="${exist.rootdir}/lib/cocoon/ehcache-1.1.jar" failonerror="false"/>
 
         <!--delete start.config from exist dir-->
         <delete file="${exist.rootdir}/start.config"/>
 
         <!--delete files from WEB-INF-->
-        <delete file="${exist.rootdir}/webapp/WEB-INF/betterform-config.xml"/>
-        <delete file="${exist.rootdir}/webapp/WEB-INF/dwr.xml"/>
-        <delete file="${exist.rootdir}/webapp/WEB-INF/dwr20.dtd"/>
-        <delete file="${exist.rootdir}/webapp/WEB-INF/log4j.dtd"/>
-        <delete file="${exist.rootdir}/webapp/WEB-INF/log4j.xml"/>
-        <delete file="${exist.rootdir}/webapp/WEB-INF/web.xml.original"/>
+        <delete file="${exist.rootdir}/webapp/WEB-INF/betterform-config.xml" failonerror="false"/>
+        <delete file="${exist.rootdir}/webapp/WEB-INF/dwr.xml" failonerror="false"/>
+        <delete file="${exist.rootdir}/webapp/WEB-INF/dwr20.dtd" failonerror="false"/>
+        <delete file="${exist.rootdir}/webapp/WEB-INF/log4j.dtd" failonerror="false"/>
+        <delete file="${exist.rootdir}/webapp/WEB-INF/log4j.xml" failonerror="false"/>
+        <delete file="${exist.rootdir}/webapp/WEB-INF/web.xml.original" failonerror="false"/>
 
         <!--delete sample file-->
-        <delete file="${exist.rootdir}/webapp/xquery/xfGuess.xql"/>
+        <delete file="${exist.rootdir}/webapp/xquery/xfGuess.xql" failonerror="false"/>
+
+        <!--remove betterFORM from the database-->
+        <xdb:remove xmlns:xdb="http://exist-db.org/ant"
+            uri="xmldb:exist://localhost:8080/exist/xmlrpc/db"
+            collection="betterform"
+            user="admin"
+            password="${pass}"/>
+
+        <!--remove timetracker lucene config-->
+        <xdb:remove xmlns:xdb="http://exist-db.org/ant"
+            uri="xmldb:exist://localhost:8080/exist/xmlrpc/db/system/config/db"
+            collection="betterform"
+            user="admin"
+            password="${pass}"/>
+
         <echo message="!!!!! To fully remove betterFORM from eXist you have to delete the 'betterform' directory and 'betterform.zip' from EXIST_HOME/extensions !!!!!"/>
     </target>
 
