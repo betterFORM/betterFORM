@@ -160,9 +160,7 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
 
                 <xf:group appearance="bf:horizontalColumn">
                     <xf:label>Hours/Minutes</xf:label>
-                    <xf:alert>Hours are missing</xf:alert>
-                    <xf:hint>how many hours did it take?</xf:hint>
-                    <xf:select1 ref="duration/@hours" style="float:left;">
+                    <xf:select1 ref="duration/@hours">
                         <xf:label/>
                         <xf:item>
                             <xf:label>0</xf:label>
@@ -294,17 +292,17 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                     </xf:item>
                 </xf:select1>
 
-                <xf:input ref="billable">
-                    <xf:label>Billable</xf:label>
-                    <xf:alert>Billable value is missing</xf:alert>
-                    <xf:hint>can this billed to Customer?</xf:hint>
-                </xf:input>
-
                 <xf:textarea ref="note" mediatype="dojo">
                     <xf:label>Note</xf:label>
                     <xf:alert>Note value is invalid</xf:alert>
                     <xf:hint>more details about the task</xf:hint>
                 </xf:textarea>
+
+                <xf:input ref="billable">
+                    <xf:label>Billable</xf:label>
+                    <xf:alert>Billable value is missing</xf:alert>
+                    <xf:hint>can this billed to Customer?</xf:hint>
+                </xf:input>
 
 			<xf:trigger style="padding-right:0;">
 				<xf:label>Save</xf:label>

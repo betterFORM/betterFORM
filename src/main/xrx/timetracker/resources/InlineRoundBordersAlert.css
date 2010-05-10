@@ -51,7 +51,8 @@
     
 }
 
-.InlineRoundBordersAlert .caVerticalTableLabel {
+.InlineRoundBordersAlert .caVerticalTableLabel,
+.InlineRoundBordersAlert .caLabelColumn {
     padding-right: 5px;
     width: 23%;
     text-align:right;
@@ -59,6 +60,8 @@
 
 .InlineRoundBordersAlert .caVerticalTableValue {
     width: 24%;
+    height:29px;
+    padding-bottom:5px;
 }
 
 .InlineRoundBordersAlert .bfVerticalTableInfo {
@@ -106,7 +109,7 @@
     margin: 0;
     /*overflow: hidden; */
     white-space: nowrap;
-    width: 100%;
+    /*width: 100%;*/
 	border-color:#E5A3A3 !important;
 }
 
@@ -121,7 +124,7 @@
     margin: 0;
     /*overflow: hidden;*/
     white-space: nowrap;
-    width: 100%;
+    /*width: 100%;    */
     border-color:#DBDBDB !important;
 
 }
@@ -139,7 +142,7 @@
     margin: 0;
     /*overflow: hidden;*/
     white-space: nowrap;
-    width: 100%;
+   /* width: 100%;*/
     border-color:#E1EFDB !important;
 }
 
@@ -164,7 +167,7 @@
 }
 
 .InlineRoundBordersAlert td, td span {
-/*    position: relative; */
+    /*position: relative;*/
 }
 
 /*
