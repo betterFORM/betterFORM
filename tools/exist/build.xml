@@ -113,9 +113,9 @@
             description="deploys exploded betterFORM into eXist installation"
             unless="extensionInstalled">
 
-        <echo  message="!!!!! You must have the betterFORM extenesion installed already !!!!!"/>
-        <echo  message="!!!!! You must have the betterFORM extenesion installed already !!!!!"/>
-        <echo  message="!!!!! You must have the betterFORM extenesion installed already !!!!!"/>
+        <echo  message="!!!!! You must have the betterFORM extension installed already !!!!!"/>
+        <echo  message="!!!!! You must have the betterFORM extension installed already !!!!!"/>
+        <echo  message="!!!!! You must have the betterFORM extension installed already !!!!!"/>
         <!--<copy file="${core.dir}/src/main/resources/META-INF/version.info" todir="${exist.bfExtension.dir}"/>-->
 
         <ant antfile="${web.dir}/build.xml" target="deploy-resources" dir="${web.dir}" inheritall="false">
