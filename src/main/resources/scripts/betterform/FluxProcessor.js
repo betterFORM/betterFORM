@@ -583,7 +583,7 @@ dojo.declare("betterform.FluxProcessor",
         if(queryIndex == -1){
           path += "?";
         }
-        path += "&submissionResponse&sessionKey="+fluxProcessor.sessionKey;
+        path += "&submissionResponse=true&sessionKey="+fluxProcessor.sessionKey;
         if (anchorIndex != -1){
           path +=  window.location.href.substring(anchorIndex);
         }
