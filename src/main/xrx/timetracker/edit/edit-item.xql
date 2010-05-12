@@ -115,11 +115,11 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
 
                     <xf:action ev:event="xforms-submit-done">
                         <xf:message level="ephemeral">Data stored</xf:message>
-                        <xf:send submission="s-clean" if="'{local:mode()}' = 'new'"/>
                         <script type="text/javascript" if="instance('tmp')/wantsToClose">
                             dijit.byId("taskDialog").hide();
                             dojo.publish("/task/refresh");
                         </script>
+                        <xf:send submission="s-clean" if="'{local:mode()}' = 'new'"/>
                     </xf:action>
 
                     <xf:action ev:event="xforms-submit-error" if="instance('i-controller')/error/@hasError='true'">
@@ -313,12 +313,6 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                     </xf:trigger>
                     <xf:trigger>
                         <xf:label>Save</xf:label>
-                        <xf:action>
-                            <xf:send submission="s-add"/>
-                        </xf:action>
-                    </xf:trigger>
-                    <xf:trigger>
-                        <xf:label>Save and Close</xf:label>
                         <xf:action>
                             <xf:setvalue ref="instance('tmp')/wantsToClose" value="'true'"/>
                             <xf:send submission="s-add"/>

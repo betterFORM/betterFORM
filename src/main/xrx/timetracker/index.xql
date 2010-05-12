@@ -73,7 +73,7 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
             });
 
             var deleteSubscriber = dojo.subscribe("/task/delete", function(data){
-                var check = confirm("Really delete this entry??");
+                var check = confirm("Really delete this entry?");
                 if (check == true){
                     fluxProcessor.setControlValue("currentTask",data);
                     fluxProcessor.dispatchEvent("deleteTask");
@@ -228,7 +228,10 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
             <!-- ######################### Content here ################################## -->
             <!-- ######################### Content here ################################## -->
             <div id="content">
-
+                <div id="header">
+                    <a href="http://www.betterform.de"><img src="/exist/rest/db/betterform/apps/timetracker/resources/images/bf_logo_201x81.png" alt="betterFORM"/></a>
+                    <div id="appName">Timetracker</div>
+                </div>
                 <div id="toolbar" dojoType="dijit.Toolbar">
                     <div id="overviewBtn" dojoType="dijit.form.DropDownButton" showLabel="true"
                          onclick="fluxProcessor.dispatchEvent('overviewTrigger');">
@@ -288,6 +291,9 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                     <div id="settingsBtn" dojoType="dijit.form.Button" showLabel="true" onclick="alert('todo');">
                         <span>Settings</span>
                     </div>
+                    <div dojotype="dijit.form.Button" showLabel="true" onclick="dijit.byId('aboutDialog').show();">
+                        <span>About</span>
+                    </div>
                 </div>
 
                 <img id="shadowTop" src="/exist/rest/db/betterform/apps/timetracker/resources/images/shad_top.jpg" alt=""/>
@@ -303,6 +309,8 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                 </div>
 
                 <div id="embedInline"></div>
+
+                <div id="aboutDialog" dojotype="dijit.Dialog" href="about.html" title="About" style="width:500px;height:500px;"></div>
 
                 <!-- ######################### Content end ################################## -->
                 <!-- ######################### Content end ################################## -->
