@@ -9,8 +9,8 @@
         <who/>
         <what/>
         <note/>
-        <billable/>
-        <billed date=""/>
+        <billable>false</billable>
+        <billed date="">false</billed>
         <status/>
         <created/>
     </task>

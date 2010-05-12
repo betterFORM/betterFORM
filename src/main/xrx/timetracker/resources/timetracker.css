@@ -1,7 +1,90 @@
 body{
     margin:0;
     padding:0;
+    background:#D3D3D3;
 }
+select{
+    border:thin solid #b3b3b3 !important;
+    margin:0;
+    padding:0;
+}
+
+#shadowTop{
+    width:100%;
+}
+
+#searchBar{
+    width:100%;
+    overflow:hidden;
+    display:block;
+    vertical-align:middle;
+}
+#searchBar .xfControl{
+    margin-right:10px;
+    float:left;
+    
+}
+#searchBar .xfControl input{
+    color:#4682b4;
+}
+
+#searchBar .xfControl .xfLabel{
+    color:#666666 !important;
+    float:left;
+    padding:0;
+    margin:0 10px 0 10px;
+}
+
+.xfInput .xfValue{
+    height:auto;
+}
+.InlineRoundBordersAlert #searchBar  .xfValue{
+    -moz-border-radius:0;
+    -webkit-border-radius:0;
+}
+
+#overviewBtn{
+    margin-left:10px;
+}
+
+.dijitTooltipContainer{
+    margin-left:8px;
+}
+.dijitTooltipConnector{
+    margin-left:8px;
+}
+
+#closeFilter-value{
+    background-image:url(/exist/rest/db/betterform/apps/timetracker/resources/images/tabClose.gif);
+    width:12px;
+    height:12px;
+}
+.InlineRoundBordersAlert .xfValue {
+    padding:0;
+}
+
+#fromTo{
+    text-align:right;
+    margin-right:10px;
+}
+
+#summary{
+    background:transparent;
+    width:220px !important;
+    border-collapse:collapse;
+    display:table;
+    float:right;
+}
+#summary td{
+    color:#4682b4 !important;
+    font-size:1.2em;
+    padding:5px;
+    white-space:nowrap;
+}
+#summary .summaryLabel{
+    color:#666666 !important;
+}
+
 #formWrapper{
     padding:0;
     margin:0;
@@ -11,23 +94,14 @@ body{
 #content {
 	-moz-background-clip:border;
 	-moz-background-inline-policy:continuous;
-	-moz-background-origin:padding;
 	background:transparent none repeat scroll 0 0;
 	display:block;
-	height:400px;
-	margin-left:auto;
-	margin-right:auto;
-	margin-top:50px;
+	height:100%;
 	overflow:auto;
-	width:800px;
+	width:100%;
 	float:none;
 }
 
-.pageMarginBox{
-	margin-left:auto;
-	margin-right:auto;
-	width:800px;
-}
 .header {
 	font-size: 16pt;
 	color: gray;
@@ -39,12 +113,24 @@ tr.xfRepeatHeader  td {
 	padding-right: 5px;
 }
 
+#embedInline{
+    padding:10px;
+}
+
 #embedTarget{
 	height:600px;
 }
+#taskDialog{
+    height:550px !important;
+}
+#taskDialog select{
+    padding:5px 0;
+}
+
 #embedDialog{
     width:600px;
-    height:400px;
+    height:540px !important;
+    overflow:auto;
 }
 
 .InlineRoundBordersAlert #embedDialog  .caVerticalTable {
@@ -58,6 +144,7 @@ tr.xfRepeatHeader  td {
 
 #embedDialog .xfGroup{
     display:block;
+
 }
 
 #embedDialog .dijitDialogPaneContent{
@@ -84,6 +171,9 @@ tr.xfRepeatHeader  td {
 }
 #embedDialog .bfCellWrapperValue .xfValue{
     width:125px;
+}
+#embedDialog select{
+    border:thin solid gray;
 }
 
 .caTabContainer {
@@ -154,7 +244,23 @@ tr.xfRepeatItem  td {
 }
 
 .xsdDate .xfValue {
-	width:80px;
+	width:100px;
+
+}
+#searchBar .xsdDate .xfValue{
+    background:transparent;
+    width:120px;
+}
+
+#durationLabel{
+    margin-left:10px;
+    display:block;
+}
+#durationLabel .xfValue{
+    font-size:14pt;
+    color:#4682b4;
+    display:block;
+    margin:5px 0;
 }
 
 .listing .xfSelectorItem {
@@ -178,25 +284,61 @@ tr.xfRepeatItem  td {
     width:20px;
 }
 
+/*data table (list-items.xql) styles*/
+#taskTable{
+    border:none;
+    border-collapse:collapse;
+    width:100%;
+    display:table;
+}
 
-#task-table .xfReadWrite .dijitCheckBox, .xfReadWrite .dijitCheckBoxIcon {
+#taskTable th,#taskTable td{
+    padding:5px;
+    border:thin solid steelBlue;
+}
+#taskTable th{
+    background:#b0c4de;
+}
+
+#add-task-table{
+    height:400px;
+}
+#add-task-table .xfReadWrite .dijitCheckBox, .xfReadWrite .dijitCheckBoxIcon {
     -moz-border-radius:0 0 0 0 !important;
     -webkit-border-radius: 0 0 0 0 !important;
     width:14px !important;
+    padding:0;
+    
 }
 
-#task-table .caHorizontalColumn {
-    width:99%
+#add-task-table .caHorizontalColumn {
+    width:99%;
 }
 
 
-#task-table .caHorizontalColumn .caHorizontalTableValue{
+#add-task-table .caHorizontalColumn .caHorizontalTableValue{
     width:50%;
 }
 
-#task-table .caHorizontalColumn .caHorizontalTableValue select{
+#add-task-table .caHorizontalColumn .caHorizontalTableValue select{
     width:99%;
     margin-left:2px;
     margin-bottom:8px;
 
 }
+#add-task-table .xfValue{
+    padding:5px 0;
+}
+
+.caHorizontalTable{
+    display:table;
+    margin-bottom:10px;
+}
+.InlineRoundBordersAlert .xsdBoolean .dijitCheckBoxInput{
+    
+}
+.xfSelectorItem{
+    padding:0;
+    margin:1px;
+}
+

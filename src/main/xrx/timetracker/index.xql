@@ -27,110 +27,20 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
             dojo.require("dijit.Toolbar");
             dojo.require("dijit.ToolbarSeparator");
             dojo.require("dijit.Dialog");
-
-
+            dojo.require("dijit.TitlePane");
+            dojo.require("betterform.ui.container.Group");
+            dojo.require('dijit.layout.ContentPane');
             dojo.require("dijit.form.Button");
-            dojo.require("dijit.form.DropDownButton");
-            dojo.require("dijit.form.ComboButton");
-            dojo.require("dijit.form.ToggleButton");
-            dojo.require("dijit.ColorPalette");
-            dojo.require("dijit.TooltipDialog");
-            dojo.require("dijit.form.TextBox");
-            dojo.require("dijit.Menu");
-
-
-
 
             var xfReadySubscribers;
 
-            dojo.require("dijit.form.Button");
-            dojo.require('dijit.layout.ContentPane');
-            dojo.require("betterform.ui.select.OptGroup");
-            dojo.require("betterform.ui.select1.RadioItemset");
-            dojo.require("betterform.ui.select.CheckBoxItemset");
-            dojo.require("betterform.ui.util");
-            dojo.require("betterform.ui.container.Switch");
-            dojo.require("betterform.ui.container.Repeat");
-            dojo.require("betterform.ui.container.RepeatItem");
-            dojo.require("betterform.ui.container.TabSwitch");
-            dojo.require("betterform.ui.container.Group");
-            dojo.require("dojox.grid.DataGrid");
-            dojo.require("dojox.data.XmlStore");
-
-            var layoutTasks = [
-					[{
-						field: "date",
-						name: "Date",
-						width: 10,
-						formatter: function(item) {
-							return item.toString();
-						}
-					},
-					{
-						field: "project",
-						name: "Project",
-						formatter: function(item) {
-							return item.toString();
-						}
-					},
-					{
-						field: "hours",
-						name: "Hours",
-						formatter: function(item) {
-							return item.toString();
-						}
-					},
-					{
-						field: "minutes",
-						name: "Minutes",
-						formatter: function(item) {
-							return item.toString();
-						}
-					},
-					{
-						field: "who",
-						name: "Who",
-						formatter: function(item) {
-							return item.toString();
-						}
-					},
-					{
-						field: "what",
-						name: "Description",
-						formatter: function(item) {
-							return item.toString();
-						}
-					},
-					{
-						field: "status",
-						name: "Status",
-						formatter: function(item) {
-							return item.toString();
-						}
-					}
-            ]];
-
-            function openTask(e){
-				var item = e.grid.getItem(e.rowIndex);
-				alert(taskStore.getValue(item,"created"));
-			}
-
-            function addToDocument(id) {
-                var model = dojo.query(".xfModel", dojo.doc)[0];
-                dijit.byId(dojo.attr(model, "id")).getInstanceAsString(id,
-                        function(data) {
-                            dojo.byId("instanceData").innerHTML = data;
-                        });
-            }
-
             function embed(targetTrigger,targetMount){
-
+                console.debug("embed",targetTrigger,targetMount);
                 if(targetMount == "embedDialog"){
                     dijit.byId("taskDialog").show();
                 }
 
                 var targetMount =  dojo.byId(targetMount);
-                dojo.parser.parse(targetMount);
                 if(xfReadySubscribers != undefined) {
                     dojo.unsubscribe(xfReadySubscribers);
                     xfReadySubscribers = null;
@@ -153,12 +63,20 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
 
             }
 
+            var editSubcriber = dojo.subscribe("/task/edit", function(data){
+                fluxProcessor.setControlValue("currentTask",data);
+            });
+
+            var refreshSubcriber = dojo.subscribe("/task/refresh", function(){
+                alert("fired refresh");
+                fluxProcessor.dispatchEvent("overviewTrigger");
+            });
             // -->
         </script>
 
 
     </head>
-    <body id="timetracker" class="tundra">
+    <body id="timetracker" class="tundra InlineRoundBordersAlert">
 
         <div class="page">
 
@@ -170,11 +88,34 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                     <xf:instance>
                         <data xmlns="">
                             <project/>
-                            <from/>
-                            <to/>
-                            <howmany>10</howmany>
+                            <default-duration>30</default-duration>
+                            <from>2000-01-01</from>
+                            <to>2000-01-02</to>
+                            <billable>false</billable>
+                            <currentTask/>
                         </data>
                     </xf:instance>
+                    <xf:bind nodeset="default-duration" type="xf:integer"/>
+                    <xf:bind nodeset="from" type="xf:date"/>
+                    <xf:bind nodeset="to" type="xf:date" />
+                    <xf:bind nodeset="billable" type="xf:boolean"/>
+
+                    <xf:submission id="s-query-tasks"
+                                    resource="/exist/rest/db/betterform/apps/timetracker/views/list-items.xql"
+                                    method="get"
+                                    replace="embedHTML"
+                                    targetid="embedInline"
+                                    ref="instance()"
+                                    validate="false">
+                        <xf:action ev:event="xforms-submit-done">
+                        </xf:action>
+                    </xf:submission>
+
+                    <xf:instance id="i-project" src="/exist/rest/db/betterform/apps/timetracker/data/project.xml" />
+
+                    <!-- ***************************
+                    Commented out but might still be useful as reference - shows REST-style access
+
                     <xf:instance id="i-query">
                         <data xmlns="">
                             <_query>//task</_query>
@@ -182,6 +123,7 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                             <_xsl>/db/betterform/apps/timetracker/views/list-items.xsl</_xsl>
                         </data>
                     </xf:instance>
+
                     <xf:submission id="s-query-tasks-rest"
                                     resource="/exist/rest/db/betterform/apps/timetracker/data/task"
                                     method="get"
@@ -193,28 +135,49 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                             <xf:refresh/>
                         </xf:action>
                     </xf:submission>
-                    <xf:submission id="s-query-tasks"
-                                    resource="/exist/rest/db/betterform/apps/timetracker/views/list-items.xql"
-                                    method="get"
-                                    replace="embedHTML"
-                                    targetid="embedInline"
-                                    ref="instance()"
-                                    validate="false">
-                        <xf:action ev:event="xforms-submit-done">
-                            <xf:toggle case="c-embedArea"/>
-                        </xf:action>
-                    </xf:submission>
+                    ****************************** -->
+
+
+                    <xf:action ev:event="xforms-ready">
+                        <xf:setvalue ref="to" value="substring(local-date(), 1, 10)"/>
+                        <xf:recalculate/>
+                        <xf:setvalue ref="from" value="days-to-date(number(days-from-date(instance()/to) - instance()/default-duration))"/>
+                    </xf:action>
                 </xf:model>
+
+                <xf:trigger id="overviewTrigger">
+                    <xf:label>Overview</xf:label>
+                    <xf:send submission="s-query-tasks"/>
+                </xf:trigger>
 
                 <xf:trigger id="addTask">
                     <xf:label>new</xf:label>
-                    <xf:load show="embed" targetid="embedDialog">
-                        <xf:resource
-                                value="'/exist/rest/db/betterform/apps/timetracker/edit/edit-item.xql#xforms?mode=new'"/>
-                    </xf:load>
+                    <xf:action>
+                        <xf:load show="embed" targetid="embedDialog">
+                            <xf:resource
+                                    value="'/exist/rest/db/betterform/apps/timetracker/edit/edit-item.xql#xforms?mode=new'"/>
+                        </xf:load>
+                    </xf:action>
                 </xf:trigger>
 
+                <xf:trigger id="editTask">
+                    <xf:label>new</xf:label>
+                    <xf:action>
+                        <xf:load show="embed" targetid="embedDialog">
+                            <xf:resource
+                                    value="concat('/exist/rest/db/betterform/apps/timetracker/edit/edit-item.xql#xforms?timestamp=',instance()/currentTask)"/>
+                        </xf:load>
+                    </xf:action>
+                </xf:trigger>
 
+                <xf:input id="currentTask" ref="instance()/currentTask">
+                    <xf:label>This is just a dummy used by JS</xf:label>
+                    <xf:action ev:event="xforms-value-changed">
+                        <script type="text/javascript">
+                            embed('editTask','embedDialog');
+                        </script>
+                    </xf:action>
+                </xf:input>
             </div>
 
 
@@ -224,20 +187,55 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
             <!-- ######################### Content here ################################## -->
             <!-- ######################### Content here ################################## -->
             <div id="content">
-                <xf:trigger id="overviewTrigger">
-                    <xf:label>Overview</xf:label>
-                    <xf:send submission="s-query-tasks"/>
-
-<!--                    <xf:toggle case="c-embedArea"/>
-                    <xf:load show="embed" targetid="embedInline">
-                        <xf:resource value="concat('/exist/rest/db/betterform/apps/timetracker/data/task?_query=//task&amp;_howmany=',instance()/howmany,'&amp;_xsl=/db/betterform/apps/timetracker/views/list-items.xsl')"/>
-                    </xf:load> -->
-                </xf:trigger>
 
                 <div id="toolbar" dojoType="dijit.Toolbar">
-                    <div id="overviewBtn" dojoType="dijit.form.Button" showLabel="true"
-                         onclick="embed('overviewTrigger','embedInline');">
-                        <span>Overview</span>
+                    <div id="overviewBtn" dojoType="dijit.form.DropDownButton" showLabel="true"
+                         onclick="fluxProcessor.dispatchEvent('overviewTrigger');">
+                        <span>Filter</span>
+                        <div id="filterPopup" dojoType="dijit.TooltipDialog">
+                            <table id="searchBar">
+                                <tr>
+                                    <td>
+                                        <xf:input ref="from" incremental="true">
+                                            <xf:label>from</xf:label>
+                                            <xf:action ev:event="xforms-value-changed">
+                                                <xf:dispatch name="DOMActivate" targetid="overviewTrigger"/>
+                                            </xf:action>
+                                        </xf:input>
+                                    </td>
+                                    <td>
+                                        <xf:input ref="to" incremental="true">
+                                            <xf:label>to</xf:label>
+                                            <xf:action ev:event="xforms-value-changed">
+                                                <xf:dispatch  name="DOMActivate" targetid="overviewTrigger"/>
+                                            </xf:action>
+                                        </xf:input>
+                                    </td>
+                                    <td>
+                                        <xf:select1 ref="project" appearance="minimal">
+                                            <xf:label>Project</xf:label>
+                                            <xf:itemset nodeset="instance('i-project')/*">
+                                                <xf:label ref="."/>
+                                                <xf:value ref="@id"/>
+                                            </xf:itemset>
+                                        </xf:select1>
+                                    </td>
+                                    <td>
+                                        <xf:input ref="billable">
+                                            <xf:label>Billable</xf:label>
+                                        </xf:input>
+                                    </td>
+                                    <td>
+                                        <xf:trigger id="closeFilter">
+                                            <xf:label/>
+                                            <script type="text/javascript">
+                                                dijit.byId("filterPopup").onCancel();
+                                            </script>
+                                        </xf:trigger>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                     <div id="addBtn" dojoType="dijit.form.Button" showLabel="true"
                          onclick="embed('addTask','embedDialog');">
@@ -250,29 +248,20 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                         <span>Settings</span>
                     </div>
                 </div>
+
                 <img id="shadowTop" src="/exist/rest/db/betterform/apps/timetracker/resources/images/shad_top.jpg" alt=""/>
 
-                <div id="taskDialog" dojotype="dijit.Dialog" style="width:610px;height:460px;">
+                <div id="fromTo">
+                    <xf:output value="concat(from,' - ',to)" id="durationLabel">
+                        <xf:label/>
+                    </xf:output>
+                </div>
+
+                <div id="taskDialog" dojotype="dijit.Dialog" style="width:610px;height:480px;" title="Task">
                     <div id="embedDialog"></div>
                 </div>
 
-                <xf:switch>
-                    <xf:case id="c-overview">
-                    </xf:case>
-                    <xf:case id="c-embedArea"  selected="true">
-                        <!-- @@@@@@@@@@@@@@@@@@@@@  MOUNTPOINT @@@@@@@@@@@@@@@@@@ -->
-
-                        <div id="embedInline"></div>
-
-                        <xf:input ref="howmany">
-                            <xf:label/>
-                             <xf:load show="embed" targetid="embedInline" ev:event="xforms-value-changed">
-                                 <xf:resource value="concat('/exist/rest/db/betterform/apps/timetracker/data/task?_query=//task&amp;_howmany=',instance()/howmany,'&amp;_xsl=/db/betterform/apps/timetracker/views/list-items.xsl')"/>
-                             </xf:load>
-
-                        </xf:input>
-                    </xf:case>
-                </xf:switch>
+                <div id="embedInline"></div>
 
                 <!-- ######################### Content end ################################## -->
                 <!-- ######################### Content end ################################## -->

@@ -100,6 +100,9 @@ public class HTTPURIResolver extends AbstractHTTPConnector implements URIResolve
 
         if (uri.getFragment() != null) {
             String fragment = uri.getFragment();
+            if(fragment.indexOf("?") != -1){
+                fragment = fragment.substring(0,fragment.indexOf("?"));
+            }
             //todo: allow access to fragments by other means than using getElementById
             Node resultNode = XPathUtil.evaluateAsSingleNode(document,"//*[@id='" + fragment + "']");
             if(LOGGER.isDebugEnabled()){

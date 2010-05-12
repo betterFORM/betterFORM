@@ -96,6 +96,10 @@
     height:15px;
     border:solid 1px;
 }
+.InlineRoundBordersAlert .xsdBoolean .xfValue{
+    -moz-border-radius:0;
+    -webkit-border-radius:0;
+}
 
 .InlineRoundBordersAlert .xfAlert {
     display: block;
