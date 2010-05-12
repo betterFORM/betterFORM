@@ -149,7 +149,6 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
             </xf:model>
         </div>
         <xf:group ref="task">
-            <div>{local:mode()}</div>
             <xf:group id="add-task-table" appearance="bf:verticalTable">
                 <xf:input id="date" ref="date">
                     <xf:label>Date</xf:label>
@@ -304,7 +303,7 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                     <xf:hint>can this billed to Customer?</xf:hint>
                 </xf:input>
 
-                <xf:group appearance="bf:horizontalTable">
+                <xf:group id="dialogButtons" appearance="bf:horizontalTable">
                     <xf:label/>
                     <xf:trigger>
                         <xf:label>Close</xf:label>

@@ -41,6 +41,9 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                 }
 
                 var targetMount =  dojo.byId(targetMount);
+
+                fluxProcessor.dispatchEvent(targetTrigger);
+
                 if(xfReadySubscribers != undefined) {
                     dojo.unsubscribe(xfReadySubscribers);
                     xfReadySubscribers = null;
@@ -65,10 +68,19 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
 
             var editSubcriber = dojo.subscribe("/task/edit", function(data){
                 fluxProcessor.setControlValue("currentTask",data);
+                embed('editTask','embedDialog');
+
+            });
+
+            var deleteSubscriber = dojo.subscribe("/task/delete", function(data){
+                var check = confirm("Really delete this entry??");
+                if (check == true){
+                    fluxProcessor.setControlValue("currentTask",data);
+                    fluxProcessor.dispatchEvent("deleteTask");
+                }
             });
 
             var refreshSubcriber = dojo.subscribe("/task/refresh", function(){
-                alert("fired refresh");
                 fluxProcessor.dispatchEvent("overviewTrigger");
             });
             // -->
@@ -107,13 +119,48 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                                     targetid="embedInline"
                                     ref="instance()"
                                     validate="false">
-                        <xf:action ev:event="xforms-submit-done">
+                        <xf:action ev:event="xforms-submit-error">
+                            <xf:message>Submission failed</xf:message>
                         </xf:action>
                     </xf:submission>
 
                     <xf:instance id="i-project" src="/exist/rest/db/betterform/apps/timetracker/data/project.xml" />
 
-                    <!-- ***************************
+                    <xf:submission id="s-delete-task"
+                                    method="delete"
+                                    replace="none"
+                                    validate="false">
+                        <xf:resource value="concat('/exist/rest/db/betterform/apps/timetracker/data/task/',currentTask,'.xml')"/>
+                        <xf:header>
+                            <xf:name>username</xf:name>
+                            <xf:value>admin</xf:value>
+                        </xf:header>
+                        <xf:header>
+                            <xf:name>password</xf:name>
+                            <xf:value>betterform</xf:value>
+                        </xf:header>
+                        <xf:header>
+                            <xf:name>realm</xf:name>
+                            <xf:value>exist</xf:value>
+                        </xf:header>
+                        
+                        <xf:action ev:event="xforms-submit-done">
+                            <script type="text/javascript">
+                                fluxProcessor.dispatchEvent("overviewTrigger");
+                            </script>
+                            <xf:message level="ephemeral">Entry has been removed</xf:message>
+                        </xf:action>
+                    </xf:submission>
+
+
+
+                    <xf:action ev:event="xforms-ready">
+                        <xf:setvalue ref="to" value="substring(local-date(), 1, 10)"/>
+                        <xf:recalculate/>
+                        <xf:setvalue ref="from" value="days-to-date(number(days-from-date(instance()/to) - instance()/default-duration))"/>
+                    </xf:action>
+
+                     <!-- ***************************
                     Commented out but might still be useful as reference - shows REST-style access
 
                     <xf:instance id="i-query">
@@ -136,13 +183,6 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                         </xf:action>
                     </xf:submission>
                     ****************************** -->
-
-
-                    <xf:action ev:event="xforms-ready">
-                        <xf:setvalue ref="to" value="substring(local-date(), 1, 10)"/>
-                        <xf:recalculate/>
-                        <xf:setvalue ref="from" value="days-to-date(number(days-from-date(instance()/to) - instance()/default-duration))"/>
-                    </xf:action>
                 </xf:model>
 
                 <xf:trigger id="overviewTrigger">
@@ -155,7 +195,7 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                     <xf:action>
                         <xf:load show="embed" targetid="embedDialog">
                             <xf:resource
-                                    value="'/exist/rest/db/betterform/apps/timetracker/edit/edit-item.xql#xforms?mode=new'"/>
+                                    value="'/exist/rest/db/betterform/apps/timetracker/edit/edit-item.xql#xforms'"/>
                         </xf:load>
                     </xf:action>
                 </xf:trigger>
@@ -170,13 +210,14 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                     </xf:action>
                 </xf:trigger>
 
+                <xf:trigger id="deleteTask">
+                    <xf:label>delete</xf:label>
+                    <xf:send submission="s-delete-task"/>
+                </xf:trigger>
+
+
                 <xf:input id="currentTask" ref="instance()/currentTask">
                     <xf:label>This is just a dummy used by JS</xf:label>
-                    <xf:action ev:event="xforms-value-changed">
-                        <script type="text/javascript">
-                            embed('editTask','embedDialog');
-                        </script>
-                    </xf:action>
                 </xf:input>
             </div>
 

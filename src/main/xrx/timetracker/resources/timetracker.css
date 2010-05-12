@@ -3,6 +3,11 @@ body{
     padding:0;
     background:#D3D3D3;
 }
+
+#caLoading {
+    top:0;
+    right:10px;
+}
 select{
     border:thin solid #b3b3b3 !important;
     margin:0;
@@ -342,3 +347,6 @@ tr.xfRepeatItem  td {
     margin:1px;
 }
 
+#dialogButtons td{
+    padding-right:3px;
+}
