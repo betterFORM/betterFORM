@@ -18,7 +18,6 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
         <link rel="stylesheet" type="text/css"
               href="/exist/rest/db/betterform/apps/timetracker/resources/timetracker.css"/>
 
-       
         <script type="text/javascript">
             <!--
             dojo.require("dojo.parser");
@@ -99,18 +98,15 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                 <xf:model id="model-1">
                     <xf:instance>
                         <data xmlns="">
-                            <project/>
-                            <default-duration>30</default-duration>
                             <from>2000-01-01</from>
                             <to>2000-01-02</to>
-                            <billable>false</billable>
-                            <currentTask/>
+                            <project/>
+                            <billable/>
+                            <billed/>
                         </data>
                     </xf:instance>
-                    <xf:bind nodeset="default-duration" type="xf:integer"/>
                     <xf:bind nodeset="from" type="xf:date"/>
                     <xf:bind nodeset="to" type="xf:date" />
-                    <xf:bind nodeset="billable" type="xf:boolean"/>
 
                     <xf:submission id="s-query-tasks"
                                     resource="/exist/rest/db/betterform/apps/timetracker/views/list-items.xql"
@@ -124,13 +120,11 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                         </xf:action>
                     </xf:submission>
 
-                    <xf:instance id="i-project" src="/exist/rest/db/betterform/apps/timetracker/data/project.xml" />
-
                     <xf:submission id="s-delete-task"
                                     method="delete"
                                     replace="none"
                                     validate="false">
-                        <xf:resource value="concat('/exist/rest/db/betterform/apps/timetracker/data/task/',currentTask,'.xml')"/>
+                        <xf:resource value="concat('/exist/rest/db/betterform/apps/timetracker/data/task/',instance('i-vars')/currentTask,'.xml')"/>
                         <xf:header>
                             <xf:name>username</xf:name>
                             <xf:value>admin</xf:value>
@@ -152,12 +146,19 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                         </xf:action>
                     </xf:submission>
 
-
-
+                    <xf:instance id="i-project" src="/exist/rest/db/betterform/apps/timetracker/data/project.xml" />
+                    <xf:instance id="i-vars">
+                        <data xmlns="">
+                            <default-duration>30</default-duration>
+                            <currentTask/>
+                        </data>
+                    </xf:instance>
+                    <xf:bind nodeset="instance('i-vars')/default-duration" type="xf:integer"/>
+                    
                     <xf:action ev:event="xforms-ready">
                         <xf:setvalue ref="to" value="substring(local-date(), 1, 10)"/>
                         <xf:recalculate/>
-                        <xf:setvalue ref="from" value="days-to-date(number(days-from-date(instance()/to) - instance()/default-duration))"/>
+                        <xf:setvalue ref="from" value="days-to-date(number(days-from-date(instance()/to) - instance('i-vars')/default-duration))"/>
                     </xf:action>
 
                      <!-- ***************************
@@ -205,7 +206,7 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                     <xf:action>
                         <xf:load show="embed" targetid="embedDialog">
                             <xf:resource
-                                    value="concat('/exist/rest/db/betterform/apps/timetracker/edit/edit-item.xql#xforms?timestamp=',instance()/currentTask)"/>
+                                    value="concat('/exist/rest/db/betterform/apps/timetracker/edit/edit-item.xql#xforms?timestamp=',instance('i-vars')/currentTask)"/>
                         </xf:load>
                     </xf:action>
                 </xf:trigger>
@@ -216,7 +217,7 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                 </xf:trigger>
 
 
-                <xf:input id="currentTask" ref="instance()/currentTask">
+                <xf:input id="currentTask" ref="instance('i-vars')/currentTask">
                     <xf:label>This is just a dummy used by JS</xf:label>
                 </xf:input>
             </div>
@@ -256,24 +257,46 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                                         </xf:input>
                                     </td>
                                     <td>
-                                        <xf:select1 ref="project" appearance="minimal">
+                                        <xf:select1 ref="project" appearance="minimal" incremental="true">
                                             <xf:label>Project</xf:label>
                                             <xf:itemset nodeset="instance('i-project')/*">
                                                 <xf:label ref="."/>
-                                                <xf:value ref="@id"/>
+                                                <xf:value ref="."/>
                                             </xf:itemset>
                                         </xf:select1>
                                     </td>
                                     <td>
-                                        <xf:input ref="billable">
+                                        <xf:select1 ref="billable" appearance="minimal" incremental="true">
                                             <xf:label>Billable</xf:label>
-                                        </xf:input>
+                                            <xf:item>
+                                                <xf:label>yes</xf:label>
+                                                <xf:value>true</xf:value>
+                                            </xf:item>
+                                            <xf:item>
+                                                <xf:label>no</xf:label>
+                                                <xf:value>false</xf:value>
+                                            </xf:item>
+                                        </xf:select1>
+                                    </td>
+                                    <td>
+                                        <xf:select1 ref="billed" appearance="minimal" incremental="true">
+                                            <xf:label>Billed</xf:label>
+                                            <xf:item>
+                                                <xf:label>not billed yet</xf:label>
+                                                <xf:value>false</xf:value>
+                                            </xf:item>
+                                            <xf:item>
+                                                <xf:label>already billed</xf:label>
+                                                <xf:value>true</xf:value>
+                                            </xf:item>
+                                        </xf:select1>
                                     </td>
                                     <td>
                                         <xf:trigger id="closeFilter">
                                             <xf:label/>
                                             <script type="text/javascript">
                                                 dijit.byId("filterPopup").onCancel();
+                                                fluxProcessor.dispatchEvent("overviewTrigger");
                                             </script>
                                         </xf:trigger>
                                     </td>

@@ -76,9 +76,9 @@ select{
 }
 
 #closeFilter-value{
-    background-image:url(/exist/rest/db/betterform/apps/timetracker/resources/images/tabClose.gif);
-    width:12px;
-    height:12px;
+    background-image:url(/exist/rest/db/betterform/apps/timetracker/resources/images/search.gif);
+    width:24px;
+    height:24px;
 }
 .InlineRoundBordersAlert .xfValue {
     padding:0;
@@ -262,6 +262,9 @@ tr.xfRepeatItem  td {
 }
 #task-table .caHorizontalColumn  .xfValue{
 	width:50%;
+}
+#task-table .dateCol{
+    white-space:nowrap;
 }
 
 .xsdDate .xfValue {
