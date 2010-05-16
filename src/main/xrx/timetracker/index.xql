@@ -9,8 +9,6 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
     <head>
         <title>betterFORM Demo XForms: Address, Registration, FeatureExplorer</title>
 
-        <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.4/dojox/grid/resources/Grid.css"/>
-        <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.4/dojox/grid/resources/tundraGrid.css"/>
         <link rel="stylesheet" type="text/css" href="/exist/resources/styles/bf.css"/>
         <link rel="stylesheet" type="text/css" href="/exist/resources/styles/demo.css"/>
         <link rel="stylesheet" type="text/css"
