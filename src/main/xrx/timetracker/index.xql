@@ -28,6 +28,8 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
             dojo.require("betterform.ui.container.Group");
             dojo.require('dijit.layout.ContentPane');
             dojo.require("dijit.form.Button");
+            dojo.require("dijit.form.CheckBox");
+
 
             var xfReadySubscribers;
 
@@ -80,6 +82,23 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
             var refreshSubcriber = dojo.subscribe("/task/refresh", function(){
                 fluxProcessor.dispatchEvent("overviewTrigger");
             });
+
+            function selectAll(){
+                dojo.query("input",dojo.byId("taskTable")).forEach(
+                function (node){
+                    dijit.byId(node.id).setChecked(true);
+                });
+            }
+
+            function selectNone(){
+                dojo.query("input",dojo.byId("taskTable")).forEach(
+                function (node){
+                    dijit.byId(node.id).setChecked(false);
+                });
+            }
+
+
+
             // -->
         </script>
 

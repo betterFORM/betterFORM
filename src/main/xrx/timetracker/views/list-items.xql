@@ -11,6 +11,7 @@ declare function local:main() as node() * {
     for $task in local:getMatchingTasks()
         return
             <tr>
+                <td class="selectorCol"><input type="checkbox" dojotype="dijit.form.CheckBox" value="{$task/created}" /></td>
                 <td class="dateCol">{$task/date}</td>
                 <td>{$task/project}</td>
                 <td>{$task/who}</td>
@@ -92,8 +93,12 @@ declare function local:project() as element()?
     </head>
     <body>
     	<div id="dataTable">
+    	   <div id="checkBoxSelectors">
+    	        Select: <a href="javascript:selectAll();">All</a> | <a href="javascript:selectNone();">None</a>
+    	   </div>
 		   <table id="taskTable">
 			 <tr>
+				<th></th>
 				<th>Date</th>
 				<th>Project</th>
 				<th>Who</th>

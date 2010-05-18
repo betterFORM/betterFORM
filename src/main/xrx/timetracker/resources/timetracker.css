@@ -263,8 +263,13 @@ tr.xfRepeatItem  td {
 #task-table .caHorizontalColumn  .xfValue{
 	width:50%;
 }
-#task-table .dateCol{
+#taskTable .dateCol{
     white-space:nowrap;
+}
+
+#taskTable .selectorCol{
+    width:10px;
+    text-align:center;
 }
 
 .xsdDate .xfValue {
@@ -368,4 +373,7 @@ tr.xfRepeatItem  td {
 
 #dialogButtons td{
     padding-right:3px;
+}
+#checkBoxSelectors{
+    padding-bottom:2px;
 }
