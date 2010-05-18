@@ -276,6 +276,9 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                                     <td>
                                         <xf:select1 ref="project" appearance="minimal" incremental="true">
                                             <xf:label>Project</xf:label>
+                                            <xf:action ev:event="xforms-value-changed">
+                                                <xf:dispatch  name="DOMActivate" targetid="overviewTrigger"/>
+                                            </xf:action>
                                             <xf:itemset nodeset="instance('i-project')/*">
                                                 <xf:label ref="."/>
                                                 <xf:value ref="."/>
@@ -285,6 +288,9 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                                     <td>
                                         <xf:select1 ref="billable" appearance="minimal" incremental="true">
                                             <xf:label>Billable</xf:label>
+                                            <xf:action ev:event="xforms-value-changed">
+                                                <xf:dispatch  name="DOMActivate" targetid="overviewTrigger"/>
+                                            </xf:action>
                                             <xf:item>
                                                 <xf:label>yes</xf:label>
                                                 <xf:value>true</xf:value>
@@ -298,6 +304,9 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                                     <td>
                                         <xf:select1 ref="billed" appearance="minimal" incremental="true">
                                             <xf:label>Billed</xf:label>
+                                            <xf:action ev:event="xforms-value-changed">
+                                                <xf:dispatch  name="DOMActivate" targetid="overviewTrigger"/>
+                                            </xf:action>
                                             <xf:item>
                                                 <xf:label>not billed yet</xf:label>
                                                 <xf:value>false</xf:value>
