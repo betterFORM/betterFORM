@@ -76,6 +76,12 @@ public class WebFactory {
         return this.config;
     }
 
+    /**
+     * factory method to create a WebProcessor which itself is a Decorator of XFormsProcessor
+     * @param request
+     * @return
+     * @throws XFormsConfigException
+     */
     public static WebProcessor createWebProcessor(HttpServletRequest request) throws XFormsConfigException {
         String useragent;
         if (request.getParameter(WebFactory.USER_AGENT) != null) {

@@ -438,32 +438,45 @@ dojo.declare("betterform.FluxProcessor",
     },
 
     _handleSubmitDone:function(xmlEvent){
-        if(xmlEvent.contextInfo.embedTarget == undefined) {
-            return;
+        if(xmlEvent.contextInfo.document != null){
+            //***** handle submission replace="new" *****
+            //***** handle submission replace="new" *****
+            //***** handle submission replace="new" *****
+            var doc = xmlEvent.contextInfo.document;
+            var newWindow = window.open();
+            newWindow.document.write(doc);
+            newWindow.document.close();
+        }else if(xmlEvent.contextInfo.embedElement != null){
+            //*****   handle submission replace="embedHTML" *****
+            //*****   handle submission replace="embedHTML" *****
+            //*****   handle submission replace="embedHTML" *****
+            if(xmlEvent.contextInfo.embedTarget == undefined) {
+                return;
+            }
+            var target  = xmlEvent.contextInfo.embedTarget;
+            var content = xmlEvent.contextInfo.embedElement;
+
+
+            //determine the DOM Element in the client DOM which is the target for embedding
+            var targetid ;
+            if(dojo.byId(target) != undefined){
+                targetid=target;
+            }else{
+                // if we reach here the target is no idref but the value of a name Attrbute that needs resolving
+                // to an id.
+                var tmp = dojo.query("*[name='" + target + "']")[0];
+                targetid = tmp.id;
+                console.debug("target id for embedding is: ",targetid);
+            }
+
+           this._unloadDOM(targetid);
+
+            //get original Element in master DOM
+            var htmlEntryPoint = dojo.byId(targetid);
+            htmlEntryPoint.innerHTML = content;
+            dojo.require("dojo.parser");
+            dojo.parser.parse(htmlEntryPoint);
         }
-        var target  = xmlEvent.contextInfo.embedTarget;
-        var content = xmlEvent.contextInfo.embedElement;
-
-
-        //determine the DOM Element in the client DOM which is the target for embedding
-        var targetid ;
-        if(dojo.byId(target) != undefined){
-            targetid=target;
-        }else{
-            // if we reach here the target is no idref but the value of a name Attrbute that needs resolving
-            // to an id.
-            var tmp = dojo.query("*[name='" + target + "']")[0];
-            targetid = tmp.id;
-            console.debug("target id for embedding is: ",targetid);
-        }
-
-       this._unloadDOM(targetid);
-
-        //get original Element in master DOM
-        var htmlEntryPoint = dojo.byId(targetid);
-        htmlEntryPoint.innerHTML = content;
-        dojo.require("dojo.parser");
-        dojo.parser.parse(htmlEntryPoint);
     },
 
     _unloadDOM:function(target) {

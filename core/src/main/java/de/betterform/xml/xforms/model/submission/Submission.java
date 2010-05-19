@@ -73,6 +73,7 @@ public class Submission extends BindingElement implements DefaultAction {
     private String targetModelId;
     private String serialization;
     private static final String EMBEDNODE = "embedElement";
+    private static final String DOCUMENT = "document";
 
     /**
      * Creates a new Submission object.
@@ -648,6 +649,10 @@ public class Submission extends BindingElement implements DefaultAction {
             submitReplaceEmbedHTML(response);
             return;
         }
+        if(this.replace.equals("new")){
+            submitReplaceNew(response);
+            return;
+        }
 
         throw new XFormsSubmitError("unknown replace mode " + this.replace, this.getTarget(), XFormsSubmitError.constructInfoObject(this.element, this.container, locationPath, XFormsConstants.VALIDATION_ERROR, getResourceURI()));
     }
@@ -931,6 +936,25 @@ public class Submission extends BindingElement implements DefaultAction {
         this.container.dispatch(this.target, XFormsEventNames.SUBMIT_DONE, eventInfo);
 
     }
+
+    private void submitReplaceNew(Map response) throws XFormsException {
+        Document result = getResponseAsDocument(response);
+        Node embedElement = result.getDocumentElement();
+
+        OutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            DOMUtil.prettyPrintDOM(embedElement,outputStream);
+        } catch (TransformerException e) {
+            throw new XFormsException(e);
+        }
+        Map eventInfo = new HashMap();
+        eventInfo.put(DOCUMENT,outputStream.toString());
+
+        // dispatch xforms-submit-done
+        this.container.dispatch(this.target, XFormsEventNames.SUBMIT_DONE, eventInfo);
+
+    }
+
 
     
     private void updateInstanceAndModel(Model referedModel, Document responseInstance) throws XFormsException {
