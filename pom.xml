@@ -42,8 +42,8 @@
     </licenses>
 
     <scm>
-        <url>https://chiba-project.org/svn/betterform/trunk/</url>
-        <developerConnection>scm:svn:https://chiba-project.org/svn/betterform/trunk/</developerConnection>
+        <url>https://betterform.de/svn/betterform/trunk/</url>
+        <developerConnection>scm:svn:https://betterform.de/svn/betterform/trunk/</developerConnection>
         <connection>${project.scm.developerConnection}</connection>
         <tag>HEAD</tag>
     </scm>
@@ -67,10 +67,10 @@
 
 
     <distributionManagement>
-        <downloadUrl>https://chiba-project.org/svn/betterform/trunk</downloadUrl>
+        <downloadUrl>https://betterform.de/svn/betterform/trunk</downloadUrl>
         <repository>
             <id>betterform-dav</id>
-            <url>dav:https://chiba-project.org/svn/betterform/trunk/</url>
+            <url>dav:https://betterform.de/svn/betterform/trunk/</url>
         </repository>
     </distributionManagement>
 
@@ -84,7 +84,7 @@
 
     <issueManagement>
         <system>Trac</system>
-        <url>https://chiba-project.org/trac</url>
+        <url>https://betterform.de/trac</url>
     </issueManagement>
 
 

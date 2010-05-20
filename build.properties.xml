@@ -28,6 +28,7 @@
                 <pathelement location="${core.dir}/src/main/lib/commons-codec-1.3.jar" groupid="commons-codec" version="1.3" artifactId="commons-codec"/>
                 <pathelement location="${core.dir}/src/main/lib/commons-fileupload-1.2.1.jar" groupid="commons-fileupload" version="1.2.1" artifactId="commons-fileupload"/>
                 <pathelement location="${core.dir}/src/main/lib/commons-httpclient-3.1.jar" groupid="commons-httpclient" version="3.1" artifactId="commons-httpclient"/>
+                <pathelement location="${core.dir}/src/main/lib/commons-io-1.4.jar" groupid="commons-io" version="1.4" artifactId="commons-io"/>
                 <pathelement location="${core.dir}/src/main/lib/commons-lang-2.4.jar" groupid="commons-lang" version="2.4" artifactId="commons-lang"/>
                 <pathelement location="${core.dir}/src/main/lib/commons-logging-1.1.1.jar" groupid="commons-logging" version="1.1.1" artifactId="commons-logging"/>
                 <pathelement location="${core.dir}/src/main/lib/activation-1.1.1.jar" groupid="javax.activation" version="1.1.1" artifactId="activation"/>
