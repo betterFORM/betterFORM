@@ -128,75 +128,79 @@
                         //list files from documents directory
 
                         File root=new File(readDir);
-                        if (!root.exists()) {
-                            root.mkdirs();
-                        }
-                        String[] files=root.list();
-                        cat.debug("files: " + files.length);
-                        File f=null;
-                        String up=null;
-                        if (files!=null)
-                        {
-                            if(uri.indexOf("/")!=-1){
-                                up=uri.substring(0,uri.lastIndexOf("/"));
-                                %>
-                                <tr>
-                                    <td class="directory" colspan="3">
-                                    <a href="forms.jsp?<%=up%>"><img src="<%=request.getContextPath()%>/resources/images/folder.gif" border="0"></a>
-                                    <a class="textLink" href="forms.jsp?<%=up%>">..</a>
-                                    </td>
-                                </tr>
-                                <%
+                        if (root.exists()) {
+                            String[] files = root.list();
+                            cat.debug("files: " + files.length);
+                            File f = null;
+                            String up = null;
+                            if (files != null) {
+                                if (uri.indexOf("/") != -1) {
+                                    up = uri.substring(0, uri.lastIndexOf("/"));
+                        %>
+                        <tr>
+                            <td class="directory" colspan="3">
+                                <a href="forms.jsp?<%=up%>"><img
+                                        src="<%=request.getContextPath()%>/resources/images/folder.gif" border="0"></a>
+                                <a class="textLink" href="forms.jsp?<%=up%>">..</a>
+                            </td>
+                        </tr>
+                        <%
                             }
 
-                            for(int i=0;i< files.length;i++){
-                                File aFile=new File( files[i]);
-                                f=new File(readDir + "/" + aFile.getName());
+                            for (int i = 0; i < files.length; i++) {
+                                File aFile = new File(files[i]);
+                                f = new File(readDir + "/" + aFile.getName());
 
-                                if(f.isDirectory()){
-                                %>
+                                if (f.isDirectory()) {
+                        %>
 
-                                    <tr class="directory">
-                                        <td colspan="3">
-                                            <a href="<%=request.getContextPath()%>/jsp/forms.jsp?<%=uri%>/<%=aFile.getName()%>"><img src="<%=request.getContextPath()%>/resources/images/folder.gif" border="0"></a>
-                                            <a class="textLink" href="<%=request.getContextPath()%>/jsp/forms.jsp?<%=uri%>/<%=aFile.getName()%>"><%=aFile.getName()%></a>
-                                        </td>
-                                    </tr>
-                                <%
-                                }
-                            }
-                        }
-                        root=new File(readDir);
-                        files=root.list();
-                        cat.debug ("files: " + files.length);
-
-                        if (files!=null)
-                        {
-                            for(int i=0;i< files.length;i++){
-                                File aFile=new File( files[i]);
-                                f=new File(readDir + "/" + aFile.getName());
-
-
-                                if(!(f.isDirectory())){
-
-                                %>
-                                    <tr class="file">
-                                        <td width="25%">
-                                            <a href="<%=request.getContextPath()%>/<%=uri%>/<%=aFile.getName()%>?" onclick="this.href=this.href.substring(0,this.href.indexOf('?'));" target="_blank">
-                                                <%=aFile.getName()%>
-                                            </a>
-                                        </td>
-                                        <td width="25%">
-                                                <a href="<%=request.getContextPath()%>/<%=uri%>/<%=aFile.getName()%>?source=true" target="_blank">source</a>
-                                        </td>
-
-                                        <td><%= ""+ DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.MEDIUM).format(new Date(f.lastModified())) %></td>
-
-                                    </tr>
-                                    <%
+                        <tr class="directory">
+                            <td colspan="3">
+                                <a href="<%=request.getContextPath()%>/jsp/forms.jsp?<%=uri%>/<%=aFile.getName()%>"><img
+                                        src="<%=request.getContextPath()%>/resources/images/folder.gif" border="0"></a>
+                                <a class="textLink"
+                                   href="<%=request.getContextPath()%>/jsp/forms.jsp?<%=uri%>/<%=aFile.getName()%>"><%=aFile.getName()%>
+                                </a>
+                            </td>
+                        </tr>
+                        <%
                                     }
                                 }
-                        }
+                            }
+                            root = new File(readDir);
+                            files = root.list();
+                            cat.debug("files: " + files.length);
+
+                            if (files != null) {
+                                for (int i = 0; i < files.length; i++) {
+                                    File aFile = new File(files[i]);
+                                    f = new File(readDir + "/" + aFile.getName());
+
+
+                                    if (!(f.isDirectory())) {
+
+                        %>
+                        <tr class="file">
+                            <td width="25%">
+                                <a href="<%=request.getContextPath()%>/<%=uri%>/<%=aFile.getName()%>?"
+                                   onclick="this.href=this.href.substring(0,this.href.indexOf('?'));" target="_blank">
+                                    <%=aFile.getName()%>
+                                </a>
+                            </td>
+                            <td width="25%">
+                                <a href="<%=request.getContextPath()%>/<%=uri%>/<%=aFile.getName()%>?source=true"
+                                   target="_blank">source</a>
+                            </td>
+
+                            <td><%= "" + DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).format(new Date(f.lastModified())) %>
+                            </td>
+
+                        </tr>
+                        <%
+                                        }
+                                    }
+                                }
+                            }
                         %>
 
                     </table>
