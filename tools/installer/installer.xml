@@ -196,6 +196,7 @@ FOR LATER: installinig the war should switch the above pack off. Did not yet fou
             <parsable targetfile="$INSTALL_PATH/build.bat"/>
             <parsable type="xml" targetfile="$INSTALL_PATH/conf.xml"/>
             <parsable targetfile="$INSTALL_PATH/tools/wrapper/conf/wrapper.conf"/>
+            <executable targetfile="$INSTALL_PATH/bin/setup.sh" stage="never" os="unix"/> 
             <executable targetfile="$INSTALL_PATH/bin/client.sh" stage="never" os="unix"/>           
             <executable targetfile="$INSTALL_PATH/bin/startup.sh" stage="never" os="unix"/>
             <executable targetfile="$INSTALL_PATH/bin/server.sh" stage="never" os="unix"/>

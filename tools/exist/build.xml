@@ -30,7 +30,7 @@
     <target name="cleanup" description="cleans target-dir from unneeded clutter">
         <move file="${webapp.dir}/WEB-INF/betterform-config.xml" todir="${target.dir}"/>
         <copy file="${webapp.dir}/WEB-INF/classes/META-INF/version.info" todir="${webapp.dir}"/>
-
+        
         <xslt in="${target.dir}/betterform-config.xml"
               out="${webapp.dir}/WEB-INF/betterform-config.xml"
               force="true"
@@ -64,7 +64,7 @@
                                                                commons-fileupload-* ,
                                                                commons-httpclient-* ,
                                                                activation-* ,
-                                                               mail-*"/>
+                                                               mail-*" />
         </delete>
     </target>
 
@@ -72,8 +72,8 @@
             description="creates a zip archive used by the extension-installer ant-file">
         <ant antfile="${web.dir}/build.xml" target="clean" dir="${web.dir}" inheritall="false"/>
         <ant antfile="${web.dir}/build.xml" target="build-dojo" dir="${web.dir}" inheritall="false">
-            <property name="target.dir" value="${target.dir}"/>
-            <property name="webapp.dir" value="${webapp.dir}"/>
+                <property name="target.dir" value="${target.dir}"/>
+                <property name="webapp.dir" value="${webapp.dir}"/>
         </ant>
         <antcall target="cleanup"/>
         <zip basedir="${webapp.dir}" zipfile="${webapp.dir}.zip"/>
@@ -100,18 +100,19 @@
     <target name="create-exist-extension-installer"
             description="creates a zip archive of the eXist-extension installer">
         <mkdir dir="${target.dir}/exist-extension-installer"/>
-        <zip basedir="${basedir}/betterform" zipfile="${target.dir}/exist-extension-installer/betterform.zip"/>
+      <zip basedir="${basedir}/betterform" zipfile="${target.dir}/exist-extension-installer/betterform.zip"/>
     </target>
 
-    <target name="deploy-into-installed-eXist"
-            description="copies betterFORM 'forms', 'resources' and 'Java classes' to the configured eXist xml db">
-        <available property="extensionInstalled" file="${exist.bfExtension.dir}/target/betterform/version.info"/>
+    <target name="deploy-into-installed-eXist" description="copies betterFORM 'forms', 'resources' and 'Java classes' to the configured eXist xml db">
+         <available property="extensionInstalled" file="${exist.bfExtension.dir}/target/betterform/version.info"/>
+	     <antcall target="install-into-eXist"/>
     </target>
 
     <!--todo: should depend on web build.xml to create a fully working debug copy to install-->
     <target name="install-into-eXist"
             description="deploys exploded betterFORM into eXist installation"
             unless="extensionInstalled">
+        <!-- <copy file="${web.dir}/src/main/resources/META-INF/version.info" todir="${exist.bfExtension.dir}"/> -->
 
         <echo  message="!!!!! You must have the betterFORM extension installed already !!!!!"/>
         <echo  message="!!!!! You must have the betterFORM extension installed already !!!!!"/>
@@ -119,8 +120,8 @@
         <!--<copy file="${core.dir}/src/main/resources/META-INF/version.info" todir="${exist.bfExtension.dir}"/>-->
 
         <ant antfile="${web.dir}/build.xml" target="deploy-resources" dir="${web.dir}" inheritall="false">
-            <property name="target.dir" value="${target.dir}"/>
-            <property name="webapp.dir" value="${webapp.dir}"/>
+                <property name="target.dir" value="${target.dir}"/>
+                <property name="webapp.dir" value="${webapp.dir}"/>
         </ant>
 
         <copy todir="${exist.webapp.dir}/forms" overwrite="true">
@@ -154,9 +155,9 @@
         WARNING: before execution configure the tasks.dir property to point to your
                 existing tasks
     -->
-    <target name="transformExistingTasks">
-        <mkdir dir="${tasks.dir}/../taskEmpty"/>
-        <mkdir dir="${tasks.dir}/../taskSorted"/>
+    <target  name="transformExistingTasks" >
+		<mkdir  dir="${tasks.dir}/../taskEmpty"/>
+		<mkdir  dir="${tasks.dir}/../taskSorted"/>
 
         <xslt basedir="${tasks.dir}"
               destdir="${tasks.dir}/../taskEmpty"

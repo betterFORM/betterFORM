@@ -1,7 +1,7 @@
 <project name="Installer" default="create-betterFormInstaller" basedir=".">
 
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
-
+    <property name="pass" value="betterform"/>
 
     <target name="clean">
         <delete dir="${basedir}/target"/>
@@ -9,7 +9,6 @@
     <target name="prepare" description="prepares all files needed for installer EXCEPT exist.war">
 
         <!-- ##### building betterForm war for deployment ##### -->
-        
         <mkdir dir="${basedir}/target"/>
         <ant antfile="../../web/build.xml" target="package" inheritall="false"/>
 
@@ -44,18 +43,67 @@
             <fileset dir="${basedir}/../../src/main/resources/scripts/betterform/"/>
         </copy>
 
-        <mkdir dir="${basedir}/target/bf-eXist/"/>
+       <antcall target="prepareExistBundle"/>
+
+    </target>
+
+    <target name="prepareExistBundle">
+         <mkdir dir="${basedir}/target/bf-eXist/"/>
+
         <java jar="${installer.exist.jar}"
               fork="true"
               spawn="false">
             <arg line="-p ${basedir}/target/bf-eXist/"/>
         </java>
+
+        <exec executable="${basedir}/target/bf-eXist/bin/setup.sh" osfamily="unix" spawn="true">
+            <arg value="betterform"/>
+        </exec>
+        <exec executable="cmd" osfamily="windows" spawn="true">
+            <arg value="/c"/>
+            <arg value="${basedir}/target/bf-eXist/bin/setup.bat"/>
+            <arg value="betterform"/>
+        </exec>
+
         <mkdir dir="${basedir}/target/bf-eXist/extensions/betterform"/>
+
+        <ant dir="${basedir}/../exist" target="package"/>
+
+
         <copy todir="${basedir}/target/bf-eXist/extensions/betterform">
             <fileset dir="${basedir}/../exist/betterform"/>
-          </copy>
-        <ant dir="${basedir}/target/bf-eXist/extensions/betterform/" target="install"/> 
+        </copy>
 
+        <mkdir dir="${basedir}/target/bf-eXist/extensions/betterform/target"/>
+        <copy todir="${basedir}/target/bf-eXist/extensions/betterform/target" file="${basedir}/../exist/target/betterform.zip"/>
+
+        <ant dir="${basedir}/target/bf-eXist/extensions/betterform/" target="install"/>
+
+        <copy todir="${basedir}/target/bf-eXist/extensions/betterform/target" file="${basedir}/../exist/target/xrx.zip"/>
+
+        <exec executable="${basedir}/target/bf-eXist/bin/startup.sh" osfamily="unix" spawn="true"/>
+        <exec executable="cmd" osfamily="windows" spawn="true">
+            <arg value="/c"/>
+            <arg value="${basedir}/target/bf-eXist/bin/startup.bat"/>
+        </exec>
+
+
+        <sleep seconds="20"/>
+
+        <ant dir="${basedir}/target/bf-eXist/extensions/betterform/" target="install-xrx"/>
+
+        <sleep seconds="20"/>
+
+        <exec executable="${basedir}/target/bf-eXist/bin/shutdown.sh" osfamily="unix">
+            <arg value="-p"/>
+            <arg value="${pass}"/>
+        </exec>
+        <exec executable="cmd" osfamily="windows">
+            <arg value="/c"/>
+            <arg value="${basedir}/target/bf-eXist/bin/shutdown.bat"/>
+            <arg value="-p"/>
+            <arg value="${pass}"/>
+        </exec>
     </target>
 
     <target name="create-betterFormInstaller"
