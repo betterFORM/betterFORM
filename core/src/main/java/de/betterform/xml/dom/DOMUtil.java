@@ -22,6 +22,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,10 +36,35 @@ import java.util.List;
 public class DOMUtil {
 
 
-    public static Node getFragment(Document in, String fragmentId) throws XFormsException {
+    public static Node getFragment(URI uri, InputStream xmlStream) throws XFormsException {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setNamespaceAware(true);
+        factory.setValidating(false);
+        Document document = null;
+        try {
+            document = parseInputStream(xmlStream, true, false);
+        } catch (ParserConfigurationException e) {
+            throw new XFormsException(e);
+        } catch (SAXException e) {
+            throw new XFormsException(e);
+        } catch (IOException e) {
+            throw new XFormsException(e);
+        }
 
-        Node node = XPathUtil.evaluateAsSingleNode(in,"//*[@id='" + fragmentId + "']");
-        // DOMUtil.prettyPrintDOM(node);
+        if (uri.getFragment() != null) {
+            String fragment = uri.getFragment();
+            if(fragment.indexOf("?") != -1){
+                fragment = fragment.substring(0,fragment.indexOf("?"));
+            }
+            return getFragment(document,fragment);
+        }
+
+        return document;
+    }
+
+
+    public static Node getFragment(Document in, String fragmentId) throws XFormsException {
+        Node node = XPathUtil.evaluateAsSingleNode(in, "//*[@id='" + fragmentId + "']");
         return node;
     }
 
@@ -536,6 +562,7 @@ public class DOMUtil {
     }
 
     // return the count of child elements
+
     public static int countChildElements(Node node) {
         NodeList nl = node.getChildNodes();
         int count = 0;
@@ -1029,11 +1056,11 @@ public class DOMUtil {
      */
     public static String getCanonicalPath(Node node) {
 
-        if (node == null){
+        if (node == null) {
             return "";
         }
 
-        if(node.getNodeType() == Node.DOCUMENT_NODE){
+        if (node.getNodeType() == Node.DOCUMENT_NODE) {
             return "/";
         }
 
@@ -1055,7 +1082,7 @@ public class DOMUtil {
             parent = ((Attr) node).getOwnerElement();
         }
 
-        if (parent == null || parent.getNodeType() == Node.DOCUMENT_NODE || parent.getNodeType() == Node.DOCUMENT_FRAGMENT_NODE ) {
+        if (parent == null || parent.getNodeType() == Node.DOCUMENT_NODE || parent.getNodeType() == Node.DOCUMENT_FRAGMENT_NODE) {
             canonPath = "/" + canonPath;
         } else {
             canonPath = DOMUtil.getCanonicalPath(parent) + "/" + canonPath;

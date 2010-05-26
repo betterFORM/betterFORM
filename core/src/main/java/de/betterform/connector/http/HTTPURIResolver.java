@@ -92,27 +92,9 @@ public class HTTPURIResolver extends AbstractHTTPConnector implements URIResolve
     }
 
     private Object buildDocument(URI uri, InputStream responseStream) throws SAXException, IOException, ParserConfigurationException, XFormsException {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setNamespaceAware(true);
-        factory.setValidating(false);
-
-        Document document = factory.newDocumentBuilder().parse(responseStream);
-
-        if (uri.getFragment() != null) {
-            String fragment = uri.getFragment();
-            if(fragment.indexOf("?") != -1){
-                fragment = fragment.substring(0,fragment.indexOf("?"));
-            }
-            //todo: allow access to fragments by other means than using getElementById
-            Node resultNode = XPathUtil.evaluateAsSingleNode(document,"//*[@id='" + fragment + "']");
-            if(LOGGER.isDebugEnabled()){
-                DOMUtil.prettyPrintDOM(resultNode);
-            }
-            return resultNode;
-        }
-
-        return document;
+        return DOMUtil.getFragment(uri, responseStream);
     }
+
 
     private String inputStreamToString(InputStream in) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
