@@ -133,7 +133,6 @@
                 <xsl:call-template name="addSimileTimelineImports" />
             </xsl:if>
 
-            <xsl:call-template name="copyInlineScript"/>
             <script type="text/javascript">
                 <xsl:call-template name="addDojoRequires"/>
 
@@ -189,6 +188,7 @@
                 });
             </script><xsl:text>
 </xsl:text>
+            <xsl:call-template name="copyInlineScript"/>
 
         </head>
     </xsl:template>
