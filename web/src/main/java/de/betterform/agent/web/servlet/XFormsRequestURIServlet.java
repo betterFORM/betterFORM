@@ -55,19 +55,22 @@ public class XFormsRequestURIServlet extends HttpServlet {
 
         //locate it
         String formRequestURI = request.getRequestURI().substring(request.getContextPath().length()+1);
-        File xfDoc = new File(getServletContext().getRealPath(formRequestURI));
-        try {
-            doc = DOMUtil.parseXmlFile(xfDoc, true, false);
-        } catch (ParserConfigurationException e) {
-            throw new ServletException(e);
-        } catch (SAXException e) {
-            throw new ServletException(e);
-        }
+        // only handle .xhtml files
+        if(formRequestURI.endsWith(".xhtml")){
+            File xfDoc = new File(getServletContext().getRealPath(formRequestURI));
+            try {
+                //parse it
+                doc = DOMUtil.parseXmlFile(xfDoc, true, false);
+            } catch (ParserConfigurationException e) {
+                throw new ServletException(e);
+            } catch (SAXException e) {
+                throw new ServletException(e);
+            }
 
-        //parse it
-        request.setAttribute(WebFactory.XFORMS_NODE, doc);
-        //do the Filter twist
-        response.getOutputStream().close();
+            request.setAttribute(WebFactory.XFORMS_NODE, doc);
+            //do the Filter twist
+            response.getOutputStream().close();
+        }
     }
 
 }
