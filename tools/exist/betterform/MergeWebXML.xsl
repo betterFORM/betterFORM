@@ -103,7 +103,7 @@
 
         <servlet-mapping>
             <servlet-name>XFormsRequestURI</servlet-name>
-            <url-pattern>/forms/*</url-pattern>
+            <url-pattern>*.xhtml</url-pattern>
         </servlet-mapping>
 
         <error-page>
