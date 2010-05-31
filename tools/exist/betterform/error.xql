@@ -1,14 +1,17 @@
 xquery version "1.0";
-
+import module namespace request="http://exist-db.org/xquery/request";
 import module namespace session="http://exist-db.org/xquery/session";
 
-let exceptionMessage := session:get-attribute("betterform.exception")
+declare option exist:serialize "method=html media-type=text/html";
 
+let $exceptionMessage := session:get-attribute("betterform.exception")
 
+return
 <html>
 <head>
 	<title>betterFORM Error Page</title>
 	<style>
+	<!--
 	body{
         font-family:Tahoma;
         font-size:14pt;
@@ -46,19 +49,19 @@ let exceptionMessage := session:get-attribute("betterform.exception")
         margin-left:0;
         margin-bottom:0;
     }
+    -->
 	</style>
 </head>
 <body>
 <div class="errorContent">
-    <img src="<%=request.getContextPath()%>/resources/images/error.png" width="24" height="24" alt="Error" style="float:left;padding-right:5px;"/>
     <div class="message1">
         Oops, an error occured...<br/>
 
     </div>
 
-    <div class="message2">{$exceptionMessage}/div>
+    <div class="message2">{$exceptionMessage}</div>
     <form>
-        <input type="button" value="Back" onClick="history.back()">
+        <input type="button" value="Back" onClick="history.back()"/>
     </form>
 </div>
 

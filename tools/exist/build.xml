@@ -148,6 +148,10 @@
             <fileset dir="${target.dir}/betterform/WEB-INF/classes"/>
         </copy>
 
+        <!--copy error page    -->
+        <copy todir="${exist.webapp.dir}/xquery">
+            <fileset file="${exist.bfExtension.home}/error.xql"/>
+        </copy>
     </target>
 
     <!--

@@ -108,11 +108,11 @@
 
         <error-page>
             <exception-type>javax.servlet.ServletException</exception-type>
-            <location>/jsp/error.jsp</location>
+            <location>/xquery/error.xql</location>
         </error-page>
         <error-page>
             <error-code>500</error-code>
-            <location>/jsp/error.jsp</location>
+            <location>/xquery/error.xsl</location>
         </error-page>
     </xsl:template>
 
