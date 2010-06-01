@@ -5,6 +5,11 @@ import module namespace session="http://exist-db.org/xquery/session";
 declare option exist:serialize "method=html media-type=text/html";
 
 let $exceptionMessage := session:get-attribute("betterform.exception")
+let $message1 := substring-before($exceptionMessage,"::")
+
+let $message2 := if ( string-length(substring-after($exceptionMessage,"::")) != 0)
+                then substring-after($exceptionMessage,"::")
+                else "unknown"
 
 return
 <html>
@@ -15,7 +20,7 @@ return
 	body{
         font-family:Tahoma;
         font-size:14pt;
-        background:url('<%=request.getContextPath()%>/resources/images/bgOne.gif') repeat-x scroll;
+        background:url('/exist/resources/images/bgOne.gif') repeat-x scroll;
     }
 	pre { font-size:8pt; }
     .errorContent{
@@ -30,6 +35,7 @@ return
         display:block;
         color:steelblue;
         font-weight:bold;
+        margin-bottom:20px;
     }
     .message2{
         display:block;
@@ -53,18 +59,17 @@ return
 	</style>
 </head>
 <body>
-<div class="errorContent">
-    <div class="message1">
-        Oops, an error occured...<br/>
+    <div class="errorContent">
+        <div class="message1">
+            Oops, an error occured...<br/>
+        </div>
 
+        <div class="message1">{$message1}</div>
+        <div class="message2">XPath: {$message2}</div>
+        <form>
+            <input type="button" value="Back" onClick="history.back()"/>
+        </form>
     </div>
-
-    <div class="message2">{$exceptionMessage}</div>
-    <form>
-        <input type="button" value="Back" onClick="history.back()"/>
-    </form>
-</div>
-
 </body>
 </html>
 

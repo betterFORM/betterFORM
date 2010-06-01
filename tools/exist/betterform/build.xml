@@ -72,6 +72,9 @@
 
         <antcall target="patchStartConfig"/>
 
+        <copy todir="${exist.rootdir}/webapp/xquery">
+            <fileset file="${basedir}/error.xql"/>
+        </copy>
     </target>
 
     <target name="install-xrx" description="installs sample XRX applications">
@@ -123,6 +126,9 @@
         <delete file="${exist.rootdir}/webapp/WEB-INF/log4j.dtd" failonerror="false"/>
         <delete file="${exist.rootdir}/webapp/WEB-INF/log4j.xml" failonerror="false"/>
         <delete file="${exist.rootdir}/webapp/WEB-INF/web.xml.original" failonerror="false"/>
+
+        <!--delete error page-->
+        <delete file="${exist.rootdir}/webapp/xquery/error.xql" failonerror="false"/>
 
         <!--delete sample file-->
         <delete file="${exist.rootdir}/webapp/xquery/xfGuess.xql" failonerror="false"/>

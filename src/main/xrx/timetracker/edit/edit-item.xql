@@ -71,6 +71,7 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
 
                  <xf:instance id="i-project"     src="/exist/rest/db/betterform/apps/timetracker/data/project.xml"/>
                  <xf:instance id="i-worker"  	 src="/exist/rest/db/betterform/apps/timetracker/data/worker.xml"/>
+                 <xf:instance id="i-tasktype"  	 src="/exist/rest/db/betterform/apps/timetracker/data/tasktype.xml"/>
                  <xf:instance id="i-controller"  src="/exist/rest/db/betterform/apps/timetracker/data/controller.xml"/>
 
                  <xf:instance id="tmp">
@@ -259,18 +260,10 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                     <xf:label>What</xf:label>
                     <xf:alert>What value is missing</xf:alert>
                     <xf:hint>what has been done?</xf:hint>
-                    <xf:item>
-                        <xf:label>Bug Fix</xf:label>
-                        <xf:value>bugfix</xf:value>
-                    </xf:item>
-                    <xf:item>
-                        <xf:label>Feature</xf:label>
-                        <xf:value>feature</xf:value>
-                    </xf:item>
-                    <xf:item>
-                        <xf:label>Support</xf:label>
-                        <xf:value>support</xf:value>
-                    </xf:item>
+                    <xf:itemset nodeset="instance('i-tasktype')/type">
+                        <xf:label ref="."/>
+                        <xf:value ref="."/>
+                    </xf:itemset>
                 </xf:select>
 
                 <xf:select1 ref="status">

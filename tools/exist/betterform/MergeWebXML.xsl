@@ -106,6 +106,11 @@
             <url-pattern>*.xhtml</url-pattern>
         </servlet-mapping>
 
+        <servlet-mapping>
+               <servlet-name>XQueryServlet</servlet-name>
+               <url-pattern>*.xql</url-pattern>
+        </servlet-mapping>
+
         <error-page>
             <exception-type>javax.servlet.ServletException</exception-type>
             <location>/xquery/error.xql</location>

@@ -49,7 +49,6 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                 }
 
                 xfReadySubscribers = dojo.subscribe("/xf/ready", function(data) {
-                    dojo.style(targetMount, "opacity", 0);
                     dojo.fadeIn({
                         node: targetMount,
                         duration:100

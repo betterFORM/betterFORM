@@ -150,7 +150,7 @@
 
         <!--copy error page    -->
         <copy todir="${exist.webapp.dir}/xquery">
-            <fileset file="${exist.bfExtension.home}/error.xql"/>
+            <fileset file="${basedir}/betterform/error.xql"/>
         </copy>
     </target>
 
