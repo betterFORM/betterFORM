@@ -351,7 +351,7 @@ declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
                     </xf:output>
                 </div>
 
-                <div id="taskDialog" dojotype="dijit.Dialog" style="width:610px;height:480px;" title="Task">
+                <div id="taskDialog" dojotype="dijit.Dialog" style="width:610px;height:480px;" title="Task" autofocus="false">
                     <div id="embedDialog"></div>
                 </div>
 

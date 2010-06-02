@@ -43,7 +43,7 @@ dojo.declare("betterform.ui.common.ToolTipAlert",
                 
                 dojo.fadeOut({
                     node:alertTooltip.domNode,
-                    duration:3000,
+                    duration:8000,
                     invalidControl:control.controlValue,
                     onBegin:function() {
                         // console.debug("this.invalidControl: ",this.invalidControl);

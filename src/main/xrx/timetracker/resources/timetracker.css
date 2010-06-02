@@ -377,3 +377,7 @@ tr.xfRepeatItem  td {
 #checkBoxSelectors{
     padding-bottom:2px;
 }
+.InlineRoundBordersAlert .suppressInfo .info{
+	position:absolute;
+	left:-1000px;
+}

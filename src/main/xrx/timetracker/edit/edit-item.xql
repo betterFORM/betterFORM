@@ -36,7 +36,6 @@ declare function local:mode() as xs:string{
              href="/exist/rest/db/betterform/apps/timetracker/resources/timetracker.css"/>
        <link rel="stylesheet" type="text/css"
              href="/exist/rest/db/betterform/apps/timetracker/resources/InlineRoundBordersAlert.css"/>
-       
     </head>
     <body class="tundra InlineRoundBordersAlert">
     	<div id="xforms">
@@ -138,9 +137,6 @@ declare function local:mode() as xs:string{
                                replace="instance"
                                instance="i-task">
                 </xf:submission>
-
-
-
             <xf:action ev:event="xforms-ready" >
                 <xf:send submission="s-get-task" if="'{local:mode()}' = 'edit'"/>
                 <xf:setfocus control="date"/>
@@ -148,7 +144,7 @@ declare function local:mode() as xs:string{
 
             </xf:model>
         </div>
-        <xf:group ref="task">
+        <xf:group ref="task" class="{if(local:mode()='edit') then 'suppressInfo' else ''}">
             <xf:group id="add-task-table" appearance="bf:verticalTable">
 
                 <xf:input id="date" ref="date">
