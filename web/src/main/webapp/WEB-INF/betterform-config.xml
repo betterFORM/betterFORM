@@ -45,7 +45,7 @@
         <!--
                    Language selection rules at runtime:
                    [1] 'lang' parameter on Url e.g. host:8888/foo.html?lang=en
-                   [2] presense of a 'lang' request Attribute
+                   [2] presence of a 'lang' request Attribute
                    [3] value of 'preselect-language' property below
                    [4] if above not present use accept-language header sent by browser
                -->
@@ -60,7 +60,7 @@
                 text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,* /*;q=0.5
                 image/png,* /*;q=0.5
         -->
-        <property name="acceptContentTypePattern" value="application/xhtml"
+        <property name="acceptContentTypePattern" value="application/xhtml\+html"
                   description="Based on this property, the XFormsFilter decide if should start XForms processing. Value
                              can be 'all_xml' (WebFactory.ALL_XML_TYPES) to accept all xml content types or a reg
                              expression to allow only certain ones."/>

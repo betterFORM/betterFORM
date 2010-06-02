@@ -31,12 +31,14 @@
         <move file="${webapp.dir}/WEB-INF/betterform-config.xml" todir="${target.dir}"/>
         <copy file="${webapp.dir}/WEB-INF/classes/META-INF/version.info" todir="${webapp.dir}"/>
         
+<!--
         <xslt in="${target.dir}/betterform-config.xml"
               out="${webapp.dir}/WEB-INF/betterform-config.xml"
               force="true"
               style="${basedir}/UpdateBetterFORMConfig.xsl">
             <classpath refid="generator.libs"/>
         </xslt>
+-->
 
         <delete includeemptydirs="true" failonerror="false">
             <!--delete default betterform-config.xml from target-->

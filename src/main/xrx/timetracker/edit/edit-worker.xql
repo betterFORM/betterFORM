@@ -19,8 +19,6 @@ declare function local:mode() as xs:string{
 
 
 
-(: request:set-attribute("betterform.filter.parseResponseBody", "true"), :)
-request:set-attribute("betterform.filter.parseResponseBody", "true"),
 <html   xmlns="http://www.w3.org/1999/xhtml"
         xmlns:xf="http://www.w3.org/2002/xforms"
         xmlns:exist="http://exist.sourceforge.net/NS/exist"

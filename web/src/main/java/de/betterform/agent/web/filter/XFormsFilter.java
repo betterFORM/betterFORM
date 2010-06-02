@@ -342,7 +342,8 @@ public class XFormsFilter implements Filter {
         }
         //[6] if inclusion is configured we have to process anyway
         try {
-            if(Config.getInstance().getProperty("webprocessor.doIncludes").equals("true")){
+            if(Config.getInstance().getProperty("webprocessor.doIncludes").equals("true") &&
+                bufResponse.hasXMLContentType()){
             return true;
             }
         } catch (XFormsConfigException e) {

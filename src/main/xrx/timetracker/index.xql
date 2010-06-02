@@ -1,7 +1,6 @@
 xquery version "1.0";
-declare option exist:serialize "method=xhtml media-type=text/xml";
+declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
 
-request:set-attribute("betterform.filter.parseResponseBody", "true"),
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns:ev="http://www.w3.org/2001/xml-events"

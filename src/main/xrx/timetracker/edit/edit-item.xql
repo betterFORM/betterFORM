@@ -24,8 +24,6 @@ declare function local:mode() as xs:string{
 
 
 
-(: request:set-attribute("betterform.filter.parseResponseBody", "true"), :)
-request:set-attribute("betterform.filter.parseResponseBody", "true"),
 <html   xmlns="http://www.w3.org/1999/xhtml"
         xmlns:xf="http://www.w3.org/2002/xforms"
         xmlns:exist="http://exist.sourceforge.net/NS/exist"
@@ -145,12 +143,14 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
 
             <xf:action ev:event="xforms-ready" >
                 <xf:send submission="s-get-task" if="'{local:mode()}' = 'edit'"/>
+                <xf:setfocus control="date"/>
             </xf:action>
 
             </xf:model>
         </div>
         <xf:group ref="task">
             <xf:group id="add-task-table" appearance="bf:verticalTable">
+
                 <xf:input id="date" ref="date">
                     <xf:label>Date</xf:label>
                     <xf:alert>a valid Date is required</xf:alert>
@@ -167,7 +167,7 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                     </xf:itemset>
                 </xf:select1>
 
-                <xf:select1 ref="duration/@hours">
+                <xf:select1 ref="duration/@hours" appearance="bf:dummy">
                     <xf:label/>
                     <xf:hint>how many hours did it take?</xf:hint>
                     <xf:alert>Hours are missing</xf:alert>
@@ -225,7 +225,7 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
                     </xf:item>
                 </xf:select1>
 
-                <xf:select1 ref="duration/@minutes" appearance="mininmal">
+                <xf:select1 ref="duration/@minutes" appearance="bf:dummy">
                     <xf:label/>
                     <xf:alert>minutes are missing</xf:alert>
                     <xf:item>
