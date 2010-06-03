@@ -13,10 +13,11 @@
 
     <info>
         <appname>betterForm</appname>
-        <appversion>3.0</appversion>
+        <appversion>3.1</appversion>
         <url>http://www.betterform.de</url>
         <javaversion>1.5</javaversion>
-        <webdir>http://localhost:8080/packs</webdir>
+        <!--<webdir>http://localhost:8080/packs</webdir>-->
+        <webdir>http://www.betterform.de/packs</webdir>
     </info>
 
     <conditions>
@@ -145,8 +146,8 @@
 
     <packs>
 
-        <pack name="betterFORM" id="betterForm" required="no" preselected="no" condition="bf-install">
-            <description>betterFORM 3.0 XForms Engine</description>
+        <pack name="betterFORM WAR" id="betterForm" required="no" preselected="no" condition="bf-install">
+            <description>betterFORM 3.0 XForms Engine packaged as WAR</description>
             <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/betterform"/>
         </pack>
 
@@ -158,8 +159,8 @@ FOR LATER: installinig the war should switch the above pack off. Did not yet fou
         </pack>
 -->
 
-        <pack id="jetty" name="Jetty" required="no" preselected="no" condition="jetty-install">
-            <description>Jetty Servlet Container Ver. 6.1.22</description>
+        <pack id="jetty" name="betterFORM standalone" required="no" preselected="no" condition="jetty-install">
+            <description>betterFORM standalone running on jetty webcontainer</description>
             <fileset dir="jetty/betterform" targetdir="$INSTALL_PATH" includes="*/**"/>
 
             <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/web/root"/>
@@ -172,8 +173,8 @@ FOR LATER: installinig the war should switch the above pack off. Did not yet fou
             <file src="exist.war" unpack="true" targetdir="$INSTALL_PATH/web/exist"/>
         </pack>
         -->
-        <pack name="betterFORM-eXist-bundle" id="betterFORM-eXist-bundle" required="no" preselected="yes" condition="exist-install">
-            <description>betterFORM bundled as extension for eXist XML DB</description>
+        <pack name="betterFORM XRX" id="betterFORM-eXist-bundle" required="no" preselected="yes" condition="exist-install">
+            <description>betterFORM and eXist bundled</description>
             
             <fileset targetdir="$INSTALL_PATH" dir="bf-eXist"/>
 
@@ -206,7 +207,7 @@ FOR LATER: installinig the war should switch the above pack off. Did not yet fou
         </pack>
          
         <pack name="DeveloperPack" required="no" preselected="no" condition="container">
-            <description>adds uncompiled Dojo for full debug capabilities</description>
+            <description>adds uncompressed Dojo for full debug capabilities</description>
            <fileset dir="dojo-release-1.3.3-src"
                      targetdir="$INSTALL_PATH/betterform/resources/scripts"
                      condition="bf"
@@ -238,7 +239,7 @@ FOR LATER: installinig the war should switch the above pack off. Did not yet fou
         </pack>
 
         <pack name="Forms" required="no" condition="container">
-            <description>betterForm's demo, reference and test forms</description>
+            <description>betterFORM demos, reference and test forms</description>
             <fileset dir="../../../src/main/xforms/demo" targetdir="$INSTALL_PATH/betterform/forms/demo"
                      excludes=""
                   condition="bf"/>

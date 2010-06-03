@@ -840,7 +840,8 @@ dojo.declare("betterform.FluxProcessor",
             var targetName = xmlEvent.contextInfo.targetName;
             if(targetName != "group" && targetName != "repeat" && targetName != "switch" && targetName!="case"){
                 xfControlId = xmlEvent.contextInfo.targetId + "-value";
-                dojo.byId(xfControlId).focus();
+//                dojo.byId(xfControlId).focus();
+                dijit.byId(xfControlId).handleOnFocus();
             }
         }
         catch(ex){

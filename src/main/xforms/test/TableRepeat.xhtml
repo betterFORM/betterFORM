@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:xf="http://www.w3.org/2002/xforms"
+	  xmlns:ev="http://www.w3.org/2001/xml-events">
+	<head>
+		<title>TableRepeat</title>
+	</head>
+	<body>
+		<div id="xforms">
+			<div style="display:none">
+				<xf:model>
+
+					<xf:instance>
+						<data xmlns="">
+							<items>
+								<item1>1</item1>
+								<item2>2</item2>
+								<item3>3</item3>
+								<item4>4</item4>
+								<item5>5</item5>
+							</items>
+							<items>
+								<item1>1</item1>
+								<item2>2</item2>
+								<item3>3</item3>
+								<item4>4</item4>
+								<item5>5</item5>
+							</items>
+							<items>
+								<item1>1</item1>
+								<item2>2</item2>
+								<item3>3</item3>
+								<item4>4</item4>
+								<item5>5</item5>
+							</items>
+						</data>
+					</xf:instance>
+
+					<!--<xf:instance id="template">
+						<data xmlns="">
+							<items>
+								<item1>1</item1>
+								<item2>2</item2>
+								<item3>3</item3>
+								<item4>4</item4>
+								<item5>5</item5>
+							</items>
+						</data>
+					</xf:instance>-->
+
+					<xf:instance id="labels">
+						<data xmlns="">
+							<item1>11</item1>
+							<item2>22</item2>
+							<item3>33</item3>
+							<item4>44</item4>
+							<item5>55</item5>
+						</data>
+					</xf:instance>
+
+				</xf:model>
+			</div>
+
+			<xf:repeat nodeset="items">
+				<xf:output ref="item1">
+					<xf:label>item 1</xf:label>
+				</xf:output>
+				<xf:output ref="item2">
+					<xf:label>item 2</xf:label>
+				</xf:output>
+				<xf:output ref="item3">
+					<xf:label>item 3</xf:label>
+				</xf:output>	
+			</xf:repeat>
+
+<!--
+			<xf:repeat nodeset="items">
+				<xf:output ref="item1">
+					<xf:label>item 1</xf:label>
+				</xf:output>
+				<xf:output ref="item2">
+					<xf:label>item 2</xf:label>
+				</xf:output>
+				<xf:output ref="item3">
+					<xf:label>item 3</xf:label>
+				</xf:output>
+			</xf:repeat>
+-->
+
+			<table>
+				<thead>
+					<tr>
+						<th>
+							<xf:output ref="instance('labels')/item1"/>
+						</th>
+						<th>
+							<xf:output ref="instance('labels')/item2"/>
+						</th>
+					</tr>
+				</thead>
+				<tbody id="r-attrs" xf:repeat-nodeset="items">
+					<tr>
+						<td id="foo" class="one" style="color:red;">
+							<xf:output ref="item1"/>
+						</td>
+						<td class="two" style="color:blue;">
+							<xf:output ref="item2"/>
+						</td>
+					</tr>
+				</tbody>
+
+			</table>
+
+			<xf:trigger>
+				<xf:label>insert</xf:label>
+				<xf:action>
+					<xf:insert nodeset="items" />
+				</xf:action>
+			</xf:trigger>
+		</div>
+	</body>
+</html>

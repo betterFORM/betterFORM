@@ -48,7 +48,7 @@
     </target>
 
     <target name="prepareExistBundle">
-         <mkdir dir="${basedir}/target/bf-eXist/"/>
+        <mkdir dir="${basedir}/target/bf-eXist/"/>
 
         <java jar="${installer.exist.jar}"
               fork="true"
@@ -77,22 +77,32 @@
         <mkdir dir="${basedir}/target/bf-eXist/extensions/betterform/target"/>
         <copy todir="${basedir}/target/bf-eXist/extensions/betterform/target" file="${basedir}/../exist/target/betterform.zip"/>
 
-        <ant dir="${basedir}/target/bf-eXist/extensions/betterform/" target="install"/>
 
+        <ant dir="${basedir}/target/bf-eXist/extensions/betterform/" target="install"/>
+        <!--
         <copy todir="${basedir}/target/bf-eXist/extensions/betterform/target" file="${basedir}/../exist/target/xrx.zip"/>
+        -->
+
+         <copy todir="${basedir}/target/bf-eXist/extensions/betterform/target" includeemptydirs="true" overwrite="true">
+            <fileset file="${basedir}/../exist/target/xrx.zip"/>
+        </copy>
 
         <exec executable="${basedir}/target/bf-eXist/bin/startup.sh" osfamily="unix" spawn="true"/>
+
         <exec executable="cmd" osfamily="windows" spawn="true">
             <arg value="/c"/>
             <arg value="${basedir}/target/bf-eXist/bin/startup.bat"/>
         </exec>
 
-
-        <sleep seconds="20"/>
+        <sleep seconds="60"/>
 
         <ant dir="${basedir}/target/bf-eXist/extensions/betterform/" target="install-xrx"/>
 
-        <sleep seconds="20"/>
+        <sleep seconds="10"/>
+        
+        <ant dir="${basedir}/target/bf-eXist/extensions/betterform/" target="install-xrx"/>
+
+        <sleep seconds="10"/>
 
         <exec executable="${basedir}/target/bf-eXist/bin/shutdown.sh" osfamily="unix">
             <arg value="-p"/>

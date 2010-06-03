@@ -39,6 +39,9 @@
             <classpath refid="generator.libs"/>
         </xslt>
 -->
+        <copy todir="${webapp.dir}/WEB-INF/">
+            <fileset file="${target.dir}/betterform-config.xml"/>
+        </copy>
 
         <delete includeemptydirs="true" failonerror="false">
             <!--delete default betterform-config.xml from target-->
