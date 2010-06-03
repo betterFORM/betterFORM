@@ -1,3 +1,12 @@
+betterFORM lightSteelBlue (Version 3.1) XRX Edition
+-------------------------------------------------------
+betterFORM lightSteelBlue XRX edition adds a convenient bundling of the well-known eXist XML database with the betterFORM
+XForms engine. This release allows to add betterFORM as a eXist extension to an existing installation or start from
+scratch with the easy to install bundle.
+
+A demo application shows how to dynamically generate XForms from XQuery, query the database and combine the capabilities
+of eXist and betterFORM in an attractive single-page application.
+
 betterFORM lightSteelBlue (Version 3.0)
 -------------------------------------------------------
 betterFORM lightSteelBlue is a full W3C XForms 1.1 implementation which has intensively  been tested against
