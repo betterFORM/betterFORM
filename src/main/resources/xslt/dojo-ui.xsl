@@ -992,7 +992,6 @@
             <xsl:element name="{local-name(.)}" namespace="">
                 <xsl:attribute name="id"><xsl:value-of select="$id"/>-prototype</xsl:attribute>
                 <xsl:attribute name="class">xfRepeatPrototype xfDisabled xfReadWrite xfOptional xfValid <xsl:value-of select="$col-classes"/></xsl:attribute>
-                <xsl:attribute name="style">display:none;</xsl:attribute>
                 <xsl:apply-templates select="*" mode="repeated-compact-prototype"/>
             </xsl:element>
         </xsl:for-each>
