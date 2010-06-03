@@ -413,7 +413,7 @@
     </xsl:template>
 
     <!-- overridden control template for compact repeat -->
-    <xsl:template match="xforms:input|xforms:output|xforms:range|xforms:secret|xforms:select|xforms:select1|xforms:textarea|xforms:upload" mode="repeated-compact-prototype">
+    <xsl:template match="xforms:input|xforms:output|xforms:range|xforms:secret|xforms:select|xforms:select1|xforms:textarea|xforms:upload" mode="repeated-compact-prototype" priority="10">
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="control-classes">
             <xsl:call-template name="assemble-control-classes"/>
@@ -452,7 +452,7 @@
 
 	</xsl:template>
 
-    <xsl:template match="xforms:group" mode="repeated-compact-prototype">
+    <xsl:template match="xforms:group" mode="repeated-compact-prototype" priority="10">
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="control-classes">
             <xsl:call-template name="assemble-control-classes"/>
@@ -479,7 +479,7 @@
 
     </xsl:template>
 
-    <xsl:template match="xforms:switch" mode="repeated-compact-prototype">
+    <xsl:template match="xforms:switch" mode="repeated-compact-prototype" priority="10">
             <xsl:variable name="switch-id" select="@id"/>
             <xsl:variable name="switch-classes">
                 <xsl:call-template name="assemble-compound-classes">
@@ -492,7 +492,7 @@
     </xsl:template>
 
 
-    <xsl:template match="xforms:case[bf:data/@bf:selected='true']" mode="repeated-compact-prototype">
+    <xsl:template match="xforms:case[bf:data/@bf:selected='true']" mode="repeated-compact-prototype" priority="10">
         <xsl:variable name="case-id" select="@id"/>
         <xsl:variable name="case-classes" select="'xfCase xfSelectedCase'"/>
 
@@ -502,7 +502,7 @@
     </xsl:template>
 
     <!-- ### DE-SELECTED/NON-SELECTED CASE ### -->
-    <xsl:template match="xforms:case" mode="repeated-compact-prototype">
+    <xsl:template match="xforms:case" mode="repeated-compact-prototype" priority="10">
         <!-- render only in scripted environment -->
         <xsl:variable name="case-id" select="@id"/>
         <xsl:variable name="case-classes" select="'xfCase xfDeselectedCase'"/>
@@ -515,7 +515,7 @@
 
 
 
-    <xsl:template match="xforms:repeat" mode="repeated-compact-prototype">
+    <xsl:template match="xforms:repeat" mode="repeated-compact-prototype" priority="10">
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="control-classes">
             <xsl:call-template name="assemble-control-classes"/>
@@ -528,7 +528,7 @@
     </xsl:template>
 
     
-    <xsl:template match="xforms:trigger" mode="repeated-compact-prototype">
+    <xsl:template match="xforms:trigger" mode="repeated-compact-prototype" priority="10">
             <xsl:variable name="id" select="@id"/>
             <xsl:variable name="appearance">
                 <xsl:choose>
@@ -554,7 +554,7 @@
 
     <xsl:template match="xforms:input|xforms:output|xforms:range|xforms:secret|xforms:select|xforms:select1|xforms:textarea|xforms:upload"
                   mode="repeated-full-prototype"
-                  priority="10">
+                  priority="20">
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="control-classes">
             <xsl:call-template name="assemble-control-classes"/>
@@ -924,6 +924,7 @@
 
     <!-- ### FOREIGN NAMESPACE REPEAT ### -->
     <xsl:template match="*[@xforms:repeat-bind]|*[@xforms:repeat-nodeset]|@repeat-bind|@repeat-nodeset" name="generic-repeat">
+        <xsl:variable name="repeat-id" select="@id"/>
         <xsl:variable name="repeat-index" select="bf:data/@bf:index"/>
         <xsl:variable name="repeat-classes">
             <xsl:call-template name="assemble-compound-classes">
@@ -931,26 +932,101 @@
             </xsl:call-template>
         </xsl:variable>
 
-
          <xsl:element name="{local-name(.)}" namespace="">
+                <xsl:attribute name="repeatId"><xsl:value-of select="$repeat-id"/></xsl:attribute>
+                <xsl:attribute name="jsId"><xsl:value-of select="@id"/></xsl:attribute>
+                <xsl:attribute name="dojoType">betterform.ui.container.Repeat</xsl:attribute>
+                <xsl:attribute name="class"><xsl:value-of select="$repeat-classes"/></xsl:attribute>
              <xsl:copy-of select="@*"/>
 
-             <xsl:for-each select="xforms:group[@appearance='repeated']">
-                 <xsl:variable name="repeat-item-id" select="@id"/>
+            <xsl:if test="not(ancestor::xforms:repeat)">
+                <!-- generate prototype(s) for scripted environment -->
+                <xsl:for-each select="bf:data/xforms:group[@appearance='repeated']">
+                    <xsl:call-template name="processTableRepeatPrototype">
+                        <xsl:with-param name="id" select="$repeat-id"/>
+                    </xsl:call-template>
+                </xsl:for-each>
+                <xsl:for-each select="bf:data/xforms:group[@appearance='repeated']//xforms:repeat">
+                    <xsl:call-template name="processRepeatPrototype"/>
+                </xsl:for-each>
+                <xsl:for-each select="bf:data/xforms:group[@appearance='repeated']//xforms:itemset">
+                    <xsl:call-template name="processItemsetPrototype"/>
+                </xsl:for-each>
+            </xsl:if>
+
+            <xsl:for-each select="xforms:group[@appearance='repeated']">
+                    <xsl:variable name="id" select="@id"/>
+
                  <xsl:variable name="repeat-item-classes">
                      <xsl:call-template name="assemble-repeat-item-classes">
                          <xsl:with-param name="selected" select="$repeat-index=position()"/>
                      </xsl:call-template>
                  </xsl:variable>
 
-                 <xsl:for-each select="*">
-                     <xsl:apply-templates select="." mode="repeated-compact-prototype"/>
+                    <xsl:for-each select="xhtml:tr">
+
+                        <tr repeatItemId="{$id}"
+                            class="{$repeat-item-classes}"
+                            dojoType="betterform.ui.container.RepeatItem"
+                            appearance="compact">
+                            <xsl:apply-templates select="*" mode="compact-repeat"/>
+                        </tr>
                  </xsl:for-each>
              </xsl:for-each>
          </xsl:element>
-
     </xsl:template>
 
+    <xsl:template name="processTableRepeatPrototype">
+        <xsl:param name="id"/>
+        <xsl:variable name="col-classes">
+            <xsl:choose>
+                <xsl:when test="./bf:data/@bf:enabled='false'">
+                    <xsl:value-of select="concat('caTableCol-',position(),' ','xfDisabled')"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="concat('caTableCol-',position())"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:for-each select="*">
+            <xsl:element name="{local-name(.)}" namespace="">
+                <xsl:attribute name="id"><xsl:value-of select="$id"/>-prototype</xsl:attribute>
+                <xsl:attribute name="class">xfRepeatPrototype xfDisabled xfReadWrite xfOptional xfValid <xsl:value-of select="$col-classes"/></xsl:attribute>
+                <xsl:attribute name="style">display:none;</xsl:attribute>
+                <xsl:apply-templates select="*" mode="repeated-compact-prototype"/>
+            </xsl:element>
+        </xsl:for-each>
+    </xsl:template>
+
+    <xsl:template match="*|@*|text()|comment()" mode="repeated-compact-prototype">
+        <xsl:choose>
+            <xsl:when test="namespace-uri(.)='http://www.w3.org/1999/xhtml'">
+                <xsl:element name="{local-name(.)}" namespace="">
+                    <xsl:apply-templates select="*|@*|text()|comment()" mode="repeated-compact-prototype"/>
+                </xsl:element>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:copy>
+                    <xsl:apply-templates select="*|@*|text()|comment()" mode="repeated-compact-prototype"/>
+                </xsl:copy>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+     <xsl:template match="*|@*|text()|comment()" mode="compact-repeat">
+        <xsl:choose>
+            <xsl:when test="namespace-uri(.)='http://www.w3.org/1999/xhtml'">
+                <xsl:element name="{local-name(.)}" namespace="">
+                    <xsl:apply-templates select="*|@*|text()|comment()" mode="compact-repeat"/>
+                </xsl:element>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:copy>
+                    <xsl:apply-templates select="*|@*|text()|comment()" mode="compact-repeat"/>
+                </xsl:copy>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
 
     <!-- repeat prototype helper -->
     <xsl:template name="processRepeatPrototype">

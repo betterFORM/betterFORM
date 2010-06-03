@@ -137,11 +137,10 @@ public class EventQueue {
             // Map PROTOTYPE_CLONED event to betterform-insert-repeatitem or betterform-insert-itemset event
             // and copy event properties to new created XMLEvent
             if(xmlEvent.getType().equals    (BetterFormEventNames.PROTOTYPE_CLONED)){
-                if(xmlEvent.getContextInfo("targetName").equals(XFormsConstants.REPEAT)){
-                    xmlEventToAdd.initXMLEvent("betterform-insert-repeatitem", xmlEvent.getBubbles(), xmlEvent.getCancelable(), xmlEvent.getContextInfo());
-                }
-                else if(xmlEvent.getContextInfo("targetName").equals(XFormsConstants.ITEMSET)){
+                if(xmlEvent.getContextInfo("targetName").equals(XFormsConstants.ITEMSET)){
                     xmlEventToAdd.initXMLEvent("betterform-insert-itemset", xmlEvent.getBubbles(), xmlEvent.getCancelable(), xmlEvent.getContextInfo());
+                }else{
+                    xmlEventToAdd.initXMLEvent("betterform-insert-repeatitem", xmlEvent.getBubbles(), xmlEvent.getCancelable(), xmlEvent.getContextInfo());
                 }
                 xmlEventToAdd.target = xmlEvent.target;
                 xmlEvent.addProperty("generatedIds", new HashMap());
