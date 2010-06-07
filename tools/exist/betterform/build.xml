@@ -10,14 +10,16 @@
     <property name="exist.web.xml" value="${exist.rootdir}/webapp/WEB-INF/web.xml"/>
 
     <property name="bf.shortname" value="betterform"/>
-    <property name="bf.version" value="3.0.0"/>
+    <!--todo:move property to build.properties.xml-->
+    <property name="bf.version" value="3.1.0"/>
 
 
     <property name="target.dir" value="${basedir}/target"/>
     <property name="bf.name" value="${bf.shortname}-${bf.version}"/>
     <property name="bfSrc.dir" value="${target.dir}/betterform"/>
 
-    <property name="bf.release.name" value="betterform-3.0.0"/>
+    <!--todo:move property to build.properties.xml-->
+    <property name="bf.release.name" value="betterform-3.1.0"/>
     <property name="bf.download.url" value="http://www.betterform.de/dist/${bf.name}.zip"/>
 
     <path id="generator.libs" description="classpath for compiling core classes">

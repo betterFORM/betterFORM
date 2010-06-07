@@ -21,7 +21,7 @@ betterFORM lightSteelBlue Web Application Archive
 
 - to compile betterFORM and package it as a Web Application Archive switch to the directory web and execute:
 	ant package
-  The created WAR file will be available at ./web/target/betterform-3.0.0
+  The created WAR file will be available at ./web/target/betterform-3.1.0
   see web/README.txt for further information about available ant targets
   
 

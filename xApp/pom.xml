@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.betterform</groupId>
     <artifactId>xApp</artifactId>
-    <version>3.0.0</version>
+    <version>3.1.0</version>
 
 
     <packaging>war</packaging>
@@ -89,7 +89,7 @@
         <dependency>
             <groupId>de.betterform</groupId>
             <artifactId>betterform-core</artifactId>
-            <version>3.0.0</version>
+            <version>3.1.0</version>
         </dependency>
         <dependency>
             <groupId>dwr</groupId>
