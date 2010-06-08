@@ -116,7 +116,7 @@
         </exec>
     </target>
 
-    <target name="create-betterFormInstaller"
+    <target name="create-betterFormInstaller" depends="prepare"
             description="Builds a betterForm Installer for deploying existing webcontainer">
 
 

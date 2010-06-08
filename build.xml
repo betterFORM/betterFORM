@@ -47,6 +47,20 @@
         <ant antfile="${convex.dir}/build.xml"  target="package" dir="${convex.dir}"  inheritall="false"/>
     </target>
 
+    <target  name="create-src-distribution">
+        <delete dir="convex/target" />
+        <delete dir="core/target" />
+        <delete dir="tools/exist/target" />
+        <delete dir="tools/installer/target" />
+        <delete dir="web/target" />
+        <delete dir="xApp/target" />
+        <delete dir="zaphod/target" />
+        <mkdir dir="${target.dir}" />
+        <zip description="create source zip of the complete betterFORM sources"
+             zipfile="${target.dir}/${web.app.name}-${web.app.version}-src.zip"
+             basedir="${basedir}"/>
+    </target>
+
     <!-- **************************************** BUILDING JAR **************************************** -->
     <!-- **************************************** BUILDING JAR **************************************** -->
     <!-- **************************************** BUILDING JAR **************************************** -->
