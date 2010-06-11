@@ -95,6 +95,7 @@ public class WebProcessor implements XFormsProcessor, EventListener {
     private String useragent;
     private String uploadDir;
     protected UIGenerator uiGenerator;
+    protected String locale = "en";
 
     public WebProcessor() {
         this.xformsProcessor = new XFormsProcessorImpl();
@@ -268,22 +269,25 @@ public class WebProcessor implements XFormsProcessor, EventListener {
         if (Config.getInstance().getProperty(XFormsProcessorImpl.BETTERFORM_ENABLE_L10N).equals("true")) {
 
             //[1] check for request param 'lang' - todo: might need refinement later to not clash with using apps
-            String locale = request.getParameter("lang");
+            //String locale = request.getParameter("lang");
             if (request.getParameter("lang") != null) {
                 if (WebProcessor.LOGGER.isDebugEnabled()) {
                     WebProcessor.LOGGER.debug("using 'lang' Url parameter: " + request.getParameter("lang"));
                 }
                 this.xformsProcessor.setLocale(request.getParameter("lang"));
+                this.locale = request.getParameter("lang");
             } else if ((String) request.getAttribute("lang") != null) {
                 if (WebProcessor.LOGGER.isDebugEnabled()) {
                     WebProcessor.LOGGER.debug("using request Attribute 'lang': " + request.getParameter("lang"));
                 }
                 this.xformsProcessor.setLocale((String) request.getAttribute("lang"));
+                this.locale = (String) request.getAttribute("lang");
             } else if (!(Config.getInstance().getProperty("preselect-language").equals(""))) {
                 if (WebProcessor.LOGGER.isDebugEnabled()) {
                     WebProcessor.LOGGER.debug("using configured lang setting from Config: " + Config.getInstance().getProperty("preselect-language"));
                 }
                 this.xformsProcessor.setLocale(Config.getInstance().getProperty("preselect-language"));
+                this.locale = Config.getInstance().getProperty("preselect-language"); 
             } else if (request.getHeader("accept-language") != null) {
                 if (WebProcessor.LOGGER.isDebugEnabled()) {
                     WebProcessor.LOGGER.debug("using accept-language header: " + request.getHeader("accept-language"));
@@ -291,15 +295,18 @@ public class WebProcessor implements XFormsProcessor, EventListener {
                 //todo:improve to support priority for language setting
                 String s = request.getHeader("accept-language");
                 this.xformsProcessor.setLocale(s.substring(0, 2));
+                this.locale = s.substring(0, 2);
             }
         } else {
             //fallback default
             this.xformsProcessor.setLocale("en");
+            this.locale =  "en";
         }
     }
 
     public void setLocale(String locale) throws XFormsException {
         this.xformsProcessor.setLocale(locale);
+        this.locale = locale;
     }
 
     /**
@@ -761,6 +768,7 @@ public class WebProcessor implements XFormsProcessor, EventListener {
             generator.setParameter("CSSPath", cssPath);
         }
 
+        generator.setParameter("locale", locale);
         return generator;
     }
 

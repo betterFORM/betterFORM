@@ -38,6 +38,7 @@ dojo.declare(
             case "input":
                 var inputType = dataType;
                 var appearance = dojo.attr(sourceNode,"appearance");
+                //TODO: ca deprecated?
                 if (appearance != undefined && appearance.indexOf("ca") != -1) {
                     inputType = appearance;
                     // console.debug("Custom Input Type: appearance=" + appearance)
@@ -71,21 +72,48 @@ dojo.declare(
                         if(xfValue != undefined && xfValue != ""){
                             xfValue = dojo.date.stamp.fromISOString(xfValue);
                         }else { xfValue = ""; }
-
+                        var datePattern;
+                            
+                        if (appearance.indexOf("iso8601:") != -1) {
+                            datePattern = appearance.substring(appearance.indexOf("iso8601:")+8);
+                            //console.debug("UIelementFactory.createWidget 1. datePattern:" + datePattern);
+                            if(datePattern.indexOf(" ") != -1) {
+                                datePattern = datePattern.substring(0,datePattern.indexOf(" ")).trim();
+                                //console.debug("UIelementFactory.createWidget 2. datePattern:" + datePattern);
+                            }
+                        }
                         dojo.require("betterform.ui.input.Date");
-                        newWidget = new betterform.ui.input.Date({
-                            name:controlId + "-value",
-                            value:xfValue,
-                            "class":classValue,
-                            title:dojo.attr(sourceNode,"title"),
-                            constraints:{
-                                /*formatLength:'short',*/
-                                selector:'date',
-                                /*locale:'en-en'*/
-                                datePattern:'dd.MM.yyyy'
-                            },
-                            xfControlId:controlId
-                        }, sourceNode);
+
+                        if (datePattern != undefined) {
+                            try {
+                                newWidget = new betterform.ui.input.Date({
+                                    name:controlId + "-value",
+                                    value:xfValue,
+                                    "class":classValue,
+                                    title:dojo.attr(sourceNode, "title"),
+                                    constraints:{
+                                        selector:'date',
+                                        datePattern:datePattern
+                                    },
+                                    xfControlId:controlId
+                                },
+                                        sourceNode);
+                            }
+                            catch (ex) {
+                                alert(ex)
+                            }
+                        } else {
+                            newWidget = new betterform.ui.input.Date({
+                                name:controlId + "-value",
+                                value:xfValue,
+                                "class":classValue,
+                                title:dojo.attr(sourceNode,"title"),
+                                constraints:{
+                                    selector:'date'
+                                },
+                                xfControlId:controlId
+                            }, sourceNode);
+                        }
                         break;
                     case "datetime":
                         var xfValue = dojo.attr(sourceNode, "schemaValue");
@@ -100,21 +128,51 @@ dojo.declare(
                         if(xfValue == undefined){
                             xfValue = "";
                         }
+                        var datePattern;
+
+                        if (appearance.indexOf("iso8601:") != -1) {
+                            datePattern = appearance.substring(appearance.indexOf("iso8601:")+8);
+                            //console.debug("UIelementFactory.createWidget 1. datePattern:" + datePattern);
+                            if(datePattern.indexOf(" ") != -1) {
+                                datePattern = datePattern.substring(0,datePattern.indexOf(" ")).trim();
+                                //console.debug("UIelementFactory.createWidget 2. datePattern:" + datePattern);
+                            }
+                        }
 
                         dojo.require("betterform.ui.input.DateTime");
-                        newWidget = new betterform.ui.input.DateTime({
-                            name:controlId + "-value",
-                            value:xfValue,
-                            miliseconds:miliseconds,
-                            constraints:{
-                                datePattern:'dd.MM.yyyy',
-                                timePattern:'HH:mm:ss'
+                        if (datePattern != undefined) {
+                            try {
+                            newWidget = new betterform.ui.input.DateTime({
+                                name:controlId + "-value",
+                                value:xfValue,
+                                miliseconds:miliseconds,
+                                constraints:{
+                                    datePattern:datePattern,
+                                    timePattern:'HH:mm:ss'
 
-                            },
-                            title:dojo.attr(sourceNode,"title"),
-                            xfControlId:controlId
-                        }, sourceNode);
-/*
+                                },
+                                title:dojo.attr(sourceNode, "title"),
+                                xfControlId:controlId
+                            }, sourceNode);
+                            } catch (ex) {
+                                alert(ex)
+                            }
+                        } else {
+
+                            newWidget = new betterform.ui.input.DateTime({
+                                name:controlId + "-value",
+                                value:xfValue,
+                                miliseconds:miliseconds,
+                                constraints:{
+                                    datePattern:'dd.MM.yyyy',
+                                    timePattern:'HH:mm:ss'
+
+                                },
+                                title:dojo.attr(sourceNode, "title"),
+                                xfControlId:controlId
+                            }, sourceNode);
+                        }
+                        /*
                         newWidget = new betterform.ui.input.DateTime({
                             name:controlId + "-value",
                             value:xfValue,

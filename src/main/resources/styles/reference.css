@@ -97,6 +97,9 @@ pre, code {
     padding: 20px 10px 20px 10px;
     overflow: auto;
 }
+.dateSample .xfControl {
+	display:block;	
+}
 .notes{
     font-size:9pt;
 }

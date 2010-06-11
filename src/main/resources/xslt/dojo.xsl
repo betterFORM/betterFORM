@@ -56,6 +56,9 @@
     <!-- CDN support is disabled by default -->
     <xsl:param name="useCDN" select="'false'"/>
 
+    <!-- locale Parameter -->
+    <xsl:param name="locale" select="'en'"/>
+
     <!-- ############################################ VARIABLES ################################################ -->
     <!-- ### checks, whether this form uses uploads. Used to set form enctype attribute ### -->
     <xsl:variable name="uses-upload" select="exists(//*/xf:upload)"/>
@@ -220,7 +223,7 @@
                 <script type="text/javascript">
                     var djConfig = {
                     debugAtAllCost:<xsl:value-of select="$debug-enabled"/>,
-                    locale:'en',
+                    locale:'<xsl:value-of select="$locale"/>',
                     isDebug:<xsl:value-of select="$debug-enabled"/>,
                     baseUrl:"<xsl:value-of select="concat($contextroot,$scriptPath,'release/dojo/')"/>",
                     modulePaths:{"betterform":"betterform"},
@@ -234,7 +237,7 @@
                 <script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/dojo/dojo.js')}">
                     var djConfig = {
                         debugAtAllCost:<xsl:value-of select="$debug-enabled"/>,
-                        locale:'en',
+                        locale:'<xsl:value-of select="$locale"/>',
                         isDebug:<xsl:value-of select="$debug-enabled"/>,
                         parseOnLoad:false
                     };

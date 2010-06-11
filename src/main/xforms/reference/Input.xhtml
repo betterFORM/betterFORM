@@ -170,6 +170,57 @@
                 </div>
             </div>
 
+				<!-- ############# date control with datePattern################# -->
+				<div class="Subsection" dojotype="dijit.TitlePane" open="true" title="Datepicker control with datePattern">
+					<div class="description">
+						An input which binds to a Node of type 'date' is rendered as a popup calendar control. The value
+						may also be be typed in directly. Through appearance="iso8601:datePattern" the format of the Date value can be customized.
+						Typical format strings apply. See <a href="http://www.dojotoolkit.com/reference-guide/dojo/date/locale/format.html">Dojo Docs</a>.
+					</div>
+
+					<div class="Sample dateSample">
+						<xf:input id="control4" ref="items/item[3]" incremental="true" appearance="iso8601:dd.MMMM.yyyy">
+							<xf:label>a date with datePattern dd.MMMM.yyyy</xf:label>
+							<xf:hint>appearance="iso8601:dd.MMMM.yyyy"</xf:hint>
+						</xf:input>
+						<xf:input id="control5" ref="items/item[3]" incremental="true" appearance="iso8601:EEE,dd.MM.yyyy">
+							<xf:label>a date with datePattern EEE,dd.MM.yyyy</xf:label>
+							<xf:hint>appearance="iso8601:EEE,dd.MMMM.yyyy"</xf:hint>
+						</xf:input>
+					</div>
+
+					<div dojotype="dijit.TitlePane" open="false" title="XForms Markup">
+            <pre><code class="xml"><![CDATA[<!-- XForms Instance -->
+ <item>2007-10-10</item>
+
+<!-- XForms Binding -->
+<xf:bind nodeset="item" type="xf:date"/>
+
+<!-- XForms UI -->
+<xf:input id="control4" ref="items/item[3]" incremental="true" appearance="iso8601:dd.MMMM.yyyy">
+	<xf:label>a date with datePattern dd.MMMM.yyyy</xf:label>
+</xf:input>
+<xf:input id="control5" ref="items/item[3]" incremental="true" appearance="iso8601:EEE,dd.MM.yyyy">
+	<xf:label>a date with datePattern EEE,dd.MM.yyyy</xf:label>
+</xf:input>]]></code></pre>
+					</div>
+
+					<div class="notes" dojotype="dijit.TitlePane" open="false" title="Notes">
+						<ul>
+							<li>
+								The date control is currently not fully accessible esp. keyboard navigation is not
+								working
+								in the current version of Dojo 1.3. Upcoming version 1.4 will fully support keyboard
+								navigation.
+							</li>
+							<li>
+								Though locale-specific formatting of a date is supported there's no further support for
+								subformats like the Java short/medium/long date formatting.
+							</li>
+						</ul>
+					</div>
+				</div>
+
             <!-- ############### datetime control #################### -->
             <div class="Subsection" dojotype="dijit.TitlePane" open="true" title="DateTime picker control">
                 <div class="description">
@@ -177,7 +228,7 @@
                     time input control.
                 </div>
                 <div class="Sample">
-                    <xf:input id="control4" ref="items/item[4]" incremental="true">
+                    <xf:input id="control6" ref="items/item[4]" incremental="true">
                         <xf:label>a datetime</xf:label>
                     </xf:input>
                 </div>
