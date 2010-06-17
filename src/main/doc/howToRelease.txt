@@ -17,6 +17,7 @@ mandatory steps to build a betterFORM release
   - select tags
   - provide the new version tag, a commit message and confirm the dialog
 - checkout the newly created tag from SVN
+
 - open a shell to build distribution with Ant
   - ant root/build.xml clean-all
   - ant root/build.xml create-src-distribution (SHOULD HAPPEN HERE AS IT WILL DELETE ALL 'target' DIRS)
