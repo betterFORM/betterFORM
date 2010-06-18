@@ -38,7 +38,7 @@ dojo.declare(
     },
 
     _onFocus:function() {
-        console.debug("betterform.ui.input.Date._onFocus: "+ this.id);        
+        //console.debug("betterform.ui.input.Date._onFocus: "+ this.id);
         this.inherited(arguments);
         this.handleOnFocus();
     },
