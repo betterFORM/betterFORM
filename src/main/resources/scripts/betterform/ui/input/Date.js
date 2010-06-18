@@ -44,9 +44,7 @@ dojo.declare(
     },
 
     _onBlur:function(){
-        if( !this.incremental ){
         this.handleOnBlur();
-        }
         this.inherited(arguments);
     },
 
