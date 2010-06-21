@@ -84,9 +84,16 @@ dojo.declare(
             // console.debug("UploadPlain.updateProgress before Clear Interval");
             clearInterval(this.progressUpdate);
             // console.debug("stopped polling");
-            this.progress.style.display="none";
-            this.progressBackground.style.width =0;
-                // reset disabled controls
+            this.progressBackground.style.width = "100%";
+            dojo.fadeOut({
+                node: this.progress,
+                duration:2000,
+                onEnd: dojo.hitch(this,function() {
+                    this.progress.style.display="none";
+                })
+            }).play();
+
+            // reset disabled controls
             dojo.query(".xfUpload.xfReadWrite .xfValue:disabled").forEach(function(item) {
                   item.removeAttribute("disabled");
             });
@@ -107,6 +114,7 @@ dojo.declare(
 
         /* Effect.BlindDown(this.xformsId + "-progress"); */
         this.progress.style.display="block";
+        this.progress.style.opacity="1";
         var path = this.inputNode.value;
         var filename = path.substring(path.lastIndexOf("/") + 1);
         //polling betterForm for update information and submit the form

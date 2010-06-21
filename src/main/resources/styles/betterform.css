@@ -296,11 +296,11 @@ a.active {
 /*********** Upload specific styles ***********/
 /*********** Upload specific styles ***********/
 /*********** Upload specific styles ***********/
-.caProgressbar {
+.bfProgressbar {
     display: none;
 }
 
-.caProgressbar .border {
+.bfProgressbar .border {
     background: url( ../images/progress-remainder.gif ) repeat-x;
     margin-top: 1px;
     border-left: 1px solid gray;
@@ -309,13 +309,13 @@ a.active {
     height: 18px;
 }
 
-.caProgressbar .background {
+.bfProgressbar .background {
     background: url( ../images/progress-bar.gif ) repeat-x;
     height: 18px;
     width: 0%;
 }
 
-.xfDisabled .caProgressbar {
+.xfDisabled .bfProgressbar {
     display: none;
 }
 

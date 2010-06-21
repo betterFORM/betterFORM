@@ -239,7 +239,8 @@ public class FluxFacade {
                 if (iProgress < 100) {
                     progress = Integer.toString(iProgress);
                 } else {
-                    progress = "99";
+                    uploadInfo.setStatus("completed");
+                    progress = "100";
                 }
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Bytes total: " + uploadInfo.getTotalSize());
