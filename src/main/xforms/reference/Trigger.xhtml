@@ -128,6 +128,41 @@
 
                 </div>
 
+                <div class="Subsection" dojotype="dijit.TitlePane" open="true" title="Image trigger with CSS">
+                    <div class="description">
+                        <p>A trigger can be styled by CSS.</p>
+                        <p>
+                            Here the trigger is given an id and a CSS matcher is added for it. The corresponding
+                            button rendered in HTML will have the original id with '-value' attached. The matcher
+                            for the button is therefore #imageTrigger-value.
+                        </p>
+                        <p>This is only one example how to style controls with CSS. Besides identity matching alternative
+                        style rules are possible to achieve the same result. E.g. instead of #imageTrigger .xfValue would
+                        match the same element in the tree.</p>
+                    </div>
+                    <div class="Sample">
+                        <xf:trigger id="imageTrigger" ref="item">
+                            <xf:label/>
+                            <xf:message level="modal">Message from CSS image trigger</xf:message>
+                        </xf:trigger>
+                    </div>
+                    <div dojotype="dijit.TitlePane" open="false" title="XForms Markup">
+                        <pre><code class="xml"><![CDATA[<style type="text/css">
+    #imageTrigger-value{
+        background:url(../../images/bf_logo_67x27.png) no-repeat center;
+        width:100px;
+        height:40px;
+    }
+</style>
+<!-- XForms UI -->
+<xf:trigger id="imageTrigger" ref="item">
+    <xf:label/>
+    <xf:message level="modal">Message from CSS image trigger/xf:message>
+</xf:trigger> ]]></code></pre>
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
