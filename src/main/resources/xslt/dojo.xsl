@@ -588,7 +588,20 @@
         </xsl:variable>
         <xsl:variable name="lname" select="local-name()"/>
         <xsl:variable name="name" select="concat($data-prefix,@id)"/>
-        <xsl:variable name="incremental" select="if (exists(@incremental)) then @incremental else 'false'"/>
+       <!-- TODO: DateTime -->
+        <xsl:variable name="incremental">
+            <xsl:choose>
+                <xsl:when test="$lname='input' and
+                            $datatype='date'
+                            ">
+                    <xsl:value-of select="if (exists(@incremental)) then @incremental else 'true'"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="if (exists(@incremental)) then @incremental else 'false'"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
         <xsl:variable name="navindex" select="if (exists(@navindex)) then @navindex else '0'"/>
         <xsl:variable name="accesskey" select="if (exists(@accesskey)) then @accesskey else 'none'"/>
 
