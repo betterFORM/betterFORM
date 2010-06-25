@@ -31,6 +31,7 @@ import de.betterform.xml.xforms.ui.AbstractFormControl;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -399,7 +400,8 @@ public class HttpRequestHandler {
                         // todo: externalize file handling and uri generation
 
                         File uploadDir = new File(request.getContextPath(), Config.getInstance().getProperty(WebFactory.UPLOADDIR_PROPERTY));
-                        URI uploadTargetDir = new URI(new File(uploadDir.getPath(), localPath).getPath());
+                        String urlEncodedPath = URLEncoder.encode(new File(uploadDir.getPath(), localPath).getPath(), "UTF-8");
+                        URI uploadTargetDir = new URI(urlEncodedPath);
 
                         data = uploadTargetDir.toString().getBytes();
                     } else {
