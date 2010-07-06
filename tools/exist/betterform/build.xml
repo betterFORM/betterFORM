@@ -225,7 +225,7 @@
 
 
     <target  name="patchStartConfig">
-        <!-- <move file="${basedir}/start.config.betterform" tofile="${exist.rootdir}/start.config"/> -->b
+        <!-- <move file="${basedir}/start.config.betterform" tofile="${exist.rootdir}/start.config"/> -->
         <move file="${basedir}/start.config.betterform-1.5" tofile="${exist.rootdir}/start.config"/>
 <!-- DO NOT REMOVE: This would be the preferred way to use the start.config but it is only available if sources of eXist have been
 installed. Therefore we maintain our own full copy for now.
