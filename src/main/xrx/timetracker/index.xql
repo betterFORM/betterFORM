@@ -95,7 +95,16 @@ declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
                 });
             }
 
-
+            function passValuesToXForms(){
+                var result="";
+                dojo.query("input",dojo.byId("taskTable")).forEach(
+                function (node){
+                    if(dijit.byId(node.id).checked && node.value != undefined){
+                        result = result + " " + node.value;
+                    }
+                });
+                fluxProcessor.setControlValue("selectedTaskIds",result);
+            }
 
             // -->
         </script>
@@ -162,13 +171,25 @@ declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
                     </xf:submission>
 
                     <xf:instance id="i-project" src="/exist/rest/db/betterform/apps/timetracker/data/project.xml" />
+
                     <xf:instance id="i-vars">
                         <data xmlns="">
                             <default-duration>30</default-duration>
                             <currentTask/>
+                            <selectedTasks/>
                         </data>
                     </xf:instance>
                     <xf:bind nodeset="instance('i-vars')/default-duration" type="xf:integer"/>
+
+                    <xf:submission  id="s-update-billed"
+                                    ref="instance('i-vars')/selectedTasks"
+                                    method="post"
+                                    replace="new"
+                                    resource="/exist/rest/db/betterform/apps/timetracker/reports/timeAndEffort.xql">
+                                    <xf:message ev:event="xforms-submit">here it comes...</xf:message>
+                    </xf:submission>
+
+
                     
                     <xf:action ev:event="xforms-ready">
                         <xf:setvalue ref="to" value="substring(local-date(), 1, 10)"/>
@@ -231,9 +252,13 @@ declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
                     <xf:send submission="s-delete-task"/>
                 </xf:trigger>
 
-
                 <xf:input id="currentTask" ref="instance('i-vars')/currentTask">
                     <xf:label>This is just a dummy used by JS</xf:label>
+                </xf:input>
+
+                <xf:input id="selectedTaskIds" ref="instance('i-vars')/selectedTasks">
+                    <xf:label>This is another dummy allowing to pass all selected tasks into an instance</xf:label>
+                    <xf:send submission="s-update-billed" ev:event="xforms-value-changed"/>
                 </xf:input>
             </div>
 
@@ -358,6 +383,12 @@ declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
                 <div id="embedInline"></div>
 
                 <div id="aboutDialog" dojotype="dijit.Dialog" href="about.html" title="About" style="width:500px;height:500px;"></div>
+
+                <xf:output ref="instance('i-vars')/selectedTasks">
+                    <xf:label>all selected tasks</xf:label>
+                </xf:output>
+
+                <div id="report"></div>
 
                 <!-- ######################### Content end ################################## -->
                 <!-- ######################### Content end ################################## -->
