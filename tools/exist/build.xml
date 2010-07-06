@@ -3,7 +3,7 @@
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
     <!-- >>>>> These properties only apply to the targets that deal with deployment into *existing* eXist installation-->
-    <property name="exist.dir" value="/Applications/eXist"/>
+    <property name="exist.dir" value="/home/zwobit/betterform-42"/>
 
     <property name="exist.bfExtension.home" value="${exist.dir}/extensions/betterform"/>
     <property name="exist.bfExtension.dir" value="${exist.bfExtension.home}/target/betterform"/>
@@ -76,13 +76,35 @@
     <target name="package" depends="create-exist-extension-installer"
             description="creates a zip archive used by the extension-installer ant-file">
         <ant antfile="${web.dir}/build.xml" target="clean" dir="${web.dir}" inheritall="false"/>
+        <available property="warAvailable" file ="${basedir}/../../release-${web.app.version}/web-dist/${web.app.name}-${web.app.version}.war"/>
+        <antcall target="buildBetterForm"/>
+        <antcall target="extractReleaseWar"/>
+
+        <!--
         <ant antfile="${web.dir}/build.xml" target="build-dojo" dir="${web.dir}" inheritall="false">
                 <property name="target.dir" value="${target.dir}"/>
                 <property name="webapp.dir" value="${webapp.dir}"/>
         </ant>
+        -->
         <antcall target="cleanup"/>
         <zip basedir="${webapp.dir}" zipfile="${webapp.dir}.zip"/>
         <antcall target="package-xrx"/>
+    </target>
+
+    <target  name="buildBetterForm" unless="warAvailable">
+        <ant antfile="${web.dir}/build.xml" target="build-dojo" dir="${web.dir}" inheritall="false">
+                <property name="target.dir" value="${target.dir}"/>
+                <property name="webapp.dir" value="${webapp.dir}"/>
+        </ant>
+    </target>
+
+    <target  name="extractReleaseWar" if="warAvailable">
+       <copy todir="${basedir}/target">
+            <fileset file="${basedir}/../../release-${web.app.version}/web-dist/${web.app.name}-${web.app.version}.war"/>
+       </copy>
+       <unzip src="${basedir}/target/${web.app.name}-${web.app.version}.war" overwrite="true" dest="${basedir}/target/${web.app.name}"/>
+       <delete file="${basedir}/target/${web.app.name}-${web.app.version}.war"/>
+       <!-- <move file="${basedir}/target/${web.app.name}-${web.app.version}.war" tofile="${basedir}/target/betterform.war"/> -->
     </target>
 
     <!--deploy xrx applications from src/main/xrx to existing eXist install. Property exist.dir must be set correctly-->

@@ -191,7 +191,9 @@
         <!-- ### installerType must be either 'standard' or 'web'. Default value is 'web' ### -->
         <installerType>web</installerType>
         <exist>
-            <jar>/Users/dev/Downloads/eXist-setup-1.4.0-rev10440.jar</jar>
+            <!-- <jar>/home/zwobit/Downloads/eXist-setup-1.4.0-rev10440.jar</jar> -->
+            <jar>/home/zwobit/Downloads/eXist-setup-1.5.0dev.jar</jar>
+            <version>1.5</version>
         </exist>
     </installer>
 </root>

@@ -116,7 +116,10 @@
         <delete dir="${exist.rootdir}/webapp/resources/xsd" failonerror="false"/>
         <delete dir="${exist.rootdir}/webapp/resources/xslt" failonerror="false"/>
         <move file="${basedir}/uninstall/web.xml" tofile="${exist.web.xml}" failonerror="false"/>
-        <move file="${basedir}/uninstall/ehcache-1.1.jar" tofile="${exist.rootdir}/lib/cocoon/ehcache-1.1.jar" failonerror="false"/>
+        <!-- eXist 1.5.0 -->
+        <move file="${basedir}/uninstall/ehcache-1.1.jar" tofile="${exist.rootdir}/extensions/cocoon/lib/ehcache-1.1.jar" failonerror="false"/>
+        <!-- eXist 1.4 -->
+        <!-- <move file="${basedir}/uninstall/ehcache-1.1.jar" tofile="${exist.rootdir}/lib/cocoon/ehcache-1.1.jar" failonerror="false"/> -->
 
         <!--delete start.config from exist dir-->
         <delete file="${exist.rootdir}/start.config"/>
@@ -153,7 +156,7 @@
     </target>
 
 
-    <target name="unzip_betterFORM_release" unless="betterFormAvailable">
+    <target name="unzip_betterFORM_release">
         <available property="betterFormAvailable" file="${bfSrc.dir}.zip"/>
         <antcall  target="download_betterFORM_release"/>
         <unzip src="${bfSrc.dir}.zip" dest="${bfSrc.dir}"/>
@@ -213,13 +216,17 @@
         <copy file="${basedir}/sample/xfGuess.xql" tofile="${exist.rootdir}/webapp/xquery/xfGuess.xql" />
 
         <mkdir dir="${basedir}/uninstall"/>
-        <move file="${exist.rootdir}/lib/cocoon/ehcache-1.1.jar" tofile="${basedir}/uninstall/ehcache-1.1.jar" />
+        <!-- eXist 1.5.0 -->
+        <move file="${exist.rootdir}/extensions/cocoon/lib/ehcache-1.1.jar" tofile="${basedir}/uninstall/ehcache-1.1.jar" />
+        <!-- eXist 1.4 -->
+        <!-- <move file="${exist.rootdir}/lib/cocoon/ehcache-1.1.jar" tofile="${basedir}/uninstall/ehcache-1.1.jar" /> -->
 
     </target>
 
 
     <target  name="patchStartConfig">
-        <move file="${basedir}/start.config.betterform" tofile="${exist.rootdir}/start.config"/>
+        <!-- <move file="${basedir}/start.config.betterform" tofile="${exist.rootdir}/start.config"/> -->b
+        <move file="${basedir}/start.config.betterform-1.5" tofile="${exist.rootdir}/start.config"/>
 <!-- DO NOT REMOVE: This would be the preferred way to use the start.config but it is only available if sources of eXist have been
 installed. Therefore we maintain our own full copy for now.
         <copy file="${exist.rootdir}/src/org/exist/start/start.config" todir="${exist.rootdir}"/>

@@ -73,6 +73,7 @@
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-core-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-web-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-convex-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
+        <ant antfile="${basedir}/tools/maven/build.xml"  target="update-xApp-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
         <!--<ant antfile="${basedir}/tools/maven/build.xml"  target="update-server-pom" dir="${basedir}/tools/maven"  inheritall="false"/>-->
     </target>
 

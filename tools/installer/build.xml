@@ -6,18 +6,15 @@
     <target name="clean">
         <delete dir="${basedir}/target"/>
     </target>
+    
     <target name="prepare" description="prepares all files needed for installer EXCEPT exist.war">
 
         <!-- ##### building betterForm war for deployment ##### -->
         <mkdir dir="${basedir}/target"/>
-        <ant antfile="../../web/build.xml" target="package" inheritall="false"/>
 
-        <mkdir dir="${basedir}/target"/>
-        
-        <copy todir="${basedir}/target">
-            <fileset file="${basedir}/../../web/target/${web.app.name}-${web.app.version}.war"/>
-        </copy>
-        <move file="${basedir}/target/${web.app.name}-${web.app.version}.war" tofile="${basedir}/target/betterform.war"/>
+        <available property="warAvailable" file ="${basedir}/../../release-${web.app.version}/web-dist/${web.app.name}-${web.app.version}.war"/>
+        <antcall target="buildWar"/>
+        <antcall target="copyReleaseWar"/>
 
         <copy tofile="${basedir}/target/BSD-license.txt">
             <fileset file="${basedir}/resource/BSD-license-inlined.txt"/>
@@ -114,6 +111,21 @@
             <arg value="-p"/>
             <arg value="${pass}"/>
         </exec>
+    </target>
+
+    <target  name="buildWar" unless="warAvailable">
+        <ant antfile="build.xml" target="package" inheritall="false" dir="../../web/"/>
+        <copy todir="${basedir}/target">
+            <fileset file="${basedir}/../../web/target/${web.app.name}-${web.app.version}.war"/>
+        </copy>
+        <move file="${basedir}/target/${web.app.name}-${web.app.version}.war" tofile="${basedir}/target/betterform.war"/>
+    </target>
+
+    <target  name="copyReleaseWar" if="warAvailable">
+       <copy todir="${basedir}/target">
+            <fileset file="${basedir}/../../release-${web.app.version}/web-dist/${web.app.name}-${web.app.version}.war"/>
+       </copy>
+       <move file="${basedir}/target/${web.app.name}-${web.app.version}.war" tofile="${basedir}/target/betterform.war"/>
     </target>
 
     <target name="create-betterFormInstaller" depends="prepare"
