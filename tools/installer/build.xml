@@ -111,6 +111,15 @@
             <arg value="-p"/>
             <arg value="${pass}"/>
         </exec>
+
+        <!-- copy template files to exist-bin-dir and exist-root-dir -->
+        <copy todir="${basedir}/target/bf-eXist/bin" overwrite="true">
+            <fileset dir="${basedir}/target/bf-eXist/installer/scripts" includes="*.sh *.bat" excludes="build.*"/>
+        </copy>
+
+        <copy todir="${basedir}/target/bf-eXist" overwrite="true">
+            <fileset dir="${basedir}/target/bf-eXist/installer/scripts" includes="build.sh build.bat"/>
+        </copy>
     </target>
 
     <target  name="buildWar" unless="warAvailable">

@@ -3,7 +3,7 @@
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
     <!-- >>>>> These properties only apply to the targets that deal with deployment into *existing* eXist installation-->
-    <property name="exist.dir" value="/home/zwobit/betterform-42"/>
+    <property name="exist.dir" value="ENTER-YOUR-EXIST-INSTALL-DIR"/>
 
     <property name="exist.bfExtension.home" value="${exist.dir}/extensions/betterform"/>
     <property name="exist.bfExtension.dir" value="${exist.bfExtension.home}/target/betterform"/>

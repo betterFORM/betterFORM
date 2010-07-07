@@ -178,9 +178,6 @@ FOR LATER: installinig the war should switch the above pack off. Did not yet fou
             
             <fileset targetdir="$INSTALL_PATH" dir="bf-eXist"/>
 
-            <fileset dir="bf-eXist/installer/scripts/" targetdir="$INSTALL_PATH/bin" override="true"/>
-            <file src="bf-eXist/installer/scripts/build.sh" targetdir="$INSTALL_PATH" override="true"/>
-            <file src="bf-eXist/installer/scripts/build.bat" targetdir="$INSTALL_PATH" override="true"/>
             <parsable type="shell" targetfile="$INSTALL_PATH/bin/client.sh"/>
             <parsable type="shell" targetfile="$INSTALL_PATH/bin/startup.sh"/>
             <parsable type="shell" targetfile="$INSTALL_PATH/bin/server.sh"/>
@@ -197,7 +194,7 @@ FOR LATER: installinig the war should switch the above pack off. Did not yet fou
             <parsable targetfile="$INSTALL_PATH/build.bat"/>
             <parsable type="xml" targetfile="$INSTALL_PATH/conf.xml"/>
             <parsable targetfile="$INSTALL_PATH/tools/wrapper/conf/wrapper.conf"/>
-            <executable targetfile="$INSTALL_PATH/bin/setup.sh" stage="never" os="unix"/> 
+            <executable targetfile="$INSTALL_PATH/bin/setup.sh" stage="never" os="unix"/>
             <executable targetfile="$INSTALL_PATH/bin/client.sh" stage="never" os="unix"/>           
             <executable targetfile="$INSTALL_PATH/bin/startup.sh" stage="never" os="unix"/>
             <executable targetfile="$INSTALL_PATH/bin/server.sh" stage="never" os="unix"/>
