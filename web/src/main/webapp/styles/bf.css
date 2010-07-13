@@ -56,6 +56,10 @@ p{
     margin-bottom:0.3em;
 }
 
+ul,ol{
+    margin:0;
+    padding-left:16px;
+}
 ul{
     list-style-image:url(../images/list.png);
 }
@@ -123,7 +127,8 @@ ul{
 }
 
 .langSelector {
-	display:none;
+    border:none;
+	/*display:none;*/
 }
 
 /*
@@ -262,6 +267,7 @@ a:hover{
     width:100%;
     background:#e7e8e8;
     padding:15px;
+    padding-bottom:5px;
     width:210px;
     font-size:9pt;
 }
@@ -276,6 +282,10 @@ a:hover{
     line-height:1.2;
     font-size:10pt;
 }
+#leftText p{
+    padding:0 10px;
+}
+
 #columnRight{
     width:258px;
     float:left;
@@ -378,6 +388,10 @@ h3{
     margin-left:auto;
     margin-right:auto;
 }
+.languages img{
+    display:none;
+}
+
 #index .languages{
     display:block;
     height:29px;
@@ -387,7 +401,35 @@ h3{
     margin-right:auto;
     padding-top:2px;
 }
+#index .languages img{
+    display:block;
+    float:right;
+    margin-left:2px
+}
+#index #columnRight .link{
+    height:97px;
+    width:282px;
+    display:block;
+}
+#index #demoButton{
+    background:url(../images/b_tryit.png) no-repeat;
+}
+#index #demoButton:hover{
+    background:url(../images/b_tryit_hover.png) no-repeat;
+}
 
+#index #getitButton{
+    background:url(../images/b_getit.png) no-repeat;
+}
+#index #getitButton:hover{
+    background:url(../images/b_getit_hover.png) no-repeat;
+}
+#index #productButton{
+    background:url(../images/b_exploreit.png) no-repeat;
+}
+#index #productButton:hover{
+    background:url(../images/b_exploreit_hover.png) no-repeat;    
+}
 .content {
 	width:700px;
 }
@@ -497,6 +539,7 @@ h3{
     padding-left:10px;
     display:block;
     padding-top:12px;
+    color:white;
 }
 #product .downloadButton {
     width:170px;    
@@ -542,6 +585,8 @@ h3{
     display:none;
 
 }
+
+
 #demo #backToDemo{
     text-align:center;
     color:white;
