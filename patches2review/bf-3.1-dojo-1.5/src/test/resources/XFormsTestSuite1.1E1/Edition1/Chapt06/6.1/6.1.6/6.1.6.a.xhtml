@@ -1,0 +1,55 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml"
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xforms="http://www.w3.org/2002/xforms">
+	<xhtml:head>
+		<xhtml:title>6.1.6.a constraint property</xhtml:title>
+		<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+		<xforms:model>
+			<xforms:instance xmlns="">
+				<range>
+					<from>10</from>
+					<to/>
+				</range>
+			</xforms:instance>
+			<xforms:bind nodeset="/range/to" constraint="number(.) &gt; number(/range/from)"/>
+		</xforms:model>
+	</xhtml:head>
+	<xhtml:body>
+		<xforms:group>
+			<xforms:label class="title">6.1.6.a constraint property</xforms:label>
+		</xforms:group>
+		<xforms:group>
+			<xforms:label>
+				You must see an xforms-valid message when you activate the Valid Value trigger. 
+				You must see an xforms-invalid message when you activate the Invalid Value trigger. 
+			</xforms:label>
+		</xforms:group>
+		
+		<xforms:input ref="/range/from">
+			<xforms:label>From </xforms:label>
+		</xforms:input>
+		<xforms:input ref="/range/to">
+			<xforms:label>To </xforms:label>
+			<xforms:action ev:event="xforms-valid">
+				<xforms:message level="modal">xforms-valid</xforms:message>
+    		</xforms:action>
+    		<xforms:action ev:event="xforms-invalid">
+    			<xforms:message level="modal">xforms-invalid</xforms:message>
+    		</xforms:action>
+		</xforms:input>
+		
+		<xforms:trigger>
+			<xforms:label>Valid Value</xforms:label>
+			<xforms:setvalue ref="/range/to" ev:event="DOMActivate">25</xforms:setvalue>
+		</xforms:trigger>
+		
+		<xforms:trigger>
+			<xforms:label>Invalid Value</xforms:label>
+			<xforms:setvalue ref="/range/to" ev:event="DOMActivate">5</xforms:setvalue>
+		</xforms:trigger>
+		
+	</xhtml:body>
+</xhtml:html>

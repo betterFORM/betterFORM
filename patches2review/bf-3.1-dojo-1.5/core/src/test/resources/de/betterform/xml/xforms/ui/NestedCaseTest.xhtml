@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <meta name="author" content="joern"/>
+        <meta name="author" content="lars"/>
+        <meta name="description" content="test form for nested case element"/>
+        <meta name="version" content="$Id: NestedCaseTest.xhtml 3503 2008-08-29 14:21:18Z lars $"/>
+
+        <xf:model id="model-1">
+            <xf:instance id="instance-1" xmlns="">
+                <data>
+                    <item/>
+                </data>
+            </xf:instance>
+            <!--<xf:action ev:event="xforms-ready">-->
+                <xf:toggle case="case-1"  ev:event="xforms-ready"/>
+            <!--</xf:action>-->
+        </xf:model>
+    </head>
+    <body>
+    <!-- OUTER SWITCH -->
+    <xf:switch id="outer-switch">
+        <xf:case id="case-1" selected="true">
+            <!--<xf:action ev:event="xforms-select">-->
+                <!-- uncomment this and test wont fail -->
+                <xf:toggle case="case-nested-2"  ev:event="xforms-select"/>
+            <!--</xf:action>-->
+
+            <xf:group appearance="full">
+                <xf:label>Case 1</xf:label>
+                <xf:trigger>
+                    <xf:label>Case 2</xf:label>
+                    <xf:toggle case="case-nested-2"/>
+                </xf:trigger>
+
+                <!-- NESTED SWITCH -->
+                <xf:switch id="nested-switch">
+                    <xf:case id="case-nested-1" selected="true">
+                        <xf:group appearance="full">
+                            <xf:label>Case 1.1</xf:label>
+                            <xf:trigger id="activate-case-1-2">
+                                <xf:label>Switch to 1-2</xf:label>
+                                <xf:toggle case="case-nested-2"/>
+                            </xf:trigger>
+
+                        </xf:group>
+                    </xf:case>
+                    <xf:case id="case-nested-2" selected="false">
+                        <xf:group appearance="full">
+                            <xf:label>Case 1.2</xf:label>
+                            <xf:trigger id="activate-case-1-1">
+                                <xf:label>Switch to 1-1</xf:label>
+                                <xf:toggle case="case-nested-1"/>
+                            </xf:trigger>
+                        </xf:group>
+                    </xf:case>
+                </xf:switch>
+            </xf:group>
+        </xf:case>
+        <xf:case id="case-2" selected="false">
+            <xf:group appearance="full">
+                <xf:label>Case 2</xf:label>
+                <xf:trigger>
+                    <xf:label>Case 1</xf:label>
+                    <xf:toggle case="case-nested-1"/>
+                </xf:trigger>
+            </xf:group>
+        </xf:case>
+    </xf:switch>
+    </body>
+</html>

@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<!--       
+  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<installation version="1.0">
+    <!--
+        The info section.
+        The meaning of the tags should be natural ...
+    -->
+
+    <info>
+        <appname>betterForm</appname>
+        <appversion>3.1</appversion>
+        <url>http://www.betterform.de</url>
+        <javaversion>1.5</javaversion>
+        <!--<webdir>http://localhost:8080/packs</webdir>-->
+        <webdir>http://www.betterform.de/packs</webdir>
+    </info>
+
+    <conditions>
+        <condition id="jetty" type="packselection">
+            <packid>jetty</packid>
+        </condition>
+        <condition id="bf" type="packselection">
+            <packid>betterForm</packid>
+        </condition>
+        <condition id="exist" type="packselection">
+            <packid>betterFORM-eXist-bundle</packid>
+        </condition>
+        <condition id="exist-install" type="and">
+            <condition type="not">
+                <condition type="ref" refid="bf"/>
+            </condition>
+            <condition type="not">
+                <condition type="ref" refid="jetty"/>
+            </condition>
+        </condition>
+        <condition id="jetty-install" type="and">
+            <condition type="not">
+                <condition type="ref" refid="bf"/>
+            </condition>
+            <condition type="not">
+                <condition type="ref" refid="exist"/>
+            </condition>
+        </condition>
+        <condition id="bf-install" type="and">
+            <condition type="not">
+                <condition type="ref" refid="jetty"/>
+            </condition>
+            <condition type="not">
+                <condition type="ref" refid="exist"/>
+            </condition>
+        </condition>
+        <condition id="container" type="or">
+                <condition type="ref" refid="container-1"/>
+                <condition type="ref" refid="exist"/>
+        </condition>
+        <condition id="container-1" type="or">
+                <condition type="ref" refid="bf"/>
+                <condition type="ref" refid="jetty"/>
+        </condition>
+
+    </conditions>
+
+    <variables>
+        <variable name="JETTY_HOME" value="$EXIST_HOME/tools/jetty"/>
+        <variable name="JDKPathPanel.skipIfValid" value="yes"/>
+        <variable name="JDKPathPanel.minVersion" value="1.5"/>
+        <variable name="dataDir" value="webapp/WEB-INF/data" />
+    </variables>
+    <!--
+        The gui preferences indication.
+        Sets the installer window to 640x480. It will not be able to change the size.
+    -->
+    <guiprefs width="640" height="580" resizable="no">
+        <modifier key="useButtonIcons" value="no"/>
+  		<modifier key="useLabelIcons" value="no"/>
+  		<modifier key="layoutAnchor" value="NORTHWEST"/>
+  		<modifier key="useHeadingPanel" value="yes"/>
+  		<modifier key="headingImageOnLeft" value="yes"/>
+  		<modifier key="headingLineCount" value="1"/>
+  		<modifier key="headingFontSize" value="1.5"/>
+  		<modifier key="headingBackgroundColor" value="0x00ffffff"/>
+		<modifier key="labelFontSize" value="1.2"/>
+        <modifier key="useButtonIcons" value="yes"/>
+  		<modifier key="useLabelIcons" value="yes"/>
+		<modifier key="labelGap" value="6"/>
+ 	</guiprefs>
+
+    <!--
+        The locale section.
+        Asks here to include the English and French langpacks.
+    -->
+    <locale>
+        <langpack iso3="deu"/>
+        <langpack iso3="eng"/>
+    </locale>
+
+
+    <!--
+        The resources section.
+        The ids must be these ones if you want to use the LicencePanel and/or the InfoPanel.
+    -->
+
+    <resources>
+    	<res id="Heading.image" src="../resource/bf_logo_145x59.png"/>
+        <res id="LicencePanel.licence" src="BSD-license.txt"/>
+        <res id="HTMLInfoPanel.readme" src="../resource/readme.html"/>
+        <res id="HTMLHelloPanel.welcome" src="../resource/welcome.html"/>
+
+        <res id="Installer.image" src="../resource/logo.png" />
+
+        <res id="Installer.image" src="../resource/info-border.png" />
+        <res src="../resource/info-border.png" id="Installer.image.0"/>
+        <res src="../resource/info-border.png" id="Installer.image.1"/>
+        <res src="../resource/pack-border.png" id="Installer.image.2"/>
+        <res src="../resource/pack-border.png" id="Installer.image.3"/>
+        <res src="../resource/pack-border.png" id="Installer.image.4"/>
+        <res src="../resource/pack-border.png" id="Installer.image.5"/>
+
+    </resources>
+
+
+    <!--
+        The panels section.
+        We indicate here which panels we want to use. The order will be respected.
+    -->
+
+    <panels labelFontSize="2.0">
+        <panel classname="HTMLHelloPanel" id="welcome"/>
+        <panel classname="LicencePanel"/>
+        <panel classname="TargetPanel"/>
+        <panel classname="HTMLInfoPanel" id="readme" />
+        <panel classname="PacksPanel"/>
+        <panel classname="InstallPanel"/>
+        <panel classname="FinishPanel"/>
+    </panels>
+
+    <!--
+        The packs section.
+        We specify here our packs.
+    -->
+
+    <packs>
+
+        <pack name="betterFORM WAR" id="betterForm" required="no" preselected="no" condition="bf-install">
+            <description>betterFORM 3.0 XForms Engine packaged as WAR</description>
+            <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/betterform"/>
+        </pack>
+
+<!--
+FOR LATER: installinig the war should switch the above pack off. Did not yet found a way to do that quickly
+        <pack name="betterForm 3.0 war" required="no" preselected="no">
+            <description>betterForm 3.0 as war-file</description>
+            <file src="betterform.war" targetdir="$INSTALL_PATH" condition="!jetty+!bf" />
+        </pack>
+-->
+
+        <pack id="jetty" name="betterFORM standalone" required="no" preselected="no" condition="jetty-install">
+            <description>betterFORM standalone running on jetty webcontainer</description>
+            <fileset dir="jetty/betterform" targetdir="$INSTALL_PATH" includes="*/**"/>
+
+            <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/web/root"/>
+        </pack>
+
+        <!--
+        <pack name="eXist" required="no" preselected="no">
+            <description>eXist 1.4 XML Database</description>
+            <depends packname="Jetty"/>
+            <file src="exist.war" unpack="true" targetdir="$INSTALL_PATH/web/exist"/>
+        </pack>
+        -->
+        <pack name="betterFORM XRX" id="betterFORM-eXist-bundle" required="no" preselected="yes" condition="exist-install">
+            <description>betterFORM and eXist bundled</description>
+            
+            <fileset targetdir="$INSTALL_PATH" dir="bf-eXist"/>
+
+            <parsable type="shell" targetfile="$INSTALL_PATH/bin/client.sh"/>
+            <parsable type="shell" targetfile="$INSTALL_PATH/bin/startup.sh"/>
+            <parsable type="shell" targetfile="$INSTALL_PATH/bin/server.sh"/>
+            <parsable type="shell" targetfile="$INSTALL_PATH/bin/shutdown.sh"/>
+            <parsable type="shell" targetfile="$INSTALL_PATH/bin/backup.sh"/>
+            <parsable type="shell" targetfile="$INSTALL_PATH/build.sh"/>
+            <parsable type="shell" targetfile="$INSTALL_PATH/bin/setup.sh"/>
+            <parsable targetfile="$INSTALL_PATH/bin/client.bat"/>
+            <parsable targetfile="$INSTALL_PATH/bin/startup.bat"/>
+            <parsable targetfile="$INSTALL_PATH/bin/server.bat"/>
+            <parsable targetfile="$INSTALL_PATH/bin/shutdown.bat"/>
+            <parsable targetfile="$INSTALL_PATH/bin/backup.bat"/>
+            <parsable targetfile="$INSTALL_PATH/bin/setup.bat"/>
+            <parsable targetfile="$INSTALL_PATH/build.bat"/>
+            <parsable type="xml" targetfile="$INSTALL_PATH/conf.xml"/>
+            <parsable targetfile="$INSTALL_PATH/tools/wrapper/conf/wrapper.conf"/>
+            <executable targetfile="$INSTALL_PATH/bin/setup.sh" stage="never" os="unix"/>
+            <executable targetfile="$INSTALL_PATH/bin/client.sh" stage="never" os="unix"/>           
+            <executable targetfile="$INSTALL_PATH/bin/startup.sh" stage="never" os="unix"/>
+            <executable targetfile="$INSTALL_PATH/bin/server.sh" stage="never" os="unix"/>
+            <executable targetfile="$INSTALL_PATH/bin/shutdown.sh" stage="never" os="unix"/>
+            <executable targetfile="$INSTALL_PATH/bin/backup.sh" stage="never" os="unix"/>
+            <executable targetfile="$INSTALL_PATH/build.sh" stage="never" os="unix"/>
+        </pack>
+         
+        <pack name="DeveloperPack" required="no" preselected="no" condition="container">
+            <description>adds uncompressed Dojo for full debug capabilities</description>
+           <fileset dir="dojo-release-1.3.3-src"
+                     targetdir="$INSTALL_PATH/betterform/resources/scripts"
+                     condition="bf"
+                     excludes="util/**"/>
+            <fileset dir="bf-resources"
+                     targetdir="$INSTALL_PATH/betterform/resources/scripts/betterform"
+                     condition="bf"
+                     excludes="util/**"/>
+            <fileset dir="dojo-release-1.3.3-src"
+                      targetdir="$INSTALL_PATH/web/root/resources/scripts"
+                     condition="jetty"
+                     excludes="util/**"/>
+
+            <fileset dir="bf-resources"
+                      targetdir="$INSTALL_PATH/web/root/resources/scripts/betterform"
+                     condition="jetty"
+                     excludes="util/**"/>
+
+            <fileset dir="dojo-release-1.3.3-src"
+                     targetdir="$INSTALL_PATH/webapp/resources/scripts"
+                     condition="exist"
+                     excludes="util/**"/>
+
+            <fileset dir="bf-resources"
+                     targetdir="$INSTALL_PATH/webapp/resources/scripts/betterform"
+                     condition="exist"
+                     excludes="util/**"/>
+            
+        </pack>
+
+        <pack name="Forms" required="no" condition="container">
+            <description>betterFORM demos, reference and test forms</description>
+            <fileset dir="../../../src/main/xforms/demo" targetdir="$INSTALL_PATH/betterform/forms/demo"
+                     excludes=""
+                  condition="bf"/>
+            <fileset dir="../../../src/main/xforms/reference" targetdir="$INSTALL_PATH/betterform/forms/reference"
+                  condition="bf"/>
+            <fileset dir="../../../src/main/xforms/test" targetdir="$INSTALL_PATH/betterform/forms/test"
+                  condition="bf"/>
+
+            <fileset dir="../../../src/main/xforms/demo" targetdir="$INSTALL_PATH/web/root/forms/demo"
+                  condition="jetty"/>
+            <fileset dir="../../../src/main/xforms/reference" targetdir="$INSTALL_PATH/web/root/forms/reference"
+                  condition="jetty"/>
+            <fileset dir="../../../src/main/xforms/test" targetdir="$INSTALL_PATH/web/root/forms/test"
+                  condition="jetty"/>
+
+            <fileset dir="../../../src/main/xforms/demo" targetdir="$INSTALL_PATH/webapp/forms/demo"
+                  condition="exist" override="true"/>
+            <fileset dir="../../../src/main/xforms/reference" targetdir="$INSTALL_PATH/webapp/forms/reference"
+                  condition="exist" override="true"/>
+            <fileset dir="../../../src/main/xforms/test" targetdir="$INSTALL_PATH/webapp/forms/test"
+                  condition="exist" override="true"/>
+        </pack>
+
+        <pack name="Testsuite1.1" id ="testsuite" required="no" preselected="no" condition="container">
+            <description>official XForms 1.1 Conformance Test Suite</description>
+
+            <fileset dir="../../../src/test/resources/XFormsTestSuite1.1E1" targetdir="$INSTALL_PATH/betterform/forms/XFormsTestSuite1.1E1"
+                  condition="bf"/>
+
+            <fileset dir="../../../src/test/resources/XFormsTestSuite1.1E1" targetdir="$INSTALL_PATH/web/root/forms/XFormsTestSuite1.1E1"
+                  condition="jetty"/>
+
+            <fileset dir="../../../src/test/resources/XFormsTestSuite1.1E1" targetdir="$INSTALL_PATH/webapp/forms/XFormsTestSuite1.1E1"
+                  condition="exist"/>
+        </pack>
+    </packs>
+</installation>
+

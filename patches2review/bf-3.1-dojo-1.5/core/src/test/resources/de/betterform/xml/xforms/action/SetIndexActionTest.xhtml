@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <meta name="author" content="unl at users.sourceforge.net"/>
+        <meta name="description" content="test form for setindex action"/>
+        <meta name="version" content="$Id: SetIndexActionTest.xhtml 3459 2008-08-14 08:38:18Z joern $"/>
+        <xf:model id="model">
+            <xf:instance id="instance" xmlns="">
+                <data>
+                    <item>first</item>
+                    <item>between</item>
+                    <item>last</item>
+                    <selection></selection>
+                </data>
+            </xf:instance>
+            <xf:bind id="repeat-selection" nodeset="selection" calculate="IF(index('repeat') &gt; 0, ../item[index('repeat')], '')"/>
+        </xf:model>
+    </head>
+    <body>
+        <xf:group>
+            <xf:label>UI Bindings: There should be 3 repeat items with values
+                <i>first</i>,
+                <i>between</i>, and
+                <i>last</i>.
+            </xf:label>
+            <xf:group>
+                <xf:repeat id="repeat" nodeset="item">
+                    <xf:input id="input" ref="."/>
+                    <xf:trigger id="trigger-repeated">
+                        <xf:label>Set index inside a repeat</xf:label>
+                        <xf:action>
+                            <xf:setindex repeat="repeat" index="count(../item)"/>
+                        </xf:action>
+                    </xf:trigger>
+                </xf:repeat>
+                <xf:output id="selection" bind="repeat-selection">
+                    <xf:label>Selected value</xf:label>
+                </xf:output>
+                <xf:trigger id="trigger-before">
+                    <xf:label>Set index before first</xf:label>
+                    <xf:action>
+                        <xf:setindex repeat="repeat" index="0"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger id="trigger-first">
+                    <xf:label>Set index to first</xf:label>
+                    <xf:action>
+                        <xf:setindex repeat="repeat" index="1"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger id="trigger-between">
+                    <xf:label>Set index between first and last</xf:label>
+                    <xf:action>
+                        <xf:setindex repeat="repeat" index="2"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger id="trigger-last">
+                    <xf:label>Set index to last</xf:label>
+                    <xf:action>
+                        <xf:setindex repeat="repeat" index="3"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger id="trigger-after">
+                    <xf:label>Set index after last</xf:label>
+                    <xf:action>
+                        <xf:setindex repeat="repeat" index="4"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger id="trigger-nan">
+                    <xf:label>Set index NaN</xf:label>
+                    <xf:action>
+                        <xf:setindex repeat="repeat" index="foo"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger id="trigger-computed" ref="item">
+                    <xf:label>Set index to position computed by 'last()'</xf:label>
+                    <xf:action>
+                        <xf:setindex repeat="repeat" index="last()"/>
+                    </xf:action>
+                </xf:trigger>
+            </xf:group>
+        </xf:group>
+    </body>
+</html>

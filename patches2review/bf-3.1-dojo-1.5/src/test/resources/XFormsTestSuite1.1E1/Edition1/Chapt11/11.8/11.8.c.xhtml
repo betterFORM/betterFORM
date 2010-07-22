@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:ev="http://www.w3.org/2001/xml-events" 
+			xmlns:xforms="http://www.w3.org/2002/xforms" 
+			xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+			xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <xhtml:head>
+    <xhtml:title>11.8.c header element with similar name elements</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model >
+    	<xforms:instance>
+    		<data>
+    			<value>one</value>
+    			<value>two</value>
+    		</data>
+    	</xforms:instance>
+    	<xforms:submission id="sub1" method="post" action="http://xformstest.org/cgi-bin/echo.sh">
+    	  <xforms:header nodeset="/data/value">
+    	    <xforms:name>myHeader</xforms:name>
+    	    <xforms:value>myValue1</xforms:value>
+    	    <xforms:value>myValue2</xforms:value>
+    	  </xforms:header>
+    	  <xforms:header>
+    	    <xforms:name>myHeader</xforms:name>
+    	    <xforms:value>myValue3</xforms:value>
+    	  </xforms:header>
+    	  <xforms:header nodeset="/data/value">
+    	    <xforms:name>myHeader</xforms:name>
+    	    <xforms:value>myValue4</xforms:value>
+    	  </xforms:header>
+    	</xforms:submission>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">11.8.c header element with similar name elements</xforms:label>
+  	</xforms:group>
+  	<!-- This is the description label if we decide that by using a duplicate header name, the value of that
+  	     duplicate header name should be added to the original header name. -->
+  	<xforms:group>
+  	  <xforms:label>
+  	    When you activate the Submit Now submit control the page must be replaced by the form data. Among the 
+  	    variables you must see one header named &quot;myHeader&quot;. 
+  	    myHeader must have the values &quot;myValue1,myValue2,myValue1,myValue2,myValue3,myValue4,myValue4&quot;
+  	    in that order. 
+  	  </xforms:label>
+  	</xforms:group>
+  	<!-- This is the description label if we decide that by using a duplicate header name, there should be
+  	     another header with the same name (there should be 5 myHeaders, not just 1).
+  	<xforms:group>
+  	  <xforms:label>
+  	    When you activate the Submit Now submit control, the page must be replaced by the form data. Among the 
+  	    variables you must see five headers named &quot;myHeader&quot;.  The values should be in this order also.
+  	    The first myHeader must have the values &quot;myValue1,myValue2&quot;.
+  	    The second myHeader must have the values &quot;myValue1,myValue2&quot;.
+  	    The third myHeader must have the value &quot;myValue3&quot;.
+  	    The fourth myHeader must have the value &quot;myValue4&quot;.
+  	    The fifth myHeader must have the value &quot;myValue4&quot;.
+  	  </xforms:label>
+  	</xforms:group> -->
+  	<xforms:group>
+  	  <xforms:submit submission="sub1">
+  	    <xforms:label>Submit Now</xforms:label>
+  	  </xforms:submit>
+  	</xforms:group>
+  	
+  </xhtml:body>
+</xhtml:html>

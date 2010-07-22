@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>5.2.6.a</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">5.2.6.a</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>@URL-TO-TEST-FORMS@/XFormsTestSuite1.1E1/Edition1/Chapt05/5.2/5.2.6/5.2.6.a.xhtml</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTitle</td>
+	<td>5.2.6.a email datatype</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTitle</td>
+	<td>5.2.6.a email datatype</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>C12-value</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>C12-value</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=message1</td>
+	<td>You entered a valid email</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>C8-value</td>
+	<td>editors@example.com</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>C15-value</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>C15-value</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=message2</td>
+	<td>You entered a valid email</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>C8-value</td>
+	<td>exact:~my_mail+{nospam}$?@sub-domain.example.info</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>C18-value</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>C18-value</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=message3</td>
+	<td>You entered an invalid email</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>C8-value</td>
+	<td>editors@(this is a comment)example.info</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>C21-value</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>C21-value</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=message4</td>
+	<td>You entered an invalid email</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>C8-value</td>
+	<td>editors{at}example{dot}info</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

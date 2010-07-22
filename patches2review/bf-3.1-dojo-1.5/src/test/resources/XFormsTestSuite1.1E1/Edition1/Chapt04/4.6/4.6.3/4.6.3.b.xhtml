@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+            xmlns:xhtml="http://www.w3.org/1999/xhtml"
+            xmlns:ev="http://www.w3.org/2001/xml-events"
+            xmlns:et="http://w3c.org/eventtracker">
+    <xhtml:head>
+        <xhtml:title>4.6.3.b event sequencing for select/select1 controls with incremental=&quot;false&quot;</xhtml:title>
+        <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+        <xforms:model id="m_001">
+            <xforms:instance xmlns="">
+                <car>
+                    <carSelected1>acu</carSelected1>
+                    <carSelected2>acu</carSelected2>
+                </car>
+            </xforms:instance>
+            <xforms:action ev:event="xforms-recalculate">
+                <xforms:insert nodeset="et:event" model="event_tracker"/>
+                <xforms:setvalue model="event_tracker" ref="et:event[last()]/@name">xforms-recalculate</xforms:setvalue>
+            </xforms:action>
+            <xforms:action ev:event="xforms-revalidate">
+                <xforms:insert nodeset="et:event" model="event_tracker"/>
+                <xforms:setvalue model="event_tracker" ref="et:event[last()]/@name">xforms-revalidate</xforms:setvalue>
+            </xforms:action>
+            <xforms:action ev:event="xforms-refresh">
+                <xforms:insert at="last()" position="after" nodeset="et:event" model="event_tracker"/>
+                <xforms:setvalue model="event_tracker" ref="et:event[last()]/@name">xforms-refresh</xforms:setvalue>
+            </xforms:action>
+        </xforms:model>
+        <xforms:model id="event_tracker">
+            <xforms:instance id="tracker_instance">
+                <et:events>
+                    <et:event name=""/>
+                </et:events>
+            </xforms:instance>
+            <xforms:bind nodeset="et:event[1]" relevant="false()"/>
+        </xforms:model>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group>
+            <xforms:label class="title">4.6.3.b event sequencing for select/select1 controls with incremental=&quot;false&quot;</xforms:label>
+        </xforms:group>
+
+        <xforms:group>
+            <xforms:label>
+                When selecting and deselecting items within one of the selection controls, messages for "xforms-select"
+                and "xforms-deselect", and only those, must appear.
+
+                NOTE: When changing focus between controls, other messages may appear, but this is tested by another test
+                and should be ignored for the purpose of the current test.
+            </xforms:label>
+
+            <xforms:select ref="/car/carSelected1" incremental="false">
+                <xforms:label>car</xforms:label>
+                <xforms:item>
+                    <xforms:label>Acura</xforms:label>
+                    <xforms:value>acu</xforms:value>
+                </xforms:item>
+                <xforms:item>
+                    <xforms:label>Honda</xforms:label>
+                    <xforms:value>hon</xforms:value>
+                </xforms:item>
+                <xforms:item>
+                    <xforms:label>Subaru</xforms:label>
+                    <xforms:value>sub</xforms:value>
+                </xforms:item>
+                <xforms:item>
+                    <xforms:label>Toyota</xforms:label>
+                    <xforms:value>toy</xforms:value>
+                </xforms:item>
+                <xforms:action ev:event="xforms-deselect">
+                    <xforms:insert at="last()" position="after" nodeset="et:event" model="event_tracker"/>
+                    <xforms:setvalue model="event_tracker" ref="et:event[last()]/@name">xforms-deselect (select)</xforms:setvalue>
+                </xforms:action>
+                <xforms:action ev:event="xforms-select">
+                    <xforms:insert at="last()" position="after" nodeset="et:event" model="event_tracker"/>
+                    <xforms:setvalue model="event_tracker" ref="et:event[last()]/@name">xforms-select (select)</xforms:setvalue>
+                </xforms:action>
+                <xforms:action ev:event="xforms-value-changed">
+                    <xforms:insert at="last()" position="after" nodeset="et:event" model="event_tracker"/>
+                    <xforms:setvalue model="event_tracker" ref="et:event[last()]/@name">xforms-value-changed (select)</xforms:setvalue>
+                </xforms:action>
+            </xforms:select>
+
+            <xforms:select1 ref="/car/carSelected2" incremental="false">
+                <xforms:label>Car</xforms:label>
+                <xforms:item>
+                    <xforms:label>Acura</xforms:label>
+                    <xforms:value>acu</xforms:value>
+                </xforms:item>
+                <xforms:item>
+                    <xforms:label>Honda</xforms:label>
+                    <xforms:value>hon</xforms:value>
+                </xforms:item>
+                <xforms:item>
+                    <xforms:label>Subaru</xforms:label>
+                    <xforms:value>sub</xforms:value>
+                </xforms:item>
+                <xforms:item>
+                    <xforms:label>Toyota</xforms:label>
+                    <xforms:value>toy</xforms:value>
+                </xforms:item>
+                <xforms:action ev:event="xforms-deselect">
+                    <xforms:insert at="last()" position="after" nodeset="et:event" model="event_tracker"/>
+                    <xforms:setvalue model="event_tracker" ref="et:event[last()]/@name">xforms-deselect (select1)</xforms:setvalue>
+                </xforms:action>
+                <xforms:action ev:event="xforms-select">
+                    <xforms:insert at="last()" position="after" nodeset="et:event" model="event_tracker"/>
+                    <xforms:setvalue model="event_tracker" ref="et:event[last()]/@name">xforms-select (select1)</xforms:setvalue>
+                </xforms:action>
+                <xforms:action ev:event="xforms-value-changed">
+                    <xforms:insert at="last()" position="after" nodeset="et:event" model="event_tracker"/>
+                    <xforms:setvalue model="event_tracker" ref="et:event[last()]/@name">xforms-value-changed (select1)</xforms:setvalue>
+                </xforms:action>
+            </xforms:select1>
+        </xforms:group>
+
+        <xforms:repeat model="event_tracker" id="repeat_event_tracker" nodeset="et:event">
+            <xforms:output ref="@name">
+                <xforms:label>Event fired:</xforms:label>
+            </xforms:output>
+        </xforms:repeat>
+
+    </xhtml:body>
+</xhtml:html>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <meta name="author" content="unl at users.sourceforge.net"/>
+        <meta name="description" content="test form for repeat index"/>
+        <meta name="version" content="$Id: RepeatIndexTest.xhtml 2272 2006-08-18 23:22:09Z unl $"/>
+        <xf:model id="default-model">
+            <xf:instance id="default-instance">
+                <default-root xmlns="">
+                    <default-collection>
+                        <default-item>default-value</default-item>
+                        <default-item>default-value</default-item>
+                    </default-collection>
+                    <default-collection>
+                        <default-item>default-value</default-item>
+                        <default-item>default-value</default-item>
+                    </default-collection>
+                    <default-collection>
+                        <default-item>default-value</default-item>
+                        <default-item>default-value</default-item>
+                    </default-collection>
+                </default-root>
+            </xf:instance>
+        </xf:model>
+    </head>
+    <body>
+        <xf:group>
+            <xf:label>UI Bindings: All input controls should say <i>default-value</i>.
+            </xf:label>
+            <xf:group>
+                <xf:repeat id="enclosing-repeat" nodeset="default-collection">
+                    <xf:repeat id="nested-repeat" nodeset="default-item">
+                        <xf:input id="input" ref="."/>
+                        <xf:action id="action"/>
+                    </xf:repeat>
+                </xf:repeat>
+            </xf:group>
+            <xf:group id="dependent-group" ref="default-collection[index('enclosing-repeat')]">
+                <xf:repeat id="dependent-repeat" nodeset="default-item">
+                    <xf:output id="output" ref="."/>
+                </xf:repeat>
+            </xf:group>
+        </xf:group>
+    </body>
+</html>

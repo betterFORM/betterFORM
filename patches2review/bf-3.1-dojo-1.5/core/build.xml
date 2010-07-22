@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- $Id: build.xml,v 1.90 2006/11/16 23:55:43 joernt Exp $ -->
+<project id="core" name="betterForm Core" default="package" basedir="." >
+
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- **************************************** PROPERTIES **************************************** -->
+
+    <property name="core.dir" value="."/>
+    <xmlproperty file="../build.properties.xml"
+             semanticAttributes="true" keepRoot="false" />
+
+    <property name="target" value="${basedir}/target"/>
+    <property name="dist.path" value="${basedir}/target/${core.app.name}"/>
+    <property name="dist.name" value="${core.app.name}-${core.app.version}"/>
+
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <target name="clean" description="clean build target directory">
+        <echo />
+        <echo message="************************************************************************************"/>
+        <echo message="cleaning up Core"/>
+        <echo message="************************************************************************************"/>
+        <echo />
+        <delete dir="${basedir}/target"/>
+    </target>
+
+    <!-- **************************************** PREPARATION **************************************** -->
+    <!-- **************************************** PREPARATION **************************************** -->
+    <!-- **************************************** PREPARATION **************************************** -->
+    <target name="prepare" description="init the build process">
+        <!-- set timestamp -->
+        <tstamp/>
+        <echo message="basedir: ${basedir}"/>
+        
+        <mkdir dir="${basedir}/target"/>
+
+
+        <echo />
+        <echo message="************************************************************************************"/>
+        <echo message="copying Core resources"/>
+        <echo message="************************************************************************************"/>
+        <echo />
+
+        <!-- copy all resources -->
+        <copy description="copy all resources"
+            todir="${basedir}/target/classes"
+            filtering="true"
+            includeemptydirs="false">
+            <fileset dir="${basedir}/src/main/resources"/>
+        </copy>
+    </target>
+
+    <!-- **************************************** COMPILATION **************************************** -->
+    <!-- **************************************** COMPILATION **************************************** -->
+    <!-- **************************************** COMPILATION **************************************** -->
+
+    <!--
+        Default build.properties setting are as below. If you need to compile with debug settings you can either
+        a. change ../build.properties.xml or
+        b. call Ant like this: ant compile -Djavac.debug="true"
+
+    -->
+
+    <target name="compile" depends="prepare" description="compile all core sources">
+
+<!--
+        <exec executable="svn" output="svnlog.out">
+             <arg line="info"/>
+         </exec>
+         <loadproperties srcFile="svnlog.out">
+               <filterchain>  
+                 <linecontains>
+                   <contains value="Revision"/>
+                 </linecontains>
+               </filterchain>
+         </loadproperties>
+         <delete file="svnlog.out"/>
+
+        <echo>SVN Revision ${Revision}</echo>
+-->
+        <filter token="app.name" value="${web.app.name}"/>
+        <filter token="app.version" value="${web.app.version}"/>
+        <filter token="app.build" value="${DSTAMP}/${TSTAMP}"/>
+        <!-- <filter token="revision.number" value="${Revision}"/> -->
+
+        <copy todir="${basedir}/src/main/resources/META-INF"
+              file="src/main/java/version.info"
+              filtering="true"
+              overwrite="true"/>
+
+        <echo />
+        <echo message="************************************************************************************"/>
+        <echo message="compiling Core classes"/>
+        <echo message="************************************************************************************"/>
+        <echo />
+        
+        <javac description="compile source files"
+            srcdir="${basedir}/src/main/java"
+            destdir="${basedir}/target/classes"
+            classpathref="compile.class.path"
+            target="${properties.javac.version}"                
+            debug="${properties.javac.debug}"
+            deprecation="${properties.javac.deprecation}"
+            optimize="${properties.javac.optimize}"/>
+    </target>
+
+    <!-- **************************************** BUILDING JAR **************************************** -->
+    <!-- **************************************** BUILDING JAR **************************************** -->
+    <!-- **************************************** BUILDING JAR **************************************** -->
+    <target name="package" depends="compile" description="create jar file(s)">
+        <copy file="${basedir}/target/classes/de/betterform/xml/config/default.xml" tofile="${target}/betterform-config.xml"
+                description="copy betterForm config file"/>
+
+        <echo />
+        <echo message="************************************************************************************"/>
+        <echo message="building Core jar"/>
+        <echo message="************************************************************************************"/>
+        <echo />
+
+        <jar description="package betterform jar"
+            jarfile="${target}/${dist.name}.jar"
+            basedir="${basedir}/target/classes"
+            excludes="**/test/** **/schemabuilder/** **/aop.xml"/>
+    </target>
+
+    <!-- **************************************** SOURCE DISTRIBUTION **************************************** -->
+    <!-- **************************************** SOURCE DISTRIBUTION **************************************** -->
+    <!-- **************************************** SOURCE DISTRIBUTION **************************************** -->
+    <target name="prepare-distribute-binary" depends="clean, package">
+      <mkdir dir="${target}/lib"/>
+
+      <copy description="copy dependant libraries"
+            todir="${target}/lib"
+            flatten="true">
+            <fileset dir="src/main/lib">
+                <include name="*.jar"/>              
+            </fileset>
+        </copy>
+
+        <move file="${target}" tofile="${target}/${dist.name}"/>
+        <copy todir="${target}/${dist.name}" file="${target}/${dist.name}/classes/META-INF/version.info"/>
+        <delete dir="${target}/${dist.name}/classes"/>
+
+    </target>
+
+    <target name="distribute-binary" depends="prepare-distribute-binary" description="assembles binary and source distributions">
+        <echo />
+        <echo message="************************************************************************************"/>
+        <echo message="creating distribution files"/>
+        <echo message="************************************************************************************"/>
+        <echo />
+
+        <!-- create binary tarball -->
+        <tar description="create binary tarball"
+            tarfile="${target}/${dist.name}-bin.tar"
+            basedir="${target}"
+            />
+
+        <gzip description="create binary tarball"
+            zipfile="${target}/${dist.name}-bin.tar.gz"
+            src="${target}/${dist.name}-bin.tar"/>
+
+
+        <!-- create binary zip -->
+        <zip zipfile="${target}/${dist.name}-bin.zip" description="create binary zip" basedir="${target}/${dist.name}"/>
+
+        <delete description="create binary tarball"
+            file="${target}/${dist.name}-bin.tar"/>
+
+        <delete dir="${target}/${dist.name}"/>
+    </target>
+
+    <target name="prepare-source-dist" depends="clean">
+        <mkdir dir="${target}/${dist.name}"/>
+
+        <copy file="../build.properties.xml" todir="${target}/${dist.name}"/>
+        <!--<copy file="../build.xml" todir="${target}/${dist.name}"/>-->
+
+        <copy todir="${target}/${dist.name}/core" description="copy core source tree">
+            <fileset dir="../core">
+                <exclude name="**/target/**"/>
+                <exclude name="**/*.iml"/>
+            </fileset>
+        </copy>
+
+        <copy todir="${target}/${dist.name}/tools" description="copy tools module">
+            <fileset dir="../tools"/>
+        </copy>
+    </target>
+
+    <target name="distribute-sources" depends="prepare-source-dist" description="assembles source distribution">
+
+        <tar description="create source tarball"
+             tarfile="${target}/${dist.name}-src.tar"
+             basedir="${target}/${dist.name}"/>
+
+
+        <gzip description="create source tarball"
+            zipfile="${target}/${dist.name}-src.tar.gz"
+            src="${target}/${dist.name}-src.tar"/>
+
+       <!-- create source zip -->
+        <zip description="create source zip" zipfile="${target}/${dist.name}-src.zip"  basedir="${target}/${dist.name}"/>
+
+        <delete description="create source tarball"
+            file="${target}/${dist.name}-src.tar"/>
+         <delete dir="${target}/${dist.name}"/>
+    </target>
+
+
+    <target name="distribute" depends="distribute-binary, distribute-sources" description="create binary and sources distributions"/>
+
+    <!-- **************************************** TESTING TARGETS **************************************** -->
+    <!-- **************************************** TESTING TARGETS **************************************** -->
+    <!-- **************************************** TESTING TARGETS **************************************** -->
+
+    <target name="prepare-test" depends="clean,compile">
+        <!-- create test directories -->
+        <mkdir dir="${basedir}/target/test-classes"/>
+        <mkdir dir="${basedir}/target/doc/test/classes"/>
+
+        <copy description="copy all resources"
+            todir="target/test-classes"
+            filtering="true"
+            includeemptydirs="false">
+            <fileset dir="src/main/resources"/>
+        </copy>
+
+        <copy description="copy all test resources"
+            todir="target/test-classes"
+            filtering="true"
+            includeemptydirs="false">
+            <fileset dir="src/test/resources"/>
+        </copy>
+
+        <javac description="compile test files"
+            excludes="de/betterform/agent/**"
+            srcdir="src/test/java"
+            destdir="target/test-classes"
+            classpathref="test.class.path"
+            debug="true"
+            deprecation="true"
+            optimize="off"/>
+    </target>
+
+    <target name="test" depends="prepare-test" description="run all unit tests">
+        <echo />
+        <echo message="************************************************************************************"/>
+        <echo message="running Core test suite"/>
+        <echo message="************************************************************************************"/>
+        <echo />
+
+        <!-- run junit tests -->
+        <junit description="run junit tests"
+            maxmemory="256m"
+            fork="no"
+            showoutput="no"
+            printsummary="on">
+            <classpath refid="test.class.path"/>
+            <formatter type="xml"/>
+            <batchtest fork="yes" todir="${basedir}/target/doc/test/classes">
+                <fileset dir="${basedir}/target/test-classes" includes="**/*Test.class" excludes="BetterFormXFormsTest.class"/>
+            </batchtest>
+        </junit>
+
+        <!-- generate junit reports -->
+        <junitreport description="generate junit reports"
+            todir="target/doc/test">
+            <fileset dir="target/doc/test/classes">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report todir="target/doc/test"/>
+        </junitreport>
+    </target>
+
+
+    <!-- **************************************** DOC TARGETS **************************************** -->
+    <!-- **************************************** DOC TARGETS **************************************** -->
+    <!-- **************************************** DOC TARGETS **************************************** -->
+    <target name="doc" depends="compile" description="generate documentation">
+        <echo />
+        <echo message="************************************************************************************"/>
+        <echo message="creating javadoc"/>
+        <echo message="************************************************************************************"/>
+        <echo />
+
+         <!--create deploy directory-->
+         <mkdir dir="${basedir}/target/doc"/>
+
+         <!--generate source code documentation-->
+         <javadoc description="generate api documentation"
+             sourcepath="${basedir}/src/main/java"
+             destdir="${basedir}/target/doc"
+             classpathref="compile.class.path"
+             packagenames="de.betterform.*">
+         </javadoc>
+
+         <!--set version filter-->
+         <filter token="core.app.version" value="${core.app.version}"/>
+     </target>
+
+
+</project>

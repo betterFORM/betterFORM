@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml"
+			xmlns:xforms="http://www.w3.org/2002/xforms"
+			xmlns:ev="http://www.w3.org/2001/xml-events"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xmlns:xsd="http://www.w3.org/2001/XMLSchema">			
+	<xhtml:head>
+		<xhtml:link rel="stylesheet" href="../../driverPages/forms/TestSuite11.css" type="text/css"/>
+		<xhtml:title>10.3.a insert action using context attribute</xhtml:title>
+		<xforms:model id="mod1" >
+			<xforms:instance id="first">
+				<number_lists>
+					<number_list>
+						<number>1</number>
+						<number>2</number>
+						<number>3</number>
+					</number_list>
+					<number_list id="pick_me">
+						<number>4</number>
+						<number>5</number>
+						<number>6</number>
+					</number_list>
+					<number_list/>
+				</number_lists>
+			</xforms:instance>		
+			<xforms:instance id="second">
+				<number_lists>
+					<number_list>
+						<number>0</number>
+					</number_list>
+				</number_lists>
+			</xforms:instance>			
+		</xforms:model>
+	</xhtml:head>	
+	<xhtml:body>
+		<xforms:group>
+			<xforms:label class="title">10.3.a insert action using context attribute</xforms:label>
+		</xforms:group>		
+		<xforms:action ev:observer="mod1" ev:event="xforms-ready">
+				<xforms:insert context="instance('second')" nodeset="number_list/number"/>
+				<xforms:insert context="number_list[2]" nodeset="number"/>
+				<xforms:insert context="number_list[2]" nodeset="number"/>
+				<xforms:insert nodeset="number_list[1]/number"/>
+				<xforms:insert context="number_list[@id = 'pick_me']" nodeset="number"/>
+				<xforms:insert context="number_list[3]" nodeset="number"/>
+				<xforms:insert nodeset="number_list[3]/number" />
+		</xforms:action>		
+		<xforms:group>
+			<xforms:label>
+			  You must see the correct values for each output control below.
+			</xforms:label>
+		</xforms:group>
+		<xforms:group ref="instance('first')">
+			<xforms:label>You must see the numbers 1, 2, 3, and 3 : </xforms:label>
+			<xforms:repeat nodeset="number_list[1]/number">
+				<xforms:output class="hlist" value="concat(. , ' ')">
+					<xforms:label/>
+				</xforms:output>
+			</xforms:repeat>
+		</xforms:group>		
+		<xforms:group ref="instance('first')">
+			<xforms:label>You must see the numbers 4, 5, 6, 6, 6, and 6 : </xforms:label>
+			<xforms:repeat nodeset="/number_lists/number_list[2]/number">
+				<xforms:output class="hlist" value="concat(. , ' ')" >
+					<xforms:label/>
+				</xforms:output>
+			</xforms:repeat>
+		</xforms:group>		
+		<xforms:group ref="instance('second')">
+			<xforms:label>You must see the numbers 0 and 0 : </xforms:label>
+			<xforms:repeat nodeset="number_list/number">
+				<xforms:output class="hlist" value="concat(. , ' ')">
+					<xforms:label/>
+				</xforms:output>
+			</xforms:repeat>
+		</xforms:group>		
+		<!-- empty nodeset with context attr, insert should terminate without effect-->
+		<xforms:group>
+			<xforms:label>You must not see a value : </xforms:label>
+			<xforms:repeat nodeset="/number_lists/number_list[3]/number">
+				<xforms:output class="hlist" value="concat(. , ' ')">
+					<xforms:label/>
+				</xforms:output>
+			</xforms:repeat>
+		</xforms:group>		
+		<!-- empty nodeset without context attr, insert should terminate without effect -->
+		<xforms:group>
+			<xforms:label>You must not see a value : </xforms:label>
+			<xforms:repeat nodeset="/number_lists/number_list[3]/number">
+				<xforms:output class="hlist" value="concat(. , ' ')">
+					<xforms:label/>
+				</xforms:output>
+			</xforms:repeat>
+		</xforms:group>
+		
+	</xhtml:body>
+</xhtml:html>

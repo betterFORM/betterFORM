@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>7.7.8.a compare() function</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model >
+      <xforms:instance>
+		<root/>
+      </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">7.7.8.a compare() function</xforms:label>
+  	</xforms:group>
+  	
+  	<xforms:group>
+  		<xforms:label>
+  		    You must see a value of &quot;-1&quot; for the compare('apple','orange') output control.
+  		    You must see a value of &quot;0&quot; for the compare('apple','apple') output control.
+  		    You must see a value of &quot;1&quot; for the compare('orange','apple') output control.   			
+  		</xforms:label>
+  	</xforms:group>
+  	
+  	<xforms:group>
+      <xforms:output value="compare('apple','orange')">
+        <xforms:label>compare('apple','orange') : </xforms:label>
+      </xforms:output>
+    </xforms:group>
+    <xforms:group>
+      <xforms:output value="compare('apple','apple')">
+      	<xforms:label>compare('apple','apple') : </xforms:label>
+      </xforms:output>
+    </xforms:group>
+    <xforms:group>
+      <xforms:output value="compare('orange','apple')">
+      	<xforms:label>compare('orange','apple') : </xforms:label>
+      </xforms:output>
+    </xforms:group> 
+		
+  </xhtml:body>
+</xhtml:html>

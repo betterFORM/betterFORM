@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:ext="http://test.org/extern"
+    xmlns:int="http://test.org/intern"
+    xmlns:inl="http://test.org/inline">
+    <head>
+        <meta name="author" content="unl at users.sourceforge.net"/>
+        <meta name="description" content="test form for model"/>
+        <meta name="version" content="$Id: ModelTest.xhtml 3251 2008-07-08 09:26:03Z lasse $"/>
+
+        <!-- empty model -->
+        <xforms:model id="model-empty"/>
+
+        <!-- model without schemas -->
+        <xforms:model id="model-1">
+            <xforms:instance id="instance-1" xmlns="">
+                <data>
+                    <item>1</item>
+                </data>
+            </xforms:instance>
+            <xforms:instance id="instance-2" xmlns="">
+                <data>
+                    <item>2</item>
+                </data>
+            </xforms:instance>
+        </xforms:model>
+
+        <!-- model with external schema -->
+        <xforms:model id="model-2" schema="ModelTest.xsd">
+            <xforms:instance id="instance-3" xmlns="">
+                <data>
+                    <item>3</item>
+                </data>
+            </xforms:instance>
+            <xforms:instance id="instance-4" xmlns="">
+                <data>
+                    <item>4</item>
+                </data>
+            </xforms:instance>
+        </xforms:model>
+
+        <!-- model with internal schema -->
+        <xforms:model id="model-3" schema="#schema-1">
+            <xforms:instance id="instance-5" xmlns="">
+                <data>
+                    <item>5</item>
+                </data>
+            </xforms:instance>
+            <xforms:instance id="instance-6" xmlns="">
+                <data>
+                    <item>6</item>
+                </data>
+            </xforms:instance>
+        </xforms:model>
+
+        <!-- model with inline schema -->
+        <xforms:model id="model-4">
+            <xforms:instance id="instance-7" xmlns="">
+                <data>
+                    <item>7</item>
+                </data>
+            </xforms:instance>
+            <xforms:instance id="instance-8" xmlns="">
+                <data>
+                    <item>8</item>
+                </data>
+            </xforms:instance>
+
+            <!-- inline schema -->
+            <xs:schema targetNamespace="http://test.org/inline" elementFormDefault="qualified">
+                <xs:simpleType name="inline">
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="[A-Z]+"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:schema>
+        </xforms:model>
+
+        <!-- internal schema -->
+        <xs:schema id="schema-1" targetNamespace="http://test.org/intern" elementFormDefault="qualified">
+            <xs:simpleType name="intern">
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="[A-Z]+"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:schema>
+    </head>
+    <body>
+        <div>nothing to see ;-)</div>
+    </body>
+</html>

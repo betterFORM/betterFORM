@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+  <xhtml:head>
+    <xhtml:title>8.3.1.a choices element</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+    	<xforms:instance xmlns="">
+    		<icecream>
+    			<flavor/>
+    		</icecream>
+    	</xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group>
+    	<xforms:label class="title">8.3.1.a choices element</xforms:label>
+    </xforms:group>
+	<xforms:group>
+		<xforms:label>
+		  You must see a select control and a select1 control on the page. The select control must contain three 
+		  choices elements labeled Group 1, Group 2, and Group 3. The select1 control must contain three choices 
+		  elements labeled Group 4, Group 5, Group 6. 
+		</xforms:label>
+	</xforms:group>
+<xforms:group>
+  <xforms:select ref="/icecream/flavor">
+    <xforms:label>select control:</xforms:label>
+    <xforms:choices>
+      <xforms:label>Group 1</xforms:label>
+      <xforms:item>
+        <xforms:label>Vanilla</xforms:label>
+        <xforms:value>vanilla</xforms:value>
+      </xforms:item>
+      <xforms:item>
+        <xforms:label>Chocolate</xforms:label>
+        <xforms:value>chocolate</xforms:value>
+      </xforms:item>
+    </xforms:choices>
+    <xforms:choices>
+      <xforms:label>Group 2</xforms:label>
+      <xforms:item>
+        <xforms:label>Orange Creamsicle</xforms:label>
+        <xforms:value>orangeCreamsicle</xforms:value>
+      </xforms:item>
+      <xforms:item>
+        <xforms:label>Fudge Ripple</xforms:label>
+        <xforms:value>fudgeRipple</xforms:value>
+      </xforms:item>
+    </xforms:choices>
+    <xforms:choices>
+      <xforms:label>Group 3</xforms:label>
+      <xforms:item>
+        <xforms:label>Dill Pickle</xforms:label>
+        <xforms:value>yuck</xforms:value>
+      </xforms:item>
+      <xforms:item>
+        <xforms:label>Carob</xforms:label>
+        <xforms:value>whyBother</xforms:value>
+      </xforms:item>
+    </xforms:choices>
+  </xforms:select>
+</xforms:group>
+<xforms:group>
+  <xforms:select1 ref="/icecream/flavor">
+    <xforms:label>select1 control:</xforms:label>
+    <xforms:choices>
+      <xforms:label>Group 4</xforms:label>
+      <xforms:item>
+        <xforms:label>Vanilla</xforms:label>
+        <xforms:value>vanilla</xforms:value>
+      </xforms:item>
+      <xforms:item>
+        <xforms:label>Chocolate</xforms:label>
+        <xforms:value>chocolate</xforms:value>
+      </xforms:item>
+    </xforms:choices>
+    <xforms:choices>
+      <xforms:label>Group 5</xforms:label>
+      <xforms:item>
+        <xforms:label>Orange Creamsicle</xforms:label>
+        <xforms:value>orangeCreamsicle</xforms:value>
+      </xforms:item>
+      <xforms:item>
+        <xforms:label>Fudge Ripple</xforms:label>
+        <xforms:value>fudgeRipple</xforms:value>
+      </xforms:item>
+    </xforms:choices>
+    <xforms:choices>
+      <xforms:label>Group 6</xforms:label>
+      <xforms:item>
+        <xforms:label>Dill Pickle</xforms:label>
+        <xforms:value>yuck</xforms:value>
+      </xforms:item>
+      <xforms:item>
+        <xforms:label>Carob</xforms:label>
+        <xforms:value>whyBother</xforms:value>
+      </xforms:item>
+    </xforms:choices>
+  </xforms:select1>
+</xforms:group>
+	
+  </xhtml:body>
+</xhtml:html>

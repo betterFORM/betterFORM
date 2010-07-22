@@ -1,0 +1,43 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"             
+      xmlns:xforms="http://www.w3.org/2002/xforms">
+  	<xhtml:head>
+    	<xhtml:title>9.3.1.c number attribute of repeat element (non-normative)</xhtml:title>
+    	<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    	<xforms:model>
+       		<xforms:instance xmlns="">
+				<cart>
+					<items>
+						<item>windshield wipers</item>
+						<item>tires</item>
+						<item>exhaust</item>
+						<item>air freshener</item>
+					</items>
+				</cart>
+       		</xforms:instance>
+    	</xforms:model>
+  	</xhtml:head>
+  	<xhtml:body>
+  		<xforms:group>
+  			<xforms:label class="title">9.3.1.c number attribute of repeat element (non-normative)</xforms:label>
+  		</xforms:group>	
+  		<xforms:group>
+  			<xforms:label>
+	  			You may see only one car part item for the Items In Cart output. 
+	  		</xforms:label>	
+  		</xforms:group>
+  		<xforms:group>
+  		  <xforms:label>Items In Cart : </xforms:label>
+			<xforms:repeat nodeset="/cart/items/item" number="1">
+				<xforms:output ref=".">
+					<xforms:label/>
+				</xforms:output>
+			</xforms:repeat>
+		</xforms:group>
+		
+  </xhtml:body>
+</xhtml:html>

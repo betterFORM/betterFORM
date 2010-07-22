@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <meta name="author" content="unl at users.sourceforge.net"/>
+        <meta name="description" content="test form for the ui element state"/>
+        <meta name="version" content="$Id: UIElementStateTest.xhtml 2272 2006-08-18 23:22:09Z unl $"/>
+
+        <xf:model id="model-1">
+            <xf:instance id="instance-1" xmlns="">
+                <data>
+                    <item xsi:type="xs:token">item</item>
+                    <constraint>true</constraint>
+                    <readonly>false</readonly>
+                    <required>false</required>
+                    <relevant>true</relevant>
+                    <trigger>trigger</trigger>
+                    <calculate>calculate</calculate>
+                    <date>2008-12-12</date>
+                </data>                
+            </xf:instance>
+            <xf:bind id="bind-existing" nodeset="item[1]"
+                constraint="../constraint='true'"
+                readonly="../readonly='true'"
+                required="../required='true'"
+                relevant="../relevant='true'"/>
+            <xf:bind id="bind-date" nodeset="date[1]" type="date"/>
+            <xf:bind id="bind-missing" nodeset="item[2]"/>
+
+            <xf:bind id="bind-constraint" nodeset="constraint"/>
+            <xf:bind id="bind-readonly" nodeset="readonly"/>
+            <xf:bind id="bind-required" nodeset="required"/>
+            <xf:bind id="bind-relevant" nodeset="relevant"/>
+
+            <xf:bind id="bind-trigger" nodeset="trigger"/>
+            <xf:bind id="bind-calculate" nodeset="calculate" calculate="../trigger"/>
+        </xf:model>
+
+    </head>
+    <body>
+        <xf:group>
+            <xf:input id="input-existing" bind="bind-existing"/>
+            <xf:input id="input-missing" bind="bind-missing"/>
+
+            <xf:input id="input-constraint" bind="bind-constraint"/>
+            <xf:input id="input-readonly" bind="bind-readonly"/>
+            <xf:input id="input-required" bind="bind-required"/>
+            <xf:input id="input-relevant" bind="bind-relevant"/>
+
+            <xf:input id="input-trigger" bind="bind-trigger"/>
+            <xf:input id="input-calculate" bind="bind-calculate"/>
+
+            <xf:input id="input-date" ref="date[1]">
+                <xf:label>Input Date</xf:label>
+            </xf:input>
+
+            <xf:trigger id="delete-existing">
+                <xf:delete nodeset="item" at="1"/>
+            </xf:trigger>
+            <xf:trigger id="insert-missing">
+                <xf:insert nodeset="item" at="1" position="after"/>
+            </xf:trigger>
+            <xf:trigger id="update-trigger">
+                <xf:setvalue bind="bind-trigger" value="'foobar'"/>
+            </xf:trigger>
+            <xf:trigger id="update-date">
+                <xf:setvalue ref="date[1]" value="'2001-01-01'"/>
+            </xf:trigger>
+        </xf:group>
+    </body>
+</html>

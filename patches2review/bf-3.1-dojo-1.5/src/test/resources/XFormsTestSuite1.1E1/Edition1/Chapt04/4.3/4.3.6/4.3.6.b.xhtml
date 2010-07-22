@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>4.3.6.b navigation sequence with navindex (non-normative)</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+      <xforms:instance>
+        <car xmlns="">
+        	<make/>
+        	<year/>
+        </car>
+      </xforms:instance>
+      <xforms:bind id="hidden_bind" nodeset="/car/year" relevant="false()"/>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group>
+    	<xforms:label class="title">4.3.6.b navigation sequence with navindex (non-normative)</xforms:label>
+    </xforms:group>
+    <xforms:group>
+    	<xforms:label>
+    	    This test case is non-normative and assumes that the navindex attribute is recognized and interpreted 
+    	    as described in section 4.3.6 of the W3C specification. 
+    	    Keyboard users can use the Tab key on the keyboard to move through the naviagation order of the input 
+    	    controls. As you move through
+    	    the page you must be going in the order that the input controls are labeled from the smallest number 
+    	    to the largest. 
+		</xforms:label>	
+   	</xforms:group>
+
+    <xforms:input navindex="14" ref="/car/make">
+      	<xforms:label>2</xforms:label>
+    </xforms:input>
+
+    <xforms:input navindex="81" ref="/car/make">
+      	<xforms:label>8</xforms:label>
+    </xforms:input>
+
+    <xforms:input navindex="15" bind="hidden_bind">
+      	<xforms:label>Hidden-15</xforms:label>
+    </xforms:input>
+
+    <xforms:input navindex="19" ref="/car/make">
+      	<xforms:label>3</xforms:label>
+    </xforms:input>
+    
+    <xforms:input navindex="78" ref="/car/make">
+       	<xforms:label>7</xforms:label>
+    </xforms:input>
+    <xforms:input navindex="42" ref="/car/make">
+       	<xforms:label>5</xforms:label>
+    </xforms:input>
+    <xforms:input navindex="8" ref="/car/make">
+    	<xforms:label>1</xforms:label>
+    </xforms:input>
+    
+    <xforms:input bind="hidden_bind">
+      	<xforms:label>Hidden2</xforms:label>
+    </xforms:input>
+    
+    <xforms:input navindex="55" ref="/car/make">
+      	<xforms:label>6</xforms:label>
+    </xforms:input>
+    
+    <xforms:input navindex="33" ref="/car/make">
+      	<xforms:label>4</xforms:label>
+    </xforms:input>
+    
+    <xforms:input navindex="99" ref="/car/make">
+      	<xforms:label>9</xforms:label>
+    </xforms:input>
+    
+    <xforms:input navindex="99" ref="/car/make">
+      	<xforms:label>10</xforms:label>
+    </xforms:input>
+    
+    <xforms:input navindex="0" ref="/car/make">
+      	<xforms:label>11</xforms:label>
+    </xforms:input>
+    
+    <xforms:input ref="/car/make">
+      	<xforms:label>12</xforms:label>
+    </xforms:input>
+	
+  </xhtml:body>
+</xhtml:html>

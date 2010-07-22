@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <meta name="author" content="unl at users.sourceforge.net"/>
+        <meta name="description" content="test form for toggle action"/>
+        <meta name="version" content="$Id: ToggleActionTest.xhtml 2693 2007-08-10 09:31:02Z joern $"/>
+
+        <xf:model id="model-1">
+            <xf:instance id="instance-1" xmlns="">
+                <data>
+                    <item/>
+                </data>
+            </xf:instance>
+        </xf:model>
+    </head>
+    <body>
+        <xf:switch id="switch">
+            <xf:case id="case-1"><xf:output value="''"/></xf:case>
+            <xf:case id="case-2"><xf:output value="''"/></xf:case>
+        </xf:switch>
+        <xf:trigger id="trigger">
+            <xf:toggle case="case-2"/>
+        </xf:trigger>
+        <xf:trigger id="trigger-wrong">
+            <xf:toggle case="case-3"/>
+        </xf:trigger>
+    </body>
+</html>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ts:testSuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" specVersion="1.1"
+    xmlns:ts="http://www.w3c.org/MarkUp/Forms/XForms/Test/11">
+    <ts:specChapter chapterName="2. " productId="" chapterTitle="Introduction to XForms">
+        <ts:statusSummary>
+            <ts:numNormTotal>0</ts:numNormTotal>
+            <ts:numNormPass>0</ts:numNormPass>
+            <ts:numNormFail>0</ts:numNormFail>
+            <ts:numNormUnknown>0</ts:numNormUnknown>
+            <ts:numBasicTotal>0</ts:numBasicTotal>
+            <ts:numBasicPass>0</ts:numBasicPass>
+            <ts:numBasicFail>0</ts:numBasicFail>
+            <ts:numBasicUnknown>0</ts:numBasicUnknown>
+        </ts:statusSummary>
+        <ts:profile>
+            <ts:specification>XForms 1.1</ts:specification>
+            <ts:normativeOnly>false</ts:normativeOnly>
+            <ts:basicOnly>false</ts:basicOnly>
+        </ts:profile>
+        <ts:testCase>
+            <ts:testCaseSection>2.1</ts:testCaseSection>
+            <ts:testCaseName>2.1.a</ts:testCaseName>
+            <ts:testCaseLink>../../Chapt02/2.1.a.xhtml</ts:testCaseLink>
+            <ts:testCaseDescription>Introductory Example No. 1</ts:testCaseDescription>
+            <ts:testCaseSpecLinkName>2.1</ts:testCaseSpecLinkName>
+            <ts:testCaseSpecLink>http://www.w3.org/TR/xforms11/#concepts-xhtml</ts:testCaseSpecLink>
+            <ts:testCaseBasic>true</ts:testCaseBasic>
+            <ts:testCaseNormative>true</ts:testCaseNormative>
+            <ts:testCaseStatus>Unknown</ts:testCaseStatus>
+            <ts:testCaseDate>2005-09-10</ts:testCaseDate>
+            <ts:testCaseRequired>true</ts:testCaseRequired>
+            <ts:testCaseNote />
+        </ts:testCase>
+        <ts:testCase>
+            <ts:testCaseSection>2.2</ts:testCaseSection>
+            <ts:testCaseName>2.2.a</ts:testCaseName>
+            <ts:testCaseLink>../../Chapt02/2.2.a.xhtml</ts:testCaseLink>
+            <ts:testCaseDescription>Example: Encapsulation of Instance Data</ts:testCaseDescription>
+            <ts:testCaseSpecLinkName>2.2</ts:testCaseSpecLinkName>
+            <ts:testCaseSpecLink>http://www.w3.org/TR/xforms11/#concepts-xml-instance-data</ts:testCaseSpecLink>
+            <ts:testCaseBasic>true</ts:testCaseBasic>
+            <ts:testCaseNormative>true</ts:testCaseNormative>
+            <ts:testCaseStatus>Unknown</ts:testCaseStatus>
+            <ts:testCaseDate>2005-09-10</ts:testCaseDate>
+            <ts:testCaseRequired>true</ts:testCaseRequired>
+            <ts:testCaseNote />
+        </ts:testCase>
+        <ts:testCase>
+            <ts:testCaseSection>2.3</ts:testCaseSection>
+            <ts:testCaseName>2.3.a</ts:testCaseName>
+            <ts:testCaseLink>../../Chapt02/2.3.a.xhtml</ts:testCaseLink>
+            <ts:testCaseDescription>Example: Value Constraints</ts:testCaseDescription>
+            <ts:testCaseSpecLinkName>2.3</ts:testCaseSpecLinkName>
+            <ts:testCaseSpecLink>http://www.w3.org/TR/xforms11/#concepts-model</ts:testCaseSpecLink>
+            <ts:testCaseBasic>false</ts:testCaseBasic>
+            <ts:testCaseNormative>true</ts:testCaseNormative>
+            <ts:testCaseStatus>Unknown</ts:testCaseStatus>
+            <ts:testCaseDate>2005-09-10</ts:testCaseDate>
+            <ts:testCaseRequired>true</ts:testCaseRequired>
+            <ts:testCaseNote />
+        </ts:testCase>
+        <ts:testCase>
+            <ts:testCaseSection>2.4</ts:testCaseSection>
+            <ts:testCaseName>2.4.a</ts:testCaseName>
+            <ts:testCaseLink>../../Chapt02/2.4.a.xhtml</ts:testCaseLink>
+            <ts:testCaseDescription>Example: Multiple Forms</ts:testCaseDescription>
+            <ts:testCaseSpecLinkName>2.4</ts:testCaseSpecLinkName>
+            <ts:testCaseSpecLink>http://www.w3.org/TR/xforms11/#concepts-multiple</ts:testCaseSpecLink>
+            <ts:testCaseBasic>false</ts:testCaseBasic>
+            <ts:testCaseNormative>true</ts:testCaseNormative>
+            <ts:testCaseStatus>Unknown</ts:testCaseStatus>
+            <ts:testCaseDate>2005-09-10</ts:testCaseDate>
+            <ts:testCaseRequired>true</ts:testCaseRequired>
+            <ts:testCaseNote />
+        </ts:testCase>
+    </ts:specChapter>
+</ts:testSuite>

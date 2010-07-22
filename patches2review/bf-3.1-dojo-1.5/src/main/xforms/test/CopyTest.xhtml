@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:xforms="http://www.w3.org/2002/xforms"
+	  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	  xmlns:ev="http://www.w3.org/2001/xml-events">
+	<head>
+		<meta name="author" content="joern at users.sourceforge.net"/>
+		<meta name="description" content="test form for copy control"/>
+		<meta name="version" content="$Id: CopyTest.xhtml 2631 2007-08-08 13:39:22Z adam $"/>
+
+		<xforms:model id="list_items">
+			<xforms:instance xmlns="">
+				<options>
+					<address desc="work_address" label="work">
+						<email>mdubinko@example.info</email>
+						<item1>Item 1</item1>
+					</address>
+					<address desc="home_address" label="home">
+						<email>mdubinko@example.info</email>
+						<item2>Item 2</item2>
+					</address>
+					<address desc="alternate_address" label="alternate">
+						<email>nospam@example.net</email>
+						<item3>item 3</item3>
+					</address>
+				</options>
+			</xforms:instance>
+		</xforms:model>
+
+		<xforms:model id="form_data">
+			<xforms:instance xmlns="">
+				<user_selection>
+					<address desc="alternate_address" label="alternate">
+						<email>nospam@example.net</email>
+						<item3>item 3</item3>
+					</address>
+				</user_selection>
+			</xforms:instance>
+		</xforms:model>
+
+	</head>
+	<body>
+		<xforms:group appearance="full">
+			<xforms:select1 ref="." model="form_data">
+				<xforms:label>Send a copy to the following email addresses</xforms:label>
+				<xforms:itemset nodeset="address" model="list_items">
+					<xforms:label ref="@label"/>
+					<xforms:copy ref="."/>
+				</xforms:itemset>
+			</xforms:select1>
+		</xforms:group>
+		<xforms:group appearance="full">
+			<xforms:label>Select Result:</xforms:label>
+			<xforms:output ref="address/email" model="form_data">
+				<xforms:label>Email:</xforms:label>
+			</xforms:output>
+			<xforms:output ref="address/@desc" model="form_data">
+				<xforms:label>Description:</xforms:label>
+			</xforms:output>
+			<xforms:group ref="address" model="form_data" appearance="full">
+				<xforms:label>Items</xforms:label>
+				<xforms:output ref="item1">
+					<xforms:label>Label Item 1</xforms:label>
+				</xforms:output>
+				<xforms:output ref="item2">
+					<xforms:label>Label Item 2</xforms:label>
+				</xforms:output>
+				<xforms:output ref="item3">
+					<xforms:label>Label Item 3</xforms:label>
+				</xforms:output>
+			</xforms:group>
+		</xforms:group>
+	</body>
+</html>

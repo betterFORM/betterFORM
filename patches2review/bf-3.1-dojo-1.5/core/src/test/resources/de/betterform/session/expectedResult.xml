@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:bf="http://betterform.sourceforge.net/xforms" xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<xf:model id="default-model">
+			<xf:instance xmlns="" id="instance1">
+				<data>
+					<complex id="1">
+						<boolean>false</boolean>
+						<date>2004-01-09</date>
+						<dateTime>2006-02-02T10:54:16+02:00</dateTime>
+						<string>20</string>
+						<upload filename="" mediatype=""/>
+					</complex>
+					<complex id="2">
+						<boolean>false</boolean>
+						<date>2004-01-09</date>
+						<dateTime>2006-02-02T10:54:16+02:00</dateTime>
+						<string>20</string>
+						<upload filename="" mediatype=""/>
+					</complex>
+					<complex id="3">
+						<boolean>false</boolean>
+						<date>2004-01-09</date>
+						<dateTime>2006-02-02T10:54:16+02:00</dateTime>
+						<string>20</string>
+						<upload filename="" mediatype=""/>
+					</complex>
+				</data>
+			</xf:instance>
+			<xf:instance xmlns="" id="instance2">
+				<data>
+					<simple>1</simple>
+					<simple>2</simple>
+					<simple>3</simple>
+					<simple>4</simple>
+					<simple>5</simple>
+				</data>
+			</xf:instance>
+		</xf:model>
+	</head>
+	<body>
+		<xf:repeat appearance="full" bf:index="2" id="repeat1" nodeset="instance('instance1')/complex">
+			<xf:output id="C2" ref="boolean"/>
+		</xf:repeat>
+		<xf:repeat appearance="full" bf:index="1" id="repeat2" nodeset="instance('instance2')/simple">
+			<xf:output id="C10" ref="."/>
+		</xf:repeat>
+		<xf:switch id="foo">
+			<xf:case selected="true">
+				<div/>
+				... content ...
+			</xf:case>
+			<xf:case selected="false">
+				<div/>
+				... other content ...
+			</xf:case>
+		</xf:switch>
+		<xf:trigger id="changeState">
+			<xf:label id="C21">switch toggle/index</xf:label>
+			<xf:action id="C22">
+				<xf:toggle case="bar" id="C23"/>
+				<xf:setindex id="C24" index="2" repeat="repeat1"/>
+			</xf:action>
+		</xf:trigger>
+	</body>
+</html>

@@ -1,0 +1,91 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"             
+      xmlns:xforms="http://www.w3.org/2002/xforms">
+  	<xhtml:head>
+    	<xhtml:title>10.3.f insert action in repeat bound to collection</xhtml:title>
+    	<xhtml:link rel="stylesheet" href="../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    	<xforms:model >
+       		<xforms:instance xmlns="">
+				<lines>
+					<line name="a">
+						<price>3.00</price>
+					</line>
+					<line name="b">
+						<price>32.25</price>
+					</line>
+					<line name="c">
+						<price>132.99</price>
+					</line>
+				</lines>
+       		</xforms:instance>
+       		<xforms:instance id="i2" xmlns="">
+       			<indexvalue/>
+       		</xforms:instance>
+       		<xforms:bind nodeset="instance('i2')" calculate="index('lineset')"/>
+			<xforms:action ev:event="xforms-insert">
+				<xforms:message level="modal">xforms-insert</xforms:message>
+			</xforms:action>
+    	</xforms:model>
+  	</xhtml:head>
+  	<xhtml:body>
+  		<xforms:group>
+  			<xforms:label class="title">10.3.f insert action in repeat bound to collection</xforms:label>
+  		</xforms:group>	
+  		<xforms:group>
+  			<xforms:label>
+  			  You must see an xforms-insert message after activating any of the Insert triggers. 
+  			  The Insert At index 1 trigger must insert a new item at the beginning of the list. 
+  			  The Insert At index 2 trigger must insert a new item after the first one in the list. 
+  			  The Insert At index 100 trigger must insert a new item at the end of the list. 
+  			  A new item with have a value of &quot;0.00&quot; for Price and no value for Name. 
+			</xforms:label>	
+  		</xforms:group>
+		<xforms:repeat id="lineset" nodeset="/lines/line">
+			<xforms:group>
+				<xforms:input ref="price">
+					<xforms:label>Price:</xforms:label>
+				</xforms:input>
+				<xforms:input ref="@name">
+					<xforms:label>Name:</xforms:label>
+				</xforms:input>
+			</xforms:group>
+		</xforms:repeat>
+		<xforms:trigger>
+			<xforms:label>Insert At index 1</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<!-- should insert at index 1 -->
+				<xforms:insert nodeset="/lines/line" at="1"
+					position="before"/>
+				<xforms:setvalue ref="/lines/line[index('lineset')]/@name"/>
+				<xforms:setvalue ref="/lines/line[index('lineset')]/price">0.00</xforms:setvalue>
+			</xforms:action>
+		</xforms:trigger>
+		<xforms:trigger>
+			<xforms:label>Insert At index 1.5</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<!-- should insert at index 2 -->
+				<xforms:insert nodeset="/lines/line" at="1.5"
+					position="before"/>
+				<xforms:setvalue ref="/lines/line[index('lineset')]/@name"/>
+				<xforms:setvalue ref="/lines/line[index('lineset')]/price">0.00</xforms:setvalue>
+			</xforms:action>
+		</xforms:trigger>
+		<xforms:trigger>
+			<xforms:label>Insert At index 100</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<xforms:insert nodeset="/lines/line" at="100"
+					position="after"/>
+				<xforms:setvalue ref="/lines/line[index('lineset')]/@name"/>
+				<xforms:setvalue ref="/lines/line[index('lineset')]/price">0.00</xforms:setvalue>
+			</xforms:action>
+		</xforms:trigger>
+		<xforms:output ref="instance('i2')">
+			<xforms:label>index=</xforms:label>
+		</xforms:output>
+		
+  </xhtml:body>
+</xhtml:html>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>4.4.3.a xforms-value-changed event</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+      <xforms:instance>
+        <car xmlns="">
+          <make>Honda</make>
+        </car>
+      </xforms:instance>
+      <xforms:setvalue ref="make" ev:event="xforms-ready">Toyota</xforms:setvalue>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group>
+    	<xforms:label class="title">4.4.3.a xforms-value-changed event</xforms:label>
+    </xforms:group>
+    <xforms:group>
+    	<xforms:label>
+    		You must have seen an xforms-value-changed message.
+    	</xforms:label>	
+    </xforms:group>
+
+    <xforms:input ref="/car/make">
+        <xforms:label>Car make</xforms:label>
+        <xforms:action ev:event="xforms-value-changed">
+          <xforms:message level="modal">xforms-value-changed</xforms:message>
+        </xforms:action>
+    </xforms:input>
+	
+  </xhtml:body>
+</xhtml:html>

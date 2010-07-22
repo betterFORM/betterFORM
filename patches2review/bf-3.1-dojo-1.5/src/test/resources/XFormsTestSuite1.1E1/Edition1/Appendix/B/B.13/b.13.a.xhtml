@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+  <xhtml:head>
+  	<xhtml:title>b.13.a Move Element</xhtml:title>
+  	<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css" />
+  	<xforms:model>
+	    <xforms:action ev:event="xforms-ready">
+	        <xforms:insert context="playlist[2]" nodeset="track" origin="../playlist[1]/track[2]"/>
+	        <xforms:delete nodeset="playlist[1]/track[2]"/>
+	  	</xforms:action>
+  		<xforms:instance>
+  			<library xmlns="">
+  				<playlist>
+  					<name>Music for Airports</name>
+  					<track id="382" />
+  					<track id="461" />
+  					<track id="629" />
+  				</playlist>
+  				<playlist>
+  					<name>Lullabies</name>
+  					<track id="251" />
+  					<track id="331" />
+  				</playlist>
+  			</library>
+  		</xforms:instance>
+  	</xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">
+  			b.13.a Move Element
+  		</xforms:label>
+  	</xforms:group>
+  	<xforms:group>
+  		<xforms:label>
+  			You must see Track ids &quot;251&quot;, &quot;331&quot; and &quot;461&quot; : 
+  		</xforms:label>
+  		<xforms:repeat nodeset="playlist[2]/track">
+  			<xforms:output
+  				class="hlist"
+  				value="concat(./@id , ' ')">
+  				<xforms:label>Track id : </xforms:label>
+  			</xforms:output>
+  		</xforms:repeat>
+  	</xforms:group>
+  </xhtml:body>
+</xhtml:html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+  <xhtml:head>
+    <xhtml:title>4.3.3.a xforms-revalidate event</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model id="car">
+    	<xforms:instance>
+    		<car xmlns="">
+    			<make/>
+    			<year/>
+    			<color>default</color>
+    		</car>
+    	</xforms:instance>
+    	<xforms:setvalue ref="color" ev:event="xforms-ready">blue</xforms:setvalue>
+    	<xforms:action ev:event="xforms-revalidate">
+      		<xforms:message level="modal">xforms-revalidate</xforms:message>
+      	</xforms:action>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">4.3.3.a xforms-revalidate event</xforms:label>
+  	</xforms:group>
+  	<xforms:group>
+  		<xforms:label>
+  	  		You must have seen an xforms-revalidate message.  
+  	  	</xforms:label>
+  	</xforms:group>
+
+  </xhtml:body>
+</xhtml:html>

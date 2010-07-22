@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ev="http://www.w3.org/2001/xml-events"
+	  xmlns:xf="http://www.w3.org/2002/xforms"
+	  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xmlns:bf="http://betterform.sourceforge.net/xforms">
+<head>
+
+
+	<xf:model>
+		<xf:instance id="i-select" xmlns="">
+			<form>
+				<items>
+					<item value="item1">item1</item>
+					<item value="item2">item2</item>
+					<item value="item3">item3</item>
+				</items>
+				<select selectvalue=""/>
+				<select1/>
+			</form>
+		</xf:instance>
+
+		<xf:instance id="i-data" xmlns="">
+			<form>
+				<items>
+					<item value="neu1">Neu1</item>
+					<item value="neu2">Neu2</item>
+					<item value="neu3">Neu3</item>
+				</items>
+				<select selectvalue=""/>
+				<select1/>
+			</form>
+		</xf:instance>
+
+		<xf:bind id="b-table" nodeset="items/item">
+			<xf:bind id="b-label" nodeset=".">
+				<xf:bind id="b-value" nodeset="@value"/>
+			</xf:bind>
+		</xf:bind>
+
+		<xf:instance id="i-controller" xmlns="">
+			<data>
+				<item value=""></item>
+			</data>
+		</xf:instance>
+		<xf:bind nodeset="instance('i-controller')/item">
+			<xf:bind nodeset="@value" constraint="string-length(.) &gt; 0"/>
+			<xf:bind nodeset="." constraint="string-length(.) &gt; 0"/>
+		</xf:bind>
+
+		<xf:submission id="s-load-data"
+					   action="echo:foo"
+					   method="post"
+					   replace="instance"
+					   ref="instance('i-data')"
+					   instance="i-select"/>
+
+		<xf:submission id="s-debug"
+					   action="{$contextroot}/jsp/debug-instance.jsp"
+					   method="post"
+					   replace="all"
+					   validate="false"/>
+
+
+	</xf:model>
+
+	<script type="text/javascript">
+
+		dojo.require("betterform.ui.select.CheckBoxGroup");
+		dojo.require("betterform.ui.select.CheckBox");
+	</script>
+
+
+
+</head>
+<body>
+	<xf:group appearance="full">
+		<xf:label>Select appearance="full"</xf:label>
+
+	<xf:select appearance="full" ref="select/@selectvalue">
+			<xf:label/>
+			<xf:choices>
+				<xf:item>
+					<xf:label>Male</xf:label>
+					<xf:value>male</xf:value>
+				</xf:item>
+				<xf:item>
+					<xf:label>Female</xf:label>
+					<xf:value>female</xf:value>
+				</xf:item>
+				<xf:choices>
+					<xf:item>
+						<xf:label>Android</xf:label>
+						<xf:value>Android</xf:value>
+					</xf:item>
+					<xf:item>
+						<xf:label>Human</xf:label>
+						<xf:value>Human</xf:value>
+					</xf:item>
+				</xf:choices>
+			</xf:choices>
+		</xf:select>
+	</xf:group>
+</body>
+</html>

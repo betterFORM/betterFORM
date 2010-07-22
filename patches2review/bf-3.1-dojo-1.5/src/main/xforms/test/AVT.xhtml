@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      lang="de"
+      xmlns:bf="http://betterform.sourceforge.net/xforms"
+      bf:evalAVTs="class style">
+<head>
+    <title>Attribute Value Template</title>
+    <xf:model id="model-1">
+        <xf:instance id="instance-1" xmlns="">
+            <avt>
+                <select1>foo</select1>
+                <select2>bar</select2>
+                <border>thin solid</border>
+                <nested>
+                    <input>foobar</input>
+                </nested>
+            </avt>
+        </xf:instance>
+
+
+        </xf:model>
+    <style type="text/css">
+        .foo {
+            background:blue;
+			color:red;
+        }
+        .bar {
+            background:red;
+			color:blue;
+        }
+		.foobar {
+			background:lightblue;
+			color:lightcoral;
+		}
+    </style>
+</head>
+<body class="tundra" style="margin:30px;">
+    <xf:group id="outer" appearance="full">
+        <xf:label>Attribute Value Template Demo</xf:label>
+        <xf:select1 id="select" ref="select1" appearance="minimal">
+            <xf:label>Switch Theme</xf:label>
+            <xf:choices>
+                <xf:item id="foo">
+                    <xf:label>foo</xf:label>
+                    <xf:value>foo</xf:value>
+                </xf:item>
+                <xf:item>
+                    <xf:label>bar</xf:label>
+                    <xf:value>bar</xf:value>
+                </xf:item>
+            </xf:choices>
+        </xf:select1>
+
+        <div id="compClass" class="hallo {select1} welt">Controlled by AVT Class</div>
+        <div id="compStyle" style="border:{border};">computed Style</div>
+
+        <br/>
+
+        <xf:output id="output1" class="{select1}" value="concat('hallo ', instance()/select1, ' welt')">
+			<xf:label>style 'foo'</xf:label>
+		</xf:output>
+		<br/>
+        <xf:input id="input1" class="{instance()/select2}" ref="select1">
+            <xf:label>style 'bar'</xf:label>
+        </xf:input>
+        <xf:group ref="nested" appearance="full">
+            <xf:input id="input2" class="hallo {.} welt" ref="input">
+                <xf:label>style 'foobar'</xf:label> 
+            </xf:input>
+        </xf:group>
+    </xf:group>
+</body>
+</html>

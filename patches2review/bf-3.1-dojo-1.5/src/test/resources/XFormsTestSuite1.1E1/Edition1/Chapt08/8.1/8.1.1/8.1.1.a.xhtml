@@ -1,0 +1,34 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml"
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xforms="http://www.w3.org/2002/xforms">
+	<xhtml:head>
+		<xhtml:title>8.1.1.a form control violates data binding restriction</xhtml:title>
+		<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+		<xforms:model>
+			<xforms:instance xmlns="">
+				<person-info>
+					<age>8</age>
+				</person-info>
+			</xforms:instance>
+			<xforms:bind nodeset="/person-info/age" type="xsd:string" />
+			<xforms:message ev:event="xforms-binding-exception" level="modal">xforms-binding-exception</xforms:message>
+		</xforms:model>
+	</xhtml:head>
+	<xhtml:body>
+		<xforms:group>
+			<xforms:label class="title">8.1.1.a form control violates data binding restriction</xforms:label>
+		</xforms:group>
+		<xforms:group>
+			<xforms:label>
+			  You must see an xforms-binding-exception message or a fatal error due to an xforms-binding-exception. 
+			</xforms:label>	
+		</xforms:group>
+		<xforms:range ref="/person-info/age">
+		  <xforms:label>Age : </xforms:label>
+		</xforms:range>
+		
+	</xhtml:body>
+</xhtml:html>

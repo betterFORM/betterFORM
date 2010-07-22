@@ -1,0 +1,67 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html 
+	  xmlns:html="http://www.w3.org/1999/xhtml"
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"             
+      xmlns:xforms="http://www.w3.org/2002/xforms">
+  	<xhtml:head>
+    	<xhtml:title>9.3.5.a repeating structures via attributes (non-normative)</xhtml:title>
+    	<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    	<xforms:model>
+       		<xforms:instance xmlns="">
+				<cart>
+					<items>
+						<item>windshield wipers</item>
+						<item>tires</item>
+						<item>exhaust</item>
+						<item>air freshener</item>
+					</items>
+				</cart>
+       		</xforms:instance>
+       		<xforms:bind id="bind_001" nodeset="/cart/items/item" />
+    	</xforms:model>
+  	</xhtml:head>
+  	<xhtml:body>
+  		<xforms:group>	
+  			<xforms:label class="title">9.3.5.a repeating structures via attributes (non-normative)</xforms:label>
+  		</xforms:group>	
+  		<xforms:group>
+  			<xforms:label>
+  				Part 1: If the XForms processor under test supports repeat-* attribute usage, you will see a list of car parts (windshield wipers, tires, exhaust, air freshener):
+  			</xforms:label>	
+  		</xforms:group>
+
+	  		<html:table xforms:repeat-nodeset="/cart/items/item" xforms:repeat-bind="bind_001">
+	  			<html:tr>
+	  				<html:td>
+	  					<xforms:output ref=".">
+							<xforms:label/>
+						</xforms:output>
+	  				</html:td>
+	  			</html:tr>
+	  		</html:table>
+	
+  		<xforms:group>
+  			<xforms:label>Part 2: If the XForms processor under test supports repeat-* attribute usage, you will see a list of car parts (windshield wipers, tires, exhaust, air freshener):</xforms:label>
+  		</xforms:group>	
+  		<xforms:group xforms:repeat-nodeset="/cart/items/item">
+  			<xforms:output ref=".">
+				<xforms:label/>
+			</xforms:output>			
+  		</xforms:group>
+  		<xforms:group>
+  			<xforms:label>Part 3: If the XForms processor under test supports repeat-* attribute usage, you will see a list of car parts (windshield wipers, tires, exhaust, air freshener):</xforms:label>
+  		</xforms:group>
+  		<xforms:group>
+  			<xforms:label>Items in cart : </xforms:label> 
+			<xforms:repeat nodeset="/cart/items/item">
+					<xforms:output ref=".">
+						<xforms:label/>
+					</xforms:output>
+			</xforms:repeat>
+  		</xforms:group>
+		
+  </xhtml:body>
+</xhtml:html>

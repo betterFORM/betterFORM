@@ -1,0 +1,43 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"             
+      xmlns:xforms="http://www.w3.org/2002/xforms">
+  	<xhtml:head>
+    	<xhtml:title>9.2.1.a1 switch element</xhtml:title>
+    	<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    	<xforms:model>
+       		<xforms:instance xmlns="">
+				<yourname>Bill</yourname>
+       		</xforms:instance>
+    	</xforms:model>
+  	</xhtml:head>
+  	<xhtml:body>
+  		<xforms:group>
+  			<xforms:label class="title">9.2.1.a1 switch element</xforms:label>
+  		</xforms:group>	
+  		<xforms:group>
+  			<xforms:label>
+  			  When you activate the In Case trigger it must be replaced by the Out Case trigger. 
+  			  When you activate the Out Case trigger it must be replaced by the In Case trigger. 
+	  		</xforms:label>	
+  		</xforms:group>
+		<xforms:switch>
+			<xforms:case id="in" selected="true">
+				<xforms:trigger>
+					<xforms:label>Case In</xforms:label>
+					<xforms:toggle ev:event="DOMActivate" case="out"/>
+				</xforms:trigger>
+			</xforms:case>
+			<xforms:case id="out">
+				<xforms:trigger id="edit">
+					<xforms:label>Case Out</xforms:label>
+					<xforms:toggle ev:event="DOMActivate" case="in"/>
+				</xforms:trigger>
+			</xforms:case>
+		</xforms:switch>
+		
+  </xhtml:body>
+</xhtml:html>

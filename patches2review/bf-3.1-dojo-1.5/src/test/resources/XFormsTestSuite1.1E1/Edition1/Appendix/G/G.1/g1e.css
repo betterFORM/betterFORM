@@ -1,0 +1,11 @@
+@namespace xforms url(http://www.w3.org/2002/xforms);
+*:out-of-range { background-color:blue; }
+*:in-range { background-color:yellow; }
+
+xf\:label.title, xforms|label.title 
+{
+    font-size: 15pt; 
+    font-weight: bold;
+    color: #000099;
+    margin-bottom: 2em;
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    author: Fabian Otto <fabian.otto<AT>gmail.com> 
+    date:   2009-03-03
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xs="http://www.w3.org/2001/XMLSchema"
+      xmlns:atom="http://www.w3.org/2005/Atom"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+    <title>Single Input Test</title>
+
+    <xf:model id="m-atom">
+        <xf:instance xmlns="">
+            <data/>
+        </xf:instance>
+    </xf:model>
+</head>
+
+<body class="tundra" style="overflow:hidden;">
+
+    <xf:group  appearance="full">
+        <xf:input ref="/data">
+            <xf:label>Input 1: </xf:label>
+        </xf:input>
+    </xf:group>
+</body>
+</html>

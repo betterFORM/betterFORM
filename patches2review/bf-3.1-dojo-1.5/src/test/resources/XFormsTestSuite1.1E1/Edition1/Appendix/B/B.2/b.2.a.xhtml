@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+  <xhtml:head>
+  	<xhtml:title>b.2.a Append Element Copy</xhtml:title>
+  	<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css" />
+  	<xforms:model>
+	  	<xforms:action ev:event="xforms-ready">
+	  		<xforms:insert context="people" nodeset="person" origin="instance('prototypes')/person"/>
+	  	</xforms:action>
+  		<xforms:instance>
+  			<data xmlns="">
+  				<people>
+  					<person>
+  						<name>Jane Doe</name>
+  					</person>
+  				</people>
+  			</data>
+  		</xforms:instance>
+  		<xforms:instance id="prototypes">
+  			<prototypes xmlns="">
+  				<person>
+  					<name/>
+  				</person>
+  			</prototypes>
+  		</xforms:instance>
+  	</xforms:model>  	
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">
+  			b.2.a Append Element Copy
+  		</xforms:label>
+  	</xforms:group>
+  	<xforms:group>
+  		<xforms:label>
+  			You must see an empty person name after the person name of &quot;Jane Doe&quot; : 
+  		</xforms:label>
+  		<xforms:repeat nodeset="people/person">
+  			<xforms:output
+  				class="hlist"
+  				value="concat(. , ' ')">
+  				<xforms:label>Person Name : </xforms:label>
+  			</xforms:output>
+  		</xforms:repeat>
+  	</xforms:group>
+  </xhtml:body>
+</xhtml:html>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+            xmlns:xforms="http://www.w3.org/2002/xforms" 
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:my="http://commerce.example.com/payment">
+    <xhtml:head>
+        <xhtml:title>2.3.a Example: Value Constraints</xhtml:title>
+        <xhtml:link rel="stylesheet" href="../driverPages/forms/TestSuite11.css" type="text/css" />
+        <xforms:model>
+            <xforms:instance>
+                <payment method="cc" xmlns="http://commerce.example.com/payment">
+                    <number />
+                    <expiry />
+                </payment>
+            </xforms:instance>
+            <xforms:submission id="submit01" method="post" action="http://xformstest.org/cgi-bin/echo.sh" />
+            <xforms:bind nodeset="/my:payment/my:number" relevant="/my:payment/@method = 'cc'"
+                         required="/my:payment/@method='cc'" type="my:ccnumber" />
+            <xforms:bind nodeset="/my:payment/my:expiry" relevant="/my:payment/@method = 'cc'"
+                         required="/my:payment/@method='cc'" type="xsd:gYearMonth" />
+            <xsd:schema targetNamespace="http://commerce.example.com/payment">
+                <xsd:simpleType name="ccnumber">
+                    <xsd:restriction base="xsd:string">
+                        <xsd:pattern value="\d{14,18}" />
+                    </xsd:restriction>
+                </xsd:simpleType>
+                <xsd:element name="payment">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="number" type="my:ccnumber" minOccurs="0" />
+                            <xsd:element name="expiry" type="xsd:gYearMonth" minOccurs="0" />
+                        </xsd:sequence>
+                        <xsd:attribute name="method" type="xsd:string" />
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:schema>
+        </xforms:model>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group>
+            <xforms:label class="title">2.3.a Example: Value Constraints</xforms:label>
+        </xforms:group>
+        <xforms:group>
+            <xforms:label>
+                You must see a select1 control with the values &quot;Cash&quot; and &quot;Credit&quot; as well as two 
+                input controls on the page. 
+                The Credit Card Number and Expiration Date input controls are set to be relevant only when Credit 
+                is selected. If you have selected Cash then you must be able to submit the form 
+            	and the input controls must have become unavailable. 
+            </xforms:label>
+        </xforms:group>
+        <xforms:group>
+            <xforms:label>
+            	If you have selected Credit then you must not be able to submit the form until valid data is 
+            	entered into both input controls. A valid entry for Credit Card Number is a positive number with 
+            	14-18 digits. A valid entry for the expiration date 
+            	is a date in the format of gYearMonth, which is yyyy-mm (ex. 1998-12 for December 1998).
+            </xforms:label>
+        </xforms:group>
+        <xforms:group>
+        	<xforms:label>
+        		When you activate the Submit Now submit control this page must be replaced by the form data. 
+				You must see the value &quot;cc&quot; and the values you entered in the Credit 
+				Card Number and Expiration Date input controls if you had selected Credit or the 
+                value &quot;cash&quot; if you had selected Cash. 
+        	</xforms:label>
+        </xforms:group>
+        <xforms:select1 ref="@method">
+            <xforms:label>Select Payment Method:</xforms:label>
+            <xforms:item>
+                <xforms:label>Cash</xforms:label>
+                <xforms:value>cash</xforms:value>
+            </xforms:item>
+            <xforms:item>
+                <xforms:label>Credit</xforms:label>
+                <xforms:value>cc</xforms:value>
+            </xforms:item>
+        </xforms:select1>
+        <xforms:input ref="my:number">
+            <xforms:label>Credit Card Number:</xforms:label>
+        </xforms:input>
+        <xforms:input ref="/my:payment/my:expiry">
+            <xforms:label>Expiration Date:</xforms:label>
+        </xforms:input>
+        <xforms:submit submission="submit01">
+            <xforms:label>Submit Now</xforms:label>
+        </xforms:submit>
+    </xhtml:body>
+</xhtml:html>

@@ -1,0 +1,44 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"             
+      xmlns:xforms="http://www.w3.org/2002/xforms">
+  	<xhtml:head>
+    	<xhtml:title>10.8.d dispatch element dispatches custom event that bubbles</xhtml:title>
+    	<xhtml:link rel="stylesheet" href="../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    	<xforms:model id="mymodel">
+       		<xforms:instance xmlns="" id="gohere">
+				<car id="carnode">
+				  <color id="colornode">
+				  </color>
+				</car>
+       		</xforms:instance>
+      	    <xforms:action ev:event="custom-event" ev:observer="gohere">
+				 <xforms:message level="modal">Child Element</xforms:message>
+			</xforms:action>
+			<xforms:action ev:event="custom-event">
+			    <xforms:message level="modal">Parent Element</xforms:message>
+			</xforms:action>
+    	</xforms:model>
+  	</xhtml:head>
+  	<xhtml:body>
+  		<xforms:group>
+	  		<xforms:label class="title">10.8.d dispatch element dispatches custom event that bubbles</xforms:label>
+	  	</xforms:group>
+  		<xforms:group>
+  			<xforms:label>
+  			  After activating the Fire Custom Event trigger you must see two messages: Child Element and Parent 
+  			  Element. 
+			</xforms:label>
+  		</xforms:group>
+		<xforms:trigger>
+	        <xforms:label>Fire Custom Event</xforms:label>
+	        <xforms:action ev:event="DOMActivate">
+				<xforms:dispatch name="custom-event" targetid="gohere" bubbles="true"/>
+			</xforms:action>
+		</xforms:trigger>
+		
+  </xhtml:body>
+</xhtml:html>

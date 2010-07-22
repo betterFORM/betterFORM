@@ -1,0 +1,13 @@
+Index: web/src/main/webapp/resources/xslt/ui.xsl
+===================================================================
+--- web/src/main/webapp/resources/xslt/ui.xsl	(revision 3547)
++++ web/src/main/webapp/resources/xslt/ui.xsl	(working copy)
+@@ -212,7 +212,7 @@
+ 
+         <table id="{$repeat-id}" class="{$repeat-classes}">
+             <!-- build table header -->
+-            <xsl:for-each select="xforms:group[@appearance='repeated'][1]">
++            <xsl:for-each select="bf:data/xforms:group[xforms:*/xforms:label][1] | .[xforms:*/xforms:label]">
+                 <tr class="repeat-header">
+                     <xsl:if test="not($scripted ='true')">
+                         <td class="repeat-selector"><xsl:text disable-output-escaping="yes">&amp;nbsp;</xsl:text></td>

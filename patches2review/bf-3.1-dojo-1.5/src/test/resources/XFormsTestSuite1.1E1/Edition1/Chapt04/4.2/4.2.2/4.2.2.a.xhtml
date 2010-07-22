@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml"
+ 	xmlns:ev="http://www.w3.org/2001/xml-events">
+  <xhtml:head>
+    <xhtml:title>4.2.2.a xforms-model-construct and xforms-model-construct-done events</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+    	<xforms:message level="modal" ev:event="xforms-model-construct">
+			xforms-model-construct dispatched
+		</xforms:message>
+		<xforms:message level="modal" ev:event="xforms-model-construct-done">
+			xforms-model-construct-done dispatched
+		</xforms:message>
+	</xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group>
+    	<xforms:label class="title">4.2.2.a xforms-model-construct and xforms-model-construct-done events</xforms:label>
+    </xforms:group>
+    <xforms:group>
+    	<xforms:label>
+	    	You must have seen two messages.  One must have said 
+	    	xforms-model-construct dispatched and 
+	    	the other must have said xforms-model-construct-done dispatched.
+	    </xforms:label>	
+    </xforms:group>
+
+	
+  </xhtml:body>
+</xhtml:html>

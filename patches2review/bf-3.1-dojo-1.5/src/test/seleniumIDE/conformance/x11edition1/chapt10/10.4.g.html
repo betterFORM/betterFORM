@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8080/" />
+<title>10.4.g</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">10.4.g</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>@URL-TO-TEST-FORMS@/XFormsTestSuite1.1E1/Edition1/Chapt10/10.4/10.4.g.xhtml</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=message1</td>
+	<td>xforms-delete</td>
+</tr>
+<tr>
+	<td>assertTitle</td>
+	<td>10.4.g delete action with xforms-delete event</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextNotPresent</td>
+	<td>xpath=//*[@class=&quot;xfControl xfOutput xsdString xfEnabled xfReadWrite xfOptional xfValid&quot;]/span</td>
+	<td>1</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

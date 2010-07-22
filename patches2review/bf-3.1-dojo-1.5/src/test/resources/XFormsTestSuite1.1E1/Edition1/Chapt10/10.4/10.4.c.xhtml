@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+            xmlns:xforms="http://www.w3.org/2002/xforms" 
+            xmlns:ev="http://www.w3.org/2001/xml-events"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xhtml:head>
+        <xhtml:link rel="stylesheet" href="../../driverPages/forms/TestSuite11.css" type="text/css" />
+        <xhtml:title>10.4.c delete action using context attribute terminates with no effect</xhtml:title>
+        <xforms:model >
+            <xforms:instance id="first">
+                <number_lists>
+                    <number_list>
+                        <number>1</number>
+                        <number>2</number>
+                        <number>3</number>
+                        <number>4</number>
+                        <number>5</number>
+                        <number>6</number>
+                    </number_list>
+                    <number_list id="pick_me">
+                        <number>7</number>
+                        <number>8</number>
+                        <number>9</number>
+                    </number_list>
+                    <number_list />
+                </number_lists>
+            </xforms:instance>
+            <xforms:instance id="second">
+                <number_lists>
+                    <number_list>
+                        <number>10</number>
+                        <number>11</number>
+                    </number_list>
+                </number_lists>
+            </xforms:instance>
+            <!-- Delete should terminate with no effect, make sure no nodesets were changed -->
+            <xforms:delete ev:event="xforms-ready" nodeset="number_list[3]/number" />
+            <!-- trying to delete an instance, should terminate with no effect -->
+            <xforms:delete ev:event="xforms-ready" nodeset="instance('first')" />
+        </xforms:model>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group>
+            <xforms:label class="title">10.4.c delete action using context attribute terminates with no effect</xforms:label>
+        </xforms:group>
+        <xforms:group>
+          <xforms:label>You must see the number 3 : </xforms:label>
+            <xforms:output value="count(number_list)"/>
+        </xforms:group>
+        <xforms:group>
+          <xforms:label>You must see the number 6 : </xforms:label>
+            <xforms:output value="count(number_list[1]/number)"/>
+        </xforms:group>
+        <xforms:group>
+          <xforms:label>You must see the number 3 : </xforms:label>
+            <xforms:output value="count(number_list[2]/number)"/>
+        </xforms:group>
+        
+    </xhtml:body>
+</xhtml:html>

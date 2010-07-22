@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xforms="http://www.w3.org/2002/xforms">
+    <head>
+        <meta name="author" content="unl at users.sourceforge.net"/>
+        <meta name="description" content="test form for context model resolution"/>
+        <meta name="version" content="$Id: ContextModelResolutionTest.xml 2731 2007-08-10 09:57:58Z joern $"/>
+        <xforms:model id="default-model">
+            <xforms:instance id="default-instance">
+                <default-root xmlns="">
+                    <default-parent>
+                        <default-child>default-value</default-child>
+                    </default-parent>
+                </default-root>
+            </xforms:instance>
+            <xforms:bind id="default-root-bind" nodeset="/default-root">
+                <xforms:bind id="default-parent-bind" nodeset="default-parent">
+                    <xforms:bind id="default-child-bind" nodeset="default-child"/>
+                </xforms:bind>
+            </xforms:bind>
+        </xforms:model>
+        <xforms:model id="additional-model">
+            <xforms:instance id="additional-instance">
+                <additional-root xmlns="">
+                    <additional-parent>
+                        <additional-child>additional-value</additional-child>
+                    </additional-parent>
+                </additional-root>
+            </xforms:instance>
+            <xforms:bind id="additional-root-bind" nodeset="/additional-root">
+                <xforms:bind id="additional-parent-bind" nodeset="additional-parent">
+                    <xforms:bind id="additional-child-bind" nodeset="additional-child"/>
+                </xforms:bind>
+            </xforms:bind>
+        </xforms:model>
+    </head>
+    <body>
+        <xforms:group>
+            <xforms:label>UI Bindings: The first input control should say
+                <i>default-value</i>, the second one
+                <i>additional-value</i>.
+            </xforms:label>
+            <xforms:group id="ui-group-1" ref="/default-root">
+                <xforms:group id="ui-group-2" model="additional-model" ref="/additional-root">
+                    <xforms:group id="ui-group-3" ref="additional-parent">
+                        <xforms:group id="ui-group-4" model="default-model" ref="default-parent">
+                            <xforms:input id="ui-input-1" ref="default-child"/>
+                            <xforms:input id="ui-input-2" model="additional-model" ref="additional-child"/>
+                        </xforms:group>
+                    </xforms:group>
+                </xforms:group>
+            </xforms:group>
+        </xforms:group>
+        <xforms:group>
+            <xforms:label>Model Bindings: The first input control should say
+                <i>default-value</i>, the second one
+                <i>additional-value</i>.
+            </xforms:label>
+            <xforms:group id="model-group-1" bind="default-root-bind">
+                <xforms:group id="model-group-2" bind="additional-root-bind">
+                    <xforms:group id="model-group-3" bind="additional-parent-bind">
+                        <xforms:group id="model-group-4" bind="default-parent-bind">
+                            <xforms:input id="model-input-1" bind="default-child-bind"/>
+                            <xforms:input id="model-input-2" bind="additional-child-bind"/>
+                        </xforms:group>
+                    </xforms:group>
+                </xforms:group>
+            </xforms:group>
+        </xforms:group>
+        <xforms:group>
+            <xforms:label>Model vs. UI Bindings: The first input control should say
+                <i>default-value</i>, the second one
+                <i>additional-value</i>.
+            </xforms:label>
+            <xforms:group id="mixed-group-1" ref="/default-root">
+                <xforms:group id="mixed-group-2" bind="additional-root-bind">
+                    <xforms:group id="mixed-group-3" model="additional-model" ref="additional-parent">
+                        <xforms:group id="mixed-group-4" model="default-model" ref="default-parent">
+                            <xforms:input id="mixed-input-1" ref="default-child"/>
+                            <xforms:input id="mixed-input-2" bind="additional-child-bind"/>
+                        </xforms:group>
+                    </xforms:group>
+                </xforms:group>
+            </xforms:group>
+        </xforms:group>
+    </body>
+</html>

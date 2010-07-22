@@ -1,0 +1,308 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:atom="http://www.w3.org/2005/Atom"
+      xml:lang="en" lang="en">
+<head>
+    <title>betterFORM Demo XForms: Address, Registration, FeatureExplorer</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> </meta>
+	<meta name="Author" content="Joern Turner"> </meta>
+	<meta name="Author" content="Lars Windauer"> </meta>
+	<meta name="publisher" content="betterFORM Project"></meta>
+	<meta name="description" content="betterFORM lightSteelBlue demo page. Varying sample illustration xforms / dojo functionality, hidden features and best practices"></meta>
+	<meta name="keywords" content="betterFORM, xforms, forms, form, xhtml, xpath, xslt, xslt2.0, dojo, dojotoolkit, java, javascript, xml, schema, web, web2.0, web2, web3.0, web3, semantic, semantic web, joern turner, turner, lars windauer, ajax, xforms processor, processor"></meta>
+	<meta name="copyright" content="betterForm Project"></meta>
+	<meta name="content-language" content="en"></meta>
+	<meta name="robots" content="all"></meta>
+	<meta http-equiv="expires" content="Wed, 9 Feb 2011 12:21:57 GMT"></meta>
+	<meta name="revisit-after" content="3 days"></meta>
+	<meta name="google-site-verification" content="L5gmOYcZv-vwF2q0e-qSIXx8ecpKUN8A7lrW4ia9YR0" />
+
+
+    <link rev="made" href="mailto:info@betterform.de"/>
+    <link rel="SHORTCUT ICON" href="images/betterform.ico"/>
+    <link rel="ICON" href="images/betterform.ico" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css" href="styles/bf.css"/>
+    <link rel="stylesheet" type="text/css" href="resources/styles/reference.css"/>
+    <link rel="stylesheet" type="text/css" href="resources/styles/demo.css"/>
+    <link rel="stylesheet" type="text/css" href="resources/styles/registration.css"/>
+
+    <style type="text/css">
+        #demoTarget {
+            height: 400px;
+            overflow: auto; /*padding:10px;*/
+            border: thin solid #bbbbbb; /*text-align:left;*/
+            background: white;
+            min-height: 400px;
+            max-height: 400px;
+            padding: 10px;
+        }
+
+
+        .backgroundImage {
+            width: 100%;
+            height: 100%;
+            background: transparent url(resources/images/play.png) no-repeat 50%;
+        }
+        #demoWrapper {
+            position: relative;
+            width: 750px;
+            height: 421px;
+            min-height: 421px;
+            max-height: 421px;
+            float: left;
+            border: 1px dotted #666;
+            /*margin-bottom: 20px;*/
+            background: url(resources/images/ajax-loader.gif) no-repeat center center;
+        }
+
+        #demoTrigger {
+            display: none;
+        }
+
+        #content {
+            min-height: 500px;
+        }
+        #backTrigger {
+            position: absolute;
+            float: right;
+        }
+		.tundra .dijitButtonNode {
+			border:none;
+		}
+
+    </style>
+
+    <script type="text/javascript">
+		var xfReadySubscribers;
+        dojo.require("dojox.highlight");
+        dojo.require("dojox.highlight.languages.xml");
+        //dojo.require("dojox.highlight.languages._static");
+        //dojo.require("dojox.highlight.languages._dynamic");
+        //dojo.require("dojox.highlight.languages._www");
+        dojo.addOnLoad(function() {
+            dojo.query("code").forEach(dojox.highlight.init);
+        });
+
+        dojo.require("dijit.form.Button");
+        dojo.require("dijit.TitlePane");
+        dojo.require('dijit.layout.ContentPane');
+        dojo.require("betterform.ui.select.OptGroup");
+        dojo.require("betterform.ui.select1.RadioItemset");
+        dojo.require("betterform.ui.select.CheckBoxItemset");
+        dojo.require("betterform.ui.util");
+        dojo.require("betterform.ui.container.Switch");
+        dojo.require("betterform.ui.container.Repeat");
+        dojo.require("betterform.ui.container.RepeatItem");
+        dojo.require("betterform.ui.container.TabSwitch");
+        dojo.require("betterform.ui.container.Group");
+
+        function addToDocument(id) {
+            var model = dojo.query(".xfModel", dojo.doc)[0];
+            dijit.byId(dojo.attr(model, "id")).getInstanceAsString(id,
+                    function(data) {
+                        dojo.byId("instanceData").innerHTML = data;
+                    });
+        }
+
+
+        function runDemo(/*string*/demo) {
+			if(xfReadySubscribers != undefined) {
+				dojo.unsubscribe(xfReadySubscribers);
+				xfReadySubscribers = null;
+			}
+
+            xfReadySubscribers = dojo.subscribe("/xf/ready", function(data) {
+                dojo.removeClass(dojo.byId("demoTarget"), "demoOverlay");
+                dojo.style("demoTarget", "opacity", 0);
+                dojo.fadeIn({
+                    node: "demoTarget",
+                    duration:1000
+                }).play();
+                if (dojo.byId("registration") != undefined) {
+                    fluxProcessor.setInlineRoundBorderAlertHandler();
+                } else {
+                    fluxProcessor.setToolTipAlertHandler();
+                }
+            });
+            dojo.fadeOut({
+                node: "demoTarget",
+                duration:200,
+                onBegin: function() {
+                    fluxProcessor.dispatchEvent(demo + 'DemoTrigger');
+                }
+            }).play();
+
+        }
+
+        function backToDemo() {
+            fluxProcessor.dispatchEvent('backTrigger');
+        }
+    </script>
+
+
+</head>
+<body id="demo">
+<div class="page">
+    <div style="display:none">
+        <xf:model id="model-1">
+            <xf:instance>
+                <data xmlns="">
+                </data>
+            </xf:instance>
+        </xf:model>
+        <div id="template" onclick="runDemo();" class="backgroundImage"></div>
+
+        <xf:trigger id="contactsDemoTrigger">
+            <xf:label>run demo</xf:label>
+            <xf:toggle case="c-demoArea"/>
+            <xf:load show="embed" targetid="demoTarget">
+                <xf:resource value="'forms/demo/contacts.xhtml#xforms'"/>
+            </xf:load>
+        </xf:trigger>
+        <xf:trigger id="orderlistDemoTrigger">
+            <xf:label>run demo</xf:label>
+            <xf:toggle case="c-demoArea"/>
+            <xf:load show="embed" targetid="demoTarget">
+                <xf:resource value="'forms/demo/orderlist.xhtml#xforms'"/>
+            </xf:load>
+        </xf:trigger>
+        <xf:trigger id="registrationDemoTrigger">
+            <xf:label>run demo</xf:label>
+            <xf:toggle case="c-demoArea"/>
+            <xf:load show="embed" targetid="demoTarget">
+                <xf:resource value="'forms/demo/registration.xhtml#xforms'"/>
+            </xf:load>
+        </xf:trigger>
+        <xf:trigger id="featureExplorerDemoTrigger">
+            <xf:label>run demo</xf:label>
+            <xf:toggle case="c-demoArea"/>
+            <xf:load show="replace" >
+                <xf:resource value="'forms/reference/XFormsFeatureExplorer.xhtml'"/>
+            </xf:load>
+        </xf:trigger>
+    </div>
+
+
+    <xf:trigger id="backTrigger" appearance="minimal">
+        <xf:label/>
+        <xf:action>
+            <xf:toggle case="c-overview"/>
+            <xf:load show="none" targetid="demoTarget"/>
+            <script type="text/javascript">
+
+                var template = dojo.clone(dojo.byId("template"));
+                // console.debug("replace template (1): ", template);
+                var demoTarget = dojo.byId("demoTarget");
+                // console.debug("replace template: (2)", demoTarget);
+                //demoWrapper.appendChild(template);
+                dojo.attr(demoTarget, "style", "");
+                demoTarget.appendChild(template);
+                // dojo.place(template, demoTarget);
+                // dojo.attr(template,"id","demoTarget");
+            </script>
+        </xf:action>
+    </xf:trigger>
+
+    <div id="header">
+        <div class="pageMarginBox">
+            <div class="languages">
+                <img src="images/en.png" class="langSelector" alt="english"/>
+                <img src="images/de.png" class="langSelector" alt="deutsch"/>
+            </div>
+            <div id="logoBar">
+                 <a href="index.html" class="link" id="linkLogo"><img id="logo" src="images/logo.png" alt="betterFORM project"/></a>
+                <div id="topnav">
+                    <a href="index.html">home</a><span class="menuDevider"> | </span>
+                    <a href="demo.xhtml" style="color:#488aa6">demo</a><span class="menuDevider"> | </span>
+                    <a href="download.html">download</a><span class="menuDevider"> | </span>
+                    <a href="product.html">product</a><span class="menuDevider"> | </span>
+                    <a href="support.html">support</a><span class="menuDevider"> | </span>
+                    <a href="whoweare.html">who we are</a>
+                    <!--<a href="whoweare.html">who we are</a><span class="menuDevider"> | </span>-->
+                    <!--<a href="contact.html">contact / impressum</a>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="content">
+        <img id="shadowTop" src="images/shad_top.jpg" alt=""/>
+        <div class="pageMarginBox">
+            <div class="contentBody">
+
+                <!-- ######################### Content here ################################## -->
+                <!-- ######################### Content here ################################## -->
+                <!-- ######################### Content here ################################## -->
+                <!-- ######################### Content here ################################## -->
+                <!-- ######################### Content here ################################## -->
+                <h1>Demo</h1>
+
+                <xf:switch>
+                    <xf:case id="c-overview" selected="true">
+                        <h2>Click the desired screenshot to run the demo. Use the <a href="jsp/forms.jsp">FormBrowser</a> to browse all available forms.</h2>
+
+
+                        <a href="javascript:runDemo('contacts');" class="link"><img src="images/add-l.png" alt="contacts"/></a>
+                        <a href="javascript:runDemo('registration');" class="link"><img src="images/reg-r.png" alt="Registration"/></a>
+                        <a href="javascript:runDemo('orderlist');" class="link"><img src="images/ord-l.png" alt="orderlist"/></a>
+                        <a href="javascript:runDemo('featureExplorer');" class="link"><img src="images/fea-r.png" alt="XFormsFeatureExplorer"/></a>
+
+                    </xf:case>
+                    <xf:case id="c-demoArea">
+                        <div id="demoWrapper">
+                            <div id="demoTarget">
+                                <!--<div onclick="runDemo();" class="backgroundImage"></div>-->
+                            </div>
+                        </div>
+                        <xf:trigger id="backToDemo">
+                            <xf:label>close</xf:label>
+                            <xf:toggle case="c-overview"/>
+                            <script type="text/javascript">
+                                backToDemo();
+                            </script>
+                        </xf:trigger>
+                    </xf:case>
+                </xf:switch>
+
+
+
+
+                <!-- ######################### Content end ################################## -->
+                <!-- ######################### Content end ################################## -->
+                <!-- ######################### Content end ################################## -->
+                <!-- ######################### Content end ################################## -->
+                <!-- ######################### Content end ################################## -->
+            </div>
+        </div>
+    </div>
+
+    <div id="footer">
+        <img id="shadowBottom" src="images/shad_bottom.jpg" alt=""/>
+
+        <div class="pageMarginBox">
+                    <span id="bottomMenu">
+                        &#169; 2010 betterFORM<span class="menuDevider"> | </span>
+                        <a href="index.html">home</a><span class="menuDevider"> | </span>
+                        <a href="demo.xhtml" style="color:#488aa6">demo</a><span class="menuDevider"> | </span>
+                        <a href="download.html">download</a><span class="menuDevider"> | </span>
+                        <a href="product.html">product</a><span class="menuDevider"> | </span>
+                        <a href="support.html">support</a><span class="menuDevider"> | </span>
+                        <a href="whoweare.html">who we are</a><span class="menuDevider"> | </span>
+                        <a href="contact.html">contact / impressum</a>
+                    </span>
+        </div>
+    </div>
+</div>
+    <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        try {
+        var pageTracker = _gat._getTracker("UA-15044944-1");
+        pageTracker._trackPageview();
+        } catch(err) {}
+    </script>
+</body>
+</html>

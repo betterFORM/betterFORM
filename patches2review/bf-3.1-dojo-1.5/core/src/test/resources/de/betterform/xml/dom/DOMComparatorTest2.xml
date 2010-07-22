@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema>
+    <element name="personae">
+        <complexType>
+            <complexContent>
+                <restriction base="anyType">
+                    <sequence maxOccurs="unbounded" minOccurs="1">
+                        <element maxOccurs="1" minOccurs="1" ref="title"/>
+                        <element maxOccurs="unbounded" minOccurs="0" ref="subtitle"/>
+                        <choice maxOccurs="1" minOccurs="1">
+                            <element maxOccurs="1" minOccurs="1" ref="address"/>
+                            <element maxOccurs="unbounded" minOccurs="1" ref="e-mail"/>
+                            <element maxOccurs="unbounded" minOccurs="1" ref="phone"/>
+                        </choice>
+                        <element maxOccurs="unbounded" minOccurs="0" ref="remarks"/>
+                    </sequence>
+                    <attribute name="id" type="ID" use="required"/>
+                    <attribute name="category" type="CDATA" use="fixed" value="BLA"/>
+                    <attribute name="enum" use="default" value="bla">
+                        <simpleType>
+                            <restriction base="string">
+                                <enumeration value="bla"/>
+                                <enumeration value="foo"/>
+                            </restriction>
+                        </simpleType>
+                    </attribute>
+                    <attribute name="not" use="default" value="bla">
+                        <simpleType>
+                            <restriction base="NOTATION">
+                                <enumeration value="bla"/>
+                                <enumeration value="foobar"/>
+                            </restriction>
+                        </simpleType>
+                    </attribute>
+                </restriction>
+            </complexContent>
+        </complexType>
+    </element>
+    <element name="title">
+        <complexType>
+            <simpleContent>
+                <extension base="string">
+                    <attribute name="id" type="ID" use="required"/>
+                </extension>
+            </simpleContent>
+        </complexType>
+    </element>
+    <element name="subtitle">
+        <complexType>
+            <simpleContent>
+                <extension base="string">
+                    <attribute name="id" type="ID" use="required"/>
+                </extension>
+            </simpleContent>
+        </complexType>
+    </element>
+    <element name="address">
+        <complexType>
+            <complexContent>
+                <restriction base="anyType">
+                    <choice maxOccurs="unbounded" minOccurs="0">
+                        <any maxOccurs="1" minOccurs="1"/>
+                    </choice>
+                    <attribute name="id" type="ID" use="required"/>
+                </restriction>
+            </complexContent>
+        </complexType>
+    </element>
+    <element name="e-mail">
+        <complexType>
+            <complexContent>
+                <restriction base="anyType">
+                    <attribute name="id" type="ID" use="required"/>
+                </restriction>
+            </complexContent>
+        </complexType>
+    </element>
+    <element name="phone">
+        <complexType>
+            <complexContent>
+                <restriction base="anyType">
+                    <attribute name="id" type="ID" use="required"/>
+                </restriction>
+            </complexContent>
+        </complexType>
+    </element>
+    <element name="remarks">
+        <complexType mixed="true">
+            <complexContent>
+                <restriction base="anyType">
+                    <choice maxOccurs="unbounded" minOccurs="0">
+                        <element maxOccurs="1" minOccurs="1" ref="good"/>
+                        <element maxOccurs="1" minOccurs="1" ref="neutral"/>
+                        <element maxOccurs="1" minOccurs="1" ref="bad"/>
+                    </choice>
+                    <attribute name="id" type="ID" use="required"/>
+                </restriction>
+            </complexContent>
+        </complexType>
+    </element>
+    <element name="good">
+        <complexType>
+            <simpleContent>
+                <extension base="string">
+                    <attribute name="id" type="ID" use="required"/>
+                </extension>
+            </simpleContent>
+        </complexType>
+    </element>
+    <element name="neutral">
+        <complexType>
+            <simpleContent>
+                <extension base="string">
+                    <attribute name="id" type="ID" use="required"/>
+                </extension>
+            </simpleContent>
+        </complexType>
+    </element>
+    <element name="bad">
+        <complexType>
+            <simpleContent>
+                <extension base="string">
+                    <attribute name="id" type="ID" use="required"/>
+                </extension>
+            </simpleContent>
+        </complexType>
+    </element>
+</schema>

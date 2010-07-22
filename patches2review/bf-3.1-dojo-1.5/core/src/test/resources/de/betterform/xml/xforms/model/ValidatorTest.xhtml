@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <meta name="author" content="unl at users.sourceforge.net"/>
+        <meta name="description" content="test form for validator component"/>
+        <meta name="version" content="$Id: ValidatorTest.xhtml 2751 2007-08-10 10:09:50Z joern $"/>
+        <xf:model id="model-1" xmlns:test="http://test.org/restricted">
+            <xf:instance id="instance-1" xmlns="">
+                <data>
+                    <item/>
+                    <item/>
+                    <item xsi:type="test:restricted"/>
+                    <item xsi:type="test:restricted"/>
+                    <item xsi:type="test:restricted" xsi:nil="true"/>
+                </data>
+            </xf:instance>
+            <xf:bind id="bind-1" nodeset="item[2]" type="test:restricted"/>
+            <xf:bind id="bind-2" nodeset="item[4]" type="xs:nonNegativeInteger"/>
+            <xs:schema targetNamespace="http://test.org/restricted" elementFormDefault="qualified">
+                <xs:simpleType name="restricted">
+                    <xs:restriction base="xs:integer">
+                        <xs:maxInclusive value="4711"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:schema>
+        </xf:model>
+    </head>
+    <body>
+        <div>nothing to see ;-)</div>
+    </body>
+</html>

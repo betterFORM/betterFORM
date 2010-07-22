@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>3.2.3.g first node rule</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+      <xforms:instance>
+        <car xmlns="">
+          <make>Mercedes</make>
+   		  <make>Chrysler</make>
+          <year>2005</year>
+          <color>black</color>
+          <hp>220</hp>
+        </car>
+      </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">3.2.3.g first node rule</xforms:label>
+  	</xforms:group>
+	<!-- First-node rule picks the first occurence of the duplication for /car/make -->
+	<xforms:group>
+		<xforms:label>You must see the value &quot;Mercedes&quot;:</xforms:label>
+	</xforms:group>
+    <xforms:output ref="/car/make">
+      	<xforms:label></xforms:label>
+    </xforms:output>
+
+	
+  </xhtml:body>
+</xhtml:html>

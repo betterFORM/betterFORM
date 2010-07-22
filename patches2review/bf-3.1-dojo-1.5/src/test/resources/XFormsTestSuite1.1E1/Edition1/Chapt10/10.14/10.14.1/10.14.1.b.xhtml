@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+            xmlns:xforms="http://www.w3.org/2002/xforms"
+            xmlns:ev="http://www.w3.org/2001/xml-events">
+    <xhtml:head>
+        <xhtml:title>10.14.1.b value attribute has precedence in load element</xhtml:title>
+        <xhtml:link href="../../../driverPages/forms/TestSuite11.css" rel="stylesheet" type="text/css" />
+        <xforms:model >
+            <xforms:instance>
+                <root />
+            </xforms:instance>
+        </xforms:model>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group>
+            <xforms:label class="title">10.14.1.b value attribute has precedence in load element</xforms:label>
+        </xforms:group>
+        <xforms:group>
+            <xforms:label>
+              After activating the trigger below this page must be replaced by the XForms 1.1 specification. 
+              If the page is replaced with the W3C homepage(http://www.w3.org) or no page loads this test case 
+              has failed. 
+            </xforms:label>
+        </xforms:group>
+        <xforms:trigger>
+            <xforms:label>Go To The XForms 1.1 Spec</xforms:label>
+            <xforms:action ev:event="DOMActivate">
+                <xforms:load>
+                    <xforms:resource value="'http://www.w3.org/TR/xforms11/'">http://www.w3.org</xforms:resource>
+                </xforms:load>
+            </xforms:action>
+        </xforms:trigger>
+    </xhtml:body>
+</xhtml:html>

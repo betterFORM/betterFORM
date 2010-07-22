@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <meta name="author" content="unl at users.sourceforge.net"/>
+        <meta name="description" content="test form for switch element"/>
+        <meta name="version" content="$Id: SwitchTest.xhtml 2272 2006-08-18 23:22:09Z unl $"/>
+
+        <xf:model id="model-1">
+            <xf:instance id="instance-1" xmlns="">
+                <data>
+                    <item/>
+                </data>
+            </xf:instance>
+            <xf:bind id="bind-item" nodeset="item" relevant="false()" readonly="true()" required="true()" constraint="false()"/>
+        </xf:model>
+    </head>
+    <body>
+        <xf:switch id="switch">
+            <xf:case id="case-1" xf:selected="true"><xf:output value="''"/></xf:case>
+            <xf:case id="case-2"><xf:output value="''"/></xf:case>
+            <xf:case id="case-3"><xf:output value="''"/></xf:case>
+        </xf:switch>
+        <xf:switch id="switch-model-binding" bind="bind-item">
+            <xf:case id="case-model-binding-1" xf:selected="true"><xf:output value="''"/></xf:case>
+            <xf:case id="case-model-binding-2"><xf:output value="''"/></xf:case>
+            <xf:case id="case-model-binding-3"><xf:output value="''"/></xf:case>
+        </xf:switch>
+        <xf:switch id="switch-ui-binding" ref="item">
+            <xf:case id="case-ui-binding-1" xf:selected="true"><xf:output value="''"/></xf:case>
+            <xf:case id="case-ui-binding-2"><xf:output value="''"/></xf:case>
+            <xf:case id="case-ui-binding-3"><xf:output value="''"/></xf:case>
+        </xf:switch>
+    </body>
+</html>

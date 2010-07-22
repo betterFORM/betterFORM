@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:ev="http://www.w3.org/2001/xml-events"
+			xmlns:xforms="http://www.w3.org/2002/xforms" 
+			xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+			xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xhtml:head>
+        <xhtml:title>10.g delete in action element</xhtml:title>
+        <xhtml:link href="../driverPages/forms/TestSuite11.css" rel="stylesheet" type="text/css"/>
+        <xforms:model id="mod1" >
+        	<xforms:instance>
+        		<root>
+        			<data/>
+        			<data/>
+        		</root>
+        	</xforms:instance>
+        	<xforms:message ev:event="xforms-rebuild" level="modal" ev:observer="mod1">xforms-rebuild</xforms:message>
+    		<xforms:message ev:event="xforms-recalculate" level="modal" ev:observer="mod1">xforms-recalculate</xforms:message>
+    		<xforms:message ev:event="xforms-revalidate" level="modal" ev:observer="mod1">xforms-revalidate</xforms:message>
+    		<xforms:message ev:event="xforms-refresh" level="modal" ev:observer="mod1">xforms-refresh</xforms:message>
+        </xforms:model>
+    </xhtml:head>
+    <xhtml:body>
+    	<xforms:group>
+    		<xforms:label class="title">10.g delete in action element</xforms:label>
+    	</xforms:group>
+    	<xforms:group>
+    		<xforms:label>
+    		  When you activate the Delete trigger you must see five messages: xforms:action, 
+    		  xforms-rebuild, xforms-recalculate, xforms-revalidate, and 
+    		  xforms-refresh. 
+    		</xforms:label>
+    	</xforms:group>
+    	<xforms:trigger>
+    		<xforms:label>Delete</xforms:label>
+    		<xforms:action ev:event="DOMActivate">
+    			<xforms:delete nodeset="data" at="1"/>
+    			<xforms:message level="modal">xforms:action</xforms:message>
+    		</xforms:action>
+    	</xforms:trigger>
+    </xhtml:body>
+</xhtml:html>

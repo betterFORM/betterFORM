@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:bf="http://betterform.sourceforge.net/xforms">
+    <head>
+        <xf:model functions="bf:fileSize bf:fileDate">
+            <xf:instance>
+                <attachments xmlns="">
+                    <attachment>
+                        <upload>FileFunctionsTest.xhtml</upload>
+                        <filesize></filesize>
+                        <filedate1/>
+                        <filedate2/>
+                    </attachment>
+                </attachments>
+            </xf:instance>
+            <xf:bind nodeset="attachment/filesize" calculate="bf:fileSize(../upload)"/>
+            <xf:bind nodeset="attachment/filedate1" calculate="bf:fileDate(../upload,'')"/>
+            <xf:bind nodeset="attachment/filedate2" calculate="bf:fileDate(../upload,'yyyy.MM.dd')"/>
+        </xf:model>
+    </head>
+    <body>
+    </body>
+</html>

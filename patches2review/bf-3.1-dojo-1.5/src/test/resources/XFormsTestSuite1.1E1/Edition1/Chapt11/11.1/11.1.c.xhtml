@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>11.1.c resource attribute of submission element</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../driverPages/html/TestSuite11.css" type="text/css"/>
+    <xforms:model id="car1">
+      <xforms:instance id="information">
+        <!-- make now has a descendant, which should be submitted if make is submitted -->
+        <car xmlns="">
+          <make>Acura
+          	<model>Integra</model>
+          </make>
+          <year>1994</year>
+          <color>white</color>
+          <hp>120</hp>
+        </car>
+      </xforms:instance>
+      <xforms:submission id="submitMakeModel" ref="/car/make" resource="http://xformstest.org/cgi-bin/echo.sh"
+          method="post"/>
+      <xforms:submission id="submitColor" ref="/car/color" resource="http://invalid/bin/echo.sh" method="post">
+          <xforms:resource>http://xformstest.org/cgi-bin/echo.sh</xforms:resource>
+      </xforms:submission>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">11.1.c resource attribute of submission element</xforms:label>
+  	</xforms:group>
+    <xforms:group>
+		<xforms:label>
+		  When you activate the Submit Make And Model trigger the page must be replaced by the form data. 
+		  The form data must contain the values &quot;Acura&quot; and &quot;Integra&quot;, but not the value 
+		  &quot;white&quot;. 
+		</xforms:label>
+    </xforms:group>
+    <xforms:submit id="makeModelButton" submission="submitMakeModel">
+        <xforms:label>Submit Make And Model</xforms:label>
+    </xforms:submit>
+    <xforms:group>
+    	<xforms:label>
+    	  When you activate the Submit Color trigger the page must be replaced by the form data. 
+		  The form data must contain the value &quot;white&quot; but not the values &quot;Acura&quot; or 
+		  &quot;Integra&quot;. 
+    	</xforms:label>
+    </xforms:group>
+	<xforms:submit id="colorSubmit" submission="submitColor">
+	    <xforms:label>Submit Color</xforms:label>
+	</xforms:submit>
+	
+  </xhtml:body>
+</xhtml:html>

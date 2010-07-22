@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <meta name="author" content="unl at users.sourceforge.net"/>
+        <meta name="description" content="test form for while action handler"/>
+        <meta name="version" content="$Id: WhileTest.xhtml 2686 2007-08-10 09:26:42Z joern $"/>
+
+        <xf:model id="model-1">
+            <xf:instance id="instance-1" xmlns="">
+                <some>
+                    <nodes selected="true">1</nodes>
+                    <nodes selected="false">2</nodes>
+                    <nodes selected="true">3</nodes>
+                    <nodes selected="true">4</nodes>
+                    <nodes selected="false">5</nodes>
+                    <nodes selected="true">6</nodes>
+                </some>
+            </xf:instance>
+            <xf:instance id="temps" xmlns="">
+                <data>
+                    <counter/>
+                    <accumulator/>
+                </data>
+            </xf:instance>
+        </xf:model>
+    </head>
+    <body>
+    	<xf:group>
+			<xf:trigger id="trigger-while">
+				<xf:label>Get Sum</xf:label>
+				<xf:action ev:event="DOMActivate">
+					<xf:setvalue ref="instance('temps')/counter" value="1"/>
+					<xf:setvalue ref="instance('temps')/accumulator" value="0"/>
+					<xf:action while="instance('temps')/counter &lt;= count(/some/nodes)">
+						<xf:setvalue id="setv1" ref="instance('temps')/accumulator"
+                            value=". + instance('instance-1')/nodes[number(instance('temps')/counter)]"
+                            if="boolean-from-string(/some/nodes[number(instance('temps')/counter)]/@selected)"/>
+                        <xf:setvalue ref="instance('temps')/counter" value=". + 1"/>
+                        
+                            <!--if="boolean-from-string(instance()/nodes[number(instance('temps')/counter)]/@selected)"/>-->
+					</xf:action>
+				</xf:action>
+			</xf:trigger>
+        </xf:group>
+    </body>
+</html>

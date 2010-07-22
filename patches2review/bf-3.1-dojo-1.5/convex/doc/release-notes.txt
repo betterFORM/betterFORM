@@ -1,0 +1,14 @@
+Convex 0.9.8+
+-------------
+This is a first preview of Convex for IE. It's an applet integration of the betterForm
+core and allows offline use of XForms inside of IE 6. While the same code would work
+in Firefox/Mozilla too (with some small patches to the javascript code) these show
+an ugly initialization delay of 10 to 15 seconds when the liveconnect bridge is first accessed.
+This is why we currently focus to make it work for IE first and later examine this problem
+further.
+
+Convex uses the latest code from betterForm CVS (0.9.8 with latest patches).
+
+Warning: this is just a preview release and this not ready for production yet. There are
+still some things missing and it's mainly meant to gather some feedback.
+

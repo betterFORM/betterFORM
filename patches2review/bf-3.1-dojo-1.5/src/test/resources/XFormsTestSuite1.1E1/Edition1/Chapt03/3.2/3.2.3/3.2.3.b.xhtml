@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms" 
+            xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <xhtml:head>
+        <xhtml:title>3.2.3.b single-node binding - model attribute</xhtml:title>
+        <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css" />
+        <xforms:model id="car1">
+            <xforms:instance>
+                <car xmlns="">
+                    <make>Mercedes</make>
+                    <year>2004</year>
+                    <color>silver</color>
+                    <hp>450</hp>
+                </car>
+            </xforms:instance>
+            <xforms:bind id="bind_001" nodeset="/car/make" />
+        </xforms:model>
+        <xforms:model id="car2">
+            <xforms:instance>
+                <car xmlns="">
+                    <make>Acura</make>
+                    <year>1994</year>
+                    <color>white</color>
+                    <hp>120</hp>
+                </car>
+            </xforms:instance>
+            <xforms:bind id="bind_002" nodeset="/car/make" />
+        </xforms:model>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group>
+            <xforms:label class="title">3.2.3.b single-node binding - model attribute</xforms:label>
+        </xforms:group>
+        
+        <xforms:group>
+        	<xforms:label>
+        		<!-- model attribute points to a valid model;  -->
+        		You must see the value &quot;Mercedes&quot;: 
+        	</xforms:label>
+        </xforms:group>
+        <xforms:group>
+            <xforms:output ref="make" model="car1">
+                <xforms:label></xforms:label>
+            </xforms:output>
+        </xforms:group>
+        
+        <xforms:group>
+        	<xforms:label>
+        		<!-- model attribute points to a valid model;  -->
+        		You must see the value &quot;Acura&quot;: 
+        	</xforms:label>
+        </xforms:group>
+        <xforms:group>
+            <xforms:output ref="make" model="car2">
+                <xforms:label></xforms:label>
+            </xforms:output>
+        </xforms:group>
+        
+        <xforms:group>
+        	<xforms:label>
+        		<!-- model has no meaning when bind attribute is present;  -->
+        		For this output, a bind is overriding the model. You must see the value &quot;Acura&quot;: 
+        	</xforms:label>
+        </xforms:group>
+        <xforms:group>
+            <xforms:output ref="year" model="car2" bind="bind_002" >
+                <xforms:label></xforms:label>
+            </xforms:output>
+        </xforms:group>
+        
+    </xhtml:body>
+</xhtml:html>

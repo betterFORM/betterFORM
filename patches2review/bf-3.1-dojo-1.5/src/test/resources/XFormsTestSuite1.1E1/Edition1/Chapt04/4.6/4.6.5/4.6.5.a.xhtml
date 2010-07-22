@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+  <xhtml:head>
+  	<xhtml:title>4.6.5.a event sequencing for submit controls</xhtml:title>
+  	<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+      <xforms:instance xmlns="">
+        <car/>
+      </xforms:instance>
+      <xforms:submission id="submission1" action="http://xformstest.org/cgi-bin/echo.sh"
+          ref="/car" method="post" replace="none">
+          <xforms:action ev:event="xforms-submit">
+          	<xforms:message level="modal">xforms-submit</xforms:message>
+          </xforms:action>
+          <xforms:action ev:event="xforms-submit-done">
+          	<xforms:message level="modal">xforms-submit-done</xforms:message>
+          </xforms:action>
+      </xforms:submission>
+      <!-- should cause xforms-submit-error -->
+      <xforms:submission id="submission2" action="http://invaliduri"
+          ref="/car" method="post" replace="none">
+          <xforms:action ev:event="xforms-submit">
+          	<xforms:message level="modal">xforms-submit</xforms:message>
+          </xforms:action>
+          <xforms:action ev:event="xforms-submit-done">
+          	<xforms:message level="modal">xforms-submit-done</xforms:message>
+          </xforms:action>
+      </xforms:submission>      
+      <xforms:action ev:event="xforms-submit-error">
+      	<xforms:message level="modal">xforms-submit-error</xforms:message>
+      </xforms:action>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group>
+    	<xforms:label class="title">4.6.5.a event sequencing for submit controls</xforms:label>
+    </xforms:group>
+
+    <xforms:group>
+    	<xforms:label>
+    	  You must see the messages DOMActivate, xforms-submit, and xforms-submit-done when you activate the Submit 1 
+    	  submit control. 
+    	</xforms:label>	
+    </xforms:group>
+
+      <xforms:submit submission="submission1">
+      	<xforms:label>Submit 1</xforms:label>
+      	<xforms:action ev:event="DOMActivate">
+      		<xforms:message level="modal">DOMActivate</xforms:message>
+      	</xforms:action>
+      </xforms:submit>
+
+    <xforms:group>
+		<xforms:label>
+		  You must see the messages DOMActivate, xforms-submit, and xforms-submit-error when you activate the Submit 2 
+    	  submit control. 
+    	</xforms:label>
+    </xforms:group>
+
+      <xforms:submit submission="submission2">
+      	<xforms:label>Submit 2</xforms:label>
+      	<xforms:action ev:event="DOMActivate">
+      		<xforms:message level="modal">DOMActivate</xforms:message>
+      	</xforms:action>
+      </xforms:submit>
+	  
+	  
+  </xhtml:body>
+</xhtml:html>

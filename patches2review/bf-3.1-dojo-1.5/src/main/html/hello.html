@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:xs="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:bf="http://betterform.sourceforge.net/xforms">
+<head>
+    <title>hello</title>
+
+    <script type="text/javascript">
+        function setView(html){
+            var xformsui = dojo.byId("xformsui");
+            
+            xformsui.innerHTML = html;
+            xformsui.className = "enabled";
+
+            dojo.parser.parse(xformsui);
+
+        return true;
+    }
+    </script>
+
+
+    <script type="text/javascript" src="resources/scripts/dojo/dojo.js"></script>
+
+      <script type="text/javascript">
+        var djConfig = {
+            debugAtAllCost:false,
+            isDebug:false,
+            parseOnLoad:false
+        };
+    </script>
+
+    <script type="text/javascript">
+
+        dojo.require("dojo.parser");
+        
+
+        dojo.require("dijit._Widget");
+        dojo.require("dijit.Dialog");
+        dojo.require("dijit.TitlePane");
+        dojo.require("dijit.Tooltip");
+        dojo.require("dijit.form.CheckBox");
+        dojo.require("dijit.form.Button");
+        dojo.require("dijit.layout.ContentPane");
+        dojo.require("dijit.layout.TabContainer");
+        dojo.require("dijit.layout.BorderContainer");
+        dojo.require("dijit.layout.AccordionContainer");
+        dojo.require("dojox.layout.FloatingPane");
+
+        dojo.require("dojox.widget.Toaster");
+        dojo.require("betterform.ConvexProcessor");
+        dojo.require("betterform.FluxProcessor");
+        dojo.require("betterform.XFormsModelElement");
+        dojo.require("betterform.ui.Control");
+        dojo.require("betterform.ui.FisheyeLite");
+        dojo.require("betterform.ui.InlineEditBox");
+        dojo.require("betterform.ui.util");
+        dojo.require("betterform.ui.XFormsStore");
+        dojo.require("betterform.ui.container.AccordionSwitch");
+        dojo.require("betterform.ui.container.AccordionSwitchPane");
+        dojo.require("betterform.ui.container.Container");
+        dojo.require("betterform.ui.container.ContentPaneGroup");
+        dojo.require("betterform.ui.container.Group");
+        dojo.require("betterform.ui.container.Repeat");
+        dojo.require("betterform.ui.container.RepeatItem");
+        dojo.require("betterform.ui.container.Switch");
+        dojo.require("betterform.ui.container.TabSwitch");
+        dojo.require("betterform.ui.input.Boolean");
+        dojo.require("betterform.ui.input.Date");
+        dojo.require("betterform.ui.input.TextField");
+        dojo.require("betterform.ui.output.Image");
+        dojo.require("betterform.ui.output.Html");
+        dojo.require("betterform.ui.output.Link");
+        dojo.require("betterform.ui.output.Plain");
+        dojo.require("betterform.ui.range.Slider");
+        dojo.require("betterform.ui.range.Rating");
+        dojo.require("betterform.ui.secret.Secret");
+        dojo.require("betterform.ui.select1.ComboBox");
+        dojo.require("betterform.ui.select1.ComboBoxOpen");
+        dojo.require("betterform.ui.select1.Plain");
+        dojo.require("betterform.ui.select1.RadioButton");
+        dojo.require("betterform.ui.select1.RadioGroup");
+        dojo.require("betterform.ui.select1.RadioItemset");
+        dojo.require("betterform.ui.select.CheckBox");
+        dojo.require("betterform.ui.select.CheckBoxGroup");
+        dojo.require("betterform.ui.select.CheckBoxItemset");
+        dojo.require("betterform.ui.select.MultiSelect");
+        dojo.require("betterform.ui.select.OptGroup");
+        dojo.require("betterform.ui.textarea.DojoEditor");
+        dojo.require("betterform.ui.textarea.HtmlEditor");
+        dojo.require("betterform.ui.textarea.MinimalTextarea");
+        dojo.require("betterform.ui.textarea.SimpleTextarea");
+        dojo.require("betterform.ui.timeline.TimeLine");
+        dojo.require("betterform.ui.tree.OPMLTree");
+        dojo.require("betterform.ui.trigger.Button");
+        dojo.require("betterform.ui.trigger.LinkButton");
+        dojo.require("betterform.ui.upload.Upload");
+        dojo.require("betterform.ui.upload.UploadPlain");
+
+        var hideLoader = function() {
+            dojo.fadeOut({
+                node:"convexProcessor",
+                duration:400,
+                onEnd: function() {
+                    dojo.style("convexProcessor", "display", "none");
+                    dojo.style(dojo.body(), "overflow", "auto");
+                }
+            }).play();
+        }
+
+        dojo.addOnLoad(function() {
+
+            dojo.addOnLoad(function() {
+                dojo.parser.parse();
+                hideLoader();
+            });
+        });
+    </script>
+
+    <style type="text/css">
+        @import "../resources/scripts/dijit/themes/tundra/tundra.css";
+        @import "../resources/scripts/dojo/resources/dojo.css";
+        @import "../resources/scripts/dojox/widget/Toaster/Toaster.css";
+        @import "../resources/scripts/dojox/layout/resources/FloatingPane.css";
+        @import "../resources/scripts/dojox/layout/resources/ResizeHandle.css";
+    </style>
+
+    <style type="text/css">
+        .buttons {
+            background: silver;
+        }
+
+        #switchmsg {
+            font-size: 14pt;
+            padding: 10px;
+            background: #A42322;
+            color: white;
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+
+<div style="display:none">
+    <xf:model id="hello-model">
+        <xf:submission id="debug" action="{$contextroot}/resources/jsp/debug-instance.jsp" method="post" replace="all"/>
+        <xf:instance id="C-2" xmlns="">
+            <data>
+                <name/>
+            </data>
+        </xf:instance>
+        <xf:bind id="bind1" nodeset="name" required="true()"/>
+    </xf:model>
+  
+</div>
+
+<div id="xformsui" class="disabled">
+
+    <xf:group id="hello-group" appearance="minimal">
+        <xf:label id="C-4">Hello</xf:label>
+        <xf:input id="name-input" bind="bind1">
+            <xf:label id="C-5">Your name:</xf:label>
+            <xf:alert id="C-6">Please put your name here</xf:alert>
+            <xf:hint id="C-7">Please input your name into this field</xf:hint>
+            <xf:action ev:event="xforms-value-changed">
+                <xf:message>the value has changed</xf:message>
+            </xf:action>
+        </xf:input>
+        <xf:group id="C-8" appearance="minimal">
+            <!--				<xforms:submit id="C-9" submission="debug">-->
+            <!--					<xforms:label id="C-10">Debug</xforms:label>-->
+            <!--				</xforms:submit>-->
+            <xf:trigger>
+                <xf:label id="C-11">Debug</xf:label>
+                <xf:action id="C-12">
+                    <xf:send submission="debug"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="reset-btn">
+                <xf:label>Reset</xf:label>
+                <xf:action>
+                    <xf:reset id="reset"/>
+                </xf:action>
+            </xf:trigger>
+        </xf:group>
+    </xf:group>
+</div>
+<applet name="Convex"
+        code="de.betterform.agent.convex.Convex"
+        codebase="bin"
+        archive="commons-codec-1.3.jar,commons-fileupload-1.1.jar,commons-httpclient-3.0.1.jar,commons-io-1.1.jar,commons-logging-1.0.4.jar,commons-logging-api-1.0.4.jar,javax-activation-1.0.2.jar,javax-mail-1.3.jar,log4j-1.2.13.jar,saxon-dom-9.0.jar,saxon-9.0.jar,xercesImpl-2.8.0.jar,xml-apis.jar,xmlrpc-1.2-b1.jar,convex-1.0.jar"
+        width="100"
+        height="100"
+        mayscript="true">
+</applet>
+</body>
+</html>
+
+

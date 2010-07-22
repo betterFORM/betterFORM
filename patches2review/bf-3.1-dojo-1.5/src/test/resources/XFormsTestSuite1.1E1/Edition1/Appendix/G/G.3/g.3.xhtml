@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>g.3 namespace example (non-normative)</xhtml:title>
+    <xhtml:link rel="stylesheet" href="sample.css" type="text/css"/>
+    <xforms:model>
+      <xforms:instance>
+        <car xmlns="">
+          <make>Honda</make>
+          <make>Toyota</make>
+          <make>Acura</make>
+        </car>
+      </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">g.3 namespace example (non-normative)</xforms:label>
+  	</xforms:group>
+    <xforms:group>
+		<xforms:label>You should see a list of cars, with the background a 'teal' color 
+		for the current item. Also, the repeat items should have a dashed box 
+		around them.
+		</xforms:label>
+    </xforms:group>
+    <xforms:group>
+    	<xforms:repeat nodeset="/car/make">
+    		<xforms:output ref=".">
+    			<xforms:label/>
+    		</xforms:output>
+    	</xforms:repeat>
+    </xforms:group>
+    <xforms:group>
+		
+	</xforms:group>
+  </xhtml:body>
+</xhtml:html>

@@ -1,0 +1,58 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+	  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"               
+      xmlns:xforms="http://www.w3.org/2002/xforms">
+  <xhtml:head>
+    <xhtml:title>8.1.6.e upload element</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+       <xforms:instance xmlns="">       
+          <mail>
+          	<picture>
+          		<attachment1 xsi:type="xsd:base64Binary"/>
+          		<attachment2 xsi:type="xsd:hexBinary"/>
+          		<attachment3 xsi:type="xsd:anyURI"/>
+          	</picture>
+          </mail>
+       </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group>
+  	    <xforms:label class="title">8.1.6.e upload element</xforms:label>
+  	</xforms:group>
+  	<xforms:group>
+  		<xforms:label>
+  		  All three upload controls on the page must allow you to select a file without any errors. 
+  		</xforms:label>
+  	</xforms:group>
+	<xforms:group>
+  		<xforms:label/>
+  		<xforms:upload ref="/mail/picture/attachment1">
+  			<xforms:label>Upload 1</xforms:label>
+       		<xforms:filename ref="/mail/picture/name"/>
+       		<xforms:mediatype ref="/mail/picture/type"/>
+  		</xforms:upload>
+  	</xforms:group>
+  	<xforms:group>
+  		<xforms:label/>
+		<xforms:upload ref="/mail/picture/attachment2">
+			<xforms:label>Upload 2</xforms:label>
+       		<xforms:filename ref="/mail/picture/name"/>
+       		<xforms:mediatype ref="/mail/picture/type"/>
+		</xforms:upload>
+	</xforms:group>
+	<xforms:group>
+  		<xforms:label/>
+       	<xforms:upload ref="/mail/picture/attachment3">
+       		<xforms:label>Upload 3</xforms:label>
+       		<xforms:filename ref="/mail/picture/name"/>
+       		<xforms:mediatype ref="/mail/picture/type"/>
+       	</xforms:upload>
+    </xforms:group>
+ 
+  </xhtml:body>
+</xhtml:html>

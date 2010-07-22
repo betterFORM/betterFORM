@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+      xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:bf="http://betterform.sourceforge.net/xforms">
+    <head>
+        <title>Complex Alert Test</title>
+        <style type="text/css">
+            .xfGroupLabel {
+                font-size: large;
+                font-weight: bolder;
+            }
+
+
+        </style>
+    </head>
+    <body class="tundra" style="overflow:hidden;">
+        <div></div>
+        <xf:trigger appearance="full" id="C967">
+            <xf:label id="C968">Debug</xf:label>
+            <xf:send id="C969" submission="s-debug"/>
+        </xf:trigger>
+    </body>
+</html>

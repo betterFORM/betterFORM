@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+	  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"               
+      xmlns:xforms="http://www.w3.org/2002/xforms">
+  <xhtml:head>
+    <xhtml:title>8.1.9.a submit element</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+    	<xforms:instance xmlns="">
+    		<employee>
+    			<name>Janel</name>
+    		</employee>
+    	</xforms:instance>
+    	<xforms:submission id="timecard" ref="/employee/name"
+    		action="http://xformstest.org/cgi-bin/echo.sh" method="post" replace="none">
+    	   	<xforms:action ev:event="xforms-submit-done">
+    	  		<xforms:message level="modal">xforms-submit-done</xforms:message>
+	      	</xforms:action>
+        	<xforms:action ev:event="xforms-submit">
+        		<xforms:message level="modal">xforms-submit</xforms:message>
+        	</xforms:action>
+      	</xforms:submission>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group>
+    	<xforms:label class="title">8.1.9.a submit element</xforms:label>
+    </xforms:group>
+    <xforms:group>
+    	<xforms:label>
+    	  When you activate the Submit Name submit control you must see a DOMActivate message, an xforms-submit 
+    	  message, and an xforms-submit-done message. 
+    	</xforms:label>
+	</xforms:group>
+    <xforms:group>
+		<xforms:submit submission="timecard">
+			<xforms:label>Submit Name</xforms:label>
+        	<xforms:action ev:event="DOMActivate">
+          		<xforms:message level="modal">DOMActivate</xforms:message>
+        	</xforms:action>
+		</xforms:submit>
+    </xforms:group>
+	
+  </xhtml:body>
+</xhtml:html>

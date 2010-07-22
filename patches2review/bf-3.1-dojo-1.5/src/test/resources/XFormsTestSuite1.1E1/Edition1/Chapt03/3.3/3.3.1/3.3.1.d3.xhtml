@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+  <xhtml:head>
+    <xhtml:title>3.3.1.d3 version attribute negative test 2</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model id="model1" >
+    	<xforms:instance>
+    		<data>
+    			<geordi/>
+    		</data>
+    	</xforms:instance>
+		<xforms:message level="modal" ev:event="xforms-version-exception">xforms-version-exception</xforms:message>
+    </xforms:model>
+    <xforms:model id="model2" version="number1engage">
+    	<xforms:instance>
+    		<lore/>
+    	</xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">3.3.1.d3 version attribute negative test 2</xforms:label>
+  	</xforms:group>
+    <xforms:group>
+    	<xforms:label>
+    	  You must see an xforms-version-exception message or a fatal error due to an 
+		  xforms-version-exception. 
+      	</xforms:label>	
+    </xforms:group>
+	
+  </xhtml:body>
+</xhtml:html>

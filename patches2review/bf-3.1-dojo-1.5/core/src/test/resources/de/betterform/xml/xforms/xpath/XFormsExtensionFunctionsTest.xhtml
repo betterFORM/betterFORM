@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events">
+<head>
+    <meta name="author" content="unl at users.sourceforge.net"/>
+    <meta name="description" content="test form for xforms extension functions"/>
+    <meta name="version" content="$Id: XFormsExtensionFunctionsTest.xhtml 3251 2008-07-08 09:26:03Z lasse $"/>
+    <xf:model id="model-1">
+        <xf:instance id="instance-1" xmlns="">
+            <data>
+                <number>1</number>
+                <number>2</number>
+                <number>3</number>
+                <text>first</text>
+                <text></text>
+                <text>3</text>
+            </data>
+        </xf:instance>
+        <xf:instance id="luhn" xmlns="">
+            <data>
+                <number>4111111111111111</number>
+                <number>5431111111111111</number>
+                <number>341111111111111</number>
+                <number>6011601160116611</number>
+                <number>123</number>
+            </data>
+        </xf:instance>
+        <xf:instance id="instance-2" xmlns="">
+            <data>dummy</data>
+        </xf:instance>
+
+        <!-- implicit test for 'index()' to return 1 before the repeat is initialized -->
+        <xf:bind id="bind-1" nodeset="number[index('repeat')]"/>
+
+        <xf:instance id="instance-3" xmlns="">
+            <converter>
+                <amount>100</amount>
+                <currency>jpy</currency>
+                <convertedAmount></convertedAmount>
+            </converter>
+        </xf:instance>
+
+        <xf:instance xmlns="" id="convTable">
+            <convTable date="20040212" currency="cdn">
+                <rate currency="eur">0.59376</rate>
+                <rate currency="mxn">8.37597</rate>
+                <rate currency="jpy">80.23451</rate>
+                <rate currency="usd">0.76138</rate>
+            </convTable>
+        </xf:instance>
+
+        <xf:bind nodeset="instance('instance-3')/convertedAmount" calculate="../amount * instance('convTable')/rate[@currency=current()/../currency]"/>
+
+        <xf:instance xmlns="" id="i1">
+            <months>
+                <mon result="">01</mon>
+                <mon result="">02</mon>
+                <mon result="">03</mon>
+            </months>
+        </xf:instance>
+        <xf:instance xmlns="" id="i2">
+            <months>
+                <month code="01">Jan</month>
+                <month code="02">Feb</month>
+                <month code="03">Mar</month>
+            </months>
+        </xf:instance>
+        
+         <xf:bind nodeset="instance('i1')/mon/@result" calculate="instance('i2')/month[@code = current()/..]"/>
+
+    </xf:model>
+    <xf:model id="second">
+        <xf:instance id="default2" xmlns="">
+            <instancedata>
+                <second>second</second>
+            </instancedata>
+        </xf:instance>
+        <xf:bind id="b2" nodeset="instance()/second"/>
+    </xf:model>
+</head>
+
+<body>
+<xf:output id="default-instance" value="instance()/number[1]"/>
+<xf:output id="second-default" ref="instance()/second" model="second"/>
+<xf:output id="second-bind" bind="b2"/>
+
+
+<xf:group model="second" ref="instance()">
+    <xf:output id="scoped-output" value="instance()/second"/>
+</xf:group>
+
+<xf:repeat id="repeat" nodeset="number">
+    <xf:output ref="."/>
+</xf:repeat>
+<xf:repeat nodeset="instance('i1')/mon">
+    <div>
+        <xf:output id="result" value="instance('i2')/month[@code = current()]"/>
+    </div>
+</xf:repeat>
+</body>
+</html>

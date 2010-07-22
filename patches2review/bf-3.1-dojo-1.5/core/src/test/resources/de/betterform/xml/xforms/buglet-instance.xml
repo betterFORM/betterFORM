@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<buglet>
+    <category>Cisco</category>
+    <reference>http://somewhere.com</reference>
+    <subject>don't know</subject>
+    <datum>01.01.01</datum>
+    <risk>3</risk>
+    <description>what shall i say?</description>
+    <see-also>
+        <urls>
+            <url>http://www.hirnbrand.de</url>
+            <url>http://world.wide.void</url>
+            <url>https://www.meintresor.daheim</url>
+        </urls>
+    </see-also>
+</buglet>

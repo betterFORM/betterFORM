@@ -1,0 +1,692 @@
+
+/*
+ * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
+/*
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+	background: transparent;
+	border: 0 none;
+	font-size: 100%;
+	font-style: inherit;
+	font-weight: inherit;
+	margin: 0;
+	outline-style: none;
+	outline-width: 0;
+	padding: 0;
+	vertical-align: baseline;
+}
+*/
+a img{
+    border:none;
+}
+.devider{
+    clear:both;
+    margin-bottom:20px;
+}
+
+
+*,
+.tundra *{
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+
+body{
+    background-image:none;
+    padding:0;
+    margin:0;
+    color:#363636;
+    overflow:auto;
+    background:#565656;
+    font-size:10pt;
+	text-align:center;
+    /*height:100%;*/
+}
+.tundra body{
+    font-size:12pt;
+    padding:0;
+    margin:0;
+}
+
+p{
+    padding:0;
+    margin-top:0.3em;
+    margin-bottom:0.3em;
+}
+
+ul,ol{
+    margin:0;
+    padding-left:16px;
+}
+ul{
+    list-style-image:url(../images/list.png);
+}
+
+.listitem {
+	background: transparent url(../images/list.png) no-repeat scroll -2px 4px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 13px;
+
+}
+
+.page {
+    margin:0;
+    padding:0;
+    display:block;
+    /*position:relative;*/
+    /*overflow:auto;*/
+}
+.page #header{
+    background:white;
+/*
+    position:inherit;
+    top:0;
+    z-index:999;
+*/
+    border-bottom:thin dotted;
+    padding-top:2px;
+    float:left;
+}
+#index .page #header{
+    padding-top:0;
+}
+
+.pageMarginBox{
+    width:760px;
+    margin-left:auto;
+    margin-right:auto;
+	text-align:left;
+}
+
+#header,
+#content,
+#footer {
+    /*width:760px;*/
+    width:100%
+/*
+    margin-left:auto;
+    margin-right:auto;
+*/
+}
+
+#topnav {
+    font-size:11pt;
+    text-align:right;
+    margin-top:-12px;
+}
+
+#topnav .menuDevider {
+    font-size:11pt;
+}
+
+#logoBar{
+    height:90px;
+}
+
+.langSelector {
+    border:none;
+	/*display:none;*/
+}
+
+/*
+.logoBar{
+
+}
+.logoBar #logo{
+    float:left;
+}
+*/
+
+#index #topnav{
+    letter-spacing:0.51em;
+    font-size:11pt;
+}
+
+/*
+	##################################################
+	############  LINK STYLING    ####################
+	##################################################
+*/
+
+a,
+a:visited {
+	font-family: Helvetica, Arial, sans-serif;
+	color:#488AA6;
+	text-decoration:none;
+	background-color: transparent;
+}
+
+a:active,
+a:focus,
+a:hover{
+	text-decoration:underline;
+}
+
+#topnav a,
+#topnav a:visited {
+	color: #999;
+	font-size:11pt;
+}
+
+#topnav a:focus,
+#topnav a:hover,
+#topnav a:active {
+    color:#488aa6;
+}
+
+#header .link,
+#content .link {
+	color:transparent;
+}
+
+#content .linkbox a,
+#bottomMenu a,
+#bottomMenu a:focus,
+#bottomMenu a:hover,
+#bottomMenu a:visited,
+#bottomMenu a:active {
+	color:white
+}
+
+#content .h2Link,
+#content .h2Link:focus,
+#content .h2Link:active,
+#content .h2Link:hover{
+	text-decoration:none;
+	clear:both;
+	color:#525252;
+	display:block;
+	font-size:1.2em;
+	letter-spacing:0.05em;
+	line-height:1.056em;
+	margin-top:10px;
+	padding-top:9px;
+}
+
+/*
+	##################################################
+	###########   END LINK STYLING    ################
+	##################################################
+*/
+
+
+#content{
+    background:#d3d3d3;
+    text-align:center;
+    display:block;
+    float:left;
+}
+#content .contentBody{
+    text-align:left;
+    /*padding-top:35px;*/
+    position:relative;
+}
+#content .contentBody div{
+    /*padding-bottom:30px;*/
+}
+
+#index #content{
+    background:#d3d3d3;
+    text-align:center;
+    height:380px;
+}
+
+
+#index #shadowTop{
+    width:760px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom:35px;
+}
+#shadowTop{
+    width:760px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom:15px;
+    position:inherit;
+    left:260px;
+}
+
+
+#columnLeft{
+    width:226px;
+    text-align:left;
+    padding-right:119px;
+    float:left;
+    margin-top:4px;
+}
+#index #columnLeft{
+    /*padding-top:35px;*/
+    width:188px;
+}
+
+#teaser{
+    width:100%;
+    background:#e7e8e8;
+    padding:15px;
+    padding-bottom:5px;
+    width:210px;
+    font-size:9pt;
+}
+#heading{
+    font-size:14pt;
+    color:#7ba841;
+    margin-bottom:5px;
+}
+#leftText{
+    width:240px;
+    margin-top:14px;
+    line-height:1.2;
+    font-size:10pt;
+}
+#leftText p{
+    padding:0 10px;
+}
+
+#columnRight{
+    width:258px;
+    float:left;
+    text-align:left;
+    padding-right:119px;
+}
+#index #columnRight{
+    /*padding-top:35px;*/
+}
+
+#columnRight img{
+    border:none;
+    margin-bottom:3px;
+}
+
+#footer{
+    text-align:center;
+/*
+    background:#565656 url(../images/bg_footer.jpg);
+*/
+    height:120px;
+	background:#565656;
+    /*
+    moves the footer in Webkit browsern to the far right.
+    */
+
+    overflow:hidden;
+    margin:0;
+    padding:0;
+    padding-bottom:50px;
+    float:left;
+}
+#shadowBottom{
+    width:760px;
+	padding:0;
+    margin:0;
+	display:block;
+	padding:0 0 0 20%;
+}
+
+.page #bottomMenu{
+    display:block;
+    float:right;
+    font-size:10pt;
+    color:white;
+    margin-top:10px;
+
+}
+
+
+.menuDevider{
+    font-weight:bold;
+    color: #7ba841;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: Helvetica, Arial, sans-serif;
+	font-weight: bold;
+}
+
+
+#content h1 {
+	color: #2C2C2C;
+	font-size: 1.6em;
+    font-variant:small-caps;
+	letter-spacing: 0.05em;
+	line-height: 1.19em;
+	/*margin-bottom: 15px;*/
+	display:block;
+	font-weight:bold;
+    clear:both;
+    margin-top:0;
+}
+h2 {
+	color: #525252;
+	font-size: 1.2em;
+	line-height: 1.056em;
+	padding-top:9px;
+	display:block;
+    letter-spacing:0.05em;
+    clear:both;
+    margin-top:10px;
+}
+h3{
+    color: #525252;
+    font-size: 1.1em;
+    line-height: 1.056em;
+    padding-top:9px;
+    display:block;
+    letter-spacing:0.05em;
+    clear:both;
+}
+
+.languages{
+    margin-top:2px;
+    display:block;
+    height:29px;
+    width:760px;
+    text-align:right;
+    margin-left:auto;
+    margin-right:auto;
+}
+.languages img{
+    display:none;
+}
+
+#index .languages{
+    display:block;
+    height:29px;
+    width:760px;
+    text-align:right;
+    margin-left:auto;
+    margin-right:auto;
+    padding-top:2px;
+}
+#index .languages img{
+    display:block;
+    float:right;
+    margin-left:2px
+}
+#index #columnRight .link{
+    height:97px;
+    width:282px;
+    display:block;
+}
+#index #demoButton{
+    background:url(../images/b_tryit.png) no-repeat;
+}
+#index #demoButton:hover{
+    background:url(../images/b_tryit_hover.png) no-repeat;
+}
+
+#index #getitButton{
+    background:url(../images/b_getit.png) no-repeat;
+}
+#index #getitButton:hover{
+    background:url(../images/b_getit_hover.png) no-repeat;
+}
+#index #productButton{
+    background:url(../images/b_exploreit.png) no-repeat;
+}
+#index #productButton:hover{
+    background:url(../images/b_exploreit_hover.png) no-repeat;    
+}
+.content {
+	width:700px;
+}
+
+
+#content p .note {
+	margin:1.31em 0 1.45em !important;
+	padding:14px 20px 16px 67px !important;
+}
+
+.bfMask {
+	width:300px;
+	height:100px;
+}
+
+/* ############################  page specific ############################## */
+#product #boxleft,
+#download #boxleft{
+    float:left;
+    width:480px;
+    padding-right:70px;
+    margin-bottom:20px;
+
+}
+#product #boxright,
+#download #boxright{
+    text-align:left;
+    float:left;
+    width:200px;
+
+}
+#product #boxright .menuRightImage{	
+	display:block;
+	padding-top:4px;
+	text-align:left;
+	width:99%;
+	overflow:hidden;
+}
+
+#download .downloadBox {
+    background: transparent url(../images/downloadButton.png) no-repeat scroll 0 0;
+    width:378px;
+    height:78px;
+}
+#download .downloadBox #downloadText{
+    font-size:14pt;
+    color:white;
+    font-size:14pt;
+    padding:20px 0 0 22px;
+    margin:0;
+}   
+#download .downloadBox #downloadSubtext{
+    color:lightsteelblue;
+    padding-left:22px;
+}
+
+#download .header1 {
+    color: #488AA6;
+    display: block;
+    font-size: 1.8em;
+    letter-spacing: 0.03em;
+    padding-top: 12px;
+    text-align: right;
+}
+#product .boxRightEntryHeading,
+#download .boxRightEntryHeading {
+    font-variant: small-caps;
+    color: #488AA6;
+}
+#product .downloadRightBar,
+#download .downloadRightBar{
+    float:left;
+
+}
+#product .downloadRightBar {
+	padding-top:10px;
+}
+#product .downloadRightBar .boxRightEntryHeadingLink a{
+	text-decoration:underline;
+
+}
+
+.downloadButtonWrapper {
+	float:left;
+}
+
+#documentation .downloadButtonWrapper {
+	float:none;
+}
+
+#documentation .downloadButtonWrapper .buttonText {
+	text-align:left;
+}
+
+
+
+#content .buttonText {
+	color:white;
+}
+.downloadButton {
+    background:transparent url(../images/b_getit_170.png) no-repeat scroll 0 0;
+    font-size:9pt;
+    font-weight:bold;
+    height:40px;
+    padding:10px;
+    width:180px;
+    padding-left:10px;
+    display:block;
+    padding-top:12px;
+    color:white;
+}
+#product .downloadButton {
+    width:170px;    
+    padding-left:10px;
+
+}
+
+#product .exploreButton{
+    background:transparent url(../images/b_exploreit_170.png) no-repeat scroll 0 0;
+    font-size:9pt;
+    font-weight:bold;
+    height:40px;
+    padding:10px;
+    width:168px;
+    padding-left:10px;
+    display:block;
+    padding-top:12px;
+
+}
+
+#conformanceTable{
+    width:100%;
+}
+#conformanceTable th{
+    padding:5px;
+}
+#conformanceTable td{
+    background:white;
+}
+
+.list{
+    background:url(../images/list.png) no-repeat left top;
+    padding:3px 0 0 15px !important;
+}
+.legend{
+    width:51px;
+    height:0px;
+    margin:0;
+    padding:0;
+    float:left;
+    line-height:28px;
+    font-size:8pt;
+    display:none;
+
+}
+
+
+#demo #backToDemo{
+    text-align:center;
+    color:white;
+}
+#demo #backToDemo .dijitButtonHover{
+    background:transparent;
+}
+#demo #backToDemo .dijitButtonNode{
+    background:none;
+}
+#demo #backToDemo-value{
+    width:145px;
+    height:39px;
+    background: transparent url(../images/b_tryit_ohne_klein.png) no-repeat;
+}
+
+#demo #backToDemo #backToDemo-value_label {
+	text-align:left;
+	width:75px;
+	color:white;
+}
+
+#product #content .linkbox{
+    background:#488aa6;
+    color:white;
+    display:block;
+    padding:10px;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    margin:0 0 25px;
+}
+
+
+#sourceforge{
+    margin-top:20px;
+    margin-bottom:20px;
+    float:right;
+}
+
+#prodcut #sourceforge a{
+    color:black;
+}
+#product #sourceforge a img{
+    vertical-align:top;
+}
+#product #otherlogos{
+    position:relative;
+    width:100%;
+    text-align:center;
+}
+#product #otherlogos #jetbrains{
+    width:33%;
+    float:left;
+}
+#product #otherlogos #osi{
+    width:33%;
+}
+#product #otherlogos #sourceforge{
+    width:33%;
+    float:right;
+}
+#whoweare .tableContent p{
+    line-height:1em;
+    text-align:left;
+}
+
+#XFormsFeatureExplorer .dijitContentPane{
+    overflow:auto;
+}
+
+#XFormsFeatureExplorer  #widgetsContainer {
+	overflow:hidden;
+}
+
+#formsbrowser table{
+    width:100%;
+    padding:0;
+    margin:0 0 30px 0;
+    background:#E7E8E8;
+    border:thin dotted;
+    
+    
+}
+#formsbrowser .formBrowserHeader{
+    padding-bottom:10px;
+    background:#488AA6;
+    color:white;
+    padding:5px;
+    font-size:12pt;
+}
+#formsbrowser .directory td{
+
+}
+#formsbrowser .file td{
+    background:white;
+}
+#formsbrowser .directory .textLink{
+    display:inline-block;
+    margin-bottom:10px;
+    vertical-align:middle;
+}
+
+

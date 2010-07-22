@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+	<complex id="1">
+        <boolean>false</boolean>
+        <date>2004-01-09</date>
+        <dateTime>2006-02-02T10:54:16+02:00</dateTime>
+        <string>20</string>
+        <upload filename="" mediatype=""></upload>
+    </complex>
+    <complex id="2">
+        <boolean>false</boolean>
+        <date>2004-01-09</date>
+        <dateTime>2006-02-02T10:54:16+02:00</dateTime>
+        <string>20</string>
+        <upload filename="" mediatype=""></upload>
+    </complex>
+    <complex id="3">
+        <boolean>false</boolean>
+        <date>2004-01-09</date>
+        <dateTime>2006-02-02T10:54:16+02:00</dateTime>
+        <string>20</string>
+        <upload filename="" mediatype=""></upload>
+    </complex>
+</data>

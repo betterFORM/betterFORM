@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- $Id: build.xml,v 1.90 2006/11/16 23:55:43 joernt Exp $ -->
+<project name="Maven Tools" default="info" basedir=".">
+
+
+    <!--
+    This buildfile contains target regarding Maven. Housekeeping, updating pom.xml from Ant
+    with XSLT and the like.
+
+    author: Joern Turner (2008)
+    author: Lars Windauer (2008)
+    -->
+
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- **************************************** PROPERTIES **************************************** -->
+
+    <property name="project.dir" value="${basedir}/../.."/>
+    <xmlproperty file="${project.dir}/build.properties.xml"
+                 semanticAttributes="true" keepRoot="false"/>
+
+    <path id="generator.libs" description="classpath for compiling core classes">
+        <pathelement location="${project.dir}/core/src/lib/saxon9.jar"/>
+        <pathelement location="${project.dir}/core/src/lib/saxon9-dom.jar"/>
+    </path>
+
+    <!-- **************************************** MAVEN TARGETS FOR BETTERFORM CORE **************************************** -->
+    <!-- **************************************** MAVEN TARGETS FOR BETTERFORM CORE **************************************** -->
+    <!-- **************************************** MAVEN TARGETS FOR BETTERFORM CORE **************************************** -->
+    <target name="info">
+        <exec command="ant -p" dir="${basedir}" />
+    </target>
+
+    <target name="update-core-pom"
+            description="update the Core pom.xml file with dependencies from build.properties.xml">
+        <echo message="Ant Module: ${core.app.name}"/>
+        <xslt in="${project.dir}/core/pom.xml"
+              out="${project.dir}/core/pom.new.xml"
+              style="${project.dir}/tools/maven/updatePOM.xsl"
+              force="true">
+            <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
+            <param name="module" expression="${core.app.name}"/>
+        </xslt>
+        <rename src="${project.dir}/core/pom.xml" dest="${project.dir}/core/pom.xml.old"/>
+        <rename src="${project.dir}/core/pom.new.xml" dest="${project.dir}/core/pom.xml"/>
+    </target>
+
+    <target name="update-web-pom"
+            description="update the web pom.xml file with dependencies from build.properties.xml">
+        <xslt in="${project.dir}/web/pom.xml"
+              out="${project.dir}/web/pom.new.xml"
+              style="${project.dir}/tools/maven/updatePOM.xsl"
+              force="true">
+            <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
+            <param name="module" expression="${web.app.name}"/>
+        </xslt>
+        <rename src="${project.dir}/web/pom.xml" dest="${project.dir}/web/pom.xml.old"/>
+        <rename src="${project.dir}/web/pom.new.xml" dest="${project.dir}/web/pom.xml"/>
+    </target>
+
+    <target name="update-convex-pom"
+            description="update the convex pom.xml file with dependencies from build.properties.xml">
+        <xslt in="${project.dir}/convex/pom.xml"
+              out="${project.dir}/convex/pom.new.xml"
+              style="${project.dir}/tools/maven/updatePOM.xsl"
+              force="true">
+            <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
+            <param name="module" expression="${convex.app.name}"/>
+        </xslt>
+        <rename src="${project.dir}/convex/pom.xml" dest="${project.dir}/convex/pom.xml.old"/>
+        <rename src="${project.dir}/convex/pom.new.xml" dest="${project.dir}/convex/pom.xml"/>
+    </target>
+
+
+     <target name="update-xApp-pom"
+            description="update the xApp pom.xml file with dependencies from build.properties.xml">
+        <xslt in="${project.dir}/xApp/pom.xml"
+              out="${project.dir}/xApp/pom.new.xml"
+              style="${project.dir}/tools/maven/updatePOM.xsl"
+              force="true">
+            <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
+            <param name="module" expression="${xapp.app.name}"/>
+        </xslt>
+        <rename src="${project.dir}/xApp/pom.xml" dest="${project.dir}/xApp/pom.xml.old"/>
+        <rename src="${project.dir}/xApp/pom.new.xml" dest="${project.dir}/xApp/pom.xml"/>
+    </target>
+
+
+    <target name="create-core-install" depends="update-core-pom">
+        <xslt in="${project.dir}/core/build.xml"
+              out="${project.dir}/core/install-files.xml"
+              style="${project.dir}/tools/maven/install-libs.xsl"
+              force="true">
+            <classpath refid="generator.libs"/>
+            <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
+            <param name="core.dir" expression="${project.dir}/core"/>
+            <param name="module" expression="${core.app.name}"/>
+        </xslt>
+    </target>
+
+    <target name="create-web-install" depends="update-web-pom">
+        <xslt in="${project.dir}/web/build.xml"
+              out="${project.dir}/web/install-files.xml"
+              style="${project.dir}/tools/maven/install-libs.xsl"
+              force="true">
+            <classpath refid="generator.libs"/>
+            <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
+            <param name="core.dir" expression="${project.dir}/core"/>
+            <param name="web.dir" expression="${project.dir}/web"/>
+            <param name="module" expression="${web.app.name}"/>
+        </xslt>
+    </target>
+
+    <target name="create-convex-install" depends="update-convex-pom">
+        <xslt in="${project.dir}/convex/build.xml"
+              out="${project.dir}/convex/install-files.xml"
+              style="${project.dir}/tools/maven/install-libs.xsl"
+              force="true">
+            <classpath refid="generator.libs"/>
+            <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
+            <param name="core.dir" expression="${project.dir}/core"/>
+            <param name="convex.dir" expression="${project.dir}/convex"/>
+            <param name="module" expression="${convex.app.name}"/>
+        </xslt>
+    </target>
+
+    <target name="create-maven-install">
+        <antcall target="create-core-install"/>
+        <antcall target="create-web-install"/>
+        <antcall target="create-convex-install"/>
+    </target>
+
+    <target name="install-core-dependencies" depends="create-core-install" description="installs core dependencies for Maven">
+        <ant antfile="${project.dir}/core/install-files.xml" target="install-dependencies"/>
+        <delete file="${project.dir}/core/install-files.xml"/>
+    </target>
+
+    <target name="install-web-dependencies" depends="create-web-install" description="installs web dependencies for Maven">
+        <ant antfile="${project.dir}/web/install-files.xml" target="install-dependencies"/>
+        <delete file="${project.dir}/web/install-files.xml"/>
+    </target>
+
+    <target name="install-convex-dependencies" depends="create-convex-install" description="installs convex dependencies for Maven">
+        <ant antfile="${project.dir}/convex/install-files.xml" target="install-dependencies"/>
+        <delete file="${project.dir}/convex/install-files.xml"/>
+    </target>
+
+
+
+    <target name="install-maven-dependencies" depends="create-maven-install"
+            description="executes generated Ant file and install needed libraries in Maven repository">
+
+        <antcall target="install-core-dependencies"/>
+        <!-- Create needed core.jar for web and convex mvn -->
+        
+        <ant antfile="${project.dir}/core/build.xml" target="package" dir="${project.dir}/core" inheritall="false"/>
+        <antcall target="install-web-dependencies"/>
+        <antcall target="install-convex-dependencies"/>
+    </target>
+
+
+    <target name="prepare-jetty-embedded" description="copies forms into src tree for live-editing with embedded jetty">
+        <copy todir="${project.dir}/web/src/main/webapp/forms">
+            <fileset dir="${project.dir}/src/main/xforms"/>
+        </copy>
+    </target>
+</project>

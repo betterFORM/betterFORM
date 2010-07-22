@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <xf:model id="default-model">
+            <xf:instance id="instance1" src="sessionData1.xml" xmlns="" />
+            <xf:instance id="instance2" src="sessionData2.xml" xmlns="" />
+        </xf:model>
+    </head>
+    <body>
+        <xf:repeat id="repeat1" nodeset="instance('instance1')/complex" appearance="full">
+            <xf:output ref="boolean"/>
+        </xf:repeat>
+        <xf:repeat id="repeat2" nodeset="instance('instance2')/simple" appearance="full">
+            <xf:output ref="."/>
+        </xf:repeat>
+        <xf:switch id="foo">
+            <xf:case id="bar" selected="false">
+                <div></div>
+                ... content ...
+            </xf:case>
+            <xf:case id="baz" selected="true">
+                <div></div>
+                ... other content ...
+            </xf:case>
+        </xf:switch>
+        <xf:trigger id="changeState">
+            <xf:label>switch toggle/index</xf:label>
+            <xf:action>
+                <xf:toggle case="bar"/>
+                <xf:setindex repeat="repeat1" index="2"/>
+            </xf:action>
+        </xf:trigger>
+    </body>
+</html>

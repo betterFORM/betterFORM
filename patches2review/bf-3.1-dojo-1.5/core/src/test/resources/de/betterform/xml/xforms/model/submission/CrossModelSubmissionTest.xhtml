@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:xs="http://www.w3.org/2001/XMLSchema"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:ext="http://test.org/extern"
+      xmlns:int="http://test.org/intern"
+      xmlns:inl="http://test.org/inline">
+    <head>
+        <meta name="author" content="lars.windauer at betterform-project.org"/>
+        <meta name="author" content="joern.turner  at betterform-project.org"/>
+        <meta name="description" content="test form for cross model submission"/>
+        <meta name="version" content="$Id: CrossModelSubmissionTest.xhtml 3251 2008-07-08 09:26:03Z lars $"/>
+
+
+        <!-- model without schemas -->
+        <xf:model id="model-1">
+            <xf:instance id="i-1-m-1" xmlns="">
+                <data>
+                    <item>true</item>
+                    <item>2001-01-01</item>
+                    <item>item instance 1</item>
+                    <child/>
+                </data>
+            </xf:instance>
+
+            <xf:instance id="i-2-m-1" xmlns="">
+                <data>
+                    <items>
+                        <item>new item 1</item>
+                        <item>new item 2</item>
+                        <item>new item 3</item>
+                    </items>
+                </data>
+            </xf:instance>
+
+            <xf:submission id="s-cross-model-submission-1"
+                           action="model:model-2#instance('i-1-m-2')/data"
+                           method="post"
+                           replace="none"
+						   ref="/data"
+                           />
+
+            <xf:submission id="s-cross-model-submission-2"
+                           action="echo:hallo"
+                           method="get"
+                           ref="instance('i-2-m-1')/items"
+                           replace="instance"
+                           instance="i-1-m-2"
+                           target="model('model-2')/data/child"/>
+
+
+        </xf:model>
+
+        <xf:model id="model-2">
+            <xf:instance id="i-1-m-2" xmlns="">
+                <data>
+                    <item>false</item>
+                    <item>2009-09-09</item>
+                    <item>item instance 2</item>
+                    <child/>
+                </data>
+            </xf:instance>
+
+            <xf:bind nodeset="instance('i-1-m-2')">
+                <xf:bind nodeset="item[1]" type="boolean"/>
+                <xf:bind nodeset="item[2]" type="date"/>
+                <xf:bind nodeset="item[3]" type="string"/>
+            </xf:bind>
+        </xf:model>
+
+    </head>
+    <body>
+        <xf:group>
+            <xf:label>Cross Model Submission Test</xf:label>
+
+            <xf:trigger id="trigger-cross-model-submission-1">
+                <xf:label>Activate Cross Model Submission</xf:label>    
+                    <xf:send submission="s-cross-model-submission-1" />
+            </xf:trigger>
+
+            <xf:trigger id="trigger-cross-model-submission-2">
+                <xf:label>Activate Cross Model Submission</xf:label>
+                    <xf:send submission="s-cross-model-submission-2" />
+            </xf:trigger>
+
+            <xf:input ref="instance('i-1-m-2')/item[1]" model="model-2">
+                <xf:label/>
+            </xf:input>
+            <xf:input ref="instance('i-1-m-2')/item[2]" model="model-2">
+                <xf:label/>
+            </xf:input>
+            <xf:input ref="instance('i-1-m-2')/item[3]" model="model-2">
+                <xf:label/>
+            </xf:input>
+        </xf:group>
+    </body>
+</html>

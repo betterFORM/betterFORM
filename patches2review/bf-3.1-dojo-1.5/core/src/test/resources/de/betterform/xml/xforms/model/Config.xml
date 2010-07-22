@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: Config.xml 3508 2008-08-31 10:03:03Z lars $ -->
+<!-- Copyright 2010 betterForm -->
+<betterform-config>
+    <!-- PLEASE COMMENT YOUR ENTRIES -->
+    <properties>
+        <!-- generate default alert elements if none present. -->
+        <property name="betterform.ui.generateDefaultAlerts" value="false"/>
+        <!-- define the default text for automatically generated alert elements. -->
+        <property name="betterform.ui.defaultAlertText" value="The specified value is invalid"/>
+
+        <property name="foo" value="bar"/>
+        <property name="language" value="en"/>
+        <property name="enable.l10n" value="true"/>
+
+        <property name="xforms.schema" value="XFormsDatatypes11.xsd"/>
+        
+    </properties>
+
+    <connectors>
+        <!--
+            For each of the connector types you can specifiy one connector to handle one URI scheme.
+        -->
+        <uri-resolver scheme="file" class="de.betterform.connector.file.FileURIResolver"/>
+        <uri-resolver scheme="http" class="de.betterform.connector.http.HTTPURIResolver"/>
+        <uri-resolver scheme="class" class="de.betterform.util.ClassResourceLoader"/>
+        <uri-resolver scheme="xmlrpc" class="de.betterform.connector.xmlrpc.XMLRPCURIResolver"/>
+        <uri-resolver scheme="context" class="de.betterform.connector.context.ContextResolver"/>
+
+        <submission-handler scheme="file" class="de.betterform.connector.file.FileSubmissionHandler"/>
+        <submission-handler scheme="http" class="de.betterform.connector.http.HTTPSubmissionHandler"/>
+        <submission-handler scheme="mailto" class="de.betterform.connector.smtp.SMTPSubmissionHandler"/>
+        <submission-handler scheme="xmlrpc" class="de.betterform.connector.xmlrpc.XMLRPCSubmissionHandler"/>
+        <submission-handler scheme="echo" class="de.betterform.connector.echo.EchoSubmissionHandler"/>
+        <submission-handler scheme="exec" class="de.betterform.connector.exec.ExecSubmissionHandler"/>
+	    <submission-handler scheme="xslt" class="de.betterform.connector.xslt.XSLTSubmissionHandler"/>
+    </connectors>
+    <extension-functions>
+        <!--
+            Specifies external functions to be used in the XForms' XPath expressions. If the 'java-name' attribute
+            is ommitted, the Java function name is considered to be the same as that of the XPath function.
+        -->
+        <function namespace="http://betterform.sourceforge.net/xforms" name="context" class="de.betterform.xml.xforms.xpath.BetterFormExtensionFunctions" />
+
+        <!--<function namespace="http://exslt.org/regular-expressions" prefix="regexp" name="test" class="org.galasoft.util.xml.servlet.xforms.exslt.Regexp" java-name="test"/>-->
+        <function namespace="http://exslt.org/regular-expressions" name="test" class="org.galasoft.util.xml.servlet.xforms.exslt.Regexp" java-name="test"/>
+        <function namespace="http://betterform.sourceforge.net/xforms" name="fileDate" class="de.betterform.xml.xforms.xpath.BetterFormExtensionFunctions"/>
+        <function namespace="http://betterform.sourceforge.net/xforms" name="fileSize" class="de.betterform.xml.xforms.xpath.BetterFormExtensionFunctions"/>
+        <function namespace="http://betterform.sourceforge.net/xforms" name="uploadContentLength" class="de.betterform.xml.xforms.xpath.BetterFormExtensionFunctions"/>
+        <function namespace="http://betterform.sourceforge.net/xforms" name="match" class="de.betterform.xml.xforms.xpath.BetterFormExtensionFunctions"/>
+    </extension-functions>
+
+	<custom-elements>
+		<!--
+			In this section you can associate a foreign namespaced element with a class that implements any
+			arbitrary control. The element is identified by its namespace URI and element name. The implementing
+			class must extend XFormsElement and have a constructor corresponding to the following signature:
+			public YourClass(Element, Model);
+		-->
+		<!--element namespace="http://yourdomain.com/path" name="yourcontrol" class="com.yourdomain.yourpackage.YourClass"/-->
+	</custom-elements>
+
+    <!-- ACTION CONFIGURATION CURRENTLY DISABLED -->
+    <actions>
+        <!--
+        these entries are used by the ActionFactory to instanciate Action-objects
+        from an XForms input document. The attribute 'name' must match the tagname
+        found in the document.
+
+        Attention: no other namespace than XForms is supported by now. This can
+        be easily added when custom actions occurs.
+        -->
+        <!--        <action name="dispatch" class="de.betterform.xml.xforms.action.DispatchAction"/>-->
+        <!--        <action name="refresh" class="de.betterform.xml.xforms.action.RefreshAction"/>-->
+        <!--        <action name="recalculate" class="de.betterform.xml.xforms.action.RecalculateAction"/>-->
+        <!--        <action name="revalidate" class="de.betterform.xml.xforms.action.RevalidateAction"/>-->
+        <!--        <action name="setfocus" class="de.betterform.xml.xforms.action.SetFocusAction"/>-->
+        <!--        <action name="load" class="de.betterform.xml.xforms.action.LoadAction"/>-->
+        <!--        <action name="setvalue" class="de.betterform.xml.xforms.action.SetValueAction"/>-->
+        <!--        <action name="send" class="de.betterform.xml.xforms.action.SendAction"/>-->
+        <!--        <action name="reset" class="de.betterform.xml.xforms.action.ResetAction"/>-->
+        <!--        <action name="setindex" class="de.betterform.xml.xforms.action.SetIndexAction"/>-->
+        <!--        <action name="insert" class="de.betterform.xml.xforms.action.InsertAction"/>-->
+        <!--        <action name="delete" class="de.betterform.xml.xforms.action.DeleteAction"/>-->
+        <!--        <action name="toggle" class="de.betterform.xml.xforms.action.ToggleAction"/>-->
+        <!--        <action name="script" class="de.betterform.xml.xforms.action.RebuildAction"/>-->
+        <!--        <action name="message" class="de.betterform.xml.xforms.action.MessageAction"/>-->
+        <!-- custom actions -->
+    </actions>
+
+</betterform-config>

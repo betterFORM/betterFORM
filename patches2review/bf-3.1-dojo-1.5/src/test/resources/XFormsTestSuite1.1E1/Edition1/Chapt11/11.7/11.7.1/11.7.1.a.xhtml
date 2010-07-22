@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xhtml:html xmlns:ev="http://www.w3.org/2001/xml-events" 
+			xmlns:xforms="http://www.w3.org/2002/xforms" 
+			xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+			xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <xhtml:head>
+    <xhtml:title>11.7.1.a method element</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model >
+        <xforms:instance>
+            <data>
+                <mthd>post</mthd>
+                 <lore>geordi</lore>
+             </data>
+        </xforms:instance>
+    	<xforms:submission id="submit" action="http://xformstest.org/cgi-bin/echo.sh">
+    		<xforms:method  value="mthd">other</xforms:method>    	
+    	</xforms:submission>     	
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">11.7.1.a method element</xforms:label>
+  	</xforms:group>
+    <xforms:group>
+        <xforms:label>
+          When the Submit With Method trigger is activated the page will be replaced by the form data. 
+          The variable on the page for the request method must equal &quot;post&quot;. 
+		</xforms:label>
+	</xforms:group>
+    <xforms:submit submission="submit">
+        <xforms:label>Submit With Method</xforms:label>
+    </xforms:submit>  	
+  </xhtml:body>
+</xhtml:html>

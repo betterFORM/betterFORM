@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xforms="http://www.w3.org/2002/xforms">
+    <head>
+        <meta name="author" content="unl at users.sourceforge.net"/>
+        <meta name="description" content="test form for scoped resolution"/>
+        <meta name="version" content="$Id: ScopedResolutionTest.xml 3251 2008-07-08 09:26:03Z lasse $"/>
+        <xforms:model id="default-model">
+            <xforms:instance id="default-instance">
+                <default-root xmlns="">
+                    <default-parent>
+                        <default-child>default-value</default-child>
+                        <wrong-child>wrong-value</wrong-child>
+                    </default-parent>
+                </default-root>
+            </xforms:instance>
+            <xforms:bind id="bind-1" nodeset="default-parent">
+                <xforms:bind id="bind-2" nodeset="default-child"/>
+            </xforms:bind>
+            <xforms:bind id="bind-3" nodeset="/default-root">
+                <xforms:bind id="bind-4" nodeset="default-parent">
+                    <xforms:bind id="bind-5" nodeset="default-child"/>
+                </xforms:bind>
+            </xforms:bind>
+            <xforms:bind id="bind-6" nodeset="instance('default-instance')">
+                <xforms:bind id="bind-7" nodeset="default-parent">
+                    <xforms:bind id="bind-8" nodeset="default-child"/>
+                </xforms:bind>
+            </xforms:bind>
+            <xforms:bind id="bind-9" nodeset="default-parent/default-child"/>
+            <xforms:bind id="bind-10" nodeset="/default-root/default-parent/default-child"/>
+            <xforms:bind id="bind-11" nodeset="instance('default-instance')/default-parent/default-child"/>
+        </xforms:model>
+    </head>
+    <body>
+        <xforms:group>
+            <xforms:label>UI Bindings: All input controls should say
+                <i>default-value</i>.
+            </xforms:label>
+            <xforms:group>
+                <xforms:group ref="default-parent">
+                    <xforms:input id="ui-input-1" ref="default-child"/>
+                </xforms:group>
+            </xforms:group>
+            <xforms:group ref="/default-root">
+                <xforms:group ref="default-parent">
+                    <xforms:input id="ui-input-2" ref="default-child"/>
+                </xforms:group>
+            </xforms:group>
+            <xforms:group ref="instance('default-instance')">
+                <xforms:group ref="default-parent">
+                    <xforms:input id="ui-input-3" ref="default-child"/>
+                </xforms:group>
+            </xforms:group>
+            <xforms:group>
+                <xforms:input id="ui-input-4" ref="default-parent/default-child"/>
+                <xforms:input id="ui-input-5" ref="/default-root/default-parent/default-child"/>
+                <xforms:input id="ui-input-6" ref="instance('default-instance')/default-parent/default-child"/>
+            </xforms:group>
+        </xforms:group>
+        <xforms:group>
+            <xforms:label>Model Bindings: All input controls should say
+                <i>default-value</i>.
+            </xforms:label>
+            <xforms:group>
+                <xforms:group bind="bind-1">
+                    <xforms:input id="model-input-1" bind="bind-2"/>
+                </xforms:group>
+            </xforms:group>
+            <xforms:group bind="bind-3">
+                <xforms:group bind="bind-4">
+                    <xforms:input id="model-input-2" bind="bind-5"/>
+                </xforms:group>
+            </xforms:group>
+            <xforms:group bind="bind-6">
+                <xforms:group bind="bind-7">
+                    <xforms:input id="model-input-3" bind="bind-8"/>
+                </xforms:group>
+            </xforms:group>
+            <xforms:group>
+                <xforms:input id="model-input-4" bind="bind-9"/>
+                <xforms:input id="model-input-5" bind="bind-10"/>
+                <xforms:input id="model-input-6" bind="bind-11"/>
+            </xforms:group>
+        </xforms:group>
+        <xforms:group>
+            <xforms:label>Model vs. UI Bindings: All input controls should say
+                <i>default-value</i>.
+            </xforms:label>
+            <xforms:group>
+                <xforms:group ref="default-parent">
+                    <xforms:input id="mixed-input-1" ref="wrong-child" bind="bind-2"/>
+                </xforms:group>
+            </xforms:group>
+            <xforms:group ref="/default-root">
+                <xforms:group ref="default-parent">
+                    <xforms:input id="mixed-input-2" ref="wrong-child" bind="bind-5"/>
+                </xforms:group>
+            </xforms:group>
+            <xforms:group ref="instance('default-instance')">
+                <xforms:group ref="default-parent">
+                    <xforms:input id="mixed-input-3" ref="wrong-child" bind="bind-8"/>
+                </xforms:group>
+            </xforms:group>
+            <xforms:group>
+                <xforms:input id="mixed-input-4" ref="default-parent/wrong-child" bind="bind-9"/>
+                <xforms:input id="mixed-input-5" ref="/default-root/default-parent/wrong-child" bind="bind-10"/>
+                <xforms:input id="mixed-input-6" ref="instance('default-instance')/default-parent/wrong-child" bind="bind-11"/>
+            </xforms:group>
+        </xforms:group>
+    </body>
+</html>

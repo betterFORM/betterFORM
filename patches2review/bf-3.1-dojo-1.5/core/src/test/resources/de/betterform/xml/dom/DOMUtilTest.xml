@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<abc:my-root xmlns:abc="http://some-url"
+    xmlns:cde="http://some-other-url"
+    abc:id="aaaa"
+    cde:name="value-gone"
+    name="a name is a name">
+    <cde:a>
+        <cde:b>text value</cde:b>
+        <abc:xxx>truely</abc:xxx>
+    </cde:a>
+    <abc:yz cde:attr1="xxxx" abc:attr2="shfhsdjk" attr3="sdjk12798"/>
+</abc:my-root>

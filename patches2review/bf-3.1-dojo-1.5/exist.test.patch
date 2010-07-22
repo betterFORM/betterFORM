@@ -1,0 +1,240 @@
+Index: src/main/resources/scripts/betterform/FluxProcessor.js
+===================================================================
+--- src/main/resources/scripts/betterform/FluxProcessor.js	(revision 427)
++++ src/main/resources/scripts/betterform/FluxProcessor.js	(working copy)
+@@ -35,6 +35,7 @@
+     currentControlId:"",
+     unloadMsg:"You are about to leave this XForms application",
+     webtest:'@WEBTEST@',
++//    webtest:'true',
+     isReady:false,
+     contextroot:"",
+     defaultAlertHandler:null,
+Index: core/src/main/resources/META-INF/version.info
+===================================================================
+--- core/src/main/resources/META-INF/version.info	(revision 427)
++++ core/src/main/resources/META-INF/version.info	(working copy)
+@@ -1 +1 @@
+-betterform 3.0.0 [build: 20100512/1524]
++betterform 3.0.0 [build: 20100517/1148]
+Index: build.properties.xml
+===================================================================
+--- build.properties.xml	(revision 427)
++++ build.properties.xml	(working copy)
+@@ -71,7 +71,7 @@
+             <selenium>
+               <!-- which browser to use for tests -->
+               <browser>*firefox</browser>
+-              <url-to-test-forms>/betterform/forms</url-to-test-forms>
++              <url-to-test-forms>/exist/forms</url-to-test-forms>
+               <!--server properties -->
+               <server>
+ <!--                <jar>${basedir}/src/main/lib/selenium-server-1.0.1.jar</jar> -->
+@@ -87,7 +87,7 @@
+                 <download-url>http://ftp-stud.hs-esslingen.de/pub/Mirrors/ftp.apache.org/dist/tomcat/tomcat-6/v6.0.26/bin/apache-tomcat-6.0.26.zip</download-url>
+                 <version>apache-tomcat-6.0.26</version>
+                 <shutdownport>42000</shutdownport>
+-                <port>42042</port>
++                <port>8080</port>
+                 <host>localhost</host>
+             </tomcat>
+             
+Index: web/src/main/webapp/WEB-INF/web.xml
+===================================================================
+--- web/src/main/webapp/WEB-INF/web.xml	(revision 427)
++++ web/src/main/webapp/WEB-INF/web.xml	(working copy)
+@@ -24,7 +24,7 @@
+ 		<filter-class>de.betterform.agent.web.filter.XFormsFilter</filter-class>
+         <init-param>
+             <param-name>useragent</param-name>
+-            <param-value>dojo</param-value>
++            <param-value>dojodev</param-value>
+         </init-param>
+     </filter>
+ 
+Index: web/build-test.xml
+===================================================================
+--- web/build-test.xml	(revision 427)
++++ web/build-test.xml	(working copy)
+@@ -158,7 +158,7 @@
+         <echo message="************************************************************************************************************"/>
+         <echo/>
+         <java jar="${basedir}/target/test-tools/${web.test.tomcat.version}/bin/bootstrap.jar" fork="true" spawn="false" maxmemory="1024m" output="${web.test.tomcat.version}.OUT" error="${web.test.tomcat.version}.ERROR">
+-            <jvmarg value="-Dcatalina.home=${basedir}/target/test-tools/${web.test.tomcat.version}"/>
++            <jvmarg value="-Dcatalina.home=${basedir}/target/test-tools/${web.test.tomcat.version}" />
+ 	    <arg line="start"/>
+         </java>
+     </target>
+@@ -169,21 +169,22 @@
+         <echo message="Starting tomcat from dir: ${basedir}/target/test-tools/${web.test.tomcat.version}"/>
+         <echo message="************************************************************************************************************"/>
+         <echo/>
+-        
+-	<exec executable="cmd.exe" spawn="true" osfamily="windows">
+-		<arg line="/c ${basedir}\target\test-tools\${web.test.tomcat.version}\bin\startup.bat"/>
+-		<env key="CATALINA_OPTS" value="-Xms256m -Xmx1024m"/>
+-		<env key="CATALINA_HOME" value="${basedir}\target\test-tools\${web.test.tomcat.version}"/>
+-	</exec>
+ 
+-	<chmod file="${basedir}/target/test-tools/${web.test.tomcat.version}/bin/catalina.sh" perm="755"/>
+-	<chmod file="${basedir}/target/test-tools/${web.test.tomcat.version}/bin/setclasspath.sh" perm="755"/>
+-	<chmod file="${basedir}/target/test-tools/${web.test.tomcat.version}/bin/startup.sh" perm="755"/>
++        <exec executable="cmd.exe" spawn="true" osfamily="windows">
++            <arg line="/c ${basedir}\target\test-tools\${web.test.tomcat.version}\bin\startup.bat"/>
++            <env key="CATALINA_OPTS" value="-Xms256m -Xmx1024m"/>
++            <env key="CATALINA_HOME" value="${basedir}\target\test-tools\${web.test.tomcat.version}"/>
++        </exec>
+ 
+-	<exec executable="${basedir}/target/test-tools/${web.test.tomcat.version}/bin/startup.sh" spawn="true" osfamily="unix" newenvironment="true">
+-		<env key="CATALINA_OPTS" value="-Xms256m -Xmx1024m"/>
+-		<env key="CATALINA_HOME" value="${basedir}/target/test-tools/${web.test.tomcat.version}"/>
+-	</exec>
++        <chmod file="${basedir}/target/test-tools/${web.test.tomcat.version}/bin/catalina.sh" perm="755"/>
++        <chmod file="${basedir}/target/test-tools/${web.test.tomcat.version}/bin/setclasspath.sh" perm="755"/>
++        <chmod file="${basedir}/target/test-tools/${web.test.tomcat.version}/bin/startup.sh" perm="755"/>
++
++        <exec executable="${basedir}/target/test-tools/${web.test.tomcat.version}/bin/startup.sh" spawn="true"
++              osfamily="unix" newenvironment="true">
++            <env key="CATALINA_OPTS" value="-Xms256m -Xmx1024m"/>
++            <env key="CATALINA_HOME" value="${basedir}/target/test-tools/${web.test.tomcat.version}"/>
++        </exec>
+     </target>
+ 
+     <target name="tomcat-stop">
+@@ -209,13 +210,14 @@
+         <echo/>
+ 
+         <filter token="WEBTEST" value="true"/>
+-        <copy tofile="${basedir}/target/betterform/resources/scripts/betterform/FluxProcessor.js" filtering="true"
++        <copy tofile="${basedir}/target/betterform/resources/scripts/betterform/FluxProcessor.js"
++              filtering="true"
+               overwrite="true">
+             <file file="${src.dir}/main/resources/scripts/betterform/FluxProcessor.js"/>
+         </copy>
+     </target>
+ 
+-    <target name="prepare-Tests">
++    <target name="prepare-Tests" depends="prepareFlux">
+         <ant antfile="build.xml" target="deploy-test-resources" dir="${basedir}" inheritall="false"/>
+ 
+         <mkdir dir="${basedir}/target/test-classes"/>
+@@ -224,7 +226,7 @@
+         <echo message="************************************************************************************************************"/>
+         <echo message="copying test resources..."/>
+         <echo message="************************************************************************************************************"/>
+-        <echo/>
++        <echo/>                                                         
+         <copy description="copy all test resources"
+               todir="${basedir}/target/test-classes"
+               filtering="true"
+@@ -363,8 +365,11 @@
+ 
+     <target name="generateSeleniumHTMLTestsChapter"
+             description="batch generates HTML Selenium Test from HTML-Templates">
+-        <copy todir="${basedir}/target/test-sources/seleniumIDE/conformance/x11edition1/chapt${chapterNo}/" overwrite="true" filtering="true">
+-            <fileset dir="${basedir}/../src/test/seleniumIDE/conformance/x11edition1/chapt${chapterNo}/" includes="*.html"/>
++        <copy todir="${basedir}/target/test-sources/seleniumIDE/conformance/x11edition1/chapt${chapterNo}/"
++              overwrite="true"
++              filtering="true">
++            <fileset dir="${basedir}/../src/test/seleniumIDE/conformance/x11edition1/chapt${chapterNo}/"
++                     includes="*.html"/>
+             <filterset>
+                 <filter token="URL-TO-TEST-FORMS" value="${web.test.selenium.url-to-test-forms}"/>            
+             </filterset>
+@@ -373,7 +378,8 @@
+ 
+ 
+     <target name="generateSeleniumJavaTestsChapter"
+-            description="batch generates Java Selenium Test from HTML" depends="generateSeleniumHTMLTestsChapter">
++            description="batch generates Java Selenium Test from HTML"
++            depends="generateSeleniumHTMLTestsChapter">
+         <echo/>
+         <echo message="************************************************************************************************************"/>
+         <echo message="generating automated Java test cases for XForms 1.1 Test Suite Chapter ${chapterNo} from Selenium HTML tests"/>
+@@ -515,48 +521,53 @@
+         <echo message="running webtest suite for all Chapters"/>
+         <echo message="************************************************************************************************************"/>
+         <echo/>
+-	<antcall target="testChapterClean">
+-	    <param name="chapterNo" value="02"/>
+-	</antcall>
+-	<antcall target="testChapter">
+-	    <param name="chapterNo" value="03"/>
+-	</antcall>
+-	<antcall target="testChapter">
+-	    <param name="chapterNo" value="04"/>
+-	</antcall>
+-	<antcall target="testChapter">
+-	    <param name="chapterNo" value="05"/>
+-	</antcall>
+-	<antcall target="testChapterClean">
+-	    <param name="chapterNo" value="06"/>
+-	</antcall>
+-	<antcall target="testChapter">
+-	    <param name="chapterNo" value="07"/>
+-	</antcall>
+-	<antcall target="testChapterClean">
+-	    <param name="chapterNo" value="08"/>
+-	</antcall>
+-	<antcall target="testChapter">
+-	    <param name="chapterNo" value="09"/>
+-	</antcall>
+-	<antcall target="testChapterClean">
+-	    <param name="chapterNo" value="10"/>
+-	</antcall>
+-	<antcall target="testChapter">
+-	    <param name="chapterNo" value="11"/>
+-	</antcall>
+-	<antcall target="testAppendix"/>
++       <!--
++            Tests each chapter of the test suit.
++            Calls sometimes testChapterClean to clear the memory of tomcat and then testing
++            the chapter.
++        -->
++        <antcall target="testChapterClean">
++            <param name="chapterNo" value="02"/>
++        </antcall>
++        <antcall target="testChapter">
++            <param name="chapterNo" value="03"/>
++        </antcall>
++        <antcall target="testChapter">
++            <param name="chapterNo" value="04"/>
++        </antcall>
++        <antcall target="testChapter">
++            <param name="chapterNo" value="05"/>
++        </antcall>
++        <antcall target="testChapterClean">
++            <param name="chapterNo" value="06"/>
++        </antcall>
++        <antcall target="testChapter">
++            <param name="chapterNo" value="07"/>
++        </antcall>
++        <antcall target="testChapterClean">
++            <param name="chapterNo" value="08"/>
++        </antcall>
++        <antcall target="testChapter">
++            <param name="chapterNo" value="09"/>
++        </antcall>
++        <antcall target="testChapterClean">
++            <param name="chapterNo" value="10"/>
++        </antcall>
++        <antcall target="testChapter">
++            <param name="chapterNo" value="11"/>
++        </antcall>
++        <antcall target="testAppendix"/>
+     </target>
+ 
+     <!-- Run a single Chapter of the Selenium Testsuite for W3C XForm 1.1 Conformance Testsuite
+ 	 Call with -DchapterNo=XX e.g. -DchapterNo=02
+     -->
+     <target name="testChapterClean"
+-            depends="tomcat-clean, testChapter"
++            depends="testChapter"
+             description="cleans tomcat-install and tests a single chapter of XForms Testsuite call with -DchapterNo=[XX] e.g. -DchapterNo=02"/>
+ 
+     <target name="testChapter"
+-            depends="checkChapterNo, cleanTestClasses, generateSeleniumJavaTestsChapter, prepare-Tests, compileTestClasses, tomcat-start, prepareFlux, selenium-start"
++            depends="checkChapterNo, cleanTestClasses, generateSeleniumJavaTestsChapter, prepare-Tests, compileTestClasses, selenium-start"
+             description="test a single chapter of XForms Testsuite call with -DchapterNo=[XX] e.g. -DchapterNo=02">
+ 
+         <echo/>

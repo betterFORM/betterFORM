@@ -1,0 +1,45 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+	  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"               
+      xmlns:xforms="http://www.w3.org/2002/xforms">
+  <xhtml:head>
+    <xhtml:title>8.2.2.c bind precedence for help element</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+       <xforms:instance xmlns="">
+          <data>
+			<msg>Instance Help Message</msg>
+			<myinput></myinput>
+	      </data>
+       </xforms:instance>
+       <xforms:bind id="inst_help" nodeset="/mail/message"/>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">8.2.2.c bind precedence for help element</xforms:label>
+  	</xforms:group>	
+	<xforms:group>
+		<xforms:label>
+		  When you activate the Dispatch Help Message trigger you must see the message &quot;Instance Help 
+		  Message&quot;. 
+		</xforms:label>	
+	</xforms:group>
+	
+	<xforms:input id="input1" ref="myinput">
+		<xforms:label>Input : </xforms:label>
+		<xforms:help ref="../msg">Inline Help Message (WRONG)</xforms:help>
+  	</xforms:input>
+  	
+  	<xforms:trigger id="help_trigger">
+	    <xforms:label>Dispatch help message</xforms:label>
+	    <xforms:action ev:event="DOMActivate">
+      		<xforms:dispatch name="xforms-help" targetid="input1"/> 
+     	</xforms:action>
+	</xforms:trigger>
+	
+  </xhtml:body>
+</xhtml:html>

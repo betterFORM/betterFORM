@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      py:strip="">
+
+  <!--! Add site-specific style sheet -->
+  <head py:match="head" py:attrs="select('@*')">
+    ${select('*|comment()|text()')}
+    <link rel="stylesheet" type="text/css"
+          href="https://www.betterform.de/trac/chrome/site/style.css"/>
+  </head>
+
+	<body py:match="body" py:attrs="select('@*')">
+		<!--! Add site-specific header -->
+		  <div id="siteheader">
+			  <!--! Place your header content here... -->
+			  <!--    the xform way to build the web -->
+		  </div>
+
+		  ${select('*|text()')}
+
+		<!--! Add site-specific footer -->
+		<div id="sitefooter">
+			<img id="shadowBottom" src="http://www.betterform.de/images/shad_bottom.jpg" alt=""/>
+
+			<div class="pageMarginBox">
+				<span id="bottomMenu">
+					&#169; 2010 betterFORM Project Page: <span class="menuDevider"> | </span>
+					<a href="http://www.betterform.de/index.html">betterFORM</a>
+							<span class="menuDevider"> | </span>
+					<a href="http://www.betterform.de/demo.xhtml">demo</a>
+							<span class="menuDevider"> | </span>
+					<a href="http://www.betterform.de/download.html">download</a>
+							<span class="menuDevider"> | </span>
+					<a href="http://www.betterform.de/product.html">product</a>
+							<span class="menuDevider"> | </span>
+					<a href="http://www.betterform.de/support.html">support</a>
+							<span class="menuDevider"> | </span>
+					<a href="http://www.betterform.de/whoweare.html">who we are</a>
+							<span class="menuDevider"> | </span>
+					<a href="http://www.betterform.de/contact.html">contact / impressum</a>
+				</span>
+			</div>
+		</div>
+	</body>
+</html>
