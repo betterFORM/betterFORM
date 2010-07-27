@@ -93,18 +93,15 @@
 
     <target name="package" 
             description="creates a zip archive used by the extension-installer ant-file">
-<!--
         <ant antfile="${web.dir}/build.xml" target="clean" dir="${web.dir}" inheritall="false"/>
         <available property="warAvailable" file ="${basedir}/../release-${web.app.version}/web-dist/${web.app.name}-${web.app.version}.war"/>
         <antcall target="buildBetterForm"/>
         <antcall target="extractReleaseWar"/>
-
         <antcall target="tailorForExist"/>
         <antcall target="package-xrx"/>
 
         <copy file="${basedir}/eXist-build.xml" tofile="${basedir}/target/build.xml"/>
 
--->
         <copy todir="${target.dir}/etc">
             <fileset dir="${basedir}/src/main/etc"/>
         </copy>
