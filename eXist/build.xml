@@ -98,7 +98,7 @@
         <antcall target="buildBetterForm"/>
         <antcall target="extractReleaseWar"/>
         <antcall target="tailorForExist"/>
-        <antcall target="package-xrx"/>
+        <!-- <antcall target="package-xrx"/> -->
 
         <copy file="${basedir}/eXist-build.xml" tofile="${basedir}/target/build.xml"/>
 
@@ -108,6 +108,10 @@
 
         <copy todir="${webapp.dir}">
             <fileset dir="${basedir}/src/main/webapp"/>
+        </copy>
+
+        <copy todir="${target.dir}/xrx">
+            <fileset dir="${basedir}/src/main/xrx"/>
         </copy>
     </target>
 
@@ -128,6 +132,7 @@
     </target>
 
     <!--deploy xrx applications from src/main/xrx to existing eXist install. Property exist.dir must be set correctly-->
+    <!--
     <target name="deploy-xrx" description="deploys xrx applications into eXist installation">
         <antcall target="package-xrx"/>
 
@@ -139,11 +144,12 @@
             <property name="core.dir" value="${basedir}/core"/>
         </ant>
     </target>
-
+    -->
+<!--
     <target name="package-xrx">
-        <zip basedir="${src.dir}/main/xrx" zipfile="${target.dir}/xrx.zip" excludes="build.xml"/>
+        <zip basedir="src/main/xrx" zipfile="${target.dir}/xrx.zip" excludes="build.xml"/>
     </target>
-
+-->
 <!--
     <target name="create-exist-extension-installer"
             description="creates a zip archive of the eXist-extension installer">
