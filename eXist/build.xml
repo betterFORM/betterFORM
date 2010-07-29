@@ -124,9 +124,9 @@
 
     <target  name="extractReleaseWar" if="warAvailable">
        <copy todir="${basedir}/target">
-            <fileset file="${basedir}/../../release-${web.app.version}/web-dist/${web.app.name}-${web.app.version}.war"/>
+            <fileset file="${basedir}/../release-${web.app.version}/web-dist/${web.app.name}-${web.app.version}.war"/>
        </copy>
-       <unzip src="${basedir}/target/${web.app.name}-${web.app.version}.war" overwrite="true" dest="${basedir}/target/${web.app.name}"/>
+       <unzip src="${basedir}/target/${web.app.name}-${web.app.version}.war" overwrite="true" dest="${webapp.dir}"/>
        <delete file="${basedir}/target/${web.app.name}-${web.app.version}.war"/>
        <!-- <move file="${basedir}/target/${web.app.name}-${web.app.version}.war" tofile="${basedir}/target/betterform.war"/> -->
     </target>

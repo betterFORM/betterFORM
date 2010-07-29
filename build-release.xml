@@ -10,7 +10,7 @@
     <property name="convex.dir" value="${basedir}/convex"/>
     <property name="server.dir" value="${basedir}/tools/server"/>
     <property name="release.dir" value="${basedir}/release"/>
-    <property name="extension.dir" value="${basedir}/tools/exist"/>
+    <property name="extension.dir" value="${basedir}/eXist"/>
     <property name="installer.dir" value="${basedir}/tools/installer"/>
 
     <!-- local Web properties -->
@@ -52,16 +52,21 @@
 
         <!-- installer zip -->
         <mkdir dir="${release.dir}-${web.app.version}/extension-dist/exist-extension-installer"/>
-        <ant antfile="${extension.dir}/build.xml" target="create-exist-extension-installer" dir="${extension.dir}" inheritall="false"/>
-
-        <copy file="${extension.dir}/target/exist-extension-installer/betterform.zip" todir="${release.dir}-${web.app.version}/extension-dist/exist-extension-installer"/>
-        <!-- betterForm and XRX zip -->
-        <mkdir dir="${release.dir}-${web.app.version}/extension-dist/exist-extension"/>
-
         <ant antfile="${extension.dir}/build.xml" target="package" dir="${extension.dir}" inheritall="false"/>
-        <copy file="${extension.dir}/target/betterform.zip" todir="${release.dir}-${web.app.version}/extension-dist/exist-extension"/>
-        <copy file="${extension.dir}/target/xrx.zip" todir="${release.dir}-${web.app.version}/extension-dist/exist-extension"/>
+        <copy todir="${release.dir}-${web.app.version}/extension-dist/exist-extension">
+            <fileset file="${extension.dir}/target/**"/>
+       </copy>
+        <!--
+            <copy file="${extension.dir}/target/exist-extension-installer/betterform.zip" todir="${release.dir}-${web.app.version}/extension-dist/exist-extension-installer"/>
+        -->
+        <!-- betterForm and XRX zip -->
+        <!--
+            <mkdir dir="${release.dir}-${web.app.version}/extension-dist/exist-extension"/>
 
+            <ant antfile="${extension.dir}/build.xml" target="package" dir="${extension.dir}" inheritall="false"/>
+            <copy file="${extension.dir}/target/betterform.zip" todir="${release.dir}-${web.app.version}/extension-dist/exist-extension"/>
+            <copy file="${extension.dir}/target/xrx.zip" todir="${release.dir}-${web.app.version}/extension-dist/exist-extension"/>
+        -->
         <!-- create installer -->
         <mkdir dir="${release.dir}-${web.app.version}/installer-dist"/>
 

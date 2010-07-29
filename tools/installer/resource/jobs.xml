@@ -1,0 +1,15 @@
+<processing>
+    <logfiledir>$INSTALL_PATH</logfiledir>
+    <job name="Set password for admin user ...">
+        <os family="windows"/>
+        <executefile name="$INSTALL_PATH/bin/setup.bat">
+            <arg>$adminPasswd</arg>
+        </executefile>
+    </job>
+    <job name="Set password for admin user ...">
+        <os family="unix"/>
+        <executefile name="$INSTALL_PATH/bin/setup.sh">
+            <arg>$adminPasswd</arg>
+        </executefile>
+    </job>
+</processing>
