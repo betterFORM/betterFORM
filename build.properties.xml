@@ -12,7 +12,7 @@
             <version>1.5</version>
         </javac>
         <dojo>dojo-release-1.3.3-src</dojo>
-        <!-- <dojo>dojo-release-1.3.3-src</dojo> -->
+        <!--<dojo>dojo-release-1.3.3-src</dojo>-->
         <!--<dojo>dojo-release-1.3.2-src</dojo>-->
 
         <timeline>timeline_libraries_v2.3.0</timeline>
@@ -76,7 +76,7 @@
               <!--server properties -->
               <server>
 <!--                <jar>${basedir}/src/main/lib/selenium-server-1.0.1.jar</jar> -->
-                <jar>${basedir}/src/main/lib/selenium/selenium-server-standalone-2.0a2.jar</jar>
+                <jar>${basedir}/src/main/lib/selenium/selenium-server-standalone-2.0a5.jar</jar>
                 <host>localhost</host>
                 <port>4444</port>
                 <url>/selenium-server/core/index.html</url>
@@ -189,11 +189,13 @@
     -->
     <installer>
         <!-- ### installerType must be either 'standard' or 'web'. Default value is 'web' ### -->
-        <installerType>web</installerType>
+        <installerType>standard</installerType>
         <exist>
             <!-- <jar>/home/zwobit/Downloads/eXist-setup-1.4.0-rev10440.jar</jar> -->
             <jar>/home/zwobit/Downloads/eXist-setup-1.5.0dev.jar</jar>
             <version>1.5</version>
+            <user>admin</user>
+            <passwd>betterform</passwd>
         </exist>
     </installer>
 </root>
