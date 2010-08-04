@@ -4,11 +4,12 @@
   ~ Licensed under the terms of BSD License
   -->
 <xsl:stylesheet version="2.0"
-                xmlns:xhtml="http://www.w3.org/1999/xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xf="http://www.w3.org/2002/xforms"
                 xmlns:bf="http://betterform.sourceforge.net/xforms"
-                exclude-result-prefixes="xhtml xf bf">
+                exclude-result-prefixes="xf bf"
+                xpath-default-namespace= "http://www.w3.org/1999/xhtml">
 
     <xsl:import href="common.xsl"/>
     <xsl:include href="dojo-ui.xsl"/>
@@ -36,7 +37,7 @@
     <xsl:param name="action-url" select="'http://localhost:8080/betterform-1.0.0/XFormsServlet'"/>
 
     <xsl:param name="form-id" select="'betterform'"/>
-    <xsl:param name="form-name" select="//xhtml:title"/>
+    <xsl:param name="form-name" select="//title"/>
     <xsl:param name="debug-enabled" select="'false'"/>
 
     <!-- ### specifies the parameter prefix for repeat selectors ### -->
@@ -74,9 +75,8 @@
 
 
 
-    <xsl:output method="html" version="4.01" encoding="UTF-8" indent="yes"
-                doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"
-                doctype-system="http://www.w3.org/TR/html4/loose.dtd"/>
+    <xsl:output method="xhtml" version="1.0" encoding="UTF-8" indent="yes"
+                doctype-system="/resources/xsd/xhtml1-transitional.dtd"/>
     <!-- ### transcodes the XHMTL namespaced elements to HTML ### -->
     <!--<xsl:namespace-alias stylesheet-prefix="xhtml" result-prefix="#default"/>-->
 
@@ -86,7 +86,7 @@
     <!-- ####################################################################################################### -->
     <!-- ##################################### TEMPLATES ####################################################### -->
     <!-- ####################################################################################################### -->
-    <xsl:template match="xhtml:head">
+    <xsl:template match="head">
 
         <xsl:comment> *** powered by betterFORM, &amp;copy; 2010 *** </xsl:comment>
 
@@ -201,7 +201,7 @@
 </xsl:text>
                 <style type="text/css">
                     <xsl:choose>
-                        <xsl:when test="//xhtml:body/@class='soria'">
+                        <xsl:when test="//body/@class='soria'">
                     @import "<xsl:value-of select="$contextroot"/>/resources/scripts/release/dojo/dijit/themes/soria/soria.css";
                         </xsl:when>
                         <xsl:otherwise>
@@ -275,11 +275,11 @@
 </xsl:text>
     </xsl:template>
 
-    <xsl:template match="xhtml:body">
+    <xsl:template match="body">
         <!-- todo: add 'overflow:hidden' to @style here -->
         <xsl:variable name="theme">
             <xsl:choose>
-                <xsl:when test="//xhtml:body/@class='soria'">soria</xsl:when>
+                <xsl:when test="//body/@class='soria'">soria</xsl:when>
                 <xsl:otherwise>tundra</xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -443,7 +443,7 @@
             <xsl:apply-templates select="xf:help"/>
             <xsl:apply-templates select="xf:hint"/>
 
-            <xsl:copy-of select="xhtml:script"/>
+            <xsl:copy-of select="script"/>
         </span>
     </xsl:template>
 
@@ -469,7 +469,7 @@
             <xsl:apply-templates select="xf:help"/>
             <xsl:apply-templates select="xf:hint"/>
 
-            <xsl:copy-of select="xhtml:script"/>
+            <xsl:copy-of select="script"/>
         </span>
     </xsl:template>
 
@@ -493,7 +493,7 @@
             <xsl:apply-templates select="xf:help"/>
             <xsl:apply-templates select="xf:hint"/>
 
-            <xsl:copy-of select="xhtml:script"/>
+            <xsl:copy-of select="script"/>
         </span>
     </xsl:template>
 
