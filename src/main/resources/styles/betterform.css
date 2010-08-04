@@ -94,7 +94,7 @@ a.active {
 }
 
 /* ################### some theme-specific (Dojo tundra) styles ################### */
-.tundra * {
+.tundra {
     font-family: sans-serif;
     font-size: 10pt;
 }
