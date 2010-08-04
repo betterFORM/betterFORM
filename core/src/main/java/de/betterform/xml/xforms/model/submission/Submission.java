@@ -536,8 +536,14 @@ public class Submission extends BindingElement implements DefaultAction {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug(this + " submit");
         }
-        
-        updateXPathContext();
+
+        try{
+            updateXPathContext();
+        }catch (Exception xe){
+            LOGGER.warn("Exception occured while updating nodeset bound by submission " + DOMUtil.getCanonicalPath(this.element) + " " + xe.getMessage());
+            LOGGER.warn("Exception occured while updating nodeset bound by submission - exception will be ignored. Submission cancelled");
+            return;
+        }
 
         // get instance object and location path to submit
         Instance instanceObject = this.model.getInstance(getInstanceId());
