@@ -243,38 +243,6 @@ dojo.declare("betterform.FluxProcessor",
     },
 
 
-    _useLoadingMessage:function(){
-        // console.debug("FluxProcessor._useLoadingMessage");
-        try {
-            dwr.engine.setPreHook(function() {
-                document.getElementById('indicator').className = 'xfEnabled';
-            });
-            dwr.engine.setPostHook(function() {
-                document.getElementById('indicator').className = 'xfDisabled';
-            });
-        }
-        catch(ex){
-            fluxProcessor._handleExceptions("Failure executing Flux._useLoadingMessage", ex);
-        }
-    },
-
-    _handleExceptions:function(msg, exception) {
-        // console.debug("FluxProcessor._handleExceptions msg:",msg, " exception: ", exception);
-        if(msg != undefined && exception != undefined ){
-            console.error(msg, ' - Exception: ', exception);
-        } else if(msg != undefined) {
-            console.error(msg);
-            if(this.webtest != 'true') {
-               alert(msg);
-            }else{
-                //only for testing purposes
-                this.logTestMessage(xmlEvent.contextInfo.errorinformation);
-            }
-        } else {
-            console.error("Unknown exception occured! arguments: ", arguments);
-        }
-    },
-
     applyChanges: function(data) {
         // console.debug("FluxProcessor.applyChanges data:",data);
         console.group("EventLog");
@@ -334,6 +302,86 @@ dojo.declare("betterform.FluxProcessor",
         }
 
 
+    },
+
+    /*
+        @param: String locale
+     */
+
+    setLocale:function(locale){
+        // console.debug("FluxProcessor.setLocale: Changed locale to: " + locale);
+        try {
+            Flux.setLocale(locale,this.sessionKey,this.applyChanges);
+        }
+        catch(ex){
+            fluxProcessor._handleExceptions("Failure executing Flux.setLocale", ex);
+        }
+    },
+
+    showHelp:function() {
+        // console.debug("showng help for:", this.currentControlId);
+        if (this.currentControlId == undefined || this.currentControlId == "" || this.currentControlId == '') {
+            console.warn("No Control selected to show help for");
+            return;
+        }
+        var helpCtrl = dojo.byId(this.currentControlId + '-help');
+        if (helpCtrl == undefined) {
+            console.warn("No help available for Control Id: '" + this.currentControlId + "'");
+            return;
+        }
+
+        var helpWnd = dojo.byId('helpTrigger');
+        var newdiv = document.createElement('div');
+        dojo.style(newdiv, { "display":"none"});
+
+        helpWnd.appendChild(newdiv);
+        newdiv.innerHTML = helpCtrl.innerHTML;
+        var helpDijit = new dojox.layout.FloatingPane({
+            title: 'Help',
+            closeable:true,
+            resizable:true,
+            dockable: false
+        }, newdiv);
+        dojo.addClass(helpDijit.domNode, "xfHelpPane");
+        helpDijit.startup();
+
+    },
+
+    // *********** PRIVATES ***********
+    // *********** PRIVATES ***********
+    // *********** PRIVATES ***********
+    // *********** PRIVATES ***********
+    // *********** PRIVATES ***********
+    _useLoadingMessage:function(){
+        // console.debug("FluxProcessor._useLoadingMessage");
+        try {
+            dwr.engine.setPreHook(function() {
+                document.getElementById('indicator').className = 'xfEnabled';
+            });
+            dwr.engine.setPostHook(function() {
+                document.getElementById('indicator').className = 'xfDisabled';
+            });
+        }
+        catch(ex){
+            fluxProcessor._handleExceptions("Failure executing Flux._useLoadingMessage", ex);
+        }
+    },
+
+    _handleExceptions:function(msg, exception) {
+        // console.debug("FluxProcessor._handleExceptions msg:",msg, " exception: ", exception);
+        if(msg != undefined && exception != undefined ){
+            console.error(msg, ' - Exception: ', exception);
+        } else if(msg != undefined) {
+            console.error(msg);
+            if(this.webtest != 'true') {
+               alert(msg);
+            }else{
+                //only for testing purposes
+                this.logTestMessage(xmlEvent.contextInfo.errorinformation);
+            }
+        } else {
+            console.error("Unknown exception occured! arguments: ", arguments);
+        }
     },
 
     _handleValidity:function(validityEvents) {
@@ -906,48 +954,6 @@ dojo.declare("betterform.FluxProcessor",
         catch(ex){
             fluxProcessor._handleExceptions("Failure executing Flux.fetchProgress", ex);
         }
-    },
-
-    /*
-        @param: String locale
-     */
-
-    setLocale:function(locale){
-        // console.debug("FluxProcessor.setLocale: Changed locale to: " + locale);
-        try {
-            Flux.setLocale(locale,this.sessionKey,this.applyChanges);
-        }
-        catch(ex){
-            fluxProcessor._handleExceptions("Failure executing Flux.setLocale", ex);
-        }
-    },
-
-    showHelp:function() {
-        // console.debug("showng help for:", this.currentControlId);
-        if (this.currentControlId == undefined || this.currentControlId == "" || this.currentControlId == '') {
-            console.warn("No Control selected to show help for");
-            return;
-        }
-        var helpCtrl = dojo.byId(this.currentControlId + '-help');
-        if (helpCtrl == undefined) {
-            console.warn("No help available for Control Id: '" + this.currentControlId + "'");
-            return;
-        }
-
-        var helpWnd = dojo.byId('helpTrigger');
-        var newdiv = document.createElement('div');
-        dojo.style(newdiv, { "display":"none"});
-
-        helpWnd.appendChild(newdiv);
-        newdiv.innerHTML = helpCtrl.innerHTML;
-        var helpDijit = new dojox.layout.FloatingPane({
-            title: 'Help',
-            closeable:true,
-            resizable:true,
-            dockable: false
-        }, newdiv);
-        dojo.addClass(helpDijit.domNode, "xfHelpPane");
-        helpDijit.startup();
-        
     }
+
 });
