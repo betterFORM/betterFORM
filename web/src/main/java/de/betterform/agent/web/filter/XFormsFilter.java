@@ -46,6 +46,7 @@ public class XFormsFilter implements Filter {
     protected WebFactory webFactory;
     protected String useragent;
     protected String defaultRequestEncoding = "UTF-8";
+    private FilterConfig filterConfig;
 
     /**
      * Filter initialisation
@@ -53,6 +54,7 @@ public class XFormsFilter implements Filter {
      * @see http://java.sun.com/j2ee/sdk_1.3/techdocs/api/javax/servlet/Filter.html#init(javax.servlet.FilterConfig)
      */
     public void init(FilterConfig filterConfig) throws ServletException {
+        this.filterConfig = filterConfig;
         useragent = filterConfig.getInitParameter(WebProcessor.USERAGENT);
         webFactory = new WebFactory();
         webFactory.setServletContext(filterConfig.getServletContext());
@@ -220,7 +222,9 @@ public class XFormsFilter implements Filter {
                             session.setAttribute("betterform.referer", request.getRequestURL());
                             //remove session from XFormsSessionManager
                             WebUtil.removeSession(webProcessor.getKey());
-                            throw new ServletException(e);
+
+                            String path = "/" + webFactory.getConfig().getProperty(WebFactory.ERROPAGE_PROPERTY);
+                            webFactory.getServletContext().getRequestDispatcher(path).forward(request,response);
                         }
                     }
 

@@ -58,7 +58,7 @@
 
     </div>
     <%
-        String msg = exception.getMessage();
+        String msg = (String) session.getAttribute("betterform.exception");
         int start = msg.indexOf("::");
         String xpath ="unknown";
         String cause="";
