@@ -19,9 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 
 /**
@@ -49,25 +47,37 @@ public class XFormsRequestURIServlet extends HttpServlet {
         LOGGER.debug("hit XFormsRequestURIServlet");
 
         request.setCharacterEncoding("UTF-8");
-        WebUtil.nonCachingResponse(response);
+            WebUtil.nonCachingResponse(response);
 
-        Document doc;
+            Document doc;
 
-        //locate it
-        String formRequestURI = request.getRequestURI().substring(request.getContextPath().length()+1);
-        File xfDoc = new File(getServletContext().getRealPath(formRequestURI));
-        try {
-            //parse it
-            doc = DOMUtil.parseXmlFile(xfDoc, true, false);
-        } catch (ParserConfigurationException e) {
-            throw new ServletException(e);
-        } catch (SAXException e) {
-            throw new ServletException(e);
+            //locate it
+            String formRequestURI = request.getRequestURI().substring(request.getContextPath().length()+1);
+            File xfDoc = new File(getServletContext().getRealPath(formRequestURI));
+
+        if (request.getHeader("betterform-internal") != null) {
+            BufferedInputStream in = new BufferedInputStream(new FileInputStream(xfDoc));
+            BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
+            
+            int read;
+            while ((read = in.read()) > -1) {
+                out.write(read);
+            }
+            out.flush();
+        } else {
+            try {
+                //parse it
+                doc = DOMUtil.parseXmlFile(xfDoc, true, false);
+            } catch (ParserConfigurationException e) {
+                throw new ServletException(e);
+            } catch (SAXException e) {
+                throw new ServletException(e);
+            }
+    
+            request.setAttribute(WebFactory.XFORMS_NODE, doc);
+            //do the Filter twist
+            response.getOutputStream().close();
         }
-
-        request.setAttribute(WebFactory.XFORMS_NODE, doc);
-        //do the Filter twist
-        response.getOutputStream().close();
     }
 
 }
