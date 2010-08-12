@@ -46,11 +46,14 @@
     <!-- ### contains the full user-agent string as received from the servlet ### -->
     <xsl:param name="user-agent" select="'default'"/>
 
+    <!-- will be set by config and passed from WebProcessor -->
+    <xsl:param name="resourcesPath" select="''"/>
+
     <!--- path to javascript files -->
-    <xsl:param name="scriptPath" select="''"/>
+    <xsl:param name="scriptPath" select="concat($resourcesPath,'scripts/')"/>
 
     <!-- path to core CSS file -->
-    <xsl:param name="CSSPath" select="''"/>
+    <xsl:param name="CSSPath" select="concat($resourcesPath,'styles/')"/>
 
     <xsl:param name="keepalive-pulse" select="'0'"/>
 
@@ -111,8 +114,8 @@
 
             <xsl:choose>
                 <xsl:when test="$useCDN='true'">
-                    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.2/dojo/resources/dojo.css"/>
-                    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.2/dijit/themes/tundra/tundra.css"/>
+                    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.3/dojo/resources/dojo.css"/>
+                    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.3/dijit/themes/tundra/tundra.css"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:call-template name="addDojoCSS"/>
@@ -202,16 +205,16 @@
                 <style type="text/css">
                     <xsl:choose>
                         <xsl:when test="//body/@class='soria'">
-                    @import "<xsl:value-of select="$contextroot"/>/resources/scripts/release/dojo/dijit/themes/soria/soria.css";
+                    @import "<xsl:value-of select="$contextroot"/><xsl:value-of select="$scriptPath"/>release/dojo/dijit/themes/soria/soria.css";
                         </xsl:when>
                         <xsl:otherwise>
-                    @import "<xsl:value-of select="$contextroot"/>/resources/scripts/release/dojo/dijit/themes/tundra/tundra.css";
+                    @import "<xsl:value-of select="$contextroot"/><xsl:value-of select="$scriptPath"/>release/dojo/dijit/themes/tundra/tundra.css";
                         </xsl:otherwise>
                     </xsl:choose>
-                    @import "<xsl:value-of select="$contextroot"/>/resources/scripts/release/dojo/dojo/resources/dojo.css";
-                    @import "<xsl:value-of select="$contextroot"/>/resources/scripts/release/dojo/dojox/widget/Toaster/Toaster.css";
-                    @import "<xsl:value-of select="$contextroot"/>/resources/scripts/dojox/layout/resources/FloatingPane.css";
-	                @import "<xsl:value-of select="$contextroot"/>/resources/scripts/dojox/layout/resources/ResizeHandle.css";
+                    @import "<xsl:value-of select="$contextroot"/><xsl:value-of select="$scriptPath"/>release/dojo/dojo/resources/dojo.css";
+                    @import "<xsl:value-of select="$contextroot"/><xsl:value-of select="$scriptPath"/>release/dojo/dojox/widget/Toaster/Toaster.css";
+                    @import "<xsl:value-of select="$contextroot"/><xsl:value-of select="$scriptPath"/>dojox/layout/resources/FloatingPane.css";
+	                @import "<xsl:value-of select="$contextroot"/><xsl:value-of select="$scriptPath"/>dojox/layout/resources/ResizeHandle.css";
                     
                 </style><xsl:text>
 </xsl:text>
@@ -250,7 +253,7 @@
     <xsl:template name="addDojoImport">
         <xsl:choose>
             <xsl:when test="$useCDN='true'">
-                <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.2/dojo/dojo.xd.js"> </script><xsl:text>
+                <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.3/dojo/dojo.xd.js"> </script><xsl:text>
 </xsl:text>
             </xsl:when>
             <xsl:otherwise>
@@ -286,7 +289,7 @@
         <body class="{$theme}">
             <xsl:copy-of select="@*"/>
             <div id="caLoading" class="disabled">
-                <img src="{concat($contextroot,'/resources/images/indicator.gif')}" class="xfDisabled" id="indicator"
+                <img src="{concat($contextroot,$resourcesPath,'images/indicator.gif')}" class="xfDisabled" id="indicator"
                      alt="loading"/>
             </div>
             <!-- Toaster widget for ephemeral messages -->

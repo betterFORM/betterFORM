@@ -51,7 +51,7 @@ public class HTTPSubmissionHandlerXI extends HTTPSubmissionHandler {
 
 
         if((submission.getReplace().equals("instance"))){
-            String xsltPath = Config.getInstance().getProperty("xslt.path");
+            String xsltPath = Config.getInstance().getProperty("resource.dir.name") + "xslt";
 
             CachingTransformerService transformerService  = (CachingTransformerService) getContext().get(TransformerService.TRANSFORMER_SERVICE);
             URI webappRealpath = null;

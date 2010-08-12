@@ -199,7 +199,7 @@ public class WebProcessor implements XFormsProcessor, EventListener {
     private void doIncludes() {
         try {
             Node input = getXForms();
-            String xsltPath = this.configuration.getProperty(WebFactory.XSLT_PATH_PROPERTY);
+            String xsltPath = this.configuration.getProperty(WebFactory.RESOURCE_PATH_PROPERTY) + "xslt";
             XSLTGenerator xsltGenerator = setupTransformer(xsltPath, "include.xsl");
             String baseURI = getBaseURI();
             String uri = baseURI.substring(0, baseURI.lastIndexOf("/") + 1);
@@ -707,21 +707,19 @@ public class WebProcessor implements XFormsProcessor, EventListener {
      *
      */
     protected UIGenerator createUIGenerator() throws URISyntaxException, XFormsException {
-        String xsltPath = configuration.getProperty(WebFactory.XSLT_PATH_PROPERTY);
         String relativeUris = configuration.getProperty(WebFactory.RELATIVE_URI_PROPERTY);
 
-        //todo: should the following two be removed? Use fixed resources dir as convention now - user shouldn't need to touch that
-        String scriptPath = configuration.getProperty(WebFactory.SCRIPT_PATH_PROPERTY);
-        String cssPath = configuration.getProperty(WebFactory.CSS_PATH_PROPERTY);
-
-        //todo: extract method
         String xslFile = request.getParameter(XSL_PARAM_NAME);
         if (xslFile == null) {
-//            xslFile = configuration.getProperty(WebFactory.XSLT_DEFAULT_PROPERTY);
             xslFile = configuration.getStylesheet(this.useragent);
         }
 
+        String resourcesPath = configuration.getProperty("resources.dir.name");
+        String xsltPath = resourcesPath + "xslt";
+
         XSLTGenerator generator = setupTransformer(xsltPath, xslFile);
+
+        generator.setParameter("resourcesPath", "/" + resourcesPath);
 
         if (relativeUris.equals("true")) {
             generator.setParameter("contextroot", ".");
@@ -759,14 +757,6 @@ public class WebProcessor implements XFormsProcessor, EventListener {
         generator.setParameter("trigger-prefix", triggerPrefix);
 
 //        generator.setParameter("user-agent", request.getHeader("User-Agent"));
-
-//        generator.setParameter("scripted", String.valueOf(isScripted()));
-        if (scriptPath != null) {
-            generator.setParameter("scriptPath", scriptPath);
-        }
-        if (cssPath != null) {
-            generator.setParameter("CSSPath", cssPath);
-        }
 
         generator.setParameter("locale", locale);
         return generator;
