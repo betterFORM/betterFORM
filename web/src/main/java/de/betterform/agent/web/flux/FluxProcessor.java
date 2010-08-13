@@ -6,8 +6,6 @@
 
 package de.betterform.agent.web.flux;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.agent.web.WebFactory;
 import de.betterform.agent.web.WebProcessor;
 import de.betterform.agent.web.WebUtil;
@@ -23,19 +21,16 @@ import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.XFormsElement;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.ui.BindingElement;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.io.StringWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.net.URISyntaxException;
-
-import net.sf.ehcache.CacheManager;
 
 /**
  * Processor for DWR calls. This
@@ -76,7 +71,10 @@ public class FluxProcessor extends WebProcessor {
         if (checkForExitEvent() != null) {
             return;
         }
-
+        /*
+        Eventlistener for the events below MUST be registered always and cannot be optimized as in WebProcessor.
+        They are used to update the client state and are not intended for form authors.
+         */
         this.root.addEventListener(BetterFormEventNames.STATE_CHANGED, this, true);
         this.root.addEventListener(BetterFormEventNames.PROTOTYPE_CLONED, this, true);
         this.root.addEventListener(BetterFormEventNames.ID_GENERATED, this, true);

@@ -5,9 +5,6 @@
 
 package de.betterform.xml.xforms.action;
 
-import net.sf.saxon.om.NodeInfo;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.DOMEventNames;
 import de.betterform.xml.events.XFormsEventNames;
@@ -24,6 +21,9 @@ import de.betterform.xml.xforms.ui.Item;
 import de.betterform.xml.xforms.ui.RepeatItem;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
+import net.sf.saxon.om.NodeInfo;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
@@ -213,10 +213,20 @@ public abstract class AbstractAction extends XFormsElement implements EventListe
     }
 
     private void addListener(EventTarget targetElement) {
+        addEventToUsedEvents();
+
         if(this.phase.equals("capture")){
             targetElement.addEventListener(this.eventType, this, true);
         }else{
             targetElement.addEventListener(this.eventType, this, false);
+        }
+    }
+
+    private void addEventToUsedEvents() {
+        //add eventType to list of used events in XFormsProcessor
+        List usedEvents =  this.container.getProcessor().getEventList();
+        if(!usedEvents.contains(this.eventType)){
+            usedEvents.add(this.eventType);
         }
     }
 

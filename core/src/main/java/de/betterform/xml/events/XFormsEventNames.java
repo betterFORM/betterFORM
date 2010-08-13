@@ -18,216 +18,216 @@ public interface XFormsEventNames {
     /**
      * XForms init event constant.
      */
-    String MODEL_CONSTRUCT = "xforms-model-construct";
+    static final String MODEL_CONSTRUCT = "xforms-model-construct";
 
     /**
      * XForms init event constant.
      */
-    String MODEL_CONSTRUCT_DONE = "xforms-model-construct-done";
+    static final String MODEL_CONSTRUCT_DONE = "xforms-model-construct-done";
 
     /**
      * XForms init event constant.
      */
-    String READY = "xforms-ready";
+    static final String READY = "xforms-ready";
 
     /**
      * XForms init event constant.
      */
-    String MODEL_DESTRUCT = "xforms-model-destruct";
+    static final String MODEL_DESTRUCT = "xforms-model-destruct";
 
     // XForms interaction events
 
     /**
      * XForms interaction event constant.
      */
-    String PREVIOUS = "xforms-previous";
+    static final String PREVIOUS = "xforms-previous";
 
     /**
      * XForms interaction event constant.
      */
-    String NEXT = "xforms-next";
+    static final String NEXT = "xforms-next";
 
     /**
      * XForms interaction event constant.
      */
-    String FOCUS = "xforms-focus";
+    static final String FOCUS = "xforms-focus";
 
     /**
      * XForms interaction event constant.
      */
-    String HELP = "xforms-help";
+    static final String HELP = "xforms-help";
 
     /**
      * XForms interaction event constant.
      */
-    String HINT = "xforms-hint";
+    static final String HINT = "xforms-hint";
 
     /**
      * XForms interaction event constant.
      */
-    String REBUILD = "xforms-rebuild";
+    static final String REBUILD = "xforms-rebuild";
 
     /**
      * XForms interaction event constant.
      */
-    String REFRESH = "xforms-refresh";
+    static final String REFRESH = "xforms-refresh";
 
     /**
      * XForms interaction event constant.
      */
-    String REVALIDATE = "xforms-revalidate";
+    static final String REVALIDATE = "xforms-revalidate";
 
     /**
      * XForms interaction event constant.
      */
-    String RECALCULATE = "xforms-recalculate";
+    static final String RECALCULATE = "xforms-recalculate";
 
     /**
      * XForms interaction event constant.
      */
-    String RESET = "xforms-reset";
+    static final String RESET = "xforms-reset";
 
     /**
      * XForms interaction event constant.
      */
-    String SUBMIT = "xforms-submit";
+    static final String SUBMIT = "xforms-submit";
     
     /**
      * XForms interaction event constant.
      */
-    String SUBMIT_SERIALIZE = "xforms-submit-serialize";
+    static final String SUBMIT_SERIALIZE = "xforms-submit-serialize";
 
     // XForms notification events
 
     /**
      * XForms notification event constant.
      */
-    String VALUE_CHANGED = "xforms-value-changed";
+    static final String VALUE_CHANGED = "xforms-value-changed";
 
     /**
      * XForms notification event constant.
      */
-    String SELECT = "xforms-select";
+    static final String SELECT = "xforms-select";
 
     /**
      * XForms notification event constant.
      */
-    String DESELECT = "xforms-deselect";
+    static final String DESELECT = "xforms-deselect";
 
     /**
      * XForms notification event constant.
      */
-    String SCROLL_FIRST = "xforms-scroll-first";
+    static final String SCROLL_FIRST = "xforms-scroll-first";
 
     /**
      * XForms notification event constant.
      */
-    String SCROLL_LAST = "xforms-scroll-last";
+    static final String SCROLL_LAST = "xforms-scroll-last";
 
     /**
      * XForms notification event constant.
      */
-    String INSERT = "xforms-insert";
+    static final String INSERT = "xforms-insert";
 
     /**
      * XForms notification event constant.
      */
-    String DELETE = "xforms-delete";
+    static final String DELETE = "xforms-delete";
 
     /**
      * XForms notification event constant.
      */
-    String VALID = "xforms-valid";
+    static final String VALID = "xforms-valid";
 
     /**
      * XForms notification event constant.
      */
-    String INVALID = "xforms-invalid";
+    static final String INVALID = "xforms-invalid";
 
     /**
      * XForms notification event constant.
      */
-    String READONLY = "xforms-readonly";
+    static final String READONLY = "xforms-readonly";
 
     /**
      * XForms notification event constant.
      */
-    String READWRITE = "xforms-readwrite";
+    static final String READWRITE = "xforms-readwrite";
 
     /**
      * XForms notification event constant.
      */
-    String REQUIRED = "xforms-required";
+    static final String REQUIRED = "xforms-required";
 
     /**
      * XForms notification event constant.
      */
-    String OPTIONAL = "xforms-optional";
+    static final String OPTIONAL = "xforms-optional";
 
     /**
      * XForms notification event constant.
      */
-    String ENABLED = "xforms-enabled";
+    static final String ENABLED = "xforms-enabled";
 
     /**
      * XForms notification event constant.
      */
-    String DISABLED = "xforms-disabled";
+    static final String DISABLED = "xforms-disabled";
 
     /**
      * XForms notification event constant.
      */
-    String IN_RANGE = "xforms-in-range";
+    static final String IN_RANGE = "xforms-in-range";
 
     /**
      * XForms notification event constant.
      */
-    String OUT_OF_RANGE = "xforms-out-of-range";
+    static final String OUT_OF_RANGE = "xforms-out-of-range";
 
     /**
      * XForms notification event constant.
      */
-    String OUTPUT_ERROR = "xforms-output-error";
+    static final String OUTPUT_ERROR = "xforms-output-error";
 
     /**
      * XForms notification event constant.
      */
-    String SUBMIT_DONE = "xforms-submit-done";
+    static final String SUBMIT_DONE = "xforms-submit-done";
 
     /**
      * XForms notification event constant.
      */
-    String SUBMIT_ERROR = "xforms-submit-error";
+    static final String SUBMIT_ERROR = "xforms-submit-error";
 
     // XForms error indications
 
     /**
      * XForms error indication event constant.
      */
-    String BINDING_EXCEPTION = "xforms-binding-exception";
+    static final String BINDING_EXCEPTION = "xforms-binding-exception";
 
     /**
      * XForms error indication event constant.
      */
-    String LINK_EXCEPTION = "xforms-link-exception";
+    static final String LINK_EXCEPTION = "xforms-link-exception";
 
     /**
      * XForms error indication event constant.
      */
-    String LINK_ERROR = "xforms-link-error";
+    static final String LINK_ERROR = "xforms-link-error";
 
     /**
      * XForms error indication event constant.
      */
-    String COMPUTE_EXCEPTION = "xforms-compute-exception";
+    static final String COMPUTE_EXCEPTION = "xforms-compute-exception";
 
     /**
      * XForms Version Exception constant.
      */
-    String VERSION_EXCEPTION = "xforms-version-exception";
+    static final String VERSION_EXCEPTION = "xforms-version-exception";
 
     /**
      * Constant representing event property as defined in 4.5.4 the xforms-link-exception Event
      */
-    String RESOURCE_URI_PROPERTY="resource-uri";
+    static final String RESOURCE_URI_PROPERTY="resource-uri";
 }

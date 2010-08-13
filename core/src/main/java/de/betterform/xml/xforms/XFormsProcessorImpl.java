@@ -5,8 +5,6 @@
 
 package de.betterform.xml.xforms;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.connector.ConnectorFactory;
 import de.betterform.session.DefaultSerializer;
 import de.betterform.xml.config.Config;
@@ -22,6 +20,8 @@ import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.ui.AbstractFormControl;
 import de.betterform.xml.xforms.ui.Repeat;
 import de.betterform.xml.xforms.ui.Upload;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -39,10 +39,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This class is an implementation of a W3C XForms 1.0 conformant
@@ -75,6 +72,20 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable {
      */
     private Map context = null;
 
+    /**
+     * List to hold events that are used by the form author
+     */
+    private ArrayList eventList;
+
+    /**
+     * returns a list of events used by the form author. This list is build during init process in
+     * AbstractAction.addListener.
+     *
+     * @return a list of events used by the form author
+     */
+    public ArrayList getEventList() {
+        return eventList;
+    }
 
     /**
      * Creates a new XFormsProcessorImpl object.
@@ -82,6 +93,7 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable {
     public XFormsProcessorImpl() {
         LOGGER.info(getAppInfo());
         this.context = new HashMap(10);
+        this.eventList = new ArrayList();
     }
 
     /**

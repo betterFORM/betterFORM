@@ -39,10 +39,10 @@ public interface XFormsProcessor {
      * this map. In HTTP environments this could be the response headers.
      * @deprecated move back to de.betterform.xml.xforms.core.Submission
      */
-    String SUBMISSION_RESPONSE = "betterform.submission.response";
+    static final String SUBMISSION_RESPONSE = "betterform.submission.response";
 
 
-        String SUBMISSION_RESPONSE_DOCUMENT = "betterform.submission.response.document";
+    static final String SUBMISSION_RESPONSE_DOCUMENT = "betterform.submission.response.document";
     
     /**
      * Defines the key under which the submission reponse stream may be accessed
@@ -55,7 +55,7 @@ public interface XFormsProcessor {
      * redirect/proxy combination could help to achieve this.
      * @deprecated move back to de.betterform.xml.xforms.core.Submission
      */
-    String  SUBMISSION_RESPONSE_STREAM = "betterform.submission.response.stream";
+    static final String  SUBMISSION_RESPONSE_STREAM = "betterform.submission.response.stream";
 
     /**
      * Defines the key for an URI to be loaded. XFormsProcessor implementations are
@@ -64,7 +64,7 @@ public interface XFormsProcessor {
      * In HTTP environments this would normally be a redirect.
      * @deprecated should not be used anymore
      */
-    String LOAD_URI = "betterform.load.URI";
+    static final String LOAD_URI = "betterform.load.URI";
 
     /**
      * Defines the key for the target presentation context into which the URI
@@ -77,7 +77,7 @@ public interface XFormsProcessor {
      * redirect should fit.
      * @deprecated should not be used anymore
      */
-    String LOAD_TARGET = "betterform.load.target";
+    static final String LOAD_TARGET = "betterform.load.target";
 
     /**
      * set the XForms to process. A complete host document embedding XForms syntax (e.g. html/xforms)

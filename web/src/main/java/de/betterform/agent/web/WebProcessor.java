@@ -5,11 +5,6 @@
 
 package de.betterform.agent.web;
 
-import javax.servlet.ServletContext;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.agent.web.event.DefaultUIEventImpl;
 import de.betterform.agent.web.event.UIEvent;
 import de.betterform.agent.web.flux.FluxProcessor;
@@ -22,11 +17,15 @@ import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.DOMEventNames;
 import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.events.XMLEvent;
-import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.XFormsElement;
 import de.betterform.xml.xforms.XFormsProcessor;
+import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xslt.TransformerService;
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
@@ -34,6 +33,7 @@ import org.w3c.dom.events.EventTarget;
 import org.w3c.xforms.XFormsModelElement;
 import org.xml.sax.InputSource;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -43,6 +43,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -54,7 +55,6 @@ import java.util.Map;
  * @see de.betterform.agent.web.flux.FluxProcessor
  * @see de.betterform.agent.web.servlet.PlainHtmlProcessor
  */
-//public class WebProcessor extends XFormsProcessor implements EventListener {
 public class WebProcessor implements XFormsProcessor, EventListener {
 
     /**
@@ -71,7 +71,7 @@ public class WebProcessor implements XFormsProcessor, EventListener {
     public static final String ACTIONURL_PARAM_NAME = "action_url";
     public static final String UIGENERATOR = "betterform.UIGenerator";
     public static final String REFERER = "betterform.referer";
-    public static final String FORWARD_URL = "betterform.base.url";    
+    public static final String FORWARD_URL = "betterform.base.url";
     public static final String ADAPTER_PREFIX = "A";
 
     public static final String ALTERNATIVE_ROOT = "ResourcePath";
@@ -196,29 +196,6 @@ public class WebProcessor implements XFormsProcessor, EventListener {
         }
     }
 
-    private void doIncludes() {
-        try {
-            Node input = getXForms();
-            String xsltPath = this.configuration.getProperty(WebFactory.RESOURCE_PATH_PROPERTY) + "xslt";
-            XSLTGenerator xsltGenerator = setupTransformer(xsltPath, "include.xsl");
-            String baseURI = getBaseURI();
-            String uri = baseURI.substring(0, baseURI.lastIndexOf("/") + 1);
-
-            xsltGenerator.setParameter("root", uri);
-            DOMResult result = new DOMResult();
-            DOMSource source = new DOMSource(input);
-            xsltGenerator.setInput(source);
-            xsltGenerator.setOutput(result);
-            xsltGenerator.generate();
-            setXForms(result.getNode());
-
-        } catch (XFormsException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     public void setXForms(Node node) throws XFormsException {
         this.xformsProcessor.setXForms(node);
@@ -265,6 +242,7 @@ public class WebProcessor implements XFormsProcessor, EventListener {
     }
 
     //todo: parse accept-language header to decide about locale
+
     public void setLocale() throws XFormsException {
         if (Config.getInstance().getProperty(XFormsProcessorImpl.BETTERFORM_ENABLE_L10N).equals("true")) {
 
@@ -287,7 +265,7 @@ public class WebProcessor implements XFormsProcessor, EventListener {
                     WebProcessor.LOGGER.debug("using configured lang setting from Config: " + Config.getInstance().getProperty("preselect-language"));
                 }
                 this.xformsProcessor.setLocale(Config.getInstance().getProperty("preselect-language"));
-                this.locale = Config.getInstance().getProperty("preselect-language"); 
+                this.locale = Config.getInstance().getProperty("preselect-language");
             } else if (request.getHeader("accept-language") != null) {
                 if (WebProcessor.LOGGER.isDebugEnabled()) {
                     WebProcessor.LOGGER.debug("using accept-language header: " + request.getHeader("accept-language"));
@@ -300,7 +278,7 @@ public class WebProcessor implements XFormsProcessor, EventListener {
         } else {
             //fallback default
             this.xformsProcessor.setLocale("en");
-            this.locale =  "en";
+            this.locale = "en";
         }
     }
 
@@ -738,7 +716,7 @@ public class WebProcessor implements XFormsProcessor, EventListener {
         } else {
             throw new XFormsConfigException("Invalid useragent: " + useragent + "'");
         }
-        if (request.getParameter("debug") != null && configuration.getProperty("betterform.debug-allowed").equals("true")) {
+        if (isDebugOn()) {
             generator.setParameter("debug-enabled", "true");
         }
 
@@ -760,6 +738,45 @@ public class WebProcessor implements XFormsProcessor, EventListener {
 
         generator.setParameter("locale", locale);
         return generator;
+    }
+
+    /**
+     * check wether an Event is used in the form being processed. Will return true if any action registers
+     * the Event in question. Will also return true if debug is enabled.
+     *
+     * @param eventName the event to check
+     * @return true if event is used in form or if debug has been switched on
+     */
+    protected boolean isEventUsed(String eventName) {
+        List eventsUsed = ((XFormsProcessorImpl) xformsProcessor).getEventList();
+        if (isDebugOn() || eventsUsed.contains(eventName)) {
+            return true;
+        }
+        return false;
+    }
+
+    private void doIncludes() {
+        try {
+            Node input = getXForms();
+            String xsltPath = this.configuration.getProperty(WebFactory.RESOURCE_PATH_PROPERTY) + "xslt";
+            XSLTGenerator xsltGenerator = setupTransformer(xsltPath, "include.xsl");
+            String baseURI = getBaseURI();
+            String uri = baseURI.substring(0, baseURI.lastIndexOf("/") + 1);
+
+            xsltGenerator.setParameter("root", uri);
+            DOMResult result = new DOMResult();
+            DOMSource source = new DOMSource(input);
+            xsltGenerator.setInput(source);
+            xsltGenerator.setOutput(result);
+            xsltGenerator.generate();
+            setXForms(result.getNode());
+
+        } catch (XFormsException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private XSLTGenerator setupTransformer(String xsltPath, String xslFile) throws URISyntaxException {
@@ -799,6 +816,9 @@ public class WebProcessor implements XFormsProcessor, EventListener {
         return actionURL;
     }
 
+    private boolean isDebugOn() {
+        return request.getParameter("debug") != null && configuration.getProperty("betterform.debug-allowed").equals("true");
+    }
     private void configureUpload() throws XFormsConfigException {
         //allow absolute paths otherwise resolve relative to the servlet context
         this.uploadDir = Config.getInstance().getProperty("uploadDir");
@@ -817,40 +837,99 @@ public class WebProcessor implements XFormsProcessor, EventListener {
         this.root = (EventTarget) this.xformsProcessor.getXForms();
 
         // interaction events my occur during init so we have to register before
-        this.root.addEventListener(DOMEventNames.ACTIVATE, this, true);
-        this.root.addEventListener(XFormsEventNames.BINDING_EXCEPTION, this, true);
-        this.root.addEventListener(XFormsEventNames.COMPUTE_EXCEPTION, this, true);
+        if (isEventUsed(DOMEventNames.ACTIVATE)) {
+            this.root.addEventListener(DOMEventNames.ACTIVATE, this, true);
+        }
+        if (isEventUsed(XFormsEventNames.BINDING_EXCEPTION)) {
+            this.root.addEventListener(XFormsEventNames.BINDING_EXCEPTION, this, true);
+        }
+        if (isEventUsed(XFormsEventNames.COMPUTE_EXCEPTION)) {
+            this.root.addEventListener(XFormsEventNames.COMPUTE_EXCEPTION, this, true);
+        }
         /*
         this.root.addEventListener(XFormsEventNames.DISABLED, this, true);
         this.root.addEventListener(XFormsEventNames.ENABLED, this, true);
          */
-        this.root.addEventListener(XFormsEventNames.FOCUS, this, false);
-        this.root.addEventListener(DOMEventNames.FOCUS_IN, this, true);
-        this.root.addEventListener(DOMEventNames.FOCUS_OUT, this, true);
-        this.root.addEventListener(XFormsEventNames.HELP, this, true);
-        this.root.addEventListener(XFormsEventNames.HINT, this, true);
-        this.root.addEventListener(XFormsEventNames.INVALID, this, true);
-        this.root.addEventListener(XFormsEventNames.IN_RANGE, this, true);
-        this.root.addEventListener(XFormsEventNames.OUT_OF_RANGE, this, true);
+
+        if (isEventUsed(XFormsEventNames.FOCUS)) {
+            this.root.addEventListener(XFormsEventNames.FOCUS, this, false);
+        }
+        if (isEventUsed(DOMEventNames.FOCUS_IN)) {
+            this.root.addEventListener(DOMEventNames.FOCUS_IN, this, true);
+        }
+        if (isEventUsed(DOMEventNames.FOCUS_OUT)) {
+            this.root.addEventListener(DOMEventNames.FOCUS_OUT, this, true);
+        }
+        if (isEventUsed(XFormsEventNames.HELP)) {
+            this.root.addEventListener(XFormsEventNames.HELP, this, true);
+        }
+        if (isEventUsed(XFormsEventNames.HINT)) {
+            this.root.addEventListener(XFormsEventNames.HINT, this, true);
+        }
+        if (isEventUsed(XFormsEventNames.INVALID)) {
+            this.root.addEventListener(XFormsEventNames.INVALID, this, true);
+        }
+        if (isEventUsed(XFormsEventNames.IN_RANGE)) {
+            this.root.addEventListener(XFormsEventNames.IN_RANGE, this, true);
+        }
+        if (isEventUsed(XFormsEventNames.OUT_OF_RANGE)) {
+            this.root.addEventListener(XFormsEventNames.OUT_OF_RANGE, this, true);
+        }
+        //betterform notification event must be passed always
         this.root.addEventListener(BetterFormEventNames.LOAD_URI, this, true);
-        this.root.addEventListener(XFormsEventNames.LINK_EXCEPTION, this, true);
-        this.root.addEventListener(XFormsEventNames.LINK_ERROR, this, true);
-        this.root.addEventListener(XFormsEventNames.MODEL_CONSTRUCT, this, true);
-        this.root.addEventListener(XFormsEventNames.MODEL_CONSTRUCT_DONE, this, true);
-        this.root.addEventListener(XFormsEventNames.NEXT, this, true);
-        this.root.addEventListener(XFormsEventNames.PREVIOUS, this, true);
-        this.root.addEventListener(XFormsEventNames.READY, this, true);
+
+        if (isEventUsed(XFormsEventNames.LINK_EXCEPTION)) {
+            this.root.addEventListener(XFormsEventNames.LINK_EXCEPTION, this, true);
+        }
+        if (isEventUsed(XFormsEventNames.LINK_ERROR)) {
+            this.root.addEventListener(XFormsEventNames.LINK_ERROR, this, true);
+        }
+        if (isEventUsed(XFormsEventNames.MODEL_CONSTRUCT)) {
+            this.root.addEventListener(XFormsEventNames.MODEL_CONSTRUCT, this, true);
+        }
+        if (isEventUsed(XFormsEventNames.MODEL_CONSTRUCT_DONE)) {
+            this.root.addEventListener(XFormsEventNames.MODEL_CONSTRUCT_DONE, this, true);
+        }
+        if (isEventUsed(XFormsEventNames.NEXT)) {
+            this.root.addEventListener(XFormsEventNames.NEXT, this, true);
+        }
+        if (isEventUsed(XFormsEventNames.PREVIOUS)) {
+            this.root.addEventListener(XFormsEventNames.PREVIOUS, this, true);
+        }
+        if (isEventUsed(XFormsEventNames.READY)) {
+            this.root.addEventListener(XFormsEventNames.READY, this, true);
+        }
+
+        //betterform notification event must be passed always
         this.root.addEventListener(BetterFormEventNames.RENDER_MESSAGE, this, true);
+        //betterform notification event must be passed always
         this.root.addEventListener(BetterFormEventNames.REPLACE_ALL, this, true);
-        this.root.addEventListener(XFormsEventNames.SUBMIT, this, true);
-        this.root.addEventListener(XFormsEventNames.SUBMIT_DONE, this, true);
-        this.root.addEventListener(XFormsEventNames.SUBMIT_ERROR, this, true);
-        this.root.addEventListener(XFormsEventNames.VERSION_EXCEPTION, this, true);
-        this.root.addEventListener(XFormsEventNames.VALUE_CHANGED, this, true);
-        this.root.addEventListener(XFormsEventNames.VALID, this, true);
-        this.root.addEventListener(XFormsEventNames.SELECT, this, true);
-        this.root.addEventListener(XFormsEventNames.DESELECT, this, true);
+        if (isEventUsed(XFormsEventNames.SUBMIT)) {
+            this.root.addEventListener(XFormsEventNames.SUBMIT, this, true);
+        }
+        if (isEventUsed(XFormsEventNames.SUBMIT_DONE)) {
+            this.root.addEventListener(XFormsEventNames.SUBMIT_DONE, this, true);
+        }
+        if (isEventUsed(XFormsEventNames.SUBMIT_ERROR)) {
+            this.root.addEventListener(XFormsEventNames.SUBMIT_ERROR, this, true);
+        }
+        if (isEventUsed(XFormsEventNames.VERSION_EXCEPTION)) {
+            this.root.addEventListener(XFormsEventNames.VERSION_EXCEPTION, this, true);
+        }
+        if (isEventUsed(XFormsEventNames.VALUE_CHANGED)) {
+            this.root.addEventListener(XFormsEventNames.VALUE_CHANGED, this, true);
+        }
+        if (isEventUsed(XFormsEventNames.VALID)) {
+            this.root.addEventListener(XFormsEventNames.VALID, this, true);
+        }
+        if (isEventUsed(XFormsEventNames.SELECT)) {
+            this.root.addEventListener(XFormsEventNames.SELECT, this, true);
+        }
+        if (isEventUsed(XFormsEventNames.DESELECT)) {
+            this.root.addEventListener(XFormsEventNames.DESELECT, this, true);
+        }
     }
+
 
     private boolean noHttp() {
         if (this.request != null && this.response != null && this.httpSession != null) {
