@@ -3,12 +3,12 @@
  */
 package de.betterform.xml.xforms.xpath;
 
-import net.sf.saxon.value.DateTimeValue;
-import net.sf.saxon.value.DateValue;
 import de.betterform.xml.xforms.BetterFormTestCase;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.ui.AbstractFormControl;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
+import net.sf.saxon.value.DateTimeValue;
+import net.sf.saxon.value.DateValue;
 import org.w3c.dom.Node;
 
 import java.io.InputStream;
@@ -409,7 +409,7 @@ public class XFormsExtensionFunctionsTest extends BetterFormTestCase {
     //XXX add test case for choose
 
     public void testInstanceOfModel() throws Exception {
-        assertEquals("second", evaluateInDefaultContextAsString("instanceOfModel('second','default2')/second"));
+        assertEquals("second", evaluateInDefaultContextAsString("bf:instanceOfModel('second','default2')/second"));
     }
 
 

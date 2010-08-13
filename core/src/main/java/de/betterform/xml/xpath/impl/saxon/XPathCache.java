@@ -5,6 +5,15 @@
 
 package de.betterform.xml.xpath.impl.saxon;
 
+import de.betterform.xml.ns.NamespaceConstants;
+import de.betterform.xml.xforms.XFormsProcessorImpl;
+import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xforms.xpath.saxon.function.BetterFormFunctionLibrary;
+import de.betterform.xml.xforms.xpath.saxon.function.XFormsFunctionLibrary;
+import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
+import de.betterform.xml.xpath.impl.saxon.sxpath.XPathDynamicContext;
+import de.betterform.xml.xpath.impl.saxon.sxpath.XPathEvaluator;
+import de.betterform.xml.xpath.impl.saxon.sxpath.XPathExpression;
 import net.sf.saxon.Configuration;
 import net.sf.saxon.dom.NodeWrapper;
 import net.sf.saxon.expr.LastPositionFinder;
@@ -12,23 +21,12 @@ import net.sf.saxon.expr.XPathContextMajor;
 import net.sf.saxon.functions.FunctionLibraryList;
 import net.sf.saxon.functions.JavaExtensionLibrary;
 import net.sf.saxon.functions.SystemFunctionLibrary;
-import net.sf.saxon.om.GroundedValue;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.LookaheadIterator;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.sxpath.IndependentContext;
 import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.value.SequenceExtent;
-
-import de.betterform.xml.ns.NamespaceConstants;
-import de.betterform.xml.xforms.XFormsProcessorImpl;
-import de.betterform.xml.xforms.exception.XFormsException;
-import de.betterform.xml.xforms.xpath.saxon.function.XFormsFunctionLibrary;
-import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
-import de.betterform.xml.xpath.impl.saxon.sxpath.XPathDynamicContext;
-import de.betterform.xml.xpath.impl.saxon.sxpath.XPathEvaluator;
-import de.betterform.xml.xpath.impl.saxon.sxpath.XPathExpression;
 import org.w3c.dom.Node;
 
 import java.util.*;
@@ -51,6 +49,7 @@ public class XPathCache {
         fgXFormsFunctionLibrary = new FunctionLibraryList();
         fgXFormsFunctionLibrary.addFunctionLibrary(SystemFunctionLibrary.getSystemFunctionLibrary(SystemFunctionLibrary.XPATH_ONLY));
         fgXFormsFunctionLibrary.addFunctionLibrary(new XFormsFunctionLibrary());
+        fgXFormsFunctionLibrary.addFunctionLibrary(new BetterFormFunctionLibrary());
         fgXFormsFunctionLibrary.addFunctionLibrary(new JavaExtensionLibrary(XPathCache.kCONFIG));
 
     }
@@ -261,6 +260,10 @@ public class XPathCache {
 
         public int position() {
             return position;
+        }
+
+        public void close() {
+            this.close();
         }
 
         /**

@@ -1,7 +1,5 @@
 package de.betterform.xml.xforms.xpath.saxon.function;
 
-import de.betterform.xml.ns.NamespaceConstants;
-import net.sf.saxon.Err;
 import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.StaticContext;
 import net.sf.saxon.functions.FunctionLibrary;
@@ -9,7 +7,6 @@ import net.sf.saxon.functions.StandardFunction;
 import net.sf.saxon.functions.SystemFunction;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.pattern.NodeKindTest;
-import net.sf.saxon.trans.StaticError;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.type.ItemType;
 import net.sf.saxon.value.EmptySequence;
@@ -119,13 +116,17 @@ public abstract class XPathFunctionLibrary implements FunctionLibrary {
 
     private int checkArgumentCount(int numArgs, int min, int max, String local) throws XPathException {
         if (min == max && numArgs != min) {
-            throw new StaticError("Function " + Err.wrap(local, Err.FUNCTION) + " must have " + min + pluralArguments(min));
+//            throw new StaticError("Function " + Err.wrap(local, Err.FUNCTION) + " must have " + min + pluralArguments(min));
+            throw new XPathException("Function " + local + " must have " + min + pluralArguments(min));
         }
         if (numArgs < min) {
-            throw new StaticError("Function " + Err.wrap(local, Err.FUNCTION) + " must have at least " + min + pluralArguments(min));
+//            throw new StaticError("Function " + Err.wrap(local, Err.FUNCTION) + " must have at least " + min + pluralArguments(min));
+            throw new XPathException("Function " + local + " must have at least " + min + pluralArguments(min));
+
         }
         if (numArgs > max) {
-            throw new StaticError("Function " + Err.wrap(local, Err.FUNCTION) + " must have no more than " + max + pluralArguments(max));
+//            throw new StaticError("Function " + Err.wrap(local, Err.FUNCTION) + " must have no more than " + max + pluralArguments(max));
+            throw new XPathException("Function " + local + " must have  no more than " + max + pluralArguments(max));
         }
         return numArgs;
     }

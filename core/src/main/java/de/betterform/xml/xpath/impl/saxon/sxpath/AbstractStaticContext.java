@@ -4,10 +4,14 @@
  */
 
 package de.betterform.xml.xpath.impl.saxon.sxpath;
+
 import net.sf.saxon.Configuration;
 import net.sf.saxon.event.LocationProvider;
 import net.sf.saxon.expr.*;
-import net.sf.saxon.functions.*;
+import net.sf.saxon.functions.ConstructorFunctionLibrary;
+import net.sf.saxon.functions.FunctionLibrary;
+import net.sf.saxon.functions.FunctionLibraryList;
+import net.sf.saxon.functions.SystemFunctionLibrary;
 import net.sf.saxon.instruct.Executable;
 import net.sf.saxon.instruct.LocationMap;
 import net.sf.saxon.om.NamePool;
@@ -70,7 +74,7 @@ public abstract class AbstractStaticContext implements StaticContext {
         lib.addFunctionLibrary(new ConstructorFunctionLibrary(getConfiguration()));
         //lib.addFunctionLibrary(new JavaExtensionLibrary(getConfiguration()));
         if (config.isAllowExternalFunctions()) {
-            Configuration.getPlatform().addFunctionLibraries(lib, config);
+            Configuration.getPlatform().addFunctionLibraries(lib, config,Configuration.XPATH);
         }
         setFunctionLibrary(lib);
     }

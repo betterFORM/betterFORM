@@ -148,7 +148,7 @@ public class XPathExpression {
         XPathDynamicContext dynamicContext = createDynamicContext(origin);
         SequenceIterator iter = iterate(dynamicContext);
         SequenceExtent extent = new SequenceExtent(iter);
-        List result = (List)extent.convertToJava(List.class, dynamicContext.getXPathContextObject());
+        List result = (List)extent.convertToJava((Item) dynamicContext.getXPathContextObject());
         if (result == null) {
             result = Collections.EMPTY_LIST;
         }

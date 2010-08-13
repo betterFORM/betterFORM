@@ -9,25 +9,19 @@ import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.xpath.saxon.function.xpath.Aggregate2;
 import de.betterform.xml.xforms.xpath.saxon.function.xpath.Id2;
 import de.betterform.xml.xforms.xpath.saxon.function.xpath.Minimax2;
-import net.sf.saxon.Err;
-import net.sf.saxon.expr.Expression;
-import net.sf.saxon.expr.StaticContext;
 import net.sf.saxon.expr.StaticProperty;
 import net.sf.saxon.functions.*;
 import net.sf.saxon.functions.Compare;
 import net.sf.saxon.functions.Error;
 import net.sf.saxon.functions.StandardFunction.Entry;
 import net.sf.saxon.om.StandardNames;
-import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.pattern.NodeKindTest;
-import net.sf.saxon.trans.StaticError;
-import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.type.BuiltInAtomicType;
-import net.sf.saxon.type.ItemType;
 import net.sf.saxon.type.Type;
-import net.sf.saxon.value.*;
-
-import java.util.HashMap;
+import net.sf.saxon.value.BooleanValue;
+import net.sf.saxon.value.DoubleValue;
+import net.sf.saxon.value.Int64Value;
+import net.sf.saxon.value.StringValue;
 
 /**
  * This class contains static data tables defining the properties of XForms functions. "XForms functions" here means the
@@ -41,6 +35,7 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
     protected String getFunctionNamespace() {
         return XFormsFunctionLibrary.functionNamespace;
     }
+
     static {
         Entry e;
 

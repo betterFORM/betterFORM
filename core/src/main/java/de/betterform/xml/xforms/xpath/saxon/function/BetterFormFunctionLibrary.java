@@ -6,22 +6,10 @@
 package de.betterform.xml.xforms.xpath.saxon.function;
 
 import de.betterform.xml.ns.NamespaceConstants;
-import de.betterform.xml.xforms.xpath.saxon.function.xpath.Aggregate2;
-import de.betterform.xml.xforms.xpath.saxon.function.xpath.Id2;
-import de.betterform.xml.xforms.xpath.saxon.function.xpath.Minimax2;
 import net.sf.saxon.expr.StaticProperty;
-import net.sf.saxon.functions.*;
-import net.sf.saxon.functions.Compare;
-import net.sf.saxon.functions.Error;
 import net.sf.saxon.functions.StandardFunction.Entry;
-import net.sf.saxon.om.StandardNames;
-import net.sf.saxon.pattern.NodeKindTest;
 import net.sf.saxon.type.BuiltInAtomicType;
 import net.sf.saxon.type.Type;
-import net.sf.saxon.value.BooleanValue;
-import net.sf.saxon.value.DoubleValue;
-import net.sf.saxon.value.Int64Value;
-import net.sf.saxon.value.StringValue;
 
 /**
  * This class contains static data tables defining the properties of XForms functions. "XForms functions" here means the
@@ -43,7 +31,7 @@ public class BetterFormFunctionLibrary extends XPathFunctionLibrary {
         arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE);
 
         // instanceOfModel is analogous to instance function but returns instance of foreign model        
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}instanceOfModel", InstanceOfModel.class, 0, 2, 2, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
+        e = register("{" + NamespaceConstants.BETTERFORM_NS + "}instanceOfModel", InstanceOfModel.class, 0, 2, 2, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
         arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
 

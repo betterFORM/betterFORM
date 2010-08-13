@@ -189,6 +189,7 @@
 
     </target>
 
+    <!-- todo: rename to deploy-forms. 'resources' is misleading here. Docs must be changed appropriately -->
     <target name="deploy-resources" depends="exploded-webapp"
             description="copy all forms from src/main/xforms to webapp dir">
 
