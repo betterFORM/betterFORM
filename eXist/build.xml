@@ -233,4 +233,12 @@
 
     </target>
 
+        <target  name="create-jar">
+        <jar basedir="${target.dir}/betterform/WEB-INF/classes" compress="true" jarfile="${exist.webapp.dir}/lib/user/betterform.jar" update="true">
+            <exclude name="schema/**"/>
+            <exclude name=".svn"/>
+            <exclude name="**/.svn/**"/>
+        </jar>
+    </target>
+
 </project>

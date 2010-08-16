@@ -12,7 +12,11 @@
     <property name="bf.shortname" value="betterform"/>
     <!--todo:move property to build.properties.xml-->
     <property name="bf.version" value="3.1.0"/>
+    <property file="${exist.rootdir}/build.properties"/>
 
+    <condition property="include.feature.betterform.config">
+        <istrue value="${include.feature.betterform}"/>
+    </condition>
 
     <!-- <property name="target.dir" value="${basedir}/target"/>  -->
     <!--<property name="bf.name" value="${bf.shortname}-${bf.version}"/>-->
@@ -46,7 +50,7 @@
         <classpath refid="classpath.exist"/>
     </typedef>
 
-    <target name="install" description="install betterFORM into an existing eXist XML Db installation">
+    <target name="install" description="install betterFORM into an existing eXist XML Db installation" if="include.feature.betterform.config">
         <echo message="************************************************************************************"/>
         <echo message="add betterFORM config parameters to eXist to ${exist.web.xml}"/>
         <echo message="************************************************************************************"/>
@@ -60,6 +64,9 @@
 
         <antcall target="deployBetterFORMResources"/>
 
+        <copy  todir="${exist.rootdir}/webapp/WEB-INF/classes">
+            <fileset dir="${betterform.webapp}/WEB-INF/classes"/>
+        </copy>
 <!--
         <echo message="************************************************************************************"/>
         <echo message="deploy betterFORM resources into running eXist XML DB"/>
@@ -72,11 +79,43 @@
         <echo message="add betterFORM lib folder to eXist start.config"/>
         <echo message="************************************************************************************"/>
 
-        <antcall target="patchStartConfig"/>
+        <!-- <antcall target="patchStartConfig"/> -->
 
-        <copy todir="${exist.rootdir}/webapp/xquery">
-            <fileset file="${betterform.webapp}/xquery/xferror.xql"/>
-        </copy>
+
+    </target>
+
+
+
+    <target name="uninstall" xmlns:xmldb="http://exist-db.org/ant" description="uninstall betterFORM" if="include.feature.betterform.config">
+        <delete file="${exist.web.xml}" failonerror="false"/>
+        <delete dir="${exist.rootdir}/webapp/betterform/forms" failonerror="false"/>
+        <delete dir="${exist.rootdir}/webapp/betterform/resources/images" failonerror="false"/>
+        <delete dir="${exist.rootdir}/webapp/betterform/resources/scripts" failonerror="false"/>
+        <delete dir="${exist.rootdir}/webapp/betterform/resources/styles" failonerror="false"/>
+        <delete dir="${exist.rootdir}/webapp/betterform/resources/xsd" failonerror="false"/>
+        <delete dir="${exist.rootdir}/webapp/betterform/resources/xslt" failonerror="false"/>
+        <move file="${basedir}/uninstall/web.xml" tofile="${exist.web.xml}" failonerror="false"/>
+        <!-- TODO: remove when cocoon is removed -->
+        <!-- eXist 1.5.0 -->
+        <move file="${basedir}/uninstall/ehcache-1.1.jar" tofile="${exist.rootdir}/extensions/cocoon/lib/ehcache-1.1.jar" failonerror="false"/>
+        <!-- eXist 1.4 -->
+        <!-- <move file="${basedir}/uninstall/ehcache-1.1.jar" tofile="${exist.rootdir}/lib/cocoon/ehcache-1.1.jar" failonerror="false"/> -->
+
+
+        <!--delete files from WEB-INF-->
+        <delete file="${exist.rootdir}/webapp/WEB-INF/betterform-config.xml" failonerror="false"/>
+        <delete file="${exist.rootdir}/webapp/WEB-INF/dwr.xml" failonerror="false"/>
+        <delete file="${exist.rootdir}/webapp/WEB-INF/dwr20.dtd" failonerror="false"/>
+        <delete file="${exist.rootdir}/webapp/WEB-INF/log4j.dtd" failonerror="false"/>
+        <delete file="${exist.rootdir}/webapp/WEB-INF/log4j.xml" failonerror="false"/>
+        <delete file="${exist.rootdir}/webapp/WEB-INF/web.xml.original" failonerror="false"/>
+
+        <!--delete error page-->
+        <delete file="${exist.rootdir}/webapp/xquery/error.xql" failonerror="false"/>
+
+        <!--delete sample file-->
+        <!-- <delete file="${exist.rootdir}/webapp/xquery/xfGuess.xql" failonerror="false"/> -->
+
     </target>
 
     <target name="install-xrx" description="installs sample XRX applications">
@@ -105,38 +144,7 @@
         </xdb:store>
     </target>
 
-
-    <target name="uninstall" xmlns:xmldb="http://exist-db.org/ant" description="uninstall betterFORM">
-        <delete file="${exist.web.xml}" failonerror="false"/>
-        <delete dir="${exist.rootdir}/webapp/forms" failonerror="false"/>
-        <delete dir="${exist.rootdir}/webapp/resources/images" failonerror="false"/>
-        <delete dir="${exist.rootdir}/webapp/resources/scripts" failonerror="false"/>
-        <delete dir="${exist.rootdir}/webapp/resources/styles" failonerror="false"/>
-        <delete dir="${exist.rootdir}/webapp/resources/xsd" failonerror="false"/>
-        <delete dir="${exist.rootdir}/webapp/resources/xslt" failonerror="false"/>
-        <move file="${basedir}/uninstall/web.xml" tofile="${exist.web.xml}" failonerror="false"/>
-        <!-- eXist 1.5.0 -->
-        <move file="${basedir}/uninstall/ehcache-1.1.jar" tofile="${exist.rootdir}/extensions/cocoon/lib/ehcache-1.1.jar" failonerror="false"/>
-        <!-- eXist 1.4 -->
-        <!-- <move file="${basedir}/uninstall/ehcache-1.1.jar" tofile="${exist.rootdir}/lib/cocoon/ehcache-1.1.jar" failonerror="false"/> -->
-
-        <!--delete start.config from exist dir-->
-        <delete file="${exist.rootdir}/start.config"/>
-
-        <!--delete files from WEB-INF-->
-        <delete file="${exist.rootdir}/webapp/WEB-INF/betterform-config.xml" failonerror="false"/>
-        <delete file="${exist.rootdir}/webapp/WEB-INF/dwr.xml" failonerror="false"/>
-        <delete file="${exist.rootdir}/webapp/WEB-INF/dwr20.dtd" failonerror="false"/>
-        <delete file="${exist.rootdir}/webapp/WEB-INF/log4j.dtd" failonerror="false"/>
-        <delete file="${exist.rootdir}/webapp/WEB-INF/log4j.xml" failonerror="false"/>
-        <delete file="${exist.rootdir}/webapp/WEB-INF/web.xml.original" failonerror="false"/>
-
-        <!--delete error page-->
-        <delete file="${exist.rootdir}/webapp/xquery/error.xql" failonerror="false"/>
-
-        <!--delete sample file-->
-        <delete file="${exist.rootdir}/webapp/xquery/xfGuess.xql" failonerror="false"/>
-
+    <target name="uninstall-xrx" description="uninstall betterform demo application">
         <!--remove betterFORM from the database-->
         <xdb:remove xmlns:xdb="http://exist-db.org/ant"
             uri="xmldb:exist://localhost:8080/exist/xmlrpc/db"
@@ -151,10 +159,7 @@
             user="admin"
             password="${pass}"/>
 
-        <echo message="!!!!! To fully remove betterFORM from eXist you have to delete the 'betterform' directory and 'betterform.zip' from EXIST_HOME/extensions !!!!!"/>
     </target>
-
-
 <!--
     <target name="unzip_betterFORM_release">
         <available property="betterFormAvailable" file="${bfSrc.dir}.zip"/>
@@ -202,10 +207,10 @@
     </target>
 
     <target name="deployBetterFORMResources" >
-        <copy todir="${exist.rootdir}/webapp/forms">
+        <copy todir="${exist.rootdir}/webapp/betterform/forms">
             <fileset dir="${betterform.webapp}/forms"/>
         </copy>
-        <copy todir="${exist.rootdir}/webapp/resources">
+        <copy todir="${exist.rootdir}/webapp/betterform/resources">
             <fileset dir="${betterform.webapp}/resources"/>
         </copy>
 
@@ -219,28 +224,14 @@
 
         <mkdir dir="${basedir}/uninstall"/>
         <!-- eXist 1.5.0 -->
+        <!-- TODO: remove when cocoon is removed -->
         <move file="${exist.rootdir}/extensions/cocoon/lib/ehcache-1.1.jar" tofile="${basedir}/uninstall/ehcache-1.1.jar" />
         <!-- eXist 1.4 -->
         <!-- <move file="${exist.rootdir}/lib/cocoon/ehcache-1.1.jar" tofile="${basedir}/uninstall/ehcache-1.1.jar" /> -->
 
-    </target>
-
-
-    <target  name="patchStartConfig">
-        <!-- <copy file="${basedir}/start.config.betterform" tofile="${exist.rootdir}/start.config"/> -->
-        <copy file="${betterform.home}/src/main/etc/start.config.betterform-1.5" tofile="${exist.rootdir}/start.config"/>
-<!-- DO NOT REMOVE: This would be the preferred way to use the start.config but it is only available if sources of eXist have been
-installed. Therefore we maintain our own full copy for now.
-        <copy file="${exist.rootdir}/src/org/exist/start/start.config" todir="${exist.rootdir}"/>
-
-        <concat destfile="${exist.rootdir}/start.config">
-            <filelist dir="${exist.rootdir}/src/org/exist/start"
-		         files="start.config"/>
-            <filelist dir="${basedir}"
-		         files="start.config.betterform"/>
-
-        </concat>
--->
+        <copy todir="${exist.rootdir}/webapp/betterform/xquery">
+            <fileset file="${betterform.webapp}/xquery/xferror.xql"/>
+        </copy>
     </target>
 
 </project>
