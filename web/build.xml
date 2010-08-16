@@ -233,9 +233,9 @@
     </target>
     
 
-    <!-- **************************************** BUILDING JAR **************************************** -->
-    <!-- **************************************** BUILDING JAR **************************************** -->
-    <!-- **************************************** BUILDING JAR **************************************** -->
+    <!-- **************************************** BUILDING JAR/WAR **************************************** -->
+    <!-- **************************************** BUILDING JAR/WAR **************************************** -->
+    <!-- **************************************** BUILDING JAR/WAR **************************************** -->
 
     <!-- todo: when package is executed it should be made sure that 'dojo' is configured as useragent in betterform-config.xml -->
     <target name="package" depends="build-dojo" description="create war file">
@@ -289,6 +289,20 @@
              basedir="${webapp.dir}">
         </war>
     </target>
+
+     <target name="create-jar" depends="compile">
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="creating jar-file..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+
+         <jar basedir="${target}/classes" compress="true" jarfile="${targetname}.jar" update="true">
+            <exclude name="schema/**"/>
+        </jar>
+    </target>
+
+
     <!-- todo: add target 'package-for-integration' that contains all files needed for inclusion in another webapp-->
 
     <!-- **************************************** SOURCE DISTRIBUTION **************************************** -->

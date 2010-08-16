@@ -32,7 +32,7 @@
     <!--This target removes unneeded files from the standard betterform web archive-->
     <target name="tailorForExist" description="cleans target-dir from unneeded clutter">
         <move file="${webapp.dir}/WEB-INF/betterform-config.xml" todir="${target.dir}"/>
-        <copy file="${webapp.dir}/WEB-INF/classes/META-INF/version.info" todir="${webapp.dir}"/>
+       <!-- <copy file="${webapp.dir}/WEB-INF/classes/META-INF/version.info" todir="${webapp.dir}"/> -->
         
 <!--
         <xslt in="${target.dir}/betterform-config.xml"
@@ -85,8 +85,11 @@
                                                                commons-codec-* ,
                                                                commons-fileupload-* ,
                                                                commons-httpclient-* ,
+                                                               commons-io-* ,
                                                                activation-* ,
-                                                               mail-*" />
+                                                               mail-* ,
+                                                               saxonb-*" />
+            <fileset  dir="${webapp.dir}/WEB-INF/classes"/>
         </delete>
 
     </target>
@@ -98,7 +101,7 @@
         <antcall target="buildBetterForm"/>
         <antcall target="extractReleaseWar"/>
         <antcall target="tailorForExist"/>
-        <!-- <antcall target="package-xrx"/> -->
+        <antcall target="moveLibs"/>
 
         <copy file="${basedir}/eXist-build.xml" tofile="${basedir}/target/build.xml"/>
 
@@ -116,10 +119,13 @@
     </target>
 
     <target  name="buildBetterForm" unless="warAvailable">
+        <ant antfile="${web.dir}/build.xml" target="create-jar" dir="${web.dir}" inheritall="false"/>        
+
         <ant antfile="${web.dir}/build.xml" target="build-dojo" dir="${web.dir}" inheritall="false">
                 <property name="target.dir" value="${target.dir}"/>
                 <property name="webapp.dir" value="${webapp.dir}"/>
         </ant>
+
     </target>
 
     <target  name="extractReleaseWar" if="warAvailable">
@@ -145,11 +151,6 @@
         </ant>
     </target>
     -->
-<!--
-    <target name="package-xrx">
-        <zip basedir="src/main/xrx" zipfile="${target.dir}/xrx.zip" excludes="build.xml"/>
-    </target>
--->
 <!--
     <target name="create-exist-extension-installer"
             description="creates a zip archive of the eXist-extension installer">
@@ -233,12 +234,9 @@
 
     </target>
 
-        <target  name="create-jar">
-        <jar basedir="${target.dir}/betterform/WEB-INF/classes" compress="true" jarfile="${exist.webapp.dir}/lib/user/betterform.jar" update="true">
-            <exclude name="schema/**"/>
-            <exclude name=".svn"/>
-            <exclude name="**/.svn/**"/>
-        </jar>
+    <target  name="moveLibs">
+        <move file="${webapp.dir}/WEB-INF/lib/" todir="${target.dir}" />
+        <copy file="${web.dir}/target/${web.app.name}-${web.app.version}.jar" todir="${target.dir}/lib" />
     </target>
 
 </project>
