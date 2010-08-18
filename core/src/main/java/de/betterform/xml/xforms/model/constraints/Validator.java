@@ -223,9 +223,9 @@ public class Validator {
 
         // check for nillable type
         if (modelItem.isXSINillable() && (value == null || value.length() == 0)) {
-            if (LOGGER.isDebugEnabled()) {
+            if (LOGGER.isTraceEnabled()) {
                 String xsiPrefix = NamespaceResolver.getPrefix(this.model.getElement(), NamespaceConstants.XMLSCHEMA_INSTANCE_NS);
-                LOGGER.debug("validate: item " + modelItem.getNode() + " with @" + xsiPrefix + ":nil='true' considered valid");
+                LOGGER.trace("validate: item " + modelItem.getNode() + " with @" + xsiPrefix + ":nil='true' considered valid");
             }
 
             // item is considered valid regardless which type it has
@@ -250,8 +250,8 @@ public class Validator {
             datatypeValid &= checkDatatype(xfType, value);
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("validate: " + DOMUtil.getCanonicalPath((Node) modelItem.getNode()) + " computed " + (datatypeValid ? "valid" : "INVALID"));
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace("validate: " + DOMUtil.getCanonicalPath((Node) modelItem.getNode()) + " computed " + (datatypeValid ? "valid" : "INVALID"));
         }
 
         // set datatype validity
@@ -293,8 +293,8 @@ public class Validator {
             simpleType.validate(value.intern() , validationState, validatedInfo);
         }
         catch (InvalidDatatypeValueException e) {
-            if(LOGGER.isDebugEnabled()){
-                LOGGER.warn("value '" + value + "' of type " + expandedName + " is invalid - " + e.getMessage());
+            if(LOGGER.isTraceEnabled()){
+                LOGGER.trace("value '" + value + "' of type " + expandedName + " is invalid - " + e.getMessage());
             }
             return false;
         }

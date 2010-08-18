@@ -44,8 +44,8 @@ public class ScriptAction extends AbstractBoundAction {
         super.init();
         this.script = DOMUtil.getTextNode(this.element).getNodeValue();
 
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Script content: " + script);
+        if (getLogger().isTraceEnabled()) {
+            getLogger().trace("Script content: " + script);
         }
     }
 

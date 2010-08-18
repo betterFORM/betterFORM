@@ -50,8 +50,8 @@ public class SubmissionValidatorMode implements ValidatorMode {
         }
 
         if (!modelItem.getStateChangeView().hasValueChanged()) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("validate: item " + modelItem.getNode() + " is unmodified: validation skipped");
+            if (LOGGER.isTraceEnabled()) {
+                LOGGER.trace("validate: item " + modelItem.getNode() + " is unmodified: validation skipped");
             }
 
             // skip unmodified item for performance reasons
@@ -77,8 +77,8 @@ public class SubmissionValidatorMode implements ValidatorMode {
         }
 
         if (!modelItem.isValid() || (modelItem.isRequired() && modelItem.getValue().length() == 0)) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("validate: item " + modelItem.getNode() + " is invalid or required but empty: validation stopped");
+            if (LOGGER.isTraceEnabled()) {
+                LOGGER.trace("validate: item " + modelItem.getNode() + " is invalid or required but empty: validation stopped");
             }
 
             // stop validation on invalid or reqiured-but-empty item

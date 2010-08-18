@@ -178,8 +178,8 @@ public class DefaultXMLEventService implements XMLEventService {
         start = System.currentTimeMillis();
         boolean preventDefault = target.dispatchEvent(event);
         end = System.currentTimeMillis();
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("dispatch event: " + type + " handling needed " + (end - start) + " ms");
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace("dispatch event: " + type + " handling needed " + (end - start) + " ms");
         }
 
         if (!event.getCancelable() || !preventDefault) {
@@ -195,8 +195,8 @@ public class DefaultXMLEventService implements XMLEventService {
                 start = System.currentTimeMillis();
                 action.performDefault(event);
                 end = System.currentTimeMillis();
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("dispatch event: " + type + " default action needed " + (end - start) + " ms");
+                if (LOGGER.isTraceEnabled()) {
+                    LOGGER.trace("dispatch event: " + type + " default action needed " + (end - start) + " ms");
                 }
             }
         }

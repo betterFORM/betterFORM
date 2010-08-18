@@ -109,14 +109,14 @@ public class DefaultXMLEventInitializer implements XMLEventInitializer {
         boolean[] rules = (boolean[]) INITIALIZATION_RULES.get(type);
 
         if (rules != null) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("initializing event " + type + " from rule: bubbles=" + rules[EVENT_BUBBLES] + ", cancelable=" + rules[EVENT_CANCELABLE] + ", context=" + (rules[EVENT_CONTEXT] ? "yes" : "no"));
+            if (LOGGER.isTraceEnabled()) {
+                LOGGER.trace("initializing event " + type + " from rule: bubbles=" + rules[EVENT_BUBBLES] + ", cancelable=" + rules[EVENT_CANCELABLE] + ", context=" + (rules[EVENT_CONTEXT] ? "yes" : "no"));
             }
             event.initXMLEvent(type, rules[EVENT_BUBBLES], rules[EVENT_CANCELABLE], rules[EVENT_CONTEXT] ? context : null);
         }
         else {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("initializing event " + type + " from parameters: bubbles=" + bubbles + ", cancelable=" + cancelable + ", context=" + (context != null ? "yes" : "no"));
+            if (LOGGER.isTraceEnabled()) {
+                LOGGER.trace("initializing event " + type + " from parameters: bubbles=" + bubbles + ", cancelable=" + cancelable + ", context=" + (context != null ? "yes" : "no"));
             }
             event.initXMLEvent(type, bubbles, cancelable, context);
         }

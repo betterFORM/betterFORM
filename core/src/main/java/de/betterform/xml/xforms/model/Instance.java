@@ -63,8 +63,8 @@ public class Instance extends XFormsElement {
      * @throws XFormsException if any error occurred during init.
      */
     public void init() throws XFormsException {
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug(this + " init");
+        if (getLogger().isTraceEnabled()) {
+            getLogger().trace(this + " init");
         }
         if(getXFormsAttribute(Instance.READONLY_INSTANCE) != null &&
            getXFormsAttribute(Instance.READONLY_INSTANCE).equals("true")){

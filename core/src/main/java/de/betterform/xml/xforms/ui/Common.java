@@ -50,8 +50,8 @@ public class Common extends BindingElement {
      * @throws XFormsException if any error occurred during init.
      */
     public void init() throws XFormsException {
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug(this + " init");
+        if (getLogger().isTraceEnabled()) {
+            getLogger().trace(this + " init");
         }
 
         initializeDefaultAction();

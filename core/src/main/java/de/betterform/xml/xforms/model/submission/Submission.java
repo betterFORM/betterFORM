@@ -255,8 +255,8 @@ public class Submission extends BindingElement implements DefaultAction {
      *                         todo: should call BindingElement.init() but some methods have to be refactored first
      */
     public void init() throws XFormsException {
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug(this + " init");
+        if (getLogger().isTraceEnabled()) {
+            getLogger().trace(this + " init");
         }
 
         initializeDefaultAction();

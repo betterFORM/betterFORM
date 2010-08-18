@@ -137,9 +137,6 @@ public class FluxProcessor extends WebProcessor {
      * @param event the handled DOMEvent
      */
     public void handleEvent(Event event) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Handling Event " + event.getType());
-        }
         super.handleEvent(event);
         try {
             if (event instanceof XMLEvent) {

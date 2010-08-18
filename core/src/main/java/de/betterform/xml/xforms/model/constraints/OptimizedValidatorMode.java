@@ -30,8 +30,8 @@ public class OptimizedValidatorMode implements ValidatorMode {
      */
     public boolean performValidation(ModelItem modelItem) {
         if (!modelItem.getStateChangeView().hasValueChanged()) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("validate: item " + modelItem.getNode() + " is unmodified: validation skipped");
+            if (LOGGER.isTraceEnabled()) {
+                LOGGER.trace("validate: item " + modelItem.getNode() + " is unmodified: validation skipped");
             }
 
             // skip unmodified item for performance reasons

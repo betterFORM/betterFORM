@@ -373,7 +373,7 @@ public class WebProcessor implements XFormsProcessor, EventListener {
      */
     public void handleEvent(Event event) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("handleEvent: " + event.getType());
+            LOGGER.debug("Handling Event " + event.getType());
         }
     }
 
