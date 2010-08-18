@@ -5,94 +5,150 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:xsd="http://www.w3.org/2001/XMLSchema"
       lang="de">
-    <head>
-        <title>Input Control</title>
+<head>
+    <title>Input Control</title>
 
-        <style type="text/css">
-            .xfGroupLabel{
-                font-size:12pt;
-                font-weight: bold;
-                padding-bottom: 10px;
-            }
+    <style type="text/css">
+        .xfGroupLabel {
+            font-size: 12pt;
+            font-weight: bold;
+            padding-bottom: 10px;
+        }
 
-            #mips .xfTrigger .dijitButtonContents{width:200px;}
-        </style>
+        #mips .xfTrigger .dijitButtonContents {
+            width: 200px;
+        }
+    </style>
 
-        
-        <link rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
-        <link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css" />
 
-        <script type="text/javascript">
-                dojo.require("dojox.highlight");
-                dojo.require("dojox.highlight.languages.xml");
-                dojo.addOnLoad(function() {
-                    dojo.query("code").forEach(dojox.highlight.init);
-                });
+    <link rel="stylesheet" type="text/css" href="../../../resources/scripts/dojox/highlight/resources/highlight.css"/>
+    <link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css"/>
 
-                dojo.require("dijit.form.Button");
-                dojo.require("dijit.TitlePane");
-                dojo.require('dijit.layout.ContentPane');
-        </script>
+    <script type="text/javascript">
+        dojo.require("dojox.highlight");
+        dojo.require("dojox.highlight.languages.xml");
+        dojo.addOnLoad(function() {
+            dojo.query("code").forEach(dojox.highlight.init);
+        });
 
-    </head>
-    <body class="soria" style="margin:30px;">
-    <!--<body style="margin:30px;">-->
-        <div id="xforms">
-            <div style="display:none;">
-                <xf:model id="model-1">
-                    <xf:instance id="instance-1" xmlns="">
-                        <data>
-                            <items>
-                                <item>foo</item>
-                                <item></item>
-                                <item>2007-10-10</item>
-                                <item>2007-10-10T23:23:23.123Z</item>
-                                <item>2007-10-10T23:23:23.123Z</item>
-                            </items>
-                        </data>
-                    </xf:instance>
+        dojo.require("dijit.form.Button");
+        dojo.require("dijit.TitlePane");
+        dojo.require('dijit.layout.ContentPane');
+    </script>
 
-                    <xf:bind nodeset="items">
-                        <xf:bind nodeset="item[1]" />
-                        <xf:bind nodeset="item[2]" type="xf:boolean"/>
-                        <xf:bind nodeset="item[3]" type="xf:date"/>
-                        <xf:bind nodeset="item[4]" type="xf:dateTime"/>
-                        <xf:bind nodeset="item[5]" type="xf:dateTime"/>
-                    </xf:bind>
-                </xf:model>
-            </div>
+</head>
+<body class="soria" style="margin:30px;">
+<!--<body style="margin:30px;">-->
+<div id="xforms">
+<div style="display:none;">
+    <xf:model id="model-1">
+        <xf:instance id="instance-1" xmlns="">
+            <data>
+                <input constraint="true" readonly="false" required="true" relevant="true">
+                    <value>foo</value>
+                </input>
+                <input constraint="true" readonly="false" required="true" relevant="true">
+                    <value></value>
+                </input>
+                <input constraint="true" readonly="false" required="true" relevant="true">
+                    <value>2007-10-10</value>
+                </input>
+                <input constraint="true" readonly="false" required="true" relevant="true">
+                    <value>2007-10-10T23:23:23.123Z</value>
+                </input>
+            </data>
+        </xf:instance>       
 
-            <div class="pagetitle">The input Element</div>
-            <div class="Section">
-                <div class="Headline">Description</div>
-                This form control enables free-form data entry or a user
-                interface component appropriate to the datatype of the bound
-                node.
-            </div>
+        <xf:bind nodeset="input[1]">
+            <xf:bind nodeset="value"
+                     constraint="boolean-from-string(../@constraint)"
+                     readonly="boolean-from-string(../@readonly)"
+                     required="boolean-from-string(../@required)"
+                     relevant="boolean-from-string(../@relevant)"/>
 
-            <div class="Section">
-                <div class="Headline"><a href="http://www.w3.org/TR/xforms11/#ui-input">XForms 1.1 Element Specification</a></div>
-            </div>
+            <xf:bind nodeset="@constraint" type="boolean"/>
+            <xf:bind nodeset="@readonly" type="boolean"/>
+            <xf:bind nodeset="@required" type="boolean"/>
+            <xf:bind nodeset="@relevant" type="boolean"/>
+        </xf:bind>
+        <xf:bind nodeset="input[2]">
+            <xf:bind nodeset="value"
+                constraint="boolean-from-string(../@constraint)"
+                readonly="boolean-from-string(../@readonly)"
+                required="boolean-from-string(../@required)"
+                relevant="boolean-from-string(../@relevant)"
+                type="xf:boolean"/>
 
-            <!-- ####################### CONTENT SECTION STARTING HERE ########################### -->
-            <!-- ####################### CONTENT SECTION STARTING HERE ########################### -->
-            <!-- ####################### CONTENT SECTION STARTING HERE ########################### -->
-            <div class="Section">
+            <xf:bind nodeset="@constraint" type="boolean"/>
+            <xf:bind nodeset="@readonly" type="boolean"/>
+            <xf:bind nodeset="@required" type="boolean"/>
+            <xf:bind nodeset="@relevant" type="boolean"/>
+        </xf:bind>
+        <xf:bind nodeset="input[3]">
+            <xf:bind nodeset="value"
+                constraint="boolean-from-string(../@constraint)"
+                readonly="boolean-from-string(../@readonly)"
+                required="boolean-from-string(../@required)"
+                relevant="boolean-from-string(../@relevant)"
+                type="xf:date"/>
 
-                <!-- ########### plain input ############ -->
-                <!-- ########### plain input ############ -->
-                <!-- ########### plain input ############ -->
-                <div class="Subsection" dojotype="dijit.TitlePane" open="true" title="Text input control">
-                    <div class="description">
-                        This is the most common rendering of an input which is bound to a string value in the
-                        Instance.
-                    </div>
-                    <div class="Sample">
-                        <xf:input id="control1" ref="items/item[1]" incremental="true">
-                            <xf:label>a text</xf:label>
-                        </xf:input>
-                    </div>
-                    <div dojotype="dijit.TitlePane" open="false" title="XForms Markup">
+            <xf:bind nodeset="@constraint" type="boolean"/>
+            <xf:bind nodeset="@readonly" type="boolean"/>
+            <xf:bind nodeset="@required" type="boolean"/>
+            <xf:bind nodeset="@relevant" type="boolean"/>
+        </xf:bind>
+        <xf:bind nodeset="input[4]">
+            <xf:bind nodeset="value"
+                constraint="boolean-from-string(../@constraint)"
+                readonly="boolean-from-string(../@readonly)"
+                required="boolean-from-string(../@required)"
+                relevant="boolean-from-string(../@relevant)"
+                type="xf:dateTime"/>
+
+            <xf:bind nodeset="@constraint" type="boolean"/>
+            <xf:bind nodeset="@readonly" type="boolean"/>
+            <xf:bind nodeset="@required" type="boolean"/>
+            <xf:bind nodeset="@relevant" type="boolean"/>
+        </xf:bind>
+    </xf:model>
+</div>
+
+<div class="pageintro">
+    <div class="pagetitle">The input Element</div>
+
+    <div class="Section">
+        <div class="PageDescription">Description</div>
+        This form control enables free-form data entry or a user
+        interface component appropriate to the datatype of the bound
+        node.
+    </div>
+
+    <div class="Section">
+        <div class="PageDescription"><a href="http://www.w3.org/TR/xforms11/Input.xhtml#ui-input">XForms 1.1 Element Specification</a>
+    </div>
+</div>
+</div>
+
+<!-- ####################### CONTENT SECTION STARTING HERE ########################### -->
+<!-- ####################### CONTENT SECTION STARTING HERE ########################### -->
+<!-- ####################### CONTENT SECTION STARTING HERE ########################### -->
+<div class="Section">
+
+    <!-- ########### plain input ############ -->
+    <!-- ########### plain input ############ -->
+    <!-- ########### plain input ############ -->
+
+
+    <div class="Headline">Text input control</div>
+
+
+    <p class="Description">
+        This is the most common rendering of an input which is bound to a string value in the
+        Instance.
+    </p>
+    <div>
+        <div class="Subheadline">XForms Markup</div>
+        <div class="Subsection">
 <pre><code class="xml"><![CDATA[<!-- XForms Instance -->
 <item>foo</item>
 
@@ -102,22 +158,53 @@
 <xf:input ref="item">
     <xf:label>a text</xf:label>
 </xf:input>]]></code></pre>
-                    </div>
-                </div>
+        </div>
+    </div>
 
-                <!-- ########### boolean input ############ -->
-                <div class="Subsection"  dojotype="dijit.TitlePane" open="true" title="Checkbox control">
-                    <div class="description">
-                        An input which binds to a Node of type 'boolean' is rendered as a Checkbox.
-                    </div>
-                    <div class="Sample">
-                        <xf:input id="control2" ref="items/item[2]" incremental="true">
-                            <xf:label>a boolean</xf:label>
-                        </xf:input>
-                    </div>
+    <div>
+        <div class="Subheadline">Sample</div>
+        <div class="Sample">
+            <xf:input id="input1" ref="input[1]/value" incremental="true">
+                <xf:label>a text</xf:label>
+                <xf:hint>input bound to string</xf:hint>
+                <xf:alert>invalid</xf:alert>
+            </xf:input>
+        </div>
+        <div class="Subheadline">Modelitem properties</div>
+        <div class="Sample">
+            <xf:input navindex="-1" style="width:10px;" ref="input[1]/@readonly" class="mips"
+                      incremental="true">
+                <xf:label>readonly</xf:label>
+            </xf:input>
+            <xf:input navindex="-1" ref="input[1]/@required" style="width:10px;" class="mips"
+                      incremental="true">
+                <xf:label>required</xf:label>
+            </xf:input>
+            <xf:input navindex="-1" ref="input[1]/@relevant" style="width:10px;" class="mips"
+                      incremental="true">
+                <xf:label>relevant</xf:label>
+            </xf:input>
+            <xf:input navindex="-1" ref="input[1]/@constraint" style="width:10px;" class="mips"
+                      incremental="true">
+                <xf:label>valid</xf:label>
+            </xf:input>
+        </div>
+    </div>
+</div>
 
-                    <div dojotype="dijit.TitlePane" open="false" title="XForms Markup">
-            <pre><code class="xml"><![CDATA[<!-- XForms Instance -->
+<!-- ########### boolean input ############ -->
+<div class="Section">
+    <div>
+        <div class="Headline">Checkbox control</div>
+
+
+        <p class="Description">
+            An input which binds to a Node of type 'boolean' is rendered as a Checkbox.
+        </p>
+        <div>
+            <div class="Subheadline">XForms Markup</div>
+            <div class="Subsection">
+<pre><code class="xml"><![CDATA[<!-- XForms Instance -->
 <item>false</item>
 
 <!-- XForms Binding -->
@@ -127,148 +214,285 @@
 <xf:input ref="item">
     <xf:label>a boolean</xf:label>
 </xf:input>]]></code></pre>
-                </div>
+            </div>
+        </div>
+
+
+        <div>
+            <div class="Subheadline">Sample</div>
+            <div class="Sample">
+                <xf:input id="input2" ref="input[2]/value" incremental="true">
+                    <xf:label>a boolean</xf:label>
+                    <xf:hint>input bound to boolean</xf:hint>
+                    <xf:alert>invalid</xf:alert>
+                </xf:input>
             </div>
 
-            <!-- ############# date control ################# -->
-            <div class="Subsection"  dojotype="dijit.TitlePane" open="true" title="Datepicker control">
-                <div class="description">
-                    An input which binds to a Node of type 'date' is rendered as a popup calendar control. The value
-                    may also be be typed in directly.
-                </div>
+            <div class="Subheadline">Modelitem properties</div>
+            <div class="Sample">
+                <xf:input navindex="-1" style="width:10px;" ref="input[2]/@readonly" class="mips"
+                          incremental="true">
+                    <xf:label>readonly</xf:label>
+                </xf:input>
+                <xf:input navindex="-1" ref="input[2]/@required" style="width:10px;" class="mips"
+                          incremental="true">
+                    <xf:label>required</xf:label>
+                </xf:input>
+                <xf:input navindex="-1" ref="input[2]/@relevant" style="width:10px;" class="mips"
+                          incremental="true">
+                    <xf:label>relevant</xf:label>
+                </xf:input>
+                <xf:input navindex="-1" ref="input[2]/@constraint" style="width:10px;" class="mips"
+                          incremental="true">
+                    <xf:label>valid</xf:label>
+                </xf:input>
+            </div>
+        </div>
+    </div>
+</div>
 
-                <div class="Sample">
-                    <xf:input id="control3" ref="items/item[3]" incremental="true">
-                        <xf:label>a date</xf:label>
-                    </xf:input>
-                </div>
 
-                <div dojotype="dijit.TitlePane" open="false" title="XForms Markup">
-            <pre><code class="xml"><![CDATA[<!-- XForms Instance -->
+<!-- ############# date control ################# -->
+<div class="Section">
+    <div class="Headline">Datepicker control</div>
+
+
+    <p class="Description">
+        An input which binds to a Node of type 'date' is rendered as a popup calendar control. The value
+        may also be be typed in directly.
+    </p>
+
+    <div>
+        <div class="Subheadline">XForms Markup</div>
+        <div class="Subsection">
+<pre><code class="xml"><![CDATA[<!-- XForms Instance -->
  <item>2007-10-10</item>
 
 <!-- XForms Binding -->
 <xf:bind nodeset="item" type="xf:date"/>
 
 <!-- XForms UI -->
-<xf:input id="control3" ref="item">
+<xf:input id="input3" ref="item">
     <xf:label>a date</xf:label>
 </xf:input>]]></code></pre>
-                </div>
+        </div>
+    </div>
 
-                <div class="notes" dojotype="dijit.TitlePane" open="false" title="Notes">
-                    <ul>
-                        <li>
-                            The date control is currently not fully accessible esp. keyboard navigation is not working
-                            in the current version of Dojo 1.3. Upcoming version 1.4 will fully support keyboard navigation.
-                        </li>
-                        <li>
-                            Though locale-specific formatting of a date is supported there's no further support for subformats
-                            like the Java short/medium/long date formatting.
-                        </li>
-						<li>
-							Known limitation:
-							Dojo only accepts 'date'-inputs in the chosen datePattern or the ISO8601/RFC3339 format (yyyy-MM-dd).
-						</li>
-                    </ul>
-                </div>
+    <div>
+        <div class="Subheadline">Sample</div>
+        <div class="Sample">
+            <xf:input id="input3" ref="input[3]/value" incremental="true">
+                <xf:label>a date</xf:label>
+                <xf:hint>input bound to date</xf:hint>
+                <xf:alert>invalid</xf:alert>
+            </xf:input>
+        </div>
+
+        <div class="Subheadline">Modelitem properties</div>
+            <div class="Sample">
+                <xf:input navindex="-1" style="width:10px;" ref="input[3]/@readonly" class="mips"
+                          incremental="true">
+                    <xf:label>readonly</xf:label>
+                </xf:input>
+                <xf:input navindex="-1" ref="input[3]/@required" style="width:10px;" class="mips"
+                          incremental="true">
+                    <xf:label>required</xf:label>
+                </xf:input>
+                <xf:input navindex="-1" ref="input[3]/@relevant" style="width:10px;" class="mips"
+                          incremental="true">
+                    <xf:label>relevant</xf:label>
+                </xf:input>
+                <xf:input navindex="-1" ref="input[3]/@constraint" style="width:10px;" class="mips"
+                          incremental="true">
+                    <xf:label>valid</xf:label>
+                </xf:input>
             </div>
+    </div>
 
-				<!-- ############# date control with datePattern################# -->
-				<div class="Subsection" dojotype="dijit.TitlePane" open="true" title="Datepicker control with datePattern">
-					<div class="description">
-						An input which binds to a Node of type 'date' is rendered as a popup calendar control. The value
-						may also be be typed in directly. Through appearance="iso8601:datePattern" the format of the Date value can be customized.
-						Typical format strings apply. See <a href="http://www.dojotoolkit.com/reference-guide/dojo/date/locale/format.html">Dojo Docs</a>.
-					</div>
+    <div>
+        <div class="Subheadline">Notes</div>
+        <ul class="Notes">
+            <li>
+                The date control is currently not fully accessible esp. keyboard navigation is not working
+                in the current version of Dojo 1.3. Upcoming version 1.4 will fully support keyboard navigation.
+            </li>
+            <li>
+                Though locale-specific formatting of a date is supported there's no further support for
+                subformats
+                like the Java short/medium/long date formatting.
+            </li>
+            <li>
+                Known limitation:
+                Dojo only accepts 'date'-inputs in the chosen datePattern or the ISO8601/RFC3339 format
+                (yyyy-MM-dd).
+            </li>
+        </ul>
+    </div>
+</div>
 
-					<div class="Sample dateSample">
-						<xf:input id="control4" ref="items/item[3]" incremental="true" appearance="iso8601:dd.MMMM.yyyy">
-							<xf:label>a date with datePattern dd.MMMM.yyyy</xf:label>
-							<xf:hint>appearance="iso8601:dd.MMMM.yyyy"</xf:hint>
-						</xf:input>
-						<xf:input id="control5" ref="items/item[3]" incremental="true" appearance="iso8601:EEE,dd.MM.yyyy">
-							<xf:label>a date with datePattern EEE,dd.MM.yyyy</xf:label>
-							<xf:hint>appearance="iso8601:EEE,dd.MMMM.yyyy"</xf:hint>
-						</xf:input>
-					</div>
+<!-- ############# date control with datePattern################# -->
+<div class="Section">
+    <div class="Headline">Datepicker control with datePattern</div>
+    <!-- TODO: create input-field so users can play around with datePattern ? -->
 
-					<div dojotype="dijit.TitlePane" open="false" title="XForms Markup">
-            <pre><code class="xml"><![CDATA[<!-- XForms Instance -->
- <item>2007-10-10</item>
+    <p class="Description">
+        An input which binds to a Node of type 'date' is rendered as a popup calendar control. The value
+        may also be be typed in directly. Through appearance="iso8601:datePattern" the format of the Date value
+        can be customized.
+        Typical format strings apply. See <a
+            href="http://www.dojotoolkit.com/reference-guide/dojo/date/locale/format.html">Dojo Docs</a>.
+    </p>
+
+    <div>
+        <div class="Subheadline">XForms Markup</div>
+        <div class="Subsection">
+<pre><code class="xml"><![CDATA[<!-- XForms Instance -->
+<item>2007-10-10</item>
 
 <!-- XForms Binding -->
 <xf:bind nodeset="item" type="xf:date"/>
 
 <!-- XForms UI -->
-<xf:input id="control4" ref="items/item[3]" incremental="true" appearance="iso8601:dd.MMMM.yyyy">
-	<xf:label>a date with datePattern dd.MMMM.yyyy</xf:label>
+<xf:input id="input4" ref="item" incremental="true"
+          appearance="iso8601:dd.MMMM.yyyy">
+    <xf:label>a date with datePattern dd.MMMM.yyyy</xf:label>
 </xf:input>
-<xf:input id="control5" ref="items/item[3]" incremental="true" appearance="iso8601:EEE,dd.MM.yyyy">
-	<xf:label>a date with datePattern EEE,dd.MM.yyyy</xf:label>
+<xf:input id="input5" ref="item" incremental="true"
+          appearance="iso8601:EEE,dd.MM.yyyy">
+    <xf:label>a date with datePattern EEE,dd.MM.yyyy</xf:label>
 </xf:input>]]></code></pre>
-					</div>
+        </div>
+    </div>
 
-					<div class="notes" dojotype="dijit.TitlePane" open="false" title="Notes">
-						<ul>
-							<li>
-								The date control is currently not fully accessible esp. keyboard navigation is not
-								working
-								in the current version of Dojo 1.3. Upcoming version 1.4 will fully support keyboard
-								navigation.
-							</li>
-							<li>
-								Though locale-specific formatting of a date is supported there's no further support for
-								subformats like the Java short/medium/long date formatting.
-							</li>
-							<li>
-								Known limitation:
-								Dojo only accepts 'date'-inputs in the chosen datePattern or the ISO8601/RFC3339 format (yyyy-MM-dd).
-							</li>
-						</ul>
-					</div>
-				</div>
+    <div>
+        <div class="Subheadline">Sample</div>
+        <div class="Sample dateSample">
+            <xf:input id="input4" ref="input[3]/value" incremental="true" appearance="iso8601:dd.MMMM.yyyy">
+                <xf:label>a date with datePattern dd.MMMM.yyyy</xf:label>
+                <xf:hint>appearance="iso8601:dd.MMMM.yyyy"</xf:hint>
+            </xf:input>
+            <xf:input id="inpu5" ref="input[3]/value" incremental="true" appearance="iso8601:EEE,dd.MM.yyyy">
+                <xf:label>a date with datePattern EEE,dd.MM.yyyy</xf:label>
+                <xf:hint>appearance="iso8601:EEE,dd.MMMM.yyyy"</xf:hint>
+            </xf:input>
+        </div>
 
-            <!-- ############### datetime control #################### -->
-            <div class="Subsection" dojotype="dijit.TitlePane" open="true" title="DateTime picker control">
-                <div class="description">
-                    An input which binds to a Node of type 'datetime' is rendered as a popup calendar and an associated
-                    time input control.
-                </div>
-                <div class="Sample">
-                    <xf:input id="control6" ref="items/item[4]" incremental="true">
-                        <xf:label>a datetime</xf:label>
-                    </xf:input>
-                </div>
+        <div class="Subheadline">Modelitem properties</div>
+        <div class="Sample">
+            <xf:input navindex="-1" style="width:10px;" ref="input[3]/@readonly" class="mips"
+                      incremental="true">
+                <xf:label>readonly</xf:label>
+            </xf:input>
+            <xf:input navindex="-1" ref="input[3]/@required" style="width:10px;" class="mips"
+                      incremental="true">
+                <xf:label>required</xf:label>
+            </xf:input>
+            <xf:input navindex="-1" ref="input[3]/@relevant" style="width:10px;" class="mips"
+                      incremental="true">
+                <xf:label>relevant</xf:label>
+            </xf:input>
+            <xf:input navindex="-1" ref="input[3]/@constraint" style="width:10px;" class="mips"
+                      incremental="true">
+                <xf:label>valid</xf:label>
+            </xf:input>                                         
+        </div>
+    </div>
 
-                <div dojotype="dijit.TitlePane" open="false" title="XForms Markup">
-            <pre><code class="xml"><![CDATA[<!-- XForms Instance -->
+
+
+
+    <div>
+        <div class="Subheadline">Notes</div>
+        <ul class="Notes">
+            <li>
+                The date control is currently not fully accessible esp. keyboard navigation is not
+                working
+                in the current version of Dojo 1.3. Upcoming version 1.4 will fully support keyboard
+                navigation.
+            </li>
+            <li>
+                Though locale-specific formatting of a date is supported there's no further support for
+                subformats like the Java short/medium/long date formatting.
+            </li>
+            <li>
+                Known limitation:
+                Dojo only accepts 'date'-inputs in the chosen datePattern or the ISO8601/RFC3339 format
+                (yyyy-MM-dd).
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- ############### datetime control #################### -->
+<div class="Section">
+   <div class="Headline">DateTime picker control</div>
+
+    <p class="Description">
+        An input which binds to a Node of type 'datetime' is rendered as a popup calendar and an associated
+        time input control.
+    </p>
+
+    <div>
+        <div class="Subheadline">XForms Markup</div>
+        <div class="Subsection">
+<pre><code class="xml"><![CDATA[<!-- XForms Instance -->
 <item>2007-10-10T23:23:23.123Z</item>
 
 <!-- XForms Binding -->
 <xf:bind nodeset="item" type="xf:datetime"/>
 
 <!-- XForms UI -->
-<xf:input id="control4" ref="item">
+<xf:input id="input4" ref="item">
     <xf:label>a datetime</xf:label>
 </xf:input>]]></code></pre>
-                </div>
-
-                <div class="notes" dojotype="dijit.TitlePane" open="false" title="Notes">
-                    <ul>
-                        <li>
-                            The date control is currently not fully accessible esp. keyboard navigation is not working
-                            in the current version of Dojo 1.3. Upcoming version 1.4 will fully support keyboard navigation.
-                        </li>
-                        <li>
-                            Though locale-specific formatting of a date is supported there's no further support for subformats
-                            like the Java short/medium/long date formatting.
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            </div>
         </div>
-    </body>
+    </div>
+
+    <div>
+        <div class="Subheadline">Sample</div>
+        <div class="Sample">
+            <xf:input id="input6" ref="input[4]/value" incremental="true">
+                <xf:label>a datetime</xf:label>
+            </xf:input>
+        </div>
+
+        <div class="Subheadline">Modelitem properties</div>
+        <div class="Sample">
+            <xf:input navindex="-1" style="width:10px;" ref="input[4]/@readonly" class="mips"
+                      incremental="true">
+                <xf:label>readonly</xf:label>
+            </xf:input>
+            <xf:input navindex="-1" ref="input[4]/@required" style="width:10px;" class="mips"
+                      incremental="true">
+                <xf:label>required</xf:label>
+            </xf:input>
+            <xf:input navindex="-1" ref="input[4]/@relevant" style="width:10px;" class="mips"
+                      incremental="true">
+                <xf:label>relevant</xf:label>
+            </xf:input>
+            <xf:input navindex="-1" ref="input[4]/@constraint" style="width:10px;" class="mips"
+                      incremental="true">
+                <xf:label>valid</xf:label>
+            </xf:input>
+        </div>
+    </div>
+
+    <div>
+        <div class="Subheadline">Notes</div>
+        <ul class="Notes">
+            <li>
+                The date control is currently not fully accessible esp. keyboard navigation is not working
+                in the current version of Dojo 1.3. Upcoming version 1.4 will fully support keyboard navigation.
+            </li>
+            <li>
+                Though locale-specific formatting of a date is supported there's no further support for
+                subformats
+                like the Java short/medium/long date formatting.
+            </li>
+        </ul>
+    </div>
+</div>
+</div>
+</body>
 </html>
 

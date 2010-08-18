@@ -5,89 +5,156 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:xsd="http://www.w3.org/2001/XMLSchema"
       lang="de">
-    <head>
-        <title>Output Control</title>
+<head>
+    <title>Output Control</title>
 
-        <style type="text/css">
-            .xfGroupLabel {
-                font-size: 12pt;
-                font-weight: bold;
-                padding-bottom: 10px;
-            }
+    <style type="text/css">
+        .xfGroupLabel {
+            font-size: 12pt;
+            font-weight: bold;
+            padding-bottom: 10px;
+        }
 
             /* #mips .xfTrigger .dijitButtonContents {
                 width: 200px;
             } */
-        </style>
+    </style>
 
-        <link rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
-        <link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css" />
-        <!--<link rel="stylesheet" type="text/css" href="http://localhost:8080/betterform/resources/scripts/dojox/highlight/resources/pygments/colorful.css" />-->
+    <link rel="stylesheet" type="text/css" href="../../../resources/scripts/dojox/highlight/resources/highlight.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../resources/styles/reference.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="http://localhost:8080/betterform/resources/scripts/dojox/highlight/resources/pygments/colorful.css" />-->
 
-        <script type="text/javascript">
-            dojo.require("dijit.form.Button");
-            dojo.require("dijit.TitlePane");
-            dojo.require('dijit.layout.ContentPane');
-            dojo.require("dojox.highlight");
-            dojo.require("dojox.highlight.languages.xml");
-            dojo.addOnLoad(function() {
-                dojo.query("code").forEach(dojox.highlight.init);
-            });
-        </script>
+    <script type="text/javascript">
+        dojo.require("dijit.form.Button");
+        dojo.require("dijit.TitlePane");
+        dojo.require('dijit.layout.ContentPane');
+        dojo.require("dojox.highlight");
+        dojo.require("dojox.highlight.languages.xml");
+        dojo.addOnLoad(function() {
+            dojo.query("code").forEach(dojox.highlight.init);
+        });
+    </script>
 
-    </head>
-    <body class="soria" style="margin:30px;">
+</head>
+<body class="soria" style="margin:30px;">
 
-        <div id="xforms">
-            <div style="display:none;">
-                <xf:model id="model-1">
-                    <xf:instance id="instance-1" xmlns="">
-                        <data constraint="true" readonly="false" required="false" relevant="true">
-                            <items>
-                                <item>a output value</item>
-                                <item>http://betterform.sourceforge.net</item>
-                                <item><![CDATA[<b>Providing</b> <i>basic</i> HTML <u>formatting</u>]]></item>
-                                <item>../../images/bf_logo_482x195.png</item>
-                            </items>
-                        </data>
-                    </xf:instance>
+<div id="xforms">
+<div style="display:none;">
+    <xf:model id="model-1">
+        <xf:bind nodeset="items">
+            <xf:bind nodeset="item[1]"/>
+            <xf:bind nodeset="item[2]" type="anyURI"/>
+            <xf:bind nodeset="item[3]"/>
+            <xf:bind nodeset="item[4]"/>
+        </xf:bind>
 
-                    <xf:bind nodeset="items">
-                        <xf:bind nodeset="item[1]"/>
-                        <xf:bind nodeset="item[2]" type="anyURI"/>
-                        <xf:bind nodeset="item[3]"/>
-                        <xf:bind nodeset="item[4]"/>
-                    </xf:bind>
-                </xf:model>
-            </div>
-            <div class="pagetitle">The output Control</div>
-            <div class="Section">
-                <div class="Headline">Description</div>
-                This form control renders content based in part on instance
-                data, but it provides no means for entering or changing data.
-            </div>
-            <div class="Section">
-                <div class="Headline"><a href="http://www.w3.org/TR/xforms11/#ui-output">XForms 1.1 Element Specification</a></div>
-            </div>
+        <xf:instance id="instance-1" xmlns="">
+            <data>
+                <items>
+                    <item>a output value</item>
+                    <item>http://betterform.sourceforge.net</item>
+                    <item><![CDATA[<b>Providing</b> <i>basic</i> HTML <u>formatting</u>]]></item>
+                    <item>../../images/bf_logo_482x195.png</item>
+                </items>
+                <output constraint="true" readonly="false" required="true" relevant="true">
+                    <value>a output value</value>
+                </output>
+                <output constraint="true" readonly="false" required="true" relevant="true">
+                    <value>http://betterform.sourceforge.net</value>
+                </output>
+                <output constraint="true" readonly="false" required="true" relevant="true">
+                    <value><![CDATA[<b>Providing</b> <i>basic</i> HTML <u>formatting</u>]]></value>
+                </output>
+                <output constraint="true" readonly="false" required="true" relevant="true">
+                    <value>../../images/bf_logo_482x195.png</value>
+                </output>
+            </data>
+        </xf:instance>
 
-            <!-- ####################### CONTENT SECTION STARTING HERE ########################### -->
-            <!-- ####################### CONTENT SECTION STARTING HERE ########################### -->
-            <!-- ####################### CONTENT SECTION STARTING HERE ########################### -->
+        <xf:bind nodeset="output[1]">
+            <xf:bind nodeset="value"
+                     constraint="boolean-from-string(../@constraint)"
+                     readonly="boolean-from-string(../@readonly)"
+                     required="boolean-from-string(../@required)"
+                     relevant="boolean-from-string(../@relevant)"/>
+
+            <xf:bind nodeset="@constraint" type="boolean"/>
+            <xf:bind nodeset="@readonly" type="boolean"/>
+            <xf:bind nodeset="@required" type="boolean"/>
+            <xf:bind nodeset="@relevant" type="boolean"/>
+        </xf:bind>
+        <xf:bind nodeset="output[2]">
+            <xf:bind nodeset="value"
+                     constraint="boolean-from-string(../@constraint)"
+                     readonly="boolean-from-string(../@readonly)"
+                     required="boolean-from-string(../@required)"
+                     relevant="boolean-from-string(../@relevant)"
+                     type="anyURI"/>
+
+            <xf:bind nodeset="@constraint" type="boolean"/>
+            <xf:bind nodeset="@readonly" type="boolean"/>
+            <xf:bind nodeset="@required" type="boolean"/>
+            <xf:bind nodeset="@relevant" type="boolean"/>
+        </xf:bind>
+        <xf:bind nodeset="output[3]">
+            <xf:bind nodeset="value"
+                     constraint="boolean-from-string(../@constraint)"
+                     readonly="boolean-from-string(../@readonly)"
+                     required="boolean-from-string(../@required)"
+                     relevant="boolean-from-string(../@relevant)"/>
+
+            <xf:bind nodeset="@constraint" type="boolean"/>
+            <xf:bind nodeset="@readonly" type="boolean"/>
+            <xf:bind nodeset="@required" type="boolean"/>
+            <xf:bind nodeset="@relevant" type="boolean"/>
+        </xf:bind>
+        <xf:bind nodeset="output[4]">
+            <xf:bind nodeset="value"
+                     constraint="boolean-from-string(../@constraint)"
+                     readonly="boolean-from-string(../@readonly)"
+                     required="boolean-from-string(../@required)"
+                     relevant="boolean-from-string(../@relevant)"/>
+
+            <xf:bind nodeset="@constraint" type="boolean"/>
+            <xf:bind nodeset="@readonly" type="boolean"/>
+            <xf:bind nodeset="@required" type="boolean"/>
+            <xf:bind nodeset="@relevant" type="boolean"/>
+        </xf:bind>
+    </xf:model>
+</div>
 
 
-            <div class="Section">
+<div class="pageintro">
+    <div class="pagetitle">The output Control</div>
+    <div class="Section">
+        <div class="PageDescription">Description</div>
+        This form control renders content based in part on instance
+        data, but it provides no means for entering or changing data.
+    </div>
+    <div class="Section">
+        <div class="PageDescription"><a href="http://www.w3.org/TR/xforms11/#ui-output">XForms 1.1 Element
+            Specification</a></div>
+    </div>
+</div>
 
-                <!-- ########### plain text output ############ -->
-                <!-- ########### plain text output ############ -->
-                <!-- ########### plain text output ############ -->
-                <div class="Subsection" dojotype="dijit.TitlePane" open="true" title="Simple Text Ouput">
-                    <div class="Sample">
-                        <xf:output ref="items/item[1]">
-                            <xf:label/>
-                        </xf:output>
-                    </div>
-                    <div dojotype="dijit.TitlePane" open="false" title="XForms Markup">
-                    <pre><code class="xml"><![CDATA[<!-- XForms Model -->
+<!-- ####################### CONTENT SECTION STARTING HERE ########################### -->
+<!-- ####################### CONTENT SECTION STARTING HERE ########################### -->
+<!-- ####################### CONTENT SECTION STARTING HERE ########################### -->
+
+
+<div class="Section">
+
+    <!-- ########### plain text output ############ -->
+    <!-- ########### plain text output ############ -->
+    <!-- ########### plain text output ############ -->
+    <div class="Headline">Simple Text Ouput</div>
+    <p class="Description">
+    </p>
+
+    <div>
+        <div class="Subheadline">XForms Markup</div>
+        <div class="Subsection">
+<pre><code class="xml"><![CDATA[<!-- XForms Model -->
 <item>a output value</item>
 
 <!-- XForms binding defaults to 'string' -->
@@ -96,21 +163,50 @@
 <xf:output ref="item">
     <xf:label/>
 </xf:output>]]></code></pre>
-                    </div>
-                </div>
-                
+        </div>
+    </div>
 
-                <!-- ########### output anyURI ############ -->
-                <!-- ########### output anyURI ############ -->
-                <!-- ########### output anyURI ############ -->
-                <div class="Subsection" dojotype="dijit.TitlePane" open="true" title="Output bound to datatype 'anyURI'">
-                    <div class="Sample">
-                        <xf:output ref="items/item[2]">
-                            <xf:label>Homepage</xf:label>
-                        </xf:output>
-                    </div>
-                    <div dojotype="dijit.TitlePane" open="false" title="XForms Markup">
-                        <pre><code class="xml"><![CDATA[<!-- XForms Model -->
+    <div>
+        <div class="Subheadline">Sample</div>
+        <div class="Sample">
+            <xf:output id="output1" ref="output[1]/value">
+                <xf:label/>
+                <xf:alert>invalid</xf:alert>
+            </xf:output>
+        </div>
+        <div class="Subheadline">Modelitem properties</div>
+        <div class="Sample">
+            <xf:input navindex="-1" style="width:10px;" ref="output[1]/@readonly" class="mips"
+                      incremental="true">
+                <xf:label>readonly</xf:label>
+            </xf:input>
+            <xf:input navindex="-1" ref="output[1]/@required" style="width:10px;" class="mips"
+                      incremental="true">
+                <xf:label>required</xf:label>
+            </xf:input>
+            <xf:input navindex="-1" ref="output[1]/@relevant" style="width:10px;" class="mips"
+                      incremental="true">
+                <xf:label>relevant</xf:label>
+            </xf:input>
+            <xf:input navindex="-1" ref="output[1]/@constraint" style="width:10px;" class="mips"
+                      incremental="true">
+                <xf:label>valid</xf:label>
+            </xf:input>
+        </div>
+    </div>
+
+
+    <!-- ########### output anyURI ############ -->
+    <!-- ########### output anyURI ############ -->
+    <!-- ########### output anyURI ############ -->
+    <div class="Headline">Output bound to datatype 'anyURI'</div>
+    <p class="Description">
+    </p>
+
+    <div>
+        <div class="Subheadline">XForms Markup</div>
+        <div class="Subsection">
+<pre><code class="xml"><![CDATA[<!-- XForms Model -->
 <item>http://betterform.sourceforge.net</item>
 
 <!-- XForms binding -->
@@ -120,49 +216,82 @@
 <xf:output ref="item">
     <xf:label/>
 </xf:output>]]></code></pre>
-                    </div>
+        </div>
+    </div>
 
-                    <div class="notes" dojotype="dijit.TitlePane" open="false" title="Notes">
-                        <ul>
-                            <li>Output should render label as link text</li>
-                            <li>if additional mediatype is present content should be dereferenced (loaded)</li>
-                        </ul>
-                    </div>
-                </div>
+    <div>
+        <div class="Subheadline">Sample</div>
+        <div class="Sample">
+            <xf:output ref="output[2]/value">
+                <xf:label>Homepage</xf:label>
+            </xf:output>
+        </div>
 
-                <!-- ########### output mediatype text/html ############ -->
-                <!-- ########### output mediatype text/html ############ -->
-                <!-- ########### output mediatype text/html ############ -->
-                <div class="Subsection" dojotype="dijit.TitlePane" open="true" title="Output Control with (simple) HTML Content">
-                    <div class="Sample">
-                        <xf:output ref="items/item[3]" mediatype="text/html">
-                            <xf:label/>
-                        </xf:output>
-                    </div>
-                    <div  dojotype="dijit.TitlePane" open="false" title="XForms Markup">
+        <div class="Subheadline">Modelitem properties</div>
+        <div class="Sample">
+            <xf:input navindex="-1" style="width:10px;" ref="output[2]/@readonly" class="mips"
+                      incremental="true">
+                <xf:label>readonly</xf:label>
+            </xf:input>
+            <xf:input navindex="-1" ref="output[2]/@required" style="width:10px;" class="mips"
+                      incremental="true">
+                <xf:label>required</xf:label>
+            </xf:input>
+            <xf:input navindex="-1" ref="output[2]/@relevant" style="width:10px;" class="mips"
+                      incremental="true">
+                <xf:label>relevant</xf:label>
+            </xf:input>
+            <xf:input navindex="-1" ref="output[2]/@constraint" style="width:10px;" class="mips"
+                      incremental="true">
+                <xf:label>valid</xf:label>
+            </xf:input>
+        </div>
+    </div>
+
+
+    <div>
+        <div class="Subheadline">Notes</div>
+        <ul class="Notes">
+            <li>Output should render label as link text</li>
+            <li>if additional mediatype is present content should be dereferenced (loaded)</li>
+        </ul>
+    </div>
+</div>
+
+<!-- ########### output mediatype text/html ############ -->
+<!-- ########### output mediatype text/html ############ -->
+<!-- ########### output mediatype text/html ############ -->
+<div class="Subsection" dojotype="dijit.TitlePane" open="true"
+     title="Output Control with (simple) HTML Content">
+    <div class="Sample">
+        <xf:output ref="items/item[3]" mediatype="text/html">
+            <xf:label/>
+        </xf:output>
+    </div>
+    <div dojotype="dijit.TitlePane" open="false" title="XForms Markup">
                         <pre><code class="xml"><![CDATA[<!-- XForms Model -->
 <item><![CDATA[<b>Providing</b> <i>basic</i>
       HTML <u>formatting</u>]]&gt;</item>
-      
+
 <!-- XForms binding defaults to 'string' -->
 
 <!-- XForms UI -->
 <xf:output ref="item" mediatype="text/html">
     <xf:label/>
 </xf:output>]]></code></pre>
-                    </div>
+    </div>
 
-                </div>
-                <!-- ########### output mediatype image/gif ############ -->
-                <!-- ########### output mediatype image/gif ############ -->
-                <!-- ########### output mediatype image/gif ############ -->
-                <div class="Subsection" dojotype="dijit.TitlePane" open="true" title="Output Controll with image">
-                    <div class="Sample">
-                        <xf:output ref="items/item[4]" mediatype="image/gif">
-                            <xf:label/>
-                        </xf:output>
-                    </div>
-                    <div  dojotype="dijit.TitlePane" open="false" title="XForms Markup">
+</div>
+<!-- ########### output mediatype image/gif ############ -->
+<!-- ########### output mediatype image/gif ############ -->
+<!-- ########### output mediatype image/gif ############ -->
+<div class="Subsection" dojotype="dijit.TitlePane" open="true" title="Output Controll with image">
+    <div class="Sample">
+        <xf:output ref="items/item[4]" mediatype="image/gif">
+            <xf:label/>
+        </xf:output>
+    </div>
+    <div dojotype="dijit.TitlePane" open="false" title="XForms Markup">
                         <pre><code class="xml"><![CDATA[<!-- XForms Model -->
 <item>/betterform/resources/images/betterform50t.gif</item>
 
@@ -172,12 +301,11 @@
 <xf:output ref="item">
     <xf:label>Link</xf:label>
 </xf:output>]]></code></pre>
-                    </div>
-                </div>
+    </div>
+</div>
 
-            </div>
+</div>
 
-        </div>
-    </body>
+</body>
 </html>
 
