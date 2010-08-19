@@ -29,7 +29,7 @@
 }
 
 .pagetitle{
-    font-size:16pt;
+    font-size:18pt;
     margin-left:8px;
 }
 
@@ -37,6 +37,10 @@
     font-size:   16pt;
     font-weight: bold;
     text-align:  center;
+}
+
+.pageintro .Section {
+  font-size: 12pt;  
 }
 
 .Section {
@@ -49,13 +53,40 @@
     padding: 10px;
 }
 
+.Section .PageDescription {
+    font-size: 14pt;
+    font-weight:bold;
+    text-align: left;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
 .Section .Headline {
+    font-size: 14pt;
+    text-align: left;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top:30px;
+}
+.Section .Subheadline {
     font-size: 12pt;
     text-align: left;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-weight: bold;
 }
 .Section .description{
     padding:5px;
     background:#fafafa;
+}
+
+.Section .Description {
+    font-size: 14px;
+    margin-bottom:12px;
+}
+
+.Section .Notes {
+    font-size: 14px;
 }
 
 .Section .Subsection {
@@ -83,8 +114,9 @@ pre {
 pre, code {
     border-width: 0px;
     /*background:#ddddff;*/
-    background:white;
-    font-size:100%;
+    /*background:white;*/
+    background-color: LightYellow;
+    font-size:14px;
 }
 .model{
     background:#dddddd;
@@ -92,10 +124,12 @@ pre, code {
     border:thin solid #cccccc;
 }
 .Sample {
-    background-color: lightsteelblue;
+    /*background-color: LightYellow;*/
     vertical-align: middle;
-    padding: 20px 10px 20px 10px;
+    padding: 15px;
     overflow: auto;
+    border:thin dotted;
+    font-size:14px;
 }
 .dateSample .xfControl {
 	display:block;	
