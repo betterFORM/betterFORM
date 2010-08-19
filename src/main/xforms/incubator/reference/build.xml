@@ -1,0 +1,22 @@
+<!--
+  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<project name="betterFORM reference generator" default="build" basedir=".">
+    <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
+    <property name="core.dir" value="${basedir}/../../../../../core"/>    
+
+    <path id="generator.libs" description="classpath for compiling core classes">
+        <pathelement location="${core.dir}/src/main/lib/saxonb-9.1.0.8.jar"/>
+        <pathelement location="${core.dir}/src/main/lib/saxonb-dom-9.1.0.8.jar"/>
+    </path>
+
+    <target name="build">
+        <xslt in="Input.xml" out="Input.gen.xhtml" force="true"
+              style="build-forms.xsl">
+           <classpath refid="generator.libs"/>
+
+        </xslt>
+    </target>
+</project>

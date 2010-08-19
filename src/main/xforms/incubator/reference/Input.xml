@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns:xf="http://www.w3.org/2002/xforms">
+    <pageintro>
+        <title>The input Element</title>
+        <description>This form control enables free-form data entry or a user interface component appropriate to the
+            datatype of the bound node.
+        </description>
+        <specification>
+            <link></link>
+            <description></description>
+        </specification>
+    </pageintro>
+    <page>
+        <section>
+            <title>Text input control</title>
+            <description>This is the most common rendering of an input which is bound to a string value in the
+                Instance.
+            </description>
+            <sample>
+                <xf:input id="input1" value="BlaBla" incremental="true">
+                    <xf:label>a text</xf:label>
+                    <xf:hint>input bound to string</xf:hint>
+                    <xf:alert>invalid</xf:alert>
+                </xf:input>
+            </sample>
+        </section>
+    </page>
+</data>
