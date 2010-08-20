@@ -13,10 +13,24 @@
     </path>
 
     <target name="build">
-        <xslt in="Input.xml" out="Input.gen.xhtml" force="true"
+        <xslt in="Select.gen.xml" out="Select.gen.xhtml" force="true"
               style="build-forms.xsl">
            <classpath refid="generator.libs"/>
+        </xslt>
+        <xslt in="Output.gen.xml" out="Output.gen.xhtml" force="true"
+              style="build-forms.xsl">
+           <classpath refid="generator.libs"/>
+        </xslt>
+    </target>
 
+    <target name="extract">
+        <xslt in="Select.xhtml" out="Select.gen.xml" force="true"
+              style="extract-xml.xsl">
+           <classpath refid="generator.libs"/>
+        </xslt>
+        <xslt in="Output.xhtml" out="Output.gen.xml" force="true"
+              style="extract-xml.xsl">
+           <classpath refid="generator.libs"/>
         </xslt>
     </target>
 </project>
