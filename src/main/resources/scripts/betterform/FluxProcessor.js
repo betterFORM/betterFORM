@@ -293,11 +293,11 @@ dojo.declare("betterform.FluxProcessor",
             }
 
             switch (nextPendingClientServerEvent.getCallerFunction()) {
-                case "dispatchEvent":                this.requestPending = true; this.original_dispatchEvent(nextPendingClientServerEvent.getTargetId()); break;
-                case "dispatchEventType":        this.requestPending = true; this.original_dispatchEventType(nextPendingClientServerEvent.getTargetId(), nextPendingClientServerEvent.getEventType(), nextPendingClientServerEvent.getContextInfo()); break;
-                case "setControlValue":            this.requestPending = true; this.original_setControlValue(nextPendingClientServerEvent.getTargetId(), nextPendingClientServerEvent.getValue()); break;
+                case "dispatchEvent":                this.requestPending = true; this._dispatchEvent(nextPendingClientServerEvent.getTargetId()); break;
+                case "dispatchEventType":        this.requestPending = true; this._dispatchEventType(nextPendingClientServerEvent.getTargetId(), nextPendingClientServerEvent.getEventType(), nextPendingClientServerEvent.getContextInfo()); break;
+                case "setControlValue":            this.requestPending = true; this._setControlValue(nextPendingClientServerEvent.getTargetId(), nextPendingClientServerEvent.getValue()); break;
                 //Re-transform the dojo-Id to repeat-Id
-                case "setRepeatIndex":            this.requestPending = true; this.original_setRepeatIndex(dojo.attr(nextPendingClientServerEvent.getTargetId(), "repeatId"), nextPendingClientServerEvent.getValue()); break;
+                case "setRepeatIndex":            this.requestPending = true; this._setRepeatIndex(dojo.attr(nextPendingClientServerEvent.getTargetId(), "repeatId"), nextPendingClientServerEvent.getValue()); break;
                 default:                                        break;
             }
         }
@@ -342,7 +342,7 @@ dojo.declare("betterform.FluxProcessor",
     },
 
     //eventually an 'activate' method still makes sense to provide a simple DOMActivate of a trigger Element
-    original_dispatchEvent: function (targetId) {
+    _dispatchEvent: function (targetId) {
         //console.debug("FluxProcessor.dispatch(",targetId,") this: ", this);
         try {
             dwr.engine.setErrorHandler(this._handleExceptions);
@@ -363,7 +363,7 @@ dojo.declare("betterform.FluxProcessor",
         this.eventFifoWriter(newClientServerEvent);
     },
 
-    original_dispatchEventType:function(targetId, eventType, contextInfo) {
+    _dispatchEventType:function(targetId, eventType, contextInfo) {
         try {
             dwr.engine.setErrorHandler(this._handleExceptions);
             dwr.engine.setOrdered(true);
@@ -386,7 +386,7 @@ dojo.declare("betterform.FluxProcessor",
         this.eventFifoWriter(newClientServerEvent);
     },
 
-    original_setControlValue: function (id, value) {
+    _setControlValue: function (id, value) {
         // console.debug("FluxProcessor.setControlValue", id, value);
         this.isDirty = true;
         try {
@@ -419,7 +419,7 @@ dojo.declare("betterform.FluxProcessor",
         this.eventFifoWriter(newClientServerEvent);
     },
 
-    original_setRepeatIndex:function(/*String*/repeatId, /*String*/targetPosition) {
+    _setRepeatIndex:function(/*String*/repeatId, /*String*/targetPosition) {
         // console.debug("FluxProcessor.setRepeatIndex for Repeat "+ repeatId + " to position " + targetPosition);
         try {
             dwr.engine.setErrorHandler(this._handleExceptions);
