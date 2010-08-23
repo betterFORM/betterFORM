@@ -13,7 +13,7 @@
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 xmlns:xhtml="http://www.w3.org/1999/xhtml"
                 xpath-default-namespace="">
-    <xsl:output method="xhtml" version="1.0" encoding="UTF-8" media-type="text/xml" cdata-section-elements="code"/>
+    <xsl:output method="xhtml" version="1.0" encoding="UTF-8" media-type="text/xml"/>
 
     <xsl:strip-space elements="*"/>
 
@@ -78,8 +78,9 @@
     <xsl:template match="content" mode="model">
         <xsl:choose>
             <xsl:when test="string($models)">
-                <xsl:copy-of select="./models/*"/>
-                <xsl:apply-templates select="$models" mode="modelbind"/>                
+                <!-- <xsl:copy-of select="./models/*"/> -->
+                <xsl:apply-templates select="$models" mode="modifyModel"/>
+
             </xsl:when>
             <xsl:otherwise>
                 <xf:model>
@@ -143,39 +144,67 @@
             <xf:bind nodeset="@readonly" type="boolean"/>
             <xf:bind nodeset="@required" type="boolean"/>
             <xf:bind nodeset="@relevant" type="boolean"/>
-
-
         </xf:bind>
     </xsl:template>
 
-    <xsl:template match="xf:*" mode="modelbind" priority="10">
-        <xsl:variable name="datatype">
+    <xsl:template match="xf:model" mode="modifyModel" priority="10">
+        <xf:model id="{./@id}">
+            <xsl:apply-templates mode="modifyInstance"/>
+            <xsl:apply-templates select="$samples" mode="bind"/>
+        </xf:model>
+    </xsl:template>
+
+
+    <xsl:template match="xf:instance" mode="modifyInstance" priority="10">
+        <xf:instance id="{./@id}" xmlns="">
+            <xsl:apply-templates mode="modifyData"/>
+        </xf:instance>
+    </xsl:template>
+
+    <xsl:template match="*" mode="modifyData" priority="10">
+        <xsl:variable name="name" select="name(.)"/>
+        <xsl:variable name="constraint">
             <xsl:choose>
-                <xsl:when test="exists(./@datatype)">
-                    <xsl:value-of select="./@datatype"/>
+                <xsl:when test="exists(./@constraint)">
+                    <xsl:value-of select="./@constraint"/>
                 </xsl:when>
-                <xsl:otherwise>string</xsl:otherwise>
+                <xsl:otherwise>true</xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="readonly">
+            <xsl:choose>
+                <xsl:when test="exists(./@readonly)">
+                    <xsl:value-of select="./@readonly"/>
+                </xsl:when>
+                <xsl:otherwise>true</xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="required">
+            <xsl:choose>
+                <xsl:when test="exists(./@required)">
+                    <xsl:value-of select="./@required"/>
+                </xsl:when>
+                <xsl:otherwise>true</xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="relevant">
+            <xsl:choose>
+                <xsl:when test="exists(./@relevant)">
+                    <xsl:value-of select="./@relevant"/>
+                </xsl:when>
+                <xsl:otherwise>true</xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
 
-        <xf:bind nodeset="{./@ref}">
-            <xf:bind nodeset="value"
-                     constraint="boolean-from-string(../@constraint)"
-                     readonly="boolean-from-string(../@readonly)"
-                     required="boolean-from-string(../@required)"
-                     relevant="boolean-from-string(../@relevant)"
-                     type="{$datatype}"/>
 
-            <xf:bind nodeset="@constraint" type="boolean"/>
-            <xf:bind nodeset="@readonly" type="boolean"/>
-            <xf:bind nodeset="@required" type="boolean"/>
-            <xf:bind nodeset="@relevant" type="boolean"/>
-
-
-        </xf:bind>
+        <xsl:element name="{$name}" namespace="">
+            <xsl:attribute name="constraint"><xsl:value-of select="$constraint"/></xsl:attribute>
+            <xsl:attribute name="readonly"><xsl:value-of select="$readonly"/></xsl:attribute>
+            <xsl:attribute name="required"><xsl:value-of select="$required"/></xsl:attribute>
+            <xsl:attribute name="relevant"><xsl:value-of select="$relevant"/></xsl:attribute>
+            <xsl:apply-templates mode="modifyData"/>
+        </xsl:element>
     </xsl:template>
-
-
     <!--
     ######################################################################################################
                 Mode ui

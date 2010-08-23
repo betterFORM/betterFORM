@@ -9,7 +9,7 @@
                 xmlns:xhtml="http://www.w3.org/1999/xhtml"
                 xmlns:xf="http://www.w3.org/2002/xforms"
                 exclude-result-prefixes="xhtml">
-    <xsl:output method="xml" version="1.0" encoding="UTF-8" media-type="text/xml" cdata-section-elements="code"/>
+    <xsl:output method="xml" version="1.0" encoding="UTF-8" media-type="text/xml"/>
 
     <xsl:strip-space elements="*"/>
 
