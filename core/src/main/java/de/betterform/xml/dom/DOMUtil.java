@@ -7,6 +7,9 @@ package de.betterform.xml.dom;
 
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.*;
 import org.w3c.dom.traversal.NodeFilter;
 import org.xml.sax.InputSource;
@@ -31,9 +34,12 @@ import java.util.List;
  *
  * @author joern turner
  * @author vrg
+ * @author Ronald van Kuijk
  * @version $Id: DOMUtil.java 3476 2008-08-18 21:53:47Z joern $
  */
 public class DOMUtil {
+	
+	private static Log LOGGER = LogFactory.getLog(DOMUtil.class);
 
 
     public static Node getFragment(URI uri, InputStream xmlStream) throws XFormsException {
@@ -1007,10 +1013,16 @@ public class DOMUtil {
      * @param node the node to serialize
      */
     public static void prettyPrintDOM(Node node) {
-        try {
-            prettyPrintDOM(node, System.out);
-        } catch (Exception e) {
-            e.printStackTrace();
+    	if (LOGGER.isTraceEnabled()) {
+            try {
+            	LOGGER.trace("DOM Output:");
+                prettyPrintDOM(node, System.out);
+                System.out.println();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+        	LOGGER.debug("Set the log level to TRACE for this class (de.betterform.xml.dom.DOMUtil) to see the XML"); 
         }
     }
 
