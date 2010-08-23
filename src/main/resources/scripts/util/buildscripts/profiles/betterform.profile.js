@@ -12,6 +12,7 @@ dependencies = {
 			name: "../betterform/betterform.js",
             dependencies: [
                 "betterform.FluxProcessor",
+                "betterform.ClientServerEvent.js",
                 "betterform.XFormsModelElement",
 
 
