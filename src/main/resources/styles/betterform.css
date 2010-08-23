@@ -27,6 +27,8 @@ body{
     /*overflow: hidden;*/
 }
 
+
+
 /*
 #fluxProcessor {
     width: 100%;
@@ -94,7 +96,7 @@ a.active {
 }
 
 /* ################### some theme-specific (Dojo tundra) styles ################### */
-.tundra {
+.tundra * {
     font-family: sans-serif;
     font-size: 10pt;
 }
@@ -296,11 +298,11 @@ a.active {
 /*********** Upload specific styles ***********/
 /*********** Upload specific styles ***********/
 /*********** Upload specific styles ***********/
-.bfProgressbar {
+.caProgressbar {
     display: none;
 }
 
-.bfProgressbar .border {
+.caProgressbar .border {
     background: url( ../images/progress-remainder.gif ) repeat-x;
     margin-top: 1px;
     border-left: 1px solid gray;
@@ -309,13 +311,13 @@ a.active {
     height: 18px;
 }
 
-.bfProgressbar .background {
+.caProgressbar .background {
     background: url( ../images/progress-bar.gif ) repeat-x;
     height: 18px;
     width: 0%;
 }
 
-.xfDisabled .bfProgressbar {
+.xfDisabled .caProgressbar {
     display: none;
 }
 
@@ -925,6 +927,50 @@ delete actions to */
 }
 
 
+
+/* An Element that is waiting for a server-call to return gets 'bfPending' class to allow styling of this control
+and visually give feedback to the user. */
+/* An bfPending Element gets an animates Gif-Symbol. bfPending is applied to a DOM-Node while it is being processed. */
+.bfPending .xfValue
+{
+		/*background: url( '../images/indicator.gif' ) no-repeat right !important;*/
+    background:#ffffe0;
+
+		/*background-repeat: repeat !important;*/
+}
+
+/* All Elements infront of the bfPending Element must be half-transparent */
+.bfPending *
+{
+		/*background-image: none;*/
+		opacity:0.9 !important;
+		filter:Alpha(opacity=90) !important;
+		moz-opacity: 0.9 !important;
+}
+
+/*
+.bfPending.xfTextarea
+{
+		display: block;
+}
+
+.bfPending > tbody, .bfPending > label
+{
+		background-color:white;
+		background-image: none;
+		*/
+/* color:black !important; *//*
+
+}
+
+*/
+/* For xfRepeat line-content *//*
+
+td > div.bfPending > span
+{
+		display: block;
+}
+*/
 
 /*##################################################################
                    START IMPORTANT STYLES (DO NOT OVERWRITE)

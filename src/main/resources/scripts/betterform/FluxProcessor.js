@@ -453,7 +453,7 @@ dojo.declare("betterform.FluxProcessor",
 
 
     _fifoProcessingFinished: function() {
-        dojo.removeClass(this.indicatorTargetObject, "xfPending");
+        dojo.removeClass(this.indicatorTargetObject, "bfPending");
 
 
         // Don't iterate through all items ... only use the last one and skip the rest
@@ -475,12 +475,12 @@ dojo.declare("betterform.FluxProcessor",
             clearTimeout(fluxProcessor.indicatorObjectTimer);
         }
         if (this.indicatorTargetObject) {
-            dojo.removeClass(this.indicatorTargetObject, "xfPending");
+            dojo.removeClass(this.indicatorTargetObject, "bfPending");
         }
 
         this.indicatorTargetObject = dojoObject;
 
-        dojo.addClass(dojoObject, "xfPending");
+        dojo.addClass(dojoObject, "bfPending");
 
         try {
             dwr.engine.setPreHook(function() {
