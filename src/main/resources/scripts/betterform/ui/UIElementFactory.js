@@ -73,7 +73,7 @@ dojo.declare(
                             xfValue = dojo.date.stamp.fromISOString(xfValue);
                         }else { xfValue = ""; }
                         var datePattern;
-                            
+
                         if (appearance.indexOf("iso8601:") != -1) {
                             datePattern = appearance.substring(appearance.indexOf("iso8601:")+8);
                             //console.debug("UIelementFactory.createWidget 1. datePattern:" + datePattern);
@@ -86,16 +86,16 @@ dojo.declare(
 
                         if (datePattern != undefined) {
                             try {
-                                newWidget = new betterform.ui.input.Date({
-                                    name:controlId + "-value",
-                                    value:xfValue,
-                                    "class":classValue,
-                                    title:dojo.attr(sourceNode, "title"),
-                                    constraints:{
-                                        selector:'date',
+                        newWidget = new betterform.ui.input.Date({
+                            name:controlId + "-value",
+                            value:xfValue,
+                            "class":classValue,
+                            title:dojo.attr(sourceNode,"title"),
+                            constraints:{
+                                selector:'date',
                                         datePattern:datePattern
-                                    },
-                                    xfControlId:controlId
+                            },
+                            xfControlId:controlId
                                 },
                                         sourceNode);
                             }
@@ -112,7 +112,7 @@ dojo.declare(
                                     selector:'date'
                                 },
                                 xfControlId:controlId
-                            }, sourceNode);
+                        }, sourceNode);
                         }
                         break;
                     case "datetime":
@@ -142,11 +142,11 @@ dojo.declare(
                         dojo.require("betterform.ui.input.DateTime");
                         if (datePattern != undefined) {
                             try {
-                            newWidget = new betterform.ui.input.DateTime({
-                                name:controlId + "-value",
-                                value:xfValue,
-                                miliseconds:miliseconds,
-                                constraints:{
+                        newWidget = new betterform.ui.input.DateTime({
+                            name:controlId + "-value",
+                            value:xfValue,
+                            miliseconds:miliseconds,
+                            constraints:{
                                     datePattern:datePattern,
                                     timePattern:'HH:mm:ss'
 
@@ -164,15 +164,15 @@ dojo.declare(
                                 value:xfValue,
                                 miliseconds:miliseconds,
                                 constraints:{
-                                    datePattern:'dd.MM.yyyy',
-                                    timePattern:'HH:mm:ss'
+                                datePattern:'dd.MM.yyyy',
+                                timePattern:'HH:mm:ss'
 
-                                },
-                                title:dojo.attr(sourceNode, "title"),
-                                xfControlId:controlId
-                            }, sourceNode);
+                            },
+                            title:dojo.attr(sourceNode,"title"),
+                            xfControlId:controlId
+                        }, sourceNode);
                         }
-                        /*
+/*
                         newWidget = new betterform.ui.input.DateTime({
                             name:controlId + "-value",
                             value:xfValue,
@@ -553,7 +553,8 @@ dojo.declare(
                         name:dojo.attr(sourceNode, "name")+"-value",
                         label:dojo.attr(sourceNode, "label"),
                         title:dojo.attr(sourceNode,"title"),
-                        xfControlId:controlId
+                        xfControlId:controlId,
+                        imageId:dojo.query(("button[id="+sourceNode.id+"]>span>span"))[0].id
                     }, sourceNode);
                     console.dirxml(sourceNode);
                 }else {

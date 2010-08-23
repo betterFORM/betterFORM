@@ -24,11 +24,11 @@ dojo.require("dijit.form.Button");
  **/
 
 dojo.declare(
-       "betterform.ui.Control",
+        "betterform.ui.Control",
         [dijit._Widget, dijit._Templated],
 {
     id:"",
-    
+
     target: null,
 
     value:"",
@@ -47,16 +47,16 @@ dojo.declare(
     tabindex:0,
     appearance:"",
 
-    buildRendering: function(){
-            // we already have the srcNodeRef, so lets just
-                    // keep it and use it as the domNode
-            this.domNode = this.srcNodeRef;
-            if(dojo.attr(this.domNode ,"tabindex")){
-                this.tabindex = eval(dojo.attr(this.domNode ,"tabindex"));
-            }
+    buildRendering: function() {
+        // we already have the srcNodeRef, so lets just
+        // keep it and use it as the domNode
+        this.domNode = this.srcNodeRef;
+        if (dojo.attr(this.domNode, "tabindex")) {
+            this.tabindex = eval(dojo.attr(this.domNode, "tabindex"));
+        }
     },
 
-    postCreate:function(){
+    postCreate:function() {
         // ensure all needed classes for Control are in place
         // TODO: examine if this can be done in handleStateChanged
         betterform.ui.util.setDefaultClasses(this.domNode);
@@ -65,7 +65,7 @@ dojo.declare(
             // console.debug("Control.postCreate this.domNode:",this.domNode);
             // verify if controlValue node allready exist, if not create it
             var controlValueTemplate = dojo.query("*[id ='" + this.id + "-value']", this.domNode)[0];
-            if(controlValueTemplate == undefined){
+            if (controlValueTemplate == undefined) {
                 controlValueTemplate = dojo.query(".xfValue", this.domNode)[0];
             }
             // Child node CntrolValue does not exist, ControlValueTemplate is created dynamicly
@@ -80,22 +80,22 @@ dojo.declare(
 
             this.controlValue = fluxProcessor.factory.createWidget(controlValueTemplate, this.id);
 
-            if(this.controlValue != undefined){
+            if (this.controlValue != undefined) {
                 // apply MIP states
                 this.controlValue.applyState();
-            }else {
+            } else {
                 console.error("ControlValue for Control " + id + " could not be created");
             }
         }
-        if(this.isValid()) {
-            dojo.publish("/xf/valid",[this.id,"init"]);
-        }else {
-            dojo.publish("/xf/invalid",[this.id,"init"]);
+        if (this.isValid()) {
+            dojo.publish("/xf/valid", [this.id,"init"]);
+        } else {
+            dojo.publish("/xf/invalid", [this.id,"init"]);
         }
     },
 
     /**
-     * Create a ControlValue template of properties taken from Control 
+     * Create a ControlValue template of properties taken from Control
      */
     _createControlValueTemplate:function() {
         // console.debug("Control.createControlValueTemplate XFControl " + this.id + " has no value node! Value node is created based on ContextInfo: ", this.contextInfo, " domNode:",this.domNode);
@@ -159,89 +159,89 @@ dojo.declare(
         return controlValueTemplate;
     },
 
-    
 
-/*    is called initially when controls initialize to read their state from
-    the CSS class attribute of the XForms shadow control (div wrapper element)
 
-    This approach is at least questionable as it leaves open the question who is
-    controlling the state actually. If the CSS classes serve the initial state but
-    this is maintained later in JS classes this opens two roads to state handling.
-    At least the master (and direction of updating) should be defined more clearly.
+    /*    is called initially when controls initialize to read their state from
+     the CSS class attribute of the XForms shadow control (div wrapper element)
 
-    If classes are considered the master (being initially set by processor and updated by
-    XMLEvents from the processor) they should be seen as readonly. The implementation
-    of the scripts should never assume correctness of
+     This approach is at least questionable as it leaves open the question who is
+     controlling the state actually. If the CSS classes serve the initial state but
+     this is maintained later in JS classes this opens two roads to state handling.
+     At least the master (and direction of updating) should be defined more clearly.
 
-    initFromClasses:function(){
-        console.debug("initFormClasses id: ", this.id);
+     If classes are considered the master (being initially set by processor and updated by
+     XMLEvents from the processor) they should be seen as readonly. The implementation
+     of the scripts should never assume correctness of
 
-        var targetNode = this._getControlWrapper();
+     initFromClasses:function(){
+     console.debug("initFormClasses id: ", this.id);
 
-        if(dojo.hasClass(targetNode,"readonly")){
-            console.debug(this, " is readonly");
-        }
-    },*/
+     var targetNode = this._getControlWrapper();
 
-    isRequired:function(){
+     if(dojo.hasClass(targetNode,"readonly")){
+     console.debug(this, " is readonly");
+     }
+     },*/
+
+    isRequired:function() {
         // console.debug("Control.isRequired",this.domNode);
-        if(dojo.hasClass(this.domNode,"xfOptional")){
+        if (dojo.hasClass(this.domNode, "xfOptional")) {
             return false;
-        }else if(dojo.hasClass(this.domNode,"xfRequired")){
+        } else if (dojo.hasClass(this.domNode, "xfRequired")) {
             return true;
-        }else {
+        } else {
             console.error("No required state found")
         }
     },
 
-    isReadonly:function(){
+    isReadonly:function() {
         // console.debug("Control.isReadonly",this.domNode);
-        if(dojo.hasClass(this.domNode,"xfReadWrite")){
+        if (dojo.hasClass(this.domNode, "xfReadWrite")) {
             return false;
-        }else if(dojo.hasClass(this.domNode,"xfReadOnly")){
+        } else if (dojo.hasClass(this.domNode, "xfReadOnly")) {
             return true;
-        }else {
+        } else {
             console.error("No readonly state found")
         }
     },
 
-    isRelevant:function(){
+    isRelevant:function() {
         //console.debug("Control.isRelevant",this.domNode);
-        if(dojo.hasClass(this.domNode,"xfDisabled")){
+        if (dojo.hasClass(this.domNode, "xfDisabled")) {
             return false;
-        }else if(dojo.hasClass(this.domNode,"xfEnabled")){
+        } else if (dojo.hasClass(this.domNode, "xfEnabled")) {
             return true;
-        }else {
+        } else {
             console.error("No relevant state found")
         }
     },
 
-    isValid:function(){
-        if(dojo.hasClass(this.domNode,"xfInvalid")){
+    isValid:function() {
+        if (dojo.hasClass(this.domNode, "xfInvalid")) {
             return false;
-        }else if(dojo.hasClass(this.domNode,"xfValid")){
+        } else if (dojo.hasClass(this.domNode, "xfValid")) {
             return true;
-        }else {
+        } else {
             console.error("No validate state found for " + this.id);
         }
     },
 
 
-    handleStateChanged:function(contextInfo){        
+    handleStateChanged:function(contextInfo) {
         // console.debug("Control.handleStateChanged: ",contextInfo);
 
         if (contextInfo["parentId"]) {
             // console.debug("Control._handleHelperChanged: ",contextInfo);
             this._handleHelperChanged(contextInfo);
-        }else{
-            this.value =  contextInfo["value"];
+        } else {
+            this.value = contextInfo["value"];
             this.valid = contextInfo["valid"];
             this.readonly = contextInfo["readonly"];
             this.required = contextInfo["required"];
             this.relevant = contextInfo["enabled"];
             // console.debug("Control.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant), " contextInfo:",contextInfo;
-            
-            if(contextInfo["targetName"]=="input" && this.value != null){
+
+            if (contextInfo["targetName"] == "input" && this.value != null) {
                 var noNSType = betterform.ui.util.removeNamespace(contextInfo["type"]);
                 this._changedDataType(noNSType, contextInfo);
 
@@ -251,7 +251,7 @@ dojo.declare(
                     this._handleSetControlValue(this.value);
                 }
 
-            }else if(this.value != null) {
+            } else if (this.value != null) {
                 this._handleSetControlValue(this.value);
             }
 
@@ -272,8 +272,8 @@ dojo.declare(
         }
     },
 
-    getControlValue:function(){
-        if(this.controlValue != undefined){
+    getControlValue:function() {
+        if (this.controlValue != undefined) {
             return this.controlValue.getControlValue();
         }
     },
@@ -308,7 +308,7 @@ dojo.declare(
 
             dojo.addClass(controlValueNode, "xfValue");
             var formerTypeClass = "xsd" + this.dataType.replace(/^[a-z]/, this.dataType.substring(0, 1).toUpperCase());
-            if(dojo.hasClass(this.domNode, formerTypeClass)){
+            if (dojo.hasClass(this.domNode, formerTypeClass)) {
                 // console.debug("remove CSS Type " + formerTypeClass);
                 dojo.removeClass(this.domNode, formerTypeClass);
             }
@@ -321,7 +321,7 @@ dojo.declare(
         this.dataType = dataType;
     },
 
-    _handleSetControlValue:function(value){
+    _handleSetControlValue:function(value) {
         // console.debug("handleSetControlValue: " + this.controlValue.currentValue + " value: " + value);
         if(this.controlValue.currentValue != value) {
             this.controlValue.currentValue = value;
@@ -332,20 +332,20 @@ dojo.declare(
 
 
 
-    _handleSetValidProperty:function(validity){
+    _handleSetValidProperty:function(validity) {
         // console.debug("Control._handleSetValidProperty [id:"+this.id+ " valid: ",validity, "]");
         if (validity) {
             betterform.ui.util.replaceClass(this.domNode, "xfInvalid", "xfValid");
-			dojo.publish("/xf/valid",[this.id,"applyChanges"]);
+            dojo.publish("/xf/valid", [this.id,"applyChanges"]);
         }
         else {
             betterform.ui.util.replaceClass(this.domNode, "xfValid", "xfInvalid");
-			dojo.publish("/xf/invalid",[this.id,"applyChanges"]);
+            dojo.publish("/xf/invalid", [this.id,"applyChanges"]);
         }
 
     },
 
-    _handleSetReadonlyProperty: function(){
+    _handleSetReadonlyProperty: function() {
         if (eval(this.readonly) == false) {
             betterform.ui.util.replaceClass(this.domNode, "xfReadOnly", "xfReadWrite");
         }
@@ -355,28 +355,28 @@ dojo.declare(
         this.controlValue.applyState();
     },
 
-    _handleSetRequiredProperty:function(){
+    _handleSetRequiredProperty:function() {
         if (this.required == "true") {
             betterform.ui.util.replaceClass(this.domNode, "xfOptional", "xfRequired");
         }
         else {
             betterform.ui.util.replaceClass(this.domNode, "xfRequired", "xfOptional");
-            if(dojo.hasClass(this.domNode, "xfRequiredEmpty")) {
+            if (dojo.hasClass(this.domNode, "xfRequiredEmpty")) {
                 dojo.removeClass(this.domNode, "xfRequiredEmpty");
             }
         }
     },
 
-    _handleSetEnabledProperty:function(enabled){
+    _handleSetEnabledProperty:function(enabled) {
         // console.debug("_handleSetEnabledProperty  enabled:",enabled, " domNode: ",this.domNode);
         var targetId = this.id;
         var label = dojo.byId(targetId + "-label");
 
         if (enabled) {
-            if(label != undefined) {
-                if(dojo.hasClass(label,"xfDisabled")){
+            if (label != undefined) {
+                if (dojo.hasClass(label, "xfDisabled")) {
                     betterform.ui.util.replaceClass(label, "xfDisabled", "xfEnabled");
-                }else {
+                } else {
                     dojo.addClass(label, "xfEnabled");
                 }
             }
@@ -384,7 +384,7 @@ dojo.declare(
             betterform.ui.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");
         }
         else {
-            if(label != undefined) {
+            if (label != undefined) {
                 if (dojo.hasClass(label, "xfEnabled")) {
                     betterform.ui.util.replaceClass(label, "xfEnabled", "xfDisabled");
                 } else {
@@ -393,31 +393,30 @@ dojo.declare(
             }
 
             betterform.ui.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");
-            if(this.isValid()){
+            if (this.isValid()) {
                 dojo.publish("/xf/valid", [this.id, "xfDisabled"]);
-            }else {
+            } else {
                 dojo.publish("/xf/invalid", [this.id, "xfDisabled"]);
             }
         }
 
 
-
     },
 
-    _handleHelperChanged: function(properties){
+    _handleHelperChanged: function(properties) {
         // console.debug("Control.handleHelperChanged: type='" + properties["type"] + "',  value='" + properties["value"] + "'");
         switch (properties["targetName"]) {
             case "label":
-                this.controlValue._setLabel( properties["value"]);
+                this.controlValue._setLabel(properties["value"]);
                 return;
             case "help":
-                this._setHelp( properties["value"]);
+                this._setHelp(properties["value"]);
                 return;
             case "hint":
-                this._setHint( properties["value"]);
+                this._setHint(properties["value"]);
                 return;
             case "alert":
-                this._setAlert( properties["value"]);
+                this._setAlert(properties["value"]);
                 return;
             case "value":
                 this.controlValue._handleSetControlValue(properties["value"]);
@@ -427,39 +426,39 @@ dojo.declare(
 
     _updateMIPClasses:function() {
 
-/*
-        console.debug("betterform.ui.Control._checkMIP: contextInfo:",this.contextInfo,
-                " enabled: " +this.contextInfo.enabled +
-                " readonly: " + this.contextInfo.readonly+
-                " required: " +this.contextInfo.required +
-                " valid: " + this.contextInfo.valid);
-*/
+        /*
+         console.debug("betterform.ui.Control._checkMIP: contextInfo:",this.contextInfo,
+         " enabled: " +this.contextInfo.enabled +
+         " readonly: " + this.contextInfo.readonly+
+         " required: " +this.contextInfo.required +
+         " valid: " + this.contextInfo.valid);
+         */
 
-        if(this.contextInfo.enabled != undefined) {
-            if(this.contextInfo.enabled == "true") {
-                betterform.ui.util.replaceClass(this.domNode,"xfDisabled", "xfEnabled");
-            }else {
-                betterform.ui.util.replaceClass(this.domNode,"xfEnabled", "xfDisabled");
+        if (this.contextInfo.enabled != undefined) {
+            if (this.contextInfo.enabled == "true") {
+                betterform.ui.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");
+            } else {
+                betterform.ui.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");
             }
         }
-        if(this.contextInfo.readonly != undefined) {
+        if (this.contextInfo.readonly != undefined) {
             if (this.contextInfo.readonly == "true") {
                 betterform.ui.util.replaceClass(this.domNode, "xfReadWrite", "xfReadOnly");
             } else {
                 betterform.ui.util.replaceClass(this.domNode, "xfReadOnly", "xfReadWrite");
             }
         }
-        if(this.contextInfo.required != undefined) {
-            if(this.contextInfo.required == "true") {
+        if (this.contextInfo.required != undefined) {
+            if (this.contextInfo.required == "true") {
                 betterform.ui.util.replaceClass(this.domNode, "xfOptional", "xfRequired");
-            }else {
+            } else {
                 betterform.ui.util.replaceClass(this.domNode, "xfRequired", "xfOptional");
             }
         }
-        if(this.contextInfo.valid != undefined) {
-            if(this.contextInfo.valid == "true") {
+        if (this.contextInfo.valid != undefined) {
+            if (this.contextInfo.valid == "true") {
                 betterform.ui.util.replaceClass(this.domNode, "xfInvalid", "xfValid");
-            }else {
+            } else {
                 betterform.ui.util.replaceClass(this.domNode, "xfValid", "xfInvalid");
             }
         }
@@ -467,48 +466,110 @@ dojo.declare(
     },
 
     updateProgress:function(value) {
-        this.controlValue.updateProgress(value);        
+        this.controlValue.updateProgress(value);
     },
 
     setControlValue:function(/* String */ value) {
         fluxProcessor.setControlValue(this.id, value);
     },
 
-    _setHelp:function( value) {
+    _setHelp:function(value) {
         // console.warn("TBD: Control._setHelp value:"+ value);
         var helpNode = dojo.byId(this.id + "-help");
-        if(helpNode != undefined) {
+        if (helpNode != undefined) {
             helpNode.innerHTML = value;
         }
         else {
-            console.warn("Failure updating help for Control '" +this.id + "-help' with value: " + value);
+            console.warn("Failure updating help for Control '" + this.id + "-help' with value: " + value);
         }
     },
 
-    _setHint:function( value) {
+    _setHint:function(value) {
+        // Container for storing the hint-node if it exists
         var hintNode = dojo.byId(this.id + "-hint");
-        if(hintNode != undefined) {
-            hintNode.innerHTML = value;
+        // Container for storing the node which contains a title attribute
+        var valueNode = dijit.byId(this.id + "-value");
+
+        // Value for: Is a hint Node available at the current DOM-structure
+        var hintNodeFound = false;
+        // Value for: Is a title-Attribute availabel at the current DOM-structure
+        var titleAttributeFound = false;
+
+        // Check if a hint-node is available and store that information
+        if (hintNode != undefined) {
+            hintNodeFound = true;
         }
         else {
-            console.error("Failure updating hint for Control '" +this.id + "-hint' with value: " + value);
+            hintNodeFound = false;
+        }
+
+        // Check if a title-attribute is available and store that information
+        if (valueNode != undefined) {
+            try {
+                // Try to retrieve the title attribute of the according value-node
+                var titleAttribute = valueNode.attr("title");
+                if (titleAttribute != null) {
+                    // Test if the retrieved title-attribute is defined
+                    if (titleAttribute != undefined) {
+                        // Test if the retrieved title-attribute has a non-empty value
+                        // TODO: Check if it really can be retrieved by valueNode.attr("title") even if it did not exist???
+                        if (titleAttribute != "") {
+                            titleAttributeFound = true;
+                        }
+                        else {
+                            titleAttributeFound = false;
+                        }
+                    }
+                    else {
+                        titleAttributeFound = false;
+                    }
+                }
+                else {
+                    titleAttributeFound = false;
+                }
+            }
+            catch(exception) {
+                titleAttributeFound = false;
+            }
+        }
+        else {
+            titleAttributeFound = false;
+        }
+
+
+        // If a hint-node was found
+        if (hintNodeFound) {
+            // Only update the hint-node's content
+            hintNode.innerHTML = value;
+        }
+
+        // If a title-attribute was found
+        if (titleAttributeFound) {
+            // Update the title-attribute
+            valueNode.attr("title", value);
+        }
+
+        // If no hint-node was found and no title-attribute was found
+        if (!hintNodeFound && !titleAttributeFound) {
+            // Print an error to the console
+            console.error("Failure updating hint for Control '" + this.id + " with value: " + value + " ... neither found '" + this.id + "-hint' nor '" + this.id + "-value");
         }
     },
 
-    _setAlert:function( value) {
+    _setAlert:function(value) {
         var alertNode = dojo.byId(this.id + "-alert");
-        if(alertNode != undefined) {
+        if (alertNode != undefined) {
             alertNode.innerHTML = value;
         }
         else {
-            console.error("Failure updating alert for Control '" +this.id + "-alert' with value: " + value);
+            console.error("Failure updating alert for Control '" + this.id + "-alert' with value: " + value);
         }
 
     },
 
-    _setValueChild:function( value) {
-        console.warn("TBD: Control._setValueChild value:"+ value);
-        }
+    _setValueChild:function(value) {
+        console.warn("TBD: Control._setValueChild value:" + value);
+    }
 });
 
 

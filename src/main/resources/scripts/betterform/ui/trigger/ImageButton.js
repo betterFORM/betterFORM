@@ -20,6 +20,7 @@ dojo.declare(
                 var image = document.createElement("img");
 
                 dojo.attr(image, "src", imageSource);
+                dojo.attr(this.iconNode, "id", this.imageId);
                 this.iconNode.appendChild(image);
                 this.showLabel = false;
             }
@@ -27,5 +28,16 @@ dojo.declare(
 
         console.dirxml(this.srcNodeRef);
         console.debug("betterform.ui.trigger.ImageButton.buildRendering: END");
+    },
+
+    _handleSetControlValue:function(value) {
+        var iconNodeList = dojo.query(("span[id=" + this.id + "][dojoattachpoint=iconNode] > img"));
+        if (iconNodeList.length == 1) {
+            iconNodeList[0].src = value;
+        }else{
+            console.warn("imageTirrgger without iconNode found");
+        }
+
     }
+
 });

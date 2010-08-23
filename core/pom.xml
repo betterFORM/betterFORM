@@ -382,31 +382,6 @@
             </roles>
         </contributor>
         <contributor>
-            <name>Giota Karadimitriou</name>
-            <roles>
-                <role>Contributor</role>
-            </roles>
-        </contributor>
-        <contributor>
-            <name>Sabine Krach</name>
-            <roles>
-                <role>Contributor</role>
-            </roles>
-        </contributor>
-        <contributor>
-            <name>Anselm Kruis</name>
-            <organization>science + computing ag</organization>
-            <roles>
-                <role>Contributor</role>
-            </roles>
-        </contributor>
-        <contributor>
-            <name>Murata Kakoto</name>
-            <roles>
-                <role>Contributor</role>
-            </roles>
-        </contributor>
-        <contributor>
             <name>Bettina Leonhardt</name>
             <organization>science + computing ag</organization>
             <roles>
@@ -433,6 +408,37 @@
         </contributor>
         <contributor>
             <name>Sebastian Ordyniak</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Martin Kalchgruber</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Giota Karadimitriou</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Sabine Krach</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Anselm Kruis</name>
+            <organization>science + computing ag</organization>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Murata Kakoto</name>
             <roles>
                 <role>Contributor</role>
             </roles>
