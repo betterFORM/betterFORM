@@ -747,7 +747,7 @@ public class Submission extends BindingElement implements DefaultAction {
             // XForms 1.1 support, section 4.3.1
             // in case of an invalid instance report submit error only if the validate attribute is true
             if (Boolean.TRUE.equals(this.validate)) {
-                throw new XFormsSubmitError("instance validation failed", this.target, XFormsSubmitError.constructInfoObject(this.element, this.container, locationPath, XFormsConstants.VALIDATION_ERROR, getResourceURI()));
+                throw new XFormsSubmitError("instance validation failed: " + mode.getStatusText(), this.target, XFormsSubmitError.constructInfoObject(this.element, this.container, locationPath, XFormsConstants.VALIDATION_ERROR, getResourceURI()));
             }
         }
 

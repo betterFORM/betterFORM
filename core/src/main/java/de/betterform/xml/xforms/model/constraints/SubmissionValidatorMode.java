@@ -21,6 +21,8 @@ public class SubmissionValidatorMode implements ValidatorMode {
 
     private boolean discontinued = false;
 
+    private String statusText = "OK";
+
     // member access
 
     /**
@@ -32,6 +34,10 @@ public class SubmissionValidatorMode implements ValidatorMode {
      */
     public boolean isDiscontinued() {
         return this.discontinued;
+    }
+
+    public String getStatusText() {
+    	return this.statusText;
     }
 
     // implementation of 'de.betterform.xml.xforms.model.constraints.ValidatorMode'
@@ -77,8 +83,11 @@ public class SubmissionValidatorMode implements ValidatorMode {
         }
 
         if (!modelItem.isValid() || (modelItem.isRequired() && modelItem.getValue().length() == 0)) {
-            if (LOGGER.isTraceEnabled()) {
-                LOGGER.trace("validate: item " + modelItem.getNode() + " is invalid or required but empty: validation stopped");
+
+        	this.statusText = modelItem.getNode() + " is invalid or required but empty: validation stopped";
+
+        	if (LOGGER.isDebugEnabled()) {
+                LOGGER.warn("validate: item " + this.statusText);
             }
 
             // stop validation on invalid or reqiured-but-empty item
