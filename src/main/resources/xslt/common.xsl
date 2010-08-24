@@ -420,6 +420,38 @@
         <xsl:value-of select="normalize-space(concat($name-classes, ' ', $mip-classes))"/>
     </xsl:template>
 
+    <!-- add style from source doc as attribute -->
+    <!-- both try with and without xhtml namespace since we do not know what the default ns of the source is -->
+    <xsl:template name="copy-style-attribute">
+        <xsl:choose>
+            <xsl:when test="@style">
+                <xsl:attribute name="style"><xsl:value-of select="@style"/></xsl:attribute>
+            </xsl:when>
+            <xsl:when test="@xhtml:style">
+                <xsl:attribute name="style"><xsl:value-of select="@xhtml:style"/></xsl:attribute>
+            </xsl:when>
+            <xsl:otherwise />
+        </xsl:choose>
+    </xsl:template>
+
+    <!-- Create label value and take xml:lang attribute into account -->
+    <xsl:template name="create-label">
+    	<xsl:param name="label-elements"/>
+    	<xsl:message><xsl:value-of select="$label-elements"/></xsl:message>
+        <!-- match all inline markup and content -->
+            	<xsl:choose>
+            	    <xsl:when test="$label-elements[@lang=$locale]">
+                        <xsl:apply-templates select="$label-elements[@lang=$locale]"/>
+                    </xsl:when>
+            	    <xsl:when test="$label-elements[not(@lang)]">
+                        <xsl:apply-templates select="$label-elements[not(@lang)]"/>
+                    </xsl:when>
+            	    <xsl:otherwise>
+                        <xsl:apply-templates select="$label-elements[1]"/>
+                    </xsl:otherwise>
+		</xsl:choose>
+    </xsl:template>
+
     <!-- ########################## ACTIONS ####################################################### -->
     <!-- these templates serve no real purpose here but are shown for reference what may be over-   -->
     <!-- written by customized stylesheets importing this one. -->

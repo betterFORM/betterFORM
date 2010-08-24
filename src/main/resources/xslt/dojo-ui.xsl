@@ -53,6 +53,9 @@
 </xsl:text>
         
         <span id="{$group-id}" class="{$group-classes}" dojoType="betterform.ui.container.Group">
+
+	    <xsl:call-template name="copy-style-attribute"/>
+
             <span class="legend">
                 <xsl:choose>
                     <xsl:when test="$group-label and xforms:label">
@@ -205,11 +208,7 @@
             <div id="{$id}"
                  dojoType="betterform.ui.Control"
                  class="{$control-classes}">
-                <xsl:if test="@style">
-                    <xsl:attribute name="style">
-                        <xsl:value-of select="@style"/>
-                    </xsl:attribute>
-                </xsl:if>
+	        	<xsl:call-template name="copy-style-attribute"/>
                 <xsl:call-template name="buildControl"/>
                 <xsl:copy-of select="xhtml:script"/>
             </div>
@@ -362,6 +361,8 @@
                             <xsl:call-template name="assemble-label-classes"/>
                         </xsl:variable>
                         <label id="{@id}-label-header" class="{$label-classes}">
+	                        <!-- Needed for IE and Chrome to size the label -->
+	        	            <xsl:call-template name="copy-style-attribute"/>
                             <xsl:value-of select="xforms:label/@header"/>
                         </label>
                     </xsl:when>
@@ -371,6 +372,7 @@
                         </xsl:variable>
 
                         <label id="{@id}-label" class="{$label-classes}">
+                            <xsl:call-template name="copy-style-attribute"/>
                             <xsl:apply-templates select="xforms:label"/>
                         </label>
                     </xsl:otherwise>
@@ -432,6 +434,7 @@
             <xsl:attribute name="controlType" select="local-name()"/>
             <xsl:attribute name="appearance" select="@appearance"/>
             <xsl:attribute name="dojoAttachEvent">onfocus:_onFocus</xsl:attribute>
+	        <xsl:call-template name="copy-style-attribute"/>
 
             <xsl:choose>
                 <xsl:when test="'output' = local-name() and exists(@mediatype)">
@@ -742,6 +745,7 @@
         </xsl:variable>
 
         <div id="{$id}" class="{$control-classes} xfRepeated" dojoType="betterform.ui.Control"  dojoAttachEvent='onfocus:_onFocus' >
+            <xsl:call-template name="copy-style-attribute"/>
             <label for="{$id}-value" id="{$id}-label" style="display:none">
                 <xsl:apply-templates select="xforms:label"/>
             </label>
@@ -1103,6 +1107,7 @@
 </xsl:text>
 
         <div id="{$switch-id}" class="{$switch-classes}" dojoType="betterform.ui.container.Switch">
+	        <xsl:call-template name="copy-style-attribute"/>
             <xsl:apply-templates/>
         </div>
     </xsl:template>
@@ -1197,6 +1202,7 @@
             </xsl:for-each>
         </div>
 		<div id="{$switch-id}" class="{$switch-classes} caTabContainer" dojoType="betterform.ui.container.TabSwitch">
+            <xsl:call-template name="copy-style-attribute"/>
 			<xsl:for-each select="xforms:case[./xforms:label]">
                 <xsl:variable name="selected">
                     <xsl:choose>
