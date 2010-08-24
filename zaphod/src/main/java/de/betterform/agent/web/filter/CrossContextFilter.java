@@ -39,7 +39,7 @@ public class CrossContextFilter implements Filter {
     // this value is null, this filter instance is not currently
     // configured.
     private FilterConfig filterConfig = null;
-    private static finm al String message = "Please edit the file META-INF/context.xml and add 'crossContext=\"true\"' as attribute.";
+    private static final String message = "Please edit the file META-INF/context.xml and add 'crossContext=\"true\"' as attribute.";
     // context name of Chiba.
     private ServletContext context = null;
     // the repeating servlet in Chiba
