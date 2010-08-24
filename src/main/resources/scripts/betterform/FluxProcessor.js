@@ -575,7 +575,7 @@ dojo.declare("betterform.FluxProcessor",
             }
         }
         catch(ex) {
-            console.debug("AN ERROR OCCURRED!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            fluxProcessor._handleExceptions("An error occurred during applyChanges ", ex);
         }
         //The pending request tournaround has been completed
         fluxProcessor.requestPending = false;
