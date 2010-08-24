@@ -427,9 +427,11 @@
             <xsl:when test="@style">
                 <xsl:attribute name="style"><xsl:value-of select="@style"/></xsl:attribute>
             </xsl:when>
+<!--
             <xsl:when test="@xhtml:style">
                 <xsl:attribute name="style"><xsl:value-of select="@xhtml:style"/></xsl:attribute>
             </xsl:when>
+-->
             <xsl:otherwise />
         </xsl:choose>
     </xsl:template>

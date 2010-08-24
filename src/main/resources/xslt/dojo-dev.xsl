@@ -21,16 +21,19 @@
                 <style type="text/css">
                     <xsl:choose>
                         <xsl:when test="//body/@class='soria'">
-                    @import "<xsl:value-of select="$contextroot"/>/resources/scripts/dijit/themes/soria/soria.css";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dijit/themes/soria/soria.css";
+                        </xsl:when>
+                        <xsl:when test="//body/@class='nihilo'">
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dijit/themes/nihilo/nihilo.css";
                         </xsl:when>
                         <xsl:otherwise>
-                    @import "<xsl:value-of select="$contextroot"/>/resources/scripts/dijit/themes/tundra/tundra.css";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dijit/themes/tundra/tundra.css";
                         </xsl:otherwise>
                     </xsl:choose>
-                    @import "<xsl:value-of select="$contextroot"/>/resources/scripts/dojo/resources/dojo.css";
-                    @import "<xsl:value-of select="$contextroot"/>/resources/scripts/dojox/widget/Toaster/Toaster.css";
-                    @import "<xsl:value-of select="$contextroot"/>/resources/scripts/dojox/layout/resources/FloatingPane.css";
-	                @import "<xsl:value-of select="$contextroot"/>/resources/scripts/dojox/layout/resources/ResizeHandle.css";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojo/resources/dojo.css";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojox/widget/Toaster/Toaster.css";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojox/layout/resources/FloatingPane.css";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojox/layout/resources/ResizeHandle.css";
                 </style><xsl:text>
 </xsl:text>
     </xsl:template>
