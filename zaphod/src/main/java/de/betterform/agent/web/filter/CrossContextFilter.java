@@ -39,7 +39,7 @@ public class CrossContextFilter implements Filter {
     // this value is null, this filter instance is not currently
     // configured.
     private FilterConfig filterConfig = null;
-    private static final String message = "Please edit the file META-INF/context.xml and add 'crossContext=\"true\"' as attribute.";
+    private static finm al String message = "Please edit the file META-INF/context.xml and add 'crossContext=\"true\"' as attribute.";
     // context name of Chiba.
     private ServletContext context = null;
     // the repeating servlet in Chiba
@@ -213,7 +213,7 @@ public class CrossContextFilter implements Filter {
 
 
     private void resourceForward(ServletRequest request, ServletResponse response) throws ServletException, IOException {
-        /* Request is being forwarded to chiba. Just changing the URI.
+        /* Request is being forwarded to betterFORM. Just changing the URI.
            This is most likely an resource like an image or a css file.
         */
 
