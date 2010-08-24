@@ -263,20 +263,21 @@
     </xsl:template>
 
     <xsl:template name="assemble-label-classes">
-        <xsl:for-each select="xf:label[1]">
-            <xsl:variable name="name-classes">
-                <xsl:call-template name="get-name-classes"/>
-            </xsl:variable>
             <xsl:variable name="mip-classes">
                 <xsl:call-template name="get-mip-classes">
                     <xsl:with-param name="limited" select="true()"/>
                 </xsl:call-template>
+            </xsl:variable>
+        <xsl:for-each select="xf:label[1]">
+            <xsl:variable name="name-classes">
+                <xsl:call-template name="get-name-classes"/>
             </xsl:variable>
             <xsl:variable name="author-classes">
                 <xsl:call-template name="get-author-classes"/>
             </xsl:variable>
 
             <xsl:value-of select="normalize-space(concat($name-classes, ' ', $mip-classes, ' ', $author-classes))"/>
+            <xsl:apply-templates/>
         </xsl:for-each>
     </xsl:template>
 

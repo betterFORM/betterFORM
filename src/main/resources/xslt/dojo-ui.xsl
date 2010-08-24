@@ -372,6 +372,12 @@
                         </xsl:variable>
 
                         <label id="{@id}-label" class="{$label-classes}">
+                            <xsl:attribute name="title">
+                               	<xsl:apply-templates select="xforms:label"/>
+                            </xsl:attribute>
+
+	                    <!-- Needed for IE and Chrome to size the label
+                            -->
                             <xsl:call-template name="copy-style-attribute"/>
                             <xsl:apply-templates select="xforms:label"/>
                         </label>

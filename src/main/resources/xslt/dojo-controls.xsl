@@ -239,6 +239,11 @@
                 <xsl:with-param name="appearance" select="$appearance"/>
             </xsl:call-template>
         </xsl:variable>
+        <xsl:variable name="label">
+            <xsl:call-template name="create-label">
+                <xsl:with-param name="label-elements" select="xforms:label"/>
+            </xsl:call-template>
+        </xsl:variable>
         <span id="{$id}" class="{$control-classes}" dojoType="betterform.ui.Control">
         <!-- minimal appearance only supported in scripted mode -->
             <xsl:choose>
@@ -260,7 +265,7 @@
                     <button id="{$id}-value"
                             appearance="{@appearance}"
                             controlType="trigger"
-                            label="{xforms:label}"
+                            label="{$label}"
                             name="{$name}"
                             type="button"
                             class="xfValue"
@@ -270,16 +275,23 @@
                             source="{$src}">
                             <xsl:apply-templates select="@*[not(name()='class')][not(name()='id')][not(name()='appearance')][not(name()='src')]"/>
                         <span id="{$id}-label" class="buttonLabel">
-                            <xsl:apply-templates select="xforms:label"/>
+                            <xsl:call-template name="create-label">
+                                <xsl:with-param name="label-elements" select="xforms:label"/>
+                            </xsl:call-template>
                         </span>
                     </button>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:variable name="source" select="if (contains(@mediatype, 'image/')) then xforms:label else $src"/>
+                    <xsl:variable name="label">
+                        <xsl:call-template name="create-label">
+                            <xsl:with-param name="label-elements" select="xforms:label"/>
+                        </xsl:call-template>
+         		    </xsl:variable>
+                    <xsl:variable name="source" select="if (contains(@mediatype, 'image/')) then $label else $src"/>
                     <button id="{$id}-value"
                             appearance="{@appearance}"
                             controlType="trigger"
-                            label="{xforms:label}"
+                            label="{$label}"
                             name="{$name}"
                             type="button"
                             class="xfValue"
@@ -352,8 +364,13 @@
     </xsl:template>
 
 	<xsl:template name="build-items-choices">
-	        <xsl:if test="exists(xforms:label)"> 
-	            <option id="{@id}" value="{xforms:label}" class="xfSelectorItem"><xsl:value-of select="xforms:label" /></option>
+        <xsl:variable name="label">
+            <xsl:call-template name="create-label">
+                <xsl:with-param name="label-elements" select="xforms:label"/>
+            </xsl:call-template>
+        </xsl:variable>
+	    <xsl:if test="$label != ''">
+	        <option id="{@id}" value="{$label}" class="xfSelectorItem"><xsl:value-of select="$label" /></option>
 	        </xsl:if>
 	        <xsl:for-each select="xforms:itemset|xforms:item|xforms:choices">
 	           <xsl:call-template name="build-items-list"/>
@@ -379,7 +396,9 @@
             <xsl:if test="@selected='true'">
                 <xsl:attribute name="selected">selected</xsl:attribute>
             </xsl:if>
-            <xsl:value-of select="xforms:label"/>
+            <xsl:call-template name="create-label">
+                <xsl:with-param name="label-elements" select="xforms:label"/>
+            </xsl:call-template>
         </option>
     </xsl:template>
 
@@ -402,7 +421,9 @@
                 <xsl:if test="@selected='true'">
                     <xsl:attribute name="selected">selected</xsl:attribute>
                 </xsl:if>
-                <xsl:value-of select="xforms:label"/>
+                <xsl:call-template name="create-label">
+                    <xsl:with-param name="label-elements" select="xforms:label"/>
+                </xsl:call-template>
             </option>
         </select>
     </xsl:template>
@@ -499,7 +520,9 @@
                 <xsl:if test="$parent/bf:data/@bf:readonly='true'">
                     <xsl:attribute name="disabled">disabled</xsl:attribute>
                 </xsl:if>
-                <xsl:apply-templates select="xforms:label"/>
+                <xsl:call-template name="create-label">
+                    <xsl:with-param name="label-elements" select="xforms:label"/>
+                </xsl:call-template>
             </label>
         </span>
 	</xsl:template>
@@ -544,7 +567,9 @@
                 <xsl:if test="$parent/bf:data/@bf:readonly='true'">
                     <xsl:attribute name="disabled">disabled</xsl:attribute>
                 </xsl:if>
-                <xsl:apply-templates select="xforms:label"/>
+                <xsl:call-template name="create-label">
+                    <xsl:with-param name="label-elements" select="xforms:label"/>
+                </xsl:call-template>
             </span>
         </span>
     </xsl:template>
@@ -621,6 +646,11 @@
     	<xsl:param name="parent"/>
         <xsl:param name="navindex"/>
         <xsl:variable name="parentId" select="$parent/@id"/>
+        <xsl:variable name="label">
+            <xsl:call-template name="create-label">
+                <xsl:with-param name="label-elements" select="xforms:label"/>
+            </xsl:call-template>
+        </xsl:variable>
         <span id="{@id}"
               class="xfSelectorItem"
               controlType="radioButtonEntry">
@@ -653,7 +683,7 @@
                 <xsl:if test="$parent/bf:data/@bf:readonly='true'">
                     <xsl:attribute name="disabled">disabled</xsl:attribute>
                 </xsl:if>
-                <xsl:apply-templates select="xforms:label"/>
+                <xsl:value-of select="$label"/>
             </label>
         </span>
 	</xsl:template>
@@ -698,6 +728,7 @@
                 <xsl:if test="$parent/bf:data/@bf:readonly='true'">
                     <xsl:attribute name="disabled">disabled</xsl:attribute>
                 </xsl:if>
+                <xsl:message>Fix this for internationalization</xsl:message>
                 <xsl:apply-templates select="xforms:label" mode="prototype"/>
             </span>
         </span>

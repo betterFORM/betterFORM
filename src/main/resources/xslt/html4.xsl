@@ -116,7 +116,7 @@
         <body>
             <xsl:copy-of select="@*"/>
             <div id="caLoading">
-                <img src="{concat($contextroot,'/resources/images/indicator.gif')}" class="disabled" id="indicator" alt="loading" />
+                <img src="{concat($contextroot, $scriptPath, '../images/indicator.gif')}" class="disabled" id="indicator" alt="loading" />
             </div>
 
             <xsl:variable name="outermostNodeset"

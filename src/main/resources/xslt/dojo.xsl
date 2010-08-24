@@ -336,7 +336,7 @@
                     <xsl:if test="exists(//xf:help)"><script type="text/javascript">dojo.require("dijit.form.Button");</script><xsl:text>
     </xsl:text>
                         <div id="helpTrigger">
-                            <a href="javascript:fluxProcessor.showHelp();"><img src="{concat($contextroot,'/resources/images/help.png')}" alt="Help"/></a>
+                            <a href="javascript:fluxProcessor.showHelp();"><img src="{concat($contextroot,$scriptPath,'help.png')}" alt="Help"/></a>
                         </div>
                     </xsl:if>
                     <div id="helpWindow" style="display:none"/>
@@ -348,7 +348,8 @@
                 </div>
             </div>
             <xsl:if test="$debug-enabled='true'">
-                <div id="debug-pane" style="width:100%;border:thin dotted;">
+                <!-- z-index of 1000 so it is also in front of shim for modal dialogs -->
+                <div id="debug-pane" style="width:100%;border:thin dotted; z-index:1000;">
                     <script type="text/javascript">dojo.require("dijit.form.Button");</script><xsl:text>
 </xsl:text>
                     <button dojotype="dijit.form.Button" onclick="getXFormsDOM();" type="button">
@@ -433,12 +434,12 @@
 
         <span id="{$id}" dojoType="betterform.ui.Control" class="{$control-classes}">
 
-            <xsl:if test="@style">
-                <xsl:attribute name="style"><xsl:value-of select="@style"/></xsl:attribute>
-            </xsl:if>
+            <xsl:call-template name="copy-style-attribute"/>
 
             <label for="{$id}-value" id="{$id}-label" class="{$label-classes}">
-                <xsl:apply-templates select="xf:label"/>
+                <xsl:call-template name="create-label">
+                    <xsl:with-param name="label-elements" select="xf:label"/>
+                </xsl:call-template>
             </label>
 
             <xsl:call-template name="buildControl"/>
@@ -463,8 +464,11 @@
         </xsl:variable>
 
         <span id="{$id}" class="{$control-classes}" dojoType="betterform.ui.Control">
+            <xsl:call-template name="copy-style-attribute"/>
                 <label for="{$id}-value" id="{$id}-label" class="{$label-classes}">
-                    <xsl:apply-templates select="xf:label"/>
+                <xsl:call-template name="create-label">
+                    <xsl:with-param name="label-elements" select="xf:label"/>
+                </xsl:call-template>
                 </label>
             <xsl:call-template name="buildControl"/>
 
@@ -488,8 +492,11 @@
         </xsl:variable>
 
         <span id="{$id}" class="{$control-classes}" controlType="{local-name()}-control">
+            <xsl:call-template name="copy-style-attribute"/>
                 <label for="{$id}-value" id="{$id}-label" class="{$label-classes}">
-                    <xsl:apply-templates select="xf:label"/>
+                <xsl:call-template name="create-label">
+                    <xsl:with-param name="label-elements" select="xf:label"/>
+                </xsl:call-template>
                 </label>
             <xsl:call-template name="buildControl"/>
             <span id="{$id}-alertAttachPoint" style="display:none;" class="alertAttachPoint"/>
@@ -688,7 +695,12 @@
 
 
             <xsl:when test="local-name()='trigger'">
-                <xsl:variable name="value" select="bf:data/text()"/>
+                <!--xsl:variable name="value" select="bf:data/text()"/-->
+                <xsl:variable name="label">
+                    <xsl:call-template name="create-label">
+                        <xsl:with-param name="label-elements" select="xf:label"/>
+                    </xsl:call-template>
+                </xsl:variable>
                 <xsl:variable name="appearance" select="@appearance"/>
 
                 <button
@@ -699,7 +711,7 @@
                      appearance="{$appearance}"
                      name="{$name}"
                      tabindex="{$navindex}"
-                     value="{bf:data/text()}"
+                     value="{$label}"
                      title="{normalize-space(xf:hint)}"
                      type="button">
                     <xsl:if test="$accesskey != ' none'">
