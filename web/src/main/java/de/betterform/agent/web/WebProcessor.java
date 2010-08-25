@@ -24,6 +24,7 @@ import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xslt.TransformerService;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Node;
@@ -260,7 +261,7 @@ public class WebProcessor implements XFormsProcessor, EventListener {
                 }
                 this.xformsProcessor.setLocale((String) request.getAttribute("lang"));
                 this.locale = (String) request.getAttribute("lang");
-            } else if (!(Config.getInstance().getProperty("preselect-language").equals(""))) {
+            } else if (StringUtils.isNotBlank(Config.getInstance().getProperty("preselect-language"))) {
                 if (WebProcessor.LOGGER.isDebugEnabled()) {
                     WebProcessor.LOGGER.debug("using configured lang setting from Config: " + Config.getInstance().getProperty("preselect-language"));
                 }
@@ -270,10 +271,8 @@ public class WebProcessor implements XFormsProcessor, EventListener {
                 if (WebProcessor.LOGGER.isDebugEnabled()) {
                     WebProcessor.LOGGER.debug("using accept-language header: " + request.getHeader("accept-language"));
                 }
-                //todo:improve to support priority for language setting
-                String s = request.getHeader("accept-language");
-                this.xformsProcessor.setLocale(s.substring(0, 2));
-                this.locale = s.substring(0, 2);
+                //getLocale takes the one with the highest priority
+                setLocale(request.getLocale().getLanguage());
             }
         } else {
             //fallback default
