@@ -9,6 +9,7 @@ package de.betterform.xml.events;
  * All event names used by betterForm internally.
  *
  * @author Ulrich Nicolas Liss&eacute;, Joern Turner
+ * @author Ronald van Kuijk
  * @version $Id: BetterFormEventNames.java 2341 2006-09-27 14:52:05Z joernt $
  */
 public interface BetterFormEventNames {
@@ -96,5 +97,16 @@ public interface BetterFormEventNames {
     String EMBED = "betterform-embed";
 
     String VARIABLE_CHANGED = "betterform-variable-changed";
+
+    /**
+     * Interaction event constant, might move to XFormsEventNames for XForms 1.2
+     */
+    String HIDE = "betterform-dialog-close";
+
+    /**
+     * Interaction event constant, might move to XFormsEventNames for XForms 1.2
+     */
+    String SHOW = "betterform-dialog-open";
+
 
 }

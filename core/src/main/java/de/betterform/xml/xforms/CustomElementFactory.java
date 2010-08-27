@@ -11,6 +11,8 @@ import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.xforms.model.Model;
+import de.betterform.xml.xforms.ui.AbstractUIElement;
+import de.betterform.xml.xforms.action.AbstractAction;
 import de.betterform.xml.xforms.exception.XFormsException;
 import org.w3c.dom.Element;
 
@@ -159,7 +161,7 @@ public class CustomElementFactory implements XFormsConstants {
 	 *            The owning model.
 	 * @return The created object.
 	 */
-	public XFormsElement createCustomXFormsElement(Element element, Model model)
+	public Object createCustomXFormsElement(Element element, Model model)
 			throws XFormsException {
 
 		//gets the class reference
@@ -171,22 +173,29 @@ public class CustomElementFactory implements XFormsConstants {
 			throw new XFormsException("No class defined for " + key);
 		}
 
-		XFormsElement xformsElement = null;
-
 		if (elementClazz != null) {
 			try {
 				//initializes a new object from the class
-				xformsElement = (XFormsElement) elementClazz.getConstructor(
+
+				Object xformsElement= elementClazz.getConstructor(
 						new Class[]{Element.class, Model.class}).newInstance(
 						new Object[]{(Element) element, model});
+
+				if (xformsElement instanceof AbstractUIElement) {
+					element.setUserData("",(AbstractUIElement)xformsElement,null);
+					return (AbstractUIElement)xformsElement;
+				} if (xformsElement instanceof AbstractAction) {
+					element.setUserData("",(AbstractAction)xformsElement,null);
+					return (AbstractAction)xformsElement;
+				}
 
 			} catch (Exception e) {
 				throw new XFormsException(e);
 			}
 
-			element.setUserData("",xformsElement,null);
 		}
 
-		return xformsElement;
+		LOGGER.warn("Custom class for " + key + " not does not extend AbstractUIElement or AbstractAction");
+		return null;
 	}
 }

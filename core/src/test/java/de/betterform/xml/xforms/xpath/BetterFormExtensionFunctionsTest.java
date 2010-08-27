@@ -24,6 +24,30 @@ import java.util.HashMap;
 public class BetterFormExtensionFunctionsTest extends BetterFormTestCase {
 
 
+    /**
+     * Tests the bf:sort() extension function.
+     *
+     * @throws Exception if any error occurred during the test.
+     */
+    public void testSortNodeset() throws Exception {
+        String xml = "<?xml version='1.0' encoding='UTF-8'?><data><item>test4</item><item>test1</item><item>test3</item><item>test2</item></data>";
+        InputStream stream = new ByteArrayInputStream(xml.getBytes("UTF-8"));
+        Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(stream);
+        stream.close();
+
+        this.processor.setContextParam("document", document);
+
+        // Test on document
+        assertEquals("test4", evaluateInDefaultContextAsString("bffn:app-context('document')/data/item[1]"));
+        assertEquals("test1", evaluateInDefaultContextAsString("bf:sort((bffn:app-context('document')/data/item), .)[1]"));
+
+        // Test on instance
+        assertEquals("item4", evaluateInDefaultContextAsString("instance('sort-instance')/item[1]"));
+        assertEquals("item1", evaluateInDefaultContextAsString("bf:sort(instance('sort-instance')/item, .)[1]"));
+
+
+    }
+
     public void testContextNew() throws Exception {
 //        assertEquals("hello", XPathUtil.evaluateAsString(processor.getXForms(),"bffn:foo()"));
         assertEquals("bar", evaluateInDefaultContextAsString("string(bffn:app-context('foo'))"));

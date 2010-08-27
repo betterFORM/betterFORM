@@ -277,7 +277,6 @@
             </xsl:variable>
 
             <xsl:value-of select="normalize-space(concat($name-classes, ' ', $mip-classes, ' ', $author-classes))"/>
-            <xsl:apply-templates/>
         </xsl:for-each>
     </xsl:template>
 
@@ -364,6 +363,21 @@
     <!-- ********************************** COMMON TEMPLATES FOR CONTAINER ELEMENTS ********************* -->
     <!-- ************************************************************************************************ -->
     <!-- ### largely redundant with 'assemble-label-classes' but sets 'group-label' instead of 'label' ### -->
+    <xsl:template name="assemble-dialog-label-classes">
+        <xsl:for-each select="xf:label[1]">
+            <xsl:variable name="name-classes">bfDialogLabel</xsl:variable>
+            <xsl:variable name="mip-classes">
+                <xsl:call-template name="get-mip-classes">
+                    <xsl:with-param name="limited" select="true()"/>
+                </xsl:call-template>
+            </xsl:variable>
+            <xsl:variable name="author-classes">
+                <xsl:call-template name="get-author-classes"/>
+            </xsl:variable>
+            <xsl:value-of select="normalize-space(concat($name-classes, ' ', $mip-classes, ' ', $author-classes))"/>
+        </xsl:for-each>
+    </xsl:template>
+
     <xsl:template name="assemble-group-label-classes">
         <xsl:for-each select="xf:label[1]">
             <xsl:variable name="name-classes">xfGroupLabel</xsl:variable>
@@ -440,8 +454,6 @@
     <!-- Create label value and take xml:lang attribute into account -->
     <xsl:template name="create-label">
     	<xsl:param name="label-elements"/>
-    	<xsl:message><xsl:value-of select="$label-elements"/></xsl:message>
-        <!-- match all inline markup and content -->
             	<xsl:choose>
             	    <xsl:when test="$label-elements[@lang=$locale]">
                         <xsl:apply-templates select="$label-elements[@lang=$locale]"/>

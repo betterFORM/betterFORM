@@ -256,7 +256,7 @@
                               title="{$hint}"
                               navindex="{$navindex}"
                               accesskey="{@accesskey}"
-                              label="{xforms:label}"
+                              label="{$label}"
                               source="{$src}">
                               <xsl:apply-templates select="@*[not(name()='class')][not(name()='id')][not(name()='appearance')][not(name()='src')]"/>
                         </span>

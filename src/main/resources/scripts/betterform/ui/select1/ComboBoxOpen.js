@@ -103,6 +103,14 @@ dojo.declare(
         }
     },
 
+    applyState:function(){
+        if(this.xfControl.isReadonly()){
+            dojo.attr(this.domNode,"disabled","disabled");
+        }else{
+             this.domNode.removeAttribute("disabled");
+        }
+    },
+
     _handleSetControlValue:function(value){
         // console.debug("_handleSetControlValue value",value);
         var labelForValue;

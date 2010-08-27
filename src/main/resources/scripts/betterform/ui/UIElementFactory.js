@@ -73,7 +73,7 @@ dojo.declare(
                             xfValue = dojo.date.stamp.fromISOString(xfValue);
                         }else { xfValue = ""; }
                         var datePattern;
-
+                            
                         if (appearance.indexOf("iso8601:") != -1) {
                             datePattern = appearance.substring(appearance.indexOf("iso8601:")+8);
                             //console.debug("UIelementFactory.createWidget 1. datePattern:" + datePattern);
@@ -86,16 +86,16 @@ dojo.declare(
 
                         if (datePattern != undefined) {
                             try {
-                        newWidget = new betterform.ui.input.Date({
-                            name:controlId + "-value",
-                            value:xfValue,
-                            "class":classValue,
-                            title:dojo.attr(sourceNode,"title"),
-                            constraints:{
-                                selector:'date',
+                                newWidget = new betterform.ui.input.Date({
+                                    name:controlId + "-value",
+                                    value:xfValue,
+                                    "class":classValue,
+                                    title:dojo.attr(sourceNode, "title"),
+                                    constraints:{
+                                        selector:'date',
                                         datePattern:datePattern
-                            },
-                            xfControlId:controlId
+                                    },
+                                    xfControlId:controlId
                                 },
                                         sourceNode);
                             }
@@ -112,7 +112,7 @@ dojo.declare(
                                     selector:'date'
                                 },
                                 xfControlId:controlId
-                        }, sourceNode);
+                            }, sourceNode);
                         }
                         break;
                     case "datetime":
@@ -142,11 +142,11 @@ dojo.declare(
                         dojo.require("betterform.ui.input.DateTime");
                         if (datePattern != undefined) {
                             try {
-                        newWidget = new betterform.ui.input.DateTime({
-                            name:controlId + "-value",
-                            value:xfValue,
-                            miliseconds:miliseconds,
-                            constraints:{
+                            newWidget = new betterform.ui.input.DateTime({
+                                name:controlId + "-value",
+                                value:xfValue,
+                                miliseconds:miliseconds,
+                                constraints:{
                                     datePattern:datePattern,
                                     timePattern:'HH:mm:ss'
 
@@ -164,15 +164,15 @@ dojo.declare(
                                 value:xfValue,
                                 miliseconds:miliseconds,
                                 constraints:{
-                                datePattern:'dd.MM.yyyy',
-                                timePattern:'HH:mm:ss'
+                                    datePattern:'dd.MM.yyyy',
+                                    timePattern:'HH:mm:ss'
 
-                            },
-                            title:dojo.attr(sourceNode,"title"),
-                            xfControlId:controlId
-                        }, sourceNode);
+                                },
+                                title:dojo.attr(sourceNode, "title"),
+                                xfControlId:controlId
+                            }, sourceNode);
                         }
-/*
+                        /*
                         newWidget = new betterform.ui.input.DateTime({
                             name:controlId + "-value",
                             value:xfValue,
@@ -203,6 +203,7 @@ dojo.declare(
                         }, sourceNode);
                         break;
                     default:
+                	    //var incrementaldelay = dojo.attr(sourceNode,"delay");
                         var xfValue = sourceNode.innerHTML;
                     // console.debug("UIElementFactory.createWidget: String Value: ", xfValue);
                         dojo.require("betterform.ui.input.TextField");
@@ -223,7 +224,7 @@ dojo.declare(
                 var outputType = dataType;
                 // console.debug("UIElementFactory.createWidget: Output Value: ",xfValue, " sourceNode", sourceNode, " appearance: ", dojo.attr(sourceNode,"appearance"));
                 var appearance = dojo.attr(sourceNode,"appearance");
-                if(appearance != undefined && appearance.indexOf("ca") != -1){
+                if(appearance != undefined && (appearance.indexOf("ca") != -1 || appearance.indexOf("bf") != -1)){
                     if(appearance == "caLink"){
                         outputType = "anyURI";
                     }
@@ -233,7 +234,7 @@ dojo.declare(
                     else
                     {
                         outputType = appearance;
-                        // console.debug("Appearance="+appearance)
+                        // console.debug("Appearance="+appearance);
                     }
 
                 }
@@ -281,6 +282,17 @@ dojo.declare(
                             title: dojo.attr(sourceNode, "title"),
                             xfControlId: controlId
                             }, sourceNode);
+                        break;
+                    case "bfinputlook":
+                            dojo.require("betterform.ui.output.InputLook");
+                            newWidget = new betterform.ui.output.InputLook({
+                                name:controlId + "-value",
+                                value:xfValue,
+                                "class":classValue,
+                                title:dojo.attr(sourceNode,"title"),
+                                xfControlId:controlId
+                            }, sourceNode);
+
                         break;
                     default:
                         if (mediatype == undefined || mediatype == "controlValue" || mediatype == "text") {
@@ -553,8 +565,7 @@ dojo.declare(
                         name:dojo.attr(sourceNode, "name")+"-value",
                         label:dojo.attr(sourceNode, "label"),
                         title:dojo.attr(sourceNode,"title"),
-                        xfControlId:controlId,
-                        imageId:dojo.query(("button[id="+sourceNode.id+"]>span>span"))[0].id
+                        xfControlId:controlId
                     }, sourceNode);
                     console.dirxml(sourceNode);
                 }else {
@@ -598,6 +609,19 @@ dojo.declare(
                // console.debug("UIElementFactory.create Radio Item for Control " + controlId + " [name:"+name+"] ! Properties: ", sourceNode, " value: " + value);
                 dojo.require("betterform.ui.select1.RadioButton");
                 newWidget = new betterform.ui.select1.RadioButton({
+                    "class":classValue,                    
+                    name:name,
+                    value:value,
+                    title:dojo.attr(sourceNode,"title"),
+                    xfControlId:controlId
+                }, sourceNode);
+                break;
+            case "dialog":
+                var name = sourceNode.name;
+                var value = sourceNode.value;
+                //console.debug("UIElementFactory.create Dialog Control " + controlId + " [name:"+name+"] ! Properties: ", sourceNode, " value: " + value);
+                dojo.require("betterform.ui.select1.RadioButton");
+                newWidget = new betterform.ui.container.Dialog({
                     "class":classValue,                    
                     name:name,
                     value:value,

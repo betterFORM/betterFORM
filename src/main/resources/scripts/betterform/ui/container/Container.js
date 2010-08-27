@@ -23,7 +23,7 @@ dojo.declare(
              this.readonly = contextInfo["readonly"];
              this.required = contextInfo["required"];
              this.relevant = contextInfo["enabled"];
-             // console.debug("Container.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant), " contextInfo:",contextInfo;
+             // console.debug("Container.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " contextInfo:",contextInfo);
 
              if (this.valid != null) {
                  this._handleSetValidProperty(eval(this.valid));
@@ -42,8 +42,8 @@ dojo.declare(
 
      },
 
-     _handleSetValidProperty:function(){
-         if (this.valid == "true") {
+     _handleSetValidProperty:function(valid){
+         if (valid) {
              betterform.ui.util.replaceClass(this.domNode, "xfInvalid", "xfValid");
          } else {
              betterform.ui.util.replaceClass(this.domNode, "xfValid", "xfInvalid");

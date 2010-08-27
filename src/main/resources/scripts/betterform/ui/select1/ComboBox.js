@@ -72,6 +72,14 @@ dojo.declare(
                 this.domNode.selectedIndex = i;
             }
         }
+    },
+
+    applyState:function(){
+        if(this.xfControl.isReadonly()){
+            dojo.attr(this.domNode,"disabled","disabled");
+        }else{
+             this.domNode.removeAttribute("disabled");
+        }
     }
 });
 

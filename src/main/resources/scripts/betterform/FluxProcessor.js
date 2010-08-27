@@ -535,6 +535,8 @@ dojo.declare("betterform.FluxProcessor",
                             case "betterform-render-message"     : fluxProcessor._handleBetterFormRenderMessage(xmlEvent); break;
                             case "betterform-replace-all"        : fluxProcessor._handleBetterFormReplaceAll(); break;
                             case "betterform-state-changed"      : fluxProcessor._handleBetterFormStateChanged(xmlEvent); break;
+                    case "betterform-dialog-open"        : fluxProcessor._handleBetterFormDialogOpen(xmlEvent); break;
+                    case "betterform-dialog-close"       : fluxProcessor._handleBetterFormDialogClose(xmlEvent); break;
                             case "upload-progress-event"    : fluxProcessor._handleUploadProgressEvent(xmlEvent); break;
                             case "xforms-focus"             : fluxProcessor._handleXFormsFocus(xmlEvent); break;
                             case "xforms-help"              : fluxProcessor._handleShowHelp(xmlEvent); break;
@@ -857,6 +859,28 @@ dojo.declare("betterform.FluxProcessor",
         }
 
         window.open(path, "_self");
+    },
+
+    _handleBetterFormDialogOpen:function(/*XMLEvent*/ xmlEvent) {
+       // console.debug("FluxProcessor._handleBetterformDialogOpen: targetId: >",xmlEvent.contextInfo.targetId,"< parentId: " , xmlEvent.contextInfo.parentId);
+       var xfControlId =xmlEvent.contextInfo.targetId;
+       // if XForms Control Dijit allready exists call show on selected control
+       if(dijit.byId(xfControlId) != undefined){
+            dijit.byId(xfControlId).show();
+       }else {
+            console.error("error during betterform-dialog-show-event: targetId >",xmlEvent.contextInfo.targetId,"<, xfControlId: >",xfControlId,"< does not exist");
+       }
+    },
+
+    _handleBetterFormDialogClose:function(/*XMLEvent*/ xmlEvent) {
+       // console.debug("FluxProcessor._handleBetterformDialogClose: targetId: >",xmlEvent.contextInfo.targetId,"< parentId: " , xmlEvent.contextInfo.parentId);
+       var xfControlId =xmlEvent.contextInfo.targetId;
+       // if XForms Control Dijit allready exists call hide on selected control
+       if(dijit.byId(xfControlId) != undefined){
+            dijit.byId(xfControlId).hide();
+       }else {
+            console.error("error during betterform-dialog-hide-event: targetId >",xmlEvent.contextInfo.targetId,"< does not exist");
+       }
     },
 
     _handleBetterFormStateChanged:function(/*XMLEvent*/ xmlEvent) {

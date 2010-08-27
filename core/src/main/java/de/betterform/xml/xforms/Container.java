@@ -297,7 +297,7 @@ public class Container {
             return;
         }
 
-        throw new XFormsException("event target '" + targetId + "' not found");
+        throw new XFormsException("Unable to add eventlistener. Event target '" + targetId + "' not found");
     }
 
     /**
@@ -317,7 +317,7 @@ public class Container {
             return;
         }
 
-        throw new XFormsException("event target '" + targetId + "' not found");
+        throw new XFormsException("Unable to remove eventlistener. Event target '" + targetId + "' not found");
     }
 
     /**
@@ -395,7 +395,7 @@ public class Container {
             return dispatch(eventTarget, eventType, info, bubbles, cancelable);
         }
 
-        throw new XFormsException("event target '" + targetId + "' not found");
+        throw new XFormsException("event target '" + targetId + "' not found for event '" + eventType + "'" );
     }
 
     /**

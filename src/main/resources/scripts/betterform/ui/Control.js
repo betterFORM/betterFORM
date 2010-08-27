@@ -84,7 +84,7 @@ dojo.declare(
                 // apply MIP states
                 this.controlValue.applyState();
             } else {
-                console.error("ControlValue for Control " + id + " could not be created");
+                console.error("ControlValue for Control " + this.id + " could not be created");
             }
         }
         if (this.isValid()) {
@@ -155,6 +155,10 @@ dojo.declare(
         // incremental handling
         if (dojo.hasClass(this.domNode, "xfIncremental")) {
             dojo.attr(controlValueTemplate, "incremental", "true");
+        }
+        // incremental delay handling
+        if (dojo.hasAttr(this.domNode, "delay")) {
+            dojo.attr(controlValueTemplate, "delay", dojo.attr(this.domNode, "delay"));
         }
         return controlValueTemplate;
     },
@@ -239,7 +243,7 @@ dojo.declare(
             this.readonly = contextInfo["readonly"];
             this.required = contextInfo["required"];
             this.relevant = contextInfo["enabled"];
-            // console.debug("Control.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant), " contextInfo:",contextInfo;
+            //console.debug("Control.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " contextInfo:",contextInfo);
 
             if (contextInfo["targetName"] == "input" && this.value != null) {
                 var noNSType = betterform.ui.util.removeNamespace(contextInfo["type"]);

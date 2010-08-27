@@ -15,10 +15,15 @@ dojo.declare(
         [betterform.ui.ControlValue,dijit.form.TextBox],
 {
     intermediateChanges:true,
-    
+    delay:300,
+
     postMixInProperties:function() {
         this.inherited(arguments);
         this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);
+        if (dojo.attr(this.srcNodeRef, "delay") != undefined && dojo.attr(this.srcNodeRef, "delay") != "") {
+            this.delay = eval(dojo.attr(this.srcNodeRef, "delay"));
+        }
+ 
     },
 
     postCreate:function() {
@@ -36,14 +41,30 @@ dojo.declare(
         this.handleOnBlur();
     },
 
-	onChange: function(/*anything*/ newValue, /*Boolean, optional*/ priorityChange){
-        this.inherited(arguments);
+    _delayTimer: undefined,
+
+    onChange: function(/*anything*/ newValue, /*Boolean, optional*/ priorityChange){
+        //this.inherited(arguments);
 
         if(this.incremental){
-            this.setControlValue();
+            if (this.delay > 0) {
+	        if (this._delayTimer != undefined ) {
+		    clearTimeout(this._delayTimer);
+                }
+		console.debug("Delay: ", this.delay);
+                this._delayTimer = setTimeout(dojo.hitch(this,"setControlValueDelayed"),this.delay);
+            } else {
+                this.setControlValue();
+            }
         }
-
     },
+
+    // Not sure why this function is needed and a direct setControlValue in the onChange behaves strange...
+    // Probably some dojo quirk or my lack of understanding
+    setControlValueDelayed:function() {
+	this.setControlValue();
+    },
+
     getControlValue:function(){
         // console.debug("chiab.ui.input.TextField.getControlValue for Control "+ this.id +": ",this._getValueAttr() );
         return this._getValueAttr();
@@ -71,7 +92,6 @@ dojo.declare(
             dojo.removeAttr(this.domNode,"disabled");
         }
     },
-
 
     /* function needed by InlineEditBox */
     getTextValue:function() {

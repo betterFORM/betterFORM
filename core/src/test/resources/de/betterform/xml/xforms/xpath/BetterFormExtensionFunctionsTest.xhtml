@@ -13,6 +13,15 @@
                     <default>default</default>
                 </data>
             </xf:instance>
+            <xf:instance id="sort-instance" xmlns="">
+                <data>
+                    <item>item4</item>
+                    <item>item1</item>
+                    <item>item3</item>
+                    <item>item2</item>
+                    <default>default</default>
+                </data>
+            </xf:instance>
             <xf:bind nodeset="item[1]" calculate="bffn:app-context('foo')" />
             <xf:bind nodeset="item[2]" calculate="bffn:app-context('plain-property')"/>
             <xf:bind nodeset="item[3]" calculate="bffn:app-context('map/nested-property')"/>

@@ -111,7 +111,9 @@ public class Initializer {
             actionElement.setGeneratedId(model.getContainer().generateId());
             actionElement.registerId();
         }
-        actionElement.setRepeatItemId(repeatItemId);
+        // 31-07-2010	Ronald van Kuijk
+        // Removed since duplicate with setting in the if above. And it is not done for the repeat either.
+        //actionElement.setRepeatItemId(repeatItemId);
         actionElement.init();
     }
 
@@ -229,10 +231,30 @@ public class Initializer {
                 else if (customFactory.isCustomElement(elementImpl)) {
                 	//initializes a custom element
                     Model contextModel = Initializer.getContextModel(model, elementImpl);
-                    AbstractUIElement customElement =
-                        (AbstractUIElement) customFactory.createCustomXFormsElement(elementImpl, contextModel);
 
-                    customElement.init();
+                    // If setters, register and init are in a shared abstract class, this can be reduced
+                    // Or add a parameter to the config: UIElement/ActionElement and use that in a isCustomXXX
+                    // Something could go wrong if it is an action and has a parent. See above (hasXFormsParent())
+                    Object customElement = customFactory.createCustomXFormsElement(elementImpl, contextModel);
+
+                    if (customElement != null && customElement instanceof AbstractUIElement) {
+                        if (repeatItemId != null) {
+                        	((AbstractUIElement)customElement).setRepeatItemId(repeatItemId);
+                        	((AbstractUIElement)customElement).setGeneratedId(model.getContainer().generateId());
+                        	((AbstractUIElement)customElement).registerId();
+                        }
+                        ((AbstractUIElement)customElement).init();
+                    }
+
+                    if (customElement != null && customElement instanceof AbstractAction) {
+                    	if (repeatItemId != null) {
+                        	((AbstractAction)customElement).setRepeatItemId(repeatItemId);
+                        	((AbstractAction)customElement).setGeneratedId(model.getContainer().generateId());
+                        	((AbstractAction)customElement).registerId();
+                        }
+                        ((AbstractAction)customElement).init();
+                    }
+
                 } else if(evalAVT != null && hasAVT(elementImpl,evalAVT)){
                     Model contextModel = Initializer.getContextModel(model, elementImpl);
                     AbstractUIElement uiElement = new AVTElement(elementImpl,contextModel);

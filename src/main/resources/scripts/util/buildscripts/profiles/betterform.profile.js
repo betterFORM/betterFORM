@@ -28,6 +28,7 @@ dependencies = {
                 "betterform.ui.container.RepeatItem",
                 "betterform.ui.container.Switch",
                 "betterform.ui.container.TabSwitch",
+                "betterform.ui.container.Dialog",
 
                 "betterform.ui.input.Boolean",
                 "betterform.ui.input.Date",
@@ -38,6 +39,7 @@ dependencies = {
                 "betterform.ui.output.Image",
                 "betterform.ui.output.Link",
                 "betterform.ui.output.Plain",
+                "betterform.ui.output.InputLook",
 
                 "betterform.ui.range.Rating",
                 "betterform.ui.range.Slider",

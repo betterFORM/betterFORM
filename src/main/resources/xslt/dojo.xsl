@@ -435,6 +435,9 @@
         <span id="{$id}" dojoType="betterform.ui.Control" class="{$control-classes}">
 
             <xsl:call-template name="copy-style-attribute"/>
+            <xsl:if test="@bf:incremental-delay">
+            	<xsl:attribute name="bf:incremental-delay" select="@bf:incremental-delay"/>
+            </xsl:if>
 
             <label for="{$id}-value" id="{$id}-label" class="{$label-classes}">
                 <xsl:call-template name="create-label">
@@ -611,6 +614,9 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
+        <xsl:variable name="incrementaldelay">
+        	<xsl:value-of select="if (exists(@bf:incremental-delay)) then @bf:incremental-delay else '0'"/>
+        </xsl:variable>
 
         <xsl:variable name="navindex" select="if (exists(@navindex)) then @navindex else '0'"/>
         <xsl:variable name="accesskey" select="if (exists(@accesskey)) then @accesskey else 'none'"/>
@@ -630,6 +636,7 @@
                      appearance="{@appearance}"
                      name="{$name}"
                      incremental="{$incremental}"
+                     delay="{$incrementaldelay}"
                      tabindex="{$navindex}"
                      title="{normalize-space(xf:hint)}">
 
@@ -696,7 +703,7 @@
 
             <xsl:when test="local-name()='trigger'">
                 <!--xsl:variable name="value" select="bf:data/text()"/-->
-                <xsl:variable name="label">
+                <xsl:variable name="value">
                     <xsl:call-template name="create-label">
                         <xsl:with-param name="label-elements" select="xf:label"/>
                     </xsl:call-template>
@@ -711,7 +718,7 @@
                      appearance="{$appearance}"
                      name="{$name}"
                      tabindex="{$navindex}"
-                     value="{$label}"
+                     value="{$value}"
                      title="{normalize-space(xf:hint)}"
                      type="button">
                     <xsl:if test="$accesskey != ' none'">

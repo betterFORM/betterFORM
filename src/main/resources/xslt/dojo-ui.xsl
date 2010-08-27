@@ -9,6 +9,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xforms="http://www.w3.org/2002/xforms"
     xmlns:bf="http://betterform.sourceforge.net/xforms"
+    xmlns:bfc="http://betterform.sourceforge.net/xforms/controls"
     exclude-result-prefixes="xhtml xforms bf"
     xpath-default-namespace= "http://www.w3.org/1999/xhtml">
 
@@ -26,6 +27,101 @@
 
 
     <xsl:preserve-space elements="*"/>
+
+    <!-- ####################################################################################################### -->
+    <!-- #################################### DIALOG ########################################################### -->
+    <!-- ####################################################################################################### -->
+
+    <xsl:template match="bfc:dialog" name="dialog" priority="10">
+        <xsl:variable name="dialog-id" select="@id"/>
+        <xsl:variable name="dialog-classes">
+            <xsl:call-template name="assemble-compound-classes">
+                <xsl:with-param name="appearance" select="@appearance"/>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:variable name="dialog-label">
+        	<xsl:call-template name="create-label">
+		  <xsl:with-param name="label-elements" select="xforms:label"/>
+   	        </xsl:call-template>
+        </xsl:variable>
+
+        <script type="text/javascript">dojo.require("betterform.ui.container.Dialog");</script><xsl:text>
+</xsl:text>
+
+        <span id="{$dialog-id}" class="{$dialog-classes}" dojoType="betterform.ui.container.Dialog" title="{$dialog-label}">
+
+	    <xsl:call-template name="copy-style-attribute"/>
+
+            <xsl:apply-templates select="*[not(self::xforms:label)] | text()"/>
+
+        </span>
+    </xsl:template>
+
+    <xsl:template match="bfc:dialog" mode="compact-repeat" priority="10">
+        <xsl:variable name="dialog-id" select="@id"/>
+        <xsl:variable name="dialog-classes">
+            <xsl:call-template name="assemble-compound-classes">
+                <xsl:with-param name="appearance" select="@appearance"/>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:variable name="dialog-label">
+        	<xsl:call-template name="create-label">
+		  <xsl:with-param name="label-elements" select="xforms:label"/>
+   	        </xsl:call-template>
+        </xsl:variable>
+
+        <script type="text/javascript">dojo.require("betterform.ui.container.Dialog");</script><xsl:text>
+</xsl:text>
+
+        <span id="{$dialog-id}" class="{$dialog-classes}" dojoType="betterform.ui.container.Dialog" title="{$dialog-label}">
+
+	    <xsl:call-template name="copy-style-attribute"/>
+
+            <xsl:apply-templates select="*[not(self::xforms:label)] | text()" mode="#current"/>
+
+        </span>
+    </xsl:template>
+
+    <xsl:template match="bfc:dialog" mode="repeated-compact-prototype" priority="10">
+        <xsl:variable name="dialog-id" select="@id"/>
+        <xsl:variable name="dialog-classes">
+            <xsl:call-template name="assemble-compound-classes">
+                <xsl:with-param name="appearance" select="@appearance"/>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:variable name="dialog-label">
+        	<xsl:call-template name="create-label">
+		  <xsl:with-param name="label-elements" select="xforms:label"/>
+   	        </xsl:call-template>
+        </xsl:variable>
+
+        <script type="text/javascript">dojo.require("betterform.ui.container.Dialog");</script><xsl:text>
+</xsl:text>
+
+	<button dojoType="dijit.form.Button" id="{$dialog-id}-button" type="button" iconClass="dijitIconSearch" showLabel="false" onCLick="show{$dialog-id}Dialog()">
+	          <script type="dojo/method" event="onClick">
+	          alert("Ronald");
+	          </script>
+
+		<xsl:choose>
+		    <xsl:when test="@button-label">
+			<xsl:value-of select="@button-label"/>
+		    </xsl:when>
+		    <xsl:otherwise>Open Dialog</xsl:otherwise>
+		</xsl:choose>
+        </button>
+
+        <span id="{$dialog-id}" dojoType="betterform.ui.container.Dialog" title="{$dialog-label}">
+            <xsl:attribute name="class" select="concat($dialog-classes,' xfRepeated')"/>
+            <xsl:attribute name="controlType" select="local-name()"/>
+            <xsl:attribute name="appearance" select="@appearance"/>
+
+	    <xsl:call-template name="copy-style-attribute"/>
+
+            <xsl:apply-templates select="*[not(self::xforms:label)] | text()" mode="#current"/>
+
+        </span>
+    </xsl:template>
 
     <!-- ####################################################################################################### -->
     <!-- #################################### GROUPS ########################################################### -->
@@ -65,7 +161,9 @@
                         <xsl:attribute name="class">
                             <xsl:call-template name="assemble-group-label-classes"/>
                         </xsl:attribute>
-                        <xsl:apply-templates select="xforms:label"/>
+        		<xsl:call-template name="create-label">
+			  <xsl:with-param name="label-elements" select="xforms:label"/>
+   			</xsl:call-template>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:attribute name="style">display:none;</xsl:attribute>
@@ -92,7 +190,9 @@
                         <xsl:attribute name="class">
                             <xsl:call-template name="assemble-group-label-classes"/>
                         </xsl:attribute>
-                        <xsl:apply-templates select="xforms:label"/>
+        		<xsl:call-template name="create-label">
+			  <xsl:with-param name="label-elements" select="xforms:label"/>
+   			</xsl:call-template>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:attribute name="style">display:none;</xsl:attribute>
@@ -347,7 +447,7 @@
 
     <!-- header for compact repeat -->
     <xsl:template name="processCompactHeader">
-        <xsl:for-each select="xforms:*">
+        <xsl:for-each select="xforms:*|bfc:*">
             <xsl:variable name="col-classes">
                 <xsl:choose>
                     <xsl:when test="./bf:data/@bf:enabled='false'"><xsl:value-of select="concat('caTableCol-',position(),' ','xfDisabled')"/></xsl:when>
@@ -355,6 +455,8 @@
                 </xsl:choose>
             </xsl:variable>
             <td class="{$col-classes}">
+
+
                 <xsl:choose>
                     <xsl:when test="self::xforms:*[local-name(.)='trigger' or local-name(.)='submit' or (local-name(.)='output' and @appearance='caLink')][xforms:label]">
                         <xsl:variable name="label-classes">
@@ -373,13 +475,17 @@
 
                         <label id="{@id}-label" class="{$label-classes}">
                             <xsl:attribute name="title">
-                               	<xsl:apply-templates select="xforms:label"/>
+        			<xsl:call-template name="create-label">
+				  <xsl:with-param name="label-elements" select="xforms:label"/>
+   				</xsl:call-template>
                             </xsl:attribute>
 
 	                    <!-- Needed for IE and Chrome to size the label
                             -->
                             <xsl:call-template name="copy-style-attribute"/>
-                            <xsl:apply-templates select="xforms:label"/>
+        			<xsl:call-template name="create-label">
+				  <xsl:with-param name="label-elements" select="xforms:label"/>
+   				</xsl:call-template>
                         </label>
                     </xsl:otherwise>
                 </xsl:choose>
@@ -434,12 +540,21 @@
             </xsl:choose>
         </xsl:variable>
         
+        <xsl:variable name="incrementaldelay">
+        	<xsl:value-of select="if (exists(@bf:incremental-delay)) then @bf:incremental-delay else 'undef'"/>
+        </xsl:variable>
+
         <xsl:element name="{$htmlElem}">
             <xsl:attribute name="id" select="$id"/>
             <xsl:attribute name="class" select="concat($control-classes,' xfRepeated')"/>
             <xsl:attribute name="controlType" select="local-name()"/>
             <xsl:attribute name="appearance" select="@appearance"/>
             <xsl:attribute name="dojoAttachEvent">onfocus:_onFocus</xsl:attribute>
+            <xsl:if test="$incrementaldelay ne 'undef'">
+                 <xsl:message><xsl:value-of select="concat(' incremental-delay: ', $incrementaldelay)" /></xsl:message>
+                <xsl:attribute name="delay" select="$incrementaldelay"/>
+            </xsl:if>
+
 	        <xsl:call-template name="copy-style-attribute"/>
 
             <xsl:choose>
@@ -482,6 +597,7 @@
             <xsl:attribute name="controlType" select="local-name()"/>
             <xsl:attribute name="appearance" select="$appearance"/>
             <xsl:attribute name="dojoAttachEvent">onfocus:_onFocus</xsl:attribute>
+	    <xsl:call-template name="copy-style-attribute"/>
             <!-- prevent xforms:label for groups within compact repeat-->
             <xsl:apply-templates select="*[not(self::xforms:label)]" mode="repeated-compact-prototype"/>
         </xsl:element>
@@ -551,7 +667,11 @@
             </xsl:variable>
             <xsl:choose>
                 <xsl:when test="exists(@ref) or exists(@bind)">
-                    <div id="{$id}" class="{$control-classes} xfRepeated"  controlType="{local-name()}" appearance="{$appearance}" ><xsl:value-of select="xforms:label"/></div>
+                    <div id="{$id}" class="{$control-classes} xfRepeated"  controlType="{local-name()}" appearance="{$appearance}" >
+                        <xsl:call-template name="create-label">
+                            <xsl:with-param name="label-elements" select="xforms:label"/>
+                        </xsl:call-template>
+		    </div>
                 </xsl:when>
                 <xsl:otherwise>
                     <div id="{$id}" class="{$control-classes} xfRepeated" unbound="true">
@@ -585,7 +705,11 @@
             <xsl:attribute name="dojoAttachEvent">onfocus:_onFocus</xsl:attribute>
 
             <xsl:if test="'output' = local-name() and exists(@mediatype)"><xsl:attribute name="mediatype" select="@mediatype"/></xsl:if>
-            <label class="xfLabel"><xsl:apply-templates select="xforms:label"/></label>
+            <label class="xfLabel">
+                <xsl:call-template name="create-label">
+                    <xsl:with-param name="label-elements" select="xforms:label"/>
+                </xsl:call-template>
+            </label>
 
             <!--<xsl:apply-templates select="xforms:alert"/>-->
             <xsl:choose>
@@ -634,7 +758,9 @@
 
              <xsl:element name="{$htmlElem}">
 	             <xsl:attribute name="class">xfGroupLabel</xsl:attribute>
-                 <xsl:apply-templates select="xforms:label"/>
+                <xsl:call-template name="create-label">
+                    <xsl:with-param name="label-elements" select="xforms:label"/>
+                </xsl:call-template>
              </xsl:element>
 
              <xsl:apply-templates select="*[not(self::xforms:label)]" mode="repeated-full-prototype"/>
@@ -729,7 +855,7 @@
     
     <!-- children for compact repeat -->
     <xsl:template name="processCompactChildren">
-        <xsl:for-each select="xforms:*">
+        <xsl:for-each select="xforms:*|bfc:*">
             <xsl:variable name="col-classes">
                 <xsl:choose>
                     <xsl:when test="./bf:data/@bf:enabled='false'"><xsl:value-of select="concat('caTableCol-',position(),' ','xfDisabled')"/></xsl:when>
@@ -753,7 +879,9 @@
         <div id="{$id}" class="{$control-classes} xfRepeated" dojoType="betterform.ui.Control"  dojoAttachEvent='onfocus:_onFocus' >
             <xsl:call-template name="copy-style-attribute"/>
             <label for="{$id}-value" id="{$id}-label" style="display:none">
-                <xsl:apply-templates select="xforms:label"/>
+                <xsl:call-template name="create-label">
+                    <xsl:with-param name="label-elements" select="xforms:label"/>
+                </xsl:call-template>
             </label>
 
             <xsl:call-template name="buildControl"/>
@@ -780,6 +908,13 @@
             <xsl:with-param name="group-label" select="false()"/>
         </xsl:call-template>
     </xsl:template>
+
+    <!-- overridden dialog template for compact repeat -->
+    <!-- It is in fact the same as the normal one but due to the mode it needs to be copied -->
+    <xsl:template match="bfc:dialog" mode="compact-repeat">
+        <xsl:call-template name="dialog" />
+    </xsl:template>
+
 
     <!-- default templates for compact repeat -->
     <xsl:template match="xforms:*" mode="compact-repeat">
@@ -840,7 +975,9 @@
                                     <xsl:attribute name="class">
                                         <xsl:call-template name="assemble-group-label-classes"/>
                                     </xsl:attribute>
-                                    <xsl:apply-templates select="xforms:label"/>
+                			<xsl:call-template name="create-label">
+			                    <xsl:with-param name="label-elements" select="xforms:label"/>
+			                </xsl:call-template>
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <xsl:attribute name="style">display:none;</xsl:attribute>
@@ -1149,10 +1286,15 @@
 		</xsl:variable><script type="text/javascript">dojo.require("dijit.layout.AccordionContainer");</script><xsl:text>
 </xsl:text>
 
-		<div id="{$switch-id}" class="{$switch-classes}" dojoType="dijit.layout.AccordionContainer" duration="200"
+		<div id="{$switch-id}" class="{$switch-classes} xfSwitch" dojoType="dijit.layout.AccordionContainer" duration="200"
                 style="float: left; margin-right: 30px; width: 400px; height: 300px; overflow: hidden">
 			<xsl:for-each select="xforms:case[.//xforms:label]">
-				<div dojoType="dijit.layout.AccordionPane" selected="{@selected}" title="{.//xforms:label[1]}">
+				<xsl:variable name="label">
+                			<xsl:call-template name="create-label">
+			                    <xsl:with-param name="label-elements" select=".//xforms:label"/>
+			                </xsl:call-template>
+				</xsl:variable>
+				<div dojoType="dijit.layout.AccordionPane" selected="{@selected}" title="{$label}">
                     <xsl:apply-templates select="*[not(self::xforms:label)]"/>
                 </div>
 			</xsl:for-each>
@@ -1186,7 +1328,12 @@
                     </xsl:choose>
                 </xsl:variable><script>dojo.require("betterform.ui.container.AccordionSwitchPane");</script><xsl:text>
 </xsl:text>
-                <div dojoType="betterform.ui.container.AccordionSwitchPane" class="xfCase" caseId="{@id}" selected="{$selected}" title="{xforms:label}">
+				<xsl:variable name="label">
+                			<xsl:call-template name="create-label">
+			                    <xsl:with-param name="label-elements" select="xforms:label"/>
+			                </xsl:call-template>
+				</xsl:variable>
+                <div dojoType="betterform.ui.container.AccordionSwitchPane" class="xfCase" caseId="{@id}" selected="{$selected}" title="{$label}">
                     <xsl:apply-templates select="*[not(self::xforms:label)]"/>
                 </div>
 			</xsl:for-each>
@@ -1218,7 +1365,12 @@
                 </xsl:variable><script type="text/javascript">dojo.require("dijit.layout.ContentPane");</script><xsl:text>
 </xsl:text>
                 <!--<div dojoType="dijit.layout.ContentPane" style="width:100%;height:100%;" class="xfCase" caseId="{@id}" selected="{$selected}" title="{xforms:label}" onscroll="betterform.ui.util.closeSelect1(this);">-->
-                <div dojoType="dijit.layout.ContentPane" style="width:100%;height:100%;" class="xfCase" caseId="{@id}" selected="{$selected}" title="{xforms:label}">
+				<xsl:variable name="label">
+                			<xsl:call-template name="create-label">
+			                    <xsl:with-param name="label-elements" select="xforms:label"/>
+			                </xsl:call-template>
+				</xsl:variable>
+                <div dojoType="dijit.layout.ContentPane" style="width:100%;height:100%;" class="xfCase" caseId="{@id}" selected="{$selected}" title="{$label}">
                     <xsl:apply-templates select="*[not(self::xforms:label)]"/>
                 </div>
 			</xsl:for-each>
