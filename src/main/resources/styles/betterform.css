@@ -947,6 +947,11 @@ and visually give feedback to the user. */
 		filter:Alpha(opacity=90) !important;
 		moz-opacity: 0.9 !important;
 }
+table > .bfPending .xfRepeatIndex{
+    /*background: url( '../images/ajax-loader.gif' ) no-repeat center center !important;*/
+    background-color:#ffffe0;
+    /*opacity:0.8;*/
+}
 
 /*
 .bfPending.xfTextarea
