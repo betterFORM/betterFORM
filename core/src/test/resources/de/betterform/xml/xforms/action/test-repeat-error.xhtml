@@ -1,0 +1,58 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xf="http://www.w3.org/2002/xforms"
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:err="http://jewishliturgy.org/errors">
+	<head>
+		<title>return test</title>
+		<xf:model>
+			<xf:instance id="data">
+				<data xmlns="">
+					<a>
+						<b>1</b>
+						<c>2</c>
+					</a>
+					<a>
+						<b>3</b>
+						<c>4</c>
+					</a>
+					<a>
+						<b>5</b>
+						<c>6</c>
+					</a>
+					<a>
+						<b>7</b>
+						<c>8</c>
+					</a>
+				</data>
+			</xf:instance>
+      <xf:instance id="prototype">
+        <a xmlns="">
+          <b>9</b>
+          <c>10</c>
+        </a>
+      </xf:instance>
+		</xf:model>
+	</head>
+	<body>	
+	  <xf:repeat id="repeat" nodeset="instance('data')/a">
+      <xf:group appearance="minimal">
+				<xf:output ref="b"/> <xf:output ref="c"/>
+        <xf:trigger>
+          <xf:label>Delete</xf:label>
+          <xf:action ev:event="DOMActivate">
+            <xf:delete nodeset="instance('data')/a[index('repeat')]" />
+          </xf:action>
+        </xf:trigger>
+      </xf:group>
+    </xf:repeat>
+    <xf:trigger>
+      <xf:label>Add</xf:label>
+      <xf:action ev:event="DOMActivate">
+        <xf:insert origin="instance('prototype')" nodeset="instance('data')/a" at="last()" position="after"/>
+        <xf:setvalue ref="instance('prototype')/b" value="instance('prototype')/b + 2"/>
+        <xf:setvalue ref="instance('prototype')/c" value="instance('prototype')/c + 2"/>
+      </xf:action>
+    </xf:trigger>
+	</body>
+
+</html>

@@ -95,13 +95,14 @@ public class DeleteAction extends AbstractBoundAction {
 
     	if (this.atAttribute == null) {
     		final Instance instance = this.model.getInstance(getInstanceId());
-	        final String path = getLocationPath() + "[1]";
+            final String locationPath = getLocationPath();
+	        final String path = locationPath + "[1]";
 		    
     		for (int i = 0; i < this.nodeset.size(); i++) {
                 //evaluate each node and return in case no nodes were deleted
                 if(!(instance.deleteNode(de.betterform.xml.xpath.impl.saxon.XPathUtil.getAsNode(this.nodeset, i + 1), path))) return;
 			}
-    		this.container.dispatch(instance.getTarget(), XFormsEventNames.DELETE, constructEventInfo(Double.valueOf(Double.NaN), this.nodeset, getLocationPath()));
+    		this.container.dispatch(instance.getTarget(), XFormsEventNames.DELETE, constructEventInfo(Double.valueOf(Double.NaN), this.nodeset, locationPath));
     	}
     	else {
 	        final Node target;
