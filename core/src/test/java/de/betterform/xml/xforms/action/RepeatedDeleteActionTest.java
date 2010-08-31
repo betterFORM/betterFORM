@@ -28,19 +28,10 @@ public class RepeatedDeleteActionTest extends BetterFormTestCase {
 //        org.apache.log4j.BasicConfigurator.configure();
 //    }
 
-    private TestEventListener deleteListener;
-    private TestEventListener rebuildListener;
-    private TestEventListener recalulateListener;
-    private TestEventListener revalidateListener;
-    private TestEventListener refreshListener;
-
 
     public void testDeleteWithRepeatedButton() throws Exception{
-        DOMUtil.prettyPrintDOM(((XFormsProcessorImpl)this.processor).getContainer().getDocument(),System.out);
         this.processor.dispatch("C14", DOMEventNames.ACTIVATE);
         assertEquals(3, (int)evaluateInDefaultContextAsDouble("count(/data/a)"));
-
-        DOMUtil.prettyPrintDOM(((XFormsProcessorImpl)this.processor).getContainer().getDefaultModel().getDefaultInstance().getInstanceDocument(),System.out);
     }
 
     /**
@@ -51,18 +42,6 @@ public class RepeatedDeleteActionTest extends BetterFormTestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        this.deleteListener = new TestEventListener();
-        this.rebuildListener = new TestEventListener();
-        this.recalulateListener = new TestEventListener();
-        this.revalidateListener = new TestEventListener();
-        this.refreshListener = new TestEventListener();
-
-        EventTarget eventTarget = (EventTarget) this.processor.getXForms();
-        eventTarget.addEventListener(XFormsEventNames.DELETE, this.deleteListener, true);
-        eventTarget.addEventListener(XFormsEventNames.REBUILD, this.rebuildListener, true);
-        eventTarget.addEventListener(XFormsEventNames.RECALCULATE, this.recalulateListener, true);
-        eventTarget.addEventListener(XFormsEventNames.REVALIDATE, this.revalidateListener, true);
-        eventTarget.addEventListener(XFormsEventNames.REFRESH, this.refreshListener, true);
     }
 
     /**
@@ -71,19 +50,6 @@ public class RepeatedDeleteActionTest extends BetterFormTestCase {
      * @throws Exception in any error occurred during setup.
      */
     protected void tearDown() throws Exception {
-        EventTarget eventTarget = (EventTarget) this.processor.getXForms();
-        eventTarget.removeEventListener(XFormsEventNames.DELETE, this.deleteListener, true);
-        eventTarget.removeEventListener(XFormsEventNames.REBUILD, this.rebuildListener, true);
-        eventTarget.removeEventListener(XFormsEventNames.RECALCULATE, this.recalulateListener, true);
-        eventTarget.removeEventListener(XFormsEventNames.REVALIDATE, this.revalidateListener, true);
-        eventTarget.removeEventListener(XFormsEventNames.REFRESH, this.refreshListener, true);
-
-        this.deleteListener = null;
-        this.rebuildListener = null;
-        this.recalulateListener = null;
-        this.revalidateListener = null;
-        this.refreshListener = null;
-
         super.tearDown();
     }
     
