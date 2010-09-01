@@ -5,23 +5,23 @@
 
 package de.betterform.xml.xforms.ui;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.XFormsConstants;
-import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.ui.state.ItemsetElementState;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Implementation of <b>9.3.3 The itemset Element</b>.
@@ -56,7 +56,7 @@ public class Itemset extends BindingElement {
      * @return the context size of this itemset.
      */
     public int getContextSize() throws XFormsException {
-        if (isBound()) {
+        if (hasBindingExpression()) {
             return nodeset.size();
         }
 
@@ -247,7 +247,7 @@ public class Itemset extends BindingElement {
      * @throws XFormsException if an error occurred during creation.
      */
     protected UIElementState createElementState() throws XFormsException {
-        return isBound() ? new ItemsetElementState() : null;
+        return hasBindingExpression() ? new ItemsetElementState() : null;
     }
 
     /**

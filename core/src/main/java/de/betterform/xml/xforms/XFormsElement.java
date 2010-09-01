@@ -5,8 +5,6 @@
 
 package de.betterform.xml.xforms;
 
-import de.betterform.xml.xforms.ui.*;
-import org.apache.commons.logging.Log;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.ns.NamespaceConstants;
@@ -15,9 +13,11 @@ import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.model.bind.Binding;
 import de.betterform.xml.xforms.model.bind.BindingResolver;
+import de.betterform.xml.xforms.ui.*;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import de.betterform.xml.xpath.XPathUtil;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
+import org.apache.commons.logging.Log;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.Event;
@@ -365,7 +365,7 @@ public abstract class XFormsElement implements XFormsConstants {
             }
 
             if (xCurrent instanceof BindingElement) {
-                if (((BindingElement) xCurrent).isBound()) {
+                if (((BindingElement) xCurrent).hasBindingExpression()) {
                     String locationPath = ((BindingElement) xCurrent).getLocationPath();
                     return locationPath;
                 } else {
@@ -488,7 +488,7 @@ public abstract class XFormsElement implements XFormsConstants {
         }
         
         Binding bindingElem = (Binding) binding;
-        if (BindingResolver.hasUIBinding(elementImpl)|| (bindingElem instanceof Group && bindingElem.isBound() || bindingElem instanceof RepeatItem) || (bindingElem instanceof Item) && (((Item)bindingElem).getItemset() != null)) {
+        if (BindingResolver.hasUIBinding(elementImpl)|| (bindingElem instanceof Group && bindingElem.hasBindingExpression() || bindingElem instanceof RepeatItem) || (bindingElem instanceof Item) && (((Item)bindingElem).getItemset() != null)) {
              if (bindingElem.getModelId().equals(modelId)) {
                  return bindingElem;
              }

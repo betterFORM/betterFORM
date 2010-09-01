@@ -483,7 +483,7 @@ public abstract class AbstractAction extends XFormsElement implements EventListe
         }
 
         Binding bindingElem = (Binding) binding;
-        if (BindingResolver.hasUIBinding(elementImpl)|| (bindingElem instanceof Group && bindingElem.isBound()) && !(bindingElem instanceof RepeatItem) ||  (bindingElem instanceof Item) && (((Item)bindingElem).getItemset() != null)) {
+        if (BindingResolver.hasUIBinding(elementImpl)|| (bindingElem instanceof Group && bindingElem.hasBindingExpression()) && !(bindingElem instanceof RepeatItem) ||  (bindingElem instanceof Item) && (((Item)bindingElem).getItemset() != null)) {
              if (bindingElem.getModelId().equals(modelId)) {
                  return bindingElem;
              }

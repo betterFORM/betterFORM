@@ -5,14 +5,14 @@
 
 package de.betterform.xml.xforms.action;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.model.bind.Bind;
 import de.betterform.xml.xforms.model.bind.Binding;
 import de.betterform.xml.xforms.model.bind.BindingResolver;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -106,7 +106,7 @@ public abstract class AbstractBoundAction extends AbstractAction implements Bind
      *          in case an XPathException happens during evaluation
      */
     protected void updateXPathContext() throws XFormsException {
-//        if (isBound()) {
+//        if (hasBindingExpression()) {
         	this.evalInscopeContext = evalInScopeContext();
             final String relativeExpr = getBindingExpression();
             try {
@@ -232,7 +232,7 @@ public abstract class AbstractBoundAction extends AbstractAction implements Bind
         return getModel().getId();
     }
 
-    public boolean isBound() {
+    public boolean hasBindingExpression() {
         if (getBindingExpression() != null || getContextExpression() != null)
             return true;
         else

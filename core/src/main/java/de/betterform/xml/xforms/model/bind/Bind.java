@@ -5,8 +5,6 @@
 
 package de.betterform.xml.xforms.model.bind;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.DefaultAction;
 import de.betterform.xml.events.XFormsEventNames;
@@ -22,6 +20,8 @@ import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.model.ModelItem;
 import de.betterform.xml.xpath.XPathReferenceFinder;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.Event;
@@ -172,7 +172,7 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
         return this.model.getId();
     }
 
-    public boolean isBound() {
+    public boolean hasBindingExpression() {
         if (getBindingExpression() != null)
             return true;
         else

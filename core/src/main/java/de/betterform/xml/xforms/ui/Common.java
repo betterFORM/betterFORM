@@ -5,16 +5,16 @@
 
 package de.betterform.xml.xforms.ui;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.ns.NamespaceResolver;
-import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.exception.XFormsLinkException;
+import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.ui.state.HelperElementState;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -57,7 +57,7 @@ public class Common extends BindingElement {
         initializeDefaultAction();
         updateXPathContext();
 
-        if (isBound()) {
+        if (hasBindingExpression()) {
             initializeElementState();
             return;
         }
@@ -120,7 +120,7 @@ public class Common extends BindingElement {
             getLogger().debug(this + " refresh");
         }
         updateXPathContext();
-        if (isBound()) {
+        if (hasBindingExpression()) {
             updateElementState();
             return;
         }
@@ -174,7 +174,7 @@ public class Common extends BindingElement {
      * @throws XFormsException if an error occurred during creation.
      */
     protected UIElementState createElementState() throws XFormsException {
-        return isBound() ? new HelperElementState() : null;
+        return hasBindingExpression() ? new HelperElementState() : null;
     }
 
     /**

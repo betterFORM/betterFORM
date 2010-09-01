@@ -6,9 +6,6 @@
 package de.betterform.xml.xforms.action;
 
 
-import de.betterform.xml.xforms.ui.RepeatItem;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.connector.ConnectorFactory;
 import de.betterform.connector.URIResolver;
 import de.betterform.xml.dom.DOMUtil;
@@ -23,7 +20,10 @@ import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Instance;
 import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.model.submission.AttributeOrValueChild;
+import de.betterform.xml.xforms.ui.RepeatItem;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -338,7 +338,7 @@ public class LoadAction extends AbstractBoundAction {
     }
 
 
-    public boolean isBound() {
+    public boolean hasBindingExpression() {
         return (getBindingExpression() != null) || resource.isAvailable();
     }
 

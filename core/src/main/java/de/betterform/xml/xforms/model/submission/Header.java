@@ -5,8 +5,6 @@
 
 package de.betterform.xml.xforms.model.submission;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.exception.XFormsException;
@@ -14,6 +12,8 @@ import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.ui.BindingElement;
 import de.betterform.xml.xforms.ui.UIElementState;
 import de.betterform.xml.xforms.ui.state.BoundElementState;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 
 public class Header extends  BindingElement {
@@ -103,7 +103,7 @@ public class Header extends  BindingElement {
     }
 
     protected UIElementState createElementState() throws XFormsException {
-        if(isBound()){
+        if(hasBindingExpression()){
            return this.elementState = new BoundElementState();
         } else {
             return null;

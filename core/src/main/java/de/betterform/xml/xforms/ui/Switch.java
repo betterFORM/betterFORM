@@ -5,13 +5,13 @@
 
 package de.betterform.xml.xforms.ui;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.ns.NamespaceConstants;
-import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.ui.state.BoundElementState;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -207,7 +207,7 @@ public class Switch extends BindingElement {
      * @throws XFormsException if an error occurred during creation.
      */
     protected UIElementState createElementState() throws XFormsException {
-        return isBound() ? new BoundElementState(false, false) : null;
+        return hasBindingExpression() ? new BoundElementState(false, false) : null;
     }
 
     /**

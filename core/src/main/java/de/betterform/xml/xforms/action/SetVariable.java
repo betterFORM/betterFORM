@@ -5,16 +5,15 @@
 
 package de.betterform.xml.xforms.action;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.dom.DOMUtil;
+import de.betterform.xml.xforms.XFormsConstants;
 import de.betterform.xml.xforms.exception.XFormsComputeException;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Model;
-import de.betterform.xml.xforms.XFormsConstants;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
-import org.w3c.dom.events.EventTarget;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +38,7 @@ public class SetVariable extends AbstractBoundAction {
     }
 
     @Override
-    public boolean isBound() {
+    public boolean hasBindingExpression() {
         return true;
     }
 

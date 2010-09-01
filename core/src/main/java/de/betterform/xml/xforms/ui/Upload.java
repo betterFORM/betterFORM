@@ -5,16 +5,16 @@
 
 package de.betterform.xml.xforms.ui;
 
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Instance;
 import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.model.ModelItem;
 import de.betterform.xml.xforms.model.constraints.Validator;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 
 /**
@@ -60,7 +60,7 @@ public class Upload extends AbstractFormControl {
      * @throws XFormsException if the datatype of the bound is not supported.
      */
     protected final void initializeUpload() throws XFormsException {
-        if (isBound()) {
+        if (hasBindingExpression()) {
             //datatype health check
             Validator validator = this.model.getValidator();
             String datatype = getDatatype();
@@ -109,7 +109,7 @@ public class Upload extends AbstractFormControl {
      * @param mediatype the mediatype of the uploaded data.
      */
     public void setValue(byte[] data, String filename, String mediatype) throws XFormsException {
-        if (!isBound()) {
+        if (!hasBindingExpression()) {
             return;
         }
 

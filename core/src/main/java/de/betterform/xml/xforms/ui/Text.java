@@ -5,10 +5,10 @@
 
 package de.betterform.xml.xforms.ui;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Model;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 
 import java.text.ParseException;
@@ -80,7 +80,7 @@ public class Text extends AbstractFormControl {
             LOGGER.error("Could not delocalise value '" + value + "'");
         }
 
-        if (isBound()) {
+        if (hasBindingExpression()) {
             setNodeValue(value.replaceAll("(\\r\\n)|(\\r)", "\n"));
             
             dispatchValueChangeSequence();

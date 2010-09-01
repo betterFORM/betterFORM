@@ -5,8 +5,6 @@
 
 package de.betterform.xml.xforms.ui;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.events.DefaultAction;
 import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.events.XMLEvent;
@@ -22,6 +20,8 @@ import de.betterform.xml.xforms.model.bind.Binding;
 import de.betterform.xml.xforms.model.bind.BindingResolver;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.Event;
@@ -241,7 +241,7 @@ public abstract class BindingElement extends AbstractUIElement implements Bindin
      * @return the location path.
      */
     public String getLocationPath() {
-        if (!isBound()) {
+        if (!hasBindingExpression()) {
             return null;
         }
 
@@ -283,15 +283,13 @@ public abstract class BindingElement extends AbstractUIElement implements Bindin
     // bound element methods
 
     /**
-     * Checks wether this element is bound to a model item.
+     * Checks wether this element has a binding expression to a model item.
      * <p/>
-     * This element is considered bound if it has either a model binding or an
-     * ui binding.
      *
-     * @return <code>true</code> if this element is bound to a model item,
+     * @return <code>true</code> has a binding expression to a model item,
      *         otherwise <code>false</code>.
      */
-    public boolean isBound() {
+    public boolean hasBindingExpression() {
         return hasModelBinding() || hasUIBinding();
     }
 
@@ -386,7 +384,7 @@ public abstract class BindingElement extends AbstractUIElement implements Bindin
      * @throws XFormsException if an error occurred during init.
      */
     protected final void initializeInstanceNode() throws XFormsException {
-        if (isBound()) {
+        if (hasBindingExpression()) {
             // 4.2.2 The xforms-model-construct-done Event
             // The default action for this event happens once, no matter how many XForms
             // Models are present in the containing document, and results in the following,

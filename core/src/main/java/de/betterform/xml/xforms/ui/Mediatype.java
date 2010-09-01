@@ -5,13 +5,13 @@
 
 package de.betterform.xml.xforms.ui;
 
-import de.betterform.xml.xforms.model.Model;
-import de.betterform.xml.xforms.exception.XFormsException;
-import de.betterform.xml.xforms.XFormsElement;
 import de.betterform.xml.dom.DOMUtil;
-import org.w3c.dom.Element;
+import de.betterform.xml.xforms.XFormsElement;
+import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xforms.model.Model;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Element;
 
 /**
  * Implementation of <b>8.3.2 The mediatype Element</b>.
@@ -66,7 +66,7 @@ public class Mediatype extends BindingElement {
      */
     public String getValue() throws XFormsException {
         try {
-            if (isBound()) {
+            if (hasBindingExpression()) {
                 return getNodeValue();
             }
         }catch(XFormsException e) {
@@ -84,7 +84,7 @@ public class Mediatype extends BindingElement {
      * @param value the value to be set.
      */
     public void setValue(String value) throws XFormsException {
-        if (isBound()) {
+        if (hasBindingExpression()) {
             setNodeValue(value);
         }
     }

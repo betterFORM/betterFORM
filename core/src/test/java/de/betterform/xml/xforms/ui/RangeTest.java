@@ -3,9 +3,9 @@
  */
 package de.betterform.xml.xforms.ui;
 
-import junit.framework.TestCase;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
+import junit.framework.TestCase;
 import org.w3c.dom.Document;
 
 /**
@@ -51,9 +51,9 @@ public class RangeTest extends TestCase {
      * @throws Exception if any error occurred during the test.
      */
     public void testInteger() throws Exception {
-        assertEquals("-2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-1']/@start"));
-        assertEquals("2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-1']/@end"));
-        assertEquals("1", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-1']/@step"));
+        assertEquals("-2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-1']/bf:data/@bf:start"));
+        assertEquals("2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-1']/bf:data/@bf:end"));
+        assertEquals("1", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-1']/bf:data/@bf:step"));
     }
 
     /**
@@ -62,9 +62,9 @@ public class RangeTest extends TestCase {
      * @throws Exception if any error occurred during the test.
      */
     public void testIntegerDefaults() throws Exception {
-        assertEquals("-2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-2']/@start"));
-        assertEquals("2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-2']/@end"));
-        assertEquals("1", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-2']/@step"));
+        assertEquals("-2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-2']/bf:data/@bf:start"));
+        assertEquals("2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-2']/bf:data/@bf:end"));
+        assertEquals("1", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-2']/bf:data/@bf:step"));
     }
 
     /**
@@ -73,9 +73,9 @@ public class RangeTest extends TestCase {
      * @throws Exception if any error occurred during the test.
      */
     public void testFloat() throws Exception {
-        assertEquals("-2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-3']/@start"));
-        assertEquals("2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-3']/@end"));
-        assertEquals("1", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-3']/@step"));
+        assertEquals("-2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-3']/bf:data/@bf:start"));
+        assertEquals("2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-3']/bf:data/@bf:end"));
+        assertEquals("1", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-3']/bf:data/@bf:step"));
     }
 
     /**
@@ -84,9 +84,9 @@ public class RangeTest extends TestCase {
      * @throws Exception if any error occurred during the test.
      */
     public void testFloatDefaults() throws Exception {
-        assertEquals("-2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-4']/@start"));
-        assertEquals("2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-4']/@end"));
-        assertEquals("1", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-4']/@step"));
+        assertEquals("-2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-4']/bf:data/@bf:start"));
+        assertEquals("2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-4']/bf:data/@bf:end"));
+        assertEquals("1", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-4']/bf:data/@bf:step"));
     }
 
     /**
@@ -95,9 +95,9 @@ public class RangeTest extends TestCase {
      * @throws Exception if any error occurred during the test.
      */
     public void testDouble() throws Exception {
-        assertEquals("-2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-5']/@start"));
-        assertEquals("2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-5']/@end"));
-        assertEquals("1", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-5']/@step"));
+        assertEquals("-2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-5']/bf:data/@bf:start"));
+        assertEquals("2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-5']/bf:data/@bf:end"));
+        assertEquals("1", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-5']/bf:data/@bf:step"));
     }
 
     /**
@@ -106,9 +106,9 @@ public class RangeTest extends TestCase {
      * @throws Exception if any error occurred during the test.
      */
     public void testDoubleDefaults() throws Exception {
-        assertEquals("-2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-6']/@start"));
-        assertEquals("2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-6']/@end"));
-        assertEquals("1", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-6']/@step"));
+        assertEquals("-2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-6']/bf:data/@bf:start"));
+        assertEquals("2", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-6']/bf:data/@bf:end"));
+        assertEquals("1", XPathUtil.evaluateAsString(host, "//xf:range[@id='range-6']/bf:data/@bf:step"));
     }
 
 }

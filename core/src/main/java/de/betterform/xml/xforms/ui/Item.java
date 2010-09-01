@@ -5,14 +5,14 @@
 
 package de.betterform.xml.xforms.ui;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.Initializer;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.model.bind.Binding;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -205,7 +205,7 @@ public class Item extends AbstractUIElement implements Binding {
         return null;
     }
 
-    public boolean isBound() {
+    public boolean hasBindingExpression() {
         if(getBindingExpression() != null)
             return true;
         else

@@ -6,23 +6,20 @@
 package de.betterform.xml.xforms.ui;
 
 
-
-
+import de.betterform.xml.events.XFormsEventNames;
+import de.betterform.xml.xforms.XFormsConstants;
+import de.betterform.xml.xforms.exception.XFormsComputeException;
+import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xforms.model.Instance;
+import de.betterform.xml.xforms.model.Model;
+import de.betterform.xml.xforms.model.ModelItem;
+import de.betterform.xml.xforms.model.submission.AttributeOrValueChild;
+import de.betterform.xml.xforms.ui.state.OutputElementState;
+import de.betterform.xml.xpath.impl.saxon.XPathCache;
+import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import net.sf.saxon.trans.XPathException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import de.betterform.xml.xforms.model.Model;
-import de.betterform.xml.xforms.model.Instance;
-import de.betterform.xml.xforms.model.ModelItem;
-import de.betterform.xml.xforms.exception.XFormsComputeException;
-import de.betterform.xml.xforms.exception.XFormsException;
-import de.betterform.xml.xforms.model.submission.AttributeOrValueChild;
-import de.betterform.xml.xforms.ui.state.OutputElementState;
-import de.betterform.xml.xforms.XFormsConstants;
-import de.betterform.xml.xforms.ui.state.UIElementStateUtil;
-import de.betterform.xml.xpath.impl.saxon.XPathCache;
-import de.betterform.xml.xpath.impl.saxon.XPathUtil;
-import de.betterform.xml.events.XFormsEventNames;
 import org.w3c.dom.Element;
 
 /**
@@ -74,7 +71,7 @@ public class Output extends AbstractFormControl {
             this.model.getContainer().dispatch(this.target, XFormsEventNames.OUTPUT_ERROR, null);
         }
 
-        if (isBound()) {
+        if (hasBindingExpression()) {
            Instance instance = this.model.getInstance(getInstanceId());
            ModelItem item = instance.getModelItem(getInstanceNode());
 
@@ -136,7 +133,7 @@ public class Output extends AbstractFormControl {
         
         try
 		{
-            if (isBound()) {
+            if (hasBindingExpression()) {
                 return XPathUtil.getAsString(getNodeset(), getPosition());
             }
             else {
@@ -167,7 +164,7 @@ public class Output extends AbstractFormControl {
      * @throws XFormsException if an error occurred during creation.
      */
     protected UIElementState createElementState() throws XFormsException {
-        if (isBound()) {
+        if (hasBindingExpression()) {
             return super.createElementState();
         }
         if (hasValueAttribute()) {

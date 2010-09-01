@@ -5,18 +5,18 @@
 
 package de.betterform.xml.xforms.ui;
 
-import de.betterform.xml.events.*;
+import de.betterform.xml.events.DOMEventNames;
+import de.betterform.xml.events.DefaultAction;
+import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.ns.NamespaceConstants;
-import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.ui.state.BoundElementState;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
-import org.w3c.dom.Element;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Element;
+import org.w3c.dom.events.Event;
 
 /**
  * Implementation of <b>9.1.1 The group Element</b>.
@@ -151,7 +151,7 @@ public class Group extends BindingElement implements DefaultAction {
      * @throws XFormsException if an error occurred during creation.
      */
     protected UIElementState createElementState() throws XFormsException {
-        return isBound() ? new BoundElementState(false, false) : null;
+        return hasBindingExpression() ? new BoundElementState(false, false) : null;
     }
 
     /**

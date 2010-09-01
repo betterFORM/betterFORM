@@ -5,22 +5,22 @@
 
 package de.betterform.xml.xforms.ui.state;
 
-import de.betterform.xml.dom.DOMComparator;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.config.Config;
+import de.betterform.xml.dom.DOMComparator;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.ns.NamespaceResolver;
-import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.Container;
+import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.ModelItem;
 import de.betterform.xml.xforms.model.bind.RefreshView;
 import de.betterform.xml.xforms.ui.BindingElement;
 import de.betterform.xml.xforms.ui.UIElementState;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -110,7 +110,7 @@ public class UIElementStateUtil {
     }
 
     public static ModelItem getModelItem(BindingElement owner) throws XFormsException {
-        if (owner.isBound()) {
+        if (owner.hasBindingExpression()) {
             return owner.getModel()
                     .getInstance(owner.getInstanceId())
                     .getModelItem(owner.getInstanceNode());

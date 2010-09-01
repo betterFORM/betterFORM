@@ -5,10 +5,6 @@
 
 package de.betterform.xml.xforms.model.submission;
 
-import net.sf.saxon.dom.DocumentWrapper;
-import net.sf.saxon.om.Item;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.connector.SubmissionHandler;
 import de.betterform.connector.http.AbstractHTTPConnector;
 import de.betterform.xml.dom.DOMUtil;
@@ -29,6 +25,10 @@ import de.betterform.xml.xforms.ui.state.BoundElementState;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
+import net.sf.saxon.dom.DocumentWrapper;
+import net.sf.saxon.om.Item;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -497,7 +497,7 @@ public class Submission extends BindingElement implements DefaultAction {
      *          if an error occurred during creation.
      */
     protected UIElementState createElementState() throws XFormsException {
-        return isBound() ? new BoundElementState() : null;
+        return hasBindingExpression() ? new BoundElementState() : null;
     }
 
     /**

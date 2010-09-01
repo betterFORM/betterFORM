@@ -5,8 +5,6 @@
 
 package de.betterform.xml.xforms.ui;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.XMLEvent;
@@ -19,6 +17,8 @@ import de.betterform.xml.xforms.model.bind.Bind;
 import de.betterform.xml.xforms.model.bind.BindingResolver;
 import de.betterform.xml.xforms.ui.state.RepeatElementState;
 import de.betterform.xml.xpath.XPathUtil;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -130,7 +130,7 @@ public class Repeat extends BindingElement implements EventListener {
      * @return the context size of this repeat.
      */
     public int getContextSize() {
-        if (isBound()) {
+        if (hasBindingExpression()) {
             return getNodeset().size();
         }
 
@@ -301,7 +301,7 @@ public class Repeat extends BindingElement implements EventListener {
      * @throws XFormsException if an error occurred during creation.
      */
     protected UIElementState createElementState() throws XFormsException {
-        return isBound() ? new RepeatElementState() : null;
+        return hasBindingExpression() ? new RepeatElementState() : null;
     }
 
     /**

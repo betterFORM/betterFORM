@@ -5,8 +5,6 @@
 
 package de.betterform.xml.xforms.ui;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.Initializer;
 import de.betterform.xml.xforms.exception.XFormsException;
@@ -14,6 +12,8 @@ import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.model.bind.Binding;
 import de.betterform.xml.xforms.model.bind.BindingResolver;
 import de.betterform.xml.xpath.XPathUtil;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -105,7 +105,7 @@ public class RepeatItem extends Group {
      *
      * @return <code>true</code>.
      */
-    public boolean isBound() {
+    public boolean hasBindingExpression() {
         return true;
     }
 

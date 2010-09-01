@@ -6,7 +6,7 @@
 package de.betterform.xml.xforms.ui;
 
 import de.betterform.xml.config.Config;
-import de.betterform.xml.events.DOMEventNames;
+import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.DefaultAction;
 import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.ns.NamespaceConstants;
@@ -20,6 +20,7 @@ import de.betterform.xml.xforms.ui.state.UIElementStateUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.events.Event;
 
 import java.math.BigDecimal;
@@ -97,8 +98,14 @@ public abstract class AbstractFormControl extends BindingElement implements Defa
      * @return the datatype of the bound node.
      */
     public String getDatatype() throws XFormsException {
-        if (isBound()) {
-            ModelItem modelItem = this.model.getInstance(getInstanceId()).getModelItem(getInstanceNode());
+        if (hasBindingExpression()) {
+            Node n = getInstanceNode();
+            if(n == null){
+                getLogger().warn("Node for path '" + getBindingExpression() + "' does not exist:" + DOMUtil.getCanonicalPath(this.element));
+                //TODO: clarify what to do
+                //throw new XFormsException("Node for path '" + getBindingExpression() + "' does not exist::" + DOMUtil.getCanonicalPath(this.element));
+            }
+            ModelItem modelItem = this.model.getInstance(getInstanceId()).getModelItem(n);
             if (modelItem != null) {
                 return UIElementStateUtil.getDatatype(modelItem, this.element);
             }
@@ -155,7 +162,7 @@ public abstract class AbstractFormControl extends BindingElement implements Defa
      * @throws XFormsException if an error occurred during creation.
      */
     protected UIElementState createElementState() throws XFormsException {
-        return isBound() ? new BoundElementState() : null;
+        return hasBindingExpression() ? new BoundElementState() : null;
     }
 
     /**

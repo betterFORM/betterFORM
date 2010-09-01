@@ -5,9 +5,6 @@
 
 package de.betterform.xml.xforms.ui;
 
-import net.sf.saxon.om.NodeInfo;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.dom.DOMComparator;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
@@ -17,15 +14,18 @@ import de.betterform.xml.events.XMLEvent;
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.XFormsConstants;
 import de.betterform.xml.xforms.exception.XFormsBindingException;
+import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Instance;
 import de.betterform.xml.xforms.model.Model;
-import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
-import org.w3c.dom.Document;
+import net.sf.saxon.om.NodeInfo;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.events.*;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventTarget;
+
 import java.util.*;
 
 /**
@@ -176,7 +176,7 @@ public class Selector extends AbstractFormControl {
      */
     public void setValue(String value) throws XFormsException
     {
-        if(isBound()) {
+        if(hasBindingExpression()) {
             //test for an xforms:copy id as the value
             String values[] = value.split(" ");
             de.betterform.xml.xforms.XFormsElement xfe = null;
@@ -282,7 +282,7 @@ public class Selector extends AbstractFormControl {
      * value of this select.
      */
     protected void initializeSelection() throws XFormsException {
-        if (isBound()) {
+        if (hasBindingExpression()) {
             setSelection(true, false, getValue());
         }
     }
@@ -294,7 +294,7 @@ public class Selector extends AbstractFormControl {
      * instance value of this select is updated.
      */
     protected void updateSelection() throws XFormsException {
-        if (isBound()) {
+        if (hasBindingExpression()) {
             setSelection(false, false, getValue());
         }
     }
@@ -309,7 +309,7 @@ public class Selector extends AbstractFormControl {
      * @param value the value used to compute selection states.
      */
     protected void dispatchSelectionWithoutValueChange(Object value) throws XFormsException {
-        if (isBound()) {
+        if (hasBindingExpression()) {
             setSelection(false, true, value);
         }
     }

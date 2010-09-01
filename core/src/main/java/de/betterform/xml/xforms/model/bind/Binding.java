@@ -64,7 +64,7 @@ public interface Binding {
     
     int getPosition();
 
-    boolean isBound();
+    boolean hasBindingExpression();
     
     String getInstanceId() throws XFormsException;
 }

@@ -5,11 +5,11 @@
 
 package de.betterform.xml.xforms.ui;
 
+import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xforms.model.Model;
+import de.betterform.xml.xforms.ui.state.BoundElementState;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import de.betterform.xml.xforms.model.Model;
-import de.betterform.xml.xforms.exception.XFormsException;
-import de.betterform.xml.xforms.ui.state.BoundElementState;
 import org.w3c.dom.Element;
 
 /**
@@ -55,7 +55,7 @@ public class Trigger extends AbstractFormControl {
      * @throws XFormsException if an error occurred during creation.
      */
     protected UIElementState createElementState() throws XFormsException {
-        return isBound() ? new BoundElementState(false, false) : null;
+        return hasBindingExpression() ? new BoundElementState(false, false) : null;
     }
 
     /**

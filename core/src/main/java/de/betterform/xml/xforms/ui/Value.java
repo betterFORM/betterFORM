@@ -5,12 +5,12 @@
 
 package de.betterform.xml.xforms.ui;
 
-import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.ui.state.HelperElementState;
-import org.w3c.dom.Element;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Element;
 
 /**
  * Implementation of <b>8.2.3 The value Element</b>.
@@ -87,7 +87,7 @@ public class Value extends BindingElement {
      * @throws XFormsException if an error occurred during creation.
      */
     protected UIElementState createElementState() throws XFormsException {
-        return isBound() ? new HelperElementState() : null;
+        return hasBindingExpression() ? new HelperElementState() : null;
     }
 
     /**

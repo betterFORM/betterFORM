@@ -5,11 +5,11 @@
 
 package de.betterform.xml.xforms.ui;
 
-import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.exception.XFormsException;
-import org.w3c.dom.Element;
+import de.betterform.xml.xforms.model.Model;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Element;
 
 /**
  * Implementation of <b>8.3.1 The filename Element</b>.
@@ -55,7 +55,7 @@ public class Filename extends BindingElement {
      */
     public String getValue() throws XFormsException {
         try {
-            if (isBound()) {
+            if (hasBindingExpression()) {
                 return getNodeValue();
             }
         }catch (XFormsException e) {
@@ -73,7 +73,7 @@ public class Filename extends BindingElement {
      * @param value the value to be set.
      */
     public void setValue(String value) throws XFormsException {
-        if (isBound()) {
+        if (hasBindingExpression()) {
             setNodeValue(value);
         }
     }
