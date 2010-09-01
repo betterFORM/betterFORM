@@ -30,13 +30,4 @@ public interface DOMEventNames {
      */
     String FOCUS_OUT = "DOMFocusOut";
 
-    /**
-     * DOM notification event constant.
-     */
-    String SHOW = "DOMShow";
-
-    /**
-     * DOM notification event constant.
-     */
-    String HIDE = "DOMHide";
 }

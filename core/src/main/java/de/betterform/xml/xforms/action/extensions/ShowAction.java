@@ -5,31 +5,16 @@
 
 package de.betterform.xml.xforms.action.extensions;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
+import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
-import de.betterform.xml.events.XFormsEventNames;
-import de.betterform.xml.xforms.model.Model;
-import de.betterform.xml.xforms.model.submission.Header;
-import de.betterform.xml.xforms.model.submission.Submission;
 import de.betterform.xml.xforms.action.AbstractAction;
 import de.betterform.xml.xforms.exception.XFormsBindingException;
 import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.ui.AbstractUIElement;
-import de.betterform.xml.xforms.XFormsElementFactory;
-import de.betterform.xml.xforms.XFormsConstants;
-import de.betterform.xml.xforms.XFormsElement;
-import de.betterform.xml.dom.DOMUtil;
-import de.betterform.xml.xpath.impl.saxon.XPathUtil;
-import de.betterform.xml.xpath.impl.saxon.XPathCache;
-import de.betterform.xml.ns.NamespaceConstants;
-import de.betterform.xml.ns.BetterFormNamespaceMap;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import java.util.ArrayList;
 
 /**
  * Implements the hide action as defined in <a src="http://www.w3.org/MarkUp/Forms/wiki/Dialog">XForms 1.2 Dialog proposal</a>
@@ -45,7 +30,7 @@ public class ShowAction extends AbstractAction {
      * Creates a setfocus action implementation.
      *
      * @param element the element.
-     * @param model the context model.
+     * @param model   the context model.
      */
     public ShowAction(Element element, Model model) {
         super(element, model);
@@ -62,7 +47,7 @@ public class ShowAction extends AbstractAction {
         if (this.referencedDialog == null) {
             this.referencedDialog = getXFormsAttribute("dialog");
         }
-        if(this.referencedDialog == null) {
+        if (this.referencedDialog == null) {
             throw new XFormsBindingException("missing dialog attribute at " + DOMUtil.getCanonicalPath(this.getElement()), this.target, null);
         }
     }
@@ -73,7 +58,7 @@ public class ShowAction extends AbstractAction {
      * Performs the <code>setfocus</code> action.
      *
      * @throws XFormsException if an error occurred during <code>setfocus</code>
-     * processing.
+     *                         processing.
      */
     public void perform() throws XFormsException {
         // check dialog idref

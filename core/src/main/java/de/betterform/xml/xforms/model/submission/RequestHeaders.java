@@ -21,16 +21,18 @@ public class RequestHeaders {
     public RequestHeaders() {
         this(10);
     }
-    public RequestHeaders(int headerListSize ) {
+
+    public RequestHeaders(int headerListSize) {
         headers = new ArrayList<RequestHeader>(headerListSize);
     }
 
     public void addHeader(String name, String value) {
-        headers.add(new RequestHeader(name,value));
+        headers.add(new RequestHeader(name, value));
     }
+
     public void addHeader(RequestHeader header) {
-        if(headers.contains(header)){
-            LOGGER.warn("Header " + header.getName() + " is allready in list [value: '" + header.getValue() +"']");
+        if (headers.contains(header)) {
+            LOGGER.warn("Header " + header.getName() + " is already in list [value: '" + header.getValue() + "']");
         }
         headers.add(header);
     }
@@ -48,16 +50,16 @@ public class RequestHeaders {
         }
 
     }
-    
+
     public RequestHeader getRequestHeader(String name) {
-    	for (int i = 0; i < headers.size(); i++) {
-			RequestHeader requestHeader = headers.get(i);
-			if (name.equals(requestHeader.getName())) {
-				return requestHeader;
-			}
-		}
-    	
-    	return null;
+        for (int i = 0; i < headers.size(); i++) {
+            RequestHeader requestHeader = headers.get(i);
+            if (name.equals(requestHeader.getName())) {
+                return requestHeader;
+            }
+        }
+
+        return null;
     }
 
     public List<RequestHeader> getAllHeaders() {
@@ -65,8 +67,8 @@ public class RequestHeaders {
     }
 
     public boolean containes(String name) {
-        for(RequestHeader header : this.headers){
-            if(header.getName().equalsIgnoreCase(name)){
+        for (RequestHeader header : this.headers) {
+            if (header.getName().equalsIgnoreCase(name)) {
                 return true;
             }
         }
@@ -84,7 +86,7 @@ public class RequestHeaders {
         if (tmp.size() > 0) {
             result = new String[tmp.size()];
             tmp.toArray(result);
-        }        
+        }
         return result;
     }
 
