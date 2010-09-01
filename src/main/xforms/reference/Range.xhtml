@@ -1,126 +1,156 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:xf="http://www.w3.org/2002/xforms"
-      xmlns:ev="http://www.w3.org/2001/xml-events"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-      lang="de">
-    <head>
-        <title>Range Control</title>
+<?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
+      <title>Range Control</title><style type="text/css">
+            .xfGroupLabel {
+            font-size: 12pt;
+            font-weight: bold;
+            padding-bottom: 10px;
+            }
 
-        <link rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
-        <link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css" />
-
-        <script type="text/javascript">
-            dojo.require("dijit.form.Button");
-            dojo.require("dijit.TitlePane");
-            dojo.require('dijit.layout.ContentPane');
+            #mips .xfTrigger .dijitButtonContents {
+            width: 200px;
+            }
+        </style><link rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
+      <link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css" /><script type="text/javascript">
             dojo.require("dojox.highlight");
             dojo.require("dojox.highlight.languages.xml");
             dojo.addOnLoad(function() {
-                dojo.query("code").forEach(dojox.highlight.init);
+            dojo.query("code").forEach(dojox.highlight.init);
             });
-        </script>
 
-    </head>
-    <body class="soria" style="margin:30px;">
-        <div id="xforms">
-            <div style="display:none;">
-                <xf:model id="model-1">
-                    <xf:instance id="instance-1" xmlns="">
-                        <data constraint="true" readonly="false" required="false" relevant="true">
-                            <item>5</item>
-                        </data>
-                    </xf:instance>
-                    <xf:bind nodeset="item" type="integer" />
-                </xf:model>
-            </div>
-            <div class="pagetitle">The Range Control</div>
-            <div class="Section">
-                <div class="Headline">Description</div>
-                This form control allows selection from a sequential range of values.
-            </div>
-            <div class="Section">
-                <div class="Headline"><a href="http://www.w3.org/TR/xforms11/#ui-range">XForms 1.1 Element Specification</a></div>
-            </div>
-
-            <!-- ####################### CONTENT SECTION STARTING HERE ########################### -->
-            <!-- ####################### CONTENT SECTION STARTING HERE ########################### -->
-            <!-- ####################### CONTENT SECTION STARTING HERE ########################### -->
-            <div class="Section">
-
-                <!-- ########### slider control ############ -->
-                <!-- ########### slider control ############ -->
-                <!-- ########### slider control ############ -->
-                <div class="Subsection" dojotype="dijit.TitlePane" open="true" title="Standard Range Control">
-                    <div class="description">
-                    Standard rendering for a XForms range control. Fully supports keyboard navigation and mouse wheel
-                    scrolling when focussed.
-                    </div>
-
-                    <div class="Sample">
-                        <xf:range ref="item" start="1" step="1" end="5" incremental="true">
-                            <xf:label>a slider</xf:label>
-                        </xf:range>
-                    </div>
-                    <div dojotype="dijit.TitlePane" open="false" title="XForms Markup">
-                        <pre><code class="xml"><![CDATA[<!-- XForms Instance -->
+            dojo.require("dijit.form.Button");
+            dojo.require("dijit.TitlePane");
+            dojo.require('dijit.layout.ContentPane');
+        </script></head>
+   <body class="soria" style="margin:30px;">
+      <div id="xforms">
+         <div style="display:none;">
+            <models xmlns="" constraint="true" readonly="true" required="true" relevant="true">
+               <xf:model id="model-1">
+                  <xf:instance id="instance-1">
+                     <data constraint="true" readonly="true" required="true" relevant="true">
+                        <item constraint="true" readonly="true" required="true" relevant="true">
+                           <value constraint="true" readonly="true" required="true" relevant="true">5</value>
+                        </item>
+                     </data>
+                  </xf:instance>
+                  <xf:bind nodeset="item/value" type="integer"></xf:bind>
+                  <xf:bind nodeset="item">
+                     <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
+                     <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
+                     <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
+                     <xf:bind nodeset="@required" type="boolean"></xf:bind>
+                     <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
+                  </xf:bind>
+               </xf:model>
+            </models>
+         </div>
+      </div>
+      <div class="pagetitle">The Range Control</div>
+      <div class="Section">
+         <div class="PageDescription">Description</div>
+         This form control allows selection from a sequential range of values.
+         
+      </div>
+      <div class="Section">
+         <div class="PageDescription"><a href="http://www.w3.org/TR/xforms11/#ui-range">XForms 1.1 Element Specification</a></div>
+      </div>
+      <div class="Section">
+         <div class="Headline">Standard Range Control</div>
+         <p class="Description">
+            Standard rendering for a XForms range control. Fully supports keyboard navigation and mouse
+            wheel
+            scrolling when focussed.
+            
+         </p>
+         <div>
+            <div class="Subheadline">XForms Markup</div>
+            <div class="Subsection"><pre><code class="xml"><![CDATA[<!-- XForms Instance -->
 <item>5</item>
 
 <!-- XForms Binding -->
-<xf:bind nodeset="item" type="integer"/>
+<xf:bind nodeset="item" type="integer"></xf:bind>
 
 <!-- XForms UI -->
-<xf:range ref="item"  start="1" step="1" end="5" incremental="true">
-    <xf:label>a slider</xf:label>
-</xf:range>]]></code></pre>
-                    </div>
-
-                    <div class="notes" dojotype="dijit.TitlePane" open="false" title="Notes">
-                        <ul>
-                            <li>Range only supports Integers at the moment</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- ########### rating control ############ -->
-                <!-- ########### rating control ############ -->
-                <!-- ########### rating control ############ -->
-                <div class="Subsection" dojotype="dijit.TitlePane" open="true" title="Range Control with appearance 'bf:rating'">
-                    <div class="description">
-                    Rating control but without keyboard control.
-                    </div>
-                    <div class="Sample">
-                        <xf:range ref="item" start="1" step="1" end="5" appearance="bf:rating" incremental="true">
-                            <xf:label>Rate it</xf:label>
-                            <xf:hint>This is a standard range control</xf:hint>
-                            <xf:help>Not much to say here but some basic html formatting is <b>possible</b></xf:help>
-                            <xf:alert>value is invalid</xf:alert>
-                        </xf:range>
-                    </div>
-                    <div dojotype="dijit.TitlePane" open="false" title="XForms Markup">
-                        <pre><code class="xml"><![CDATA[<!-- XForms Instance -->
+<xf:range ref="item" start="1" step="1" end="5" incremental="true">
+  <xf:label>a slider</xf:label>
+</xf:range>]]></code></pre></div>
+         </div>
+         <div>
+            <div class="Subheadline">Sample</div>
+            <div class="Sample">
+               <xf:range ref="item/value" start="1" step="1" end="5" incremental="true">
+                  <xf:label>a slider</xf:label>
+               </xf:range>
+            </div>
+            <div class="Subheadline">Modelitem properties</div>
+            <div class="Sample">
+               <xf:input navindex="-1" style="width:10px;" ref="item/@readonly" class="mips" incremental="true">
+                  <xf:label>readonly</xf:label>
+               </xf:input>
+               <xf:input navindex="-1" ref="item/@required" style="width:10px;" class="mips" incremental="true">
+                  <xf:label>required</xf:label>
+               </xf:input>
+               <xf:input navindex="-1" ref="item/@relevant" style="width:10px;" class="mips" incremental="true">
+                  <xf:label>relevant</xf:label>
+               </xf:input>
+               <xf:input navindex="-1" ref="item/@constraint" style="width:10px;" class="mips" incremental="true">
+                  <xf:label>valid</xf:label>
+               </xf:input>
+            </div>
+         </div>
+      </div>
+      <div class="Section">
+         <div class="Headline">Range Control with appearance 'bf:rating'</div>
+         <p class="Description">
+            Rating control but without keyboard control.
+            
+         </p>
+         <div>
+            <div class="Subheadline">XForms Markup</div>
+            <div class="Subsection">
+<pre><code class="xml"><![CDATA[
+<!-- XForms Instance -->
 <item>5</item>
 
 <!-- XForms Binding -->
-<xf:bind nodeset="item" type="integer"/>
+<xf:bind nodeset="item" type="integer"></xf:bind>
 
 <!-- XForms UI -->
-<xf:range ref="item" start="1" step="1" end="5" incremental="true" appearance="bf:rating">
-    <xf:label/>
-</xf:range>]]></code></pre>
-                    </div>
-
-                    <div class="notes" dojotype="dijit.TitlePane" open="false" title="Notes">
-                        <ul>
-                            <li>Range only supports Integers at the moment</li>
-                        </ul>
-                    </div>
-                </div>
-
+<xf:range ref="item" start="1" step="1" end="5" appearance="bf:rating" incremental="true">
+  <xf:label>a slider</xf:label>
+</xf:range>]]></code></pre></div>
+         </div>
+         <div>
+            <div class="Subheadline">Sample</div>
+            <div class="Sample">
+               <xf:range ref="item/value" start="1" step="1" end="5" appearance="bf:rating" incremental="true">
+                  <xf:label>Rate it</xf:label>
+                  <xf:hint>This is a standard range control</xf:hint>
+                  <xf:help>Not much to say here but some basic html formatting is
+                     
+                     <b xmlns="">possible</b>
+                  </xf:help>
+                  <xf:alert>value is invalid</xf:alert>
+               </xf:range>
             </div>
-
-        </div>
-    </body>
+            <div class="Subheadline">Modelitem properties</div>
+            <div class="Sample">
+               <xf:input navindex="-1" style="width:10px;" ref="item/@readonly" class="mips" incremental="true">
+                  <xf:label>readonly</xf:label>
+               </xf:input>
+               <xf:input navindex="-1" ref="item/@required" style="width:10px;" class="mips" incremental="true">
+                  <xf:label>required</xf:label>
+               </xf:input>
+               <xf:input navindex="-1" ref="item/@relevant" style="width:10px;" class="mips" incremental="true">
+                  <xf:label>relevant</xf:label>
+               </xf:input>
+               <xf:input navindex="-1" ref="item/@constraint" style="width:10px;" class="mips" incremental="true">
+                  <xf:label>valid</xf:label>
+               </xf:input>
+            </div>
+         </div>
+      </div>
+   </body>
 </html>
-

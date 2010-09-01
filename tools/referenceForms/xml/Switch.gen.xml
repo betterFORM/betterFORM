@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns:xf="http://www.w3.org/2002/xforms">
+    <title>Switch Control</title>
+    <page>
+        <title>The Switch Element</title>
+        <description>DescriptionA switch element is a container form control that allows the
+            creation of user interfaces where the user interface can be
+            varied based on user actions and events
+        </description>
+        <specification>
+            <link>http://www.w3.org/TR/xforms11/#ui-switch-module</link>
+            <description>XForms 1.1 Element Specification</description>
+        </specification>
+        <content>
+            <models>
+                <xf:model xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+                          xmlns:bf="http://betterform.sourceforge.net/xforms" id="model-1">
+                    <xf:instance xmlns="" id="instance-1">
+                        <data constraint="true" readonly="false" required="false" relevant="true"/>
+                    </xf:instance>
+                </xf:model>
+            </models>
+            <samples>
+                <section>
+                    <title>Switch</title>
+                    <description>
+                        A switch without appearance renders as a div Element which may contain arbitrary markup and
+                        be toggled (changing the active case) with the help of triggers outside of the switch.
+                    </description>
+                    <xf:group xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+                              xmlns:bf="http://betterform.sourceforge.net/xforms">
+                        <xf:label class="blockLabel">Switch / Case</xf:label>
+                        <xf:group id="menu" appearance="minimal">
+                            <xf:label class="blockLabel">Triggers outside Switch / Case</xf:label>
+                            <xf:trigger style="clear:none">
+                                <xf:label>Case 1</xf:label>
+                                <xf:toggle case="case1"/>
+                            </xf:trigger>
+                            <xf:trigger style="clear:none">
+                                <xf:label>Case 2</xf:label>
+                                <xf:toggle case="case2"/>
+                            </xf:trigger>
+                            <xf:trigger style="clear:none">
+                                <xf:label>Case 3</xf:label>
+                                <xf:toggle case="case3"/>
+                            </xf:trigger>
+                            <xf:trigger style="clear:none">
+                                <xf:label>Case 4</xf:label>
+                                <xf:toggle case="case4"/>
+                            </xf:trigger>
+                        </xf:group>
+                        <xf:switch>
+                            <xf:case id="case1" selected="true">
+                                <div class="caseContent" style="background:#bbbbff">CASE 1</div>
+                            </xf:case>
+                            <xf:case id="case2">
+                                <div class="caseContent" style="background:#ccccff">CASE 2</div>
+                            </xf:case>
+                            <xf:case id="case3">
+                                <div class="caseContent" style="background:#ddddff">CASE 3</div>
+                            </xf:case>
+                            <xf:case id="case4">
+                                <div class="caseContent" style="background:#eeeeff">CASE 4</div>
+                            </xf:case>
+                        </xf:switch>
+                    </xf:group>
+                </section>
+                <section>
+                    <title>Switch appearance 'dijit.TabContainer'</title>
+                    <description>
+                        A switch Element with appearance Attribute set to 'dijit.TabContainer' will be rendered as
+                        a tabbed panel which can be toggled by clicking a card or by navigating the cards with the
+                        keyboard.
+
+                        As the author might need other actions besides simply activating another case ( to e.g. prepare
+                        data for the new view) we need a explicit trigger that toggles the wanted case. On the other
+                        side when the user clicks a tab we have to let the processor know which trigger has to run
+                        for the switching. To allow mapping from active case to the trigger that performs the switch
+                        you have to follow a convention to achieve the mapping:
+                        write one trigger for each case you wantgive the trigger an id of 't-' + CASE_ID (where CASE_ID
+                        references the respective case you want to activate put all triggers inside a div which you hide
+                        from display with a style="display:none;"write your switch as normal and give it an appearance
+                        of 'dijit.TabContainer'
+                    </description>
+                    <xf:group xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+                              xmlns:bf="http://betterform.sourceforge.net/xforms">
+                        <xf:label>Switch / Case</xf:label>
+                        <div style="display:none;">
+                            <xf:trigger id="t-tabcase1">
+                                <xf:label>Case 1</xf:label>
+                                <xf:toggle case="tabcase1"/>
+                            </xf:trigger>
+                            <xf:trigger id="t-tabcase2">
+                                <xf:label>Case 2</xf:label>
+                                <xf:toggle case="tabcase2"/>
+                            </xf:trigger>
+                            <xf:trigger id="t-tabcase3">
+                                <xf:label>Case 3</xf:label>
+                                <xf:toggle case="tabcase3"/>
+                            </xf:trigger>
+                            <xf:trigger id="t-tabcase4">
+                                <xf:label>Case 4</xf:label>
+                                <xf:toggle case="tabcase4"/>
+                            </xf:trigger>
+                        </div>
+                        <xf:switch appearance="dijit:TabContainer">
+                            <xf:case id="tabcase1" selected="true">
+                                <xf:label>Case 1</xf:label>
+                                <div class="caseContent" style="background:#bbbbff">CASE 1</div>
+                            </xf:case>
+                            <xf:case id="tabcase2">
+                                <xf:label>Case 2</xf:label>
+                                <div class="caseContent" style="background:#ccccff">CASE 2</div>
+                            </xf:case>
+                            <xf:case id="tabcase3">
+                                <xf:label>Case 3</xf:label>
+                                <div class="caseContent" style="background:#ddddff">CASE 3</div>
+                            </xf:case>
+                            <xf:case id="tabcase4">
+                                <xf:label>Case 4</xf:label>
+                                <div class="caseContent" style="background:#eeeeff">CASE 4</div>
+                            </xf:case>
+                        </xf:switch>
+                    </xf:group>
+                </section>
+            </samples>
+        </content>
+    </page>
+</data>

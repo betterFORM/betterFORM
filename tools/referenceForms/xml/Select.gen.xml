@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns:xf="http://www.w3.org/2002/xforms">
+    <title>Select Control</title>
+    <page>
+        <title>The select Control</title>
+        <description>Description
+            This form control allows the user to make multiple selections from a set of choices.
+
+            All select controls on this page are bound to the same instance. Thus if you change the value of
+            one control the others will update acccordngly.
+        </description>
+        <specification>
+            <link>http://www.w3.org/TR/xforms11/#ui-selectMany</link>
+            <description>XForms 1.1 Element Specification</description>
+        </specification>
+        <content>
+            <models>
+                <xf:model xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+                          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                          xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="model-1">
+                    <xf:instance xmlns="" id="instance-1">
+                        <data constraint="true" readonly="false" required="false" relevant="true">
+                            <item>
+                                <value>AX DZ</value>
+                            </item>
+                        </data>
+                    </xf:instance>
+                    <xf:bind nodeset="item">
+                        <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"/>
+
+                        <xf:bind nodeset="@constraint" type="boolean"/>
+                        <xf:bind nodeset="@readonly" type="boolean"/>
+                        <xf:bind nodeset="@required" type="boolean"/>
+                        <xf:bind nodeset="@relevant" type="boolean"/>
+                    </xf:bind>
+                    <xf:instance xmlns="" id="codes">
+                        <countrylist lang="en">
+                            <country>
+                                <country-name>AFGHANISTAN</country-name>
+                                <code>AF</code>
+                            </country>
+                            <country>
+                                <country-name>LAND ISLANDS</country-name>
+                                <code>AX</code>
+                            </country>
+                            <country>
+                                <country-name>ALBANIA</country-name>
+                                <code>AL</code>
+                            </country>
+                            <country>
+                                <country-name>ALGERIA</country-name>
+                                <code>DZ</code>
+                            </country>
+                        </countrylist>
+                    </xf:instance>
+                    <xf:instance xmlns="" id="instance">
+                        <data>
+                            <content/>
+                        </data>
+                    </xf:instance>
+                    <xf:submission id="showInstance" resource="{$contextroot}/jsp/debug-instance.jsp" replace="instance"
+                                   ref="instance('instance')" target="content" instance="instance" method="post"
+                                   serialization="none"/>
+                    <xf:submission id="showInstance2" resource="{$contextroot}/jsp/debug-instance.jsp" replace="all"
+                                   ref="instance('instance')" method="post"/>
+                </xf:model>
+            </models>
+            <samples>
+                <section>
+                    <title>Select Control with appearance 'minimal'</title>
+                    <description>
+                        If no appearance is given, the XForms select control defaults to a HTML select control.
+                    </description>
+                    <xf:select xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+                               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                               xmlns:xsd="http://www.w3.org/2001/XMLSchema" ref="item/value">
+                        <xf:label>Country</xf:label>
+                        <xf:itemset nodeset="instance('codes')/country">
+                            <xf:label ref="country-name"/>
+                            <xf:value ref="code"/>
+                        </xf:itemset>
+                    </xf:select>
+                </section>
+                <section>
+                    <title>Standart Select Control Appearance 'full'</title>
+                    <description>
+                        Select with appearance="full" will be rendered as a set of checkboxes.
+                    </description>
+                    <xf:select xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+                               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                               xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="control2" ref="item/value" appearance="full">
+                        <xf:label>Country</xf:label>
+                        <!--<xf:label>appearance = 'full'</xf:label>-->
+                        <xf:hint>This is a standard select control</xf:hint>
+                        <xf:help>Not much to say here but some basic html formatting
+                            is
+                            <b>possible</b>
+                        </xf:help>
+                        <xf:alert>The select value is not valid</xf:alert>
+                        <xf:itemset nodeset="instance('codes')/country">
+                            <xf:label ref="country-name"/>
+                            <xf:value ref="code"/>
+                        </xf:itemset>
+                    </xf:select>
+                </section>
+                <section>
+                    <title>Standard Select Control</title>
+                    <description>
+                        A select with attribute 'selection="open"' allows the user to add an entry that is not
+                        contained in the predefined list of choices. It will be rendered as a select along with an
+                        input control. The selection attribute takes precedence over the appearance attribute.
+                    </description>
+                    <xf:select xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+                               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                               xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="control3" ref="item/value" selection="open">
+                        <xf:label>Country</xf:label>
+                        <!--<xf:label>selection='open'</xf:label>-->
+                        <xf:hint>This is a standard select control</xf:hint>
+                        <xf:help>Not much to say here but some basic html formatting
+                            is
+                            <b>possible</b>
+                        </xf:help>
+                        <xf:alert>The select value is not valid</xf:alert>
+                        <xf:itemset nodeset="instance('codes')/country">
+                            <xf:label ref="country-name"/>
+                            <xf:value ref="code"/>
+                        </xf:itemset>
+                    </xf:select>
+                </section>
+            </samples>
+        </content>
+    </page>
+</data>

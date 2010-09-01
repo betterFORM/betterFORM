@@ -31,12 +31,14 @@
 .pagetitle{
     font-size:18pt;
     margin-left:8px;
+	color:#708090;
 }
 
 .Headline {
     font-size:   16pt;
     font-weight: bold;
     text-align:  center;
+	color:#708090;
 }
 
 .pageintro .Section {
@@ -59,6 +61,12 @@
     text-align: left;
     padding-top: 5px;
     padding-bottom: 5px;
+	color:#708090;
+}
+
+.Section .PageDescription a {
+	font-size: 12pt;
+	color: #444444;
 }
 
 .Section .Headline {
@@ -67,22 +75,27 @@
     padding-top: 5px;
     padding-bottom: 5px;
     margin-top:30px;
+	color:#708090;
 }
 .Section .Subheadline {
     font-size: 12pt;
     text-align: left;
-    padding-top: 5px;
+    padding-top: 1.35em;
     padding-bottom: 5px;
     font-weight: bold;
+	color:#708090;
 }
 .Section .description{
     padding:5px;
     background:#fafafa;
+	color:#333333;
 }
 
-.Section .Description {
-    font-size: 14px;
-    margin-bottom:12px;
+.Section .Description, .Section p {
+    font-size: 1.35em;
+    margin-bottom:0.5em;
+	margin-top: 0.5em;
+	color:#333333;
 }
 
 .Section .Notes {
@@ -96,6 +109,7 @@
 }
 
 .Section .Subsection .Headline {
+	color:#708090;
     font-size: 14px;
     margin: 5px;
 }
@@ -150,5 +164,9 @@ pre, code {
     background:url(../../images/bf_logo_67x27.png) no-repeat center;
     width:100px;
     height:40px;
+}
+
+.Sample .xsdBoolean {
+	margin: 5px;
 }
 

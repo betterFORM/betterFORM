@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns:xf="http://www.w3.org/2002/xforms">
+    <title>Select1 Control</title>
+    <page>
+        <title>The select1 Control</title>
+        <description>Description
+            This form control allows the user to make multiple selections from a set of choices..
+        </description>
+        <specification>
+            <link>http://www.w3.org/TR/xforms11/#ui-selectMany</link>
+            <description>XForms 1.1 Element Specification</description>
+        </specification>
+        <content>
+            <models>
+                <xf:model xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+                          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                          xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="model-1">
+                    <xf:instance xmlns="" id="instance-1">
+                        <data constraint="true" readonly="false" required="false" relevant="true">
+                            <item>
+                                <value>AX</value>
+                            </item>
+                        </data>
+                    </xf:instance>
+                    <xf:bind nodeset="item">
+                        <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"/>
+
+                        <xf:bind nodeset="@constraint" type="boolean"/>
+                        <xf:bind nodeset="@readonly" type="boolean"/>
+                        <xf:bind nodeset="@required" type="boolean"/>
+                        <xf:bind nodeset="@relevant" type="boolean"/>
+                    </xf:bind>
+                    <xf:instance xmlns="" id="codes">
+                        <countrylist lang="en">
+                            <country>
+                                <country-name>AFGHANISTAN</country-name>
+                                <code>AF</code>
+                            </country>
+                            <country>
+                                <country-name>LAND ISLANDS</country-name>
+                                <code>AX</code>
+                            </country>
+                            <country>
+                                <country-name>ALBANIA</country-name>
+                                <code>AL</code>
+                            </country>
+                            <country>
+                                <country-name>ALGERIA</country-name>
+                                <code>DZ</code>
+                            </country>
+                        </countrylist>
+                    </xf:instance>
+                </xf:model>
+            </models>
+            <samples>
+                <section>
+                    <title>select1 Control with appearance 'minimal'</title>
+                    <description>
+                        Default rendering of a select1 if no appearance is given.
+                    </description>
+                    <xf:select1 xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+                                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                xmlns:xsd="http://www.w3.org/2001/XMLSchema" ref="item/value">
+                        <xf:label>minimal select1</xf:label>
+                        <xf:itemset nodeset="instance('codes')/country">
+                            <xf:label ref="country-name"/>
+                            <xf:value ref="code"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </section>
+                <section>
+                    <title>select1 Control with appearance 'compact'</title>
+                    <description/>
+                    <xf:select1 xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+                                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                xmlns:xsd="http://www.w3.org/2001/XMLSchema" ref="item/value" appearance="compact">
+                        <xf:label>compact select1</xf:label>
+                        <xf:itemset nodeset="instance('codes')/country">
+                            <xf:label ref="country-name"/>
+                            <xf:value ref="code"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </section>
+                <section>
+                    <title>select1 Control with appearance 'full'</title>
+                    <description/>
+                    <xf:select1 xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+                                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                xmlns:xsd="http://www.w3.org/2001/XMLSchema" ref="item/value" appearance="full">
+                        <xf:label>full select1</xf:label>
+                        <xf:itemset nodeset="instance('codes')/country">
+                            <xf:label ref="country-name"/>
+                            <xf:value ref="code"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </section>
+                <section>
+                    <title>open select1 Control</title>
+                    <description>
+                        Select1 with @selection='open' allows the user to input a value that does not exist in the list
+                        of choices. Simply type into the input field.
+                    </description>
+                    <xf:select1 xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+                                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                xmlns:xsd="http://www.w3.org/2001/XMLSchema" ref="item/value" selection="open">
+                        <xf:label>selection open</xf:label>
+                        <xf:choices>
+                            <xf:item>
+                                <xf:label>AFGHANISTAN</xf:label>
+                                <xf:value>AF</xf:value>
+                            </xf:item>
+                            <xf:item>
+                                <xf:label>LAND ISLANDS</xf:label>
+                                <xf:value>AX</xf:value>
+                            </xf:item>
+                            <xf:item>
+                                <xf:label>ALBANIA</xf:label>
+                                <xf:value>AL</xf:value>
+                            </xf:item>
+                            <xf:item>
+                                <xf:label>ALGERIA</xf:label>
+                                <xf:value>DZ</xf:value>
+                            </xf:item>
+                        </xf:choices>
+                    </xf:select1>
+                </section>
+            </samples>
+        </content>
+    </page>
+</data>

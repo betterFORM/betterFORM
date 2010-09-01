@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns:xf="http://www.w3.org/2002/xforms">
+    <title>The group Element</title>
+    <page>
+        <title>The group Element</title>
+        <description>Description
+            This form shows how betterForm interprets the XForms 'appearance'
+            attribute for groups. CSS rules to influence the standard layout as shown below can be influenced
+            by modifying or overwriting style rules in betterform.css. Please resize your browser window to see the
+            behavior of certain appearances.
+        </description>
+        <specification>
+            <link>http://www.w3.org/TR/xforms11/#ui-group-module</link>
+            <description>
+                XForms 1.1 Element Specification
+            </description>
+        </specification>
+        <description>
+            A group without any 'appearance' attribute defaults to a rendering equivalent to a compact group
+            (see below). Though no appearance is specified this behavior is a concession to the lazy or
+            unexperienced author thereby getting a clean readable output.
+        </description>
+        <content>
+            <models>
+                <xf:model xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+                          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                          xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="model-1">
+                    <xf:instance xmlns="" id="instance-1">
+                        <data>
+                            <grouped-data>
+                                <group>
+                                    <a>aaa</a>
+                                    <b>bbb</b>
+                                    <c>ccc</c>
+                                    <d>ddd</d>
+                                </group>
+                            </grouped-data>
+                        </data>
+                    </xf:instance>
+                    <xf:bind nodeset="grouped-data">
+                        <xf:bind nodeset="group" constraint="boolean-from-string(../@constraint)"
+                                 readonly="boolean-from-string(../@readonly)"
+                                 required="boolean-from-string(../@required)"
+                                 relevant="boolean-from-string(../@relevant)"/>
+                        <xf:bind nodeset="@constraint" type="boolean"/>
+                        <xf:bind nodeset="@readonly" type="boolean"/>
+                        <xf:bind nodeset="@required" type="boolean"/>
+                        <xf:bind nodeset="@relevant" type="boolean"/>
+                    </xf:bind>
+                </xf:model>
+            </models>
+            <samples>
+                <section>
+                    <title>Group with no apprearance</title>
+                    <description>
+                        A group without any 'appearance' attribute defaults to a rendering equivalent to a compact group
+                        (see below). Though no appearance is specified this behavior is a concession to the lazy or
+                        unexperienced author thereby getting a clean readable output.
+                    </description>
+                    <xf:group xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+                              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                              xmlns:xsd="http://www.w3.org/2001/XMLSchema" ref="group">
+                        <xf:label>Group with no appearance</xf:label>
+                        <xf:input ref="a">
+                            <xf:label>A-label</xf:label>
+                        </xf:input>
+                        <xf:input ref="b">
+                            <xf:label>Bb-label</xf:label>
+                        </xf:input>
+                        <xf:input ref="c">
+                            <xf:label>Ccc-label</xf:label>
+                        </xf:input>
+                        <xf:input ref="d">
+                            <xf:label>Dddd-label</xf:label>
+                        </xf:input>
+                    </xf:group>
+                </section>
+                <section>
+                    <title>Minimal Group</title>
+                    <description>
+                        A group with 'minimal' appearance simply wraps the contents of the group in a span Element
+                        in the rendered output and is layout-agnostic. It should be used when no layout is implied by
+                        the group but only a XForms binding scope should be established.
+                    </description>
+                    <xf:group xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+                              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                              xmlns:xsd="http://www.w3.org/2001/XMLSchema" ref="group" appearance="minimal">
+                        <xf:label>Group with minimal appearance (layout-agnostic)</xf:label>
+                        <xf:input ref="a">
+                            <xf:label>A-label</xf:label>
+                        </xf:input>
+                        <xf:input ref="b">
+                            <xf:label>Bb-label</xf:label>
+                        </xf:input>
+                        <xf:input ref="c">
+                            <xf:label>Ccc-label</xf:label>
+                        </xf:input>
+                        <xf:input ref="d">
+                            <xf:label>Dddd-label</xf:label>
+                        </xf:input>
+                    </xf:group>
+                </section>
+                <section>
+                    <title>Compact Group</title>
+                    <description>
+                        A compact group renders the labels of any containing control above the actual control and
+                        therefore provides a very narrow layout of a group.
+                    </description>
+                    <xf:group xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+                              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                              xmlns:xsd="http://www.w3.org/2001/XMLSchema" ref="group" appearance="compact">
+                        <xf:label>
+                            <b>Compact Group</b>
+                            uses a horizontal table layout
+                        </xf:label>
+                        <xf:input ref="a">
+                            <xf:label>A-label</xf:label>
+                        </xf:input>
+                        <xf:input ref="b">
+                            <xf:label>B-label</xf:label>
+                        </xf:input>
+                        <xf:input ref="c">
+                            <xf:label>C-label</xf:label>
+                        </xf:input>
+                        <xf:input ref="d">
+                            <xf:label>D-label</xf:label>
+                        </xf:input>
+                    </xf:group>
+                </section>
+                <section>
+                    <title>Full Group</title>
+                    <description>
+                        A group with full appearance aligns labels and controls on a single line.
+                    </description>
+                    <xf:group xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+                              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                              xmlns:xsd="http://www.w3.org/2001/XMLSchema" ref="group" appearance="full">
+                        <xf:label>
+                            <b>Full Group</b>
+                            uses a two column layout to display controls vertically
+                        </xf:label>
+                        <xf:input ref="a">
+                            <xf:label>A-label</xf:label>
+                        </xf:input>
+                        <xf:input ref="b">
+                            <xf:label>Bb-label</xf:label>
+                        </xf:input>
+                        <xf:input ref="c">
+                            <xf:label>Ccc-label</xf:label>
+                        </xf:input>
+                        <xf:input ref="d">
+                            <xf:label>Dddd-label</xf:label>
+                        </xf:input>
+                    </xf:group>
+                </section>
+                <section>
+                    <title>Vertical Group (rendered as HTML Table)</title>
+                    <description>
+                        A group with the custom appearance 'bf:verticalTable' is largely the same as a full group except
+                        that is uses tables for left/right aligning labels and controls. This in some cases makes it
+                        easier
+                        to nest groups as well as optimize the space the respective labels take. With CSS you need to
+                        specify a fixed width for the labels which is problematic when labels differ a lot in length.
+                        Further
+                        labels that do not fit the specified width may corrupt your layout. The use of tables avoids
+                        those
+                        problems.
+                    </description>
+                    <xf:group xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+                              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                              xmlns:xsd="http://www.w3.org/2001/XMLSchema" ref="group"
+                              appearance="bf:verticalTable">
+                        <xf:label>
+                            <b>Vertical Group</b>
+                            rendered as HTML Table
+                        </xf:label>
+                        <xf:input ref="a">
+                            <xf:label>A-label</xf:label>
+                        </xf:input>
+                        <xf:input ref="b">
+                            <xf:label>Bb-label</xf:label>
+                        </xf:input>
+                        <xf:input ref="c">
+                            <xf:label>Ccc-label</xf:label>
+                        </xf:input>
+                        <xf:input ref="d">
+                            <xf:label>Dddd-label</xf:label>
+                        </xf:input>
+                    </xf:group>
+                </section>
+                <section>
+                    <title>complex Vertical Group sample</title>
+                    <description>This is more complex sample using vertical table layout with
+                        nested groups and HTML Elements in between. Please note that HTML Elements found in the group
+                        will take span the whole width of the table.
+                    </description>
+                </section>
+                <section>
+                    <title>Group with 'bf:horizontalTable' appearance</title>
+                    <description/>
+                    <xf:group xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+                              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                              xmlns:xsd="http://www.w3.org/2001/XMLSchema" ref="group"
+                              appearance="bf:horizontalTable">
+                        <xf:label>
+                            <b>Horizontal Group</b>
+                            rendered as HTML Table
+                        </xf:label>
+                        <xf:input ref="a">
+                            <xf:label>A-label</xf:label>
+                        </xf:input>
+                        <xf:input ref="b">
+                            <xf:label>Bb-label</xf:label>
+                        </xf:input>
+                        <xf:input ref="c">
+                            <xf:label>Ccc-label</xf:label>
+                        </xf:input>
+                        <xf:input ref="d">
+                            <xf:label>Dddd-label</xf:label>
+                        </xf:input>
+                    </xf:group>
+                </section>
+                <section>
+                    <title>Group with 'bf:horizontalTable' appearance</title>
+                    <description/>
+                    <xf:group xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+                              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                              xmlns:xsd="http://www.w3.org/2001/XMLSchema" ref="group"
+                              appearance="bf:horizontalTable">
+                        <xf:label>Complex Horizontal Group</xf:label>
+                        <xf:input ref="a">
+                            <xf:label>A-label</xf:label>
+                        </xf:input>
+                        <xf:input ref="b">
+                            <xf:label>Bb-label</xf:label>
+                        </xf:input>
+                        <div>
+                            a simple div
+                        </div>
+                        <xf:group>
+                            <xf:label>no appearance group</xf:label>
+                            <xf:input ref="a">
+                                <xf:label>A-label</xf:label>
+                            </xf:input>
+                            <xf:input ref="b">
+                                <xf:label>Bb-label</xf:label>
+                            </xf:input>
+                            <xf:input ref="c">
+                                <xf:label>Ccc-label</xf:label>
+                            </xf:input>
+                            <xf:input ref="d">
+                                <xf:label>Dddd-label</xf:label>
+                            </xf:input>
+                        </xf:group>
+                        <xf:group appearance="bf:verticalTable">
+                            <xf:label>
+                                <b>Inner Vertical Group</b>
+                            </xf:label>
+                            <xf:input ref="a">
+                                <xf:label>A-label</xf:label>
+                            </xf:input>
+                            <xf:input ref="b">
+                                <xf:label>Bb-label</xf:label>
+                            </xf:input>
+                            <xf:input ref="c">
+                                <xf:label>Ccc-label</xf:label>
+                            </xf:input>
+                            <xf:input ref="d">
+                                <xf:label>Dddd-label</xf:label>
+                            </xf:input>
+                        </xf:group>
+                        <xf:group appearance="bf:horizontalTable">
+                            <xf:label>
+                                <b>Inner Horizontal Group</b>
+                            </xf:label>
+                            <xf:input ref="a">
+                                <xf:label>A-label</xf:label>
+                            </xf:input>
+                            <xf:input ref="b">
+                                <xf:label>Bb-label</xf:label>
+                            </xf:input>
+                            <xf:input ref="c">
+                                <xf:label>Ccc-label</xf:label>
+                            </xf:input>
+                            <xf:input ref="d">
+                                <xf:label>Dddd-label</xf:label>
+                            </xf:input>
+                        </xf:group>
+                    </xf:group>
+                </section>
+            </samples>
+        </content>
+    </page>
+</data>

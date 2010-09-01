@@ -78,7 +78,7 @@
 
 
 
-    <xsl:output method="xhtml" version="1.0" encoding="UTF-8" indent="yes"
+    <xsl:output method="xhtml" version="1.0" encoding="UTF-8" indent="no"
                 doctype-system="/resources/xsd/xhtml1-transitional.dtd"/>
     <!-- ### transcodes the XHMTL namespaced elements to HTML ### -->
     <!--<xsl:namespace-alias stylesheet-prefix="xhtml" result-prefix="#default"/>-->
@@ -782,6 +782,11 @@
             </xsl:when>
         </xsl:choose>
 
+    </xsl:template>
+
+    <xsl:template match="pre">
+        <span class="abc"/>
+        <xsl:copy-of select="."/>
     </xsl:template>
 
 </xsl:stylesheet>

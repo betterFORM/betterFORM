@@ -1,127 +1,140 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:xf="http://www.w3.org/2002/xforms"
-      xmlns:ev="http://www.w3.org/2001/xml-events"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-      lang="de">
-    <head>
-        <title>Repeat Control</title>
+<?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+   
+   <head>
+      <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
+      <title>Repeat Control</title><style type="text/css">
+            .xfGroupLabel {
+            font-size: 12pt;
+            font-weight: bold;
+            padding-bottom: 10px;
+            }
 
-        <link rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
-        <link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css" />
-
-        <script type="text/javascript">
+            #mips .xfTrigger .dijitButtonContents {
+            width: 200px;
+            }
+        </style><link rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
+      <link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css" /><script type="text/javascript">
             dojo.require("dojox.highlight");
             dojo.require("dojox.highlight.languages.xml");
-            //dojo.require("dojox.highlight.languages._static");
-            //dojo.require("dojox.highlight.languages._dynamic");
-            //dojo.require("dojox.highlight.languages._www");
             dojo.addOnLoad(function() {
-                dojo.query("code").forEach(dojox.highlight.init);
+            dojo.query("code").forEach(dojox.highlight.init);
             });
 
             dojo.require("dijit.form.Button");
             dojo.require("dijit.TitlePane");
             dojo.require('dijit.layout.ContentPane');
-        </script>
+        </script></head>
+   
+   <body class="soria" style="margin:30px;">
+      <div id="xforms">
+         <div style="display:none;">
+            <models xmlns="" constraint="true" readonly="true" required="true" relevant="true">
+               
+               <xf:model xmlns="http://www.w3.org/1999/xhtml" id="model-1">
+                  
+                  <xf:instance id="instance-1">
+                     
+                     <data xmlns="" constraint="true" readonly="true" required="true" relevant="true">
+                        <repeat constraint="true" readonly="true" required="true" relevant="true">
+                        <items constraint="true" readonly="true" required="true" relevant="true">
+                           
+                           <item constraint="true" readonly="true" required="true" relevant="true">text 1</item>
+                           
+                           <item constraint="true" readonly="true" required="true" relevant="true">2009-10-20</item>
+                           
+                           <item constraint="true" readonly="true" required="true" relevant="true">true</item>
+                           
+                        </items>
+                        
+                        <items constraint="true" readonly="true" required="true" relevant="true">
+                           
+                           <item constraint="true" readonly="true" required="true" relevant="true">text 2</item>
+                           
+                           <item constraint="true" readonly="true" required="true" relevant="true">2009-10-21</item>
+                           
+                           <item constraint="true" readonly="true" required="true" relevant="true">true</item>
+                           
+                        </items>
+                        
+                        <items constraint="true" readonly="true" required="true" relevant="true">
+                           
+                           <item constraint="true" readonly="true" required="true" relevant="true">text 3</item>
+                           
+                           <item constraint="true" readonly="true" required="true" relevant="true">2009-10-22</item>
+                           
+                           <item constraint="true" readonly="true" required="true" relevant="true">true</item>
+                           
+                        </items>
+                        
+                        <items constraint="true" readonly="true" required="true" relevant="true">
+                           
+                           <item constraint="true" readonly="true" required="true" relevant="true">text 4</item>
+                           
+                           <item constraint="true" readonly="true" required="true" relevant="true">2009-10-23</item>
+                           
+                           <item constraint="true" readonly="true" required="true" relevant="true">true</item>
+                           
+                        </items>
+						</repeat>
+                     </data>
+                     
+                  </xf:instance>
+                  
+                  <xf:bind nodeset="items">
+                     
+                     <xf:bind nodeset="item[1]" type="xf:string"></xf:bind>
+                     
+                     <xf:bind nodeset="item[2]" type="xf:date"></xf:bind>
+                     
+                     <xf:bind nodeset="item[3]" type="xf:boolean"></xf:bind>
+                     
+                  </xf:bind>
+                  
+                  
+                  <xf:bind nodeset="repeat">
+                     
+                     <xf:bind nodeset="items" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
 
-        <style type="text/css">
-            .xfInput, .xsdString .xfValue {
-                width: 100px;
-            }
-            .xfInput, .xsdDate .xfValue {
-                width: 100px;
-            }
-
-            .xfCompactRepeat .caTableCol-3{
-                text-align:center;
-            }
-            .xfCompactRepeat td{
-                padding:3px;
-                /*background:#dedeff;*/
-            }
-            .xfCompactRepeat
-             .xfRepeatHeader td{
-                background:#cdcdff;
-                border-bottom:thin dotted;
-            }
-        </style>
+                     <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
+                     
+                     <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
+                     
+                     <xf:bind nodeset="@required" type="boolean"></xf:bind>
+                     
+                     <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
+                     
+                  </xf:bind>
 
 
-    </head>
-    <body class="soria" style="margin:30px;">
-
-        <div id="xforms">
-            <div style="display:none;">
-                <xf:model id="model-1">
-                    <xf:instance id="instance-1" xmlns="">
-                        <data>
-                            <items>
-                                <item>text 1</item>
-                                <item>2009-10-20</item>
-                                <item>true</item>
-                            </items>
-                            <items>
-                                <item>text 2</item>
-                                <item>2009-10-21</item>
-                                <item>true</item>
-                            </items>
-                            <items>
-                                <item>text 3</item>
-                                <item>2009-10-22</item>
-                                <item>true</item>
-                            </items>
-                            <items>
-                                <item>text 4</item>
-                                <item>2009-10-23</item>
-                                <item>true</item>
-                            </items>
-                        </data>
-                    </xf:instance>
-                    <xf:bind nodeset="items">
-                        <xf:bind nodeset="item[1]" type="xf:string" />
-                        <xf:bind nodeset="item[2]" type="xf:date" />
-                        <xf:bind nodeset="item[3]" type="xf:boolean" />
-                    </xf:bind>
-                </xf:model>
-            </div>
-
-            <div class="pagetitle">The Repeat Element</div>
-            <div class="Section">
-                <div class="Headline">Description</div>
-                The XForms specification allows the definition of repeating
-                structures.
-            </div>
-            <div class="Section">   
-                <div class="Headline"><a href="http://www.w3.org/TR/xforms11/#ui-repeat-module">XForms 1.1 Element Specification</a></div>
-            </div>
-
-            <!-- ####################### CONTENT SECTION STARTING HERE ########################### -->
-            <!-- ####################### CONTENT SECTION STARTING HERE ########################### -->
-            <!-- ####################### CONTENT SECTION STARTING HERE ########################### -->
-            <div class="Section">
-
-                <div class="Subsection" dojotype="dijit.TitlePane" open="true" title="Full Repeat Control (default)">
-                    <div class="description">
-                        A repeat with no appearance, 'minimal' appearance or 'full' appearance will be rendered
-                        vertically with labels on the left and controls on the right.
-                    </div>
-                    <div class="Sample">
-                        <xf:repeat nodeset="items" appearance="full">
-                            <xf:input ref="item[1]">
-                                <xf:label>String:</xf:label>
-                            </xf:input><br/>
-                            <xf:input ref="item[2]">
-                                <xf:label>Date:</xf:label>
-                            </xf:input><br/>
-                            <xf:input ref="item[3]">
-                                <xf:label>Boolean:</xf:label>
-                            </xf:input>
-                        </xf:repeat>
-                    </div>
-                    <div  dojotype="dijit.TitlePane" open="false" title="XForms Markup">
-                        <pre><code class="xml"><![CDATA[<!-- XForms instance -->
+                  
+               </xf:model>
+               
+            </models>
+            
+         </div>
+      </div>
+      <div class="pagetitle">The Repeat Element</div>
+      <div class="Section">
+         <div class="PageDescription">Description</div>
+         <p>
+            The XForms specification allows the definition of repeating
+            structures.
+            
+         </p>
+      </div>
+      <div class="Section">
+         <div class="PageDescription"><a href="http://www.w3.org/TR/xforms11/#ui-repeat-module">XForms 1.1 Element Specification</a></div>
+      </div>
+      <div class="Section">
+         <div class="Headline">Full Repeat Control (default)</div>
+         <p class="Description">
+            A repeat with no appearance, 'minimal' appearance or 'full' appearance will be rendered
+            vertically with labels on the left and controls on the right.
+            
+         </p>
+         <div>
+            <div class="Subheadline">XForms Markup</div>
+            <div class="Subsection"><pre><code class="xml"><![CDATA[<!-- XForms instance -->
 <items>
     <item>text 1</item>
     <item>2009-10-20</item>
@@ -162,29 +175,61 @@
     <xf:input ref="item[3]">
         <xf:label>Boolean:</xf:label>
     </xf:input>
-</xf:repeat>]]></code></pre>
-                    </div>
-                </div>
-
-                <div class="Subsection" dojotype="dijit.TitlePane" open="true" title="Compact Repeat Control">
-                    <div class="description">
-                        Compact repeats are rendered as horizontal-oriented HTML tables.
-                    </div>
-                    <div class="Sample">
-                        <xf:repeat id="compactRepeat" nodeset="items" appearance="compact">
-                            <xf:input ref="item[1]">
-                                <xf:label>String:</xf:label>
-                            </xf:input>
-                            <xf:input ref="item[2]">
-                                <xf:label>Date:</xf:label>
-                            </xf:input>
-                            <xf:input ref="item[3]">
-                                <xf:label>Boolean:</xf:label>
-                            </xf:input>
-                        </xf:repeat>
-                    </div>
-                    <div dojotype="dijit.TitlePane" open="false" title="XForms Markup">
-                        <pre><code class="xml"><![CDATA[<!-- XForms instance -->
+</xf:repeat>]]></code></pre></div>
+         </div>
+         <div>
+            <div class="Subheadline">Sample</div>
+            <div class="Sample">
+               <xf:repeat nodeset="repeat/items" appearance="full">
+                  
+                  <xf:input ref="item[1]">
+                     
+                     <xf:label>String:</xf:label>
+                     
+                  </xf:input>
+                  <br />
+                  
+                  <xf:input ref="item[2]">
+                     
+                     <xf:label>Date:</xf:label>
+                     
+                  </xf:input>
+                  <br />
+                  
+                  <xf:input ref="item[3]">
+                     
+                     <xf:label>Boolean:</xf:label>
+                     
+                  </xf:input>
+                  
+               </xf:repeat>
+            </div>
+            <div class="Subheadline">Modelitem properties</div>
+            <div class="Sample">
+               <xf:input navindex="-1" style="width:10px;" ref="repeat/@readonly" class="mips" incremental="true">
+                  <xf:label>readonly</xf:label>
+               </xf:input>
+               <xf:input navindex="-1" ref="repeat/@required" style="width:10px;" class="mips" incremental="true">
+                  <xf:label>required</xf:label>
+               </xf:input>
+               <xf:input navindex="-1" ref="repeat/@relevant" style="width:10px;" class="mips" incremental="true">
+                  <xf:label>relevant</xf:label>
+               </xf:input>
+               <xf:input navindex="-1" ref="repeat/@constraint" style="width:10px;" class="mips" incremental="true">
+                  <xf:label>valid</xf:label>
+               </xf:input>
+            </div>
+         </div>
+      </div>
+      <div class="Section">
+         <div class="Headline">Compact Repeat Control</div>
+         <p class="Description">
+            Compact repeats are rendered as horizontal-oriented HTML tables.
+            
+         </p>
+         <div>
+            <div class="Subheadline">XForms Markup</div>
+            <div class="Subsection"><pre><code class="xml"><![CDATA[<!-- XForms instance -->
 <items>
     <item>text 1</item>
     <item>2009-10-20</item>
@@ -224,12 +269,50 @@
     <xf:input ref="item[3]">
         <xf:label>Boolean:</xf:label>
     </xf:input>
-</xf:repeat>]]></code></pre>
-                    </div>
-                </div>
-
+</xf:repeat>]]></code></pre></div>
+         </div>
+         <div>
+            <div class="Subheadline">Sample</div>
+            <div class="Sample">
+               <xf:repeat id="compactRepeat" nodeset="repeat/items" appearance="compact">
+                  
+                  <xf:input ref="item[1]">
+                     
+                     <xf:label>String:</xf:label>
+                     
+                  </xf:input>
+                  
+                  <xf:input ref="item[2]">
+                     
+                     <xf:label>Date:</xf:label>
+                     
+                  </xf:input>
+                  
+                  <xf:input ref="item[3]">
+                     
+                     <xf:label>Boolean:</xf:label>
+                     
+                  </xf:input>
+                  
+               </xf:repeat>
             </div>
-        </div>
-    </body>
+            <div class="Subheadline">Modelitem properties</div>
+            <div class="Sample">
+               <xf:input navindex="-1" style="width:10px;" ref="repeat/@readonly" class="mips" incremental="true">
+                  <xf:label>readonly</xf:label>
+               </xf:input>
+               <xf:input navindex="-1" ref="repeat/@required" style="width:10px;" class="mips" incremental="true">
+                  <xf:label>required</xf:label>
+               </xf:input>
+               <xf:input navindex="-1" ref="repeat/@relevant" style="width:10px;" class="mips" incremental="true">
+                  <xf:label>relevant</xf:label>
+               </xf:input>
+               <xf:input navindex="-1" ref="repeat/@constraint" style="width:10px;" class="mips" incremental="true">
+                  <xf:label>valid</xf:label>
+               </xf:input>
+            </div>
+         </div>
+      </div>
+   </body>
+   
 </html>
-
