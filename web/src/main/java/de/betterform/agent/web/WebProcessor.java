@@ -323,7 +323,7 @@ public class WebProcessor implements XFormsProcessor, EventListener {
         if (noHttp()) {
             throw new XFormsException("request, response and session object are undefined");
         }
-        addEventListeners();
+            addEventListeners();
 
         // init processor
         this.xformsProcessor.init();
@@ -831,6 +831,10 @@ public class WebProcessor implements XFormsProcessor, EventListener {
         setUploadDestination(new File(uploadDir).getAbsolutePath());
     }
 
+    /*
+    todo: review approach for events targetted at model + submission. Events will never arrive in case they are
+    handled with isEventUsed as registration of listeners happens before form init.
+     */
     private void addEventListeners() throws XFormsException {
         // get docuent root as event target in order to capture all events
         this.root = (EventTarget) this.xformsProcessor.getXForms();
@@ -883,21 +887,21 @@ public class WebProcessor implements XFormsProcessor, EventListener {
         if (isEventUsed(XFormsEventNames.LINK_ERROR)) {
             this.root.addEventListener(XFormsEventNames.LINK_ERROR, this, true);
         }
-        if (isEventUsed(XFormsEventNames.MODEL_CONSTRUCT)) {
+//        if (isEventUsed(XFormsEventNames.MODEL_CONSTRUCT)) {
             this.root.addEventListener(XFormsEventNames.MODEL_CONSTRUCT, this, true);
-        }
-        if (isEventUsed(XFormsEventNames.MODEL_CONSTRUCT_DONE)) {
+//        }
+//        if (isEventUsed(XFormsEventNames.MODEL_CONSTRUCT_DONE)) {
             this.root.addEventListener(XFormsEventNames.MODEL_CONSTRUCT_DONE, this, true);
-        }
+//        }
         if (isEventUsed(XFormsEventNames.NEXT)) {
             this.root.addEventListener(XFormsEventNames.NEXT, this, true);
         }
         if (isEventUsed(XFormsEventNames.PREVIOUS)) {
             this.root.addEventListener(XFormsEventNames.PREVIOUS, this, true);
         }
-        if (isEventUsed(XFormsEventNames.READY)) {
+//        if (isEventUsed(XFormsEventNames.READY)) {
             this.root.addEventListener(XFormsEventNames.READY, this, true);
-        }
+//        }
 
         //betterform notification event must be passed always
         this.root.addEventListener(BetterFormEventNames.RENDER_MESSAGE, this, true);
@@ -906,12 +910,12 @@ public class WebProcessor implements XFormsProcessor, EventListener {
         if (isEventUsed(XFormsEventNames.SUBMIT)) {
             this.root.addEventListener(XFormsEventNames.SUBMIT, this, true);
         }
-        if (isEventUsed(XFormsEventNames.SUBMIT_DONE)) {
+//        if (isEventUsed(XFormsEventNames.SUBMIT_DONE)) {
             this.root.addEventListener(XFormsEventNames.SUBMIT_DONE, this, true);
-        }
-        if (isEventUsed(XFormsEventNames.SUBMIT_ERROR)) {
+//        }
+//        if (isEventUsed(XFormsEventNames.SUBMIT_ERROR)) {
             this.root.addEventListener(XFormsEventNames.SUBMIT_ERROR, this, true);
-        }
+//        }
         if (isEventUsed(XFormsEventNames.VERSION_EXCEPTION)) {
             this.root.addEventListener(XFormsEventNames.VERSION_EXCEPTION, this, true);
         }
