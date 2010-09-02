@@ -6,10 +6,9 @@
         <description>Description
             This form control allows selection from a sequential range of values.
         </description>
-        <specification>
-            <link>http://www.w3.org/TR/xforms11/#ui-range</link>
-            <description>XForms 1.1 Element Specification</description>
-        </specification>
+        <references>
+           <w3c ref="range"/>
+        </references>
         <content>
             <models>
                 <xf:model id="model-1">

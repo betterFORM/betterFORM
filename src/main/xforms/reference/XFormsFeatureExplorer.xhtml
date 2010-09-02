@@ -147,7 +147,7 @@
 */
 
             #uploadMount{
-                
+
             }
             .blocked{
                 /*position:absolute;*/
@@ -170,7 +170,7 @@
                 background-color:#7ba841;
                 height:75%;
                 color:white;
-                
+
             }
             #boilerPlate p{
                 margin-bottom:16px;
@@ -192,7 +192,7 @@
             pageTracker._trackPageview();
             } catch(err) {}
         </script>
-        
+
 </head>
 <body class="soria" id="XFormsFeatureExplorer">
 
@@ -268,6 +268,24 @@
                                     <xf:label/>
                                     <xf:toggle case="container"/>
                                 </xf:trigger>
+
+										<xf:trigger ref="file[1]" id="input">
+												<xf:label ref="./@name"/>
+												<xf:action>
+													<xf:load show="embed" targetid="inputMount">
+														<xf:resource value="'Input.xhtml#xforms'"/>
+													</xf:load>
+												</xf:action>
+											</xf:trigger>
+										<xf:trigger ref="file[2]" id="output">
+												<xf:label ref="./@name"/>
+												<xf:action>
+													<xf:load show="embed" targetid="outputMount">
+														<xf:resource value="'Output.xhtml#xforms'"/>
+													</xf:load>
+												</xf:action>
+										</xf:trigger>
+
                             </div>
                             <xf:switch appearance="dijit:TabContainer" id="featureTabContainer">
 
@@ -320,8 +338,29 @@
                                 </xf:case>
 
                                 <xf:case id="control">
-                                    <xf:label>Controls</xf:label>
+									<xf:label>CONTROL</xf:label>
 
+									<div dojoType="dijit.layout.TabContainer" title="Control" nested="true">
+										<div dojoType="dijit.layout.ContentPane" title="Input" selected="true">
+				                			<script type="dojo/connect" event="click">
+												fluxProcessor.dispatchEvent("input");
+											</script>
+											<div id="inputMount"/>
+										</div>
+										<div dojoType="dijit.layout.ContentPane" title="Output">
+				                			<script type="dojo/connect" event="click">
+												fluxProcessor.dispatchEvent("output");
+											</script>
+											<div id="outputMount"/>
+										</div>
+
+									</div>
+
+
+
+
+
+<!--
 
                                     <div id="controlPane" class="Subsection" dojotype="dijit.TitlePane" open="true" duration="1000"
                                          title="XForms control reference">
@@ -496,7 +535,12 @@
                                         </xf:group>
                                     </div>
 
-                                    <div id="controlMount"/>
+
+
+								  -->
+
+
+
                                 </xf:case>
 
 

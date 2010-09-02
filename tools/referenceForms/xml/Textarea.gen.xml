@@ -8,10 +8,9 @@
             intended for use in entering multiline content, e.g., the
             body of an email message.
         </description>
-        <specification>
-            <link>http://www.w3.org/TR/xforms11/#ui-textarea</link>
-            <description>XForms 1.1 Element Specification</description>
-        </specification>
+       <references>
+           <w3c ref="textarea"/>
+        </references>
         <content>
             <models>
                 <xf:model xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"

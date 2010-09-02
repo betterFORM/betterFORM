@@ -2,15 +2,14 @@
 <data xmlns:xf="http://www.w3.org/2002/xforms">
     <title>Output Control</title>
     <page>
-        <title>The output Control</title>
+        <title>The <span class="titlecode">output</span> Control</title>
         <description>Description
             This form control renders content based in part on instance
             data, but it provides no means for entering or changing data.
         </description>
-        <specification>
-            <link>http://www.w3.org/TR/xforms11/#ui-output</link>
-            <description>XForms 1.1 Element Specification</description>
-        </specification>
+        <references>
+           <w3c ref="output"/>
+        </references>
         <content>
             <models>
                 <xf:model xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
@@ -88,7 +87,7 @@
             <samples>
                 <section>
                     <title>Simple Text Ouput</title>
-                    <description/>
+                    <description>jdhas kugduihaskudzi uashdkuz asiudhiu aszku dg hai suhd kuhas</description>
                     <xf:output xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
                                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                                xmlns:xsd="http://www.w3.org/2001/XMLSchema" ref="items/item[1]">

@@ -9,12 +9,9 @@
             by modifying or overwriting style rules in betterform.css. Please resize your browser window to see the
             behavior of certain appearances.
         </description>
-        <specification>
-            <link>http://www.w3.org/TR/xforms11/#ui-group-module</link>
-            <description>
-                XForms 1.1 Element Specification
-            </description>
-        </specification>
+        <references>
+           <w3c ref="group"/>
+        </references>
         <description>
             A group without any 'appearance' attribute defaults to a rendering equivalent to a compact group
             (see below). Though no appearance is specified this behavior is a concession to the lazy or

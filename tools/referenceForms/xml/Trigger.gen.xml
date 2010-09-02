@@ -8,10 +8,9 @@
             allows for user-triggered actions. This form control may
             also be used to construct other custom form controls.
         </description>
-        <specification>
-            <link>http://www.w3.org/TR/xforms11/#ui-trigger</link>
-            <description>XForms 1.1 Element Specification</description>
-        </specification>
+        <references>
+           <w3c ref="trigger"/>
+        </references>
         <content>
             <models>
                 <xf:model xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       <title>The group Element</title><style type="text/css">
@@ -23,23 +24,35 @@
             dojo.require("dijit.TitlePane");
             dojo.require('dijit.layout.ContentPane');
         </script></head>
+
    <body class="soria" style="margin:30px;">
       <div id="xforms">
          <div style="display:none;">
-            <models xmlns="" constraint="true" readonly="true" required="true" relevant="true">
-               <xf:model xmlns="http://www.w3.org/1999/xhtml" id="model-1">
-                   <xf:instance xmlns="" id="instance-1">
-                        <data>
+            <xf:model id="model-1">
+               <xf:instance id="instance-1">
+
+                  <data xmlns="" constraint="true" readonly="true" required="true" relevant="true">
+
                             <grouped-data constraint="true" readonly="true" required="true" relevant="true">
+
                                 <group constraint="true" readonly="true" required="true" relevant="true">
+
                                     <a constraint="true" readonly="true" required="true" relevant="true">aaa</a>
+
                            			<b constraint="true" readonly="true" required="true" relevant="true">bbb</b>
+
                            			<c constraint="true" readonly="true" required="true" relevant="true">ccc</c>
+
                            			<d constraint="true" readonly="true" required="true" relevant="true">ddd</d>
+
                                 </group>
+
                             </grouped-data>
+
                         </data>
+
                     </xf:instance>
+
                     <xf:bind nodeset="grouped-data">
                         <xf:bind nodeset="group" constraint="boolean-from-string(../@constraint)"
                                  readonly="boolean-from-string(../@readonly)"
@@ -50,31 +63,43 @@
                         <xf:bind nodeset="@required" type="boolean"/>
                         <xf:bind nodeset="@relevant" type="boolean"/>
                     </xf:bind>
+
                </xf:model>
-            </models>
          </div>
-      </div>
+         <div class="pageintro">
       <div class="pagetitle">The group Element</div>
       <div class="Section">
          <div class="PageDescription">Description</div>
-         This form shows how betterForm interprets the XForms 'appearance'
-         attribute for groups. CSS rules to influence the standard layout as shown below can be influenced
-         by modifying or overwriting style rules in betterform.css. Please resize your browser window to see the
-         behavior of certain appearances.
+		  <p>
+			This form shows how betterForm interprets the XForms 'appearance'
+			attribute for groups. CSS rules to influence the standard layout as shown below can be influenced
+			by modifying or overwriting style rules in betterform.css. Please resize your browser window to see the
+			behavior of certain appearances.
+		  </p>
          
       </div>
-      <div class="Section">
-         <div class="PageDescription"><a href="http://www.w3.org/TR/xforms11/#ui-group-module">
-               XForms 1.1 Element Specification
-               </a></div>
-      </div>
+      <table>
+               <tr>
+                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="../../resources/images/w3c_home_nb.png" alt="W3C" /></a></td>
+                  <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
+               </tr>
+               <tr>
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-group" target="_blank">Recommendation</a></td>
+               </tr>
+               <tr>
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html#elems-form-controls" target="_blank">Quick Reference</a></td>
+               </tr>
+            </table>
       <div class="Section">
          <div class="PageDescription">Description</div>
-         A group without any 'appearance' attribute defaults to a rendering equivalent to a compact group
-         (see below). Though no appearance is specified this behavior is a concession to the lazy or
-         unexperienced author thereby getting a clean readable output.
+		  <p>
+			 A group without any 'appearance' attribute defaults to a rendering equivalent to a compact group
+			 (see below). Though no appearance is specified this behavior is a concession to the lazy or
+			 unexperienced author thereby getting a clean readable output.
+		  </p>
          
       </div>
+	  </div>
       <div class="Section">
          <div class="Headline">Group with no apprearance</div>
          <p class="Description">
@@ -133,7 +158,7 @@
                </xf:group>
             </div>
             <div class="Subheadline">Modelitem properties</div>
-            <div class="Sample">
+            <div class="MIPS">
                <xf:input navindex="-1" style="width:10px;" ref="grouped-data/@readonly" class="mips" incremental="true">
                   <xf:label>readonly</xf:label>
                </xf:input>
@@ -207,7 +232,7 @@
                </xf:group>
             </div>
             <div class="Subheadline">Modelitem properties</div>
-            <div class="Sample">
+            <div class="MIPS">
                <xf:input navindex="-1" style="width:10px;" ref="grouped-data/@readonly" class="mips" incremental="true">
                   <xf:label>readonly</xf:label>
                </xf:input>
@@ -286,7 +311,7 @@
                </xf:group>
             </div>
             <div class="Subheadline">Modelitem properties</div>
-            <div class="Sample">
+            <div class="MIPS">
                <xf:input navindex="-1" style="width:10px;" ref="grouped-data/@readonly" class="mips" incremental="true">
                   <xf:label>readonly</xf:label>
                </xf:input>
@@ -364,7 +389,7 @@
                </xf:group>
             </div>
             <div class="Subheadline">Modelitem properties</div>
-            <div class="Sample">
+            <div class="MIPS">
                <xf:input navindex="-1" style="width:10px;" ref="grouped-data/@readonly" class="mips" incremental="true">
                   <xf:label>readonly</xf:label>
                </xf:input>
@@ -450,7 +475,7 @@
                </xf:group>
             </div>
             <div class="Subheadline">Modelitem properties</div>
-            <div class="Sample">
+            <div class="MIPS">
                <xf:input navindex="-1" style="width:10px;" ref="grouped-data/@readonly" class="mips" incremental="true">
                   <xf:label>readonly</xf:label>
                </xf:input>
@@ -747,7 +772,7 @@
                 </div>
             </div>
             <div class="Subheadline">Modelitem properties</div>
-			 <div class="Sample">
+			 <div class="MIPS">
                <xf:input navindex="-1" style="width:10px;" ref="grouped-data/@readonly" class="mips" incremental="true">
                   <xf:label>readonly</xf:label>
                </xf:input>
@@ -822,7 +847,7 @@
                </xf:group>
             </div>
             <div class="Subheadline">Modelitem properties</div>
-            <div class="Sample">
+            <div class="MIPS">
                <xf:input navindex="-1" style="width:10px;" ref="grouped-data/@readonly" class="mips" incremental="true">
                   <xf:label>readonly</xf:label>
                </xf:input>
@@ -977,7 +1002,7 @@
                </xf:group>
             </div>
             <div class="Subheadline">Modelitem properties</div>
-            <div class="Sample">
+            <div class="MIPS">
                <xf:input navindex="-1" style="width:10px;" ref="grouped-data/@readonly" class="mips" incremental="true">
                   <xf:label>readonly</xf:label>
                </xf:input>
@@ -993,5 +1018,7 @@
             </div>
          </div>
       </div>
+   </div>
+
    </body>
 </html>

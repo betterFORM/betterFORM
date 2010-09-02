@@ -6,19 +6,15 @@
         <description>This form control enables free-form data entry or a user interface component appropriate to the
             datatype of the bound node.
         </description>
-        <specification>
-            <link>http://www.w3.org/TR/xforms11/#ui-input</link>
-            <description>XForms 1.1 Element Specification</description>
-        </specification>
+        <references>
+            <w3c ref="output"/>
+            <w3c ref="input"/>
+        </references>
+
         <content>
-            <models>
-                <xf:model>
-                    ....
-                </xf:model>
-            </models>
             <samples>
                 <section>
-                    <title>Tile 1</title>
+                    <title>Input</title>
                     <description>Description 1</description>
 <xf:input value="BlaBla" incremental="true" ref="input1">
     <xf:label>a text</xf:label>
@@ -27,22 +23,23 @@
 </xf:input>
                 </section>
                 <section>
-                    <title>Tile 2</title>
+                    <title>Output</title>
                     <description>Description 2</description>
-<xf:input incremental="true" datatype="boolean" ref="input2" value="true">
-    <xf:label>a boolean</xf:label>
-    <xf:hint>input bound to boolean</xf:hint>
-    <xf:alert>invalid</xf:alert>
-</xf:input>
+<xf:output incremental="true" ref="input2" value="Output">
+    <xf:label>Output</xf:label>
+</xf:output>
                 </section>
                 <section>
-                    <title>Tile 3</title>
+                    <title>Input and output</title>
                     <description>Description 3</description>
-<xf:input incremental="true" datatype="date" ref="input3">
-    <xf:label>a date</xf:label>
+<xf:input incremental="true" ref="input3" value="Hallo Welt!">
+    <xf:label>Input</xf:label>
     <xf:hint>input bound to date</xf:hint>
     <xf:alert>invalid</xf:alert>
 </xf:input>
+<xf:output ref="input3">
+    <xf:label>Output</xf:label>
+</xf:output>
                 </section>
             </samples>
         </content>

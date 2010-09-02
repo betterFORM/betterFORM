@@ -3,22 +3,9 @@
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       <title>Upload Control</title><style type="text/css">
-            .xfGroupLabel {
-            font-size: 12pt;
-            font-weight: bold;
-            padding-bottom: 10px;
-            }
-
             #mips .xfTrigger .dijitButtonContents {
             width: 200px;
             }
-	   		.blocked{
-				display:block;
-				color:red;
-				font-weight:bold;
-				text-align:center;
-				font-size:large;
-			}
         </style><link rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
       <link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css" /><script type="text/javascript">
             dojo.require("dojox.highlight");
@@ -34,11 +21,11 @@
    
    <body class="soria" style="margin:30px;">
       <div id="xforms">
-		 <div class="blocked" >disabled for security reasons.<br/>remove readonly="true" from: <br/>&lt;xf:bind nodeset="items" readonly="true()"&gt; to activate</div>
+		 <div class="blocked" ></div>
          <div style="display:none;">
-            <models xmlns="" constraint="true" readonly="true" required="true" relevant="true">
-               
-               <xf:model xmlns="http://www.w3.org/1999/xhtml" id="model-1">
+            <xf:model id="model-1">
+
+
                   
                   <xf:instance id="instance-1">
                      
@@ -96,10 +83,10 @@
                   
                </xf:model>
                
-            </models>
+
             
          </div>
-      </div>
+      <div class="pageinto">
       <div class="pagetitle">The upload Element</div>
       <div class="Section">
          <div class="PageDescription">Description</div>
@@ -107,12 +94,21 @@
             This form control enables the common feature found on Web sites
             to upload a file from the local file system, as well as
             accepting input from various devices including microphones,
-            pens, and digital cameras.
-            
+            pens, and digital cameras.			 
          </p>
       </div>
-      <div class="Section">
-         <div class="PageDescription"><a href="http://www.w3.org/TR/xforms11/#ui-upload">XForms 1.1 Element Specification</a></div>
+     <table>
+               <tr>
+                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="../../resources/images/w3c_home_nb.png" alt="W3C" /></a></td>
+                  <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
+               </tr>
+               <tr>
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-upload" target="_blank">Recommendation</a></td>
+               </tr>
+               <tr>
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html#elems-form-controls" target="_blank">Quick Reference</a></td>
+               </tr>
+            </table>
       </div>
       <div class="Section">
          <div class="Headline">File Upload Control</div>
@@ -171,7 +167,7 @@
                </xf:group>
             </div>
             <div class="Subheadline">Modelitem properties</div>
-            <div class="Sample">
+            <div class="MIPS">
                <xf:input navindex="-1" style="width:10px;" ref="items/item[1]/@readonly" class="mips" incremental="true">
                   <xf:label>readonly</xf:label>
                </xf:input>
@@ -245,7 +241,7 @@
                </xf:group>
             </div>
             <div class="Subheadline">Modelitem properties</div>
-            <div class="Sample">
+            <div class="MIPS">
 				<xf:input navindex="-1" style="width:10px;" ref="items/item[2]/@readonly" class="mips" incremental="true">
 				  <xf:label>readonly</xf:label>
 				</xf:input>
@@ -318,7 +314,7 @@
                </xf:group>
             </div>
             <div class="Subheadline">Modelitem properties</div>
-            <div class="Sample">
+            <div class="MIPS">
                <xf:input navindex="-1" style="width:10px;" ref="items/item[3]/@readonly" class="mips" incremental="true">
 				  <xf:label>readonly</xf:label>
 				</xf:input>
@@ -334,6 +330,7 @@
             </div>
          </div>
       </div>
+   </div>
    </body>
    
 </html>

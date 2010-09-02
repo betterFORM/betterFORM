@@ -26,7 +26,6 @@
    <body class="soria" style="margin:30px;">
       <div id="xforms">
          <div style="display:none;">
-            <models xmlns="" constraint="true" readonly="true" required="true" relevant="true">
                <xf:model xmlns="http://www.w3.org/1999/xhtml" id="model-1">
                   <xf:instance id="instance-1">
                      <data xmlns="" constraint="true" readonly="false" required="false" relevant="true">
@@ -70,9 +69,9 @@
                   <submission xmlns="" id="showInstance" resource="{$contextroot}/jsp/debug-instance.jsp" replace="instance" ref="instance('instance')" target="content" instance="instance" method="post" serialization="none" constraint="true" readonly="true" required="true" relevant="true"></submission>
                   <submission xmlns="" id="showInstance2" resource="{$contextroot}/jsp/debug-instance.jsp" replace="all" ref="instance('instance')" method="post" constraint="true" readonly="true" required="true" relevant="true"></submission>
                </xf:model>
-            </models>
          </div>
-      </div>
+
+	  <div class="pageintro">
       <div class="pagetitle">The select Control</div>
       <div class="Section">
          <div class="PageDescription">Description</div>
@@ -82,15 +81,26 @@
          one control the others will update acccordngly.
          
       </div>
-      <div class="Section">
-         <div class="PageDescription"><a href="http://www.w3.org/TR/xforms11/#ui-selectMany">XForms 1.1 Element Specification</a></div>
-      </div>
+      <table>
+               <tr>
+                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="../../resources/images/w3c_home_nb.png" alt="W3C" /></a></td>
+                  <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
+               </tr>
+               <tr>
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-select" target="_blank">Recommendation</a></td>
+               </tr>
+               <tr>
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html#elems-form-controls" target="_blank">Quick Reference</a></td>
+               </tr>
+            </table>
+	  </div>
       <div class="Section">
          <div class="Headline">Select Control with appearance 'minimal'</div>
          <p class="Description">
             If no appearance is given, the XForms select control defaults to a HTML select control.
             
          </p>
+		  </div>
          <div>
             <div class="Subheadline">XForms Markup</div>
             <div class="Subsection"><pre><code class="xml"><![CDATA[<!-- XForms Model -->
@@ -146,7 +156,7 @@
                </xf:select>
             </div>
             <div class="Subheadline">Modelitem properties</div>
-            <div class="Sample">
+            <div class="MIPS">
                <xf:input navindex="-1" style="width:10px;" ref="item/@readonly" class="mips" incremental="true">
                   <xf:label>readonly</xf:label>
                </xf:input>
@@ -161,7 +171,7 @@
                </xf:input>
             </div>
          </div>
-      </div>
+      
       <div class="Section">
          <div class="Headline">Standart Select Control Appearance 'full'</div>
          <p class="Description">
@@ -229,7 +239,7 @@
                </xf:select>
             </div>
             <div class="Subheadline">Modelitem properties</div>
-            <div class="Sample">
+            <div class="MIPS">
                <xf:input navindex="-1" style="width:10px;" ref="item/@readonly" class="mips" incremental="true">
                   <xf:label>readonly</xf:label>
                </xf:input>
@@ -314,7 +324,7 @@
                </xf:select>
             </div>
             <div class="Subheadline">Modelitem properties</div>
-            <div class="Sample">
+            <div class="MIPS">
                <xf:input navindex="-1" style="width:10px;" ref="item/@readonly" class="mips" incremental="true">
                   <xf:label>readonly</xf:label>
                </xf:input>
@@ -330,5 +340,6 @@
             </div>
          </div>
       </div>
+   </div>
    </body>
 </html>

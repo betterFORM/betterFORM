@@ -9,10 +9,9 @@
             accepting input from various devices including microphones,
             pens, and digital cameras.
         </description>
-        <specification>
-            <link>http://www.w3.org/TR/xforms11/#ui-upload</link>
-            <description>XForms 1.1 Element Specification</description>
-        </specification>
+        <references>
+           <w3c ref="upload"/>
+        </references>
         <content>
             <models>
                 <xf:model xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"

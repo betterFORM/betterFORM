@@ -2,12 +2,6 @@
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       <title>Trigger Control</title><style type="text/css">
-            .xfGroupLabel {
-            font-size: 12pt;
-            font-weight: bold;
-            padding-bottom: 10px;
-            }
-
             #mips .xfTrigger .dijitButtonContents {
             width: 200px;
             }
@@ -44,7 +38,8 @@
                </xf:bind>
             </xf:model>
          </div>
-      </div>
+
+	  <div class="pageintro">
       <div class="pagetitle">The trigger Control</div>
       <div class="Section">
          <div class="PageDescription">Description</div>
@@ -53,8 +48,18 @@
          also be used to construct other custom form controls.
          
       </div>
-      <div class="Section">
-         <div class="PageDescription"><a href="http://www.w3.org/TR/xforms11/#ui-trigger">XForms 1.1 Element Specification</a></div>
+      <table>
+               <tr>
+                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="../../resources/images/w3c_home_nb.png" alt="W3C" /></a></td>
+                  <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
+               </tr>
+               <tr>
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-trigger" target="_blank">Recommendation</a></td>
+               </tr>
+               <tr>
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html#elems-form-controls" target="_blank">Quick Reference</a></td>
+               </tr>
+            </table>
       </div>
       <div class="Section">
          <div class="Headline">Minimal trigger Control</div>
@@ -79,7 +84,7 @@
                </xf:trigger>
             </div>
             <div class="Subheadline">Modelitem properties</div>
-            <div class="Sample">
+            <div class="MIPS">
                <xf:input navindex="-1" style="width:10px;" ref="item/@readonly" class="mips" incremental="true">
                   <xf:label>readonly</xf:label>
                </xf:input>
@@ -118,7 +123,7 @@
                </xf:trigger>
             </div>
             <div class="Subheadline">Modelitem properties</div>
-            <div class="Sample">
+            <div class="MIPS">
                <xf:input navindex="-1" style="width:10px;" ref="item/@readonly" class="mips" incremental="true">
                   <xf:label>readonly</xf:label>
                </xf:input>
@@ -157,7 +162,7 @@
                </xf:trigger>
             </div>
             <div class="Subheadline">Modelitem properties</div>
-            <div class="Sample">
+            <div class="MIPS">
                <xf:input navindex="-1" style="width:10px;" ref="item/@readonly" class="mips" incremental="true">
                   <xf:label>readonly</xf:label>
                </xf:input>
@@ -209,7 +214,7 @@
                </xf:trigger>
             </div>
             <div class="Subheadline">Modelitem properties</div>
-            <div class="Sample">
+            <div class="MIPS">
                <xf:input navindex="-1" style="width:10px;" ref="item/@readonly" class="mips" incremental="true">
                   <xf:label>readonly</xf:label>
                </xf:input>
@@ -225,5 +230,6 @@
             </div>
          </div>
       </div>
+   </div>
    </body>
 </html>

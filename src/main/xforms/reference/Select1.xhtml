@@ -26,8 +26,8 @@
    <body class="soria" style="margin:30px;">
       <div id="xforms">
          <div style="display:none;">
-            <models xmlns="" constraint="true" readonly="true" required="true" relevant="true">
-               <xf:model xmlns="http://www.w3.org/1999/xhtml" id="model-1">
+            <xf:model id="model-1">
+
                   <xf:instance id="instance-1">
                      <data xmlns="" constraint="true" readonly="false" required="false" relevant="true">
                         <item constraint="true" readonly="true" required="true" relevant="true">
@@ -63,18 +63,28 @@
                      </countrylist>
                   </xf:instance>
                </xf:model>
-            </models>
+
          </div>
-      </div>
+         <div class="pageintro">
       <div class="pagetitle">The select1 Control</div>
       <div class="Section">
-         <div class="PageDescription">Description</div>
-         This form control allows the user to make multiple selections from a set of choices..
-         
+         <div class="PageDescription">Description</div><p>
+         This form control allows the user to make multiple selections from a set of choices.
+		</p>
       </div>
-      <div class="Section">
-         <div class="PageDescription"><a href="http://www.w3.org/TR/xforms11/#ui-selectMany">XForms 1.1 Element Specification</a></div>
-      </div>
+      <table>
+               <tr>
+                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="../../resources/images/w3c_home_nb.png" alt="W3C" /></a></td>
+                  <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
+               </tr>
+               <tr>
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-select1" target="_blank">Recommendation</a></td>
+               </tr>
+               <tr>
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html#elems-form-controls" target="_blank">Quick Reference</a></td>
+               </tr>
+            </table>
+	  </div>
       <div class="Section">
          <div class="Headline">select1 Control with appearance 'minimal'</div>
          <p class="Description">
@@ -136,7 +146,7 @@
                </xf:select1>
             </div>
             <div class="Subheadline">Modelitem properties</div>
-            <div class="Sample">
+            <div class="MIPS">
                <xf:input navindex="-1" style="width:10px;" ref="item/@readonly" class="mips" incremental="true">
                   <xf:label>readonly</xf:label>
                </xf:input>
@@ -210,7 +220,7 @@
                </xf:select1>
             </div>
             <div class="Subheadline">Modelitem properties</div>
-            <div class="Sample">
+            <div class="MIPS">
                <xf:input navindex="-1" style="width:10px;" ref="item/@readonly" class="mips" incremental="true">
                   <xf:label>readonly</xf:label>
                </xf:input>
@@ -284,7 +294,7 @@
                </xf:select1>
             </div>
             <div class="Subheadline">Modelitem properties</div>
-            <div class="Sample">
+            <div class="MIPS">
                <xf:input navindex="-1" style="width:10px;" ref="item/@readonly" class="mips" incremental="true">
                   <xf:label>readonly</xf:label>
                </xf:input>
@@ -376,7 +386,7 @@
                </xf:select1>
             </div>
             <div class="Subheadline">Modelitem properties</div>
-            <div class="Sample">
+            <div class="MIPS">
                <xf:input navindex="-1" style="width:10px;" ref="item/@readonly" class="mips" incremental="true">
                   <xf:label>readonly</xf:label>
                </xf:input>
@@ -392,5 +402,6 @@
             </div>
          </div>
       </div>
+   </div>
    </body>
 </html>

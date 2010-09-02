@@ -9,10 +9,9 @@
             All select controls on this page are bound to the same instance. Thus if you change the value of
             one control the others will update acccordngly.
         </description>
-        <specification>
-            <link>http://www.w3.org/TR/xforms11/#ui-selectMany</link>
-            <description>XForms 1.1 Element Specification</description>
-        </specification>
+       <references>
+           <w3c ref="select"/>
+        </references>
         <content>
             <models>
                 <xf:model xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"

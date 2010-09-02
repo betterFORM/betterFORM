@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns:xf="http://www.w3.org/2002/xforms">
+    <!-- HTML Title -->
+    <title>Page Title</title>
+    <page>
+        <!-- Überschrift der Seite -->
+        <title>Überschrift der Seite</title>
+        <!-- Berscheibungstext der Seite -->
+        <description> Berscheibungstext der Seite</description>
+
+        <!-- Für XForms Spec-Links nach der Beschreibung -->
+        <references>
+            <w3c ref="output"/>
+        </references>
+
+        <!-- Für allgenmeine Links nach der Beschreibung -->
+        <specification>
+            <link>http://www.w3.org/TR/xforms11/#ui-input</link>
+            <description>XForms 1.1 Element Specification</description>
+        </specification>
+
+        <!-- XForms Div -->
+        <content>
+            <!-- Deklaration eines zu verwendenden Models.
+              Ohne diese wird über die "value"- und "datatype"-Attribute der XForms-Element ein Model erzeugt.
+              Model wird kopiert und zusätzlich werden erzeugt :
+              - ModelItemProperties-Attribute (readonly, relevant etc.)
+              - Bindings für die ModelItemProperties (diese sind jedoch nicht funktional!)
+            -->
+            <models>
+                <xf:model>
+                    ....
+                </xf:model>
+            </models>
+            <!-- Block der Beispiele -->
+            <samples>
+                <!-- einzelnes Beispiel.
+                     Es sind mehere "section"-Blöcke möglich
+                -->
+                <section>
+                    <!-- Überschrift des Beispiels -->
+                    <title>Überschrift des Beispiels</title>
+                    <!-- Beschreibung  des Beispiels -->
+                    <description>Beschreibung  des Beispiels</description>
+<!-- XForms-Markup-Block des Beispiels
+     Muss für die Code-Block-Generierung linksbündig ausgerichtet sein.
+        "value"-Attribute werden für die Erzeugung des Models genutzt.
+        "datatype"-Attribute werden für Type-Bindings im Model verwendet, ohne datatype deklaration wird "string" verwendet.
+
+     Alle anderen Attribute (apperance etc.)  werden kopiert!
+
+     Erzeugt werden:
+     - Model des Beispiels falls models-Block nicht angegeben wurde.
+     - Das eigentliche Beispiel
+     - XForms-Markup-Code-Block
+
+     Beispiel:
+     <xf:input value="BlaBla" incremental="true" ref="input1" datatype="boolean"/>
+
+      erzeugt eine "Model"-Instanz der folgenden Form:
+
+
+        <xf:model>
+            <xf:instance>
+                <data xmlns="">
+                    <input1 constraint="true" readonly="true" required="true" relevant="true">
+                        <value>BlaBla</value>
+                    </input1>
+                </data>
+            <xf:instance>
+        </xf:model>
+
+        <xf:bind nodeset="input1">
+            <xf:bind nodeset="value"
+                     constraint="boolean-from-string(../@constraint)"
+                     readonly="boolean-from-string(../@readonly)"
+                     required="boolean-from-string(../@required)"
+                     relevant="boolean-from-string(../@relevant)
+                     type="boolean"/>
+
+            <xf:bind nodeset="@constraint" type="boolean"/>
+            <xf:bind nodeset="@readonly" type="boolean"/>
+            <xf:bind nodeset="@required" type="boolean"/>
+            <xf:bind nodeset="@relevant" type="boolean"/>
+        </xf:bind>
+-->
+<xf:input value="BlaBla" incremental="true" ref="input1">
+    <xf:label>a text</xf:label>
+    <xf:hint>input bound to string</xf:hint>
+    <xf:alert>invalid</xf:alert>
+</xf:input>
+                </section>
+            </samples>
+        </content>
+    </page>
+</data>
