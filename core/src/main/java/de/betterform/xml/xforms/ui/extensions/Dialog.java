@@ -230,7 +230,7 @@ public class Dialog extends BindingElement implements EventListener {
      * @throws XFormsException if an error occurred during creation.
      */
     protected UIElementState createElementState() throws XFormsException {
-        return isBound() ? new BoundElementState(false, false) : null;
+        return hasBindingExpression() ? new BoundElementState(false, false) : null;
     }
 
     /**
