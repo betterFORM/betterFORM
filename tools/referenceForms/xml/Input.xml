@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns:xf="http://www.w3.org/2002/xforms">
+    <title>Output Control</title>
+    <page>
+        <title>The <span class="titlecode">output</span> Control</title>
+        <description>Description
+            This form control renders content based in part on instance
+            data, but it provides no means for entering or changing data.
+        </description>
+        <references>
+           <w3c ref="output"/>
+        </references>
+        <content>
+        </content>
+    </page>
+</data>

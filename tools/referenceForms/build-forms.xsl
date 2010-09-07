@@ -70,6 +70,9 @@
                 </div>
                 <xsl:apply-templates select="$content" mode="content"/>
             </div>
+            <div style="text-align:right;" id="copyright">
+                <a href="http://www.betterform.de"><img style="vertical-align:text-bottom; margin-right:5px;" src="../../images/betterform_icon16x16.png" alt="betterFORM project"/></a><span>&#xA9; 2010 betterFORM</span>
+            </div>
         </body>
     </xsl:template>
 
@@ -280,7 +283,7 @@
         <xsl:variable name="link" select="./link"/>
         <xsl:variable name="description" select="./description"/>
         <div class="Section">
-            <div class="PageDescription"><a href="{$link}"><xsl:value-of select="$description"/></a>
+            <div class="PageDescription"><a style="color:#005A9C;" href="{$link}"><xsl:value-of select="$description"/></a>
             </div>
         </div>
     </xsl:template>
@@ -411,6 +414,7 @@
     </xsl:template>
 
     <xsl:template match="xf:*[@ref]" mode="modelitemsection" priority="10">
+        //TODO: id=ref-ro ....
         <xsl:variable name="ref" select="./@ref"/>
         <xf:input navindex="-1" style="width:10px;" ref="{$ref}/@readonly" class="mips"
                   incremental="true">
