@@ -352,8 +352,8 @@ public class Selector extends AbstractFormControl {
             }
             if (selectable && isInRange(value, item.getValue())) {
                 if (force || !item.isSelected()) {
-                    if (getLogger().isDebugEnabled()) {
-                        getLogger().debug(this + " selecting item " + itemId);
+                    if (getLogger().isTraceEnabled()) {
+                        getLogger().trace(this + " selecting item " + itemId);
                     }
 
                     item.select();
@@ -370,8 +370,8 @@ public class Selector extends AbstractFormControl {
                 selectable = isMultiple();
             } else {
                 if (force || item.isSelected()) {
-                    if (getLogger().isDebugEnabled()) {
-                        getLogger().debug(this + " deselecting item " + itemId);
+                    if (getLogger().isTraceEnabled()) {
+                        getLogger().trace(this + " deselecting item " + itemId);
                     }
                     item.deselect();
                 }
