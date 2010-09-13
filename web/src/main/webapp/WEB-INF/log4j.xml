@@ -57,15 +57,15 @@
     </category>
 
     <category name="de.betterform">
-        <priority value="ERROR"/>
+        <priority value="DEBUG"/>
     </category>
 
     <logger name="net.sf.ehcache">
-        <level value="ERROR"/>
+        <level value="INFO"/>
     </logger>
 
     <root>
-        <priority value="ERROR"/>
+        <priority value="INFO"/>
         <appender-ref ref="SHELL"/>
     </root>
 
