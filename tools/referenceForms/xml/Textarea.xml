@@ -39,7 +39,7 @@
                     <description>
                         A simple textarea with plain text editing capability.
                     </description>
-<xf:textarea id="control1" ref="item/value">
+<xf:textarea id="textarea1" ref="item/value">
     <xf:label>simple textarea</xf:label>
 </xf:textarea>
                     <mips>
@@ -62,7 +62,7 @@
                     <description>
                         A textarea with HTML editing capability.
                     </description>
-<xf:textarea id="control2" ref="item/value"
+<xf:textarea id="textarea2" ref="item/value"
              mediatype="text/html">
     <xf:label/>
 </xf:textarea>
@@ -86,7 +86,7 @@
                     <description>
                         This is like the simple textarea except that it grows when the content grows.
                     </description>
-<xf:textarea id="control3" ref="item/value" mediatype="dojo">
+<xf:textarea id="textarea3" ref="item/value" mediatype="dojo">
     <xf:label/>
 </xf:textarea>
                     <mips>

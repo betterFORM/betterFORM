@@ -40,7 +40,7 @@
                     <description>
                         A trigger with minimal appearance is rendered as a Link.
                     </description>
-<xf:trigger ref="item" appearance="minimal">
+<xf:trigger id="trigger1" ref="item" appearance="minimal">
     <xf:label>A minimal trigger</xf:label>
     <xf:message level="modal">Clicked minimal trigger</xf:message>
 </xf:trigger>
@@ -66,7 +66,7 @@
                     <description>
                         A trigger without any appearance is rendered as a standard button.
                     </description>
-<xf:trigger ref="item">
+<xf:trigger id="trigger2" ref="item">
     <xf:label>A standard trigger</xf:label>
     <xf:message level="ephemeral">Clicked standard trigger</xf:message>
 </xf:trigger>
@@ -92,7 +92,7 @@
                     <description>
                         A trigger can reference a picture to display instead of the label.
                     </description>
-<xf:trigger src="../../images/bf_logo_67x27.png"
+<xf:trigger id="trigger3" src="../../images/bf_logo_67x27.png"
             ref="item">
     <xf:label>A image trigger</xf:label>
     <xf:message level="modal">Message from image trigger</xf:message>
@@ -125,7 +125,14 @@
                         would
                         match the same element in the tree.
                     </description>
-<xf:trigger id="imageTrigger" ref="item">
+<style type="text/css">
+    #trigger4-value{
+        background:url(../../images/bf_logo_67x27.png) no-repeat center;
+        width:100px;
+        height:40px;
+    }
+</style>
+<xf:trigger id="trigger4" ref="item">
     <xf:label/>
     <xf:message level="modal">Message from CSS image trigger</xf:message>
 </xf:trigger>

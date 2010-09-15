@@ -307,8 +307,9 @@
                 <div class="Subheadline">XForms Markup</div>
                 <div class="Subsection">
 <pre><code class="xml">
-    <xsl:apply-templates mode="codesectioninstance"/>
-    <xsl:apply-templates mode="codesectionbind"/>
+<xsl:apply-templates mode="escape" select="./style"/>
+<xsl:apply-templates mode="codesectioninstance"/>
+<xsl:apply-templates mode="codesectionbind"/>
 &lt;!--XForms UI--&gt;
 <xsl:apply-templates mode="escape" select="./xf:*"/>
 </code></pre>
@@ -360,7 +361,7 @@
 &lt;xf:bind nodeset="<xsl:value-of select="$nodeset"/>" type="<xsl:value-of select="$datatype"/>"/&gt;
         </xsl:if>
     </xsl:template>
-    
+
     <xsl:template match="xf:*" mode="codesectionxforms" priority="10">
         <xsl:variable name="ref" select="./@ref"/>
         <xsl:variable name="name" select="name(.)"/>
@@ -406,6 +407,11 @@
     </xsl:template>
 
     <xsl:template match="mips" mode="samplesection" priority="10"/>
+
+    <xsl:template match="style" mode="samplesection" priority="10">
+        <xsl:message><xsl:value-of select="."/></xsl:message>
+        <xsl:copy-of select="."/>
+    </xsl:template>
 
     <xsl:template match="xf:*" mode="samplesection" priority="10">
         <xsl:variable name="ref" select="./@ref"/>
@@ -456,7 +462,6 @@
 
     <xsl:template match="notes" mode="notes" priority="10">
         <div class="Subheadline">Notes</div>
-        <xsl:message><xsl:value-of select="."/></xsl:message>
         <xsl:copy-of select="./*"/>
     </xsl:template>
 

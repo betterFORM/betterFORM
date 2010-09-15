@@ -98,7 +98,7 @@
                         A repeat with no appearance, 'minimal' appearance or 'full' appearance will be rendered
                         vertically with labels on the left and controls on the right.
                     </description>
-<xf:repeat nodeset="repeat/items" appearance="full">
+<xf:repeat id="repeat1" nodeset="repeat/items" appearance="full">
     <xf:input ref="item[1]">
         <xf:label>String:</xf:label>
     </xf:input>
@@ -117,7 +117,7 @@
                     <description>
                         Compact repeats are rendered as horizontal-oriented HTML tables.
                     </description>
-<xf:repeat id="compactRepeat" nodeset="repeat/items"
+<xf:repeat id="repeat2" nodeset="repeat/items"
            appearance="compact">
     <xf:input ref="item[1]">
         <xf:label>String:</xf:label>

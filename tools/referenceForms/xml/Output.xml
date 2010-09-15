@@ -63,7 +63,7 @@
                 <section>
                     <title>Simple Text Ouput</title>
                     <description/>
-<xf:output ref="items/item[1]">
+<xf:output id="output1" ref="items/item[1]">
     <xf:label/>
 </xf:output>
                     <!--
@@ -86,9 +86,7 @@
                 <section>
                     <title>Output bound to datatype 'anyURI'</title>
                     <description/>
-<xf:output xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xmlns:xsd="http://www.w3.org/2001/XMLSchema" ref="items/item[2]">
+<xf:output id="output2" ref="items/item[2]">
     <xf:label>Homepage</xf:label>
 </xf:output>
                     <!--
@@ -111,18 +109,14 @@
                 <section>
                     <title>Output Control with (simple) HTML Content</title>
                     <description/>
-<xf:output xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xmlns:xsd="http://www.w3.org/2001/XMLSchema" ref="items/item[3]" mediatype="text/html">
+<xf:output id="output3" ref="items/item[3]" mediatype="text/html">
     <xf:label/>
 </xf:output>
                 </section>
                 <section>
                     <title>Output Controll with image</title>
                     <description/>
-<xf:output xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xmlns:xsd="http://www.w3.org/2001/XMLSchema" ref="items/item[4]" mediatype="image/gif">
+<xf:output id="output3" ref="items/item[4]" mediatype="image/gif">
     <xf:label/>
 </xf:output>
                     <!--

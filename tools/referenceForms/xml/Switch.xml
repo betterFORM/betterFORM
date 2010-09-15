@@ -51,17 +51,17 @@
             <xf:toggle case="case4"/>
         </xf:trigger>
     </xf:group>
-    <xf:switch>
-        <xf:case id="case1" selected="true">
+    <xf:switch id="switch1">
+        <xf:case id="switch1-case1" selected="true">
             <div class="caseContent" style="background:#bbbbff">CASE 1</div>
         </xf:case>
-        <xf:case id="case2">
+        <xf:case id="switch1-case2">
             <div class="caseContent" style="background:#ccccff">CASE 2</div>
         </xf:case>
-        <xf:case id="case3">
+        <xf:case id="switch1-case3">
             <div class="caseContent" style="background:#ddddff">CASE 3</div>
         </xf:case>
-        <xf:case id="case4">
+        <xf:case id="switch1-case4">
             <div class="caseContent" style="background:#eeeeff">CASE 4</div>
         </xf:case>
     </xf:switch>
@@ -104,20 +104,20 @@
             <xf:toggle case="tabcase4"/>
         </xf:trigger>
     </div>
-    <xf:switch appearance="dijit:TabContainer">
-        <xf:case id="tabcase1" selected="true">
+    <xf:switch id="switch2" appearance="dijit:TabContainer">
+        <xf:case id="switch2-case1" selected="true">
             <xf:label>Case 1</xf:label>
             <div class="caseContent" style="background:#bbbbff">CASE 1</div>
         </xf:case>
-        <xf:case id="tabcase2">
+        <xf:case id="switch2-case2">
             <xf:label>Case 2</xf:label>
             <div class="caseContent" style="background:#ccccff">CASE 2</div>
         </xf:case>
-        <xf:case id="tabcase3">
+        <xf:case id="switch2-case3">
             <xf:label>Case 3</xf:label>
             <div class="caseContent" style="background:#ddddff">CASE 3</div>
         </xf:case>
-        <xf:case id="tabcase4">
+        <xf:case id="switch2-case4">
             <xf:label>Case 4</xf:label>
             <div class="caseContent" style="background:#eeeeff">CASE 4</div>
         </xf:case>

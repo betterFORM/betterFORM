@@ -92,7 +92,7 @@
                         An upload control binding to datatype 'anyURI' is equivalent to a file upload known
                         from HTML.
                     </description>
-<xf:upload ref="items/item[1]/value">
+<xf:upload id="upload1" ref="items/item[1]/value">
     <xf:label>a standard file upload</xf:label>
     <xf:filename ref="attribute::file"/>
     <xf:mediatype ref="attribute::type"/>
@@ -130,7 +130,7 @@
                         and
                         stores these as the value of the bound node.
                     </description>
-<xf:upload  ref="items/item[2]/value">
+<xf:upload id="upload2" ref="items/item[2]/value">
     <xf:label>a base64Binary upload</xf:label>
     <xf:filename ref="attribute::file"/>
     <xf:mediatype ref="attribute::type"/>
@@ -167,7 +167,7 @@
                         An upload control binding to datatype 'hexBinary' encodes the uploaded data as hexBinary and
                         stores these as the value of the bound node.
                     </description>
-<xf:upload ref="items/item[3]/value">
+<xf:upload id="upload3" ref="items/item[3]/value">
     <xf:label>a hexBinary upload</xf:label>
     <xf:filename ref="attribute::file"/>
     <xf:mediatype ref="attribute::type"/>

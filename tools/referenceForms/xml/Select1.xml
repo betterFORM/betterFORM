@@ -117,7 +117,7 @@
                 <section>
                     <title>select1 Control with appearance 'full'</title>
                     <description/>
-<xf:select1 ref="item/value" appearance="full">
+<xf:select1 id="select11" ref="item/value" appearance="full">
     <xf:label>full select1</xf:label>
     <xf:itemset nodeset="instance('codes')/country">
         <xf:label ref="country-name"/>
@@ -145,7 +145,7 @@
                         Select1 with @selection='open' allows the user to input a value that does not exist in the list
                         of choices. Simply type into the input field.
                     </description>
-<xf:select1 ref="item/value" selection="open">
+<xf:select1 id="select12" ref="item/value" selection="open">
     <xf:label>selection open</xf:label>
     <xf:choices>
         <xf:item>

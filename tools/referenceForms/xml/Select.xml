@@ -81,7 +81,7 @@
                     <description>
                         If no appearance is given, the XForms select control defaults to a HTML select control.
                     </description>
-<xf:select ref="item/value">
+<xf:select id="select1" ref="item/value">
     <xf:label>Country</xf:label>
     <xf:itemset nodeset="instance('codes')/country">
         <xf:label ref="country-name"/>
@@ -108,7 +108,7 @@
                     <description>
                         Select with appearance="full" will be rendered as a set of checkboxes.
                     </description>
-<xf:select id="control2" ref="item/value" appearance="full">
+<xf:select id="select2" ref="item/value" appearance="full">
     <xf:label>Country</xf:label>
     <!--<xf:label>appearance = 'full'</xf:label>-->
     <xf:hint>This is a standard select control</xf:hint>
@@ -144,7 +144,7 @@
                         contained in the predefined list of choices. It will be rendered as a select along with an
                         input control. The selection attribute takes precedence over the appearance attribute.
                     </description>
-<xf:select id="control3" ref="item/value" selection="open">
+<xf:select id="select3" ref="item/value" selection="open">
     <xf:label>Country</xf:label>
     <!--<xf:label>selection='open'</xf:label>-->
     <xf:hint>This is a standard select control</xf:hint>
