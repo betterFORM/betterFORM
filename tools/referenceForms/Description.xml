@@ -89,6 +89,9 @@
     <xf:hint>input bound to string</xf:hint>
     <xf:alert>invalid</xf:alert>
 </xf:input>
+                    <mips>
+                        <!-- Put XForms-Markup here which should be copied to "Model Item Propterties" section if <models/> is specified -->
+                    </mips>
                 </section>
             </samples>
         </content>
