@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:bf="http://betterform.sourceforge.net/xforms">
+    <head>
+        <title>Test XForms Post Servlet</title>
+
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model>
+                <xf:instance>
+                    <html>
+                        <head>
+                            <title>hello</title>
+                        </head>
+                        <body>
+                            <xf:output id="ui" ref="hello">
+                                <xf:label>Hello from xf:</xf:label>
+                            </xf:output>
+                        </body>
+                    </html>
+                </xf:instance>
+            </xf:model>
+
+            <xf:submission id="s-post"
+                           resource="XFormsPost"
+                           method="post">
+                <xf:message ev:event="xforms-submit-error">post failed</xf:message>
+            </xf:submission>
+
+        </div>
+        <xf:trigger>
+            <xf:label>Post form</xf:label>
+            <xf:send submission="s-post"/>
+        </xf:trigger>
+    </body>
+</html>
