@@ -1,511 +1,454 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:xf="http://www.w3.org/2002/xforms"
-      xmlns:ev="http://www.w3.org/2001/xml-events"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-      lang="de">
-<head>
-    <title>Input Control</title>
-
-    <style type="text/css">
-        .xfGroupLabel {
-            font-size: 12pt;
-            font-weight: bold;
-            padding-bottom: 10px;
-        }
-
-        #mips .xfTrigger .dijitButtonContents {
-            width: 200px;
-        }
-    </style>
-
-
-    <link rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css"/>
-    <link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css"/>
-
-    <script type="text/javascript">
-        dojo.require("dojox.highlight");
-        dojo.require("dojox.highlight.languages.xml");
-        dojo.addOnLoad(function() {
+<?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+   
+   <head>
+      <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
+      <title>Input Control</title>
+      <link rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
+      <link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css" /><script type="text/javascript">
+            dojo.require("dojox.highlight");
+            dojo.require("dojox.highlight.languages.xml");
+            dojo.addOnLoad(function() {
             dojo.query("code").forEach(dojox.highlight.init);
-        });
+            });
 
-        dojo.require("dijit.form.Button");
-        dojo.require("dijit.TitlePane");
-        dojo.require('dijit.layout.ContentPane');
-    </script>
-
-</head>
-<body class="soria" style="margin:30px;">
-<!--<body style="margin:30px;">-->
-<div id="xforms">
-<div style="display:none;">
-    <xf:model id="model-1">
-        <xf:instance id="instance-1" xmlns="">
-            <data>
-                <input constraint="true" readonly="false" required="true" relevant="true">
-                    <value>foo</value>
-                </input>
-                <input constraint="true" readonly="false" required="true" relevant="true">
-                    <value></value>
-                </input>
-                <input constraint="true" readonly="false" required="true" relevant="true">
-                    <value>2007-10-10</value>
-                </input>
-                <input constraint="true" readonly="false" required="true" relevant="true">
-                    <value>2007-10-10T23:23:23.123Z</value>
-                </input>
-            </data>
-        </xf:instance>       
-
-        <xf:bind nodeset="input[1]">
-            <xf:bind nodeset="value"
-                     constraint="boolean-from-string(../@constraint)"
-                     readonly="boolean-from-string(../@readonly)"
-                     required="boolean-from-string(../@required)"
-                     relevant="boolean-from-string(../@relevant)"/>
-
-            <xf:bind nodeset="@constraint" type="boolean"/>
-            <xf:bind nodeset="@readonly" type="boolean"/>
-            <xf:bind nodeset="@required" type="boolean"/>
-            <xf:bind nodeset="@relevant" type="boolean"/>
-        </xf:bind>
-        <xf:bind nodeset="input[2]">
-            <xf:bind nodeset="value"
-                constraint="boolean-from-string(../@constraint)"
-                readonly="boolean-from-string(../@readonly)"
-                required="boolean-from-string(../@required)"
-                relevant="boolean-from-string(../@relevant)"
-                type="xf:boolean"/>
-
-            <xf:bind nodeset="@constraint" type="boolean"/>
-            <xf:bind nodeset="@readonly" type="boolean"/>
-            <xf:bind nodeset="@required" type="boolean"/>
-            <xf:bind nodeset="@relevant" type="boolean"/>
-        </xf:bind>
-        <xf:bind nodeset="input[3]">
-            <xf:bind nodeset="value"
-                constraint="boolean-from-string(../@constraint)"
-                readonly="boolean-from-string(../@readonly)"
-                required="boolean-from-string(../@required)"
-                relevant="boolean-from-string(../@relevant)"
-                type="xf:date"/>
-
-            <xf:bind nodeset="@constraint" type="boolean"/>
-            <xf:bind nodeset="@readonly" type="boolean"/>
-            <xf:bind nodeset="@required" type="boolean"/>
-            <xf:bind nodeset="@relevant" type="boolean"/>
-        </xf:bind>
-        <xf:bind nodeset="input[4]">
-            <xf:bind nodeset="value"
-                constraint="boolean-from-string(../@constraint)"
-                readonly="boolean-from-string(../@readonly)"
-                required="boolean-from-string(../@required)"
-                relevant="boolean-from-string(../@relevant)"
-                type="xf:dateTime"/>
-
-            <xf:bind nodeset="@constraint" type="boolean"/>
-            <xf:bind nodeset="@readonly" type="boolean"/>
-            <xf:bind nodeset="@required" type="boolean"/>
-            <xf:bind nodeset="@relevant" type="boolean"/>
-        </xf:bind>
-    </xf:model>
-</div>
-
-<div class="pageintro">
-    <div class="pagetitle">The input Element</div>
-
-    <div class="Section">
-        <div class="PageDescription">Description</div>
-        This form control enables free-form data entry or a user
-        interface component appropriate to the datatype of the bound
-        node.
-    </div>
-
-	<table>
-		<tr>
-			<td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;"
-							   target="_blank"><img id="logo" class="image" src="../../resources/images/w3c_home_nb.png"
-													alt="W3C"/></a></td>
-			<td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
-		</tr>
-		<tr>
-			<td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-output"
-				   target="_blank">Recommendation</a></td>
-		</tr>
-		<tr>
-			<td><a style="color:#005A9C;"
-				   href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html#elems-form-controls" target="_blank">Quick
-				Reference</a></td>
-		</tr>
-	</table>
-	</div>
-
-<!-- ####################### CONTENT SECTION STARTING HERE ########################### -->
-<!-- ####################### CONTENT SECTION STARTING HERE ########################### -->
-<!-- ####################### CONTENT SECTION STARTING HERE ########################### -->
-<div class="Section">
-
-    <!-- ########### plain input ############ -->
-    <!-- ########### plain input ############ -->
-    <!-- ########### plain input ############ -->
-
-
-    <div class="Headline">Text input control</div>
-
-
-    <p class="Description">
-        This is the most common rendering of an input which is bound to a string value in the
-        Instance.
-    </p>
-    <div>
-        <div class="Subheadline">XForms Markup</div>
-        <div class="Subsection">
-<pre><code class="xml"><![CDATA[<!-- XForms Instance -->
-<item>foo</item>
-
-<!-- There's no xf:bind in this sample as 'string' is the default datatype. -->
-
-<!-- XForms UI -->
-<xf:input ref="item">
-    <xf:label>a text</xf:label>
-</xf:input>]]></code></pre>
-        </div>
-    </div>
-
-    <div>
-        <div class="Subheadline">Sample</div>
-        <div class="Sample">
-            <xf:input id="input1" ref="input[1]/value" incremental="true">
-                <xf:label>a text</xf:label>
-                <xf:hint>input bound to string</xf:hint>
-                <xf:alert>invalid</xf:alert>
-            </xf:input>
-        </div>
-        <div class="Subheadline">Modelitem properties</div>
-        <div class="MIPS">
-            <xf:input navindex="-1" style="width:10px;" ref="input[1]/@readonly" class="mips"
-                      incremental="true">
-                <xf:label>readonly</xf:label>
-            </xf:input>
-            <xf:input navindex="-1" ref="input[1]/@required" style="width:10px;" class="mips"
-                      incremental="true">
-                <xf:label>required</xf:label>
-            </xf:input>
-            <xf:input navindex="-1" ref="input[1]/@relevant" style="width:10px;" class="mips"
-                      incremental="true">
-                <xf:label>relevant</xf:label>
-            </xf:input>
-            <xf:input navindex="-1" ref="input[1]/@constraint" style="width:10px;" class="mips"
-                      incremental="true">
-                <xf:label>valid</xf:label>
-            </xf:input>
-        </div>
-    </div>
-</div>
-
-<!-- ########### boolean input ############ -->
-<div class="Section">
-    <div>
-        <div class="Headline">Checkbox control</div>
-
-
-        <p class="Description">
-            An input which binds to a Node of type 'boolean' is rendered as a Checkbox.
-        </p>
-        <div>
-            <div class="Subheadline">XForms Markup</div>
-            <div class="Subsection">
-<pre><code class="xml"><![CDATA[<!-- XForms Instance -->
-<item>false</item>
-
-<!-- XForms Binding -->
-<xf:bind nodeset="item" type="xf:boolean"/>
-
-<!-- XForms UI -->
-<xf:input ref="item">
-    <xf:label>a boolean</xf:label>
-</xf:input>]]></code></pre>
+            dojo.require("dijit.form.Button");
+            dojo.require("dijit.TitlePane");
+            dojo.require('dijit.layout.ContentPane');
+        </script></head>
+   
+   <body class="soria inlineAlert" style="margin:30px;">
+      <div id="xforms">
+         <div style="display:none;">
+            <xf:model>
+               <xf:instance>
+                  <data xmlns="">
+                     <input1 constraint="true" readonly="false" required="true" relevant="true">
+                        <value></value>
+                     </input1>
+                     <input2 constraint="true" readonly="false" required="true" relevant="true">
+                        <value></value>
+                     </input2>
+                     <input3 constraint="true" readonly="false" required="true" relevant="true">
+                        <value>2007-10-10</value>
+                     </input3>
+                     <input4 constraint="true" readonly="false" required="true" relevant="true">
+                        <value>2007-10-10</value>
+                     </input4>
+                     <input5 constraint="true" readonly="false" required="true" relevant="true">
+                        <value>2007-10-10</value>
+                     </input5>
+                     <input6 constraint="true" readonly="false" required="true" relevant="true">
+                        <value>2007-10-10T23:23:23.123Z</value>
+                     </input6>
+                  </data>
+               </xf:instance>
+               <xf:bind nodeset="input1">
+                  <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="string"></xf:bind>
+                  <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@required" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
+               </xf:bind>
+               <xf:bind nodeset="input2">
+                  <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="xf:boolean"></xf:bind>
+                  <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@required" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
+               </xf:bind>
+               <xf:bind nodeset="input3">
+                  <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="xf:date"></xf:bind>
+                  <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@required" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
+               </xf:bind>
+               <xf:bind nodeset="input4">
+                  <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="xf:date"></xf:bind>
+                  <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@required" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
+               </xf:bind>
+               <xf:bind nodeset="input5">
+                  <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="xf:date"></xf:bind>
+                  <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@required" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
+               </xf:bind>
+               <xf:bind nodeset="input6">
+                  <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="xf:dateTime"></xf:bind>
+                  <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@required" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
+               </xf:bind>
+            </xf:model>
+         </div>
+         <div class="pageintro">
+            <div class="pagetitle">The 
+               <span xmlns="" class="titlecode">input</span> Element
             </div>
-        </div>
-
-
-        <div>
-            <div class="Subheadline">Sample</div>
-            <div class="Sample">
-                <xf:input id="input2" ref="input[2]/value" incremental="true">
-                    <xf:label>a boolean</xf:label>
-                    <xf:hint>input bound to boolean</xf:hint>
-                    <xf:alert>invalid</xf:alert>
-                </xf:input>
+            <div class="Section">
+               <div class="PageDescription">Description</div>
+               <p>
+                  This form control enables free-form data entry or a user
+                  interface component appropriate to the datatype of the bound
+                  node.
+                  
+               </p>
             </div>
-
-            <div class="Subheadline">Modelitem properties</div>
-            <div class="MIPS">
-                <xf:input navindex="-1" style="width:10px;" ref="input[2]/@readonly" class="mips"
-                          incremental="true">
-                    <xf:label>readonly</xf:label>
-                </xf:input>
-                <xf:input navindex="-1" ref="input[2]/@required" style="width:10px;" class="mips"
-                          incremental="true">
-                    <xf:label>required</xf:label>
-                </xf:input>
-                <xf:input navindex="-1" ref="input[2]/@relevant" style="width:10px;" class="mips"
-                          incremental="true">
-                    <xf:label>relevant</xf:label>
-                </xf:input>
-                <xf:input navindex="-1" ref="input[2]/@constraint" style="width:10px;" class="mips"
-                          incremental="true">
-                    <xf:label>valid</xf:label>
-                </xf:input>
+            <table>
+               <tr>
+                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="../../resources/images/w3c_home_nb.png" alt="W3C" /></a></td>
+                  <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
+               </tr>
+               <tr>
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-input" target="_blank">Recommendation</a></td>
+               </tr>
+               <tr>
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html#elems-form-controls" target="_blank">Quick Reference</a></td>
+               </tr>
+            </table>
+         </div>
+         <div class="Section">
+            <div class="Headline">Text input control</div>
+            <p class="Description">
+               This is the most common rendering of an input which is bound to a string value in the
+               Instance.
+               
+            </p>
+            <div>
+               <div class="Subheadline">XForms Markup</div>
+               <div class="Subsection"><pre><code class="xml">
+&lt;!--XForms UI--&gt;
+&lt;xf:input ref="input1" incremental="true"&gt;
+    &lt;xf:label&gt;a text&lt;/xf:label&gt;
+    &lt;xf:hint&gt;input bound to string&lt;/xf:hint&gt;
+    &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
+&lt;/xf:input&gt;</code></pre></div>
             </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- ############# date control ################# -->
-<div class="Section">
-    <div class="Headline">Datepicker control</div>
-
-
-    <p class="Description">
-        An input which binds to a Node of type 'date' is rendered as a popup calendar control. The value
-        may also be be typed in directly.
-    </p>
-
-    <div>
-        <div class="Subheadline">XForms Markup</div>
-        <div class="Subsection">
-<pre><code class="xml"><![CDATA[<!-- XForms Instance -->
- <item>2007-10-10</item>
-
-<!-- XForms Binding -->
-<xf:bind nodeset="item" type="xf:date"/>
-
-<!-- XForms UI -->
-<xf:input id="input3" ref="item">
-    <xf:label>a date</xf:label>
-</xf:input>]]></code></pre>
-        </div>
-    </div>
-
-    <div>
-        <div class="Subheadline">Sample</div>
-        <div class="Sample">
-            <xf:input id="input3" ref="input[3]/value" incremental="true">
-                <xf:label>a date</xf:label>
-                <xf:hint>input bound to date</xf:hint>
-                <xf:alert>invalid</xf:alert>
-            </xf:input>
-        </div>
-
-        <div class="Subheadline">Modelitem properties</div>
-            <div class="MIPS">
-                <xf:input navindex="-1" style="width:10px;" ref="input[3]/@readonly" class="mips"
-                          incremental="true">
-                    <xf:label>readonly</xf:label>
-                </xf:input>
-                <xf:input navindex="-1" ref="input[3]/@required" style="width:10px;" class="mips"
-                          incremental="true">
-                    <xf:label>required</xf:label>
-                </xf:input>
-                <xf:input navindex="-1" ref="input[3]/@relevant" style="width:10px;" class="mips"
-                          incremental="true">
-                    <xf:label>relevant</xf:label>
-                </xf:input>
-                <xf:input navindex="-1" ref="input[3]/@constraint" style="width:10px;" class="mips"
-                          incremental="true">
-                    <xf:label>valid</xf:label>
-                </xf:input>
+            <div>
+               <div class="Subheadline">Sample</div>
+               <div class="Sample">
+                  <xf:input ref="input1/value" incremental="true" id="input1">
+                     
+                     
+                     
+                     
+                     <xf:label>a text</xf:label>
+                     <xf:hint>input bound to string</xf:hint>
+                     <xf:alert>invalid</xf:alert>
+                  </xf:input>
+               </div>
+               <div class="Subheadline">Modelitem properties</div>
+               <div class="MIPS">
+                  <xf:group appearance="full">
+                     <xf:label></xf:label>
+                     <xf:input id="input1-readonly" navindex="-1" ref="input1/@readonly" incremental="true">
+                        <xf:label>readonly</xf:label>
+                     </xf:input>
+                     <xf:input id="input1-required" navindex="-1" ref="input1/@required" incremental="true">
+                        <xf:label>required</xf:label>
+                     </xf:input>
+                     <xf:input id="input1-relevant" navindex="-1" ref="input1/@relevant" incremental="true">
+                        <xf:label>relevant</xf:label>
+                     </xf:input>
+                     <xf:input id="input1-valid" navindex="-1" ref="input1/@constraint" incremental="true">
+                        <xf:label>valid</xf:label>
+                     </xf:input>
+                  </xf:group>
+               </div>
             </div>
-    </div>
-
-    <div>
-        <div class="Subheadline">Notes</div>
-        <ul class="Notes">
-            <li>
-                The date control is currently not fully accessible esp. keyboard navigation is not working
-                in the current version of Dojo 1.3. Upcoming version 1.4 will fully support keyboard navigation.
-            </li>
-            <li>
-                Though locale-specific formatting of a date is supported there's no further support for
-                subformats
-                like the Java short/medium/long date formatting.
-            </li>
-            <li>
-                Known limitation:
-                Dojo only accepts 'date'-inputs in the chosen datePattern or the ISO8601/RFC3339 format
-                (yyyy-MM-dd).
-            </li>
-        </ul>
-    </div>
-</div>
-
-<!-- ############# date control with datePattern################# -->
-<div class="Section">
-    <div class="Headline">Datepicker control with datePattern</div>
-    <!-- TODO: create input-field so users can play around with datePattern ? -->
-
-    <p class="Description">
-        An input which binds to a Node of type 'date' is rendered as a popup calendar control. The value
-        may also be be typed in directly. Through appearance="iso8601:datePattern" the format of the Date value
-        can be customized.
-        Typical format strings apply. See <a
-            href="http://www.dojotoolkit.com/reference-guide/dojo/date/locale/format.html">Dojo Docs</a>.
-    </p>
-
-    <div>
-        <div class="Subheadline">XForms Markup</div>
-        <div class="Subsection">
-<pre><code class="xml"><![CDATA[<!-- XForms Instance -->
-<item>2007-10-10</item>
-
-<!-- XForms Binding -->
-<xf:bind nodeset="item" type="xf:date"/>
-
-<!-- XForms UI -->
-<xf:input id="input4" ref="item" incremental="true"
-          appearance="iso8601:dd.MMMM.yyyy">
-    <xf:label>a date with datePattern dd.MMMM.yyyy</xf:label>
-</xf:input>
-<xf:input id="input5" ref="item" incremental="true"
-          appearance="iso8601:EEE,dd.MM.yyyy">
-    <xf:label>a date with datePattern EEE,dd.MM.yyyy</xf:label>
-</xf:input>]]></code></pre>
-        </div>
-    </div>
-
-    <div>
-        <div class="Subheadline">Sample</div>
-        <div class="Sample dateSample">
-            <xf:input id="input4" ref="input[3]/value" incremental="true" appearance="iso8601:dd.MMMM.yyyy">
-                <xf:label>a date with datePattern dd.MMMM.yyyy</xf:label>
-                <xf:hint>appearance="iso8601:dd.MMMM.yyyy"</xf:hint>
-            </xf:input>
-            <xf:input id="inpu5" ref="input[3]/value" incremental="true" appearance="iso8601:EEE,dd.MM.yyyy">
-                <xf:label>a date with datePattern EEE,dd.MM.yyyy</xf:label>
-                <xf:hint>appearance="iso8601:EEE,dd.MMMM.yyyy"</xf:hint>
-            </xf:input>
-        </div>
-
-        <div class="Subheadline">Modelitem properties</div>
-        <div class="MIPS">
-            <xf:input navindex="-1" style="width:10px;" ref="input[3]/@readonly" class="mips"
-                      incremental="true">
-                <xf:label>readonly</xf:label>
-            </xf:input>
-            <xf:input navindex="-1" ref="input[3]/@required" style="width:10px;" class="mips"
-                      incremental="true">
-                <xf:label>required</xf:label>
-            </xf:input>
-            <xf:input navindex="-1" ref="input[3]/@relevant" style="width:10px;" class="mips"
-                      incremental="true">
-                <xf:label>relevant</xf:label>
-            </xf:input>
-            <xf:input navindex="-1" ref="input[3]/@constraint" style="width:10px;" class="mips"
-                      incremental="true">
-                <xf:label>valid</xf:label>
-            </xf:input>                                         
-        </div>
-    </div>
-
-
-
-
-    <div>
-        <div class="Subheadline">Notes</div>
-        <ul class="Notes">
-            <li>
-                The date control is currently not fully accessible esp. keyboard navigation is not
-                working
-                in the current version of Dojo 1.3. Upcoming version 1.4 will fully support keyboard
-                navigation.
-            </li>
-            <li>
-                Though locale-specific formatting of a date is supported there's no further support for
-                subformats like the Java short/medium/long date formatting.
-            </li>
-            <li>
-                Known limitation:
-                Dojo only accepts 'date'-inputs in the chosen datePattern or the ISO8601/RFC3339 format
-                (yyyy-MM-dd).
-            </li>
-        </ul>
-    </div>
-</div>
-
-<!-- ############### datetime control #################### -->
-<div class="Section">
-   <div class="Headline">DateTime picker control</div>
-
-    <p class="Description">
-        An input which binds to a Node of type 'datetime' is rendered as a popup calendar and an associated
-        time input control.
-    </p>
-
-    <div>
-        <div class="Subheadline">XForms Markup</div>
-        <div class="Subsection">
-<pre><code class="xml"><![CDATA[<!-- XForms Instance -->
-<item>2007-10-10T23:23:23.123Z</item>
-
-<!-- XForms Binding -->
-<xf:bind nodeset="item" type="xf:datetime"/>
-
-<!-- XForms UI -->
-<xf:input id="input4" ref="item">
-    <xf:label>a datetime</xf:label>
-</xf:input>]]></code></pre>
-        </div>
-    </div>
-
-    <div>
-        <div class="Subheadline">Sample</div>
-        <div class="Sample">
-            <xf:input id="input6" ref="input[4]/value" incremental="true">
-                <xf:label>a datetime</xf:label>
-            </xf:input>
-        </div>
-
-        <div class="Subheadline">Modelitem properties</div>
-        <div class="MIPS">
-            <xf:input navindex="-1" style="width:10px;" ref="input[4]/@readonly" class="mips"
-                      incremental="true">
-                <xf:label>readonly</xf:label>
-            </xf:input>
-            <xf:input navindex="-1" ref="input[4]/@required" style="width:10px;" class="mips"
-                      incremental="true">
-                <xf:label>required</xf:label>
-            </xf:input>
-            <xf:input navindex="-1" ref="input[4]/@relevant" style="width:10px;" class="mips"
-                      incremental="true">
-                <xf:label>relevant</xf:label>
-            </xf:input>
-            <xf:input navindex="-1" ref="input[4]/@constraint" style="width:10px;" class="mips"
-                      incremental="true">
-                <xf:label>valid</xf:label>
-            </xf:input>
-        </div>
-    </div>
-
-    <div>
-        <div class="Subheadline">Notes</div>
-        <ul class="Notes">
-            <li>
-                The date control is currently not fully accessible esp. keyboard navigation is not working
-                in the current version of Dojo 1.3. Upcoming version 1.4 will fully support keyboard navigation.
-            </li>
-            <li>
-                Though locale-specific formatting of a date is supported there's no further support for
-                subformats
-                like the Java short/medium/long date formatting.
-            </li>
-        </ul>
-    </div>
-</div>
-</div>
-</body>
+         </div>
+         <div class="Section">
+            <div class="Headline">Checkbox control</div>
+            <p class="Description">
+               An input which binds to a Node of type 'boolean' is rendered as a Checkbox.
+               
+            </p>
+            <div>
+               <div class="Subheadline">XForms Markup</div>
+               <div class="Subsection"><pre><code class="xml">
+&lt;!--XForms Bind--&gt;
+&lt;xf:bind nodeset="input2" type="xf:boolean"/&gt;
+        
+&lt;!--XForms UI--&gt;
+&lt;xf:input ref="input2" incremental="true" datatype="xf:boolean"&gt;
+    &lt;xf:label&gt;a boolean&lt;/xf:label&gt;
+    &lt;xf:hint&gt;input bound to boolean&lt;/xf:hint&gt;
+    &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
+&lt;/xf:input&gt;</code></pre></div>
+            </div>
+            <div>
+               <div class="Subheadline">Sample</div>
+               <div class="Sample">
+                  <xf:input ref="input2/value" incremental="true" datatype="xf:boolean" id="input2">
+                     
+                     
+                     
+                     
+                     <xf:label>a boolean</xf:label>
+                     <xf:hint>input bound to boolean</xf:hint>
+                     <xf:alert>invalid</xf:alert>
+                  </xf:input>
+               </div>
+               <div class="Subheadline">Modelitem properties</div>
+               <div class="MIPS">
+                  <xf:group appearance="full">
+                     <xf:label></xf:label>
+                     <xf:input id="input2-readonly" navindex="-1" ref="input2/@readonly" incremental="true">
+                        <xf:label>readonly</xf:label>
+                     </xf:input>
+                     <xf:input id="input2-required" navindex="-1" ref="input2/@required" incremental="true">
+                        <xf:label>required</xf:label>
+                     </xf:input>
+                     <xf:input id="input2-relevant" navindex="-1" ref="input2/@relevant" incremental="true">
+                        <xf:label>relevant</xf:label>
+                     </xf:input>
+                     <xf:input id="input2-valid" navindex="-1" ref="input2/@constraint" incremental="true">
+                        <xf:label>valid</xf:label>
+                     </xf:input>
+                  </xf:group>
+               </div>
+            </div>
+         </div>
+         <div class="Section">
+            <div class="Headline">Datepicker control</div>
+            <p class="Description">
+               An input which binds to a Node of type 'date' is rendered as a popup calendar control. The value
+               may also be be typed in directly.
+               
+            </p>
+            <div>
+               <div class="Subheadline">XForms Markup</div>
+               <div class="Subsection"><pre><code class="xml">
+&lt;!--XForms Instance--&gt;
+&lt;item&gt;2007-10-10&lt;/item&gt;
+        
+&lt;!--XForms Bind--&gt;
+&lt;xf:bind nodeset="input3" type="xf:date"/&gt;
+        
+&lt;!--XForms UI--&gt;
+&lt;xf:input ref="input3" incremental="true" datatype="xf:date" value="2007-10-10"&gt;
+    &lt;xf:label&gt;a date&lt;/xf:label&gt;
+    &lt;xf:hint&gt;input bound to date&lt;/xf:hint&gt;
+    &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
+&lt;/xf:input&gt;</code></pre></div>
+            </div>
+            <div>
+               <div class="Subheadline">Sample</div>
+               <div class="Sample">
+                  <xf:input ref="input3/value" incremental="true" datatype="xf:date" value="2007-10-10" id="input3">
+                     
+                     
+                     
+                     
+                     <xf:label>a date</xf:label>
+                     <xf:hint>input bound to date</xf:hint>
+                     <xf:alert>invalid</xf:alert>
+                  </xf:input>
+               </div>
+               <div class="Subheadline">Modelitem properties</div>
+               <div class="MIPS">
+                  <xf:group appearance="full">
+                     <xf:label></xf:label>
+                     <xf:input id="input3-readonly" navindex="-1" ref="input3/@readonly" incremental="true">
+                        <xf:label>readonly</xf:label>
+                     </xf:input>
+                     <xf:input id="input3-required" navindex="-1" ref="input3/@required" incremental="true">
+                        <xf:label>required</xf:label>
+                     </xf:input>
+                     <xf:input id="input3-relevant" navindex="-1" ref="input3/@relevant" incremental="true">
+                        <xf:label>relevant</xf:label>
+                     </xf:input>
+                     <xf:input id="input3-valid" navindex="-1" ref="input3/@constraint" incremental="true">
+                        <xf:label>valid</xf:label>
+                     </xf:input>
+                  </xf:group>
+               </div>
+            </div>
+         </div>
+         <div class="Section">
+            <div class="Headline">Datepicker control with datePattern</div>
+            <p class="Description">
+               An input which binds to a Node of type 'date' is rendered as a popup calendar control. The value
+               may also be be typed in directly. Through appearance="iso8601:datePattern" the format of the Date value
+               can be customized.
+               Typical format strings apply. See Dojo Docs.
+               
+            </p>
+            <div>
+               <div class="Subheadline">XForms Markup</div>
+               <div class="Subsection"><pre><code class="xml">
+&lt;!--XForms UI--&gt;
+&lt;xf:group appearance="full"&gt;
+    &lt;xf:label&gt;&lt;/xf:label&gt;
+    &lt;xf:input ref="input4" incremental="true" appearance="iso8601:dd.MMMM.yyyy" datatype="xf:date" value="2007-10-10" class="longDate"&gt;
+        &lt;xf:label&gt;a date with datePattern dd.MMMM.yyyy&lt;/xf:label&gt;
+        &lt;xf:hint&gt;appearance="iso8601:dd.MMMM.yyyy"&lt;/xf:hint&gt;
+    &lt;/xf:input&gt;
+    &lt;xf:input ref="input5" incremental="true" appearance="iso8601:EEE,dd.MM.yyyy" datatype="xf:date" value="2007-10-10" class="longDate"&gt;
+        &lt;xf:label&gt;a date with datePattern EEE,dd.MM.yyyy&lt;/xf:label&gt;
+        &lt;xf:hint&gt;appearance="iso8601:EEE,dd.MMMM.yyyy"&lt;/xf:hint&gt;
+    &lt;/xf:input&gt;
+&lt;/xf:group&gt;</code></pre></div>
+            </div>
+            <div>
+               <div class="Subheadline">Sample</div>
+               <div class="Sample">
+                  <xf:group appearance="full">
+                     
+                     
+                     
+                     
+                     <xf:label></xf:label>
+                     <xf:input ref="input4/value" incremental="true" appearance="iso8601:dd.MMMM.yyyy" datatype="xf:date" value="2007-10-10" class="longDate" id="input4">
+                        
+                        
+                        
+                        <xf:label>a date with datePattern dd.MMMM.yyyy</xf:label>
+                        <xf:hint>appearance="iso8601:dd.MMMM.yyyy"</xf:hint>
+                     </xf:input>
+                     <xf:input ref="input5/value" incremental="true" appearance="iso8601:EEE,dd.MM.yyyy" datatype="xf:date" value="2007-10-10" class="longDate" id="input5">
+                        
+                        
+                        
+                        <xf:label>a date with datePattern EEE,dd.MM.yyyy</xf:label>
+                        <xf:hint>appearance="iso8601:EEE,dd.MMMM.yyyy"</xf:hint>
+                     </xf:input>
+                  </xf:group>
+               </div>
+               <div class="Subheadline">Modelitem properties</div>
+               <div class="MIPS">
+                  <xf:group appearance="full">
+                     <xf:label></xf:label>
+                     <xf:input id="input4-readonly" navindex="-1" ref="input4/@readonly" incremental="true">
+                        <xf:label>readonly</xf:label>
+                     </xf:input>
+                     <xf:input id="input4-required" navindex="-1" ref="input4/@required" incremental="true">
+                        <xf:label>required</xf:label>
+                     </xf:input>
+                     <xf:input id="input4-relevant" navindex="-1" ref="input4/@relevant" incremental="true">
+                        <xf:label>relevant</xf:label>
+                     </xf:input>
+                     <xf:input id="input4-valid" navindex="-1" ref="input4/@constraint" incremental="true">
+                        <xf:label>valid</xf:label>
+                     </xf:input>
+                  </xf:group>
+                  <xf:group appearance="full">
+                     <xf:label></xf:label>
+                     <xf:input id="input5-readonly" navindex="-1" ref="input5/@readonly" incremental="true">
+                        <xf:label>readonly</xf:label>
+                     </xf:input>
+                     <xf:input id="input5-required" navindex="-1" ref="input5/@required" incremental="true">
+                        <xf:label>required</xf:label>
+                     </xf:input>
+                     <xf:input id="input5-relevant" navindex="-1" ref="input5/@relevant" incremental="true">
+                        <xf:label>relevant</xf:label>
+                     </xf:input>
+                     <xf:input id="input5-valid" navindex="-1" ref="input5/@constraint" incremental="true">
+                        <xf:label>valid</xf:label>
+                     </xf:input>
+                  </xf:group>
+               </div>
+               <div class="Subheadline">Notes</div>
+               <ul xmlns="" class="Notes">
+                  
+                  <li>
+                     The date control is currently not fully accessible esp. keyboard navigation is not
+                     working
+                     in the current version of Dojo 1.3. Upcoming version 1.4 will fully support keyboard
+                     navigation.
+                     
+                  </li>
+                  
+                  <li>
+                     Though locale-specific formatting of a date is supported there's no further support for
+                     subformats like the Java short/medium/long date formatting.
+                     
+                  </li>
+                  
+                  <li>
+                     Known limitation:
+                     Dojo only accepts 'date'-inputs in the chosen datePattern or the ISO8601/RFC3339 format
+                     (yyyy-MM-dd).
+                     
+                  </li>
+                  
+               </ul>
+            </div>
+         </div>
+         <div class="Section">
+            <div class="Headline">DateTime picker control</div>
+            <p class="Description">
+               An input which binds to a Node of type 'datetime' is rendered as a popup calendar and an associated
+               time input control.
+               
+            </p>
+            <div>
+               <div class="Subheadline">XForms Markup</div>
+               <div class="Subsection"><pre><code class="xml">
+&lt;!--XForms Instance--&gt;
+&lt;item&gt;2007-10-10T23:23:23.123Z&lt;/item&gt;
+        
+&lt;!--XForms Bind--&gt;
+&lt;xf:bind nodeset="input6" type="xf:dateTime"/&gt;
+        
+&lt;!--XForms UI--&gt;
+&lt;xf:input ref="input6" incremental="true" datatype="xf:dateTime" value="2007-10-10T23:23:23.123Z"&gt;
+    &lt;xf:label&gt;a datetime&lt;/xf:label&gt;
+&lt;/xf:input&gt;</code></pre></div>
+            </div>
+            <div>
+               <div class="Subheadline">Sample</div>
+               <div class="Sample">
+                  <xf:input ref="input6/value" incremental="true" datatype="xf:dateTime" value="2007-10-10T23:23:23.123Z" id="input6">
+                     
+                     
+                     <xf:label>a datetime</xf:label>
+                  </xf:input>
+               </div>
+               <div class="Subheadline">Modelitem properties</div>
+               <div class="MIPS">
+                  <xf:group appearance="full">
+                     <xf:label></xf:label>
+                     <xf:input id="input6-readonly" navindex="-1" ref="input6/@readonly" incremental="true">
+                        <xf:label>readonly</xf:label>
+                     </xf:input>
+                     <xf:input id="input6-required" navindex="-1" ref="input6/@required" incremental="true">
+                        <xf:label>required</xf:label>
+                     </xf:input>
+                     <xf:input id="input6-relevant" navindex="-1" ref="input6/@relevant" incremental="true">
+                        <xf:label>relevant</xf:label>
+                     </xf:input>
+                     <xf:input id="input6-valid" navindex="-1" ref="input6/@constraint" incremental="true">
+                        <xf:label>valid</xf:label>
+                     </xf:input>
+                  </xf:group>
+               </div>
+               <div class="Subheadline">Notes</div>
+               <ul xmlns="" class="Notes">
+                  
+                  <li>
+                     The date control is currently not fully accessible esp. keyboard navigation is not working
+                     in the current version of Dojo 1.3. Upcoming version 1.4 will fully support keyboard navigation.
+                     
+                  </li>
+                  
+                  <li>
+                     Though locale-specific formatting of a date is supported there's no further support for
+                     subformats
+                     like the Java short/medium/long date formatting.
+                     
+                  </li>
+                  
+               </ul>
+            </div>
+         </div>
+      </div>
+      <div style="text-align:right;" id="copyright"><a href="http://www.betterform.de"><img style="vertical-align:text-bottom; margin-right:5px;" src="../../images/betterform_icon16x16.png" alt="betterFORM project" /></a><span>© 2010 betterFORM</span></div>
+   </body>
+   
 </html>
-

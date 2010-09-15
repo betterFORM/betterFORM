@@ -204,8 +204,14 @@
 </xsl:text>
                 <style type="text/css">
                     <xsl:choose>
-                        <xsl:when test="//body/@class='soria'">
+                        <xsl:when test="contains(//body/@class, 'soria')">
                     @import "<xsl:value-of select="$contextroot"/><xsl:value-of select="$scriptPath"/>release/dojo/dijit/themes/soria/soria.css";
+                        </xsl:when>
+                        <xsl:when test="contains(//body/@class, 'claro')">
+                    @import "<xsl:value-of select="$contextroot"/>release/dojo/dijit/themes/claro/claro.css";
+                        </xsl:when>
+                        <xsl:when test="contains(//body/@class, 'nihilo')">
+                    @import "<xsl:value-of select="$contextroot"/>release/dojo/dijit/themes/nihilo/nihilo.css";
                         </xsl:when>
                         <xsl:otherwise>
                     @import "<xsl:value-of select="$contextroot"/><xsl:value-of select="$scriptPath"/>release/dojo/dijit/themes/tundra/tundra.css";
@@ -283,6 +289,8 @@
         <xsl:variable name="theme">
             <xsl:choose>
                 <xsl:when test="//body/@class='soria'">soria</xsl:when>
+                <xsl:when test="//body/@class='claro'">claro</xsl:when>
+                <xsl:when test="//body/@class='nihilo'">nihilo</xsl:when>
                 <xsl:otherwise>tundra</xsl:otherwise>
             </xsl:choose>
         </xsl:variable>

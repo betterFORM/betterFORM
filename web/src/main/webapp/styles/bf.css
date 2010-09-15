@@ -657,7 +657,7 @@ h3{
     overflow:auto;
 }
 
-#XFormsFeatureExplorer  #widgetsContainer {
+#XFormsFeatureExplorer  #widgetsContainer, #XFormsFeatureExplorer #innerWidgetsContainer {
 	overflow:hidden;
 }
 

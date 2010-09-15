@@ -3,7 +3,10 @@
   ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
+<!-- TODO:
+        - create empty instance see Input
 
+-->
 <xsl:stylesheet version="2.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns="http://www.w3.org/1999/xhtml"
@@ -35,15 +38,8 @@
 
     <xsl:template match="title" mode="title">
         <title><xsl:value-of select="."/></title>
-        <style type="text/css">
-            #mips .xfTrigger .dijitButtonContents {
-            width: 200px;
-            }
-        </style>
-
-
-        <link rel="stylesheet" type="text/css"
-              href="../../resources/scripts/dojox/highlight/resources/highlight.css"/>
+      
+        <link rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css"/>
         <link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css"/>
 
         <script type="text/javascript">
@@ -60,7 +56,7 @@
     </xsl:template>
 
     <xsl:template match="page">
-        <body class="soria" style="margin:30px;">
+        <body class="soria inlineAlert" style="margin:30px;">
             <div id="xforms">
                 <div style="display:none;">
                     <xsl:apply-templates mode="model"/>
@@ -79,10 +75,10 @@
     <xsl:template match="content" mode="model">
         <xsl:choose>
             <xsl:when test="string($models)">
+               <xsl:copy-of select="./models/*"/>
                 <!--
-                <xsl:copy-of select="./models/*"/>
-                -->
                 <xsl:apply-templates select="$models" mode="existingModel"/>
+                -->
             </xsl:when>
             <xsl:otherwise>
                 <xf:model>
@@ -107,16 +103,19 @@
     <xsl:template match="xf:*" mode="instance" priority="20">
         <xsl:variable name="name" select="./@ref"/>
         <xsl:variable name="value" select="./@value"/>
-        <xsl:element name="{$name}" namespace="">
-            <xsl:attribute name="constraint">true</xsl:attribute>
-            <xsl:attribute name="readonly">true</xsl:attribute>
-            <xsl:attribute name="required">true</xsl:attribute>
-            <xsl:attribute name="relevant">true</xsl:attribute>
-            <xsl:element name="value" namespace=""><xsl:value-of select="$value"/></xsl:element>                        
-        </xsl:element>
+        <xsl:if test="string($name)">
+            <xsl:element name="{$name}" namespace="">
+                <xsl:attribute name="constraint">true</xsl:attribute>
+                <xsl:attribute name="readonly">false</xsl:attribute>
+                <xsl:attribute name="required">true</xsl:attribute>
+                <xsl:attribute name="relevant">true</xsl:attribute>
+                <xsl:element name="value" namespace=""><xsl:value-of select="$value"/></xsl:element>
+            </xsl:element>
+        </xsl:if>
+        <xsl:apply-templates mode="instance"/>
     </xsl:template>
 
-    <xsl:template match="text()" mode="instance"/>
+
 
     <!--
     ######################################################################################################
@@ -147,28 +146,31 @@
                 </xf:bind>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:variable name="datatype">
-                    <xsl:choose>
-                        <xsl:when test="exists(./@datatype)">
-                            <xsl:value-of select="./@datatype"/>
-                        </xsl:when>
-                        <xsl:otherwise>string</xsl:otherwise>
-                    </xsl:choose>
-                </xsl:variable>
+                <xsl:if test="string(./@ref)">
+                    <xsl:variable name="datatype">
+                        <xsl:choose>
+                            <xsl:when test="exists(./@datatype)">
+                                <xsl:value-of select="./@datatype"/>
+                            </xsl:when>
+                            <xsl:otherwise>string</xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:variable>
 
-                <xf:bind nodeset="{./@ref}">
-                    <xf:bind nodeset="value"
-                             constraint="boolean-from-string(../@constraint)"
-                             readonly="boolean-from-string(../@readonly)"
-                             required="boolean-from-string(../@required)"
-                             relevant="boolean-from-string(../@relevant)"
-                             type="{$datatype}"/>
+                    <xf:bind nodeset="{./@ref}">
+                        <xf:bind nodeset="value"
+                                 constraint="boolean-from-string(../@constraint)"
+                                 readonly="boolean-from-string(../@readonly)"
+                                 required="boolean-from-string(../@required)"
+                                 relevant="boolean-from-string(../@relevant)"
+                                 type="{$datatype}"/>
 
-                    <xf:bind nodeset="@constraint" type="boolean"/>
-                    <xf:bind nodeset="@readonly" type="boolean"/>
-                    <xf:bind nodeset="@required" type="boolean"/>
-                    <xf:bind nodeset="@relevant" type="boolean"/>
-                </xf:bind>        
+                        <xf:bind nodeset="@constraint" type="boolean"/>
+                        <xf:bind nodeset="@readonly" type="boolean"/>
+                        <xf:bind nodeset="@required" type="boolean"/>
+                        <xf:bind nodeset="@relevant" type="boolean"/>
+                    </xf:bind>
+                </xsl:if>
+                <xsl:apply-templates mode="bind"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -213,7 +215,7 @@
                 <xsl:when test="exists(./@readonly)">
                     <xsl:value-of select="./@readonly"/>
                 </xsl:when>
-                <xsl:otherwise>true</xsl:otherwise>
+                <xsl:otherwise>false</xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="required">
@@ -319,13 +321,28 @@
                     <xsl:apply-templates mode="samplesection"/>
                 </div>
 
+                <xsl:if test="not(string($models))">
                 <div class="Subheadline">Modelitem properties</div>
                 <div class="MIPS">
                      <xsl:apply-templates mode="modelitemsection"/>
                 </div>
+                </xsl:if>
+
+                <xsl:if test="string($models) and string(./mips)">
+                <div class="Subheadline">Modelitem properties</div>
+                <div class="MIPS">
+                     <xsl:copy-of select="./mips/*"/>
+                </div>
+                </xsl:if>
+
+                <xsl:apply-templates mode="notes"/>
             </div>
         </div>
     </xsl:template>
+
+    <xsl:template match="mips" mode="codesectionxforms" priority="10"/>
+    <xsl:template match="mips" mode="codesectionbind" priority="10"/>
+    <xsl:template match="mips" mode="codesectioninstance" priority="10"/>
 
     <xsl:template match="xf:*" mode="codesectioninstance" priority="10">
         <xsl:if test="string(./@value)">
@@ -343,7 +360,7 @@
 &lt;xf:bind nodeset="<xsl:value-of select="$nodeset"/>" type="<xsl:value-of select="$datatype"/>"/&gt;
         </xsl:if>
     </xsl:template>
-
+    
     <xsl:template match="xf:*" mode="codesectionxforms" priority="10">
         <xsl:variable name="ref" select="./@ref"/>
         <xsl:variable name="name" select="name(.)"/>
@@ -388,6 +405,8 @@
 <xsl:text>"</xsl:text>
     </xsl:template>
 
+    <xsl:template match="mips" mode="samplesection" priority="10"/>
+
     <xsl:template match="xf:*" mode="samplesection" priority="10">
         <xsl:variable name="ref" select="./@ref"/>
         <xsl:variable name="name" select="name(.)"/>
@@ -400,6 +419,9 @@
             <xsl:otherwise>
                 <xsl:element name="{$name}">
                     <xsl:copy-of select="./@*"/>
+                    <xsl:if test="string($ref)">
+                        <xsl:attribute name="id" select="$ref"/>
+                    </xsl:if>
                     <xsl:if test="string($ref)">
                         <xsl:attribute name="ref" select="concat($ref, '/value')"/>
                     </xsl:if>
@@ -414,32 +436,37 @@
     </xsl:template>
 
     <xsl:template match="xf:*[@ref]" mode="modelitemsection" priority="10">
-        //TODO: id=ref-ro ....
-        <xsl:variable name="ref" select="./@ref"/>
-        <xf:input navindex="-1" style="width:10px;" ref="{$ref}/@readonly" class="mips"
-                  incremental="true">
-            <xf:label>readonly</xf:label>
-        </xf:input>
-        <xf:input navindex="-1" ref="{$ref}/@required" style="width:10px;" class="mips"
-                  incremental="true">
-            <xf:label>required</xf:label>
-        </xf:input>
-        <xf:input navindex="-1" ref="{$ref}/@relevant" style="width:10px;" class="mips"
-                  incremental="true">
-            <xf:label>relevant</xf:label>
-        </xf:input>
-        <xf:input navindex="-1" ref="{$ref}/@constraint" style="width:10px;" class="mips"
-                  incremental="true">
-            <xf:label>valid</xf:label>
-        </xf:input>
+      <xsl:variable name="ref" select="./@ref"/>
+        <xf:group appearance="full">
+            <xf:label/>
+            <xf:input id="{$ref}-readonly" navindex="-1" ref="{$ref}/@readonly" incremental="true">
+                <xf:label>readonly</xf:label>
+            </xf:input>
+            <xf:input id="{$ref}-required" navindex="-1" ref="{$ref}/@required" incremental="true">
+                <xf:label>required</xf:label>
+            </xf:input>
+            <xf:input id="{$ref}-relevant" navindex="-1" ref="{$ref}/@relevant" incremental="true">
+                <xf:label>relevant</xf:label>
+            </xf:input>
+            <xf:input id="{$ref}-valid" navindex="-1" ref="{$ref}/@constraint" incremental="true">
+                <xf:label>valid</xf:label>
+            </xf:input>
+        </xf:group>
     </xsl:template>
 
+    <xsl:template match="notes" mode="notes" priority="10">
+        <div class="Subheadline">Notes</div>
+        <xsl:message><xsl:value-of select="."/></xsl:message>
+        <xsl:copy-of select="./*"/>
+    </xsl:template>
+
+    <xsl:template match="text()" mode="instance"/>
     <xsl:template match="text()" mode="ui"/>
     <xsl:template match="text()" mode="section"/>
     <xsl:template match="text()" mode="codesectioninstance"/>
     <xsl:template match="text()" mode="codesectionbind"/> 
     <xsl:template match="text()" mode="codesectionxforms"/>
-   
+    <xsl:template match="text()" mode="notes"/>
     <xsl:template match="text()" mode="samplesection"/>
     <xsl:template match="text()" mode="modelitemsection"/>
     <xsl:template match="text()" mode="bind"/>

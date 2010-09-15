@@ -20,11 +20,14 @@
 </xsl:text>
                 <style type="text/css">
                     <xsl:choose>
-                        <xsl:when test="//body/@class='soria'">
+                        <xsl:when test="contains(//body/@class, 'soria')">
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dijit/themes/soria/soria.css";
                         </xsl:when>
-                        <xsl:when test="//body/@class='nihilo'">
+                        <xsl:when test="contains(//body/@class, 'nihilo')">
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dijit/themes/nihilo/nihilo.css";
+                        </xsl:when>
+                         <xsl:when test="contains(//body/@class, 'claro')">
+                    @import "<xsl:value-of select="$contextroot"/>dijit/themes/claro/claro.css";
                         </xsl:when>
                         <xsl:otherwise>
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dijit/themes/tundra/tundra.css";
