@@ -6,8 +6,9 @@
 dojo.provide("betterform.ui.ControlValue");
 
 dojo.require("dijit._Widget");
+dojo.require("dijit.form._FormWidget");
 dojo.require("dijit._Templated");
-dojo.require("dojo._base.fx");
+/*dojo.require("dojo._base.fx");*/
 
 
 /**
@@ -39,6 +40,7 @@ dojo.declare(
         }
     },
     setCurrentValue:function(value) {
+        // console.debug("ControlValue.setCurrentValue value:",value);
         if (value != undefined) {
             this.currentValue = value;
         } else {
@@ -126,13 +128,7 @@ dojo.declare(
 
     applyState:function() {
         // console.debug("ControlValue.applyState (id:" + this.id +")");
-        if (this.xfControl.isReadonly()) {
-            this.attr('disabled', true);
-            this.attr('readonly', true);
-        } else {
-            this.attr('disabled', false);
-            this.attr('readonly', false);
-        }
+        this.set("readOnly",this.xfControl.isReadonly());
     },
 
     setControlValue:function(value) {

@@ -28,8 +28,7 @@ dojo.declare(
 {
     // Root Label
     rootLabel:"Root Node",
-
-    templatePath: dojo.moduleUrl("betterform", "ui/templates/Tree.html"),
+    templateString: dojo.cache("betterform", "ui/templates/Tree.html"),
     instanceId:null,
     modelId:null,
 

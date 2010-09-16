@@ -12,7 +12,7 @@ dojo.declare(
         betterform.ui.ControlValue,
 {
     label:"",
-    templatePath: dojo.moduleUrl("betterform", "ui/templates/HtmlLinkButton.html"),
+    templateString: dojo.cache("betterform", "ui/templates/HtmlLinkButton.html"),
 
     postMixInProperties:function() {
         this.inherited(arguments);

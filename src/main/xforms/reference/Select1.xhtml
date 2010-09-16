@@ -21,81 +21,39 @@
          <div style="display:none;">
             <xf:model id="model-1">
                
-               
                <xf:instance id="instance-1">
-                  
                   <data xmlns="" constraint="true" readonly="false" required="false" relevant="true">
-                     
                      <item constraint="true" readonly="false" required="true" relevant="true">
-                        
                         <value constraint="true" readonly="false" required="true" relevant="true">AX</value>
-                        
                      </item>
-                     
                   </data>
                   
                </xf:instance>
-               
                <xf:bind nodeset="item">
-                  
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
-                  
                   <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@required" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
-                  
                </xf:bind>
                
                <xf:instance id="codes">
-                  
                   <countrylist xmlns="" lang="en" constraint="true" readonly="false" required="true" relevant="true">
-                     
                      <country constraint="true" readonly="false" required="true" relevant="true">
-                        
-                        <country-name constraint="true" readonly="false" required="true" relevant="true">
-                           AFGHANISTAN
-                           
-                        </country-name>
-                        
+                        <country-name constraint="true" readonly="false" required="true" relevant="true">AFGHANISTAN</country-name>
                         <code constraint="true" readonly="false" required="true" relevant="true">AF</code>
-                        
                      </country>
-                     
                      <country constraint="true" readonly="false" required="true" relevant="true">
-                        
-                        <country-name constraint="true" readonly="false" required="true" relevant="true">LAND
-                           ISLANDS
-                           
-                        </country-name>
-                        
+                        <country-name constraint="true" readonly="false" required="true" relevant="true">LAND ISLANDS</country-name>
                         <code constraint="true" readonly="false" required="true" relevant="true">AX</code>
-                        
                      </country>
-                     
                      <country constraint="true" readonly="false" required="true" relevant="true">
-                        
-                        <country-name constraint="true" readonly="false" required="true" relevant="true">
-                           ALBANIA
-                           
-                        </country-name>
-                        
+                        <country-name constraint="true" readonly="false" required="true" relevant="true">ALBANIA</country-name>
                         <code constraint="true" readonly="false" required="true" relevant="true">AL</code>
-                        
                      </country>
-                     
                      <country constraint="true" readonly="false" required="true" relevant="true">
-                        
-                        <country-name constraint="true" readonly="false" required="true" relevant="true">
-                           ALGERIA
-                           
-                        </country-name>
-                        
+                        <country-name constraint="true" readonly="false" required="true" relevant="true">ALGERIA</country-name>
                         <code constraint="true" readonly="false" required="true" relevant="true">DZ</code>
-                        
                      </country>
                      
                   </countrylist>
@@ -106,11 +64,11 @@
          </div>
          <div class="pageintro">
             <div class="pagetitle">The select1 Control</div>
-            <div class="Section">
+         <div class="Section">
                <div class="PageDescription">Description</div>
                <p>
                   This form control allows the user to make multiple selections from a set of choices..
-                  
+
                </p>
             </div>
             <table>
@@ -130,7 +88,7 @@
             <div class="Headline">select1 Control with appearance 'minimal'</div>
             <p class="Description">
                Default rendering of a select1 if no appearance is given.
-               
+
             </p>
             <div>
                <div class="Subheadline">XForms Markup</div>
@@ -148,40 +106,40 @@
                <div class="Subheadline">Sample</div>
                <div class="Sample">
                   <xf:select1 ref="item/value">
-                     
+
                      <xf:label>minimal select1</xf:label>
-                     
+
                      <xf:itemset nodeset="instance('codes')/country">
-                        
+
                         <xf:label ref="country-name"></xf:label>
-                        
+
                         <xf:value ref="code"></xf:value>
-                        
+
                      </xf:itemset>
-                     
+
                   </xf:select1>
                </div>
                <div class="Subheadline">Modelitem properties</div>
                <div class="MIPS">
                   <xf:input navindex="-1" ref="item/@readonly" class="mips" incremental="true">
-                     
+
                      <xf:label>readonly</xf:label>
-                     
+
                   </xf:input>
                   <xf:input navindex="-1" ref="item/@required" class="mips" incremental="true">
-                     
+
                      <xf:label>required</xf:label>
-                     
+
                   </xf:input>
                   <xf:input navindex="-1" ref="item/@relevant" class="mips" incremental="true">
-                     
+
                      <xf:label>relevant</xf:label>
-                     
+
                   </xf:input>
                   <xf:input navindex="-1" ref="item/@constraint" class="mips" incremental="true">
-                     
+
                      <xf:label>valid</xf:label>
-                     
+
                   </xf:input>
                </div>
             </div>
@@ -205,40 +163,40 @@
                <div class="Subheadline">Sample</div>
                <div class="Sample">
                   <xf:select1 ref="item/value" appearance="compact">
-                     
+
                      <xf:label>compact select1</xf:label>
-                     
+
                      <xf:itemset nodeset="instance('codes')/country">
-                        
+
                         <xf:label ref="country-name"></xf:label>
-                        
+
                         <xf:value ref="code"></xf:value>
-                        
+
                      </xf:itemset>
-                     
+
                   </xf:select1>
                </div>
                <div class="Subheadline">Modelitem properties</div>
                <div class="MIPS">
                   <xf:input navindex="-1" ref="item/@readonly" class="mips" incremental="true">
-                     
+
                      <xf:label>readonly</xf:label>
-                     
+
                   </xf:input>
                   <xf:input navindex="-1" ref="item/@required" class="mips" incremental="true">
-                     
+
                      <xf:label>required</xf:label>
-                     
+
                   </xf:input>
                   <xf:input navindex="-1" ref="item/@relevant" class="mips" incremental="true">
-                     
+
                      <xf:label>relevant</xf:label>
-                     
+
                   </xf:input>
                   <xf:input navindex="-1" ref="item/@constraint" class="mips" incremental="true">
-                     
+
                      <xf:label>valid</xf:label>
-                     
+
                   </xf:input>
                </div>
             </div>
@@ -262,40 +220,29 @@
                <div class="Subheadline">Sample</div>
                <div class="Sample">
                   <xf:select1 id="select11" ref="item/value" appearance="full">
-                     
+
                      <xf:label>full select1</xf:label>
-                     
+
                      <xf:itemset nodeset="instance('codes')/country">
-                        
+
                         <xf:label ref="country-name"></xf:label>
-                        
                         <xf:value ref="code"></xf:value>
-                        
                      </xf:itemset>
-                     
                   </xf:select1>
                </div>
                <div class="Subheadline">Modelitem properties</div>
                <div class="MIPS">
                   <xf:input navindex="-1" ref="item/@readonly" class="mips" incremental="true">
-                     
                      <xf:label>readonly</xf:label>
-                     
                   </xf:input>
                   <xf:input navindex="-1" ref="item/@required" class="mips" incremental="true">
-                     
                      <xf:label>required</xf:label>
-                     
                   </xf:input>
                   <xf:input navindex="-1" ref="item/@relevant" class="mips" incremental="true">
-                     
                      <xf:label>relevant</xf:label>
-                     
                   </xf:input>
                   <xf:input navindex="-1" ref="item/@constraint" class="mips" incremental="true">
-                     
                      <xf:label>valid</xf:label>
-                     
                   </xf:input>
                </div>
             </div>
@@ -305,7 +252,7 @@
             <p class="Description">
                Select1 with @selection='open' allows the user to input a value that does not exist in the list
                of choices. Simply type into the input field.
-               
+
             </p>
             <div>
                <div class="Subheadline">XForms Markup</div>
@@ -332,73 +279,73 @@
         &lt;/xf:item&gt;
     &lt;/xf:choices&gt;
 &lt;/xf:select1&gt;</code></pre></div>
-            </div>
+      </div>
             <div>
                <div class="Subheadline">Sample</div>
                <div class="Sample">
                   <xf:select1 id="select12" ref="item/value" selection="open">
-                     
+
                      <xf:label>selection open</xf:label>
-                     
+
                      <xf:choices>
-                        
+
                         <xf:item>
-                           
+
                            <xf:label>AFGHANISTAN</xf:label>
-                           
+
                            <xf:value>AF</xf:value>
-                           
+
                         </xf:item>
-                        
+
                         <xf:item>
-                           
+
                            <xf:label>LAND ISLANDS</xf:label>
-                           
+
                            <xf:value>AX</xf:value>
-                           
+
                         </xf:item>
-                        
+
                         <xf:item>
-                           
+
                            <xf:label>ALBANIA</xf:label>
-                           
+
                            <xf:value>AL</xf:value>
-                           
+
                         </xf:item>
-                        
+
                         <xf:item>
-                           
+
                            <xf:label>ALGERIA</xf:label>
-                           
+
                            <xf:value>DZ</xf:value>
-                           
+
                         </xf:item>
-                        
+
                      </xf:choices>
-                     
+
                   </xf:select1>
                </div>
                <div class="Subheadline">Modelitem properties</div>
                <div class="MIPS">
                   <xf:input navindex="-1" ref="item/@readonly" class="mips" incremental="true">
-                     
+
                      <xf:label>readonly</xf:label>
-                     
+
                   </xf:input>
                   <xf:input navindex="-1" ref="item/@required" class="mips" incremental="true">
-                     
+
                      <xf:label>required</xf:label>
-                     
+
                   </xf:input>
                   <xf:input navindex="-1" ref="item/@relevant" class="mips" incremental="true">
-                     
+
                      <xf:label>relevant</xf:label>
-                     
+
                   </xf:input>
                   <xf:input navindex="-1" ref="item/@constraint" class="mips" incremental="true">
-                     
+
                      <xf:label>valid</xf:label>
-                     
+
                   </xf:input>
                </div>
             </div>

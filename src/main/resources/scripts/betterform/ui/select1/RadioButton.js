@@ -17,8 +17,7 @@ dojo.declare(
     select1Dijit:null,
 
     buildRendering:function() {
-
-        // console.debug("RadioButton.buildRendering");
+         // console.debug("RadioButton.buildRendering");
         if(dojo.attr(this.srcNodeRef, "selected") == undefined ||dojo.attr(this.srcNodeRef, "selected") == "") {
             dojo.attr(this.srcNodeRef, "selected", "false");
         }
@@ -29,7 +28,7 @@ dojo.declare(
 
         
         this.currentValue = dojo.attr(this.srcNodeRef, "value");
-        // console.debug("RadioButton.buildRendering currentValue: ",this.currentValue);
+         // console.debug("RadioButton.buildRendering currentValue: ",this.currentValue);
 
         if(dojo.attr(this.srcNodeRef,"parentId") != undefined && dojo.attr(this.srcNodeRef,"parentId") != "" ) {
             this.parentId = dojo.attr(this.srcNodeRef,"parentId");
@@ -54,15 +53,18 @@ dojo.declare(
         
     },
 
+
     postCreate:function() {
+        this.inherited(arguments);
         // console.debug("RadioButton.postCreate: connect _setRadioGroupValue");
         if(dijit.byId(this.parentId+"-value") == undefined && this.parentId != undefined) {
-            //console.debug("RadioButton.postCreate: Parent Select1 Dijit undefined, will be created; ParentId is: ",this.parentId);
+            console.warn("RadioButton.postCreate: Parent Select1 Dijit undefined, will be created; ParentId is: ",this.parentId);
             dojo.hitch(this, new betterform.ui.Control({},this.parentId));
         }
         this.select1Dijit = dijit.byId(this.parentId+"-value");
         // console.debug("RadioButton: selectDijit = ",this.select1Dijit, " parentId: ",this.parentId);
         dojo.connect(this, "_onClick", this.select1Dijit, "_setRadioGroupValue");
+        // console.debug("END RadioButton.postCreate");
     },
 
 

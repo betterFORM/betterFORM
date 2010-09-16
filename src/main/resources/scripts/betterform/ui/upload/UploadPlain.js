@@ -14,8 +14,7 @@ dojo.declare(
         betterform.ui.ControlValue,
 {
 
-    templatePath: dojo.moduleUrl("betterform", "ui/templates/HtmlUpload.html"),
-    
+    templateString: dojo.cache("betterform", "ui/templates/HtmlUpload.html"),
     // parameters
     value:"",
     disabledNodes: new Array(),

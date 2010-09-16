@@ -62,7 +62,7 @@ dojo.declare(
     // Not sure why this function is needed and a direct setControlValue in the onChange behaves strange...
     // Probably some dojo quirk or my lack of understanding
     setControlValueDelayed:function() {
-	this.setControlValue();
+	    this.setControlValue();
     },
 
     getControlValue:function(){
@@ -80,17 +80,6 @@ dojo.declare(
     /* function needed by InlineEditBox */
     setTextValue:function(/* String */ value) {
         this.setControlValue(this.getControlValue());
-    },
-
-    applyState:function() {
-        // console.debug("betterform.ui.input.TextField.applyState",this);
-        if (this.xfControl.isReadonly()) {
-            dojo.attr(this.domNode,"readonly","readonly");
-        } else if(dojo.hasAttr(this.domNode,"readonly")) {
-            dojo.removeAttr(this.domNode,"readonly");
-        }else if(dojo.hasAttr(this.domNode,"disabled")) {
-            dojo.removeAttr(this.domNode,"disabled");
-        }
     },
 
     /* function needed by InlineEditBox */

@@ -46,6 +46,8 @@ dojo.declare("betterform.FluxProcessor",
     requestPending:false,
     fifoReaderTimer:null,
     lastServerClientFocusEvent:null,
+    _earlyTemplatedStartup:true,
+    widgetsInTemplate:true,    
 
 
     /*
@@ -210,10 +212,10 @@ dojo.declare("betterform.FluxProcessor",
         while ((this.requestPending == false) && (this.clientServerEventQueue.length != 0)) {
             nextPendingClientServerEvent = this.clientServerEventQueue.shift();
             switch (nextPendingClientServerEvent.getCallerFunction()) {
-                case "dispatchEvent":                console.info("FIFO-READ:  dispatchEvent(" + nextPendingClientServerEvent.getTargetId() + ")"); break;
-                case "dispatchEventType":        console.info("FIFO-READ:  dispatchEventType(" + nextPendingClientServerEvent.getTargetId() + ", " + nextPendingClientServerEvent.getEventType() + ", " + nextPendingClientServerEvent.getContextInfo() + ")"); break;
-                case "setControlValue":            console.info("FIFO-READ:  setControlValue(" + nextPendingClientServerEvent.getTargetId() + ", " + nextPendingClientServerEvent.getValue() + ")"); break;
-                case "setRepeatIndex":            console.info("FIFO-READ: setRepeatIndex(" + nextPendingClientServerEvent.getTargetId() + ", " + nextPendingClientServerEvent.getValue() + ")"); break;
+                case "dispatchEvent":       console.info("FIFO-READ:  dispatchEvent(" + nextPendingClientServerEvent.getTargetId() + ")"); break;
+                case "dispatchEventType":   console.info("FIFO-READ:  dispatchEventType(" + nextPendingClientServerEvent.getTargetId() + ", " + nextPendingClientServerEvent.getEventType() + ", " + nextPendingClientServerEvent.getContextInfo() + ")"); break;
+                case "setControlValue":     console.info("FIFO-READ:  setControlValue(" + nextPendingClientServerEvent.getTargetId() + ", " + nextPendingClientServerEvent.getValue() + ")"); break;
+                case "setRepeatIndex":      console.info("FIFO-READ: setRepeatIndex(" + nextPendingClientServerEvent.getTargetId() + ", " + nextPendingClientServerEvent.getValue() + ")"); break;
                 default:                                        break;
             }
 

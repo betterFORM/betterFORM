@@ -24,7 +24,7 @@ dojo.declare(
     values:"",
 
     handleStateChanged:function(contextInfo) {
-        console.debug("RadioItemset.handleStateChanged: ",contextInfo);
+        // console.debug("RadioItemset.handleStateChanged: ",contextInfo);
         if(contextInfo.targetName == "label"){
             dojo.byId(contextInfo.parentId+"-label").innerHTML = contextInfo.value;
         }else if(contextInfo.targetName == "value"){
@@ -36,7 +36,7 @@ dojo.declare(
 
 
     handleInsert:function(contextInfo) {
-        console.debug("RadioItemset.insertItem: ",contextInfo);
+        // console.debug("RadioItemset.insertItem: ",contextInfo);
 
         var itemNode = document.createElement("span");
         dojo.addClass(itemNode, "xfSelectorItem");
@@ -55,12 +55,12 @@ dojo.declare(
         dojo.attr(labelNode, "for",itemId+"-value" );
         labelNode.innerHTML = contextInfo.label;
         var myParentNode = this.domNode.parentNode;
-        while(!dojo.hasClass(myParentNode,"xfSelect1")){
+        while(!dojo.hasClass(myParentNode,"xfFullSelect1")){
             myParentNode = myParentNode.parentNode;
         }
-        console.debug("myParentNode",myParentNode);
-        console.debug("RadioItemset.insertItemset: created node: ", itemNode);
-        console.dirxml(itemNode);
+        // console.debug("myParentNode",myParentNode);
+        // console.debug("RadioItemset.insertItemset: created node: ", itemNode);
+        // console.dirxml(itemNode);
 
         var valueNode = document.createElement("input");
         if(dojo.hasClass(valueNode, "xfValue")) {
@@ -94,7 +94,7 @@ dojo.declare(
                 dojo.attr(item, "parentid", myParentNode.id);
 
                 this._replacePrototypeIds(item, generatedIds);
-                console.dirxml(item);
+                // console.dirxml(item);
 
                 dojo.place(item, labelNode);
             }

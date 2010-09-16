@@ -15,7 +15,7 @@ dojo.declare(
 {   timeLine:null,
     t1:null,
     resizeTimerID:null,
-    templatePath: dojo.moduleUrl("betterform", "ui/templates/TimeLine.html"),
+    templateString: dojo.cache("betterform", "ui/templates/TimeLine.html"),
     instanceId:null,
     modelId:null,
     adjustTimestamp:false,

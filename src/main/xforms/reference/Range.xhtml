@@ -89,6 +89,9 @@
 &lt;!--XForms UI--&gt;
 &lt;xf:range ref="item/value" start="1" step="1" end="5" incremental="true"&gt;
     &lt;xf:label&gt;a slider&lt;/xf:label&gt;
+    &lt;xf:help&gt;help for slider1&lt;/xf:help&gt;
+    &lt;xf:hint&gt;hint for slider1&lt;/xf:hint&gt;
+    &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
 &lt;/xf:range&gt;</code></pre></div>
             </div>
             <div>
@@ -97,6 +100,12 @@
                   <xf:range ref="item/value" start="1" step="1" end="5" incremental="true">
                      
                      <xf:label>a slider</xf:label>
+                     
+                     <xf:help>help for slider1</xf:help>
+                     
+                     <xf:hint>hint for slider1</xf:hint>
+                     
+                     <xf:alert>invalid</xf:alert>
                      
                   </xf:range>
                </div>
@@ -138,9 +147,7 @@
 &lt;xf:range ref="item/value" start="1" step="1" end="5" appearance="bf:rating" incremental="true"&gt;
     &lt;xf:label&gt;Rate it&lt;/xf:label&gt;
     &lt;xf:hint&gt;This is a standard range control&lt;/xf:hint&gt;
-    &lt;xf:help&gt;Not much to say here but some basic html formatting is
-        &lt;b&gt;possible&lt;/b&gt;
-    &lt;/xf:help&gt;
+    &lt;xf:help&gt;Not much to say here but some basic html formatting is &lt;b&gt;possible&lt;/b&gt;&lt;/xf:help&gt;
     &lt;xf:alert&gt;value is invalid&lt;/xf:alert&gt;
 &lt;/xf:range&gt;</code></pre></div>
             </div>
@@ -153,10 +160,8 @@
                      
                      <xf:hint>This is a standard range control</xf:hint>
                      
-                     <xf:help>Not much to say here but some basic html formatting is
-                        
+                     <xf:help>Not much to say here but some basic html formatting is 
                         <b xmlns="">possible</b>
-                        
                      </xf:help>
                      
                      <xf:alert>value is invalid</xf:alert>

@@ -22,6 +22,7 @@
 <xf:input ref="input1" incremental="true">
     <xf:label>a text</xf:label>
     <xf:hint>input bound to string</xf:hint>
+    <xf:help>help for input1</xf:help>
     <xf:alert>invalid</xf:alert>
 </xf:input>
                 </section>
@@ -34,6 +35,7 @@
     <xf:label>a boolean</xf:label>
     <xf:hint>input bound to boolean</xf:hint>
     <xf:alert>invalid</xf:alert>
+    <xf:help>help for input2</xf:help>
 </xf:input>
                 </section>
                 <section>
@@ -46,6 +48,7 @@
     <xf:label>a date</xf:label>
     <xf:hint>input bound to date</xf:hint>
     <xf:alert>invalid</xf:alert>
+    <xf:help>help for input3</xf:help>
 </xf:input>
                 </section>
                 <section>
@@ -81,10 +84,16 @@
     <xf:input ref="input4" incremental="true" appearance="iso8601:dd.MMMM.yyyy" datatype="xf:date" value="2007-10-10" class="longDate">
         <xf:label>a date with datePattern dd.MMMM.yyyy</xf:label>
         <xf:hint>appearance="iso8601:dd.MMMM.yyyy"</xf:hint>
+        <xf:alert>invalid</xf:alert>
+        <xf:help>help for input4</xf:help>
+
     </xf:input>
     <xf:input ref="input5" incremental="true" appearance="iso8601:EEE,dd.MM.yyyy" datatype="xf:date" value="2007-10-10" class="longDate">
         <xf:label>a date with datePattern EEE,dd.MM.yyyy</xf:label>
         <xf:hint>appearance="iso8601:EEE,dd.MMMM.yyyy"</xf:hint>
+        <xf:alert>invalid</xf:alert>
+        <xf:help>help for input5</xf:help>
+
     </xf:input>
 </xf:group>
                 </section>
@@ -109,6 +118,10 @@
                     </notes>
 <xf:input ref="input6" incremental="true" datatype="xf:dateTime" value="2007-10-10T23:23:23.123Z">
     <xf:label>a datetime</xf:label>
+    <xf:alert>invalid</xf:alert>
+    <xf:help>help for input6</xf:help>
+    <xf:hint>hint for input6</xf:hint>
+
 </xf:input>
                 </section>
             </samples>

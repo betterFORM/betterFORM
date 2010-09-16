@@ -126,6 +126,7 @@
 &lt;xf:input ref="input1" incremental="true"&gt;
     &lt;xf:label&gt;a text&lt;/xf:label&gt;
     &lt;xf:hint&gt;input bound to string&lt;/xf:hint&gt;
+    &lt;xf:help&gt;help for input1&lt;/xf:help&gt;
     &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
 &lt;/xf:input&gt;</code></pre></div>
             </div>
@@ -137,8 +138,10 @@
                      
                      
                      
+                     
                      <xf:label>a text</xf:label>
                      <xf:hint>input bound to string</xf:hint>
+                     <xf:help>help for input1</xf:help>
                      <xf:alert>invalid</xf:alert>
                   </xf:input>
                </div>
@@ -179,6 +182,7 @@
     &lt;xf:label&gt;a boolean&lt;/xf:label&gt;
     &lt;xf:hint&gt;input bound to boolean&lt;/xf:hint&gt;
     &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
+    &lt;xf:help&gt;help for input2&lt;/xf:help&gt;
 &lt;/xf:input&gt;</code></pre></div>
             </div>
             <div>
@@ -189,9 +193,11 @@
                      
                      
                      
+                     
                      <xf:label>a boolean</xf:label>
                      <xf:hint>input bound to boolean</xf:hint>
                      <xf:alert>invalid</xf:alert>
+                     <xf:help>help for input2</xf:help>
                   </xf:input>
                </div>
                <div class="Subheadline">Modelitem properties</div>
@@ -235,6 +241,7 @@
     &lt;xf:label&gt;a date&lt;/xf:label&gt;
     &lt;xf:hint&gt;input bound to date&lt;/xf:hint&gt;
     &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
+    &lt;xf:help&gt;help for input3&lt;/xf:help&gt;
 &lt;/xf:input&gt;</code></pre></div>
             </div>
             <div>
@@ -245,9 +252,11 @@
                      
                      
                      
+                     
                      <xf:label>a date</xf:label>
                      <xf:hint>input bound to date</xf:hint>
                      <xf:alert>invalid</xf:alert>
+                     <xf:help>help for input3</xf:help>
                   </xf:input>
                </div>
                <div class="Subheadline">Modelitem properties</div>
@@ -288,10 +297,16 @@
     &lt;xf:input ref="input4" incremental="true" appearance="iso8601:dd.MMMM.yyyy" datatype="xf:date" value="2007-10-10" class="longDate"&gt;
         &lt;xf:label&gt;a date with datePattern dd.MMMM.yyyy&lt;/xf:label&gt;
         &lt;xf:hint&gt;appearance="iso8601:dd.MMMM.yyyy"&lt;/xf:hint&gt;
+        &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
+        &lt;xf:help&gt;help for input4&lt;/xf:help&gt;
+
     &lt;/xf:input&gt;
     &lt;xf:input ref="input5" incremental="true" appearance="iso8601:EEE,dd.MM.yyyy" datatype="xf:date" value="2007-10-10" class="longDate"&gt;
         &lt;xf:label&gt;a date with datePattern EEE,dd.MM.yyyy&lt;/xf:label&gt;
         &lt;xf:hint&gt;appearance="iso8601:EEE,dd.MMMM.yyyy"&lt;/xf:hint&gt;
+        &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
+        &lt;xf:help&gt;help for input5&lt;/xf:help&gt;
+
     &lt;/xf:input&gt;
 &lt;/xf:group&gt;</code></pre></div>
             </div>
@@ -308,15 +323,25 @@
                         
                         
                         
+                        
+                        
+                        
                         <xf:label>a date with datePattern dd.MMMM.yyyy</xf:label>
                         <xf:hint>appearance="iso8601:dd.MMMM.yyyy"</xf:hint>
+                        <xf:alert>invalid</xf:alert>
+                        <xf:help>help for input4</xf:help>
                      </xf:input>
                      <xf:input ref="input5/value" incremental="true" appearance="iso8601:EEE,dd.MM.yyyy" datatype="xf:date" value="2007-10-10" class="longDate" id="input5">
                         
                         
                         
+                        
+                        
+                        
                         <xf:label>a date with datePattern EEE,dd.MM.yyyy</xf:label>
                         <xf:hint>appearance="iso8601:EEE,dd.MMMM.yyyy"</xf:hint>
+                        <xf:alert>invalid</xf:alert>
+                        <xf:help>help for input5</xf:help>
                      </xf:input>
                   </xf:group>
                </div>
@@ -399,6 +424,10 @@
 &lt;!--XForms UI--&gt;
 &lt;xf:input ref="input6" incremental="true" datatype="xf:dateTime" value="2007-10-10T23:23:23.123Z"&gt;
     &lt;xf:label&gt;a datetime&lt;/xf:label&gt;
+    &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
+    &lt;xf:help&gt;help for input6&lt;/xf:help&gt;
+    &lt;xf:hint&gt;hint for input6&lt;/xf:hint&gt;
+
 &lt;/xf:input&gt;</code></pre></div>
             </div>
             <div>
@@ -407,7 +436,14 @@
                   <xf:input ref="input6/value" incremental="true" datatype="xf:dateTime" value="2007-10-10T23:23:23.123Z" id="input6">
                      
                      
+                     
+                     
+                     
+                     
                      <xf:label>a datetime</xf:label>
+                     <xf:alert>invalid</xf:alert>
+                     <xf:help>help for input6</xf:help>
+                     <xf:hint>hint for input6</xf:hint>
                   </xf:input>
                </div>
                <div class="Subheadline">Modelitem properties</div>

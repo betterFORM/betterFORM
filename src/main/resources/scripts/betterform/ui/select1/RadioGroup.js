@@ -48,7 +48,7 @@ dojo.declare(
                     var optionId = dojo.attr(xfNode,"id");
                     var optionvalue = [0];
                     dojo.query(".xfRadioValue",xfNode).attr("name",name);
-                    
+                    // console.dirxml(xfNode);
                     var option = new betterform.ui.Control({id:optionId,
                                                        value:dojo.attr(xfNode,"value")
                                                        },xfNode);
@@ -105,47 +105,30 @@ dojo.declare(
         // console.debug("RadioGroup._handleSetControlValue value:",value, " this.id: ", this.id);
         var radioItems = dojo.query(".xfRadioValue", this.domNode);
         for(i=0;i<radioItems.length;i++){
-            //var optionValue = dojo.attr(dojo.query(".dijitCheckBoxInput",radioItems[i])[0],"value");
             var optionDijitId = dojo.attr(radioItems[i],"widgetId");
             var optionDijit = dijit.byId(optionDijitId);
             var optionValue = optionDijit.getControlValue();
             // console.debug("RadioItems optionDijit: ",optionDijit, " optionValue:",optionValue);
             if(optionValue==value){
-                optionDijit._setCheckedAttr(true);
+                // console.debug("found correct dijit: optionDijit: ",optionDijit);
+                optionDijit.attr("checked", true);
             }else{
-                optionDijit._setCheckedAttr(false);                
+                optionDijit.attr("checked", false);                
             }            
         }
     },
     /* update UI MIP after value change by processor */
     applyState:function(){
-        // console.debug("RadioGroup.applyState [id:"+this.id+" / object:",this,"]");
-        var radioItems = dojo.query(".xfRadioValue", this.domNode);
-        for(i=0;i<radioItems.length;i++){
-            var optionDOM = dojo.byId(dojo.attr(radioItems[i],"widgetId"));
-            // console.debug("OptionDOM: ", optionDOM, " radioItem["+i+"]" ,radioItems[i]);
-
-           if (this.xfControl.isReadonly() && optionDOM != undefined){
-                dojo.attr(optionDOM,"disabled","disabled");
-            } else if(optionDOM != undefined){
-                 optionDOM.removeAttribute("disabled");
-            }
-        }
-    }
-
-/*    setDisabled:function(*//*Boolean*//* disabled) {
-        dojo.forEach(dojo.query(".dijitCheckBoxInput", this.domNode),
-            function(entry) {
-                if (disabled) {
-                    dojo.attr(entry, "disabled", "disabled");
-                }
-                else {
-                    entry.removeAttribute("disabled");
-                }
+        // console.debug("RadioGroup.applyState [id:"+this.id+" / object:",this,"] this.xfControl: ",this.xfControl);
+        var isReadOnly = this.xfControl.isReadonly();
+        dojo.query(".xfRadioValue", this.domNode).forEach(
+            function(xfNode){
+                var radioDijit = dijit.byNode(xfNode);
+                // console.debug("radioDijit: ",radioDijit, " isReadOnly: ",isReadOnly);
+                radioDijit.set("readOnly",isReadOnly);
             }
         );
-    }*/
-
+    }
 });
 
 

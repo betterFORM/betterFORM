@@ -13,7 +13,7 @@ dojo.declare(
         "betterform.ui.input.DateTime",
         betterform.ui.ControlValue,
 {
-    templatePath: dojo.moduleUrl("betterform", "ui/templates/DateTime.html"),
+    templateString: dojo.cache("betterform", "ui/templates/DateTime.html"),
     id:null,
     widgetsInTemplate:true,
     dateDijit:null,
@@ -160,13 +160,8 @@ dojo.declare(
      is already present and other MIPs are entirely managed through CSS.
      */
     applyState:function() {
-        if (this.xfControl.isReadonly()) {
-            this.dateDijit.attr("disabled",true);
-            this.timeDijit.attr("disabled",true);
-        } else {
-            this.dateDijit.attr("disabled",false);
-            this.timeDijit.attr("disabled",false);
-        }
+        this.dateDijit.set("readOnly",this.xfControl.isReadonly());
+        this.timeDijit.attr("readOnly",this.xfControl.isReadonly());
     }
 
 });

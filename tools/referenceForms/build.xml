@@ -3,7 +3,7 @@
   ~ Licensed under the terms of BSD License
   -->
 
-<project name="betterFORM reference generator" default="build" basedir=".">
+<project name="betterFORM reference generator" default="deploy-forms" basedir=".">
     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
     <property name="core.dir" value="${basedir}../../../core"/>    
 
@@ -164,7 +164,7 @@
 -->
     </target>
 
-    <target name="deploy-forms" depends="build">
+    <target name="deploy-forms" depends="build" description="builds and deploys reference forms">
         <copy todir="../../src/main/xforms/reference/">
             <fileset dir="target">
                 <include name="*.xhtml"/>

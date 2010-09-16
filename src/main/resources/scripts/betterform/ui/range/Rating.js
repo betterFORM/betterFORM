@@ -24,7 +24,15 @@ dojo.declare(
         this.inherited(arguments);
         this.setCurrentValue();
     },
-    
+
+    // overwritten to implement readonly 
+    _onMouse: function(evt){
+        // console.debug("betterform.ui.range.Rating.onStarClick: readonly: ", this.xfControl.isReadonly());
+        if(!this.xfControl.isReadonly()){
+            this.inherited(arguments);
+        }
+    },
+
     _onFocus:function() {
         this.inherited(arguments);
         this.handleOnFocus();
@@ -46,9 +54,10 @@ dojo.declare(
         }
     },
 
+
     _handleSetControlValue:function(value) {
         // console.debug("betterform.ui.range.Rating._handleSetControlValue: Value: ", value);
-        this.setAttribute("value",value);        
+        this.setAttribute("value",value);
     }
 
 });

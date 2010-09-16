@@ -43,7 +43,7 @@
             .xfFullGroup .xfControl {
                 padding:3px;
             }
-            
+
             .xfFullGroup .xfControl .xfLabel {
                 float: left;
                 text-align: right;
@@ -195,12 +195,12 @@
                         <xf:trigger>
                             <xf:label>Add</xf:label>
                             <xf:insert nodeset="authors/author" position="after"/>
-                        </xf:trigger>
+				</xf:trigger>
                         <xf:trigger>
                             <xf:label>Delete</xf:label>
                             <xf:delete nodeset="authors/author" at="index('authors')"
                                     if="count(authors/author) &gt; 1"/>
-                        </xf:trigger>
+				</xf:trigger>
 
                     </xf:group>
                 </xf:group>
@@ -232,13 +232,13 @@
                     </xf:item>
                 </xf:select>
             </xf:group>
-            
+
             <xf:group appearance="minimal">
                 <xf:trigger>
                     <xf:label>create App</xf:label>
                     <xf:message>here i am</xf:message>
                     <xf:send submission="s-createApplication"/>
-                </xf:trigger>
+				</xf:trigger>
             </xf:group>
 
         </xf:group>

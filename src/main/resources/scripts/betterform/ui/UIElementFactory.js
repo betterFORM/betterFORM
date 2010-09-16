@@ -29,7 +29,7 @@ dojo.declare(
         }
         var newWidget = null;
         if (controlType == undefined) {
-            console.warn("UIElementFactory.createWidget: undefined controlType, Node: ", sourceNode);            
+            console.warn("UIElementFactory.createWidget: undefined controlType, Node: ", sourceNode);
             return sourceNode;
         }
         var mediatype = dojo.attr(sourceNode, "mediatype");
@@ -73,7 +73,7 @@ dojo.declare(
                             xfValue = dojo.date.stamp.fromISOString(xfValue);
                         }else { xfValue = ""; }
                         var datePattern;
-                            
+
                         if (appearance.indexOf("iso8601:") != -1) {
                             datePattern = appearance.substring(appearance.indexOf("iso8601:")+8);
                             //console.debug("UIelementFactory.createWidget 1. datePattern:" + datePattern);
@@ -118,10 +118,10 @@ dojo.declare(
                     case "datetime":
                         var xfValue = dojo.attr(sourceNode, "schemaValue");
 
-                        // examine if dateTime value contains miliseconds and set property to true if so                            
+                        // examine if dateTime value contains miliseconds and set property to true if so
                         var miliseconds = false;
                         if(xfValue != undefined && xfValue.indexOf(".")==19){
-                            xfValue = xfValue.substring(0,19);                           
+                            xfValue = xfValue.substring(0,19);
                             miliseconds = true;
                         }
 
@@ -337,7 +337,7 @@ dojo.declare(
                                     title:dojo.attr(sourceNode,"title"),
                                     xfControlId:controlId
                                 }, sourceNode);
-                                
+
                             }
                         break;
                 }
@@ -437,8 +437,8 @@ dojo.declare(
 
             /* Select Cases */
             case "selectCheckBox":
-              
-                    dojo.require("betterform.ui.select.CheckBoxGroup");
+
+                dojo.require("betterform.ui.select.CheckBoxGroup");
                 newWidget = new betterform.ui.select.CheckBoxGroup({
                     name:controlId + "-value",
                     "class":classValue,
@@ -567,7 +567,7 @@ dojo.declare(
                         title:dojo.attr(sourceNode,"title"),
                         xfControlId:controlId
                     }, sourceNode);
-                    console.dirxml(sourceNode);
+                    // console.dirxml(sourceNode);
                 }else {
                     dojo.require("betterform.ui.trigger.Button");
                     dojo.require("dijit.form.Button");
@@ -604,27 +604,28 @@ dojo.declare(
                 }
                 break;
             case "radio":
-                var name = sourceNode.name;
-                var value = sourceNode.value;
-               // console.debug("UIElementFactory.create Radio Item for Control " + controlId + " [name:"+name+"] ! Properties: ", sourceNode, " value: " + value);
+                var radioName = sourceNode.name;
+                var radioValue = sourceNode.value;
+                // console.debug("UIElementFactory.create Radio Item for Control " + controlId + " [name:"+radioName+"] ! Properties: ", sourceNode, " value: " + radioValue);
                 dojo.require("betterform.ui.select1.RadioButton");
                 newWidget = new betterform.ui.select1.RadioButton({
-                    "class":classValue,                    
-                    name:name,
-                    value:value,
+                    "class":classValue,
+                    name:radioName,
+                    value:radioValue,
                     title:dojo.attr(sourceNode,"title"),
                     xfControlId:controlId
                 }, sourceNode);
+                newWidget.startup();
                 break;
             case "dialog":
-                var name = sourceNode.name;
-                var value = sourceNode.value;
-                //console.debug("UIElementFactory.create Dialog Control " + controlId + " [name:"+name+"] ! Properties: ", sourceNode, " value: " + value);
-                dojo.require("betterform.ui.select1.RadioButton");
+                var dialogName = sourceNode.name;
+                var dialogValue = sourceNode.value;
+                //console.debug("UIElementFactory.create Dialog Control " + controlId + " [name:"+dialogName+"] ! Properties: ", sourceNode, " value: " + dialogValue);
+                dojo.require("betterform.ui.container.Dialog");
                 newWidget = new betterform.ui.container.Dialog({
-                    "class":classValue,                    
-                    name:name,
-                    value:value,
+                    "class":classValue,
+                    name:dialogName,
+                    value:dialogValue,
                     title:dojo.attr(sourceNode,"title"),
                     xfControlId:controlId
                 }, sourceNode);
@@ -635,7 +636,7 @@ dojo.declare(
         }
         if(newWidget != undefined){
             return newWidget;
-        }    
+        }
 
     }
 });

@@ -24,116 +24,69 @@
                
                <xf:instance id="instance-1">
                   
-                  
-                  <data xmlns="" constraint="true" readonly="false" required="true" relevant="true">
+                  <data xmlns="">
                      
-                     <repeat constraint="true" readonly="false" required="true" relevant="true">
+                     <repeat>
                         
-                        <items constraint="true" readonly="false" required="true" relevant="true">
+                        <items>
                            
+                           <item>text 1</item>
                            
-                           <item constraint="true" readonly="false" required="true" relevant="true">text 1</item>
+                           <item>2009-01-20</item>
                            
-                           
-                           <item constraint="true" readonly="false" required="true" relevant="true">2009-10-20</item>
-                           
-                           
-                           <item constraint="true" readonly="false" required="true" relevant="true">true</item>
-                           
+                           <item>true</item>
                            
                         </items>
                         
                         
-                        <items constraint="true" readonly="false" required="true" relevant="true">
+                        <items>
                            
+                           <item>text 2</item>
                            
-                           <item constraint="true" readonly="false" required="true" relevant="true">text 2</item>
+                           <item>2010-03-17</item>
                            
-                           
-                           <item constraint="true" readonly="false" required="true" relevant="true">2009-10-21</item>
-                           
-                           
-                           <item constraint="true" readonly="false" required="true" relevant="true">true</item>
-                           
+                           <item>false</item>
                            
                         </items>
                         
                         
-                        <items constraint="true" readonly="false" required="true" relevant="true">
+                        <items>
                            
+                           <item>text 3</item>
                            
-                           <item constraint="true" readonly="false" required="true" relevant="true">text 3</item>
+                           <item>2011-05-22</item>
                            
-                           
-                           <item constraint="true" readonly="false" required="true" relevant="true">2009-10-22</item>
-                           
-                           
-                           <item constraint="true" readonly="false" required="true" relevant="true">true</item>
-                           
+                           <item>true</item>
                            
                         </items>
                         
                         
-                        <items constraint="true" readonly="false" required="true" relevant="true">
+                        <items>
                            
+                           <item>text 4</item>
                            
-                           <item constraint="true" readonly="false" required="true" relevant="true">text 4</item>
+                           <item>2008-06-13</item>
                            
-                           
-                           <item constraint="true" readonly="false" required="true" relevant="true">2009-10-23</item>
-                           
-                           
-                           <item constraint="true" readonly="false" required="true" relevant="true">true</item>
-                           
+                           <item>false</item>
                            
                         </items>
-                        						
+                        
                      </repeat>
                      
                   </data>
                   
-                  
                </xf:instance>
                
                
-               <xf:bind nodeset="items">
-                  
+               <xf:bind nodeset="repeat/items">
                   
                   <xf:bind nodeset="item[1]" type="xf:string"></xf:bind>
                   
-                  
                   <xf:bind nodeset="item[2]" type="xf:date"></xf:bind>
-                  
                   
                   <xf:bind nodeset="item[3]" type="xf:boolean"></xf:bind>
                   
-                  
                </xf:bind>
-               
-               
-               
-               <xf:bind nodeset="repeat">
-                  
-                  
-                  <xf:bind nodeset="items" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
-                  
-                  
-                  <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
-                  
-                  
-                  <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
-                  
-                  
-                  <xf:bind nodeset="@required" type="boolean"></xf:bind>
-                  
-                  
-                  <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
-                  
-                  
-               </xf:bind>
-               
-               
-               
                
             </xf:model>
          </div>

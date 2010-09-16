@@ -28,6 +28,8 @@ dojo.declare(
         [dijit._Widget, dijit._Templated],
 {
     id:"",
+    _earlyTemplatedStartup:true,
+    widgetsInTemplate:true,
 
     target: null,
 
@@ -51,6 +53,7 @@ dojo.declare(
         // we already have the srcNodeRef, so lets just
         // keep it and use it as the domNode
         this.domNode = this.srcNodeRef;
+        // console.debug("\nControl.buildRendering; DOM Node:",this.domNode,"\n");
         if (dojo.attr(this.domNode, "tabindex")) {
             this.tabindex = eval(dojo.attr(this.domNode, "tabindex"));
         }
@@ -58,6 +61,7 @@ dojo.declare(
 
     postCreate:function() {
         // ensure all needed classes for Control are in place
+        // console.debug("\nControl.postCreate; DOM Node:",this.domNode,"\n");
         // TODO: examine if this can be done in handleStateChanged
         betterform.ui.util.setDefaultClasses(this.domNode);
 
@@ -92,6 +96,8 @@ dojo.declare(
         } else {
             dojo.publish("/xf/invalid", [this.id,"init"]);
         }
+        // console.debug("\nControl.postCreate; DOM Node:",this.domNode,"\n");
+
     },
 
     /**
@@ -103,7 +109,7 @@ dojo.declare(
         // prepare Control Node
         if (this.contextInfo.type != undefined && this.contextInfo.type != "") {
             var cssDataType = betterform.ui.util.removeNamespace(this.contextInfo.type);
-            cssDataType = "xsd" + cssDataType.replace(/^[a-z]/, cssDataType.substring(0, 1).toUpperCase())
+            cssDataType = "xsd" + cssDataType.replace(/^[a-z]/, cssDataType.substring(0, 1).toUpperCase());
             if (dojo.hasClass(this.domNode, "xsd")) {
                 betterform.ui.util.replaceClass(this.domNode, "xsd", cssDataType);
             } else {
@@ -350,7 +356,7 @@ dojo.declare(
     },
 
     _handleSetReadonlyProperty: function() {
-        if (eval(this.readonly) == false) {
+        if (!eval(this.readonly)) {
             betterform.ui.util.replaceClass(this.domNode, "xfReadOnly", "xfReadWrite");
         }
         else {
@@ -500,12 +506,7 @@ dojo.declare(
         var titleAttributeFound = false;
 
         // Check if a hint-node is available and store that information
-        if (hintNode != undefined) {
-            hintNodeFound = true;
-        }
-        else {
-            hintNodeFound = false;
-        }
+        hintNodeFound = hintNode != undefined;
 
         // Check if a title-attribute is available and store that information
         if (valueNode != undefined) {

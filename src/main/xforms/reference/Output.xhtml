@@ -24,57 +24,30 @@
                
                <xf:instance id="instance-1">
                   
-                  
                   <data xmlns="" constraint="true" readonly="false" required="false" relevant="true">
-                     
                      
                      <items constraint="true" readonly="false" required="true" relevant="true">
                         
-                        
                         <item constraint="true" readonly="false" required="true" relevant="true">a output value</item>
-                        
                         
                         <item constraint="true" readonly="false" required="true" relevant="true">http://betterform.sourceforge.net</item>
                         
-                        
                         <item constraint="true" readonly="false" required="true" relevant="true">&lt;b&gt;Providing&lt;/b&gt; &lt;i&gt;basic&lt;/i&gt; HTML &lt;u&gt;formatting&lt;/u&gt;</item>
-                        
                         
                         <item constraint="true" readonly="false" required="true" relevant="true">../../images/bf_logo_482x195.png</item>
                         
-                        
                      </items>
-                     
                      
                   </data>
                   
-                  
                </xf:instance>
-               
-               
-               <xf:bind nodeset="items">
-                  
-                  
-                  <xf:bind nodeset="item[1]"></xf:bind>
-                  
-                  
-                  <xf:bind nodeset="item[2]" type="anyURI"></xf:bind>
-                  
-                  
-                  <xf:bind nodeset="item[3]"></xf:bind>
-                  
-                  
-                  <xf:bind nodeset="item[4]"></xf:bind>
-                  
-                  
-               </xf:bind>
                
                
                <xf:bind nodeset="items">
                   					
                   <xf:bind nodeset="item[1]" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
                   				 	
-                  <xf:bind nodeset="item[2]" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
+                  <xf:bind nodeset="item[2]" type="anyURI" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
                   					
                   <xf:bind nodeset="item[3]" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
                   
@@ -126,7 +99,10 @@
                <div class="Subsection"><pre><code class="xml">
 &lt;!--XForms UI--&gt;
 &lt;xf:output id="output1" ref="items/item[1]"&gt;
-    &lt;xf:label&gt;&lt;/xf:label&gt;
+    &lt;xf:label&gt;Output 1:&lt;/xf:label&gt;
+    &lt;xf:help&gt;Help for Output 1&lt;/xf:help&gt;
+    &lt;xf:hint&gt;Hint for Output 1&lt;/xf:hint&gt;
+    &lt;xf:alert&gt;Invalid&lt;/xf:alert&gt;
 &lt;/xf:output&gt;</code></pre></div>
             </div>
             <div>
@@ -134,9 +110,38 @@
                <div class="Sample">
                   <xf:output id="output1" ref="items/item[1]">
                      
-                     <xf:label></xf:label>
+                     <xf:label>Output 1:</xf:label>
+                     
+                     <xf:help>Help for Output 1</xf:help>
+                     
+                     <xf:hint>Hint for Output 1</xf:hint>
+                     
+                     <xf:alert>Invalid</xf:alert>
                      
                   </xf:output>
+               </div>
+               <div class="Subheadline">Modelitem properties</div>
+               <div class="MIPS">
+                  <xf:input navindex="-1" ref="items/@readonly" class="mips" incremental="true">
+                     
+                     <xf:label>readonly</xf:label>
+                     
+                  </xf:input>
+                  <xf:input navindex="-1" ref="items/@required" class="mips" incremental="true">
+                     
+                     <xf:label>required</xf:label>
+                     
+                  </xf:input>
+                  <xf:input navindex="-1" ref="items/@relevant" class="mips" incremental="true">
+                     
+                     <xf:label>relevant</xf:label>
+                     
+                  </xf:input>
+                  <xf:input navindex="-1" ref="items/@constraint" class="mips" incremental="true">
+                     
+                     <xf:label>valid</xf:label>
+                     
+                  </xf:input>
                </div>
             </div>
          </div>
@@ -149,6 +154,10 @@
 &lt;!--XForms UI--&gt;
 &lt;xf:output id="output2" ref="items/item[2]"&gt;
     &lt;xf:label&gt;Homepage&lt;/xf:label&gt;
+    &lt;xf:help&gt;Help for Output 2&lt;/xf:help&gt;
+    &lt;xf:hint&gt;Hint for Output 2&lt;/xf:hint&gt;
+    &lt;xf:alert&gt;Invalid&lt;/xf:alert&gt;
+
 &lt;/xf:output&gt;</code></pre></div>
             </div>
             <div>
@@ -158,7 +167,37 @@
                      
                      <xf:label>Homepage</xf:label>
                      
+                     <xf:help>Help for Output 2</xf:help>
+                     
+                     <xf:hint>Hint for Output 2</xf:hint>
+                     
+                     <xf:alert>Invalid</xf:alert>
+                     
+                     
                   </xf:output>
+               </div>
+               <div class="Subheadline">Modelitem properties</div>
+               <div class="MIPS">
+                  <xf:input navindex="-1" ref="items/@readonly" class="mips" incremental="true">
+                     
+                     <xf:label>readonly</xf:label>
+                     
+                  </xf:input>
+                  <xf:input navindex="-1" ref="items/@required" class="mips" incremental="true">
+                     
+                     <xf:label>required</xf:label>
+                     
+                  </xf:input>
+                  <xf:input navindex="-1" ref="items/@relevant" class="mips" incremental="true">
+                     
+                     <xf:label>relevant</xf:label>
+                     
+                  </xf:input>
+                  <xf:input navindex="-1" ref="items/@constraint" class="mips" incremental="true">
+                     
+                     <xf:label>valid</xf:label>
+                     
+                  </xf:input>
                </div>
             </div>
          </div>
@@ -170,7 +209,10 @@
                <div class="Subsection"><pre><code class="xml">
 &lt;!--XForms UI--&gt;
 &lt;xf:output id="output3" ref="items/item[3]" mediatype="text/html"&gt;
-    &lt;xf:label&gt;&lt;/xf:label&gt;
+    &lt;xf:label&gt;Output 3&lt;/xf:label&gt;
+    &lt;xf:help&gt;Help for Output 3&lt;/xf:help&gt;
+    &lt;xf:hint&gt;Hint for Output 3&lt;/xf:hint&gt;
+    &lt;xf:alert&gt;Invalid&lt;/xf:alert&gt;
 &lt;/xf:output&gt;</code></pre></div>
             </div>
             <div>
@@ -178,7 +220,13 @@
                <div class="Sample">
                   <xf:output id="output3" ref="items/item[3]" mediatype="text/html">
                      
-                     <xf:label></xf:label>
+                     <xf:label>Output 3</xf:label>
+                     
+                     <xf:help>Help for Output 3</xf:help>
+                     
+                     <xf:hint>Hint for Output 3</xf:hint>
+                     
+                     <xf:alert>Invalid</xf:alert>
                      
                   </xf:output>
                </div>
@@ -191,18 +239,52 @@
                <div class="Subheadline">XForms Markup</div>
                <div class="Subsection"><pre><code class="xml">
 &lt;!--XForms UI--&gt;
-&lt;xf:output id="output3" ref="items/item[4]" mediatype="image/gif"&gt;
-    &lt;xf:label&gt;&lt;/xf:label&gt;
+&lt;xf:output id="output4" ref="items/item[4]" mediatype="image/gif"&gt;
+    &lt;xf:label&gt;Output 4:&lt;/xf:label&gt;
+    &lt;xf:help&gt;Help for Output 4&lt;/xf:help&gt;
+    &lt;xf:hint&gt;Hint for Output 4&lt;/xf:hint&gt;
+    &lt;xf:alert&gt;Invalid&lt;/xf:alert&gt;
+
 &lt;/xf:output&gt;</code></pre></div>
             </div>
             <div>
                <div class="Subheadline">Sample</div>
                <div class="Sample">
-                  <xf:output id="output3" ref="items/item[4]" mediatype="image/gif">
+                  <xf:output id="output4" ref="items/item[4]" mediatype="image/gif">
                      
-                     <xf:label></xf:label>
+                     <xf:label>Output 4:</xf:label>
+                     
+                     <xf:help>Help for Output 4</xf:help>
+                     
+                     <xf:hint>Hint for Output 4</xf:hint>
+                     
+                     <xf:alert>Invalid</xf:alert>
+                     
                      
                   </xf:output>
+               </div>
+               <div class="Subheadline">Modelitem properties</div>
+               <div class="MIPS">
+                  <xf:input navindex="-1" ref="items/@readonly" class="mips" incremental="true">
+                     
+                     <xf:label>readonly</xf:label>
+                     
+                  </xf:input>
+                  <xf:input navindex="-1" ref="items/@required" class="mips" incremental="true">
+                     
+                     <xf:label>required</xf:label>
+                     
+                  </xf:input>
+                  <xf:input navindex="-1" ref="items/@relevant" class="mips" incremental="true">
+                     
+                     <xf:label>relevant</xf:label>
+                     
+                  </xf:input>
+                  <xf:input navindex="-1" ref="items/@constraint" class="mips" incremental="true">
+                     
+                     <xf:label>valid</xf:label>
+                     
+                  </xf:input>
                </div>
             </div>
          </div>

@@ -24,9 +24,10 @@ dojo.require("betterform.ui.select.CheckBox");
 
 dojo.declare(
         "betterform.ui.select.CheckBoxItemset",
-         [betterform.ui.ControlValue,dijit._Widget],
+         [dijit._Widget],
 {
     values:"",
+    widgetsInTemplate:true,
 
     /**
      * handle betterform-state-changed event
@@ -42,14 +43,14 @@ dojo.declare(
             // make sure that the associated select displays the correct value
             if(dojo.hasClass(this.domNode.parentNode, "CheckBoxGroup")){
                 var selectDijit = dijit.byId(dojo.attr(this.domNode.parentNode,"id"));
-                // console.debug("CheckBoxItemset SelectDijit: ", selectDijit, " selectDijit.currentValue:",selectDijit.currentValue , " contextInfo.value: ",contextInfo.value);
+                console.debug("CheckBoxItemset SelectDijit: ", selectDijit, " selectDijit.currentValue:",selectDijit.currentValue , " contextInfo.value: ",contextInfo.value);
                 if(selectDijit.currentValue == contextInfo.value) {
                     selectDijit._handleSetControlValue(contextInfo.value);
                 }
             }
 
         }else {
-            // console.warn("CheckBoxItemset.handleStateChanged: no action taken for contextInfo: ",contextInfo);
+           console.warn("CheckBoxItemset.handleStateChanged: no action taken for contextInfo: ",contextInfo);
         }
 
     },
@@ -59,7 +60,7 @@ dojo.declare(
      * @param contextInfo
      */
     handleInsert:function(contextInfo) {
-        // console.debug("CheckBoxItemset.handleInsert [id: ",this.id, " / contextInfo:",contextInfo,"]");
+        console.debug("CheckBoxItemset.handleInsert [id: ",this.id, " / contextInfo:",contextInfo,"]");
         var itemNode = document.createElement("span");
         var generatedIds= contextInfo.generatedIds;
         var itemId = generatedIds[contextInfo.prototypeId];
@@ -70,7 +71,7 @@ dojo.declare(
         while(!dojo.hasClass(myParentNode,"CheckBoxGroup")){
             myParentNode = myParentNode.parentNode;
         }
-        // console.debug("CheckBoxItemset.handleInsert [id: ",this.id, " / parentNode:",myParentNode,"]");
+        console.debug("CheckBoxItemset.handleInsert [id: ",this.id, " / parentNode:",myParentNode,"]");
         var valueNode = new betterform.ui.select.CheckBox({
                 id:itemId+"-value",
                 "class":"xfCheckBoxValue",
@@ -81,7 +82,7 @@ dojo.declare(
             }
         );
 
-        // console.debug("CheckBoxItemset.handleInsert [id: ",this.id, " / checkBoxDijit:",valueNode,"]");
+         console.debug("CheckBoxItemset.handleInsert [id: ",this.id, " / checkBoxDijit:",valueNode,"]");
         dojo.place(valueNode.domNode,itemNode);
         // create Label
         var labelNode = document.createElement("span");
@@ -99,7 +100,7 @@ dojo.declare(
      * @param contextInfo
      */
     handleDelete:function(contextInfo) {
-        // console.debug("CheckBoxItemset.deleteItem: ",contextInfo);
+        console.debug("CheckBoxItemset.deleteItem: ",contextInfo);
         var itemToRemove =dojo.query(".xfSelectorItem", this.domNode)[contextInfo.position-1];
         this.domNode.removeChild(itemToRemove);
     }

@@ -36,19 +36,19 @@
         <xf:label class="blockLabel">Triggers outside Switch / Case</xf:label>
         <xf:trigger style="clear:none">
             <xf:label>Case 1</xf:label>
-            <xf:toggle case="case1"/>
+            <xf:toggle case="switch1-case1"/>
         </xf:trigger>
         <xf:trigger style="clear:none">
             <xf:label>Case 2</xf:label>
-            <xf:toggle case="case2"/>
+            <xf:toggle case="switch1-case2"/>
         </xf:trigger>
         <xf:trigger style="clear:none">
             <xf:label>Case 3</xf:label>
-            <xf:toggle case="case3"/>
+            <xf:toggle case="switch1-case3"/>
         </xf:trigger>
         <xf:trigger style="clear:none">
             <xf:label>Case 4</xf:label>
-            <xf:toggle case="case4"/>
+            <xf:toggle case="switch1-case4"/>
         </xf:trigger>
     </xf:group>
     <xf:switch id="switch1">
@@ -87,21 +87,21 @@
 <xf:group>
     <xf:label>Switch / Case</xf:label>
     <div style="display:none;">
-        <xf:trigger id="t-tabcase1">
+        <xf:trigger id="t-switch2-case1">
             <xf:label>Case 1</xf:label>
-            <xf:toggle case="tabcase1"/>
+            <xf:toggle case="switch2-case1"/>
         </xf:trigger>
-        <xf:trigger id="t-tabcase2">
+        <xf:trigger id="t-switch2-case2">
             <xf:label>Case 2</xf:label>
-            <xf:toggle case="tabcase2"/>
+            <xf:toggle case="switch2-case2"/>
         </xf:trigger>
-        <xf:trigger id="t-tabcase3">
+        <xf:trigger id="t-switch2-case3">
             <xf:label>Case 3</xf:label>
-            <xf:toggle case="tabcase3"/>
+            <xf:toggle case="switch2-case3"/>
         </xf:trigger>
-        <xf:trigger id="t-tabcase4">
+        <xf:trigger id="t-switch2-case4">
             <xf:label>Case 4</xf:label>
-            <xf:toggle case="tabcase4"/>
+            <xf:toggle case="switch2-case4"/>
         </xf:trigger>
     </div>
     <xf:switch id="switch2" appearance="dijit:TabContainer">

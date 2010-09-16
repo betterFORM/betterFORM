@@ -21,8 +21,9 @@ dojo.require("betterform.ui.select.CheckBox");
 
 dojo.declare(
         "betterform.ui.select.CheckBoxGroup",
-        betterform.ui.ControlValue,
+        [betterform.ui.ControlValue],
 {
+    widgetsInTemplate:true,
 
     buildRendering:function() {
         // console.debug("CheckBoxGroup.buildRendering");
@@ -30,33 +31,14 @@ dojo.declare(
     },
 
     postMixInProperties:function() {
-        // console.debug("CheckBoxGroup.postMixInProperties");
+        // console.debug("CheckBoxGroup.postMixInProperties this.xfControlId:",this.xfControlId);
         this.inherited(arguments);
         this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);
-        if(dojo.attr(this.srcNodeRef, "incremental") == undefined || dojo.attr(this.srcNodeRef, "incremental") == "" || dojo.attr(this.srcNodeRef, "incremental") == "true" ){
-            this.incremental = true;
-        }else {
-            this.incremental = false;
-        }
+        var incrementalValue = dojo.attr(this.srcNodeRef, "incremental");
+        // set incremental to true if not explicitly set to false
+        this.incremental =  incrementalValue || incrementalValue == undefined || incrementalValue == "" || incrementalValue == "true" ;
+        
     },
-
-    postCreate:function() {
-        // console.debug("CheckBoxGroup.postCreate");
-        this.inherited(arguments);
-        var tmpValue = "";
-        dojo.query("*[checked]", this.domNode).forEach(
-            function(entry) {
-                tmpValue += entry.value + " ";
-            }
-        );
-
-
-        if(tmpValue != ''){
-            tmpValue = tmpValue.replace(/\s+$/g,"");
-        }        
-        this.setCurrentValue(tmpValue);
-    },
-
 
     _onFocus:function() {
        //console.debug("CheckBoxGroup._onFocus()");
@@ -73,11 +55,13 @@ dojo.declare(
     getControlValue:function() {
         // console.debug("CheckBoxGroup.getControlValue");
         var tmpValue = "";
-        dojo.query(".dijitCheckBoxChecked .dijitCheckBoxInput", this.domNode).forEach(
-            function(entry) {
-                tmpValue = dijit.byId(dojo.attr(entry,"id")).getControlValue() + " " + tmpValue;
-            }
-        );
+        var checkBoxList = dojo.query(".dijitCheckBoxChecked .dijitCheckBoxInput", this.domNode);
+        for(var index = checkBoxList.length-1; index >=0 ; index--){
+            var checkBoxNode = checkBoxList[index];
+            var checkBoxDijit = dijit.byId(dojo.attr(checkBoxNode,"id"));
+            tmpValue = checkBoxDijit.getControlValue() + " " + tmpValue;
+        }
+        // console.debug("\ntmpValue: ",tmpValue, "\n");
         return tmpValue.replace(/\s+$/g, "");
     },
 
@@ -99,6 +83,7 @@ dojo.declare(
     },
     /* update processor after value change by UI */
     _setCheckBoxGroupValue: function() {
+        // console.debug("CheckBoxGroup._setCheckBoxGroupValue");
         var selectedItems = dojo.query(".dijitCheckBoxChecked .dijitCheckBoxInput", this.domNode);
         var ids = undefined;
         dojo.forEach(selectedItems, function(item, index, array) {
@@ -136,16 +121,18 @@ dojo.declare(
     /* disable this Select */
 
     setDisabled:function(/*Boolean*/ disabled) {
-        // console.debug("CheckBoxGroup.setDisabled disable control: " + this.id + ": " + disabled);
-        dojo.forEach(dojo.query(".dijitCheckBoxInput", this.domNode),
+        // console.debug("CheckBoxGroup.setDisabled disable control: " + this.id + ": " + disabled);        
+        dojo.forEach(dojo.query(".xfSelectorItem", this.domNode),
             function(entry) {
-                var entryId = dojo.attr(entry, "id");
-                var tmpDijit = dijit.byId(entryId);
-                if(tmpDijit != undefined) {
-                    tmpDijit.attr('disabled',disabled);
+                var selectorId  =dojo.attr(entry, "id");
+                var checkBoxChild = dijit.byId(selectorId +"-value");
+                if(checkBoxChild != undefined) {
+                    checkBoxChild.attr('disabled',disabled);
                 } else {
-                    tmpDijit = new betterform.ui.select.CheckBox({},entryId);
-                    tmpDijit.attr('disabled',disabled);
+                    // initially the CheckBox child is not initialized and the DOM is manipulated directly
+                    checkBoxChild = dojo.byId(selectorId +"-value");
+                    if(disabled){ dojo.attr(checkBoxChild, "disabled",disabled); }
+                    else        { dojo.removeAttr(checkBoxChild, "disabled"); }
                 }
             }
         );

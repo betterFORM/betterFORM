@@ -40,6 +40,9 @@
 <xf:range ref="item/value" start="1" step="1" end="5"
           incremental="true">
     <xf:label>a slider</xf:label>
+    <xf:help>help for slider1</xf:help>
+    <xf:hint>hint for slider1</xf:hint>
+    <xf:alert>invalid</xf:alert>
 </xf:range>
                     <mips>
                         <xf:input navindex="-1" ref="item/@readonly" class="mips" incremental="true">
@@ -65,9 +68,7 @@
           appearance="bf:rating" incremental="true">
     <xf:label>Rate it</xf:label>
     <xf:hint>This is a standard range control</xf:hint>
-    <xf:help>Not much to say here but some basic html formatting is
-        <b>possible</b>
-    </xf:help>
+    <xf:help>Not much to say here but some basic html formatting is <b>possible</b></xf:help>
     <xf:alert>value is invalid</xf:alert>
 </xf:range>
                     <mips>
