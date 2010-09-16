@@ -6,10 +6,6 @@
 
 package de.betterform.agent.web;
 
-import net.sf.ehcache.CacheManager;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.xml.DOMConfigurator;
 import de.betterform.agent.web.flux.FluxProcessor;
 import de.betterform.agent.web.servlet.PlainHtmlProcessor;
 import de.betterform.xml.config.Config;
@@ -18,6 +14,10 @@ import de.betterform.xml.xslt.TransformerService;
 import de.betterform.xml.xslt.impl.CachingTransformerService;
 import de.betterform.xml.xslt.impl.FileResourceResolver;
 import de.betterform.xml.xslt.impl.HttpResourceResolver;
+import net.sf.ehcache.CacheManager;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.xml.DOMConfigurator;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -39,8 +39,6 @@ public class WebFactory {
 
     public static final String UPLOADDIR_PROPERTY = "uploadDir";
     public static final String RELATIVE_URI_PROPERTY = "forms.uri.relative";
-    public static final String SCRIPT_PATH_PROPERTY = "scriptPath";
-    public static final String CSS_PATH_PROPERTY = "CSSPath";
     public static final String ERROPAGE_PROPERTY = "error.page";
 
     public static final String XFORMS_NODE = "XFormsInputNode";
@@ -58,6 +56,7 @@ public class WebFactory {
     public static final String ACCEPT_CONTENTTYPE = "acceptContentTypePattern";
     public static final String ALL_XML_TYPES = "all_xml";
     private String userAgentId;
+    private static final String DO_INIT_LOGGING = "initLogging";
 
 
     public WebFactory() {
@@ -179,12 +178,15 @@ public class WebFactory {
 
 
     public void initLogging(Class theClass) throws XFormsConfigException {
-        String logConfig = this.config.getProperty(WebFactory.LOG_CONFIG);
+        String initLogging = this.config.getProperty(WebFactory.DO_INIT_LOGGING);
+        if(initLogging.equals("true")){
+            String logConfig = this.config.getProperty(WebFactory.LOG_CONFIG);
 
-        DOMConfigurator.configure(resolvePath(logConfig, servletContext));
-        Log logger = LogFactory.getLog(theClass);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Logger initialized");
+            DOMConfigurator.configure(resolvePath(logConfig, servletContext));
+            Log logger = LogFactory.getLog(theClass);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Logger initialized");
+            }
         }
     }
 
