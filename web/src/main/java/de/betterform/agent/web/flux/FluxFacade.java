@@ -13,6 +13,7 @@ import de.betterform.agent.web.event.EventQueue;
 import de.betterform.agent.web.event.UIEvent;
 import de.betterform.agent.web.upload.UploadInfo;
 import de.betterform.xml.dom.DOMUtil;
+import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.XMLEvent;
 import de.betterform.xml.events.impl.XercesXMLEventFactory;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
@@ -66,26 +67,33 @@ public class FluxFacade {
     //todo: should be named 'dispatchActivateEvent'
 
     public List<XMLEvent> dispatchEvent(String id, String sessionKey) throws XFormsException {
-
         FluxProcessor processor = null;
         try {
             processor = FluxUtil.getProcessor(sessionKey);
             // ##### event queue is not flushed here as FluxProcessor handles this ####
         } catch (FluxException e) {
             e.printStackTrace();
+            return null;
         }
+
         try {
             processor.dispatchEvent(id);
+            return processor.getEventQueue().getEventList();
         } catch (FluxException e) {
-            XMLEvent errorEvent = new XercesXMLEventFactory().createXMLEvent("betterform-render-message");
-            Map params = new HashMap(1);
-            params.put("message", e.getMessage());
-            errorEvent.initXMLEvent("betterform-render-message", true, false, params);
-            ArrayList<XMLEvent> list = new ArrayList();
-            list.add(errorEvent);
-            return list;
+            return this.renderErrorMessage(e.getMessage());
         }
-        return processor.getEventQueue().getEventList();
+
+    }
+
+    private List<XMLEvent> renderErrorMessage(String message) {
+        LOGGER.warn("betterFORM Error Message: " + message);
+        XMLEvent errorEvent = new XercesXMLEventFactory().createXMLEvent(BetterFormEventNames.RENDER_MESSAGE);
+        Map<String,String> params = new HashMap<String,String>(1);
+        params.put("message", message);
+        errorEvent.initXMLEvent(BetterFormEventNames.RENDER_MESSAGE, true, false, params);
+        ArrayList<XMLEvent> list = new ArrayList<XMLEvent>();
+        list.add(errorEvent);
+        return list;
     }
 
     public List<XMLEvent> dispatchEventType(String id, String eventType, String sessionKey) throws XFormsException {
@@ -111,13 +119,7 @@ public class FluxFacade {
             }
         }
         catch (XFormsException e) {
-            XMLEvent errorEvent = new XercesXMLEventFactory().createXMLEvent("betterform-render-message");
-            Map params = new HashMap(1);
-            params.put("message", e.getMessage());
-            errorEvent.initXMLEvent("betterform-render-message", true, false, params);
-            ArrayList<XMLEvent> list = new ArrayList();
-            list.add(errorEvent);
-            return list;
+            return this.renderErrorMessage(e.getMessage());
         }
         return processor.getEventQueue().getEventList();
     }
@@ -132,13 +134,7 @@ public class FluxFacade {
         try {
             results = handleUIEvent(event, sessionKey);
         } catch (FluxException e) {
-            XMLEvent errorEvent = new XercesXMLEventFactory().createXMLEvent("betterform-render-message");
-            Map params = new HashMap(1);
-            params.put("message", e.getMessage());
-            errorEvent.initXMLEvent("betterform-render-message", true, false, params);
-            ArrayList<XMLEvent> list = new ArrayList();
-            list.add(errorEvent);
-            return list;
+            return this.renderErrorMessage(e.getMessage());
         }
         return results;
 
@@ -262,13 +258,7 @@ public class FluxFacade {
 
         WebProcessor webProcessor = WebUtil.getWebProcessor(sessionKey);
         if (webProcessor == null) {
-            XMLEvent errorEvent = new XercesXMLEventFactory().createXMLEvent("betterform-render-message");
-            Map params = new HashMap(1);
-            params.put("message", "ERROR: session " + sessionKey + " does not exist");
-            errorEvent.initXMLEvent("betterform-render-message", true, false, params);
-            ArrayList<XMLEvent> list = new ArrayList();
-            list.add(errorEvent);
-            return list;
+            return this.renderErrorMessage("ERROR: session " + sessionKey + " does not exist");
         }
 
 
@@ -324,10 +314,10 @@ public class FluxFacade {
         WebProcessor webProcessor = WebUtil.getWebProcessor(sessionKey);
 
         if (webProcessor == null) {
-            XMLEvent errorEvent = new XercesXMLEventFactory().createXMLEvent("betterform-render-message");
+            XMLEvent errorEvent = new XercesXMLEventFactory().createXMLEvent(BetterFormEventNames.RENDER_MESSAGE);
             Map params = new HashMap(1);
             params.put("message", "ERROR: FluxFacade.setLocale(): session " + sessionKey + " does not exist");
-            errorEvent.initXMLEvent("betterform-render-message", true, false, params);
+            errorEvent.initXMLEvent(BetterFormEventNames.RENDER_MESSAGE, true, false, params);
             ArrayList<XMLEvent> list = new ArrayList();
             list.add(errorEvent);
             return list;
