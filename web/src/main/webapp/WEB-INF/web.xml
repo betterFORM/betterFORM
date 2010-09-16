@@ -39,6 +39,16 @@
 		<url-pattern>*.xhtml</url-pattern>
 	</filter-mapping>
 
+    <!--
+    	Chains the XFormsFilter with the XFormsPostServlet. The XFormsPostServlet parses the form from
+    	the request and passes it to the XFormsFilter (via request attribute)
+     -->
+<!--
+	<filter-mapping>
+		<filter-name>XFormsFilter</filter-name>
+		<servlet-name>XFormsPostServlet</servlet-name>
+	</filter-mapping>
+-->
     <error-page>
         <exception-type>javax.servlet.ServletException</exception-type>
         <location>/jsp/error.jsp</location>
@@ -75,7 +85,22 @@
 -->
     </servlet>
 
+	<!-- XFormsPostServlet
+		Servlet to handle HTTP Post requests containing XForms. See XFormsFilter mapping comments for further
+		 information
+	 -->
 <!--
+    <servlet>
+        <servlet-name>XFormsPostServlet</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.XFormsPostServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>XFormsPostServlet</servlet-name>
+        <url-pattern>/XFormsPost</url-pattern>
+    </servlet-mapping>
+-->
+
+    <!--
     <servlet>
         <servlet-name>foo</servlet-name>
         <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
@@ -94,7 +119,6 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 -->
-
 
 <!--
 	<servlet-mapping>

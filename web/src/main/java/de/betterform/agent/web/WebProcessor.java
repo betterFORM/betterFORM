@@ -9,6 +9,7 @@ import de.betterform.agent.web.event.DefaultUIEventImpl;
 import de.betterform.agent.web.event.UIEvent;
 import de.betterform.agent.web.flux.FluxProcessor;
 import de.betterform.agent.web.servlet.HttpRequestHandler;
+import de.betterform.agent.web.servlet.XFormsPostServlet;
 import de.betterform.generator.UIGenerator;
 import de.betterform.generator.XSLTGenerator;
 import de.betterform.xml.config.Config;
@@ -499,9 +500,9 @@ public class WebProcessor implements XFormsProcessor, EventListener {
         WebUtil.nonCachingResponse(response);
 
         try {
-            if (request.getMethod().equalsIgnoreCase("POST")) {
+            if (request.getMethod().equalsIgnoreCase("POST") && request.getAttribute(XFormsPostServlet.INIT_BY_POST) == null) {
                 updating = true;
-                // updating ... - this is only called when PlainHtmlProcessor is in use
+                // updating ... - this is only called when PlainHtmlProcessor is in use or an upload happens
                 UIEvent uiEvent = new DefaultUIEventImpl();
                 uiEvent.initEvent("http-request", null, request);
                 handleUIEvent(uiEvent);

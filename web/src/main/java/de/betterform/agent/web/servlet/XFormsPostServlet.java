@@ -31,7 +31,11 @@ import java.io.IOException;
  */
 public class XFormsPostServlet extends HttpServlet {
     private static final Log LOGGER = LogFactory.getLog(XFormsPostServlet.class);
-
+    /**
+     * this constant is used to signal that a xforms document is inited by this servlet. It's used by the XFormsServlet
+     * to distinguish between 'normal' POST requests and an init through this servlet.
+     */
+    public static final String INIT_BY_POST = "betterform.init-by-post";
     /**
      * read from the inputStream and parse that as DOM. The result is passed into a request attribute for
      * processing by the XFormsFilter.
@@ -63,6 +67,7 @@ public class XFormsPostServlet extends HttpServlet {
 
         //do the Filter twist
         request.setAttribute(WebFactory.XFORMS_NODE, doc);
+        request.setAttribute(XFormsPostServlet.INIT_BY_POST, doc);
         response.getOutputStream().close();
     }
 
