@@ -244,7 +244,6 @@ public class WebProcessor implements XFormsProcessor, EventListener {
     }
 
     //todo: parse accept-language header to decide about locale
-
     public void setLocale() throws XFormsException {
         if (Config.getInstance().getProperty(XFormsProcessorImpl.BETTERFORM_ENABLE_L10N).equals("true")) {
 
@@ -254,20 +253,17 @@ public class WebProcessor implements XFormsProcessor, EventListener {
                 if (WebProcessor.LOGGER.isDebugEnabled()) {
                     WebProcessor.LOGGER.debug("using 'lang' Url parameter: " + request.getParameter("lang"));
                 }
-                this.xformsProcessor.setLocale(request.getParameter("lang"));
-                this.locale = request.getParameter("lang");
+                this.setLocale(request.getParameter("lang"));
             } else if ((String) request.getAttribute("lang") != null) {
                 if (WebProcessor.LOGGER.isDebugEnabled()) {
                     WebProcessor.LOGGER.debug("using request Attribute 'lang': " + request.getParameter("lang"));
                 }
-                this.xformsProcessor.setLocale((String) request.getAttribute("lang"));
-                this.locale = (String) request.getAttribute("lang");
+                this.setLocale((String) request.getAttribute("lang"));
             } else if (StringUtils.isNotBlank(Config.getInstance().getProperty("preselect-language"))) {
                 if (WebProcessor.LOGGER.isDebugEnabled()) {
                     WebProcessor.LOGGER.debug("using configured lang setting from Config: " + Config.getInstance().getProperty("preselect-language"));
                 }
-                this.xformsProcessor.setLocale(Config.getInstance().getProperty("preselect-language"));
-                this.locale = Config.getInstance().getProperty("preselect-language");
+                this.setLocale(Config.getInstance().getProperty("preselect-language"));
             } else if (request.getHeader("accept-language") != null) {
                 if (WebProcessor.LOGGER.isDebugEnabled()) {
                     WebProcessor.LOGGER.debug("using accept-language header: " + request.getHeader("accept-language"));
@@ -277,8 +273,7 @@ public class WebProcessor implements XFormsProcessor, EventListener {
             }
         } else {
             //fallback default
-            this.xformsProcessor.setLocale("en");
-            this.locale = "en";
+            this.setLocale("en");
         }
     }
 
@@ -426,6 +421,8 @@ public class WebProcessor implements XFormsProcessor, EventListener {
             this.root.removeEventListener(XFormsEventNames.VALID, this, true);
             this.root.removeEventListener(XFormsEventNames.SELECT, this, true);
             this.root.removeEventListener(XFormsEventNames.DESELECT, this, true);
+            this.root.removeEventListener(BetterFormEventNames.HIDE, this, true);
+            this.root.removeEventListener(BetterFormEventNames.SHOW, this, true);
 
 
             this.root = null;
@@ -931,6 +928,12 @@ public class WebProcessor implements XFormsProcessor, EventListener {
         }
         if (isEventUsed(XFormsEventNames.DESELECT)) {
             this.root.addEventListener(XFormsEventNames.DESELECT, this, true);
+        }
+        if (isEventUsed(BetterFormEventNames.HIDE)) {
+            this.root.addEventListener(BetterFormEventNames.HIDE, this, true);
+        }
+        if (isEventUsed(BetterFormEventNames.SHOW)) {
+            this.root.addEventListener(BetterFormEventNames.SHOW, this, true);
         }
     }
 

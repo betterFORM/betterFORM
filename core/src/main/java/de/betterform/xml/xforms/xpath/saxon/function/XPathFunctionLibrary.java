@@ -15,13 +15,7 @@ import net.sf.saxon.value.Value;
 
 import java.util.HashMap;
 
-/**
- * Created by IntelliJ IDEA.
- * User: dev
- * Date: Aug 12, 2010
- * Time: 1:34:10 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public abstract class XPathFunctionLibrary implements FunctionLibrary {
     protected static Value EMPTY = EmptySequence.getInstance();
     private static HashMap functionTable = new HashMap(20);

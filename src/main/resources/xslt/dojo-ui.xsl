@@ -66,7 +66,7 @@
         </xsl:variable>
         <xsl:variable name="dialog-label">
         	<xsl:call-template name="create-label">
-		  <xsl:with-param name="label-elements" select="xforms:label"/>
+		        <xsl:with-param name="label-elements" select="xforms:label"/>
    	        </xsl:call-template>
         </xsl:variable>
 
@@ -99,9 +99,7 @@
 </xsl:text>
 
 	<button dojoType="dijit.form.Button" id="{$dialog-id}-button" type="button" iconClass="dijitIconSearch" showLabel="false" onCLick="show{$dialog-id}Dialog()">
-	          <script type="dojo/method" event="onClick">
-	          alert("Ronald");
-	          </script>
+        <script type="dojo/method" event="onClick">alert("Ronald");</script>
 
 		<xsl:choose>
 		    <xsl:when test="@button-label">
