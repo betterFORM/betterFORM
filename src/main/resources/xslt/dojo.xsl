@@ -203,22 +203,22 @@
                 <style type="text/css">
                     <xsl:choose>
                         <xsl:when test="contains(//body/@class, 'soria')">
-                    @import "<xsl:value-of select="$contextroot"/><xsl:value-of select="$scriptPath"/>release/dojo/dijit/themes/soria/soria.css";
-                        </xsl:when>
-                        <xsl:when test="contains(//body/@class, 'claro')">
-                    @import "<xsl:value-of select="$contextroot"/>release/dojo/dijit/themes/claro/claro.css";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/soria/soria.css";
                         </xsl:when>
                         <xsl:when test="contains(//body/@class, 'nihilo')">
-                    @import "<xsl:value-of select="$contextroot"/>release/dojo/dijit/themes/nihilo/nihilo.css";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/nihilo/nihilo.css";
+                        </xsl:when>
+                        <xsl:when test="contains(//body/@class, 'claro')">
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/claro/claro.css";
                         </xsl:when>
                         <xsl:otherwise>
-                    @import "<xsl:value-of select="$contextroot"/><xsl:value-of select="$scriptPath"/>release/dojo/dijit/themes/tundra/tundra.css";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/tundra/tundra.css";
                         </xsl:otherwise>
                     </xsl:choose>
-                    @import "<xsl:value-of select="$contextroot"/><xsl:value-of select="$scriptPath"/>release/dojo/dojo/resources/dojo.css";
-                    @import "<xsl:value-of select="$contextroot"/><xsl:value-of select="$scriptPath"/>release/dojo/dojox/widget/Toaster/Toaster.css";
-                    @import "<xsl:value-of select="$contextroot"/><xsl:value-of select="$scriptPath"/>dojox/layout/resources/FloatingPane.css";
-	                @import "<xsl:value-of select="$contextroot"/><xsl:value-of select="$scriptPath"/>dojox/layout/resources/ResizeHandle.css";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dojo/resources/dojo.css";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dojox/widget/Toaster/Toaster.css";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojox/layout/resources/FloatingPane.css";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojox/layout/resources/ResizeHandle.css";
                     
                 </style><xsl:text>
 </xsl:text>
@@ -243,7 +243,7 @@
             <xsl:otherwise>
                 <script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/dojo/dojo.js')}">
                     var djConfig = {
-                        debugAtAllCost:<xsl:value-of select="$debug-enabled"/>,
+                        debugAtAllCosts:<xsl:value-of select="$debug-enabled"/>,
                         locale:'<xsl:value-of select="$locale"/>',
                         isDebug:<xsl:value-of select="$debug-enabled"/>,
                         parseOnLoad:false
@@ -286,9 +286,9 @@
         <!-- todo: add 'overflow:hidden' to @style here -->
         <xsl:variable name="theme">
             <xsl:choose>
-                <xsl:when test="//body/@class='soria'">soria</xsl:when>
-                <xsl:when test="//body/@class='claro'">claro</xsl:when>
-                <xsl:when test="//body/@class='nihilo'">nihilo</xsl:when>
+                <xsl:when test="contains(//body/@class, 'soria')">soria</xsl:when>
+                <xsl:when test="contains(//body/@class, 'claro')">claro</xsl:when>
+                <xsl:when test="contains(//body/@class, 'nihilo')">nihilo</xsl:when>
                 <xsl:otherwise>tundra</xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -299,7 +299,7 @@
                      alt="loading"/>
             </div>
             <!-- Toaster widget for ephemeral messages -->
-            <script>dojo.require("dojox.widget.Toaster");</script><xsl:text>
+            <script type="javascript">dojo.require("dojox.widget.Toaster");</script><xsl:text>
 </xsl:text>
             <div dojoType="dojox.widget.Toaster"
                  id="betterformMessageToaster"
@@ -545,9 +545,11 @@
         <xsl:apply-templates/>
 
         <!-- check for requiredness -->
-        <!--<xsl:if test="../bf:data/@bf:required='true'">-->
-            <!--<span class="xfRequiredSymbol">*</span>-->
-        <!--</xsl:if>-->
+<!--
+        <xsl:if test="../bf:data/@bf:required='true'">
+            <span class="xfRequiredSymbol">*</span>
+        </xsl:if>
+-->
     </xsl:template>
 
     <xsl:template match="xf:label" mode="prototype">
@@ -624,6 +626,9 @@
         	<xsl:value-of select="if (exists(@bf:incremental-delay)) then @bf:incremental-delay else '0'"/>
         </xsl:variable>
 
+		<xsl:if test="$incrementaldelay ne '0'">
+			 <xsl:message><xsl:value-of select="concat(' incremental-delay: ', $incrementaldelay)" /></xsl:message>
+		</xsl:if>
         <xsl:variable name="navindex" select="if (exists(@navindex)) then @navindex else '0'"/>
         <xsl:variable name="accesskey" select="if (exists(@accesskey)) then @accesskey else 'none'"/>
 
@@ -790,6 +795,7 @@
 
     </xsl:template>
 
+    <!-- What's this?? -->
     <xsl:template match="pre">
         <span class="abc"/>
         <xsl:copy-of select="."/>

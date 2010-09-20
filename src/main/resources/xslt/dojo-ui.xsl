@@ -25,7 +25,7 @@
     <!-- ##### should be declared in dojo.xsl ###### -->
     <!-- ############################################ VARIABLES ################################################ -->
 
-
+    
     <xsl:preserve-space elements="*"/>
 
     <!-- ####################################################################################################### -->
@@ -1010,7 +1010,7 @@
         </xsl:for-each>
 
 
-        <div id="{$repeat-id}" repeatId="{$repeat-id}" class="{$repeat-classes}" dojoType="betterform.ui.container.RepeatTabContainer" doLayout="false">           ´
+        <div id="{$repeat-id}" repeatId="{$repeat-id}" class="{$repeat-classes}" dojoType="betterform.ui.container.RepeatTabContainer" doLayout="false">
 
             <xsl:for-each select="xforms:group[@appearance='repeated']">
                 <xsl:variable name="repeat-item-id" select="@id"/>
