@@ -35,6 +35,8 @@ import java.util.List;
  * Implementation of <b>9.3.1 The repeat Element</b>.
  *
  * @author Ulrich Nicolas Liss&eacute;
+ * @author Ronald van Kuijk
+ * @author Lars Windauer
  * @version $Id: Repeat.java 3253 2008-07-08 09:26:40Z lasse $
  */
 public class Repeat extends BindingElement implements EventListener {
@@ -102,8 +104,8 @@ public class Repeat extends BindingElement implements EventListener {
      *
      * @param index the index of this <code>repeat</code>.
      */
-    public void setIndex(int index) throws XFormsException {
-        if (getLogger().isDebugEnabled()) {
+	public void setIndex(int index) throws XFormsException {
+		if (getLogger().isDebugEnabled()) {
             getLogger().debug(this + " set index: " + index);
         }
 
@@ -483,27 +485,34 @@ public class Repeat extends BindingElement implements EventListener {
                 getLogger().debug(this + " delete: position " + uiPosition);
             }
 
-            // delete repeat item (and remove focus if focused
-            RepeatItem repeatItem2delete = (RepeatItem) this.items.remove(uiPosition - 1);
-            if(repeatItem2delete.getId().equals(this.getContainerObject().getFocussedContainerId())) {
-                this.getContainerObject().setFocussedContainerId(null);
-            }
-            disposeRepeatItem(repeatItem2delete);
-
+            // delete repeat item (and remove focus if focused)
+		   disposeRepeatItem((RepeatItem) this.items.remove(uiPosition - 1));
             // update position of following items
             for (int index = uiPosition - 1; index < this.items.size(); index++) {
                 ((RepeatItem) this.items.get(index)).setPosition(index + 1);
             }
 
-            // set index only if it was pointing to the deleted item
-            // and the deleted item was the last collection member
-            // otherwise nothing is done and the repeat index stays the same
+            // set index to the last item if it was pointing to the deleted item
+            // and the deleted item was the last collection member (Q: need a real index-changed-event here?)
+            // Otherwise set it explicitly to update have the ui reflect the new situation (betterform-index-changed event)
+
+            // set the new index item to be the focussed one (-1 since java arrays start at 0)
             int contextSize = getContextSize();
             if (getIndex() > contextSize) {
                 setIndex(contextSize);
-            }            
+                this.container.setFocussedContainerId(((RepeatItem) this.items.get(contextSize-1)).getId());
+            } else {
+            	if (getIndex() != 0) {
+            		this.container.setFocussedContainerId(((RepeatItem) this.items.get(getIndex()-1)).getId());
+            	} else {
+            		this.container.setFocussedContainerId(null);
+            	}
+            }
+
         } else {
-            setIndex(this.index);
+        	setIndex(this.index);
+             //getLogger().info("Index: "+ this.index + " items: " + this.items.size());
+            this.container.setFocussedContainerId(null);
         }
     }
 
