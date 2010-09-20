@@ -7,81 +7,86 @@
             This form control allows selection from a sequential range of values.
         </description>
         <references>
-           <w3c ref="range"/>
+            <w3c ref="range"/>
         </references>
         <content>
             <models>
                 <xf:model id="model-1">
-                  <xf:instance id="instance-1">
-                     <data constraint="true" readonly="false" required="true" relevant="true">
-                        <item constraint="true" readonly="false" required="true" relevant="true">
-                           <value constraint="true" readonly="false" required="true" relevant="true">5</value>
-                        </item>
-                     </data>
-                  </xf:instance>
-                  <xf:bind nodeset="item/value" type="integer"></xf:bind>
-                  <xf:bind nodeset="item">
-                     <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
-                     <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
-                     <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
-                     <xf:bind nodeset="@required" type="boolean"></xf:bind>
-                     <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
-                  </xf:bind>
-               </xf:model>
+                    <xf:instance id="instance-1">
+                        <data constraint="true" readonly="false" required="true" relevant="true">
+                            <item constraint="true" readonly="false" required="true" relevant="true">
+                                <value constraint="true" readonly="false" required="true" relevant="true">5</value>
+                            </item>
+                        </data>
+                    </xf:instance>
+                    <xf:bind nodeset="item/value" type="integer"></xf:bind>
+                    <xf:bind nodeset="item">
+                        <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)"
+                                 readonly="boolean-from-string(../@readonly)"
+                                 required="boolean-from-string(../@required)"
+                                 relevant="boolean-from-string(../@relevant)"></xf:bind>
+                        <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
+                        <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
+                        <xf:bind nodeset="@required" type="boolean"></xf:bind>
+                        <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
+                    </xf:bind>
+                </xf:model>
             </models>
             <samples>
-                <section>
+                <section name="range">
                     <title>Standard Range Control</title>
                     <description>
                         Standard rendering for a XForms range control. Fully supports keyboard navigation and mouse
                         wheel
                         scrolling when focussed.
                     </description>
-<xf:range ref="item/value" start="1" step="1" end="5"
-          incremental="true">
-    <xf:label>a slider</xf:label>
-    <xf:help>help for slider1</xf:help>
-    <xf:hint>hint for slider1</xf:hint>
-    <xf:alert>invalid</xf:alert>
-</xf:range>
+                    <xf:range ref="item/value" start="1" step="1" end="5"
+                              incremental="true">
+                        <xf:label>a slider</xf:label>
+                        <xf:help>help for slider1</xf:help>
+                        <xf:hint>hint for slider1</xf:hint>
+                        <xf:alert>invalid</xf:alert>
+                    </xf:range>
                     <mips>
                         <xf:input navindex="-1" ref="item/@readonly" class="mips" incremental="true">
                             <xf:label>readonly</xf:label>
                         </xf:input>
-                        <xf:input navindex="-1"  ref="item/@required" class="mips" incremental="true">
+                        <xf:input navindex="-1" ref="item/@required" class="mips" incremental="true">
                             <xf:label>required</xf:label>
                         </xf:input>
-                        <xf:input navindex="-1"  ref="item/@relevant" class="mips" incremental="true">
+                        <xf:input navindex="-1" ref="item/@relevant" class="mips" incremental="true">
                             <xf:label>relevant</xf:label>
                         </xf:input>
-                        <xf:input navindex="-1"  ref="item/@constraint" class="mips" incremental="true">
+                        <xf:input navindex="-1" ref="item/@constraint" class="mips" incremental="true">
                             <xf:label>valid</xf:label>
                         </xf:input>
                     </mips>
                 </section>
-                <section>
+                <section name="rating">
                     <title>Range Control with appearance 'bf:rating'</title>
                     <description>
                         Rating control but without keyboard control.
                     </description>
-<xf:range ref="item/value" start="1" step="1" end="5"
-          appearance="bf:rating" incremental="true">
-    <xf:label>Rate it</xf:label>
-    <xf:hint>This is a standard range control</xf:hint>
-    <xf:help>Not much to say here but some basic html formatting is <b>possible</b></xf:help>
-    <xf:alert>value is invalid</xf:alert>
-</xf:range>
+                    <xf:range ref="item/value" start="1" step="1" end="5"
+                              appearance="bf:rating" incremental="true">
+                        <xf:label>Rate it</xf:label>
+                        <xf:hint>This is a standard range control</xf:hint>
+                        <xf:help>Not much to say here but some basic html formatting is
+                            <b>possible</b>
+                        </xf:help>
+                        <xf:alert>value is invalid</xf:alert>
+                    </xf:range>
                     <mips>
                         <xf:input navindex="-1" ref="item/@readonly" class="mips" incremental="true">
                             <xf:label>readonly</xf:label>
                         </xf:input>
-                        <xf:input navindex="-1"  ref="item/@required" class="mips" incremental="true">
+                        <xf:input navindex="-1" ref="item/@required" class="mips" incremental="true">
                             <xf:label>required</xf:label>
                         </xf:input>
-                        <xf:input navindex="-1"  ref="item/@relevant" class="mips" incremental="true">
+                        <xf:input navindex="-1" ref="item/@relevant" class="mips" incremental="true">
                             <xf:label>relevant</xf:label>
                         </xf:input>
-                        <xf:input navindex="-1"  ref="item/@constraint" class="mips" incremental="true">
+                        <xf:input navindex="-1" ref="item/@constraint" class="mips" incremental="true">
                             <xf:label>valid</xf:label>
                         </xf:input>
                     </mips>

@@ -29,25 +29,24 @@
             <xsl:apply-templates/>
         </html>
     </xsl:template>
-    
+
     <xsl:template match="title">
-            <head>
-                <xsl:apply-templates select="." mode="title"/>
-            </head>    
+        <head>
+            <xsl:apply-templates select="." mode="title"/>
+        </head>
     </xsl:template>
 
     <xsl:template match="title" mode="title">
-        <title><xsl:value-of select="."/></title>
-      
+        <title>
+            <xsl:value-of select="."/>
+        </title>
+
         <link rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css"/>
         <link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css"/>
 
         <script type="text/javascript">
             dojo.require("dojox.highlight");
             dojo.require("dojox.highlight.languages.xml");
-            dojo.addOnLoad(function() {
-            dojo.query("code").forEach(dojox.highlight.init);
-            });
 
             dojo.require("dijit.form.Button");
             dojo.require("dijit.TitlePane");
@@ -57,7 +56,21 @@
 
     <xsl:template match="page">
         <body class="soria inlineAlert" style="margin:30px;">
+            <a name="top"/>
             <div id="xforms">
+                <xsl:if test="count(//section) &gt; 1">
+                    <div id="toc">
+                        <!--<a href="#top"><div class="tocEntry" style="border-bottom:thin solid #aaaaaa">Intro</div></a>-->
+                        <div class="tocEntry" style="border-bottom:thin solid #aaaaaa">Contents</div>
+                        <xsl:for-each select="//section">
+                            <div class="tocEntry">
+                                <a href="#{@name}">
+                                    <xsl:value-of select="title"/>
+                                </a>
+                            </div>
+                        </xsl:for-each>
+                    </div>
+                </xsl:if>
                 <div style="display:none;">
                     <xsl:apply-templates mode="model"/>
                 </div>
@@ -65,9 +78,16 @@
                     <xsl:apply-templates mode="ui"/>
                 </div>
                 <xsl:apply-templates select="$content" mode="content"/>
+                <script type="text/javascript">
+                    dojo.query("code").forEach(dojox.highlight.init);
+                </script>
             </div>
             <div style="text-align:right;" id="copyright">
-                <a href="http://www.betterform.de"><img style="vertical-align:text-bottom; margin-right:5px;" src="../../images/betterform_icon16x16.png" alt="betterFORM project"/></a><span>&#xA9; 2010 betterFORM</span>
+                <a href="http://www.betterform.de">
+                    <img style="vertical-align:text-bottom; margin-right:5px;"
+                         src="../../images/betterform_icon16x16.png" alt="betterFORM project"/>
+                </a>
+                <span>&#xA9; 2010 betterFORM</span>
             </div>
         </body>
     </xsl:template>
@@ -75,7 +95,7 @@
     <xsl:template match="content" mode="model">
         <xsl:choose>
             <xsl:when test="string($models)">
-               <xsl:copy-of select="./models/*"/>
+                <xsl:copy-of select="./models/*"/>
                 <!--
                 <xsl:apply-templates select="$models" mode="existingModel"/>
                 -->
@@ -84,7 +104,7 @@
                 <xf:model>
                     <xf:instance>
                         <data xmlns="">
-                               <xsl:apply-templates select="$samples" mode="instance"/>
+                            <xsl:apply-templates select="$samples" mode="instance"/>
                         </data>
                     </xf:instance>
                     <xsl:apply-templates select="$samples" mode="bind"/>
@@ -92,7 +112,6 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-
 
 
     <!--
@@ -109,12 +128,13 @@
                 <xsl:attribute name="readonly">false</xsl:attribute>
                 <xsl:attribute name="required">true</xsl:attribute>
                 <xsl:attribute name="relevant">true</xsl:attribute>
-                <xsl:element name="value" namespace=""><xsl:value-of select="$value"/></xsl:element>
+                <xsl:element name="value" namespace="">
+                    <xsl:value-of select="$value"/>
+                </xsl:element>
             </xsl:element>
         </xsl:if>
         <xsl:apply-templates mode="instance"/>
     </xsl:template>
-
 
 
     <!--
@@ -238,28 +258,38 @@
 
         <xsl:element name="{$name}" namespace="">
             <xsl:copy-of select="@*"/>
-            <xsl:attribute name="constraint"><xsl:value-of select="$constraint"/></xsl:attribute>
-            <xsl:attribute name="readonly"><xsl:value-of select="$readonly"/></xsl:attribute>
-            <xsl:attribute name="required"><xsl:value-of select="$required"/></xsl:attribute>
-            <xsl:attribute name="relevant"><xsl:value-of select="$relevant"/></xsl:attribute>
+            <xsl:attribute name="constraint">
+                <xsl:value-of select="$constraint"/>
+            </xsl:attribute>
+            <xsl:attribute name="readonly">
+                <xsl:value-of select="$readonly"/>
+            </xsl:attribute>
+            <xsl:attribute name="required">
+                <xsl:value-of select="$required"/>
+            </xsl:attribute>
+            <xsl:attribute name="relevant">
+                <xsl:value-of select="$relevant"/>
+            </xsl:attribute>
             <xsl:apply-templates mode="existingModel"/>
         </xsl:element>
     </xsl:template>
-    
+
     <!--
     ######################################################################################################
                 Mode ui
     ######################################################################################################
     -->
     <xsl:template match="page/title" mode="ui">
-        <div class="pagetitle"><xsl:copy-of select="*|text()"/></div>
+        <div class="pagetitle">
+            <xsl:copy-of select="*|text()"/>
+        </div>
     </xsl:template>
 
     <xsl:template match="page/description" mode="ui">
         <div class="Section">
             <div class="PageDescription">Description</div>
             <p>
-            <xsl:value-of select="."/>
+                <xsl:value-of select="."/>
             </p>
         </div>
     </xsl:template>
@@ -269,14 +299,28 @@
 
         <table>
             <tr>
-                <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="../../resources/images/w3c_home_nb.png" alt="W3C"/></a></td>
+                <td rowspan="3">
+                    <a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank">
+                        <img id="logo" class="image" src="../../resources/images/w3c_home_nb.png" alt="W3C"/>
+                    </a>
+                </td>
                 <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
             </tr>
             <tr>
-                <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-{$ref}" target="_blank">Recommendation</a></td>
+                <td>
+                    <a style="color:#005A9C;"
+                       href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-{$ref}" target="_blank">
+                        Recommendation
+                    </a>
+                </td>
             </tr>
             <tr>
-                <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html#elems-form-controls" target="_blank">Quick Reference</a></td>
+                <td>
+                    <a style="color:#005A9C;"
+                       href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html#elems-form-controls" target="_blank">
+                        Quick Reference
+                    </a>
+                </td>
             </tr>
         </table>
     </xsl:template>
@@ -285,7 +329,10 @@
         <xsl:variable name="link" select="./link"/>
         <xsl:variable name="description" select="./description"/>
         <div class="Section">
-            <div class="PageDescription"><a style="color:#005A9C;" href="{$link}"><xsl:value-of select="$description"/></a>
+            <div class="PageDescription">
+                <a style="color:#005A9C;" href="{$link}">
+                    <xsl:value-of select="$description"/>
+                </a>
             </div>
         </div>
     </xsl:template>
@@ -299,20 +346,27 @@
     -->
     <xsl:template match="section" mode="content">
         <div class="Section">
-            <div class="Headline"><xsl:value-of select="./title"/></div>
+            <a name="{@name}"/>
+            <div class="Headline">
+                <xsl:value-of select="./title"/>
+            </div>
 
 
-            <p class="Description"><xsl:value-of select="./description"/></p>
+            <p class="Description">
+                <xsl:copy-of select="./description"/>
+            </p>
             <div>
                 <div class="Subheadline">XForms Markup</div>
-                <div class="Subsection">
-<pre><code class="xml">
-<xsl:apply-templates mode="escape" select="./style"/>
-<xsl:apply-templates mode="codesectioninstance"/>
-<xsl:apply-templates mode="codesectionbind"/>
-&lt;!--XForms UI--&gt;
-<xsl:apply-templates mode="escape" select="./xf:*"/>
-</code></pre>
+                <div class="markup">
+                    <pre>
+                        <code class="xml">
+                            <xsl:apply-templates mode="escape" select="./style"/>
+                            <xsl:apply-templates mode="codesectioninstance"/>
+                            <xsl:apply-templates mode="codesectionbind"/>
+                            &lt;!--XForms UI--&gt;
+                            <xsl:apply-templates mode="escape" select="./xf:*"/>
+                        </code>
+                    </pre>
 
                 </div>
             </div>
@@ -323,17 +377,17 @@
                 </div>
 
                 <xsl:if test="not(string($models))">
-                <div class="Subheadline">Modelitem properties</div>
-                <div class="MIPS">
-                     <xsl:apply-templates mode="modelitemsection"/>
-                </div>
+                    <div class="Subheadline">Modelitem properties</div>
+                    <div class="MIPS">
+                        <xsl:apply-templates mode="modelitemsection"/>
+                    </div>
                 </xsl:if>
 
                 <xsl:if test="string($models) and string(./mips)">
-                <div class="Subheadline">Modelitem properties</div>
-                <div class="MIPS">
-                     <xsl:copy-of select="./mips/*"/>
-                </div>
+                    <div class="Subheadline">Modelitem properties</div>
+                    <div class="MIPS">
+                        <xsl:copy-of select="./mips/*"/>
+                    </div>
                 </xsl:if>
 
                 <xsl:apply-templates mode="notes"/>
@@ -347,8 +401,8 @@
 
     <xsl:template match="xf:*" mode="codesectioninstance" priority="10">
         <xsl:if test="string(./@value)">
-&lt;!--XForms Instance--&gt;
-&lt;item&gt;<xsl:value-of select="./@value"/>&lt;/item&gt;
+            &lt;!--XForms Instance--&gt;
+            &lt;item&gt;<xsl:value-of select="./@value"/>&lt;/item&gt;
         </xsl:if>
     </xsl:template>
 
@@ -357,8 +411,8 @@
         <xsl:variable name="datatype" select="./@datatype"/>
 
         <xsl:if test="string($datatype)">
-&lt;!--XForms Bind--&gt;
-&lt;xf:bind nodeset="<xsl:value-of select="$nodeset"/>" type="<xsl:value-of select="$datatype"/>"/&gt;
+            &lt;!--XForms Bind--&gt;
+            &lt;xf:bind nodeset="<xsl:value-of select="$nodeset"/>" type="<xsl:value-of select="$datatype"/>"/&gt;
         </xsl:if>
     </xsl:template>
 
@@ -388,28 +442,30 @@
     </xsl:template>
 
     <xsl:template match="*" mode="escape" priority="10">
-<xsl:text>&lt;</xsl:text>
-<xsl:value-of select="name()"/>
-<xsl:apply-templates mode="escape" select="@*"/>
-<xsl:text>&gt;</xsl:text>
-<xsl:apply-templates mode="escape"/>
-<xsl:text>&lt;/</xsl:text>
-<xsl:value-of select="name()"/>
-<xsl:text>&gt;</xsl:text>
+        <xsl:text>&lt;</xsl:text>
+        <xsl:value-of select="name()"/>
+        <xsl:apply-templates mode="escape" select="@*"/>
+        <xsl:text>&gt;</xsl:text>
+        <xsl:apply-templates mode="escape"/>
+        <xsl:text>&lt;/</xsl:text>
+        <xsl:value-of select="name()"/>
+        <xsl:text>&gt;</xsl:text>
     </xsl:template>
 
     <xsl:template match="@*" mode="escape" priority="10">
-<xsl:text> </xsl:text>
-<xsl:value-of select="name()"/>
-<xsl:text>="</xsl:text>
-<xsl:value-of select="."/>
-<xsl:text>"</xsl:text>
+        <xsl:text> </xsl:text>
+        <xsl:value-of select="name()"/>
+        <xsl:text>="</xsl:text>
+        <xsl:value-of select="."/>
+        <xsl:text>"</xsl:text>
     </xsl:template>
 
     <xsl:template match="mips" mode="samplesection" priority="10"/>
 
     <xsl:template match="style" mode="samplesection" priority="10">
-        <xsl:message><xsl:value-of select="."/></xsl:message>
+        <xsl:message>
+            <xsl:value-of select="."/>
+        </xsl:message>
         <xsl:copy-of select="."/>
     </xsl:template>
 
@@ -442,7 +498,7 @@
     </xsl:template>
 
     <xsl:template match="xf:*[@ref]" mode="modelitemsection" priority="10">
-      <xsl:variable name="ref" select="./@ref"/>
+        <xsl:variable name="ref" select="./@ref"/>
         <xf:group appearance="full">
             <xf:label/>
             <xf:input id="{$ref}-readonly" navindex="-1" ref="{$ref}/@readonly" incremental="true">
@@ -460,8 +516,10 @@
         </xf:group>
     </xsl:template>
 
-    <xsl:template match="notes" mode="notes" priority="10">
-        <div class="Subheadline">Notes</div>
+    <xsl:template match="subsection" mode="notes" priority="10">
+        <div class="Subheadline">
+            <xsl:value-of select="@name"/>
+        </div>
         <xsl:copy-of select="./*"/>
     </xsl:template>
 
@@ -469,7 +527,7 @@
     <xsl:template match="text()" mode="ui"/>
     <xsl:template match="text()" mode="section"/>
     <xsl:template match="text()" mode="codesectioninstance"/>
-    <xsl:template match="text()" mode="codesectionbind"/> 
+    <xsl:template match="text()" mode="codesectionbind"/>
     <xsl:template match="text()" mode="codesectionxforms"/>
     <xsl:template match="text()" mode="notes"/>
     <xsl:template match="text()" mode="samplesection"/>

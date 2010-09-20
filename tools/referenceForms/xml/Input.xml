@@ -2,65 +2,246 @@
 <data xmlns:xf="http://www.w3.org/2002/xforms">
     <title>Input Control</title>
     <page>
-        <title>The <span class="titlecode">input</span> Element</title>
+        <title>The
+            <span class="titlecode">input</span>
+            Element
+        </title>
         <description>
             This form control enables free-form data entry or a user
             interface component appropriate to the datatype of the bound
             node.
         </description>
         <references>
-           <w3c ref="input"/>
+            <w3c ref="input"/>
         </references>
         <content>
             <samples>
-                <section>
+                <section name="TextInput">
                     <title>Text input control</title>
                     <description>
                         This is the most common rendering of an input which is bound to a string value in the
                         Instance.
                     </description>
-<xf:input ref="input1" incremental="true">
-    <xf:label>a text</xf:label>
-    <xf:hint>input bound to string</xf:hint>
-    <xf:help>help for input1</xf:help>
-    <xf:alert>invalid</xf:alert>
-</xf:input>
+                    <xf:input ref="input1" incremental="true">
+                        <xf:label>a text</xf:label>
+                        <xf:hint>input bound to string</xf:hint>
+                        <xf:help>help for input1</xf:help>
+                        <xf:alert>invalid</xf:alert>
+                    </xf:input>
+                    <subsection name="CSS">
+                        <table class="cssReference">
+                            <tr>
+                                <th class="col1">Class</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>xfInput</td>
+                                <td>matches an Element that represents a XForms input element</td>
+                            </tr>
+                        </table>
+                    </subsection>
                 </section>
-                <section>
+                <section name="Checkbox">
                     <title>Checkbox control</title>
                     <description>
                         An input which binds to a Node of type 'boolean' is rendered as a Checkbox.
                     </description>
-<xf:input ref="input2" incremental="true" datatype="xf:boolean">
-    <xf:label>a boolean</xf:label>
-    <xf:hint>input bound to boolean</xf:hint>
-    <xf:alert>invalid</xf:alert>
-    <xf:help>help for input2</xf:help>
-</xf:input>
+                    <xf:input ref="input2" incremental="true" datatype="xf:boolean">
+                        <xf:label>a boolean</xf:label>
+                        <xf:hint>input bound to boolean</xf:hint>
+                        <xf:alert>invalid</xf:alert>
+                        <xf:help>help for input2</xf:help>
+                    </xf:input>
+                    <subsection name="CSS">
+                        <table class="cssReference">
+                            <tr>
+                                <th class="col1">Class</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>xfInput</td>
+                                <td>matches an Element that represents a XForms input element</td>
+                            </tr>
+                            <tr>
+                                <td>xsdBoolean</td>
+                                <td>matches an Element that is bound to a node with datatype
+                                    <code>boolean</code>
+                                </td>
+                            </tr>
+                        </table>
+                    </subsection>
+
                 </section>
-                <section>
+                <section name="Datepicker">
                     <title>Datepicker control</title>
                     <description>
                         An input which binds to a Node of type 'date' is rendered as a popup calendar control. The value
                         may also be be typed in directly.
                     </description>
-<xf:input ref="input3" incremental="true" datatype="xf:date" value="2007-10-10">
-    <xf:label>a date</xf:label>
-    <xf:hint>input bound to date</xf:hint>
-    <xf:alert>invalid</xf:alert>
-    <xf:help>help for input3</xf:help>
-</xf:input>
+                    <xf:input ref="input3" incremental="true" datatype="xf:date" value="2007-10-10">
+                        <xf:label>a date</xf:label>
+                        <xf:hint>input bound to date</xf:hint>
+                        <xf:alert>invalid</xf:alert>
+                        <xf:help>help for input3</xf:help>
+                    </xf:input>
+                    <subsection name="CSS">
+                        <table class="cssReference">
+                            <tr>
+                                <th class="col1">Class</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>xfInput</td>
+                                <td>matches an Element that represents a XForms input element</td>
+                            </tr>
+                            <tr>
+                                <td>xsdDate</td>
+                                <td>matches an Element that is bound to a node widht datatype
+                                    <code>date</code>
+                                </td>
+                            </tr>
+                        </table>
+                    </subsection>
+                    <subsection name="Notes">
+                        <ul class="Notes">
+                            <li>
+                                The date control is currently not fully accessible esp. keyboard navigation is not
+                                working
+                                in the current version of Dojo 1.3. Upcoming version 1.4 will fully support keyboard
+                                navigation.
+                            </li>
+                        </ul>
+                    </subsection>
                 </section>
-                <section>
-                    <title>Datepicker control with datePattern</title>
+                <section name="DatepickerPattern1">
+                    <title>Datepicker control with datePattern 'dd.MMMM.yyyy'</title>
                     <description>
-                        An input which binds to a Node of type 'date' is rendered as a popup calendar control. The value
-                        may also be be typed in directly. Through appearance="iso8601:datePattern" the format of the Date value
+                        By setting the appearance attribute to "iso8601:datePattern" the format of the Date value
                         can be customized.
-                        Typical format strings apply. See <a
-                            href="http://www.dojotoolkit.com/reference-guide/dojo/date/locale/format.html">Dojo Docs</a>.
+                        Typical format strings apply. See<a
+                            href="http://www.dojotoolkit.com/reference-guide/dojo/date/locale/format.html">Dojo Docs</a>
+                        .
                     </description>
-                    <notes>
+                    <xf:group appearance="full">
+                        <xf:input ref="input4" incremental="true" appearance="iso8601:dd.MMMM.yyyy" datatype="xf:date"
+                                  value="2007-10-10" class="longDate">
+                            <xf:label>a date with datePattern dd.MMMM.yyyy</xf:label>
+                            <xf:hint>appearance="iso8601:dd.MMMM.yyyy"</xf:hint>
+                            <xf:alert>invalid</xf:alert>
+                            <xf:help>help for input4</xf:help>
+
+                        </xf:input>
+                    </xf:group>
+
+                    <subsection name="CSS">
+                        <table class="cssReference">
+                            <tr>
+                                <th class="col1">Class</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>xfInput</td>
+                                <td>matches an Element that represents a XForms input element</td>
+                            </tr>
+                            <tr>
+                                <td>xsdDate</td>
+                                <td>matches an Element that is bound to a node widht datatype
+                                    <code>date</code>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>xfIso8601:dd.MMMM.yyyyInput</td>
+                                <td>matches an Element that has a datePattern of 'dd.MMMM.yyyy'</td>
+                            </tr>
+                        </table>
+                    </subsection>
+
+                    <subsection name="notes">
+                        <ul class="Notes">
+                            <li>
+                                Though locale-specific formatting of a date is supported there's no further support for
+                                subformats like the Java short/medium/long date formatting.
+                            </li>
+                            <li>
+                                Known limitation:
+                                Dojo only accepts 'date'-inputs in the format of the datePattern or the ISO8601/RFC3339
+                                format
+                                (yyyy-MM-dd).
+                            </li>
+                        </ul>
+                    </subsection>
+
+                </section>
+
+
+                <section name="DatepickerPattern2">
+                    <title>Datepicker control with datePattern 'EEE,dd.MM.yyyy'</title>
+                    <description>
+                        Through appearance="iso8601:datePattern" the format of the Date value
+                        can be customized.
+                        Typical format strings apply. See<a
+                            href="http://www.dojotoolkit.com/reference-guide/dojo/date/locale/format.html">Dojo Docs</a>
+                        .
+                    </description>
+                    <xf:group appearance="full">
+                        <xf:input ref="input5" incremental="true" appearance="iso8601:EEE,dd.MM.yyyy" datatype="xf:date"
+                                  value="2007-10-10" class="longDate">
+                            <xf:label>a date with datePattern EEE,dd.MM.yyyy</xf:label>
+                            <xf:hint>appearance="iso8601:EEE,dd.MMMM.yyyy"</xf:hint>
+                            <xf:alert>invalid</xf:alert>
+                            <xf:help>help for input5</xf:help>
+                        </xf:input>
+                    </xf:group>
+
+                    <subsection name="CSS">
+                        <table class="cssReference">
+                            <tr>
+                                <th class="col1">Class</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>xfInput</td>
+                                <td>matches an Element that represents a XForms input element</td>
+                            </tr>
+                            <tr>
+                                <td>xsdDate</td>
+                                <td>matches an Element that is bound to a node with datatype
+                                    <code>date</code>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>xfIso8601:EEE,dd.MM.yyyyInput</td>
+                                <td>matches an Element that has a datePattern of 'EEE,dd.MM.yyyy'</td>
+                            </tr>
+                        </table>
+                    </subsection>
+
+                    <subsection name="notes">
+                        <ul class="Notes">
+                            <li>
+                                Though locale-specific formatting of a date is supported there's no further support for
+                                subformats like the Java short/medium/long date formatting.
+                            </li>
+                            <li>
+                                Known limitation:
+                                Dojo only accepts 'date'-inputs in the format of the datePattern or the ISO8601/RFC3339
+                                format
+                                (yyyy-MM-dd).
+                            </li>
+                        </ul>
+                    </subsection>
+
+                </section>
+
+
+                <section name="DateTimePicker">
+                    <title>DateTime picker control</title>
+                    <description>
+                        An input which binds to a Node of type 'datetime' is rendered as a popup calendar and an
+                        associated
+                        time input control.
+                    </description>
+                    <subsection name="notes">
                         <ul class="Notes">
                             <li>
                                 The date control is currently not fully accessible esp. keyboard navigation is not
@@ -70,59 +251,38 @@
                             </li>
                             <li>
                                 Though locale-specific formatting of a date is supported there's no further support for
-                                subformats like the Java short/medium/long date formatting.
-                            </li>
-                            <li>
-                                Known limitation:
-                                Dojo only accepts 'date'-inputs in the chosen datePattern or the ISO8601/RFC3339 format
-                                (yyyy-MM-dd).
-                            </li>
-                        </ul>
-                     </notes>
-<xf:group appearance="full">
-    <xf:label/>
-    <xf:input ref="input4" incremental="true" appearance="iso8601:dd.MMMM.yyyy" datatype="xf:date" value="2007-10-10" class="longDate">
-        <xf:label>a date with datePattern dd.MMMM.yyyy</xf:label>
-        <xf:hint>appearance="iso8601:dd.MMMM.yyyy"</xf:hint>
-        <xf:alert>invalid</xf:alert>
-        <xf:help>help for input4</xf:help>
-
-    </xf:input>
-    <xf:input ref="input5" incremental="true" appearance="iso8601:EEE,dd.MM.yyyy" datatype="xf:date" value="2007-10-10" class="longDate">
-        <xf:label>a date with datePattern EEE,dd.MM.yyyy</xf:label>
-        <xf:hint>appearance="iso8601:EEE,dd.MMMM.yyyy"</xf:hint>
-        <xf:alert>invalid</xf:alert>
-        <xf:help>help for input5</xf:help>
-
-    </xf:input>
-</xf:group>
-                </section>
-                <section>
-                    <title>DateTime picker control</title>
-                    <description>
-                        An input which binds to a Node of type 'datetime' is rendered as a popup calendar and an associated
-                        time input control.
-                    </description>
-                    <notes>
-                        <ul class="Notes">
-                            <li>
-                                The date control is currently not fully accessible esp. keyboard navigation is not working
-                                in the current version of Dojo 1.3. Upcoming version 1.4 will fully support keyboard navigation.
-                            </li>
-                            <li>
-                                Though locale-specific formatting of a date is supported there's no further support for
                                 subformats
                                 like the Java short/medium/long date formatting.
                             </li>
                         </ul>
-                    </notes>
-<xf:input ref="input6" incremental="true" datatype="xf:dateTime" value="2007-10-10T23:23:23.123Z">
-    <xf:label>a datetime</xf:label>
-    <xf:alert>invalid</xf:alert>
-    <xf:help>help for input6</xf:help>
-    <xf:hint>hint for input6</xf:hint>
+                    </subsection>
+                    <xf:input ref="input6" incremental="true" datatype="xf:dateTime" value="2007-10-10T23:23:23.123Z">
+                        <xf:label>a datetime</xf:label>
+                        <xf:alert>invalid</xf:alert>
+                        <xf:help>help for input6</xf:help>
+                        <xf:hint>hint for input6</xf:hint>
 
-</xf:input>
+                    </xf:input>
+
+                    <subsection name="CSS">
+                        <table class="cssReference">
+                            <tr>
+                                <th class="col1">Class</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>xfInput</td>
+                                <td>matches an Element that represents a XForms input element</td>
+                            </tr>
+                            <tr>
+                                <td>xsdDateTime</td>
+                                <td>matches an Element that is bound to a node with datatype
+                                    <code>datetime</code>
+                                </td>
+                            </tr>
+                        </table>
+                    </subsection>
+
                 </section>
             </samples>
         </content>

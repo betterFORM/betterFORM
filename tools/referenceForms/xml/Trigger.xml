@@ -9,7 +9,7 @@
             also be used to construct other custom form controls.
         </description>
         <references>
-           <w3c ref="trigger"/>
+            <w3c ref="trigger"/>
         </references>
         <content>
             <models>
@@ -35,15 +35,15 @@
                 </xf:model>
             </models>
             <samples>
-                <section>
+                <section name="minimal">
                     <title>Minimal trigger Control</title>
                     <description>
                         A trigger with minimal appearance is rendered as a Link.
                     </description>
-<xf:trigger id="trigger1" ref="item" appearance="minimal">
-    <xf:label>A minimal trigger</xf:label>
-    <xf:message level="modal">Clicked minimal trigger</xf:message>
-</xf:trigger>
+                    <xf:trigger id="trigger1" ref="item" appearance="minimal">
+                        <xf:label>A minimal trigger</xf:label>
+                        <xf:message level="modal">Clicked minimal trigger</xf:message>
+                    </xf:trigger>
                     <!--
                     <mips>
                         <xf:input navindex="-1" ref="item/@readonly" class="mips" incremental="true">
@@ -61,15 +61,15 @@
                     </mips>
                     -->
                 </section>
-                <section>
+                <section name="default">
                     <title>Stanaard trigger</title>
                     <description>
                         A trigger without any appearance is rendered as a standard button.
                     </description>
-<xf:trigger id="trigger2" ref="item">
-    <xf:label>A standard trigger</xf:label>
-    <xf:message level="ephemeral">Clicked standard trigger</xf:message>
-</xf:trigger>
+                    <xf:trigger id="trigger2" ref="item">
+                        <xf:label>A standard trigger</xf:label>
+                        <xf:message level="ephemeral">Clicked standard trigger</xf:message>
+                    </xf:trigger>
                     <!--
                     <mips>
                         <xf:input navindex="-1" ref="item/@readonly" class="mips" incremental="true">
@@ -87,16 +87,16 @@
                     </mips>
                     -->
                 </section>
-                <section>
+                <section name="imageTrigger">
                     <title>Image trigger</title>
                     <description>
                         A trigger can reference a picture to display instead of the label.
                     </description>
-<xf:trigger id="trigger3" src="../../images/bf_logo_67x27.png"
-            ref="item">
-    <xf:label>A image trigger</xf:label>
-    <xf:message level="modal">Message from image trigger</xf:message>
-</xf:trigger>
+                    <xf:trigger id="trigger3" src="../../images/bf_logo_67x27.png"
+                                ref="item">
+                        <xf:label>A image trigger</xf:label>
+                        <xf:message level="modal">Message from image trigger</xf:message>
+                    </xf:trigger>
                     <!--
                     <mips>
                         <xf:input navindex="-1" ref="item/@readonly" class="mips" incremental="true">
@@ -114,7 +114,7 @@
                     </mips>
                     -->
                 </section>
-                <section>
+                <section name="cssImageTrigger">
                     <title>Image trigger with CSS</title>
                     <description>A trigger can be styled by CSS.
                         Here the trigger is given an id and a CSS matcher is added for it. The corresponding
@@ -125,17 +125,17 @@
                         would
                         match the same element in the tree.
                     </description>
-<style type="text/css">
-    #trigger4-value{
-        background:url(../../images/bf_logo_67x27.png) no-repeat center;
-        width:100px;
-        height:40px;
-    }
-</style>
-<xf:trigger id="trigger4" ref="item">
-    <xf:label/>
-    <xf:message level="modal">Message from CSS image trigger</xf:message>
-</xf:trigger>
+                    <style type="text/css">
+                        #trigger4-value{
+                        background:url(../../images/bf_logo_67x27.png) no-repeat center;
+                        width:100px;
+                        height:40px;
+                        }
+                    </style>
+                    <xf:trigger id="trigger4" ref="item">
+                        <xf:label/>
+                        <xf:message level="modal">Message from CSS image trigger</xf:message>
+                    </xf:trigger>
                     <!--
                     <mips>
                         <xf:input navindex="-1" ref="item/@readonly" class="mips" incremental="true">

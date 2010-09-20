@@ -9,7 +9,7 @@
             varied based on user actions and events
         </description>
         <references>
-           <w3c ref="switch"/>
+            <w3c ref="switch"/>
         </references>
         <content>
             <models>
@@ -24,50 +24,50 @@
                 </xf:model>
             </models>
             <samples>
-                <section>
+                <section name="standard">
                     <title>Switch</title>
                     <description>
                         A switch without appearance renders as a div Element which may contain arbitrary markup and
                         be toggled (changing the active case) with the help of triggers outside of the switch.
                     </description>
-<xf:group>
-    <xf:label class="blockLabel">Switch / Case</xf:label>
-    <xf:group id="menu" appearance="minimal">
-        <xf:label class="blockLabel">Triggers outside Switch / Case</xf:label>
-        <xf:trigger style="clear:none">
-            <xf:label>Case 1</xf:label>
-            <xf:toggle case="switch1-case1"/>
-        </xf:trigger>
-        <xf:trigger style="clear:none">
-            <xf:label>Case 2</xf:label>
-            <xf:toggle case="switch1-case2"/>
-        </xf:trigger>
-        <xf:trigger style="clear:none">
-            <xf:label>Case 3</xf:label>
-            <xf:toggle case="switch1-case3"/>
-        </xf:trigger>
-        <xf:trigger style="clear:none">
-            <xf:label>Case 4</xf:label>
-            <xf:toggle case="switch1-case4"/>
-        </xf:trigger>
-    </xf:group>
-    <xf:switch id="switch1">
-        <xf:case id="switch1-case1" selected="true">
-            <div class="caseContent" style="background:#bbbbff">CASE 1</div>
-        </xf:case>
-        <xf:case id="switch1-case2">
-            <div class="caseContent" style="background:#ccccff">CASE 2</div>
-        </xf:case>
-        <xf:case id="switch1-case3">
-            <div class="caseContent" style="background:#ddddff">CASE 3</div>
-        </xf:case>
-        <xf:case id="switch1-case4">
-            <div class="caseContent" style="background:#eeeeff">CASE 4</div>
-        </xf:case>
-    </xf:switch>
-</xf:group>
+                    <xf:group>
+                        <xf:label class="blockLabel">Switch / Case</xf:label>
+                        <xf:group id="menu" appearance="minimal">
+                            <xf:label class="blockLabel">Triggers outside Switch / Case</xf:label>
+                            <xf:trigger style="clear:none">
+                                <xf:label>Case 1</xf:label>
+                                <xf:toggle case="switch1-case1"/>
+                            </xf:trigger>
+                            <xf:trigger style="clear:none">
+                                <xf:label>Case 2</xf:label>
+                                <xf:toggle case="switch1-case2"/>
+                            </xf:trigger>
+                            <xf:trigger style="clear:none">
+                                <xf:label>Case 3</xf:label>
+                                <xf:toggle case="switch1-case3"/>
+                            </xf:trigger>
+                            <xf:trigger style="clear:none">
+                                <xf:label>Case 4</xf:label>
+                                <xf:toggle case="switch1-case4"/>
+                            </xf:trigger>
+                        </xf:group>
+                        <xf:switch id="switch1">
+                            <xf:case id="switch1-case1" selected="true">
+                                <div class="caseContent" style="background:#bbbbff">CASE 1</div>
+                            </xf:case>
+                            <xf:case id="switch1-case2">
+                                <div class="caseContent" style="background:#ccccff">CASE 2</div>
+                            </xf:case>
+                            <xf:case id="switch1-case3">
+                                <div class="caseContent" style="background:#ddddff">CASE 3</div>
+                            </xf:case>
+                            <xf:case id="switch1-case4">
+                                <div class="caseContent" style="background:#eeeeff">CASE 4</div>
+                            </xf:case>
+                        </xf:switch>
+                    </xf:group>
                 </section>
-                <section>
+                <section name="tabAppearance">
                     <title>Switch appearance 'dijit.TabContainer'</title>
                     <description>
                         A switch Element with appearance Attribute set to 'dijit.TabContainer' will be rendered as
@@ -84,45 +84,45 @@
                         from display with a style="display:none;"write your switch as normal and give it an appearance
                         of 'dijit.TabContainer'
                     </description>
-<xf:group>
-    <xf:label>Switch / Case</xf:label>
-    <div style="display:none;">
-        <xf:trigger id="t-switch2-case1">
-            <xf:label>Case 1</xf:label>
-            <xf:toggle case="switch2-case1"/>
-        </xf:trigger>
-        <xf:trigger id="t-switch2-case2">
-            <xf:label>Case 2</xf:label>
-            <xf:toggle case="switch2-case2"/>
-        </xf:trigger>
-        <xf:trigger id="t-switch2-case3">
-            <xf:label>Case 3</xf:label>
-            <xf:toggle case="switch2-case3"/>
-        </xf:trigger>
-        <xf:trigger id="t-switch2-case4">
-            <xf:label>Case 4</xf:label>
-            <xf:toggle case="switch2-case4"/>
-        </xf:trigger>
-    </div>
-    <xf:switch id="switch2" appearance="dijit:TabContainer">
-        <xf:case id="switch2-case1" selected="true">
-            <xf:label>Case 1</xf:label>
-            <div class="caseContent" style="background:#bbbbff">CASE 1</div>
-        </xf:case>
-        <xf:case id="switch2-case2">
-            <xf:label>Case 2</xf:label>
-            <div class="caseContent" style="background:#ccccff">CASE 2</div>
-        </xf:case>
-        <xf:case id="switch2-case3">
-            <xf:label>Case 3</xf:label>
-            <div class="caseContent" style="background:#ddddff">CASE 3</div>
-        </xf:case>
-        <xf:case id="switch2-case4">
-            <xf:label>Case 4</xf:label>
-            <div class="caseContent" style="background:#eeeeff">CASE 4</div>
-        </xf:case>
-    </xf:switch>
-</xf:group>
+                    <xf:group>
+                        <xf:label>Switch / Case</xf:label>
+                        <div style="display:none;">
+                            <xf:trigger id="t-switch2-case1">
+                                <xf:label>Case 1</xf:label>
+                                <xf:toggle case="switch2-case1"/>
+                            </xf:trigger>
+                            <xf:trigger id="t-switch2-case2">
+                                <xf:label>Case 2</xf:label>
+                                <xf:toggle case="switch2-case2"/>
+                            </xf:trigger>
+                            <xf:trigger id="t-switch2-case3">
+                                <xf:label>Case 3</xf:label>
+                                <xf:toggle case="switch2-case3"/>
+                            </xf:trigger>
+                            <xf:trigger id="t-switch2-case4">
+                                <xf:label>Case 4</xf:label>
+                                <xf:toggle case="switch2-case4"/>
+                            </xf:trigger>
+                        </div>
+                        <xf:switch id="switch2" appearance="dijit:TabContainer">
+                            <xf:case id="switch2-case1" selected="true">
+                                <xf:label>Case 1</xf:label>
+                                <div class="caseContent" style="background:#bbbbff">CASE 1</div>
+                            </xf:case>
+                            <xf:case id="switch2-case2">
+                                <xf:label>Case 2</xf:label>
+                                <div class="caseContent" style="background:#ccccff">CASE 2</div>
+                            </xf:case>
+                            <xf:case id="switch2-case3">
+                                <xf:label>Case 3</xf:label>
+                                <div class="caseContent" style="background:#ddddff">CASE 3</div>
+                            </xf:case>
+                            <xf:case id="switch2-case4">
+                                <xf:label>Case 4</xf:label>
+                                <div class="caseContent" style="background:#eeeeff">CASE 4</div>
+                            </xf:case>
+                        </xf:switch>
+                    </xf:group>
                 </section>
             </samples>
         </content>
