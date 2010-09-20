@@ -1,6 +1,6 @@
 /*
  * This filter allows a web application to
- * use chiba in different context.
+ * use betterFORM in different context.
  *
  * To Install this filter you can use the following snippet
  * in your web.xml file:
@@ -9,7 +9,7 @@
 <filter-class>de.betterform.agent.web.filter.CrossContextFilter</filter-class>
 <init-param>
 <param-name>xforms.engine.webcontext</param-name>
-<param-value>chiba</param-value>
+<param-value>betterform</param-value>
 </init-param>
 </filter>
 <filter-mapping>
@@ -19,14 +19,14 @@
  */
 package de.betterform.agent.web.filter;
 
-import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 
 /**
  *
- * @author fabian.otto@chiba-project.org
+ * @author fabian.otto@betterform.de
  */
 public class CrossContextFilter implements Filter {
     private static final String ALTERNATIVE_ROOT = "ResourcePath";
@@ -40,9 +40,9 @@ public class CrossContextFilter implements Filter {
     // configured.
     private FilterConfig filterConfig = null;
     private static final String message = "Please edit the file META-INF/context.xml and add 'crossContext=\"true\"' as attribute.";
-    // context name of Chiba.
+    // context name of betterFORM.
     private ServletContext context = null;
-    // the repeating servlet in Chiba
+    // the repeating servlet in betterFORM
     private String xformsServlet = null;
     // URL Prefix for URLs getting forwarded.
     private String xformsResources = null;
@@ -126,7 +126,7 @@ public class CrossContextFilter implements Filter {
         }
         String xformsContext = filterConfig.getInitParameter("xforms.engine.webcontext");
 
-        // get chiba's context dispatcher
+        // get betterFORM's context dispatcher
         this.context = getFilterConfig().getServletContext().getContext("/" + xformsContext);
 
         if (context == null) {
@@ -189,7 +189,7 @@ public class CrossContextFilter implements Filter {
     }
 
     private void formForward(FilterChain chain, ServletRequest request, ServletResponse response) throws IOException, ServletException {
-        /* Process other filter and send the response to chiba for xforms processing.
+        /* Process other filter and send the response to betterFORM for xforms processing.
            Since the filter should only run when a specified URL pattern matches this
            should be only the case for processing xforms.
         */
@@ -198,13 +198,13 @@ public class CrossContextFilter implements Filter {
         log("Zaphod: Calling other filter(s) and sending the result to betterForm: " + httpRequest.getContentType());
         chain.doFilter(request, bufferedResponse);
         if (isXML(bufferedResponse)) {
-            // create and set input stream from buffer for chiba
+            // create and set input stream from buffer for betterFORM
             RequestDispatcher dispatcher = context.getRequestDispatcher(xformsServlet);
             request.setAttribute(XFORMSINPUTSTREAM, bufferedResponse.getInputStream());
             request.setAttribute(ALTERNATIVE_ROOT, xformsResources);
             request.setAttribute(FORWARD_URL, httpRequest.getRequestURL().toString());
 
-            // forward the orignal request and response to chiba's context.
+            // forward the orignal request and response to betterFORM's context.
             dispatcher.forward(request, response);
         } else {
             chain.doFilter(request, response);
