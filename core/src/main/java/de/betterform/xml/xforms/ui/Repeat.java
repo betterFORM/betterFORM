@@ -483,8 +483,12 @@ public class Repeat extends BindingElement implements EventListener {
                 getLogger().debug(this + " delete: position " + uiPosition);
             }
 
-            // delete repeat item
-            disposeRepeatItem((RepeatItem) this.items.remove(uiPosition - 1));
+            // delete repeat item (and remove focus if focused
+            RepeatItem repeatItem2delete = (RepeatItem) this.items.remove(uiPosition - 1);
+            if(repeatItem2delete.getId().equals(this.getContainerObject().getFocussedContainerId())) {
+                this.getContainerObject().setFocussedContainerId(null);
+            }
+            disposeRepeatItem(repeatItem2delete);
 
             // update position of following items
             for (int index = uiPosition - 1; index < this.items.size(); index++) {
@@ -493,12 +497,13 @@ public class Repeat extends BindingElement implements EventListener {
 
             // set index only if it was pointing to the deleted item
             // and the deleted item was the last collection member
+            // otherwise nothing is done and the repeat index stays the same
             int contextSize = getContextSize();
             if (getIndex() > contextSize) {
                 setIndex(contextSize);
-            }
-        }else {
-             setIndex(this.index);
+            }            
+        } else {
+            setIndex(this.index);
         }
     }
 

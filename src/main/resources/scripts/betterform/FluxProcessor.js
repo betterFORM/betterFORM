@@ -146,7 +146,7 @@ dojo.declare("betterform.FluxProcessor",
     setToolTipAlertHandler:function() {
         // console.debug("setToolTipAlertHandler");
         this.unsubscribeFromAlertHandler();
-        this.defaultAlertHandler == undefined;
+        this.defaultAlertHandler = undefined;
         dojo.require("betterform.ui.common.ToolTipAlert");
         this.defaultAlertHandler = new betterform.ui.common.ToolTipAlert({});
         this.subscribers[0] = dojo.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
@@ -161,7 +161,7 @@ dojo.declare("betterform.FluxProcessor",
 
     handleUnload:function(evt) {
         // console.debug("FluxProcessor.handleUnload Event: ", evt);
-        if (this.isDirty == true && this.skipshutdown == false) {
+        if (this.isDirty && !this.skipshutdown) {
             dojo.stopEvent(evt);
             // console.log(this.unloadMsg);
             // For IE
@@ -202,6 +202,7 @@ dojo.declare("betterform.FluxProcessor",
      * ... changed references are updated. (e.g. xf:repeat items)
      */
     eventFifoReader: function() {
+        // console.debug("eventFifoReader: this.clientServerEventQueue:",this.clientServerEventQueue);
         var nextPendingClientServerEvent = null;
         var raceCondition = false;
         var dojoObject = null;
@@ -209,7 +210,7 @@ dojo.declare("betterform.FluxProcessor",
         var messageString = "";
 
         //Loop as long as Pending Events are being skipped (as long as no Request is being initiated)
-        while ((this.requestPending == false) && (this.clientServerEventQueue.length != 0)) {
+        while ((!this.requestPending) && (this.clientServerEventQueue.length != 0)) {
             nextPendingClientServerEvent = this.clientServerEventQueue.shift();
             switch (nextPendingClientServerEvent.getCallerFunction()) {
                 case "dispatchEvent":       console.info("FIFO-READ:  dispatchEvent(" + nextPendingClientServerEvent.getTargetId() + ")"); break;
@@ -236,13 +237,10 @@ dojo.declare("betterform.FluxProcessor",
             }
 
             // Test if this dijit-control has an isReadonly() method
-            if (dijitObject.isReadonly() != null) {
-                if (dijitObject.isReadonly() == true) {
-                    console.warn("Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: READ-ONLY");
-                    continue;
-                }
-                else {
-                }
+
+            if (dijitObject && dijitObject.isReadonly()) {
+                console.warn("Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: READ-ONLY");
+                continue;
             }
 
             // Test if the Control's event was a setControlValue
@@ -1097,9 +1095,13 @@ dojo.declare("betterform.FluxProcessor",
         }
         else if (xmlEvent.contextInfo.targetName == "repeat" || xmlEvent.contextInfo.targetName == "tbody") {
             var repeatElement = dojo.query("*[repeatId='" + xmlEvent.contextInfo.targetId + "']");
-            dijit.byId(dojo.attr(repeatElement[0], "id")).handleDelete(xmlEvent.contextInfo);
+            var repeatDijit  = dijit.byId(dojo.attr(repeatElement[0], "id"));            
+            repeatDijit.handleDelete(xmlEvent.contextInfo);
+            var positionOfDeletedItem = xmlEvent.contextInfo.position;
+            if(positionOfDeletedItem <= repeatDijit._getSize()){
+                repeatDijit._handleSetRepeatIndex(positionOfDeletedItem);
+            }
         }
-
     },
     _handleBetterFormIndexChanged:function(xmlEvent) {
         var repeatElement = dojo.query("*[repeatId='" + xmlEvent.contextInfo.targetId + "']");

@@ -13,17 +13,6 @@ dojo.declare(
         betterform.ui.container.Container,
 {
 
-    createdRepeatItems:null,
-    itemsToRemoveList:[],
-    currentIndex:null,
-
-    postCreate:function() {
-        //console.debug("betterform.ui.container.Repeat.postCreate: ",this);
-        this.inherited(arguments);
-        this.createdRepeatItems = new Array();
-        // console.dirxml(this.srcNodeRef);
-    },
-
     handleSetRepeatIndex:function(/*Map*/ contextInfo) {
         this._handleSetRepeatIndex(contextInfo.index);
     },
@@ -35,10 +24,6 @@ dojo.declare(
             return;
         }
         this._removeRepeatIndexClasses();
-        // console.dirxml(this.domNode);
-
-        /* ############################### Memorize Repeat-Index ############################## */
-        this.currentIndex = index;
 
         var repeatIndexNode;
         if (dojo.hasClass(this.domNode, "xfCompactRepeat")) {
@@ -82,6 +67,7 @@ dojo.declare(
         var prototype = dojo.byId(contextInfo.originalId + "-prototype");
         var insertedNode = prototype.cloneNode(true);
         this._replaceRepeatItemClasses(insertedNode);
+
         // replace prototype ids with generated ones
         var generatedIds = "";
         if (contextInfo.prototypeId != undefined) {
@@ -106,13 +92,8 @@ dojo.declare(
                     // console.debug("Create UIControl for unbound item", item);
                     var xfControl = new betterform.ui.Control({}, item);
                 }
-                );
+        );
         repeatItemWidget.showRepeatItem();
-        // this.createdRepeatItems.push(repeatItemWidget);
-        // console.debug("Inserted new Repeat Item", repeatItemWidget.domNode);
-
-        /* #################################### Select Node on previous position ################################## */
-        this._handleSetRepeatIndex(this.currentIndex);
     },
 
     _replaceRepeatItemClasses:function(/* Node */ node) {
@@ -122,8 +103,6 @@ dojo.declare(
         dojo.removeClass(node, "xfDisabled");
         dojo.addClass(node, "xfRepeatItem");
         dojo.addClass(node, "xfEnabled");
-        /* ####################### New Element is NOT selected automatically ############################ */
-        //dojo.addClass(node, "xfRepeatIndexPre");
     },
 
     _replacePrototypeIds:function(node, generatedIds) {
@@ -174,7 +153,6 @@ dojo.declare(
     },
     _createRepeatItem:function(/*Dijit*/node, /* int */position) {
         // console.debug("RepeatItem._createRepeatItem node:",node, " at position " + position);
-        var insertPosition = position;
         var repeatItemCount = this._getSize();
         var appearance;
         if (dojo.hasClass(this.domNode, "xfFullRepeat")) {
@@ -213,19 +191,19 @@ dojo.declare(
 
 
         } else {
-            // insertPosition - 2 causes
+            //  position - 2 causes
             //  1. XForms Position 1 = JavaScript Array Position 1 and
             //  2. Default Insert happens after the targetNode
 
             if (dojo.hasClass(this.domNode, "xfCompactRepeat")) {
-                targetNode = dojo.query("> tbody > .xfRepeatItem", this.domNode)[insertPosition - 2];
+                targetNode = dojo.query("> tbody > .xfRepeatItem", this.domNode)[position - 2];
             } else {
-                targetNode = dojo.query("> .xfRepeatItem", this.domNode)[insertPosition - 2];
+                targetNode = dojo.query("> .xfRepeatItem", this.domNode)[position - 2];
             }
             // console.debug("RepeatItem._createRepeatItem targetNode: ", targetNode , " repeatItem: ", repeatItemDijit);
             dojo.place(repeatItemDijit.domNode, targetNode, "after");
         }
-        // console.debug("RepeatItem._createRepeatItem Insert at Position "+ insertPosition + " (Orig:" + position + ") + of  :"+(repeatItemCount+1));
+        // console.debug("RepeatItem._createRepeatItem Insert at Position "+ position + " of  :"+(repeatItemCount+1));
         return repeatItemDijit;
     },
 
@@ -248,24 +226,6 @@ dojo.declare(
         return repeatItems;
     },
 
-    /*    showRepeatItem:function(){
-     // console.debug("Repeat.showRepeatItem", this.createdRepeatItems);
-     var repeatItem = null;
-     while(this.createdRepeatItems.length > 0){
-     repeatItem = this.createdRepeatItems.shift();
-     //console.debug("ArrayEntry: " , repeatItem);
-     repeatItem.showRepeatItem();
-     }
-     if(repeatItem != undefined){
-     // this.setFocusOnChild(repeatItem.domNode);
-
-     }
-     },
-
-     */
-
-
-
     handleDelete:function(/*Map*/ contextInfo) {
         var position = eval(contextInfo.position);
         var itemToRemove;
@@ -277,19 +237,6 @@ dojo.declare(
             this.domNode.removeChild(itemToRemove);
         }
         // console.debug("handleDelete: repeatItemSize:" + repeatItemsSize + " position:" + position, " itemToRemove",itemToRemove);
-
-        /*
-         var repeatItemsSize = itemToRemove.length;
-         if(repeatItemsSize == 1){
-         console.debug("no setRepeatIndex");
-         return;
-         }
-         else if (repeatItemsSize > position) {
-         fluxProcessor.setRepeatIndex(this.id, position);
-         } else {
-         fluxProcessor.setRepeatIndex(this.id, repeatItemsSize);
-         }
-         */
     },
 
 
@@ -308,27 +255,26 @@ dojo.declare(
     _removeRepeatIndexClasses:function() {
         if (dojo.hasClass(this.domNode, "xfCompactRepeat")) {
             dojo.query("> tbody > .xfRepeatIndexPre", this.domNode).forEach(
-                    function(repeatIndexItem) {
-                        dojo.removeClass(repeatIndexItem, "xfRepeatIndexPre");
-                    }
-                    );
+				function(repeatIndexItem) {
+					dojo.removeClass(repeatIndexItem, "xfRepeatIndexPre");
+				}
+			);
             dojo.query("> tbody > .xfRepeatIndex", this.domNode).forEach(
-                    function(repeatIndexItem) {
-                        dojo.removeClass(repeatIndexItem, "xfRepeatIndex");
-                    }
-                    );
-
-        } else {
+				function(repeatIndexItem) {
+					dojo.removeClass(repeatIndexItem, "xfRepeatIndex");
+				}
+			);
+		} else {
             dojo.query("> .xfRepeatIndexPre", this.domNode).forEach(
-                    function(repeatIndexItem) {
-                        dojo.removeClass(repeatIndexItem, "xfRepeatIndexPre");
-                    }
-                    );
-            dojo.query("> .xfRepeatIndex", this.domNode).forEach(
-                    function(repeatIndexItem) {
-                        dojo.removeClass(repeatIndexItem, "xfRepeatIndex");
-                    }
-                    );
+				function(repeatIndexItem) {
+					dojo.removeClass(repeatIndexItem, "xfRepeatIndexPre");
+				}
+			);
+			dojo.query("> .xfRepeatIndex", this.domNode).forEach(
+				function(repeatIndexItem) {
+					dojo.removeClass(repeatIndexItem, "xfRepeatIndex");
+				}
+			);
         }
 
     }

@@ -183,8 +183,6 @@
 
                     dojo.addOnLoad(function(){
                         dojo.require("dojo.parser");
-                        // THE FOLLOWING CALL HAS BEEN MOVED INTO CONSTRUCTOR OF FLUXPROCESSOR.JS
-                        //Flux.init(dojo.attr(dojo.byId("fluxProcessor"),"sessionKey"),dijit.byId("fluxProcessor").applyChanges);
                         dojo.parser.parse();
 
                         Flux._path = dojo.attr(dojo.byId("fluxProcessor"), "contextroot") + "/Flux";
