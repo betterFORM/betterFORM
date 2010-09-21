@@ -13,7 +13,7 @@
     <xsl:template match="/">
         <xsl:choose>
             <xsl:when test="exists(/webxml:web-app/webxml:context-param/webxml:param-name[.='betterform.configfile'])">
-                <xsl:message terminate="yes">betterFORM is allready installed. Please run 'ant uninstall' before installing it again</xsl:message>
+                <xsl:message terminate="yes">betterFORM is already installed. Please run 'ant uninstall' before installing it again</xsl:message>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:result-document href="{$webxml.path}.original" encoding="UTF-8"><xsl:copy-of select="."/></xsl:result-document>
@@ -38,9 +38,6 @@
 
 
     <xsl:template match="/webxml:web-app/webxml:filter[last()]">
-        <xsl:copy-of select="."/>
-        <xsl:text>
-    </xsl:text>
         <xsl:comment>XForms Filter</xsl:comment>
         <xsl:text>
     </xsl:text>
@@ -52,6 +49,9 @@
                 <param-value>dojo</param-value>
             </init-param>
         </filter>
+        <xsl:text>
+    </xsl:text>
+        <xsl:copy-of select="."/>
     </xsl:template>
 
     <xsl:template match="/webxml:web-app/webxml:servlet[last()]">
@@ -72,24 +72,25 @@
         </servlet>
 
         <servlet>
-            <servlet-name>XFormsRequestURI</servlet-name>
-            <servlet-class>de.betterform.agent.web.servlet.XFormsRequestURIServlet</servlet-class>
+            <servlet-name>XFormsPostServlet</servlet-name>
+            <servlet-class>de.betterform.agent.web.servlet.XFormsPostServlet</servlet-class>
         </servlet>
     </xsl:template>
 
-    <xsl:template match="/webxml:web-app/webxml:filter-mapping[1]">
+    <xsl:template match="/webxml:web-app/webxml:filter-mapping[webxml:filter-name/text()='XQueryURLRewrite']">
+        <xsl:text>
+</xsl:text>
         <filter-mapping>
             <filter-name>XFormsFilter</filter-name>
             <url-pattern>/*</url-pattern>
         </filter-mapping>
 
+        <filter-mapping>
+            <filter-name>XFormsFilter</filter-name>
+            <servlet-name>XFormsPostServlet</servlet-name>
+        </filter-mapping>
         <xsl:text>
     </xsl:text>
-
-        <xsl:copy-of select="."/>
-    </xsl:template>
-
-    <xsl:template match="/webxml:web-app/webxml:servlet-mapping[last()]">
         <xsl:copy-of select="."/>
         <xsl:text>
     </xsl:text><xsl:comment>betterFORM Flux Servlet Mapping</xsl:comment>
@@ -102,23 +103,14 @@
         </servlet-mapping>
 
         <servlet-mapping>
-            <servlet-name>XFormsRequestURI</servlet-name>
-            <url-pattern>*.xhtml</url-pattern>
+            <servlet-name>XFormsPostServlet</servlet-name>
+            <url-pattern>/XFormsPost</url-pattern>
         </servlet-mapping>
 
         <servlet-mapping>
                <servlet-name>XQueryServlet</servlet-name>
                <url-pattern>*.xql</url-pattern>
         </servlet-mapping>
-
-        <error-page>
-            <exception-type>javax.servlet.ServletException</exception-type>
-            <location>/betterform/xquery/xferror.xql</location>
-        </error-page>
-        <error-page>
-            <error-code>500</error-code>
-            <location>/betterform/xquery/xferror.xql</location>
-        </error-page>
     </xsl:template>
 
 
