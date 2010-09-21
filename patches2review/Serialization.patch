@@ -1,0 +1,1000 @@
+Index: web/src/main/java/de/betterform/agent/web/WebProcessor.java
+===================================================================
+--- web/src/main/java/de/betterform/agent/web/WebProcessor.java	(revision 606)
++++ web/src/main/java/de/betterform/agent/web/WebProcessor.java	(revision )
+@@ -56,7 +56,7 @@
+  * @see de.betterform.agent.web.flux.FluxProcessor
+  * @see de.betterform.agent.web.servlet.PlainHtmlProcessor
+  */
+-public class WebProcessor implements XFormsProcessor, EventListener {
++public class WebProcessor implements XFormsProcessor, EventListener,Serializable {
+ 
+     /**
+      * Defines the key for accessing (HTTP) session ids.
+@@ -79,10 +79,10 @@
+ 
+     //todo:review - can be deleted when ehcache is in place
+     String KEEPALIVE_PULSE = "keepalive";
+-    protected XFormsProcessor xformsProcessor;
+-    protected EventTarget root;
++    protected XFormsProcessorImpl xformsProcessor;
++    protected transient EventTarget root;
+     protected HttpRequestHandler httpRequestHandler;
+-    protected XMLEvent exitEvent = null;
++    protected transient XMLEvent exitEvent = null;
+     protected String contextRoot;
+     protected String key;
+     protected transient HttpServletRequest request;
+@@ -95,7 +95,7 @@
+     private String uploadDestination;
+     private String useragent;
+     private String uploadDir;
+-    protected UIGenerator uiGenerator;
++    protected transient UIGenerator uiGenerator;
+     protected String locale = "en";
+ 
+     public WebProcessor() {
+@@ -136,6 +136,7 @@
+ 
+     public void setUseragent(String useragent) {
+         this.useragent = useragent;
++        setContextParam("betterform.useragent",useragent);
+     }
+ 
+     /**
+@@ -293,7 +294,7 @@
+      *
+      * @return the context in which the processor is running.
+      */
+-    public ServletContext getContext() {
++    private ServletContext getContext() {
+         // Return the betterform context when set
+         if (this.context != null) {
+             return context;
+Index: core/src/main/java/de/betterform/session/DocumentSerializer.java
+===================================================================
+--- core/src/main/java/de/betterform/session/DocumentSerializer.java	(revision )
++++ core/src/main/java/de/betterform/session/DocumentSerializer.java	(revision )
+@@ -0,0 +1,159 @@
++/*
++ * Copyright (c) 2010. betterForm Project - http://www.betterform.de
++ * Licensed under the terms of BSD License
++ */
++
++package de.betterform.session;
++
++import de.betterform.generator.XSLTGenerator;
++import de.betterform.xml.dom.DOMUtil;
++import de.betterform.xml.xforms.XFormsProcessorImpl;
++import de.betterform.xml.xforms.exception.XFormsException;
++import de.betterform.xml.xforms.model.Instance;
++import de.betterform.xml.xforms.model.Model;
++import de.betterform.xml.xpath.impl.saxon.XPathCache;
++import de.betterform.xml.xpath.impl.saxon.XPathUtil;
++import de.betterform.xml.xslt.impl.CachingTransformerService;
++import de.betterform.xml.xslt.impl.FileResourceResolver;
++import net.sf.saxon.dom.DocumentWrapper;
++import net.sf.saxon.dom.NodeWrapper;
++import net.sf.saxon.om.NodeInfo;
++import net.sf.saxon.sxpath.IndependentContext;
++import org.apache.commons.logging.Log;
++import org.apache.commons.logging.LogFactory;
++import org.w3c.dom.Document;
++import org.w3c.dom.Node;
++
++import javax.xml.transform.TransformerException;
++import java.io.IOException;
++import java.net.URI;
++import java.net.URISyntaxException;
++import java.util.Collections;
++import java.util.List;
++
++/**
++ * SessionSerializer allows to persist a running XForms session as XML. It uses a special
++ * XML structure as container to hold all data and states.
++ * <p/>
++ * todo: serialize the context map !!!
++ * todo: CURRENT VERSION DOES NOT SUPPORT THE USAGE OF ATTRIBUTE VALUE TEMPLATES
++ *
++ * @author Joern Turner
++ */
++public class DocumentSerializer {
++    /**
++     * The logger.
++     */
++    protected static Log LOGGER = LogFactory.getLog(DocumentSerializer.class);
++
++    private XFormsProcessorImpl processor;
++    private Document document;
++
++
++    public DocumentSerializer(XFormsProcessorImpl processor,Document doc) {
++        this.processor = processor;
++        this.document = doc;
++    }
++
++    /**
++     * writes the XML session container
++     *
++     * @throws java.io.IOException
++     */
++    public Document serialize() throws IOException {
++        Document result;
++        try {
++            result = serializeHostDocument();
++        } catch (XFormsException e) {
++            throw new IOException("Error while serializing host document: " + e.getMessage());
++        } catch (TransformerException e) {
++            throw new IOException("Error while transforming host document: " + e.getMessage());
++        } catch (URISyntaxException e) {
++            throw new IOException("Invalid URI: " + e.getMessage());
++        }
++        return result;
++    }
++
++
++    private Document serializeHostDocument() throws XFormsException, TransformerException, URISyntaxException {
++        Document in = this.document;
++        Document out = DOMUtil.newDocument(true, false);
++
++
++        //resetting internal DOM to original state
++        resetForm(in, out);
++        inlineInstances(out);
++
++        return out;
++    }
++
++    /**
++     * inlines all instances from the processor into the output document. Eventually existent @src Attributes
++     * have already been removed during the 'reset' transformation.
++     *
++     * @param out the output document for serialization
++     */
++    private void inlineInstances(Document out) {
++        //inlining instances
++        NodeInfo context = getDocumentElementContext(out);
++        //iterate all models to get all instances
++        synchronized (document) {
++            List models = this.processor.getContainer().getModels();
++            for (int i = 0; i < models.size(); i++) {
++                Model model = (Model) models.get(i);
++
++                List instances = model.getInstances();
++                for (int j = 0; j < instances.size(); j++) {
++                    Instance instance = (Instance) instances.get(j);
++                    String id = instance.getId();
++
++                    //get node from out
++                    String search = "//*[@id='" + id + "']";
++                    try {
++                        Node outInstance = XPathUtil.getAsNode(XPathCache.getInstance().evaluate(context, search, Collections.EMPTY_MAP, null), 1);
++                        Node imported = out.adoptNode(instance.getInstanceDocument().getDocumentElement());
++                        outInstance.appendChild(imported);
++                    } catch (XFormsException e) {
++                        // You should never come here
++                        LOGGER.error(e.getMessage(), e);
++                    }
++                }
++
++            }
++        }
++    }
++
++    /**
++     * resets the form to its original state right after parsing has been done and before XForms initialization
++     * has taken place. This means that repeats will not be unrolled and all bf:data elements have been removed.
++     * <p/>
++     * Besides resetting the form the stylesheet also preserves the states of repeat indexes and selected case elements.
++     *
++     * @param in  the internal betterForm DOM
++     * @param out the output document for serialization
++     * @throws javax.xml.transform.TransformerException in case something with Transformation goes wrong
++     * @throws java.net.URISyntaxException   in case the stylesheet URI is invalid or cannot be loaded
++     * @throws de.betterform.xml.xforms.exception.XFormsException
++     */
++    private void resetForm(Document in, Document out) throws TransformerException, URISyntaxException, XFormsException {
++        CachingTransformerService transformerService = new CachingTransformerService(new FileResourceResolver());
++        String path = getClass().getResource("reset.xsl").getPath();
++        String xslFilePath = "file:" + path;
++        transformerService.getTransformer(new URI(xslFilePath));
++
++        XSLTGenerator generator = new XSLTGenerator();
++        generator.setTransformerService(transformerService);
++        generator.setStylesheetURI(new URI(xslFilePath));
++        generator.setInput(in);
++        generator.setOutput(out);
++        generator.generate();
++    }
++
++    /**
++     * @param document
++     * @return
++     */
++    private static NodeWrapper getDocumentElementContext(Document document) {
++        return new DocumentWrapper(document, "configuration.xml", new IndependentContext().getConfiguration()).wrap(document.getDocumentElement());
++    }
++}
+Index: web/src/main/java/de/betterform/agent/web/servlet/XFormsRepeater.java
+===================================================================
+--- web/src/main/java/de/betterform/agent/web/servlet/XFormsRepeater.java	(revision 90)
++++ web/src/main/java/de/betterform/agent/web/servlet/XFormsRepeater.java	(revision )
+@@ -2,16 +2,16 @@
+ /* Licensed under the terms of BSD and Apache 2 Licenses */
+ package de.betterform.agent.web.servlet;
+ 
+-import de.betterform.xml.xforms.exception.XFormsException;
+-import org.apache.commons.logging.Log;
+-import org.apache.commons.logging.LogFactory;
+ import de.betterform.agent.web.WebFactory;
+ import de.betterform.agent.web.WebProcessor;
+ import de.betterform.agent.web.WebUtil;
+ import de.betterform.xml.config.XFormsConfigException;
++import de.betterform.xml.xforms.exception.XFormsException;
++import org.apache.commons.logging.Log;
++import org.apache.commons.logging.LogFactory;
+ 
+-import javax.servlet.RequestDispatcher;
+ import javax.servlet.ServletConfig;
++import javax.servlet.ServletContext;
+ import javax.servlet.ServletException;
+ import javax.servlet.http.HttpServlet;
+ import javax.servlet.http.HttpServletRequest;
+@@ -24,7 +24,6 @@
+ import java.util.Enumeration;
+ import java.util.Iterator;
+ import java.util.Map;
+-import javax.servlet.ServletContext;
+ 
+ /**
+  * The XFormsRepeater handles forwarded requests from other contexts and interacts with
+@@ -139,7 +138,7 @@
+     protected void doSubmissionReplaceAll(HttpServletRequest request, HttpServletResponse response) throws IOException {
+         final Log LOG = LogFactory.getLog(XFormsRepeater.class);
+         HttpSession session = request.getSession(false);
+-        WebProcessor webProcessor = WebUtil.getWebProcessor(request, session);
++        WebProcessor webProcessor = WebUtil.getWebProcessor(request);
+         if (session != null && webProcessor != null) {
+             if (LOG.isDebugEnabled()) {
+                 Enumeration keys = session.getAttributeNames();
+Index: web/src/main/java/de/betterform/agent/web/flux/FluxProcessor.java
+===================================================================
+--- web/src/main/java/de/betterform/agent/web/flux/FluxProcessor.java	(revision 589)
++++ web/src/main/java/de/betterform/agent/web/flux/FluxProcessor.java	(revision )
+@@ -27,6 +27,9 @@
+ import org.w3c.dom.events.Event;
+ 
+ import javax.servlet.http.HttpServletRequest;
++import java.io.IOException;
++import java.io.ObjectInputStream;
++import java.io.Serializable;
+ import java.io.StringWriter;
+ import java.util.HashMap;
+ import java.util.Iterator;
+@@ -35,16 +38,15 @@
+ /**
+  * Processor for DWR calls. This
+  * class is not exposed through DWR. Instead a Facadeclass 'FluxFacade' will be
+- * exposed that only allows to use the dispatch method. All other methods will
+- * be hidden for security.
++ * exposed.
+  *
+  * @author Joern Turner
+  * @version $Id: FluxAdapter.java 2970 2007-10-30 11:25:03Z lars $
+  */
+-public class FluxProcessor extends WebProcessor {
++public class FluxProcessor extends WebProcessor implements Serializable {
+     private static final Log LOGGER = LogFactory.getLog(FluxProcessor.class);
+     public static final String FLUX_ACTIVATE_EVENT = "flux-action-event";
+-    private EventQueue eventQueue;
++    private transient EventQueue eventQueue;
+ 
+ 
+     public FluxProcessor() {
+@@ -84,8 +86,8 @@
+         this.root.addEventListener(BetterFormEventNames.SWITCH_TOGGLED, this, true);
+         this.root.addEventListener(BetterFormEventNames.SCRIPT_ACTION, this, true);
+ 
+-		//TODO, see where these should be added
+-		// Will be enabled later
++        //TODO, see where these should be added
++        // Will be enabled later
+         //this.root.addEventListener(BetterFormEventNames.SHOW, this, true);
+         //this.root.addEventListener(BetterFormEventNames.HIDE, this, true);
+     }
+@@ -312,5 +314,10 @@
+     }
+ */
+ 
++    protected void readObject(ObjectInputStream in) throws IOException,ClassNotFoundException{
++        this.eventQueue = new EventQueue();
++
+-}
++    }
++
++}
+ // end of class
+Index: core/src/main/resources/ehcache.xml
+===================================================================
+--- core/src/main/resources/ehcache.xml	(revision 9)
++++ core/src/main/resources/ehcache.xml	(revision )
+@@ -15,7 +15,7 @@
+             />
+     <cache name="xfSessionCache"
+            maxElementsOnDisk="10000"
+-           maxElementsInMemory="10"
++           maxElementsInMemory="1"
+            eternal="true"
+            diskSpoolBufferSizeMB="30"
+            diskPersistent="true"
+Index: core/src/main/java/de/betterform/xml/xforms/XFormsProcessorImpl.java
+===================================================================
+--- core/src/main/java/de/betterform/xml/xforms/XFormsProcessorImpl.java	(revision 532)
++++ core/src/main/java/de/betterform/xml/xforms/XFormsProcessorImpl.java	(revision )
+@@ -773,6 +773,9 @@
+     }
+ 
+     public void writeExternal(ObjectOutput objectOutput) throws IOException {
++        if(LOGGER.isDebugEnabled()){
++            LOGGER.debug("serializing XFormsProcessor");
++        }
+         DefaultSerializer serializer = new DefaultSerializer(this);
+         Document serializedForm = serializer.serialize();
+ 
+@@ -814,6 +817,7 @@
+         try {
+             host = DOMUtil.parseString(read,true,false);
+             setXForms(host.getDocumentElement());
++            init();
+         } catch (ParserConfigurationException e) {
+             throw new IOException("Parser misconfigured: " + e.getMessage());
+         } catch (SAXException e) {
+Index: core/src/main/java/de/betterform/xml/xforms/model/Instance.java
+===================================================================
+--- core/src/main/java/de/betterform/xml/xforms/model/Instance.java	(revision 537)
++++ core/src/main/java/de/betterform/xml/xforms/model/Instance.java	(revision )
+@@ -5,11 +5,6 @@
+ 
+ package de.betterform.xml.xforms.model;
+ 
+-import net.sf.saxon.dom.NodeWrapper;
+-import net.sf.saxon.om.NodeInfo;
+-import net.sf.saxon.trans.XPathException;
+-import org.apache.commons.logging.Log;
+-import org.apache.commons.logging.LogFactory;
+ import de.betterform.xml.dom.DOMUtil;
+ import de.betterform.xml.events.BetterFormEventNames;
+ import de.betterform.xml.events.XFormsEventNames;
+@@ -23,6 +18,11 @@
+ import de.betterform.xml.xpath.XPathUtil;
+ import de.betterform.xml.xpath.impl.saxon.BetterFormXPathContext;
+ import de.betterform.xml.xpath.impl.saxon.XPathCache;
++import net.sf.saxon.dom.NodeWrapper;
++import net.sf.saxon.om.NodeInfo;
++import net.sf.saxon.trans.XPathException;
++import org.apache.commons.logging.Log;
++import org.apache.commons.logging.LogFactory;
+ import org.w3c.dom.*;
+ import org.w3c.dom.traversal.DocumentTraversal;
+ import org.w3c.dom.traversal.NodeFilter;
+@@ -619,6 +619,8 @@
+         // if inline content is given this takes precedence over @resource
+         if(DOMUtil.getChildElements(this.element).size() != 1) {
+             try {
++                LOGGER.debug("############################################################################");
++                DOMUtil.prettyPrintDOM(this.element);
+                 this.container.dispatch(this.model.getTarget(), XFormsEventNames.LINK_EXCEPTION, null);
+             } catch (XFormsException e) {
+                 Map contextInfo = new HashMap();
+Index: core/src/main/java/de/betterform/xml/config/DefaultConfig.java
+===================================================================
+--- core/src/main/java/de/betterform/xml/config/DefaultConfig.java	(revision 94)
++++ core/src/main/java/de/betterform/xml/config/DefaultConfig.java	(revision )
+@@ -5,20 +5,21 @@
+ 
+ package de.betterform.xml.config;
+ 
+-import net.sf.saxon.dom.DocumentWrapper;
+-import net.sf.saxon.dom.NodeWrapper;
+-import net.sf.saxon.om.NodeInfo;
+-import net.sf.saxon.sxpath.IndependentContext;
+ import de.betterform.connector.InstanceSerializer;
+ import de.betterform.connector.InstanceSerializerMap;
+ import de.betterform.xml.xforms.exception.XFormsException;
+ import de.betterform.xml.xpath.impl.saxon.XPathCache;
+ import de.betterform.xml.xpath.impl.saxon.XPathUtil;
++import net.sf.saxon.dom.DocumentWrapper;
++import net.sf.saxon.dom.NodeWrapper;
++import net.sf.saxon.om.NodeInfo;
++import net.sf.saxon.sxpath.IndependentContext;
+ import org.w3c.dom.Document;
+ import org.w3c.dom.Element;
+ 
+ import javax.xml.parsers.DocumentBuilderFactory;
+ import java.io.InputStream;
++import java.io.Serializable;
+ import java.util.Collections;
+ import java.util.HashMap;
+ import java.util.List;
+@@ -29,7 +30,7 @@
+  * @author Flavio Costa <flaviocosta@users.sourceforge.net>
+  * @author Terence Jacyno
+  */
+-public class DefaultConfig extends Config {
++public class DefaultConfig extends Config implements Serializable{
+ 
+ 	/**
+ 	 * Creates and loads a new configuration.
+Index: web/src/main/java/de/betterform/agent/web/filter/XFormsFilter.java
+===================================================================
+--- web/src/main/java/de/betterform/agent/web/filter/XFormsFilter.java	(revision 528)
++++ web/src/main/java/de/betterform/agent/web/filter/XFormsFilter.java	(revision )
+@@ -7,11 +7,6 @@
+ 
+ package de.betterform.agent.web.filter;
+ 
+-import net.sf.ehcache.CacheManager;
+-import org.apache.commons.fileupload.FileUpload;
+-import org.apache.commons.fileupload.servlet.ServletRequestContext;
+-import org.apache.commons.logging.Log;
+-import org.apache.commons.logging.LogFactory;
+ import de.betterform.agent.web.WebFactory;
+ import de.betterform.agent.web.WebProcessor;
+ import de.betterform.agent.web.WebUtil;
+@@ -21,6 +16,11 @@
+ import de.betterform.xml.config.XFormsConfigException;
+ import de.betterform.xml.ns.NamespaceConstants;
+ import de.betterform.xml.xforms.exception.XFormsException;
++import net.sf.ehcache.CacheManager;
++import org.apache.commons.fileupload.FileUpload;
++import org.apache.commons.fileupload.servlet.ServletRequestContext;
++import org.apache.commons.logging.Log;
++import org.apache.commons.logging.LogFactory;
+ 
+ import javax.servlet.*;
+ import javax.servlet.http.HttpServletRequest;
+@@ -154,7 +154,7 @@
+                 LOG.info("Start Update XForm");
+ 
+                 try {
+-                    WebProcessor webProcessor = WebUtil.getWebProcessor(request, session);
++                    WebProcessor webProcessor = WebUtil.getWebProcessor(request);
+                     webProcessor.setRequest(request);
+                     webProcessor.setResponse(response);
+                     webProcessor.handleRequest();
+@@ -244,7 +244,7 @@
+             LOG.debug("*** FluxHelper ***");
+         }
+ 
+-        WebProcessor webProcessor = WebUtil.getWebProcessor(request, session);
++        WebProcessor webProcessor = WebUtil.getWebProcessor(request);
+         try {
+             if (webProcessor == null) {
+                 throw new ServletException(Config.getInstance().getErrorMessage("session-invalid"));
+@@ -378,7 +378,8 @@
+     }
+ 
+     /**
+-     * Checks if the request is to update an XForm
++     * Checks if the request is to update an XForm. This method is only used in non-scripted mode when each request
++     * is handled by the XFormsFilter. In scripted mode the filter is only called once at init time.
+      *
+      * @param srvRequest The request
+      * @return true if the request is to update an XForm, false otherwise
+@@ -470,7 +471,7 @@
+      */
+     protected void doSubmissionReplaceAll(HttpServletRequest request, HttpServletResponse response) throws IOException {
+         HttpSession session = request.getSession(false);
+-        WebProcessor webProcessor = WebUtil.getWebProcessor(request, session);
++        WebProcessor webProcessor = WebUtil.getWebProcessor(request);
+         if (session != null && webProcessor != null) {
+             if (LOG.isDebugEnabled()) {
+                 Enumeration keys = session.getAttributeNames();
+Index: core/src/main/java/de/betterform/session/DefaultSerializer.java
+===================================================================
+--- core/src/main/java/de/betterform/session/DefaultSerializer.java	(revision 23)
++++ core/src/main/java/de/betterform/session/DefaultSerializer.java	(revision )
+@@ -5,12 +5,6 @@
+ 
+ package de.betterform.session;
+ 
+-import net.sf.saxon.dom.DocumentWrapper;
+-import net.sf.saxon.dom.NodeWrapper;
+-import net.sf.saxon.om.NodeInfo;
+-import net.sf.saxon.sxpath.IndependentContext;
+-import org.apache.commons.logging.Log;
+-import org.apache.commons.logging.LogFactory;
+ import de.betterform.generator.XSLTGenerator;
+ import de.betterform.xml.dom.DOMUtil;
+ import de.betterform.xml.xforms.XFormsProcessorImpl;
+@@ -21,6 +15,12 @@
+ import de.betterform.xml.xpath.impl.saxon.XPathUtil;
+ import de.betterform.xml.xslt.impl.CachingTransformerService;
+ import de.betterform.xml.xslt.impl.FileResourceResolver;
++import net.sf.saxon.dom.DocumentWrapper;
++import net.sf.saxon.dom.NodeWrapper;
++import net.sf.saxon.om.NodeInfo;
++import net.sf.saxon.sxpath.IndependentContext;
++import org.apache.commons.logging.Log;
++import org.apache.commons.logging.LogFactory;
+ import org.w3c.dom.Document;
+ import org.w3c.dom.Node;
+ 
+@@ -34,9 +34,9 @@
+ /**
+  * SessionSerializer allows to persist a running XForms session as XML. It uses a special
+  * XML structure as container to hold all data and states.
+- *
++ * <p/>
+  * todo: serialize the context map !!!
+- * todo: CURRENT VERSION DOES NOT SUPPORT THE USAGE OF ATTRIBUTE VALUE TEMPLATES 
++ * todo: CURRENT VERSION DOES NOT SUPPORT THE USAGE OF ATTRIBUTE VALUE TEMPLATES
+  *
+  * @author Joern Turner
+  */
+@@ -75,7 +75,7 @@
+ 
+     private Document serializeHostDocument() throws XFormsException, TransformerException, URISyntaxException {
+         Document in = this.processor.getXForms();
+-        Document out = DOMUtil.newDocument(true,false);
++        Document out = DOMUtil.newDocument(true, false);
+ 
+ 
+         //resetting internal DOM to original state
+@@ -92,43 +92,48 @@
+      * @param out the output document for serialization
+      */
+     private void inlineInstances(Document out) {
+-        //imlining instances
++        //inlining instances
+         NodeInfo context = getDocumentElementContext(out);
+         //iterate all models to get all instances
++        synchronized (processor) {
+-        List models = this.processor.getContainer().getModels();
++            List models = this.processor.getContainer().getModels();
++            synchronized (processor){
+-        for (int i = 0; i < models.size(); i++) {
+-            Model model = (Model) models.get(i);
++                for (int i = 0; i < models.size(); i++) {
++                    Model model = (Model) models.get(i);
+ 
+-            List instances = model.getInstances();
+-            for (int j = 0; j < instances.size(); j++) {
+-                Instance instance = (Instance) instances.get(j);
+-                String id = instance.getId();
++                    List instances = model.getInstances();
++                    for (int j = 0; j < instances.size(); j++) {
++                        Instance instance = (Instance) instances.get(j);
++                        String id = instance.getId();
+ 
+-                //get node from out
+-                String search = "//*[@id='" + id + "']";
+-		try {
+-		    Node outInstance = XPathUtil.getAsNode(XPathCache.getInstance().evaluate(context, search, Collections.EMPTY_MAP, null), 1);
+-		    Node imported = out.adoptNode(instance.getInstanceDocument().getDocumentElement());
+-	            outInstance.appendChild(imported);
++                        //get node from out
++                        String search = "//*[@id='" + id + "']";
++                        try {
++                            Node outInstance = XPathUtil.getAsNode(XPathCache.getInstance().evaluate(context, search, Collections.EMPTY_MAP, null), 1);
++                            Node imported = out.adoptNode(instance.getInstanceDocument().getDocumentElement());
++                            outInstance.appendChild(imported);
++                            outInstance.replaceChild(imported,DOMUtil.getFirstChildElement(outInstance));
+-		} catch (XFormsException e) {
+-		    // You should never come here
+-		    LOGGER.error(e.getMessage(), e);
+-		}
++                        } catch (XFormsException e) {
++                            // You should never come here
++                            LOGGER.error(e.getMessage(), e);
++                        }
++                    }
+-                
+-            }
+-        }
+-    }
++
++                }
++            }
++        }
++    }
+ 
+     /**
+      * resets the form to its original state right after parsing has been done and before XForms initialization
+      * has taken place. This means that repeats will not be unrolled and all bf:data elements have been removed.
+-     *
++     * <p/>
+      * Besides resetting the form the stylesheet also preserves the states of repeat indexes and selected case elements.
+      *
+-     * @param in the internal betterForm DOM
++     * @param in  the internal betterForm DOM
+      * @param out the output document for serialization
+      * @throws TransformerException in case something with Transformation goes wrong
+-     * @throws URISyntaxException in case the stylesheet URI is invalid or cannot be loaded
++     * @throws URISyntaxException   in case the stylesheet URI is invalid or cannot be loaded
+      * @throws XFormsException
+      */
+     private void resetForm(Document in, Document out) throws TransformerException, URISyntaxException, XFormsException {
+@@ -149,7 +154,7 @@
+      * @param document
+      * @return
+      */
+-     private static NodeWrapper getDocumentElementContext(Document document) {
+-	return new DocumentWrapper(document, "configuration.xml", new IndependentContext().getConfiguration()).wrap(document.getDocumentElement());
+-     }
++    private static NodeWrapper getDocumentElementContext(Document document) {
++        return new DocumentWrapper(document, "configuration.xml", new IndependentContext().getConfiguration()).wrap(document.getDocumentElement());
++    }
+ }
+Index: core/src/main/java/de/betterform/xml/xforms/ExternizableDocument.java
+===================================================================
+--- core/src/main/java/de/betterform/xml/xforms/ExternizableDocument.java	(revision )
++++ core/src/main/java/de/betterform/xml/xforms/ExternizableDocument.java	(revision )
+@@ -0,0 +1,92 @@
++package de.betterform.xml.xforms;
++
++import de.betterform.session.DocumentSerializer;
++import de.betterform.xml.dom.DOMUtil;
++import org.apache.commons.logging.Log;
++import org.apache.commons.logging.LogFactory;
++import org.w3c.dom.Document;
++import org.xml.sax.SAXException;
++
++import javax.xml.parsers.ParserConfigurationException;
++import javax.xml.transform.*;
++import javax.xml.transform.dom.DOMSource;
++import javax.xml.transform.stream.StreamResult;
++import java.io.*;
++
++/**
++ * Created by IntelliJ IDEA.
++ * User: dev
++ * Date: Sep 10, 2010
++ * Time: 12:55:30 PM
++ * To change this template use File | Settings | File Templates.
++ */
++public class ExternizableDocument implements Externalizable{
++    private static final Log LOGGER = LogFactory.getLog(ExternizableDocument.class);
++    private Document document;
++    private XFormsProcessorImpl xformsProcessor;
++
++    public ExternizableDocument(){
++    }
++
++    public Document getDocument(){
++        return this.document;
++    }
++
++    public void setDocument(Document document){
++        this.document = document;
++    }
++
++    public void setProcessor(XFormsProcessorImpl processor){
++        this.xformsProcessor = processor;
++    }
++
++    public void writeExternal(ObjectOutput objectOutput) throws IOException {
++        if(LOGGER.isDebugEnabled()){
++            LOGGER.debug("serializing XFormsProcessor to disk");
++        }
++        DocumentSerializer serializer = new DocumentSerializer(this.xformsProcessor,this.document);
++        Document serializedForm = serializer.serialize();
++
++        StringWriter stringWriter = new StringWriter();
++        Transformer transformer = null;
++        StreamResult result = new StreamResult(stringWriter);
++        try {
++            transformer = TransformerFactory.newInstance().newTransformer();
++            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
++            transformer.transform(new DOMSource(serializedForm), result);
++        } catch (TransformerConfigurationException e) {
++            throw new IOException("TransformerConfiguration invalid: " + e.getMessage());
++        } catch (TransformerException e) {
++            throw new IOException("Error during serialization transform: " + e.getMessage());
++        }
++        objectOutput.writeUTF(stringWriter.getBuffer().toString());
++        objectOutput.flush();
++        objectOutput.close();
++    }
++
++    /**
++     * reads serialized host document from ObjectInputStream and parses the resulting String
++     * to a DOM Document. After that the host document is passed to the processor. init() is NOT yet
++     * called on the processor to allow an using application to do its own configuration work (like
++     * setting of baseURI and passing of context params).
++     *
++     * todo: rethink the question of the baseURI - is this still necessary when deaserializing? Presumably yes to further allow dynamic resolution.
++     * @param objectInput
++     * @throws IOException
++     * @throws ClassNotFoundException
++     */
++    public void readExternal(ObjectInput objectInput) throws IOException, ClassNotFoundException {
++        if(LOGGER.isDebugEnabled()){
++            LOGGER.debug("deserializing XForms host document");
++        }
++        String read = objectInput.readUTF();
++        try {
++            this.document = DOMUtil.parseString(read,true,false);
++        } catch (ParserConfigurationException e) {
++            throw new IOException("Parser misconfigured: " + e.getMessage());
++        } catch (SAXException e) {
++            throw new IOException("Parsing failed: " + e.getMessage());
++        }
++    }
++
++}
+Index: core/src/main/resources/de/betterform/session/reset.xsl
+===================================================================
+--- core/src/main/resources/de/betterform/session/reset.xsl	(revision 23)
++++ core/src/main/resources/de/betterform/session/reset.xsl	(revision )
+@@ -40,6 +40,7 @@
+ 
+ 	<xsl:template match="xf:case">
+ 		<xsl:copy>
++            <xsl:copy-of select="@*[name() != 'selected'][name() != 'caseId']"/>            
+ 			<xsl:variable name="selected" select="bf:data/@bf:selected"/>
+ 			<xsl:attribute name="selected"><xsl:value-of select="$selected"/></xsl:attribute>
+ 			<xsl:apply-templates/>
+Index: web/src/main/java/de/betterform/agent/web/servlet/ViewServlet.java
+===================================================================
+--- web/src/main/java/de/betterform/agent/web/servlet/ViewServlet.java	(revision 24)
++++ web/src/main/java/de/betterform/agent/web/servlet/ViewServlet.java	(revision )
+@@ -6,12 +6,12 @@
+ 
+ package de.betterform.agent.web.servlet;
+ 
+-import org.apache.commons.logging.Log;
+-import org.apache.commons.logging.LogFactory;
+ import de.betterform.agent.web.WebProcessor;
+ import de.betterform.agent.web.WebUtil;
+-import de.betterform.xml.xforms.XFormsProcessor;
+ import de.betterform.generator.UIGenerator;
++import de.betterform.xml.xforms.XFormsProcessor;
++import org.apache.commons.logging.Log;
++import org.apache.commons.logging.LogFactory;
+ 
+ import javax.servlet.ServletException;
+ import javax.servlet.http.HttpServlet;
+@@ -73,7 +73,7 @@
+ 
+         String referer = request.getParameter("referer");
+ 
+-        WebProcessor webProcessor = WebUtil.getWebProcessor(request, session);
++        WebProcessor webProcessor = WebUtil.getWebProcessor(request);
+         try {
+             if (webProcessor == null || webProcessor.getContextParam("update") == null) {
+                 LOGGER.info("session does not exist: creating new one");
+Index: core/src/main/java/de/betterform/xml/dom/DOMUtil.java
+===================================================================
+--- core/src/main/java/de/betterform/xml/dom/DOMUtil.java	(revision 546)
++++ core/src/main/java/de/betterform/xml/dom/DOMUtil.java	(revision )
+@@ -7,7 +7,6 @@
+ 
+ import de.betterform.xml.xforms.exception.XFormsException;
+ import de.betterform.xml.xpath.impl.saxon.XPathUtil;
+-
+ import org.apache.commons.logging.Log;
+ import org.apache.commons.logging.LogFactory;
+ import org.w3c.dom.*;
+@@ -1013,18 +1012,18 @@
+      * @param node the node to serialize
+      */
+     public static void prettyPrintDOM(Node node) {
+-    	if (LOGGER.isTraceEnabled()) {
++//    	if (LOGGER.isTraceEnabled()) {
+             try {
+-            	LOGGER.trace("DOM Output:");
++                System.out.println();
+                 prettyPrintDOM(node, System.out);
+                 System.out.println();
+             } catch (Exception e) {
+                 e.printStackTrace();
+             }
+-        } else {
+-        	LOGGER.debug("Set the log level to TRACE for this class (de.betterform.xml.dom.DOMUtil) to see the XML"); 
++//        } else {
++//        	LOGGER.debug("Set the log level to TRACE for this class (de.betterform.xml.dom.DOMUtil) to see the XML");
++//        }
+-        }
++    }
+-    }
+ 
+ 
+     /**
+Index: web/src/main/java/de/betterform/agent/web/servlet/PlainHtmlServlet.java
+===================================================================
+--- web/src/main/java/de/betterform/agent/web/servlet/PlainHtmlServlet.java	(revision 24)
++++ web/src/main/java/de/betterform/agent/web/servlet/PlainHtmlServlet.java	(revision )
+@@ -6,10 +6,10 @@
+ 
+ package de.betterform.agent.web.servlet;
+ 
++import de.betterform.agent.web.WebProcessor;
++import de.betterform.agent.web.WebUtil;
+ import org.apache.commons.logging.Log;
+ import org.apache.commons.logging.LogFactory;
+-import de.betterform.agent.web.WebUtil;
+-import de.betterform.agent.web.WebProcessor;
+ 
+ import javax.servlet.ServletException;
+ import javax.servlet.http.HttpServlet;
+@@ -63,7 +63,7 @@
+         request.setCharacterEncoding("UTF-8");
+         WebUtil.nonCachingResponse(response);
+ 
+-        WebProcessor webProcessor = WebUtil.getWebProcessor(request, session);
++        WebProcessor webProcessor = WebUtil.getWebProcessor(request);
+         try {
+ 
+             webProcessor.setRequest(request);
+Index: web/src/main/java/de/betterform/agent/web/WebFactory.java
+===================================================================
+--- web/src/main/java/de/betterform/agent/web/WebFactory.java	(revision 527)
++++ web/src/main/java/de/betterform/agent/web/WebFactory.java	(revision )
+@@ -6,10 +6,6 @@
+ 
+ package de.betterform.agent.web;
+ 
+-import net.sf.ehcache.CacheManager;
+-import org.apache.commons.logging.Log;
+-import org.apache.commons.logging.LogFactory;
+-import org.apache.log4j.xml.DOMConfigurator;
+ import de.betterform.agent.web.flux.FluxProcessor;
+ import de.betterform.agent.web.servlet.PlainHtmlProcessor;
+ import de.betterform.xml.config.Config;
+@@ -18,6 +14,10 @@
+ import de.betterform.xml.xslt.impl.CachingTransformerService;
+ import de.betterform.xml.xslt.impl.FileResourceResolver;
+ import de.betterform.xml.xslt.impl.HttpResourceResolver;
++import net.sf.ehcache.CacheManager;
++import org.apache.commons.logging.Log;
++import org.apache.commons.logging.LogFactory;
++import org.apache.log4j.xml.DOMConfigurator;
+ 
+ import javax.servlet.ServletContext;
+ import javax.servlet.http.HttpServletRequest;
+@@ -83,19 +83,7 @@
+      * @throws XFormsConfigException
+      */
+     public static WebProcessor createWebProcessor(HttpServletRequest request) throws XFormsConfigException {
+-        String useragent;
+-        if (request.getParameter(WebFactory.USER_AGENT) != null) {
+-            //passed as request param
+-            useragent = request.getParameter(WebFactory.USER_AGENT);
+-        } else if (request.getHeader(WebFactory.USER_AGENT) != null) {
+-            //passed as http header
+-            useragent = request.getHeader(WebFactory.USER_AGENT);
+-        } else if (request.getAttribute(WebFactory.USER_AGENT) != null) {
+-            //passed from config in web.xml
+-            useragent = (String) request.getAttribute(WebFactory.USER_AGENT);
+-        } else {
+-            throw new XFormsConfigException("Useragent has not been set.");
+-        }
++        String useragent = detectUserAgent(request);
+ 
+         WebProcessor processor;
+         //todo: this has to be refactored to grab Processor Implementation from Config and instanciate with reflection -->
+@@ -106,8 +94,41 @@
+         } else {
+             throw new XFormsConfigException("Invalid useragent: " + useragent + "'");
+         }
++        return passUserAgent(request, useragent, processor);
++    }
++
++    /**
++     * todo: refactor to remove redundancy between createWebProcessor and wrapProcessor
++     * @param processorImpl
++     * @return
++     * @throws XFormsConfigException
++     */
++/*
++    public static WebProcessor wrapProcessor(XFormsProcessor processorImpl) throws XFormsConfigException {
++//        String useragent = detectUserAgent(request);
++//        String useragent = (String) processorImpl.getContextParam("betterform.useragent");
++        String useragent = "dojodev";
++
++        WebProcessor wrapper;
++        //todo: this has to be refactored to grab Processor Implementation from Config and instanciate with reflection -->
++        if (useragent.equalsIgnoreCase("dojo") || useragent.equalsIgnoreCase("dojodev")) {
++            wrapper = new FluxProcessor();
++        } else if (useragent.equalsIgnoreCase("html")) {
++            wrapper = new PlainHtmlProcessor();
++        } else {
++            throw new XFormsConfigException("Unknown useragent: " + useragent + "'");
++        }
++        wrapper.setXFormsProcessor(processorImpl);
++        ((FluxProcessor)wrapper).initFlux();
++        return wrapper;
++//        return passUserAgent(request, useragent, wrapper);
++    }
++*/
++
++
++    private static WebProcessor passUserAgent(HttpServletRequest request, String useragent, WebProcessor processor) {
+         processor.setUseragent(useragent);
+-         
++
+         if (LOGGER.isInfoEnabled()) {
+             LOGGER.info("request URI: " + request.getRequestURI());
+             LOGGER.info("using user agent: " + useragent + " : " + processor);
+@@ -115,6 +136,24 @@
+         return processor;
+     }
+ 
++    private static String detectUserAgent(HttpServletRequest request) throws XFormsConfigException {
++        String useragent;
++        if (request.getParameter(WebFactory.USER_AGENT) != null) {
++            //passed as request param
++            useragent = request.getParameter(WebFactory.USER_AGENT);
++        } else if (request.getHeader(WebFactory.USER_AGENT) != null) {
++            //passed as http header
++            useragent = request.getHeader(WebFactory.USER_AGENT);
++        } else if (request.getAttribute(WebFactory.USER_AGENT) != null) {
++            //passed from config in web.xml
++            useragent = (String) request.getAttribute(WebFactory.USER_AGENT);
++        } else {
++            throw new XFormsConfigException("Useragent has not been set.");
++        }
++        return useragent;
++    }
++
++
+     /**
+      * reads the the context param 'betterform.configfile' to get the location of the configuration file. Then
+      * the configuration will be initialized and stored within the servlet context. It may be accessed by using the constant key
+Index: web/src/main/java/de/betterform/agent/web/WebUtil.java
+===================================================================
+--- web/src/main/java/de/betterform/agent/web/WebUtil.java	(revision 368)
++++ web/src/main/java/de/betterform/agent/web/WebUtil.java	(revision )
+@@ -6,15 +6,15 @@
+ 
+ package de.betterform.agent.web;
+ 
++import de.betterform.connector.http.AbstractHTTPConnector;
++import de.betterform.xml.xforms.XFormsProcessor;
++import de.betterform.xml.xforms.model.submission.RequestHeaders;
++import de.betterform.xml.xslt.TransformerService;
+ import net.sf.ehcache.Cache;
+ import net.sf.ehcache.CacheManager;
+ import org.apache.commons.httpclient.Cookie;
+ import org.apache.commons.logging.Log;
+ import org.apache.commons.logging.LogFactory;
+-import de.betterform.connector.http.AbstractHTTPConnector;
+-import de.betterform.xml.xforms.XFormsProcessor;
+-import de.betterform.xml.xforms.model.submission.RequestHeaders;
+-import de.betterform.xml.xslt.TransformerService;
+ 
+ import javax.servlet.http.HttpServletRequest;
+ import javax.servlet.http.HttpServletResponse;
+@@ -89,10 +89,6 @@
+      * @return the xformsSession for the request
+      */
+     public static WebProcessor getWebProcessor(HttpServletRequest request) {
+-
+-//        String key = request.getParameter("sessionKey");
+-//        XFormsSessionManager manager = (XFormsSessionManager) session.getAttribute(XFormsSessionManager.XFORMS_SESSION_MANAGER);
+-//        XFormsSession xFormsSession = manager.getWebProcessor(key);
+         String key = request.getParameter("sessionKey");
+         if (key == null) {
+             LOGGER.warn("Request " + request + " has no parameter session key");
+@@ -102,20 +98,6 @@
+         }
+     }
+ 
+-    /**
+-     * fetches the XFormsSession from the HTTP Session
+-     *
+-     * @param request the HTTP Request
+-     * @param session the HTTP Session
+-     * @return the xformsSession for the request
+-     */
+-    public static WebProcessor getWebProcessor(HttpServletRequest request, HttpSession session) {
+-//        String key = request.getParameter("sessionKey");
+-//        XFormsSessionManager manager = (XFormsSessionManager) session.getAttribute(XFormsSessionManager.XFORMS_SESSION_MANAGER);
+-//        XFormsSession xFormsSession = manager.getWebProcessor(key);
+-        return getWebProcessor(request);
+-    }
+-
+     public static WebProcessor getWebProcessor(String key) {
+         if (key == null || key.equals("")) {
+             LOGGER.warn("SessionKey is null");
