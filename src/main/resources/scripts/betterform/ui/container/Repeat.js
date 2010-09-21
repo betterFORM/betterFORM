@@ -14,12 +14,16 @@ dojo.declare(
 {
 
     handleSetRepeatIndex:function(/*Map*/ contextInfo) {
-        this._handleSetRepeatIndex(contextInfo.index);
+        // console.debug("Repeat.handleSetRepeatIndex: contextInfo'",contextInfo, " for Repeat id: ", this.id);
+        if(contextInfo != undefined && contextInfo.index != undefined ){
+        	this._handleSetRepeatIndex(contextInfo.index);
+    	}
     },
 
     _handleSetRepeatIndex:function(index) {
-        // console.debug("handleSetRepeatIndex: position='",contextInfo.index,"' for Repeat id: ", this.id, " this:",this);
-        if (eval(index) == 0) {
+        // console.debug("Repeat._handleSetRepeatIndex: position='", index,"' for Repeat id: ", this.id);
+        var intIndex = eval(index)
+        if (intIndex == 0) {
             //this.setFocusOnChild(this.domNode);
             return;
         }
@@ -27,9 +31,9 @@ dojo.declare(
 
         var repeatIndexNode;
         if (dojo.hasClass(this.domNode, "xfCompactRepeat")) {
-            repeatIndexNode = dojo.query("> tbody > .xfRepeatItem", this.domNode)[index - 1];
+            repeatIndexNode = dojo.query("> tbody > .xfRepeatItem", this.domNode)[intIndex - 1];
         } else {
-            repeatIndexNode = dojo.query("> .xfRepeatItem", this.domNode)[index - 1];
+            repeatIndexNode = dojo.query("> .xfRepeatItem", this.domNode)[intIndex - 1];
         }
         // console.debug("handleSetRepeatIndex for repeatIndexNode",repeatIndexNode);
         if (repeatIndexNode != undefined) {
@@ -94,6 +98,7 @@ dojo.declare(
                 }
         );
         repeatItemWidget.showRepeatItem();
+        // console.debug("Inserted new Repeat Item", repeatItemWidget.domNode);
     },
 
     _replaceRepeatItemClasses:function(/* Node */ node) {
@@ -106,6 +111,11 @@ dojo.declare(
     },
 
     _replacePrototypeIds:function(node, generatedIds) {
+		var compactRepeat = false;
+        if(dojo.hasClass(this.domNode,"xfCompactRepeat")) {
+	    	compactRepeat = true;
+        }
+
         dojo.query("*", node).forEach(
                 function(xfNode) {
                     var idAtt = dojo.attr(xfNode, "id");
@@ -116,7 +126,7 @@ dojo.declare(
 
                     if (idAtt != undefined && generatedIds[idAtt] != undefined) {
                         dojo.attr(xfNode, "id", generatedIds[idAtt]);
-                    }
+                	}
 
                     else if (idAtt != undefined) {
                         var idPrefix;
@@ -279,5 +289,4 @@ dojo.declare(
 
     }
 });
-
 
