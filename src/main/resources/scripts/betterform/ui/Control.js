@@ -513,34 +513,13 @@ dojo.declare(
             try {
                 // Try to retrieve the title attribute of the according value-node
                 var titleAttribute = valueNode.attr("title");
-                if (titleAttribute != null) {
-                    // Test if the retrieved title-attribute is defined
-                    if (titleAttribute != undefined) {
-                        // Test if the retrieved title-attribute has a non-empty value
-                        // TODO: Check if it really can be retrieved by valueNode.attr("title") even if it did not exist???
-                        if (titleAttribute != "") {
-                            titleAttributeFound = true;
-                        }
-                        else {
-                            titleAttributeFound = false;
-                        }
-                    }
-                    else {
-                        titleAttributeFound = false;
-                    }
-                }
-                else {
-                    titleAttributeFound = false;
-                }
+                // Test if the retrieved title-attribute is defined and has a non-empty value
+                titleAttributeFound = titleAttribute != undefined && titleAttribute != "";
             }
             catch(exception) {
-                titleAttributeFound = false;
+                console.debug("title attribute for hint " +  this.id + "-hint" + " is empty");
             }
         }
-        else {
-            titleAttributeFound = false;
-        }
-
 
         // If a hint-node was found
         if (hintNodeFound) {
@@ -557,7 +536,7 @@ dojo.declare(
         // If no hint-node was found and no title-attribute was found
         if (!hintNodeFound && !titleAttributeFound) {
             // Print an error to the console
-            console.error("Failure updating hint for Control '" + this.id + " with value: " + value + " ... neither found '" + this.id + "-hint' nor '" + this.id + "-value");
+            console.warn("Failure updating hint for Control '" + this.id + " with value: " + value + " ... neither found '" + this.id + "-hint' nor '" + this.id + "-value");
         }
     },
 
