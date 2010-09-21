@@ -111,7 +111,7 @@
             <!-- dojo init -->
             <script type="text/javascript" src="{concat($contextroot,$scriptPath,'dojo/dojo.js')}">
                 var djConfig = {
-                    debugAtAllCost:  <xsl:value-of select="$debug-enabled"/>,
+                    debugAtAllCosts:  <xsl:value-of select="$debug-enabled"/>,
                     isDebug: <xsl:value-of select="$debug-enabled"/>,
                     popup:true
                 };
