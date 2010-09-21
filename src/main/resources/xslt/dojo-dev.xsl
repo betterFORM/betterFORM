@@ -44,7 +44,7 @@
     <xsl:template name="addDojoConfig">
         <script type="text/javascript">
             var djConfig = {
-                debugAtAllCost:<xsl:value-of select="$debug-enabled"/>,
+                debugAtAllCosts:<xsl:value-of select="$debug-enabled"/>,
                 locale:'<xsl:value-of select="$locale"/>',
                 isDebug:<xsl:value-of select="$debug-enabled"/>,
                 parseOnLoad:false
