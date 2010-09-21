@@ -73,12 +73,50 @@
             <url>dav:https://betterform.de/svn/betterform/trunk/</url>
         </repository>
     </distributionManagement>
-
+    <!-- Repository management, including extra repositories if needed -->
     <repositories>
         <repository>
-            <id>JBoss</id>
-            <name>JBoss</name>
-            <url>http://repository.jboss.org/maven2</url>
+            <id>jboss-public-repository-group</id>
+            <name>JBoss Public Maven Repository Group</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public
+            </url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>third-party-repository-group</id>
+            <name>Third Party Repository Group</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public-thirdparty-releases/</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>maven-central-repository</id>
+            <name>Maven Central Repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/central</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
         </repository>
     </repositories>
 
@@ -86,8 +124,53 @@
         <system>Trac</system>
         <url>https://betterform.de/trac</url>
     </issueManagement>
-
-
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jboss-public-repository-group</id>
+            <name>JBoss Public Maven Repository Group</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public
+            </url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>maven-central-repository-group</id>
+            <name>Maven Central Repository Group</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/central
+            </url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>jboss-snapshots-repository</id>
+            <name>JBoss Snapshots Repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/snapshots/
+            </url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
     <build>
         <plugins>
@@ -134,7 +217,7 @@
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-ssh-external</artifactId>
-                <version>1.0-alpha-5</version>
+				<version>1.0-alpha-6</version>
             </extension>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
@@ -145,7 +228,7 @@
     </build>
     <dependencies>
       	<dependency>
-      		<groupId>org.apache.tools.ant</groupId>
+			<groupId>org.apache.ant</groupId>
         	<artifactId>ant</artifactId>
         	<version>1.7.1</version>
       	</dependency>

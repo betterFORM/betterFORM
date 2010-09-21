@@ -12,7 +12,9 @@
     <xsl:param name="buildprops"/>
     <xsl:param name="module"/>
                  
-    <xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
+    <xsl:output method="xml"
+                omit-xml-declaration="yes" 
+                indent="yes"/>
 
     <xsl:template match="/">
         <xsl:apply-templates/>
@@ -75,6 +77,18 @@
                     <artifactId><xsl:value-of select="@artifactId"/></artifactId>
                     <version><xsl:value-of select="@version"/></version>
                     <xsl:if test="string-length(@scope)&gt; 0"><scope><xsl:value-of select="@scope"/></scope></xsl:if>
+                    <xsl:if test="@artifactId = 'log4j'">
+                        <exclusions>
+                            <exclusion>
+                                <artifactId>jmxtools</artifactId>
+                                <groupId>com.sun.jdmk</groupId>
+                            </exclusion>
+                            <exclusion>
+                                <artifactId>jmxri</artifactId>
+                                <groupId>com.sun.jmx</groupId>
+                            </exclusion>
+                        </exclusions>
+                    </xsl:if>
                 </dependency>
             </xsl:for-each>
         </dependencies>

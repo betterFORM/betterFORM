@@ -13,7 +13,6 @@
         </javac>
         <dojo>dojo-release-1.5.0-src</dojo>
         <!--<dojo>dojo-release-1.3.3-src</dojo>-->
-        <!--<dojo>dojo-release-1.3.2-src</dojo>-->
 
         <timeline>timeline_libraries_v2.3.0</timeline>
     </properties>
@@ -34,8 +33,8 @@
                 <pathelement location="${core.dir}/src/main/lib/activation-1.1.1.jar" groupid="javax.activation" version="1.1.1" artifactId="activation"/>
                 <pathelement location="${core.dir}/src/main/lib/mail-1.4.2.jar" groupid="javax.mail" version="1.4.2" artifactId="mail"/>
                 <pathelement location="${core.dir}/src/main/lib/log4j-1.2.15.jar" groupid="log4j" version="1.2.15" artifactId="log4j"/>
-                <pathelement location="${core.dir}/src/main/lib/saxonb-dom-9.1.0.8.jar" groupid="net.sf.saxon" version="9.1.0.8" artifactId="saxon-dom"/>
-                <pathelement location="${core.dir}/src/main/lib/saxonb-9.1.0.8.jar" groupid="net.sf.saxon" version="9.1.0.8" artifactId="saxon"/>
+                <pathelement location="${core.dir}/src/main/lib/saxon-dom-9.1.0.8.jar" groupid="net.sf.saxon" version="9.1.0.8" artifactId="saxon-dom"/>
+                <pathelement location="${core.dir}/src/main/lib/saxon-9.1.0.8.jar" groupid="net.sf.saxon" version="9.1.0.8" artifactId="saxon"/>
                 <pathelement location="${core.dir}/src/main/lib/xercesImpl-2.9.1.jar" groupid="xerces" version="2.9.1" artifactId="xercesImpl"/>
                 <pathelement location="${core.dir}/src/main/lib/xml-apis-1.3.04.jar" groupid="xml-apis" artifactId="xml-apis" version="1.3.04"/>
                 <pathelement location="${core.dir}/src/main/lib/xmlrpc-common-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-common"/>
@@ -62,13 +61,13 @@
         <compile>
             <classpath pathid="web.class.path" description="classpath for compiling web classes">
                 <path refid="compile.class.path"/>
-                <pathelement location="${web.dir}/src/main/lib/dwr-2.0.5.jar" groupid="dwr" version="2.0.5" artifactId="dwr"/>
+                <pathelement location="${web.dir}/src/main/lib/dwr-2.0.5.jar" groupid="org.directwebremoting.dwr" version="2.0.5" artifactId="dwr"/>
                 <pathelement location="${web.dir}/src/main/lib/servlet-api-2.4.jar" groupid="javax.servlet" version="2.4" artifactId="servlet-api" scope="provided"/>
             </classpath>
         </compile>
         <test>
             <!-- Selenium Properties -->
-            
+
             <selenium>
               <!-- which browser to use for tests -->
               <browser>*firefox</browser>
@@ -91,12 +90,12 @@
                 <port>42042</port>
                 <host>localhost</host>
             </tomcat>
-            
+
             <classpath pathid="web.test.class.path" description="classpath for compiling web classes">
                 <path refid="web.class.path"/>
-                <path refid="test.class.path"/>            
+                <path refid="test.class.path"/>
                 <pathelement path="${web.dir}/target/test-classes"/>
-                <pathelement location="${web.dir}/src/main/lib/selenium/selenium-java-client-driver-1.0.1.jar" groupid="org.seleniumhq.selenium" version="1.0.1" artifactId="selenium-java-client-driver" scope="test"/>
+                <pathelement location="${web.dir}/src/main/lib/selenium/selenium-java-client-driver-1.0.1.jar" groupid="org.seleniumhq.selenium.client-drivers" version="1.0.1" artifactId="selenium-java-client-driver" scope="test"/>
                 <!-- experimental webdriver support -->
                 <!--
                 <pathelement location="${web.dir}/src/main/lib/webtest/webdriver/bcprov-jdk15-135.jar"
@@ -178,6 +177,7 @@
     <xapp>
         <app>
             <name>xApplication</name>
+            <version>1.0</version>
         </app>
     </xapp>
 
