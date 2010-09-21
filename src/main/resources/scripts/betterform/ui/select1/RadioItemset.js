@@ -38,34 +38,42 @@ dojo.declare(
     handleInsert:function(contextInfo) {
         // console.debug("RadioItemset.insertItem: ",contextInfo);
 
+        // create a new span as Control Node containing label and value
         var itemNode = document.createElement("span");
+        // add css classes
         dojo.addClass(itemNode, "xfSelectorItem");
         dojo.addClass(itemNode, "xfEnabled");
         dojo.addClass(itemNode, "xfReadWrite");
         dojo.addClass(itemNode, "xfOptional");
         dojo.addClass(itemNode, "xfValid");
         dojo.attr(itemNode, "controltype","radioButtonEntry");
-
+        // console.debug("RadioItemset.insertItem: generatedIds:",contextInfo.generatedIds);
         var generatedIds= contextInfo.generatedIds;
         var itemId = generatedIds[contextInfo.prototypeId];
         dojo.attr(itemNode, "id",itemId );
+        // create Label node for item
         var labelNode = document.createElement("label");
         dojo.addClass(labelNode, "xfRadioLabel");
         dojo.attr(labelNode, "id",itemId+"-label" );
         dojo.attr(labelNode, "for",itemId+"-value" );
         labelNode.innerHTML = contextInfo.label;
+        // console.debug("RadioItemset.insertItem: parentNode:",this.domNode.parentNode);
+        // search up the DOM tree for the parent Select1 the itemset belongs to
         var myParentNode = this.domNode.parentNode;
-        while(!dojo.hasClass(myParentNode,"xfFullSelect1")){
+        while(!dojo.hasClass(myParentNode,"xfFullSelect1") && !dojo.hasClass(myParentNode,"xfSelect1")){
             myParentNode = myParentNode.parentNode;
+            // console.debug("\tmyParentNode: ",myParentNode);
         }
         // console.debug("myParentNode",myParentNode);
         // console.debug("RadioItemset.insertItemset: created node: ", itemNode);
         // console.dirxml(itemNode);
 
+        // create Select item value node
         var valueNode = document.createElement("input");
         if(dojo.hasClass(valueNode, "xfValue")) {
             dojo.removeClass(valueNode, "xfValue");
         }
+        // add css classes
         dojo.addClass(valueNode, "xfRadioValue");
         dojo.attr(valueNode, "id",itemId+"-value" );
         dojo.attr(valueNode, "selected","false");
@@ -75,6 +83,7 @@ dojo.declare(
         dojo.attr(valueNode, "datatype","radio");
         dojo.attr(valueNode, "controltype","radio");
 
+        // place label and value node as childs of the item node
        dojo.place(valueNode,itemNode);
        dojo.place(labelNode,itemNode);
 
