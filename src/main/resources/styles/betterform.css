@@ -933,51 +933,47 @@ and visually give feedback to the user. */
 /* An bfPending Element gets an animates Gif-Symbol. bfPending is applied to a DOM-Node while it is being processed. */
 .bfPending .xfValue
 {
-		/*background: url( '../images/indicator.gif' ) no-repeat right !important;*/
+	/*
+	background: url( '../images/indicator.gif' ) no-repeat right !important;
     background:#ffffe0;
-
-		/*background-repeat: repeat !important;*/
+	background-repeat: repeat !important;
+	*/
 }
 
 /* All Elements infront of the bfPending Element must be half-transparent */
-.bfPending *
-{
-		/*background-image: none;*/
-/*
+.bfPending * {
+		/*
+		background-image: none;
 		opacity:0.9 !important;
 		filter:Alpha(opacity=90) !important;
 		moz-opacity: 0.9 !important;
-*/
+		*/
 }
 table > .bfPending .xfRepeatIndex{
-    /*background: url( '../images/ajax-loader.gif' ) no-repeat center center !important;*/
+    /*
+    background: url( '../images/ajax-loader.gif' ) no-repeat center center !important;
     background-color:#ffffe0;
-    /*opacity:0.8;*/
+    opacity:0.8;
+    */
 }
 
 /*
-.bfPending.xfTextarea
-{
+.bfPending.xfTextarea {
 		display: block;
 }
 
-.bfPending > tbody, .bfPending > label
-{
+.bfPending > tbody, .bfPending > label {
 		background-color:white;
 		background-image: none;
-		*/
-/* color:black !important; *//*
-
+		color:black !important;
 }
-
 */
+
 /* For xfRepeat line-content *//*
 
-td > div.bfPending > span
-{
+td > div.bfPending > span {
 		display: block;
-}
-*/
+} */
 
 /*##################################################################
                    START IMPORTANT STYLES (DO NOT OVERWRITE)
