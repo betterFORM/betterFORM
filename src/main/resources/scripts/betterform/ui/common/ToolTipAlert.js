@@ -40,21 +40,28 @@ dojo.declare("betterform.ui.common.ToolTipAlert",
 
                 alertTooltip.show(alert.innerHTML, dojo.byId(id+"-value"));
                 dojo.style(alertTooltip.domNode, "opacity", "1");
-                
-                dojo.fadeOut({
-                    node:alertTooltip.domNode,
-                    duration:8000,
-                    invalidControl:control.controlValue,
-                    onBegin:function() {
-                        // console.debug("this.invalidControl: ",this.invalidControl);
-                        dojo.addClass(this.invalidControl.domNode, "bfInvalidControl");
+                dojo.addClass(control.domNode, "bfInvalidControl");
+
+                setTimeout(dojo.hitch(this,"_fadeOutAndHide", id),3000);
+
                     }
-                }).play();
-            }
             else {
                 alertTooltip.hide(dojo.byId(id+"-value"));
             }
         }
+    },
+
+    _fadeOutAndHide:function(id) {
+        var alertTooltip = dijit.byId(id+"-MasterToolTip-alert");
+        // No need to check if tooltip exists since this function is only called if (after a check before) it exists
+
+        dojo.fadeOut({
+            node:alertTooltip.domNode,
+            duration:1000,
+            onEnd:function() {
+                alertTooltip.hide(dojo.byId(id+"-value"));
+    	}
+        }).play();
     }
 
 });
