@@ -10,8 +10,9 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.betterform</groupId>
+    <!-- TODO: generate dependencies for zaphod/pom.xml -->
 
+    <groupId>de.betterform</groupId>
     <artifactId>zaphod</artifactId>
     <version>1.0</version>
     <name>betterFORM zaphod</name>
