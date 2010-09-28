@@ -48,12 +48,12 @@
 
                 </xf:model>
                 <code class="ui">
-                    <xf:trigger id="trigger1" src="../../images/bf_logo_67x27.png" incremental="true">
-                        <xf:label>a text</xf:label>
-                        <xf:hint>trigger hint text</xf:hint>
-                        <xf:help>help for trigger1</xf:help>
-                        <xf:alert>invalid</xf:alert>
-                    </xf:trigger>
+<xf:trigger id="trigger1" src="../../images/bf_logo_67x27.png" incremental="true">
+    <xf:label>a text</xf:label>
+    <xf:hint>trigger hint text</xf:hint>
+    <xf:help>help for trigger1</xf:help>
+    <xf:alert>invalid</xf:alert>
+</xf:trigger>
                 </code>
             </div>
         </div>

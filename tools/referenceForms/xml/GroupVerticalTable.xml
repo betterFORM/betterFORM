@@ -49,21 +49,21 @@
                     </xf:bind>
                 </xf:model>
                 <code class="ui">
-                    <xf:group ref="grouped-data/group" appearance="bf:verticalTable">
-                        <xf:label>Group with 'verticalTable' appearance</xf:label>
-                        <xf:input ref="a">
-                            <xf:label>A-label</xf:label>
-                        </xf:input>
-                        <xf:input ref="b">
-                            <xf:label>Bb-label</xf:label>
-                        </xf:input>
-                        <xf:input ref="c">
-                            <xf:label>Ccc-label</xf:label>
-                        </xf:input>
-                        <xf:input ref="d">
-                            <xf:label>Dddd-label</xf:label>
-                        </xf:input>
-                    </xf:group>
+<xf:group ref="grouped-data/group" appearance="bf:verticalTable">
+    <xf:label>Group with 'verticalTable' appearance</xf:label>
+    <xf:input ref="a">
+        <xf:label>A-label</xf:label>
+    </xf:input>
+    <xf:input ref="b">
+        <xf:label>Bb-label</xf:label>
+    </xf:input>
+    <xf:input ref="c">
+        <xf:label>Ccc-label</xf:label>
+    </xf:input>
+    <xf:input ref="d">
+        <xf:label>Dddd-label</xf:label>
+    </xf:input>
+</xf:group>
                 </code>
             </div>
         </div>

@@ -60,19 +60,19 @@
 
                 </xf:model>
                 <code class="ui">
-                    <xf:repeat id="repeat1" nodeset="repeat/items" appearance="full">
-                        <xf:input ref="item[1]">
-                            <xf:label>String:</xf:label>
-                        </xf:input>
-                        <br/>
-                        <xf:input ref="item[2]">
-                            <xf:label>Date:</xf:label>
-                        </xf:input>
-                        <br/>
-                        <xf:input ref="item[3]">
-                            <xf:label>Boolean:</xf:label>
-                        </xf:input>
-                    </xf:repeat>
+<xf:repeat id="repeat1" nodeset="repeat/items" appearance="full">
+    <xf:input ref="item[1]">
+        <xf:label>String:</xf:label>
+    </xf:input>
+    <br/>
+    <xf:input ref="item[2]">
+        <xf:label>Date:</xf:label>
+    </xf:input>
+    <br/>
+    <xf:input ref="item[3]">
+        <xf:label>Boolean:</xf:label>
+    </xf:input>
+</xf:repeat>
                 </code>
             </div>
         </div>

@@ -49,22 +49,22 @@
 
                 </xf:model>
                 <code class="ui">
-                    <xf:upload id="upload1" ref="upload1/value">
-                        <xf:label>a standard file upload</xf:label>
-                        <xf:filename ref="attribute::file"/>
-                        <xf:mediatype ref="attribute::type"/>
-                    </xf:upload>
-                    <xf:group appearance="bf:verticalTable">
-                        <xf:output ref="upload1/value/@file">
-                            <xf:label>File:</xf:label>
-                        </xf:output>
-                        <xf:output ref="upload1/value/@type">
-                            <xf:label>Type:</xf:label>
-                        </xf:output>
-                        <xf:output value="upload1/value">
-                            <xf:label>Download Link:</xf:label>
-                        </xf:output>
-                    </xf:group>
+<xf:upload id="upload1" ref="upload1/value">
+    <xf:label>a standard file upload</xf:label>
+    <xf:filename ref="attribute::file"/>
+    <xf:mediatype ref="attribute::type"/>
+</xf:upload>
+<xf:group appearance="bf:verticalTable">
+    <xf:output ref="upload1/value/@file">
+        <xf:label>File:</xf:label>
+    </xf:output>
+    <xf:output ref="upload1/value/@type">
+        <xf:label>Type:</xf:label>
+    </xf:output>
+    <xf:output value="upload1/value">
+        <xf:label>Download Link:</xf:label>
+    </xf:output>
+</xf:group>
                 </code>
             </div>
         </div>

@@ -46,12 +46,12 @@
 
                 </xf:model>
                 <code class="ui">
-                    <xf:output id="output1" ref="output1/value" incremental="true">
-                        <xf:label>betterform Homepage</xf:label>
-                        <xf:hint>output bound to a node with datatype anyURI</xf:hint>
-                        <xf:help>help for output1</xf:help>
-                        <xf:alert>invalid</xf:alert>
-                    </xf:output>
+<xf:output id="output1" ref="output1/value" incremental="true">
+    <xf:label>betterform Homepage</xf:label>
+    <xf:hint>output bound to a node with datatype anyURI</xf:hint>
+    <xf:help>help for output1</xf:help>
+    <xf:alert>invalid</xf:alert>
+</xf:output>
                 </code>
             </div>
         </div>

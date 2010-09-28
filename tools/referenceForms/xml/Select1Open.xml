@@ -73,16 +73,16 @@
                     </xf:instance>
                 </xf:model>
                 <code class="ui">
-                    <xf:select1 id="select1" ref="select1/value" selection="open" incremental="true">
-                        <xf:label>a text</xf:label>
-                        <xf:hint>input bound to string</xf:hint>
-                        <xf:help>help for select1</xf:help>
-                        <xf:alert>invalid</xf:alert>
-                        <xf:itemset nodeset="instance('codes')/country">
-                            <xf:label ref="country-name"/>
-                            <xf:value ref="code"/>
-                        </xf:itemset>
-                    </xf:select1>
+<xf:select1 id="select1" ref="select1/value" selection="open" incremental="true">
+    <xf:label>a text</xf:label>
+    <xf:hint>input bound to string</xf:hint>
+    <xf:help>help for select1</xf:help>
+    <xf:alert>invalid</xf:alert>
+    <xf:itemset nodeset="instance('codes')/country">
+        <xf:label ref="country-name"/>
+        <xf:value ref="code"/>
+    </xf:itemset>
+</xf:select1>
                 </code>
             </div>
         </div>

@@ -48,15 +48,15 @@
 
                 </xf:model>
                 <code class="ui">
-                    <xf:trigger id="trigger1" incremental="true">
-                        <xf:label>a text</xf:label>
-                        <xf:hint>trigger hint text</xf:hint>
-                        <xf:help>help for trigger1</xf:help>
-                        <xf:alert>invalid</xf:alert>
-                        <script type="text/javascript">
-                            alert('trigger was clicked');
-                        </script>
-                    </xf:trigger>
+<xf:trigger id="trigger1" incremental="true">
+    <xf:label>a text</xf:label>
+    <xf:hint>trigger hint text</xf:hint>
+    <xf:help>help for trigger1</xf:help>
+    <xf:alert>invalid</xf:alert>
+    <script type="text/javascript">
+        alert('trigger was clicked');
+    </script>
+</xf:trigger>
                 </code>
             </div>
         </div>
