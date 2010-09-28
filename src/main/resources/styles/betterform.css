@@ -18,16 +18,12 @@ form {
     makes maintainance hard but be overwritten in your custom stylesheets or inline
     style rules.
 */
-body{
-    background:url( '../images/bgOne.gif' ) repeat-x scroll;
-    /*width: 100%;*/
-    /*height: 100%;*/
+body {
+    background: url('../images/bgOne.gif') repeat-x scroll; /*width: 100%;*/
+/*height: 100%;*/
     margin: 30px;
-    padding: 0;
-    /*overflow: hidden;*/
+    padding: 0; /*overflow: hidden;*/
 }
-
-
 
 /*
 #fluxProcessor {
@@ -48,11 +44,10 @@ body{
 }
 
 #caCopyright {
-    position: absolute;
-    /*bottom:0;*/
-    right:0;
+    position: absolute; /*bottom:0;*/
+    right: 0;
     font-size: 8pt;
-    padding-right:20px;
+    padding-right: 20px;
 
 }
 
@@ -74,6 +69,7 @@ body{
     padding: 10px;
 
 }
+
 .caInactive {
     display: none;
 }
@@ -101,24 +97,25 @@ a.active {
     font-size: 10pt;
 }
 
-.tundra .dijitToasterContainer{
-    padding:2px;
-    border:thin dotted gray;
+.tundra .dijitToasterContainer {
+    padding: 2px;
+    border: thin dotted gray;
 }
-.tundra .dijitToasterContent{
-    font-size:smaller;
-    color:black;
+
+.tundra .dijitToasterContent {
+    font-size: smaller;
+    color: black;
     padding-top: 2px;
-    padding-bottom:2px;
-    
+    padding-bottom: 2px;
+
 }
 
 .tundra .xsdDateTime .dijitError {
-    background:#FFFFFF url(../images/validationInputBg.png) repeat-x scroll left top;    
+    background: #FFFFFF url(../images/validationInputBg.png) repeat-x scroll left top;
 }
 
-.dijitError .dijitValidationIcon, .dijitError .dijitValidationIconText  {
-    visibility:hidden;
+.dijitError .dijitValidationIcon, .dijitError .dijitValidationIconText {
+    visibility: hidden;
 }
 
 /* #################### SPECIAL CONTROL APPEARANCE STYLES #################### */
@@ -130,7 +127,7 @@ a.active {
 
 /* matches all popup calendars */
 .xsdDateTime .xfDateTextBox {
-    width:90px;
+    width: 90px;
 }
 
 /* matches Rating control (range) */
@@ -142,7 +139,7 @@ a.active {
 /* matches Rating control (range) */
 .dojoxRatingStar {
     display: inline-block;
-    background-image: url( ../images/rating_empty.gif );
+    background-image: url(../images/rating_empty.gif);
     background-position: left center;
     position: relative;
     height: 15px;
@@ -152,12 +149,12 @@ a.active {
 
 /* matches Rating control (range) */
 .dojoxRatingStarChecked {
-    background-image: url( ../images/rating_full.gif );
+    background-image: url(../images/rating_full.gif);
 }
 
 /* matches Rating control (range) */
 .dojoxRatingStarHover {
-    background-image: url( ../images/rating_full.gif );
+    background-image: url(../images/rating_full.gif);
     opacity: .5;
 }
 
@@ -167,7 +164,6 @@ a.active {
     display:inline;
 }
 */
-
 
 /* ***************************************************************************** */
 /* ********************* GENERAL XFORMS MIP AND COMMON-CHILD STYLES ************ */
@@ -186,23 +182,23 @@ a.active {
 .tundra .xfControl .bfInvalidControl,
 .tundra .xfControl .bfInvalidControl .xfDateTextBox,
 .tundra .xfMinimalTextarea .bfInvalidControl .xfValue,
-.tundra .xfControl .bfInvalidControl .xfTimeTextBox{
-	/*border:1px solid #801B1B*/
-	background:#FFCFCF;
+.tundra .xfControl .bfInvalidControl .xfTimeTextBox {
+/*border:1px solid #801B1B*/
+    background: #FFCFCF;
 
 }
 
 .xfAlert {
-	/*background:yellow;*/
-	border:1px solid #801B1B;
-	color:#801B1B;
-	margin:3px;
-  }
+/*background:yellow;*/
+    border: 1px solid #801B1B;
+    color: #801B1B;
+    margin: 3px;
+}
 
 /* for tundra checkboxes */
 .tundra .dijitCheckBox,
 .tundra .dijitCheckBoxIcon {
-    background-image: url( '../images/checkmarkNoBorder.png' ); /* checkbox sprite image */
+    background-image: url('../images/checkmarkNoBorder.png'); /* checkbox sprite image */
     border: 1px solid gray;
     height: 14px;
     width: 14px;
@@ -210,23 +206,22 @@ a.active {
 }
 
 /* matches selection open controls in tundra */
-.tundra .xfSelectOpen .xfValue{
+.tundra .xfSelectOpen .xfValue {
     width: 150px;
     display: block;
 }
 
 .xfSelectOpen .xfSelectFreeText {
     display: inline-block;
-    overflow-x: hidden;
-    /*overflow-y: scroll;*/
+    overflow-x: hidden; /*overflow-y: scroll;*/
     position: relative;
     width: 152px;
     top: 0px;
 }
-.tundra .xfSelectOpen .dijitTextBox{
+
+.tundra .xfSelectOpen .dijitTextBox {
     width: 140px;
 }
-
 
 /*********** styles character used for signaling 'required' (normally '*') ***********/
 .xfRequiredSymbol {
@@ -243,14 +238,15 @@ a.active {
     display: none;
 }
 
-#helpTrigger{
-    position:absolute;
-    top:10px;
-    right:10px;
-    z-index:999;
-    border:thin solid steelblue;
-    padding:3px;
+#helpTrigger {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 999;
+    border: thin solid steelblue;
+    padding: 3px;
 }
+
 .xfHelpPane {
     position: absolute;
     top: 20px;
@@ -279,7 +275,6 @@ a.active {
 }
 */
 
-
 /*
 .xfTextarea > .xfValue {
     width: 380px;
@@ -289,7 +284,7 @@ a.active {
 .caRefreshButton {
     display: block;
     float: right;
-    background-color: rgb( 188, 216, 132 );
+    background-color: rgb(188, 216, 132);
     border: thin solid gray;
     padding: 2px;
     margin-left: 10px;
@@ -303,7 +298,7 @@ a.active {
 }
 
 .bfProgressbar .border {
-    background: url( ../images/progress-remainder.gif ) repeat-x;
+    background: url(../images/progress-remainder.gif) repeat-x;
     margin-top: 1px;
     border-left: 1px solid gray;
     border-right: 1px solid gray;
@@ -312,7 +307,7 @@ a.active {
 }
 
 .bfProgressbar .background {
-    background: url( ../images/progress-bar.gif ) repeat-x;
+    background: url(../images/progress-bar.gif) repeat-x;
     height: 18px;
     width: 0%;
 }
@@ -322,14 +317,15 @@ a.active {
 }
 
 .xfLabel {
-	display:inline;
+    display: inline;
 }
 
-.xfDateTimeControl   {
-	display:inline;
+.xfDateTimeControl {
+    display: inline;
 }
+
 .xfDateTimeControl > xfLabel {
-	float:left;
+    float: left;
 }
 
 /* ***************************************************************************** */
@@ -346,14 +342,15 @@ a.active {
 .xfContainer{
 }
 */
-.xfGroup{
-    /*display:block;*/
+.xfGroup {
+/*display:block;*/
 }
+
 .xfGroup .xfControl .xfLabel {
     display: block;
     float: none;
-    margin-left:0.2em;
-    margin-top:0.4em;
+    margin-left: 0.2em;
+    margin-top: 0.4em;
 }
 
 /* ############################## Minimal GROUP STYLES ############################## */
@@ -361,8 +358,9 @@ a.active {
 /* ############################## Minimal GROUP STYLES ############################## */
 
 .xfMinimalGroup .xfGroupLabel {
-	display:block;
+    display: block;
 }
+
 /* ############################## COMPACT GROUP STYLES ############################## */
 /* ############################## COMPACT GROUP STYLES ############################## */
 /* ############################## COMPACT GROUP STYLES ############################## */
@@ -371,21 +369,21 @@ a.active {
 }
 
 .xfCompactGroup .xfGroupLabel {
-    display:block;
-    width:100%;
+    display: block;
+    width: 100%;
 }
 
-.xfCompactGroup .xfControl{
-	clear:both;
-    display:inline;
+.xfCompactGroup .xfControl {
+    clear: both;
+    display: inline;
 }
 
 .xfCompactGroup .xfControl .xfLabel {
-	clear:both;
+    clear: both;
     display: block;
     float: none;
-    margin-left:0.2em;
-    margin-top:0.3em;
+    margin-left: 0.2em;
+    margin-top: 0.3em;
 }
 
 /*
@@ -403,13 +401,13 @@ a.active {
 /* ############################## FULL GROUP STYLES ############################## */
 /* ############################## FULL GROUP STYLES ############################## */
 /* ############################## FULL GROUP STYLES ############################## */
-.xfFullGroup .xfGroupLabel{
-	display:block;
+.xfFullGroup .xfGroupLabel {
+    display: block;
 }
 
 .xfFullGroup .xfControl {
-    display:block;
-	clear:both;
+    display: block;
+    clear: both;
 }
 
 .xfFullGroup .xfLabel {
@@ -425,13 +423,12 @@ a.active {
     text-align: left;
     width: 160px;
     vertical-align: top;
-    display:block;
-    /*float:left;*/
+    display: block; /*float:left;*/
 }
 
 .xfFullSelect .xfSelectorItem .xfLabel {
-    display:inline;
-    float:none;
+    display: inline;
+    float: none;
 }
 
 /*
@@ -451,58 +448,68 @@ a.active {
 }
 
 .xfGroup {
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
 }
+
 /* ############################## CUSTOM GROUP STYLES ############################## */
 /* ############################## CUSTOM GROUP STYLES ############################## */
 /* ############################## CUSTOM GROUP STYLES ############################## */
 
-.caHorizontalTableValue > .xfControl > .xfLabel{
-	display:none;
+.caHorizontalTableValue > .xfControl > .xfLabel {
+    display: none;
 }
-.caVerticalTable .caHorizontalColumn .xfLabel{
-    display:none;
+
+.bfVerticalTable .caHorizontalColumn .xfLabel {
+    display: none;
 }
-.caVerticalTable{
-    /*border:thin dotted;*/
-    /*display:block;*/
+
+.bfVerticalTable {
+/*border:thin dotted;*/
+/*display:block;*/
 }
+
 /*
 .caVerticalTable tr{
 }
 */
-.caVerticalTable td{
-    /*border:thin solid;*/
+.bfVerticalTable td {
+/*border:thin solid;*/
 }
 
-.caVerticalTableLabel{
-}
-.caVerticalTableValue{
+.bfVerticalTableLabel {
 }
 
-.caHorizontalTable{
-    /*border:thin dotted;*/
-    overflow:auto;
-}
-.caHorizontalTable td{
-    vertical-align:top;
-}
-.caHorizontalTable .xfLabel{
-    display:none;
+.bfVerticalTableValue {
 }
 
-.caHorizontalTableValue{
+.caHorizontalTable {
+/*border:thin dotted;*/
+    overflow: auto;
+}
+
+.caHorizontalTable td {
+    vertical-align: top;
+}
+
+.caHorizontalTable .xfLabel {
+    display: none;
+}
+
+.caHorizontalTableValue {
 
 }
-.caHorizontalTableLabel{
+
+.caHorizontalTableLabel {
 
 }
-.caHorizontalTableValue .caHorizontalTableHeader{
-    display:none;
+
+.caHorizontalTableValue .caHorizontalTableHeader {
+    display: none;
 }
-.caHorizontalTableValue .caHorizontalTableLabel{
-    /*display:none;*/
+
+.caHorizontalTableValue .caHorizontalTableLabel {
+/*display:none;*/
 }
 
 /*
@@ -511,10 +518,9 @@ a.active {
 }
 */
 /* hide duplicate group-labels for horizontal groups */
-.caHorizontalTable .xfContainer .xfGroupLabel{
-    display:none;
+.caHorizontalTable .xfContainer .xfGroupLabel {
+    display: none;
 }
-
 
 /* ***************************************************************************** */
 /* ***************************************************************************** */
@@ -559,7 +565,6 @@ a.active {
     background-color: violet;
 }
 */
-
 
 .xfRepeatIndexMouseOver {
     background-color: lightblue;
@@ -611,17 +616,18 @@ a.active {
 }
 
 .xfFullRepeat .xfRepeatItem {
-    clear: both;
-    /*display: block;*/
+    clear: both; /*display: block;*/
     padding: 5px;
 }
+
 .xfFullRepeat .xfRepeatItem  .xfControl {
-	clear:both;
-	display:block;	
+    clear: both;
+    display: block;
 }
+
 .xfFullRepeat .xfRepeatItem  .xfMinimalGroup .xfControl {
-	clear:none;
-	display:inline-block;	
+    clear: none;
+    display: inline-block;
 }
 
 /* applies only to compact repeat and matches an empty cell at the right of the repeat table to dock insert and
@@ -637,8 +643,7 @@ delete actions to */
 }
 
 .xfRepeatIndex .caRepeatActionDock {
-    width: 40px;
-    /*display: block;*/
+    width: 40px; /*display: block;*/
 }
 
 /*
@@ -649,7 +654,7 @@ delete actions to */
 */
 
 .caDeleteMouseOut {
-    background: url( ../images/tabClose.gif ) no-repeat;
+    background: url(../images/tabClose.gif) no-repeat;
     background-position: center right;
     width: 34px;
     height: 18px;
@@ -662,7 +667,7 @@ delete actions to */
 }
 
 .caInsertBeforeMouseOut {
-    background: url( ../images/insertBefore.png ) no-repeat;
+    background: url(../images/insertBefore.png) no-repeat;
     background-position: center center;
     width: 34px;
     height: 18px;
@@ -675,7 +680,7 @@ delete actions to */
 }
 
 .caInsertAfterMouseOut {
-    background: url( ../images/insertAfter.png ) no-repeat;
+    background: url(../images/insertAfter.png) no-repeat;
     background-position: center center;
     width: 34px;
     height: 18px;
@@ -685,12 +690,12 @@ delete actions to */
     height: 35px;
 }
 
-
-.caTabContainer {    
+.caTabContainer {
     height: 600px;
-    width:98%;
-    overflow:auto;
+    width: 98%;
+    overflow: auto;
 }
+
 /* ***************************************************************************** */
 /* ***************************************************************************** */
 /* ***************************************************************************** */
@@ -703,7 +708,7 @@ delete actions to */
 /* ***************************************************************************** */
 /* ***************************************************************************** */
 .xfSwitch {
-	clear:both;
+    clear: both;
 }
 
 .xfFullSwitch {
@@ -718,7 +723,7 @@ delete actions to */
 
 .xfFullSwitch .caActiveTab {
     background-color: #F0F4EA;
-    border: 1px solid rgb( 85, 96, 63 );
+    border: 1px solid rgb(85, 96, 63);
     border-right: none;
     border-bottom: #F0F4EA;
     padding: 3px 5px 3px 5px;
@@ -731,20 +736,20 @@ delete actions to */
 }
 
 .xfFullSwitch .caInactiveTab {
-    background-color: rgb( 188, 216, 132 );
-    border: 1px solid rgb( 85, 96, 63 );
+    background-color: rgb(188, 216, 132);
+    border: 1px solid rgb(85, 96, 63);
     border-right: none;
     padding: 3px 5px 3px 5px;
     width: 10%;
 }
 
 .xfFullSwitch .caInactiveTab input {
-    background-color: rgb( 188, 216, 132 );
+    background-color: rgb(188, 216, 132);
     border: none;
 }
 
 .xfFullSwitch .caFillerTab {
-    border: 1px solid rgb( 85, 96, 63 );
+    border: 1px solid rgb(85, 96, 63);
     border-top: none;
     border-right: none;
     width: 90%;
@@ -771,7 +776,7 @@ delete actions to */
 */
 
 .xfReadWrite .dijitRadio, .xfReadWrite .dijitRadioIcon {
-    background-image: url( ../images/checkmark.png );
+    background-image: url(../images/checkmark.png);
     background-position: -112px 50%;
     background-repeat: no-repeat;
     height: 16px;
@@ -781,7 +786,7 @@ delete actions to */
 }
 
 .xfReadWrite .dijitRadioChecked {
-    background-image: url( ../images/checkmark.png );
+    background-image: url(../images/checkmark.png);
     background-position: -96px 50%;
     background-repeat: no-repeat;
     height: 16px;
@@ -792,7 +797,7 @@ delete actions to */
 }
 
 .xfReadOnly .dijitRadio, .xfReadOnly .dijitRadioIcon {
-    background-image: url( ../images/checkmark.png );
+    background-image: url(../images/checkmark.png);
     background-position: -144px 50%;
     background-repeat: no-repeat;
     height: 16px;
@@ -806,7 +811,7 @@ delete actions to */
 }
 
 .xfReadWrite .dijitCheckBox, .xfReadWrite .dijitCheckBoxIcon {
-    background-image: url( ../images/checkmarkNoBorder.png );
+    background-image: url(../images/checkmarkNoBorder.png);
     background-position: -16px 50%;
     background-repeat: no-repeat;
     height: 14px;
@@ -816,7 +821,7 @@ delete actions to */
 }
 
 .xfReadWrite .dijitCheckBoxChecked {
-    background-image: url( ../images/checkmarkNoBorder.png );
+    background-image: url(../images/checkmarkNoBorder.png);
     background-position: 0 50%;
     background-repeat: no-repeat;
     height: 14px;
@@ -825,7 +830,7 @@ delete actions to */
 }
 
 .xfReadOnly .dijitCheckBox, .xfReadOnly .dijitCheckBoxIcon {
-    background-image: url( ../images/checkmarkNoBorder.png );
+    background-image: url(../images/checkmarkNoBorder.png);
     background-position: -48px 50%;
     background-repeat: no-repeat;
     height: 14px;
@@ -855,7 +860,7 @@ delete actions to */
 }
 
 .tundra .dijitCheckBoxIcon {
-    background-image: url( ../images/checkmarkNoBorder.png );
+    background-image: url(../images/checkmarkNoBorder.png);
 }
 
 .xfControl select {
@@ -863,7 +868,7 @@ delete actions to */
 }
 
 .caHelpIcon {
-    background-image: url( ../images/info22.png );
+    background-image: url(../images/info22.png);
     background-repeat: no-repeat;
     background-position: center center;
     width: 18px;
@@ -884,7 +889,7 @@ delete actions to */
 }
 
 .xfHelpText * {
-	font-family:sans-serif;
+    font-family: sans-serif;
     font-size: 8pt;
 
 }
@@ -909,10 +914,9 @@ delete actions to */
 }
 
 .xfTextarea .RichTextEditable iframe {
-	background-color:white;
-	height:195px;
+    background-color: white;
+    height: 195px;
 }
-
 
 /* overwritten dojo styles */
 
@@ -920,36 +924,33 @@ delete actions to */
     position: absolute;
 }
 
-
 .dijitAccordionBody {
     padding-top: 10px;
     padding-left: 5px;
 }
 
-
-
 /* An Element that is waiting for a server-call to return gets 'bfPending' class to allow styling of this control
 and visually give feedback to the user. */
 /* An bfPending Element gets an animates Gif-Symbol. bfPending is applied to a DOM-Node while it is being processed. */
-.bfPending .xfValue
-{
-	/*
-	background: url( '../images/indicator.gif' ) no-repeat right !important;
-    background:#ffffe0;
-	background-repeat: repeat !important;
-	*/
+.bfPending .xfValue {
+    /*
+     background: url( '../images/indicator.gif' ) no-repeat right !important;
+     background:#ffffe0;
+     background-repeat: repeat !important;
+     */
 }
 
 /* All Elements infront of the bfPending Element must be half-transparent */
 .bfPending * {
-		/*
-		background-image: none;
-		opacity:0.9 !important;
-		filter:Alpha(opacity=90) !important;
-		moz-opacity: 0.9 !important;
-		*/
+    /*
+         background-image: none;
+         opacity:0.9 !important;
+         filter:Alpha(opacity=90) !important;
+         moz-opacity: 0.9 !important;
+         */
 }
-table > .bfPending .xfRepeatIndex{
+
+table > .bfPending .xfRepeatIndex {
     /*
     background: url( '../images/ajax-loader.gif' ) no-repeat center center !important;
     background-color:#ffffe0;
@@ -979,13 +980,12 @@ td > div.bfPending > span {
                    START IMPORTANT STYLES (DO NOT OVERWRITE)
 ##################################################################*/
 .xfDisabled {
-	display:none;
+    display: none;
 }
 
 /*##################################################################
                    END IMPORTANT STYLES
 ##################################################################*/
-
 
 /*##################################################################
                    START Imported (overwritten) STYLES
@@ -993,7 +993,7 @@ td > div.bfPending > span {
 
 /* START DOJOX/FORMS/RESOURCES/RANGESLIDER.CSS */
 .dojoxRangeSlider .dijitSliderLeftBumperH,
-    .dojoxRangeSlider .dijitSliderBottomBumperV {
+.dojoxRangeSlider .dijitSliderBottomBumperV {
     background: #FFFFFF !important;
 }
 
@@ -1016,12 +1016,13 @@ td > div.bfPending > span {
 }
 
 .xfOutOfRange {
-	background:transparent;
+    background: transparent;
 }
 
 .xfInRange {
-	background:transparent;
+    background: transparent;
 }
+
 /* START DOJOX/FORMS/RESOURCES/RANGESLIDER.CSS */
 /*##################################################################
                    END Imported STYLES

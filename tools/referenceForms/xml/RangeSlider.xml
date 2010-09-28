@@ -2,16 +2,16 @@
 <html xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>Password control</title>
+        <title>Slider range control</title>
     </head>
     <body>
         <div class="description">
             <p>
-                This form control is used to provide the user with the ability
-                to supply information to the system in a manner that makes
-                it difficult for someone, other than the user, who may be
-                observing the process to discern the value that is being
-                supplied.
+                This form control allows selection from a sequential range of values.
+            </p>
+            <p>
+                Standard rendering for a XForms range control. Fully supports keyboard navigation and mouse
+                wheel scrolling when focused.
             </p>
         </div>
         <div class="references">
@@ -23,17 +23,17 @@
                 <xf:model>
                     <xf:instance xmlns="">
                         <data>
-                            <secret1 constraint="true" readonly="false" required="true" relevant="true">
+                            <range1 constraint="true" readonly="false" required="true" relevant="true">
                                 <value></value>
-                            </secret1>
+                            </range1>
                         </data>
                     </xf:instance>
-                    <xf:bind nodeset="secret1">
+                    <xf:bind nodeset="range1">
                         <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)"
                                  readonly="boolean-from-string(../@readonly)"
                                  required="boolean-from-string(../@required)"
                                  relevant="boolean-from-string(../@relevant)"
-                                 type="string"/>
+                                 type="integer"/>
                         <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
                         <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
                         <xf:bind nodeset="@required" type="boolean"></xf:bind>
@@ -42,28 +42,28 @@
 
                 </xf:model>
                 <code class="ui">
-                    <xf:secret id="secret1" ref="secret1/value" incremental="true">
+                    <xf:range id="range1" ref="range1/value" start="1" step="1" end="5" incremental="true">
                         <xf:label>a text</xf:label>
-                        <xf:hint>a password control</xf:hint>
-                        <xf:help>help for secret1</xf:help>
+                        <xf:hint>input bound to string</xf:hint>
+                        <xf:help>help for range1</xf:help>
                         <xf:alert>invalid</xf:alert>
-                    </xf:secret>
+                    </xf:range>
                 </code>
             </div>
         </div>
         <div class="MIPS">
             <xf:group appearance="full">
                 <xf:label></xf:label>
-                <xf:input id="secret1-readonly" navindex="-1" ref="secret1/@readonly" incremental="true">
+                <xf:input id="range1-readonly" navindex="-1" ref="range1/@readonly" incremental="true">
                     <xf:label>readonly</xf:label>
                 </xf:input>
-                <xf:input id="secret1-required" navindex="-1" ref="secret1/@required" incremental="true">
+                <xf:input id="range1-required" navindex="-1" ref="range1/@required" incremental="true">
                     <xf:label>required</xf:label>
                 </xf:input>
-                <xf:input id="secret1-relevant" navindex="-1" ref="secret1/@relevant" incremental="true">
+                <xf:input id="range1-relevant" navindex="-1" ref="range1/@relevant" incremental="true">
                     <xf:label>relevant</xf:label>
                 </xf:input>
-                <xf:input id="secret1-valid" navindex="-1" ref="secret1/@constraint" incremental="true">
+                <xf:input id="range1-valid" navindex="-1" ref="range1/@constraint" incremental="true">
                     <xf:label>valid</xf:label>
                 </xf:input>
             </xf:group>
@@ -75,10 +75,16 @@
                 <th>Description</th>
             </tr>
             <tr>
-                <td>xfSecret</td>
-                <td>matches an Element that represents a XForms input element</td>
+                <td>xfRange</td>
+                <td>matches an Element that represents a XForms
+                    <span class="keyword">range</span>
+                    element
+                </td>
             </tr>
         </table>
-
+        <h2>Known Limitations</h2>
+        <p>
+            Hier gehoert sich noch einiges hin ...........
+        </p>
     </body>
 </html>

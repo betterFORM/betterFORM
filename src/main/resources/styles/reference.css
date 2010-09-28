@@ -7,7 +7,8 @@
         Styling for refrence pages.
 */
 body {
-    margin: 3px;
+    margin: 0;
+    padding: 0;
 }
 
 #caLoading {
@@ -34,34 +35,71 @@ body {
     margin: 10px;
 }
 
-#toc {
-    border: thin solid #AAAAAA;
-    float: right;
-    margin: 0 0 10px 10px;
-    padding: 10px;
-    /*
-        position:fixed;
-        right:10px;
-        top:10px;
-    */
-    background: #dedede;
-}
-
-.tocEntry {
-    display: block;
-    padding: 3px;
-}
-
-.tocEntry a, .tocEntry a:visited {
-    color: #005A9C;
-}
-
 table {
     clear: both;
 }
 
 #explorer {
     width: 80%;
+}
+
+#xforms {
+    font-size: 12pt;
+    color: #7080A0;
+    margin-top: 45px;
+}
+
+#xforms p {
+    margin: 0;
+}
+
+#xforms .pageintro h1 {
+    font-size: 1.8em;
+}
+
+#xforms .pageintro .description p {
+    margin-top: 1.0em;
+    margin-bottom: 1.0em;
+    line-height: 1;
+}
+
+.pageintro #references {
+    margin-top: 20px;
+}
+
+.pageintro #references td {
+    font-size: 0.8em;
+}
+
+.Section {
+    padding: 20px;
+    border: thin dotted #cccccc;
+
+}
+
+#xforms .markup {
+    font-size: 0.8em;
+    padding: 0;
+    margin: 0;
+}
+
+#xforms .sample {
+    padding: 20px;
+    background: #eeeeee;
+}
+
+#xforms .CSS {
+    font-size: 0.9em;
+}
+
+#xforms .CSS th {
+    padding: 3px;
+    background: #7080A0;
+    color: #eeeeee;
+}
+
+#xforms .CSS td {
+    padding: 3px;
 }
 
 /*
@@ -76,7 +114,7 @@ table {
     padding: 10px;
 }
 
-.pagetitle, #content h1, #boilerPlate h1, .page h1 {
+.pagetitle, #boilerPlate h1, .page h1 {
     font-size: 2.2em; /*margin-left:8px;*/
     color: #708090;
 }
@@ -86,27 +124,24 @@ table {
     font-family: monospace;
 }
 
+.keyword {
+    font-family: monospace;
+}
+
+/*
 .Headline {
     font-size: 16pt;
     font-weight: bold;
     text-align: center;
     color: #708090;
 }
+*/
 
+/*
 .pageintro .Section {
     font-size: 12pt;
 }
-
-.Section {
-    /*
-                    border-width: 1px;
-                    border-color: black;
-                    border-style: dotted;
-    */
-/*margin: 10px;*/
-    padding: 10px;
-
-}
+*/
 
 .Section .PageDescription, h2 {
     font-size: 14pt;
@@ -115,6 +150,7 @@ table {
     padding-top: 5px;
     padding-bottom: 5px;
     color: #708090;
+    margin-bottom: 0;
 }
 
 .Section .PageDescription a {
@@ -123,54 +159,17 @@ table {
 }
 
 .pageintro .Section p, .page p {
-    margin-bottom: 0.5em;
-    margin-top: 0.5em;
-    color: #333333;
-}
-
-.Section .Headline {
-    font-size: 18pt;
-    text-align: left;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    margin-top: 30px;
-    color: #488aa6;
-    border-bottom: 3px solid;
-}
-
-.Section .Subheadline {
-    font-size: 12pt;
-    text-align: left;
-    padding-top: 1.35em;
-    padding-bottom: 5px;
-    font-weight: bold;
-    color: #708090;
-}
-
-.Section .Description {
-    margin-bottom: 0.5em;
-    margin-top: 0.5em;
-    color: #333333;
-    font-size: 1.1em;
-}
-
-.Notes {
-    font-size: 1.1em;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 15px;
+    /*
+        margin-bottom: 0.5em;
+        margin-top: 0.5em;
+        color: #333333;
+    */
 }
 
 .Section .markup {
 /* border-top: 1px gray dotted; */
     border: thin dotted #d3d3d3;
     margin-bottom: 12px;
-}
-
-.Section .markup .Headline {
-    color: #708090;
-    font-size: 14px;
-    margin: 5px;
 }
 
 pre {
@@ -193,8 +192,8 @@ pre, code {
     border: thin solid #cccccc;
 }
 
+/*
 .Sample {
-/*background-color: LightYellow;*/
     vertical-align: middle;
     padding: 15px;
     overflow: auto;
@@ -202,6 +201,7 @@ pre, code {
     font-size: 14px;
     background: #eee;
 }
+*/
 
 .dateSample .xfControl {
     display: block;
@@ -245,6 +245,7 @@ pre, code {
 
 .MIPS .xfFullGroup .xfControl .xfLabel {
     width: 60px;
+    text-align: right;
 }
 
 .MIPS .xfFullGroup .xfControl {
@@ -255,21 +256,24 @@ pre, code {
     width: 275px !important;
 }
 
-.cssReference {
-    width: 100%;
+.xfRange .xfAlert {
+    border: none;
+    color: #801B1B;
+    font-size: 0.8em;
+    margin: -45px;
+    padding: 2px;
 }
 
-.cssReference th {
-    white-space: nowrap;
-    padding: 3px 10px 3px 3px;
-    background: #D3D3D3;
+/* code highlighting */
+pre code {
+    color: #7ba841;
+    font-weight: bold;
 }
 
-.cssReference td {
-    padding: 3px 10px 3px 3px;
-    background: #eeeeee;
+pre code .tag {
+    color: #005A9C;
 }
 
-.cssReference .col1 {
-    width: 15%;
+pre code .attribute .value {
+    color: #C46B47 !important;
 }

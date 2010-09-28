@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Compact group</title>
+    </head>
+    <body>
+        <div class="description">
+            <p>
+                A compact group renders the labels of any containing control above the actual control and
+                therefore provides a very narrow layout of a group.
+            </p>
+        </div>
+        <div class="references">
+            <a href="#ui-group"/>
+            <a href="#elems-form-controls"/>
+        </div>
+        <div class="sample">
+            <div class="markup">
+                <xf:model>
+                    <xf:instance>
+                        <data xmlns="">
+                            <grouped-data constraint="true" readonly="false" required="true" relevant="true">
+                                <group>
+                                    <a>aaa</a>
+                                    <b>bbb</b>
+                                    <c>ccc</c>
+                                    <d>ddd</d>
+                                </group>
+                            </grouped-data>
+                        </data>
+                    </xf:instance>
+
+                    <xf:bind nodeset="grouped-data">
+                        <xf:bind nodeset="group" constraint="boolean-from-string(../@constraint)"
+                                 readonly="boolean-from-string(../@readonly)"
+                                 required="boolean-from-string(../@required)"
+                                 relevant="boolean-from-string(../@relevant)"/>
+                        <xf:bind nodeset="@constraint" type="boolean"/>
+                        <xf:bind nodeset="@readonly" type="boolean"/>
+                        <xf:bind nodeset="@required" type="boolean"/>
+                        <xf:bind nodeset="@relevant" type="boolean"/>
+                    </xf:bind>
+                </xf:model>
+                <code class="ui">
+                    <xf:group ref="grouped-data/group" appearance="compact">
+                        <xf:label>Group with compact appearance</xf:label>
+                        <xf:input ref="a">
+                            <xf:label>A-label</xf:label>
+                        </xf:input>
+                        <xf:input ref="b">
+                            <xf:label>Bb-label</xf:label>
+                        </xf:input>
+                        <xf:input ref="c">
+                            <xf:label>Ccc-label</xf:label>
+                        </xf:input>
+                        <xf:input ref="d">
+                            <xf:label>Dddd-label</xf:label>
+                        </xf:input>
+                    </xf:group>
+                </code>
+            </div>
+        </div>
+        <div class="MIPS">
+            <xf:group appearance="full">
+                <xf:label></xf:label>
+                <xf:input id="input1-readonly" navindex="-1" ref="grouped-data/@readonly" incremental="true">
+                    <xf:label>readonly</xf:label>
+                </xf:input>
+                <xf:input id="input1-required" navindex="-1" ref="grouped-data/@required" incremental="true">
+                    <xf:label>required</xf:label>
+                </xf:input>
+                <xf:input id="input1-relevant" navindex="-1" ref="grouped-data/@relevant" incremental="true">
+                    <xf:label>relevant</xf:label>
+                </xf:input>
+                <xf:input id="input1-valid" navindex="-1" ref="grouped-data/@constraint" incremental="true">
+                    <xf:label>valid</xf:label>
+                </xf:input>
+            </xf:group>
+        </div>
+        <h2>CSS</h2>
+        <table class="CSS">
+            <tr>
+                <th>Class</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>xfContainer</td>
+                <td>matches any Element that represents a XForms
+                    <span class="keyword">group</span>
+                    |
+                    <span class="keyword">repeat</span>
+                    |
+                    <span class="keyword">switch</span>
+                    element
+                </td>
+            </tr>
+            <tr>
+                <td>xfCompactGroup</td>
+                <td>matches an Element that represents a XForms
+                    <span class="keyword">group</span>
+                    element with
+                    'compact'
+                    <span class="keyword">appearance</span>
+                </td>
+            </tr>
+        </table>
+
+    </body>
+</html>

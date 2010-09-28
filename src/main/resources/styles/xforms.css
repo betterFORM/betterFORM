@@ -39,9 +39,9 @@
 }
 
 .xfReadOnly .xfValue {
-    background:#E4E4E4 url(../images/buttonDisabled.png) repeat-x scroll center top;
-    border-color:#D5D5D5 #D5D5D5 #BDBDBD;
-    cursor:not-allowed !important;
+    background: #E4E4E4 url(../images/buttonDisabled.png) repeat-x scroll center top;
+    border-color: #D5D5D5 #D5D5D5 #BDBDBD;
+    cursor: not-allowed !important;
 }
 
 /*********** styles character used for signaling 'required' (normally '*') ***********/
@@ -54,18 +54,18 @@
     display: none;
 }
 
-.xfRequired .xfLabel{
-    /*background:url(../images/required.gif) no-repeat left top;*/
-    padding-left:10px;
-    font-weight:bold;
+.xfRequired .xfLabel {
+/*background:url(../images/required.gif) no-repeat left top;*/
+/*padding-left:10px;*/
+    font-weight: bold;
 }
 
-.xfRequiredEmpty  .xfLabel {
-    font-weight:bold;
-    color:orangered;
+.xfRequired .xfLabel:after {
+    content: '*';
+    color: #8b0000;
 }
 
-.xfRequired .xfValue .xfLabel{
+.xfRequired .xfValue .xfLabel {
 /*background:url(../images/required.gif) no-repeat left top;*/
     padding-left: 0px;
     font-weight: normal;
@@ -76,9 +76,10 @@
     z-index:999;
 }*/
 
-.xfSelectOpen .xfValue{
-    width:100%;
+.xfSelectOpen .xfValue {
+    width: 100%;
 }
+
 /* ***************************************************************************** */
 /* **************************** REPEAT STYLES  ********************************* */
 /* ***************************************************************************** */
@@ -95,20 +96,23 @@
     display: none;
 }
 
-.xfMinimalRepeat{
-    display:block;}
+.xfMinimalRepeat {
+    display: block;
+}
 
-.xfMinimalRepeat .xfRepeatItem{
-    float:left;
-    clear:none;}
+.xfMinimalRepeat .xfRepeatItem {
+    float: left;
+    clear: none;
+}
 
-.xfMinimalRepeat .xfRepeatIndex{
-    float:left;
-    clear:none;}
+.xfMinimalRepeat .xfRepeatIndex {
+    float: left;
+    clear: none;
+}
 
 .xfCompactRepeat td .xfDisabled {
-    display:none;}
-
+    display: none;
+}
 
 /* ***************************************************************************** */
 /* **************************** SWITCH STYLES ********************************** */

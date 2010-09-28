@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<data xmlns:xf="http://www.w3.org/2002/xforms">
-    <title>Repeat Control</title>
-    <page>
-        <title>The Repeat Element</title>
-        <description>
-            The XForms specification allows the definition of repeating
-            structures.
-        </description>
-        <references>
-            <w3c ref="repeat"/>
-        </references>
-        <content>
-            <models>
-                <xf:model id="model-1">
-
-                    <xf:instance id="instance-1">
+<html xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>group with appearance 'compact'</title>
+    </head>
+    <body>
+        <div class="description">
+            <p>
+                Compact repeats are rendered as horizontally-oriented HTML tables.
+            </p>
+        </div>
+        <div class="references">
+            <a href="#ui-repeat"/>
+            <a href="#elems-form-controls"/>
+        </div>
+        <div class="sample">
+            <div class="markup">
+                <xf:model>
+                    <xf:instance>
                         <data xmlns="">
                             <repeat>
                                 <items>
@@ -50,34 +53,7 @@
                         <xf:bind nodeset="item[3]" type="xf:boolean"/>
                     </xf:bind>
                 </xf:model>
-
-            </models>
-            <samples>
-                <section name="fullAppearance">
-                    <title>Full Repeat Control (default)</title>
-                    <description>
-                        A repeat with no appearance, 'minimal' appearance or 'full' appearance will be rendered
-                        vertically with labels on the left and controls on the right.
-                    </description>
-                    <xf:repeat id="repeat1" nodeset="repeat/items" appearance="full">
-                        <xf:input ref="item[1]">
-                            <xf:label>String:</xf:label>
-                        </xf:input>
-                        <br/>
-                        <xf:input ref="item[2]">
-                            <xf:label>Date:</xf:label>
-                        </xf:input>
-                        <br/>
-                        <xf:input ref="item[3]">
-                            <xf:label>Boolean:</xf:label>
-                        </xf:input>
-                    </xf:repeat>
-                </section>
-                <section name="compactAppearance">
-                    <title>Compact Repeat Control</title>
-                    <description>
-                        Compact repeats are rendered as horizontal-oriented HTML tables.
-                    </description>
+                <code class="ui">
                     <xf:repeat id="repeat2" nodeset="repeat/items"
                                appearance="compact">
                         <xf:input ref="item[1]">
@@ -90,8 +66,34 @@
                             <xf:label>Boolean:</xf:label>
                         </xf:input>
                     </xf:repeat>
-                </section>
-            </samples>
-        </content>
-    </page>
-</data>
+                </code>
+            </div>
+        </div>
+        <h2>CSS</h2>
+        <table class="CSS">
+            <tr>
+                <th>Class</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>xfContainer</td>
+                <td>matches any Element that represents a XForms
+                    <span class="keyword">group</span>
+                    |
+                    <span class="keyword">repeat</span>
+                    |
+                    <span class="keyword">switch</span>
+                    element
+                </td>
+            </tr>
+            <tr>
+                <td>xfRepeat</td>
+                <td>matches an Element that represents a XForms
+                    <span class="keyword">repeat</span>
+                    element
+                </td>
+            </tr>
+        </table>
+
+    </body>
+</html>

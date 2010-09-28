@@ -2,20 +2,26 @@
 <html xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>Password control</title>
+        <title>Trigger control rendered as button</title>
     </head>
     <body>
         <div class="description">
             <p>
-                This form control is used to provide the user with the ability
-                to supply information to the system in a manner that makes
-                it difficult for someone, other than the user, who may be
-                observing the process to discern the value that is being
-                supplied.
+                This form control is similar to the HTML element button and
+                allows for user-triggered actions. This form control may
+                also be used to construct other custom form controls.
+            </p>
+            <p>
+                A
+                <span class="keyword">trigger</span>
+                with a
+                <span class="keyword">src</span>
+                attribute pointing to a
+                image URL is rendered as a button with an image.
             </p>
         </div>
         <div class="references">
-            <a href="#ui-input"/>
+            <a href="#ui-trigger"/>
             <a href="#elems-form-controls"/>
         </div>
         <div class="sample">
@@ -23,12 +29,12 @@
                 <xf:model>
                     <xf:instance xmlns="">
                         <data>
-                            <secret1 constraint="true" readonly="false" required="true" relevant="true">
+                            <trigger1 constraint="true" readonly="false" required="true" relevant="true">
                                 <value></value>
-                            </secret1>
+                            </trigger1>
                         </data>
                     </xf:instance>
-                    <xf:bind nodeset="secret1">
+                    <xf:bind nodeset="trigger1">
                         <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)"
                                  readonly="boolean-from-string(../@readonly)"
                                  required="boolean-from-string(../@required)"
@@ -42,28 +48,28 @@
 
                 </xf:model>
                 <code class="ui">
-                    <xf:secret id="secret1" ref="secret1/value" incremental="true">
+                    <xf:trigger id="trigger1" src="../../images/bf_logo_67x27.png" incremental="true">
                         <xf:label>a text</xf:label>
-                        <xf:hint>a password control</xf:hint>
-                        <xf:help>help for secret1</xf:help>
+                        <xf:hint>trigger hint text</xf:hint>
+                        <xf:help>help for trigger1</xf:help>
                         <xf:alert>invalid</xf:alert>
-                    </xf:secret>
+                    </xf:trigger>
                 </code>
             </div>
         </div>
         <div class="MIPS">
             <xf:group appearance="full">
                 <xf:label></xf:label>
-                <xf:input id="secret1-readonly" navindex="-1" ref="secret1/@readonly" incremental="true">
+                <xf:input id="trigger1-readonly" navindex="-1" ref="trigger1/@readonly" incremental="true">
                     <xf:label>readonly</xf:label>
                 </xf:input>
-                <xf:input id="secret1-required" navindex="-1" ref="secret1/@required" incremental="true">
+                <xf:input id="trigger1-required" navindex="-1" ref="trigger1/@required" incremental="true">
                     <xf:label>required</xf:label>
                 </xf:input>
-                <xf:input id="secret1-relevant" navindex="-1" ref="secret1/@relevant" incremental="true">
+                <xf:input id="trigger1-relevant" navindex="-1" ref="trigger1/@relevant" incremental="true">
                     <xf:label>relevant</xf:label>
                 </xf:input>
-                <xf:input id="secret1-valid" navindex="-1" ref="secret1/@constraint" incremental="true">
+                <xf:input id="trigger1-valid" navindex="-1" ref="trigger1/@constraint" incremental="true">
                     <xf:label>valid</xf:label>
                 </xf:input>
             </xf:group>
@@ -75,7 +81,7 @@
                 <th>Description</th>
             </tr>
             <tr>
-                <td>xfSecret</td>
+                <td>xfTrigger</td>
                 <td>matches an Element that represents a XForms input element</td>
             </tr>
         </table>

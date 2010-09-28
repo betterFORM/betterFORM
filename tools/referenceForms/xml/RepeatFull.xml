@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>group with appearance 'full'</title>
+    </head>
+    <body>
+        <div class="description">
+            <p>
+                A repeat with no<span class="keyword">appearance</span>, 'minimal'
+                <span class="keyword">appearance</span>
+                or 'full'
+                <span class="keyword">appearance</span>
+                will be rendered
+                vertically with labels on the left and controls on the right.
+            </p>
+        </div>
+        <div class="references">
+            <a href="#ui-repeat"/>
+            <a href="#elems-form-controls"/>
+        </div>
+        <div class="sample">
+            <div class="markup">
+                <xf:model>
+                    <xf:instance>
+                        <data xmlns="">
+                            <repeat>
+                                <items>
+                                    <item>text 1</item>
+                                    <item>2009-01-20</item>
+                                    <item>true</item>
+                                </items>
+
+                                <items>
+                                    <item>text 2</item>
+                                    <item>2010-03-17</item>
+                                    <item>false</item>
+                                </items>
+
+                                <items>
+                                    <item>text 3</item>
+                                    <item>2011-05-22</item>
+                                    <item>true</item>
+                                </items>
+
+                                <items>
+                                    <item>text 4</item>
+                                    <item>2008-06-13</item>
+                                    <item>false</item>
+                                </items>
+                            </repeat>
+                        </data>
+                    </xf:instance>
+
+                    <xf:bind nodeset="repeat/items">
+                        <xf:bind nodeset="item[1]" type="xf:string"/>
+                        <xf:bind nodeset="item[2]" type="xf:date"/>
+                        <xf:bind nodeset="item[3]" type="xf:boolean"/>
+                    </xf:bind>
+
+                </xf:model>
+                <code class="ui">
+                    <xf:repeat id="repeat1" nodeset="repeat/items" appearance="full">
+                        <xf:input ref="item[1]">
+                            <xf:label>String:</xf:label>
+                        </xf:input>
+                        <br/>
+                        <xf:input ref="item[2]">
+                            <xf:label>Date:</xf:label>
+                        </xf:input>
+                        <br/>
+                        <xf:input ref="item[3]">
+                            <xf:label>Boolean:</xf:label>
+                        </xf:input>
+                    </xf:repeat>
+                </code>
+            </div>
+        </div>
+        <h2>CSS</h2>
+        <table class="CSS">
+            <tr>
+                <th>Class</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>xfContainer</td>
+                <td>matches any Element that represents a XForms
+                    <span class="keyword">group</span>
+                    |
+                    <span class="keyword">repeat</span>
+                    |
+                    <span class="keyword">switch</span>
+                    element
+                </td>
+            </tr>
+            <tr>
+                <td>xfRepeat</td>
+                <td>matches an Element that represents a XForms
+                    <span class="keyword">repeat</span>
+                    element
+                </td>
+            </tr>
+        </table>
+
+    </body>
+</html>

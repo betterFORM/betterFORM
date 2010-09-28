@@ -2,16 +2,22 @@
 <html xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>Password control</title>
+        <title>Calendar and Time input control combined</title>
     </head>
     <body>
         <div class="description">
             <p>
-                This form control is used to provide the user with the ability
-                to supply information to the system in a manner that makes
-                it difficult for someone, other than the user, who may be
-                observing the process to discern the value that is being
-                supplied.
+                This form control enables free-form data entry or a user
+                interface component appropriate to the datatype of the bound
+                node.
+            </p>
+            <p>
+                An input which binds to a Node of type
+                <span class="keyword">dateTime</span>
+                is rendered as a popup calendar and an
+                associated time input control. Both controls act together to input a single
+                <span class="keyword">dateTime</span>
+                value.
             </p>
         </div>
         <div class="references">
@@ -23,17 +29,17 @@
                 <xf:model>
                     <xf:instance xmlns="">
                         <data>
-                            <secret1 constraint="true" readonly="false" required="true" relevant="true">
+                            <input1 constraint="true" readonly="false" required="true" relevant="true">
                                 <value></value>
-                            </secret1>
+                            </input1>
                         </data>
                     </xf:instance>
-                    <xf:bind nodeset="secret1">
+                    <xf:bind nodeset="input1">
                         <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)"
                                  readonly="boolean-from-string(../@readonly)"
                                  required="boolean-from-string(../@required)"
                                  relevant="boolean-from-string(../@relevant)"
-                                 type="string"/>
+                                 type="dateTime"/>
                         <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
                         <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
                         <xf:bind nodeset="@required" type="boolean"></xf:bind>
@@ -42,28 +48,28 @@
 
                 </xf:model>
                 <code class="ui">
-                    <xf:secret id="secret1" ref="secret1/value" incremental="true">
+                    <xf:input id="input1" ref="input1/value" incremental="true">
                         <xf:label>a text</xf:label>
-                        <xf:hint>a password control</xf:hint>
-                        <xf:help>help for secret1</xf:help>
+                        <xf:hint>input bound to a dateTime</xf:hint>
+                        <xf:help>help for input1</xf:help>
                         <xf:alert>invalid</xf:alert>
-                    </xf:secret>
+                    </xf:input>
                 </code>
             </div>
         </div>
-        <div class="MIPS">
+        <div class="Section MIPS">
             <xf:group appearance="full">
                 <xf:label></xf:label>
-                <xf:input id="secret1-readonly" navindex="-1" ref="secret1/@readonly" incremental="true">
+                <xf:input id="input1-readonly" navindex="-1" ref="input1/@readonly" incremental="true">
                     <xf:label>readonly</xf:label>
                 </xf:input>
-                <xf:input id="secret1-required" navindex="-1" ref="secret1/@required" incremental="true">
+                <xf:input id="input1-required" navindex="-1" ref="input1/@required" incremental="true">
                     <xf:label>required</xf:label>
                 </xf:input>
-                <xf:input id="secret1-relevant" navindex="-1" ref="secret1/@relevant" incremental="true">
+                <xf:input id="input1-relevant" navindex="-1" ref="input1/@relevant" incremental="true">
                     <xf:label>relevant</xf:label>
                 </xf:input>
-                <xf:input id="secret1-valid" navindex="-1" ref="secret1/@constraint" incremental="true">
+                <xf:input id="input1-valid" navindex="-1" ref="input1/@constraint" incremental="true">
                     <xf:label>valid</xf:label>
                 </xf:input>
             </xf:group>
@@ -75,10 +81,20 @@
                 <th>Description</th>
             </tr>
             <tr>
-                <td>xfSecret</td>
+                <td>xfInput</td>
                 <td>matches an Element that represents a XForms input element</td>
             </tr>
+            <tr>
+                <td>xsdDateTime</td>
+                <td>matches an Element that is bound to a node with datatype
+                    <code>dateTime</code>
+                </td>
+            </tr>
         </table>
-
+        <h2>Notes</h2>
+        <p class="Notes">
+            The date control is currently not fully accessible esp. keyboard navigation is not
+            working in the current version of Dojo.
+        </p>
     </body>
 </html>
