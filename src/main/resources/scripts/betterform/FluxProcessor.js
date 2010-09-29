@@ -106,7 +106,7 @@ dojo.declare("betterform.FluxProcessor",
         if (inlineAlertEnabled != undefined) {
             dojo.require("betterform.ui.common.InlineAlert");
             this.defaultAlertHandler = new betterform.ui.common.InlineAlert({});
-            console.debug("Enabled InlineTipAlert Handler ", this.defaultAlertHandler);
+            console.debug("Enabled InlineAlert Handler ", this.defaultAlertHandler);
 
         }
 
@@ -667,8 +667,8 @@ dojo.declare("betterform.FluxProcessor",
             dojo.parser.parse(htmlEntryPoint);
 
             dojo.place(nodesToEmbed, htmlEntryPoint, "before");
-            dojo.fx.wipeIn({node: nodesToEmbed,duration: 500}).play();
-            // dojo.style(nodesToEmbed,"display","block");
+//            dojo.fx.wipeIn({node: nodesToEmbed,duration: 500}).play();
+            dojo.style(nodesToEmbed,"display","block");
 
             //copy classes from mountpoint
             var classes = dojo.attr(htmlEntryPoint, "class");
