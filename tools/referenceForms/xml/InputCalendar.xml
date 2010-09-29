@@ -52,7 +52,7 @@
 </xf:input>
                 </code>
             </div>
-            <div class="Section MIPS">
+            <div class="MIPS">
                 <xf:group appearance="full">
                     <xf:label></xf:label>
                     <xf:input id="input1-readonly" navindex="-1" ref="input1/@readonly" incremental="true">

@@ -118,6 +118,20 @@
                     element
                 </td>
             </tr>
+            <tr>
+                <td>xfCheckBoxLabel</td>
+                <td>matches all checkbox labels of the element that represents a XForms
+                    <span class="keyword">select</span>
+                    element
+                </td>
+            </tr>
+            <tr>
+                <td>xfCheckBoxValue</td>
+                <td>matches all checkbox values of the element that represents a XForms
+                    <span class="keyword">select</span>
+                    element
+                </td>
+            </tr>
         </table>
 
     </body>

@@ -98,24 +98,19 @@
                     </pre>
                 </div>
 
-<!--
-                <h2>Example</h2>
-                <div class="Section sample">
-                    <xsl:copy-of select=".//code[@class='ui']/*"/>
-                </div>
--->
-
                 <xsl:variable name="sampleDiv" select="div[@class='sample']"/>
                 <xsl:for-each select="$sampleDiv/following-sibling::*">
                     <xsl:apply-templates select="."/>
                 </xsl:for-each>
+
+                
             </div>
         </xsl:copy>
     </xsl:template>
 
     <xsl:template match="div[@class='sample']/div[@class='markup']/xf:model">
         <div style="display:none">
-            <xsl:copy-of select="."/>
+            <xsl:apply-templates select="." mode="xforms"/>
         </div>
     </xsl:template>
 
@@ -155,18 +150,123 @@
         <h2>Example</h2>
         <xsl:apply-templates select="div[@class='markup']"/>
         <xsl:apply-templates select="div[@class='markup']/following-sibling::*"/>
-<!--
-        <div class="Section sample">
-            <xsl:copy-of select=".//code[@class='ui']/*"/>
-        </div>
--->
-
     </xsl:template>
 
     <xsl:template match="div[@class='markup']">
         <div class="Section sample">
             <xsl:copy-of select=".//code[@class='ui']/*"/>
+            <!--<xsl:apply-templates select=".//code[@class='ui']/*"/>-->
         </div>
+    </xsl:template>
+
+    <xsl:template match="h2[text()='CSS']">
+        <!--<h2 onclick="dijit.byId('cssWindow').show();">CSS</h2>-->
+        <h2>CSS</h2>
+        <div style="font-size:0.8em;font-style:italic;">Hover the classes on the left to see the matching element(s) in the example</div>
+    </xsl:template>
+
+
+
+    <xsl:template match="table[@class='CSS']" priority="20">
+        <table class="CSS">
+            <xsl:apply-templates/>
+            <tr>
+                <td onmouseover="showClass('xfControl');"
+                        onmouseout="hideClass('xfControl');">xfControl</td>
+                <td>matches an Element that represents a XForms control</td>
+            </tr>
+            <tr>
+                <td onmouseover="showClass('xfLabel');"
+                        onmouseout="hideClass('xfLabel');">xfLabel</td>
+                <td>matches the label part of an XForms control</td>
+            </tr>
+            <tr>
+                <td onmouseover="showClass('xfValue');"
+                        onmouseout="hideClass('xfValue');">xfValue</td>
+                <td>matches the wigdet part of an XForms control</td>
+            </tr>
+            <xsl:if test="exists(//div[@class='MIPS'])">
+                <tr>
+                    <td onmouseover="showClass('xfReadOnly');"
+                        onmouseout="hideClass('xfReadOnly');">
+                        xfReadOnly
+                    </td>
+                    <td>
+                        matches a xforms control that is currently readonly
+                    </td>
+                </tr>
+                <tr>
+                    <td onmouseover="showClass('xfReadWrite');"
+                        onmouseout="hideClass('xfReadWrite');">
+                        xfReadWrite
+                    </td>
+                    <td>
+                        matches a xforms control that is currently writable
+                    </td>
+                </tr>
+                <tr>
+                    <td onmouseover="showClass('xfRequired');"
+                        onmouseout="hideClass('xfRequired');">
+                        xfRequired
+                    </td>
+                    <td>
+                        matches a xforms control that is currently required
+                    </td>
+                </tr>
+                <tr>
+                    <td onmouseover="showClass('xfOptional');"
+                        onmouseout="hideClass('xfOptional');">
+                        xfOptional
+                    </td>
+                    <td>
+                        matches a xforms control that is currently optional
+                    </td>
+                </tr>
+                <tr>
+                    <td onmouseover="showClass('xfEnabled');"
+                        onmouseout="hideClass('xfEnabled');">
+                        xfEnabled
+                    </td>
+                    <td>
+                        matches a xforms control that is currently relevant (enabled)
+                    </td>
+                </tr>
+                <tr>
+                    <td onmouseover="showClass('xfDisabled');"
+                        onmouseout="hideClass('xfDisabled');">
+                        xfDisabled
+                    </td>
+                    <td>
+                        matches a xforms control that is currently disabled (can't be visualized here as the control gets hidden)
+                    </td>
+                </tr>
+                <tr>
+                    <td onmouseover="showClass('xfValid');"
+                        onmouseout="hideClass('xfDisabled');">
+                        xfValid
+                    </td>
+                    <td>
+                        matches a xforms control that is currently valid
+                    </td>
+                </tr>
+                <tr>
+                    <td onmouseover="showClass('xfInvalid');"
+                        onmouseout="hideClass('xfInvalid');">
+                        xfInvalid
+                    </td>
+                    <td>
+                        matches a xforms control that is currently invalid
+                    </td>
+                </tr>
+            </xsl:if>
+        </table>
+    </xsl:template>
+
+    <xsl:template match="table[@class='CSS']/tr/td[1]" priority="20">
+        <td onmouseover="showClass('{.}');"
+            onmouseout="hideClass('{.}');">
+            <xsl:value-of select="."/>
+        </td>
     </xsl:template>
 
     <xsl:template match="*|@*|text()|comment()">

@@ -29,17 +29,17 @@
             <div class="markup">
                 <xf:model>
                     <code>
-                        <xf:instance xmlns="">
-                            <data>
-                                <output1 constraint="true" readonly="false" required="false" relevant="true">
-                                    <value><![CDATA[
+<xf:instance xmlns="">
+    <data>
+        <output1 constraint="true" readonly="false" required="false" relevant="true">
+            <value><![CDATA[
                 <b>Providing</b>
                 <i>basic</i> HTML <u>formatting</u>
                 ]]>
-                                    </value>
-                                </output1>
-                            </data>
-                        </xf:instance>
+            </value>
+        </output1>
+    </data>
+</xf:instance>
                     </code>
                     <xf:bind nodeset="output1">
                         <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)"

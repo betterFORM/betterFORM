@@ -21,6 +21,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;
+    z-index:1000;
 }
 
 #boilerPlate {
@@ -88,6 +89,9 @@ table {
     background: #eeeeee;
 }
 
+.xfControl{
+    padding:3px;
+}
 #xforms .CSS {
     font-size: 0.9em;
 }
@@ -110,8 +114,13 @@ table {
 }
 */
 
+#contentBody{
+    font-size:12pt;
+    color:#7080A0;
+}
+
 .contentBody .dijitTabPaneWrapper > .dijitContentPane {
-    padding: 10px;
+    /*padding: 10px;*/
 }
 
 .pagetitle, #boilerPlate h1, .page h1 {
@@ -276,4 +285,9 @@ pre code .tag {
 
 pre code .attribute .value {
     color: #C46B47 !important;
+}
+
+.showClass{
+    background:#005A9C !important;
+    color:#dedede;
 }

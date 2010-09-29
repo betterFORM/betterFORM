@@ -55,6 +55,7 @@
         dojo.require("betterform.ui.container.Switch");
         dojo.require("betterform.ui.container.Repeat");
         dojo.require("betterform.ui.container.RepeatItem");
+//        dojo.require("dojox.layout.FloatingPane");
 
         function addToDocument(id) {
             var model = dojo.query(".xfModel", dojo.doc)[0];
@@ -73,10 +74,23 @@
             dojo.byId('xforms').style.display = "none";
             dojo.byId('static').style.display = "block";
         }
+        function showClass(cssClass){
+            dojo.query('.sample .'+ cssClass).forEach(function(item){
+                dojo.addClass(item,'showClass');
+            });
+        }
+        function hideClass(cssClass){
+            dojo.query('.sample .'+ cssClass).forEach(function(item){
+                dojo.removeClass(item,'showClass');
+            });
+        }
     </script>
 
 
     <style type="text/css">
+        /*@import "../../resources/scripts/dojox/layout/resources/FloatingPane.css";*/
+        /*@import "../../resources/scripts/dojox/layout/resources/ResizeHandle.css";*/
+
         body {
             margin: 35px 20px 20px 20px;
         }
@@ -415,7 +429,7 @@
 
                     <div dojotype="dijit.Menu">
                         <div dojoType="dijit.MenuItem"
-                             onClick="hideStatic();fluxProcessor.dispatchEvent('inputTextTrigger');">
+                             onClick="fluxProcessor.dispatchEvent('inputTextTrigger');hideStatic();">
                             Text
                         </div>
                         <div dojoType="dijit.MenuItem"
@@ -668,10 +682,19 @@
 
     <div id="contentBody">
         <div id="static" dojotype="dijit.layout.ContentPane" href="intro.html"></div>
-        <div id="xforms"></div>
+        <div id="xforms" class="InlineAlert"></div>
     </div>
 
+<!--
+    <div id="cssWindow"
+        dojoType="dojox.layout.FloatingPane"
+        title="CSS"
+        resizable="true"
+        dockable="false"
+        style="position:absolute;top:0;right:0;width:250px;height:400px;visibility:hidden;">
 
+    </div>
+-->
 <!-- ######################### Content end ################################## -->
 <!-- ######################### Content end ################################## -->
 <!-- ######################### Content end ################################## -->
