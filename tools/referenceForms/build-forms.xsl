@@ -61,9 +61,12 @@
 
             <div id="xforms" class="InlineAlert">
                 <!-- the xforms model here -->
+                <xsl:apply-templates select="div[@class='sample']/div[@class='markup']/xf:model"/>
+<!--
                 <div style="display:none">
                     <xsl:apply-templates select="div[@class='sample']/div[@class='markup']/xf:model" mode="xforms"/>
                 </div>
+-->
 
                 <div class="pageintro">
                     <h1>
@@ -76,6 +79,8 @@
                         <xsl:with-param name="quickRef" select="div[@class='references']/a[2]/@href"/>
                     </xsl:call-template>
                 </div>
+
+                <xsl:apply-templates select="div[@class='sample']"/>
 
                 <h2>XForms Markup</h2>
                 <div class="Section markup">
@@ -93,27 +98,26 @@
                     </pre>
                 </div>
 
+<!--
                 <h2>Example</h2>
                 <div class="Section sample">
                     <xsl:copy-of select=".//code[@class='ui']/*"/>
                 </div>
+-->
 
                 <xsl:variable name="sampleDiv" select="div[@class='sample']"/>
                 <xsl:for-each select="$sampleDiv/following-sibling::*">
                     <xsl:apply-templates select="."/>
                 </xsl:for-each>
-                <!--
-                                <xsl:for-each select="div[contains(./@class,'Section')]">
-                                    <xsl:copy-of select="."/>
-                                </xsl:for-each>
-                -->
-                <script type="text/javascript">
-                    dojo.query("code").forEach(dojox.highlight.init);
-                </script>
             </div>
         </xsl:copy>
     </xsl:template>
 
+    <xsl:template match="div[@class='sample']/div[@class='markup']/xf:model">
+        <div style="display:none">
+            <xsl:copy-of select="."/>
+        </div>
+    </xsl:template>
 
     <xsl:template name="referenceTable">
         <xsl:param name="specRef"/>
@@ -145,6 +149,24 @@
                 </td>
             </tr>
         </table>
+    </xsl:template>
+
+    <xsl:template match="div[@class='sample']">
+        <h2>Example</h2>
+        <xsl:apply-templates select="div[@class='markup']"/>
+        <xsl:apply-templates select="div[@class='markup']/following-sibling::*"/>
+<!--
+        <div class="Section sample">
+            <xsl:copy-of select=".//code[@class='ui']/*"/>
+        </div>
+-->
+
+    </xsl:template>
+
+    <xsl:template match="div[@class='markup']">
+        <div class="Section sample">
+            <xsl:copy-of select=".//code[@class='ui']/*"/>
+        </div>
     </xsl:template>
 
     <xsl:template match="*|@*|text()|comment()">

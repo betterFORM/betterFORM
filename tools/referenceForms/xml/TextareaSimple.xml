@@ -49,23 +49,23 @@
 </xf:textarea>
                 </code>
             </div>
-        </div>
-        <div class="MIPS">
-            <xf:group appearance="full">
-                <xf:label></xf:label>
-                <xf:input id="textarea1-readonly" navindex="-1" ref="textarea1/@readonly" incremental="true">
-                    <xf:label>readonly</xf:label>
-                </xf:input>
-                <xf:input id="textarea1-required" navindex="-1" ref="textarea1/@required" incremental="true">
-                    <xf:label>required</xf:label>
-                </xf:input>
-                <xf:input id="textarea1-relevant" navindex="-1" ref="textarea1/@relevant" incremental="true">
-                    <xf:label>relevant</xf:label>
-                </xf:input>
-                <xf:input id="textarea1-valid" navindex="-1" ref="textarea1/@constraint" incremental="true">
-                    <xf:label>valid</xf:label>
-                </xf:input>
-            </xf:group>
+            <div class="MIPS">
+                <xf:group appearance="full">
+                    <xf:label></xf:label>
+                    <xf:input id="textarea1-readonly" navindex="-1" ref="textarea1/@readonly" incremental="true">
+                        <xf:label>readonly</xf:label>
+                    </xf:input>
+                    <xf:input id="textarea1-required" navindex="-1" ref="textarea1/@required" incremental="true">
+                        <xf:label>required</xf:label>
+                    </xf:input>
+                    <xf:input id="textarea1-relevant" navindex="-1" ref="textarea1/@relevant" incremental="true">
+                        <xf:label>relevant</xf:label>
+                    </xf:input>
+                    <xf:input id="textarea1-valid" navindex="-1" ref="textarea1/@constraint" incremental="true">
+                        <xf:label>valid</xf:label>
+                    </xf:input>
+                </xf:group>
+            </div>
         </div>
         <h2>CSS</h2>
         <table class="CSS">

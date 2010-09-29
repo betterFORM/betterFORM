@@ -50,23 +50,23 @@
 </xf:range>
                 </code>
             </div>
-        </div>
-        <div class="MIPS">
-            <xf:group appearance="full">
-                <xf:label></xf:label>
-                <xf:input id="range1-readonly" navindex="-1" ref="range1/@readonly" incremental="true">
-                    <xf:label>readonly</xf:label>
-                </xf:input>
-                <xf:input id="range1-required" navindex="-1" ref="range1/@required" incremental="true">
-                    <xf:label>required</xf:label>
-                </xf:input>
-                <xf:input id="range1-relevant" navindex="-1" ref="range1/@relevant" incremental="true">
-                    <xf:label>relevant</xf:label>
-                </xf:input>
-                <xf:input id="range1-valid" navindex="-1" ref="range1/@constraint" incremental="true">
-                    <xf:label>valid</xf:label>
-                </xf:input>
-            </xf:group>
+            <div class="MIPS">
+                <xf:group appearance="full">
+                    <xf:label></xf:label>
+                    <xf:input id="range1-readonly" navindex="-1" ref="range1/@readonly" incremental="true">
+                        <xf:label>readonly</xf:label>
+                    </xf:input>
+                    <xf:input id="range1-required" navindex="-1" ref="range1/@required" incremental="true">
+                        <xf:label>required</xf:label>
+                    </xf:input>
+                    <xf:input id="range1-relevant" navindex="-1" ref="range1/@relevant" incremental="true">
+                        <xf:label>relevant</xf:label>
+                    </xf:input>
+                    <xf:input id="range1-valid" navindex="-1" ref="range1/@constraint" incremental="true">
+                        <xf:label>valid</xf:label>
+                    </xf:input>
+                </xf:group>
+            </div>
         </div>
         <h2>CSS</h2>
         <table class="CSS">
