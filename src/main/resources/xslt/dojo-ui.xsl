@@ -1126,16 +1126,10 @@
         </xsl:variable>
 
         <xsl:element name="{local-name(.)}" namespace="">
-            <xsl:attribute name="repeatId">
-                <xsl:value-of select="$repeat-id"/>
-            </xsl:attribute>
-            <xsl:attribute name="jsId">
-                <xsl:value-of select="@id"/>
-            </xsl:attribute>
+            <xsl:attribute name="repeatId"><xsl:value-of select="$repeat-id"/></xsl:attribute>
+            <xsl:attribute name="jsId"><xsl:value-of select="@id"/></xsl:attribute>
             <xsl:attribute name="dojoType">betterform.ui.container.Repeat</xsl:attribute>
-            <xsl:attribute name="class">
-                <xsl:value-of select="$repeat-classes"/>
-            </xsl:attribute>
+            <xsl:attribute name="class"><xsl:value-of select="$repeat-classes"/></xsl:attribute>
             <xsl:copy-of select="@*"/>
 
             <xsl:if test="not(ancestor::xforms:repeat)">
@@ -1189,11 +1183,8 @@
         </xsl:variable>
         <xsl:for-each select="*">
             <xsl:element name="{local-name(.)}" namespace="">
-                <xsl:attribute name="id"><xsl:value-of select="$id"/>-prototype
-                </xsl:attribute>
-                <xsl:attribute name="class">xfRepeatPrototype xfDisabled xfReadWrite xfOptional xfValid
-                    <xsl:value-of select="$col-classes"/>
-                </xsl:attribute>
+                <xsl:attribute name="id"><xsl:value-of select="$id"/>-prototype</xsl:attribute>
+                <xsl:attribute name="class">xfRepeatPrototype xfDisabled xfReadWrite xfOptional xfValid<xsl:value-of select="$col-classes"/></xsl:attribute>
                 <xsl:apply-templates select="*" mode="repeated-compact-prototype"/>
             </xsl:element>
         </xsl:for-each>
