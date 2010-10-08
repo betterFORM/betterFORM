@@ -1234,5 +1234,14 @@ dojo.declare("betterform.FluxProcessor",
         dojo.addClass(helpDijit.domNode, "xfHelpPane");
         helpDijit.startup();
 
+    },
+
+    getInstanceDocument:function(modelId, instanceId){
+        dwr.engine.setErrorHandler(this._handleExceptions);
+        Flux.getInstanceDocument(modelId, instanceId, this.sessionKey,this.printInstance);
+    },
+    
+    printInstance:function(data){
+        console.dirxml(data);
     }
 });

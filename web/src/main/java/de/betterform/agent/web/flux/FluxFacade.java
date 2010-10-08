@@ -382,6 +382,12 @@ public class FluxFacade {
         return eventlog;
     }
 
+    /*
+    make this available through Facade for those that know what they are doing
+     */
+    public static org.w3c.dom.Element getInstanceDocument(String modelId, String instanceId, String sessionKey){
+        return FluxModel.getInstanceDocument(modelId, instanceId, sessionKey);
+    }
 
 }
 

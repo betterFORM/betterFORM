@@ -55,7 +55,7 @@ public class FluxModel {
      * @return the corresponding DOM document.
      * @throws org.w3c.dom.DOMException if there is no matching instance data.
      */
-    public org.w3c.dom.Element getInstanceDocument(String modelId, String instanceId, String sessionKey){
+    public static org.w3c.dom.Element getInstanceDocument(String modelId, String instanceId, String sessionKey){
 
         try {
             return FluxUtil.getProcessor(sessionKey).getXFormsModel(modelId).getInstanceDocument(instanceId).getDocumentElement();
