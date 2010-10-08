@@ -218,7 +218,8 @@ public class XFormsFilter implements Filter {
                                 LOG.error("Could not shutdown Processor: Error: " + xfe.getMessage() + " Cause: " + xfe.getCause());
                             }
                             // store exception
-                            session.setAttribute("betterform.exception", e.getMessage());
+                            session.setAttribute("betterform.exception", e);
+                            session.setAttribute("betterform.exception.message", e.getMessage());
                             session.setAttribute("betterform.referer", request.getRequestURL());
                             //remove session from XFormsSessionManager
                             WebUtil.removeSession(webProcessor.getKey());

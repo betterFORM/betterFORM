@@ -1,6 +1,6 @@
 <%@ page import="de.betterform.xml.config.Config" %>
 <%@ page import="java.net.URLEncoder" %>
-<%@ page contentType="text/html; ISO-8859-1" session="true" isErrorPage="true" %>
+<%@ page contentType="text/html; ISO-8859-1" session="true" %>
 <%--
   ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
@@ -58,7 +58,7 @@
 
     </div>
     <%
-        String msg = (String) session.getAttribute("betterform.exception");
+        String msg = (String) session.getAttribute("betterform.exception.message");
         int start = msg.indexOf("::");
         String xpath ="unknown";
         String cause="";
@@ -66,10 +66,13 @@
             xpath = msg.substring(start+2);
             msg=msg.substring(0,start);
         }
-        if(exception.getCause() != null && exception.getCause().getMessage() != null){
-            cause = exception.getCause().getMessage();
-        }
 
+        Exception ex = (Exception) session.getAttribute("betterform.exception");
+        if(ex.getCause() != null && ex.getCause().getMessage() != null){
+            cause = ex.getCause().getMessage();
+        }
+        session.removeAttribute("betterform.exception");
+        session.removeAttribute("betterform.exception.message");
     %>
 
     <div class="message2"><%= msg %></div>
