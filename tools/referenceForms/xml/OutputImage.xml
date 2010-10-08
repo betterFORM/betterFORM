@@ -78,35 +78,33 @@
                 </xf:group>
             </div>
         </div>
-        <h2>CSS</h2>
-        <table class="CSS">
-            <tr>
-                <th>Class</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td>xfOutput</td>
-                <td>matches an Element that represents a XForms
-                    <span class="keyword">output</span>
-                    element
-                </td>
-            </tr>
-        </table>
+        <div class="CSS">
 
-        <h2>Notes</h2>
-        <p>
-            Though the Model Item Properties
-            <span class="keyword">readonly</span>
-            and
-            <span class="keyword">required</span>
-            are shown in the above example they of course cannot be influenced directly via the
-            <span class="keyword">output</span>
-            control but the same node might be bound by other XForms controls that allow data entry. State
-            changes resulting by entering data through other controls will be reflected by the<span class="keyword">
-            output</span>.
-        </p>
-        <p>
-            The bound instance node must contain a link to the image to be rendered NOT an image as data.
-        </p>
+            <table class="CSS">
+                <tr>
+                    <td>xfOutput</td>
+                    <td>matches an Element that represents a XForms
+                        <span class="keyword">output</span>
+                        element
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="Notes">
+            <p>
+                Though the Model Item Properties
+                <span class="keyword">readonly</span>
+                and
+                <span class="keyword">required</span>
+                are shown in the above example they of course cannot be influenced directly via the
+                <span class="keyword">output</span>
+                control but the same node might be bound by other XForms controls that allow data entry. State
+                changes resulting by entering data through other controls will be reflected by the<span class="keyword">
+                output</span>.
+            </p>
+            <p>
+                The bound instance node must contain a link to the image to be rendered NOT an image as data.
+            </p>
+        </div>
     </body>
 </html>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Table via repeat attributes</title>
+        <style type="text/css">
+            th {
+                width:100px;
+                background:#add8e6;
+                padding:4px;
+                color:#00008b;
+            }
+            td{
+                padding:2px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="description">
+            <p>
+                This form shows usage of repeat attributes in conjunction with a HTML table.
+            </p>
+            <p>
+                Please note that this example uses <span class="keyword">output</span> controls for the table header which
+                are bound to a separate instance. This allows to internationalize the labels if you need to but it is
+                no requirement for working with <span class="keyword">repeat</span> attributes.
+            </p>
+        </div>
+        <div class="references">
+            <a href="#ui.repeat.via.attrs"/>
+            <a href="#Switch"/>
+        </div>
+        <div class="sample">
+            <div class="markup">
+                <xf:model>
+                    <code>
+<xf:instance xmlns="">
+    <data xmlns="">
+        <items>
+            <item1>item 11</item1>
+            <item2>item 12</item2>
+            <item3>item 13</item3>
+            <item4>item 14</item4>
+            <item5>item 15</item5>
+        </items>
+        <items>
+            <item1>item 21</item1>
+            <item2>item 22</item2>
+            <item3>item 23</item3>
+            <item4>item 24</item4>
+            <item5>item 25</item5>
+        </items>
+        <items>
+            <item1>item 31</item1>
+            <item2>item 32</item2>
+            <item3>item 33</item3>
+            <item4>item 34</item4>
+            <item5>item 35</item5>
+        </items>
+    </data>
+</xf:instance>
+<xf:instance id="labels">
+    <data xmlns="">
+        <item1>Label 1</item1>
+        <item2>Label 2</item2>
+        <item3>Label 3</item3>
+        <item4>Label 4</item4>
+        <item5>Label 5</item5>
+    </data>
+</xf:instance>
+                    </code>
+                </xf:model>
+                <code class="ui">
+<xf:trigger>
+    <xf:label>insert</xf:label>
+    <xf:action>
+        <xf:insert nodeset="items" />
+    </xf:action>
+</xf:trigger>
+<xf:trigger>
+    <xf:label>delete</xf:label>
+    <xf:action>
+        <xf:delete nodeset="items[index('r-attrs')]"  />
+    </xf:action>
+</xf:trigger>
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                <xf:output ref="instance('labels')/item1"/>
+            </th>
+            <th>
+                <xf:output ref="instance('labels')/item2"/>
+            </th>
+            <th>
+                <xf:output ref="instance('labels')/item3"/>
+            </th>
+            <th>
+                <xf:output ref="instance('labels')/item4"/>
+            </th>
+            <th>
+                <xf:output ref="instance('labels')/item5"/>
+            </th>
+        </tr>
+    </thead>
+    <tbody id="r-attrs" xf:repeat-nodeset="items">
+        <tr>
+            <td id="foo" class="one" style="color:steelblue;font-weight:bold;">
+                <xf:output ref="item1"/>
+            </td>
+            <td class="two" style="color:blue;">
+                <xf:output ref="item2"/>
+            </td>
+            <td class="two" style="color:blue;">
+                <xf:output ref="item3"/>
+            </td>
+            <td class="two" style="color:blue;">
+                <xf:output ref="item4"/>
+            </td>
+            <td class="two" style="color:blue;">
+                <xf:output ref="item5"/>
+            </td>
+        </tr>
+    </tbody>
+
+</table>
+                </code>
+            </div>
+        </div>
+        <div class="CSS">
+            <table>
+                <tr>
+                    <td>xfContainer</td>
+                    <td>matches any Element that represents a XForms <span class="keyword">group</span> | <span class="keyword">repeat</span> | <span class="keyword">switch</span> element</td>
+                </tr>
+                <tr>
+                    <td>xfTbody</td>
+                    <td>matches the element wearing the <span class="keyword">repeat</span> attributes</td>
+                </tr>
+            </table>
+        </div>
+
+    </body>
+</html>

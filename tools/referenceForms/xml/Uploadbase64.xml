@@ -85,23 +85,20 @@
                 </xf:group>
             </div>
         </div>
-        <h2>CSS</h2>
-        <table class="CSS">
-            <tr>
-                <th>Class</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td>xfUpload</td>
-                <td>matches an Element that represents a XForms input element</td>
-            </tr>
-            <tr>
-                <td>xsdanyURI</td>
-                <td>matches an Element that is bound to a node with datatype
-                    <code>anyURI</code>
-                </td>
-            </tr>
-        </table>
+        <div class="CSS">
 
+            <table class="CSS">
+                <tr>
+                    <td>xfUpload</td>
+                    <td>matches an Element that represents a XForms input element</td>
+                </tr>
+                <tr>
+                    <td>xsdanyURI</td>
+                    <td>matches an Element that is bound to a node with datatype
+                        <code>anyURI</code>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </body>
 </html>

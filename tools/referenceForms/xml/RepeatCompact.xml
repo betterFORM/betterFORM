@@ -69,31 +69,29 @@
                 </code>
             </div>
         </div>
-        <h2>CSS</h2>
-        <table class="CSS">
-            <tr>
-                <th>Class</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td>xfContainer</td>
-                <td>matches any Element that represents a XForms
-                    <span class="keyword">group</span>
-                    |
-                    <span class="keyword">repeat</span>
-                    |
-                    <span class="keyword">switch</span>
-                    element
-                </td>
-            </tr>
-            <tr>
-                <td>xfRepeat</td>
-                <td>matches an Element that represents a XForms
-                    <span class="keyword">repeat</span>
-                    element
-                </td>
-            </tr>
-        </table>
+        <div class="CSS">
+
+            <table class="CSS">
+                <tr>
+                    <td>xfContainer</td>
+                    <td>matches any Element that represents a XForms
+                        <span class="keyword">group</span>
+                        |
+                        <span class="keyword">repeat</span>
+                        |
+                        <span class="keyword">switch</span>
+                        element
+                    </td>
+                </tr>
+                <tr>
+                    <td>xfRepeat</td>
+                    <td>matches an Element that represents a XForms
+                        <span class="keyword">repeat</span>
+                        element
+                    </td>
+                </tr>
+            </table>
+        </div>
 
     </body>
 </html>

@@ -70,27 +70,26 @@
                 </xf:group>
             </div>
         </div>
-        <h2>CSS</h2>
-        <table class="CSS">
-            <tr>
-                <th>Class</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td>xfInput</td>
-                <td>matches an Element that represents a XForms input element</td>
-            </tr>
-            <tr>
-                <td>xsdDate</td>
-                <td>matches an Element that is bound to a node widht datatype
-                    <code>date</code>
-                </td>
-            </tr>
-        </table>
-        <h2>Notes</h2>
-        <p class="Notes">
-            The date control is currently not fully accessible esp. keyboard navigation is not
-            working in the current version of Dojo.
-        </p>
+        <div class="CSS">
+
+            <table class="CSS">
+                <tr>
+                    <td>xfInput</td>
+                    <td>matches an Element that represents a XForms input element</td>
+                </tr>
+                <tr>
+                    <td>xsdDate</td>
+                    <td>matches an Element that is bound to a node widht datatype
+                        <code>date</code>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="Notes">
+            <p class="Notes">
+                The date control is currently not fully accessible esp. keyboard navigation is not
+                working in the current version of Dojo.
+            </p>
+        </div>
     </body>
 </html>

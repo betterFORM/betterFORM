@@ -62,11 +62,12 @@
             <div id="xforms" class="InlineAlert">
                 <!-- the xforms model here -->
                 <xsl:apply-templates select="div[@class='sample']/div[@class='markup']/xf:model"/>
-<!--
-                <div style="display:none">
-                    <xsl:apply-templates select="div[@class='sample']/div[@class='markup']/xf:model" mode="xforms"/>
-                </div>
--->
+                <!--
+                                <div style="display:none">
+                                    <xsl:apply-templates select="div[@class='sample']/div[@class='markup']/xf:model" mode="xforms"/>
+                                </div>
+                -->
+                <xsl:apply-templates select="div[@class='CSS']"/>
 
                 <div class="pageintro">
                     <h1>
@@ -80,8 +81,15 @@
                     </xsl:call-template>
                 </div>
 
+                <!--
+                here the xforms code gets integrated into the page within a hidden div. Sections within <code class="ui">
+                are
+                 -->
                 <xsl:apply-templates select="div[@class='sample']"/>
 
+                <!-- here the highlighted code for the example will be generated -->
+                <!-- here the highlighted code for the example will be generated -->
+                <!-- here the highlighted code for the example will be generated -->
                 <h2>XForms Markup</h2>
                 <div class="Section markup">
                     <pre>
@@ -98,21 +106,31 @@
                     </pre>
                 </div>
 
-                <xsl:variable name="sampleDiv" select="div[@class='sample']"/>
-                <xsl:for-each select="$sampleDiv/following-sibling::*">
-                    <xsl:apply-templates select="."/>
-                </xsl:for-each>
+                <xsl:apply-templates select="div[@class='Notes']"/>
+                <xsl:apply-templates select="div[@class='Limitations']"/>
+                <!--
+                                <xsl:variable name="sampleDiv" select="div[@class='sample']"/>
+                                <xsl:for-each select="$sampleDiv/following-sibling::*">
+                                    <xsl:apply-templates select="."/>
+                                </xsl:for-each>
+                -->
 
-                
+                <script type="text/javascript">
+                    function showClass(cssClass){
+                        dojo.query('.sample .'+ cssClass).forEach(function(item){
+                            dojo.addClass(item,'showClass');
+                        });
+                    }
+                    function hideClass(cssClass){
+                        dojo.query('.sample .'+ cssClass).forEach(function(item){
+                            dojo.removeClass(item,'showClass');
+                        });
+                    }                    
+                </script>
             </div>
         </xsl:copy>
     </xsl:template>
 
-    <xsl:template match="div[@class='sample']/div[@class='markup']/xf:model">
-        <div style="display:none">
-            <xsl:apply-templates select="." mode="xforms"/>
-        </div>
-    </xsl:template>
 
     <xsl:template name="referenceTable">
         <xsl:param name="specRef"/>
@@ -152,6 +170,13 @@
         <xsl:apply-templates select="div[@class='markup']/following-sibling::*"/>
     </xsl:template>
 
+
+    <xsl:template match="div[@class='sample']/div[@class='markup']/xf:model">
+        <div style="display:none">
+            <xsl:apply-templates select="." mode="xforms"/>
+        </div>
+    </xsl:template>
+
     <xsl:template match="div[@class='markup']">
         <div class="Section sample">
             <xsl:copy-of select=".//code[@class='ui']/*"/>
@@ -159,108 +184,153 @@
         </div>
     </xsl:template>
 
-    <xsl:template match="h2[text()='CSS']">
-        <!--<h2 onclick="dijit.byId('cssWindow').show();">CSS</h2>-->
-        <h2>CSS</h2>
-        <div style="font-size:0.8em;font-style:italic;">Hover the classes on the left to see the matching element(s) in the example</div>
+    <!--
+        <xsl:template match="h2[text()='CSS']">
+            <h2>CSS</h2>
+            <div style="font-size:0.8em;font-style:italic;">Hover the classes on the left to see the matching element(s) in
+                the example
+            </div>
+        </xsl:template>
+    -->
+
+    <xsl:template match="div[@class='CSS']">
+        <!--<h2><xsl:value-of select="@class"/></h2>-->
+        <div class="CSS">
+            <xsl:apply-templates select="table"/>
+        </div>
     </xsl:template>
 
-
-
-    <xsl:template match="table[@class='CSS']" priority="20">
-        <table class="CSS">
-            <xsl:apply-templates/>
+    <xsl:template match="div[@class='CSS']/table" priority="20">
+        <table>
+            <!--<xsl:apply-templates/>-->
+            <caption>CSS</caption>
             <tr>
-                <td onmouseover="showClass('xfControl');"
-                        onmouseout="hideClass('xfControl');">xfControl</td>
-                <td>matches an Element that represents a XForms control</td>
+                <th style="font-style:italic;color:#C46B47;">
+                    Hover the classes to see matching element(s) in the example
+                </th>
+            </tr>
+            <xsl:for-each select="tr">
+                <tr>
+                    <xsl:variable name="idref" select="generate-id()"/>
+                    <td id="{$idref}" onmouseover="showClass('{td[1]}');"
+                        onmouseout="hideClass('{td[1]}');">
+                        <xsl:value-of select="td[1]"/>
+                        <div dojoType="dijit.Tooltip" connectId="{$idref}">
+                            <xsl:value-of select="td[2]"/>
+                        </div>
+                    </td>
+                </tr>
+            </xsl:for-each>
+            <tr>
+                <td id="xfcontrol" onmouseover="showClass('xfControl');"
+                    onmouseout="hideClass('xfControl');">xfControl
+                    <div dojoType="dijit.Tooltip" connectId="xfcontrol">
+                        matches an Element that represents a XForms control
+                    </div>
+                </td>
             </tr>
             <tr>
-                <td onmouseover="showClass('xfLabel');"
-                        onmouseout="hideClass('xfLabel');">xfLabel</td>
-                <td>matches the label part of an XForms control</td>
+                <td id="xflabel" onmouseover="showClass('xfLabel');"
+                    onmouseout="hideClass('xfLabel');">xfLabel
+                    <div dojoType="dijit.Tooltip" connectId="xflabel">
+                        matches the label part of an XForms control
+                    </div>
+                </td>
             </tr>
             <tr>
-                <td onmouseover="showClass('xfValue');"
-                        onmouseout="hideClass('xfValue');">xfValue</td>
-                <td>matches the wigdet part of an XForms control</td>
+                <td id="xfvalue" onmouseover="showClass('xfValue');"
+                    onmouseout="hideClass('xfValue');">xfValue
+                    <div dojoType="dijit.Tooltip" connectId="xfvalue">
+                        matches the wigdet part of an XForms control
+                    </div>
+                </td>
             </tr>
             <xsl:if test="exists(//div[@class='MIPS'])">
                 <tr>
-                    <td onmouseover="showClass('xfReadOnly');"
+                    <td id="xfreadonly" onmouseover="showClass('xfReadOnly');"
                         onmouseout="hideClass('xfReadOnly');">
                         xfReadOnly
-                    </td>
-                    <td>
-                        matches a xforms control that is currently readonly
+                        <div dojoType="dijit.Tooltip" connectId="xfreadonly">
+                            matches a xforms control that is currently readonly
+                        </div>
                     </td>
                 </tr>
                 <tr>
-                    <td onmouseover="showClass('xfReadWrite');"
+                    <td id="xfreadwrite" onmouseover="showClass('xfReadWrite');"
                         onmouseout="hideClass('xfReadWrite');">
                         xfReadWrite
-                    </td>
-                    <td>
-                        matches a xforms control that is currently writable
+                        <div dojoType="dijit.Tooltip" connectId="xfreadwrite">
+                            matches a xforms control that is currently writable
+                        </div>
                     </td>
                 </tr>
                 <tr>
-                    <td onmouseover="showClass('xfRequired');"
+                    <td id="xfrequired" onmouseover="showClass('xfRequired');"
                         onmouseout="hideClass('xfRequired');">
                         xfRequired
-                    </td>
-                    <td>
-                        matches a xforms control that is currently required
+                        <div dojoType="dijit.Tooltip" connectId="xfrequired">
+                            matches a xforms control that is currently required
+                        </div>
                     </td>
                 </tr>
                 <tr>
-                    <td onmouseover="showClass('xfOptional');"
+                    <td id="xfoptional" onmouseover="showClass('xfOptional');"
                         onmouseout="hideClass('xfOptional');">
                         xfOptional
-                    </td>
-                    <td>
-                        matches a xforms control that is currently optional
+                        <div dojoType="dijit.Tooltip" connectId="xfoptional">
+                            matches a xforms control that is currently optional
+                        </div>
                     </td>
                 </tr>
                 <tr>
-                    <td onmouseover="showClass('xfEnabled');"
+                    <td id="xfenabled" onmouseover="showClass('xfEnabled');"
                         onmouseout="hideClass('xfEnabled');">
                         xfEnabled
-                    </td>
-                    <td>
-                        matches a xforms control that is currently relevant (enabled)
+                        <div dojoType="dijit.Tooltip" connectId="xfenabled">
+                            matches a xforms control that is currently relevant (enabled)
+                        </div>
                     </td>
                 </tr>
                 <tr>
-                    <td onmouseover="showClass('xfDisabled');"
+                    <td id="xfdisabled" onmouseover="showClass('xfDisabled');"
                         onmouseout="hideClass('xfDisabled');">
                         xfDisabled
-                    </td>
-                    <td>
-                        matches a xforms control that is currently disabled (can't be visualized here as the control gets hidden)
+                        <div dojoType="dijit.Tooltip" connectId="xfdisabled">
+                            matches a xforms control that is currently disabled (can't be visualized here as the control gets hidden)
+                        </div>
                     </td>
                 </tr>
                 <tr>
-                    <td onmouseover="showClass('xfValid');"
-                        onmouseout="hideClass('xfDisabled');">
+                    <td id="xfvalid" onmouseover="showClass('xfValid');"
+                        onmouseout="hideClass('xfValid');">
                         xfValid
-                    </td>
-                    <td>
-                        matches a xforms control that is currently valid
+                        <div dojoType="dijit.Tooltip" connectId="xfvalid">
+                            matches a xforms control that is currently valid
+                        </div>
                     </td>
                 </tr>
                 <tr>
-                    <td onmouseover="showClass('xfInvalid');"
+                    <td id="xfinvalid" onmouseover="showClass('xfInvalid');"
                         onmouseout="hideClass('xfInvalid');">
                         xfInvalid
-                    </td>
-                    <td>
-                        matches a xforms control that is currently invalid
+                        <div dojoType="dijit.Tooltip" connectId="xfinvalid">
+                            matches a xforms control that is currently invalid
+                        </div>
                     </td>
                 </tr>
             </xsl:if>
         </table>
+
     </xsl:template>
+
+    <xsl:template match="div[@class='Notes']">
+        <xsl:copy-of select="."/>
+    </xsl:template>
+
+    <xsl:template match="div[@class='Limitations']">
+        <xsl:copy-of select="."/>
+    </xsl:template>
+
 
     <xsl:template match="table[@class='CSS']/tr/td[1]" priority="20">
         <td onmouseover="showClass('{.}');"

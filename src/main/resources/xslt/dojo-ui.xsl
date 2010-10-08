@@ -1120,9 +1120,7 @@
         <xsl:variable name="repeat-id" select="@id"/>
         <xsl:variable name="repeat-index" select="bf:data/@bf:index"/>
         <xsl:variable name="repeat-classes">
-            <xsl:call-template name="assemble-compound-classes">
-                <xsl:with-param name="appearance" select="'full'"/>
-            </xsl:call-template>
+            <xsl:call-template name="assemble-compound-classes"/>
         </xsl:variable>
 
         <xsl:element name="{local-name(.)}" namespace="">

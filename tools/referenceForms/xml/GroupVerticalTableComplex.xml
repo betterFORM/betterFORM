@@ -202,33 +202,30 @@
                 </xf:group>
             </div>
         </div>
-        <h2>CSS</h2>
-        <table class="CSS">
-            <tr>
-                <th>Class</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td>xfContainer</td>
-                <td>matches any Element that represents a XForms
-                    <span class="keyword">group</span>
-                    |
-                    <span class="keyword">repeat</span>
-                    |
-                    <span class="keyword">switch</span>
-                    element
-                </td>
-            </tr>
-            <tr>
-                <td>bfVerticalTable</td>
-                <td>matches an Element that represents a XForms
-                    <span class="keyword">group</span>
-                    element with
-                    'bf:verticalTable'
-                    <span class="keyword">appearance</span>
-                </td>
-            </tr>
-        </table>
+        <div class="CSS">
 
+            <table class="CSS">
+                <tr>
+                    <td>xfContainer</td>
+                    <td>matches any Element that represents a XForms
+                        <span class="keyword">group</span>
+                        |
+                        <span class="keyword">repeat</span>
+                        |
+                        <span class="keyword">switch</span>
+                        element
+                    </td>
+                </tr>
+                <tr>
+                    <td>bfVerticalTable</td>
+                    <td>matches an Element that represents a XForms
+                        <span class="keyword">group</span>
+                        element with
+                        'bf:verticalTable'
+                        <span class="keyword">appearance</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </body>
 </html>

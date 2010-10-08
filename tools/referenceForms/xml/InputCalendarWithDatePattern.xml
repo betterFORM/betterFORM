@@ -81,40 +81,39 @@
                 </xf:group>
             </div>
         </div>
-        <h2>CSS</h2>
-        <table class="CSS">
-            <tr>
-                <th>Class</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td>xfInput</td>
-                <td>matches an Element that represents a XForms input element</td>
-            </tr>
-            <tr>
-                <td>xsdDate</td>
-                <td>matches an Element that is bound to a node widht datatype
-                    <code>date</code>
-                </td>
-            </tr>
-            <tr>
-                <td>xfIso8601:[pattern]Input</td>
-                <td>matches an Element that uses a datePattern where [pattern] is a valid pattern from the Dojo docs
-                    e.g. 'dd.MMMM.yyyy'
-                </td>
-            </tr>
-        </table>
-        <h2>Known Limitations</h2>
-        <p class="Notes">
-            The date control is currently not fully accessible esp. keyboard navigation is not
-            working in the current version of Dojo.
-        </p>
-        <p>
-            Though locale-specific formatting of a date is supported there's no further support for
-            subformats like the Java short/medium/long date formatting.
-        </p>
-        <p>
-            Dojo only accepts 'date'-inputs in the format of the datePattern OR the ISO8601/RFC3339 format.
-        </p>
+        <div class="CSS">
+
+            <table class="CSS">
+                <tr>
+                    <td>xfInput</td>
+                    <td>matches an Element that represents a XForms input element</td>
+                </tr>
+                <tr>
+                    <td>xsdDate</td>
+                    <td>matches an Element that is bound to a node widht datatype
+                        <code>date</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>xfIso8601:[pattern]Input</td>
+                    <td>matches an Element that uses a datePattern where [pattern] is a valid pattern from the Dojo docs
+                        e.g. 'dd.MMMM.yyyy'
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="Limitations">
+            <p>
+                The date control is currently not fully accessible esp. keyboard navigation is not
+                working in the current version of Dojo.
+            </p>
+            <p>
+                Though locale-specific formatting of a date is supported there's no further support for
+                subformats like the Java short/medium/long date formatting.
+            </p>
+            <p>
+                Dojo only accepts 'date'-inputs in the format of the datePattern OR the ISO8601/RFC3339 format.
+            </p>
+        </div>
     </body>
 </html>

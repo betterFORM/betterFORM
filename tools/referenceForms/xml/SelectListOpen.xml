@@ -111,27 +111,24 @@
                 </xf:group>
             </div>
         </div>
-        <h2>CSS</h2>
-        <table class="CSS">
-            <tr>
-                <th>Class</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td>xfMinimalSelect</td>
-                <td>matches an Element that represents a XForms
-                    <span class="keyword">select</span>
-                    element
-                </td>
-            </tr>
-            <tr>
-                <td>xfSelectorItem</td>
-                <td>matches all list entries of the Element that represents a XForms
-                    <span class="keyword">select</span>
-                    element
-                </td>
-            </tr>            
-        </table>
+        <div class="CSS">
 
+            <table class="CSS">
+                <tr>
+                    <td>xfMinimalSelect</td>
+                    <td>matches an Element that represents a XForms
+                        <span class="keyword">select</span>
+                        element
+                    </td>
+                </tr>
+                <tr>
+                    <td>xfSelectorItem</td>
+                    <td>matches all list entries of the Element that represents a XForms
+                        <span class="keyword">select</span>
+                        element
+                    </td>
+                </tr>
+            </table>
+        </div>
     </body>
 </html>

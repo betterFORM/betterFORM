@@ -66,20 +66,17 @@
                 </xf:group>
             </div>
         </div>
-        <h2>CSS</h2>
-        <table class="CSS">
-            <tr>
-                <th>Class</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td>xfTrigger</td>
-                <td>matches an Element that represents a XForms
-                    <span class="keyword">trigger</span>
-                    element
-                </td>
-            </tr>
-        </table>
+        <div class="CSS">
 
+            <table class="CSS">
+                <tr>
+                    <td>xfTrigger</td>
+                    <td>matches an Element that represents a XForms
+                        <span class="keyword">trigger</span>
+                        element
+                    </td>
+                </tr>
+            </table>
+        </div>
     </body>
 </html>

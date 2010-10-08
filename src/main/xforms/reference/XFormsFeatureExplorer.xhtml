@@ -47,6 +47,7 @@
         dojo.require("dijit.Menu");
         dojo.require("dijit.MenuItem");
         dojo.require("dijit.PopupMenuItem");
+        dojo.require("dijit.Tooltip");
         dojo.require("dijit.layout.ContentPane");
         dojo.require("betterform.ui.container.Group");
         dojo.require("betterform.ui.select.OptGroup");
@@ -73,16 +74,6 @@
         function showStatic() {
             dojo.byId('xforms').style.display = "none";
             dojo.byId('static').style.display = "block";
-        }
-        function showClass(cssClass){
-            dojo.query('.sample .'+ cssClass).forEach(function(item){
-                dojo.addClass(item,'showClass');
-            });
-        }
-        function hideClass(cssClass){
-            dojo.query('.sample .'+ cssClass).forEach(function(item){
-                dojo.removeClass(item,'showClass');
-            });
         }
     </script>
 
@@ -385,6 +376,12 @@
                 <xf:resource value="'RepeatFull.xhtml#xforms'"/>
             </xf:load>
         </xf:trigger>
+        <xf:trigger id="repeatTableTrigger">
+            <xf:label/>
+            <xf:load show="embed" targetid="xforms">
+                <xf:resource value="'RepeatTable.xhtml#xforms'"/>
+            </xf:load>
+        </xf:trigger>
 
         <!-- ############### switch trigger ################# -->
         <!-- ############### switch trigger ################# -->
@@ -658,6 +655,10 @@
                              onClick="hideStatic();fluxProcessor.dispatchEvent('repeatFullTrigger');">
                             full
                         </div>
+                        <div dojoType="dijit.MenuItem"
+                             onClick="hideStatic();fluxProcessor.dispatchEvent('repeatTableTrigger');">
+                            via attributes (table
+                        </div>
                     </div>
                 </div>
 
@@ -701,7 +702,7 @@
 <!-- ######################### Content end ################################## -->
 <!-- ######################### Content end ################################## -->
 
-<div style="text-align:right;" id="copyright">
+<div style="text-align:right;margin-top:10px;" id="copyright">
     <a href="http://www.betterform.de">
         <img style="vertical-align:text-bottom; margin-right:5px;"
              src="../../images/betterform_icon16x16.png" alt="betterFORM project"/>

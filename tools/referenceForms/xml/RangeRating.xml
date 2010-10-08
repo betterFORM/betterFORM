@@ -77,23 +77,22 @@
                 </xf:group>
             </div>
         </div>
-        <h2>CSS</h2>
-        <table class="CSS">
-            <tr>
-                <th>Class</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td>xfRange</td>
-                <td>matches an Element that represents a XForms
-                    <span class="keyword">range</span>
-                    element
-                </td>
-            </tr>
-        </table>
-        <h2>Known Limitations</h2>
-        <p>
-            The rating control is not keyboard accessible.
-        </p>
+        <div class="CSS">
+
+            <table class="CSS">
+                <tr>
+                    <td>xfRange</td>
+                    <td>matches an Element that represents a XForms
+                        <span class="keyword">range</span>
+                        element
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="Limitations">
+            <p>
+                The rating control is not keyboard accessible.
+            </p>
+        </div>
     </body>
 </html>

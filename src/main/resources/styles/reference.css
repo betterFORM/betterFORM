@@ -90,20 +90,38 @@ table {
 }
 
 .xfControl{
-    padding:3px;
+    padding:5px;
 }
 #xforms .CSS {
-    font-size: 0.9em;
+    font-size: 0.7em !important;
+    position:fixed;
+    right:10px;
+    width:80px;
+    border:thin dotted;
+}
+#xforms .CSS table{
+    width:100%;
+    background:#eeeeee;
 }
 
+#xforms .CSS caption{
+    background:#7080A0;
+    color:#eeeeee;
+    padding:3px;
+}
+
+
+/*
 #xforms .CSS th {
     padding: 3px;
     background: #7080A0;
     color: #eeeeee;
 }
+*/
 
 #xforms .CSS td {
     padding: 3px;
+    border:thin dotted;
 }
 
 /*
@@ -117,6 +135,7 @@ table {
 #contentBody{
     font-size:12pt;
     color:#7080A0;
+    margin-right:90px;
 }
 
 .contentBody .dijitTabPaneWrapper > .dijitContentPane {
@@ -287,7 +306,8 @@ pre code .attribute .value {
     color: #C46B47 !important;
 }
 
-.showClass{
+html body #formWrapper #xforms .showClass{
     background:#005A9C !important;
-    color:#dedede;
+    color:#dedede !important;
+    padding:8px;
 }

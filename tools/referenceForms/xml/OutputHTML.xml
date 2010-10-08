@@ -80,43 +80,43 @@
                 </xf:group>
             </div>
         </div>
-        <h2>CSS</h2>
-        <table class="CSS">
-            <tr>
-                <th>Class</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td>xfOutput</td>
-                <td>matches an Element that represents a XForms
-                    <span class="keyword">output</span>
-                    element
-                </td>
-            </tr>
-        </table>
-        <h2>Known Limitations</h2>
-        <p>
-            The HTML markup in the bound instance data node must be either escaped or enclosed within a CDATA section.
-        </p>
-        <h2>Notes</h2>
-        <p>
-            Though the Model Item Properties
-            <span class="keyword">readonly</span>
-            and
-            <span class="keyword">required</span>
-            are shown in the above example they of course cannot be influenced directly via the
-            <span class="keyword">output</span>
-            control but the same node might be bound by other XForms controls that allow data entry. State
-            changes resulting by entering data through other controls will be reflected by the<span class="keyword">
-            output</span>.
-        </p>
-        <p>
-            The
-            <span class="keyword">output</span>
-            is the only control that may leave out the
-            <span class="keyword">label</span>
-            child
-            element and can then be used inline with other content in a page.
-        </p>
+        <div class="CSS">
+
+            <table class="CSS">
+                <tr>
+                    <td>xfOutput</td>
+                    <td>matches an Element that represents a XForms
+                        <span class="keyword">output</span>
+                        element
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="Limitations">
+            <p>
+                The HTML markup in the bound instance data node must be either escaped or enclosed within a CDATA section.
+            </p>
+        </div>
+        <div class="Notes">
+            <p>
+                Though the Model Item Properties
+                <span class="keyword">readonly</span>
+                and
+                <span class="keyword">required</span>
+                are shown in the above example they of course cannot be influenced directly via the
+                <span class="keyword">output</span>
+                control but the same node might be bound by other XForms controls that allow data entry. State
+                changes resulting by entering data through other controls will be reflected by the<span class="keyword">
+                output</span>.
+            </p>
+            <p>
+                The
+                <span class="keyword">output</span>
+                is the only control that may leave out the
+                <span class="keyword">label</span>
+                child
+                element and can then be used inline with other content in a page.
+            </p>
+        </div>
     </body>
 </html>

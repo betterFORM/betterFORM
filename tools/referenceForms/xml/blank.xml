@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>[the title for the form - will be used as HTML title but also as main headline of the page]</title>
+    </head>
+    <body>
+        <div class="description">
+            <p>
+               [general description - of course several paragraphs are possible]
+            </p>
+        </div>
+        <!-- [optional section if it makes sense to link the spec and quickref]-->
+        <!-- [optional section if it makes sense to link the spec and quickref]-->
+        <!-- [optional section if it makes sense to link the spec and quickref]-->
+        <div class="references">
+            <!-- [of course the links below are only examples]-->
+            <a href="#ui-input"/>
+            <a href="#elems-form-controls"/>
+        </div>
+        <!-- [
+            this is the region to put sample xforms code. Everything that is surrounded by <code> tags
+            will be displayed as markup on the page. Section that use <code class="ui"> are rendered on the page.
+            This means you can have hidden ui sections (if ever that will be needed) as long as they are within
+            the <div class="markup">.
+        ]-->
+        <div class="sample">
+            <div class="markup">
+                <xf:model>
+                    <!--[xforms model code gets here]-->
+                    <!--[xforms model code gets here]-->
+                    <!--[xforms model code gets here]-->
+                </xf:model>
+                <code class="ui">
+<!--[ put xforms ui here and make sure it's completely outdented to avoid whitespace in front of rendered markup on the page]-->
+<!--[ put xforms ui here and make sure it's completely outdented to avoid whitespace in front of rendered markup on the page]-->
+<!--[ put xforms ui here and make sure it's completely outdented to avoid whitespace in front of rendered markup on the page]-->
+                </code>
+            </div>
+            <div class="MIPS">
+                <xf:group appearance="full">
+                    <xf:label></xf:label>
+                    <xf:input id="input1-readonly" navindex="-1" ref="input1/@readonly" incremental="true">
+                        <xf:label>readonly</xf:label>
+                    </xf:input>
+                    <xf:input id="input1-required" navindex="-1" ref="input1/@required" incremental="true">
+                        <xf:label>required</xf:label>
+                    </xf:input>
+                    <xf:input id="input1-relevant" navindex="-1" ref="input1/@relevant" incremental="true">
+                        <xf:label>relevant</xf:label>
+                    </xf:input>
+                    <xf:input id="input1-valid" navindex="-1" ref="input1/@constraint" incremental="true">
+                        <xf:label>valid</xf:label>
+                    </xf:input>
+                </xf:group>
+            </div>
+        </div>
+        <div class="CSS">
+
+        </div>
+        <div class="NOTES">
+
+        </div>
+        <div class="LIMITATIONS">
+
+        </div>
+        
+        <h2>CSS</h2>
+        <table class="CSS">
+            <tr>
+                <th>Class</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td title="matches an Element that represents a XForms input element">xfInput</td>
+                <td>matches an Element that represents a XForms input element</td>
+            </tr>
+        </table>
+
+    </body>
+</html>
