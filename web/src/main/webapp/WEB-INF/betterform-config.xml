@@ -137,6 +137,7 @@
         <uri-resolver scheme="http" class="de.betterform.connector.http.HTTPURIResolver"/>
         <uri-resolver scheme="https" class="de.betterform.connector.http.HTTPURIResolver"/>
         <uri-resolver scheme="xmlrpc" class="de.betterform.connector.xmlrpc.XMLRPCURIResolver"/>
+        <uri-resolver scheme="context" class="de.betterform.connector.context.ContextMapResolver"/>
 <!--
         <uri-resolver scheme="context" class="de.betterform.connector.context.ContextResolver"/>
         <uri-resolver scheme="contextobject" class="de.betterform.connector.context.ContextObjectResolver"/>
@@ -159,6 +160,7 @@
         <submission-handler scheme="exec" class="de.betterform.connector.exec.ExecSubmissionHandler"/>
         <submission-handler scheme="xslt" class="de.betterform.connector.xslt.XSLTSubmissionHandler"/>
         <submission-handler scheme="model" class="de.betterform.connector.ModelSubmissionHandler"/>
+        <submission-handler scheme="context" class="de.betterform.connector.context.ContextMapSubmissionHandler"/>
         <!--        <submission-handler scheme="jms" class="de.betterform.connector.jms.JMSSubmissionHandler"/>-->
         <!--
             These connector types are deprecated. Their usage is strongly discouraged,

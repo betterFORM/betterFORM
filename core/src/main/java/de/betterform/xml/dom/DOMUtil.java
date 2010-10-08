@@ -815,6 +815,15 @@ public class DOMUtil {
         }
     }
 
+    public static Node importAndAppendNode(Document document, Node toImport){
+        if(toImport != null){
+            Node imported = document.importNode(toImport,true);
+//            Node root = document.getDocumentElement();
+            return document.appendChild(imported);
+        }
+        return null;
+    }
+
     /**
      * This is a workaround for very strange behaviour of xerces-1.4.2 DOM importNode.
      */
@@ -1015,9 +1024,9 @@ public class DOMUtil {
     public static void prettyPrintDOM(Node node) {
     	if (LOGGER.isTraceEnabled()) {
             try {
-            	LOGGER.trace("DOM Output:");
+//            	LOGGER.trace("DOM Output:");
                 prettyPrintDOM(node, System.out);
-                System.out.println();
+//                System.out.println();
             } catch (Exception e) {
                 e.printStackTrace();
             }
