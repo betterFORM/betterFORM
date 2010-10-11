@@ -105,6 +105,32 @@
 
         <property name="webprocessor.doIncludes" value="true" description="if true the incoming XForms will be scanned for bf:include tags and transformed accordingly"/>
         <property name="admin.mail" value="foo@bar.de" description="a mail address to report problems and errors with forms"/>
+
+        <!--
+             Full classpath of SSLProtocolSocketFactory which should be used by httpclient.
+             For now there is only one implementing Class in betterFORM, which allows verification of a server cert.
+        -->
+        <property name="httpclient.ssl.factory" value="de.betterform.connector.http.ssl.KeyStoreSSLProtocolSocketFactory"/>
+        <!--
+            Specify defaultPort for SSLProtocolSocketFactory for httpclient.
+            If not specified 443 will be used.
+            See: http://hc.apache.org/httpclient-3.x/apidocs/org/apache/commons/httpclient/protocol/Protocol.html
+        -->
+        <property name="httpclient.ssl.factory.defaultPort" value="8443"/>
+        <!--
+           Location of JAVA keystore used by httpclient to verify trusted ssl-certs.
+           If / is omitted in the value "user.home" will be used a relative path.
+           Otherwise an absolute path is expected.
+           Used by: KeyStoreSSLProtocolSocketFactory
+        -->
+        <property name="httpclient.ssl.keystore.path" value="/home/zwobit/test/test/test/client.jks"/>
+        <!--
+            Password to unlock JAVA keystore.
+            Used by: KeyStoreSSLProtocolSocketFactory
+        -->
+        <property name="httpclient.ssl.keystore.passwd" value="changeit"/>
+
+
     </properties>
 
     <error-messages>

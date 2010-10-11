@@ -5,12 +5,16 @@
 
 package de.betterform.connector.http;
 
+import de.betterform.xml.config.Config;
 import org.apache.commons.httpclient.*;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.cookie.CookieSpecBase;
 import org.apache.commons.httpclient.cookie.MalformedCookieException;
 import org.apache.commons.httpclient.methods.*;
+import org.apache.commons.httpclient.protocol.Protocol;
+import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
+import org.apache.commons.httpclient.protocol.SecureProtocolSocketFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import de.betterform.connector.AbstractConnector;
@@ -19,7 +23,6 @@ import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.exception.XFormsInternalSubmitException;
 import de.betterform.xml.xforms.model.submission.RequestHeader;
 import de.betterform.xml.xforms.model.submission.RequestHeaders;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -37,6 +40,7 @@ public class AbstractHTTPConnector extends AbstractConnector {
     private static Log LOGGER = LogFactory.getLog(AbstractHTTPConnector.class);
     public static final String REQUEST_COOKIE = "request-cookie";
     public static final String ACCEPT_LANGUAGE = "Accept-Language";
+    public static final String SSL_PROTOCOL = "ssl-protocol";
 
     /**
      * The response body.
@@ -197,6 +201,15 @@ public class AbstractHTTPConnector extends AbstractConnector {
         //		(new HttpClient()).executeMethod(httpMethod);
         HttpClient client = new HttpClient();
 
+
+
+        if (! getContext().containsKey(SSL_PROTOCOL)) {
+            String protocolPath = Config.getInstance().getProperty("httpclient.ssl.factory");
+            if (protocolPath != null) {
+                initSSLProtocol(protocolPath);
+            }
+        }
+        
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("context params>>>");
             Map map = getContext();
@@ -295,7 +308,14 @@ public class AbstractHTTPConnector extends AbstractConnector {
         }
 
         try {
-            client.executeMethod(httpMethod);
+            if (getContext().containsKey(SSL_PROTOCOL)) {
+                LOGGER.trace("Using customSSL-Protocol-Handler");
+                HostConfiguration hc = new HostConfiguration();
+                hc.setHost(httpMethod.getURI().getHost(), httpMethod.getURI().getPort(), (Protocol) getContext().get(SSL_PROTOCOL));
+                client.executeMethod(hc, httpMethod);
+            } else {
+                client.executeMethod(httpMethod);
+            }
             if (httpMethod.getStatusCode() >= 300) {
                 // Allow 302 only
                 if (httpMethod.getStatusCode() != 302) {
@@ -335,6 +355,33 @@ public class AbstractHTTPConnector extends AbstractConnector {
         httpMethod.setRequestHeader(new Header("Content-Length", String.valueOf(body.getBytes(encoding).length)));
     }
 
+    private void initSSLProtocol(String protocolPath) throws Exception {
+        Protocol sslProtocol;
+            LOGGER.trace("creating sslProtocol ...");
+            LOGGER.trace("ProtocolPath: " + protocolPath);
+            Class sslClass = Class.forName(protocolPath);
+            Object sslObject = sslClass.newInstance();
+            if (sslObject instanceof SecureProtocolSocketFactory) {
+                int defaultPort;
+                if (Config.getInstance().getProperty("httpclient.ssl.factory.defaultPort") != null) {
+                    try {
+                        defaultPort = Integer.parseInt(Config.getInstance().getProperty("httpclient.ssl.factory.defaultPort"));
+                    } catch (NumberFormatException nfe) {
+                        LOGGER.warn("httpclient.ssl.factory.defaultPort ist not parsable as number check your setting in betterform-config.xml!", nfe);
+                        LOGGER.warn("Setting sslPort to 443");
+                        //throw new XFormsConfigException(httpclient.ssl.factory.defaultPort ist not parseable as number check your setting in betterform-config.xml!", nfe);
+                        defaultPort = 443;
+                    }
+                } else {
+                    defaultPort = 443;
+                }
+                LOGGER.trace("DefaultPort: " + defaultPort);
+                sslProtocol = new Protocol("https", (ProtocolSocketFactory) sslObject, defaultPort);
+                Protocol.registerProtocol("https", sslProtocol);
+
+                getContext().put(SSL_PROTOCOL, sslProtocol);
+            }
+    }
 }
 
 //end of class
