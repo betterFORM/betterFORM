@@ -104,6 +104,7 @@ public class InstanceSerializerMap {
      */
     public InstanceSerializer getSerializer(String scheme, String method, String mediatype) {
         InstanceSerializer serializer;
+        method = method.toLowerCase();
         serializer = (InstanceSerializer) this.serializerMap.get(scheme + ":" + method + ":" + mediatype);
         if (serializer == null) {
             serializer = (InstanceSerializer) this.serializerMap.get(scheme + ":" + method + ":*");
