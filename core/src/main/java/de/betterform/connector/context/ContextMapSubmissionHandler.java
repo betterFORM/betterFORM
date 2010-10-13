@@ -18,6 +18,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import javax.xml.transform.TransformerException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -58,7 +59,7 @@ public class ContextMapSubmissionHandler extends AbstractConnector implements Su
     public Map submit(Submission submission, Node instance) throws XFormsException {
 
         if(LOGGER.isTraceEnabled()){
-            LOGGER.trace("submitting instance...");
+            LOGGER.trace("submitting instance...\n");
             DOMUtil.prettyPrintDOM(instance);
         }
 
@@ -69,6 +70,7 @@ public class ContextMapSubmissionHandler extends AbstractConnector implements Su
                 Object xmlNode = ContextMapResolver.getNodeFromContext(contextKey,getContext());
                 
                 if(LOGGER.isTraceEnabled()){
+                    LOGGER.trace("got instance from context...\n");
                     DOMUtil.prettyPrintDOM((Node) xmlNode);
                 }
 
@@ -104,14 +106,24 @@ public class ContextMapSubmissionHandler extends AbstractConnector implements Su
                     if(instance instanceof Element){
                         doc = DOMUtil.newDocument(true,false);
                         DOMUtil.importAndAppendNode(doc,instance);
-                        if(LOGGER.isTraceEnabled()){
-                            LOGGER.trace("storing instance in context...");
-                            DOMUtil.prettyPrintDOM(doc);
-                        }
                     }else if (instance instanceof Document){
-                        doc = (Document) instance;
+//                        doc = (Document) instance;
+                        doc = DOMUtil.newDocument(true,false);
+                        DOMUtil.importAndAppendNode(doc,((Document) instance).getDocumentElement());
+
+
+
                     }else{
                         throw new XFormsException("Node of type '" + instance.getNodeType() + " is not supported");
+                    }
+
+                    if(LOGGER.isTraceEnabled()){
+                        LOGGER.trace("storing instance in context...\n");
+                        try {
+                            DOMUtil.prettyPrintDOM(doc,System.out);
+                        } catch (TransformerException e) {
+                            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                        }
                     }
 
 //                    getContext().put(contextKey, instance);
