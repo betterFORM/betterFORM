@@ -373,9 +373,10 @@ a.active {
     width: 100%;
 }
 
-.xfCompactGroup .xfControl {
+.xfCompactGroup .xfControl{
     clear: both;
-    display: inline;
+    display: block;
+    margin:1px;
 }
 
 .xfCompactGroup .xfControl .xfLabel {
