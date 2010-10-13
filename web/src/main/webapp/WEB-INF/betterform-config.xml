@@ -108,28 +108,32 @@
 
         <!--
              Full classpath of SSLProtocolSocketFactory which should be used by httpclient.
-             For now there is only one implementing Class in betterFORM, which allows verification of a server cert.
+             For now there is only one implementing Class in betterFORM, which allows verification of a server cert (KeyStoreSSLProtocolSocketFactory).
+             SSLProtocolSocketFactory-Handling will be activated if the property is specified.
         -->
-        <property name="httpclient.ssl.factory" value="de.betterform.connector.http.ssl.KeyStoreSSLProtocolSocketFactory"/>
+<!--
+        <property name="httpclient.ssl.factory" value="de.betterform.connector.http.ssl.KeyStoreSSLProtocolSocketFactory" description="Full classpath of SSLProtocolSocketFactory which should be used by httpclient."/>
+-->
         <!--
             Specify defaultPort for SSLProtocolSocketFactory for httpclient.
             If not specified 443 will be used.
             See: http://hc.apache.org/httpclient-3.x/apidocs/org/apache/commons/httpclient/protocol/Protocol.html
         -->
-        <property name="httpclient.ssl.factory.defaultPort" value="8443"/>
+        <property name="httpclient.ssl.factory.defaultPort" value="DEFAULT-SSL-PORT" description="Specify defaultPort for SSLProtocolSocketFactory for httpclient. 443 if not specified."/>
+
         <!--
            Location of JAVA keystore used by httpclient to verify trusted ssl-certs.
            If / is omitted in the value "user.home" will be used a relative path.
            Otherwise an absolute path is expected.
            Used by: KeyStoreSSLProtocolSocketFactory
         -->
-        <property name="httpclient.ssl.keystore.path" value="/home/zwobit/test/test/test/client.jks"/>
+        <property name="httpclient.ssl.keystore.path" value="PATH-TO-KEYSTORE" description="Location of the keystore to be used by httpclient."/>
+
         <!--
             Password to unlock JAVA keystore.
             Used by: KeyStoreSSLProtocolSocketFactory
         -->
-        <property name="httpclient.ssl.keystore.passwd" value="changeit"/>
-
+        <property name="httpclient.ssl.keystore.passwd" value="KEYSTORE-PASSWD" description="Password to unlock keystore."/>
 
     </properties>
 

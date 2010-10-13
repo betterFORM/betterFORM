@@ -59,6 +59,7 @@
 
 package de.betterform.connector.http.ssl;
 
+import de.betterform.connector.http.AbstractHTTPConnector;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
 import org.apache.commons.httpclient.ConnectTimeoutException;
@@ -97,8 +98,8 @@ public class KeyStoreSSLProtocolSocketFactory implements SecureProtocolSocketFac
 
     public KeyStoreSSLProtocolSocketFactory() {
         try {
-            this.keyStorePath = Config.getInstance().getProperty("httpclient.ssl.keystore.path", null);
-            this.keyStorePasswd = Config.getInstance().getProperty("httpclient.ssl.keystore.passwd" , null);
+            this.keyStorePath = Config.getInstance().getProperty(AbstractHTTPConnector.HTTPCLIENT_SSL_KEYSTORE_PATH, null);
+            this.keyStorePasswd = Config.getInstance().getProperty(AbstractHTTPConnector.HTTPCLIENT_SSL_KEYSTORE_PASSWD , null);
         } catch (XFormsConfigException xfce) {
            LOGGER.warn(xfce.getLocalizedMessage(), xfce);
         }
@@ -116,11 +117,11 @@ public class KeyStoreSSLProtocolSocketFactory implements SecureProtocolSocketFac
             try {
                 return keystore.toURI().toURL();
             } catch (MalformedURLException murle) {
-                LOGGER.error("Wrong Syntax in httpclient.ssl.keystore.path", murle);
-                throw new AuthSSLInitializationError("Wrong syntax in httpclient.ssl.keystore.path");
+                LOGGER.error("Wrong Syntax in " + AbstractHTTPConnector.HTTPCLIENT_SSL_KEYSTORE_PATH, murle);
+                throw new AuthSSLInitializationError("Wrong Syntax in " + AbstractHTTPConnector.HTTPCLIENT_SSL_KEYSTORE_PATH);
             }
         } else {
-            throw new AuthSSLInitializationError("You must configure httpclient.ssl.keystore.path in betterform-config.xml!");
+            throw new AuthSSLInitializationError("You must configure "+ AbstractHTTPConnector.HTTPCLIENT_SSL_KEYSTORE_PATH + " in betterform-config.xml!");
         }
     }
 
@@ -130,7 +131,7 @@ public class KeyStoreSSLProtocolSocketFactory implements SecureProtocolSocketFac
             return KeyStoreSSLProtocolSocketFactory.keyStorePasswd;
         }
 
-        throw new AuthSSLInitializationError("You must configure httpclient.ssl.keystore.passwd in betterform-config.xml!");
+        throw new AuthSSLInitializationError("You must configure "+ AbstractHTTPConnector.HTTPCLIENT_SSL_KEYSTORE_PASSWD + " in betterform-config.xml!");
     }
 
     private static KeyStore createKeyStore(final URL url, final String password)
@@ -177,19 +178,19 @@ public class KeyStoreSSLProtocolSocketFactory implements SecureProtocolSocketFac
             TrustManager[] trustmanagers = null;
             if (getKeyStoreURL() != null) {
                 KeyStore keystore = createKeyStore(getKeyStoreURL(), getKeyStorePasswd());
-                if (LOGGER.isDebugEnabled()) {
+                if (LOGGER.isTraceEnabled()) {
                     Enumeration aliases = keystore.aliases();
                     while (aliases.hasMoreElements()) {
                         String alias = (String)aliases.nextElement();
-                        LOGGER.debug("Trusted certificate '" + alias + "':");
+                        LOGGER.trace("Trusted certificate '" + alias + "':");
                         Certificate trustedcert = keystore.getCertificate(alias);
                         if (trustedcert != null && trustedcert instanceof X509Certificate) {
                             X509Certificate cert = (X509Certificate)trustedcert;
-                            LOGGER.debug("  Subject DN: " + cert.getSubjectDN());
-                            LOGGER.debug("  Signature Algorithm: " + cert.getSigAlgName());
-                            LOGGER.debug("  Valid from: " + cert.getNotBefore() );
-                            LOGGER.debug("  Valid until: " + cert.getNotAfter());
-                            LOGGER.debug("  Issuer: " + cert.getIssuerDN());
+                            LOGGER.trace("  Subject DN: " + cert.getSubjectDN());
+                            LOGGER.trace("  Signature Algorithm: " + cert.getSigAlgName());
+                            LOGGER.trace("  Valid from: " + cert.getNotBefore() );
+                            LOGGER.trace("  Valid until: " + cert.getNotAfter());
+                            LOGGER.trace("  Issuer: " + cert.getIssuerDN());
                         }
                     }
                 }

@@ -40,8 +40,22 @@ public class AbstractHTTPConnector extends AbstractConnector {
     private static Log LOGGER = LogFactory.getLog(AbstractHTTPConnector.class);
     public static final String REQUEST_COOKIE = "request-cookie";
     public static final String ACCEPT_LANGUAGE = "Accept-Language";
-    public static final String SSL_PROTOCOL = "ssl-protocol";
 
+    /*
+     * Custom-SSL:
+     * Key for storing custom SSL-protocol
+     */
+    public static final String SSL_CUSTOM_PROTOCOL = "ssl-protocol";
+
+    /*
+     * Custom-SSL:
+     * SSL-factory properties, see betterform-config.xml for description.
+     */
+    public static final String HTTPCLIENT_SSL_FACTORY= "httpclient.ssl.factory";
+    public static final String HTTPCLIENT_SSL_FACTORY_DEFAULTPORT= "httpclient.ssl.factory.defaultPort";
+    public static final String HTTPCLIENT_SSL_KEYSTORE_PATH= "httpclient.ssl.keystore.path";
+    public static final String HTTPCLIENT_SSL_KEYSTORE_PASSWD= "httpclient.ssl.keystore.passwd";
+    
     /**
      * The response body.
      */
@@ -203,10 +217,10 @@ public class AbstractHTTPConnector extends AbstractConnector {
 
 
 
-        if (! getContext().containsKey(SSL_PROTOCOL)) {
-            String protocolPath = Config.getInstance().getProperty("httpclient.ssl.factory");
-            if (protocolPath != null) {
-                initSSLProtocol(protocolPath);
+        if (! getContext().containsKey(AbstractHTTPConnector.SSL_CUSTOM_PROTOCOL)) {
+            String factoryPath = Config.getInstance().getProperty(AbstractHTTPConnector.HTTPCLIENT_SSL_FACTORY);
+            if (factoryPath != null) {
+                initSSLProtocol(factoryPath);
             }
         }
         
@@ -308,10 +322,10 @@ public class AbstractHTTPConnector extends AbstractConnector {
         }
 
         try {
-            if (getContext().containsKey(SSL_PROTOCOL)) {
-                LOGGER.trace("Using customSSL-Protocol-Handler");
+            if (getContext().containsKey(AbstractHTTPConnector.SSL_CUSTOM_PROTOCOL)) {
+                LOGGER.debug("Using customSSL-Protocol-Handler");
                 HostConfiguration hc = new HostConfiguration();
-                hc.setHost(httpMethod.getURI().getHost(), httpMethod.getURI().getPort(), (Protocol) getContext().get(SSL_PROTOCOL));
+                hc.setHost(httpMethod.getURI().getHost(), httpMethod.getURI().getPort(), (Protocol) getContext().get(AbstractHTTPConnector.SSL_CUSTOM_PROTOCOL));
                 client.executeMethod(hc, httpMethod);
             } else {
                 client.executeMethod(httpMethod);
@@ -355,31 +369,30 @@ public class AbstractHTTPConnector extends AbstractConnector {
         httpMethod.setRequestHeader(new Header("Content-Length", String.valueOf(body.getBytes(encoding).length)));
     }
 
-    private void initSSLProtocol(String protocolPath) throws Exception {
+    private void initSSLProtocol(String factoryPath) throws Exception {
         Protocol sslProtocol;
-            LOGGER.trace("creating sslProtocol ...");
-            LOGGER.trace("ProtocolPath: " + protocolPath);
-            Class sslClass = Class.forName(protocolPath);
-            Object sslObject = sslClass.newInstance();
-            if (sslObject instanceof SecureProtocolSocketFactory) {
+            LOGGER.debug("creating sslProtocol ...");
+            LOGGER.debug("ProtocolPath: " + factoryPath);
+            Class sslClass = Class.forName(factoryPath);
+            Object sslFactory = sslClass.newInstance();
+            if (sslFactory instanceof SecureProtocolSocketFactory) {
                 int defaultPort;
-                if (Config.getInstance().getProperty("httpclient.ssl.factory.defaultPort") != null) {
+                if (Config.getInstance().getProperty(AbstractHTTPConnector.HTTPCLIENT_SSL_FACTORY_DEFAULTPORT) != null) {
                     try {
-                        defaultPort = Integer.parseInt(Config.getInstance().getProperty("httpclient.ssl.factory.defaultPort"));
+                        defaultPort = Integer.parseInt(Config.getInstance().getProperty(AbstractHTTPConnector.HTTPCLIENT_SSL_FACTORY_DEFAULTPORT));
                     } catch (NumberFormatException nfe) {
-                        LOGGER.warn("httpclient.ssl.factory.defaultPort ist not parsable as number check your setting in betterform-config.xml!", nfe);
+                        LOGGER.warn(AbstractHTTPConnector.HTTPCLIENT_SSL_FACTORY_DEFAULTPORT + " is not parsable as a number. Check your settings in betterform-config.xml!", nfe);
                         LOGGER.warn("Setting sslPort to 443");
-                        //throw new XFormsConfigException(httpclient.ssl.factory.defaultPort ist not parseable as number check your setting in betterform-config.xml!", nfe);
                         defaultPort = 443;
                     }
                 } else {
                     defaultPort = 443;
                 }
                 LOGGER.trace("DefaultPort: " + defaultPort);
-                sslProtocol = new Protocol("https", (ProtocolSocketFactory) sslObject, defaultPort);
+                sslProtocol = new Protocol("https", (ProtocolSocketFactory) sslFactory, defaultPort);
                 Protocol.registerProtocol("https", sslProtocol);
 
-                getContext().put(SSL_PROTOCOL, sslProtocol);
+                getContext().put(AbstractHTTPConnector.SSL_CUSTOM_PROTOCOL, sslProtocol);
             }
     }
 }
