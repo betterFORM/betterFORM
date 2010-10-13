@@ -70,13 +70,13 @@ public class HTTPURIResolver extends AbstractHTTPConnector implements URIResolve
         String         contentType = (String) header.get("Content-Type");
                        contentType = parseContentType(contentType);
 
-        if (contentType.equalsIgnoreCase("text/plain") || contentType.equalsIgnoreCase("text/html")) {
+        if ("text/plain".equalsIgnoreCase(contentType) || "text/html".equalsIgnoreCase(contentType)) {
             try {
                 return inputStreamToString(responseStream);
             } catch (IOException e) {
                 throw new XFormsException(e);
             }
-        } else if (contentType.equalsIgnoreCase("application/xml") || contentType.equalsIgnoreCase("text/xml") || contentType.equalsIgnoreCase("application/xhtml+xml") ) {
+        } else if ("application/xml".equalsIgnoreCase(contentType) || "text/xml".equalsIgnoreCase(contentType) || "application/xhtml+xml".equalsIgnoreCase(contentType) ) {
             try {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("converting response stream to XML");
@@ -116,9 +116,11 @@ public class HTTPURIResolver extends AbstractHTTPConnector implements URIResolve
      */
     private String parseContentType(String contentType)
     {
-        int semicolonIndex = contentType.indexOf(';');
-        if (semicolonIndex > 0) {
-            contentType = contentType.substring(0, semicolonIndex);
+        if (contentType != null) {
+            int semicolonIndex = contentType.indexOf(';');
+            if (semicolonIndex > 0) {
+                contentType = contentType.substring(0, semicolonIndex);
+            }
         }
         return contentType;
     }
