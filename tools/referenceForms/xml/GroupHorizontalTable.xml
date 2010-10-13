@@ -7,9 +7,12 @@
     <body>
         <div class="description">
             <p>
-                A group with the custom
-                <span class="keyword">appearance</span>
-                'bf:horizontalTable' ...
+                A group with the custom <span class="keyword">appearance</span> 'bf:horizontalTable' use an HTML table
+                for displaying all child controls in one row.
+            </p>
+            <p>
+                This layout allows nesting of other groups. A nested <span class="keyword">group</span> will take
+                one column within the horizontal table.
             </p>
         </div>
         <div class="references">
@@ -44,7 +47,7 @@
                     </xf:bind>
                 </xf:model>
                 <code class="ui">
-<xf:group ref="grouped-data/group" appearance="bf:verticalTable">
+<xf:group ref="grouped-data/group" appearance="bf:horizontalTable">
     <xf:label>Group with 'horizontalTable' appearance</xf:label>
     <xf:input ref="a">
         <xf:label>A-label</xf:label>
@@ -94,7 +97,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>bfVerticalTable</td>
+                    <td>bfHorizontalTable</td>
                     <td>matches an Element that represents a XForms
                         <span class="keyword">group</span>
                         element with
@@ -102,6 +105,23 @@
                         <span class="keyword">appearance</span>
                     </td>
                 </tr>
+                <tr>
+                    <td>xfGroupLabel</td>
+                    <td>matches the <span class="keyword"> label</span> of a <span class="keyword">group</span></td>
+                </tr>
+                <tr>
+                    <td>bfHorizontalTableLabel</td>
+                    <td>matches the <span class="keyword"> label</span> of a control used as table header</td>
+                </tr>
+                <tr>
+                    <td>bfTableCol1</td>
+                    <td>matches the first column of the table. Subsequent columns have the same class but with their respective column number (counted from left to right)</td>
+                </tr>
+                <tr>
+                    <td>bfTableLabel</td>
+                    <td>matches a label of a nested <span class="keyword">group</span></td>
+                </tr>
+
             </table>
         </div>
     </body>

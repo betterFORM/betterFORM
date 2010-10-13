@@ -335,24 +335,14 @@
 
     <!-- this template is used for horizontalTable AND for horizontalColumn appearance -->
     <xsl:template match="xforms:group[@appearance='bf:horizontalTable']" priority="15" name="horizontalTable">
-        <!--
-                <xsl:if test="exists(xforms:group)">
-                    <xsl:message terminate="yes">ERROR: This custom group appearance may not have child groups</xsl:message>
-                </xsl:if>
-        -->
         <xsl:variable name="mip-classes">
             <xsl:call-template name="get-mip-classes"/>
         </xsl:variable>
         <script type="text/javascript">dojo.require("betterform.ui.container.Group");</script><xsl:text>
 </xsl:text>
 
-
-        <xsl:variable name="realAppearance"
-                      select="if(@appearance='bf:horizontalTable') then 'caHorizontalTable' else 'caHorizontalColumn'"/>
-        <table class="xfContainer {$realAppearance} {$mip-classes}" dojoType="betterform.ui.container.Group">
+        <table class="xfContainer bfHorizontalTable {$mip-classes}" dojoType="betterform.ui.container.Group">
             <tr>
-                <!--<td colspan="{count(*[position() &gt; 1 and position() &lt; last()])}" class="caHorizontalTableHeader">-->
-                <!--<td colspan="{count(*[position() &gt; 1]) -1}" class="xfGroupLabel">-->
                 <td colspan="{count(*[position() &gt; 1])}" class="xfGroupLabel">
                     <xsl:if test="exists(xforms:label) and @appearance !='bf:horizontalColumn'">
                         <xsl:apply-templates select="./xforms:label"/>
@@ -364,9 +354,9 @@
                 <!--<xsl:for-each select="*[position() &gt; 1]/xforms:label">-->
                 <xsl:for-each select="*[position() &gt; 1]">
                     <!--<xsl:for-each select="*[position() &gt; 1]">-->
-                    <td class="caHorizontalTableLabel  caTableCol{position()}">
+                    <td class="bfHorizontalTableLabel  bfTableCol{position()}">
                         <xsl:if test="local-name(.) != 'trigger'">
-                            <label id="{@id}-label" for="{@id}-value" class="xfTableLable">
+                            <label id="{@id}-label" for="{@id}-value" class="bfTableLabel">
                                 <xsl:apply-templates select="xforms:label"/>
                             </label>
                         </xsl:if>
@@ -376,7 +366,7 @@
             <tr>
                 <!--<xsl:for-each select="*[position() &gt; 1 and position() &lt; last()]">-->
                 <xsl:for-each select="*[position() &gt; 1 and *[position() != last()]]">
-                    <td class="caHorizontalTableValue">
+                    <td class="bfHorizontalTableValue">
                         <xsl:apply-templates select="."/>
                     </td>
                 </xsl:for-each>

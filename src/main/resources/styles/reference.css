@@ -22,10 +22,13 @@ body {
     left: 0;
     width: 100%;
     z-index:1000;
+	background:#b0c4de;
 }
 
 #boilerPlate {
-    margin: 100px;
+    margin-left:auto;
+	margin-right:auto;
+	width:400px;
 }
 
 #static {
@@ -90,9 +93,6 @@ table {
     background: #eeeeee;
 }
 
-.xfControl{
-    padding:5px;
-}
 #xforms .CSS {
     font-size: 0.7em !important;
     position:fixed;
@@ -311,4 +311,13 @@ html body #formWrapper #xforms .showClass{
     background:#005A9C !important;
     color:#dedede !important;
     padding:8px;
+}
+/* XForms rules that may make it into betterform.css or even xforms.css */
+.xfContainer{
+	display:block;
+}
+.xfContainer .xfControl{
+    padding:5px;
+	display:block;
+	margin:1px;
 }

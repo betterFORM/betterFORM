@@ -56,6 +56,7 @@
         dojo.require("betterform.ui.container.Switch");
         dojo.require("betterform.ui.container.Repeat");
         dojo.require("betterform.ui.container.RepeatItem");
+		dojo.require("dijit.Tooltip");
 //        dojo.require("dojox.layout.FloatingPane");
 
         function addToDocument(id) {
@@ -75,6 +76,27 @@
             dojo.byId('xforms').style.display = "none";
             dojo.byId('static').style.display = "block";
         }
+
+		function showClass(cssClass){
+			dojo.query('.sample .'+ cssClass).forEach(function(item){
+				dojo.addClass(item,'showClass');
+			});
+		}
+		function hideClass(cssClass){
+			dojo.query('.sample .'+ cssClass).forEach(function(item){
+				dojo.removeClass(item,'showClass');
+			});
+		}
+		
+		dojo.addOnLoad(function(){
+			  new dijit.Tooltip({
+				 connectId: ["navMenu"],
+				 label: "use the menu to select forms"
+			  });
+
+//			dijit.byId("navMenu").focus();
+		});
+
     </script>
 
 
@@ -86,15 +108,16 @@
             margin: 35px 20px 20px 20px;
         }
         #menuHint{
+			opacity:0;
             position:absolute;
             left:5px;
             top:25px;
-            padding:12px;
-            paddding-left:30px;
+            padding:23px 12px 18px 45px;
             -moz-border-radius:10px;
             -webkit-border-radius:10px;
-            border:3px solid #b0c4de;
-            background:url(../../resources/images/icons/tux/arrow-green.png) left no-repeat;
+            border:1px solid #4682b4;
+            background:url(../../resources/images/icons/tux/arrow-green.png) left top no-repeat;
+			background-color:#b0c4de;
 
         }
             /*
@@ -420,6 +443,7 @@
 <!-- ######################### Content here ################################## -->
 
     <div dojoType="dijit.MenuBar" id="navMenu">
+
         <div dojoType="dijit.PopupMenuBarItem">
                             <span>
                                 Controls

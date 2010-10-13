@@ -324,10 +324,12 @@
     </xsl:template>
 
     <xsl:template match="div[@class='Notes']">
+        <h2>Notes</h2>
         <xsl:copy-of select="."/>
     </xsl:template>
 
     <xsl:template match="div[@class='Limitations']">
+        <h2>Limitations</h2>
         <xsl:copy-of select="."/>
     </xsl:template>
 

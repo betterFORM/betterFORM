@@ -457,7 +457,7 @@ a.active {
 /* ############################## CUSTOM GROUP STYLES ############################## */
 /* ############################## CUSTOM GROUP STYLES ############################## */
 
-.caHorizontalTableValue > .xfControl > .xfLabel {
+.bfHorizontalTableValue > .xfControl > .xfLabel {
     display: none;
 }
 
@@ -484,42 +484,42 @@ a.active {
 .bfVerticalTableValue {
 }
 
-.caHorizontalTable {
+.bfHorizontalTable {
 /*border:thin dotted;*/
     overflow: auto;
 }
 
-.caHorizontalTable td {
+.bfHorizontalTable td {
     vertical-align: top;
 }
 
-.caHorizontalTable .xfLabel {
+.bfHorizontalTable .xfLabel {
     display: none;
 }
 
-.caHorizontalTableValue {
+.bfHorizontalTableValue {
 
 }
 
-.caHorizontalTableLabel {
+.bfHorizontalTableLabel {
 
 }
 
-.caHorizontalTableValue .caHorizontalTableHeader {
+.bfHorizontalTableValue .bfHorizontalTableHeader {
     display: none;
 }
 
-.caHorizontalTableValue .caHorizontalTableLabel {
+.bfHorizontalTableValue .bfHorizontalTableLabel {
 /*display:none;*/
 }
 
 /*
-.caHorizontalTable td{
+.bfHorizontalTable td{
     vertical-align:top;
 }
 */
 /* hide duplicate group-labels for horizontal groups */
-.caHorizontalTable .xfContainer .xfGroupLabel {
+.bfHorizontalTable .xfContainer .xfGroupLabel {
     display: none;
 }
 
