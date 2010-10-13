@@ -14,27 +14,13 @@
     these rules in your own stylesheet which you import in the document or by
     inline style rules defined in the document.
 */
-.xfDisabled iframe {
-    display: none;
-}
-
-.xfDisabled label {
-    display: none;
-}
-
-.xfDisabled .xfValue {
-    display: none;
-}
-
-.xfDisabled {
-    display: none;
-}
-
-.xfDisabled .xfHelpIcon {
-    display: none;
-}
-
-.xfDisabled span {
+.xfDisabled iframe,
+.xfDisabled label,
+.xfDisabled label ,
+.xfDisabled .xfValue,
+.xfDisabled .xfHelpIcon,
+.xfDisabled span,
+.xfDisabled .xfGroupLabel{
     display: none;
 }
 

@@ -233,7 +233,7 @@
                 of the first control into the lefthand column -->
                         <xsl:when test="local-name()='group' and ./@appearance='bf:horizontalColumn'">
                             <tr>
-                                <td class="caLabelColumn">
+                                <td class="bfLabelColumn">
                                     <!-- use the label of the nested group for the left column -->
                                     <xsl:value-of select="xforms:label"/>
                                 </td>
@@ -325,16 +325,17 @@
     <!-- ####################################### custom group with horizontal layout ############################## -->
     <!-- ######################################################################################################## -->
 
-
     <!-- appearance horizontalColumn allows to be nested into a verticalTable and display its labels in the left
     column of the vertical table. All other controls will be wrapped in a horizontal group and be written to the
     right column. -->
     <xsl:template match="xforms:group[@appearance='bf:horizontalColumn']" priority="15">
+        <xsl:call-template name="copy-style-attribute"/>
         <xsl:call-template name="horizontalTable"/>
     </xsl:template>
 
     <!-- this template is used for horizontalTable AND for horizontalColumn appearance -->
     <xsl:template match="xforms:group[@appearance='bf:horizontalTable']" priority="15" name="horizontalTable">
+        
         <xsl:variable name="mip-classes">
             <xsl:call-template name="get-mip-classes"/>
         </xsl:variable>
@@ -350,10 +351,7 @@
                 </td>
             </tr>
             <tr>
-                <!--<xsl:for-each select="*[position() &gt; 1 and position() &lt; last()]/xforms:label">-->
-                <!--<xsl:for-each select="*[position() &gt; 1]/xforms:label">-->
                 <xsl:for-each select="*[position() &gt; 1]">
-                    <!--<xsl:for-each select="*[position() &gt; 1]">-->
                     <td class="bfHorizontalTableLabel  bfTableCol{position()}">
                         <xsl:if test="local-name(.) != 'trigger'">
                             <label id="{@id}-label" for="{@id}-value" class="bfTableLabel">
@@ -364,7 +362,6 @@
                 </xsl:for-each>
             </tr>
             <tr>
-                <!--<xsl:for-each select="*[position() &gt; 1 and position() &lt; last()]">-->
                 <xsl:for-each select="*[position() &gt; 1 and *[position() != last()]]">
                     <td class="bfHorizontalTableValue">
                         <xsl:apply-templates select="."/>

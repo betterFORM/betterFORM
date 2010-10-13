@@ -19,7 +19,7 @@
         </div>
         <div class="references">
             <a href="#ui-group"/>
-            <a href="#elems-form-controls"/>
+            <a href="#Switch"/>
         </div>
         <div class="sample">
             <div class="markup">
@@ -67,32 +67,34 @@
         <xf:label>Dddd-label</xf:label>
     </xf:input>
 
-    <div style="padding:5px;color:darkgreen;font-size:14pt;">this following group shows all labels
-        in the left column
-    </div>
+    <div style="padding:5px;color:darkgreen;font-size:14pt;">this is a simple DIV in between groups</div>
 
+    <div style="display:block;width:400px;font-size:10pt;">The group below uses appearance="bf:horizontalColumn" inside a verticalTable layout to place labels
+    in the left column while all controls will be rendered in the right column. With CSS the control labels can
+    be hidden if wanted.</div>
     <xf:group appearance="bf:horizontalColumn">
-        <xf:label>A-label / Bb-label / Ccc-label / Dddd-label</xf:label>
+        <xf:label style="border:thin solid lightsteelblue;">A-label / Bb-label</xf:label>
         <xf:input ref="a">
             <xf:label>A-label</xf:label>
         </xf:input>
         <xf:input ref="b">
             <xf:label>Bb-label</xf:label>
         </xf:input>
-        <xf:input ref="c">
-            <xf:label>Ccc-label</xf:label>
-        </xf:input>
-        <xf:input ref="d">
-            <xf:label>Dddd-label</xf:label>
-        </xf:input>
     </xf:group>
 
-    <div style="padding:5px;color:darkgreen;font-size:14pt;">this is a simple div Element nested
-        within the group
+    <div style="display:block;width:400px;font-size:10pt;margin:10px;">
+        The following two controls are part of the outer group again. Please note that the column width is maintained
+        though there are DIVs and other groups in between.
     </div>
+    <xf:input ref="c">
+        <xf:label>Ccc-label</xf:label>
+    </xf:input>
+    <xf:input ref="d">
+        <xf:label>Dddd-label</xf:label>
+    </xf:input>
 
     <xf:group>
-        <xf:label>no appearance group</xf:label>
+        <xf:label>a group with no appearance at all</xf:label>
         <xf:input ref="a">
             <xf:label>A-label</xf:label>
         </xf:input>
@@ -177,9 +179,6 @@
         <xf:input ref="c">
             <xf:label>Ccc-label</xf:label>
         </xf:input>
-        <xf:input ref="d">
-            <xf:label>Dddd-label</xf:label>
-        </xf:input>
     </xf:group>
 </xf:group>
                 </code>
@@ -217,6 +216,10 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>xfGroup</td>
+                    <td></td>
+                </tr>
+                <tr>
                     <td>bfVerticalTable</td>
                     <td>matches an Element that represents a XForms
                         <span class="keyword">group</span>
@@ -224,6 +227,34 @@
                         'bf:verticalTable'
                         <span class="keyword">appearance</span>
                     </td>
+                </tr>
+                <tr>
+                    <td>xfGroupLabel</td>
+                    <td>matches the <span class="keyword"> label</span> of a <span class="keyword">group</span></td>
+                </tr>                                
+                <tr>
+                    <td>bfLabelColumn</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>bfHorizontalTable</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>bfHorizontalTableLabel</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>xfMinimalGroup</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>xfCompactGroup</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>xfFullGroup</td>
+                    <td></td>
                 </tr>
             </table>
         </div>

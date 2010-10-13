@@ -51,7 +51,7 @@ table {
     font-size: 12pt;
     color: #7080A0;
     margin-top: 45px;
-    margin-right:80px;
+    margin-right:160px;
 }
 
 #xforms p {
@@ -97,8 +97,9 @@ table {
     font-size: 0.7em !important;
     position:fixed;
     right:10px;
-    width:80px;
+    width:150px;
     border:thin dotted;
+	z-index:999;
 }
 #xforms .CSS table{
     width:100%;
@@ -311,6 +312,12 @@ html body #formWrapper #xforms .showClass{
     background:#005A9C !important;
     color:#dedede !important;
     padding:8px;
+}
+
+/* especially for GroupVerticalTableComplex  - should not match other files */
+#xforms .xfContainer .xfContainer{
+	margin-top:20px;
+	margin-bottom:20px;
 }
 /* XForms rules that may make it into betterform.css or even xforms.css */
 .xfContainer{

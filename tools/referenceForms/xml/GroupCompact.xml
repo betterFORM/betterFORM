@@ -13,7 +13,7 @@
         </div>
         <div class="references">
             <a href="#ui-group"/>
-            <a href="#elems-form-controls"/>
+            <a href="#Switch"/>
         </div>
         <div class="sample">
             <div class="markup">
@@ -100,10 +100,14 @@
                         <span class="keyword">appearance</span>
                     </td>
                 </tr>
+                <tr>
+                    <td>xfGroupLabel</td>
+                    <td>matches the <span class="keyword"> label</span> of a <span class="keyword">group</span></td>
+                </tr>                
             </table>
         </div>
         <div class="Limitations">
-            <p>There is no way to show the invalidity of a compact <span class="keyword">group</span> currently as the <span class="keyword">xfInvalid</span> class sits
+            <p>There is no way to show the invalidity of a <span class="keyword">group</span> currently as the <span class="keyword">xfInvalid</span> class sits
             on the <span class="keyword">group</span> element itself.</p>
         </div>        
     </body>
