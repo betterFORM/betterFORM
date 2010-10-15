@@ -315,10 +315,6 @@ html body #formWrapper #xforms .showClass{
 }
 
 /* especially for GroupVerticalTableComplex  - should not match other files */
-#xforms .xfContainer .xfContainer{
-	margin-top:20px;
-	margin-bottom:20px;
-}
 /* XForms rules that may make it into betterform.css or even xforms.css */
 .xfContainer{
 	display:block;

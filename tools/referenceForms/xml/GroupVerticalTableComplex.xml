@@ -5,6 +5,9 @@
         <title>Example of complex nested group layout</title>
 
         <style type="text/css">
+            .sample .xfLabel,.sample .xfValue{
+				font-size:9pt;
+			}
             .xfContainer .xfGroupLabel{
 				color:steelblue;
 				font-size:1.2em;
@@ -18,6 +21,14 @@
 			.xfContainer{
 				margin:2px;
 				border:thin dotted #b0c4de;
+			}
+            #xforms .xfContainer .xfContainer{
+                margin-top:20px;
+                margin-bottom:20px;
+				display:inline-block;
+            }
+			#VerticalGroupHTML{
+				overflow:auto;
 			}
         </style>
     </head>
