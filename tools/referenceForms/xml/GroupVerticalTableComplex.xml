@@ -3,18 +3,30 @@
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>Example of complex nested group layout</title>
+
+        <style type="text/css">
+            .xfContainer .xfGroupLabel{
+				color:steelblue;
+				font-size:1.2em;
+				margin-bottom:10px;
+				border-bottom:thin solid;
+			}
+			.bfGroupLabelLeft .bfHorizontalTable .xfGroupLabel,
+			.bfGroupLabelLeft .bfHorizontalTable .bfHorizontalTableLabel{
+				/*display:none;*/
+			}
+			.xfContainer{
+				margin:2px;
+				border:thin dotted #b0c4de;
+			}
+        </style>
     </head>
     <body>
         <div class="description">
+            <p>This example shows how different appearances of groups can be used for layout.</p>
             <p>
-                A group with the custom
-                <span class="keyword">appearance</span>
-                'bf:verticalTable' is largely the same
-                as a full group except that is uses an HTML table for left/right aligning labels and controls.
-                This in some cases makes it easier to nest groups as well as optimize the space the respective labels
-                take. With CSS you need to specify a fixed width for the labels which is problematic when labels differ
-                a lot in length. Further labels that do not fit the specified width may corrupt your layout. The use of
-                tables avoids those problems.
+                This example uses an appearance of 'bf:VerticalTable' as outer group. This contains simple controls but also
+                some HTML elements and nested groups.
             </p>
         </div>
         <div class="references">
@@ -69,32 +81,8 @@
 
     <div style="padding:5px;color:darkgreen;font-size:14pt;">this is a simple DIV in between groups</div>
 
-    <div style="display:block;width:400px;font-size:10pt;">The group below uses appearance="bf:horizontalColumn" inside a verticalTable layout to place labels
-    in the left column while all controls will be rendered in the right column. With CSS the control labels can
-    be hidden if wanted.</div>
-    <xf:group appearance="bf:horizontalColumn">
-        <xf:label style="border:thin solid lightsteelblue;">A-label / Bb-label</xf:label>
-        <xf:input ref="a">
-            <xf:label>A-label</xf:label>
-        </xf:input>
-        <xf:input ref="b">
-            <xf:label>Bb-label</xf:label>
-        </xf:input>
-    </xf:group>
-
-    <div style="display:block;width:400px;font-size:10pt;margin:10px;">
-        The following two controls are part of the outer group again. Please note that the column width is maintained
-        though there are DIVs and other groups in between.
-    </div>
-    <xf:input ref="c">
-        <xf:label>Ccc-label</xf:label>
-    </xf:input>
-    <xf:input ref="d">
-        <xf:label>Dddd-label</xf:label>
-    </xf:input>
-
     <xf:group>
-        <xf:label>a group with no appearance at all</xf:label>
+        <xf:label>a first nested group with no appearance at all</xf:label>
         <xf:input ref="a">
             <xf:label>A-label</xf:label>
         </xf:input>
@@ -108,6 +96,23 @@
             <xf:label>Dddd-label</xf:label>
         </xf:input>
     </xf:group>
+    
+
+
+
+
+
+    <div style="display:block;width:400px;font-size:10pt;margin:10px;">
+        The following two controls are part of the outer group again. Please note that the column width is maintained
+        though there are DIVs and other groups in between.
+    </div>
+    <xf:input ref="c">
+        <xf:label>Ccc-label</xf:label>
+    </xf:input>
+    <xf:input ref="d">
+        <xf:label>Dddd-label</xf:label>
+    </xf:input>
+
 
     <xf:group appearance="minimal">
         <xf:label>minimal group</xf:label>
@@ -149,24 +154,7 @@
         <xf:input ref="b">
             <xf:label>Bb-label</xf:label>
         </xf:input>
-        <xf:input ref="c">
-            <xf:label>Ccc-label</xf:label>
-        </xf:input>
-        <xf:input ref="d">
-            <xf:label>Dddd-label</xf:label>
-        </xf:input>
     </xf:group>
-
-    <xf:group appearance="bf:verticalTable">
-        <xf:label>vertical group</xf:label>
-        <xf:input ref="a">
-            <xf:label>A-label</xf:label>
-        </xf:input>
-        <xf:input ref="b">
-            <xf:label>Bb-label</xf:label>
-        </xf:input>
-    </xf:group>
-
 
     <xf:group appearance="bf:horizontalTable">
         <xf:label>horizontal group</xf:label>
@@ -180,6 +168,42 @@
             <xf:label>Ccc-label</xf:label>
         </xf:input>
     </xf:group>
+
+    <div style="display:block;width:400px;font-size:10pt;">The group below uses appearance="bf:GroupLabelLeft" inside a verticalTable layout to place labels
+    in the left column while all controls will be rendered in the right column. With CSS the control labels can
+    be hidden if wanted.</div>
+    <xf:group appearance="bf:GroupLabelLeft">
+        <xf:label style="border:thin solid lightsteelblue;">A-label / Bb-label</xf:label>
+        <xf:input ref="a">
+            <xf:label>A-label</xf:label>
+        </xf:input>
+        <xf:input ref="b">
+            <xf:label>Bb-label</xf:label>
+        </xf:input>
+    </xf:group>
+
+    <xf:group appearance="compact">
+        <xf:label>two vertical groups wrapped in a compact group</xf:label>
+        <xf:group appearance="bf:verticalTable">
+            <xf:label>left group</xf:label>
+            <xf:input ref="a">
+                <xf:label>A-label</xf:label>
+            </xf:input>
+            <xf:input ref="b">
+                <xf:label>Bb-label</xf:label>
+            </xf:input>
+        </xf:group>
+        <xf:group appearance="bf:verticalTable">
+            <xf:label>right group</xf:label>
+            <xf:input ref="c">
+                <xf:label>Ccc-label</xf:label>
+            </xf:input>
+            <xf:input ref="d">
+                <xf:label>Dddd-label</xf:label>
+            </xf:input>
+        </xf:group>
+    </xf:group>
+
 </xf:group>
                 </code>
             </div>
@@ -216,8 +240,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>xfGroup</td>
-                    <td></td>
+                    <td>xfGroupLabel</td>
+                    <td>matches the <span class="keyword"> label</span> of a <span class="keyword">group</span></td>
                 </tr>
                 <tr>
                     <td>bfVerticalTable</td>
@@ -229,32 +253,47 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>xfGroupLabel</td>
-                    <td>matches the <span class="keyword"> label</span> of a <span class="keyword">group</span></td>
-                </tr>                                
-                <tr>
-                    <td>bfLabelColumn</td>
-                    <td></td>
+                    <td>bfVerticalTableLabel</td>
+                    <td>matches the label column of a vertical table layout
+                    </td>
                 </tr>
                 <tr>
-                    <td>bfHorizontalTable</td>
-                    <td></td>
+                    <td>bfVerticalTableValue</td>
+                    <td>matches the value column of a vertical table layout
+                    </td>
                 </tr>
                 <tr>
-                    <td>bfHorizontalTableLabel</td>
-                    <td></td>
+                    <td>bfVerticalTableInfo</td>
+                    <td>matches the info column of a vertical table layout
+                    </td>
+                </tr>
+                <tr>
+                    <td>xfGroup</td>
+                    <td>tbd</td>
                 </tr>
                 <tr>
                     <td>xfMinimalGroup</td>
-                    <td></td>
+                    <td>tbd</td>
                 </tr>
                 <tr>
                     <td>xfCompactGroup</td>
-                    <td></td>
+                    <td>tbd</td>
                 </tr>
                 <tr>
                     <td>xfFullGroup</td>
-                    <td></td>
+                    <td>tbd</td>
+                </tr>
+                <tr>
+                    <td>bfHorizontalTable</td>
+                    <td>tbd</td>
+                </tr>
+                <tr>
+                    <td>bfHorizontalTableLabel</td>
+                    <td>tbd</td>
+                </tr>
+                <tr>
+                    <td>bfGroupLabelLeft</td>
+                    <td>tbd</td>
                 </tr>
             </table>
         </div>

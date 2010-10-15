@@ -51,14 +51,14 @@
     
 }
 
-.InlineRoundBordersAlert .caVerticalTableLabel,
+.InlineRoundBordersAlert .bfVerticalTableLabel,
 .InlineRoundBordersAlert .caLabelColumn {
     padding-right: 5px;
     width: 23%;
     text-align:right;
 }
 
-.InlineRoundBordersAlert .caVerticalTableValue {
+.InlineRoundBordersAlert .bfVerticalTableValue {
     width: 24%;
     height:29px;
     padding-bottom:5px;

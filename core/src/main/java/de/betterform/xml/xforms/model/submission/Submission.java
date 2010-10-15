@@ -922,7 +922,7 @@ public class Submission extends BindingElement implements DefaultAction {
         if(resource.indexOf("#") != -1){
             // detected a fragment so extract that from our result Document
             String fragmentid = resource.substring(resource.indexOf("#")+1);
-            embedElement = DOMUtil.getFragment(result,fragmentid);
+            embedElement = DOMUtil.getById(result,fragmentid);
         }
 
         // Map eventInfo = constructEventInfo(response);

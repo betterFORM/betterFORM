@@ -229,7 +229,7 @@
             <xsl:when test="$useCDN='true'">
                 <script type="text/javascript">
                     var djConfig = {
-                    debugAtAllCosts:<xsl:value-of select="$debug-enabled"/>,
+                    debugAtAllCosts:false,
                     locale:'<xsl:value-of select="$locale"/>',
                     isDebug:<xsl:value-of select="$debug-enabled"/>,
                     baseUrl:"<xsl:value-of select="concat($contextroot,$scriptPath,'release/dojo/')"/>",

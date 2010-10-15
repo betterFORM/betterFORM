@@ -65,13 +65,13 @@
     padding-top: 10px;
 }
 
-#registration .caVerticalTableLabel {
+#registration .bfVerticalTableLabel {
     padding-right: 5px;
     width: 23%;
     text-align: right;
 }
 
-#registration .caVerticalTableValue {
+#registration .bfVerticalTableValue {
     width: 24%;
 }
 

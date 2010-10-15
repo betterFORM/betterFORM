@@ -62,14 +62,14 @@ public class DOMUtil {
             if(fragment.indexOf("?") != -1){
                 fragment = fragment.substring(0,fragment.indexOf("?"));
             }
-            return getFragment(document,fragment);
+            return getById(document,fragment);
         }
 
         return document;
     }
 
 
-    public static Node getFragment(Document in, String fragmentId) throws XFormsException {
+    public static Node getById(Document in, String fragmentId) throws XFormsException {
         Node node = XPathUtil.evaluateAsSingleNode(in, "//*[@id='" + fragmentId + "']");
         return node;
     }

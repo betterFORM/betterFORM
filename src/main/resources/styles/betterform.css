@@ -367,7 +367,9 @@ a.active {
 
 .xfCompactGroup {
 }
-
+.xfCompactGroup .xfContainer{
+	display:inline-block;
+}
 .xfCompactGroup .xfGroupLabel {
     display: block;
     width: 100%;
@@ -461,7 +463,7 @@ a.active {
     display: none;
 }
 
-.bfVerticalTable .caHorizontalColumn .xfLabel {
+.bfVerticalTable .bfGroupLabelLeft .xfLabel {
     display: none;
 }
 

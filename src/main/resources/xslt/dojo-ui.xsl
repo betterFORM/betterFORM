@@ -219,6 +219,7 @@
         <script type="text/javascript">dojo.require("betterform.ui.container.Group");</script><xsl:text>
 </xsl:text>
 
+        <xsl:variable name="bfGroupLabelLeft"> </xsl:variable>
         <table cellspacing="0" cellpadding="0" class="xfContainer bfVerticalTable {$mip-classes}" id="{$group-id}"
                dojoType="betterform.ui.container.Group">
             <xsl:if test="exists(xforms:label)">
@@ -229,11 +230,11 @@
             <tbody>
                 <xsl:for-each select="*[not(local-name()='label')]">
                     <xsl:choose>
-                        <!-- if we got a group with appearance bf:horizontalColumn we put the label
+                        <!-- if we got a group with appearance bf:GroupLabelLeft we put the label
                 of the first control into the lefthand column -->
-                        <xsl:when test="local-name()='group' and ./@appearance='bf:horizontalColumn'">
-                            <tr>
-                                <td class="bfLabelColumn">
+                        <xsl:when test="local-name()='group' and ./@appearance='bf:GroupLabelLeft'">
+                            <tr class="bfGroupLabelLeft">
+                                <td>
                                     <!-- use the label of the nested group for the left column -->
                                     <xsl:value-of select="xforms:label"/>
                                 </td>
@@ -259,7 +260,7 @@
                         <xsl:otherwise>
                             <xsl:if test="exists(node())">
                                 <tr>
-                                    <td class="caVerticalTableLabel" valign="top">
+                                    <td class="bfVerticalTableLabel" valign="top">
                                         <xsl:variable name="label-classes">
                                             <xsl:call-template name="assemble-label-classes"/>
                                         </xsl:variable>
@@ -269,7 +270,7 @@
                                             </label>
                                         </xsl:if>
                                     </td>
-                                    <td class="caVerticalTableValue" valign="top">
+                                    <td class="bfVerticalTableValue" valign="top">
                                         <xsl:apply-templates select="." mode="table"/>
                                     </td>
                                     <td class="bfVerticalTableInfo" valign="top">
@@ -325,15 +326,15 @@
     <!-- ####################################### custom group with horizontal layout ############################## -->
     <!-- ######################################################################################################## -->
 
-    <!-- appearance horizontalColumn allows to be nested into a verticalTable and display its labels in the left
+    <!-- appearance ColumnLeft allows to be nested into a verticalTable and display its labels in the left
     column of the vertical table. All other controls will be wrapped in a horizontal group and be written to the
     right column. -->
-    <xsl:template match="xforms:group[@appearance='bf:horizontalColumn']" priority="15">
+    <xsl:template match="xforms:group[@appearance='bf:GroupLabelLeft']" priority="15">
         <xsl:call-template name="copy-style-attribute"/>
         <xsl:call-template name="horizontalTable"/>
     </xsl:template>
 
-    <!-- this template is used for horizontalTable AND for horizontalColumn appearance -->
+    <!-- this template is used for horizontalTable AND for ColumnLeft appearance -->
     <xsl:template match="xforms:group[@appearance='bf:horizontalTable']" priority="15" name="horizontalTable">
         
         <xsl:variable name="mip-classes">
@@ -345,7 +346,7 @@
         <table class="xfContainer bfHorizontalTable {$mip-classes}" dojoType="betterform.ui.container.Group">
             <tr>
                 <td colspan="{count(*[position() &gt; 1])}" class="xfGroupLabel">
-                    <xsl:if test="exists(xforms:label) and @appearance !='bf:horizontalColumn'">
+                    <xsl:if test="exists(xforms:label) and @appearance !='bf:GroupLabelLeft'">
                         <xsl:apply-templates select="./xforms:label"/>
                     </xsl:if>
                 </td>

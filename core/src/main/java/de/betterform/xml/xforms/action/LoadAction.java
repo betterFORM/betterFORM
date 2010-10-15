@@ -22,6 +22,8 @@ import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.model.submission.AttributeOrValueChild;
 import de.betterform.xml.xforms.ui.RepeatItem;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
+import net.sf.saxon.dom.NodeWrapper;
+import net.sf.saxon.value.StringValue;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
@@ -34,6 +36,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -52,7 +55,7 @@ public class LoadAction extends AbstractBoundAction {
      * Creates a load action implementation.
      *
      * @param element the element.
-     * @param model the context model.
+     * @param model   the context model.
      */
     public LoadAction(Element element, Model model) {
         super(element, model);
@@ -66,7 +69,7 @@ public class LoadAction extends AbstractBoundAction {
     public void init() throws XFormsException {
         super.init();
 
-        this.resource= new AttributeOrValueChild(this.element, this.model, RESOURCE_ATTRIBUTE);
+        this.resource = new AttributeOrValueChild(this.element, this.model, RESOURCE_ATTRIBUTE);
         this.resource.init();
 
         this.showAttribute = getXFormsAttribute(SHOW_ATTRIBUTE);
@@ -85,7 +88,7 @@ public class LoadAction extends AbstractBoundAction {
      * Performs the <code>load</code> action.
      *
      * @throws XFormsException if an error occurred during <code>load</code>
-     * processing.
+     *                         processing.
      */
     public void perform() throws XFormsException {
         String bindAttribute = getXFormsAttribute(BIND_ATTRIBUTE);
@@ -102,9 +105,9 @@ public class LoadAction extends AbstractBoundAction {
         try {
             //todo: needs refactoring
             updateXPathContext();
-            if("none".equals(this.showAttribute)){
-              //todo: dirty dirty dirty
-                String evaluatedTarget =evalAttributeValueTemplates(this.targetAttribute,this.element);
+            if ("none".equals(this.showAttribute)) {
+                //todo: dirty dirty dirty
+                String evaluatedTarget = evalAttributeValueTemplates(this.targetAttribute, this.element);
 //                Element targetElem = this.container.getElementById(evaluatedTarget);
                 Element targetElem = getTargetElement(evaluatedTarget);
                 destroyembeddedModels(targetElem);
@@ -112,14 +115,13 @@ public class LoadAction extends AbstractBoundAction {
                 HashMap map = new HashMap();
 
 
-
                 map.put("show", this.showAttribute);
-                if(isRepeated()){
-                    map.put("nameTarget",evaluatedTarget);
-                    String idForNamedElement = getXFormsAttribute(getTargetElement(evaluatedTarget),"id");
+                if (isRepeated()) {
+                    map.put("nameTarget", evaluatedTarget);
+                    String idForNamedElement = getXFormsAttribute(getTargetElement(evaluatedTarget), "id");
                     map.put("xlinkTarget", idForNamedElement);
 
-                }else{
+                } else {
                     map.put("xlinkTarget", evaluatedTarget);
                 }
 
@@ -129,10 +131,9 @@ public class LoadAction extends AbstractBoundAction {
 
             if (this.resource.isAvailable()) {
                 relativeURI = this.resource.getValue();
-            }
-            else {
+            } else {
 
-                if (this.nodeset ==null || this.nodeset.size() == 0) {
+                if (this.nodeset == null || this.nodeset.size() == 0) {
                     getLogger().warn(this + " perform: nodeset '" + getLocationPath() + "' is empty");
                     return;
                 }
@@ -160,13 +161,13 @@ public class LoadAction extends AbstractBoundAction {
 
 //        if(this.targetAttribute == null) return;
         //todo: handle multiple params
-        if(absoluteURI.indexOf("?") > 0){
-            String name = absoluteURI.substring(absoluteURI.indexOf("?")+1);
-            String value = name.substring(name.indexOf("=")+1,name.length());
-            name = name.substring(0,name.indexOf("="));
-            this.container.getProcessor().setContextParam(name,value);
+        if (absoluteURI.indexOf("?") > 0) {
+            String name = absoluteURI.substring(absoluteURI.indexOf("?") + 1);
+            String value = name.substring(name.indexOf("=") + 1, name.length());
+            name = name.substring(0, name.indexOf("="));
+            this.container.getProcessor().setContextParam(name, value);
         }
-        if(this.targetAttribute == null){
+        if (this.targetAttribute == null) {
             map.put("uri", absoluteURI);
             map.put("show", this.showAttribute);
 
@@ -176,52 +177,55 @@ public class LoadAction extends AbstractBoundAction {
         }
 
 
-        if(!("embed".equals(this.showAttribute))){
-            throw new XFormsException("@show must be 'embed' if @target is given but was: '" + this.showAttribute + "' on Element "  + DOMUtil.getCanonicalPath(this.element));
+        if (!("embed".equals(this.showAttribute))) {
+            throw new XFormsException("@show must be 'embed' if @target is given but was: '" + this.showAttribute + "' on Element " + DOMUtil.getCanonicalPath(this.element));
         }
         //todo: dirty dirty dirty
-        String evaluatedTarget =evalAttributeValueTemplates(this.targetAttribute,this.element);
-        if(LOGGER.isDebugEnabled()){
+        String evaluatedTarget = evalAttributeValueTemplates(this.targetAttribute, this.element);
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("targetid evaluated to: " + evaluatedTarget);
         }
         Node embed = getEmbeddedDocument(absoluteURI);
+        // fetch CSS
+        String cssRules = getInlineCSS(embed);
+        embed = extractFragment(absoluteURI, embed);
 
-
-        if(embed == null){
+        if (embed == null) {
             //todo: review: context info params containing a '-' fail during access in javascript!
             //todo: the following property should have been 'resource-uri' according to spec
-            map.put("resourceUri",absoluteURI);
+            map.put("resourceUri", absoluteURI);
             this.container.dispatch(this.target, XFormsEventNames.LINK_EXCEPTION, map);
             return;
         }
-        
+
         Element embeddedNode;
         Element targetElem = getTargetElement(evaluatedTarget);
 
         // destroy existing embedded form within targetNode
-        if(targetElem.hasChildNodes()){
+        if (targetElem.hasChildNodes()) {
             destroyembeddedModels(targetElem);
             Initializer.disposeUIElements(targetElem);
         }
 
         // import referenced embedded form into host document
-        embeddedNode = (Element) this.container.getDocument().importNode(embed,true);
+        embeddedNode = (Element) this.container.getDocument().importNode(embed, true);
 
         //import namespaces
         NamespaceResolver.applyNamespaces(targetElem.getOwnerDocument().getDocumentElement(), (Element) embeddedNode);
 
         // keep original targetElem id within hostdoc
-        embeddedNode.setAttributeNS(null,"id", targetElem.getAttributeNS(null,"id"));
+        embeddedNode.setAttributeNS(null, "id", targetElem.getAttributeNS(null, "id"));
         //copy all Attributes that might have been on original mountPoint to embedded node
-        DOMUtil.copyAttributes(targetElem, embeddedNode,null);
-        targetElem.getParentNode().replaceChild(embeddedNode,targetElem);
+        DOMUtil.copyAttributes(targetElem, embeddedNode, null);
+        targetElem.getParentNode().replaceChild(embeddedNode, targetElem);
 
 
         map.put("uri", absoluteURI);
         map.put("show", this.showAttribute);
         map.put("targetElement", embeddedNode);
-        map.put("nameTarget",evaluatedTarget);
-        map.put("xlinkTarget", getXFormsAttribute(targetElem,"id"));
+        map.put("nameTarget", evaluatedTarget);
+        map.put("xlinkTarget", getXFormsAttribute(targetElem, "id"));
+        map.put("inlineCSS", cssRules);
 
         this.container.dispatch((EventTarget) embeddedNode, BetterFormEventNames.EMBED, map);
         //create model for it
@@ -235,23 +239,42 @@ public class LoadAction extends AbstractBoundAction {
 //        storeInContext(absoluteURI, this.showAttribute);
     }
 
+    private String getInlineCSS(Node embed) throws XFormsException {
+        //fetch style element(s) from Node to embed
+        String cssRules = "";
+        List result = XPathUtil.evaluate((Element) embed, "//*[@type='text/css']");
+        if (result.size() == 0) {
+            return null;
+        }
+        for (int i = 0; i < result.size(); i++) {
+            Object item = result.get(i);
+            if (result.get(i) instanceof NodeWrapper) {
+                NodeWrapper wrapper = (NodeWrapper) item;
+                Node n = (Node) wrapper.getUnderlyingNode();
+                cssRules += DOMUtil.getTextNodeAsString(n);
+            }
+        }
+        return cssRules;
+    }
+
     /**
      * fetches the Element that is the target for embedding. This Element will be replaced by the markup
      * to be embedded or all of its contents is erased in case of an 'unload'.
+     *
      * @param evaluatedTarget the targetid of a load action can be a AVT expression and be evaluated. The result
-     * is treated as an idref to an Element.
+     *                        is treated as an idref to an Element.
      * @return
      * @throws XFormsException
      */
     private Element getTargetElement(String evaluatedTarget) throws XFormsException {
-        Element targetElem=null;
-        if(isRepeated()){
+        Element targetElem = null;
+        if (isRepeated()) {
             String itemId = getRepeatItemId();
             RepeatItem item = (RepeatItem) container.lookup(itemId);
             int pos = item.getPosition();
-            targetElem = (Element) XPathUtil.evaluateAsSingleNode(item.getElement().getOwnerDocument() ,"//*[@name='" + evaluatedTarget + "']");
-        }else{
-        // ##### try to interpret the targetAttribute value as an idref ##### -->
+            targetElem = (Element) XPathUtil.evaluateAsSingleNode(item.getElement().getOwnerDocument(), "//*[@name='" + evaluatedTarget + "']");
+        } else {
+            // ##### try to interpret the targetAttribute value as an idref ##### -->
             targetElem = this.container.getElementById(evaluatedTarget);
         }
         return targetElem;
@@ -271,16 +294,16 @@ public class LoadAction extends AbstractBoundAction {
         //load resource from absoluteURI
         ConnectorFactory factory = ConnectorFactory.getFactory();
         factory.setContext(this.container.getProcessor().getContext());
-        URIResolver uriResolver = factory.createURIResolver(absoluteURI,this.element);
+        URIResolver uriResolver = factory.createURIResolver(absoluteURI, this.element);
 
         Object answer = uriResolver.resolve();
-        Node embed=null;
-        if(answer instanceof Node){
+        Node embed = null;
+        if (answer instanceof Node) {
             embed = (Node) answer;
-        }else if(answer instanceof String){
+        } else if (answer instanceof String) {
             // we got some plain HTML and this is returned as a string
             try {
-                embed = DOMUtil.parseString((String)answer,true,false);
+                embed = DOMUtil.parseString((String) answer, true, false);
             } catch (ParserConfigurationException e) {
                 throw new XFormsException(e);
             } catch (IOException e) {
@@ -290,19 +313,22 @@ public class LoadAction extends AbstractBoundAction {
             }
 
         }
-        if(embed instanceof Document && absoluteURI.indexOf("#") != -1){
-            String s = absoluteURI.substring(absoluteURI.indexOf("#")+1);
-            embed = DOMUtil.getFragment((Document) embed,s);
+//        embed = extractFragment(absoluteURI, embed);
+        return embed;
+    }
+
+    private Node extractFragment(String absoluteURI, Node embed) throws XFormsException {
+        if (embed instanceof Document && absoluteURI.indexOf("#") != -1) {
+            String s = absoluteURI.substring(absoluteURI.indexOf("#") + 1);
+            embed = DOMUtil.getById((Document) embed, s);
         }
 
-        if(embed == null){
+        if (embed == null) {
             throw new XFormsException("content returned from URI could not be recognized");
         }
-        if(embed instanceof Document){
-            embed = ((Document)embed).getDocumentElement();
+        if (embed instanceof Document) {
+            embed = ((Document) embed).getDocumentElement();
         }
-
-
         return embed;
     }
 
@@ -320,8 +346,9 @@ public class LoadAction extends AbstractBoundAction {
 
                 if (NamespaceConstants.XFORMS_NS.equals(uri) && name.equals(XFormsConstants.MODEL)) {
                     Model model = (Model) elementImpl.getUserData("");
-                    if(LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("dispatch 'model-destruct' event to embedded model: " + model.getId());;
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("dispatch 'model-destruct' event to embedded model: " + model.getId());
+                        ;
                     }
 
                     // do not dispatch model-destruct to avoid problems in lifecycle
@@ -329,8 +356,7 @@ public class LoadAction extends AbstractBoundAction {
                     model.dispose();
                     this.container.removeModel(model);
                     model = null;
-                }
-                else {
+                } else {
                     destroyembeddedModels(elementImpl);
                 }
             }

@@ -535,36 +535,36 @@ dojo.declare("betterform.FluxProcessor",
                             case "betterform-render-message"     : fluxProcessor._handleBetterFormRenderMessage(xmlEvent); break;
                             case "betterform-replace-all"        : fluxProcessor._handleBetterFormReplaceAll(); break;
                             case "betterform-state-changed"      : fluxProcessor._handleBetterFormStateChanged(xmlEvent); break;
-                    case "betterform-dialog-open"        : fluxProcessor._handleBetterFormDialogOpen(xmlEvent); break;
-                    case "betterform-dialog-close"       : fluxProcessor._handleBetterFormDialogClose(xmlEvent); break;
-                            case "upload-progress-event"    : fluxProcessor._handleUploadProgressEvent(xmlEvent); break;
-                            case "xforms-focus"             : fluxProcessor._handleXFormsFocus(xmlEvent); break;
-                            case "xforms-help"              : fluxProcessor._handleShowHelp(xmlEvent); break;
-                            case "xforms-hint"              : fluxProcessor._handleXFormsHint(xmlEvent); break;
-                            case "xforms-link-exception"    : fluxProcessor._handleLinkException(xmlEvent); break;
+                            case "betterform-dialog-open"        : fluxProcessor._handleBetterFormDialogOpen(xmlEvent); break;
+                            case "betterform-dialog-close"       : fluxProcessor._handleBetterFormDialogClose(xmlEvent); break;
+                            case "upload-progress-event"         : fluxProcessor._handleUploadProgressEvent(xmlEvent); break;
+                            case "xforms-focus"                  : fluxProcessor._handleXFormsFocus(xmlEvent); break;
+                            case "xforms-help"                   : fluxProcessor._handleShowHelp(xmlEvent); break;
+                            case "xforms-hint"                   : fluxProcessor._handleXFormsHint(xmlEvent); break;
+                            case "xforms-link-exception"         : fluxProcessor._handleLinkException(xmlEvent); break;
                             case "betterform-switch-toggled"     : fluxProcessor._handleSwitchToggled(xmlEvent); break;
                             case "betterform-script-action"      : eval(xmlEvent.contextInfo["script"]); break;
-                            case "xforms-value-changed"     : /* console.debug(xmlEvent); */ break;
-                            case "xforms-version-exception" : fluxProcessor._handleVersionException(xmlEvent); break;
-                            case "xforms-binding-exception" : fluxProcessor._handleBindingException(xmlEvent);break;
-                            case "xforms-submit-error"      : fluxProcessor._handleSubmitError(xmlEvent); break;
-                            case "DOMFocusIn"               : fluxProcessor.lastServerClientFocusEvent = {postponedFunction:fluxProcessor._handleDOMFocusIn, postponedXmlEvent:xmlEvent}; break;    //cache the xmlEvent for being processed later
-                            case "xforms-out-of-range"      : fluxProcessor._handleOutOfRange(xmlEvent);break;
-                            case "xforms-in-range"          : fluxProcessor._handleInRange(xmlEvent);break;
-                            case "xforms-invalid"           :
-                            case "xforms-valid"             :validityEvents[index] = xmlEvent; index++;break;
+                            case "xforms-value-changed"          : /* console.debug(xmlEvent); */ break;
+                            case "xforms-version-exception"      : fluxProcessor._handleVersionException(xmlEvent); break;
+                            case "xforms-binding-exception"      : fluxProcessor._handleBindingException(xmlEvent);break;
+                            case "xforms-submit-error"           : fluxProcessor._handleSubmitError(xmlEvent); break;
+                            case "DOMFocusIn"                    : fluxProcessor.lastServerClientFocusEvent = {postponedFunction:fluxProcessor._handleDOMFocusIn, postponedXmlEvent:xmlEvent}; break;    //cache the xmlEvent for being processed later
+                            case "xforms-out-of-range"           : fluxProcessor._handleOutOfRange(xmlEvent);break;
+                            case "xforms-in-range"               : fluxProcessor._handleInRange(xmlEvent);break;
+                            case "xforms-invalid"                :
+                            case "xforms-valid"                  :validityEvents[index] = xmlEvent; index++;break;
 
                             /* default handling for known events */
                             case "betterform-id-generated"       :
-                            case "DOMActivate"              :
-                            case "xforms-select"            :
-                            case "xforms-deselect"          :
-                            case "DOMFocusOut"              :
-                            case "xforms-model-construct"   :
-                            case "xforms-model-construct-done":break;
-                            case "xforms-ready"             : this.isReady = true;dojo.publish("/xf/ready", []);break; //not perfect - should be on XFormsModelElement
-                            case "xforms-submit"            : break;
-                            case "xforms-submit-done"       : fluxProcessor._handleSubmitDone(xmlEvent);break;
+                            case "DOMActivate"                   :
+                            case "xforms-select"                 :
+                            case "xforms-deselect"               :
+                            case "DOMFocusOut"                   :
+                            case "xforms-model-construct"        :
+                            case "xforms-model-construct-done"   :break;
+                            case "xforms-ready"                  : this.isReady = true;dojo.publish("/xf/ready", []);break; //not perfect - should be on XFormsModelElement
+                            case "xforms-submit"                 : break;
+                            case "xforms-submit-done"            : fluxProcessor._handleSubmitDone(xmlEvent);break;
 
                             /* Unknow XMLEvent: */
                             default                         : console.error("Event " + xmlEvent.type + " unknown [Event:", xmlEvent, "]"); break;
@@ -674,6 +674,16 @@ dojo.declare("betterform.FluxProcessor",
             var classes = dojo.attr(htmlEntryPoint, "class");
             dojo.attr(nodesToEmbed, "class", classes);
             htmlEntryPoint.parentNode.removeChild(htmlEntryPoint);
+
+            // finally dynamically load the CSS (if some) form the embedded form
+            var cssToLoad = xmlEvent.contextInfo.inlineCSS;
+            if(cssToLoad != undefined){
+                var headID = document.getElementsByTagName("head")[0];
+                
+                var newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","style");
+                newScript.appendChild(dojo.doc.createTextNode(cssToLoad));
+                headID.appendChild(newScript);
+            }
         }
         /*  xf:load show=none
          to unload (loaded) subforms
@@ -1032,7 +1042,40 @@ dojo.declare("betterform.FluxProcessor",
                 }
             }
         }
-        else {
+        // Check if it is a nested output in a trigger label. If so, (really quick hack: chance xmlEvent.contextInfo)
+        else if(xmlEvent.contextInfo.targetName != undefined  && xmlEvent.contextInfo.targetName == "output"){
+            // console.debug("FluxProcessor._handleBetterFormStateChanged xf:output inside label handling: xmlEvent: ",xmlEvent, " contextInfo: ", xmlEvent.contextInfo);
+
+	        var possibleId = xmlEvent.contextInfo.targetId.substring(1,xmlEvent.contextInfo.targetId.length) -2 ;
+            var warningMsg = "FluxProcessor._handleBetterFormStateChanged: element for dynamic label " + xmlEvent.contextInfo.targetId + ": Control not found ";
+	        var control = dijit.byId("C"+possibleId);
+	        if ((control != undefined) && (control.controlType == "trigger")) {
+                // console.debug("FluxProcessor._handleBetterFormStateChanged for dynamic label on trigger control: " ,control, "controlType: ", control.controlType);
+		        xmlEvent.contextInfo.targetId = "C"+(possibleId-1);
+		        xmlEvent.contextInfo.parentId = "C"+(possibleId-2);
+		        xmlEvent.contextInfo.targetName = "label";
+                control.handleStateChanged(xmlEvent.contextInfo);
+            } else if (control != undefined) {
+		        // There was a dijit, so currently assuming it is either an output, input or group. Try setting it...
+		        // target ID does not change, parent does
+                // console.debug("FluxProcessor._handleBetterFormStateChanged input/output/group control: " ,control, "controlType: ", control.controlType);
+		        xmlEvent.contextInfo.parentId = "C"+(possibleId);
+		        xmlEvent.contextInfo.targetName = "label";
+                control.handleStateChanged(xmlEvent.contextInfo);
+  	        } else {
+		        // Currently the only case encountered where this is needed is for a selectorItem
+	            control = dojo.byId("C"+possibleId-2);
+	            if (control != undefined) {
+                    // console.debug("FluxProcessor._handleBetterFormStateChanged selectorItem control: " ,control, "controlType: ", control.controlType);
+		            // targetId stays the same
+		            xmlEvent.contextInfo.targetName = "label";
+		            xmlEvent.contextInfo.parentId = "C"+(possibleId-2);
+                    this._handleBetterFormStateChanged(xmlEvent);
+	    	    } else {
+	 	            console.warn(warningMsg);
+		        }
+	        }
+	    } else {
             console.error("FluxProcessor betterform-state-changed Error: Processor does not know how to handle betterform-state-changed based on xmlEvent ", xmlEvent.contextInfo.targetId);
         }
 
@@ -1125,7 +1168,8 @@ dojo.declare("betterform.FluxProcessor",
             var targetName = xmlEvent.contextInfo.targetName;
             if (targetName != "group" && targetName != "repeat" && targetName != "switch" && targetName != "case") {
                 xfControlId = xmlEvent.contextInfo.targetId + "-value";
-                //                dojo.byId(xfControlId).focus();
+                // dojo.byId(xfControlId).focus();
+        		// console.debug("xforms-focus control: ",xfControlId);
                 dijit.byId(xfControlId).handleOnFocus();
             }
         }
@@ -1138,8 +1182,10 @@ dojo.declare("betterform.FluxProcessor",
     _handleDOMFocusIn:function(xmlEvent) {
         xfControlId = xmlEvent.contextInfo.targetId + "-value";
         if (dijit.byId(xfControlId) != undefined) {
+        	// console.debug("dom-focus-in-dijit control: ",xfControlId);
             dijit.byId(xfControlId)._handleDOMFocusIn();
         } else if (dojo.byId(xfControlId) != undefined) {
+        	// console.debug("dom-focus-in-dojo control: ",xfControlId);
             var domControlValue = dojo.byId(xfControlId)
             domControlValue.focus();
         } else {
