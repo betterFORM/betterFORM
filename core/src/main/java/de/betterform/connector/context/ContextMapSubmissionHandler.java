@@ -59,7 +59,7 @@ public class ContextMapSubmissionHandler extends AbstractConnector implements Su
     public Map submit(Submission submission, Node instance) throws XFormsException {
 
         if(LOGGER.isTraceEnabled()){
-            LOGGER.trace("submitting instance...\n");
+            LOGGER.trace("submitting instance...");
             DOMUtil.prettyPrintDOM(instance);
         }
 
@@ -70,7 +70,6 @@ public class ContextMapSubmissionHandler extends AbstractConnector implements Su
                 Object xmlNode = ContextMapResolver.getNodeFromContext(contextKey,getContext());
                 
                 if(LOGGER.isTraceEnabled()){
-                    LOGGER.trace("got instance from context...\n");
                     DOMUtil.prettyPrintDOM((Node) xmlNode);
                 }
 
@@ -83,19 +82,6 @@ public class ContextMapSubmissionHandler extends AbstractConnector implements Su
         } else if (submission.getMethod().equalsIgnoreCase("put")) {
 
             if (submission.getReplace().equals("none")) {
-                // create uri
-//                URI uri = null;
-//                try {
-//                    uri = new URI(getURI());
-//                }
-//                catch (URISyntaxException e) {
-//                    throw new XFormsException("failed to parse URI - syntax error.", e);
-//                }
-//
-//                String key = uri.getSchemeSpecificPart();
-//                String fragment = uri.getFragment();
-
-
                 String contextKey = ContextMapResolver.getContextKeyFormURI(getURI());
 
                 if (contextKey == null ) {
@@ -106,8 +92,11 @@ public class ContextMapSubmissionHandler extends AbstractConnector implements Su
                     if(instance instanceof Element){
                         doc = DOMUtil.newDocument(true,false);
                         DOMUtil.importAndAppendNode(doc,instance);
+                        if(LOGGER.isTraceEnabled()){
+                            LOGGER.trace("storing instance in context...");
+                            DOMUtil.prettyPrintDOM(doc);
+                        }
                     }else if (instance instanceof Document){
-//                        doc = (Document) instance;
                         doc = DOMUtil.newDocument(true,false);
                         DOMUtil.importAndAppendNode(doc,((Document) instance).getDocumentElement());
 
@@ -126,7 +115,6 @@ public class ContextMapSubmissionHandler extends AbstractConnector implements Su
                         }
                     }
 
-//                    getContext().put(contextKey, instance);
                     getContext().put(contextKey, doc);
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("storing node in context: " + contextKey + "='" + instance + "'");
