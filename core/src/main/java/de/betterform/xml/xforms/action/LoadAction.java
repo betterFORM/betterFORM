@@ -242,6 +242,9 @@ public class LoadAction extends AbstractBoundAction {
     private String getInlineCSS(Node embed) throws XFormsException {
         //fetch style element(s) from Node to embed
         String cssRules = "";
+        if(embed instanceof Document){
+            embed = ((Document) embed).getDocumentElement();
+        }
         List result = XPathUtil.evaluate((Element) embed, "//*[@type='text/css']");
         if (result.size() == 0) {
             return null;
