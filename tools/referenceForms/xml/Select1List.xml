@@ -108,12 +108,20 @@
 
             <table class="CSS">
                 <tr>
-                    <td>xfCompactSelect1</td>
+                    <td>xfSelect1</td>
                     <td>matches an Element that represents a XForms
                         <span class="keyword">select</span>
                         element
                     </td>
                 </tr>
+                <tr>
+                    <td>xfSelectorItem</td>
+                    <td>matches an item of a XForms
+                        <span class="keyword">select1</span>
+                        element
+                    </td>
+                </tr>
+                
             </table>
         </div>
 

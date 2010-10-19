@@ -15,7 +15,7 @@
             </p>
         </div>
         <div class="references">
-            <a href="#ui-input"/>
+            <a href="#ui-range"/>
             <a href="#elems-form-controls"/>
         </div>
         <div class="sample">
@@ -79,11 +79,6 @@
                     </td>
                 </tr>
             </table>
-        </div>
-        <div class="Limitations">
-            <p>
-                Hier gehoert sich noch einiges hin ...........
-            </p>
         </div>
     </body>
 </html>

@@ -7,7 +7,7 @@
     <body>
         <div class="description">
             <p>
-                A repeat with no<span class="keyword">appearance</span>, 'minimal'
+                A repeat with no <span class="keyword">appearance</span>, 'minimal'
                 <span class="keyword">appearance</span>
                 or 'full'
                 <span class="keyword">appearance</span>
@@ -91,12 +91,23 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>xfRepeat</td>
+                    <td>xfFullRepeat</td>
                     <td>matches an Element that represents a XForms
                         <span class="keyword">repeat</span>
                         element
                     </td>
                 </tr>
+                <tr>
+                    <td>xfRepeatItem</td>
+                    <td>matches all <span class="keyword">repeat</span> items
+                    </td>
+                </tr>
+                <tr>
+                    <td>xfRepeatIndex</td>
+                    <td>matches the currently selected <span class="keyword">repeat</span> item
+                    </td>
+                </tr>
+                
             </table>
         </div>
     </body>

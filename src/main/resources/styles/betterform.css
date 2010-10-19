@@ -318,6 +318,7 @@ a.active {
 
 .xfLabel {
     display: inline;
+	vertical-align:top;
 }
 
 .xfDateTimeControl {
@@ -655,6 +656,12 @@ delete actions to */
     display:block;
 }
 */
+
+/* this rule is for tables using repeat Attributes - a display:block will otherwise break the table layout */
+table .xfContainer{
+	display:table-row-group;
+}
+
 
 .caDeleteMouseOut {
     background: url(../images/tabClose.gif) no-repeat;

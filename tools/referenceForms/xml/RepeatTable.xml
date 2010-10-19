@@ -13,7 +13,6 @@
             td{
                 padding:2px;
             }
-
         </style>
     </head>
     <body>
@@ -113,13 +112,13 @@
             <td class="two" style="color:blue;">
                 <xf:output ref="item2"/>
             </td>
-            <td class="two" style="color:blue;">
+            <td class="three" style="color:blue;">
                 <xf:output ref="item3"/>
             </td>
-            <td class="two" style="color:blue;">
+            <td class="four" style="color:blue;">
                 <xf:output ref="item4"/>
             </td>
-            <td class="two" style="color:blue;">
+            <td class="five" style="color:blue;">
                 <xf:output ref="item5"/>
             </td>
         </tr>
@@ -136,11 +135,45 @@
                     <td>matches any Element that represents a XForms <span class="keyword">group</span> | <span class="keyword">repeat</span> | <span class="keyword">switch</span> element</td>
                 </tr>
                 <tr>
+                    <td>xfRepeatItem</td>
+                    <td>matches all <span class="keyword">repeat</span> items
+                    </td>
+                </tr>
+                <tr>
+                    <td>xfRepeatIndex</td>
+                    <td>matches the currently selected <span class="keyword">repeat</span> item
+                    </td>
+                </tr>                
+                <tr>
                     <td>xfTbody</td>
                     <td>matches the element wearing the <span class="keyword">repeat</span> attributes</td>
                 </tr>
+                <tr>
+                    <td>one</td>
+                    <td>matches a cells that have the author class 'one' on them</td>
+                </tr>
+                <tr>
+                    <td>two</td>
+                    <td>matches a cells that have the author class 'two' on them</td>
+                </tr>
+                <tr>
+                    <td>three</td>
+                    <td>matches a cells that have the author class 'three' on them</td>
+                </tr>
+                <tr>
+                    <td>four</td>
+                    <td>matches a cells that have the author class 'four' on them</td>
+                </tr>
+                <tr>
+                    <td>five</td>
+                    <td>matches a cells that have the author class 'five' on them</td>
+                </tr>
+
             </table>
         </div>
 
+        <div class="Notes">
+            Please note that if you use a display:block for class xfContainer you should add a rule
+        </div>
     </body>
 </html>

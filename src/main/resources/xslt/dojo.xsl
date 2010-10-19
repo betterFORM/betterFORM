@@ -431,7 +431,7 @@
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="control-classes">
             <xsl:call-template name="assemble-control-classes">
-                <xsl:with-param name="appearance" select="@appearance"/>
+                <!--<xsl:with-param name="appearance" select="@appearance"/>-->
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="label-classes">
@@ -465,7 +465,7 @@
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="control-classes">
             <xsl:call-template name="assemble-control-classes">
-                <xsl:with-param name="appearance" select="@appearance"/>
+                <!--<xsl:with-param name="appearance" select="@appearance"/>-->
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="label-classes">
@@ -493,7 +493,7 @@
        <xsl:variable name="id" select="@id"/>
         <xsl:variable name="control-classes">
             <xsl:call-template name="assemble-control-classes">
-                <xsl:with-param name="appearance" select="@appearance"/>
+                <!--<xsl:with-param name="appearance" select="@appearance"/>-->
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="label-classes">
@@ -523,7 +523,7 @@
     <xsl:template match="xf:trigger|xf:submit">
         <xsl:variable name="control-classes">
             <xsl:call-template name="assemble-control-classes">
-                <xsl:with-param name="appearance" select="@appearance"/>
+                <!--<xsl:with-param name="appearance" select="@appearance"/>-->
             </xsl:call-template>
         </xsl:variable>
 

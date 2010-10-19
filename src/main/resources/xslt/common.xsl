@@ -165,11 +165,11 @@
     <xsl:template name="addDojoRequires"/>
 
     <xsl:template name="assemble-control-classes">
-        <xsl:param name="appearance"/>
+        <!--<xsl:param name="appearance"/>-->
 
         <xsl:variable name="name-classes">
             <xsl:call-template name="get-name-classes">
-                <xsl:with-param name="appearance" select="$appearance"/>
+                <!--<xsl:with-param name="appearance" select="$appearance"/>-->
             </xsl:call-template>
         </xsl:variable>
 

@@ -31,13 +31,13 @@
             <div class="markup">
                 <xf:model>
                     <code>
-                        <xf:instance xmlns="">
-                            <data>
-                                <output1 constraint="true" readonly="false" required="false" relevant="true">
-                                    <value>../../images/bf_logo_482x195.png</value>
-                                </output1>
-                            </data>
-                        </xf:instance>
+<xf:instance xmlns="">
+    <data>
+        <output1 constraint="true" readonly="false" required="false" relevant="true">
+            <value>../../images/bf_logo_482x195.png</value>
+        </output1>
+    </data>
+</xf:instance>
                     </code>
                     <xf:bind nodeset="output1">
                         <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)"

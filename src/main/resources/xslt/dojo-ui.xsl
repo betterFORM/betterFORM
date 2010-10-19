@@ -292,7 +292,7 @@
     <xsl:template match="xforms:trigger" mode="table">
         <xsl:variable name="control-classes">
             <xsl:call-template name="assemble-control-classes">
-                <xsl:with-param name="appearance" select="@appearance"/>
+                <!--<xsl:with-param name="appearance" select="@appearance"/>-->
             </xsl:call-template>
         </xsl:variable>
 
@@ -308,7 +308,7 @@
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="control-classes">
             <xsl:call-template name="assemble-control-classes">
-                <xsl:with-param name="appearance" select="@appearance"/>
+                <!--<xsl:with-param name="appearance" select="@appearance"/>-->
             </xsl:call-template>
         </xsl:variable>
 
@@ -449,10 +449,10 @@
             <xsl:variable name="col-classes">
                 <xsl:choose>
                     <xsl:when test="./bf:data/@bf:enabled='false'">
-                        <xsl:value-of select="concat('caTableCol-',position(),' ','xfDisabled')"/>
+                        <xsl:value-of select="concat('bfTableCol-',position(),' ','xfDisabled')"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="concat('caTableCol-',position())"/>
+                        <xsl:value-of select="concat('bfTableCol-',position())"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
@@ -514,10 +514,10 @@
                     <xsl:variable name="col-classes">
                         <xsl:choose>
                             <xsl:when test="./bf:data/@bf:enabled='false'">
-                                <xsl:value-of select="concat('caTableCol-',position(),' ','xfDisabled')"/>
+                                <xsl:value-of select="concat('bfTableCol-',position(),' ','xfDisabled')"/>
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:value-of select="concat('caTableCol-',position())"/>
+                                <xsl:value-of select="concat('bfTableCol-',position())"/>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
@@ -882,10 +882,10 @@
             <xsl:variable name="col-classes">
                 <xsl:choose>
                     <xsl:when test="./bf:data/@bf:enabled='false'">
-                        <xsl:value-of select="concat('caTableCol-',position(),' ','xfDisabled')"/>
+                        <xsl:value-of select="concat('bfTableCol-',position(),' ','xfDisabled')"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="concat('caTableCol-',position())"/>
+                        <xsl:value-of select="concat('bfTableCol-',position())"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
@@ -1160,10 +1160,10 @@
         <xsl:variable name="col-classes">
             <xsl:choose>
                 <xsl:when test="./bf:data/@bf:enabled='false'">
-                    <xsl:value-of select="concat('caTableCol-',position(),' ','xfDisabled')"/>
+                    <xsl:value-of select="concat('bfTableCol-',position(),' ','xfDisabled')"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="concat('caTableCol-',position())"/>
+                    <xsl:value-of select="concat('bfTableCol-',position())"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>

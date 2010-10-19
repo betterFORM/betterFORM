@@ -85,11 +85,9 @@
                 </tr>
             </table>
         </div>
-        <div class="Notes">
-            <p class="Notes">
-                The date control is currently not fully accessible esp. keyboard navigation is not
-                working in the current version of Dojo.
-            </p>
+        <div class="Limitations">
+            The date control is currently not fully accessible esp. keyboard navigation is not
+            working in the current version of Dojo.
         </div>
     </body>
 </html>

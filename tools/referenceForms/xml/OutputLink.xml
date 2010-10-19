@@ -25,19 +25,23 @@
         <div class="sample">
             <div class="markup">
                 <xf:model>
-                    <xf:instance xmlns="">
-                        <data>
-                            <output1 constraint="true" readonly="false" required="false" relevant="true">
-                                <value>http://www.betterform.de</value>
-                            </output1>
-                        </data>
-                    </xf:instance>
+                    <code>
+<xf:instance xmlns="">
+    <data>
+        <output1 constraint="true" readonly="false" required="false" relevant="true">
+            <value>http://www.betterform.de</value>
+        </output1>
+    </data>
+</xf:instance>
+                    </code>
                     <xf:bind nodeset="output1">
-                        <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)"
-                                 readonly="boolean-from-string(../@readonly)"
-                                 required="boolean-from-string(../@required)"
-                                 relevant="boolean-from-string(../@relevant)"
-                                 type="anyURI"/>
+                    <code>
+<xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)"
+         readonly="boolean-from-string(../@readonly)"
+         required="boolean-from-string(../@required)"
+         relevant="boolean-from-string(../@relevant)"
+         type="anyURI"/>
+                    </code>
                         <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
                         <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
                         <xf:bind nodeset="@required" type="boolean"></xf:bind>
@@ -83,7 +87,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>xsdanyURI</td>
+                    <td>xsdAnyURI</td>
                     <td>matches an Element that is bound to a node with datatype
                         <code>anyURI</code>
                     </td>

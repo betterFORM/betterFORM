@@ -3,6 +3,9 @@
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>select1 control rendered as combobox control</title>
+        <script type="text/javascript">
+            dojo.require("dijit.form.Button");
+        </script>
     </head>
     <body>
         <div class="description">
@@ -30,7 +33,7 @@
         </div>
         <div class="sample">
             <div class="markup">
-                <xf:model>
+                <xf:model id="model-1">
                     <xf:instance id="instance-1">
                         <data xmlns="" constraint="true" readonly="false" required="false" relevant="true">
                             <select1 constraint="true" readonly="false" required="true" relevant="true">
@@ -113,9 +116,16 @@
 
             <table class="CSS">
                 <tr>
-                    <td>xfMinimalSelect1</td>
+                    <td>xfSelect1</td>
                     <td>matches an Element that represents a XForms
-                        <span class="keyword">select</span>
+                        <span class="keyword">select1</span>
+                        element
+                    </td>
+                </tr>
+                <tr>
+                    <td>xfSelectorItem</td>
+                    <td>matches an item of a XForms 
+                        <span class="keyword">select1</span>
                         element
                     </td>
                 </tr>

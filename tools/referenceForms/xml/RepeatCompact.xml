@@ -84,14 +84,50 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>xfRepeat</td>
+                    <td>xfCompactRepeat</td>
                     <td>matches an Element that represents a XForms
                         <span class="keyword">repeat</span>
                         element
                     </td>
                 </tr>
+                <tr>
+                    <td>xfRepeatHeader</td>
+                    <td>matches an Element that represents a XForms
+                        <span class="keyword">repeat</span>
+                        element
+                    </td>
+                </tr>
+                <tr>
+                    <td>xfRepeatItem</td>
+                    <td>matches all <span class="keyword">repeat</span> items
+                    </td>
+                </tr>
+                <tr>
+                    <td>xfRepeatIndex</td>
+                    <td>matches the currently selected <span class="keyword">repeat</span> item
+                    </td>
+                </tr>
+                <tr>
+                    <td>bfTableCol-1</td>
+                    <td>matches the first column
+                    </td>
+                </tr>
+                <tr>
+                    <td>bfTableCol-2</td>
+                    <td>matches the first column
+                    </td>
+                </tr>
+                <tr>
+                    <td>bfTableCol-3</td>
+                    <td>matches the first column
+                    </td>
+                </tr>
+
             </table>
         </div>
-
+        <div class="Notes">
+            The CSS class 'bfTableCol-[number of column] is automatically generated for every column in the compact
+            <span class="keyword">repeat</span>.
+        </div>
     </body>
 </html>

@@ -3,6 +3,10 @@
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>select control rendered as list control</title>
+        <script type="text/javascript">
+            dojo.require("dijit.form.Button");
+        </script>
+        
     </head>
     <body>
         <div class="description">
@@ -24,7 +28,7 @@
         </div>
         <div class="sample">
             <div class="markup">
-                <xf:model>
+                <xf:model id="model-1">
                     <xf:instance id="instance-1">
                         <data xmlns="" constraint="true" readonly="false" required="false" relevant="true">
                             <select1 constraint="true" readonly="false" required="true" relevant="true">
@@ -104,8 +108,7 @@
             </div>
         </div>
         <div class="CSS">
-
-            <table class="CSS">
+            <table>
                 <tr>
                     <td>xfCompactSelect1</td>
                     <td>matches an Element that represents a XForms
@@ -115,5 +118,13 @@
                 </tr>
             </table>
         </div>
+        <div class="copy">
+            <button dojotype="dijit.form.Button"
+                onclick="fluxProcessor.getInstanceDocument('model-1','instance-1');"
+                type="button">
+                <label>print instance on console</label>
+            </button>
+        </div>
+        
     </body>
 </html>

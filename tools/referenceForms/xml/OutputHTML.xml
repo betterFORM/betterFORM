@@ -94,7 +94,8 @@
         </div>
         <div class="Limitations">
             <p>
-                The HTML markup in the bound instance data node must be either escaped or enclosed within a CDATA section.
+                The HTML markup in the bound instance data node must enclosed within a CDATA section. This is not
+                shown in the sample above due to limitations with the syntax highlighting. 
             </p>
         </div>
         <div class="Notes">

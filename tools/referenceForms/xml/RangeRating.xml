@@ -23,7 +23,7 @@
             </p>
         </div>
         <div class="references">
-            <a href="#ui-input"/>
+            <a href="#ui-range"/>
             <a href="#elems-form-controls"/>
         </div>
         <div class="sample">
@@ -32,7 +32,7 @@
                     <xf:instance xmlns="">
                         <data>
                             <range1 constraint="true" readonly="false" required="true" relevant="true">
-                                <value></value>
+                                <value>0</value>
                             </range1>
                         </data>
                     </xf:instance>
@@ -50,7 +50,7 @@
 
                 </xf:model>
                 <code class="ui">
-<xf:range id="range1" ref="range1/value" start="1" step="1" end="5" appearance="bf:rating"
+<xf:range id="range1" ref="range1/value" start="0" step="1" end="5" appearance="bf:rating"
           incremental="true">
     <xf:label>a text</xf:label>
     <xf:hint>input bound to string</xf:hint>
