@@ -13,9 +13,15 @@
         <div style="display:none">
             <xf:model>
                 <xf:instance>
-                    <html>
+                    <html xmlns="http://www.w3.org/1999/xhtml"
+                          xmlns:xf="http://www.w3.org/2002/xforms">
                         <head>
                             <title>hello</title>
+                            <xf:model>
+                                <xf:instance>
+                                    <data></data>
+                                </xf:instance>
+                            </xf:model>
                         </head>
                         <body>
                             <xf:output id="ui" ref="hello">
@@ -24,18 +30,23 @@
                         </body>
                     </html>
                 </xf:instance>
-            </xf:model>
 
-            <xf:submission id="s-post"
-                           resource="XFormsPost"
-                           method="post">
-                <xf:message ev:event="xforms-submit-error">post failed</xf:message>
-            </xf:submission>
+                <xf:submission id="postit"
+                               resource="http://localhost:8080/betterform/XFormsPost"
+                               method="post"
+                               replace="instance"
+                               ref="instance()"
+                        >
+                    <xf:message ev:event="xforms-submit-error">post failed - make sure that XFormsPostServlet is properly configured in web.xml</xf:message>
+                </xf:submission>
+            </xf:model>
 
         </div>
         <xf:trigger>
             <xf:label>Post form</xf:label>
-            <xf:send submission="s-post"/>
+            <xf:action>
+                <xf:send submission="postit"/>
+            </xf:action>
         </xf:trigger>
     </body>
 </html>
