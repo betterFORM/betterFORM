@@ -3,6 +3,10 @@
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>select control rendered as a group of checkboxes</title>
+        <script type="text/javascript">
+            dojo.require("dijit.form.Button");
+        </script>
+        
     </head>
     <body>
         <div class="description">
@@ -21,19 +25,21 @@
             </p>
         </div>
         <div class="references">
-            <a href="#ui-input"/>
+            <a href="#ui-selectMany"/>
             <a href="#elems-form-controls"/>
         </div>
         <div class="sample">
             <div class="markup">
-                <xf:model>
-                    <xf:instance id="instance-1">
-                        <data xmlns="" constraint="true" readonly="false" required="false" relevant="true">
-                            <select constraint="true" readonly="false" required="true" relevant="true">
-                                <value>AX DZ</value>
-                            </select>
-                        </data>
-                    </xf:instance>
+                <xf:model id="model-1">
+                    <!--<code>-->
+<xf:instance id="instance-1">
+    <data xmlns="">
+        <select constraint="true" readonly="false" required="true" relevant="true">
+            <value>AX DZ</value>
+        </select>
+    </data>
+</xf:instance>
+                    <!--</code>-->
                     <xf:bind nodeset="select">
                         <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)"
                                  readonly="boolean-from-string(../@readonly)"
@@ -44,35 +50,28 @@
                         <xf:bind nodeset="@required" type="boolean"></xf:bind>
                         <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
                     </xf:bind>
-                    <xf:instance id="codes">
-                        <countrylist xmlns="" lang="en" constraint="true" readonly="false" required="true"
-                                     relevant="true">
-                            <country constraint="true" readonly="false" required="true" relevant="true">
-                                <country-name constraint="true" readonly="false" required="true" relevant="true">
-                                    AFGHANISTAN
-                                </country-name>
-                                <code constraint="true" readonly="false" required="true" relevant="true">AF</code>
-                            </country>
-                            <country constraint="true" readonly="false" required="true" relevant="true">
-                                <country-name constraint="true" readonly="false" required="true" relevant="true">LAND
-                                    ISLANDS
-                                </country-name>
-                                <code constraint="true" readonly="false" required="true" relevant="true">AX</code>
-                            </country>
-                            <country constraint="true" readonly="false" required="true" relevant="true">
-                                <country-name constraint="true" readonly="false" required="true" relevant="true">
-                                    ALBANIA
-                                </country-name>
-                                <code constraint="true" readonly="false" required="true" relevant="true">AL</code>
-                            </country>
-                            <country constraint="true" readonly="false" required="true" relevant="true">
-                                <country-name constraint="true" readonly="false" required="true" relevant="true">
-                                    ALGERIA
-                                </country-name>
-                                <code constraint="true" readonly="false" required="true" relevant="true">DZ</code>
-                            </country>
-                        </countrylist>
-                    </xf:instance>
+                    <code>
+<xf:instance id="codes">
+    <countrylist xmlns="">
+        <country>
+            <country-name>AFGHANISTAN</country-name>
+            <code>AF</code>
+        </country>
+        <country>
+            <country-name>LAND ISLANDS</country-name>
+            <code>AX</code>
+        </country>
+        <country>
+            <country-name>ALBANIA</country-name>
+            <code>AL</code>
+        </country>
+        <country>
+            <country-name>ALGERIA</country-name>
+            <code>DZ</code>
+        </country>
+    </countrylist>
+</xf:instance>
+                    </code>
                 </xf:model>
                 <code class="ui">
 <xf:select id="select" ref="select/value" appearance="full" incremental="true">
@@ -109,7 +108,7 @@
 
             <table class="CSS">
                 <tr>
-                    <td>xfFullSelect</td>
+                    <td>xfSelect</td>
                     <td>matches an Element that represents a XForms
                         <span class="keyword">select</span>
                         element
@@ -131,5 +130,18 @@
                 </tr>
             </table>
         </div>
+        <div class="Other" title="XForms Instance">
+            <button id="printInstance" dojotype="dijit.form.Button"
+                onclick="fluxProcessor.getInstanceDocument('model-1','instance-1');"
+                type="button">
+                <label>print instance on console</label>
+            </button>
+
+            <div dojotype="dijit.Tooltip" connectid="printInstance" position="above">
+                This button prints the current instance data to the console. Works with Firebug in FF or Chrome and Safari
+                with developer tools activated.
+            </div>
+        </div>
+
     </body>
 </html>

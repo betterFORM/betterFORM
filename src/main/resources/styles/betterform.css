@@ -243,7 +243,6 @@ a.active {
     top: 10px;
     right: 10px;
     z-index: 999;
-    border: thin solid steelblue;
     padding: 3px;
 }
 
@@ -700,7 +699,7 @@ table .xfContainer{
     height: 35px;
 }
 
-.caTabContainer {
+.bfTabContainer {
     height: 600px;
     width: 98%;
     overflow: auto;
@@ -719,50 +718,6 @@ table .xfContainer{
 /* ***************************************************************************** */
 .xfSwitch {
     clear: both;
-}
-
-.xfFullSwitch {
-    border-spacing: 0px;
-}
-
-.xfFullSwitchBody {
-    background-color: #F0F4EA;
-    border: 1px solid black;
-    border-top: none;
-}
-
-.xfFullSwitch .caActiveTab {
-    background-color: #F0F4EA;
-    border: 1px solid rgb(85, 96, 63);
-    border-right: none;
-    border-bottom: #F0F4EA;
-    padding: 3px 5px 3px 5px;
-    width: 10%;
-}
-
-.xfFullSwitch .caActiveTab input {
-    background-color: #F0F4EA;
-    border: none;
-}
-
-.xfFullSwitch .caInactiveTab {
-    background-color: rgb(188, 216, 132);
-    border: 1px solid rgb(85, 96, 63);
-    border-right: none;
-    padding: 3px 5px 3px 5px;
-    width: 10%;
-}
-
-.xfFullSwitch .caInactiveTab input {
-    background-color: rgb(188, 216, 132);
-    border: none;
-}
-
-.xfFullSwitch .caFillerTab {
-    border: 1px solid rgb(85, 96, 63);
-    border-top: none;
-    border-right: none;
-    width: 90%;
 }
 
 /* ***************************************************************************** */

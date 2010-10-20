@@ -114,9 +114,10 @@
                                     <xsl:apply-templates select="."/>
                                 </xsl:for-each>
                 -->
-                <xsl:if test="div[@class='copy']">
-                    <xsl:copy-of select="div[@class='copy']/*"/>
-                </xsl:if>
+                <xsl:for-each select="div[@class='Other']">
+                    <h2><xsl:value-of select="@title"/></h2>
+                    <xsl:copy-of select="."/>
+                </xsl:for-each>
                 <script type="text/javascript">
                     function showClass(cssClass){
                         dojo.query('.sample .'+ cssClass).forEach(function(item){

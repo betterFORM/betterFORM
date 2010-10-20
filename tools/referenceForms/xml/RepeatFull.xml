@@ -78,7 +78,7 @@
         </div>
         <div class="CSS">
 
-            <table class="CSS">
+            <table>
                 <tr>
                     <td>xfContainer</td>
                     <td>matches any Element that represents a XForms

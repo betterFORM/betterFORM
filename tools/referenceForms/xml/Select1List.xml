@@ -106,7 +106,7 @@
         </div>
         <div class="CSS">
 
-            <table class="CSS">
+            <table>
                 <tr>
                     <td>xfSelect1</td>
                     <td>matches an Element that represents a XForms

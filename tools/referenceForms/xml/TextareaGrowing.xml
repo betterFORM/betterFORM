@@ -3,6 +3,12 @@
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>growing Textarea control</title>
+        <style type="text/css">
+            .xfControl{
+				/* this should be set for xfControl in general probably */
+				display:inline-block;
+			}
+        </style>
     </head>
     <body>
         <div class="description">

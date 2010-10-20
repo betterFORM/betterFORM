@@ -2,7 +2,7 @@
 <html xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>Text input control</title>
+        <title>upload control</title>
     </head>
     <body>
         <div class="description">
@@ -51,20 +51,9 @@
                 <code class="ui">
 <xf:upload id="upload1" ref="upload1/value">
     <xf:label>a standard file upload</xf:label>
-    <xf:filename ref="attribute::file"/>
+    <xf:filename ref="."/>
     <xf:mediatype ref="attribute::type"/>
 </xf:upload>
-<xf:group appearance="bf:verticalTable">
-    <xf:output ref="upload1/value/@file">
-        <xf:label>File:</xf:label>
-    </xf:output>
-    <xf:output ref="upload1/value/@type">
-        <xf:label>Type:</xf:label>
-    </xf:output>
-    <xf:output value="upload1/value">
-        <xf:label>Download Link:</xf:label>
-    </xf:output>
-</xf:group>
                 </code>
             </div>
             <div class="MIPS">
@@ -93,7 +82,7 @@
                     <td>matches an Element that represents a XForms input element</td>
                 </tr>
                 <tr>
-                    <td>xsdanyURI</td>
+                    <td>xsdAnyURI</td>
                     <td>matches an Element that is bound to a node with datatype
                         <code>anyURI</code>
                     </td>

@@ -35,24 +35,25 @@
                         </data>
                     </xf:instance>
                     <xf:bind nodeset="trigger1">
-                        <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)"
+                        <xf:bind nodeset="value" constraint="true()"
                                  readonly="boolean-from-string(../@readonly)"
-                                 required="boolean-from-string(../@required)"
+                                 required="false()"
                                  relevant="boolean-from-string(../@relevant)"
                                  type="string"/>
-                        <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
+                        <xf:bind nodeset="@constraint" type="boolean" readonly="true()"></xf:bind>
                         <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
-                        <xf:bind nodeset="@required" type="boolean"></xf:bind>
+                        <xf:bind nodeset="@required" type="boolean" readonly="true()"></xf:bind>
                         <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
                     </xf:bind>
 
                 </xf:model>
                 <code class="ui">
-<xf:trigger id="trigger1" src="../../images/bf_logo_67x27.png" incremental="true">
-    <xf:label>a text</xf:label>
+<xf:trigger id="trigger1" ref="trigger1/value" src="../../images/bf_logo_67x27.png" incremental="true">
+    <xf:label></xf:label>
     <xf:hint>trigger hint text</xf:hint>
     <xf:help>help for trigger1</xf:help>
     <xf:alert>invalid</xf:alert>
+    <xf:message>The trigger was clicked</xf:message>
 </xf:trigger>
                 </code>
             </div>

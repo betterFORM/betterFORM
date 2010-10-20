@@ -28,9 +28,9 @@
         </div>
         <div class="sample">
             <div class="markup">
-                <xf:model id="model-1">
+                <xf:model>
                     <xf:instance id="instance-1">
-                        <data xmlns="" constraint="true" readonly="false" required="false" relevant="true">
+                        <data xmlns="">
                             <select1 constraint="true" readonly="false" required="true" relevant="true">
                                 <value>AX DZ</value>
                             </select1>
@@ -47,31 +47,22 @@
                         <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
                     </xf:bind>
                     <xf:instance id="codes">
-                        <countrylist xmlns="" lang="en" constraint="true" readonly="false" required="true"
-                                     relevant="true">
-                            <country constraint="true" readonly="false" required="true" relevant="true">
-                                <country-name constraint="true" readonly="false" required="true" relevant="true">
-                                    AFGHANISTAN
-                                </country-name>
-                                <code constraint="true" readonly="false" required="true" relevant="true">AF</code>
+                        <countrylist xmlns="">
+                            <country>
+                                <country-name>AFGHANISTAN</country-name>
+                                <code>AF</code>
                             </country>
-                            <country constraint="true" readonly="false" required="true" relevant="true">
-                                <country-name constraint="true" readonly="false" required="true" relevant="true">LAND
-                                    ISLANDS
-                                </country-name>
-                                <code constraint="true" readonly="false" required="true" relevant="true">AX</code>
+                            <country>
+                                <country-name>LAND ISLANDS</country-name>
+                                <code>AX</code>
                             </country>
-                            <country constraint="true" readonly="false" required="true" relevant="true">
-                                <country-name constraint="true" readonly="false" required="true" relevant="true">
-                                    ALBANIA
-                                </country-name>
-                                <code constraint="true" readonly="false" required="true" relevant="true">AL</code>
+                            <country>
+                                <country-name>ALBANIA</country-name>
+                                <code>AL</code>
                             </country>
-                            <country constraint="true" readonly="false" required="true" relevant="true">
-                                <country-name constraint="true" readonly="false" required="true" relevant="true">
-                                    ALGERIA
-                                </country-name>
-                                <code constraint="true" readonly="false" required="true" relevant="true">DZ</code>
+                            <country>
+                                <country-name>ALGERIA</country-name>
+                                <code>DZ</code>
                             </country>
                         </countrylist>
                     </xf:instance>
@@ -110,20 +101,29 @@
         <div class="CSS">
             <table>
                 <tr>
-                    <td>xfCompactSelect1</td>
+                    <td>xfSelect1</td>
                     <td>matches an Element that represents a XForms
                         <span class="keyword">select</span>
+                        element
+                    </td>
+                </tr>
+                <tr>
+                    <td>xfSelectorItem</td>
+                    <td>matches an item of a XForms
+                        <span class="keyword">select1</span>
                         element
                     </td>
                 </tr>
             </table>
         </div>
         <div class="copy">
+<!--
             <button dojotype="dijit.form.Button"
                 onclick="fluxProcessor.getInstanceDocument('model-1','instance-1');"
                 type="button">
                 <label>print instance on console</label>
             </button>
+-->
         </div>
         
     </body>

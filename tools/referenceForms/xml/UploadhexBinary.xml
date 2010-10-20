@@ -55,14 +55,8 @@
     <xf:mediatype ref="attribute::type"/>
 </xf:upload>
 <xf:group appearance="bf:verticalTable">
-    <xf:output ref="upload1/value/@file">
-        <xf:label>File:</xf:label>
-    </xf:output>
-    <xf:output ref="upload1/value/@type">
-        <xf:label>Type:</xf:label>
-    </xf:output>
     <xf:output value="upload1/value">
-        <xf:label>Download Link:</xf:label>
+        <xf:label>hexBinary-encoded value:</xf:label>
     </xf:output>
 </xf:group>
                 </code>
@@ -93,7 +87,7 @@
                     <td>matches an Element that represents a XForms input element</td>
                 </tr>
                 <tr>
-                    <td>xsdhexBinary</td>
+                    <td>xsdHexBinary</td>
                     <td>matches an Element that is bound to a node with datatype
                         <code>hexBinary</code>
                     </td>

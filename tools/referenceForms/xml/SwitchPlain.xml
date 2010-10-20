@@ -3,6 +3,15 @@
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>XForms switch</title>
+        <style type="text/css">
+            .caseContent{
+				height:100px;
+				border-style:groove;
+			}
+			.caseContent h2{
+				margin-top:3px;
+			}
+        </style>
     </head>
     <body>
         <div class="description">
@@ -48,16 +57,28 @@
     </xf:group>
     <xf:switch id="switch1">
         <xf:case id="switch1-case1" selected="true">
-            <div class="caseContent" style="background:#bbbbff">CASE 1</div>
+            <div class="caseContent" style="background:#bbbbff">
+                <h2>CASE 1</h2>
+                <p>This is some content for the first case</p>
+            </div>
         </xf:case>
         <xf:case id="switch1-case2">
-            <div class="caseContent" style="background:#ccccff">CASE 2</div>
+            <div class="caseContent" style="background:#ccccff">
+                <h2>CASE 2</h2>
+                <p>This is some content for the second case</p>
+            </div>
         </xf:case>
         <xf:case id="switch1-case3">
-            <div class="caseContent" style="background:#ddddff">CASE 3</div>
+            <div class="caseContent" style="background:#ddddff">
+                <h2>CASE 3</h2>
+                <p>This is some content for the third case</p>
+            </div>
         </xf:case>
         <xf:case id="switch1-case4">
-            <div class="caseContent" style="background:#eeeeff">CASE 4</div>
+            <div class="caseContent" style="background:#eeeeff">
+                <h2>CASE 4</h2>
+                <p>This is some content for the fourth case</p>
+            </div>
         </xf:case>
     </xf:switch>
 </xf:group>
@@ -66,7 +87,7 @@
         </div>
         <div class="CSS">
 
-            <table class="CSS">
+            <table>
                 <tr>
                     <td>xfContainer</td>
                     <td>matches any Element that represents a XForms
@@ -79,9 +100,30 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>xfSwtich</td>
+                    <td>xfSwitch</td>
                     <td>matches an Element that represents a XForms
                         <span class="keyword">switch</span>
+                        element
+                    </td>
+                </tr>
+                <tr>
+                    <td>xfCase</td>
+                    <td>matches an Element that represents a XForms
+                        <span class="keyword">case</span>
+                        element
+                    </td>
+                </tr>
+                <tr>
+                    <td>xfSelectedCase</td>
+                    <td>matches an Element that represents a selected XForms
+                        <span class="keyword">case</span>
+                        element
+                    </td>
+                </tr>
+                <tr>
+                    <td>xfDeselectedCase</td>
+                    <td>matches an Element that represents a non-selected XForms
+                        <span class="keyword">case</span>
                         element
                     </td>
                 </tr>

@@ -342,7 +342,8 @@
                     <xsl:if test="exists(//xf:help)"><script type="text/javascript">dojo.require("dijit.form.Button");</script><xsl:text>
     </xsl:text>
                         <div id="helpTrigger">
-                            <a href="javascript:fluxProcessor.showHelp();"><img src="{concat($contextroot,$scriptPath,'help.png')}" alt="Help"/></a>
+                            <a href="javascript:fluxProcessor.showHelp();"><img id="helpIcon" src="{concat($contextroot,$resourcesPath,'images/helpBubble.png')}" alt="Help"/></a>
+                            <div dojotype="dijit.Tooltip" connectid="helpIcon">Focus control and click here for help</div>
                         </div>
                     </xsl:if>
                     <div id="helpWindow" style="display:none"/>

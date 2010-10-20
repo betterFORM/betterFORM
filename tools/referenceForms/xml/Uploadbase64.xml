@@ -27,8 +27,8 @@
         </div>
         <div class="sample">
             <div class="markup">
-                <xf:model>
-                    <xf:instance xmlns="">
+                <xf:model id="model-1">
+                    <xf:instance id="instance-1" xmlns="">
                         <data>
                             <upload1 constraint="true" readonly="false" required="true" relevant="true">
                                 <value type="" value=""></value>
@@ -51,18 +51,10 @@
                 <code class="ui">
 <xf:upload id="upload1" ref="upload1/value">
     <xf:label>a base64 upload</xf:label>
-    <xf:filename ref="attribute::file"/>
-    <xf:mediatype ref="attribute::type"/>
 </xf:upload>
 <xf:group appearance="bf:verticalTable">
-    <xf:output ref="upload1/value/@file">
-        <xf:label>File:</xf:label>
-    </xf:output>
-    <xf:output ref="upload1/value/@type">
-        <xf:label>Type:</xf:label>
-    </xf:output>
     <xf:output value="upload1/value">
-        <xf:label>Download Link:</xf:label>
+        <xf:label>base64-encoded Value:</xf:label>
     </xf:output>
 </xf:group>
                 </code>
@@ -93,7 +85,7 @@
                     <td>matches an Element that represents a XForms input element</td>
                 </tr>
                 <tr>
-                    <td>xsdanyURI</td>
+                    <td>xsdAnyURI</td>
                     <td>matches an Element that is bound to a node with datatype
                         <code>anyURI</code>
                     </td>

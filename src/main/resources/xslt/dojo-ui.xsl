@@ -1380,11 +1380,13 @@
 
     <xsl:template match="xforms:switch[@appearance='dijit:TabContainer']">
         <xsl:variable name="switch-id" select="@id"/>
+<!--
         <xsl:variable name="switch-classes">
             <xsl:call-template name="assemble-compound-classes">
                 <xsl:with-param name="appearance" select="@appearance"/>
             </xsl:call-template>
         </xsl:variable>
+-->
         <script type="text/javascript">dojo.require("betterform.ui.container.TabSwitch");</script><xsl:text>
 </xsl:text>
         <div style="display:none">
@@ -1392,7 +1394,7 @@
                 <xsl:call-template name="trigger"/>
             </xsl:for-each>
         </div>
-        <div id="{$switch-id}" class="{$switch-classes} caTabContainer" dojoType="betterform.ui.container.TabSwitch">
+        <div id="{$switch-id}" class="xfSwitch bfTabContainer" dojoType="betterform.ui.container.TabSwitch">
             <xsl:call-template name="copy-style-attribute"/>
             <xsl:for-each select="xforms:case[./xforms:label]">
                 <xsl:variable name="selected">

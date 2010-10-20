@@ -12,7 +12,7 @@
             </p>
         </div>
         <div class="references">
-            <a href="#ui-input"/>
+            <a href="#ui-selectMany"/>
             <a href="#elems-form-controls"/>
         </div>
         <div class="sample">
@@ -100,7 +100,7 @@
 
             <table class="CSS">
                 <tr>
-                    <td>xfMinimalSelect</td>
+                    <td>xfSelect</td>
                     <td>matches an Element that represents a XForms
                         <span class="keyword">select</span>
                         element
