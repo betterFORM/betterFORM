@@ -33,7 +33,7 @@ dojo.declare("betterform.ui.common.ToolTipAlert",
             if(action == "xfDisabled") {
                 alertTooltip.hide(control.domNode);
             }
-            if(action=="onFocus" && (control.getControlValue() != '')){
+            if( (action=="onFocus" || action=="onBlur") && (control.getControlValue() != '')){
                 alertTooltip.show(alert.innerHTML, dojo.byId(id+"-value"));
             }
             else  if(action=="applyChanges" && (control.getControlValue() != '' || dojo.hasClass(control.domNode,"xsdBoolean"))){
