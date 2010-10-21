@@ -85,7 +85,7 @@ public class SaxonXPathExpressionSerializer {
         } else if (expr instanceof FilterExpression) {
             FilterExpression filterExpression = (FilterExpression) expr;
             result.append('(');
-            serialize(result, filterExpression.getBaseExpression(), reversePrefixMapping);
+            serialize(result, filterExpression.getControllingExpression(), reversePrefixMapping);
             result.append('[');
             serialize(result, filterExpression.getFilter(), reversePrefixMapping);
             result.append("])");
@@ -123,9 +123,9 @@ public class SaxonXPathExpressionSerializer {
         } else if (expr instanceof PathExpression) {
             PathExpression pathExpression = (PathExpression) expr;
             result.append('(');
-            serialize(result, pathExpression.getStartExpression(), reversePrefixMapping);
+            serialize(result, pathExpression.getControllingExpression(), reversePrefixMapping);
             result.append('/');
-            serialize(result, pathExpression.getStepExpression(), reversePrefixMapping);
+            serialize(result, pathExpression.getControlledExpression() , reversePrefixMapping);
             result.append(')');
         } else if (expr instanceof PatternMatchExpression) {
             // XXX not yet supported

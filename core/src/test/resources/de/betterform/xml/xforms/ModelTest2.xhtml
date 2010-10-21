@@ -5,8 +5,7 @@
     xmlns:ev="http://www.w3.org/2001/xml-events"
     xmlns:ext="http://test.org/extern"
     xmlns:int="http://test.org/intern"
-    xmlns:inl="http://test.org/inline"
-    xmlns:bffn="java:de.betterform.xml.xforms.xpath.BetterFormXPathFunctions">
+    xmlns:inl="http://test.org/inline">
     <head>
         <meta name="author" content="unl at users.sourceforge.net"/>
         <meta name="description" content="test form for model"/>
@@ -16,7 +15,7 @@
         <xforms:model id="model-empty"/>
 
         <!-- model without schemas -->
-        <xforms:model functions="bffn:fileSize bffn:fileDate" id="model-1">
+        <xforms:model id="model-1">
             <xforms:instance id="instance-1" xmlns="">
                 <data>
                     <item>1</item>

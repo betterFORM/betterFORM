@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:xf="http://www.w3.org/2002/xforms"
-      xmlns:bffn="java:de.betterform.xml.xforms.xpath.BetterFormXPathFunctions">
+      xmlns:xf="http://www.w3.org/2002/xforms">
     <head>
         <xf:model>
             <xf:instance id="default-instance" xmlns="">
@@ -22,19 +21,20 @@
                     <default>default</default>
                 </data>
             </xf:instance>
-            <xf:bind nodeset="item[1]" calculate="bffn:app-context('foo')" />
-            <xf:bind nodeset="item[2]" calculate="bffn:app-context('plain-property')"/>
-            <xf:bind nodeset="item[3]" calculate="bffn:app-context('map/nested-property')"/>
-            <xf:bind nodeset="item[4]" calculate="bffn:app-context('document')/data/item"/>
+            <xf:bind nodeset="item[1]" calculate="bf:appContext('foo')" />
+            <xf:bind nodeset="item[2]" calculate="bf:appContext('plain-property')"/>
+            <xf:bind nodeset="item[3]" calculate="bf:appContext('map/nested-property')"/>
+            <xf:bind nodeset="item[4]" calculate="bf:appContext('document')/data/item"/>
         </xf:model>
     </head>
     <body>
-    	<xf:output id="i-match1" value="bffn:match('NO', 'no', 'gi')"/>
-    	<xf:output id="i-match2" value="bffn:match('NO', 'no', 'g')"/>
-    	<xf:output id="i-match3" value="bffn:match('This is a test', '[\w ]+')"/>
+    <!--
+    	<xf:output id="i-match1" value="bf:match('NO', 'no', 'gi')"/>
+    	<xf:output id="i-match2" value="bf:match('NO', 'no', 'g')"/>
+    	<xf:output id="i-match3" value="bf:match('This is a test', '[\w ]+')"/>
+    -->    	
+    	<xf:output id="i-filesize" value="bf:fileSize('BetterFormExtensionFunctionsTest.xhtml')"/>
     	
-    	<xf:output id="i-filesize" value="bffn:fileSize('BetterFormExtensionFunctionsTest.xhtml')"/>
-    	
-    	<xf:output id="i-filedate" value="bffn:fileDate('BetterFormExtensionFunctionsTest.xhtml')"/>
+    	<xf:output id="i-filedate" value="bf:fileDate('BetterFormExtensionFunctionsTest.xhtml')"/>
     </body>
 </html>

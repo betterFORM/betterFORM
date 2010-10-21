@@ -5,7 +5,7 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:xsd="http://www.w3.org/2001/XMLSchema"
       xmlns:j2ee="http://java.sun.com/xml/ns/j2ee"
-      xmlns:bffn="java:de.betterform.xml.xforms.xpath.BetterFormXPathFunctions"
+   
         >
     <head>
         <title>Status</title>
@@ -70,25 +70,29 @@
 
             <xf:group appearance="bf:verticalTable" id="environment">
                 <xf:label>Environment Parameters</xf:label>
-                <xf:output value="bffn:appContext('requestURI')">
-                    <xf:hint>bffn:appContext('requestURI')</xf:hint>
+                <xf:output value="bf:appContext('requestURI')">
+                    <xf:hint>bf:appContext('requestURI')</xf:hint>
                     <xf:label>Request-URI</xf:label>
                 </xf:output>
-                <xf:output value="bffn:appContext('webapp.realpath')">
+                <xf:output value="bf:appContext('webapp.realpath')">
                     <xf:label>Webapp Realpath</xf:label>
-                    <xf:hint>bffn:appContext('webapp.realpath')</xf:hint>
+                    <xf:hint>bf:appContext('webapp.realpath')</xf:hint>
                 </xf:output>
-                <xf:output value="bffn:appContext('contextroot')">
+                <xf:output value="bf:appContext('contextroot')">
                     <xf:label>Contextroot</xf:label>
-                    <xf:hint>bffn:appContext('contextroot')</xf:hint>
+                    <xf:hint>bf:appContext('contextroot')</xf:hint>
                 </xf:output>
-                <xf:output value="bffn:appContext('betterform.baseURI')">
+                <xf:output value="bf:appContext('betterform.baseURI')">
                     <xf:label>baseURI</xf:label>
-                    <xf:hint>bffn:appContext('betterform.baseURI')</xf:hint>
+                    <xf:hint>bf:appContext('betterform.baseURI')</xf:hint>
                 </xf:output>
-                <xf:output value="bffn:appContext('betterform.locale')">
+                <xf:output value="bf:appContext('betterform.locale', 'uk')">
                     <xf:label>Locale</xf:label>
-                    <xf:hint>bffn:appContext('betterform.locale')</xf:hint>
+                    <xf:hint>bf:appContext('betterform.locale')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:config('initLogging')">
+                    <xf:label>initLogging</xf:label>
+                    <xf:hint>bf:config('initLogging')</xf:hint>
                 </xf:output>
             </xf:group>
 

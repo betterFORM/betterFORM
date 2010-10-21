@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns:ev="http://www.w3.org/2001/xml-events"
-      xmlns:bffn="java:de.betterform.xml.xforms.xpath.BetterFormXPathFunctions">
+      >
 <head>
     <title>A responsive Fisheye-like FisheyeLite widget | The Dojo Toolkit</title>
     <style type="text/css">
@@ -211,9 +211,9 @@
             <!-- setting the start directory and load it -->
             <xf:action ev:event="xforms-ready">
                 <xf:setvalue ref="instance('i-controller')/startDir"
-                             value="concat(bffn:appContext('webapp.realpath'),'forms')"/>
+                             value="concat(bf:appContext('webapp.realpath'),'forms')"/>
                 <xf:setvalue ref="instance('i-controller')/currentDir"
-                             value="concat(bffn:appContext('webapp.realpath'),'forms')"/>
+                             value="concat(bf:appContext('webapp.realpath'),'forms')"/>
                 <xf:send submission="s-load-dir"/>
             </xf:action>
         </xf:model>

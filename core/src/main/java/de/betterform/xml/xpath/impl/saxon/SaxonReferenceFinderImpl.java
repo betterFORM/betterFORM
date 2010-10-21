@@ -34,7 +34,6 @@ public class SaxonReferenceFinderImpl implements XPathReferenceFinder {
      *
      * @param xpath the XPath expression.
      * @param prefixMapping the prefix to name space mapping
-     * @param functionContext the function context
      * @return the set of all references to other nodes.
      * @throws XFormsException if a reference detection error occurred.
      */
@@ -59,10 +58,10 @@ public class SaxonReferenceFinderImpl implements XPathReferenceFinder {
 	else if (expression instanceof PathExpression)
 	{
 	    final PathExpression pathExpression = (PathExpression)expression;
-	    final Expression startExpression = pathExpression.getStartExpression();
+	    final Expression startExpression = pathExpression.getControllingExpression();
 	    
 	    addExpressionReferences(references, context, startExpression, prefixMapping); 
-	    addExpressionReferences(references, SaxonXPathExpressionSerializer.serialize(startExpression, prefixMapping), pathExpression.getStepExpression(), prefixMapping);
+	    addExpressionReferences(references, SaxonXPathExpressionSerializer.serialize(startExpression, prefixMapping), pathExpression.getControlledExpression(), prefixMapping);
 	    
 	}
 	else if (expression instanceof FilterExpression)
@@ -70,7 +69,7 @@ public class SaxonReferenceFinderImpl implements XPathReferenceFinder {
 	    final FilterExpression filterExpression = (FilterExpression)expression;
 	    
 	    final HashSet baseReferences = new HashSet();
-	    addExpressionReferences(baseReferences, context, filterExpression.getBaseExpression(), prefixMapping);
+	    addExpressionReferences(baseReferences, context, filterExpression.getControllingExpression(), prefixMapping);
 	    
 	    for (Iterator it = baseReferences.iterator(); it.hasNext();) {
 		String newContext = (String) it.next();

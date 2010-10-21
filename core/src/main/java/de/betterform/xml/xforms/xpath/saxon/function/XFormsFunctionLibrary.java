@@ -192,7 +192,7 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
         // Note, this has a variable number of arguments so it is treated
         // specially
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}contains", Contains.class, Contains.CONTAINS, 2, 3, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
+        e = register("{" + NamespaceConstants.XFORMS_NS + "}contains", Contains.class, 0, 2, 3, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
         arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, BooleanValue.TRUE);
         arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
@@ -258,7 +258,7 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
         e = register("{" + NamespaceConstants.XFORMS_NS + "}empty", Existence.class, Existence.EMPTY, 1, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
         arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, BooleanValue.TRUE);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}ends-with", Contains.class, Contains.ENDSWITH, 2, 3, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
+        e = register("{" + NamespaceConstants.XFORMS_NS + "}ends-with", EndsWith.class, 0, 2, 3, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
         arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, BooleanValue.TRUE);
         arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
@@ -531,7 +531,7 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
                 StaticProperty.ALLOWS_ZERO_OR_ONE);
         arg(e, 0, BuiltInAtomicType.TIME, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}starts-with", Contains.class, Contains.STARTSWITH, 2, 3, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
+        e = register("{" + NamespaceConstants.XFORMS_NS + "}starts-with", StartsWith.class, 0, 2, 3, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
         arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, BooleanValue.TRUE);
         arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
@@ -565,12 +565,12 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
         arg(e, 1, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE, null);
         arg(e, 2, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}substring-after", Contains.class, Contains.AFTER, 2, 3, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        e = register("{" + NamespaceConstants.XFORMS_NS + "}substring-after", SubstringAfter.class, 0, 2, 3, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
         arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
         arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}substring-before", Contains.class, Contains.BEFORE, 2, 3, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        e = register("{" + NamespaceConstants.XFORMS_NS + "}substring-before", SubstringBefore.class, 0, 2, 3, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
         arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, StringValue.EMPTY_STRING);
         arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);

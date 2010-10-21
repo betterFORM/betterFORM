@@ -19,9 +19,7 @@ import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.ExpressionVisitor;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
-import net.sf.saxon.trans.DynamicError;
 import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.type.ValidationException;
 import net.sf.saxon.value.StringValue;
 
 import org.apache.commons.codec.BinaryEncoder;
@@ -91,7 +89,7 @@ public class Hmac extends XFormsFunction {
 	    // In practice, you would save this key.
 	    SecretKey secretKey = new SecretKeySpec(key.getBytes("utf-8"), algorithm);
 
-	    // Create a MAC object using HMAC-MD5 and initialize with key
+	    // Create a MAC object using HMAC-MD5 and initialize with kesaxoniay
 	    Mac mac = Mac.getInstance(secretKey.getAlgorithm());
 	    mac.init(secretKey);
 	    mac.update(data.getBytes("utf-8"));
@@ -108,15 +106,15 @@ public class Hmac extends XFormsFunction {
 	    return new StringValue(new String(encoder.encode(digest), "ASCII"));
 
 	} catch (NoSuchAlgorithmException e) {
-	    throw new DynamicError(e);
+	    throw new XPathException(e);
 	} catch (UnsupportedEncodingException e) {
-	    throw new DynamicError(e);
+	    throw new XPathException(e);
 	} catch (EncoderException e) {
 		XPathFunctionContext functionContext = getFunctionContext(xpathContext);
 		XFormsElement xformsElement = functionContext.getXFormsElement();
 		throw new XPathException(new XFormsComputeException("Encoder exception.", e, xformsElement.getTarget(), this));
 	} catch (InvalidKeyException e) {
-	    throw new DynamicError(e);
+	    throw new XPathException(e);
 	}
 
     }

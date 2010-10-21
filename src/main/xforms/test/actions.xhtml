@@ -6,7 +6,7 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:bf="http://betterform.sourceforge.net/xforms"
-    xmlns:bffn="java:de.betterform.xml.xforms.xpath.BetterFormXPathFunctions">
+    >
     <!--<bf:keepalive pulse="900"/>-->
     <head>
         <title>Actions</title>
@@ -16,7 +16,7 @@
             .caHorizontalTableLabel{display:none;}
         </style>
 
-        <xf:model id="model-1" functions="bffn:appContext">
+        <xf:model id="model-1" functions="bf:appContext">
             <xf:submission id="s-debug" action="{$contextroot}/jsp/debug-instance.jsp" method="post" replace="all"/>
             <xf:submission id="s-debug-partial" action="{$contextroot}/jsp/debug-instance.jsp" method="post" replace="all" ref="instance('default')/repeatdata"/>
             <xf:submission id="s-update" action="{$contextroot}/jsp/generate-instance.jsp" method="post" replace="instance"/>
@@ -269,8 +269,8 @@
                 <xf:trigger>
                     <xf:label>Load (replace)</xf:label>
                     <xf:action>
-                        <xf:load resource="{$contextroot}/forms/apps/address.xhtml?betterformjs=true" if="string-length(bffn:appContext('betterformjs')) != 0" show="replace"/>
-                        <xf:load resource="{$contextroot}/forms/apps/address.xhtml" if="string-length(bffn:appContext('betterformjs')) = 0" show="replace"/>
+                        <xf:load resource="{$contextroot}/forms/apps/address.xhtml?betterformjs=true" if="string-length(bf:appContext('betterformjs')) != 0" show="replace"/>
+                        <xf:load resource="{$contextroot}/forms/apps/address.xhtml" if="string-length(bf:appContext('betterformjs')) = 0" show="replace"/>
                     </xf:action>
                 </xf:trigger>
                 <xf:trigger>

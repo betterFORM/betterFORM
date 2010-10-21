@@ -51,7 +51,6 @@ declare function local:main() as node()?
 request:set-attribute("betterform.filter.parseResponseBody", "true"),
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xf="http://www.w3.org/2002/xforms"
-      xmlns:bffn="java:de.betterform.xml.xforms.xpath.BetterFormXPathFunctions"
       xmlns:ev="http://www.w3.org/2001/xml-events"
       >
     <head><title>Number Guessing</title></head>
@@ -65,7 +64,7 @@ request:set-attribute("betterform.filter.parseResponseBody", "true"),
     		  	</xf:instance>
                 <xf:bind nodeset="input" type="integer" constraint=". &gt;= 0 and . &lt;= 100"/>
     		  	<xf:action ev:event="xforms-ready">
-    		  		<xf:setvalue ref="input" value="bffn:appContext('guess')"/>    		  		    		  		
+    		  		<xf:setvalue ref="input" value="bf:appContext('guess')"/>
     		  	</xf:action>
 		  	</xf:model>
     	</div>

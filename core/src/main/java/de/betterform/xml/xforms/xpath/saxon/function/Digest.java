@@ -15,7 +15,6 @@ import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.ExpressionVisitor;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
-import net.sf.saxon.trans.DynamicError;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.type.ValidationException;
 import net.sf.saxon.value.StringValue;
@@ -98,9 +97,9 @@ public class Digest extends XFormsFunction {
 	    return new StringValue(new String(encoder.encode(digest), "ASCII"));
 
 	} catch (NoSuchAlgorithmException e) {
-	    throw new DynamicError(e);
+	    throw new XPathException(e);
 	} catch (UnsupportedEncodingException e) {
-	    throw new DynamicError(e);
+	    throw new XPathException(e);
 	} catch (EncoderException e) {
 		XPathFunctionContext functionContext = getFunctionContext(xpathContext);
 		XFormsElement xformsElement = functionContext.getXFormsElement();

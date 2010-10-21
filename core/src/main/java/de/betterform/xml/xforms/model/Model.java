@@ -436,7 +436,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
                 String namespaceURI = NamespaceResolver.getNamespaceURI(this.element, prefix);
                 if (namespaceURI == null) namespaceURI = "";
                 FunctionLibrary functionLibrary = XPathCache.getFgXFormsFunctionLibrary();
-                if (!(functionLibrary.isAvailable(new StructuredQName(prefix, namespaceURI, localName), -1))) {
+                if ((functionLibrary.getFunctionSignature(new StructuredQName(prefix, namespaceURI, localName), -1)) != null) {
                     throw new XFormsComputeException("Function '" + localName + "' cannot be found in Namespace: '" + namespaceURI + "'", this.target, null);
 //                    Map<String, String> errorMsg = new HashMap<String, String>();
 //                    errorMsg.put("error-message","XFormsComputeException: Function '" + localName + "' cannot be found in Namespace: '" + namespaceURI + "'");

@@ -4,12 +4,11 @@
       xmlns:xsd="http://www.w3.org/2001/XMLSchema"
       xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns:ts="http://www.w3c.org/MarkUp/Forms/XForms/Test/11"
-      xmlns:bf="http://betterform.sourceforge.net/xforms"
-      xmlns:bffn="java:de.betterform.xml.xforms.xpath.ChibaXPathFunctions">
+      xmlns:bf="http://betterform.sourceforge.net/xforms">
 <head>
     <title>XForms Test Suite</title>
 
-    <xf:model id="chapterModel" functions="bffn:appContext">
+    <xf:model id="chapterModel" functions="bf:appContext">
         <!--
                 <xf:instance id="instance_chapterModel"   >
                     <data xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/11"/>
@@ -538,35 +537,35 @@
                 <xf:label>Browser Version:</xf:label>
             </xf:output>
             <br/>
-            <xf:output value="choose((contains(bffn:appContext('http-headers/user-agent'),'Firefox') or contains(bffn:appContext('http-headers/user-agent'),'Minefield')) and contains(bffn:appContext('http-headers/user-agent'),'/3.0'), 'Browser is Firefox 3.0','Browser is not Firefox 3.0')">
+            <xf:output value="choose((contains(bf:appContext('http-headers/user-agent'),'Firefox') or contains(bf:appContext('http-headers/user-agent'),'Minefield')) and contains(bf:appContext('http-headers/user-agent'),'/3.0'), 'Browser is Firefox 3.0','Browser is not Firefox 3.0')">
                 <xf:label>Header Browser:</xf:label>
             </xf:output><br/>
-            <xf:output value="choose((contains(bffn:appContext('http-headers/user-agent'),'Firefox') or contains(bffn:appContext('http-headers/user-agent'),'Shiretoko')) and contains(bffn:appContext('http-headers/user-agent'),'/3.1'), 'Browser is Firefox 3.1','Browser is not Firefox 3.1')">
+            <xf:output value="choose((contains(bf:appContext('http-headers/user-agent'),'Firefox') or contains(bf:appContext('http-headers/user-agent'),'Shiretoko')) and contains(bf:appContext('http-headers/user-agent'),'/3.1'), 'Browser is Firefox 3.1','Browser is not Firefox 3.1')">
                 <xf:label>Header Browser:</xf:label>
             </xf:output><br/>
-            <xf:output value="choose((contains(bffn:appContext('http-headers/user-agent'),'MSIE') and not(contains(bffn:appContext('http-headers/user-agent'),'Opera')) and not(contains(bffn:appContext('http-headers/user-agent'),'Safari'))) and contains(bffn:appContext('http-headers/user-agent'),'MSIE 6.0'), 'Browser is IE 6.0','Browser is not IE 6.0')">
+            <xf:output value="choose((contains(bf:appContext('http-headers/user-agent'),'MSIE') and not(contains(bf:appContext('http-headers/user-agent'),'Opera')) and not(contains(bf:appContext('http-headers/user-agent'),'Safari'))) and contains(bf:appContext('http-headers/user-agent'),'MSIE 6.0'), 'Browser is IE 6.0','Browser is not IE 6.0')">
                 <xf:label>Header Browser:</xf:label>
             </xf:output><br/>
-            <xf:output value="choose((contains(bffn:appContext('http-headers/user-agent'),'MSIE') and not(contains(bffn:appContext('http-headers/user-agent'),'Opera')) and not(contains(bffn:appContext('http-headers/user-agent'),'Safari'))) and contains(bffn:appContext('http-headers/user-agent'),'MSIE 7.0'), 'Browser is IE 7.0','Browser is not IE 7.0')">
+            <xf:output value="choose((contains(bf:appContext('http-headers/user-agent'),'MSIE') and not(contains(bf:appContext('http-headers/user-agent'),'Opera')) and not(contains(bf:appContext('http-headers/user-agent'),'Safari'))) and contains(bf:appContext('http-headers/user-agent'),'MSIE 7.0'), 'Browser is IE 7.0','Browser is not IE 7.0')">
                 <xf:label>Header Browser:</xf:label>
             </xf:output><br/>
-            <xf:output value="choose((contains(bffn:appContext('http-headers/user-agent'),'MSIE') and not(contains(bffn:appContext('http-headers/user-agent'),'Opera')) and not(contains(bffn:appContext('http-headers/user-agent'),'Safari'))) and contains(bffn:appContext('http-headers/user-agent'),'MSIE 8.0'), 'Browser is IE 8.0','Browser is not IE 8.0')">
+            <xf:output value="choose((contains(bf:appContext('http-headers/user-agent'),'MSIE') and not(contains(bf:appContext('http-headers/user-agent'),'Opera')) and not(contains(bf:appContext('http-headers/user-agent'),'Safari'))) and contains(bf:appContext('http-headers/user-agent'),'MSIE 8.0'), 'Browser is IE 8.0','Browser is not IE 8.0')">
                 <xf:label>Header Browser:</xf:label>
             </xf:output><br/>
-            <xf:output value="choose((contains(bffn:appContext('http-headers/user-agent'),'AppleWebKit') and not(contains(bffn:appContext('http-headers/user-agent'),'Chrome'))) and contains(bffn:appContext('http-headers/user-agent'),'AppleWebKit/5'), 'Browser is Safari 3.2','Browser is not Safari 3.2')">
+            <xf:output value="choose((contains(bf:appContext('http-headers/user-agent'),'AppleWebKit') and not(contains(bf:appContext('http-headers/user-agent'),'Chrome'))) and contains(bf:appContext('http-headers/user-agent'),'AppleWebKit/5'), 'Browser is Safari 3.2','Browser is not Safari 3.2')">
                 <xf:label>Header Browser:</xf:label>
             </xf:output><br/>
-            <xf:output value="choose(contains(bffn:appContext('http-headers/user-agent'),'Macintosh'), 'OS is Macintosh','OS is not Macintosh')">
+            <xf:output value="choose(contains(bf:appContext('http-headers/user-agent'),'Macintosh'), 'OS is Macintosh','OS is not Macintosh')">
                 <xf:label>Header OS:</xf:label>
             </xf:output><br/>
-            <xf:output value="choose(contains(bffn:appContext('http-headers/user-agent'),'Windows'), 'OS is Windows','OS is not Windows')">
+            <xf:output value="choose(contains(bf:appContext('http-headers/user-agent'),'Windows'), 'OS is Windows','OS is not Windows')">
                 <xf:label>Header OS:</xf:label>
             </xf:output><br/>
-            <xf:output value="choose(contains(bffn:appContext('http-headers/user-agent'),'Linux'), 'OS is Linux','OS is not Linux')">
+            <xf:output value="choose(contains(bf:appContext('http-headers/user-agent'),'Linux'), 'OS is Linux','OS is not Linux')">
                 <xf:label>Header OS:</xf:label>
             </xf:output><br/>
             <br/>
-            <xf:output value="concat(   bffn:appContext('webapp.realpath'),
+            <xf:output value="concat(   bf:appContext('webapp.realpath'),
                                         '../../../src/test/resources/XFormsTestSuite1.1E1/Edition1/driverPages/Results/web/',
                                         instance('i-controller')/selectedOS/@name,
                                         '/',

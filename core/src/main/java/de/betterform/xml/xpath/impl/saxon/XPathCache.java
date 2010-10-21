@@ -19,7 +19,7 @@ import net.sf.saxon.dom.NodeWrapper;
 import net.sf.saxon.expr.LastPositionFinder;
 import net.sf.saxon.expr.XPathContextMajor;
 import net.sf.saxon.functions.FunctionLibraryList;
-import net.sf.saxon.functions.JavaExtensionLibrary;
+
 import net.sf.saxon.functions.SystemFunctionLibrary;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.LookaheadIterator;
@@ -47,10 +47,10 @@ public class XPathCache {
 
     static {
         fgXFormsFunctionLibrary = new FunctionLibraryList();
-        fgXFormsFunctionLibrary.addFunctionLibrary(SystemFunctionLibrary.getSystemFunctionLibrary(SystemFunctionLibrary.XPATH_ONLY));
+        fgXFormsFunctionLibrary.addFunctionLibrary(SystemFunctionLibrary.getSystemFunctionLibrary(Configuration.XPATH));
         fgXFormsFunctionLibrary.addFunctionLibrary(new XFormsFunctionLibrary());
         fgXFormsFunctionLibrary.addFunctionLibrary(new BetterFormFunctionLibrary());
-        fgXFormsFunctionLibrary.addFunctionLibrary(new JavaExtensionLibrary(XPathCache.kCONFIG));
+//        fgXFormsFunctionLibrary.addFunctionLibrary(new JavaExtensionLibrary(XPathCache.kCONFIG));
 
     }
 

@@ -34,6 +34,10 @@ import java.util.regex.Pattern;
 public class BetterFormXPathFunctions {
     private static final Log LOGGER = LogFactory.getLog(BetterFormXPathFunctions.class);
 
+    /*
+        TOBI: Converted appContext() to XPathFunction 
+     */
+    /*
     public static Node appContext(XPathContext c, String key) {
         Container container = getContainer(c);
 
@@ -71,7 +75,12 @@ public class BetterFormXPathFunctions {
             return n;
         }
     }
+    */
 
+     /*
+        TOBI: Converted config() to XPathFunction
+     */
+    /*
     public static String config(String key) {
         try {
             return Config.getInstance().getProperty(key);
@@ -79,7 +88,7 @@ public class BetterFormXPathFunctions {
             return "";
         }
     }
-
+    */
     private static Map m_regexPatterns = new HashMap();
 
     /**
@@ -130,6 +139,7 @@ public class BetterFormXPathFunctions {
      * @return the size of the file as String <p/> todo: revisit code structure -
      *         fileSize and fileDate functions only differ in one line of code
      */
+    /*
     public static float fileSize(XPathContext c, String filename) {
         if (filename == null) {
             return Float.NaN;
@@ -141,7 +151,7 @@ public class BetterFormXPathFunctions {
             return Float.NaN;
         }
     }
-
+     */
     /**
      * custom extension function to get the lastModified Date of a local file.
      *
@@ -151,9 +161,11 @@ public class BetterFormXPathFunctions {
      * @return the formatted lastModified Date of the file
      * @see java.text.SimpleDateFormat
      */
+    /*
     public static String fileDate(XPathContext c, String filename) {
         return fileDate(c, filename, null);
     }
+    */
 
 
     /**
@@ -168,6 +180,7 @@ public class BetterFormXPathFunctions {
      * @return the formatted lastModified Date of the file
      * @see java.text.SimpleDateFormat
      */
+    /*
     public static String fileDate(XPathContext c, String filename, String format) {
         if (filename == null) {
             return null;
@@ -179,6 +192,7 @@ public class BetterFormXPathFunctions {
             return null;
         }
     }
+    */
 
     /**
      * custom extension function to get the content length of an uploaded file
@@ -236,6 +250,7 @@ public class BetterFormXPathFunctions {
 //               }
 //           }
 //       }
+    /*
     private static Node wrap(XPathContext c, Object o) {
         if (o instanceof Node) {
             return (Node) o;
@@ -246,8 +261,8 @@ public class BetterFormXPathFunctions {
         return ownerDocument.createTextNode(o.toString());
 
     }
-
-
+    */
+    /*
     private static String formatDateString(long modified, String format) {
         Calendar calendar = new GregorianCalendar(Locale.getDefault());
         calendar.setTimeInMillis(modified);
@@ -269,7 +284,8 @@ public class BetterFormXPathFunctions {
         result = simple.format(calendar.getTime());
         return result;
     }
-
+    */
+    /*
     public static Container getContainer(XPathContext c) {
         Node n = (Node) ((NodeWrapper) c.getContextItem()).getUnderlyingNode();
         if (LOGGER.isDebugEnabled()) {
@@ -284,4 +300,5 @@ public class BetterFormXPathFunctions {
             return null;
         }
     }
+    */
 }

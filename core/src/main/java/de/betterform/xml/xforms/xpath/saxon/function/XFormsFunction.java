@@ -5,9 +5,16 @@
 
 package de.betterform.xml.xforms.xpath.saxon.function;
 
+import de.betterform.xml.xforms.Container;
+import net.sf.saxon.dom.NodeWrapper;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.functions.SystemFunction;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
+import net.sf.saxon.om.Item;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  * This class is the base class for all the XForms functions. "XForms functions"
@@ -15,7 +22,7 @@ import de.betterform.xml.xforms.XFormsProcessorImpl;
  */
 
 public abstract class XFormsFunction extends SystemFunction {
-
+   private static final Log LOGGER = LogFactory.getLog(XFormsFunction.class);
     /**
      * @param xpathContext
      * @return
@@ -38,4 +45,20 @@ public abstract class XFormsFunction extends SystemFunction {
 //                 StaticProperty.DEPENDS_ON_POSITION |
 //                 StaticProperty.DEPENDS_ON_LAST );
 //     }
+
+    protected Container getContainer(XPathContext xpathContext) {
+        Item item = xpathContext.getContextItem();
+        Node n = (Node) ((NodeWrapper) item).getUnderlyingNode();
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("context node: " + n.getNodeName());
+        }
+
+        Element root = n.getOwnerDocument().getDocumentElement();
+        Object container = root.getUserData("container");
+        if (container instanceof Container) {
+            return (Container) container;
+        } else {
+            return null;
+        }
+    }
 }

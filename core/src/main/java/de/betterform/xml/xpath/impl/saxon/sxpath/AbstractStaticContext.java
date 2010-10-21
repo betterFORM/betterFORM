@@ -6,14 +6,13 @@
 package de.betterform.xml.xpath.impl.saxon.sxpath;
 
 import net.sf.saxon.Configuration;
+import net.sf.saxon.Platform;
 import net.sf.saxon.event.LocationProvider;
 import net.sf.saxon.expr.*;
-import net.sf.saxon.functions.ConstructorFunctionLibrary;
-import net.sf.saxon.functions.FunctionLibrary;
-import net.sf.saxon.functions.FunctionLibraryList;
-import net.sf.saxon.functions.SystemFunctionLibrary;
+import net.sf.saxon.functions.*;
 import net.sf.saxon.instruct.Executable;
 import net.sf.saxon.instruct.LocationMap;
+import net.sf.saxon.java.JavaPlatform;
 import net.sf.saxon.om.NamePool;
 import net.sf.saxon.om.NamespaceConstant;
 import net.sf.saxon.sort.StringCollator;
@@ -68,13 +67,15 @@ public abstract class AbstractStaticContext implements StaticContext {
 
     protected final void setDefaultFunctionLibrary() {
         FunctionLibraryList lib = new FunctionLibraryList();
-        lib.addFunctionLibrary(
-                SystemFunctionLibrary.getSystemFunctionLibrary(SystemFunctionLibrary.XPATH_ONLY));
+        lib.addFunctionLibrary(SystemFunctionLibrary.getSystemFunctionLibrary(StandardFunction.CORE));
         lib.addFunctionLibrary(getConfiguration().getVendorFunctionLibrary());
         lib.addFunctionLibrary(new ConstructorFunctionLibrary(getConfiguration()));
         //lib.addFunctionLibrary(new JavaExtensionLibrary(getConfiguration()));
         if (config.isAllowExternalFunctions()) {
-            Configuration.getPlatform().addFunctionLibraries(lib, config,Configuration.XPATH);
+            Platform platform = Configuration.getPlatform();
+            if (platform instanceof JavaPlatform) {
+                ((JavaPlatform) platform).addFunctionLibraries(lib, config,Configuration.XPATH);
+            }
         }
         setFunctionLibrary(lib);
     }

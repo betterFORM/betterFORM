@@ -49,6 +49,23 @@ public abstract class XPathFunctionLibrary implements FunctionLibrary {
         }
     }
 
+    //TODO: implement method!!!!!! 
+    public net.sf.saxon.value.SequenceType[] getFunctionSignature(StructuredQName functionName, int arity) {
+        String uri = functionName.getNamespaceURI();
+        String local = functionName.getLocalName();
+//        if (uri.equals(NamespaceConstants.XFORMS_NS)) {
+        if (uri.equals(getFunctionNamespace())) {
+//            StandardFunction.Entry entry = XFormsFunction.getFunction("{" + uri + "}" + local, arity);
+            StandardFunction.Entry entry = getFunction("{" + uri + "}" + local, arity);
+            if (entry == null) {
+                return null;
+            }
+            return entry.argumentTypes;
+        } else {
+            return null;
+        }
+     }
+
     /**
      * Bind an extension function, given the URI and local parts of the function name,
      * and the list of expressions supplied as arguments. This method is called at compile

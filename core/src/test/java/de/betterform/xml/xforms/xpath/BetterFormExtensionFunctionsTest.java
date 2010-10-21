@@ -38,8 +38,8 @@ public class BetterFormExtensionFunctionsTest extends BetterFormTestCase {
         this.processor.setContextParam("document", document);
 
         // Test on document
-        assertEquals("test4", evaluateInDefaultContextAsString("bffn:app-context('document')/data/item[1]"));
-        assertEquals("test1", evaluateInDefaultContextAsString("bf:sort((bffn:app-context('document')/data/item), .)[1]"));
+        assertEquals("test4", evaluateInDefaultContextAsString("bf:appContext('document')/data/item[1]"));
+        assertEquals("test1", evaluateInDefaultContextAsString("bf:sort((bf:appContext('document')/data/item), .)[1]"));
 
         // Test on instance
         assertEquals("item4", evaluateInDefaultContextAsString("instance('sort-instance')/item[1]"));
@@ -50,7 +50,7 @@ public class BetterFormExtensionFunctionsTest extends BetterFormTestCase {
 
     public void testContextNew() throws Exception {
 //        assertEquals("hello", XPathUtil.evaluateAsString(processor.getXForms(),"bffn:foo()"));
-        assertEquals("bar", evaluateInDefaultContextAsString("string(bffn:app-context('foo'))"));
+        assertEquals("bar", evaluateInDefaultContextAsString("string(bf:appContext('foo'))"));
         assertEquals("bar", evaluateInDefaultContextAsString("string(/data/item[1])"));
     }
 
@@ -60,20 +60,20 @@ public class BetterFormExtensionFunctionsTest extends BetterFormTestCase {
      * @throws Exception if any error occurred during the test.
      */
     public void testContext() throws Exception {
-        assertEquals("", evaluateInDefaultContextAsString("string(bffn:app-context('plain-property'))"));
-        assertEquals("default", evaluateInDefaultContextAsString("string(bffn:app-context('plain-property', 'default'))"));
-        assertEquals("default", evaluateInDefaultContextAsString("string(bffn:app-context('plain-property', /data/default))"));
+        assertEquals("", evaluateInDefaultContextAsString("string(bf:appContext('plain-property'))"));
+        assertEquals("default", evaluateInDefaultContextAsString("string(bf:appContext('plain-property', 'default'))"));
+        assertEquals("default", evaluateInDefaultContextAsString("string(bf:appContext('plain-property', /data/default))"));
 
         String plainProperty = String.valueOf(System.currentTimeMillis());
         this.processor.setContextParam("plain-property", plainProperty);
 
-        assertEquals(plainProperty, evaluateInDefaultContextAsString("string(bffn:app-context('plain-property'))"));
+        assertEquals(plainProperty, evaluateInDefaultContextAsString("string(bf:appContext('plain-property'))"));
         assertEquals("bar", evaluateInDefaultContextAsString("string(/data/item[1])"));
 
         getDefaultModel().rebuild();
         getDefaultModel().recalculate();
 
-        assertEquals(plainProperty, evaluateInDefaultContextAsString("string(bffn:app-context('plain-property'))"));
+        assertEquals(plainProperty, evaluateInDefaultContextAsString("string(bf:appContext('plain-property'))"));
         assertEquals(plainProperty, evaluateInDefaultContextAsString("string(/data/item[2])"));
     }
 
@@ -83,22 +83,22 @@ public class BetterFormExtensionFunctionsTest extends BetterFormTestCase {
      * @throws Exception if any error occurred during the test.
      */
     public void testContextNested() throws Exception {
-        assertEquals("", evaluateInDefaultContextAsString("string(bffn:app-context('map/nested-property'))"));
-        assertEquals("default", evaluateInDefaultContextAsString("string(bffn:app-context('map/nested-property', 'default'))"));
-        assertEquals("default", evaluateInDefaultContextAsString("string(bffn:app-context('map/nested-property', /data/default))"));
+        assertEquals("", evaluateInDefaultContextAsString("string(bf:appContext('map/nested-property'))"));
+        assertEquals("default", evaluateInDefaultContextAsString("string(bf:appContext('map/nested-property', 'default'))"));
+        assertEquals("default", evaluateInDefaultContextAsString("string(bf:appContext('map/nested-property', /data/default))"));
 
         String nestedProperty = String.valueOf(System.currentTimeMillis());
         HashMap map = new HashMap();
         map.put("nested-property", nestedProperty);
         this.processor.setContextParam("map", map);
 
-        assertEquals(nestedProperty, evaluateInDefaultContextAsString("string(bffn:app-context('map/nested-property'))"));
+        assertEquals(nestedProperty, evaluateInDefaultContextAsString("string(bf:appContext('map/nested-property'))"));
         assertEquals("", evaluateInDefaultContextAsString("string(/data/item[3])"));
 
          getDefaultModel().rebuild();
          getDefaultModel().recalculate();
 
-        assertEquals(nestedProperty, evaluateInDefaultContextAsString("string(bffn:app-context('map/nested-property'))"));
+        assertEquals(nestedProperty, evaluateInDefaultContextAsString("string(bf:appContext('map/nested-property'))"));
         assertEquals(nestedProperty, evaluateInDefaultContextAsString("string(/data/item[3])"));
     }
 
@@ -115,13 +115,13 @@ public class BetterFormExtensionFunctionsTest extends BetterFormTestCase {
         stream.close();
         this.processor.setContextParam("document", document);
 
-        assertEquals("test", evaluateInDefaultContextAsString("string(bffn:app-context('document')/data/item)"));
+        assertEquals("test", evaluateInDefaultContextAsString("string(bf:appContext('document')/data/item)"));
         assertEquals("", evaluateInDefaultContextAsString("string(/data/item[4])"));
 
         getDefaultModel().rebuild();
         getDefaultModel().recalculate();
 
-        assertEquals("test", evaluateInDefaultContextAsString("string(bffn:app-context('document')/data/item)"));
+        assertEquals("test", evaluateInDefaultContextAsString("string(bf:appContext('document')/data/item)"));
         assertEquals("test", evaluateInDefaultContextAsString("string(/data/item[4])"));
     }
 
@@ -130,11 +130,13 @@ public class BetterFormExtensionFunctionsTest extends BetterFormTestCase {
      *
      * @throws Exception if any error occurred during the test.
      */
+    /*
     public void testMatch() throws Exception {
         assertEquals("true", evaluateInDocumentContextAsString("string(//xf:output[@id='i-match1']/bf:data)"));
         assertEquals("false", evaluateInDocumentContextAsString("string(//xf:output[@id='i-match2']/bf:data)"));
         assertEquals("true", evaluateInDocumentContextAsString("string(//xf:output[@id='i-match3']/bf:data)"));
     }
+    */
 
 
     /**
