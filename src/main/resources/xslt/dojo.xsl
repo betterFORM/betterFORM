@@ -294,7 +294,7 @@
         </xsl:variable>
         <body class="{$theme}">
             <xsl:copy-of select="@*"/>
-            <div id="caLoading" class="disabled">
+            <div id="bfLoading" class="disabled">
                 <img src="{concat($contextroot,$resourcesPath,'images/indicator.gif')}" class="xfDisabled" id="indicator"
                      alt="loading"/>
             </div>
@@ -340,15 +340,15 @@
                         </xsl:otherwise>
                     </xsl:choose>
                     <xsl:if test="exists(//xf:help)"><script type="text/javascript">dojo.require("dijit.form.Button");</script><xsl:text>
-    </xsl:text>
-                        <div id="helpTrigger">
-                            <a href="javascript:fluxProcessor.showHelp();"><img id="helpIcon" src="{concat($contextroot,$resourcesPath,'images/helpBubble.png')}" alt="Help"/></a>
-                            <div dojotype="dijit.Tooltip" connectid="helpIcon">Focus control and click here for help</div>
+</xsl:text>
+                        <div id="bfHelpTrigger">
+                            <a href="javascript:fluxProcessor.showHelp();"><img id="bfHelpIcon" src="{concat($contextroot,$resourcesPath,'images/helpBubble.png')}" alt="Help"/></a>
+                            <div dojotype="dijit.Tooltip" connectid="bfHelpIcon">Focus control and click here for help</div>
                         </div>
                     </xsl:if>
                     <div id="helpWindow" style="display:none"/>
 <!--
-                    <div id="caCopyright">
+                    <div id="bfCopyright">
                         <xsl:text disable-output-escaping="yes">powered by betterFORM, &amp;copy; 2010</xsl:text>
                     </div>
 -->
@@ -544,13 +544,6 @@
     <xsl:template match="xf:label">
         <!-- match all inline markup and content -->
         <xsl:apply-templates/>
-
-        <!-- check for requiredness -->
-<!--
-        <xsl:if test="../bf:data/@bf:required='true'">
-            <span class="xfRequiredSymbol">*</span>
-        </xsl:if>
--->
     </xsl:template>
 
     <xsl:template match="xf:label" mode="prototype">

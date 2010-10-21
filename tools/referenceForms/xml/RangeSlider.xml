@@ -44,7 +44,7 @@
                 <code class="ui">
 <xf:range id="range1" ref="range1/value" start="1" step="1" end="5" incremental="true">
     <xf:label>a text</xf:label>
-    <xf:hint>input bound to string</xf:hint>
+    <xf:hint>a Hint for this control</xf:hint>
     <xf:help>help for range1</xf:help>
     <xf:alert>invalid</xf:alert>
 </xf:range>

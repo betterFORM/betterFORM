@@ -115,7 +115,7 @@
     <xsl:template match="xhtml:body">
         <body>
             <xsl:copy-of select="@*"/>
-            <div id="caLoading">
+            <div id="bfLoading">
                 <img src="{concat($contextroot, $scriptPath, '../images/indicator.gif')}" class="disabled" id="indicator" alt="loading" />
             </div>
 
@@ -180,10 +180,10 @@
                 <xsl:attribute name="enctype">multipart/form-data</xsl:attribute>
             </xsl:if>
             <input type="hidden" id="bfSessionKey" name="sessionKey" value="{$sessionKey}"/>
-            <input type="submit" value="refresh page" class="caRefreshButton"/>
+            <input type="submit" value="refresh page" class="bfRefreshButton"/>
 
             <xsl:apply-templates select="."/>
-            <input type="submit" value="refresh page" class="caRefreshButton"/>
+            <input type="submit" value="refresh page" class="bfRefreshButton"/>
         </xsl:element>
     </xsl:template>
 

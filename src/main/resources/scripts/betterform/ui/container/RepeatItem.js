@@ -40,14 +40,14 @@ dojo.declare(
             dojo.connect(this.domNode, "onkeydown", this, "_onKeyDown");
         },
         _onMouseOver:function(){
-            if(!dojo.hasClass(this.domNode,"xfRepeatIndexMouseOver" )){
-                dojo.addClass(this.domNode, "xfRepeatIndexMouseOver");
+            if(!dojo.hasClass(this.domNode,"bfRepeatIndexMouseOver" )){
+                dojo.addClass(this.domNode, "bfRepeatIndexMouseOver");
             }
         },
 
         _onMouseOut:function(){
-            if(dojo.hasClass(this.domNode,"xfRepeatIndexMouseOver" )){
-                dojo.removeClass(this.domNode, "xfRepeatIndexMouseOver");
+            if(dojo.hasClass(this.domNode,"bfRepeatIndexMouseOver" )){
+                dojo.removeClass(this.domNode, "bfRepeatIndexMouseOver");
             }
         },
 
@@ -76,13 +76,11 @@ dojo.declare(
 
         },
         _onBlur:function() {           
-            //dojo.query(".caRepeatActionDock",this.domNode).style("display","none");
             this.inherited(arguments);
         },
         _onFocus:function(){
-           // dojo.query(".caRepeatActionDock",this.domNode).style("display","block");
-            if(dojo.hasClass(this.domNode,"xfRepeatIndexMouseOver" )){
-                dojo.removeClass(this.domNode, "xfRepeatIndexMouseOver");
+            if(dojo.hasClass(this.domNode,"bfRepeatIndexMouseOver" )){
+                dojo.removeClass(this.domNode, "bfRepeatIndexMouseOver");
             }
             
             // console.debug("\n\nRepeatItem " + this.id + " focused");

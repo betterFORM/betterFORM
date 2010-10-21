@@ -18,7 +18,6 @@
 .xfDisabled label,
 .xfDisabled label ,
 .xfDisabled .xfValue,
-.xfDisabled .xfHelpIcon,
 .xfDisabled span,
 .xfDisabled .xfGroupLabel{
     display: none;
@@ -32,18 +31,7 @@
 
 /*********** styles character used for signaling 'required' (normally '*') ***********/
 
-.xfRepeat .xfLabel .xfRequiredSymbol {
-    display: inline;
-}
-
-.xfOptional .xfRequiredSymbol {
-    display: none;
-}
-
 .xfRequired .xfLabel {
-/*background:url(../images/required.gif) no-repeat left top;*/
-/*padding-left:10px;*/
-    /*font-weight: bold;*/
 }
 
 .xfRequired .xfLabel:after {
@@ -56,11 +44,6 @@
     padding-left: 0px;
     font-weight: normal;
 }
-
-/*.xfHelpText {
-    position: absolute;
-    z-index:999;
-}*/
 
 .xfSelectOpen .xfValue {
     width: 100%;

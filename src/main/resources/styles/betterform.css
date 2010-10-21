@@ -37,13 +37,7 @@ body {
 }
 */
 
-#caLogo {
-    display: block;
-    position: relative;
-    text-align: right;
-}
-
-#caCopyright {
+#bfCopyright {
     position: absolute; /*bottom:0;*/
     right: 0;
     font-size: 8pt;
@@ -51,32 +45,12 @@ body {
 
 }
 
-#caLoading {
+#bfLoading {
     top: 10px;
     right: 40px;
     padding: 3px;
-}
-
-.caMessagePane {
-    display: block;
-    position: fixed;
-    z-index: 1000;
-    border: solid;
-    border-width: 1px;
-    background-color: lightyellow;
-    left: 20px;
-    top: 20px;
-    padding: 10px;
-
-}
-
-.caInactive {
-    display: none;
-}
-
-#caLoading {
-    position: absolute;
-    z-index: 1000;
+	position: absolute;
+	z-index: 1000;
 }
 
 a.link {
@@ -174,25 +148,27 @@ a.active {
 .xfInvalid .xfRadioLabel,
 .xfInvalid .xfCheckBoxLabel,
 .xfInvalid .dijitTextBox {
-    /*
-    	background-color:#F9F7BA; !important;
-	*/
+	/*color:#CC0000;*/
 }
 
 .tundra .xfControl .bfInvalidControl,
 .tundra .xfControl .bfInvalidControl .xfDateTextBox,
 .tundra .xfMinimalTextarea .bfInvalidControl .xfValue,
 .tundra .xfControl .bfInvalidControl .xfTimeTextBox {
-/*border:1px solid #801B1B*/
-    background: #FFCFCF;
-
+	/*border:1px solid #CC0000;*/
+    /*background: #FFCFCF;*/
 }
 
 .xfAlert {
-/*background:yellow;*/
-    border: 1px solid #801B1B;
-    color: #801B1B;
-    margin: 3px;
+    border: 1px solid #CC0000;
+	background-color:white;
+    color: #333333;
+    margin: 2px;
+	padding:5px;
+	vertical-align:middle;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	
 }
 
 /* for tundra checkboxes */
@@ -224,21 +200,8 @@ a.active {
 }
 
 /*********** styles character used for signaling 'required' (normally '*') ***********/
-.xfRequiredSymbol {
-    color: darkred;
-    font-size: larger;
-}
 
-.xfRepeat .xfLabel .xfRequiredSymbol {
-    color: red;
-    display: inline;
-}
-
-.xfOptional .xfRequiredSymbol {
-    display: none;
-}
-
-#helpTrigger {
+#bfHelpTrigger {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -246,7 +209,7 @@ a.active {
     padding: 3px;
 }
 
-.xfHelpPane {
+.bfHelpPane {
     position: absolute;
     top: 20px;
     right: 0px;
@@ -254,33 +217,7 @@ a.active {
     width: 500px;
 }
 
-/*
-.xfHelp{
-    border:none;
-    background-color:transparent;
-}
-
-.xfHelpText {
-    */
-/* width: 300px; */
-/*
-    border: thin dotted gray;
-    background-color: #eee;
-    padding: 10px;
-}
-
-.xfHelpSymbol {
-    margin-left: 3px;
-}
-*/
-
-/*
-.xfTextarea > .xfValue {
-    width: 380px;
-}
-*/
-
-.caRefreshButton {
+.bfRefreshButton {
     display: block;
     float: right;
     background-color: rgb(188, 216, 132);
@@ -342,8 +279,10 @@ a.active {
 .xfContainer{
 }
 */
+
 .xfGroup {
-/*display:block;*/
+    margin: 0;
+    padding: 0;
 }
 
 .xfGroup .xfControl .xfLabel {
@@ -389,14 +328,6 @@ a.active {
     margin-top: 0.3em;
 }
 
-/*
-.xfCompactGroup div {
-    display: block;
-    float: left;
-    clear: none;
-}
-*/
-
 .xfCompactGroup .xfDisabled {
     display: none;
 }
@@ -411,11 +342,17 @@ a.active {
 .xfFullGroup .xfControl {
     display: block;
     clear: both;
+	margin-top:10px;
+	margin-bottom:10px;
 }
 
 .xfFullGroup .xfLabel {
     width: 10em;
     float: left;
+}
+
+.xfFullGroup .xfAlert{
+	vertical-align:top;
 }
 
 .xfFullGroup .xfDisabled {
@@ -434,15 +371,7 @@ a.active {
     float: none;
 }
 
-/*
-.xfFullGroup  .xfFullSelect1 .xfSelectorItem .xfLabel {
-    float:none;
-    display:inline;
-}
-*/
-
 .xfFullGroup .xfControl .xfValue {
-
     /*  conflicts with repeat
         position:absolute;
     */
@@ -450,10 +379,7 @@ a.active {
     text-align: left;
 }
 
-.xfGroup {
-    margin: 0;
-    padding: 0;
-}
+
 
 /* ############################## CUSTOM GROUP STYLES ############################## */
 /* ############################## CUSTOM GROUP STYLES ############################## */
@@ -468,16 +394,9 @@ a.active {
 }
 
 .bfVerticalTable {
-/*border:thin dotted;*/
-/*display:block;*/
 }
 
-/*
-.caVerticalTable tr{
-}
-*/
 .bfVerticalTable td {
-/*border:thin solid;*/
 }
 
 .bfVerticalTableLabel {
@@ -487,7 +406,6 @@ a.active {
 }
 
 .bfHorizontalTable {
-/*border:thin dotted;*/
     overflow: auto;
 }
 
@@ -515,11 +433,6 @@ a.active {
 /*display:none;*/
 }
 
-/*
-.bfHorizontalTable td{
-    vertical-align:top;
-}
-*/
 /* hide duplicate group-labels for horizontal groups */
 .bfHorizontalTable .xfContainer .xfGroupLabel {
     display: none;
@@ -545,60 +458,13 @@ a.active {
     background-color: lightyellow;
 }
 
-/*
-.xfRepeatItem .xfRepeatIndex {
-    background-color: lightgreen;
-}
-*/
-
-/*
-.xfRepeatItem .xfRepeatIndex .xfValue {
-    background-color: lightgreen;
-}
-*/
-
-/*
-.xfRepeatItem .xfRepeatItem  .xfRepeatIndex {
-    background-color: violet;
-}
-*/
-
-/*
-.xfRepeatItem  .xfRepeatItem .xfRepeatIndex .xfValue {
-    background-color: violet;
-}
-*/
-
-.xfRepeatIndexMouseOver {
+.bfRepeatIndexMouseOver {
     background-color: lightblue;
 }
 
-.xfRepeatIndexMouseOver .xfValue {
+.bfRepeatIndexMouseOver .xfValue {
     background-color: lightblue;
 }
-
-/*
-.xfRepeatIndexMouseOver .xfRepeatIndexMouseOver{
-    background-color: lightsalmon;
-}
-*/
-
-/*
-.xfRepeatIndexMouseOver .xfRepeatIndexMouseOver .xfValue {
-    background-color: lightsalmon;
-}
-*/
-/*
-.xfRepeatIndexMouseOver .xfRepeatIndexMouseOver .xfRepeatIndexMouseOver{
-    background-color: white;
-}
-*/
-
-/*
-.xfRepeatIndexMouseOver .xfRepeatIndexMouseOver .xfRepeatIndexMouseOver .xfValue {
-    background-color: white;
-}
-*/
 
 .xfMinimalRepeat {
     display: block;
@@ -633,70 +499,9 @@ a.active {
     display: inline-block;
 }
 
-/* applies only to compact repeat and matches an empty cell at the right of the repeat table to dock insert and
-delete actions to */
-.xfRepeatItem .caRepeatActionDock {
-    display: none;
-    height: 18px;
-    width: 40px;
-}
-
-.xfRepeatItem .caRepeatActionDock a {
-    width: 40px;
-}
-
-.xfRepeatIndex .caRepeatActionDock {
-    width: 40px; /*display: block;*/
-}
-
-/*
- .xfRepeatIndex .caRepeatActionDock > {
-    width:39px;
-    display:block;
-}
-*/
-
 /* this rule is for tables using repeat Attributes - a display:block will otherwise break the table layout */
 table .xfContainer{
 	display:table-row-group;
-}
-
-
-.caDeleteMouseOut {
-    background: url(../images/tabClose.gif) no-repeat;
-    background-position: center right;
-    width: 34px;
-    height: 18px;
-}
-
-.caDeleteOnMouseOver {
-    width: 16px;
-    height: 16px;
-    margin-left: 4px;
-}
-
-.caInsertBeforeMouseOut {
-    background: url(../images/insertBefore.png) no-repeat;
-    background-position: center center;
-    width: 34px;
-    height: 18px;
-}
-
-.caInsertBeforeOnMouseOver {
-    height: 35px;
-    padding-top: 0px;
-    margin: 0;
-}
-
-.caInsertAfterMouseOut {
-    background: url(../images/insertAfter.png) no-repeat;
-    background-position: center center;
-    width: 34px;
-    height: 18px;
-}
-
-.caInsertAfterOnMouseOver {
-    height: 35px;
 }
 
 .bfTabContainer {
@@ -731,14 +536,6 @@ table .xfContainer{
 /* ***************************************************************************** */
 /* ***************************************************************************** */
 /* ***************************************************************************** */
-
-/*
-.xfFullSelect .xfValue .xfSelectorItem,
-.xfFullSelect1 .xfValue .xfSelectorItem {
-   clear:both;
-	display:block;
-}
-*/
 
 .xfReadWrite .dijitRadio, .xfReadWrite .dijitRadioIcon {
     background-image: url(../images/checkmark.png);
@@ -806,21 +603,13 @@ table .xfContainer{
     background-position: -32px 50%;
 }
 
-.caFishEye {
-    margin: 10px;
-    line-height: 22px;
-    padding: 3px;
-    display: block;
-    font: 10px Arial sans-serif;
-}
-
 /*
  ########################################################################################
                 Styles from Allcomponent:
  ########################################################################################
 */
 
-.helpIcon {
+.bfHelpIcon {
     vertical-align: top;
 }
 
@@ -830,33 +619,6 @@ table .xfContainer{
 
 .xfControl select {
     background-color: white;
-}
-
-.caHelpIcon {
-    background-image: url(../images/info22.png);
-    background-repeat: no-repeat;
-    background-position: center center;
-    width: 18px;
-    height: 18px;
-}
-
-.xfHelpIcon .dijitArrowButtonInner {
-    background: transparent;
-}
-
-.xfHelpIcon .dijitButtonNode {
-    border: none;
-    background: transparent;
-}
-
-.xfHelpIcon button {
-    width: 24px;
-}
-
-.xfHelpText * {
-    font-family: sans-serif;
-    font-size: 8pt;
-
 }
 
 .helpAttributeTableHeader {

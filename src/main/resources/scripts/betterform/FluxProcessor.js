@@ -66,7 +66,7 @@ dojo.declare("betterform.FluxProcessor",
          };
          */
         // This is used for referencing this object from within ajax-callback-functions
-        this.indicatorContainer = document.getElementById('caLoading');
+        this.indicatorContainer = document.getElementById('bfLoading');
         this.indicatorImage = document.getElementById('indicator');
         this.indicatorImage.className = 'xfDisabled';
 
@@ -1265,7 +1265,7 @@ dojo.declare("betterform.FluxProcessor",
             return;
         }
 
-        var helpWnd = dojo.byId('helpTrigger');
+        var helpWnd = dojo.byId('bfHelpTrigger');
         var newdiv = document.createElement('div');
         dojo.style(newdiv, { "display":"none"});
 
@@ -1277,7 +1277,7 @@ dojo.declare("betterform.FluxProcessor",
             resizable:true,
             dockable: false
         }, newdiv);
-        dojo.addClass(helpDijit.domNode, "xfHelpPane");
+        dojo.addClass(helpDijit.domNode, "bfHelpPane");
         helpDijit.startup();
 
     },

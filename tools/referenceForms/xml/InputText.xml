@@ -46,7 +46,7 @@
                 <code class="ui">
 <xf:input id="input1" ref="input1/value" incremental="true">
     <xf:label>a text</xf:label>
-    <xf:hint>input bound to string</xf:hint>
+    <xf:hint>Hint for this input</xf:hint>
     <xf:help>help for input1</xf:help>
     <xf:alert>invalid</xf:alert>
 </xf:input>

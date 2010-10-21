@@ -50,7 +50,7 @@
                 <code class="ui">
 <xf:trigger id="trigger1" ref="trigger1/value" src="../../images/bf_logo_67x27.png" incremental="true">
     <xf:label></xf:label>
-    <xf:hint>trigger hint text</xf:hint>
+    <xf:hint>a Hint for this control</xf:hint>
     <xf:help>help for trigger1</xf:help>
     <xf:alert>invalid</xf:alert>
     <xf:message>The trigger was clicked</xf:message>

@@ -36,7 +36,7 @@
     <xsl:template match="xhtml:body">
         <body>
             <xsl:copy-of select="@*"/>
-            <div id="caLoading">
+            <div id="bfLoading">
                 <img src="{concat($contextroot,'/resources/images/indicator.gif')}" class="disabled" id="indicator" alt="loading" />
             </div>
 

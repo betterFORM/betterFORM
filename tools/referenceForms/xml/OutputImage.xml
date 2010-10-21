@@ -54,7 +54,7 @@
                 <code class="ui">
 <xf:output id="output1" ref="output1/value" mediatype="image/gif" incremental="true">
     <xf:label>a label:</xf:label>
-    <xf:hint>output using mediatype image/gif</xf:hint>
+    <xf:hint>a Hint for this control</xf:hint>
     <xf:help>help for output1</xf:help>
     <xf:alert>invalid</xf:alert>
 </xf:output>
