@@ -6,12 +6,17 @@
 package de.betterform.xml.xforms.ui.state;
 
 import de.betterform.xml.dom.DOMUtil;
+import de.betterform.xml.events.BetterFormEventNames;
+import de.betterform.xml.events.XFormsEventNames;
+import de.betterform.xml.xforms.Container;
 import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xforms.model.ModelItem;
 import de.betterform.xml.xforms.ui.BindingElement;
 import de.betterform.xml.xforms.ui.UIElementState;
 import de.betterform.xml.xforms.ui.AVTElement;
 import de.betterform.xml.ns.NamespaceConstants;
 import org.w3c.dom.Element;
+import org.w3c.dom.events.EventTarget;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -80,11 +85,22 @@ public class AVTElementState implements UIElementState {
      * @throws de.betterform.xml.xforms.exception.XFormsException if an error occurred during update.
      */
     public void update() throws XFormsException {
+        // get model item and its current properties
+        ModelItem modelItem = UIElementStateUtil.getModelItem(this.owner);
+        boolean[] properties = UIElementStateUtil.getModelItemProperties(modelItem);
+        Container container = owner.getContainerObject();
+
         Set keyset = attributeValueMap.keySet();
         for (Iterator iterator = keyset.iterator(); iterator.hasNext();) {
             String attribute = (String) iterator.next();
             Object result=((AVTElement)this.owner).evalAttributeValueTemplates((String) attributeValueMap.get(attribute),this.owner.getElement());
             this.owner.getElement().setAttribute(attribute,result.toString());
+
+            final Map contextInfo = new HashMap(2);
+            contextInfo.put("attribute",attribute);
+            contextInfo.put("value",result);
+            container.dispatch(owner.getTarget(), BetterFormEventNames.AVT_CHANGED, contextInfo);
+
         }
     }
 

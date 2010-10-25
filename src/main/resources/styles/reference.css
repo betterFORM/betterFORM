@@ -174,7 +174,7 @@ table {
 */
 
 .Section .PageDescription, h2 {
-    font-size: 14pt;
+    font-size: 14pt !important;
     font-weight: bold;
     text-align: left;
     padding-top: 5px;
@@ -237,6 +237,13 @@ pre, code {
     display: block;
 }
 
+.tundra *{
+	font-size:12pt;
+}
+.tundra .xml *{
+	font-size:10pt !important;
+	font-weight:normal;
+}
 .tundra .dijitTitlePaneContentInner {
     padding: 4px;
 }

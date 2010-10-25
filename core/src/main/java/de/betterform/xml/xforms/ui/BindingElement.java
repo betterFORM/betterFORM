@@ -5,6 +5,8 @@
 
 package de.betterform.xml.xforms.ui;
 
+import de.betterform.xml.dom.DOMUtil;
+import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.DefaultAction;
 import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.events.XMLEvent;
@@ -101,6 +103,11 @@ public abstract class BindingElement extends AbstractUIElement implements Bindin
                 String expression = this.getElement().getAttribute(attribute);
                 this.attributeValueMap.put(attribute,expression );
 
+                if(LOGGER.isTraceEnabled()){
+                    LOGGER.debug("evaluating AVT at: " + DOMUtil.getCanonicalPath(this.getElement()) + "/@" + attribute);
+                    DOMUtil.prettyPrintDOM(this.element);
+                }
+
                 Object result=this.evalAttributeValueTemplates(expression,this.getElement());
                 this.getElement().setAttribute(attribute,result.toString());
             }
@@ -149,7 +156,7 @@ public abstract class BindingElement extends AbstractUIElement implements Bindin
             }
         }
         if(LOGGER.isDebugEnabled()){
-            LOGGER.debug("inputExpr: " + inputExpr + " evaluated to: " + substitutedString);
+            LOGGER.debug("inputExpr: '" + inputExpr + "' evaluated to: '" + substitutedString + "'");
         }
         return substitutedString.toString();
     }
@@ -173,7 +180,14 @@ public abstract class BindingElement extends AbstractUIElement implements Bindin
             for (Iterator iterator = keyset.iterator(); iterator.hasNext();) {
                 String attribute = (String) iterator.next();
                 Object result=this.evalAttributeValueTemplates((String) this.attributeValueMap.get(attribute),this.getElement());
+
                 this.getElement().setAttribute(attribute,result.toString());
+
+                final Map contextInfo = new HashMap(2);
+                contextInfo.put("attribute",attribute);
+                contextInfo.put("value",result);
+                container.dispatch(this.getTarget(), BetterFormEventNames.AVT_CHANGED, contextInfo);
+
             }
 
         }
@@ -504,8 +518,16 @@ public abstract class BindingElement extends AbstractUIElement implements Bindin
      * @throws XFormsException if an error occurred during update.
      */
     protected final void updateElementState() throws XFormsException {
+        if(LOGGER.isTraceEnabled()){
+            LOGGER.debug(">>> before update <<<");
+            DOMUtil.prettyPrintDOM(this.element);
+        }
         if (this.elementState != null) {
             this.elementState.update();
+        }
+        if(LOGGER.isTraceEnabled()){
+            LOGGER.debug(">>> after update <<<");
+            DOMUtil.prettyPrintDOM(this.element);
         }
     }
 

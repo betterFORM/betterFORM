@@ -23,9 +23,7 @@
     <xsl:preserve-space elements="code"/>
 
     <xsl:template match="/">
-        <html>
-            <xsl:apply-templates/>
-        </html>
+        <xsl:apply-templates/>
     </xsl:template>
 
     <xsl:template match="head">
@@ -56,7 +54,7 @@
 
     <xsl:template match="body">
         <xsl:copy>
-            <xsl:attribute name="class">soria InlineAlert</xsl:attribute>
+            <xsl:attribute name="class" select="if(exists(@class)) then @class else 'soria InlineAlert'"/>
             <xsl:attribute name="style">margin:30px</xsl:attribute>
 
             <div id="xforms" class="InlineAlert">
@@ -139,32 +137,34 @@
         <xsl:param name="specRef"/>
         <xsl:param name="quickRef"/>
 
-        <table id="references">
-            <tr>
-                <td rowspan="3">
-                    <a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank">
-                        <img id="logo" class="image" src="../../resources/images/w3c_home_nb.png" alt="W3C"/>
-                    </a>
-                </td>
-                <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
-            </tr>
-            <tr>
-                <td>
-                    <a style="color:#005A9C;"
-                       href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html{$specRef}" target="_blank">
-                        Recommendation
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a style="color:#005A9C;"
-                       href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html{$quickRef}" target="_blank">
-                        Quick Reference
-                    </a>
-                </td>
-            </tr>
-        </table>
+        <xsl:if test="exists(div[@class='references'])">
+            <table id="references">
+                <tr>
+                    <td rowspan="3">
+                        <a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank">
+                            <img id="logo" class="image" src="../../resources/images/w3c_home_nb.png" alt="W3C"/>
+                        </a>
+                    </td>
+                    <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a style="color:#005A9C;"
+                           href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html{$specRef}" target="_blank">
+                            Recommendation
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a style="color:#005A9C;"
+                           href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html{$quickRef}" target="_blank">
+                            Quick Reference
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="div[@class='sample']">
@@ -198,9 +198,11 @@
 
     <xsl:template match="div[@class='CSS']">
         <!--<h2><xsl:value-of select="@class"/></h2>-->
-        <div class="CSS">
-            <xsl:apply-templates select="table"/>
-        </div>
+        <xsl:if test="table">
+            <div class="CSS">
+                <xsl:apply-templates select="table"/>
+            </div>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="div[@class='CSS']/table" priority="20">

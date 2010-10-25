@@ -87,7 +87,7 @@
 				dojo.removeClass(item,'showClass');
 			});
 		}
-		
+
 		dojo.addOnLoad(function(){
 			  new dijit.Tooltip({
 				 connectId: ["navMenu"],
@@ -120,6 +120,10 @@
 			background-color:#b0c4de;
 
         }
+
+		.externalLink{
+			background:url(../../resources/images/icons/external_link.png) no-repeat 3px 3px;
+		}
             /*
                     #contentBody {
                         margin-top: 35px;
@@ -433,6 +437,14 @@
             </xf:load>
         </xf:trigger>
 
+		<!-- ############### extensions trigger ################# -->
+		<!-- ############### extensions trigger ################# -->
+		<!-- ############### extensions trigger ################# -->
+		<xf:trigger id="AVTThemeSwitcherTrigger">
+			<xf:label/>
+			<xf:load show="new" resource="AVTThemeSwitcher.xhtml"/>
+		</xf:trigger>
+
     </div>
 
 
@@ -445,9 +457,9 @@
     <div dojoType="dijit.MenuBar" id="navMenu">
 
         <div dojoType="dijit.PopupMenuBarItem">
-                            <span>
-                                Controls
-                            </span>
+			<span>
+				Controls
+			</span>
 
             <div dojoType="dijit.Menu" id="controls">
                 <div dojoType="dijit.MenuItem"
@@ -634,9 +646,9 @@
             </div>
         </div>
         <div dojoType="dijit.PopupMenuBarItem">
-                    <span>
-                        Container
-                    </span>
+			<span>
+				Container
+			</span>
 
             <div dojoType="dijit.Menu" id="editMenu">
                 <div dojoType="dijit.MenuItem"
@@ -713,7 +725,30 @@
                     </div>
                 </div>
             </div>
+
+
         </div>
+		<div dojoType="dijit.PopupMenuBarItem">
+			<span>
+				Extensions
+			</span>
+			<div dojoType="dijit.Menu" id="extensions">
+				<div dojoType="dijit.MenuItem" iconClass="externalLink"
+					 onClick="hideStatic();fluxProcessor.dispatchEvent('AVTThemeSwitcherTrigger');">
+					AVT Theme Switcher
+				</div>
+			</div>
+		</div>
+
+	                                   <!--<img src="../../resources/images/icons/external_link.png" alt="^"/>-->
+	 	<!--
+        <div dojoType="dijit.PopupMenuBarItem">
+			<span>
+				MENUNAME on toobar
+			</span>
+
+		</div>
+	 	-->
     </div>
 
     <div id="contentBody">

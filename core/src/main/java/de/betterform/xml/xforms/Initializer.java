@@ -177,7 +177,7 @@ public class Initializer {
     public static void initializeUIElements(Element element) throws XFormsException
     {
         Element elementImpl = element.getOwnerDocument().getDocumentElement();
-        Container container = (Container) element.getUserData("");
+        Container container = (Container) elementImpl.getUserData("");
 
         String evalAVT = elementImpl.getAttributeNS(NamespaceConstants.BETTERFORM_NS,"evalAVTs");
         if(evalAVT != null && evalAVT.length() != 0) {
@@ -217,12 +217,7 @@ public class Initializer {
                     AbstractUIElement uiElement =
                         (AbstractUIElement) xformsFactory.createXFormsElement(elementImpl, contextModel);
 
-                    if (repeatItemId != null) {
-                        uiElement.setRepeatItemId(repeatItemId);
-                        uiElement.setGeneratedId(model.getContainer().generateId());
-                        uiElement.registerId();
-                    }
-                    uiElement.init();
+                    initXFormsObject(model, repeatItemId, uiElement);
                 }else if(XFormsElementFactory.isActionElement(elementImpl)){
                     if(hasXFormsParent(elementImpl)) {
                         initializeActionElement(model,repeatItemId,xformsFactory,elementImpl);
@@ -238,12 +233,7 @@ public class Initializer {
                     Object customElement = customFactory.createCustomXFormsElement(elementImpl, contextModel);
 
                     if (customElement != null && customElement instanceof AbstractUIElement) {
-                        if (repeatItemId != null) {
-                        	((AbstractUIElement)customElement).setRepeatItemId(repeatItemId);
-                        	((AbstractUIElement)customElement).setGeneratedId(model.getContainer().generateId());
-                        	((AbstractUIElement)customElement).registerId();
-                        }
-                        ((AbstractUIElement)customElement).init();
+                        initXFormsObject(model, repeatItemId, ((AbstractUIElement)customElement));
                     }
 
                     if (customElement != null && customElement instanceof AbstractAction) {
@@ -259,13 +249,8 @@ public class Initializer {
                     Model contextModel = Initializer.getContextModel(model, elementImpl);
                     AbstractUIElement uiElement = new AVTElement(elementImpl,contextModel);
                     elementImpl.setUserData("",uiElement,null);
-                    
-                    if (repeatItemId != null) {
-                        uiElement.setRepeatItemId(repeatItemId);
-                        uiElement.setGeneratedId(model.getContainer().generateId());
-                        uiElement.registerId();
-                    }
-                    uiElement.init();
+
+                    initXFormsObject(model, repeatItemId, uiElement);
 
 
                 } else {
@@ -274,6 +259,15 @@ public class Initializer {
                 }
             }
         }
+    }
+
+    private static void initXFormsObject(Model model, String repeatItemId, AbstractUIElement uiElement) throws XFormsException {
+        if (repeatItemId != null) {
+            uiElement.setRepeatItemId(repeatItemId);
+            uiElement.setGeneratedId(model.getContainer().generateId());
+            uiElement.registerId();
+        }
+        uiElement.init();
     }
 
     /**

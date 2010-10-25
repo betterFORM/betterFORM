@@ -109,4 +109,5 @@ public interface BetterFormEventNames {
     String SHOW = "betterform-dialog-open";
 
 
+    String AVT_CHANGED = "betterform-AVT-changed";
 }

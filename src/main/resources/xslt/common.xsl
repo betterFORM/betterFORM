@@ -352,6 +352,7 @@
             <xsl:when test="@class">
                 <xsl:value-of select="@class"/>
             </xsl:when>
+            <!-- this is bullshit -->
             <xsl:when test="@class">
                 <xsl:value-of select="@class"/>
             </xsl:when>

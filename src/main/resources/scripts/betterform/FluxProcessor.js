@@ -537,6 +537,7 @@ dojo.declare("betterform.FluxProcessor",
                             case "betterform-state-changed"      : fluxProcessor._handleBetterFormStateChanged(xmlEvent); break;
                             case "betterform-dialog-open"        : fluxProcessor._handleBetterFormDialogOpen(xmlEvent); break;
                             case "betterform-dialog-close"       : fluxProcessor._handleBetterFormDialogClose(xmlEvent); break;
+                            case "betterform-AVT-changed"        : fluxProcessor._handleAVTChanged(xmlEvent);break;
                             case "upload-progress-event"         : fluxProcessor._handleUploadProgressEvent(xmlEvent); break;
                             case "xforms-focus"                  : fluxProcessor._handleXFormsFocus(xmlEvent); break;
                             case "xforms-help"                   : fluxProcessor._handleShowHelp(xmlEvent); break;
@@ -584,6 +585,10 @@ dojo.declare("betterform.FluxProcessor",
         //Schedule the next FIFO-Read try in 0 ms
         clearTimeout(fluxProcessor.fifoReaderTimer);
         fluxProcessor.fifoReaderTimer = setTimeout("fluxProcessor.eventFifoReader()", 0);
+    },
+
+    _handleAVTChanged:function(xmlEvent){
+        dojo.attr(xmlEvent.contextInfo.targetId,xmlEvent.contextInfo.attribute,xmlEvent.contextInfo.value);
     },
 
     _handleValidity:function(validityEvents) {

@@ -1022,16 +1022,12 @@ public class DOMUtil {
      * @param node the node to serialize
      */
     public static void prettyPrintDOM(Node node) {
-    	if (LOGGER.isTraceEnabled()) {
-            try {
-//            	LOGGER.trace("DOM Output:");
-                prettyPrintDOM(node, System.out);
-//                System.out.println();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-        	LOGGER.debug("Set the log level to TRACE for this class (de.betterform.xml.dom.DOMUtil) to see the XML"); 
+        try {
+            System.out.println();
+            prettyPrintDOM(node, System.out);
+            System.out.println("\n");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -1045,7 +1041,7 @@ public class DOMUtil {
      */
     public static void prettyPrintDOM(Node node, OutputStream stream) throws TransformerException {
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
-        transformer.setOutputProperty(OutputKeys.INDENT, "no");
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty(OutputKeys.METHOD, "xml");
         transformer.transform(new DOMSource(node), new StreamResult(stream));
     }
