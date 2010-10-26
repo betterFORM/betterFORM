@@ -17,6 +17,7 @@
     <meta name="Author" content="Joern Turner"/>
     <meta name="Author" content="Lars Windauer"/>
     <meta name="Author" content="Tobi Krebs"/>
+    <meta name="Author" content="Ronald van Kuijk"/>
     <meta name="publisher" content="betterFORM Project"/>
     <meta name="description"
           content="betterFORM XForms Feature Explorer. Explore the power of the W3C XForms 1.1 Recommendation. See xforms input / output / range / repeat / secrect / select / select1 / switch / textarea / trigger / upload controls in action"/>
@@ -56,6 +57,7 @@
         dojo.require("betterform.ui.container.Switch");
         dojo.require("betterform.ui.container.Repeat");
         dojo.require("betterform.ui.container.RepeatItem");
+        dojo.require("betterform.ui.container.Dialog");
 		dojo.require("dijit.Tooltip");
         dojo.require("betterform.ui.container.TabSwitch");
 
@@ -445,6 +447,14 @@
 			<xf:load show="new" resource="AVTThemeSwitcher.xhtml"/>
 		</xf:trigger>
 
+		<!-- ############### extensions dialog ################# -->
+		<!-- ############### extensions dialog ################# -->
+		<!-- ############### extensions dialog ################# -->
+		<xf:trigger id="DialogTrigger">
+			<xf:label/>
+			<xf:load show="new" resource="Dialog.xhtml"/>
+		</xf:trigger>
+
     </div>
 
 
@@ -736,6 +746,10 @@
 				<div dojoType="dijit.MenuItem" iconClass="externalLink"
 					 onClick="hideStatic();fluxProcessor.dispatchEvent('AVTThemeSwitcherTrigger');">
 					AVT Theme Switcher
+				</div>
+				<div dojoType="dijit.MenuItem" iconClass="externalLink"
+					 onClick="hideStatic();fluxProcessor.dispatchEvent('DialogTrigger');">
+					Dialog
 				</div>
 			</div>
 		</div>

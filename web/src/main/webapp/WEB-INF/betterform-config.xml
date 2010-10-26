@@ -208,6 +208,11 @@
               public YourClass(Element, Model);
           -->
         <!--element namespace="http://yourdomain.com/path" name="yourcontrol" class="com.yourdomain.yourpackage.YourClass"/-->
+
+        <element namespace="http://betterform.sourceforge.net/xforms/controls" name="dialog" class="de.betterform.xml.xforms.ui.extensions.Dialog"/>
+        <element namespace="http://betterform.sourceforge.net/xforms/controls" name="show" class="de.betterform.xml.xforms.action.extensions.ShowAction"/>
+        <element namespace="http://betterform.sourceforge.net/xforms/controls" name="hide" class="de.betterform.xml.xforms.action.extensions.HideAction"/>
+        
     </custom-elements>
 
 

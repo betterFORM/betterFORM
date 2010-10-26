@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:bfc="http://betterform.sourceforge.net/xforms/controls">
+   
+   <head>
+      <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
+      <title>Dialog Control</title>
+      <link rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
+      <link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css" /><script type="text/javascript">
+            dojo.require("dojox.highlight");
+            dojo.require("dojox.highlight.languages.xml");
+            dojo.addOnLoad(function() {
+            dojo.query("code").forEach(dojox.highlight.init);
+            });
+
+            dojo.require("dijit.form.Button");
+            dojo.require("dijit.TitlePane");
+            dojo.require('dijit.layout.ContentPane');
+        </script></head>
+   
+   <body class="soria inlineAlert" style="margin:30px;">
+      <div id="xforms">
+         <div style="display:none;">
+            <xf:model id="model-1">
+               
+               
+               <xf:instance id="instance-1">
+                  
+                  
+                  <data xmlns="" constraint="true" readonly="false" required="false" relevant="true"></data>
+                  
+                  
+               </xf:instance>
+               
+               
+            </xf:model>
+         </div>
+         <div class="pageintro">
+            <div class="pagetitle">The Dialog Element</div>
+            <div class="Section">
+               <div class="PageDescription">Description</div>
+               <p>
+                  A Dialog element is a container form control that allows...
+               </p>
+            </div>
+            <table>
+               <tr>
+                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="../../resources/images/w3c_home_nb.png" alt="W3C" /></a></td>
+                  <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
+               </tr>
+               <tr>
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-switch" target="_blank">Recommendation</a></td>
+               </tr>
+               <tr>
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html#elems-form-controls" target="_blank">Quick Reference</a></td>
+               </tr>
+            </table>
+         </div>
+         <div class="Section">
+            <div class="Headline">Dialog</div>
+            <p class="Description">
+               A dialog without appearance renders as a dojo dialog which may contain arbitrary markup and
+               be toggled (changing the active case) with the help of triggers outside of the switch.
+               
+            </p>
+            <div>
+               <div class="Subheadline">XForms Markup</div>
+               <div class="Subsection"><pre><code class="xml">
+
+</code></pre></div>
+            </div>
+            <div>
+               <div class="Subheadline">Sample</div>
+               <div class="Sample">
+                  <xf:group>
+                     
+                    <xf:label class="blockLabel">Dialog</xf:label>
+                     
+                    <xforms:trigger>
+								<xforms:label>Show dialog</xforms:label>
+								<bfc:show dialog="demoDialog" />
+							</xforms:trigger>
+					<bfc:dialog id="demoDialog" style="width:530px">
+						<xforms:label>Dialog Title</xforms:label>
+							<xforms:group appearance="minimal">
+								<xforms:trigger>
+									<xforms:label>OK</xforms:label>
+									<bfc:hide dialog="demoDialog" events:event="DOMActivate" />
+								</xforms:trigger>
+								<xforms:trigger>
+									<xforms:label>Cancel</xforms:label>
+									<xforms:hint>Close dialog</xforms:hint>
+									<bfc:hide dialog="demoDialog" events:event="DOMActivate" />
+								</xforms:trigger>
+							</xforms:group>
+						</xforms:group>
+					</bfc:dialog>
+                  </xf:group>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div style="text-align:right;" id="copyright"><a href="http://www.betterform.de"><img style="vertical-align:text-bottom; margin-right:5px;" src="../../images/betterform_icon16x16.png" alt="betterFORM project" /></a><span>© 2010 betterFORM</span></div>
+   </body>
+   
+</html>

@@ -69,16 +69,6 @@ public class Dialog extends BindingElement implements EventListener {
             getLogger().debug(this + " init");
         }
 
-        // try {
-        // this.startIndex = getXFormsAttribute(STARTINDEX_ATTRIBUTE) !=
-        // null?Integer.parseInt(getXFormsAttribute(STARTINDEX_ATTRIBUTE))
-        // :(getXFormsAttribute(REPEAT_STARTINDEX_ATTRIBUTE) !=
-        // null?Integer.parseInt(getXFormsAttribute(REPEAT_STARTINDEX_ATTRIBUTE)):1);
-        // }
-        // catch(NumberFormatException e) {
-        // startIndex = 1;
-        // }
-
         initializeDialog();
         initializeDefaultAction();
         //initializeInstanceNode();
@@ -101,22 +91,7 @@ public class Dialog extends BindingElement implements EventListener {
      *              determining the event's flow and default action.
      */
     public void handleEvent(Event event) {
-        try {
-            if (BetterFormEventNames.SHOW.equals(event.getType())) {
-                handleShow(event);
-                return;
-            }
-            if (BetterFormEventNames.HIDE.equals(event.getType())) {
-                handleHide(event);
-                return;
-            }
-        } catch (Exception e) {
-            // handle exception, prevent default action and stop event
-            // propagation
-            this.container.handleEventException(e);
-            event.preventDefault();
-            event.stopPropagation();
-        }
+        // Not needed for Dialog
     }
 
     // lifecycle template methods
@@ -131,8 +106,6 @@ public class Dialog extends BindingElement implements EventListener {
         this.container.getXMLEventService().registerDefaultAction(this.target,
                 BetterFormEventNames.HIDE, this);
     }
-
-    // implementation of 'de.betterform.xml.events.DefaultAction'
 
     /**
      * Performs the implementation specific default action for this event.
@@ -159,8 +132,6 @@ public class Dialog extends BindingElement implements EventListener {
     private void handleShow(Event event) {
 
         if (!this.visible) {
-            try {
-                this.container.dispatch(this.id, BetterFormEventNames.SHOW);
                 this.visible = true;
                 String current = this.container.getFocussedContainerId();
                 if (current != null && !(current.equals(this.id))) {
@@ -179,9 +150,6 @@ public class Dialog extends BindingElement implements EventListener {
                 } catch (XFormsException e) {
                     LOGGER.warn("silently failed DOMFocusIn");
                 }
-            } catch (XFormsException e) {
-                LOGGER.warn("silently failed making dialog vi");
-            }
         } else {
             LOGGER.info("Ignoring " + event.getType() + " event for: "
                     + this.id + " Since it is already visible");
@@ -190,8 +158,6 @@ public class Dialog extends BindingElement implements EventListener {
 
     private void handleHide(Event event) {
         if (this.visible) {
-            try {
-                this.container.dispatch(this.id, BetterFormEventNames.HIDE);
                 this.visible = false;
                 String current = this.container.getFocussedContainerId();
                 if (current.equals(this.id)) {
@@ -204,9 +170,6 @@ public class Dialog extends BindingElement implements EventListener {
                     }
                 }
                 // What is going to get focus? The other trigger that
-            } catch (XFormsException e) {
-                LOGGER.warn("silently failed making dialog vi");
-            }
         } else {
             LOGGER.info("Ignoring " + event.getType() + " event for: "
                     + this.id + " Since it is not visible");
