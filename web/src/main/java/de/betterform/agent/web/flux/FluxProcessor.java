@@ -19,6 +19,7 @@ import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.events.XMLEvent;
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.XFormsElement;
+import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.ui.BindingElement;
 import org.apache.commons.logging.Log;
@@ -83,6 +84,7 @@ public class FluxProcessor extends WebProcessor {
         this.root.addEventListener(BetterFormEventNames.INDEX_CHANGED, this, true);
         this.root.addEventListener(BetterFormEventNames.SWITCH_TOGGLED, this, true);
         this.root.addEventListener(BetterFormEventNames.SCRIPT_ACTION, this, true);
+        this.root.addEventListener(BetterFormEventNames.AVT_CHANGED, this, true);
 
 		//TODO, see where BetterFormEventNames.SHOW/HIDE should be added? Lars: moved to WebProcessor		
     }
@@ -231,6 +233,15 @@ public class FluxProcessor extends WebProcessor {
         }
     }
 
+/*
+     public void createUIElement(String id,
+                                String xfRole,
+                                String ref,
+                                String value,
+                                String model ) throws XFormsException{
+        ((XFormsProcessorImpl)this.xformsProcessor).createUIElement(id,xfRole,ref,value,model);
+     }
+*/
     private Map copyMap(Map generatedIds) {
         HashMap tmpMap = new HashMap(generatedIds.size());
         for (Iterator iterator = generatedIds.keySet().iterator(); iterator.hasNext();) {
@@ -275,6 +286,7 @@ public class FluxProcessor extends WebProcessor {
             this.root.removeEventListener(BetterFormEventNames.INDEX_CHANGED, this, true);
             this.root.removeEventListener(BetterFormEventNames.SWITCH_TOGGLED, this, true);            
             this.root.removeEventListener(BetterFormEventNames.SCRIPT_ACTION, this, true);
+            this.root.removeEventListener(BetterFormEventNames.AVT_CHANGED, this, true);
         }
 
 //        super.shutdown();
