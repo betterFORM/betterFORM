@@ -8,8 +8,7 @@
     <property name="core.dir" value="${basedir}../../../core"/>    
 
     <path id="generator.libs" description="classpath for compiling core classes">
-        <pathelement location="${core.dir}/src/main/lib/saxon-9.1.0.8.jar"/>
-        <pathelement location="${core.dir}/src/main/lib/saxon-dom-9.1.0.8.jar"/>
+        <pathelement location="${core.dir}/src/main/lib/saxon-9.2.1.5.jar"/>        
     </path>
 
     <target name="build">
