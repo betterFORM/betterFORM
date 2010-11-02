@@ -19,7 +19,6 @@ import net.sf.saxon.dom.NodeWrapper;
 import net.sf.saxon.expr.LastPositionFinder;
 import net.sf.saxon.expr.XPathContextMajor;
 import net.sf.saxon.functions.FunctionLibraryList;
-
 import net.sf.saxon.functions.SystemFunctionLibrary;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.LookaheadIterator;
@@ -189,7 +188,7 @@ public class XPathCache {
             Map.Entry entry = (Map.Entry) it.next();
             independentContext.declareNamespace((String) entry.getKey(), (String) entry.getValue());
         }
-        independentContext.declareNamespace("bffn","java:de.betterform.xml.xforms.xpath.BetterFormXPathFunctions");
+        //independentContext.declareNamespace("bffn","java:de.betterform.xml.xforms.xpath.BetterFormXPathFunctions");
         // XXX declare variable
 
         independentContext.setFunctionLibrary(fgXFormsFunctionLibrary);

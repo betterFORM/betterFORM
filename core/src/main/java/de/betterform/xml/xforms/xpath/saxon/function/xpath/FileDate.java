@@ -6,6 +6,7 @@ package de.betterform.xml.xforms.xpath.saxon.function.xpath;
 
 import de.betterform.xml.xforms.xpath.saxon.function.XFormsFunction;
 import net.sf.saxon.expr.Expression;
+import net.sf.saxon.expr.ExpressionVisitor;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.trans.XPathException;
@@ -26,6 +27,19 @@ import java.util.Locale;
 public class FileDate extends XFormsFunction {
     private static final Log LOGGER = LogFactory.getLog(FileDate.class);
 
+     /**
+     * Pre-evaluate a function at compile time. Functions that do not allow
+     * pre-evaluation, or that need access to context information, can override this method.
+     *
+     * @param visitor an expression visitor
+     * @return the result of the early evaluation, or the original expression, or potentially
+     *         a simplified expression
+     */
+
+    public Expression preEvaluate(ExpressionVisitor visitor) throws XPathException {
+        return this;
+    }
+    
     public Item evaluateItem(XPathContext xpathContext) throws XPathException {
 	     if (argument.length < 1 || argument.length > 2) {
             throw new XPathException("There must be 1 argument (filename)  or 2 arguments (filename, format) for this function");

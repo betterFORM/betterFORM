@@ -130,13 +130,11 @@ public class BetterFormExtensionFunctionsTest extends BetterFormTestCase {
      *
      * @throws Exception if any error occurred during the test.
      */
-    /*
     public void testMatch() throws Exception {
         assertEquals("true", evaluateInDocumentContextAsString("string(//xf:output[@id='i-match1']/bf:data)"));
         assertEquals("false", evaluateInDocumentContextAsString("string(//xf:output[@id='i-match2']/bf:data)"));
         assertEquals("true", evaluateInDocumentContextAsString("string(//xf:output[@id='i-match3']/bf:data)"));
     }
-    */
 
 
     /**

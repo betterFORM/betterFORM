@@ -7,10 +7,7 @@ package de.betterform.xml.xforms.xpath.saxon.function;
 
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.xpath.saxon.function.extensions.BFSort;
-import de.betterform.xml.xforms.xpath.saxon.function.xpath.AppContext;
-import de.betterform.xml.xforms.xpath.saxon.function.xpath.Config;
-import de.betterform.xml.xforms.xpath.saxon.function.xpath.FileDate;
-import de.betterform.xml.xforms.xpath.saxon.function.xpath.FileSize;
+import de.betterform.xml.xforms.xpath.saxon.function.xpath.*;
 import net.sf.saxon.expr.StaticProperty;
 import net.sf.saxon.functions.StandardFunction.Entry;
 import net.sf.saxon.type.BuiltInAtomicType;
@@ -48,6 +45,10 @@ public class BetterFormFunctionLibrary extends XPathFunctionLibrary {
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
         arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
 
+//        e = register("{" + NamespaceConstants.BETTERFORM_NS + "}appContext", AppContext.class, 0, 1, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+//        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+//        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
+
         e = register("{" + NamespaceConstants.BETTERFORM_NS + "}config", Config.class, 0, 1, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
 
@@ -57,5 +58,10 @@ public class BetterFormFunctionLibrary extends XPathFunctionLibrary {
         e = register("{" + NamespaceConstants.BETTERFORM_NS + "}fileDate", FileDate.class, 0, 1, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
         arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
+
+        e = register("{" + NamespaceConstants.BETTERFORM_NS + "}match", Match.class, 0, 2, 3, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
+        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
     }
 }
