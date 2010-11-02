@@ -16,6 +16,7 @@
                     <item>2001-04-02T14:34:03+02:00</item>
                     <item>2001-11-11T10:00:00</item>
                     <item value="2.3"/>
+                    <item>10001.00</item>                    
                     <repeat>
                         <item>string</item>
                         <item>1</item>
@@ -40,8 +41,7 @@
             <xf:bind nodeset="item[8]" type="dateTime"/>
             <xf:bind nodeset="item[9]" type="date"/>
             <xf:bind nodeset="item[9]/@value" type="float"/>
-
-
+            <xf:bind nodeset="item[10]" type="decimal"/>
 
         </xf:model>
     </head>
@@ -90,6 +90,10 @@
 
                 <xf:input id="9" ref="item[9]/@value">
                     <xf:label>number on attr</xf:label>
+                </xf:input>
+
+                <xf:input id="10" ref="item[10]">
+                    <xf:label>decimal with '00' fraction</xf:label>
                 </xf:input>
 
 

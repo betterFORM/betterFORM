@@ -26,10 +26,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.EventTarget;
 
-import java.text.DateFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.text.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -323,10 +320,24 @@ public class UIElementStateUtil {
                 if (value.equals("")) return value;
                 if (value.equals("NaN")) return value; //do not localize 'NaN' as it returns strange characters
                 try {
-                    Double num = Double.parseDouble(value);
                     NumberFormat formatter = NumberFormat.getNumberInstance(locale);
-                    formatter.setMaximumFractionDigits(Double.SIZE);
-                    return formatter.format(num.doubleValue());
+                    if(formatter instanceof DecimalFormat){
+                        //get original number format
+                        NumberFormat original = NumberFormat.getNumberInstance();
+                        DecimalFormatSymbols symbols = ((DecimalFormat)original).getDecimalFormatSymbols();
+                        char decimalSeparator = symbols.getDecimalSeparator();
+
+                        int separatorPos = value.indexOf(decimalSeparator);
+                        if(separatorPos == -1){
+                            formatter.setMaximumFractionDigits(0);
+                        }else{
+                            int fractionDigitCount = value.length() - separatorPos - 1;
+                            formatter.setMinimumFractionDigits(fractionDigitCount);
+                        }
+
+                        Double num = Double.parseDouble(value);
+                        return formatter.format(num.doubleValue());
+                    }
                 } catch (NumberFormatException e) {
                     LOGGER.warn("Value '" + value + "' is no valid " + tmpType);
                     return value;

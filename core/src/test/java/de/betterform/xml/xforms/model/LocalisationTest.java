@@ -109,6 +109,10 @@ public class LocalisationTest extends TestCase {
                 s = XPathCache.getInstance().evaluateAsString(xformsProcesssorImpl.getContainer().getHostContext(xformsProcesssorImpl.getBaseURI()), "//*[@id='4']/*:data/text()");
                 assertEquals("06.01.2004", s);
 
+                s = XPathCache.getInstance().evaluateAsString(xformsProcesssorImpl.getContainer().getHostContext(xformsProcesssorImpl.getBaseURI()), "//*[@id='10']/*:data/text()");
+                assertEquals("10.001,00", s);
+
+                // ##########################
                 xformsProcesssorImpl.setLocale("en");
 //                processor.dispatch("foo", "xforms-refresh");
 
@@ -124,7 +128,26 @@ public class LocalisationTest extends TestCase {
                 s = XPathCache.getInstance().evaluateAsString(xformsProcesssorImpl.getContainer().getHostContext(xformsProcesssorImpl.getBaseURI()), "//*[@id='4']/*:data/text()");
                 assertEquals("Jan 6, 2004", s);
 
+                s = XPathCache.getInstance().evaluateAsString(xformsProcesssorImpl.getContainer().getHostContext(xformsProcesssorImpl.getBaseURI()), "//*[@id='10']/*:data/text()");
+                assertEquals("10,001.00", s);
+
+                // ##########################
+                xformsProcesssorImpl.setLocale("nl");
+
+                s = XPathCache.getInstance().evaluateAsString(xformsProcesssorImpl.getContainer().getHostContext(xformsProcesssorImpl.getBaseURI()), "//*[@id='1']/*:data/text()");
+                assertEquals("10.001,1111111", s);
+
+                s = XPathCache.getInstance().evaluateAsString(xformsProcesssorImpl.getContainer().getHostContext(xformsProcesssorImpl.getBaseURI()), "//*[@id='2']/*:data/text()");
+                assertEquals("1,127181727", s);
+
+                s = XPathCache.getInstance().evaluateAsString(xformsProcesssorImpl.getContainer().getHostContext(xformsProcesssorImpl.getBaseURI()), "//*[@id='3']/*:data/text()");
+                assertEquals("1,13799898", s);
+
+                s = XPathCache.getInstance().evaluateAsString(xformsProcesssorImpl.getContainer().getHostContext(xformsProcesssorImpl.getBaseURI()), "//*[@id='4']/*:data/text()");
+                assertEquals("6-jan-2004", s);
             }
+
+
 
     }
     public void testDelocalizeFallback() throws Exception {
