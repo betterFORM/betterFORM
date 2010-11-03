@@ -5,6 +5,9 @@
 
 package de.betterform.xml.xforms.action;
 
+import de.betterform.xml.ns.NamespaceConstants;
+import de.betterform.xml.xforms.XFormsElement;
+import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.dom.DOMUtil;
@@ -17,6 +20,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Implements the action as defined in <code>10.1.2 The dispatch
  * Element</code>.
@@ -24,7 +30,7 @@ import org.w3c.dom.Node;
  * @author Ulrich Nicolas Liss&eacute;
  * @version $Id: DispatchAction.java 3457 2008-08-13 15:03:54Z joern $
  */
-public class DispatchAction extends AbstractAction {
+public class DispatchAction extends AbstractBoundAction {
     private static final Log LOGGER = LogFactory.getLog(DispatchAction.class);
     private AttributeOrValueChild eventName = null;
     private AttributeOrValueChild eventTarget = null;
@@ -94,6 +100,22 @@ public class DispatchAction extends AbstractAction {
         }
         // dispatch specified event
         if(this.eventName != null) {
+
+            NodeList nl = this.element.getElementsByTagNameNS(NamespaceConstants.XFORMS_NS,"contextinfo");
+            int len = nl.getLength();
+            if(len != 0){
+                updateXPathContext();
+                Element e = null;
+                Map map = new HashMap(len);
+                String value;
+                for (int i = 0; i < len; i++) {
+                    e = (Element) nl.item(i);
+                    value = XPathCache.getInstance().evaluateAsString(this.getNodeset(), getPosition(), XFormsElement.getXFormsAttribute(e,"value"), getPrefixMapping(), xpathFunctionContext);
+                    map.put(XFormsElement.getXFormsAttribute(e,"name"),value);
+                }
+                this.container.dispatch(this.eventTarget.getValue(), this.eventName.getValue(), map, this.bubbles, this.cancelable);
+                return;
+            }
             this.container.dispatch(this.eventTarget.getValue(), this.eventName.getValue(), null, this.bubbles, this.cancelable);
         }
     }

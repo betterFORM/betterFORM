@@ -3,6 +3,9 @@
  */
 package de.betterform.xml.xforms;
 
+import de.betterform.xml.dom.DOMUtil;
+import de.betterform.xml.xforms.model.Model;
+import de.betterform.xml.xforms.ui.Text;
 import junit.framework.TestCase;
 import de.betterform.xml.dom.DOMComparator;
 import de.betterform.xml.events.DOMEventNames;
@@ -220,6 +223,20 @@ public class XFormsProcessorImplTest extends TestCase {
 
         assertNotNull(this.processor.getContainer());
         assertTrue(this.processor.getContainer().getDocument() instanceof org.apache.xerces.dom.DocumentImpl);
+    }
+
+    public void testCreateUIElement() throws Exception{
+        this.processor.setXForms(new InputSource(this.baseURI + "xfRoleTest.xhtml"));
+        this.processor.init();
+
+        this.processor.createUIElement("myInput","input","hello","world",null);
+
+        XFormsElement input = this.processor.lookup("myInput");
+        assertNotNull(input);
+        assertTrue(input instanceof Text);
+        assertTrue(((Text) input).getModel() instanceof Model);
+        assertEquals("model-1",input.getModel().getId());
+        DOMUtil.prettyPrintDOM(this.processor.getContainer().getDocument(),System.out);
     }
 
     /**

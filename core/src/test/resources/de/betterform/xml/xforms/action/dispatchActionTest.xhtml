@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:bf="http://betterform.sourceforge.net/xforms">
+    <head>
+        <title>[PUT YOUR TITLE HERE]</title>
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model id="model-1">
+                <xf:instance id="i-default">
+                    <data xmlns="">
+						<value>fromInstance</value>
+						<staticResult/>
+						<xpathResult/>
+                    </data>
+                </xf:instance>
+            </xf:model>
+        </div>
+		<xf:group id="foo">
+			<xf:action ev:event="customEvent">
+				<xf:setvalue ref="staticResult" value="event('param1')"/>
+				<xf:setvalue ref="xpathResult" value="event('param2')"/>
+			</xf:action>
+
+			<xf:trigger id="triggerContextInfo">
+				<xf:label>dispatch with ContextInfo</xf:label>
+				<xf:dispatch name="customEvent" targetid="foo">
+					<xf:contextinfo name="param1" value="'hello'"/>
+					<xf:contextinfo name="param2" value="value"/>
+				</xf:dispatch>
+			</xf:trigger>
+
+			<xf:group appearance="full">
+				<xf:output ref="staticResult">
+					<xf:label>static result</xf:label>
+				</xf:output>
+				<xf:output ref="xpathResult">
+					<xf:label>result from XPath</xf:label>
+				</xf:output>
+			</xf:group>
+		</xf:group>
+    </body>
+</html>

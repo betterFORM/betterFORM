@@ -175,6 +175,8 @@ public class Event extends XFormsFunction {
                 if(XFormsConstants.VARIABLE_VALUE.equals(argAsString) && ((Map)eventInfo.getInfo()).containsKey(XFormsConstants.VARIABLE_VALUE)) {
                     return SingletonIterator.makeIterator(new StringValue(((String)((Map)eventInfo.getInfo()).get(XFormsConstants.VARIABLE_VALUE))));
                 }
+            }else{
+                return SingletonIterator.makeIterator(new StringValue(((String)((Map)eventInfo.getInfo()).get(argAsString))));
             }
 		}
 		
