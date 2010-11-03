@@ -26,6 +26,41 @@
 		<link rel="SHORTCUT ICON" href="images/betterform.ico"/>
 		<link rel="ICON" href="images/betterform.ico" type="image/x-icon"/>
 		<link rel="stylesheet" type="text/css" href="styles/bf.css"/>
+        <style type="text/css">
+            #index #content{
+                height:205px;
+            }
+            #index #content .contentBody a{
+                width:295px;
+                height:100px;
+                display:block;
+                float:left;
+            }
+            .pageMarginBox{
+                width:890px;
+            }
+            #index #textContent{
+                height:296px;
+                background:white;
+                display:block;
+                /*float:left;*/
+            }
+            #index #textContent .col{
+                width:260px;
+                height:250px;
+                border:thin dotted;
+                float:left;
+                margin-top:25px;
+                padding:0 15px;
+            }
+            #index #textContent #rightCol{
+                margin-right:0;
+            }
+            #bottomMenu{
+                float:left;
+            }
+
+        </style>
 	</head>
 	<body style="overflow:hidden;" id="index">
 		<div class="page">
@@ -49,7 +84,11 @@
                 <img id="shadowTop" src="images/shad_top.jpg" alt=""/>
                 <div class="pageMarginBox">
 					<div class="contentBody">
-						<div id="columnLeft">
+                        <a href="demo.xhtml" class="link" id="demoButton"></a>
+                        <a href="download.html" class="link" id="getitButton"></a>
+                        <a href="product.html" class="link" id="productButton"></a>
+
+						<!--<div id="columnLeft">
 							<div id="teaser">
 								<div id="heading">August 31th, 2010</div>
                                 <p>
@@ -69,15 +108,33 @@
                                 </p>
 							</div>
 
-						</div>
+						</div>-->
+<!--
 						<div id="columnRight">
 							<a href="demo.xhtml" class="link" id="demoButton"></a>
 							<a href="download.html" class="link" id="getitButton"></a>
 							<a href="product.html" class="link" id="productButton"></a>
 						</div>
+-->
 					</div>
                 </div>
 			</div>
+            <div id="textContent">
+                <div class="pageMarginBox">
+
+                    <div id="leftCol" class="col">
+                        foo tkjls klsdf klklalkj ljla lslfk jlja lkjlakj kljlksdjf lk
+                        lksjdf lkjl lak lsdjf lsjlfj lskjdf ljlkljljlajlj lajdf lkjsldf
+                        lkaj ljdlj l lajsdjooo sl ljls jlsjkl sj ljlj aljlk
+                    </div>
+                    <div id="centerCol" class="col">
+                        bar
+                    </div>
+                    <div id="rightCol" class="col">
+                        baz
+                    </div>
+                </div>
+            </div>
 			<div id="footer">
                 <img id="shadowBottom" src="images/shad_bottom.jpg" alt=""/>
 
