@@ -225,6 +225,7 @@ public class XFormsProcessorImplTest extends TestCase {
         assertTrue(this.processor.getContainer().getDocument() instanceof org.apache.xerces.dom.DocumentImpl);
     }
 
+/*
     public void testCreateUIElement() throws Exception{
         this.processor.setXForms(new InputSource(this.baseURI + "xfRoleTest.xhtml"));
         this.processor.init();
@@ -238,6 +239,7 @@ public class XFormsProcessorImplTest extends TestCase {
         assertEquals("model-1",input.getModel().getId());
         DOMUtil.prettyPrintDOM(this.processor.getContainer().getDocument(),System.out);
     }
+*/
 
     /**
      * Sets up the test.
