@@ -274,6 +274,9 @@ public class Validator {
         validationState.setExtraChecking(false);
         validationState.setUsingNamespaces(true);
 
+        if(LOGGER.isTraceEnabled()){
+            LOGGER.trace("checking datatype - expandedName: " + expandedName);
+        }
         // TODO: does not yet work with restricted QNames
         if(expandedName.endsWith("QName") && value.indexOf(":") != -1){
             NamespaceSupport support = new NamespaceSupport();
