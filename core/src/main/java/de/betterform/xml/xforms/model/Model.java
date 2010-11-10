@@ -5,12 +5,6 @@
 
 package de.betterform.xml.xforms.model;
 
-import net.sf.saxon.functions.FunctionLibrary;
-import net.sf.saxon.om.StructuredQName;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.xerces.dom.DOMInputImpl;
-import org.apache.xerces.xs.*;
 import de.betterform.connector.ConnectorFactory;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.events.DefaultAction;
@@ -36,10 +30,17 @@ import de.betterform.xml.xforms.model.constraints.Vertex;
 import de.betterform.xml.xpath.XPathUtil;
 import de.betterform.xml.xpath.impl.saxon.SaxonReferenceFinderImpl;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
+import net.sf.saxon.functions.FunctionLibrary;
+import net.sf.saxon.om.StructuredQName;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.xerces.dom.DOMInputImpl;
+import org.apache.xerces.xs.*;
 import org.w3c.dom.*;
 import org.w3c.dom.bootstrap.DOMImplementationRegistry;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.ls.LSInput;
+import org.w3c.dom.ls.LSResourceResolver;
 import org.w3c.xforms.XFormsModelElement;
 
 import javax.xml.transform.OutputKeys;
@@ -51,6 +52,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.Reader;
 import java.net.URI;
 import java.util.*;
 
@@ -112,6 +114,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
     }
 
     // children of this model can get acess to the container
+
     public Container getContainer() {
         return this.container;
     }
@@ -201,6 +204,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
         // get real id of default instance
         return getDefaultInstance().getId();
     }
+
     /**
      * returns the Main-Calculation-Graph
      *
@@ -240,7 +244,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
      * <li>All linked Schemas of this Model in order of their occurrence in the
      * <tt>xforms:schema</tt> attribute.</li> <li>All inline Schemas of this
      * Model in document order.</li> </ol>
-     *
+     * <p/>
      * Note: use the schema's in a synchronized block on Model.class  (synchronized(Model.class ) { } )
      *
      * @return a list of Schemas associated with this Model.
@@ -1014,6 +1018,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
     }
 
     // todo: move to schema helper component
+
     public Map getNamedDatatypes(List schemas) {
         Map datatypes = new HashMap();
 
@@ -1094,14 +1099,132 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
         return loadSchema(new ByteArrayInputStream(array));
     }
 
-    private XSLoader getSchemaLoader() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
-        //  System.setProperty(DOMImplementationRegistry.PROPERTY, "org.apache.xerces.dom.DOMXSImplementationSourceImpl");
+
+    private XSLoader getSchemaLoader() throws IllegalAccessException,
+            InstantiationException, ClassNotFoundException {
+        // System.setProperty(DOMImplementationRegistry.PROPERTY,
+        // "org.apache.xerces.dom.DOMXSImplementationSourceImpl");
         DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
         XSImplementation implementation = (XSImplementation) registry.getDOMImplementation("XS-Loader");
         XSLoader loader = implementation.createXSLoader(null);
 
+        DOMConfiguration cfg = loader.getConfig();
+
+        cfg.setParameter("resource-resolver", new LSResourceResolver() {
+            public LSInput resolveResource(String type,
+                                           String namespaceURI,
+                                           String publicId,
+                                           String systemId,
+                                           String baseURI) {
+                LSInput input = new LSInput() {
+                    String systemId;
+
+                    public void setSystemId(String systemId) {
+                        this.systemId = systemId;
+                    }
+
+                    public void setStringData(String s) {
+                    }
+
+                    String publicId;
+
+                    public void setPublicId(String publicId) {
+                        this.publicId = publicId;
+                    }
+
+                    public void setEncoding(String s) {
+                    }
+
+                    public void setCharacterStream(Reader reader) {
+                    }
+
+                    public void setCertifiedText(boolean flag) {
+                    }
+
+                    public void setByteStream(InputStream inputstream) {
+                    }
+
+                    String baseURI;
+
+                    public void setBaseURI(String baseURI) {
+                        this.baseURI = baseURI;
+                    }
+
+                    public String getSystemId() {
+                        return this.systemId;
+                    }
+
+                    public String getStringData() {
+                        return null;
+                    }
+
+                    public String getPublicId() {
+                        return this.publicId;
+                    }
+
+                    public String getEncoding() {
+                        return null;
+                    }
+
+                    public Reader getCharacterStream() {
+                        return null;
+                    }
+
+                    public boolean getCertifiedText() {
+                        return false;
+                    }
+
+                    public InputStream getByteStream() {
+                        if(LOGGER.isTraceEnabled()){
+                            LOGGER.trace("Schema resource\n\t\t publicId '" + publicId + "'\n\t\t systemId '" + systemId + "' requested");
+                        }
+                        if ("http://www.w3.org/MarkUp/SCHEMA/xml-events-attribs-1.xsd".equals(systemId)) {
+                            if(LOGGER.isTraceEnabled()){
+                                LOGGER.trace("loading resource 'schema/xml-events-attribs-1.xsd'\n\n");
+                            }
+                            return Thread.currentThread().getContextClassLoader().getResourceAsStream("schema/xml-events-attribs-1.xsd");
+                        } else if ("http://www.w3.org/2001/XMLSchema.xsd".equals(systemId)) {
+                            if(LOGGER.isTraceEnabled()){
+                                LOGGER.trace("loading resource 'schema/XMLSchema.xsd'\n\n");
+                            }
+                            return Thread.currentThread().getContextClassLoader().getResourceAsStream("schema/XMLSchema.xsd");
+                        } else if ("-//W3C//DTD XMLSCHEMA 200102//EN".equals(publicId) ) {
+                            if(LOGGER.isTraceEnabled()){
+                                LOGGER.trace("loading resource 'schema/XMLSchema.dtd'\n\n");
+                            }
+                            return Thread.currentThread().getContextClassLoader().getResourceAsStream("schema/XMLSchema.dtd");
+                        } else if ("datatypes".equals(publicId)) {
+                            if(LOGGER.isTraceEnabled()){
+                                LOGGER.trace("loading resource 'schema/datatypes.dtd'\n\n");
+                            }
+                            return Thread.currentThread().getContextClassLoader().getResourceAsStream("schema/datatypes.dtd");
+                        } else if ("http://www.w3.org/2001/xml.xsd".equals(systemId)) {
+                            if(LOGGER.isTraceEnabled()){
+                                LOGGER.trace("loading resource 'schema/xml.xsd'\n\n");
+                            }
+                            return Thread.currentThread().getContextClassLoader().getResourceAsStream("schema/xml.xsd");
+                        } else {
+                            if(LOGGER.isTraceEnabled()){
+                                LOGGER.trace("resource not known '" + systemId + "'\n\n");
+                            }
+                            return null;
+                        }
+                    }
+
+                    public String getBaseURI() {
+                        return this.baseURI;
+                    }
+                };
+                input.setSystemId(systemId);
+                input.setBaseURI(baseURI);
+                input.setPublicId(publicId);
+                return input;
+            }
+        });
+        // END: Patch
         return loader;
     }
+
 
 }
 
