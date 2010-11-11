@@ -282,6 +282,7 @@ public class WebUtil {
             processor.setContextParam(s, value);
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("added request param '" + s + "' added to context");
+                LOGGER.debug("param value'" + value);
             }
         }
 
