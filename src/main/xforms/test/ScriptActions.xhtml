@@ -56,6 +56,19 @@
 						document.getElementById("scriptActionGroup").style.color = "red";
 					</script>
 				</xf:trigger>
+
+				<xf:input id="name" ref="name">
+					<xf:label>Name</xf:label>
+				</xf:input>
+
+				<xf:trigger>
+					<xf:label>setControlValue</xf:label>
+					<xf:action>
+						<script type="text/javascript">
+							fluxProcessor.setControlValue("name","foo");
+						</script>
+					</xf:action>
+				</xf:trigger>
 			</xf:group>
 
 			<div id="message" style="font-size:24pt;"></div>
