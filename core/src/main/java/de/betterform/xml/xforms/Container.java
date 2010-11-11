@@ -758,6 +758,9 @@ public class Container {
 					models.add(el);
 				}
 				// Model is a top level XForms element so we don't need to go in recursion here
+                else{
+                    addModelElements(it, models);                    
+                }
 			}
 			else {
 				addModelElements(it, models);
