@@ -150,6 +150,28 @@ public class LocalisationTest extends TestCase {
 
 
     }
+    public void testSetLocalisedValue() throws Exception{
+        if (Config.getInstance().getProperty(XFormsProcessorImpl.BETTERFORM_ENABLE_L10N).equals("true")) {
+            xformsProcesssorImpl.setLocale("de");
+            this.xformsProcesssorImpl.setControlValue("foo", "20002,222");
+            DOMUtil.prettyPrintDOM(this.xformsProcesssorImpl.getContainer().getDefaultModel().getDefaultInstance().getInstanceDocument());
+            assertEquals("20002.222", XPathCache.getInstance().evaluateAsString(inst.getRootContext(), "/data/item[3]"));
+
+            this.xformsProcesssorImpl.setControlValue("foo", "20002,12345");
+            assertEquals("20002.12345", XPathCache.getInstance().evaluateAsString(inst.getRootContext(), "/data/item[3]"));
+            DOMUtil.prettyPrintDOM(this.xformsProcesssorImpl.getContainer().getDefaultModel().getDefaultInstance().getInstanceDocument());
+
+            this.xformsProcesssorImpl.setControlValue("foo", "20007");
+            assertEquals("20007", XPathCache.getInstance().evaluateAsString(inst.getRootContext(), "/data/item[3]"));
+            DOMUtil.prettyPrintDOM(this.xformsProcesssorImpl.getContainer().getDefaultModel().getDefaultInstance().getInstanceDocument());
+
+            this.xformsProcesssorImpl.setControlValue("foo", "20007.12");
+            assertEquals("20007.12", XPathCache.getInstance().evaluateAsString(inst.getRootContext(), "/data/item[3]"));
+            DOMUtil.prettyPrintDOM(this.xformsProcesssorImpl.getContainer().getDefaultModel().getDefaultInstance().getInstanceDocument());
+
+        }
+    }
+
     public void testDelocalizeFallback() throws Exception {
         if (Config.getInstance().getProperty(XFormsProcessorImpl.BETTERFORM_ENABLE_L10N).equals("true")) {
 
