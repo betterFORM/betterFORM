@@ -795,7 +795,10 @@ dojo.declare("betterform.FluxProcessor",
                 if (exception != undefined) {
                     console.warn("An Exception occured in Facade: ", exception);
                 } else {
-                    window.alert(message);
+                    dojo.require("dijit.Dialog");
+                    var messageDialog = dijit.byId("bfMessageDialog");
+                    dojo.query("#messageContent",messageDialog.domNode)[0].innerHTML=message;
+                    messageDialog.show();
                 }
             }
         } else {

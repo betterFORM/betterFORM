@@ -354,6 +354,16 @@
 -->
                 </div>
             </div>
+
+            <div id="bfMessageDialog" dojotype="dijit.Dialog" style="text-align:center;">
+                <div id="messageContent"></div>
+                <button dojotype="dijit.form.Button" type="button" style="margin:10px;">OK
+                    <script type="dojo/method" event="onClick" args="evt">
+                        dijit.byId("bfMessageDialog").hide();
+                    </script>
+                </button>
+            </div>
+
             <xsl:if test="$debug-enabled='true'">
                 <!-- z-index of 1000 so it is also in front of shim for modal dialogs -->
                 <div id="debug-pane" style="width:100%;border:thin dotted; z-index:1000;">
