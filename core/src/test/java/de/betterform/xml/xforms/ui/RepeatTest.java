@@ -133,6 +133,23 @@ public class RepeatTest extends TestCase {
         assertTrue(this.itemInsertedListener.getTime() < this.indexChangedListener.getTime());
     }
 
+    public void testInsertLastRepeat() throws Exception {
+        Repeat repeat = (Repeat) this.xformsProcesssorImpl.getContainer().lookup("repeat");
+        register(repeat.getTarget());
+        this.xformsProcesssorImpl.dispatch("trigger-insert-last", DOMEventNames.ACTIVATE);
+        deregister(repeat.getTarget());
+
+        assertEquals(4, repeat.getIndex());
+        assertEquals(4, repeat.getContextSize());
+
+        assertItemInserted("repeat", "repeat", "4");
+        assertItemDeleted(null, null, null);
+        assertIndexChanged("repeat", "repeat", "4");
+        assertStateChanged(null, null);
+
+        assertTrue(this.itemInsertedListener.getTime() < this.indexChangedListener.getTime());
+    }
+
     /**
      * Tests deleting at the current index.
      *
@@ -191,7 +208,10 @@ public class RepeatTest extends TestCase {
 
         assertItemInserted("repeat", "repeat", "1");
         assertItemDeleted("repeat", "repeat", "1");
-        assertIndexChanged("repeat", "repeat", "1");
+        /*
+        * index event won't be triggered as the index does not change through the delete and index actions - stays '1'
+        */
+//        assertIndexChanged("repeat", "repeat", "1");
         assertStateChanged(null, null);
 
         assertTrue(this.itemDeletedListener.getTime() < this.itemInsertedListener.getTime());

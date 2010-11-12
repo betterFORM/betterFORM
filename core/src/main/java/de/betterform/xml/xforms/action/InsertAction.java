@@ -397,6 +397,7 @@ public class InsertAction extends AbstractBoundAction {
 	    	result.put("location-path", locationPath);
 	    	result.put(INSERTED_NODES, insertedItems);
 	    	result.put(ORIGIN_NODES, originNodeSet);
+            //todo: fix this!!!
 	    	result.put(INSERT_LOCATION_NODE, InsertAction.this.container.getDocumentWrapper(insertLocationNode).wrap(insertLocationNode));
 	    	result.put(POSITION, positionAttribute);
 	    	

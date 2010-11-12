@@ -331,7 +331,8 @@ public class Instance extends XFormsElement {
         else {
         	insertedNode = parentNode.insertBefore(this.instanceDocument.importNode(originNode, true), beforeNode);
         }
-         
+        String canonPath = DOMUtil.getCanonicalPath(insertedNode);
+
         ModelItem insertedModelItem = getModelItem(insertedNode);
         insertedModelItem.getDeclarationView().setDatatype(miOrigin.getDeclarationView().getDatatype());
 
@@ -352,6 +353,7 @@ public class Instance extends XFormsElement {
         HashMap map = new HashMap();
         map.put("nodeset", canonicalParts[0]);
         map.put("position", canonicalParts.length>1?canonicalParts[1]:"1");
+        map.put("canonPath", canonPath);
         this.container.dispatch(this.target, BetterFormEventNames.NODE_INSERTED, map);
 
         if (getLogger().isDebugEnabled()) {
@@ -383,6 +385,7 @@ public class Instance extends XFormsElement {
      * @param path the path pointing to the node to be deleted.
      */
     public boolean deleteNode(Node node, String path) throws XFormsException {
+        String canonicalPath = DOMUtil.getCanonicalPath(node);
         if(node == null){
             LOGGER.warn("Node is null - delete is terminated with no effect.");
             return false;
@@ -412,6 +415,8 @@ public class Instance extends XFormsElement {
             return false;
         }
 
+        Node canonNode = node;
+
         if (node.getNodeType() != Node.ATTRIBUTE_NODE) {
             node.getParentNode().removeChild(node);
         } else {
@@ -424,6 +429,7 @@ public class Instance extends XFormsElement {
         HashMap map = new HashMap();
         map.put("nodeset", canonicalParts[0]);
         map.put("position", canonicalParts[canonicalParts.length - 1]);
+        map.put("canonPath",canonicalPath);
         this.container.dispatch(this.target, BetterFormEventNames.NODE_DELETED, map);
 
         if (getLogger().isDebugEnabled()) {

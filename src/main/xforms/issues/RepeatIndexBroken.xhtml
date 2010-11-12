@@ -6,6 +6,9 @@
         <title>Repeats</title>
         <style type="text/css">
             #nested-input-value{width:400px;}
+			.xfRepeatIndex .xfRepeatIndex{
+				background:#90ee90;
+			}
         </style>
 
         <xf:model id="model_1">
@@ -92,7 +95,7 @@
 								<xf:label>Insert Into Inner Repeat @last</xf:label>
 								<xf:insert nodeset="//annotation[index('r-outerRepeat')]/innerNode" at="last()" position="after"/>
 							</xf:trigger>
-							<xf:trigger>
+							<xf:trigger id="delete-inner-repeat-item">
 								<xf:label>Delete Inner RepeatItem @last</xf:label>
 								<xf:delete nodeset="//annotation[index('r-outerRepeat')]/innerNode" at="last()"/>
 							</xf:trigger>

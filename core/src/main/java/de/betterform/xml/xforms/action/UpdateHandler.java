@@ -47,8 +47,8 @@ public class UpdateHandler {
      * @param rebuild specifies wether to perform a rebuild or not.
      */
     public void doRebuild(boolean rebuild) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug((rebuild ? "deferring" : "clearing") + " rebuild");
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace((rebuild ? "deferring" : "clearing") + " rebuild");
         }
         this.rebuild = rebuild;
     }
@@ -59,8 +59,8 @@ public class UpdateHandler {
      * @param recalculate specifies wether to perform a recalculate or not.
      */
     public void doRecalculate(boolean recalculate) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug((recalculate? "deferring" : "clearing") + " recalculate");
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace((recalculate? "deferring" : "clearing") + " recalculate");
         }
         this.recalculate = recalculate;
     }
@@ -71,8 +71,8 @@ public class UpdateHandler {
      * @param revalidate specifies wether to perform a revalidate or not.
      */
     public void doRevalidate(boolean revalidate) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug((revalidate ? "deferring" : "clearing") + " revalidate");
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace((revalidate ? "deferring" : "clearing") + " revalidate");
         }
         this.revalidate = revalidate;
     }
@@ -83,8 +83,8 @@ public class UpdateHandler {
      * @param refresh specifies wether to perform a refresh or not.
      */
     public void doRefresh(boolean refresh) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug((refresh ? "deferring" : "clearing") + " refresh");
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace((refresh ? "deferring" : "clearing") + " refresh");
         }
         this.refresh = refresh;
     }
@@ -97,26 +97,26 @@ public class UpdateHandler {
     public void doUpdate() throws XFormsException {
         try {
             if (this.rebuild) {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("performing deferred rebuild");
+                if (LOGGER.isTraceEnabled()) {
+                    LOGGER.trace("performing deferred rebuild");
                 }
                 this.model.getContainer().dispatch(this.model.getTarget(), XFormsEventNames.REBUILD, null);
             }
             if (this.recalculate) {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("performing deferred recalculate");
+                if (LOGGER.isTraceEnabled()) {
+                    LOGGER.trace("performing deferred recalculate");
                 }
                 this.model.getContainer().dispatch(this.model.getTarget(), XFormsEventNames.RECALCULATE, null);
             }
             if (this.revalidate) {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("performing deferred revalidate");
+                if (LOGGER.isTraceEnabled()) {
+                    LOGGER.trace("performing deferred revalidate");
                 }
                 this.model.getContainer().dispatch(this.model.getTarget(), XFormsEventNames.REVALIDATE, null);
             }
             if (this.refresh) {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("performing deferred refresh");
+                if (LOGGER.isTraceEnabled()) {
+                    LOGGER.trace("performing deferred refresh");
                 }
                 this.model.getContainer().dispatch(this.model.getTarget(), XFormsEventNames.REFRESH, null);
             }

@@ -8,6 +8,7 @@ package de.betterform.xml.xforms.ui;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.XMLEvent;
+import de.betterform.xml.events.impl.XercesXMLEvent;
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.XFormsElement;
 import de.betterform.xml.xforms.exception.XFormsException;
@@ -17,6 +18,7 @@ import de.betterform.xml.xforms.model.bind.Bind;
 import de.betterform.xml.xforms.model.bind.BindingResolver;
 import de.betterform.xml.xforms.ui.state.RepeatElementState;
 import de.betterform.xml.xpath.XPathUtil;
+import net.sf.saxon.dom.NodeWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
@@ -43,7 +45,7 @@ public class Repeat extends BindingElement implements EventListener {
     private static final Log LOGGER = LogFactory.getLog(Repeat.class);
 
     private int startIndex;
-    
+
     private int index;
     private Element prototype;
     private List items;
@@ -52,7 +54,7 @@ public class Repeat extends BindingElement implements EventListener {
      * Creates a new repeat element handler.
      *
      * @param element the host document element.
-     * @param model the context model.
+     * @param model   the context model.
      */
     public Repeat(Element element, Model model) {
         super(element, model);
@@ -65,19 +67,31 @@ public class Repeat extends BindingElement implements EventListener {
      * <code>EventListener</code> interface was registered.
      *
      * @param event The <code>Event</code> contains contextual information about
-     * the event. It also contains the <code>stopPropagation</code> and
-     * <code>preventDefault</code> methods which are used in determining the
-     * event's flow and default action.
+     *              the event. It also contains the <code>stopPropagation</code> and
+     *              <code>preventDefault</code> methods which are used in determining the
+     *              event's flow and default action.
      */
     public void handleEvent(Event event) {
         try {
-            if (BetterFormEventNames.NODE_INSERTED.equals(event.getType())) {
-                handleNodeInserted(event);
+            String instancePath = (String) ((XercesXMLEvent) event).getContextInfo().get("canonPath");
+            instancePath = instancePath.substring(0, instancePath.lastIndexOf("["));
+
+            if(this.nodeset.size() == 0){
                 return;
             }
-            if (BetterFormEventNames.NODE_DELETED.equals(event.getType())) {
-                handleNodeDeleted(event);
-                return;
+            Node n = (Node) ((NodeWrapper) this.nodeset.get(0)).getUnderlyingNode();
+            String path = DOMUtil.getCanonicalPath(n);
+            path = path.substring(0, path.lastIndexOf("["));
+
+            if (instancePath.equals(path)) {
+                if (BetterFormEventNames.NODE_INSERTED.equals(event.getType())) {
+                    handleNodeInserted(event);
+                    return;
+                }
+                if (BetterFormEventNames.NODE_DELETED.equals(event.getType())) {
+                    handleNodeDeleted(event);
+                    return;
+                }
             }
         }
         catch (Exception e) {
@@ -104,21 +118,22 @@ public class Repeat extends BindingElement implements EventListener {
      *
      * @param index the index of this <code>repeat</code>.
      */
-	public void setIndex(int index) throws XFormsException {
-		if (getLogger().isDebugEnabled()) {
+    public void setIndex(int index) throws XFormsException {
+        if (getLogger().isDebugEnabled()) {
             getLogger().debug(this + " set index: " + index);
         }
 
         // update index
-        this.index = index;
-        notifyIndexChange();
+        if(this.index != index){
+            this.index = index;
+            notifyIndexChange();
+        }
 
         if (isRepeated()) {
             // set enclosing index
             RepeatItem repeatItem = (RepeatItem) this.container.lookup(getRepeatItemId());
             repeatItem.getRepeat().setIndex(repeatItem.getPosition());
-        }
-        else {
+        } else {
             // register repeat item under original id
             registerRepeatItem(index);
         }
@@ -215,7 +230,7 @@ public class Repeat extends BindingElement implements EventListener {
     public String getBindingExpression() {
         if (hasModelBinding()) {
             return getModelBinding().getBindingExpression();
-        }        
+        }
 
         String nodesetAttribute = getXFormsAttribute(REPEAT_NODESET_ATTRIBUTE);
         if (nodesetAttribute != null) {
@@ -241,15 +256,15 @@ public class Repeat extends BindingElement implements EventListener {
         if (getLogger().isTraceEnabled()) {
             getLogger().trace(this + " init");
         }
-        
+
         try {
-        	this.startIndex = getXFormsAttribute(STARTINDEX_ATTRIBUTE) != null?Integer.parseInt(getXFormsAttribute(STARTINDEX_ATTRIBUTE))
-        			:(getXFormsAttribute(REPEAT_STARTINDEX_ATTRIBUTE) != null?Integer.parseInt(getXFormsAttribute(REPEAT_STARTINDEX_ATTRIBUTE)):1);
+            this.startIndex = getXFormsAttribute(STARTINDEX_ATTRIBUTE) != null ? Integer.parseInt(getXFormsAttribute(STARTINDEX_ATTRIBUTE))
+                    : (getXFormsAttribute(REPEAT_STARTINDEX_ATTRIBUTE) != null ? Integer.parseInt(getXFormsAttribute(REPEAT_STARTINDEX_ATTRIBUTE)) : 1);
         }
-        catch(NumberFormatException e) {
-        	startIndex = 1;
+        catch (NumberFormatException e) {
+            startIndex = 1;
         }
-        
+
 
         initializeDefaultAction();
         initializeInstanceNode();
@@ -326,9 +341,9 @@ public class Repeat extends BindingElement implements EventListener {
     protected void initializePrototype() throws XFormsException {
         // create prototype element
         Document document = this.element.getOwnerDocument();
-        this.prototype = document.createElementNS(NamespaceConstants.XFORMS_NS, (this.xformsPrefix!=null?this.xformsPrefix:NamespaceConstants.XFORMS_PREFIX) + ":" + GROUP);
+        this.prototype = document.createElementNS(NamespaceConstants.XFORMS_NS, (this.xformsPrefix != null ? this.xformsPrefix : NamespaceConstants.XFORMS_PREFIX) + ":" + GROUP);
         this.prototype.setAttributeNS(null, "id", this.container.generateId());
-        this.prototype.setAttributeNS(null,  APPEARANCE_ATTRIBUTE, "repeated");
+        this.prototype.setAttributeNS(null, APPEARANCE_ATTRIBUTE, "repeated");
 
         // clone repeat prototype
         NodeList children = this.element.getChildNodes();
@@ -363,9 +378,9 @@ public class Repeat extends BindingElement implements EventListener {
             this.index = Math.min(count, this.startIndex);
         }
 
-        if(element.hasAttributeNS(NamespaceConstants.BETTERFORM_NS,"index")){
+        if (element.hasAttributeNS(NamespaceConstants.BETTERFORM_NS, "index")) {
             //we're initializing a deserialized form
-            this.index = Integer.parseInt(element.getAttributeNS(NamespaceConstants.BETTERFORM_NS,"index"));
+            this.index = Integer.parseInt(element.getAttributeNS(NamespaceConstants.BETTERFORM_NS, "index"));
         }
 
 
@@ -435,9 +450,9 @@ public class Repeat extends BindingElement implements EventListener {
     protected void disposeRepeat() throws XFormsException {
         // deregister repeat as event listener
         Instance instance = this.model.getInstance(getInstanceId());
-        if(instance!= null) {
+        if (instance != null) {
             instance.getTarget().removeEventListener(BetterFormEventNames.NODE_INSERTED, this, false);
-            instance.getTarget().removeEventListener(BetterFormEventNames.NODE_DELETED, this, false);            
+            instance.getTarget().removeEventListener(BetterFormEventNames.NODE_DELETED, this, false);
         }
 
         // free repeat items and prototype
@@ -486,7 +501,7 @@ public class Repeat extends BindingElement implements EventListener {
             }
 
             // delete repeat item (and remove focus if focused)
-		   disposeRepeatItem((RepeatItem) this.items.remove(uiPosition - 1));
+            disposeRepeatItem((RepeatItem) this.items.remove(uiPosition - 1));
             // update position of following items
             for (int index = uiPosition - 1; index < this.items.size(); index++) {
                 ((RepeatItem) this.items.get(index)).setPosition(index + 1);
@@ -500,18 +515,18 @@ public class Repeat extends BindingElement implements EventListener {
             int contextSize = getContextSize();
             if (getIndex() > contextSize) {
                 setIndex(contextSize);
-                this.container.setFocussedContainerId(((RepeatItem) this.items.get(contextSize-1)).getId());
+                this.container.setFocussedContainerId(((RepeatItem) this.items.get(contextSize - 1)).getId());
             } else {
-            	if (getIndex() != 0) {
-            		this.container.setFocussedContainerId(((RepeatItem) this.items.get(getIndex()-1)).getId());
-            	} else {
-            		this.container.setFocussedContainerId(null);
-            	}
+                if (getIndex() != 0) {
+                    this.container.setFocussedContainerId(((RepeatItem) this.items.get(getIndex() - 1)).getId());
+                } else {
+                    this.container.setFocussedContainerId(null);
+                }
             }
 
         } else {
-        	setIndex(this.index);
-             //getLogger().info("Index: "+ this.index + " items: " + this.items.size());
+            setIndex(this.index);
+            //getLogger().info("Index: "+ this.index + " items: " + this.items.size());
             this.container.setFocussedContainerId(null);
         }
     }
@@ -520,9 +535,9 @@ public class Repeat extends BindingElement implements EventListener {
 
     private boolean doHandleInstanceEvent(Event event) throws XFormsException {
         // Node inserted or deleted update xpath context
-    	updateXPathContext();
-    	
-    	// check context size
+        updateXPathContext();
+
+        // check context size
         int contextSize = getContextSize();
         if (contextSize == 0) {
             return false;
@@ -584,7 +599,7 @@ public class Repeat extends BindingElement implements EventListener {
         }
     }
 
-    private void initializePrototype (Node parent, Node prototype) {
+    private void initializePrototype(Node parent, Node prototype) {
         Node copy = prototype.cloneNode(false);
         if (copy.getNodeType() == Node.ELEMENT_NODE) {
             Element element = (Element) copy;
@@ -686,8 +701,7 @@ public class Repeat extends BindingElement implements EventListener {
                             repeatItem.registerId();
                             registerChildren(repeatItem.getElement());
                         }
-                    }
-                    else {
+                    } else {
                         // register *all* children
                         registerChildren(xFormsElement.getElement());
                     }

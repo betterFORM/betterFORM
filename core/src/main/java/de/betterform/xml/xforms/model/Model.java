@@ -511,6 +511,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
     public void rebuild() {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug(this + " #################### REBUILD ####################");
+            getLogger().debug(this);
         }
 
         try {
@@ -554,7 +555,8 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
      */
     public void recalculate() {
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug(this + " #################### RECALCULATE ####################");
+            getLogger().debug(" #################### RECALCULATE ####################");
+            getLogger().debug(this);
         }
 
         try {
@@ -593,7 +595,8 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
      */
     public void revalidate() {
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug(this + " #################### REVALIDATE ####################");
+            getLogger().debug(" #################### REVALIDATE ####################");
+            getLogger().debug(this);
         }
 
         try {
@@ -629,7 +632,8 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
      */
     public void refresh() {
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug(this + " #################### START REFRESH Model " + this.id + " ####################");
+            getLogger().debug(" #################### START REFRESH Model " + this.id + " ####################");
+            getLogger().debug(this);
         }
         try {
             if (this.updateSequencer.sequence(REFRESH)) {
@@ -691,7 +695,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
      */
     public void performDefault(Event event) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("performing default action for: >>>>> " + event.getType().toUpperCase() + " <<<<<");
+            LOGGER.debug("\n\n>>>>>>>>>>>>>>>>>>>>>>>>> " + event.getType().toUpperCase() + " <<<<<<<<<<<<<<<<<<<<<<<<<\n\n");
         }
         try {
             if (event.getType().equals(XFormsEventNames.MODEL_CONSTRUCT)) {

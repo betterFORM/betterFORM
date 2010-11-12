@@ -409,6 +409,9 @@ public class Container {
      * @throws XFormsException if the target node could not be found.
      */
     public boolean dispatch(EventTarget eventTarget, String eventType, Object info) throws XFormsException {
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("dispatching event '" + eventType + "' to target '" + DOMUtil.getCanonicalPath((Node) eventTarget) + "'");
+        }
         return dispatch(eventTarget, eventType, info, true, true);
     }
 

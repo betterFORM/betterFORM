@@ -206,8 +206,8 @@ public abstract class AbstractAction extends XFormsElement implements EventListe
                     getLogger().warn("parent is null");
                 }
             }
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug(this + " init: added handler for event '" + this.eventType + "' to " + DOMUtil.getCanonicalPath(this.element));
+            if (getLogger().isTraceEnabled()) {
+                getLogger().trace(this + " init: added handler for event '" + this.eventType + "' to " + DOMUtil.getCanonicalPath(this.element));
             }
         }
     }
@@ -264,12 +264,12 @@ public abstract class AbstractAction extends XFormsElement implements EventListe
                     event.preventDefault();
                 }
 
-                if (getLogger().isDebugEnabled()) {
+                if (getLogger().isTraceEnabled()) {
                     String currentEventId = (((Element) event.getCurrentTarget()).getAttribute("id"));
                     String targetEventId = (((Element) event.getTarget()).getAttribute("id"));
-                    LOGGER.debug("currentEventTargetId: '" + currentEventId+ "' eventTargetId:'" +  targetEventId+ "'");
+                    LOGGER.trace("currentEventTargetId: '" + currentEventId+ "' eventTargetId:'" +  targetEventId+ "'");
 
-                    getLogger().debug(DOMUtil.getCanonicalPath(this.element) + " handling event '" + this.eventType + " target: " + event.getTarget() + "' (" + event.getEventPhase() + ")");
+                    getLogger().trace("handling event '" + this.eventType + "' target: " + DOMUtil.getCanonicalPath(this.element) + "' Event Phase: (" + event.getEventPhase() + ")");
                 }
 
                 if(getLogger().isDebugEnabled()){

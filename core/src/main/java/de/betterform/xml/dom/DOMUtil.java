@@ -1098,8 +1098,10 @@ public class DOMUtil {
         } else if (node.getNodeType() == Node.ATTRIBUTE_NODE) {
             parent = ((Attr) node).getOwnerElement();
         }
-
-        if (parent == null || parent.getNodeType() == Node.DOCUMENT_NODE || parent.getNodeType() == Node.DOCUMENT_FRAGMENT_NODE) {
+        if(parent == null){
+            parent = node.getOwnerDocument().getDocumentElement();
+        }
+        if (parent.getNodeType() == Node.DOCUMENT_NODE || parent.getNodeType() == Node.DOCUMENT_FRAGMENT_NODE) {
             canonPath = "/" + canonPath;
         } else {
             canonPath = DOMUtil.getCanonicalPath(parent) + "/" + canonPath;

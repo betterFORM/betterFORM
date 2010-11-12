@@ -168,8 +168,8 @@ public abstract class BindingElement extends AbstractUIElement implements Bindin
      * @throws XFormsException if any error occurred during update.
      */
     public void refresh() throws XFormsException {
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug(this + " refresh");
+        if (getLogger().isTraceEnabled()) {
+            getLogger().trace("refresh" + this);
         }
 
         updateXPathContext();

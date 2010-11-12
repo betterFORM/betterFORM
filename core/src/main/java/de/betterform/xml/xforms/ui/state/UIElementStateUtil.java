@@ -140,8 +140,8 @@ public class UIElementStateUtil {
                 datatype = getDefaultDatatype(element);
             }
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("return datatype: " + datatype + " for " + DOMUtil.getCanonicalPath(element));
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace("return datatype: " + datatype + " for " + DOMUtil.getCanonicalPath(element));
         }
 
         return datatype;
@@ -384,7 +384,8 @@ public class UIElementStateUtil {
                 }
 
             } else {
-                if(LOGGER.isWarnEnabled()) {
+                //not logging for type 'string'
+                if(LOGGER.isWarnEnabled() && !(tmpType.equals("string"))) {
                     LOGGER.warn("Type " + tmpType + " cannot be localized");        
                 }
             }
