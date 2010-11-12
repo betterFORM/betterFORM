@@ -42,6 +42,7 @@ public class Selector extends AbstractFormControl {
     private boolean multiple;
     private final Map extendedPrefixMapping;
     private boolean selectHasCopyChilds = false;
+    private boolean isOutOfRange=false;
 
     /**
      * Creates a new selector element handler.
@@ -380,7 +381,11 @@ public class Selector extends AbstractFormControl {
         }
 
         if(!inRange){
+            this.isOutOfRange=true;
             this.container.dispatch(this.target, XFormsEventNames.OUT_OF_RANGE, null);
+        }else if(this.isOutOfRange){
+            this.isOutOfRange=false;
+            this.container.dispatch(this.target,XFormsEventNames.IN_RANGE,null);
         }
     }
 

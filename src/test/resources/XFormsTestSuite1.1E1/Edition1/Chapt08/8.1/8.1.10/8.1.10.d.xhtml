@@ -46,12 +46,19 @@
 		<xforms:action ev:event="xforms-out-of-range">
       		<xforms:message level="modal">xforms-out-of-range</xforms:message>
     	</xforms:action>
+		<xforms:action ev:event="xforms-in-range">
+      		<xforms:message level="modal">xforms-in-range</xforms:message>
+    	</xforms:action>
 	</xforms:select>
 	</xforms:group>
 	<xforms:trigger>
 		<xforms:label>Enter An Invalid Value</xforms:label>
 		<xforms:setvalue ev:event="DOMActivate" ref="/icecream/flavor">mango</xforms:setvalue>
 	</xforms:trigger>
-	
+	<xforms:trigger>
+		<xforms:label>Enter An Invalid Value</xforms:label>
+		<xforms:setvalue ev:event="DOMActivate" ref="/icecream/flavor">v</xforms:setvalue>
+	</xforms:trigger>
+
   </xhtml:body>
 </xhtml:html>
