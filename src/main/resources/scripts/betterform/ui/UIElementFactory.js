@@ -564,6 +564,7 @@ dojo.declare(
                         id:dojo.attr(sourceNode, "id"),
                         name:dojo.attr(sourceNode, "name")+"-value",
                         label:dojo.attr(sourceNode, "label"),
+                        "class":classValue,
                         title:dojo.attr(sourceNode,"title"),
                         xfControlId:controlId
                     }, sourceNode);
@@ -576,6 +577,7 @@ dojo.declare(
                         id:dojo.attr(sourceNode, "id"),
                         name:dojo.attr(sourceNode, "name")+"-value",
                         label:dojo.attr(sourceNode, "label"),
+                        "class":classValue,
                         title:dojo.attr(sourceNode,"title"),
                         xfControlId:controlId
                     }, sourceNode);
