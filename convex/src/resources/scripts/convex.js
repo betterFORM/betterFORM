@@ -17,7 +17,7 @@ function handleStateChange(id, value, valid, readonly, required, relevant, type)
     var targetValue = dojo.byId(id+"-value");
 
     if(target != ""){
-        //2. update value
+        //2. update value                                                                                                                                                  
         if(value != ""){
             targetValue.value = value;
         }

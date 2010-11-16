@@ -480,7 +480,7 @@ public class Convex extends Applet {
         // setup processor
         AppletProcessor processor = new AppletProcessor();
         processor.setBetterFormApplet(this);
-//        processor.setContextClassLoader(Thread.currentThread().getContextClassLoader());
+        processor.setContextClassLoader(Thread.currentThread().getContextClassLoader());
         processor.setUploadDir(new File(documentBaseURI).getParentFile().getAbsolutePath());
         //hack around AbstractBetterFormAdapter to set contextmap
         processor.setContext(context);
