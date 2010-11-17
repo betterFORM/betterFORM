@@ -645,6 +645,7 @@ dojo.declare("betterform.FluxProcessor",
          to embed an existing form into the running form
          */
         else if (xmlEvent.contextInfo.show == "embed") {
+//            console.debug("xmlEvent.contextInfo.show='embed'", this);
             // getting target from event - can be either the value of a 'name' or 'id' Attribute
             var xlinkTarget = xmlEvent.contextInfo.xlinkTarget;
 
@@ -682,12 +683,15 @@ dojo.declare("betterform.FluxProcessor",
 
             // finally dynamically load the CSS (if some) form the embedded form
             var cssToLoad = xmlEvent.contextInfo.inlineCSS;
+//            console.debug("css to load: ", cssToLoad);
             if(cssToLoad != undefined){
                 var headID = document.getElementsByTagName("head")[0];
                 
                 var newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","style");
+                dojo.attr(newScript,"name",xmlEvent.contextInfo.xlinkTarget);
                 newScript.appendChild(dojo.doc.createTextNode(cssToLoad));
                 headID.appendChild(newScript);
+                console.debug("new Style: ", newScript);
             }
         }
         /*  xf:load show=none
@@ -745,6 +749,15 @@ dojo.declare("betterform.FluxProcessor",
     },
 
     _unloadDOM:function(target) {
+        //delete CSS specific to subform
+        var headID = document.getElementsByTagName("style");
+        var tmp = dojo.query("*[name='" + xlinkTarget + "']",headID).forEach(function(item) {
+            console.debug("item to remove: ", item, " dojo.document.head: " ,dojo.document.head);
+
+        });
+
+
+
         var htmlEntryPoint = dojo.byId(target);
         if (htmlEntryPoint == undefined) {
             return;
@@ -1297,5 +1310,6 @@ dojo.declare("betterform.FluxProcessor",
     
     printInstance:function(data){
         console.dirxml(data);
+        dojo.byId("debugFrame").innerHTML=data;
     }
 });
