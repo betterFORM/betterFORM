@@ -47,10 +47,7 @@ import java.util.Map;
  */
 public class Convex extends Applet {
     private static final Log LOGGER = LogFactory.getLog(Convex.class);
-    static {
-        org.apache.log4j.BasicConfigurator.configure();
-    }
-    
+
     // applet parameters and defaults
     public static final String LOG4J_PARAMETER = "log4j";
     public static final String LOG4J_DEFAULT = "log4j.xml";
@@ -106,7 +103,7 @@ public class Convex extends Applet {
 
             // set splash screen
 
-//            javascriptCall("setView", getSplashScreen(XFormsProcessorImpl.getAppInfo(), ""));
+            javascriptCall("document.setView", getSplashScreen(XFormsProcessorImpl.getAppInfo(), ""));
 
             // get code and document bases
             URL codeBaseUrl = getCodeBase();
@@ -119,31 +116,22 @@ public class Convex extends Applet {
             this.documentName = documentPath.substring(documentPath.lastIndexOf('/') + 1);
 
             // update splash screen
-//            javascriptCall("setView", getSplashScreen("configuring", this.documentName));
+            javascriptCall("document.setView", getSplashScreen("configuring", this.documentName));
 
             // init logging
             URL log4jUrl = resolveParameter(codeBaseUrl, LOG4J_PARAMETER, LOG4J_DEFAULT);
+            DOMConfigurator.configure(log4jUrl);
 
-            System.out.println("init: code base '" + codeBaseUrl + "'");
-            System.out.println("init: document base '" + documentBaseUrl + "'");
-            System.out.println("init: document name '" + this.documentName + "'");
+            LOGGER.info("init: code base '" + codeBaseUrl + "'");
+            LOGGER.info("init: document base '" + documentBaseUrl + "'");
+            LOGGER.info("init: document name '" + this.documentName + "'");
 
             // loading config
             URL configUrl = resolveParameter(codeBaseUrl, CONFIG_PARAMETER, CONFIG_DEFAULT);
             Config.getInstance(configUrl.openConnection().getInputStream());
 
-            // init script parameters
-//            javascriptCall("setDebug", String.valueOf(LOGGER.isDebugEnabled()));
-//            javascriptCall("setDateDisplayFormat", DATE_DISPLAY_FORMAT);
-//            javascriptCall("setDateTimeDisplayFormat", DATETIME_DISPLAY_FORMAT);
-//            javascriptCall("setBetterFormPseudoItem", BETTERFORM_PSEUDO_ITEM);
-
             // init adapter
             this.appletProcessor = initAdapter(documentBaseUrl);
-
-            System.out.println("Applet init end");
-
-//            System.out.println("init: container document:" + System.getProperty("line.separator") + toString(this.appletProcessor.getXForms()));
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -159,27 +147,21 @@ public class Convex extends Applet {
         System.out.println("Applet start");
 
         try {
-            System.out.println("start: " + this);
             // update splash screen
-//            javascriptCall("setView", getSplashScreen("rendering", this.documentName));
+            javascriptCall("document.setView", getSplashScreen("rendering", this.documentName));
 
-            System.out.println("Applet render");
             // render initial view
-
             if (this.appletProcessor != null) {
                       System.out.println("appletProcessor not null");
             }
             String form = renderForm((Document) this.appletProcessor.getXForms());
             this.view = form;
 
-            System.out.println("start: rendered form:" + System.getProperty("line.separator") + form);
-
             System.out.println("Applet setview");
             // set initial view
            javascriptCall("setView", form);
 //            JSObject.getWindow(this).eval("setView('" + form + "')");
             JSObject win = JSObject.getWindow(this);
-//            ((JSObject)win.getMember("document")).eval("setView('" + form + "')");
             ((JSObject)win.getMember("document")).call("setView", new String[]{form});
 
         }
@@ -189,6 +171,11 @@ public class Convex extends Applet {
         }
     }
 
+    public void callJS(String functionName,String[] args){
+        JSObject win = JSObject.getWindow(this);
+        ((JSObject)win.getMember("document")).call(functionName, args);
+    }
+    
     public String getView(){
         return this.view;
     }
@@ -261,7 +248,7 @@ public class Convex extends Applet {
      * @param eventType the type of event to be fired.
      */
     public void dispatch(String id, String eventType) {
-        //System.out.println("Convex.dispatch: " + id);
+        LOGGER.debug("Convex Applet dispatch - " + id + " : " + eventType);
         try {
             this.appletProcessor.dispatch(id, eventType);
             this.appletProcessor.executeHandler();
@@ -278,6 +265,7 @@ public class Convex extends Applet {
      * @param value the new value of the control.
      */
     public void setValue(String id, String value) {
+        LOGGER.debug("Convex Applet setValue: " + id + " : '" + value + "'");
         try {
             this.appletProcessor.setValue(id, value);
             this.appletProcessor.executeHandler();
@@ -547,10 +535,13 @@ public class Convex extends Applet {
         transformer.transform(documentSource, streamResult);
 
         String result = stream.toString(encoding);
-        
-        LOGGER.debug("result >>>>>:" + result);
 
-        return result.substring(result.indexOf("<form"),result.lastIndexOf("</html>"));
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("result >>>>>:" + result);
+        }
+
+//        return result.substring(result.indexOf("<form"),result.lastIndexOf("</html>"));
+        return result.substring(result.indexOf("<form"));
     }
 
     protected String toString(Node node) throws TransformerException {

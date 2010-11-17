@@ -337,7 +337,13 @@ public class AppletProcessor implements XFormsProcessor, EventListener {
      *              event's flow and default action.
      */
     public void handleEvent(Event event) {
+        ensureContextClassLoader();
+
             if (event instanceof XMLEvent) {
+
+                LOG.debug("Event from Processor: " + event.getType() );
+//                convex.javascriptCall("document.debug",event.getType());
+
                 try {
                 Object contextInfo = ((XMLEvent) event).getContextInfo();
                 String eventType = event.getType();
@@ -349,22 +355,6 @@ public class AppletProcessor implements XFormsProcessor, EventListener {
                 StringBuffer call = new StringBuffer();
 
 
-    /*
-                if (eventType.equals(EventFactory.BETTERFORM_MESSAGE)) {
-                    String value = escape(contextInfo.toString());
-                    // todo: Responder.renderModelessMessage
-                    // todo: Responder.renderEphemeralMessage
-                    call.append("Responder.renderModalMessage('").append(targetId).append("','").append(value).append("');");
-                    if (this.responseSequence.size() > 0) {
-                        this.responseSequence.add(call.toString());
-                    }
-                    else {
-                        // may happen without refresh
-                        this.convex.javascriptEval(call.toString());
-                    }
-                    return;
-                }
-    */
                 if (eventType.equals(XFormsEventNames.SELECT)) {
                     if (targetElement.getLocalName().equals(XFormsConstants.CASE)) {
                         call.append("Responder.selectCase('").append(targetId).append("');");
@@ -395,8 +385,26 @@ public class AppletProcessor implements XFormsProcessor, EventListener {
                     return;
                 }
                 if (eventType.equals(XFormsEventNames.INVALID)) {
-                    call.append("Responder.setElementInvalid('").append(targetId).append("');");
-                    this.responseSequence.add(call.toString());
+//                    call.append("Responder.setElementInvalid('").append(targetId).append("');");
+//                    this.responseSequence.add(call.toString());
+
+                    LOG.debug("AppletProcessor handling " + event.getType() );
+//                    convex.callJS("debug",new String[]{event.getType()});
+
+                    StringBuffer eventToEvaluate = new StringBuffer("fluxProcessor.publishChange('");
+                    eventToEvaluate.append(event.getType());
+                    eventToEvaluate.append("',[{");
+                    eventToEvaluate.append("targetid:'");
+                    eventToEvaluate.append(targetId);
+                    eventToEvaluate.append("'");
+
+                    
+
+                    eventToEvaluate.append("}]);");
+                    LOG.debug("string to eval: " + eventToEvaluate.toString());
+                            
+//                    this.convex.javascriptEval("fluxProcessor.publishChange('" + event.getType() + "','" + args + "');");
+                    this.convex.javascriptEval(eventToEvaluate.toString());
                     return;
                 }
                 if (eventType.equals(XFormsEventNames.READONLY)) {
@@ -754,6 +762,8 @@ public class AppletProcessor implements XFormsProcessor, EventListener {
         this.root.addEventListener(XFormsEventNames.SUBMIT_DONE, this, true);
         this.root.addEventListener(XFormsEventNames.SUBMIT_ERROR, this, true);
         this.root.addEventListener(XFormsEventNames.VERSION_EXCEPTION, this, true);
+        this.root.addEventListener(XFormsEventNames.INVALID, this, true);
+        
     }
 
     private void ensureContextClassLoader() {

@@ -10,9 +10,11 @@ dojo.declare(
         "betterform.ui.UIElementFactory",
         null,
 {
-
+    constructor:function(){
+    },
+    
     createWidget:function(sourceNode, controlId) {
-        // console.debug("Create Widget: ",controlId , " sourceNode: ",sourceNode)
+        console.debug("Create Widget: ",controlId , " sourceNode: ",sourceNode)
         var controlType = dojo.attr(sourceNode, "controlType");
 
         var dataType = dojo.attr(sourceNode, "dataType");

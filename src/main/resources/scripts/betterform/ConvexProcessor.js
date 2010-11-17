@@ -4,124 +4,71 @@
  */
 
 dojo.provide("betterform.ConvexProcessor");
-dojo.require("betterform.FluxProcessor");
+
+dojo.require("dojo._base.html");
+dojo.require("betterform.XFormsProcessor");
+dojo.require("betterform.ui.UIElementFactory");
+
+
 
     /*
     This class represents the interface to the remote XForms processor (aka 'betterForm Web') with DWR. It is the only class
     actually having dependency on DWR to handle the AJAX part of things and calling remote Java methods on
     de.betterform.web.flux.FluxFacade.
     */
-    dojo.declare("betterform.ConvexProcessor",
-            "betterform.FluxProcessor",
-    {
-
-    sessionKey:"",
-    skipshutdown:false,
-    isDirty:false,
+dojo.declare("betterform.ConvexProcessor",
+            betterform.XFormsProcessor,
+{
     factory:null,
-    currentControlId:"",
-    unloadMsg:"You are about to leave this XForms application",
-/*
-    keepAlive: function() {
-        if(dwr.engine){
-            dwr.engine.setErrorHandler(this._handleExceptions);
-            dwr.engine.setOrdered(true);
-            Flux.keepAlive(this.sessionKey);
-        }
-    },
-*/
-
-
+    convex:null,
 
     constructor:function() {
+        console.log("hurrah - convexProcessor is running");
         this.factory = new betterform.ui.UIElementFactory();
+        this.convex = document.getElementById("convex");
+        dojo.subscribe("xforms-invalid",function(value){
+           console.debug("received event: ", value); 
+        });
+    },
+
+    publishChange:function(event, object){
+        console.debug("publishChange: ",event, object);
+         dojo.publish(event,[object]);
     },
 
 
-        _buildUI: function(startElement){
-            alert("ConvexProcessor.buildUI");
-            dojo.query("*",startElement).forEach(
-                function(input) {
-                    // console.debug("element: ", input);
+    dispatchEventType: function (targetId,event) {
+        console.log("Convex.dispatch");
+        convex.dispatch(targetId,event);
+    },
 
-                    //todo:detect right prefix
+    setControlValue: function (id, value) {
+        console.log("Convex.setControlValue");
+        convex.setValue(id,value);
+    },
 
-                    if(input.tagName.indexOf("XF:") != -1){
-                       // console.debug("XForms UI element: ", input.tagName);
-                    }
-
-                }
-            );
-        },
-
-        closeSession: function () {
-            alert("ConvexProcessor.closeSession");
-            //        DWREngine.setErrorHandler(ignoreExceptions);
-            //        DWREngine.setAsync(false);
-            //        Flux.close(dojo.byId("bfSessionKey").value);
-        },
-
-        ignoreExceptions: function (msg) {
-            alert("ConvexProcessor.ignoreException");
-        },
-
-        //eventually an 'activate' method still makes sense to provide a simple DOMActivate of a trigger Element
-
-        dispatchEvent: function (targetId) {
-            alert("ConvexProcessor.dispatch");
-            //        this._useLoadingMessage();
-            //        DWREngine.setErrorHandler(this._handleExceptions);
-            //        DWREngine.setOrdered(true);
-            //        Flux.fireAction(this.changeManager.applyChanges, targetId, dojo.byId("bfSessionKey").value);
-            //        return false;
-        },
-
-        setControlValue: function (id, value) {
-            alert("ConvexProcessor.setControlValue");
-            //        DWREngine.setErrorHandler(this._handleExceptions);
-            //        this._useLoadingMessage();
-            //        DWREngine.setOrdered(true);
-            //        DWREngine.setErrorHandler(this._handleExceptions);
-            //        Flux.setXFormsValue(this.changeManager.applyChanges, id, value, dojo.byId("bfSessionKey").value);
-        },
-
-        setRange: function (id, value) {
-            alert("ConvexProcessor.setRange");
-            //        DWREngine.setErrorHandler(this._handleExceptions);
-            //        Flux.setXFormsValue(this.changeManager.applyChanges, id, value, dojo.byId("bfSessionKey").value);
-        },
+    setRange: function (id, value) {
+    },
 
 
-        setRepeatIndex:function (targetRepeatElement) {
-            alert("ConvexProcessor.setRepeatIndex");
-            //        this._useLoadingMessage();
-            //        DWREngine.setErrorHandler(this._handleExceptions);
-            //        DWREngine.setOrdered(true);
-            //        Flux.setRepeatIndex(this.changeManager.applyChanges, repeatId, targetPosition, dojo.byId("bfSessionKey").value);
-        },
+    setRepeatIndex:function (targetRepeatElement){
+    },
 
+    setView: function (html) {
+        alert("ConvexProcessor.setView");
 
-        _useLoadingMessage:function() {
-            alert("ConvexProcessor.useLoadingMessage");
-            //nope
-        },
+        var xformsui = document.getElementById("xformsui");
 
-        _handleExceptions:function(msg) {
-            alert("ConvexProcessor.handleExceptions");
-            console.error(msg);
-        },
+        xformsui.innerHTML = html;
+        xformsui.className = "enabled";
 
-        setView: function (html) {
-            alert("ConvexProcessor.setView");
+        dojo.parser.parse(xformsui);
 
-            var xformsui = dojo.byId("xformsui");
+        return true;
 
-            xformsui.innerHTML = html;
-            xformsui.className = "enabled";
-
-            dojo.parser.parse(xformsui);
-
-            return true;
-
-        }
-    });
+    },
+    
+    debug:function(message){
+        console.debug(message);
+    }
+});

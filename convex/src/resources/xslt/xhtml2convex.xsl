@@ -27,6 +27,16 @@
         <xsl:variable name="head" select="."/>
         <xsl:copy>
             <xsl:copy-of select="title"/>
+            <xsl:text>
+</xsl:text>
+            <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.3/dojo/resources/dojo.css"/><xsl:text>
+</xsl:text>
+            <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.3/dijit/themes/tundra/tundra.css"/><xsl:text>
+</xsl:text>
+            <link rel="stylesheet" type="text/css" href="../resources/styles/xforms.css"/><xsl:text>
+</xsl:text>
+            <link rel="stylesheet" type="text/css" href="../resources/styles/betterform.css"/><xsl:text>
+</xsl:text>
 
             <script type="text/javascript">
                         var djConfig = {
@@ -56,6 +66,9 @@
             <script type="text/javascript">
                 dojo.require("dojo.parser");
                 dojo.require("betterform.ConvexProcessor");
+                dojo.require("betterform.ui.Control");
+                dojo.require("betterform.ui.container.Group");
+                dojo.require("betterform.ui.util");
 
                 var insertPoint;
                 dojo.addOnLoad(function(){
@@ -67,7 +80,11 @@
                     insertPoint = dojo.byId("xformsui");
                     console.debug("insertPoint",insertPoint);
                     insertPoint.innerHTML=html;
-                    dojo.parser.parse(insertPoint);
+//                    dojo.parser.parse(insertPoint);
+                    dojo.parser.parse();
+                }
+                function debug(message){
+                    console.log(message);
                 }
             </script><xsl:text>
 </xsl:text>
@@ -85,6 +102,7 @@
     <xsl:template match="body">
         <xsl:copy>
             <xsl:copy-of select="@*"/>
+            <xsl:attribute name="class">tundra</xsl:attribute>
             <div id="xformsui">
                 <xsl:apply-templates />
             </div>

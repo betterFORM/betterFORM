@@ -250,26 +250,27 @@
     </xsl:template>
 
     <xsl:template match="body">
+        <xsl:copy>
+            <xsl:element name="form" >
+                <xsl:attribute name="name">
+                    <xsl:value-of select="$form-id"/>
+                </xsl:attribute>
+                <xsl:attribute name="action">
+                    <xsl:value-of select="$action-url"/>
+                </xsl:attribute>
+                <xsl:attribute name="method">POST</xsl:attribute>
+                <xsl:attribute name="enctype">application/x-www-form-urlencoded</xsl:attribute>
+                <xsl:if test="$uses-upload">
+                    <xsl:attribute name="enctype">multipart/form-data</xsl:attribute>
+                </xsl:if>
+                <xsl:attribute name="onsubmit">javascript:submit();</xsl:attribute>
 
-        <xsl:element name="form">
-            <xsl:attribute name="name">
-                <xsl:value-of select="$form-id"/>
-            </xsl:attribute>
-            <xsl:attribute name="action">
-                <xsl:value-of select="$action-url"/>
-            </xsl:attribute>
-            <xsl:attribute name="method">POST</xsl:attribute>
-            <xsl:attribute name="enctype">application/x-www-form-urlencoded</xsl:attribute>
-            <xsl:if test="$uses-upload">
-                <xsl:attribute name="enctype">multipart/form-data</xsl:attribute>
-            </xsl:if>
-            <xsl:attribute name="onsubmit">javascript:submit();</xsl:attribute>
-
-            <div dojotype="betterform.ConvexProcessor" jsId="fluxProcessor" id="fluxProcessor"/>
-            <!-- provide a first submit which does not map to any xforms:trigger -->
-            <input type="image" name="dummy" style="width:0pt;height:0pt;" value="dummy"/>
-            <xsl:apply-templates select="div[@id='xformsui']"/>
-        </xsl:element>
+                <div dojotype="betterform.ConvexProcessor" jsId="fluxProcessor" id="fluxProcessor"/>
+                <!-- provide a first submit which does not map to any xforms:trigger -->
+                <input type="image" name="dummy" style="width:0pt;height:0pt;" value="dummy"/>
+                <xsl:apply-templates select="div[@id='xformsui']"/>
+            </xsl:element>
+        </xsl:copy>
     </xsl:template>
 
     <xsl:template match="div[@id='xformsui']">
