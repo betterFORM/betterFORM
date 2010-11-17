@@ -14,9 +14,17 @@
     <property name="core.dir" value="../core"/>
     <property name="web.dir" value="../web"/>
     <property name="convex.dir" value="."/>
+    <property name="project.dir" value=".."/>
+    <property name="src.dir" value="../src"/>
 
     <xmlproperty file="../build.properties.xml"
              semanticAttributes="true" keepRoot="false" />
+
+    <path id="generator.libs" description="classpath for compiling core classes">
+        <pathelement location="${project.dir}/core/src/main/lib/saxon-9.2.1.5.jar"/>
+        <!--<pathelement location="${project.dir}/core/src/lib/saxon9-dom.jar"/>-->
+    </path>
+
 
 
     <!-- local Convex properties -->
@@ -175,14 +183,25 @@
         <copy file="${basedir}/install.bat" todir="${targetname}/bin"/>
         <copy file="${basedir}/betterform-config.xml" todir="${targetname}/bin"/>
 
+        <copy file="${basedir}/src/resources/etc/log4j.xml" todir="${targetname}/bin"/>
     </target>
 
-    <target name="copy-forms" depends="deploy" description="copy forms">
+    <target name="copy-forms" description="copy forms">
         <echo/>
         <echo message="************************************************************************************"/>
         <echo message="copying forms..."/>
         <echo message="************************************************************************************"/>
         <echo/>
+        <xslt basedir="${src.dir}/main/xforms"
+              destdir="${basedir}/target/${convex.app.name}-${convex.app.version}"
+              style="${basedir}/src/resources/xslt/xhtml2convex.xsl"
+              force="true"
+              includes="**/*.xhtml"
+              extension=".html">
+            <classpath refid="generator.libs"/>
+        </xslt>
+
+<!--
         <copy todir="${targetname}/${forms.target}"
               overwrite="true">
             <fileset dir="${basedir}/${properties.rootDir}/src/main/html"/>
@@ -192,6 +211,7 @@
                 <filter token="applet.archive" value="${convex.app.name}-${convex.app.version}.jar,${runtime.libs}"/>
             </filterset>
         </copy>
+-->
     </target>
 
     <target name="dist" depends="clean, compile, test, javadoc, deploy" description="make a complete distribution">

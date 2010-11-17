@@ -19,6 +19,7 @@ import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xslt.TransformerService;
 import de.betterform.xml.xslt.impl.CachingTransformerService;
 import de.betterform.xml.xslt.impl.FileResourceResolver;
+import org.apache.log4j.xml.DOMConfigurator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -46,7 +47,10 @@ import java.util.Map;
  */
 public class Convex extends Applet {
     private static final Log LOGGER = LogFactory.getLog(Convex.class);
-
+    static {
+        org.apache.log4j.BasicConfigurator.configure();
+    }
+    
     // applet parameters and defaults
     public static final String LOG4J_PARAMETER = "log4j";
     public static final String LOG4J_DEFAULT = "log4j.xml";
@@ -71,12 +75,14 @@ public class Convex extends Applet {
 
     private AppletProcessor appletProcessor;
     private String documentName;
+    private String view;
 
     /**
      * Creates a new betterform applet.
      */
     public Convex() {
         // NOP
+
     }
 
     /**
@@ -101,15 +107,15 @@ public class Convex extends Applet {
             // set splash screen
 
 //            javascriptCall("setView", getSplashScreen(XFormsProcessorImpl.getAppInfo(), ""));
-            System.out.println("javascriptCall");
 
             // get code and document bases
             URL codeBaseUrl = getCodeBase();
-            System.out.println("getDocumentBase");
             URL documentBaseUrl = getDocumentBase();
+            LOGGER.debug("getDocumentBase: "+ documentBaseUrl.toExternalForm());
 
             // extract document name
             String documentPath = documentBaseUrl.getPath();
+            System.out.println("getDocumentPath: " + documentPath);
             this.documentName = documentPath.substring(documentPath.lastIndexOf('/') + 1);
 
             // update splash screen
@@ -164,12 +170,18 @@ public class Convex extends Applet {
                       System.out.println("appletProcessor not null");
             }
             String form = renderForm((Document) this.appletProcessor.getXForms());
+            this.view = form;
 
             System.out.println("start: rendered form:" + System.getProperty("line.separator") + form);
 
             System.out.println("Applet setview");
             // set initial view
            javascriptCall("setView", form);
+//            JSObject.getWindow(this).eval("setView('" + form + "')");
+            JSObject win = JSObject.getWindow(this);
+//            ((JSObject)win.getMember("document")).eval("setView('" + form + "')");
+            ((JSObject)win.getMember("document")).call("setView", new String[]{form});
+
         }
         catch (Exception e) {
             handleException(e);
@@ -177,6 +189,9 @@ public class Convex extends Applet {
         }
     }
 
+    public String getView(){
+        return this.view;
+    }
     /**
      * Stop: Does nothing yet.
      */
@@ -505,13 +520,16 @@ public class Convex extends Applet {
         // todo: determine from browser document
         String encoding = "UTF-8";
 
+        LOGGER.debug("renderForm");
         // obtain transformer for stylesheet uri
         String stylesheetParameter = getParameter(XSLT_PARAMETER);
         if (stylesheetParameter == null || stylesheetParameter.length() == 0) {
             stylesheetParameter = XSLT_DEFAULT;
         }
+        LOGGER.debug("stylesheetParameter: " + stylesheetParameter);
         URI stylesheetURI = new URI(getCodeBase().toString()).resolve(stylesheetParameter);
-
+        LOGGER.debug("styleSheetURI: "+ stylesheetURI);
+        
         TransformerService transformerService = new CachingTransformerService(new FileResourceResolver());
         System.setProperty("javax.xml.transform.TransformerFactory", "net.sf.saxon.TransformerFactoryImpl");
         Transformer transformer = transformerService.getTransformer(stylesheetURI);
@@ -529,7 +547,10 @@ public class Convex extends Applet {
         transformer.transform(documentSource, streamResult);
 
         String result = stream.toString(encoding);
-        return result.substring(result.indexOf("<form"));
+        
+        LOGGER.debug("result >>>>>:" + result);
+
+        return result.substring(result.indexOf("<form"),result.lastIndexOf("</html>"));
     }
 
     protected String toString(Node node) throws TransformerException {

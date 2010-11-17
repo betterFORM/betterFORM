@@ -5,11 +5,13 @@
 -->
 
 <xsl:stylesheet version="2.0"
+    xmlns="http://www.w3.org/1999/xhtml"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xforms="http://www.w3.org/2002/xforms"
     xmlns:bf="http://betterform.sourceforge.net/xforms"
-    exclude-result-prefixes="xforms bf xhtml">
+    exclude-result-prefixes="xforms bf xhtml"
+    xpath-default-namespace="http://www.w3.org/1999/xhtml">
 
 
     <xsl:import href="dojo-dev.xsl"/>
@@ -45,15 +47,15 @@
     </xsl:template>
 -->
 
-    <xsl:template match="xhtml:html">
+    <xsl:template match="html">
         <xsl:message>betterform-applet.xsl</xsl:message>
         <html>
             <xsl:apply-templates/>
         </html>
     </xsl:template>
 
-    <!--<xsl:template match="xhtml:head"/>-->
-    <xsl:template match="xhtml:head" priority="10">
+    <!--<xsl:template match="head"/>-->
+    <xsl:template match="head" priority="10">
         <xsl:message>match head</xsl:message>
 
         <head>
@@ -65,10 +67,10 @@
             </title>
 
             <!-- copy base if present -->
-            <xsl:if test="xhtml:base">
+            <xsl:if test="base">
                 <base>
                     <xsl:attribute name="href">
-                        <xsl:value-of select="xhtml:base/@href"/>
+                        <xsl:value-of select="base/@href"/>
                     </xsl:attribute>
                 </base>
             </xsl:if>
@@ -104,7 +106,7 @@
 </xsl:text>
 
             <!-- copy user-defined stylesheets and inline styles -->
-            <xsl:call-template name="getLinkAndStyle"/>
+            <!--<xsl:call-template name="getLinkAndStyle"/>-->
 
 
             <!-- include needed javascript files -->
@@ -225,7 +227,7 @@
             
 
 <!-- copy inline javascript -->
-                <xsl:for-each select="xhtml:script">
+                <xsl:for-each select="script">
                     <script>
                         <xsl:choose>
                             <xsl:when test="@src">
@@ -247,7 +249,7 @@
         </head>
     </xsl:template>
 
-    <xsl:template match="xhtml:body">
+    <xsl:template match="body">
 
         <xsl:element name="form">
             <xsl:attribute name="name">
@@ -266,11 +268,11 @@
             <div dojotype="betterform.ConvexProcessor" jsId="fluxProcessor" id="fluxProcessor"/>
             <!-- provide a first submit which does not map to any xforms:trigger -->
             <input type="image" name="dummy" style="width:0pt;height:0pt;" value="dummy"/>
-            <xsl:apply-templates select="xhtml:div[@id='xformsui']"/>
+            <xsl:apply-templates select="div[@id='xformsui']"/>
         </xsl:element>
     </xsl:template>
 
-    <xsl:template match="xhtml:div[@id='xformsui']">
+    <xsl:template match="div[@id='xformsui']">
         <xsl:apply-templates/>
     </xsl:template>
 
