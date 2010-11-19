@@ -54,14 +54,14 @@
                         </dependency>
                     </xsl:for-each>
                 </xsl:when>
-                <xsl:when test="$module = document($buildprops)/root/convex/app/name">
+                <xsl:when test="$module = document($buildprops)/root/betty/app/name">
                     <dependency>
                         <groupId>de.betterform</groupId>
                         <artifactId><xsl:value-of select="document($buildprops)/root/core/app/name"/></artifactId>
                         <version><xsl:value-of select="document($buildprops)/root/core/app/version"/></version>
                     </dependency>
 
-                    <xsl:for-each select="document($buildprops)/root/convex//pathelement[@artifactId]">
+                    <xsl:for-each select="document($buildprops)/root/betty//pathelement[@artifactId]">
                         <dependency>
                             <groupId><xsl:value-of select="@groupid"/></groupId>
                             <artifactId><xsl:value-of select="@artifactId"/></artifactId>

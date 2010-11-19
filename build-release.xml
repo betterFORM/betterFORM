@@ -7,7 +7,7 @@
 
     <property name="core.dir" value="${basedir}/core"/>
     <property name="web.dir" value="${basedir}/web"/>
-    <property name="convex.dir" value="${basedir}/convex"/>
+    <property name="betty.dir" value="${basedir}/betty"/>
     <property name="server.dir" value="${basedir}/tools/server"/>
     <property name="release.dir" value="${basedir}/release"/>
     <property name="extension.dir" value="${basedir}/eXist"/>

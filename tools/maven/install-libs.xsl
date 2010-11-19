@@ -11,7 +11,7 @@
     <xsl:param name="buildprops"/>
     <xsl:param name="core.dir" />
     <xsl:param name="web.dir" />
-    <xsl:param name="convex.dir"/>
+    <xsl:param name="betty.dir"/>
     <xsl:param name="module"/>
 
     <xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
@@ -29,10 +29,10 @@
 
                 <property name="core.dir" value="{$core.dir}"/>
                 <xsl:if test="string-length($web.dir)"><property name="web.dir" value="{$web.dir}"/></xsl:if>
-                <xsl:if test="string-length($convex.dir)"><property name="convex.dir" value="{$convex.dir}"/></xsl:if>
+                <xsl:if test="string-length($betty.dir)"><property name="betty.dir" value="{$betty.dir}"/></xsl:if>
 
 
-                <xsl:if test="$module=document($buildprops)/root/convex/app/name">
+                <xsl:if test="$module=document($buildprops)/root/betty/app/name">
                     <property file="build.properties"/>
                 </xsl:if>
 
@@ -78,8 +78,8 @@
                                 </xsl:element>
                             </antcall>
                         </xsl:when>
-                        <xsl:when test="$module=document($buildprops)/root/convex/app/name">
-                            <xsl:for-each select="document($buildprops)/root/convex//pathelement[@artifactId]">
+                        <xsl:when test="$module=document($buildprops)/root/betty/app/name">
+                            <xsl:for-each select="document($buildprops)/root/betty//pathelement[@artifactId]">
                                 <xsl:variable name="install-cmd">install:install-file -DgroupId=<xsl:value-of select="@groupid"/> -DartifactId=<xsl:value-of select="@artifactId"/> -Dversion=<xsl:value-of select="@version"/> -Dpackaging=jar -Dfile=<xsl:value-of select="@location"/></xsl:variable>
                                 <antcall target="mvn">
                                     <xsl:element name="param">

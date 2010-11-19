@@ -1,0 +1,18 @@
+Installing Convex
+-----------------
+System requirements:
+Convex has been build and tested with JDK 1.5 and you should have the java plugin installed on your system before
+running Convex. Further you need a current version of Ant to build it.
+
+To allow reading and writing of files to your local hard-disk Convex needs special permissions to break out
+of the sandbox. Currently we're fairly generous by giving the applet all permissions. This is surely not the
+final solution and should be considered an interims solution until we've worked out the right permission set.
+
+To install Convex you've to execute the install.bat file from directory 'etc'. This will copy a .java.security
+file to your home directory which grants all permissions to Convex.
+
+After that you should execute the 'dist' target in the root-directory of Convex. This will create a folder
+'dist' with sub-directory 'convex-0.9.8'. Inside you find sample forms that can be executed directly by
+opening them in IE6.
+
+Have fun.

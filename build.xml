@@ -7,7 +7,7 @@
 
     <property name="core.dir" value="${basedir}/core"/>
     <property name="web.dir" value="${basedir}/web"/>
-    <property name="convex.dir" value="${basedir}/convex"/>
+    <property name="betty.dir" value="${basedir}/betty"/>
     <property name="server.dir" value="${basedir}/tools/server"/>
     <property name="target.dir" value="${basedir}/target"/>
     <!-- local Web properties -->
@@ -18,7 +18,7 @@
     <target name="clean" description="clean build target directory">
         <echo/>
         <echo message="************************************************************************************"/>
-        <echo message="cleaning up core, web and convex"/>
+        <echo message="cleaning up core, web and betty"/>
         <echo message="************************************************************************************"/>
         <echo/>
         <delete dir="${target.dir}"/>
@@ -27,13 +27,13 @@
     <target name="clean-all" description="clean build target directory">
         <echo/>
         <echo message="************************************************************************************"/>
-        <echo message="cleaning up core, web and convex"/>
+        <echo message="cleaning up core, web and betty"/>
         <echo message="************************************************************************************"/>
         <echo/>
         <delete dir="${target.dir}"/>
         <delete dir="${core.dir}/target"/>
         <delete dir="${web.dir}/target"/>
-        <delete dir="${convex.dir}/target"/>
+        <delete dir="${betty.dir}/target"/>
     </target>
 
 
@@ -41,14 +41,14 @@
     <!-- **************************************** BUILDING JAR **************************************** -->
     <!-- **************************************** BUILDING JAR **************************************** -->
     <!-- **************************************** BUILDING JAR **************************************** -->
-    <target name="package" description="package core, web and convex">
+    <target name="package" description="package core, web and betty">
         <ant antfile="${core.dir}/build.xml" target="package" dir="${core.dir}" inheritall="false"/>
         <ant antfile="${web.dir}/build.xml"  target="package" dir="${web.dir}"  inheritall="false"/>
-        <ant antfile="${convex.dir}/build.xml"  target="package" dir="${convex.dir}"  inheritall="false"/>
+        <ant antfile="${betty.dir}/build.xml"  target="package" dir="${betty.dir}"  inheritall="false"/>
     </target>
 
     <target  name="create-src-distribution">
-        <delete dir="convex/target" />
+        <delete dir="betty/target" />
         <delete dir="core/target" />
         <delete dir="tools/exist/target" />
         <delete dir="tools/installer/target" />
@@ -69,10 +69,10 @@
 
     </target>
 
-    <target name="update-maven-poms" description="update core, web and convex pom.xml">
+    <target name="update-maven-poms" description="update core, web and betty pom.xml">
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-core-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-web-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
-        <ant antfile="${basedir}/tools/maven/build.xml"  target="update-convex-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
+        <ant antfile="${basedir}/tools/maven/build.xml"  target="update-betty-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-xApp-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
         <!--<ant antfile="${basedir}/tools/maven/build.xml"  target="update-server-pom" dir="${basedir}/tools/maven"  inheritall="false"/>-->
     </target>

@@ -159,18 +159,18 @@
             </classpath>
         </test>
     </web>
-    <convex>
+    <betty>
         <app>
-            <name>convex</name>
+            <name>betty</name>
             <version>1.0</version>
         </app>
         <compile>
-            <classpath pathid="convex.class.path" description="classpath for compiling web classes">
-                <pathelement location="${convex.dir}/src/main/lib/plugin.jar" groupid="netscape" version="1.0" artifactId="netscape" scope="provided"/>
+            <classpath pathid="betty.class.path" description="classpath for compiling web classes">
+                <pathelement location="${betty.dir}/src/main/lib/plugin.jar" groupid="netscape" version="1.0" artifactId="netscape" scope="provided"/>
                 <path refid="compile.class.path"/>
             </classpath>
         </compile>
-    </convex>
+    </betty>
     <zaphod>
         <app>
             <name>zaphod</name>

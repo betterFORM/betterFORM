@@ -58,17 +58,17 @@
         <rename src="${project.dir}/web/pom.new.xml" dest="${project.dir}/web/pom.xml"/>
     </target>
 
-    <target name="update-convex-pom"
-            description="update the convex pom.xml file with dependencies from build.properties.xml">
-        <xslt in="${project.dir}/convex/pom.xml"
-              out="${project.dir}/convex/pom.new.xml"
+    <target name="update-betty-pom"
+            description="update the betty pom.xml file with dependencies from build.properties.xml">
+        <xslt in="${project.dir}/betty/pom.xml"
+              out="${project.dir}/betty/pom.new.xml"
               style="${project.dir}/tools/maven/updatePOM.xsl"
               force="true">
             <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
-            <param name="module" expression="${convex.app.name}"/>
+            <param name="module" expression="${betty.app.name}"/>
         </xslt>
-        <rename src="${project.dir}/convex/pom.xml" dest="${project.dir}/convex/pom.xml.old"/>
-        <rename src="${project.dir}/convex/pom.new.xml" dest="${project.dir}/convex/pom.xml"/>
+        <rename src="${project.dir}/betty/pom.xml" dest="${project.dir}/betty/pom.xml.old"/>
+        <rename src="${project.dir}/betty/pom.new.xml" dest="${project.dir}/betty/pom.xml"/>
     </target>
 
 
@@ -111,23 +111,23 @@
         </xslt>
     </target>
 
-    <target name="create-convex-install" depends="update-convex-pom">
-        <xslt in="${project.dir}/convex/build.xml"
-              out="${project.dir}/convex/install-files.xml"
+    <target name="create-betty-install" depends="update-betty-pom">
+        <xslt in="${project.dir}/betty/build.xml"
+              out="${project.dir}/betty/install-files.xml"
               style="${project.dir}/tools/maven/install-libs.xsl"
               force="true">
             <classpath refid="generator.libs"/>
             <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
             <param name="core.dir" expression="${project.dir}/core"/>
-            <param name="convex.dir" expression="${project.dir}/convex"/>
-            <param name="module" expression="${convex.app.name}"/>
+            <param name="betty.dir" expression="${project.dir}/betty"/>
+            <param name="module" expression="${betty.app.name}"/>
         </xslt>
     </target>
 
     <target name="create-maven-install">
         <antcall target="create-core-install"/>
         <antcall target="create-web-install"/>
-        <antcall target="create-convex-install"/>
+        <antcall target="create-betty-install"/>
     </target>
 
     <target name="install-core-dependencies" depends="create-core-install" description="installs core dependencies for Maven">
@@ -140,9 +140,9 @@
         <delete file="${project.dir}/web/install-files.xml"/>
     </target>
 
-    <target name="install-convex-dependencies" depends="create-convex-install" description="installs convex dependencies for Maven">
-        <ant antfile="${project.dir}/convex/install-files.xml" target="install-dependencies"/>
-        <delete file="${project.dir}/convex/install-files.xml"/>
+    <target name="install-betty-dependencies" depends="create-betty-install" description="installs betty dependencies for Maven">
+        <ant antfile="${project.dir}/betty/install-files.xml" target="install-dependencies"/>
+        <delete file="${project.dir}/betty/install-files.xml"/>
     </target>
 
 
@@ -151,11 +151,11 @@
             description="executes generated Ant file and install needed libraries in Maven repository">
 
         <antcall target="install-core-dependencies"/>
-        <!-- Create needed core.jar for web and convex mvn -->
+        <!-- Create needed core.jar for web and betty mvn -->
         
         <ant antfile="${project.dir}/core/build.xml" target="package" dir="${project.dir}/core" inheritall="false"/>
         <antcall target="install-web-dependencies"/>
-        <antcall target="install-convex-dependencies"/>
+        <antcall target="install-betty-dependencies"/>
     </target>
 
 
