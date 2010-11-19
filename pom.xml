@@ -14,7 +14,7 @@
 
     <modules>
         <module>core</module>
-        <module>convex</module>
+        <module>betty</module>
         <module>web</module>       
         <module>xApp</module>
         <module>zaphod</module>
