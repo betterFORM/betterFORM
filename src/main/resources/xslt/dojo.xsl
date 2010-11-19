@@ -364,6 +364,30 @@
                 </button>
             </div>
 
+<!--
+            <div style="width: 800px; height: 800px">
+                <script type="text/javascript">
+                    dojo.require("dijit.layout.TabContainer");
+                    dojo.require("dojox.layout.ContentPane");
+
+                </script>
+                <div dojoType="dijit.layout.TabContainer" style="width: 100%; height: 100%;">
+                    <div dojoType="dojox.layout.ContentPane"
+                         title="Host DOM"
+                         selected="true"
+                         >
+                        <iframe src="{concat($baseURI,'?source')}" style="width:100%;height:100%;"></iframe>
+                    </div>
+                    <div dojoType="dijit.layout.ContentPane" title="My second tab">
+                        Lorem ipsum and all around - second...
+                    </div>
+                    <div dojoType="dijit.layout.ContentPane" title="My last tab" closable="true">
+                        Lorem ipsum and all around - last...
+                    </div>
+                </div>
+            </div>
+-->
+
             <xsl:if test="$debug-enabled='true'">
                 <!-- z-index of 1000 so it is also in front of shim for modal dialogs -->
                 <div id="debug-pane" style="width:100%;border:thin dotted; z-index:1000;">
