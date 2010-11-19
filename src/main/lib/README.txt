@@ -2,7 +2,7 @@
 betterForm Useragent Libraries
 -----------------------------------------------------------------------------------------------------------------------
 
-This folder contains various libs used by the betterForm Useragents (web and convex)
+This folder contains various libs used by the betterForm Useragents (web and betty)
 
 -----------------------------------------------------------------------------------------------------------------------
 Dojo Release Version 1.2.3
