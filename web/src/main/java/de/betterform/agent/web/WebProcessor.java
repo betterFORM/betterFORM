@@ -15,11 +15,8 @@ import de.betterform.generator.XSLTGenerator;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.events.BetterFormEventNames;
-import de.betterform.xml.events.DOMEventNames;
-import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.events.XMLEvent;
-import de.betterform.xml.xforms.XFormsElement;
-import de.betterform.xml.xforms.XFormsProcessor;
+import de.betterform.xml.xforms.AbstractProcessorDecorator;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xslt.TransformerService;
@@ -30,9 +27,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
-import org.w3c.xforms.XFormsModelElement;
 import org.xml.sax.InputSource;
 
 import javax.servlet.ServletContext;
@@ -45,8 +39,6 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Superclass for Adapters used in web applications. Does minimal event listening on the processor and provides
@@ -57,7 +49,7 @@ import java.util.Map;
  * @see de.betterform.agent.web.flux.FluxProcessor
  * @see de.betterform.agent.web.servlet.PlainHtmlProcessor
  */
-public class WebProcessor implements XFormsProcessor, EventListener {
+public class WebProcessor extends AbstractProcessorDecorator {
 
     /**
      * Defines the key for accessing (HTTP) session ids.
@@ -80,8 +72,6 @@ public class WebProcessor implements XFormsProcessor, EventListener {
 
     //todo:review - can be deleted when ehcache is in place
     String KEEPALIVE_PULSE = "keepalive";
-    protected XFormsProcessor xformsProcessor;
-    protected EventTarget root;
     protected HttpRequestHandler httpRequestHandler;
     protected XMLEvent exitEvent = null;
     protected String contextRoot;
@@ -91,16 +81,14 @@ public class WebProcessor implements XFormsProcessor, EventListener {
     protected transient HttpSession httpSession;
     protected transient ServletContext context;
     protected boolean isXFormsPresent = false;
-    protected Config configuration;//    private String requestURI;
     private static final Log LOGGER = LogFactory.getLog(FluxProcessor.class);
     private String uploadDestination;
     private String useragent;
     private String uploadDir;
     protected UIGenerator uiGenerator;
-    protected String locale = "en";
 
     public WebProcessor() {
-        this.xformsProcessor = new XFormsProcessorImpl();
+        super();
     }
 
     public void configure() throws XFormsException {
@@ -199,50 +187,6 @@ public class WebProcessor implements XFormsProcessor, EventListener {
     }
 
 
-    public void setXForms(Node node) throws XFormsException {
-        this.xformsProcessor.setXForms(node);
-    }
-
-    public void setXForms(URI uri) throws XFormsException {
-        this.xformsProcessor.setXForms(uri);
-    }
-
-    public void setXForms(InputStream inputStream) throws XFormsException {
-        this.xformsProcessor.setXForms(inputStream);
-    }
-
-    public String getBaseURI() {
-        return this.xformsProcessor.getBaseURI();
-    }
-
-    public void setXForms(InputSource inputSource) throws XFormsException {
-        this.xformsProcessor.setXForms(inputSource);
-    }
-
-    public void setBaseURI(String s) {
-        this.xformsProcessor.setBaseURI(s);
-    }
-
-    public void setConfigPath(String s) throws XFormsException {
-        this.xformsProcessor.setConfigPath(s);
-    }
-
-    public void setContext(Map map) {
-        this.xformsProcessor.setContext(map);
-    }
-
-    public void setContextParam(String s, Object o) {
-        this.xformsProcessor.setContextParam(s, o);
-    }
-
-    public Object getContextParam(String s) {
-        return this.xformsProcessor.getContextParam(s);
-    }
-
-    public Object removeContextParam(String s) {
-        return this.xformsProcessor.removeContextParam(s);
-    }
-
     //todo: parse accept-language header to decide about locale
     public void setLocale() throws XFormsException {
         if (Config.getInstance().getProperty(XFormsProcessorImpl.BETTERFORM_ENABLE_L10N).equals("true")) {
@@ -275,11 +219,6 @@ public class WebProcessor implements XFormsProcessor, EventListener {
             //fallback default
             this.setLocale("en");
         }
-    }
-
-    public void setLocale(String locale) throws XFormsException {
-        this.xformsProcessor.setLocale(locale);
-        this.locale = locale;
     }
 
     /**
@@ -325,14 +264,6 @@ public class WebProcessor implements XFormsProcessor, EventListener {
         this.xformsProcessor.init();
     }
 
-    public Node getXForms() throws XFormsException {
-        return this.xformsProcessor.getXForms();
-    }
-
-    public XFormsModelElement getXFormsModel(String s) throws XFormsException {
-        return this.xformsProcessor.getXFormsModel(s);
-    }
-
     public XMLEvent checkForExitEvent() {
         return this.exitEvent;
     }
@@ -372,107 +303,8 @@ public class WebProcessor implements XFormsProcessor, EventListener {
         }
     }
 
-    /**
-     * terminates the XForms processing. right place to do cleanup of
-     * resources.
-     *
-     * @throws de.betterform.xml.xforms.exception.XFormsException
-     *
-     */
-    public void shutdown() throws XFormsException {
-        // shutdown processor
-        if (this.xformsProcessor != null) {
-            this.xformsProcessor.shutdown();
-            this.xformsProcessor = null;
-        }
-
-        // deregister for interaction events if any
-        if (this.root != null) {
-            this.root.removeEventListener(DOMEventNames.ACTIVATE, this, true);
-            this.root.removeEventListener(XFormsEventNames.BINDING_EXCEPTION, this, true);
-            this.root.removeEventListener(XFormsEventNames.COMPUTE_EXCEPTION, this, true);
-            /*
-            this.root.removeEventListener(XFormsEventNames.DISABLED, this, true);
-            this.root.removeEventListener(XFormsEventNames.ENABLED, this, true);
-             */
-            this.root.removeEventListener(XFormsEventNames.FOCUS, this, false);
-            this.root.removeEventListener(DOMEventNames.FOCUS_IN, this, true);
-            this.root.removeEventListener(DOMEventNames.FOCUS_OUT, this, true);
-            this.root.removeEventListener(XFormsEventNames.HELP, this, true);
-            this.root.removeEventListener(XFormsEventNames.HINT, this, true);
-            this.root.removeEventListener(XFormsEventNames.INVALID, this, true);
-            this.root.removeEventListener(XFormsEventNames.IN_RANGE, this, true);
-            this.root.removeEventListener(XFormsEventNames.OUT_OF_RANGE, this, true);
-            this.root.removeEventListener(BetterFormEventNames.LOAD_URI, this, true);
-            this.root.removeEventListener(XFormsEventNames.LINK_EXCEPTION, this, true);
-            this.root.removeEventListener(XFormsEventNames.LINK_ERROR, this, true);
-            this.root.removeEventListener(XFormsEventNames.MODEL_CONSTRUCT, this, true);
-            this.root.removeEventListener(XFormsEventNames.MODEL_CONSTRUCT_DONE, this, true);
-            this.root.removeEventListener(XFormsEventNames.NEXT, this, true);
-            this.root.removeEventListener(XFormsEventNames.PREVIOUS, this, true);
-            this.root.removeEventListener(XFormsEventNames.READY, this, true);
-            this.root.removeEventListener(BetterFormEventNames.RENDER_MESSAGE, this, true);
-            this.root.removeEventListener(BetterFormEventNames.REPLACE_ALL, this, true);
-            this.root.removeEventListener(XFormsEventNames.SUBMIT, this, true);
-            this.root.removeEventListener(XFormsEventNames.SUBMIT_DONE, this, true);
-            this.root.removeEventListener(XFormsEventNames.SUBMIT_ERROR, this, true);
-            this.root.removeEventListener(XFormsEventNames.VALUE_CHANGED, this, true);
-            this.root.removeEventListener(XFormsEventNames.VERSION_EXCEPTION, this, true);
-            this.root.removeEventListener(XFormsEventNames.VALID, this, true);
-            this.root.removeEventListener(XFormsEventNames.SELECT, this, true);
-            this.root.removeEventListener(XFormsEventNames.DESELECT, this, true);
-            this.root.removeEventListener(BetterFormEventNames.HIDE, this, true);
-            this.root.removeEventListener(BetterFormEventNames.SHOW, this, true);
-
-
-            this.root = null;
-        }
-    }
-
-    public boolean dispatch(String id, String event) throws XFormsException {
-        return this.xformsProcessor.dispatch(id, event);
-    }
-
-    /**
-     * dispatches an Event to an Element specified by parameter 'id' and allows to set all events properties and
-     * pass a context info
-     *
-     * @param targetId   the id identifying the Element to dispatch to
-     * @param eventType  the type of Event to dispatch identified by a string
-     * @param info       an implementation-specific context info object
-     * @param bubbles    true if event bubbles
-     * @param cancelable true if event is cancelable
-     * @return <code>true</code> if the event has been cancelled during dispatch,
-     *         otherwise <code>false</code>.
-     * @throws de.betterform.xml.xforms.exception.XFormsException
-     *
-     */
-    public boolean dispatch(String targetId, String eventType, Object info, boolean bubbles, boolean cancelable) throws XFormsException {
-        return this.xformsProcessor.dispatch(targetId, eventType, info, bubbles, cancelable);
-    }
-
-    public XFormsElement lookup(String s) {
-        return this.xformsProcessor.lookup(s);
-    }
-
-    public void handleEventException(Exception e) {
-        this.xformsProcessor.handleEventException(e);
-    }
-
-    public void setControlValue(String s, String s1) throws XFormsException {
-        this.xformsProcessor.setControlValue(s, s1);
-    }
-
-    public void setUploadValue(String s, String s1, String s2, byte[] bytes) throws XFormsException {
-        this.xformsProcessor.setUploadValue(s, s1, s2, bytes);
-    }
-
-    public boolean isFileUpload(String s, String s1) throws XFormsException {
-        return this.xformsProcessor.isFileUpload(s, s1);
-    }
-
-    public void setRepeatIndex(String s, int i) throws XFormsException {
-        this.xformsProcessor.setRepeatIndex(s, i);
+    protected boolean isDebugOn() {
+        return (super.isDebugOn() && request.getParameter("debug") != null);
     }
 
     /**
@@ -620,7 +452,7 @@ public class WebProcessor implements XFormsProcessor, EventListener {
      * @throws de.betterform.xml.xforms.exception.XFormsException
      *
      */
-    protected void initConfig() throws XFormsException {
+    private void initConfig() throws XFormsException {
         final String initParameter = getContext().getInitParameter(WebFactory.BETTERFORM_CONFIG_PATH);
         String configPath = WebFactory.resolvePath(initParameter, getContext());
         if ((configPath != null) && !(configPath.equals(""))) {
@@ -737,21 +569,6 @@ public class WebProcessor implements XFormsProcessor, EventListener {
         return generator;
     }
 
-    /**
-     * check wether an Event is used in the form being processed. Will return true if any action registers
-     * the Event in question. Will also return true if debug is enabled.
-     *
-     * @param eventName the event to check
-     * @return true if event is used in form or if debug has been switched on
-     */
-    protected boolean isEventUsed(String eventName) {
-        List eventsUsed = ((XFormsProcessorImpl) xformsProcessor).getEventList();
-        if (isDebugOn() || eventsUsed.contains(eventName)) {
-            return true;
-        }
-        return false;
-    }
-
     private void doIncludes() {
         try {
             Node input = getXForms();
@@ -813,9 +630,6 @@ public class WebProcessor implements XFormsProcessor, EventListener {
         return actionURL;
     }
 
-    private boolean isDebugOn() {
-        return request.getParameter("debug") != null && configuration.getProperty("betterform.debug-allowed").equals("true");
-    }
     private void configureUpload() throws XFormsConfigException {
         //allow absolute paths otherwise resolve relative to the servlet context
         this.uploadDir = Config.getInstance().getProperty("uploadDir");
@@ -833,109 +647,6 @@ public class WebProcessor implements XFormsProcessor, EventListener {
     todo: review approach for events targetted at model + submission. Events will never arrive in case they are
     handled with isEventUsed as registration of listeners happens before form init.
      */
-    private void addEventListeners() throws XFormsException {
-        // get docuent root as event target in order to capture all events
-        this.root = (EventTarget) this.xformsProcessor.getXForms();
-
-        // interaction events my occur during init so we have to register before
-        if (isEventUsed(DOMEventNames.ACTIVATE)) {
-            this.root.addEventListener(DOMEventNames.ACTIVATE, this, true);
-        }
-        if (isEventUsed(XFormsEventNames.BINDING_EXCEPTION)) {
-            this.root.addEventListener(XFormsEventNames.BINDING_EXCEPTION, this, true);
-        }
-        if (isEventUsed(XFormsEventNames.COMPUTE_EXCEPTION)) {
-            this.root.addEventListener(XFormsEventNames.COMPUTE_EXCEPTION, this, true);
-        }
-        /*
-        this.root.addEventListener(XFormsEventNames.DISABLED, this, true);
-        this.root.addEventListener(XFormsEventNames.ENABLED, this, true);
-         */
-
-        if (isEventUsed(XFormsEventNames.FOCUS)) {
-            this.root.addEventListener(XFormsEventNames.FOCUS, this, false);
-        }
-        if (isEventUsed(DOMEventNames.FOCUS_IN)) {
-            this.root.addEventListener(DOMEventNames.FOCUS_IN, this, true);
-        }
-        if (isEventUsed(DOMEventNames.FOCUS_OUT)) {
-            this.root.addEventListener(DOMEventNames.FOCUS_OUT, this, true);
-        }
-        if (isEventUsed(XFormsEventNames.HELP)) {
-            this.root.addEventListener(XFormsEventNames.HELP, this, true);
-        }
-        if (isEventUsed(XFormsEventNames.HINT)) {
-            this.root.addEventListener(XFormsEventNames.HINT, this, true);
-        }
-        if (isEventUsed(XFormsEventNames.INVALID)) {
-            this.root.addEventListener(XFormsEventNames.INVALID, this, true);
-        }
-        if (isEventUsed(XFormsEventNames.IN_RANGE)) {
-            this.root.addEventListener(XFormsEventNames.IN_RANGE, this, true);
-        }
-        if (isEventUsed(XFormsEventNames.OUT_OF_RANGE)) {
-            this.root.addEventListener(XFormsEventNames.OUT_OF_RANGE, this, true);
-        }
-        //betterform notification event must be passed always
-        this.root.addEventListener(BetterFormEventNames.LOAD_URI, this, true);
-
-        if (isEventUsed(XFormsEventNames.LINK_EXCEPTION)) {
-            this.root.addEventListener(XFormsEventNames.LINK_EXCEPTION, this, true);
-        }
-        if (isEventUsed(XFormsEventNames.LINK_ERROR)) {
-            this.root.addEventListener(XFormsEventNames.LINK_ERROR, this, true);
-        }
-//        if (isEventUsed(XFormsEventNames.MODEL_CONSTRUCT)) {
-            this.root.addEventListener(XFormsEventNames.MODEL_CONSTRUCT, this, true);
-//        }
-//        if (isEventUsed(XFormsEventNames.MODEL_CONSTRUCT_DONE)) {
-            this.root.addEventListener(XFormsEventNames.MODEL_CONSTRUCT_DONE, this, true);
-//        }
-        if (isEventUsed(XFormsEventNames.NEXT)) {
-            this.root.addEventListener(XFormsEventNames.NEXT, this, true);
-        }
-        if (isEventUsed(XFormsEventNames.PREVIOUS)) {
-            this.root.addEventListener(XFormsEventNames.PREVIOUS, this, true);
-        }
-//        if (isEventUsed(XFormsEventNames.READY)) {
-            this.root.addEventListener(XFormsEventNames.READY, this, true);
-//        }
-
-        //betterform notification event must be passed always
-        this.root.addEventListener(BetterFormEventNames.RENDER_MESSAGE, this, true);
-        //betterform notification event must be passed always
-        this.root.addEventListener(BetterFormEventNames.REPLACE_ALL, this, true);
-        if (isEventUsed(XFormsEventNames.SUBMIT)) {
-            this.root.addEventListener(XFormsEventNames.SUBMIT, this, true);
-        }
-//        if (isEventUsed(XFormsEventNames.SUBMIT_DONE)) {
-            this.root.addEventListener(XFormsEventNames.SUBMIT_DONE, this, true);
-//        }
-//        if (isEventUsed(XFormsEventNames.SUBMIT_ERROR)) {
-            this.root.addEventListener(XFormsEventNames.SUBMIT_ERROR, this, true);
-//        }
-        if (isEventUsed(XFormsEventNames.VERSION_EXCEPTION)) {
-            this.root.addEventListener(XFormsEventNames.VERSION_EXCEPTION, this, true);
-        }
-        if (isEventUsed(XFormsEventNames.VALUE_CHANGED)) {
-            this.root.addEventListener(XFormsEventNames.VALUE_CHANGED, this, true);
-        }
-        if (isEventUsed(XFormsEventNames.VALID)) {
-            this.root.addEventListener(XFormsEventNames.VALID, this, true);
-        }
-        if (isEventUsed(XFormsEventNames.SELECT)) {
-            this.root.addEventListener(XFormsEventNames.SELECT, this, true);
-        }
-        if (isEventUsed(XFormsEventNames.DESELECT)) {
-            this.root.addEventListener(XFormsEventNames.DESELECT, this, true);
-        }
-        if (isEventUsed(BetterFormEventNames.HIDE)) {
-            this.root.addEventListener(BetterFormEventNames.HIDE, this, true);
-        }
-        if (isEventUsed(BetterFormEventNames.SHOW)) {
-            this.root.addEventListener(BetterFormEventNames.SHOW, this, true);
-        }
-    }
 
 
     private boolean noHttp() {
