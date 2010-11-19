@@ -684,11 +684,12 @@ dojo.declare("betterform.FluxProcessor",
             // finally dynamically load the CSS (if some) form the embedded form
             var cssToLoad = xmlEvent.contextInfo.inlineCSS;
 //            console.debug("css to load: ", cssToLoad);
-            if(cssToLoad != undefined){
+            if(cssToLoad != undefined && cssToLoad != ""){
                 var headID = document.getElementsByTagName("head")[0];
                 
                 var newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","style");
-                dojo.attr(newScript,"name",xmlEvent.contextInfo.xlinkTarget);
+                dojo.attr(newScript,"name",xlinkTarget);
+                dojo.attr(newScript,"type","text/css");
                 newScript.appendChild(dojo.doc.createTextNode(cssToLoad));
                 headID.appendChild(newScript);
                 console.debug("new Style: ", newScript);
@@ -750,13 +751,12 @@ dojo.declare("betterform.FluxProcessor",
 
     _unloadDOM:function(target) {
         //delete CSS specific to subform
-        var headID = document.getElementsByTagName("style");
-        var tmp = dojo.query("*[name='" + xlinkTarget + "']",headID).forEach(function(item) {
-            console.debug("item to remove: ", item, " dojo.document.head: " ,dojo.document.head);
-
+        var styleList = document.getElementsByTagName("style");
+        dojo.forEach(styleList, function(item) {
+            if(dojo.attr(item,"name") == target){
+                item.parentNode.removeChild(item);
+            }
         });
-
-
 
         var htmlEntryPoint = dojo.byId(target);
         if (htmlEntryPoint == undefined) {
