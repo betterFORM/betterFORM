@@ -52,6 +52,19 @@
             <property name="webapp.dir" value="${basedir}/target/${xapp.app.name}"/>
             <property name="target.dir" value="${basedir}/target"/>
         </ant>
+
+        <delete dir="${basedir}/target/${xapp.app.name}" includes="*.*"/>
+        <delete dir="${basedir}/target/${xapp.app.name}/doc"/>
+        <delete dir="${basedir}/target/${xapp.app.name}/images"/>
+        <delete dir="${basedir}/target/${xapp.app.name}/lang"/>
+        <delete dir="${basedir}/target/${xapp.app.name}/META-INF"/>
+        <delete dir="${basedir}/target/${xapp.app.name}/reports"/>
+        <delete dir="${basedir}/target/${xapp.app.name}/styles"/>
+        <delete file="${basedir}/target/${xapp.app.name}/resources/styles/demo.css"/>
+        <delete file="${basedir}/target/${xapp.app.name}/resources/styles/registration.css"/>
+        <delete file="${basedir}/target/${xapp.app.name}/resources/styles/reference.css"/>
+        <delete file="${basedir}/target/${xapp.app.name}/resources/styles/timetracker.css"/>
+
     </target>
 
     <target name="prepare-xApp">
@@ -60,6 +73,7 @@
               overwrite="true">
             <fileset dir="${basedir}/src/main/webapp"/>
         </copy>
+
     </target>
 
     <!-- **************************************** COMPILATION **************************************** -->
