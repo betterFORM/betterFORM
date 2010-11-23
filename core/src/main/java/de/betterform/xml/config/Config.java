@@ -50,8 +50,10 @@ public abstract class Config {
 	/**
 	 * The useragent lookup map.
 	 */
-	protected HashMap useragents;
+	protected Map useragents;
 
+    protected Map generators;
+    
 	/**
 	 * The submission handlers lookup map.
 	 */
@@ -225,6 +227,11 @@ public abstract class Config {
 		return (s != null) ? s : value;
 	}
 
+    public Map getUserAgents(){
+        return this.useragents;
+    }
+
+
 	/**
 	 * Returns the specifed stylesheet value.
 	 * 
@@ -233,7 +240,7 @@ public abstract class Config {
 	 * @return the specifed stylesheet value.
 	 */
 	public String getStylesheet(String key) {
-		return (String) this.useragents.get(key);
+		return (String) this.generators.get(key);
 	}
 
 	/**
@@ -324,6 +331,10 @@ public abstract class Config {
 	//    {
 	//        return (String) this.generators.get(key);
 	//    }
+
+    public Map getGenerators(){
+        return this.generators;
+    }
 }
 
 // end of class

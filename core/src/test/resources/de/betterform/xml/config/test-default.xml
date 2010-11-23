@@ -14,6 +14,23 @@
         
     </properties>
 
+    <useragents>
+        <useragent name="foo"
+                   processor="foo.bar"
+                   description="descriptive text">
+        </useragent>
+        <useragent name="bar"
+                   processor="bar.baz"
+                   description="descriptive text">
+        </useragent>
+    </useragents>
+
+    <ui-generators>
+        <ui-generator useragent="foo" stylesheet="dojo.xsl"/>
+        <ui-generator useragent="bar" stylesheet="dojodev.xsl"/>
+        <ui-generator useragent="baz" stylesheet="html4.xsl"/>
+    </ui-generators>
+
     <!--You can specify an alternate connector factory class-->
     <connectors factoryClass="test.factory">
         <uri-resolver scheme="test.scheme" class="test.class"/>

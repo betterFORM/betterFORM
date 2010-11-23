@@ -6,6 +6,8 @@ package de.betterform.xml.config;
 
 import junit.framework.TestCase;
 
+import java.util.Map;
+
 /**
  * Test cases for configuration.
  *
@@ -29,6 +31,11 @@ public class ConfigTest extends TestCase {
         Config config = Config.getInstance();
         String value = null;
 
+        Map useragents= Config.getInstance().getUserAgents();
+        assertTrue(2 == useragents.size());
+
+        assertEquals("foo.bar",useragents.get("foo"));
+        assertEquals("bar.baz",useragents.get("bar"));
         // test uri resolvers
         value = config.getURIResolver("file");
         assertNotNull("uri-resolver 'file' is unknown", value);
@@ -62,6 +69,18 @@ public class ConfigTest extends TestCase {
         Config config = Config.getInstance(getClass().getResource("test-default.xml").getPath());
         String value = null;
 
+        Map useragents= Config.getInstance().getUserAgents();
+        assertTrue(2 == useragents.size());
+        assertEquals("foo.bar",useragents.get("foo"));
+        assertEquals("bar.baz",useragents.get("bar"));
+
+        Map generators = Config.getInstance().getGenerators();
+        assertTrue(3 == generators.size());
+        assertEquals("dojo.xsl",Config.getInstance().getStylesheet("foo"));
+        assertEquals("dojodev.xsl",Config.getInstance().getStylesheet("bar"));
+        assertEquals("html4.xsl",Config.getInstance().getStylesheet("baz"));
+
+
         // test properties
         value = config.getProperty("test.property");
         assertNotNull("property 'test.property' is unknown", value);
@@ -83,7 +102,6 @@ public class ConfigTest extends TestCase {
         assertTrue("submission-handler 'test.scheme' is wrong" + ": " + value, value.equals("test.class"));
 
     }
-
 
     protected void tearDown() throws Exception {
         Config.unloadConfig();

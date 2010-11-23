@@ -8,8 +8,10 @@ package de.betterform.agent.web;
 
 import de.betterform.agent.web.flux.FluxProcessor;
 import de.betterform.agent.web.servlet.PlainHtmlProcessor;
+import de.betterform.connector.URIResolver;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
+import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xslt.TransformerService;
 import de.betterform.xml.xslt.impl.CachingTransformerService;
 import de.betterform.xml.xslt.impl.FileResourceResolver;
@@ -24,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Map;
 
 
 /**
@@ -97,21 +100,39 @@ public class WebFactory {
         }
 
         WebProcessor processor;
-        //todo: this has to be refactored to grab Processor Implementation from Config and instanciate with reflection -->
-        if (useragent.equalsIgnoreCase("dojo") || useragent.equalsIgnoreCase("dojodev")) {
-            processor = new FluxProcessor();
-        } else if (useragent.equalsIgnoreCase("html")) {
-            processor = new PlainHtmlProcessor();
-        } else {
-            throw new XFormsConfigException("Invalid useragent: " + useragent + "'");
+        Map useragents = Config.getInstance().getUserAgents();
+        String className="";
+        if(useragents.containsKey(useragent)){
+            try {
+                className = (String) useragents.get(useragent);
+                Class clazz = Class.forName(className,true, WebFactory.class.getClassLoader());
+                Object o = clazz.newInstance();
+                if (!(o instanceof XFormsProcessor)) {
+                    throw new XFormsConfigException("This useragent is not configured properly: '" + useragent + "'");
+                }
+                processor = (WebProcessor) o;
+                processor.setUseragent(useragent);
+                return processor;
+            }
+            catch (ClassNotFoundException cnfe) {
+                throw new XFormsConfigException(cnfe);
+            }
+            catch (ClassCastException cce) {
+                throw new XFormsConfigException(cce);
+            }
+            catch (InstantiationException ie) {
+                throw new XFormsConfigException(ie);
+            }
+            catch (IllegalAccessException iae) {
+                throw new XFormsConfigException(iae);
+            }
+
         }
-        processor.setUseragent(useragent);
-         
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("request URI: " + request.getRequestURI());
-            LOGGER.info("using user agent: " + useragent + " : " + processor);
+            LOGGER.info("using user agent: " + useragent + " : " + useragent);
         }
-        return processor;
+        throw new XFormsConfigException("Processor class : '" + className + "' cannot be instanciated");
     }
 
     /**

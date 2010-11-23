@@ -19,9 +19,7 @@ import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.InputStream;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Load the configuration in the default XML format from an InputStream.
@@ -30,7 +28,6 @@ import java.util.List;
  * @author Terence Jacyno
  */
 public class DefaultConfig extends Config {
-
 	/**
 	 * Creates and loads a new configuration.
 	 * 
@@ -49,7 +46,8 @@ public class DefaultConfig extends Config {
 			NodeInfo context = getDocumentElementContext(document);
 			
 			this.properties = load(context, "properties/property", "name", "value");
-			this.useragents = load(context, "useragents/useragent", "name", "value");
+			this.useragents = load(context, "useragents/useragent", "name", "processor");
+            this.generators = load (context, "ui-generators/ui-generator","useragent","stylesheet");
 			this.uriResolvers = load(context, "connectors/uri-resolver", "scheme", "class");
 			this.submissionHandlers = load(context, "connectors/submission-handler", "scheme", "class");
 			this.errorMessages = load(context, "error-messages/message", "id", "value");
@@ -73,7 +71,7 @@ public class DefaultConfig extends Config {
 		}
 	}
 
-	/**
+    /**
 	 * @param document
 	 * @return
 	 */
