@@ -64,6 +64,7 @@
         <delete file="${basedir}/target/${xapp.app.name}/resources/styles/registration.css"/>
         <delete file="${basedir}/target/${xapp.app.name}/resources/styles/reference.css"/>
         <delete file="${basedir}/target/${xapp.app.name}/resources/styles/timetracker.css"/>
+        <delete dir="${basedir}/target/${xapp.app.name}/jsp" includes="*.jsp" excludes="error.jsp"/>
 
     </target>
 
