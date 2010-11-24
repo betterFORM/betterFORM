@@ -8,6 +8,7 @@ package de.betterform.xml.xforms.action;
 
 import de.betterform.connector.ConnectorFactory;
 import de.betterform.connector.URIResolver;
+import de.betterform.xml.config.Config;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.XFormsEventNames;
@@ -15,6 +16,7 @@ import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.ns.NamespaceResolver;
 import de.betterform.xml.xforms.Initializer;
 import de.betterform.xml.xforms.XFormsConstants;
+import de.betterform.xml.xforms.XFormsElement;
 import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Instance;
@@ -37,6 +39,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -353,12 +356,18 @@ public class LoadAction extends AbstractBoundAction {
                         LOGGER.debug("dispatch 'model-destruct' event to embedded model: " + model.getId());
                         ;
                     }
-
+                    String modelId=model.getId();
                     // do not dispatch model-destruct to avoid problems in lifecycle
                     // TODO: review: this.container.dispatch(model.getTarget(), XFormsEventNames.MODEL_DESTRUCT, null);
                     model.dispose();
                     this.container.removeModel(model);
                     model = null;
+                    if(Config.getInstance().getProperty("betterform.debug-allowed").equals("true")){
+                        Map contextInfo = new HashMap(1);
+                        contextInfo.put("modelId", modelId);
+                        this.container.dispatch(this.target, BetterFormEventNames.MODEL_REMOVED, contextInfo);
+                    }
+
                 } else {
                     destroyembeddedModels(elementImpl);
                 }

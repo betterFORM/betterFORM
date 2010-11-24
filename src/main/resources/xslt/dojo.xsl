@@ -231,7 +231,7 @@
                     var djConfig = {
                     debugAtAllCosts:false,
                     locale:'<xsl:value-of select="$locale"/>',
-                    isDebug:<xsl:value-of select="$debug-enabled"/>,
+                    isDebug:false,
                     baseUrl:"<xsl:value-of select="concat($contextroot,$scriptPath,'release/dojo/')"/>",
                     modulePaths:{"betterform":"betterform"},
                     xWaitSeconds:10,
@@ -364,43 +364,10 @@
                 </button>
             </div>
 
-<!--
-            <div style="width: 800px; height: 800px">
-                <script type="text/javascript">
-                    dojo.require("dijit.layout.TabContainer");
-                    dojo.require("dojox.layout.ContentPane");
-
-                </script>
-                <div dojoType="dijit.layout.TabContainer" style="width: 100%; height: 100%;">
-                    <div dojoType="dojox.layout.ContentPane"
-                         title="Host DOM"
-                         selected="true"
-                         >
-                        <iframe src="{concat($baseURI,'?source')}" style="width:100%;height:100%;"></iframe>
-                    </div>
-                    <div dojoType="dijit.layout.ContentPane" title="My second tab">
-                        Lorem ipsum and all around - second...
-                    </div>
-                    <div dojoType="dijit.layout.ContentPane" title="My last tab" closable="true">
-                        Lorem ipsum and all around - last...
-                    </div>
-                </div>
-            </div>
--->
-
             <xsl:if test="$debug-enabled='true'">
                 <!-- z-index of 1000 so it is also in front of shim for modal dialogs -->
-                <div id="debug-pane" style="width:100%;border:thin dotted; z-index:1000;">
-                    <script type="text/javascript">dojo.require("dijit.form.Button");</script><xsl:text>
-</xsl:text>
-                    <button dojotype="dijit.form.Button" onclick="getXFormsDOM();" type="button">
-                        <label>HostDOM</label>
-                    </button>
-                    <xsl:for-each select="//xf:instance">
-                        <button dojotype="dijit.form.Button" onclick="getInstanceDocument(this.id);" id="{@id}" type="button">
-                            <label>Instance:<xsl:value-of select="if(position()=1) then concat(@id,' (default)') else @id"/></label>
-                        </button>
-                    </xsl:for-each>
+                <div id="debug-pane" context="{concat($contextroot,'/inspector/',$sessionKey,'/')}">
+                    <a href="{concat($contextroot,'/inspector/',$sessionKey,'/','hostDOM')}" target="_blank">Host Document</a>
                 </div>
             </xsl:if>
         </body>

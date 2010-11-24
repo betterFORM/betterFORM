@@ -303,9 +303,11 @@ public class WebProcessor extends AbstractProcessorDecorator {
         }
     }
 
+/*
     protected boolean isDebugOn() {
         return (super.isDebugOn() && request.getParameter("debug") != null);
     }
+*/
 
     /**
      * set the upload location. This string represents the destination (data-sink) for uploads.

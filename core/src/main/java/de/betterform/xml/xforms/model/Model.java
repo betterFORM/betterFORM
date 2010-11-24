@@ -7,6 +7,7 @@ package de.betterform.xml.xforms.model;
 
 import de.betterform.connector.ConnectorFactory;
 import de.betterform.xml.config.Config;
+import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.DefaultAction;
 import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.events.XMLEvent;
@@ -813,8 +814,13 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
             for (int index = 0; index < count; index++) {
                 Element xformsInstance = instanceElements.get(index);
                 createInstanceObject(xformsInstance);
+                if(Config.getInstance().getProperty("betterform.debug-allowed").equals("true")){
+                    Map contextInfo = new HashMap(1);
+                    contextInfo.put("modelId",XFormsElement.getXFormsAttribute((Element) xformsInstance.getParentNode(),"id"));
+                    contextInfo.put("instanceId",XFormsElement.getXFormsAttribute(xformsInstance,"id"));
+                    this.container.dispatch(this.target, BetterFormEventNames.INSTANCE_CREATED, contextInfo);
+                }
             }
-
         }
 
         // todo: initialize p3p ?

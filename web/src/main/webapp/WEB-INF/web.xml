@@ -39,7 +39,7 @@
 		<url-pattern>*.xhtml</url-pattern>
 	</filter-mapping>
 
-    <!--
+<!--
     	Chains the XFormsFilter with the XFormsPostServlet. The XFormsPostServlet parses the form from
     	the request and passes it to the XFormsFilter (via request attribute)
      -->
@@ -85,6 +85,17 @@
 -->
     </servlet>
 
+<!--
+     <servlet>
+        <servlet-name>CsrfTestServlet</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.CsrfTestServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CsrfTestServlet</servlet-name>
+        <url-pattern>/CSRF</url-pattern>
+    </servlet-mapping>
+-->
+
 	<!-- XFormsPostServlet
 		Servlet to handle HTTP Post requests containing XForms. See XFormsFilter mapping comments for further
 		 information
@@ -100,6 +111,15 @@
     </servlet-mapping>
 -->
 
+    <servlet>
+        <servlet-name>inspector</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.XFormsInspectorServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>inspector</servlet-name>
+        <url-pattern>/inspector/*</url-pattern>
+    </servlet-mapping>
     <!--
     <servlet>
         <servlet-name>foo</servlet-name>
@@ -152,7 +172,7 @@
         <servlet-class>de.betterform.agent.web.servlet.XFormsRepeater</servlet-class>
         <init-param>
             <param-name>useragent</param-name>
-            <param-value>dojo</param-value>
+            <param-value>dojodev</param-value>
         </init-param>
     </servlet>
 	<servlet-mapping>

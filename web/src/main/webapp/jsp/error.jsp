@@ -68,7 +68,7 @@
         }
 
         Exception ex = (Exception) session.getAttribute("betterform.exception");
-        if(ex.getCause() != null && ex.getCause().getMessage() != null){
+        if(ex != null && ex.getCause() != null && ex.getCause().getMessage() != null){
             cause = ex.getCause().getMessage();
         }
         session.removeAttribute("betterform.exception");

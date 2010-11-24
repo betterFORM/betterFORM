@@ -47,7 +47,7 @@ dojo.declare("betterform.FluxProcessor",
     fifoReaderTimer:null,
     lastServerClientFocusEvent:null,
     _earlyTemplatedStartup:true,
-    widgetsInTemplate:true,    
+    widgetsInTemplate:true,
 
 
     /*
@@ -538,6 +538,8 @@ dojo.declare("betterform.FluxProcessor",
                             case "betterform-dialog-open"        : fluxProcessor._handleBetterFormDialogOpen(xmlEvent); break;
                             case "betterform-dialog-close"       : fluxProcessor._handleBetterFormDialogClose(xmlEvent); break;
                             case "betterform-AVT-changed"        : fluxProcessor._handleAVTChanged(xmlEvent);break;
+                            case "betterform-instance-created"   : fluxProcessor._handleInstanceCreated(xmlEvent);break;
+                            case "betterform-model-removed"      : fluxProcessor._handleModelRemoved(xmlEvent);break;
                             case "upload-progress-event"         : fluxProcessor._handleUploadProgressEvent(xmlEvent); break;
                             case "xforms-focus"                  : fluxProcessor._handleXFormsFocus(xmlEvent); break;
                             case "xforms-help"                   : fluxProcessor._handleShowHelp(xmlEvent); break;
@@ -589,6 +591,28 @@ dojo.declare("betterform.FluxProcessor",
 
     _handleAVTChanged:function(xmlEvent){
         dojo.attr(xmlEvent.contextInfo.targetId,xmlEvent.contextInfo.attribute,xmlEvent.contextInfo.value);
+    },
+
+    _handleInstanceCreated:function(xmlEvent){
+        dojo.require("dojox.fx");
+        var debugPane = dojo.byId("debug-pane");
+        if(debugPane != null){
+            var contextroot = dojo.attr(debugPane,"context");
+            var newLink = document.createElement("a");
+            dojo.attr(newLink,"href",contextroot + xmlEvent.contextInfo.modelId + "/" + xmlEvent.contextInfo.instanceId);
+            dojo.attr(newLink,"target","_blank");
+            dojo.attr(newLink,"modelId",xmlEvent.contextInfo.modelId);
+            var linkText = document.createTextNode("Model:" + xmlEvent.contextInfo.modelId + " :: " + "Instance:" + xmlEvent.contextInfo.instanceId);
+            newLink.appendChild(linkText);
+            debugPane.appendChild(newLink);
+            dojox.fx.highlight({node:newLink, color:'#999999', duration:600}).play()
+        }
+    },
+
+    _handleModelRemoved:function(xmlEvent){
+        var modelId = xmlEvent.contextInfo.modelId;
+        dojo.query("#debug-pane a[modelId='" + modelId +"']").orphan();
+
     },
 
     _handleValidity:function(validityEvents) {
@@ -686,7 +710,7 @@ dojo.declare("betterform.FluxProcessor",
 //            console.debug("css to load: ", cssToLoad);
             if(cssToLoad != undefined && cssToLoad != ""){
                 var headID = document.getElementsByTagName("head")[0];
-                
+
                 var newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","style");
                 dojo.attr(newScript,"name",xlinkTarget);
                 dojo.attr(newScript,"type","text/css");
@@ -1159,7 +1183,7 @@ dojo.declare("betterform.FluxProcessor",
         }
         else if (xmlEvent.contextInfo.targetName == "repeat" || xmlEvent.contextInfo.targetName == "tbody") {
             var repeatElement = dojo.query("*[repeatId='" + xmlEvent.contextInfo.targetId + "']");
-            var repeatDijit  = dijit.byId(dojo.attr(repeatElement[0], "id"));            
+            var repeatDijit  = dijit.byId(dojo.attr(repeatElement[0], "id"));
             repeatDijit.handleDelete(xmlEvent.contextInfo);
             var positionOfDeletedItem = xmlEvent.contextInfo.position;
             if(positionOfDeletedItem <= repeatDijit._getSize()){
@@ -1307,7 +1331,7 @@ dojo.declare("betterform.FluxProcessor",
         dwr.engine.setErrorHandler(this._handleExceptions);
         Flux.getInstanceDocument(modelId, instanceId, this.sessionKey,this.printInstance);
     },
-    
+
     printInstance:function(data){
         console.dirxml(data);
         dojo.byId("debugFrame").innerHTML=data;
