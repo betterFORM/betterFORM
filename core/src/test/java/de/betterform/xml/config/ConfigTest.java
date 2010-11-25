@@ -31,11 +31,6 @@ public class ConfigTest extends TestCase {
         Config config = Config.getInstance();
         String value = null;
 
-        Map useragents= Config.getInstance().getUserAgents();
-        assertTrue(2 == useragents.size());
-
-        assertEquals("foo.bar",useragents.get("foo"));
-        assertEquals("bar.baz",useragents.get("bar"));
         // test uri resolvers
         value = config.getURIResolver("file");
         assertNotNull("uri-resolver 'file' is unknown", value);

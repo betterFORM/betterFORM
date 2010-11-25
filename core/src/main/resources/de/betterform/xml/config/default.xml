@@ -12,6 +12,8 @@
         <property name="language" value="de"/>
         <property name="enable.l10n" value="true"/>
         <property name="xforms.schema" value="XFormsDatatypes11.xsd"/>
+        <property name="betterform.debug-allowed" value="true" description="if debug may be switched by Url param 'debug'"/>
+        
     </properties>
 
     <connectors>

@@ -814,7 +814,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
             for (int index = 0; index < count; index++) {
                 Element xformsInstance = instanceElements.get(index);
                 createInstanceObject(xformsInstance);
-                if(Config.getInstance().getProperty("betterform.debug-allowed").equals("true")){
+                if(isReady() && Config.getInstance().getProperty("betterform.debug-allowed").equals("true")){
                     Map contextInfo = new HashMap(1);
                     contextInfo.put("modelId",XFormsElement.getXFormsAttribute((Element) xformsInstance.getParentNode(),"id"));
                     contextInfo.put("instanceId",XFormsElement.getXFormsAttribute(xformsInstance,"id"));
