@@ -28,6 +28,22 @@
         </init-param>
     </filter>
 
+	<!--
+	<filter>
+		<filter-name>XSLTFilter</filter-name>
+		<filter-class>de.betterform.agent.web.filter.XSLTFilter</filter-class>
+        <init-param>
+            <param-name>xsltHome</param-name>
+            <param-value>resources/xslt</param-value>
+        </init-param>
+        <init-param>
+            <param-name>xsltFile</param-name>
+            <param-value>highlight.xsl</param-value>
+        </init-param>
+    </filter>
+    -->
+
+
 	<!--  XForms filter mapping
 		maps the XFormsFilter to a specified Servlet or url-pattern. This example uses a
 		url-pattern that matches all document under the forms directory. Other examples would be:
@@ -40,6 +56,13 @@
 	</filter-mapping>
 
 <!--
+    <filter-mapping>
+        <filter-name>XSLTFilter</filter-name>
+        <servlet-name>inspector</servlet-name>
+    </filter-mapping>
+-->
+
+    <!--
     	Chains the XFormsFilter with the XFormsPostServlet. The XFormsPostServlet parses the form from
     	the request and passes it to the XFormsFilter (via request attribute)
      -->

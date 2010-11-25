@@ -109,7 +109,6 @@ public class XFormsInspectorServlet extends HttpServlet /* extends AbstractXForm
                     OutputStream out = response.getOutputStream();
                     response.setContentType("application/xml");
                     DOMUtil.prettyPrintDOM(instance, out);
-                    out.close();
                 }catch(DOMException de){
                     sendError(request, response, session, null,"Instance with id '" + instanceId + "' not found.");
                     return;
