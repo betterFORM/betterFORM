@@ -128,7 +128,7 @@ public abstract class Config {
 			Constructor construct = classRef
 					.getConstructor(new Class[]{InputStream.class});
 
-			//initializes the singleton invonking the constructor
+			//initializes the singleton invoking the constructor
 			SINGLETON = (Config) construct.newInstance(new Object[]{stream});
 
 		} catch (Exception e) {

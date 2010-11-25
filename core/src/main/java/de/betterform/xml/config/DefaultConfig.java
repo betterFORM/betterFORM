@@ -55,8 +55,8 @@ public class DefaultConfig extends Config {
 			//this.actions = load (context,"actions/action", "name", "class");
 			//this.generators = load(context, "generators/generator", "name",
 			// "class");
-			this.extensionFunctions = loadExtensionFunctions(context,
-					"extension-functions/function");
+//			this.extensionFunctions = loadExtensionFunctions(context,
+//					"extension-functions/function");
 			this.customElements = loadCustomElements(context,
 					"custom-elements/element");
 
