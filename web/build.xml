@@ -28,6 +28,10 @@
     <property name="targetname" value="${target}/${web.app.name}-${web.app.version}"/>
     <property name="servlet.container" value="${properties.webappPath}"/>
 
+    <path id="generator.libs" description="classpath for compiling core classes">
+        <pathelement location="${core.dir}/src/main/lib/saxon-9.2.1.5.jar"/>
+    </path>
+
     <!-- **************************************** HOUSEKEEPING **************************************** -->
     <!-- **************************************** HOUSEKEEPING **************************************** -->
     <!-- **************************************** HOUSEKEEPING **************************************** -->
@@ -109,7 +113,16 @@
     <!-- **************************************** DEPLOYMENT **************************************** -->
     <!-- **************************************** DEPLOYMENT **************************************** -->
     <!-- **************************************** DEPLOYMENT **************************************** -->
-
+    <target name="prepare-site" description="generates the betterFORM site">
+        <xslt basedir="${basedir}/src/main/webapp/pages"
+              destdir="${basedir}/src/main/webapp/pages"
+              style="${basedir}/src/main/webapp/resources/xslt/site.xsl"
+              force="true"
+              includes="*.xhtml"
+              extension=".html">
+            <classpath refid="generator.libs"/>
+        </xslt>
+    </target>
 
     <target name="exploded-webapp" depends="compile"
             description="builds an exploded webapp with expanded 'WEB-INF/classes' dir">
