@@ -42,6 +42,9 @@
     <%@ page import="java.text.DateFormat" %>
     <%@ page import="java.util.Date" %>
     <%@ page import="java.util.Enumeration" %>
+    <%@ page import="de.betterform.agent.web.utils.SortingWalker" %>
+    <%@ page import="java.util.Collections" %>
+    <%@ page import="java.util.List" %>
     <%@ page session="true"%>
 
     <body id="formsbrowser">
@@ -108,7 +111,7 @@
                         String readDir=null;
 
 
-                        if (uri == null) {
+                        if (uri == null || uri.contains("..") || ! uri.contains("forms") ) {
                             uri = "forms";
                         }
                         readDir = rootDir + uri;
@@ -129,7 +132,8 @@
 
                         File root=new File(readDir);
                         if (root.exists()) {
-                            String[] files = root.list();
+                            java.util.List<File> results = SortingWalker.sortDirsAndFiles(root);
+                            File[] files = results.toArray(new File[results.size()]);
                             cat.debug("files: " + files.length);
                             File f = null;
                             String up = null;
@@ -148,7 +152,7 @@
                             }
 
                             for (int i = 0; i < files.length; i++) {
-                                File aFile = new File(files[i]);
+                                File aFile = files[i];
                                 f = new File(readDir + "/" + aFile.getName());
 
                                 if (f.isDirectory()) {
@@ -168,12 +172,13 @@
                                 }
                             }
                             root = new File(readDir);
-                            files = root.list();
+                            results = SortingWalker.sortDirsAndFiles(root);
+                            files = results.toArray(new File[results.size()]);
                             cat.debug("files: " + files.length);
 
                             if (files != null) {
                                 for (int i = 0; i < files.length; i++) {
-                                    File aFile = new File(files[i]);
+                                    File aFile = files[i];
                                     f = new File(readDir + "/" + aFile.getName());
 
 
