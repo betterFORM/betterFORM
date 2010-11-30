@@ -27,10 +27,12 @@ dojo.declare(
 
     // overwritten to implement readonly 
     _onMouse: function(evt){
-        // console.debug("betterform.ui.range.Rating.onStarClick: readonly: ", this.xfControl.isReadonly());
-        if(!this.xfControl.isReadonly()){
-            this.inherited(arguments);
-        }
+        //console.debug("betterform.ui.range.Rating.onMouse: readonly: ", this.xfControl.isReadonly());
+        /*
+            if(!this.xfControl.isReadonly()){
+                this.inherited(arguments);
+            }
+        */
     },
 
     _onFocus:function() {
@@ -48,9 +50,11 @@ dojo.declare(
     },
     
     onStarClick:function(/* Event */evt){
-        this.inherited(arguments);
-        if(this.incremental){
-            this.setControlValue();
+        if(!this.xfControl.isReadonly()){
+            this.inherited(arguments);
+            if(this.incremental){
+                this.setControlValue();
+            }
         }
     },
 
