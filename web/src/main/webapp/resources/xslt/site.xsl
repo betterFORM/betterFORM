@@ -11,7 +11,9 @@
                 exclude-result-prefixes="xsl html">
 
 
-    <xsl:output method="xhtml" version="1.0" encoding="UTF-8" media-type="text/xml"/>
+    <xsl:output method="xhtml" version="1.0" encoding="UTF-8" media-type="text/xml"
+            doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+            doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" />
 
     <xsl:param name="rootDir" select="'..'"/>
 

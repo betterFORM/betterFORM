@@ -22,18 +22,23 @@ import java.util.List;
  */
 public class FormsServlet extends HttpServlet {
 
+    /*
+     * Example URLs:
+       *  complete HTML-Listing with header and Footer: /forms/formslist
+       *  fragment-Listing: /forms/formslist?fragment=true&path=/forms/demo/
+       *  fragment-Listing: /forms/formslist#path=/forms/demo?fragment=true
+       *  fragment-Listing: /FormBrowser?path=/forms/demo&fragment=true
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String uri = request.getQueryString();
         boolean fragment = false;
 
-        if (uri != null) {
+        String fragmentParameter = request.getParameter("fragment");
+        String uri = request.getParameter("path");
 
-            if ( uri.contains("fragment") )
-            {
-                fragment = true;
-                uri = uri.substring("fragment=".length()+1, uri.length());
-            }
+        if(fragmentParameter != null && fragmentParameter.equals("true")){
+            fragment = true;
         }
+
         if (!fragment) {
             response.getOutputStream().write(getHTMLHead(request).getBytes());
         }
@@ -92,12 +97,15 @@ public class FormsServlet extends HttpServlet {
             "\n" +
             "    <div id=\"content\" class=\"contact\">\n" +
             "        <img id=\"shadowTop\" src=\"" + request.getContextPath() + "/images/shad_top.jpg\" alt=\"\"/>\n" +
-            "        <div class=\"pageMarginBox\">\n";
+            "        <div class=\"pageMarginBox\">\n" +
+            "            <div class=\"contentBody\">\n " +
+            "                 <h1>Forms Browser</h1>\n";
     }
 
 
     private static final String getHTMLFooter(HttpServletRequest request) {
             return
+                "            </div>\n" +
                 "        </div>\n" +
                 "    </div>\n" +
                 "    <div id=\"footer\">\n" +
@@ -152,8 +160,7 @@ public class FormsServlet extends HttpServlet {
 
     private void addTableHead(StringBuffer html, String uri) {
         html.append(
-        "<div class=\"contentBody\">\n" +
-        "    <h1>Forms Browser</h1>\n" +
+        "<div id=\"bfFormBrowser\">\n" +
         "    <table>\n" +
         "        <tr>\n" +
         "            <td class=\"formBrowserHeader\" colspan=\"3\">\n" +
@@ -202,8 +209,8 @@ public class FormsServlet extends HttpServlet {
         html.append(
         "        <tr>\n" +
         "            <td class=\"directory\" colspan=\"3\">\n" +
-        "                <a href=\""+ request.getContextPath() + "/forms/formslist?" + up +"\"><img src=\"" + request.getContextPath() +"/resources/images/folder.gif\" border=\"0\"></a>\n" +
-        "                <a class=\"textLink\" href=\"" + request.getContextPath() + "/forms/formslist?" + up + "\">..</a>\n" +
+        "                <a href=\""+ getRequestURI(request, up) +"\"><img src=\"" + request.getContextPath() +"/resources/images/folder.gif\" border=\"0\"></a>\n" +
+        "                <a class=\"textLink\" href=\"" + getRequestURI(request, up) + "\">..</a>\n" +
         "            </td>\n" +
         "        </tr>");
     }
@@ -211,8 +218,8 @@ public class FormsServlet extends HttpServlet {
         html.append(
         "        <tr class=\"directory\">\n" +
         "            <td colspan=\"3\">\n" +
-        "                <a href=\""+ request.getContextPath() + "/forms/formslist?" + uri + "/" + aFile.getName() + "\"><img src=\"" + request.getContextPath() + "/resources/images/folder.gif\" border=\"0\"></a>\n" +
-        "                <a class=\"textLink\" href=\""+ request.getContextPath() + "/forms/formslist?"+ uri + "/" + aFile.getName()+ "\">" + aFile.getName() + "</a>\n" +
+        "                <a href=\""+ getRequestURI(request, uri) + "/" + aFile.getName() + "\"><img src=\"" + request.getContextPath() + "/resources/images/folder.gif\" border=\"0\"></a>\n" +
+        "                <a class=\"textLink\" href=\""+ getRequestURI(request, uri) + "/" + aFile.getName()+ "\">" + aFile.getName() + "</a>\n" +
         "            </td>\n" +
         "        </tr>");
     }
@@ -229,5 +236,9 @@ public class FormsServlet extends HttpServlet {
         "            </td>\n" +
         "            <td>" + DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).format(new Date(f.lastModified())) + "</td>\n" +
         "        </tr>");
+    }
+
+    private String getRequestURI(HttpServletRequest request,String path) {
+        return request.getRequestURI() + "?path=" + path;
     }
 }

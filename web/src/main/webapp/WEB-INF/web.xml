@@ -246,7 +246,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>FormsServlet</servlet-name>
-        <url-pattern>/forms/formslist</url-pattern>
+        <url-pattern>/FormBrowser</url-pattern>
     </servlet-mapping>
 <!--
     <security-constraint>
