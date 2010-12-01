@@ -192,6 +192,9 @@ public class LoadAction extends AbstractBoundAction {
         // fetch CSS
         String cssRules = getInlineCSS(embed);
         embed = extractFragment(absoluteURI, embed);
+        if(LOGGER.isDebugEnabled()){
+            DOMUtil.prettyPrintDOM(embed);
+        }
 
         if (embed == null) {
             //todo: review: context info params containing a '-' fail during access in javascript!

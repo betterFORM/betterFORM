@@ -71,6 +71,7 @@ public interface XFormsConstants {
     String LABEL = "label";
     String LEVEL_ATTRIBUTE = "level";
     String LOAD = "load";
+    String UNLOAD = "unload";
     String MAXOCCURS_ATTRIBUTE = "maxoccurs";
     String MEDIATYPE = "mediatype";
     String MEDIATYPE_ATTRIBUTE = "mediatype";

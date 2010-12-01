@@ -6,6 +6,7 @@
 
 package de.betterform.agent.web;
 
+import com.thoughtworks.xstream.XStream;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import org.apache.commons.httpclient.Cookie;
@@ -134,6 +135,10 @@ public class WebUtil {
             LOGGER.warn("Cached WebProcessor for key '" + key + "' is null");
             return null;
         }
+//        XStream xStream = new XStream();
+//        String xml = xStream.toXML(webProcessor);
+//        LOGGER.debug(xml);
+
         return webProcessor;
     }
 

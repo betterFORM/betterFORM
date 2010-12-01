@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Trigger control with nested image output</title>
+    </head>
+    <body>
+        <div class="description">
+            <p>
+                This form control is similar to the HTML element button and
+                allows for user-triggered actions. This form control may
+                also be used to construct other custom form controls.
+            </p>
+            <p>
+                DOES NOT WORK YET!!!
+            </p>
+        </div>
+        <div class="references">
+            <a href="#ui-trigger"/>
+            <a href="#elems-form-controls"/>
+        </div>
+        <div class="sample">
+            <div class="markup">
+                <xf:model>
+                    <xf:instance xmlns="">
+                        <code>
+<data>
+    <output constraint="true" readonly="false" required="false" relevant="true">
+        <value>../../images/bf_logo_482x195.png</value>
+    </output>
+    <output constraint="true" readonly="false" required="false" relevant="true">
+        <value>../../images/betterform_icon_118x118.png</value>
+    </output>
+</data>
+                        </code>
+                    </xf:instance>
+                    <xf:bind nodeset="output">
+                        <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)"
+                                 readonly="boolean-from-string(../@readonly)"
+                                 required="boolean-from-string(../@required)"
+                                 relevant="boolean-from-string(../@relevant)"
+                                 type="string"/>
+                        <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
+                        <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
+                        <xf:bind nodeset="@required" type="boolean"></xf:bind>
+                        <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
+                    </xf:bind>
+
+                </xf:model>
+                <code class="ui">
+<xf:trigger id="trigger1" incremental="true">
+    <xf:label>
+        <xf:output ref="output[1]" mediatype="image/*"/>
+    </xf:label>
+</xf:trigger>
+<xf:trigger id="trigger2" incremental="true">
+    <xf:label>
+        <xf:output ref="output[2]" mediatype="image/*"/>
+    </xf:label>
+</xf:trigger>
+                </code>
+            </div>
+            <div class="MIPS">
+                <xf:group appearance="full">
+                    <xf:label></xf:label>
+                    <xf:input id="output-readonly" navindex="-1" ref="output/@readonly" incremental="true">
+                        <xf:label>readonly</xf:label>
+                    </xf:input>
+                    <xf:input id="output-required" navindex="-1" ref="output/@required" incremental="true">
+                        <xf:label>required</xf:label>
+                    </xf:input>
+                    <xf:input id="output-relevant" navindex="-1" ref="output/@relevant" incremental="true">
+                        <xf:label>relevant</xf:label>
+                    </xf:input>
+                    <xf:input id="output-valid" navindex="-1" ref="output/@constraint" incremental="true">
+                        <xf:label>valid</xf:label>
+                    </xf:input>
+                </xf:group>
+            </div>
+        </div>
+        <div class="CSS">
+
+            <table class="CSS">
+                <tr>
+                    <td>xfTrigger</td>
+                    <td>matches an Element that represents a XForms input element</td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

@@ -49,7 +49,7 @@ import java.util.*;
  * @author Ulrich Nicolas Liss&eacute;
  * @version $Id: XFormsProcessorImpl.java 3492 2008-08-27 12:37:01Z joern $
  */
-public class XFormsProcessorImpl implements XFormsProcessor, Externalizable {
+public class XFormsProcessorImpl implements XFormsProcessor {
     public static final String BETTERFORM_LOCALE = "betterform.locale";
     public static final String BETTERFORM_ENABLE_L10N = "enable.l10n";
     private static final Log LOGGER = LogFactory.getLog(XFormsProcessorImpl.class);

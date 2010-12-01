@@ -1,99 +1,75 @@
-<?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-   
-   <head>
-      <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
+<?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3.org/1999/xhtml">
+   <data xmlns="">
+      
       <title>Trigger Control</title>
-      <link rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
-      <link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css" /><script type="text/javascript">
-            dojo.require("dojox.highlight");
-            dojo.require("dojox.highlight.languages.xml");
-            dojo.addOnLoad(function() {
-            dojo.query("code").forEach(dojox.highlight.init);
-            });
-
-            dojo.require("dijit.form.Button");
-            dojo.require("dijit.TitlePane");
-            dojo.require('dijit.layout.ContentPane');
-        </script></head>
-   
-   <body class="soria inlineAlert" style="margin:30px;">
-      <div id="xforms">
-         <div style="display:none;">
-            <xf:model>
+      
+      <page>
+         
+         <title>The trigger Control</title>
+         
+         <description>
+            This form control is similar to the HTML element button and
+            allows for user-triggered actions. This form control may
+            also be used to construct other custom form controls.
+            
+         </description>
+         
+         <references>
+            
+            <w3c ref="trigger"></w3c>
+            
+         </references>
+         
+         <content>
+            
+            <models>
                
-               <xf:instance>
+               <xf:model>
                   
-                  <data xmlns="">
+                  <xf:instance>
                      
-                     <item constraint="true" readonly="false" required="true" relevant="true">
+                     <data>
                         
-                        <value></value>
+                        <item constraint="true" readonly="false" required="true" relevant="true">
+                           
+                           <value></value>
+                           
+                        </item>
                         
-                     </item>
+                     </data>
                      
-                  </data>
+                  </xf:instance>
                   
-               </xf:instance>
+                  
+                  <xf:bind nodeset="item">
+                     
+                     <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="string"></xf:bind>
+                     
+                     <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
+                     
+                     <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
+                     
+                     <xf:bind nodeset="@required" type="boolean"></xf:bind>
+                     
+                     <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
+                     
+                  </xf:bind>
+                  
+               </xf:model>
                
+            </models>
+            
+            <samples>
                
-               <xf:bind nodeset="item">
+               <section name="minimal">
                   
-                  <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="string"></xf:bind>
+                  <title>Minimal trigger Control</title>
                   
-                  <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
+                  <description>
+                     A trigger with minimal appearance is rendered as a Link.
+                     
+                  </description>
                   
-                  <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
-                  
-                  <xf:bind nodeset="@required" type="boolean"></xf:bind>
-                  
-                  <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
-                  
-               </xf:bind>
-               
-            </xf:model>
-         </div>
-         <div class="pageintro">
-            <div class="pagetitle">The trigger Control</div>
-            <div class="Section">
-               <div class="PageDescription">Description</div>
-               <p>
-                  This form control is similar to the HTML element button and
-                  allows for user-triggered actions. This form control may
-                  also be used to construct other custom form controls.
-                  
-               </p>
-            </div>
-            <table>
-               <tr>
-                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="../../resources/images/w3c_home_nb.png" alt="W3C" /></a></td>
-                  <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
-               </tr>
-               <tr>
-                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-trigger" target="_blank">Recommendation</a></td>
-               </tr>
-               <tr>
-                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html#elems-form-controls" target="_blank">Quick Reference</a></td>
-               </tr>
-            </table>
-         </div>
-         <div class="Section">
-            <div class="Headline">Minimal trigger Control</div>
-            <p class="Description">
-               A trigger with minimal appearance is rendered as a Link.
-               
-            </p>
-            <div>
-               <div class="Subheadline">XForms Markup</div>
-               <div class="Subsection"><pre><code class="xml">
-&lt;!--XForms UI--&gt;
-&lt;xf:trigger id="trigger1" ref="item" appearance="minimal"&gt;
-    &lt;xf:label&gt;A minimal trigger&lt;/xf:label&gt;
-    &lt;xf:message level="modal"&gt;Clicked minimal trigger&lt;/xf:message&gt;
-&lt;/xf:trigger&gt;</code></pre></div>
-            </div>
-            <div>
-               <div class="Subheadline">Sample</div>
-               <div class="Sample">
                   <xf:trigger id="trigger1" ref="item" appearance="minimal">
                      
                      <xf:label>A minimal trigger</xf:label>
@@ -101,27 +77,35 @@
                      <xf:message level="modal">Clicked minimal trigger</xf:message>
                      
                   </xf:trigger>
-               </div>
-            </div>
-         </div>
-         <div class="Section">
-            <div class="Headline">Stanaard trigger</div>
-            <p class="Description">
-               A trigger without any appearance is rendered as a standard button.
+                  
+                  <!--
+                    <mips>
+                        <xf:input navindex="-1" ref="item/@readonly" class="mips" incremental="true">
+                            <xf:label>readonly</xf:label>
+                        </xf:input>
+                        <xf:input navindex="-1" ref="item/@required" class="mips" incremental="true">
+                            <xf:label>required</xf:label>
+                        </xf:input>
+                        <xf:input navindex="-1" ref="item/@relevant" class="mips" incremental="true">
+                            <xf:label>relevant</xf:label>
+                        </xf:input>
+                        <xf:input navindex="-1" ref="item/@constraint" class="mips" incremental="true">
+                            <xf:label>valid</xf:label>
+                        </xf:input>
+                    </mips>
+                    -->
+                  
+               </section>
                
-            </p>
-            <div>
-               <div class="Subheadline">XForms Markup</div>
-               <div class="Subsection"><pre><code class="xml">
-&lt;!--XForms UI--&gt;
-&lt;xf:trigger id="trigger2" ref="item"&gt;
-    &lt;xf:label&gt;A standard trigger&lt;/xf:label&gt;
-    &lt;xf:message level="ephemeral"&gt;Clicked standard trigger&lt;/xf:message&gt;
-&lt;/xf:trigger&gt;</code></pre></div>
-            </div>
-            <div>
-               <div class="Subheadline">Sample</div>
-               <div class="Sample">
+               <section name="default">
+                  
+                  <title>Stanaard trigger</title>
+                  
+                  <description>
+                     A trigger without any appearance is rendered as a standard button.
+                     
+                  </description>
+                  
                   <xf:trigger id="trigger2" ref="item">
                      
                      <xf:label>A standard trigger</xf:label>
@@ -129,27 +113,35 @@
                      <xf:message level="ephemeral">Clicked standard trigger</xf:message>
                      
                   </xf:trigger>
-               </div>
-            </div>
-         </div>
-         <div class="Section">
-            <div class="Headline">Image trigger</div>
-            <p class="Description">
-               A trigger can reference a picture to display instead of the label.
+                  
+                  <!--
+                    <mips>
+                        <xf:input navindex="-1" ref="item/@readonly" class="mips" incremental="true">
+                            <xf:label>readonly</xf:label>
+                        </xf:input>
+                        <xf:input navindex="-1" ref="item/@required" class="mips" incremental="true">
+                            <xf:label>required</xf:label>
+                        </xf:input>
+                        <xf:input navindex="-1" ref="item/@relevant" class="mips" incremental="true">
+                            <xf:label>relevant</xf:label>
+                        </xf:input>
+                        <xf:input navindex="-1" ref="item/@constraint" class="mips" incremental="true">
+                            <xf:label>valid</xf:label>
+                        </xf:input>
+                    </mips>
+                    -->
+                  
+               </section>
                
-            </p>
-            <div>
-               <div class="Subheadline">XForms Markup</div>
-               <div class="Subsection"><pre><code class="xml">
-&lt;!--XForms UI--&gt;
-&lt;xf:trigger id="trigger3" src="../../images/bf_logo_67x27.png" ref="item"&gt;
-    &lt;xf:label&gt;A image trigger&lt;/xf:label&gt;
-    &lt;xf:message level="modal"&gt;Message from image trigger&lt;/xf:message&gt;
-&lt;/xf:trigger&gt;</code></pre></div>
-            </div>
-            <div>
-               <div class="Subheadline">Sample</div>
-               <div class="Sample">
+               <section name="imageTrigger">
+                  
+                  <title>Image trigger</title>
+                  
+                  <description>
+                     A trigger can reference a picture to display instead of the label.
+                     
+                  </description>
+                  
                   <xf:trigger id="trigger3" src="../../images/bf_logo_67x27.png" ref="item">
                      
                      <xf:label>A image trigger</xf:label>
@@ -157,40 +149,42 @@
                      <xf:message level="modal">Message from image trigger</xf:message>
                      
                   </xf:trigger>
-               </div>
-            </div>
-         </div>
-         <div class="Section">
-            <div class="Headline">Image trigger with CSS</div>
-            <p class="Description">A trigger can be styled by CSS.
-               Here the trigger is given an id and a CSS matcher is added for it. The corresponding
-               button rendered in HTML will have the original id with '-value' attached. The matcher
-               for the button is therefore #imageTrigger-value.
-               This is only one example how to style controls with CSS. Besides identity matching alternative
-               style rules are possible to achieve the same result. E.g. instead of #imageTrigger .xfValue
-               would
-               match the same element in the tree.
+                  
+                  <!--
+                    <mips>
+                        <xf:input navindex="-1" ref="item/@readonly" class="mips" incremental="true">
+                            <xf:label>readonly</xf:label>
+                        </xf:input>
+                        <xf:input navindex="-1" ref="item/@required" class="mips" incremental="true">
+                            <xf:label>required</xf:label>
+                        </xf:input>
+                        <xf:input navindex="-1" ref="item/@relevant" class="mips" incremental="true">
+                            <xf:label>relevant</xf:label>
+                        </xf:input>
+                        <xf:input navindex="-1" ref="item/@constraint" class="mips" incremental="true">
+                            <xf:label>valid</xf:label>
+                        </xf:input>
+                    </mips>
+                    -->
+                  
+               </section>
                
-            </p>
-            <div>
-               <div class="Subheadline">XForms Markup</div>
-               <div class="Subsection"><pre><code class="xml">&lt;style type="text/css"&gt;
-    #trigger4-value{
-        background:url(../../images/bf_logo_67x27.png) no-repeat center;
-        width:100px;
-        height:40px;
-    }
-&lt;/style&gt;
-&lt;!--XForms UI--&gt;
-&lt;xf:trigger id="trigger4" ref="item"&gt;
-    &lt;xf:label&gt;&lt;/xf:label&gt;
-    &lt;xf:message level="modal"&gt;Message from CSS image trigger&lt;/xf:message&gt;
-&lt;/xf:trigger&gt;</code></pre></div>
-            </div>
-            <div>
-               <div class="Subheadline">Sample</div>
-               <div class="Sample">
-                  <style xmlns="" type="text/css">
+               <section name="cssImageTrigger">
+                  
+                  <title>Image trigger with CSS</title>
+                  
+                  <description>A trigger can be styled by CSS.
+                     Here the trigger is given an id and a CSS matcher is added for it. The corresponding
+                     button rendered in HTML will have the original id with '-value' attached. The matcher
+                     for the button is therefore #imageTrigger-value.
+                     This is only one example how to style controls with CSS. Besides identity matching alternative
+                     style rules are possible to achieve the same result. E.g. instead of #imageTrigger .xfValue
+                     would
+                     match the same element in the tree.
+                     
+                  </description>
+                  
+                  <style type="text/css">
                      #trigger4-value{
                      background:url(../../images/bf_logo_67x27.png) no-repeat center;
                      width:100px;
@@ -198,6 +192,7 @@
                      }
                      
                   </style>
+                  
                   <xf:trigger id="trigger4" ref="item">
                      
                      <xf:label></xf:label>
@@ -205,11 +200,31 @@
                      <xf:message level="modal">Message from CSS image trigger</xf:message>
                      
                   </xf:trigger>
-               </div>
-            </div>
-         </div>
-      </div>
-      <div style="text-align:right;" id="copyright"><a href="http://www.betterform.de"><img style="vertical-align:text-bottom; margin-right:5px;" src="../../images/betterform_icon16x16.png" alt="betterFORM project" /></a><span>© 2010 betterFORM</span></div>
-   </body>
-   
+                  
+                  <!--
+                    <mips>
+                        <xf:input navindex="-1" ref="item/@readonly" class="mips" incremental="true">
+                            <xf:label>readonly</xf:label>
+                        </xf:input>
+                        <xf:input navindex="-1" ref="item/@required" class="mips" incremental="true">
+                            <xf:label>required</xf:label>
+                        </xf:input>
+                        <xf:input navindex="-1" ref="item/@relevant" class="mips" incremental="true">
+                            <xf:label>relevant</xf:label>
+                        </xf:input>
+                        <xf:input navindex="-1" ref="item/@constraint" class="mips" incremental="true">
+                            <xf:label>valid</xf:label>
+                        </xf:input>
+                    </mips>
+                    -->
+                  
+               </section>
+               
+            </samples>
+            
+         </content>
+         
+      </page>
+      
+   </data>
 </html>

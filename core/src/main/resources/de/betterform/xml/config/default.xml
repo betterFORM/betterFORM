@@ -16,6 +16,25 @@
         
     </properties>
 
+<!--
+    <useragents>
+        <useragent name="foo"
+                   processor="foo.bar"
+                   description="descriptive text">
+        </useragent>
+        <useragent name="bar"
+                   processor="bar.baz"
+                   description="descriptive text">
+        </useragent>
+    </useragents>
+
+    <ui-generators>
+        <ui-generator useragent="foo" stylesheet="dojo.xsl"/>
+        <ui-generator useragent="bar" stylesheet="dojodev.xsl"/>
+        <ui-generator useragent="baz" stylesheet="html4.xsl"/>
+    </ui-generators>
+-->
+
     <connectors>
         <!--
             For each of the connector types you can specifiy one connector to handle one URI scheme.

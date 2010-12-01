@@ -330,6 +330,9 @@ public class XFormsElementFactory implements XFormsConstants {
         else if (localName.equals(LOAD)) {
             xformsElement = new LoadAction(element, model);
         }
+        else if (localName.equals(UNLOAD)) {
+            xformsElement = new UnloadAction(element, model);
+        }
         else if (localName.equals(SETVALUE)) {
             xformsElement = new SetValueAction(element, model);
         }

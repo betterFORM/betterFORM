@@ -4,6 +4,7 @@
  */
 package de.betterform.xml.xforms;
 
+import com.thoughtworks.xstream.XStream;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.DOMEventNames;
@@ -16,7 +17,7 @@ import org.w3c.dom.events.EventTarget;
 import org.w3c.xforms.XFormsModelElement;
 import org.xml.sax.InputSource;
 
-import java.io.InputStream;
+import java.io.*;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
@@ -30,8 +31,8 @@ import java.util.Map;
  * @author joern turner
  */
 public abstract class AbstractProcessorDecorator implements XFormsProcessor, EventListener {
-    protected XFormsProcessor xformsProcessor;
-    protected EventTarget root;
+    protected transient XFormsProcessor xformsProcessor;
+    protected transient EventTarget root;
     protected Config configuration;
     protected String locale = "en";
 
@@ -39,9 +40,20 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
         this.xformsProcessor = new XFormsProcessorImpl();
     }
 
-    // ##### Event-related methods #####
-    // ##### Event-related methods #####
-    // ##### Event-related methods #####
+/*
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        XStream xstream = new XStream();
+        ObjectOutputStream xout = xstream.createObjectOutputStream(out);
+        xout.writeObject(this);
+        xout.close();
+    }
+
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+        
+    }
+*/
+
+
     /**
      * check wether an Event is used in the form being processed. Will return true if any action registers
      * the Event in question. Will also return true if debug is enabled.
@@ -220,13 +232,13 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
     // ##### XFormsProcessor implementation #####
     // ##### XFormsProcessor implementation #####
     // ##### XFormsProcessor implementation #####
+
     public void setLocale(String locale) throws XFormsException {
         this.xformsProcessor.setLocale(locale);
         this.locale = locale;
     }
 
-    public abstract void init() throws XFormsException ;
-
+    public abstract void init() throws XFormsException;
 
 
     public void setXForms(Node node) throws XFormsException {

@@ -11,6 +11,7 @@
         <pathelement location="${core.dir}/src/main/lib/saxon-9.2.1.5.jar"/>        
     </path>
 
+
     <target name="build">
         <xslt basedir="${basedir}/xml"
               destdir="${basedir}/target"
@@ -20,147 +21,10 @@
               extension=".xhtml">
             <classpath refid="generator.libs"/>
         </xslt>
-<!--
-        <mkdir dir="xhtml"/>
-          <xslt in="Input.xml" out="xhtml/Input.xhtml" force="true"
-              style="build-forms.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
-
-        <xslt in="xml/Group.xml" out="xhtml/Group.gen.xhtml" force="true"
-              style="build-forms.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
-
-        <xslt in="xml/Output.xml" out="xhtml/Output.gen.xhtml" force="true"
-              style="build-forms.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
-
-        <xslt in="xml/Range.xml" out="xhtml/Range.gen.xhtml" force="true"
-              style="build-forms.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
-
-
-        <xslt in="xml/Repeat.xml" out="xhtml/Repeat.gen.xhtml" force="true"
-              style="build-forms.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
-
-        <xslt in="xml/Secret.xml" out="xhtml/Secret.gen.xhtml" force="true"
-              style="build-forms.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
-
-        <xslt in="xml/Select.xml" out="xhtml/Select.gen.xhtml" force="true"
-              style="build-forms.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
-
-        <xslt in="xml/Select1.xml" out="xhtml/Select1.gen.xhtml" force="true"
-              style="build-forms.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
-
-
-        <xslt in="xml/Switch.xml" out="xhtml/Switch.gen.xhtml" force="true"
-              style="build-forms.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
-
-
-        <xslt in="xml/Textarea.xml" out="xhtml/Textarea.gen.xhtml" force="true"
-              style="build-forms.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
-
-        <xslt in="xml/Trigger.xml" out="xhtml/Trigger.gen.xhtml" force="true"
-              style="build-forms.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
-
-
-        <xslt in="xml/Upload.xml" out="xhtml/Upload.gen.xhtml" force="true"
-              style="build-forms.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
--->
     </target>
 
     <target name="extract">
-
-
         <mkdir dir="xml"/>
-
-<!--
-        <xslt style="extract-xml.xsl" includes="*.xhtml" destdir="xml" basedir="../">
-            <mapper type="glob" from="*.xhtml" to="*.xml"/>
-        </xslt>
-
-
-        <xslt in="Group.xhtml" out="xml/Group.xml" force="true"
-              style="extract-xml.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
-
-        <xslt in="Output.xhtml" out="xml/Output.xml" force="true"
-              style="extract-xml.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
-
-        <xslt in="Range.xhtml" out="xml/Range.xml" force="true"
-              style="extract-xml.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
-
-        <xslt in="Repeat.xhtml" out="xml/Repeat.xml" force="true"
-              style="extract-xml.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
-
-        <xslt in="Secret.xhtml" out="xml/Secret.xml" force="true"
-              style="extract-xml.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
-
-        <xslt in="Select.xhtml" out="xml/Select.xml" force="true"
-              style="extract-xml.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
-
-        <xslt in="Select1.xhtml" out="xml/Select1.xml" force="true"
-              style="extract-xml.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
-
-        <xslt in="Switch.xhtml" out="xml/Switch.xml" force="true"
-              style="extract-xml.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
-
-        <xslt in="Textarea.xhtml" out="xml/Textarea.xml" force="true"
-              style="extract-xml.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
-
-        <xslt in="Trigger.xhtml" out="xml/Trigger.xml" force="true"
-              style="extract-xml.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
-
-
-        <xslt in="Upload.xhtml" out="xml/Upload.gen.xml" force="true"
-              style="extract-xml.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
-
-
-        <xslt in="Output.xhtml" out="xml/Output.xml" force="true"
-              style="extract-xml.xsl">
-           <classpath refid="generator.libs"/>
-        </xslt>
--->
     </target>
 
     <target name="deploy-forms" depends="build" description="builds and deploys reference forms">

@@ -19,6 +19,7 @@ import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.events.XMLEvent;
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.XFormsElement;
+import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.ui.BindingElement;
@@ -45,7 +46,8 @@ import java.util.Map;
 public class FluxProcessor extends WebProcessor {
     private static final Log LOGGER = LogFactory.getLog(FluxProcessor.class);
     public static final String FLUX_ACTIVATE_EVENT = "flux-action-event";
-    private EventQueue eventQueue;
+    private transient EventQueue eventQueue;
+    protected transient XFormsProcessor xformsProcessor;
 
 
     public FluxProcessor() {

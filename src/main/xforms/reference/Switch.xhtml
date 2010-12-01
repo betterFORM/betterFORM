@@ -1,113 +1,57 @@
-<?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-   
-   <head>
-      <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
+<?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3.org/1999/xhtml">
+   <data xmlns="">
+      
       <title>Switch Control</title>
-      <link rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
-      <link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css" /><script type="text/javascript">
-            dojo.require("dojox.highlight");
-            dojo.require("dojox.highlight.languages.xml");
-            dojo.addOnLoad(function() {
-            dojo.query("code").forEach(dojox.highlight.init);
-            });
-
-            dojo.require("dijit.form.Button");
-            dojo.require("dijit.TitlePane");
-            dojo.require('dijit.layout.ContentPane');
-        </script></head>
-   
-   <body class="soria inlineAlert" style="margin:30px;">
-      <div id="xforms">
-         <div style="display:none;">
-            <xf:model id="model-1">
+      
+      <page>
+         
+         <title>The Switch Element</title>
+         
+         <description>
+            A switch element is a container form control that allows the
+            creation of user interfaces where the user interface can be
+            varied based on user actions and events
+            
+         </description>
+         
+         <references>
+            
+            <w3c ref="switch"></w3c>
+            
+         </references>
+         
+         <content>
+            
+            <models>
                
-               
-               <xf:instance id="instance-1">
+               <xf:model id="model-1">
                   
                   
-                  <data xmlns="" constraint="true" readonly="false" required="false" relevant="true"></data>
+                  <xf:instance id="instance-1">
+                     
+                     
+                     <data constraint="true" readonly="false" required="false" relevant="true"></data>
+                     
+                     
+                  </xf:instance>
                   
                   
-               </xf:instance>
+               </xf:model>
                
+            </models>
+            
+            <samples>
                
-            </xf:model>
-         </div>
-         <div class="pageintro">
-            <div class="pagetitle">The Switch Element</div>
-            <div class="Section">
-               <div class="PageDescription">Description</div>
-               <p>
-                  A switch element is a container form control that allows the
-                  creation of user interfaces where the user interface can be
-                  varied based on user actions and events
+               <section name="standard">
                   
-               </p>
-            </div>
-            <table>
-               <tr>
-                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="../../resources/images/w3c_home_nb.png" alt="W3C" /></a></td>
-                  <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
-               </tr>
-               <tr>
-                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-switch" target="_blank">Recommendation</a></td>
-               </tr>
-               <tr>
-                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html#elems-form-controls" target="_blank">Quick Reference</a></td>
-               </tr>
-            </table>
-         </div>
-         <div class="Section">
-            <div class="Headline">Switch</div>
-            <p class="Description">
-               A switch without appearance renders as a div Element which may contain arbitrary markup and
-               be toggled (changing the active case) with the help of triggers outside of the switch.
-               
-            </p>
-            <div>
-               <div class="Subheadline">XForms Markup</div>
-               <div class="Subsection"><pre><code class="xml">
-&lt;!--XForms UI--&gt;
-&lt;xf:group&gt;
-    &lt;xf:label class="blockLabel"&gt;Switch / Case&lt;/xf:label&gt;
-    &lt;xf:group id="menu" appearance="minimal"&gt;
-        &lt;xf:label class="blockLabel"&gt;Triggers outside Switch / Case&lt;/xf:label&gt;
-        &lt;xf:trigger style="clear:none"&gt;
-            &lt;xf:label&gt;Case 1&lt;/xf:label&gt;
-            &lt;xf:toggle case="switch1-case1"&gt;&lt;/xf:toggle&gt;
-        &lt;/xf:trigger&gt;
-        &lt;xf:trigger style="clear:none"&gt;
-            &lt;xf:label&gt;Case 2&lt;/xf:label&gt;
-            &lt;xf:toggle case="switch1-case2"&gt;&lt;/xf:toggle&gt;
-        &lt;/xf:trigger&gt;
-        &lt;xf:trigger style="clear:none"&gt;
-            &lt;xf:label&gt;Case 3&lt;/xf:label&gt;
-            &lt;xf:toggle case="switch1-case3"&gt;&lt;/xf:toggle&gt;
-        &lt;/xf:trigger&gt;
-        &lt;xf:trigger style="clear:none"&gt;
-            &lt;xf:label&gt;Case 4&lt;/xf:label&gt;
-            &lt;xf:toggle case="switch1-case4"&gt;&lt;/xf:toggle&gt;
-        &lt;/xf:trigger&gt;
-    &lt;/xf:group&gt;
-    &lt;xf:switch id="switch1"&gt;
-        &lt;xf:case id="switch1-case1" selected="true"&gt;
-            &lt;div class="caseContent" style="background:#bbbbff"&gt;CASE 1&lt;/div&gt;
-        &lt;/xf:case&gt;
-        &lt;xf:case id="switch1-case2"&gt;
-            &lt;div class="caseContent" style="background:#ccccff"&gt;CASE 2&lt;/div&gt;
-        &lt;/xf:case&gt;
-        &lt;xf:case id="switch1-case3"&gt;
-            &lt;div class="caseContent" style="background:#ddddff"&gt;CASE 3&lt;/div&gt;
-        &lt;/xf:case&gt;
-        &lt;xf:case id="switch1-case4"&gt;
-            &lt;div class="caseContent" style="background:#eeeeff"&gt;CASE 4&lt;/div&gt;
-        &lt;/xf:case&gt;
-    &lt;/xf:switch&gt;
-&lt;/xf:group&gt;</code></pre></div>
-            </div>
-            <div>
-               <div class="Subheadline">Sample</div>
-               <div class="Sample">
+                  <title>Switch</title>
+                  
+                  <description>
+                     A switch without appearance renders as a div Element which may contain arbitrary markup and
+                     be toggled (changing the active case) with the help of triggers outside of the switch.
+                     
+                  </description>
+                  
                   <xf:group>
                      
                      <xf:label class="blockLabel">Switch / Case</xf:label>
@@ -154,104 +98,60 @@
                         
                         <xf:case id="switch1-case1" selected="true">
                            
-                           <div xmlns="" class="caseContent" style="background:#bbbbff">CASE 1</div>
+                           <div class="caseContent" style="background:#bbbbff">CASE 1</div>
                            
                         </xf:case>
                         
                         <xf:case id="switch1-case2">
                            
-                           <div xmlns="" class="caseContent" style="background:#ccccff">CASE 2</div>
+                           <div class="caseContent" style="background:#ccccff">CASE 2</div>
                            
                         </xf:case>
                         
                         <xf:case id="switch1-case3">
                            
-                           <div xmlns="" class="caseContent" style="background:#ddddff">CASE 3</div>
+                           <div class="caseContent" style="background:#ddddff">CASE 3</div>
                            
                         </xf:case>
                         
                         <xf:case id="switch1-case4">
                            
-                           <div xmlns="" class="caseContent" style="background:#eeeeff">CASE 4</div>
+                           <div class="caseContent" style="background:#eeeeff">CASE 4</div>
                            
                         </xf:case>
                         
                      </xf:switch>
                      
                   </xf:group>
-               </div>
-            </div>
-         </div>
-         <div class="Section">
-            <div class="Headline">Switch appearance 'dijit.TabContainer'</div>
-            <p class="Description">
-               A switch Element with appearance Attribute set to 'dijit.TabContainer' will be rendered as
-               a tabbed panel which can be toggled by clicking a card or by navigating the cards with the
-               keyboard.
+                  
+               </section>
                
-               As the author might need other actions besides simply activating another case ( to e.g. prepare
-               data for the new view) we need a explicit trigger that toggles the wanted case. On the other
-               side when the user clicks a tab we have to let the processor know which trigger has to run
-               for the switching. To allow mapping from active case to the trigger that performs the switch
-               you have to follow a convention to achieve the mapping:
-               write one trigger for each case you want give the trigger an id of 't-' + CASE_ID (where CASE_ID
-               references the respective case you want to activate put all triggers inside a div which you hide
-               from display with a style="display:none;"write your switch as normal and give it an appearance
-               of 'dijit.TabContainer'
-               
-            </p>
-            <div>
-               <div class="Subheadline">XForms Markup</div>
-               <div class="Subsection"><pre><code class="xml">
-&lt;!--XForms UI--&gt;
-&lt;xf:group&gt;
-    &lt;xf:label&gt;Switch / Case&lt;/xf:label&gt;
-    &lt;div style="display:none;"&gt;
-        &lt;xf:trigger id="t-switch2-case1"&gt;
-            &lt;xf:label&gt;Case 1&lt;/xf:label&gt;
-            &lt;xf:toggle case="switch2-case1"&gt;&lt;/xf:toggle&gt;
-        &lt;/xf:trigger&gt;
-        &lt;xf:trigger id="t-switch2-case2"&gt;
-            &lt;xf:label&gt;Case 2&lt;/xf:label&gt;
-            &lt;xf:toggle case="switch2-case2"&gt;&lt;/xf:toggle&gt;
-        &lt;/xf:trigger&gt;
-        &lt;xf:trigger id="t-switch2-case3"&gt;
-            &lt;xf:label&gt;Case 3&lt;/xf:label&gt;
-            &lt;xf:toggle case="switch2-case3"&gt;&lt;/xf:toggle&gt;
-        &lt;/xf:trigger&gt;
-        &lt;xf:trigger id="t-switch2-case4"&gt;
-            &lt;xf:label&gt;Case 4&lt;/xf:label&gt;
-            &lt;xf:toggle case="switch2-case4"&gt;&lt;/xf:toggle&gt;
-        &lt;/xf:trigger&gt;
-    &lt;/div&gt;
-    &lt;xf:switch id="switch2" appearance="dijit:TabContainer"&gt;
-        &lt;xf:case id="switch2-case1" selected="true"&gt;
-            &lt;xf:label&gt;Case 1&lt;/xf:label&gt;
-            &lt;div class="caseContent" style="background:#bbbbff"&gt;CASE 1&lt;/div&gt;
-        &lt;/xf:case&gt;
-        &lt;xf:case id="switch2-case2"&gt;
-            &lt;xf:label&gt;Case 2&lt;/xf:label&gt;
-            &lt;div class="caseContent" style="background:#ccccff"&gt;CASE 2&lt;/div&gt;
-        &lt;/xf:case&gt;
-        &lt;xf:case id="switch2-case3"&gt;
-            &lt;xf:label&gt;Case 3&lt;/xf:label&gt;
-            &lt;div class="caseContent" style="background:#ddddff"&gt;CASE 3&lt;/div&gt;
-        &lt;/xf:case&gt;
-        &lt;xf:case id="switch2-case4"&gt;
-            &lt;xf:label&gt;Case 4&lt;/xf:label&gt;
-            &lt;div class="caseContent" style="background:#eeeeff"&gt;CASE 4&lt;/div&gt;
-        &lt;/xf:case&gt;
-    &lt;/xf:switch&gt;
-&lt;/xf:group&gt;</code></pre></div>
-            </div>
-            <div>
-               <div class="Subheadline">Sample</div>
-               <div class="Sample">
+               <section name="tabAppearance">
+                  
+                  <title>Switch appearance 'dijit.TabContainer'</title>
+                  
+                  <description>
+                     A switch Element with appearance Attribute set to 'dijit.TabContainer' will be rendered as
+                     a tabbed panel which can be toggled by clicking a card or by navigating the cards with the
+                     keyboard.
+                     
+                     As the author might need other actions besides simply activating another case ( to e.g. prepare
+                     data for the new view) we need a explicit trigger that toggles the wanted case. On the other
+                     side when the user clicks a tab we have to let the processor know which trigger has to run
+                     for the switching. To allow mapping from active case to the trigger that performs the switch
+                     you have to follow a convention to achieve the mapping:
+                     write one trigger for each case you want give the trigger an id of 't-' + CASE_ID (where CASE_ID
+                     references the respective case you want to activate put all triggers inside a div which you hide
+                     from display with a style="display:none;"write your switch as normal and give it an appearance
+                     of 'dijit.TabContainer'
+                     
+                  </description>
+                  
                   <xf:group>
                      
                      <xf:label>Switch / Case</xf:label>
                      
-                     <div xmlns="" style="display:none;">
+                     <div style="display:none;">
                         
                         <xf:trigger id="t-switch2-case1">
                            
@@ -293,7 +193,7 @@
                            
                            <xf:label>Case 1</xf:label>
                            
-                           <div xmlns="" class="caseContent" style="background:#bbbbff">CASE 1</div>
+                           <div class="caseContent" style="background:#bbbbff">CASE 1</div>
                            
                         </xf:case>
                         
@@ -301,7 +201,7 @@
                            
                            <xf:label>Case 2</xf:label>
                            
-                           <div xmlns="" class="caseContent" style="background:#ccccff">CASE 2</div>
+                           <div class="caseContent" style="background:#ccccff">CASE 2</div>
                            
                         </xf:case>
                         
@@ -309,7 +209,7 @@
                            
                            <xf:label>Case 3</xf:label>
                            
-                           <div xmlns="" class="caseContent" style="background:#ddddff">CASE 3</div>
+                           <div class="caseContent" style="background:#ddddff">CASE 3</div>
                            
                         </xf:case>
                         
@@ -317,18 +217,21 @@
                            
                            <xf:label>Case 4</xf:label>
                            
-                           <div xmlns="" class="caseContent" style="background:#eeeeff">CASE 4</div>
+                           <div class="caseContent" style="background:#eeeeff">CASE 4</div>
                            
                         </xf:case>
                         
                      </xf:switch>
                      
                   </xf:group>
-               </div>
-            </div>
-         </div>
-      </div>
-      <div style="text-align:right;" id="copyright"><a href="http://www.betterform.de"><img style="vertical-align:text-bottom; margin-right:5px;" src="../../images/betterform_icon16x16.png" alt="betterFORM project" /></a><span>© 2010 betterFORM</span></div>
-   </body>
-   
+                  
+               </section>
+               
+            </samples>
+            
+         </content>
+         
+      </page>
+      
+   </data>
 </html>

@@ -596,6 +596,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
     }
 
     private XSLTGenerator setupTransformer(String xsltPath, String xslFile) throws URISyntaxException {
+/*
         TransformerService transformerService = (TransformerService) getContext().getAttribute(TransformerService.class.getName());
         URI uri = new File(WebFactory.resolvePath(xsltPath, getContext())).toURI().resolve(new URI(xslFile));
 
@@ -603,6 +604,8 @@ public class WebProcessor extends AbstractProcessorDecorator {
         generator.setTransformerService(transformerService);
         generator.setStylesheetURI(uri);
         return generator;
+*/
+        return WebFactory.setupTransformer(xsltPath,xslFile,getContext());
     }
 
     /**

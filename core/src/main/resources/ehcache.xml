@@ -15,7 +15,7 @@
             />
     <cache name="xfSessionCache"
            maxElementsOnDisk="10000"
-           maxElementsInMemory="10"
+           maxElementsInMemory="1"
            eternal="true"
            diskSpoolBufferSizeMB="30"
            diskPersistent="true"

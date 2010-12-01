@@ -1,226 +1,207 @@
-<?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-   
-   <head>
-      <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
+<?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3.org/1999/xhtml">
+   <data xmlns="">
+      
       <title>Textarea Control</title>
-      <link rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
-      <link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css" /><script type="text/javascript">
-            dojo.require("dojox.highlight");
-            dojo.require("dojox.highlight.languages.xml");
-            dojo.addOnLoad(function() {
-            dojo.query("code").forEach(dojox.highlight.init);
-            });
-
-            dojo.require("dijit.form.Button");
-            dojo.require("dijit.TitlePane");
-            dojo.require('dijit.layout.ContentPane');
-        </script></head>
-   
-   <body class="soria inlineAlert" style="margin:30px;">
-      <div id="xforms">
-         <div style="display:none;">
-            <xf:model id="model-1">
+      
+      <page>
+         
+         <title>The textarea Control</title>
+         
+         <description>
+            This form control enables free-form data entry and is
+            intended for use in entering multiline content, e.g., the
+            body of an email message.
+            
+         </description>
+         
+         <references>
+            
+            <w3c ref="textarea"></w3c>
+            
+         </references>
+         
+         <content>
+            
+            <models>
                
-               <xf:instance id="instance-1">
+               <xf:model xmlns="http://www.w3.org/1999/xhtml" id="model-1">
                   
-                  <data xmlns="" constraint="true" readonly="false" required="false" relevant="true">
+                  <xf:instance id="instance-1">
                      
-                     <item constraint="true" readonly="false" required="true" relevant="true">
+                     <data xmlns="" constraint="true" readonly="false" required="false" relevant="true">
                         
-                        <value constraint="true" readonly="false" required="true" relevant="true">&lt;b&gt;Providing&lt;/b&gt;&lt;i&gt;basic&lt;/i&gt;HTML &lt;u&gt;formatting&lt;/u&gt;</value>
+                        <item constraint="true" readonly="false" required="true" relevant="true">
+                           
+                           <value constraint="true" readonly="false" required="true" relevant="true">&lt;b&gt;Providing&lt;/b&gt;&lt;i&gt;basic&lt;/i&gt;HTML
+                              &lt;u&gt;formatting&lt;/u&gt;
+                           </value>
+                           
+                        </item>
                         
-                     </item>
+                     </data>
                      
-                  </data>
+                  </xf:instance>
                   
-               </xf:instance>
+                  <xf:bind nodeset="item">
+                     
+                     <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
+                     
+                     <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
+                     
+                     <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
+                     
+                     <xf:bind nodeset="@required" type="boolean"></xf:bind>
+                     
+                     <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
+                     
+                  </xf:bind>
+                  
+               </xf:model>
                
-               <xf:bind nodeset="item">
-                  
-                  <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
-                  
-                  <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
-                  
-                  <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
-                  
-                  <xf:bind nodeset="@required" type="boolean"></xf:bind>
-                  
-                  <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
-                  
-               </xf:bind>
+            </models>
+            
+            <samples>
                
-            </xf:model>
-         </div>
-         <div class="pageintro">
-            <div class="pagetitle">The textarea Control</div>
-            <div class="Section">
-               <div class="PageDescription">Description</div>
-               <p>
-                  This form control enables free-form data entry and is
-                  intended for use in entering multiline content, e.g., the
-                  body of an email message.
+               <section name="textarea">
                   
-               </p>
-            </div>
-            <table>
-               <tr>
-                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="../../resources/images/w3c_home_nb.png" alt="W3C" /></a></td>
-                  <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
-               </tr>
-               <tr>
-                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-textarea" target="_blank">Recommendation</a></td>
-               </tr>
-               <tr>
-                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html#elems-form-controls" target="_blank">Quick Reference</a></td>
-               </tr>
-            </table>
-         </div>
-         <div class="Section">
-            <div class="Headline">textarea Control</div>
-            <p class="Description">
-               A simple textarea with plain text editing capability.
-               
-            </p>
-            <div>
-               <div class="Subheadline">XForms Markup</div>
-               <div class="Subsection"><pre><code class="xml">
-&lt;!--XForms UI--&gt;
-&lt;xf:textarea id="textarea1" ref="item/value"&gt;
-    &lt;xf:label&gt;simple textarea&lt;/xf:label&gt;
-&lt;/xf:textarea&gt;</code></pre></div>
-            </div>
-            <div>
-               <div class="Subheadline">Sample</div>
-               <div class="Sample">
+                  <title>textarea Control</title>
+                  
+                  <description>
+                     A simple textarea with plain text editing capability.
+                     
+                  </description>
+                  
                   <xf:textarea id="textarea1" ref="item/value">
                      
                      <xf:label>simple textarea</xf:label>
                      
                   </xf:textarea>
-               </div>
-               <div class="Subheadline">Modelitem properties</div>
-               <div class="MIPS">
-                  <xf:input navindex="-1" ref="item/@readonly" class="mips" incremental="true">
+                  
+                  <mips>
                      
-                     <xf:label>readonly</xf:label>
+                     <xf:input navindex="-1" ref="item/@readonly" class="mips" incremental="true">
+                        
+                        <xf:label>readonly</xf:label>
+                        
+                     </xf:input>
                      
-                  </xf:input>
-                  <xf:input navindex="-1" ref="item/@required" class="mips" incremental="true">
+                     <xf:input navindex="-1" ref="item/@required" class="mips" incremental="true">
+                        
+                        <xf:label>required</xf:label>
+                        
+                     </xf:input>
                      
-                     <xf:label>required</xf:label>
+                     <xf:input navindex="-1" ref="item/@relevant" class="mips" incremental="true">
+                        
+                        <xf:label>relevant</xf:label>
+                        
+                     </xf:input>
                      
-                  </xf:input>
-                  <xf:input navindex="-1" ref="item/@relevant" class="mips" incremental="true">
+                     <xf:input navindex="-1" ref="item/@constraint" class="mips" incremental="true">
+                        
+                        <xf:label>valid</xf:label>
+                        
+                     </xf:input>
                      
-                     <xf:label>relevant</xf:label>
-                     
-                  </xf:input>
-                  <xf:input navindex="-1" ref="item/@constraint" class="mips" incremental="true">
-                     
-                     <xf:label>valid</xf:label>
-                     
-                  </xf:input>
-               </div>
-            </div>
-         </div>
-         <div class="Section">
-            <div class="Headline">textarea Control with mediatype 'text/html'</div>
-            <p class="Description">
-               A textarea with HTML editing capability.
+                  </mips>
+                  
+               </section>
                
-            </p>
-            <div>
-               <div class="Subheadline">XForms Markup</div>
-               <div class="Subsection"><pre><code class="xml">
-&lt;!--XForms UI--&gt;
-&lt;xf:textarea id="textarea2" ref="item/value" mediatype="text/html"&gt;
-    &lt;xf:label&gt;&lt;/xf:label&gt;
-&lt;/xf:textarea&gt;</code></pre></div>
-            </div>
-            <div>
-               <div class="Subheadline">Sample</div>
-               <div class="Sample">
+               <section name="htmlTextarea">
+                  
+                  <title>textarea Control with mediatype 'text/html'</title>
+                  
+                  <description>
+                     A textarea with HTML editing capability.
+                     
+                  </description>
+                  
                   <xf:textarea id="textarea2" ref="item/value" mediatype="text/html">
                      
                      <xf:label></xf:label>
                      
                   </xf:textarea>
-               </div>
-               <div class="Subheadline">Modelitem properties</div>
-               <div class="MIPS">
-                  <xf:input navindex="-1" ref="item/@readonly" class="mips" incremental="true">
+                  
+                  <mips>
                      
-                     <xf:label>readonly</xf:label>
+                     <xf:input navindex="-1" ref="item/@readonly" class="mips" incremental="true">
+                        
+                        <xf:label>readonly</xf:label>
+                        
+                     </xf:input>
                      
-                  </xf:input>
-                  <xf:input navindex="-1" ref="item/@required" class="mips" incremental="true">
+                     <xf:input navindex="-1" ref="item/@required" class="mips" incremental="true">
+                        
+                        <xf:label>required</xf:label>
+                        
+                     </xf:input>
                      
-                     <xf:label>required</xf:label>
+                     <xf:input navindex="-1" ref="item/@relevant" class="mips" incremental="true">
+                        
+                        <xf:label>relevant</xf:label>
+                        
+                     </xf:input>
                      
-                  </xf:input>
-                  <xf:input navindex="-1" ref="item/@relevant" class="mips" incremental="true">
+                     <xf:input navindex="-1" ref="item/@constraint" class="mips" incremental="true">
+                        
+                        <xf:label>valid</xf:label>
+                        
+                     </xf:input>
                      
-                     <xf:label>relevant</xf:label>
-                     
-                  </xf:input>
-                  <xf:input navindex="-1" ref="item/@constraint" class="mips" incremental="true">
-                     
-                     <xf:label>valid</xf:label>
-                     
-                  </xf:input>
-               </div>
-            </div>
-         </div>
-         <div class="Section">
-            <div class="Headline">textarea Control with mediatype 'dojo'</div>
-            <p class="Description">
-               This is like the simple textarea except that it grows when the content grows.
+                  </mips>
+                  
+               </section>
                
-            </p>
-            <div>
-               <div class="Subheadline">XForms Markup</div>
-               <div class="Subsection"><pre><code class="xml">
-&lt;!--XForms UI--&gt;
-&lt;xf:textarea id="textarea3" ref="item/value" mediatype="dojo"&gt;
-    &lt;xf:label&gt;&lt;/xf:label&gt;
-&lt;/xf:textarea&gt;</code></pre></div>
-            </div>
-            <div>
-               <div class="Subheadline">Sample</div>
-               <div class="Sample">
+               <section name="dojoTextarea">
+                  
+                  <title>textarea Control with mediatype 'dojo'</title>
+                  
+                  <description>
+                     This is like the simple textarea except that it grows when the content grows.
+                     
+                  </description>
+                  
                   <xf:textarea id="textarea3" ref="item/value" mediatype="dojo">
                      
                      <xf:label></xf:label>
                      
                   </xf:textarea>
-               </div>
-               <div class="Subheadline">Modelitem properties</div>
-               <div class="MIPS">
-                  <xf:input navindex="-1" ref="item/@readonly" class="mips" incremental="true">
+                  
+                  <mips>
                      
-                     <xf:label>readonly</xf:label>
+                     <xf:input navindex="-1" ref="item/@readonly" class="mips" incremental="true">
+                        
+                        <xf:label>readonly</xf:label>
+                        
+                     </xf:input>
                      
-                  </xf:input>
-                  <xf:input navindex="-1" ref="item/@required" class="mips" incremental="true">
+                     <xf:input navindex="-1" ref="item/@required" class="mips" incremental="true">
+                        
+                        <xf:label>required</xf:label>
+                        
+                     </xf:input>
                      
-                     <xf:label>required</xf:label>
+                     <xf:input navindex="-1" ref="item/@relevant" class="mips" incremental="true">
+                        
+                        <xf:label>relevant</xf:label>
+                        
+                     </xf:input>
                      
-                  </xf:input>
-                  <xf:input navindex="-1" ref="item/@relevant" class="mips" incremental="true">
+                     <xf:input navindex="-1" ref="item/@constraint" class="mips" incremental="true">
+                        
+                        <xf:label>valid</xf:label>
+                        
+                     </xf:input>
                      
-                     <xf:label>relevant</xf:label>
-                     
-                  </xf:input>
-                  <xf:input navindex="-1" ref="item/@constraint" class="mips" incremental="true">
-                     
-                     <xf:label>valid</xf:label>
-                     
-                  </xf:input>
-               </div>
-            </div>
-         </div>
-      </div>
-      <div style="text-align:right;" id="copyright"><a href="http://www.betterform.de"><img style="vertical-align:text-bottom; margin-right:5px;" src="../../images/betterform_icon16x16.png" alt="betterFORM project" /></a><span>© 2010 betterFORM</span></div>
-   </body>
-   
+                  </mips>
+                  
+               </section>
+               
+            </samples>
+            
+         </content>
+         
+      </page>
+      
+   </data>
 </html>
