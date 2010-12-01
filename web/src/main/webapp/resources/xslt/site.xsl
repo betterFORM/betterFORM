@@ -46,7 +46,9 @@
                 <link rel="SHORTCUT ICON" href="{$rootDir}/images/betterform.ico"/>
                 <link rel="ICON" href="{$rootDir}/images/betterform.ico" type="image/x-icon"/>
                 <link rel="stylesheet" type="text/css" href="{$rootDir}/styles/bf.css"/>
-                <xsl:copy-of select="//html:head/html:style"/>
+                <xsl:copy-of select="//html:head/html:style"/><xsl:text>
+</xsl:text>
+                <xsl:copy-of select="//html:head/html:script"/>
             </head>
             <body id="{//html:body/@id}">
                 <xsl:copy-of select="@style"/>
@@ -76,22 +78,24 @@
                     </div>
 
                     <div id="content-area">
-                        <div id="sub-header">
-                            <img id="shadowTop" src="{$rootDir}/images/shad_top.jpg" alt=""/>
-                            <div class="pageMarginBox">
-                                <div class="contentBody">
-                                    <xsl:copy-of select="//html:div[@id='sub-header']/*"/>
+                        <img id="shadowTop" src="{$rootDir}/images/shad_top.jpg" alt=""/>
+                        <div id="box" class="box">
+                            <div id="sub-header">
+                                <div class="pageMarginBox">
+                                    <div class="contentBody">
+                                        <xsl:copy-of select="//html:div[@id='sub-header']/*"/>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="main-content">
-                            <div class="pageMarginBox">
-                                <xsl:copy-of select="//html:div[@id='main-content']/*"/>
+                            <div id="main-content">
+                                    <div class="pageMarginBox">
+                                        <xsl:copy-of select="//html:div[@id='main-content']/*"/>
+                                    </div>
                             </div>
+                            <img id="shadowBottom" src="{$rootDir}/images/shad_bottom.jpg" alt=""/>
                         </div>
                     </div>
                     <div id="footer">
-                        <img id="shadowBottom" src="{$rootDir}/images/shad_bottom.jpg" alt=""/>
 
                         <div class="pageMarginBox">
                             <div class="languages">
