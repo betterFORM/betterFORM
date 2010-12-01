@@ -6,7 +6,6 @@
 
 package de.betterform.agent.web;
 
-import com.thoughtworks.xstream.XStream;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import org.apache.commons.httpclient.Cookie;

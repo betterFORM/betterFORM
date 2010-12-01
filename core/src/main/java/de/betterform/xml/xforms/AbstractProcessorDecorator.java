@@ -4,7 +4,6 @@
  */
 package de.betterform.xml.xforms;
 
-import com.thoughtworks.xstream.XStream;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.DOMEventNames;
