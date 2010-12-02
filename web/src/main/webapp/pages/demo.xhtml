@@ -82,7 +82,9 @@
 			padding-bottom:10px;
 
 		}
-
+		#noScript{
+			display:none;
+		}
 
     </style>
 
@@ -120,37 +122,41 @@
 
 
         function runDemo(/*string*/demo) {
-			if(xfReadySubscribers != undefined) {
-				dojo.unsubscribe(xfReadySubscribers);
-				xfReadySubscribers = null;
-			}
+			console.debug("rundemo:",demo);
+				if(xfReadySubscribers != undefined) {
+					dojo.unsubscribe(xfReadySubscribers);
+					xfReadySubscribers = null;
+				}
 
-            xfReadySubscribers = dojo.subscribe("/xf/ready", function(data) {
-                dojo.removeClass(dojo.byId("demoTarget"), "demoOverlay");
-                dojo.style("demoTarget", "opacity", 0);
-                dojo.fadeIn({
-                    node: "demoTarget",
-                    duration:1000
-                }).play();
-                if (dojo.byId("registration") != undefined) {
-                    fluxProcessor.setInlineRoundBorderAlertHandler();
-                } else {
-                    fluxProcessor.setToolTipAlertHandler();
-                }
-            });
-            dojo.fadeOut({
-                node: "demoTarget",
-                duration:200,
-                onBegin: function() {
-                    fluxProcessor.dispatchEvent(demo + 'DemoTrigger');
-                }
-            }).play();
-
+				xfReadySubscribers = dojo.subscribe("/xf/ready", function(data) {
+					dojo.removeClass(dojo.byId("demoTarget"), "demoOverlay");
+					dojo.style("demoTarget", "opacity", 0);
+					dojo.fadeIn({
+						node: "demoTarget",
+						duration:1000
+					}).play();
+					if (dojo.byId("registration") != undefined) {
+						fluxProcessor.setInlineRoundBorderAlertHandler();
+					} else {
+						fluxProcessor.setToolTipAlertHandler();
+					}
+				});
+				dojo.fadeOut({
+					node: "demoTarget",
+					duration:200,
+					onBegin: function() {
+						fluxProcessor.dispatchEvent(demo + 'DemoTrigger');
+					}
+				}).play();
         }
 
         function backToDemo() {
             fluxProcessor.dispatchEvent('backTrigger');
         }
+		dojo.subscribe("/xf/ready", function(){
+			fluxProcessor.skipshutdown=true;
+		});
+		
     </script>
 
 
@@ -189,7 +195,6 @@
         </xf:trigger>
         <xf:trigger id="featureExplorerDemoTrigger">
             <xf:label>run demo</xf:label>
-            <xf:toggle case="c-demoArea"/>
             <xf:load show="new" >
                 <xf:resource value="'../forms/reference/XFormsFeatureExplorer.xhtml'"/>
             </xf:load>
@@ -240,6 +245,10 @@
     </div>
 
     <div id="content">
+		<noscript>
+			<div style="border: thin solid ; width: 100%; color: darkred;position:absolute;top:120px;z-index:999;padding:10px;background:orange">Sorry - this site was optimized for use with JavaScript. You won't be able to run the demos until you activate JavaScript</div>
+		</noscript>
+		
 		<div id="demoHeader">
 			<img id="shadowTop" src="../images/shad_top.jpg" alt=""/>
 			<div class="pageMarginBox">
@@ -263,7 +272,7 @@
                         <a href="javascript:runDemo('contacts');" class="link"><img src="../images/add-l.png" alt="contacts"/></a>
                         <a href="javascript:runDemo('registration');" class="link"><img src="../images/reg-r.png" alt="Registration"/></a>
                         <a href="javascript:runDemo('orderlist');" class="link"><img src="../images/ord-l.png" alt="orderlist"/></a>
-                        <a href="javascript:runDemo('featureExplorer');" class="link"><img src="../images/fea-r.png" alt="XFormsFeatureExplorer"/></a>
+                        <a href="javascript:fluxProcessor.dispatchEvent('featureExplorerDemoTrigger');" class="link"><img src="../images/fea-r.png" alt="XFormsFeatureExplorer"/></a>
 
                     </xf:case>
                     <xf:case id="c-demoArea">
