@@ -15,6 +15,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	padding: 0;
 	vertical-align: baseline;
 }
+
 /*
 a img {
 	border: none;
@@ -30,7 +31,8 @@ a img {
 .tundra * {
 	font-family: Arial, Helvetica, sans-serif;
 }
-body,a{
+
+body, a {
 	font-size: 11pt;
 }
 
@@ -43,17 +45,20 @@ body {
 	background: #565656;
 	text-align: center; /*height:100%;*/
 }
-p,li{
-	line-height:1.2;
+
+p, li {
+	line-height: 1.2;
 }
 
-ul,ol{
-	list-style-type:none;
+ul, ol {
+	list-style-type: none;
 }
-ul,li{
-	margin:0;
-	padding:0;
+
+ul, li {
+	margin: 0;
+	padding: 0;
 }
+
 .tundra body {
 	font-size: 12pt;
 	padding: 0;
@@ -75,8 +80,9 @@ ul, ol {
 */
 
 table {
-	color:#666666;
+	color: #666666;
 }
+
 /*
 ul {
 	list-style-image: url(../images/list.png);
@@ -142,7 +148,7 @@ ul {
 	letter-spacing: 0.3em;
 	font-size: 11pt;
 	float: right;
-	margin-top:7px;
+	margin-top: 7px;
 }
 
 #topnav {
@@ -164,17 +170,25 @@ ul {
 	border: none; /*display:none;*/
 }
 
-#main-content{
-	color:#666666;
+#main-content {
+	color: #666666;
 }
+
 /*
 .logoBar{
 
 }
 .logoBar #logo{
-    float:left;
+	float:left;
 }
 */
+
+.box {
+	margin-top: -24px;
+	width: 100%;
+	border: 1px solid #BABABA;
+	overflow: hidden;
+}
 
 /*
 	##################################################
@@ -276,16 +290,18 @@ a:hover {
 	margin-left: auto;
 	margin-right: auto;
 	margin-bottom: 35px;
-    position: absolute;
-    top:120px;
-    z-index:100;
+	position: absolute;
+	top: 120px;
+	z-index: 100;
 }
-#sub-header{
-    float:none;
-    padding-top:30px;
-    height:130px;
-    
+
+#sub-header {
+	float: none;
+	padding-top: 30px;
+	height: 130px;
+
 }
+
 #shadowTop {
 	width: 760px;
 	margin-left: auto;
@@ -378,7 +394,7 @@ moves the footer in Webkit browsern to the far right.
 
 .page #bottomMenu {
 	display: block;
-	float: right;
+	float: left;
 	font-size: 10pt;
 	color: white;
 	margin-top: 10px;
@@ -416,7 +432,7 @@ h2 {
 	letter-spacing: 0.05em;
 	clear: both;
 	margin-top: 20px;
-	margin-bottom:14px;
+	margin-bottom: 14px;
 }
 
 h3 {
@@ -437,13 +453,14 @@ h3 {
 	text-align: right;
 	margin-left: auto;
 	margin-right: auto;
-	float:right;
+	float: right;
 	padding-top: 11px;
 }
 
 .languages img {
 	display: none;
 }
+
 #index .languages img {
 	display: block;
 	float: right;
@@ -520,25 +537,7 @@ h3 {
 	overflow: hidden;
 }
 
-#download .downloadBox {
-	background: transparent url(../images/downloadButton.png) no-repeat scroll 0 0;
-	width: 378px;
-	height: 78px;
-}
-
-#download .downloadBox #downloadText {
-	font-size: 14pt;
-	color: white;
-	font-size: 14pt;
-	padding: 20px 0 0 22px;
-	margin: 0;
-}
-
-#download .downloadBox #downloadSubtext {
-	color: lightsteelblue;
-	padding-left: 22px;
-}
-
+/*
 #download .header1 {
 	color: #488AA6;
 	display: block;
@@ -547,6 +546,7 @@ h3 {
 	padding-top: 12px;
 	text-align: right;
 }
+*/
 
 #product .boxRightEntryHeading,
 #download .boxRightEntryHeading {
@@ -569,22 +569,22 @@ h3 {
 
 }
 
-.downloadButtonWrapper {
-	float: left;
-}
-
 #documentation .downloadButtonWrapper {
 	float: none;
 }
 
 #documentation .downloadButtonWrapper .buttonText {
 	text-align: left;
-	color:white;
+	color: white;
 }
 
 #sub-header .buttonText {
 	color: white;
 }
+#sub-header p{
+	font-size:0.9em;
+}
+
 
 .downloadButton {
 	background: transparent url(../images/b_getit_170.png) no-repeat scroll 0 0;
@@ -729,32 +729,44 @@ h3 {
 	overflow: hidden;
 }
 
-#formsbrowser table {
+#bfFormBrowser {
+	height: 405px;
+	overflow: auto;
+	background: #D3D3D3;
+}
+
+#bfFormBrowser table {
 	width: 100%;
 	padding: 0;
 	margin: 0 0 30px 0;
-	background: #E7E8E8;
-	border: thin dotted;
-
+	background: #D3D3D3;
+	border: none;
 }
 
-#formsbrowser .formBrowserHeader {
+#bfFormBrowser .formBrowserHeader {
 	padding-bottom: 10px;
 	background: #488AA6;
 	color: white;
 	padding: 5px;
 	font-size: 12pt;
+	text-align: left;
 }
 
-#formsbrowser .directory td {
-
-}
-
-#formsbrowser .file td {
+#bfFormBrowser .directory {
 	background: white;
 }
 
-#formsbrowser .directory .textLink {
+#bfFormBrowser .directory td {
+	text-align: left;
+}
+
+#bfFormBrowser .file td {
+	background: white;
+	text-align: left;
+
+}
+
+#bfFormBrowser .directory .textLink {
 	display: inline-block;
 	margin-bottom: 10px;
 	vertical-align: middle;
