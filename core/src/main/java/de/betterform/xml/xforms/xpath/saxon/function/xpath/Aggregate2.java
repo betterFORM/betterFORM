@@ -149,15 +149,17 @@ public class Aggregate2 extends SystemFunction {
                 return DoubleValue.NaN;
             }
         }
+
         if (sum instanceof NumericValue) {
-            while (true) {
-                AtomicValue next = (AtomicValue)iter.next();
-                if (next == null) {
-                    return sum;
-                }
-                if (next instanceof UntypedAtomicValue) {
-                    next = next.convert(BuiltInAtomicType.DOUBLE, context);
-                } else if (!(next instanceof NumericValue)) {
+            AtomicValue next;
+            while ( (next = (AtomicValue)iter.next()) != null) {
+                if ( next instanceof UntypedAtomicValue ) {
+                    try {
+                        next = next.convert(BuiltInAtomicType.DOUBLE, context);
+                    }  catch (XPathException e) {
+                        return DoubleValue.NaN;
+                    }
+                } else {
                     return DoubleValue.NaN;
                 }
                 sum = ArithmeticExpression.compute(sum, Calculator.PLUS, (NumericValue)next, context);
@@ -167,17 +169,17 @@ public class Aggregate2 extends SystemFunction {
                     return sum;
                 }
             }
+            return sum;
         } else if (sum instanceof DurationValue) {
-            while (true) {
-                AtomicValue next = (AtomicValue)iter.next();
-                if (next == null) {
-                    return sum;
-                }
+            AtomicValue next;
+            while ( (next = (AtomicValue)iter.next()) != null) {
                 if (!(next instanceof DurationValue)) {
                     return DoubleValue.NaN;
                 }
                 sum = ((DurationValue)sum).add((DurationValue)next);
             }
+
+            return sum;
         } else {
             return DoubleValue.NaN;
         }
