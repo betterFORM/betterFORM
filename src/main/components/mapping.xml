@@ -1,0 +1,137 @@
+<mapping providing="id, datatype, appearance, mediatype">
+
+    <dialog>
+
+    </dialog>
+
+    <input type="string" appearance="*">
+    </input>
+
+    <input type="boolean" appearance="*">
+    </input>
+
+    <input type="dateTime" appearance="*" mediatype="*"/>
+    <input type="date" appearance="*" mediatype="*">
+        <param name="id" aspect="processor"/>
+        <param name="classes" aspect="processor+user"/>
+        <param name="pattern" aspect="user"/>
+
+        <template xmlns="xhtml">
+            <!-- markup -->
+            <input id="{$id}" />
+        </template>
+        <implementation>
+            <!--script-->
+            <method name="create" return="object">
+                <script type="text/javascript">
+                    dojo.require("betterform.ui.input.Date");
+                    newWidget = new betterform.ui.input.Date({
+                        name:{$id},
+                        value:{$id},
+                        "class":{$classes},
+                        title:dojo.attr(sourceNode, "title"),
+                        constraints:{
+                            selector:'date',
+                            datePattern:$pattern
+                        },
+                        xfControlId:{$id}
+                    },
+                    sourceNode);
+                </script>
+            </method>
+        </implementation>
+
+    </input>
+
+    <output type="boolean" appearance="*" mediatype="text/html">
+
+    </output>
+
+    <output type="*" appearance="*" mediatype="text/html">
+
+    </output>
+
+    <range type="*" appearance="*">
+
+    </range>
+
+    <secret>
+
+    </secret>
+
+    <select appearance="*">
+
+    </select>
+
+    <select1 appearance="*">
+
+    </select1>
+
+    <textarea appearance="*" mediatype="text/html">
+
+    </textarea>
+
+    <trigger appearance="*">
+
+    </trigger>
+
+    <submit>
+
+    </submit>
+
+    <upload type="anyURI">
+
+    </upload>
+
+    <upload type="hexBinary">
+
+    </upload>
+
+    <upload type="base64Encoded">
+
+    </upload>
+
+    <group appearance="full">
+
+    </group>
+
+    <group appearance="compact">
+
+    </group>
+    <group appearance="minimal">
+
+    </group>
+
+    <repeat appearance="full">
+
+    </repeat>
+
+    <repeat appearance="minimal">
+
+    </repeat>
+
+    <repeat appearance="compact">
+
+    </repeat>
+
+    <repeat appearance="*">
+
+    </repeat >
+
+    <switch appearance="bf:tabContainer">
+
+    </switch>
+
+    <switch appearance="*">
+
+    </switch>
+</mapping>
+
+
+        <!--
+
+        case:
+            var bar = createWidget(...};
+        case:
+
+        -->
