@@ -6,6 +6,7 @@
 
 <xsl:stylesheet version="2.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xhtml="http://www.w3.org/1999/xhtml"
                 xmlns:bf="http://betterform.sourceforge.net/xforms"
                 xmlns:gen = "betterFORM-mapping-generator"
     exclude-result-prefixes="bf xsl">
@@ -20,21 +21,22 @@
 
 
 
-         <xsl:variable name="xfTypeSlash" select="translate(@type, '/','')"/>
+         <xsl:variable name="xfTypeNamespace" select="if(contains(@type,':')) then substring-after(@type, ':') else @type"/>
+         <xsl:variable name="xfTypeSlash" select="translate($xfTypeNamespace, '/','')"/>
          <xsl:variable name="xfTypeColon" select="translate($xfTypeSlash, ':','')"/>
-         <xsl:variable name="xfType" select="translate($xfTypeColon, '*', 'DefaultType')"/>
-
+         <xsl:variable name="xfType" select="translate($xfTypeColon, '*', '-')"/>
+          
          <xsl:variable name="xfAppearanceSlash" select="translate(@appearance, '/','')"/>
          <xsl:variable name="xfAppearanceColon" select="translate($xfAppearanceSlash, ':','')"/>
-         <xsl:variable name="xfAppearance" select="translate($xfAppearanceColon, '*', 'DefaultAppearance')"/>
+         <xsl:variable name="xfAppearance" select="translate($xfAppearanceColon, '*', '-')"/>
 
          <xsl:variable name="xfMediatypeSlash" select="translate(@mediatype, '/','')"/>
          <xsl:variable name="xfMediatypeColon" select="translate($xfMediatypeSlash, ':','')"/>
-         <xsl:variable name="xfMediatype" select="translate($xfMediatypeColon, '*', 'DefaultMediatype')"/>
+         <xsl:variable name="xfMediatype" select="translate($xfMediatypeColon, '*', '-')"/>
 
 
 <gen:template name="{concat(local-name(), $xfType,$xfAppearance,$xfMediatype)}">
-    <gen:copy-of select="template/*"/>
+    <xsl:copy-of select="xhtml:template/*[1]"/>
 </gen:template>
      </xsl:for-each>
 

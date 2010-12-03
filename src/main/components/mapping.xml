@@ -1,9 +1,7 @@
-<mapping providing="id, datatype, appearance, mediatype">
-
+<mapping>
     <dialog>
 
     </dialog>
-
     <input type="string" appearance="*">
     </input>
 
@@ -11,17 +9,31 @@
     </input>
 
     <input type="dateTime" appearance="*" mediatype="*"/>
+
+<!--
     <input type="date" appearance="*" mediatype="*">
         <param name="id" aspect="processor"/>
         <param name="classes" aspect="processor+user"/>
         <param name="pattern" aspect="user"/>
 
-        <template xmlns="xhtml">
-            <!-- markup -->
+        <template xmlns="http://www.w3.org/1999/xhtml">
             <input id="{$id}" />
+            &lt;!&ndash;
+            class durchkopieren
+            style
+            name
+            incremental
+            delay
+            tabindex
+            title
+
+            &ndash;&gt;
+
+
+
         </template>
         <implementation>
-            <!--script-->
+            &lt;!&ndash;script&ndash;&gt;
             <method name="create" return="object">
                 <script type="text/javascript">
                     dojo.require("betterform.ui.input.Date");
@@ -42,7 +54,23 @@
         </implementation>
 
     </input>
+-->
+    <input type="*" appearance="*" mediatype="*">
+        <template xmlns="http://www.w3.org/1999/xhtml">
+            <!-- markup -->
+            <input />
+            <!--
+            class durchkopieren
+            style
+            name
+            incremental
+            delay
+            tabindex
+            title
+            -->
+        </template>
 
+    </input>
     <output type="boolean" appearance="*" mediatype="text/html">
 
     </output>

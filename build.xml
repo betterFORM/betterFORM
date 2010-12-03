@@ -10,6 +10,11 @@
     <property name="betty.dir" value="${basedir}/betty"/>
     <property name="server.dir" value="${basedir}/tools/server"/>
     <property name="target.dir" value="${basedir}/target"/>
+
+    <path id="generator.libs" description="classpath for compiling core classes">
+        <pathelement location="${core.dir}/src/main/lib/saxon-9.2.1.5.jar"/>
+    </path>
+
     <!-- local Web properties -->
 
     <!-- **************************************** HOUSEKEEPING **************************************** -->
@@ -123,4 +128,21 @@
 
     </target>
 
+    <target name="transformToXFormsUsingComponent">
+         <xslt in="${basedir}/src/main/xforms/demo/registration.xhtml"
+               out="${basedir}/registration.xhtml"
+               style="${basedir}/src/main/resources/xslt/component.xsl"
+               force="true">
+             <classpath refid="generator.libs"/>
+         </xslt>
+     </target>
+
+
+    <target name="componentXSL">
+        <xslt in="${basedir}/src/main/components/mapping.xml"
+              out="${basedir}/src/main/resources/xslt/mappings.xsl"
+              style="${basedir}/src/main/components/mapping2xsl.xsl">
+            <classpath refid="generator.libs"/>
+        </xslt>
+    </target>
 </project>
