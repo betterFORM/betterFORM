@@ -50,7 +50,7 @@ public class XSLTFilter implements Filter {
         PrintWriter out = response.getWriter();
         CharResponseWrapper wrapper = new CharResponseWrapper((HttpServletResponse) response);
         try {
-            XSLTGenerator generator = WebFactory.setup  Transformer(xsltPath,xslFile,servletContext);
+            XSLTGenerator generator = WebFactory.setupTransformer(xsltPath,xslFile,servletContext);
 //        Source styleSource = new StreamSource(styleFile);
 
             wrapper.setContentType("text/html");
