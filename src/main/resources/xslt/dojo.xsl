@@ -217,8 +217,8 @@
                     </xsl:choose>
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dojo/resources/dojo.css";
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dojox/widget/Toaster/Toaster.css";
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojox/layout/resources/FloatingPane.css";
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojox/layout/resources/ResizeHandle.css";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dojox/layout/resources/FloatingPane.css";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dojox/layout/resources/ResizeHandle.css";
                     
                 </style><xsl:text>
 </xsl:text>
@@ -241,7 +241,7 @@
 </xsl:text>
             </xsl:when>
             <xsl:otherwise>
-                <script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/dojo/dojo.js')}">
+                <script type="text/javascript">
                     var djConfig = {
                         debugAtAllCosts:<xsl:value-of select="$debug-enabled"/>,
                         locale:'<xsl:value-of select="$locale"/>',
