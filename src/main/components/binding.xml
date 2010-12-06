@@ -1,0 +1,181 @@
+<xbl:xbl xmlns:xbl="http://betterform.de/ns/xbl"
+         xmlns:xf="http://www.w3.org/2002/xforms"
+         xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+    <!-- #################################### BINDING TEMPLATE #################################### -->
+    <!-- #################################### BINDING TEMPLATE #################################### -->
+    <!-- #################################### BINDING TEMPLATE #################################### -->
+    <!-- we use XPath instead of CSS matching here to the sake of easier processing with XSLT -->
+    <!--
+    <xbl:binding element="[qualified name of element e.g. xf:input or html:div]" type="boolean" appearance="*" mediatype="text/html">
+        <xbl:template>
+            &lt;!&ndash; markup template &ndash;&gt;
+        </xbl:template>
+        <xbl:implementation>
+            &lt;!&ndash; constructor function for component plus API implementation if any &ndash;&gt;
+        </xbl:implementation>
+        <xbl:handlers>
+            <xbl:handler>
+                &lt;!&ndash; event handler function &ndash;&gt;
+            </xbl:handler>
+        </xbl:handlers>
+        <xbl:resources>
+            <style>
+                &lt;!&ndash; CSS stylesheets to be loaded&ndash;&gt;
+            </style>
+        </xbl:resources>
+
+    </xbl:binding>
+-->
+
+    <!-- #################################### SAMPLE BINDING ############################## -->
+    <!-- #################################### SAMPLE BINDING ############################## -->
+    <!-- #################################### SAMPLE BINDING ############################## -->
+    <xbl:binding element="xf:input" type="boolean">
+        <xbl:template>
+            <div id="{@id}" class="{$calculatedClasses}" dojoType="betterform.ui.Control"
+                 xmlns="http://www.w3.org/1999/xhtml">
+                <!-- xf:label will handled here - apply-binding-sheets is used to signal that this element itself has to
+                be processed instead of just inserted as is. (in XSLT apply-templates versus value-of resp. copy) -->
+                <!--<xsl:apply-templates select="xf:label"/>-->
+                <xbl:content includes="xf:label" apply-binding-sheets="true" xmlns:xf="http://www.w3.org/2002/xforms"/>
+                <input type="checkbox" id="{@id-value}" class="xfValue"/>
+                <xbl:content includes="xf:alert" apply-binding-sheets="true"/>
+                <xbl:content includes="xf:hint" apply-binding-sheets="true"/>
+                <xbl:content includes="xf:help" apply-binding-sheets="true"/>
+            </div>
+        </xbl:template>
+        <xbl:handlers>
+            <xbl:handler event="onClick">
+                fluxProcessor.setControlValue();
+                <!-- propagate event -->
+                <!--publish({@id},{event:onClick});-->
+            </xbl:handler>
+        </xbl:handlers>
+
+    </xbl:binding>
+
+    <xbl:binding element="xf:group" appearance="full">
+        <xbl:template>
+            <div id="{@id}" class="{$calculatedClasses}" dojoType="betterform.ui.container.Group"
+                 xmlns="http://www.w3.org/1999/xhtml">
+                <!-- xf:label will handled here - apply-binding-sheets is used to signal that this element itself has to
+                be processed instead of just inserted as is. (in XSLT apply-templates versus value-of resp. copy) -->
+                <xbl:content includes="xf:label" apply-binding-sheets="true"/>
+                <xbl:content includes="*" apply-binding-sheets="true"/>
+            </div>
+        </xbl:template>
+    </xbl:binding>
+
+
+    <!-- #################################### BINDINGS ############################## -->
+    <!-- #################################### BINDINGS ############################## -->
+    <!-- #################################### BINDINGS ############################## -->
+
+    <xbl:binding element="xf:dialog">
+    </xbl:binding>
+
+    <xbl:binding element="xf:input" type="string" appearance="*">
+    </xbl:binding>
+
+    <xbl:binding element="xf:input" type="boolean" appearance="*">
+    </xbl:binding>
+
+    <xbl:binding element="xf:input" type="dateTime" appearance="*" mediatype="*"/>
+
+    <xbl:binding element="xf:input" type="*" appearance="*" mediatype="*">
+        <template xmlns="http://www.w3.org/1999/xhtml">
+            <!-- markup -->
+            <input/>
+            <!--
+            class durchkopieren
+            style
+            name
+            incremental
+            delay
+            tabindex
+            title
+            -->
+        </template>
+
+    </xbl:binding>
+
+    <xbl:binding element="xf:output" type="boolean" appearance="*" mediatype="text/html">
+    </xbl:binding>
+
+    <xbl:binding element="xf:output" type="*" appearance="*" mediatype="text/html">
+    </xbl:binding>
+
+    <xbl:binding element="xf:range" type="*" appearance="*">
+    </xbl:binding>
+
+    <xbl:binding element="xf:secret">
+    </xbl:binding>
+
+    <xbl:binding element="xf:select" appearance="*">
+    </xbl:binding>
+
+    <xbl:binding element="xf:select1" appearance="*">
+    </xbl:binding>
+
+    <xbl:binding element="xf:textarea" appearance="*" mediatype="text/html">
+    </xbl:binding>
+
+    <xbl:binding element="xf:trigger" appearance="*">
+    </xbl:binding>
+
+    <xbl:binding element="xf:submit">
+    </xbl:binding>
+
+    <xbl:binding element="xf:upload" type="anyURI">
+    </xbl:binding>
+
+    <xbl:binding element="xf:upload" type="hexBinary">
+    </xbl:binding>
+
+    <xbl:binding element="xf:upload" type="base64Encoded">
+    </xbl:binding>
+
+    <xbl:binding element="xf:group" appearance="full">
+    </xbl:binding>
+
+    <xbl:binding element="xf:group" appearance="compact">
+    </xbl:binding>
+
+    <xbl:binding element="xf:group" appearance="minimal">
+    </xbl:binding>
+
+    <xbl:binding element="xf:repeat" appearance="full">
+    </xbl:binding>
+
+    <xbl:binding element="xf:repeat" appearance="minimal">
+    </xbl:binding>
+
+    <xbl:binding element="xf:repeat" appearance="compact">
+    </xbl:binding>
+
+    <xbl:binding element="xf:repeat" appearance="*">
+    </xbl:binding>
+
+    <xbl:binding element="xf:switch" appearance="bf:tabContainer">
+    </xbl:binding>
+
+    <xbl:binding element="xf:switch" appearance="*">
+    </xbl:binding>
+
+    <!-- general script functions used by the bindings. May be used to put the libs to be loaded ?-->
+    <xbl:script>
+        function publish(topic, args) {
+            fluxProcessor.publish(topic, args);
+        }
+    </xbl:script>
+</xbl:xbl>
+
+
+        <!--
+
+        case:
+            var bar = createWidget(...};
+        case:
+
+        -->

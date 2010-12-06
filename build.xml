@@ -145,4 +145,12 @@
             <classpath refid="generator.libs"/>
         </xslt>
     </target>
+    
+    <target name="xbl2xsl">
+        <xslt in="${basedir}/src/main/components/binding.xml"
+              out="${basedir}/src/main/resources/xslt/xbl.xsl"
+              style="${basedir}/src/main/components/xbl2xsl.xsl">
+            <classpath refid="generator.libs"/>
+        </xslt>
+    </target>
 </project>
