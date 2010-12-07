@@ -1,0 +1,44 @@
+<mappings>
+    <!--This is a draft for a mapping from XForms control to concrete controls. It's intended to be used
+     in the XSLT transformation responsible for rendering the UI and at the same time for generating
+     the UIElementFactory that instanciates the concrete controls. -->
+    <input>
+
+        <!-- 'string**' -->
+        <creator datatype="string" appearance="*" mediatype="*">
+            <implemenation>
+                newWidget = new betterform.ui.input.TextField({
+                    name:$controlId + "-value",
+                    value:$xfValue,
+                    "class":"xfValue",
+                    title:$title,
+                    xfControlId:$controlId
+                }, sourceNode);
+            </implemenation>
+        </creator>
+        <!-- 'boolean**' -->
+        <creator datatype="boolean" appearance="*" mediatype="*"/>
+        <!-- 'date**' -->
+        <creator datatype="date" appearance="*" mediatype="*"/>
+        <!-- 'dateminimal*' -->
+        <creator datatype="date" appearance="minimal" mediatype="*"/>
+        <!-- 'dateISO8601*' -->
+        <creator datatype="date" appearance="ISO8601*" mediatype="*"/>
+        <!-- 'dateTime**' -->
+        <creator datatype="dateTime" appearance="*" mediatype="*"/>
+    </input>
+
+
+
+
+
+
+    <output></output>
+    <range></range>
+    <secret></secret>
+    <select1></select1>
+    <select></select>
+    <textarea></textarea>
+    <trigger></trigger>
+    <upload></upload>
+</mappings>

@@ -152,8 +152,9 @@
     </target>
 
     <target name="testxblxsl">
-        <xslt in="${basedir}/src/main/xforms/demo/registration.xhtml"
+        <xslt in="${basedir}/tools/XFormsDumpToXHTML/dump.xml"
               out="${basedir}/testoutput.html"
+              force="true"             
               style="${basedir}/src/main/resources/xslt/xbl.xsl">
             <classpath refid="transform.class.path"/>
         </xslt>

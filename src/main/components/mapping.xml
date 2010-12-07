@@ -1,5 +1,24 @@
-<mapping>
+<xbl xmlns="http://www.w3.org/ns/xbl">
+    <binding element="xf:input[bf:data/@datatype='boolean']">
+        <templates>
+            <template></template>
+        </templates>
+        <implementation>
+
+        </implementation>
+        <handlers>
+            <handler></handler>
+        </handlers>
+        <resources>
+            <style/>
+        </resources>
+
+    </binding>
+    <!-- general script functions used by the bindings. May be used to put the libs to be loaded ?-->
+    <script>
+    </script>
     <dialog>
+
 
     </dialog>
     <input type="string" appearance="*">
@@ -153,7 +172,7 @@
     <switch appearance="*">
 
     </switch>
-</mapping>
+</xbl>
 
 
         <!--

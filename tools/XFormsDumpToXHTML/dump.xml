@@ -3,21 +3,34 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema"
       xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:bf="http://betterform.sourceforge.net/xforms">
     <head>
-        <title>Complex Alert Test</title>
-        <style type="text/css">
-            .xfGroupLabel {
-                font-size: large;
-                font-weight: bolder;
-            }
-
-
-        </style>
+        <title>test</title>
     </head>
     <body class="tundra" style="overflow:hidden;">
-        <div></div>
-        <xf:trigger appearance="full" id="C967">
-            <xf:label id="C968">Debug</xf:label>
-            <xf:send id="C969" submission="s-debug"/>
-        </xf:trigger>
+        <div>
+            <xf:model>
+                <xf:instance xmlns="">
+                    <data/>
+                </xf:instance>
+            </xf:model>
+        </div>
+<!--
+        <xf:input id="foo" ref="data">
+            <xf:label>Hallo</xf:label>
+            <xf:alert>Testalert</xf:alert>
+        </xf:input>
+-->
+        <xf:group id="baz" appearance="full">
+            <xf:label>group label</xf:label>
+            <xf:input id="bar" ref="data">
+                <xf:label>Hallo</xf:label>
+                <xf:alert>Testalert</xf:alert>
+            </xf:input>
+        </xf:group>
+        <xf:group appearance="repeat" nodeset="foo/bar">
+            <xf:label>repeat group label</xf:label>
+            <xf:input ref="xxx">
+                <xf:label>xxx-label</xf:label>
+            </xf:input>
+        </xf:group>
     </body>
 </html>

@@ -1,6 +1,14 @@
 <xbl:xbl xmlns:xbl="http://betterform.de/ns/xbl"
          xmlns:xf="http://www.w3.org/2002/xforms"
-         xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+         xmlns="http://www.w3.org/1999/xhtml"
+         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+        xmlns:bfb="http://betterform.de/binding">
+
+
+    <!-- used in stylesheet generation to build include the base stylesheet (useragent stylesheet) -->
+    <bfb:resources>
+        <bfb:xslt id="dojo" href="dojo.xsl"/>
+    </bfb:resources>
 
     <!-- #################################### BINDING TEMPLATE #################################### -->
     <!-- #################################### BINDING TEMPLATE #################################### -->
@@ -31,15 +39,17 @@
     <!-- #################################### SAMPLE BINDING ############################## -->
     <!-- #################################### SAMPLE BINDING ############################## -->
     <!-- #################################### SAMPLE BINDING ############################## -->
-    <xbl:binding element="xf:input" type="boolean">
+    <xbl:binding element="xf:input">
         <xbl:template>
-            <div id="{@id}" class="{$calculatedClasses}" dojoType="betterform.ui.Control"
+            <div id="{@id}" dojoType="betterform.ui.Control"
                  xmlns="http://www.w3.org/1999/xhtml">
                 <!-- xf:label will handled here - apply-binding-sheets is used to signal that this element itself has to
                 be processed instead of just inserted as is. (in XSLT apply-templates versus value-of resp. copy) -->
                 <!--<xsl:apply-templates select="xf:label"/>-->
-                <xbl:content includes="xf:label" apply-binding-sheets="true" xmlns:xf="http://www.w3.org/2002/xforms"/>
-                <input type="checkbox" id="{@id-value}" class="xfValue"/>
+                <div class="myFlashyLabel">
+                    <xbl:content includes="xf:label" apply-binding-sheets="true"/>
+                </div>
+                <input type="text" id="{@id}-value" class="xfValue"/>
                 <xbl:content includes="xf:alert" apply-binding-sheets="true"/>
                 <xbl:content includes="xf:hint" apply-binding-sheets="true"/>
                 <xbl:content includes="xf:help" apply-binding-sheets="true"/>
@@ -57,12 +67,46 @@
 
     <xbl:binding element="xf:group" appearance="full">
         <xbl:template>
-            <div id="{@id}" class="{$calculatedClasses}" dojoType="betterform.ui.container.Group"
+            <div id="{@id}" class="myCustomGroup" dojoType="betterform.ui.container.Group"
                  xmlns="http://www.w3.org/1999/xhtml">
                 <!-- xf:label will handled here - apply-binding-sheets is used to signal that this element itself has to
                 be processed instead of just inserted as is. (in XSLT apply-templates versus value-of resp. copy) -->
                 <xbl:content includes="xf:label" apply-binding-sheets="true"/>
-                <xbl:content includes="*" apply-binding-sheets="true"/>
+
+                <table>
+                    <tr>
+                        <xbl:content includes="*[exists(xf:label)]">
+                            <td>
+                                <xbl:content includes="xf:label" apply-binding-sheets="true"/>
+                            </td>
+                            <td>
+                                <xbl:content includes="."  apply-binding-sheets="true"/>
+                            </td>
+                        </xbl:content>
+                    </tr>
+                </table>
+
+            </div>
+        </xbl:template>
+    </xbl:binding>
+
+    <xbl:binding element="xf:group" appearance="repeat">
+        <xbl:template>
+            <div id="{@id}" class="myCustomGroup" dojoType="betterform.ui.container.Group"
+                 xmlns="http://www.w3.org/1999/xhtml">
+                <!-- xf:label will handled here - apply-binding-sheets is used to signal that this element itself has to
+                be processed instead of just inserted as is. (in XSLT apply-templates versus value-of resp. copy) -->
+                <xbl:content includes="xf:label" apply-binding-sheets="true"/>
+
+<!--
+                <xbl:content-forEach includes="*[exists(xf:label)]">
+                    <xbl:content includes="." apply-binding-sheets="true"/>
+                </xbl:content-forEach>
+-->
+
+                <xf:repeat nodeset="" id="{@id}" appearance="compact">
+                    <xbl:content includes="*" apply-binding-sheets="true"/>
+                </xf:repeat>
             </div>
         </xbl:template>
     </xbl:binding>
@@ -83,11 +127,12 @@
 
     <xbl:binding element="xf:input" type="dateTime" appearance="*" mediatype="*"/>
 
+<!--
     <xbl:binding element="xf:input" type="*" appearance="*" mediatype="*">
         <template xmlns="http://www.w3.org/1999/xhtml">
-            <!-- markup -->
+            &lt;!&ndash; markup &ndash;&gt;
             <input/>
-            <!--
+            &lt;!&ndash;
             class durchkopieren
             style
             name
@@ -95,10 +140,11 @@
             delay
             tabindex
             title
-            -->
+            &ndash;&gt;
         </template>
 
     </xbl:binding>
+-->
 
     <xbl:binding element="xf:output" type="boolean" appearance="*" mediatype="text/html">
     </xbl:binding>
@@ -136,9 +182,11 @@
     <xbl:binding element="xf:upload" type="base64Encoded">
     </xbl:binding>
 
+<!--
     <xbl:binding element="xf:group" appearance="full">
     </xbl:binding>
 
+-->
     <xbl:binding element="xf:group" appearance="compact">
     </xbl:binding>
 
