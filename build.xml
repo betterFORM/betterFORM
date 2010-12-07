@@ -2,18 +2,15 @@
 <!-- $Id: build.xml,v 1.90 2006/11/16 23:55:43 joernt Exp $ -->
 <project id="betterform-project" name="betterForm Project" default="package" basedir=".">
 
+    <property name="core.dir" value="${basedir}/core"/>
     <xmlproperty file="build.properties.xml"
                  semanticAttributes="true" keepRoot="false"/>
 
-    <property name="core.dir" value="${basedir}/core"/>
     <property name="web.dir" value="${basedir}/web"/>
     <property name="betty.dir" value="${basedir}/betty"/>
     <property name="server.dir" value="${basedir}/tools/server"/>
     <property name="target.dir" value="${basedir}/target"/>
 
-    <path id="generator.libs" description="classpath for compiling core classes">
-        <pathelement location="${core.dir}/src/main/lib/saxon-9.2.1.5.jar"/>
-    </path>
 
     <!-- local Web properties -->
 
@@ -133,7 +130,7 @@
                out="${basedir}/registration.xhtml"
                style="${basedir}/src/main/resources/xslt/component.xsl"
                force="true">
-             <classpath refid="generator.libs"/>
+             <classpath refid="transform.class.path"/>
          </xslt>
      </target>
 
@@ -142,7 +139,7 @@
         <xslt in="${basedir}/src/main/components/mapping.xml"
               out="${basedir}/src/main/resources/xslt/mappings.xsl"
               style="${basedir}/src/main/components/mapping2xsl.xsl">
-            <classpath refid="generator.libs"/>
+            <classpath refid="transform.class.path"/>
         </xslt>
     </target>
     
@@ -150,7 +147,16 @@
         <xslt in="${basedir}/src/main/components/binding.xml"
               out="${basedir}/src/main/resources/xslt/xbl.xsl"
               style="${basedir}/src/main/components/xbl2xsl.xsl">
-            <classpath refid="generator.libs"/>
+            <classpath refid="transform.class.path"/>
         </xslt>
     </target>
+
+    <target name="testxblxsl">
+        <xslt in="${basedir}/src/main/xforms/demo/registration.xhtml"
+              out="${basedir}/testoutput.html"
+              style="${basedir}/src/main/resources/xslt/xbl.xsl">
+            <classpath refid="transform.class.path"/>
+        </xslt>
+    </target>
+
 </project>

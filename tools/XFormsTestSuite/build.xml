@@ -6,17 +6,19 @@
     <!-- **************************************** PROPERTIES **************************************** -->
     <!-- **************************************** PROPERTIES **************************************** -->
     <property name="project.dir" value="${basedir}"/>
+    <property name="core.dir" value="${basedir}/../../core"/>
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
     <property name="target.dir" value="${basedir}/target"/>
-    <property name="core.dir" value="${basedir}/../../core"/>
     <property name="lib.dir" value="${basedir}/../../core/src/main/lib"/>
 
+<!--
     <path id="generator.libs" description="classpath for compiling core classes">
         <pathelement location="${lib.dir}/saxon-9.0.jar"/>
         <pathelement location="${lib.dir}/saxon-dom-9.0.jar"/>
         <pathelement location="${lib.dir}/xercesImpl-2.8.0.jar"/>
         <pathelement location="${lib.dir}/xml-apis-1.0.b2.jar" />
     </path>
+-->
 
     <path id="treewalker.lib" description="classpath for compiling core classes">
         <pathelement location="lib/hdlg/hdlg.jar"/>
@@ -66,7 +68,7 @@
              <param name="server" expression="${webtest.server}"/>
             <param name="targetURL" expression="${webtest.url}"/>
             <param name="rootDir" expression="${basedir}"/>
-            <classpath refid="generator.libs"/>
+            <classpath refid="transform.class.path"/>
         </xslt>
 
         <echo>Merge generated and existing Selenium HTML Tests</echo>

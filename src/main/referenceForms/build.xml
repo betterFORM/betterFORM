@@ -6,10 +6,8 @@
 <project name="betterFORM reference generator" default="generate-forms" basedir=".">
     <!--<xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>-->
     <property name="core.dir" value="${basedir}/../../../core"/>    
-
-    <path id="generator.libs" description="classpath for compiling core classes">
-        <pathelement location="${core.dir}/src/main/lib/saxon-9.2.1.5.jar"/>
-    </path>
+    <xmlproperty file="../../../build.properties.xml"
+                 semanticAttributes="true" keepRoot="false"/>
 
     <target name="generate-forms">
         <xslt basedir="${basedir}/xml"
@@ -18,7 +16,7 @@
               force="true"
               includes="*.xml"
               extension=".xhtml">
-            <classpath refid="generator.libs"/>
+            <classpath refid="transform.class.path"/>
         </xslt>
     </target>
 

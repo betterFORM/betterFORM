@@ -3,7 +3,7 @@
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
     <!-- >>>>> These properties only apply to the targets that deal with deployment into *existing* eXist installation-->
-    <property name="exist.dir" value="ENTER-YOUR-EXIST-INSTALL-DIR"/>
+    <property name="exist.dir" value="/Applications/betterformXRX"/>
 
     <property name="exist.bfExtension.home" value="${exist.dir}/extensions/betterform"/>
     <property name="exist.bfExtension.dir" value="${exist.bfExtension.home}/target/betterform"/>
@@ -18,10 +18,7 @@
     <property name="target.dir" value="${basedir}/target"/>
     <property name="webapp.dir" value="${basedir}/target/${web.app.name}"/>
 
-    <path id="generator.libs" description="classpath for compiling core classes">
-        <pathelement location="${core.dir}/src/main/lib/saxon-9.0.jar"/>
-        <pathelement location="${core.dir}/src/main/lib/saxon-dom-9.0.jar"/>
-    </path>
+    <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
     <target name="clean">
         <delete dir="${target.dir}" failonerror="false"/>
@@ -198,7 +195,7 @@
               extension=".xml"
               filenameparameter="filename"
               filedirparameter="filedir">
-            <classpath refid="generator.libs"/>
+            <classpath refid="transform.class.path"/>
             <param name="resultDir" expression="${tasks.dir}/../taskSorted"/>
         </xslt>
         <delete dir="${tasks.dir}/../taskEmpty"/>

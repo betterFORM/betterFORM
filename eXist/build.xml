@@ -15,13 +15,11 @@
     <property name="src.dir" value="${basedir}/../src"/>
     <property name="web.dir" value="${basedir}/../web"/>
     <property name="core.dir" value="${basedir}/../core"/>
+    <xmlproperty file="../build.properties.xml"
+                 semanticAttributes="true" keepRoot="false"/>
+
     <property name="target.dir" value="${basedir}/target/src/main"/>
     <property name="webapp.dir" value="${target.dir}/webapp"/>
-
-    <path id="generator.libs" description="classpath for compiling core classes">
-        <pathelement location="${core.dir}/src/main/lib/saxon-9.0.jar"/>
-        <pathelement location="${core.dir}/src/main/lib/saxon-dom-9.0.jar"/>
-    </path>
 
     <target name="clean">
         <delete dir="${basedir}/target" failonerror="false"/>
@@ -227,7 +225,7 @@
               extension=".xml"
               filenameparameter="filename"
               filedirparameter="filedir">
-            <classpath refid="generator.libs"/>
+            <classpath refid="transform.class.path"/>
             <param name="resultDir" expression="${tasks.dir}/../taskSorted"/>
         </xslt>
         <delete dir="${tasks.dir}/../taskEmpty"/>

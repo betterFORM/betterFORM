@@ -20,13 +20,6 @@
     <xmlproperty file="../build.properties.xml"
              semanticAttributes="true" keepRoot="false" />
 
-    <path id="generator.libs" description="classpath for compiling core classes">
-        <pathelement location="${project.dir}/core/src/main/lib/saxon-9.2.1.5.jar"/>
-        <!--<pathelement location="${project.dir}/core/src/lib/saxon9-dom.jar"/>-->
-    </path>
-
-
-
     <!-- local Betty properties -->
     <property file="build.properties"/>
     <property file="signjar.properties"/>
@@ -198,7 +191,7 @@
               force="true"
               includes="**/*.xhtml"
               extension=".html">
-            <classpath refid="generator.libs"/>
+            <classpath refid="transform.class.path"/>
         </xslt>
 
 <!--

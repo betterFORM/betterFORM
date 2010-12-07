@@ -7,10 +7,8 @@
     <!-- **************************************** PROPERTIES **************************************** -->
     <!-- **************************************** PROPERTIES **************************************** -->
     <!-- **************************************** PROPERTIES **************************************** -->
-    <path id="generator.libs" description="classpath for compiling core classes">
-        <pathelement location="${basedir}/../../core/src/main/lib/saxon-9.0.jar"/>
-        <pathelement location="${basedir}/../../core/src/main/lib/saxon-dom-9.0.jar"/>
-    </path>
+    <property name="core.dir" value="${basedir}/../../core"/>
+    <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
 
     <!-- **************************************** HOUSEKEEPING **************************************** -->
@@ -21,7 +19,7 @@
               out="${basedir}/out.xml"
               style="${basedir}/generateRepeatedNodesets.xsl"
               force="true">
-            <classpath refid="generator.libs"/>
+            <classpath refid="transform.class.path"/>
         </xslt>
     </target>
 

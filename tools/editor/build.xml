@@ -12,14 +12,10 @@
     <!-- **************************************** PROPERTIES **************************************** -->
     <!-- **************************************** PROPERTIES **************************************** -->
 
+    <property name="core.dir" value="${basedir}/../../core"/>
     <property name="project.dir" value="${basedir}/../.."/>
     <xmlproperty file="${project.dir}/build.properties.xml"
                  semanticAttributes="true" keepRoot="false"/>
-
-    <path id="generator.libs" description="classpath for compiling core classes">
-        <pathelement location="${project.dir}/core/src/main/lib/saxonb-9.1.0.8.jar"/>
-        <pathelement location="${project.dir}/core/src/main/lib/saxonb-dom-9.1.0.8.jar"/>
-    </path>
 
     <target name="clean">
         <delete dir="${basedir}/target"/>
@@ -33,8 +29,9 @@
         <xslt in="${basedir}/XForms-11-Schema.xsd"
               out="${basedir}/target/xforms.xml"
               style="${basedir}/generateXForms.xsl"
-              force="true">
-            <classpath refid="generator.libs"/>
+              force="true"
+                classpathref="transform.class.path">
+            <!--<classpath refid="transform.class.path"/>-->
             
 <!--
             <param name="buildprops" expression="${project.dir}/build.properties.xml"/>

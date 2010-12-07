@@ -4,33 +4,28 @@
   -->
 
 <project name="betterFORM reference generator" default="build" basedir=".">
-    <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
     <property name="core.dir" value="${basedir}/../../../../../core"/>    
-
-    <path id="generator.libs" description="classpath for compiling core classes">
-        <pathelement location="${core.dir}/src/main/lib/saxon-9.1.0.8.jar"/>
-        <pathelement location="${core.dir}/src/main/lib/saxon-dom-9.1.0.8.jar"/>
-    </path>
+    <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
     <target name="build">
         <xslt in="Select.gen.xml" out="Select.gen.xhtml" force="true"
               style="build-forms.xsl">
-           <classpath refid="generator.libs"/>
+           <classpath refid="transform.class.path"/>
         </xslt>
         <xslt in="Output.gen.xml" out="Output.gen.xhtml" force="true"
               style="build-forms.xsl">
-           <classpath refid="generator.libs"/>
+           <classpath refid="transform.class.path"/>
         </xslt>
     </target>
 
     <target name="extract">
         <xslt in="Select.xhtml" out="Select.gen.xml" force="true"
               style="extract-xml.xsl">
-           <classpath refid="generator.libs"/>
+           <classpath refid="transform.class.path"/>
         </xslt>
         <xslt in="Output.xhtml" out="Output.gen.xml" force="true"
               style="extract-xml.xsl">
-           <classpath refid="generator.libs"/>
+           <classpath refid="transform.class.path"/>
         </xslt>
     </target>
 </project>

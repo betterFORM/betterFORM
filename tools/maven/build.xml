@@ -16,13 +16,9 @@
     <!-- **************************************** PROPERTIES **************************************** -->
 
     <property name="project.dir" value="${basedir}/../.."/>
+    <property name="core.dir" value="${project.dir}/core"/>
     <xmlproperty file="${project.dir}/build.properties.xml"
                  semanticAttributes="true" keepRoot="false"/>
-
-    <path id="generator.libs" description="classpath for compiling core classes">
-        <pathelement location="${project.dir}/core/src/lib/saxon9.jar"/>
-        <pathelement location="${project.dir}/core/src/lib/saxon9-dom.jar"/>
-    </path>
 
     <!-- **************************************** MAVEN TARGETS FOR BETTERFORM CORE **************************************** -->
     <!-- **************************************** MAVEN TARGETS FOR BETTERFORM CORE **************************************** -->
@@ -91,7 +87,7 @@
               out="${project.dir}/core/install-files.xml"
               style="${project.dir}/tools/maven/install-libs.xsl"
               force="true">
-            <classpath refid="generator.libs"/>
+            <classpath refid="transform.class.path"/>
             <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
             <param name="core.dir" expression="${project.dir}/core"/>
             <param name="module" expression="${core.app.name}"/>
@@ -103,7 +99,7 @@
               out="${project.dir}/web/install-files.xml"
               style="${project.dir}/tools/maven/install-libs.xsl"
               force="true">
-            <classpath refid="generator.libs"/>
+            <classpath refid="transform.class.path"/>
             <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
             <param name="core.dir" expression="${project.dir}/core"/>
             <param name="web.dir" expression="${project.dir}/web"/>
@@ -116,7 +112,7 @@
               out="${project.dir}/betty/install-files.xml"
               style="${project.dir}/tools/maven/install-libs.xsl"
               force="true">
-            <classpath refid="generator.libs"/>
+            <classpath refid="transform.class.path"/>
             <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
             <param name="core.dir" expression="${project.dir}/core"/>
             <param name="betty.dir" expression="${project.dir}/betty"/>

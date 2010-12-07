@@ -28,10 +28,6 @@
     <property name="targetname" value="${target}/${web.app.name}-${web.app.version}"/>
     <property name="servlet.container" value="${properties.webappPath}"/>
 
-    <path id="generator.libs" description="classpath for compiling core classes">
-        <pathelement location="${core.dir}/src/main/lib/saxon-9.2.1.5.jar"/>
-    </path>
-
     <!-- **************************************** HOUSEKEEPING **************************************** -->
     <!-- **************************************** HOUSEKEEPING **************************************** -->
     <!-- **************************************** HOUSEKEEPING **************************************** -->
@@ -123,7 +119,7 @@
               excludes="demo.xhtml"
               extension=".html"
               filenameparameter="currentFile">
-            <classpath refid="generator.libs"/>
+            <classpath refid="transform.class.path"/>
         </xslt>
     </target>
 
