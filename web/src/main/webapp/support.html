@@ -1,46 +1,28 @@
-<!--
-  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
-  ~ Licensed under the terms of BSD License
-  -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:xf="http://www.w3.org/2002/xforms"
-      xmlns:ev="http://www.w3.org/2001/xml-events"
-      xml:lang="en" lang="en">
-    <head>
-        <title>Support and Service for your XForms / betterFORM Project</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<meta name="Author" content="Joern Turner"/>
-		<meta name="Author" content="Lars Windauer"/>
-		<meta name="publisher" content="betterFORM Project"/>
-		<meta name="description" content="betterFORM lightSteelBlue Support and Service Page. betterFORM project provides professional XForms / betterFORM support in various packages"/>
-		<meta name="keywords" content="betterFORM, xforms,xforms training,user interface design,rapid application development,XML, XRX, forms, form, xhtml, xpath, xslt, xslt2.0, dojo, dojotoolkit, java, javascript, xml, schema, web, web2.0, web2, web3.0, web3, semantic, semantic web, joern turner, turner, lars windauer, ajax, xforms processor, processor"/>
-		<meta name="copyright" content="betterForm Project"/>
-		<meta name="content-language" content="en"/>
-		<meta name="robots" content="all"/>
-		<meta http-equiv="expires" content="Wed, 9 Feb 2011 12:21:57 GMT"/>
-		<meta name="revisit-after" content="3 days"/>
-
-
-
-        <link rev="made" href="mailto:info@betterform.de"/>
-        <link rel="SHORTCUT ICON" href="images/betterform.ico"/>
-        <link rel="ICON" href="images/betterform.ico" type="image/x-icon"/>
-        <link rel="stylesheet" type="text/css" href="styles/bf.css"/>
-
-		<style type="text/css">
-			.tableHeading {
-				background:#565656;
-				color:#ffffff;
-				font-size:large;
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+   <head>
+      <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
+      <title>Support and Service for your XForms / betterFORM Project - support.xhtml</title>
+      <meta name="Author" content="Joern Turner" />
+      <meta name="Author" content="Lars Windauer" />
+      <meta name="publisher" content="betterFORM Project" />
+      <meta name="description" content=" betterFORM allows easy creation of highly dynamic Web 2.0 user interfaces with attractive controls. Add validations, calculations, actions and events to build webapplications." />
+      <meta name="keywords" content="betterFORM, xforms, forms, form, xhtml, xpath, xslt, xslt2.0, dojo, dojotoolkit, java, javascript, xml, schema, web, web2.0, web2, web3.0, web3, semantic, semantic web, joern turner, turner, lars windauer, ajax, xforms processor, processor" />
+      <meta name="copyright" content="betterForm Project" />
+      <meta name="content-language" content="en" />
+      <meta name="robots" content="all" />
+      <meta http-equiv="expires" content="Wed, 9 Feb 2011 12:21:57 GMT" />
+      <meta name="revisit-after" content="2 days" />
+      <meta name="google-site-verification" content="L5gmOYcZv-vwF2q0e-qSIXx8ecpKUN8A7lrW4ia9YR0" />
+      <link rev="made" href="mailto:info@betterform.de" />
+      <link rel="SHORTCUT ICON" href="./images/betterform.ico" />
+      <link rel="ICON" href="./images/betterform.ico" type="image/x-icon" />
+      <link rel="stylesheet" type="text/css" href="./styles/bf.css" /><style xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" type="text/css">
+			#support h2{
+				margin-top:35px;
 			}
-			.subTableHeading {
-				background:#e6e6e6;
-				font-weight:bold;
-			}
-
 			td {
 				padding:5px;
                 background:white;
@@ -86,371 +68,590 @@
 
             table{
                 margin-bottom:30px;
+				border-collapse:collapse;
             }
+			#support table td{
+				border-color:#488AA6;
+				border-left:none;
+				border-right:none;				
+			}
+			#support .tableHeading {
+				color:#666666;
+				font-size:large;
+				border-top:none;
+			}
+			#support .subTableHeading {
+				background:#e6e6e6;
+				font-weight:bold;
+			}
+			#support #packages{
+				margin-top:-40px;
+			}
+
             .contentBody p{
                 margin-right:134px;
             }
+			ul{
+				list-style-image:url(../images/menu_pfeil.png);
+				list-style-position:inside;
+			}
+			.hint{
+				font-size:0.9em;
+				font-style:italic;
+				margin-top:-25px;
+			}
+			#generalPrices{
+				margin-top:-50px;
+			}
+			#generalPrices .col-1{
+				width:180px;
+			}
+
+			#generalPrices .col-2{
+				text-align:right;
+				padding-right:50px;
+			}
+			.generalPricesHeader .col-1,.generalPricesHeader .col-2{
+				background:transparent;
+				border:none;
+			}
+			.generalPricesHeader .col-3,.generalPricesHeader .col-4{
+				border-top:none;
+			}
 		</style>
-
-        
-    </head>
-<body  id="support">
-        <div class="page">
-
-            <div id="header">
+      </head>
+   <body id="support">
+      <div class="page">
+         <div id="header">
             <div class="pageMarginBox">
-					<div class="languages">
-                        <img src="images/en.png" class="langSelector" alt="english"/>
-                        <img src="images/de.png" class="langSelector" alt="deutsch"/>
-                    </div>
-                <div id="logoBar">
-                     <a href="index.html" class="link" id="linkLogo"><img id="logo" src="images/logo.png" alt="betterFORM project"/></a>
-
-					<div id="topnav">
-						<a href="index.html">home</a><span class="menuDevider"> | </span>
-						<a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>
-						<a href="download.html">download</a><span class="menuDevider"> | </span>
-						<a href="product.html">product</a><span class="menuDevider"> | </span>
-						<a href="support.html" style="color:#488aa6">support</a><span class="menuDevider"> | </span>
-                        <a href="whoweare.html">who we are</a>
-<!--
-						<a href="whoweare.html">who we are</a><span class="menuDevider"> | </span>
-						<a href="contact.html">contact / impressum</a>
--->
-					</div>
-                </div>
+               <div id="logoBar"><a href="index.html" class="link" id="linkLogo"><img id="logo" src="./images/logo.png" alt="betterFORM project" /></a><div id="mission">the XForms way to build the web</div>
+                  <div id="topnav"><a href="index.html">home</a><span class="menuDevider"> | </span><a href="demo.xhtml">demo</a><span class="menuDevider"> | </span><a href="download.html">download</a><span class="menuDevider"> | </span><a href="product.html">product</a><span class="menuDevider"> | </span><a style="color:#488aa6;" href="support.html">support</a><span class="menuDevider"> | </span><a href="whoweare.html">who we are</a></div>
+               </div>
             </div>
-        </div>
-
-			<div id="content" class="content">
-				<img id="shadowTop" src="images/shad_top.jpg" alt=""/>
-
-				<!-- ######################### Content here ################################## -->
-				<!-- ######################### Content here ################################## -->
-				<!-- ######################### Content here ################################## -->
-				<!-- ######################### Content here ################################## -->
-				<!-- ######################### Content here ################################## -->
-				<div class="pageMarginBox">
-					<div class="contentBody">
-
-
-						<h1>Support &amp; Service</h1>
-
-                        <p><strong>Get support directly from the source</strong> - the developers of betterFORM offer professional
-                        services around the product ranging from day to day help to consulting and implementation of
-                        complete solutions.
+         </div>
+         <div id="content-area"><img id="shadowTop" src="./images/shad_top.jpg" alt="" /><noscript>
+               <div style="border: thin solid ; width: 100%; color: darkred;position:absolute;top:120px;z-index:999;padding:5px;background:orange">Sorry - this site was optimized for use with JavaScript. You won't be able to access all content until you activate JavaScript</div>
+            </noscript>
+            <div id="box" class="box">
+               <div id="sub-header">
+                  <div class="pageMarginBox">
+                     <div class="contentBody">
+                        <h1 xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events">Support</h1>
+                        <p xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events"><strong>Get support directly from the source</strong> - the developers of betterFORM offer professional
+                           			services around the product ranging from day to day help to consulting and implementation of
+                           			complete solutions.
+                           			
                         </p>
-                        <p>
-                            The team has successfully supported projects in health care, aeronautic information management,
-                            banking, science and BPM.
-                        </p>
-                        
-						<p>We supply various services around XForms, XML technologies and enterprise web development</p>
-						<!--
-							<p>&lt;<b>Development</b> /&gt; of enterprise application systems or components in contract with customers</p>
-							<p>&lt;<b>Consultancy</b> /&gt; in the architecture of software systems based on XForms.</p>
-							<p>&lt;<b>Training</b> /&gt; in the use of Betterform</p>
--->
-                        <ul>
-                            <li>XForms Consulting</li>
-                            <li>Custom Component Development</li>
-                            <li>User Interface Design</li>
-                            <li>Rapid WebApp Development</li>
-                            <li>Development of State of the Art browser-based Enterprise Application Systems</li>
-                            <li>Architecture Planning for XML-based Applications</li>
-                            <li>Training on XForms and betterFORM</li>
-                        </ul>
-
-						<p>If you got questions regarding our support offerings please <a href="contact.html">contact us</a> by phone or mail</p>
-
-						<h2>Support Range</h2>
-						<table frame="void" border="0" cellspacing="0" cols="4" rules="none">
-							<tbody>
-								<tr>
-									<td class="col-1 tableHeading">Support Bundle</td>
-									<td class="col-2 tableHeading">Boost</td>
-									<td class="col-3 tableHeading">Startup</td>
-									<td class="col-4 tableHeading">Enterprise</td>
-								</tr>
-								<tr>
-									<td class="col-1 subTableHeading">Support Features</td>
-									<td class="col-2 subTableHeading">&nbsp;</td>
-									<td class="col-3 subTableHeading">&nbsp;</td>
-									<td class="col-4 subTableHeading">&nbsp;</td>
-
-								</tr>
-								<tr>
-									<td class="col-1">Ask the Experts</td>
-									<td class="col-2"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-									<td class="col-3"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-									<td class="col-4"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-								</tr>
-								<tr>
-									<td class="col-1">XForms Troubleshooting</td>
-									<td class="col-2"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-									<td class="col-3"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-									<td class="col-4"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-								</tr>
-                                <tr>
-                                    <td class="col-1">Kickstart your Apps</td>
-                                    <td class="col-2"></td>
-                                    <td class="col-3"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-                                    <td class="col-4"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-                                </tr>
-								<!--
-								<tr>
-									<td class="col-1">Solve the Problem</td>
-									<td class="col-2"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-									<td class="col-3"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-									<td class="col-4"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-								</tr>
--->
-								<tr>
-									<td class="col-1">Talk with the Leaders</td>
-									<td class="col-2">&nbsp;</td>
-									<td class="col-3"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-									<td class="col-4"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-								</tr>
-                                <tr>
-                                    <td class="col-1">Update Service</td>
-                                    <td class="col-2"></td>
-                                    <td class="col-3"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-                                    <td class="col-4"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-                                </tr>
-                                <tr>
-                                    <td class="col-1">Performance Tuning</td>
-                                    <td class="col-2"></td>
-                                    <td class="col-3"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-                                    <td class="col-4"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-                                </tr>
-
-                                <tr>
-                                    <td class="col-1">Discount on regular fee</td>
-                                    <td class="col-2"></td>
-                                    <td class="col-3"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-                                    <td class="col-4"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-                                </tr>
-
-
-
-
-								<tr>
-									<td class="col-1 subTableHeading">Technologies</td>
-									<td class="col-2 subTableHeading">&nbsp;</td>
-									<td class="col-3 subTableHeading">&nbsp;</td>
-									<td class="col-4 subTableHeading">&nbsp;</td>
-
-								</tr>
-								<tr>
-									<td class="col-1">
-                                        XML Technologies - XForms,  XML Schema, XPath, XQuery, XSLT
-									</td>
-									<td class="col-2"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-									<td class="col-3"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-									<td class="col-4"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-								</tr>
-                                <tr>
-									<td class="col-1">
-                                        Web Technologies - HTTP, (X)HTML, JavaScript, CSS
-									</td>
-									<td class="col-2"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-									<td class="col-3"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-									<td class="col-4"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-								</tr>
-
-
-								<tr>
-									<td class="col-1">
-                                        Java, J2EE
-									</td>
-									<td class="col-2"></td>
-									<td class="col-3"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-									<td class="col-4"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-								</tr>
-
-								<!--
-								<tr>
-									<td class="col-1"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/>ML Derivates (XForms, XSLT, XPath, XQuerry)</td>
-									<td class="col-2"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-									<td class="col-3"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-									<td class="col-4"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-								</tr>
-								<tr>
-									<td class="col-1">Web (HTML , CSS, JavaScript)</td>
-									<td class="col-2"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-									<td class="col-3"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-									<td class="col-4"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-								</tr>
-
--->
-								<tr>
-									<td class="col-1">Inside betterFORM</td>
-									<td class="col-2">&nbsp;</td>
-									<td class="col-3"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-									<td class="col-4"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-								</tr>
-                                
-                                  <tr>
-                                    <td class="col-1 subTableHeading">Tool Support</td>
-                                    <td class="col-2 subTableHeading">&nbsp;</td>
-                                    <td class="col-3 subTableHeading">&nbsp;</td>
-                                    <td class="col-4 subTableHeading">&nbsp;</td>
-
-                                </tr>
-
-                                <tr>
-                                    <td class="col-1">Subversion Repository</td>
-                                    <td class="col-2"></td>
-                                    <td class="col-3"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-                                    <td class="col-4"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-                                </tr>
-
-                                <tr>
-                                    <td class="col-1">Wiki</td>
-                                    <td class="col-2"></td>
-                                    <td class="col-3"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-                                    <td class="col-4"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-                                </tr>
-
-                                <tr>
-                                    <td class="col-1">Issue Tracking</td>
-                                    <td class="col-2"></td>
-                                    <td class="col-3"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-                                    <td class="col-4"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-                                </tr>
-								<tr>
-									<td class="col-1 subTableHeading">Communication</td>
-									<td class="col-2 subTableHeading">&nbsp;</td>
-									<td class="col-3 subTableHeading">&nbsp;</td>
-									<td class="col-4 subTableHeading">&nbsp;</td>
-
-								</tr>
-
-								<tr>
-									<td class="col-1">Acknowledge the Problem (working days)</td>
-									<td class="col-2">3</td>
-									<td class="col-3">2</td>
-									<td class="col-4">1</td>
-								</tr>
-								<tr>
-									<td class="col-1">Mail Contact</td>
-									<td class="col-2"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-									<td class="col-3"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-									<td class="col-4"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-								</tr>
-
-								<!--
-								<tr>
-									<td class="col-1">Chat Contact</td>
-									<td class="col-2"></td>
-									<td class="col-3"></td>
-									<td class="col-4"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-								</tr>
--->
-
-								<tr>
-									<td class="col-1">Live Contact (Chat / Phone)</td>
-									<td class="col-2">&nbsp;</td>
-									<td class="col-3"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-									<td class="col-4"><img src="resources/images/001_06.png" width="20" height="20" alt="included"/></td>
-								</tr>
-
-								<tr>
-									<td class="col-1 subTableHeading">Pricing</td>
-									<td class="col-2 subTableHeading">&nbsp;</td>
-									<td class="col-3 subTableHeading">&nbsp;</td>
-									<td class="col-4 subTableHeading">&nbsp;</td>
-
-								</tr>
-
-
-                                <tr>
-                                    <td class="col-1">Support Days included</td>
-                                    <td class="col-2">1</td>
-                                    <td class="col-3">5</td>
-                                    <td class="col-4">12</td>
-                                </tr>
-
-
-								<tr>
-									<td class="col-1">Support Duration (Month)</td>
-									<td class="col-2">1</td>
-									<td class="col-3">3</td>
-									<td class="col-4">12</td>
-								</tr>
-
-                                <tr>
-                                    <td class="col-1">Development & Consulting Day</td>
-                                    <td class="col-2">€ 900</td>
-                                    <td class="col-3">€ 850</td>
-                                    <td class="col-4">€ 800</td>
-                                </tr>
-
-								<tr>
-									<td class="col-1">Price (excluding VAT)</td>
-									<td class="col-2">€ 500</td>
-									<td class="col-3">€ 4000</td>
-									<td class="col-4">€ 9800</td>
-								</tr>
-
+                     </div>
+                  </div>
+               </div>
+               <div id="main-content">
+                  <div class="pageMarginBox">
+                     <h2 xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events">Our Services</h2>
+                     <p xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events">
+                        				The betterFORM team has supported projects in eHealth, aeronautic information management,
+                        				banking, insurance, ECM, science and BPM.
+                        			
+                     </p>
+                     <p xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events">We supply various services around XForms, XML technologies and enterprise web development</p>
+                     <ul xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events">
+                        				
+                        <li>Consulting, Development and Training around XForms and betterFORM</li>
+                        				
+                        <li>XML application development using the complete XML toolchain (XSLT, XQuery, XPath, XProc, ...)</li>
+                        				
+                        <li>Custom Component Development</li>
+                        				
+                        <li>User Interface Design</li>
+                        				
+                        <li>Mobile applications</li>
+                        			
+                     </ul>
+                     <p xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events">If you got questions regarding our support offerings please <a href="contact.html">contact us</a> by phone or mail
+                     </p>
+                     <h2 xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events">General Pricing</h2>
+                     <table xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" id="generalPrices" frame="void" border="0" cellspacing="0" cols="4" rules="none">
+                        				
+                        <tbody>
+                           					
+                           <tr class="generalPricesHeader">
+                              						
+                              <td class="col-1"></td>
+                              						
+                              <td class="col-2"></td>
+                              						
+                              <td class="col-3">For Startup contractors</td>
+                              						
+                              <td class="col-4">For Enterprise contractors</td>
+                              					
+                           </tr>
+                           					
+                           <tr>
+                              						
+                              <td class="col-1">Development Day</td>
+                              						
+                              <td class="col-2">850 €</td>
+                              						
+                              <td class="col-3">825 €</td>
+                              						
+                              <td class="col-4">800 €</td>
+                              					
+                           </tr>
+                           					
+                           <tr>
+                              						
+                              <td class="col-1">Consulting Day</td>
+                              						
+                              <td class="col-2">850 €</td>
+                              						
+                              <td class="col-3">825 €</td>
+                              						
+                              <td class="col-4">800 €</td>
+                              					
+                           </tr>
+                           					
+                           <tr>
+                              						
+                              <td class="col-1">Training Day</td>
+                              						
+                              <td class="col-2">1000 €</td>
+                              						
+                              <td class="col-3">950 €</td>
+                              						
+                              <td class="col-4">900 €</td>
+                              					
+                           </tr>
+                           				
+                        </tbody>
+                        			
+                     </table>
+                     <p xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" class="hint">Prices excluding VAT and travel expenses</p>
+                     <p xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events">Special conditions apply for longer term contracts.</p>
+                     <h2 xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events">Support Bundles</h2>
+                     <table xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" id="packages" frame="void" border="0" cellspacing="0" cols="4" rules="none">
+                        				
+                        <tbody>
+                           					
+                           <tr>
+                              						
+                              <td class="col-1 tableHeading"></td>
+                              						
+                              <td class="col-2 tableHeading">Boost</td>
+                              						
+                              <td class="col-3 tableHeading">Startup</td>
+                              						
+                              <td class="col-4 tableHeading">Enterprise</td>
+                              					
+                           </tr>
+                           					
+                           <tr>
+                              						
+                              <td class="col-1 subTableHeading">Support Features</td>
+                              						
+                              <td class="col-2 subTableHeading"></td>
+                              						
+                              <td class="col-3 subTableHeading"></td>
+                              						
+                              <td class="col-4 subTableHeading"></td>
                               
+                              					
+                           </tr>
+                           					
+                           <tr>
+                              						
+                              <td class="col-1">Ask the Experts</td>
+                              						
+                              <td class="col-2"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              						
+                              <td class="col-3"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              						
+                              <td class="col-4"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              					
+                           </tr>
+                           					
+                           <tr>
+                              						
+                              <td class="col-1">XForms Troubleshooting</td>
+                              						
+                              <td class="col-2"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              						
+                              <td class="col-3"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              						
+                              <td class="col-4"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              					
+                           </tr>
+                           					
+                           <tr>
+                              						
+                              <td class="col-1">Kickstart your Apps</td>
+                              						
+                              <td class="col-2"></td>
+                              						
+                              <td class="col-3"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              						
+                              <td class="col-4"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              					
+                           </tr>
+                           					
+                           <!--
+					<tr>
+						<td class="col-1">Solve the Problem</td>
+						<td class="col-2"><img src="../images/ok.png" width="20" height="20" alt="included"/></td>
+						<td class="col-3"><img src="../images/ok.png" width="20" height="20" alt="included"/></td>
+						<td class="col-4"><img src="../images/ok.png" width="20" height="20" alt="included"/></td>
+					</tr>
+	-->
+                           					
+                           <tr>
+                              						
+                              <td class="col-1">Talk with the Leaders</td>
+                              						
+                              <td class="col-2"></td>
+                              						
+                              <td class="col-3"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              						
+                              <td class="col-4"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              					
+                           </tr>
+                           					
+                           <tr>
+                              						
+                              <td class="col-1">Update Service</td>
+                              						
+                              <td class="col-2"></td>
+                              						
+                              <td class="col-3"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              						
+                              <td class="col-4"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              					
+                           </tr>
+                           					
+                           <tr>
+                              						
+                              <td class="col-1">Performance Tuning</td>
+                              						
+                              <td class="col-2"></td>
+                              						
+                              <td class="col-3"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              						
+                              <td class="col-4"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              					
+                           </tr>
+                           
+                           					
+                           <tr>
+                              						
+                              <td class="col-1">Discount on regular fee</td>
+                              						
+                              <td class="col-2"></td>
+                              						
+                              <td class="col-3"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              						
+                              <td class="col-4"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              					
+                           </tr>
+                           	
+                           <!--
+					<tr>
+						<td class="col-1 subTableHeading">Technologies</td>
+						<td class="col-2 subTableHeading"></td>
+						<td class="col-3 subTableHeading"></td>
+						<td class="col-4 subTableHeading"></td>
+
+					</tr>
+					<tr>
+						<td class="col-1">
+							XML Technologies - XForms,  XML Schema, XPath, XQuery, XSLT
+						</td>
+						<td class="col-2"><img src="../images/ok.png" width="20" height="20" alt="included"/></td>
+						<td class="col-3"><img src="../images/ok.png" width="20" height="20" alt="included"/></td>
+						<td class="col-4"><img src="../images/ok.png" width="20" height="20" alt="included"/></td>
+					</tr>
+					<tr>
+						<td class="col-1">
+							Web Technologies - HTTP, (X)HTML, JavaScript, CSS
+						</td>
+						<td class="col-2"><img src="../images/ok.png" width="20" height="20" alt="included"/></td>
+						<td class="col-3"><img src="../images/ok.png" width="20" height="20" alt="included"/></td>
+						<td class="col-4"><img src="../images/ok.png" width="20" height="20" alt="included"/></td>
+					</tr>
 
 
-								<!--
-								<tr>
-									<td class="col-1">
-										<ul>Extra Support Day*</ul>
-									</td>
-									<td class="col-2">850</td>
-									<td class="col-3">750</td>
-									<td class="col-4">600</td>
-								</tr>
+					<tr>
+						<td class="col-1">
+							Java, J2EE
+						</td>
+						<td class="col-2"></td>
+						<td class="col-3"><img src="../images/ok.png" width="20" height="20" alt="included"/></td>
+						<td class="col-4"><img src="../images/ok.png" width="20" height="20" alt="included"/></td>
+					</tr>
+	-->
+                           
+                           					
+                           <!--
+					<tr>
+						<td class="col-1"><img src="../images/ok.png" width="20" height="20" alt="included"/>ML Derivates (XForms, XSLT, XPath, XQuerry)</td>
+						<td class="col-2"><img src="../images/ok.png" width="20" height="20" alt="included"/></td>
+						<td class="col-3"><img src="../images/ok.png" width="20" height="20" alt="included"/></td>
+						<td class="col-4"><img src="../images/ok.png" width="20" height="20" alt="included"/></td>
+					</tr>
+					<tr>
+						<td class="col-1">Web (HTML , CSS, JavaScript)</td>
+						<td class="col-2"><img src="../images/ok.png" width="20" height="20" alt="included"/></td>
+						<td class="col-3"><img src="../images/ok.png" width="20" height="20" alt="included"/></td>
+						<td class="col-4"><img src="../images/ok.png" width="20" height="20" alt="included"/></td>
+					</tr>
 
-								<tr>
-									<td class="col-1">Extra Developer Day*</td>
-									<td class="col-2">850</td>
-									<td class="col-3">850</td>
-									<td class="col-4">800</td>
-								</tr>
--->
-							</tbody>
-						</table>
-                       <p>Not what you need? Contact us and we will tailor a contract for your individual needs.</p>
-					</div>
+	-->
+                           					
+                           <tr>
+                              						
+                              <td class="col-1">Inside betterFORM</td>
+                              						
+                              <td class="col-2"></td>
+                              						
+                              <td class="col-3"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              						
+                              <td class="col-4"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              					
+                           </tr>
+                           
+                           					  
+                           <tr>
+                              						
+                              <td class="col-1 subTableHeading">Tool Support</td>
+                              						
+                              <td class="col-2 subTableHeading"></td>
+                              						
+                              <td class="col-3 subTableHeading"></td>
+                              						
+                              <td class="col-4 subTableHeading"></td>
+                              
+                              					
+                           </tr>
+                           
+                           					
+                           <tr>
+                              						
+                              <td class="col-1">Subversion Repository</td>
+                              						
+                              <td class="col-2"></td>
+                              						
+                              <td class="col-3"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              						
+                              <td class="col-4"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              					
+                           </tr>
+                           
+                           					
+                           <tr>
+                              						
+                              <td class="col-1">Wiki</td>
+                              						
+                              <td class="col-2"></td>
+                              						
+                              <td class="col-3"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              						
+                              <td class="col-4"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              					
+                           </tr>
+                           
+                           					
+                           <tr>
+                              						
+                              <td class="col-1">Issue Tracking</td>
+                              						
+                              <td class="col-2"></td>
+                              						
+                              <td class="col-3"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              						
+                              <td class="col-4"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              					
+                           </tr>
+                           					
+                           <tr>
+                              						
+                              <td class="col-1 subTableHeading">Communication</td>
+                              						
+                              <td class="col-2 subTableHeading"></td>
+                              						
+                              <td class="col-3 subTableHeading"></td>
+                              						
+                              <td class="col-4 subTableHeading"></td>
+                              
+                              					
+                           </tr>
+                           
+                           					
+                           <tr>
+                              						
+                              <td class="col-1">Acknowledge the Problem (working days)</td>
+                              						
+                              <td class="col-2">3</td>
+                              						
+                              <td class="col-3">2</td>
+                              						
+                              <td class="col-4">1</td>
+                              					
+                           </tr>
+                           					
+                           <tr>
+                              						
+                              <td class="col-1">Mail Contact</td>
+                              						
+                              <td class="col-2"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              						
+                              <td class="col-3"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              						
+                              <td class="col-4"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              					
+                           </tr>
+                           
+                           					
+                           <!--
+					<tr>
+						<td class="col-1">Chat Contact</td>
+						<td class="col-2"></td>
+						<td class="col-3"></td>
+						<td class="col-4"><img src="../images/ok.png" width="20" height="20" alt="included"/></td>
+					</tr>
+	-->
+                           
+                           					
+                           <tr>
+                              						
+                              <td class="col-1">Live Contact (Chat / Phone)</td>
+                              						
+                              <td class="col-2"></td>
+                              						
+                              <td class="col-3"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              						
+                              <td class="col-4"><img src="../images/ok.png" width="20" height="20" alt="included" /></td>
+                              					
+                           </tr>
+                           
+                           					
+                           <tr>
+                              						
+                              <td class="col-1 subTableHeading">Pricing</td>
+                              						
+                              <td class="col-2 subTableHeading"></td>
+                              						
+                              <td class="col-3 subTableHeading"></td>
+                              						
+                              <td class="col-4 subTableHeading"></td>
+                              
+                              					
+                           </tr>
+                           
+                           
+                           					
+                           <tr>
+                              						
+                              <td class="col-1">Support Days included</td>
+                              						
+                              <td class="col-2">1</td>
+                              						
+                              <td class="col-3">5</td>
+                              						
+                              <td class="col-4">12</td>
+                              					
+                           </tr>
+                           
+                           
+                           					
+                           <tr>
+                              						
+                              <td class="col-1">Support Duration (Month)</td>
+                              						
+                              <td class="col-2">1</td>
+                              						
+                              <td class="col-3">3</td>
+                              						
+                              <td class="col-4">12</td>
+                              					
+                           </tr>
+                           
+                           					
+                           <tr>
+                              						
+                              <td class="col-1">Development &amp; Consulting Day</td>
+                              						
+                              <td class="col-2">€ 900</td>
+                              						
+                              <td class="col-3">€ 850</td>
+                              						
+                              <td class="col-4">€ 800</td>
+                              					
+                           </tr>
+                           
+                           					
+                           <tr>
+                              						
+                              <td class="col-1">Price (excluding VAT)</td>
+                              						
+                              <td class="col-2">€ 500</td>
+                              						
+                              <td class="col-3">€ 4000</td>
+                              						
+                              <td class="col-4">€ 9800</td>
+                              					
+                           </tr>
+                           
+                           
+                           
+                           
+                           					
+                           <!--
+					<tr>
+						<td class="col-1">
+							<ul>Extra Support Day*</ul>
+						</td>
+						<td class="col-2">850</td>
+						<td class="col-3">750</td>
+						<td class="col-4">600</td>
+					</tr>
 
-                    <!-- ##### a bit of space ###### -->
-
-				</div>
-                <div class="devider"></div>
-
-			</div>
-			<div id="footer">
-				<img id="shadowBottom" src="images/shad_bottom.jpg" alt=""/>
-
-				<div class="pageMarginBox">
-                    <span id="bottomMenu">
-                        &#169; 2010 betterFORM<span class="menuDevider"> | </span>
-                        <a href="index.html">home</a><span class="menuDevider"> | </span>
-                        <a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>
-                        <a href="download.html">download</a><span class="menuDevider"> | </span>
-                        <a href="product.html">product</a><span class="menuDevider"> | </span>
-                        <a href="support.html" style="color:#488aa6">support</a><span class="menuDevider"> | </span>
-                        <a href="whoweare.html">who we are</a><span class="menuDevider"> | </span>
-                        <a href="contact.html">contact / impressum</a>
-                    </span>
-				</div>
-			</div>
-
-		</div>
-        <script type="text/javascript">
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-        </script>
-        <script type="text/javascript">
-            try {
-            var pageTracker = _gat._getTracker("UA-15044944-1");
-            pageTracker._trackPageview();
-            } catch(err) {}
-        </script>
-    </body>
+					<tr>
+						<td class="col-1">Extra Developer Day*</td>
+						<td class="col-2">850</td>
+						<td class="col-3">850</td>
+						<td class="col-4">800</td>
+					</tr>
+	-->
+                           				
+                        </tbody>
+                        			
+                     </table>
+                     <p xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events">Not what you need? Contact us and we will tailor a contract for your individual needs.</p>
+                  </div>
+               </div>
+            </div>
+            <div class="pageMarginBox">
+               <div id="browser"></div>
+            </div>
+         </div><img id="shadowBottom" src="./images/shad_bottom.jpg" alt="" /><div id="footer">
+            <div class="pageMarginBox">
+               <div class="languages"><img src="./images/en.png" class="langSelector" alt="english version" title="english version" /><a href="./lang/de/index.html"><img src="./images/de.png" class="langSelector" alt="deutsch" title="deutsche Version" /></a></div><span id="bottomMenu">
+                  © 2010 betterFORM   |   
+                  
+                  
+                  
+                  
+                  
+                  <a href="contact.html">contact / impressum</a>  |   
+                  
+                  </span></div>
+         </div>
+         <div style="display:none"><img src="./images/b_tryit_hover.png" alt="" /><img src="./images/b_getit_hover.png" alt="" /><img src="./images/b_exploreit_hover.png" alt="" /></div>
+      </div><script type="text/javascript">
+                    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+                    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+                </script><script type="text/javascript">
+                    try {
+                        var pageTracker = _gat._getTracker("UA-15044944-1");
+                        pageTracker._trackPageview();
+                    } catch(err) {
+                    }
+                </script></body>
 </html>

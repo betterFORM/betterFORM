@@ -15,7 +15,7 @@
             doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
             doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" />
 
-    <xsl:param name="rootDir" select="'..'"/>
+    <xsl:param name="rootDir" select="'.'"/>
     <xsl:param name="currentFile" select="''"/>
 
     <xsl:template match="/">

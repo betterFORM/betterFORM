@@ -112,7 +112,7 @@
     <target name="prepare-site" description="generates the betterFORM site">
         <delete dir="${basedir}/src/main/webapp/pages" includes="*.html"/>
         <xslt basedir="${basedir}/src/main/webapp/pages"
-              destdir="${basedir}/src/main/webapp/pages"
+              destdir="${basedir}/src/main/webapp"
               style="${basedir}/src/main/webapp/resources/xslt/site.xsl"
               force="true"
               includes="*.xhtml"
