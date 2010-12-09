@@ -18,6 +18,7 @@
     <inceptionYear>2010</inceptionYear>
     <url>http://betterform.sourceforge.net</url>
 
+
     <build>
         <plugins>
             <plugin>
@@ -205,7 +206,7 @@
         <developer>
             <id>lars</id>
             <name>Lars Windauer</name>
-            <email>windauer@users.sourceforge.net</email>
+            <email>lars.windauer@betterform.de</email>
             <organization>betterForm Project</organization>
         </developer>
     </developers>
