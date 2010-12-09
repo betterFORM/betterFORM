@@ -16,7 +16,6 @@
         
     </properties>
 
-<!--
     <useragents>
         <useragent name="foo"
                    processor="foo.bar"
@@ -33,7 +32,6 @@
         <ui-generator useragent="bar" stylesheet="dojodev.xsl"/>
         <ui-generator useragent="baz" stylesheet="html4.xsl"/>
     </ui-generators>
--->
 
     <connectors>
         <!--
