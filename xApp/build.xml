@@ -21,6 +21,7 @@
     <property name="web.dir" value="."/>
     <property name="dojo.name" value="dojo-release-1.2.3"/>
     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
+    <property name="targetname" value="${web.app.name}-${web.app.version}"/>
 
 
     <!-- local Web properties -->
@@ -48,28 +49,56 @@
     <!-- **************************************** PREPARATION **************************************** -->
     <!-- **************************************** PREPARATION **************************************** -->
     <target name="prepare">
+        <echo/>
+        <echo message="####################################################################################"/>
+        <echo message="prepare..."/>
+        <echo message="####################################################################################"/>
+        <echo/>
         <ant antfile="${basedir}/../web/build.xml" target="exploded-webapp" dir="${basedir}/../web" inheritall="false">
-            <property name="webapp.dir" value="${basedir}/target/${xapp.app.name}"/>
-            <property name="target.dir" value="${basedir}/target"/>
+            <!--<property name="webapp.dir" value="${basedir}/target/${xapp.app.name}"/>-->
+            <!--<property name="target.dir" value="${basedir}/target"/>-->
         </ant>
-
-        <delete dir="${basedir}/target/${xapp.app.name}" includes="*.*"/>
-        <delete dir="${basedir}/target/${xapp.app.name}/doc"/>
-        <delete dir="${basedir}/target/${xapp.app.name}/images"/>
-        <delete dir="${basedir}/target/${xapp.app.name}/lang"/>
-        <delete dir="${basedir}/target/${xapp.app.name}/META-INF"/>
-        <delete dir="${basedir}/target/${xapp.app.name}/reports"/>
-        <delete dir="${basedir}/target/${xapp.app.name}/styles"/>
-        <delete file="${basedir}/target/${xapp.app.name}/resources/styles/demo.css"/>
-        <delete file="${basedir}/target/${xapp.app.name}/resources/styles/registration.css"/>
-        <delete file="${basedir}/target/${xapp.app.name}/resources/styles/reference.css"/>
-        <delete file="${basedir}/target/${xapp.app.name}/resources/styles/timetracker.css"/>
-        <delete dir="${basedir}/target/${xapp.app.name}/jsp" includes="*.jsp" excludes="error.jsp"/>
-
     </target>
 
     <target name="prepare-xApp">
         <!-- copy xApp webapp dir to target -->
+        <echo/>
+        <echo message="####################################################################################"/>
+        <echo message="copying resources from web module..."/>
+        <echo message="####################################################################################"/>
+        <echo/>
+        <copy todir="${basedir}/target/${xapp.app.name}/resources"
+              overwrite="true">
+            <fileset dir="${src.dir}/main/resources"/>
+        </copy>
+        <!-- create default dir for uploads -->
+        <mkdir dir="${basedir}/target/${xapp.app.name}/upload"/>
+
+        <echo/>
+        <echo message="####################################################################################"/>
+        <echo message="copying WEB-INF from web module..."/>
+        <echo message="####################################################################################"/>
+        <echo/>
+        <copy todir="${basedir}/target/${xapp.app.name}/WEB-INF"
+              overwrite="true">
+            <fileset dir="${root.dir}/web/src/main/webapp/WEB-INF" includes="**/*"/>
+        </copy>
+
+        <echo/>
+        <echo message="####################################################################################"/>
+        <echo message="copying libs from web module..."/>
+        <echo message="####################################################################################"/>
+        <echo/>
+        <copy todir="${basedir}/target/${xapp.app.name}/WEB-INF/lib"
+              overwrite="true">
+            <fileset dir="${root.dir}/web/target/${web.app.name}/WEB-INF/lib" />
+        </copy>
+
+        <echo/>
+        <echo message="####################################################################################"/>
+        <echo message="adding/overwriting resources local xApp resources to target..."/>
+        <echo message="####################################################################################"/>
+        <echo/>
         <copy todir="${basedir}/target/${xapp.app.name}"
               overwrite="true">
             <fileset dir="${basedir}/src/main/webapp"/>
@@ -92,6 +121,11 @@
 
     -->
     <target name="compile">
+        <ant antfile="${root.dir}/web/build.xml" target="create-jar" dir="${root.dir}/web" inheritall="false">
+            <!--<property name="target.dir" value="${basedir}/target/${xapp.app.name}/WEB-INF/classes"/>            -->
+        </ant>
+        <copy file="${root.dir}/web/target/${targetname}.jar" todir="${basedir}/target/${xapp.app.name}/WEB-INF/lib"/>
+
         <echo/>
         <echo message="####################################################################################"/>
         <echo message="compiling xApp classes..."/>
@@ -109,12 +143,16 @@
                 />
     </target>
 
-    <target name="deploy-resources" depends="prepare, compile" description="copy all forms from src/main/xforms to webapp dir">
-        <antcall target="prepare-xApp"/>
+    <target name="deploy-resources" depends="prepare-xApp, compile" description="copy all forms and resources to webapp dir">
     </target>
     
 
     <target name="create-war" depends="deploy-resources" description="creates a not optimized war-file for interims release and development purposes">
+        <echo/>
+        <echo message="####################################################################################"/>
+        <echo message="building non-optimized war-file ..."/>
+        <echo message="####################################################################################"/>
+        <echo/>
         <ant antfile="${basedir}/../web/build.xml" target="create-war" dir="${basedir}/../web" inheritall="false">
             <property name="targetname" value="${basedir}/target/${xapp.app.name}"/>
             <property name="webapp.dir" value="${basedir}/target/${xapp.app.name}"/>
@@ -122,6 +160,12 @@
     </target>
 
     <target name="package" depends="clean" description="builds an optimized version of the war-file with compiled JavaScript">
+        <echo/>
+        <echo message="####################################################################################"/>
+        <echo message="building optimized war-file for distribution ..."/>
+        <echo message="####################################################################################"/>
+        <echo/>
+        
         <antcall target="compile">
             <param name="properties.javac.debug" value="false"/>
             <param name="properties.javac.optimize" value="true"/>
