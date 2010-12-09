@@ -115,7 +115,7 @@
               destdir="${basedir}/src/main/webapp"
               style="${basedir}/src/main/webapp/resources/xslt/site.xsl"
               force="true"
-              includes="*.xhtml"
+              includes="**/*.xhtml"
               excludes="demo.xhtml"
               extension=".html"
               filenameparameter="currentFile">
