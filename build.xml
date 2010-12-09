@@ -145,17 +145,23 @@
     
     <target name="xbl2xsl">
         <xslt in="${basedir}/src/main/components/binding.xml"
-              out="${basedir}/src/main/resources/xslt/xbl.xsl"
+              out="${basedir}/src/main/resources/xslt/dummy.xsl"
               style="${basedir}/src/main/components/xbl2xsl.xsl">
             <classpath refid="transform.class.path"/>
         </xslt>
     </target>
 
     <target name="testxblxsl">
-        <xslt in="${basedir}/tools/XFormsDumpToXHTML/dump.xml"
-              out="${basedir}/testoutput.html"
+        <xslt in="tools/XFormsDumpToXHTML/BindingTest1.xml"
+              out="${basedir}/testoutput1.html"
               force="true"             
               style="${basedir}/src/main/resources/xslt/xbl.xsl">
+            <classpath refid="transform.class.path"/>
+        </xslt>
+        <xslt in="tools/XFormsDumpToXHTML/EarlyBindingTest1.xml"
+              out="${basedir}/testoutput2.html"
+              force="true"             
+              style="${basedir}/src/main/resources/xslt/early-binding.xsl">
             <classpath refid="transform.class.path"/>
         </xslt>
     </target>

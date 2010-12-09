@@ -18,7 +18,7 @@
         <xslt destdir="${basedir}/target"
               style="${basedir}/../../src/main/resources/xslt/dojo-dev.xsl"
               force="true"
-              in="${basedir}/dump.xml"
+              in="BindingTest1.xml"
               out="${basedir}/dump.xhtml">
             <classpath refid="transform.class.path"/>
         </xslt>

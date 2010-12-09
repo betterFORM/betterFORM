@@ -25,12 +25,17 @@
                 <xf:label>Hallo</xf:label>
                 <xf:alert>Testalert</xf:alert>
             </xf:input>
+            <xf:input id="boz" ref="yyy">
+                <xf:label>yyy-label</xf:label>
+            </xf:input>
         </xf:group>
+<!--
         <xf:group appearance="repeat" nodeset="foo/bar">
             <xf:label>repeat group label</xf:label>
             <xf:input ref="xxx">
                 <xf:label>xxx-label</xf:label>
             </xf:input>
         </xf:group>
+-->
     </body>
 </html>

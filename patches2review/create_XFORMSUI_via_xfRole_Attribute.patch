@@ -1,0 +1,220 @@
+Index: core/src/main/java/de/betterform/xml/xforms/XFormsElementFactory.java
+===================================================================
+--- core/src/main/java/de/betterform/xml/xforms/XFormsElementFactory.java	(revision 50)
++++ core/src/main/java/de/betterform/xml/xforms/XFormsElementFactory.java	(revision )
+@@ -174,7 +174,9 @@
+         if (hasRepeatAttributes(element)) {
+             return true;
+         }
+-
++        if(hasXFormsRole(element)){
++            return true;
++        }
+         String name = element.getLocalName();
+         String uri = element.getNamespaceURI();
+ 
+@@ -182,6 +184,10 @@
+                 (UI_ELEMENT_LIST.contains(name) || FORM_CONTROL_LIST.contains(name));
+     }
+ 
++    public static boolean hasXFormsRole(Element element){
++        return element.hasAttributeNS(null, "xfRole");
++    }
++
+     /**
+      * factory method for XFormsElement objects.
+      *
+@@ -190,8 +196,14 @@
+      * @return the created object
+      */
+     public XFormsElement createXFormsElement(Element element, Model model) throws XFormsException {
++        if(hasXFormsRole(element)){
++            return createXFormsElementForName(element, model, XFormsElement.getXFormsAttribute(element,"xfRole"));
++        }
+         String localName = element.getLocalName();
++        return createXFormsElementForName(element, model, localName);
++    }
+ 
++    private XFormsElement createXFormsElementForName(Element element, Model model, String localName) throws XFormsException {
+         XFormsElement xformsElement;
+ 
+         // 3.3 The XForms Core Module
+Index: core/src/test/resources/de/betterform/xml/xforms/xfRoleTest.xhtml
+===================================================================
+--- core/src/test/resources/de/betterform/xml/xforms/xfRoleTest.xhtml	(revision )
++++ core/src/test/resources/de/betterform/xml/xforms/xfRoleTest.xhtml	(revision )
+@@ -0,0 +1,25 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<html xmlns="http://www.w3.org/1999/xhtml"
++    xmlns:xf="http://www.w3.org/2002/xforms"
++    xmlns:ev="http://www.w3.org/2001/xml-events"
++    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
++    xmlns:bf="http://betterform.sourceforge.net/xforms">
++    <head>
++        <title>Creating XForms UI from Dojo</title>
++    </head>
++    <body>
++        <div style="display:none">
++            <xf:model id="model-1">
++                <xf:instance id="i-default">
++                    <data xmlns="">
++						<hello>world</hello>
++                    </data>
++                </xf:instance>
++            </xf:model>
++        </div>
++		<xf:group>
++			<div id="myInput" xfRole="input" ref="hello" />
++		</xf:group>
++    </body>
++</html>
+Index: src/main/xforms/test/xfRoleTest.xhtml
+===================================================================
+--- src/main/xforms/test/xfRoleTest.xhtml	(revision )
++++ src/main/xforms/test/xfRoleTest.xhtml	(revision )
+@@ -0,0 +1,28 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<html xmlns="http://www.w3.org/1999/xhtml"
++    xmlns:xf="http://www.w3.org/2002/xforms"
++    xmlns:ev="http://www.w3.org/2001/xml-events"
++    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
++    xmlns:bf="http://betterform.sourceforge.net/xforms">
++    <head>
++        <title>Creating XForms UI from Dojo</title>
++		<script type="text/javascript">
++			dojo.require("dijit.form.TextBox");
++		</script>
++    </head>
++    <body>
++        <div style="display:none">
++            <xf:model id="model-1">
++                <xf:instance id="i-default">
++                    <data xmlns="">
++						<hello>world</hello>
++                    </data>
++                </xf:instance>
++            </xf:model>
++        </div>
++		<xf:group>
++			<div dojotype="dijit.form.TextBox" id="myInput" xfRole="input" xfRef="hello" />
++		</xf:group>
++    </body>
++</html>
+Index: core/src/main/java/de/betterform/xml/xforms/XFormsProcessorImpl.java
+===================================================================
+--- core/src/main/java/de/betterform/xml/xforms/XFormsProcessorImpl.java	(revision 532)
++++ core/src/main/java/de/betterform/xml/xforms/XFormsProcessorImpl.java	(revision )
+@@ -15,6 +15,7 @@
+ import de.betterform.xml.events.impl.DefaultXMLEventInitializer;
+ import de.betterform.xml.events.impl.DefaultXMLEventService;
+ import de.betterform.xml.events.impl.XercesXMLEventFactory;
++import de.betterform.xml.ns.NamespaceConstants;
+ import de.betterform.xml.xforms.exception.XFormsException;
+ import de.betterform.xml.xforms.model.Model;
+ import de.betterform.xml.xforms.ui.AbstractFormControl;
+@@ -24,6 +25,7 @@
+ import org.apache.commons.logging.LogFactory;
+ import org.w3c.dom.DOMException;
+ import org.w3c.dom.Document;
++import org.w3c.dom.Element;
+ import org.w3c.dom.Node;
+ import org.w3c.xforms.XFormsModelElement;
+ import org.xml.sax.EntityResolver;
+@@ -648,6 +650,33 @@
+         }
+     }
+ 
++    public void createUIElement(String id,
++                                String xfRole,
++                                String ref,
++                                String value,
++                                String model ) throws XFormsException{
++        if(id == null){
++            throw new XFormsException("No id given for Element to create");
++        }
++        //get the target Element
++        Node n = DOMUtil.getById(this.container.getDocument(),id);
++
++        //get the model
++        Model targetModel;
++        if(model == null){
++            targetModel = this.container.getDefaultModel();
++        }else{
++            targetModel = this.container.getModel(model);
++        }
++
++        //create binding expression
++        Element e = (Element)n;
++        e.setAttributeNS(NamespaceConstants.XFORMS_NS,"ref",ref);
++
++        //initialize it
++        Initializer.initializeUIElements(e);
++    }
++
+     /**
+      * creates a Locale object from the passed language code. This must be valid ISO-639 code. The validity of the
+      * locale is not checked at this point.
+Index: web/src/main/java/de/betterform/agent/web/flux/FluxFacade.java
+===================================================================
+--- web/src/main/java/de/betterform/agent/web/flux/FluxFacade.java	(revision 658)
++++ web/src/main/java/de/betterform/agent/web/flux/FluxFacade.java	(revision )
+@@ -38,7 +38,7 @@
+ public class FluxFacade {
+     //this is a custom event to activate a trigger in XForms.
+     public static final String FLUX_ACTIVATE_EVENT = "flux-action-event";
+-    private static final Log LOGGER = LogFactory.getLog(FluxProcessor.class);
++    private static final Log LOGGER = LogFactory.getLog(FluxFacade.class);
+     private HttpSession session;
+ 
+ 
+@@ -59,6 +59,7 @@
+     public List<XMLEvent> init(String sessionKey) throws FluxException {
+         if (LOGGER.isDebugEnabled()) {
+             LOGGER.debug("FluxProcessor init called on Facade");
++            LOGGER.debug("CSRF NONCE: " + session.getAttribute("org.apache.catalina.filters.CSRF_NONCE")) ;
+         }
+         FluxProcessor processor = FluxUtil.getProcessor(sessionKey);
+         return processor.getEventQueue().getEventList();
+@@ -358,7 +359,30 @@
+         }
+     }
+ 
++    /**
++     * allows to create XForms UI Elements from JavaScript. It is not possible and must not be allowed to create
++     * XForms model elements via this method as this would introduce serious security issues.
++     *
++     * param id id given to UI Element
++     * param xfRole a string matching the name of a XForms UI Element e.g. 'input' or 'group'
++     * param ref an optional string containing the binding expression for the UI Element
++     * param value an opitonal value given to the UI Element
++     * param modelId optional model id to bind to - if null UI Element will be bound to default model
++     * param sessionKey the session key
++     * 
++     * @throws FluxException
++     */
++    public void createXFormsUIElement(String id,
++                                      String xfRole,
++                                      String ref,
++                                      String value,
++                                      String modelId,
++                                      String sessionKey) throws FluxException, XFormsException {
++        FluxProcessor processor = FluxUtil.getProcessor(sessionKey);
+ 
++         //processor.createUIElement(id,xfRole,ref,value,modelId);
++    }
++
+     private List handleUIEvent(UIEvent uiEvent, String sessionKey) throws FluxException {
+         FluxProcessor processor = FluxUtil.getProcessor(sessionKey);
+         if (processor != null) {
+@@ -386,6 +410,9 @@
+     make this available through Facade for those that know what they are doing
+      */
+     public static org.w3c.dom.Element getInstanceDocument(String modelId, String instanceId, String sessionKey){
++        if(LOGGER.isDebugEnabled()){
++            LOGGER.debug("getInstanceDocument called with modelId '" + modelId + "' instanceId '" + instanceId + "'");
++        }
+         return FluxModel.getInstanceDocument(modelId, instanceId, sessionKey);
+     }
+ 
