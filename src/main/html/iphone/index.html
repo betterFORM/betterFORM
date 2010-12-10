@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<title>How to build an iPhone website</title>
+
+	<meta name="author" content="will" />
+	<meta name="copyright" content="copyright 2008 www.engageinteractive.co.uk" />
+	<meta name="description" content="Welcome to engege interactive on the iPhone!" />
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+	<link rel="apple-touch-icon" href="images/template/engage.png"/>
+
+	<style type="text/css">
+		@import url("iphone.css");
+	</style>
+
+	<script type="text/javascript" src="orientation.js"></script>
+	<script type="text/javascript">
+		window.addEventListener("load",
+				function() {
+					setTimeout(loaded, 100) },
+				false);
+	
+		function loaded() {
+			// document.getElementById("page_wrapper").style.visibility = "visible";
+			// window.scrollTo(0, 1); // pan to the bottom, hides the location bar
+		}
+	</script>
+
+</head>
+
+<body onorientationchange="updateOrientation();">
+
+	<div id="page_wrapper">
+		<h1>Engage Interactive</h1>
+		<div id="content_left">
+			<p>You are now holding your phone to the left</p>
+		</div>
+		<div id="content_right">
+			<p>You are now holding your phone to the right</p>
+		</div>
+		<div id="content_normal">
+			<p>You are now holding your phone upright</p>
+		</div>
+		<div id="content_flipped">
+			<p>This doesn't work yet, but there is a chance apple will enable it at some point, so I've put it in anyway. You would be holding your phone upside down if it did work.</p>
+		</div>
+	</div>
+
+</body>
+</html>

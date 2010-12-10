@@ -1,0 +1,275 @@
+<div class="tutorial">
+
+<img src="/blog/wp-content/uploads/2008/06/iphone_tutorial.jpg" alt="How to build an iphone website!" title="iphone_tutorial" class="alignnone size-medium wp-image-37" width="550"/>
+
+<span class="intro">Well, we did promise we'd get around to a tutorial eventually, so here you have it! The Engage Interactive school for all things internet proudly presents: How to build a website with orientation specific content especially for the iPhone!</span>
+
+<p>Before you start the tutorial you can have a look at <a href="http://www.engageinteractive.co.uk/tutorials/iphone/" target="_blank">the finished example</a>. That would be cheating though and you will make baby Jesus (and his iPhone) cry.</p>
+
+<h3>Setting up your page</h3>
+<p>Just like any other web browser safari needs all the usual code at the top and bottom of the page and there is no harm in using keywords as people will still find your website through Google. There are also some iPhone specific meta tags you can use to control the way content is rendered. I have an example of what the code in the head tag should look like below.</p>
+
+<pre name="code" class="html">
+&lt;head&gt;
+	&lt;title&gt;Engage Interactive&lt;/title&gt;
+	&lt;meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;"&gt;
+	&lt;link rel="apple-touch-icon" href="images/template/engage.png"/&gt;
+&lt;/head&gt;
+&lt;body onorientationchange="updateOrientation();"&gt;
+&lt;/body&gt;
+</pre>
+
+<p>If you look at lines <strong>3</strong>, <strong>4</strong> and <strong>6</strong> you'll see a few lines you probably haven't come across before.</p>
+
+<p>Line <strong>3</strong> tells Safari that the viewport should be the same size as the iPhone screen. Usually the iPhone's screen acts like a window and the web page is the background scenery. Setting this line forces the content to always fit the window. The next part of that line sets the scale of the page. Because we are making this website specifically for the iPhone's small screen we don't need to have the page zoomed in.</p>
+
+<p>Line <strong>4</strong> is for creating webclip icons when you bookmark a site. The image should be 57px by 57px in .png format. You do not need to add the shine or corners as the iPhone will do that for you.</p>
+
+<p>Line <strong>6</strong> is part of the orientation detection. Safari simply executes a javascript function each time you turn the phone. This however doesn't have any way of acting upon which way the phone is being held. The javascript has to take care of that aspect. More on that later.</p>
+
+<p>For more options on the viewport <a href="http://developer.apple.com/DOCUMENTATION/AppleApplications/Reference/SafariWebContent/UsingtheViewport/chapter_4_section_5.html#//apple_ref/doc/uid/TP40006509-SW26" target="_blank">check out this page</a> (you need to be registered with the apple developer program).</p>
+
+<h3>Laying out the content</h3>
+
+<p>Before we get into the clever javascript and CSS we need to get the content in place and set the initial styles that will be default so that you can't see everything at once before the site has finished loading.</p>
+
+<pre name="code" class="html">
+&lt;div id="page_wrapper"&gt;
+	&lt;h1&gt;Engage Interactive&lt;/h1&gt;
+	&lt;div id="content_left"&gt;
+		&lt;p&gt;You are now holding your phone to the left&lt;/p&gt;
+	&lt;/div&gt;
+	&lt;div id="content_right"&gt;
+		&lt;p&gt;You are now holding your phone to the right&lt;/p&gt;
+	&lt;/div&gt;
+	&lt;div id="content_normal"&gt;
+		&lt;p&gt;You are now holding your phone upright&lt;/p&gt;
+	&lt;/div&gt;
+	&lt;div id="content_flipped"&gt;
+		&lt;p&gt;This doesn't work yet.&lt;/p&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+<p>First, we need a wrapper that will contain all the content on the page. This is very important as the javascript will be changing the class of this wrapper which will effect a lot of elements inside of it.</p>
+
+<p>Next, I've put in a logo. This is optional obviously, but it's an example of content that will always be visible regardless of the orientation should you want it to be.</p>
+
+<p>Lastly, we have all the content areas. Although at the moment the iPhone only supports left, right and upright orientations there is a chance that it might eventually support a flipped over orientation (holding the phone upside down) so I've put it in just in case. Each of these content areas are unique so we may as well use ID's rather than classes.</p>
+
+<p>These will be set to <em>display:none</em> and <em>display:block</em> and apart from that it's probably best to avoid anything more complicated than background colours/images and dimensions. Leave that to the content within them.</p>
+
+<h3>Onto the CSS</h3>
+
+<p>The CSS is very important in switching the content. Using classes and ID's we can make sure that only the correct content is being displayed. First though, we need to set up the page so that none of the iPhone's default styles will interfere.</p>
+
+<pre name="code" class="css">
+/*-----------------------------
+RESET STYLES
+-----------------------------*/
+	
+html, body, form, fieldset, p, div, h1, h2, h3, h4, h5, h6{
+	margin:0;
+	padding:0;
+	-webkit-text-size-adjust:none;
+	}
+body{
+	font-size: 10px;
+	}
+ul, li, ol, dl, dd, dt{
+	list-style:none;
+	padding:0;
+	margin:0;
+	}
+a{
+	text-decoration:none;
+	}
+</pre>
+
+<p>The most important part in that is the <em>-webkit-text-size-adjust:none;</em> This line stops safari from adjusting the text size when you rotate the screen. By default it assumes that holding the phone on it's side requires larger text size - which is true in most cases as the sites become more zoomed out - but in this case we are fitting the website to the screen so it's not necessary.</p>
+
+<pre name="code" class="css">
+/*-----------------------------
+	BASIC PAGE STYLING
+-----------------------------*/
+	
+body{
+	background:#fff000;
+	font-family: Helvetica;
+	color:#999;
+	}
+p{
+	font-size:12px;
+	padding-bottom:8px;
+	}
+a{
+	color:#fff000;
+	text-decoration:none;
+	}
+	
+/*-----------------------------
+	HEADINGS
+-----------------------------*/
+	
+h1{
+	display:block;
+	width:112px;
+	height:41px;
+	background-image:url(images/logo.gif);
+	text-indent:-5000px;
+	}
+	
+/*-----------------------------
+	BASIC LAYOUT
+-----------------------------*/
+	
+#page_wrapper{
+	padding-top:20px;
+	background:#000 url(images/page_background.gif) repeat-x;
+	overflow:auto;
+	}
+</pre>
+
+<p>These styles simply set the colours and font sizes for a few elements and also style the logo and page wrapper. You may have noticed, I've used the font <em>Helvetica</em>. It's already on the iPhone and it's a great font so I might as well. No more Ariel!</p>
+
+<p>Using <em>overflow:auto</em> on the <em>#page_wrapper</em> is simply so that any floated elements do not overflow the containing div. It's the (far better) alternative to <em>&lt;br class="clear" /&gt;</em></p>
+
+<h3>The complicated CSS</h3>
+
+<p>The following CSS controls which containers are currently on display and which are hidden which will be controlled by the javascript we'll get to in a bit.</p>
+
+<pre name="code" class="css">
+/*-----------------------------
+	ORIENTATION CLEVERNESS
+-----------------------------*/
+	
+#content_left,
+#content_right,
+#content_normal,
+#content_flipped{
+	display:none;
+	}
+</pre>
+<p>First we need to hide everything by default. When the page loads this will ensure that you don't get a flash of content before it is hidden.</p>
+<pre name="code" class="css">
+.show_normal,
+.show_flipped{
+	width:320px;
+	}
+.show_left,
+.show_right{
+	width:480px;
+	}
+</pre>
+<p>Next the width of the containers is specified. If you're building a site that fits the screen exactly you might want to put some heights in here.</p>
+<pre name="code" class="css">
+.show_left #content_left,
+.show_right #content_right,
+.show_normal #content_normal,
+.show_flipped #content_flipped{
+	display:block;
+	}
+</pre>
+<p>Finally the clever bit (well, not that clever really). This simply shows the containers if the <em>#page_wrapper</em> has the correct class. These classes are going to be set by the javascript. It would be possible to do it all with javascript, however I built the Engage site with several little tricks in place that needed the classes to apply certain styles.</p>
+
+<h3>The grand finale: Orientation Detection (and another useful trick)</h3>
+
+<p>This is the truly clever bit! Now I must admit, I didn't write all of this myself, various different aspects have come from different examples and samples from around the web. I've listed a few of the resources I used at the end of this article. The concept however is a genuine Engage Interactive exclusive!</p>
+
+<pre name="code" class="javascript">
+window.onload = function initialLoad(){
+	updateOrientation();
+}
+</pre>
+
+<p>This first line initialises the orientation change. Without this, the orientation wouldn't be detected on load, only on the first time it is changed.</p>
+
+<pre name="code" class="javascript">
+function updateOrientation(){
+	var contentType = "show_";
+	switch(window.orientation){
+		case 0:
+		contentType += "normal";
+		break;
+		
+		case -90:
+		contentType += "right";
+		break;
+		
+		case 90:
+		contentType += "left";
+		break;
+		
+		case 180:
+		contentType += "flipped";
+		break;
+	}
+document.getElementById("page_wrapper").setAttribute("class", contentType);
+}
+</pre>
+
+<p>This is the function that actually makes the changes to the page that allow the different content to be displayed. Lets go over it step by step:</p>
+<ul>
+	<li>Line 1 names the function which is run each time the phone is turned. This was what we enabled earlier in the body tag.</li>
+	<li>Line 2 sets the variable <em>contentType</em> to the default <em>show_</em></li>
+	<li>The following lines check the case (orientation) until it finds the appropriate one and breaks out of the out of the switch block appending the relevant term to the end of the <em>contentType</em> variable</li>
+	<li>Finally the javascript finds the page_wrapper div and sets the class to the value of <em>contentType</em>. From there the CSS takes over and styles the page accordingly.</li>
+</ul>
+<p>Clever huh?</p>
+
+<p>There is also one more little trick we've used to make the most out of the iPhone's nice big screen.</p>
+
+<pre name="code" class="javascript">
+window.addEventListener("load", function() { setTimeout(loaded, 100) }, false);
+	
+function loaded() {
+	document.getElementById("page_wrapper").style.visibility = "visible";
+	window.scrollTo(0, 1); // pan to the bottom, hides the location bar
+}
+</pre>
+
+<p>This javascipt waits until the page has loaded and then scrolls to the named element. In this case, <em>page_wrapper</em>. This hides the location bar straight away rather than having to scroll it manually off the screen. Handy if you want to make a page that fits the iPhone exactly.</p>
+<div class="files">
+	<h3>Source files</h3>
+	<p>To view the finished example head to <a href="http://www.engageinteractive.co.uk/tutorials/iphone/" target="_blank">www.engageinteractive.co.uk/tutorials/iphone/</a> on your iPhone. It wont work on your computer obviously, but you can still have a look at all the code.</p>
+	<p>Right click and save as on the following files to download the source.</p>
+	<ul>
+		<li>The HTML: <a href="http://www.engageinteractive.co.uk/tutorials/iphone/index.html" target="_blank">index.html</a></li>
+		<li>The CSS: <a href="http://www.engageinteractive.co.uk/tutorials/iphone/iphone.css" target="_blank">iphone.css</a></li>
+		<li>The Javascript: <a href="http://www.engageinteractive.co.uk/tutorials/iphone/orientation.js" target="_blank">orientation.js</a></li>
+		<li>The tutorial: <a href="http://www.engageinteractive.co.uk/tutorials/iphone/tutorial.html" target="_blank">tutorial.html</a></li>
+	</ul>
+</div>
+
+<p>So that was the technical side of building a website for the iPhone, you'll have to come up with creative stuff yourselves. I've listed a few helpful pages and resources that should help you on your way below.</p>
+
+<h3>Things to remember</h3>
+
+<p>Before you embark on your own iPhone website, here are a few things I had to keep reminding myself:</p>
+
+<ul>
+	<li>Every single iPhone is the same. If it works on one, it works on all the others. How nice it is to not have to bug check!</li>
+	<li>You can design your site to fit pixel perfectly to the width and height.</li>
+	<li>Don’t worry about using image replace for usability reasons (SEO reasons still apply however), the iPhone doesn't cater to people who would use screen readers so it’s not necessary. On a related note; there is no way of increasing text size, so feel free to use pixel sizes instead of em's or percentages.</li>
+	<li>There is no :hover status! The iphone only has on or off. Your finger is the mouse and dragging is how we scroll the page. Thus, no need for hover states in your CSS.</li>
+	<li>The iPhone has limited processing power and memory. Regardless of internet speed, large images or complicated javascript does slow down the iphone. Sometimes even cause it to crash.</li>
+</ul>
+
+<h3>Useful resources</h3>
+
+<p>Apple has kindly supplied a whole host of information for people to use when they embark on a web application for the iphone. Hidden away under many layers helpful hints though I've found the most important pages (which you have to register to use):</p>
+
+<ul>
+	<li><a href="https://developer.apple.com/iphone/index.action" target="_blank">iPhone developer pages</a></li>
+	<li><a href="http://developer.apple.com/documentation/iPhone/Conceptual/iPhoneHIG/Introduction/chapter_1_section_1.html" target="_blank">Apples suggested guidelines</a></li>
+	<li><a href="https://developer.apple.com/webapps/docs/documentation/iPhone/Conceptual/iPhoneHIG/MetricsLayout/chapter_5_section_4.html" target="_blank">iPhone screen metrics</a></li>
+	<li><a href="http://developer.apple.com/DOCUMENTATION/AppleApplications/Reference/SafariWebContent/UsingtheViewport/chapter_4_section_5.html#//apple_ref/doc/uid/TP40006509-SW26" target="_blank">Configuring the viewport.</a></li>
+</ul>
+
+<p>These links worked at the time of writing, but as I've discovered over the last few months, Apple seem to insist on reorganising everything on what seems to be a weekly basis. So what is there one week might be mysteriously moved the next. They have a pretty good search though so you shouldn't have much trouble re-discovering the pages linked above.</p>
+
+<p>And absolutely nothing to do with Apple themselves, <a href="http://developer.apple.com/documentation/iPhone/Conceptual/iPhoneHIG/Introduction/chapter_1_section_1.html" target="_blank">I found this little gem.</a> A great source of examples for Safaris abilities. My favourite being the ability to round corners with a simple line of CSS!</p>
+
+<p>I hope you found this little tutorial useful, and don't forget to post a comment with a link to your own creation, we love to hear from you!</p>
+
+</div>
