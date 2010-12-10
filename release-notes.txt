@@ -1,3 +1,8 @@
+betterFORM (Version 3.2)
+-------------------------------------------------------
+TBD
+
+
 betterFORM lightSteelBlue (Version 3.1) XRX Edition
 -------------------------------------------------------
 betterFORM lightSteelBlue XRX edition adds a convenient bundling of the well-known eXist XML database with the betterFORM
