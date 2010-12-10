@@ -2,6 +2,7 @@
 <!--
   ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
+  author: joern turner
   -->
 
 <xsl:stylesheet version="2.0"
