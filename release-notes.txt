@@ -9,7 +9,7 @@ betterFORM lightSteelBlue XRX edition adds a convenient bundling of the well-kno
 XForms engine. This release allows to add betterFORM as a eXist extension to an existing installation or start from
 scratch with the easy to install bundle.
 
-A demo application shows how to dynamically generate XForms from XQuery, query the database and combine the capabilities
+A demo appli cation shows how to dynamically generate XForms from XQuery, query the database and combine the capabilities
 of eXist and betterFORM in an attractive single-page application.
 
 betterFORM lightSteelBlue (Version 3.0)
