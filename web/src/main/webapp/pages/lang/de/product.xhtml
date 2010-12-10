@@ -2,8 +2,6 @@
   ~ Copyright (c) 2010. betterFORM Project - http://www.betterform.de
   	~ Licensed under the terms of BSD License
   -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xf="http://www.w3.org/2002/xforms"
@@ -11,340 +9,123 @@
       xml:lang="en" lang="en">
 <head>
     <title>betterFORM Produkt: Dokumentation / FAQ / Quellcode / Wiki</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta name="Author" content="Joern Turner">
-	<meta name="Author" content="Lars Windauer">
-	<meta name="publisher" content="betterFORM Project">
-	<meta name="description" content="betterFORM lightSteelBlue Product page provides documentation, links to references and source code">
-	<meta name="keywords" content="betterFORM, xforms, forms, form, xhtml, xpath, xslt, xslt2.0, dojo, dojotoolkit, java, javascript, xml, schema, web, web2.0, web2, web3.0, web3, semantic, semantic web, joern turner, turner, lars windauer, ajax, xforms processor, processor">
-	<meta name="copyright" content="betterFORM Project">
-	<meta name="content-language" content="de">
-	<meta name="robots" content="all">
-	<meta http-equiv="expires" content="Wed, 9 Feb 2011 12:21:57 GMT">
-	<meta name="revisit-after" content="3 days">
-
-
-
-	<link REV="made" HREF="mailto:info@betterform.de">
-    <link rel="SHORTCUT ICON" href="../../images/betterform.ico"/>
-    <link rel="ICON" href="../../images/betterform.ico" type="image/x-icon"/>
-    <link rel="stylesheet" type="text/css" href="../../styles/bf.css"/>
-
-
-
-	<!--[if IE]>
-	<style type="text/css">
-		#product .downloadButton {
-			margin-right:10px;
-		}
-	</style>
-	<![endif]-->
-
-
-    
 </head>
 <body id="product">
-    <div class="page">
+	<div id="sub-header">
+		<a href="demo.xhtml" class="link" id="demoButton"></a>
+		<a href="download.html" class="link" id="getitButton"></a>
+		<a href="product.html" class="link" id="productButton"></a>
+	</div>
+	<div id="main-content">
+			<div id="boxleft">
 
-        <div id="header">
-            <div class="pageMarginBox">
-                <div class="languages">
-                    <img src="../../images/en.png" class="langSelector" alt="english"/>
-                    <img src="../../images/de.png" class="langSelector" alt="deutsch"/>
-                </div>
-                <div id="logoBar">
-                     <a href="index.xhtml" class="link" id="linkLogo"><img id="logo" src="../../images/logo.png" alt="betterFORM project"/></a>
 
-                    <div id="topnav">
-                        <a href="index.xhtml">Start</a><span class="menuDevider"> | </span>
-                        <a href="demo.xhtml">Demo</a><span class="menuDevider"> | </span>
-                        <a href="download.xhtml">Download</a><span class="menuDevider"> | </span>
-                        <a href="product.xhtml" style="color:#488aa6">Produkt</a><span class="menuDevider"> | </span>
-                        <a href="support.xhtml">Support</a><span class="menuDevider"> | </span>
-                        <a href="whoweare.xhtml">Wer wir sind</a>
-<!--
-                        <a href="whoweare.html">who we are</a><span class="menuDevider"> | </span>
-                        <a href="contact.html">contact / impressum</a>
+				<h2>Documentation</h2>
+				<table width="100%" id="documentation">
+					<tr>
+						<td><a href="doc/betterFormUserGuide.pdf" target="_blank" class="link">UserGuide</a></td>
+						<td>assists you with getting started with betterFORM lightSteelBlue. For XForms authors.</td>
+					</tr>
+					<tr>
+						<td><a href="doc/betterFormDeveloperGuide.pdf" target="_blank" class="link">DeveloperGuide</a>
+						</td>
+						<td>for developers and integrators that need to know more.</td>
+					</tr>
+					<tr>
+						<td><a href="forms/reference/XFormsFeatureExplorer.xhtml" class="link">XFormsFeatureExplorer</a>
+						</td>
+						<td>shows many features of XForms and betterFORM in live examples</td>
+					</tr>
+					<tr>
+						<td><a href="https://betterform.de/trac/wiki/FAQ" class="link">FAQ</a></td>
+						<td>Frequently asked questions</td>
+					</tr>
+					<tr>
+						<td><a href="http://betterform.wordpress.com" class="link">Blog</a></td>
+						<td>Articles about XForms and betterFORM</td>
+					</tr>
+				</table>
+
+				<h2>XForms 1.1 Implementation Status</h2>
+				<img src="../images/xfConformanceTest_FF30_OSX.png" alt="XForms compliance test results" width="100"
+					 height="100" align="right" id="chart"/>
+
+				<p>
+					betterFORM has been intensely tested against the official XForms 1.1 Test Suite
+					Edition 1. The full test reports can be browsed below:
+				</p>
+
+				<!--<h3>XForms Compliance Test result</h3>-->
+				<ul>
+					<li><a href="reports/Firefox-3.0-Mac-OS-X-10.6-ConformanceReport1.1.html" title="98% Compliance">Firefox
+						3.0 on Mac OS X</a></li>
+					<li><a href="reports/Firefox-3.6-Windows-XP-ConformanceReport1.1.html" title="97% Compliance">Firefox
+						3.6 on Windows XP</a></li>
+					<li><a href="reports/Google-Chrome-4.0-Windows-XP-ConformanceReport1.1.html" title="96% Compliance">Chrome
+						4.0 on Windows XP</a></li>
+					<li><a href="reports/Google-Chrome-5.0-Mac-OS-X-10.6-ConformanceReport1.1.html"
+						   title="96% Compliance">Chrome 5.0 on Mac OS X</a></li>
+					<li><a href="reports/Internet-Explorer-7-Windows-XP-ConformanceReport1.1.html"
+						   title="95% Compliance">Internet Explorer 7.0 on Windows XP</a></li>
+				</ul>
+
+				<h2>Developer Resources</h2>
+				<ul>
+					<li><a href="https://www.betterform.de/svn/betterform" class="link" target="_blank">Subversion
+						repository</a></li>
+					<li><a href="https://www.betterform.de/trac/browser" class="link" target="_blank">Sourcecode
+						browser</a></li>
+					<li><a href="https://www.betterform.de/trac/" class="link" target="_blank">Bug tracking</a></li>
+					<li><a href="https://lists.sourceforge.net/lists/listinfo/betterform-users" class="link"
+						   target="_blank">betterform-users mailing list</a></li>
+					<li><a href="https://lists.sourceforge.net/lists/listinfo/betterform-developer" class="link"
+						   target="_blank">betterform-developers mailing list</a></li>
+				</ul>
+
+				<!--
+			<p style="color:darkred;">
+				NOTE:
+			</p>
+			<p style="color:darkred;">
+				This site uses a self-signed certificate and you will be browser warnings if clicking
+				the link. Please trust us - this is not a malicious site. To avoid this please
+				click <a href="BetterformCA.crt">this link</a> and store
+				our root CA certificate in your browser. From now on the warnings should be gone.
+			</p>
 -->
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div id="content">
-            <img id="shadowTop" src="../../images/shad_top.jpg" alt=""/>
+				<h2>Contribute</h2>
 
-            <!-- ######################### Content here ################################## -->
-            <!-- ######################### Content here ################################## -->
-            <!-- ######################### Content here ################################## -->
-            <!-- ######################### Content here ################################## -->
-            <!-- ######################### Content here ################################## -->
-            <div class="pageMarginBox">
-				<div class="contentBody">
-					<div id="boxleft">
-						<h1>Produkt</h1>
+				<p>
+					If you are willing to contribute please contact us via the betterform-users mailing list.
+				</p>
 
-						<h2 name="features">Eigenschaften</h2>
+				<h2>Supporter</h2>
 
-						<ul>
-							<li>einfache Installation</li>
-							<li>dynamisches Laden von Subformularen</li>
-							<li>schnelle  Entwicklung von Webanwendungen</li>
-							<li>keine Skriptprogrammierung n&ouml;tig</li>
-							<li>voll deklaratives Programmiermodel</li>
-							<li>keine plugins - l&auml;uft ohne Installation auf allen g&auml;nigen Browsern</li>
-							<li>Typisierung, Validierung und Berechnungen ohne Programmierung</li>
-							<li>dependency engine f&uuml;r komplexe Validierungen</li>
-							<li>erf&uuml;llt die XForms 1.1 recommendation</li>
-							<li>nahtlose Integration</li>
-							<li>in einen eigenen webcontext installierbar</li>
-							<li>volle Tastaturunterstützung</li>
-							<li>&Uuml;nterst&uuml;zung f&uuml;r Internationalisierung und Lokalisierung</li>
-							<li>Open-Source unter der unternehmensfreundlichen BSD oder Apache 2 Lizenz</li>
-							<li>Professioneller Support verf&uuml;gbar</li>
-						</ul>
+				<p class="supporter">
+					<a href="http://www.jetbrains.com/idea/"
+					   target="_blank"
+					   style="position: relative;display:block; width:120px; height:30px; border:0; margin:0;padding:0;text-decoration:none;text-indent:0;">
+						<img src="http://www.jetbrains.com/idea/opensource/img/all/banners/idea120x30_white.gif"
+							 alt="The best Java IDE" border="0"/>
+					</a>
+				</p>
 
 
-						<h2><a name="documentation" class="h2Link">Dokumentation</a></h2>
-						<p>Alle schriftlichen Dokumentationen sind im PDF-Format und ausschliesslich in englischer Sprache verf&uuml;gbar.</p>
-						<p>Zus&auml;tzlich existiert, mit dem XFormsFeatureExplorer, eine Live Referenz, welche alle verf&uuml;gbaren Container
-                        und Controls in Beispielen zeigt.</p>
-						<br/>
-						<table width="100%" id="documentation">
-							<tr>
-								<td align="center" valign="middle"><span class="downloadButtonWrapper"><a href="../../doc/betterFormUserGuide.pdf" target="_blank" class="link"><span class="buttonText downloadButton">Benutzer Handbuch</span></a></span> </td>
-								<td align="center" valign="middle"><span class="downloadButtonWrapper"><a href="product.xhtml" target="_blank" class="link"><span class="buttonText downloadButton">Entwickler Leitfaden</span></a></span> </td>
-							</tr>
-							<tr>
-								<td align="center" valign="middle"><span class="downloadButtonWrapper"><a href="../../forms/reference/XFormsFeatureExplorer.xhtml" class="link"><span class="buttonText exploreButton">Live Referenze</span></a></span> </td>
-                                <td align="center" valign="middle"></td>
-							</tr>
-						</table>
+				<p class="supporter">
+					<a href="https://sourceforge.net/projects/betterform" target="_blank"
+					   style="border:0;display:block;width:128px;padding:4px;">
+						<img src="../images/logo_sourceforge.png" alt="SourceForge.net" border="0"
+							 style="padding:4px;"/>
+					</a>
+				</p>
 
 
-
-
-
-
-						<h2><a name="conformance" class="h2Link">XForms 1.1 Standard</a></h2>
-						<p>
-							betterFORM wurde ausgiebig gegen die offizielle XForms 1.1 Test Suite Edition 1 getestet.
-						</p>
-
-						<p>
-							Die vollst&auml;ndigen Test Ergebnisse erreichen Sie &uuml;ber einen Klick auf die untenstehenden Diagramme.
-                            Einzelne Tests k&ouml;nnen dann durch einen Klick auf die Links in der linken Spalte in jeweiligen Report direkt ausgef&uuml;hrt werden.
-						</p>
-
-						<table id="conformanceTable">
-							<tr bgcolor="#565656" style="color:white;">
-								<th>Firefox 3.0 unter OSX</th>
-								<th>Firefox 3.6 unter XP</th>
-								<th>Chrome 4.0 unter XP</th>
-								<th>Chrome 5.0 unter OSX</th>
-								<th>IE 7 unter XP</th>
-							</tr>
-							<tr>
-								<td valign="middle" style="text-align:center;" width="90px">
-									<a href="../../reports/Firefox-3.0-Mac-OS-X-10.6-ConformanceReport1.1.html" title="98% Erf&uuml;llung">
-										<img src="../../images/xfConformanceTest_FF30_OSX.png" alt="XForms Test Ergebnisse f&uuml;r Firefox 3.0 unter Mac OS X" class="conformanceCell" />
-									</a>
-								</td>
-								<td valign="middle" style="text-align:center;" width="90px">
-									<a href="../../reports/Firefox-3.6-Windows-XP-ConformanceReport1.1.html" title="97% Erf&uuml;llung">
-										<img src="../../images/xfConformanceTest_FF36_XP.png" alt="XForms Ergebnisse f&uuml;r Firefox 3.6 unter Windows XP" class="conformanceCell" />
-									</a>
-								</td>
-								<td valign="middle" style="text-align:center;" width="90px">
-									<a href="../../reports/Google-Chrome-4.0-Windows-XP-ConformanceReport1.1.html" title="96% Erf&uuml;llung">
-										<img src="../../images/xfConformanceTest_CH4_XP.png" alt="XForms Ergebnisse f&uuml;r Chrome 4.0 unter Windows XP" class="conformanceCell" />
-									</a>
-								</td>
-								<td valign="middle" style="text-align:center;" width="90px">
-									<a href="../../reports/Google-Chrome-5.0-Mac-OS-X-10.6-ConformanceReport1.1.html" title="96% Erf&uuml;llung">
-										<img src="../../images/xfConformanceTest_CH5_OSX.png" alt="XForms Compliance Test Results for Chrome 5.0 on Mac Os X" class="conformanceCell" />
-									</a>
-								</td>
-								<td valign="middle" style="text-align:center;" width="90px">
-									<a href="../../reports/Internet-Explorer-7-Windows-XP-ConformanceReport1.1.html" title="95% Erf&uuml;llung">
-										<img src="../../images/xfConformanceTest_IE7_XP.png" alt="XForms Ergebnisse f&uuml;r Internet Explorer 7.0 unter Windows XP" class="conformanceCell"/>
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td valign="middle" style="text-align:center;background-color:#7ba841;" width="90px">bestanden: 98%</td>
-								<td valign="middle" style="text-align:center;background-color:#7ba841;" width="90px">97%</td>
-								<td valign="middle" style="text-align:center;background-color:#7ba841;" width="90px">96%</td>
-								<td valign="middle" style="text-align:center;background-color:#7ba841;" width="90px">96%</td>
-								<td valign="middle" style="text-align:center;background-color:#7ba841;" width="90px">95%</td>
-							</tr>
-						</table>
-
-						<h2><a name="svn" class="h2Link">Zugang f&uuml;r Entwickler</a></h2>
-						<p>Der betterFORM Quellcode kann &uuml;ber unser Subversion Repository bezogen werden. Die Adresse hierf&uuml;r lautet:
-							<div class="linkbox"><a href="https://www.betterform.de/svn/betterform" target="_blank">https://www.betterform.de/svn/betterform</a></div>
-						</p>
-						<p>Installieren Sie <a href="http://subversion.apache.org/packages.html" target="_blank">Subversion</a> und f&uuml;hren Sie folgenden Befehl in einem Terminal aus, um die aktuellen Quellen des betterFORM Projekts zu beziehen;</p>
-                        <p class="linkbox"><i>svn checkout https://betterform.de/svn/betterform/trunk</i></p>
-                        <p>Sie k&ouml;nnen auch einen <a href="http://de.wikipedia.org/wiki/Apache_Subversion#Grafische_Benutzeroberfl.C3.A4chen" target="_blank">Subversion Klienten</a> ihrer Wahl verwenden.</p>
-
-						<p>Alle betterFORM Quellen und deren Revisionen k&ouml;nnen Sie &uuml;ber den folgenden Link betrachten:
-							<div class="linkbox">
-								<a href="https://www.betterform.de/trac/browser" target="_blank">https://www.betterform.de/trac/browser</a>
-							</div>
-						</p>
-
-						<p>
-							Die Weiterentwicklung der betterFORM Quellen findet im '<a href="https://betterform.de/svn/betterform/trunk" target="_blank">trunk</a>' statt.
-                            Die einzelnen ver&ouml;ffentlichten Versionen sind &uuml;ber die mit "R-" beginnenden Ordnern
-                            im '<a href="https://betterform.de/svn/betterform/tags" target="_blank">tags</a>' Verzeichnis ereichbar,
-                            z.B. '<a href="https://betterform.de/svn/betterform/tags/R-3-1-0" target="_blank">R-3-1-0</a>' f&uuml;r die aktuelle Version lightSteelBlue.
-						</p>
-						<p>
-							Entwickler oder Organisationen, die sich an der Weiterentwicklung des betterFORM Projekts
-                            beteiligen m&ouml;chten, kontaktieren uns bitte &uuml;ber die öffentliche <a href="product.xhtml#sourceforge">Mailing Liste</a>.
-						</p>
-
-						<h2><a name="trac" class="h2Link">Issue Tracking</a></h2>
-						<p>
-							Suchen Sie Antworten, die Sie nirgendwo anders finden?
-						</p>
-						<p>
-							Unsere trac Installation ist die Anlaufstelle f&uuml;r die aktuellesten Informationen bez&uml;glich der betterFORM Entwicklung.
-                            Sie k&ouml;nnen:
-						</p>
-						<ul>
-							<li>Artikel in unserem Wiki lesen. Dort finden Sie kurze how-tos, eine FAQ und andere kleinere Dokumentationen.</li>
-							<li>die "timeline" betrachten welche &Auml;nderungen an den Wikiseiten, Revisionen und Tickets aufzeigt.</li>
-							<li>unseren Milestones Plan mit seinen zugeordneten Tickets betrachten.</li>
-							<li>den Quellcode online einsehen</li>
-						</ul>
-
-						<div class="linkbox">
-							<a href ="https://www.betterform.de/trac/" target="_blank">https://www.betterform.de/trac/</a>
-						</div>
-
-						<h2><a name="sourceforge" class="h2Link">Mailing Lists</a></h2>
-
-						<p>
-							Das betterFORM Projekt wird von Sourceforge gehostet und benutzt deren E-mail Verteiler und Download Angebote.
-						</p>
-						<p>
-							Die <strong>Benutzer</strong> Liste beantwortet Fragen im Zusammenhang mit der Benutztung des betterFORM Toolkits, seiner installation, Probleme die
-                            im laufenden Betrieb auftreten und Fragen zur Integration.
-                            Um dem E-mail Verteiler beizutreten, besuchen Sie bitte die folgende URL:
-							</p>
-							<div class="linkbox">
-								<a href ="https://lists.sourceforge.net/lists/listinfo/betterform-users" target="_blank">https://lists.sourceforge.net/lists/listinfo/betterform-users</a>
-							</div>
-
-						<p>
-							Die <strong>Entwickler</strong> Liste ist f&uuml;r die Diskussion &uuml;ber die Architektur, neue Features und Entwicklungungsinterna reserviert.
-							Um dem E-mail Verteiler beizutreten, besuchen Sie bitte die folgende URL:</p>
-						<div class="linkbox">
-							<a href ="https://lists.sourceforge.net/lists/listinfo/betterform-developer" target="_blank">https://lists.sourceforge.net/lists/listinfo/betterform-developer</a>
-						</div>
-						<!-- ##### a bit of space ###### -->
-						<div class="devider"></div>
-					</div>
-					<div id="boxright">
-						<div class="downloadRightBar">
-							<div class="boxRightEntryHeading boxRightEntryHeadingLink"><a href="#documentation">Dokumentation</a></div>
-							<p>Das <a href="../../doc/betterFormUserGuide.pdf" target="_blank">Benutzerhandbuch</a> hilft ihnen bei Start mit betterFORM lightSteelBlue.</p>
-						</div>
-						<div class="downloadRightBar">
-							<div class="boxRightEntryHeading boxRightEntryHeadingLink"><a href="#conformance">XForms 1.1 Compliance</a></div>
-							<p>betterFORM lightSteelBlue erf&uuml;llt mehr als 95% der <a href="http://www.w3.org/TR/xforms11" target="_blank">W3C XForms 1.1</a> Funktionalit&auml;t.</p>
-						</div>
-						<div class="downloadRightBar">
-							<div class="boxRightEntryHeading boxRightEntryHeadingLink"><a href="#svn">Entwickler Zugang</a></div>
-							<p>Arbeiten Sie mit den betterFORM Quellen. Laden Sie sich die neueste (trunk) Version oder ein spezielles Release.</p>
-						</div>
-						<div class="downloadRightBar">
-							<div class="boxRightEntryHeading boxRightEntryHeadingLink"><a href="#trac">Issue Tracking</a></div>
-							<p>Unterst&uuml;zen Sie betterFORM mit ihren Vorschl&auml;gen und Anregungen. Melden Sie Fehler, um es noch besser zu machen.</p>
-						</div>
-						<div class="downloadRightBar">
-							<div class="boxRightEntryHeading boxRightEntryHeadingLink"><a href="#sourceforge">Stay In Touch</a></div>
-							<p>Abonnieren Sie den betterFORM E-mail Verteiler, um auf den Laufenden zu bleiben.</p>
-						</div>
-						<div class="downloadRightBar">
-							<div class="boxRightEntryHeading">betterFORM unterst&uuml;zen</div>
-							<p>Bewerten Sie betterFORM bei <a href="http://sourceforge.net/projects/betterform/reviews" target="_blank">SourceForge</a> und <a href="https://www.ohloh.net/p/betterform" target="_blank">Ohloh</a>.</p>
-						</div>
-
-						<div class="downloadRightBar">
-							<div class="boxRightEntryHeading">Zertifizierte Open Source</div>
-							<p>betterFORM ist "OSI Certified" Open Source Software. <br/>
-								<span class="menuRightImage"><a href="http://www.opensource.org/" target="_blank" title="OSI certified"><img src="../../images/osi-certified-72x60.png" alt="OSI certified" id="osiLogo" style="border: 1px solid #565656"/></a></span>
-							</p>
-
-						</div>
-						
-						<div class="downloadRightBar">
-							<div class="boxRightEntryHeading">betterFORM Unterst&uuml;zer</div>
-							<p>Entwickelt mit:
-								<span class="menuRightImage">
-									<a href="http://www.jetbrains.com/idea/"
-									   target="_blank"
-									   style="position: relative;display:block; width:120px; height:30px; border:0; margin:0;padding:0;text-decoration:none;text-indent:0;">
-										<img src="http://www.jetbrains.com/idea/opensource/img/all/banners/idea120x30_white.gif" alt="The best Java IDE" border="0"/>
-									</a>
-								</span>
-							</p>
-							<p>Hosted bei:
-								<span class="menuRightImage">
-									<span style="background-color:white;border:1px solid #565656;display:block;height:26px;width:128px;">
-										<a href="https://sourceforge.net/projects/betterform" target="_blank"
-										   style="border:0;display:block;width:128px;">
-											<img src="../../images/logo_sourceforge.png" alt="SourceForge.net" border="0" style="padding:4px;"/>
-										</a>
-									</span>
-								</span>
-							</p>
-						</div>
-
-						<table class="supporter" width="100%" align="center">
-							<tr>
-								<td align="left" width="33%">
-								</td>
-								<td align="center" width="33%">
-								</td>
-								<td align="right" width="33%">
-								</td>
-							</tr>
-						</table>
-
-					</div>
-				</div>
-            </div>
-        </div>
-		<div id="footer">
-			<img id="shadowBottom" src="../../images/shad_bottom.jpg" alt=""/>
-
-			<div class="pageMarginBox">
-				<span id="bottomMenu">
-					&#169; 2010 betterFORM<span class="menuDevider"> | </span>
-					<a href="index.xhtml">Start</a><span class="menuDevider"> | </span>
-					<a href="demo.xhtml">Demo</a><span class="menuDevider"> | </span>
-					<a href="download.xhtml">Download</a><span class="menuDevider"> | </span>
-					<a href="product.xhtml" style="color:#488aa6">Produkt</a><span class="menuDevider"> | </span>
-					<a href="support.xhtml">Support</a><span class="menuDevider"> | </span>
-					<a href="whoweare.xhtml">Wer wir sind</a><span class="menuDevider"> | </span>
-					<a href="contact.xhtml">Kontakt / Impressum</a>
-				</span>
+				<!-- ##### a bit of space ###### -->
+				<div class="devider"></div>
 			</div>
+
 		</div>
-		
-     <script type="text/javascript">
-        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-    </script>
-    <script type="text/javascript">
-        try {
-        var pageTracker = _gat._getTracker("UA-15044944-1");
-        pageTracker._trackPageview();
-        } catch(err) {}
-    </script>
+
 </body>
 </html>
