@@ -4,14 +4,26 @@
          xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:bfb="http://betterform.de/binding">
 
-    <!-- ##### STATUS
-    simple input mapping should work
-    basic groups should work
-    todo: next steps
-    -parameter passing from incoming element to shadow content
-    ##### -->
+    <!--
+        implicit variables:
+        - id
+        - readonly
+        - relevant
+        - datatype
+        - valid
+        - value
+        - required
+        - classes
+        - label-classes
+        - [customAttributeName]
 
-    #
+        use as:
+        $id,
+        $readonly,
+        ...
+        $customAttr
+    -->
+
     <!-- used in stylesheet generation to build include the base stylesheet (useragent stylesheet) -->
     <bfb:resources>
         <bfb:xslt id="dojo" href="dojo.xsl"/>
