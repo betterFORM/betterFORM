@@ -1,22 +1,92 @@
-<!--
-  ~ Copyright (c) 2010. betterFORM Project - http://www.betterform.de
-  	~ Licensed under the terms of BSD License
-  -->
-
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:xf="http://www.w3.org/2002/xforms"
-      xmlns:ev="http://www.w3.org/2001/xml-events"
-      xml:lang="en" lang="en">
-<head>
-    <title>betterFORM Produkt: Dokumentation / FAQ / Quellcode / Wiki</title>
-</head>
-<body id="product">
-	<div id="sub-header">
-		<a href="demo.xhtml" class="link" id="demoButton"></a>
-		<a href="download.html" class="link" id="getitButton"></a>
-		<a href="product.html" class="link" id="productButton"></a>
-	</div>
-	<div id="main-content">
+	  xmlns:xf="http://www.w3.org/2002/xforms"
+	  xmlns:ev="http://www.w3.org/2001/xml-events"
+	  xml:lang="en" lang="en">
+	<head>
+		<title>betterFORM Product: Documentation / FAQ / Source Code / Wiki</title>
+
+		<style type="text/css">
+				/*
+		#featureTable{
+			margin-top:-15px;
+		}
+*/
+			#featureTable td {
+				vertical-align: top;
+				font-size: 0.9em;
+				color: #666666;
+				padding: 5px 45px 5px 0;
+			}
+
+			#featureTable td ul {
+				padding: 0 15px;
+			}
+
+			#featureTable td ul li {
+				background: url(../../images/list.png) no-repeat;
+				padding-left: 12px;
+				margin-top: 6px;
+			}
+
+			.features {
+				font-size: 1.8em;
+				padding-right: 60px;
+				color: #525252;
+			}
+
+			.feature {
+				float: left;
+				width: 250px;
+				margin-right: 20px;
+			}
+
+			#product #boxleft {
+				width: 100%;
+			}
+
+			#chart {
+				margin-right: 330px;
+				height: 150px;
+				width: 150px;
+			}
+			.supporter{
+				float:left;
+				padding-right:20px;
+			}
+		</style>
+
+		<!--[if IE]>
+		<style type="text/css">
+			#product .downloadButton {
+				margin-right: 10px;
+			}
+		</style>
+		<![endif]-->
+
+	</head>
+	<body id="product">
+			<div id="sub-header">
+			<h1>Product</h1>
+			<table id="featureTable">
+				<tr>
+					<td>easy installation</td>
+					<td>full XForms 1.1 implementation</td>
+					<td>Open Source under BSD or Apache 2 license</td>
+				</tr>
+				<tr>
+					<td>seamless integration</td>
+					<td>cross-browser - no plugins</td>
+					<td>completely based on open standards</td>
+				</tr>
+				<tr>
+					<td>rapid web application development</td>
+					<td>dynamic subforms</td>
+					<td>professional support</td>
+				</tr>
+			</table>
+		</div>
+
+		<div id="main-content">
 			<div id="boxleft">
 
 
@@ -47,7 +117,7 @@
 				</table>
 
 				<h2>XForms 1.1 Implementation Status</h2>
-				<img src="../images/xfConformanceTest_FF30_OSX.png" alt="XForms compliance test results" width="100"
+				<img src="../../images/xfConformanceTest_FF30_OSX.png" alt="XForms compliance test results" width="100"
 					 height="100" align="right" id="chart"/>
 
 				<p>
@@ -115,7 +185,7 @@
 				<p class="supporter">
 					<a href="https://sourceforge.net/projects/betterform" target="_blank"
 					   style="border:0;display:block;width:128px;padding:4px;">
-						<img src="../images/logo_sourceforge.png" alt="SourceForge.net" border="0"
+						<img src="../../images/logo_sourceforge.png" alt="SourceForge.net" border="0"
 							 style="padding:4px;"/>
 					</a>
 				</p>
@@ -126,6 +196,5 @@
 			</div>
 
 		</div>
-
-</body>
+	</body>
 </html>

@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) 2010. betterFORM Project - http://www.betterform.de
+  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
@@ -8,175 +8,206 @@
       xmlns:ev="http://www.w3.org/2001/xml-events"
       xml:lang="en" lang="en">
     <head>
-        <title>betterFORM herunterladen</title>
+		<title>Download betterFORM lightSteelBlue Version 3.1.0</title>
+		<style type="text/css">
+			#download #boxleft {
+				width: 100%;
+			}
+
+
+			#downloadNote{
+				float:left;
+				width:300px;
+				margin:0;
+				font-size:0.9em;
+				margin-top:10px;
+			}
+			#download .downloadBox {
+				background: transparent url(../../images/downloadButton.png) no-repeat scroll 0 0;
+				width: 378px;
+				height: 78px;
+				float:left;
+				margin-left:-5px;
+			}
+			.downloadButtonWrapper {
+				float: left;
+				clear:left;
+			}
+
+			#download .downloadBox #downloadText {
+				font-size: 14pt;
+				color: white;
+				font-size: 14pt;
+				padding: 20px 0 0 22px;
+				margin: 0;
+			}
+
+			#download .downloadBox #downloadSubtext {
+				color: lightsteelblue;
+				padding-left: 22px;
+				font-size:0.9em;
+				margin:0;
+			}
+			.downloadOption{
+				clear:both;
+			}
+			.downloadOption p{
+				float:left;
+				width:600px;
+			}
+
+		</style>
     </head>
     <body id="download">
+		<div id="sub-header">
+			<h1>Downloads</h1>
 
-        <div class="page">
+			<div class="downloadBox">
+				<a href="http://sourceforge.net/projects/betterform/files/" target="_blank"
+				   class="link"><p id="downloadText">download now</p>
 
-            <div id="header">
-                <div class="pageMarginBox">
-                    <div class="languages">
-                        <img src="../../images/en.png" class="langSelector" alt="english"/>
-                        <img src="../../images/de.png" class="langSelector" alt="deutsch"/>
-                    </div>
-                    <div id="logoBar">
-                         <a href="index.xhtml" id="linkLogo"><img id="logo" src="../../images/logo.png" alt="betterFORM project"/></a>
+					<p id="downloadSubtext">betterFORM lightSteelBlue</p></a>
+			</div>
+			<p id="downloadNote">
+					The recommended way of installing betterFORM is to use the WebInstaller. It
+					offers selective download of components and guides you through the installation.
+			</p>
+		</div>
+		<div id="main-content">
+			<div id="boxleft">
+				<div class="webinstaller">
+					<h2>Other Installation Options</h2>
 
-                        <div id="topnav">
-                            <a href="index.xhtml">Start</a><span class="menuDevider"> | </span>
-                            <a href="demo.xhtml">Demo</a><span class="menuDevider"> | </span>
-                            <a href="download.xhtml" style="color:#488aa6">Download</a><span class="menuDevider"> | </span>
-                            <a href="product.xhtml">Produkt</a><span class="menuDevider"> | </span>
-                            <a href="support.xhtml">Support</a><span class="menuDevider"> | </span>
-                            <a href="whoweare.xhtml">Wer wir sind</a>
+					<div class="downloadOption">
+						<div class="downloadButtonWrapper">
+							<a href="https://sourceforge.net/projects/betterform/files/lightSteelBlue-XRX/betterform-install.jar/download"
+							   class="link"><span class="buttonText downloadButton">betterFORM XRX</span></a></div>
+						<!--<div class="boxRightEntryHeading">eXist/betterFORM bundle</div>-->
+						<p>
+							A ready-to-go bundle of the eXist XML database with betterFORM.
+						</p>
+
+					</div>
+
+					<div class="downloadOption">
+						<div class="downloadButtonWrapper">
+							<a href="https://sourceforge.net/projects/betterform/files/lightSteelBlue-XRX/betterform-3.1.0.war/download" class="link"><span class="buttonText downloadButton">Web Application</span></a></div>
+						<!--<div class="boxRightEntryHeading">Web Application Archive</div>-->
+						<p>
+							Optimized web application archive (.war file) ready for deployment.
+						</p>
+					</div>
+
+					<div class="downloadOption">
+						<div class="downloadButtonWrapper">
+							<a href="https://sourceforge.net/projects/betterform/files/lightSteelBlue-XRX/betterform-core-3.1.0-bin.zip/download" class="link"><span class="buttonText downloadButton">standalone jar</span></a></div>
+						<!--<div class="boxRightEntryHeading">XForms Core</div>-->
+
+						<p>contains the XForms processor implementation in a single jar-file for integration in any Java application</p>
+					</div>
+
+					<div class="downloadOption">
+						<div class="downloadButtonWrapper">
+							<a href="http://sourceforge.net/projects/betterform/files/lightSteelBlue/betterform-3.1.0-src.zip/download" class="link"><span class="buttonText downloadButton">Source Code</span></a></div>
+						<!--<div class="boxRightEntryHeading">Source Code</div>-->
+						<p>The source code of betterFORM is available via Sourceforge. Click the button
+						below to download it.</p>
+
+					</div>
+
+					<!--<ul>
+						<li>Web Archive (.war) deployable in any webcontainer</li>
+						<li>bundled with Jetty as a standalone application</li>
+						<li>bundled with Jetty and eXist XML Database</li>
+					</ul>-->
+
+					<h2>System Requirements</h2>
+					<ul>
+						<li>You need <a href="http://www.java.com" target="_blank">Java</a> 1.5 or higher to
+							run betterFORM
+						</li>
+						<!--<li>Make sure your system is configured to execute jar-files</li>-->
+					</ul>
+
+				</div>
+
+				<h2>Run betterFORM</h2>
+				<ol>
+					<li>Switch to your installation directory</li>
+					<li>Execute the betterform.jar by double-clicking it</li>
+					<li>Point your browser to <a href="http://localhost:8080">localhost:8080</a></li>
+				</ol>
+
+				<h2>Getting started</h2>
+
+				<p>
+					To get started we recommend to have a look at the <a
+						href="forms/reference/XFormsFeatureExplorer.xhtml">XFormsFeatureExplorer</a> which
+					shows live examples of all available controls and containers along with
+					markup and descriptions. The FeatureExplorer will constantly be extended and updated
+					as betterFORM moves on.
+				</p>
+
+
+				<p>
+					The <a href="product.html#documentation">User Guide</a> is a must-read for every new
+					user and especially focuses on XForms
+					authoring, styling and page layout. It should give an overview of what the platform
+					offers out of the box.
+				</p>
+
+				<p>
+					The <a href="product.html#documentation">Developer Guide</a> is for architects and
+					developers seeking information about the architecture of betterFORM, building from
+					sourcecode, the various ways to extend the functionality and usage of the Java API.
+				</p>
+
+				<h2>If you need help</h2>
+				There are several places you can go if you run into trouble:
+				<ul>
+					<li><a href="https://www.betterform.de/trac/wiki/FAQ" target="_blank">The Frequently
+						Asked Questions (FAQ)</a></li>
+					<li><a href="https://lists.sourceforge.net/lists/listinfo/betterform-users"
+						   target="_blank">The users mailing list for all kinds of questions regarding
+						betterFORM</a></li>
+					<li><a href="support.html">Commercial support offerings of the betterFORM team</a></li>
+				</ul>
+			</div>
+
 <!--
-                            <a href="whoweare.html">who we are</a><span class="menuDevider"> | </span>
-                            <a href="contact.html">contact / impressum</a>
+				<div class="downloadRightBar">
+					<div class="boxRightEntryHeading">eXist/betterFORM bundle</div>
+					<p>
+						A ready-to-go bundle of the eXist XML database with betterFORM.
+					</p>
+					 <div class="downloadButtonWrapper">
+						 <a href="https://sourceforge.net/projects/betterform/files/lightSteelBlue-XRX/betterform-install.jar/download" class="link"><span class="buttonText downloadButton">eXist bundle</span></a></div>
+				</div>
+				<div class="downloadRightBar">
+					<div class="boxRightEntryHeading">Web Application Archive</div>
+					<p>
+						For those that already have a webcontainer betterFORM provides an optimized web application archive (WAR) ready for deployment.
+					</p>
+					 <div class="downloadButtonWrapper">
+						 <a href="https://sourceforge.net/projects/betterform/files/lightSteelBlue-XRX/betterform-3.1.0.war/download" class="link"><span class="buttonText downloadButton">download WAR</span></a></div>
+				</div>
+				<div class="downloadRightBar">
+					<div class="boxRightEntryHeading">Source Code</div>
+					<p>The source code of betterFORM is available via Sourceforge. Click the button
+					below to download it.</p>
+					<div class="downloadButtonWrapper">
+						<a href="http://sourceforge.net/projects/betterform/files/lightSteelBlue/betterform-3.1.0-src.zip/download" class="link"><span class="buttonText downloadButton">download sources</span></a></div>
+
+				</div>
+				<div class="downloadRightBar">
+					<div class="boxRightEntryHeading">XForms Core</div>
+
+					<p>The betterFORM XForms implementation is available as a standalone JAR file and can be integrated in any Java application.</p>
+					<div class="downloadButtonWrapper">
+						<a href="https://sourceforge.net/projects/betterform/files/lightSteelBlue-XRX/betterform-core-3.1.0-bin.zip/download" class="link"><span class="buttonText downloadButton">download JAR</span></a></div>
+				</div>
+			</div>
 -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="content">
-                <img id="shadowTop" src="../../images/shad_top.jpg" alt=""/>
-
-                <!-- ######################### Content here ################################## -->
-                <!-- ######################### Content here ################################## -->
-                <!-- ######################### Content here ################################## -->
-                <!-- ######################### Content here ################################## -->
-                <!-- ######################### Content here ################################## -->
-                <div class="pageMarginBox">
-                    <div class="contentBody">
-                        <div id="boxleft">
-                           	<h1>Downloads</h1>
-                            <p>
-                                Der empfohlene Weg um betterFORM zu installiern ist die Verwendung des WebInstallers.
-                                Er führt Sie durch die Installation und bietet ihnen die Möglichkeit nur ausgewählte Komponenten zu installieren.
-                            </p>
-                            <p>
-                               Klicken Sie den Knopf, um den WebInstaller zu laden.
-                            </p>
-
-                            <div class="downloadBox">
-                                <a href="http://sourceforge.net/projects/betterform/files/" target="_blank"
-                                   class="link"><p id="downloadText">jetzt laden</p>
-                                    
-                                <p id="downloadSubtext">betterFORM lightSteelBlue</p></a>
-                            </div>
-
-                            <div class="header1">the XForms way to build the web</div>
-
-                            <div class="webinstaller">
-                                <h2>Installations Möglichkeiten</h2>
-                                <ul>
-                                    <li>Als Web Archive (.war) einsetzbar in jedem beliebigen Web Container</li>
-                                    <li>gebündelt mit Jetty als eine selbständige Anwendung</li>
-                                    <li>gebündelt mit Jetty und der eXist XML Datenbank</li>
-                                </ul>
-
-                                <h2>System Voraussetzungen</h2>
-                                <ul>
-                                    <li>Sie benötigen <a href="http://www.java.com" target="_blank">Java</a> in der Version 1.5 oder höher um betterFORM auszuführen.</li>
-                                    <!--<li>Make sure your system is configured to execute jar-files</li>-->
-                                </ul>
-
-                                </div>
-
-                                <h2>Ausführen von betterFORM</h2>
-                                <ol>
-                                    <li>Wechseln Sie in das Verzeichnis in das Sie den Installer geladen haben</li>
-                                    <li>Starten sie den Installer durch einen Doppelklick auf das betterFORM-install.jar</li>
-                                    <li>Folgen Sie den Anweisungen des Installers, um betterFORM zu installieren</li>
-                                    <li>Wechseln Sie in das Installationsverzeichnis</li>
-                                    <li>Doppelklicken Sie anschließend auf das betterFORM.jar um den Server zu starten</li>
-                                    <li>Mit einem Doppelklick auf das betterFORM Logo starten Sie ihren Browser</li>
-                                </ol>
-
-                                <h2>Erste Schritte</h2>
-                                <p>
-                                Als Einstiegspunkt empfehlen wir den  <a href="../../forms/reference/XFormsFeatureExplorer.xhtml">XFormsFeatureExplorer</a>. Er zeigt
-                                Beispiele aller verfügbaren Bedienelemente und Container zusammen mit Codebeispielen und Beschreibungen. Der
-                                FeatureExplorer wird ständig erweitert und aktualisiert, sobald neue Features verfügbar sind.
-                                    
-                                </p>
-
-
-                                <p>
-                                    Das <a href="product.xhtml#documentation">Benutzerhandbuch</a> ist eine Pflichtlektüre für jeden neuen Nutzer. Sein Fokus liegt im speziellen auf den Themen: Erstellung von XForms, sowie
-                                    Gestaltung und Seitenlayout. Er sollte ihnen einen guten Überblick verschaffen, welche Funktionalitäten Ihnen die Platform bietet.
-
-                                </p>
-
-                                <p>
-                                   Als Hilfe zur Seitengestaltung und -layout ist die  <a href="product.xhtml#documentation">CSS Referenz</a> gedacht. Sie beinhaltet alle CSS-Klassen
-                                   die dem Benutzer zum Verändern des Erscheinungsbild und der Benutzeroberfläche zur Verfügung stehen.
-                                </p>
-
-                                <p>
-                                    Das <a href="product.xhtml#documentation">Entwickler Handbuch</a> ist für Architekten und Entwickler gedacht, die Informationen
-                                    über die betterFORM Architektur, das Erzeugen des Programms aus dem Quellcode,
-                                    die verschiedenen Möglichkeiten der Erweiterung der  Grundfunktionalität, als auch die Benutzung der Java API suchen.
-                                </p>
-                                <h2>Falls Sie Hilfe suchen</h2>
-                                Es gibt mehrere Anlaufstellen falls Sie Hilfe benötigen.
-                                <ul>
-                                    <li><a href="https://www.betterform.de/trac/wiki/FAQ" target="_blank">Die häufig gestellten Fragen (FAQ)</a></li>
-                                    <li><a href="https://lists.sourceforge.net/lists/listinfo/betterform-users" target="_blank">Die Benutzer  Mailingliste für alle Fragen rund um das Thema betterFORM</a></li>
-                                    <li><a href="support.xhtml">Kommerzielle Support-Angebote des betterFORM Teams</a></li>
-                                </ul>
-
-                            </div>
-                        </div>
-                        <div id="boxright">
-                            <div class="downloadRightBar">
-                                <div class="boxRightEntryHeading">Web Application Archive</div>
-                                <p>
-                                    Für alle die bereits einen Web Container betreiben, bietet betterFORM ein optimiertes, sofort einsetzbares  web application archive (WAR).
-                                </p>
-                                 <div class="downloadButtonWrapper">
-                                     <a href="http://sourceforge.net/projects/betterform/files/" target="_blank"><span class="downloadButton">WAR laden</span></a></div>
-                            </div>
-                            <div class="downloadRightBar">
-                                <div class="boxRightEntryHeading">Quellcode</div>
-                                <p>Der Quellcode von betterFORM ist über Sourceforge verfügbar. Um die Downloadseite
-                                    aufzurufen, klicken Sie bitte auf die folgende Schaltfläche.</p>
-                                <div class="downloadButtonWrapper">
-                                    <a href="http://sourceforge.net/projects/betterform/files/" target="_blank"><span class="downloadButton">Quellcode laden</span></a></div>
-
-                            </div>
-                            <div class="downloadRightBar">
-                                <div class="boxRightEntryHeading">XForms Core</div>
-
-                                <p> Die betterFROM XForms Implementierung kann als selbständige JAR Datei verwendet werden und ist in jede Java Anwendung integrierbar.</p>
-                                <div class="downloadButtonWrapper">
-                                    <a href="http://sourceforge.net/projects/betterform/files/" target="_blank"><span class="downloadButton">JAR laden</span></a></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="footer">
-                <img id="shadowBottom" src="../../images/shad_bottom.jpg" alt=""/>
-
-                <div class="pageMarginBox">
-                        <span id="bottomMenu">
-                            &#169; 2010 betterFORM<span class="menuDevider"> | </span>
-                            <a href="index.xhtml">Start</a><span class="menuDevider"> | </span>
-                            <a href="demo.xhtml">Demo</a><span class="menuDevider"> | </span>
-                            <a href="download.xhtml" style="color:#488aa6">Download</a><span class="menuDevider"> | </span>
-                            <a href="product.xhtml">Produkt</a><span class="menuDevider"> | </span>
-                            <a href="support.xhtml">Support</a><span class="menuDevider"> | </span>
-                            <a href="whoweare.xhtml">Wer wir sind</a><span class="menuDevider"> | </span>
-                            <a href="contact.xhtml">Kontakt / Impressum</a>
-                        </span>
-                </div>
-            </div>
-            </div>
-
-
-
-        <!--</div>-->
+		</div>
     </body>
 </html>

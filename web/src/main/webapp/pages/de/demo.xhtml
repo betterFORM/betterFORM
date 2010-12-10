@@ -1,25 +1,36 @@
-<!--
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://localhost:8080/betterform/resources/dtd/xhtml1-transitional.dtd">
--->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns:ev="http://www.w3.org/2001/xml-events"
       xmlns:atom="http://www.w3.org/2005/Atom"
       xml:lang="en" lang="en">
 <head>
-    <title>betterFORM Demo</title>
+    <title>betterFORM Demo XForms: Address, Registration, FeatureExplorer</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> </meta>
+	<meta name="Author" content="Joern Turner"> </meta>
+	<meta name="Author" content="Lars Windauer"> </meta>
+	<meta name="publisher" content="betterFORM Project"></meta>
+	<meta name="description" content="betterFORM lightSteelBlue demo page. Varying sample illustration xforms / dojo functionality, hidden features and best practices"></meta>
+	<meta name="keywords" content="betterFORM, xforms, forms, form, xhtml, xpath, xslt, xslt2.0, dojo, dojotoolkit, java, javascript, xml, schema, web, web2.0, web2, web3.0, web3, semantic, semantic web, joern turner, turner, lars windauer, ajax, xforms processor, processor"></meta>
+	<meta name="copyright" content="betterForm Project"></meta>
+	<meta name="content-language" content="en"></meta>
+	<meta name="robots" content="all"></meta>
+	<meta http-equiv="expires" content="Wed, 9 Feb 2011 12:21:57 GMT"></meta>
+	<meta name="revisit-after" content="3 days"></meta>
+	<meta name="google-site-verification" content="L5gmOYcZv-vwF2q0e-qSIXx8ecpKUN8A7lrW4ia9YR0" />
 
 
-    <link REV="made" HREF="mailto:info@betterform.de"/>
+    <link rev="made" href="mailto:info@betterform.de"/>
     <link rel="SHORTCUT ICON" href="../../images/betterform.ico"/>
     <link rel="ICON" href="../../images/betterform.ico" type="image/x-icon"/>
     <link rel="stylesheet" type="text/css" href="../../styles/bf.css"/>
-    <link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css"/>
-    <link rel="stylesheet" type="text/css" href="../../resources/styles/demo.css"/>
-    <link rel="stylesheet" type="text/css" href="../../resources/styles/registration.css"/>
+    <link rel="stylesheet" type="text/css" href="../resources/styles/reference.css"/>
+    <link rel="stylesheet" type="text/css" href="../resources/styles/demo.css"/>
+    <link rel="stylesheet" type="text/css" href="../resources/styles/registration.css"/>
 
     <style type="text/css">
+		.contentBody{
+			width:100%;
+		}
         #demoTarget {
             height: 400px;
             overflow: auto; /*padding:10px;*/
@@ -34,7 +45,7 @@
         .backgroundImage {
             width: 100%;
             height: 100%;
-            background: transparent url(../../resources/images/play.png) no-repeat 50%;
+            background: transparent url(../resources/images/play.png) no-repeat 50%;
         }
         #demoWrapper {
             position: relative;
@@ -45,7 +56,7 @@
             float: left;
             border: 1px dotted #666;
             /*margin-bottom: 20px;*/
-            background: url(../../resources/images/ajax-loader.gif) no-repeat center center;
+            background: url(../resources/images/ajax-loader.gif) no-repeat center center;
         }
 
         #demoTrigger {
@@ -54,15 +65,31 @@
 
         #content {
             min-height: 500px;
+			background:white;
         }
         #backTrigger {
             position: absolute;
             float: right;
         }
+		.tundra .dijitButtonNode {
+			border:none;
+		}
+		#demoHeader{
+			background:#d3d3d3;
+		}
+		#demoHeader h2{
+			margin-top:-16px;
+			padding-bottom:10px;
+
+		}
+		#noScript{
+			display:none;
+		}
 
     </style>
 
     <script type="text/javascript">
+		var xfReadySubscribers;
         dojo.require("dojox.highlight");
         dojo.require("dojox.highlight.languages.xml");
         //dojo.require("dojox.highlight.languages._static");
@@ -75,8 +102,6 @@
         dojo.require("dijit.form.Button");
         dojo.require("dijit.TitlePane");
         dojo.require('dijit.layout.ContentPane');
-        <!-- todo: resolve issue with dojo.requires appearing in subforms. These must be present in master at the
-        moment but this shouldn't be necessary .-->
         dojo.require("betterform.ui.select.OptGroup");
         dojo.require("betterform.ui.select1.RadioItemset");
         dojo.require("betterform.ui.select.CheckBoxItemset");
@@ -95,33 +120,43 @@
                     });
         }
 
-        function runDemo(/*string*/demo) {
-            dojo.subscribe("/xf/ready", function(data) {
-                dojo.removeClass(dojo.byId("demoTarget"), "demoOverlay");
-                dojo.style("demoTarget", "opacity", 0);
-                dojo.fadeIn({
-                    node: "demoTarget",
-                    duration:1000
-                }).play();
-                if (dojo.byId("registration") != undefined) {
-                    fluxProcessor.setInlineRoundBorderAlertHandler();
-                } else {
-                    fluxProcessor.setToolTipAlertHandler();
-                }
-            });
-            dojo.fadeOut({
-                node: "demoTarget",
-                duration:200,
-                onBegin: function() {
-                    fluxProcessor.dispatchEvent(demo + 'DemoTrigger');
-                }
-            }).play();
 
+        function runDemo(/*string*/demo) {
+			console.debug("rundemo:",demo);
+				if(xfReadySubscribers != undefined) {
+					dojo.unsubscribe(xfReadySubscribers);
+					xfReadySubscribers = null;
+				}
+
+				xfReadySubscribers = dojo.subscribe("/xf/ready", function(data) {
+					dojo.removeClass(dojo.byId("demoTarget"), "demoOverlay");
+					dojo.style("demoTarget", "opacity", 0);
+					dojo.fadeIn({
+						node: "demoTarget",
+						duration:1000
+					}).play();
+					if (dojo.byId("registration") != undefined) {
+						fluxProcessor.setInlineRoundBorderAlertHandler();
+					} else {
+						fluxProcessor.setToolTipAlertHandler();
+					}
+				});
+				dojo.fadeOut({
+					node: "demoTarget",
+					duration:200,
+					onBegin: function() {
+						fluxProcessor.dispatchEvent(demo + 'DemoTrigger');
+					}
+				}).play();
         }
 
         function backToDemo() {
             fluxProcessor.dispatchEvent('backTrigger');
         }
+		dojo.subscribe("/xf/ready", function(){
+			fluxProcessor.skipshutdown=true;
+		});
+
     </script>
 
 
@@ -141,28 +176,27 @@
             <xf:label>run demo</xf:label>
             <xf:toggle case="c-demoArea"/>
             <xf:load show="embed" targetid="demoTarget">
-                <xf:resource value="'../../forms/demo/contacts.xhtml#xforms'"/>
+                <xf:resource value="'../forms/demo/contacts.xhtml#xforms'"/>
             </xf:load>
         </xf:trigger>
         <xf:trigger id="orderlistDemoTrigger">
             <xf:label>run demo</xf:label>
             <xf:toggle case="c-demoArea"/>
             <xf:load show="embed" targetid="demoTarget">
-                <xf:resource value="'../../forms/demo/orderlist.xhtml#xforms'"/>
+                <xf:resource value="'../forms/demo/orderlist.xhtml#xforms'"/>
             </xf:load>
         </xf:trigger>
         <xf:trigger id="registrationDemoTrigger">
             <xf:label>run demo</xf:label>
             <xf:toggle case="c-demoArea"/>
             <xf:load show="embed" targetid="demoTarget">
-                <xf:resource value="'../../forms/demo/registration.xhtml#xforms'"/>
+                <xf:resource value="'../forms/demo/registration.xhtml#xforms'"/>
             </xf:load>
         </xf:trigger>
         <xf:trigger id="featureExplorerDemoTrigger">
             <xf:label>run demo</xf:label>
-            <xf:toggle case="c-demoArea"/>
-            <xf:load show="replace" >
-                <xf:resource value="'../../forms/reference/XFormsFeatureExplorer.xhtml'"/>
+            <xf:load show="new" >
+                <xf:resource value="'../forms/reference/XFormsFeatureExplorer.xhtml'"/>
             </xf:load>
         </xf:trigger>
     </div>
@@ -176,9 +210,9 @@
             <script type="text/javascript">
 
                 var template = dojo.clone(dojo.byId("template"));
-                console.debug("replace template: ", template);
+                // console.debug("replace template (1): ", template);
                 var demoTarget = dojo.byId("demoTarget");
-                console.debug("replace template: ", demoTarget);
+                // console.debug("replace template: (2)", demoTarget);
                 //demoWrapper.appendChild(template);
                 dojo.attr(demoTarget, "style", "");
                 demoTarget.appendChild(template);
@@ -195,14 +229,14 @@
                 <img src="../../images/de.png" class="langSelector" alt="deutsch"/>
             </div>
             <div id="logoBar">
-                 <a href="index.html" id="linkLogo"><img id="logo" src="../../images/logo.png" alt="betterFORM project"/></a>
+                 <a href="index.html" class="link" id="linkLogo"><img id="logo" src="../../images/logo.png" alt="betterFORM project"/></a>
                 <div id="topnav">
-                    <a href="index.html">Start</a><span class="menuDevider"> | </span>
-                    <a href="demo.xhtml" style="color:#488aa6">Demo</a><span class="menuDevider"> | </span>
-                    <a href="download.html">Download</a><span class="menuDevider"> | </span>
-                    <a href="product.html">Produkt</a><span class="menuDevider"> | </span>
-                    <a href="support.html">Support</a><span class="menuDevider"> | </span>
-                    <a href="whoweare.html">Wer wir sind</a>
+                    <a href="index.html">home</a><span class="menuDevider"> | </span>
+                    <a href="demo.xhtml" style="color:#488aa6">demo</a><span class="menuDevider"> | </span>
+                    <a href="download.html">download</a><span class="menuDevider"> | </span>
+                    <a href="product.html">product</a><span class="menuDevider"> | </span>
+                    <a href="support.html">support</a><span class="menuDevider"> | </span>
+                    <a href="whoweare.html">who we are</a>
                     <!--<a href="whoweare.html">who we are</a><span class="menuDevider"> | </span>-->
                     <!--<a href="contact.html">contact / impressum</a>-->
                 </div>
@@ -211,7 +245,17 @@
     </div>
 
     <div id="content">
-        <img id="shadowTop" src="../../images/shad_top.jpg" alt=""/>
+		<noscript>
+			<div style="border: thin solid ; width: 100%; color: darkred;position:absolute;top:120px;z-index:999;padding:10px;background:orange">Sorry - this site was optimized for use with JavaScript. You won't be able to run the demos until you activate JavaScript</div>
+		</noscript>
+
+		<div id="demoHeader">
+			<img id="shadowTop" src="../../images/shad_top.jpg" alt=""/>
+			<div class="pageMarginBox">
+				<h2>Click the desired screenshot to run the demo.</h2>
+			</div>
+		</div>
+
         <div class="pageMarginBox">
             <div class="contentBody">
 
@@ -220,30 +264,25 @@
                 <!-- ######################### Content here ################################## -->
                 <!-- ######################### Content here ################################## -->
                 <!-- ######################### Content here ################################## -->
-                <h1>Demo</h1>
 
                 <xf:switch>
                     <xf:case id="c-overview" selected="true">
-                        <h2>Klicken Sie auf ein Bildschirmfoto um die Demo zu starten</h2>
 
 
-                        <a href="javascript:runDemo('contacts');"><img src="../../images/add-l.png" alt="contacts"/></a>
-                        <a href="javascript:runDemo('registration');"><img src="../../images/reg-r.png"
-                                                                           alt="Registration"/></a>
-                        <a href="javascript:runDemo('orderlist');"><img src="../../images/ord-l.png"
-                                                                        alt="orderlist"/></a>
-                        <a href="javascript:runDemo('featureExplorer');"><img src="../../images/fea-r.png"
-                                                                      alt="XFormsFeatureExplorer"/></a>
+                        <a href="javascript:runDemo('contacts');" class="link"><img src="../../images/add-l.png" alt="contacts"/></a>
+                        <a href="javascript:runDemo('registration');" class="link"><img src="../../images/reg-r.png" alt="Registration"/></a>
+                        <a href="javascript:runDemo('orderlist');" class="link"><img src="../../images/ord-l.png" alt="orderlist"/></a>
+                        <a href="javascript:fluxProcessor.dispatchEvent('featureExplorerDemoTrigger');" class="link"><img src="../../images/fea-r.png" alt="XFormsFeatureExplorer"/></a>
 
                     </xf:case>
                     <xf:case id="c-demoArea">
                         <div id="demoWrapper">
                             <div id="demoTarget">
-                                <div onclick="runDemo();" class="backgroundImage"></div>
+                                <!--<div onclick="runDemo();" class="backgroundImage"></div>-->
                             </div>
                         </div>
                         <xf:trigger id="backToDemo">
-                            <xf:label>Schließen</xf:label>
+                            <xf:label>close</xf:label>
                             <xf:toggle case="c-overview"/>
                             <script type="text/javascript">
                                 backToDemo();
@@ -270,13 +309,7 @@
         <div class="pageMarginBox">
                     <span id="bottomMenu">
                         &#169; 2010 betterFORM<span class="menuDevider"> | </span>
-                        <a href="index.xhtml">Start</a><span class="menuDevider"> | </span>
-                        <a href="demo.xhtml" style="color:#488aa6">Demo</a><span class="menuDevider"> | </span>
-                        <a href="download.xhtml">Download</a><span class="menuDevider"> | </span>
-                        <a href="product.xhtml">Produkt</a><span class="menuDevider"> | </span>
-                        <a href="support.xhtml">Support</a><span class="menuDevider"> | </span>
-                        <a href="whoweare.xhtml">Wer wir sind</a><span class="menuDevider"> | </span>
-                        <a href="contact.xhtml">Kontakt / Impressum</a>
+                        <a href="contact.html">contact / impressum</a>
                     </span>
         </div>
     </div>
