@@ -136,8 +136,10 @@
 
                         <div class="pageMarginBox">
                             <div class="languages">
+                                <a href="{$rootDir}/site/en/index.html">
                                 <img src="{$rootDir}/images/en.png" class="langSelector" alt="english version"
                                      title="english version"/>
+                                </a>
                                 <a href="{$rootDir}/site/de/index.html">
                                     <img src="{$rootDir}/images/de.png" class="langSelector" alt="deutsch"
                                          title="deutsche Version"/>
