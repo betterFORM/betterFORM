@@ -15,7 +15,7 @@
             doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
             doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" />
 
-    <xsl:param name="rootDir" select="'.'"/>
+    <xsl:param name="rootDir" select="'../..'"/>
     <xsl:param name="currentFile" select="''"/>
 
     <xsl:template match="/">
@@ -136,9 +136,11 @@
 
                         <div class="pageMarginBox">
                             <div class="languages">
+                                <a href="{$rootDir}/site/en/index.html">
                                 <img src="{$rootDir}/images/en.png" class="langSelector" alt="english version"
                                      title="english version"/>
-                                <a href="{$rootDir}/lang/de/index.html">
+                                </a>
+                                <a href="{$rootDir}/site/de/index.html">
                                     <img src="{$rootDir}/images/de.png" class="langSelector" alt="deutsch"
                                          title="deutsche Version"/>
                                 </a>
