@@ -1,18 +1,36 @@
+
+
+## generic files to ignore
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
+*.class
+pom.xml.old
+
+
+## intellij project files
+*.iml
+*.ipr
+*.iws
+
+## eclipse project files
+.classpath
+.project
+.settings
+
+
+## directories to ignore
 .gitignore
-betterform-project.iml
-betterform-project.ipr
-betterform-project.iws
+.svn
 
-core/betterform-core.iml
-web/betterform.iml
-betty/betty.iml
-xApp/xApplication.iml
-zaphod/zaphod.iml
 
-core/pom.xml.old
-web/pom.xml.old
-betty/pom.xml.old
 
-core/target*
-web/target*
+target/*
 betty/target*
+core/target*
+exist/target/*
+web/target*
+xApp/target*
+zaphod/target*
