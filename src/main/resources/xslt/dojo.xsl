@@ -196,8 +196,6 @@
 </xsl:text>
                 <link rel="stylesheet" type="text/css" href="{concat($contextroot,$scriptPath,'release/dojo/betterform/css/static.css')}"/><xsl:text>
 </xsl:text>
-                <link rel="stylesheet" type="text/css" href="{concat($contextroot,$scriptPath,'release/dojo/betterform/css/custom.css')}"/><xsl:text>
-</xsl:text>
         		<xsl:call-template name="getLinkAndStyle"/><xsl:text>
 </xsl:text>
     </xsl:template>
