@@ -1,0 +1,14 @@
+/**
+	This file currently holds all CSS files that are needed by the betterFORM XForms engine to work. These
+	are referred to as 'static CSS' in contrast to the 'custom' CSS that a XForms author or Site Designer might add
+	for a project. These should be added via custom.css.
+
+	This file is referenced by scripts/betterform/css is and therefore included during CSS optimization.
+**/
+
+@import url("../scripts/release/dojo/dijit/themes/tundra/tundra.css");
+@import url("../scripts/release/dojo/dojo/resources/dojo.css");
+@import url("../scripts/release/dojo/dojox/widget/Toaster/Toaster.css");
+@import url("../scripts/release/dojo/dojox/layout/resources/FloatingPane.css");
+@import url("xforms.css");
+@import url("betterform.css");

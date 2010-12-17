@@ -15,30 +15,38 @@
     <xsl:import href="dojo.xsl"/>
     <!-- ### CDN support is not avaibable for this stylesheet -->
     <xsl:variable name="useCDN" select="'false'"/>
+    <!-- path to core CSS file -->
+    <xsl:param name="CSSPath" select="concat($resourcesPath,'styles/')"/>
 
-    <xsl:template name="addDojoCSS"><xsl:text>
+    <!-- ### the CSS stylesheet to use ### -->
+    <xsl:variable name="default-css" select="concat($contextroot,$CSSPath,'xforms.css')"/>
+    <xsl:variable name="betterform-css" select="concat($contextroot,$CSSPath,'betterform.css')"/>
+    <xsl:variable name="custom-css" select="concat($contextroot,$CSSPath,'custom.css')"/>
+
+
+
+    <xsl:template name="addCSS"><xsl:text>
 </xsl:text>
                 <style type="text/css">
-                    <xsl:choose>
-                        <xsl:when test="contains(//body/@class, 'soria')">
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dijit/themes/soria/soria.css";
-                        </xsl:when>
-                        <xsl:when test="contains(//body/@class, 'nihilo')">
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dijit/themes/nihilo/nihilo.css";
-                        </xsl:when>
-                         <xsl:when test="contains(//body/@class, 'claro')">
-                    @import "<xsl:value-of select="$contextroot"/>dijit/themes/claro/claro.css";
-                        </xsl:when>
-                        <xsl:otherwise>
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dijit/themes/tundra/tundra.css";
-                        </xsl:otherwise>
-                    </xsl:choose>
+                    <xsl:call-template name="chooseTheme"/>
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojo/resources/dojo.css";
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojox/widget/Toaster/Toaster.css";
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojox/layout/resources/FloatingPane.css";
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojox/layout/resources/ResizeHandle.css";
                 </style><xsl:text>
 </xsl:text>
+        <!-- include betterForm default stylesheet -->
+        <link rel="stylesheet" type="text/css" href="{$default-css}"/><xsl:text>
+</xsl:text>
+        <link rel="stylesheet" type="text/css" href="{$betterform-css}"/><xsl:text>
+</xsl:text>
+        <link rel="stylesheet" type="text/css" href="{$custom-css}"/><xsl:text>
+</xsl:text>
+        <!-- copy user-defined stylesheets and inline styles -->
+        <xsl:call-template name="getLinkAndStyle"/>
+<xsl:text>
+</xsl:text>
+
     </xsl:template>
 
     <xsl:template name="addDojoConfig">
