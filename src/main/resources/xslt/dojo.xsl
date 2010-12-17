@@ -266,7 +266,7 @@
             </xsl:otherwise>
         </xsl:choose>
 
-        <script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/betterform/betterform.js')}">
+        <script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/betterform/betterform-full.js')}">
             &#160;</script>
         <xsl:text>
 </xsl:text>
