@@ -6,7 +6,6 @@
 dojo.provide("betterform.ui.Control");
 
 dojo.require("dijit._Widget");
-dojo.require("betterform.ui.UIElementFactory");
 
 /* dojo.Dialog and Button are needed to render helps  */
 dojo.require("dijit.Dialog");

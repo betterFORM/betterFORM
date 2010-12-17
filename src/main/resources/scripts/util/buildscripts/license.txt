@@ -1,1 +1,11 @@
-betterFORM License Text
+/*
+* Copyright (c) 2010. betterForm Project - http://www.betterform.de
+* All Rights Reserved.
+*
+* @author Tobias Krebs
+* @author Joern Turner
+* @author Lars Windauer
+*
+* Licensed under the terms of BSD License
+*
+*/

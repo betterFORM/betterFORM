@@ -8,7 +8,7 @@ dojo.provide("betterform.ui.input.TextField");
 dojo.require("dijit._Widget");
 dojo.require("dijit._Templated");
 dojo.require("dijit.form.TextBox");
-dojo.require("betterform.ui.ControlValue");
+
 
 dojo.declare(
         "betterform.ui.input.TextField",

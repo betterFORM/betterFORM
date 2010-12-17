@@ -6,7 +6,7 @@
 dojo.provide("betterform.ui.select.MultiSelect");
 
 dojo.require("dijit.form.FilteringSelect");
-dojo.require("betterform.ui.ControlValue");
+
 dojo.require("dijit.form.MultiSelect");
 
 

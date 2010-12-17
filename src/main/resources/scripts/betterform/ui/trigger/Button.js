@@ -8,7 +8,7 @@ dojo.provide("betterform.ui.trigger.Button");
 dojo.require("dijit._Widget");
 dojo.require("dijit._Templated");
 dojo.require("dijit.form.Button");
-dojo.require("betterform.ui.ControlValue");
+
 
 dojo.declare(
         "betterform.ui.trigger.Button",

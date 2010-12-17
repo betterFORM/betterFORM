@@ -54,42 +54,7 @@
     </xsl:template>
 
     <xsl:template name="addDojoRequires">
-                dojo.require("betterform.FluxProcessor");
-                dojo.require("betterform.XFormsModelElement");
-                dojo.require("betterform.ui.Control");
-                dojo.require("betterform.ui.util");
-                // needed for alert Handling
-                dojo.require("dijit.Tooltip");
-                dojo.require("betterform.ui.container.Repeat");
-                dojo.require("betterform.ui.container.RepeatItem");
-
-                <!--dojo.require("betterform.ui.container.Container");-->
-
-                <!--dojo.require("dojo.parser");-->
-                <!--dojo.require("dojo.fx");-->
-                <!--dojo.require("dojo.NodeList-fx");-->
-                <!--dojo.require("dojo.dnd.Selector");-->
-                <!--dojo.require("dojo.dnd.Source");-->
-
-
-                <!--dojo.require("dijit.Dialog");-->
-                <!--dojo.require("dijit.TitlePane");-->
-               <!-- dojo.require("dijit.Tooltip");-->
-                <!--dojo.require("dijit.form.CheckBox");-->
-                <!--dojo.require("dijit.form.Button");-->
-                <!--dojo.require("dijit.layout.ContentPane");-->
-                <!--dojo.require("dijit.layout.TabContainer");-->
-                <!--dojo.require("dijit.layout.BorderContainer");-->
-                <!--dojo.require("dijit.layout.AccordionContainer");-->
-                <!--dojo.require("dojox.layout.FloatingPane");-->
-
-                <!--dojo.require("dojox.widget.FisheyeLite");-->
-                <!--dojo.require("dojox.widget.Toaster");-->
-                <!-- Not used? -->
-                <!-- dojo.require("betterform.ui.textarea.MinimalTextarea"); -->
-                <!--dojo.require("betterform.ui.upload.Upload");-->
-                <!-- Only used is in OutputElementFactory -->
-                <!-- dojo.require("betterform.ui.tree.OPMLTree"); -->
+                dojo.require("betterform.bfRequiredMinimal");
     </xsl:template>
 
 </xsl:stylesheet>

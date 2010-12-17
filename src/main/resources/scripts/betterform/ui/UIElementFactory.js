@@ -49,7 +49,6 @@ dojo.declare(
                 switch (inputType.toLowerCase()) {
                     case "casimiletimeline":
                         // console.debug("UIElementFactory: create new timeline", sourceNode);
-                        dojo.require("betterform.ui.timeline.TimeLine");
                         newWidget = new betterform.ui.timeline.TimeLine({
                             name:controlId + "-value",
                             checked:xfValue,
@@ -60,7 +59,6 @@ dojo.declare(
                         break;
                     case "caopmltree":
                         // console.debug("UIElementFactory: create new tree");
-                            dojo.require("betterform.ui.tree.OPMLTree");
                         newWidget = new betterform.ui.tree.OPMLTree({
                             name:controlId + "-value",
                             "class":classValue,
@@ -84,7 +82,6 @@ dojo.declare(
                                 //console.debug("UIelementFactory.createWidget 2. datePattern:" + datePattern);
                             }
                         }
-                        dojo.require("betterform.ui.input.Date");
 
                         if (datePattern != undefined) {
                             try {
@@ -141,7 +138,6 @@ dojo.declare(
                             }
                         }
 
-                        dojo.require("betterform.ui.input.DateTime");
                         if (datePattern != undefined) {
                             try {
                             newWidget = new betterform.ui.input.DateTime({
@@ -195,7 +191,7 @@ dojo.declare(
                         if (xfValue == "false") {
                             xfValue = undefined;
                         }
-                        dojo.require("betterform.ui.input.Boolean");
+
                         newWidget = new betterform.ui.input.Boolean({
                             name:controlId + "-value",
                             checked:xfValue,
@@ -208,7 +204,7 @@ dojo.declare(
                 	    //var incrementaldelay = dojo.attr(sourceNode,"delay");
                         var xfValue = sourceNode.innerHTML;
                     // console.debug("UIElementFactory.createWidget: String Value: ", xfValue);
-                        dojo.require("betterform.ui.input.TextField");
+
                         newWidget = new betterform.ui.input.TextField({
                             name:controlId + "-value",
                             value:xfValue,
@@ -244,7 +240,7 @@ dojo.declare(
                     case "anyuri":
                         //todo: clean this mess up - handling of text/html missing
                         if (mediatype == undefined || mediatype == "controlValue" || mediatype == "text") {
-                            dojo.require("betterform.ui.output.Link");
+
                             newWidget = new betterform.ui.output.Link({
                                 name:controlId + "-value",
                                 href:xfValue,
@@ -253,7 +249,7 @@ dojo.declare(
                                 xfControlId:controlId
                             }, sourceNode);
                         }else if (mediatype.indexOf("image/") > -1) {
-                                dojo.require("betterform.ui.output.Image");
+
                                 newWidget = new betterform.ui.output.Image({
                                     name:controlId + "-value",
                                     src:xfValue,
@@ -262,7 +258,7 @@ dojo.declare(
                                     xfControlId:controlId
                                 }, sourceNode);
                         }else if (mediatype == "text/html") {
-                            dojo.require("betterform.ui.output.Html");
+
                             newWidget = new betterform.ui.output.Html({
                                 name:controlId + "-value",
                                 value:xfValue,
@@ -276,7 +272,7 @@ dojo.declare(
                         }
                         break;
                     case "sourcecode":
-                        dojo.require("betterform.ui.output.SourceCode");
+
                         newWidget = new betterform.ui.output.SourceCode({
                             name: controlId + "-value",
                             value: xfValue,
@@ -286,7 +282,7 @@ dojo.declare(
                             }, sourceNode);
                         break;
                     case "bfinputlook":
-                            dojo.require("betterform.ui.output.InputLook");
+
                             newWidget = new betterform.ui.output.InputLook({
                                 name:controlId + "-value",
                                 value:xfValue,
@@ -298,7 +294,7 @@ dojo.declare(
                         break;
                     default:
                         if (mediatype == undefined || mediatype == "controlValue" || mediatype == "text") {
-                            dojo.require("betterform.ui.output.Plain");
+
                             newWidget = new betterform.ui.output.Plain({
                                 name:controlId + "-value",
                                 value:xfValue,
@@ -309,7 +305,7 @@ dojo.declare(
 
                         }
                         else if (mediatype == "text/html") {
-                            dojo.require("betterform.ui.output.Html");
+
                             newWidget = new betterform.ui.output.Html({
                                 name:controlId + "-value",
                                 value:xfValue,
@@ -320,7 +316,7 @@ dojo.declare(
 
                         }
                         else if (mediatype.indexOf("image/") > -1) {
-                                dojo.require("betterform.ui.output.Image");
+
                                 newWidget = new betterform.ui.output.Image({
                                     name:controlId + "-value",
                                     src:xfValue,
@@ -331,7 +327,7 @@ dojo.declare(
                             }
                             else {
                                 console.warn("UIElementFactory.createWidget(): unknown mediatype '" + mediatype + "' for output, rendering default output");
-                                dojo.require("betterform.ui.output.Plain");
+
                                 newWidget = new betterform.ui.output.Plain({
                                     name:controlId + "-value",
                                     value:xfValue,
@@ -370,7 +366,7 @@ dojo.declare(
                 }
                 // console.debug("UIElementFactory Range: srcNode: ", sourceNode, " start: ", start, " end: ", end, " step: ",step);
                 if(dojo.attr(sourceNode,"appearance")=="bf:rating"){
-                    dojo.require("betterform.ui.range.Rating");
+
                     newWidget = new betterform.ui.range.Rating({
                         name:controlId + "-value",
                         value:xfValue,
@@ -384,7 +380,7 @@ dojo.declare(
                     var discreteValues = ((end - start) / step) +1;
                     // create and setup Range Rules
                     var rulesNode = document.createElement('div');
-                    dojo.require("betterform.ui.range.Slider");
+
                     sourceNode.appendChild(rulesNode);
                     var sliderRules = new dijit.form.HorizontalRule({
                         count: discreteValues,
@@ -427,7 +423,7 @@ dojo.declare(
 
             case "secret":
                 var xfValue = sourceNode.innerHTML;
-                dojo.require("betterform.ui.secret.Secret");
+
                 newWidget = new betterform.ui.secret.Secret({
                     name:controlId + "-value",
                     value:xfValue,
@@ -440,7 +436,7 @@ dojo.declare(
             /* Select Cases */
             case "selectCheckBox":
 
-                dojo.require("betterform.ui.select.CheckBoxGroup");
+
                 newWidget = new betterform.ui.select.CheckBoxGroup({
                     name:controlId + "-value",
                     "class":classValue,
@@ -450,7 +446,7 @@ dojo.declare(
                 break;
 
             case "selectList":
-                dojo.require("betterform.ui.select.MultiSelect");
+
                 newWidget = new betterform.ui.select.MultiSelect({
                     name:controlId + "-value",
                     size:dojo.attr(sourceNode, "size"),
@@ -464,7 +460,7 @@ dojo.declare(
             /* Select1 Cases */
             case "select1":
             case "select1ComboBox":
-                dojo.require("betterform.ui.select1.ComboBox");
+
                 newWidget = new betterform.ui.select1.ComboBox({
                     name:controlId + "-value",
                     value:"",
@@ -475,7 +471,7 @@ dojo.declare(
                 break;
 
             case "select1ComboBoxOpen":
-                     dojo.require("betterform.ui.select1.ComboBoxOpen");
+
                 newWidget = new betterform.ui.select1.ComboBoxOpen({
                     name:controlId + "-value",
                     size:dojo.attr(sourceNode, "size"),
@@ -487,7 +483,7 @@ dojo.declare(
                 break;
 
             case "select1List":
-                     dojo.require("betterform.ui.select1.Plain");
+
                 newWidget = new betterform.ui.select1.Plain({
                     name:controlId + "-value",
                     size:dojo.attr(sourceNode, "size"),
@@ -497,7 +493,7 @@ dojo.declare(
                 }, sourceNode);
                 break;
             case "select1RadioButton":
-                dojo.require("betterform.ui.select1.RadioGroup");
+
                 newWidget = new betterform.ui.select1.RadioGroup({
                     name:controlId + "-value",
                     "class":classValue,
@@ -508,7 +504,7 @@ dojo.declare(
             case "textarea":
 // todo: fixme: textarea mediatype="dojo" makes no sense - should be an appearance instead
                 if(dojo.attr(sourceNode,"appearance")=="minimal" && mediatype != 'text/html' && mediatype !=  'dojo') {
-                    dojo.require("betterform.ui.textarea.MinimalTextarea");
+
                     newWidget = new betterform.ui.textarea. MinimalTextarea({
                         name:controlId + "-value",
                         rows:5,
@@ -520,7 +516,7 @@ dojo.declare(
                 }
                 else {
                     if(mediatype == 'text/html') {
-                        dojo.require("betterform.ui.textarea.HtmlEditor");
+
                         newWidget = new betterform.ui.textarea.HtmlEditor({
                             name:controlId + "-value",
                             "class":classValue,
@@ -528,7 +524,7 @@ dojo.declare(
                             xfControlId:controlId
                             }, sourceNode);
                     } else if(mediatype == 'dojo') {
-                        dojo.require("betterform.ui.textarea.DojoEditor");
+
                         newWidget = new betterform.ui.textarea.DojoEditor({
                             name:controlId + "-value",
                             "class":classValue,
@@ -538,7 +534,7 @@ dojo.declare(
                             xfControlId:controlId
                         }, sourceNode);
                     }else {
-                        dojo.require("betterform.ui.textarea.SimpleTextarea");
+
                         newWidget = new betterform.ui.textarea.SimpleTextarea({
                             name:controlId + "-value",
                             "class":classValue,
@@ -551,7 +547,7 @@ dojo.declare(
             case "minimalTrigger":
             case "trigger":
                 if(dojo.attr(sourceNode,"appearance")=="minimal") {
-                    dojo.require("betterform.ui.trigger.LinkButton");
+
                     newWidget = new betterform.ui.trigger.LinkButton({
                         id:dojo.attr(sourceNode, "id"),
                         name:dojo.attr(sourceNode, "name")+"-value",
@@ -561,7 +557,7 @@ dojo.declare(
                         xfControlId:controlId
                     }, sourceNode);
                 } else if (dojo.attr(sourceNode,"appearance")=="imageTrigger") {
-                    dojo.require("betterform.ui.trigger.ImageButton");
+
                     newWidget = new betterform.ui.trigger.ImageButton({
                         id:dojo.attr(sourceNode, "id"),
                         name:dojo.attr(sourceNode, "name")+"-value",
@@ -572,8 +568,7 @@ dojo.declare(
                     }, sourceNode);
                     // console.dirxml(sourceNode);
                 }else {
-                    dojo.require("betterform.ui.trigger.Button");
-                    dojo.require("dijit.form.Button");
+
                     // console.debug("UIElementFactory: creating betterform.ui.trigger.Button sourceNode:",sourceNode );
                     newWidget = new betterform.ui.trigger.Button({
                         id:dojo.attr(sourceNode, "id"),
@@ -595,7 +590,7 @@ dojo.declare(
                     case "base64Binary":
                     case "hexBinary":
                     case "anyURI":
-                        dojo.require("betterform.ui.upload.UploadPlain");
+
                         newWidget = new betterform.ui.upload.UploadPlain({
                             "class":classValue,
                             title:dojo.attr(sourceNode,"title"),
@@ -611,7 +606,7 @@ dojo.declare(
                 var radioName = sourceNode.name;
                 var radioValue = sourceNode.value;
                 // console.debug("UIElementFactory.create Radio Item for Control " + controlId + " [name:"+radioName+"] ! Properties: ", sourceNode, " value: " + radioValue);
-                dojo.require("betterform.ui.select1.RadioButton");
+
                 newWidget = new betterform.ui.select1.RadioButton({
                     "class":classValue,
                     name:radioName,
@@ -625,7 +620,7 @@ dojo.declare(
                 var dialogName = sourceNode.name;
                 var dialogValue = sourceNode.value;
                 //console.debug("UIElementFactory.create Dialog Control " + controlId + " [name:"+dialogName+"] ! Properties: ", sourceNode, " value: " + dialogValue);
-                dojo.require("betterform.ui.container.Dialog");
+
                 newWidget = new betterform.ui.container.Dialog({
                     "class":classValue,
                     name:dialogName,

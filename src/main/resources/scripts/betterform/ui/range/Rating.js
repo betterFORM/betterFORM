@@ -6,7 +6,7 @@
 dojo.provide("betterform.ui.range.Rating");
 
 dojo.require("dojox.form.Rating");
-dojo.require("betterform.ui.ControlValue");
+
 
 dojo.require("dijit._Widget");
 dojo.require("dijit._Templated");

@@ -6,8 +6,8 @@
 dojo.provide("betterform.ui.select.OptGroup");
 
 dojo.require("dijit._Widget");
-dojo.require("betterform.ui.ControlValue");
-dojo.require("dojox.data.dom");
+
+dojo.require("dojox.xml.parser");
 /**
 	All Rights Reserved.
 	@author Joern Turner

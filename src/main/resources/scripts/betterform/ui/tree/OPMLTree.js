@@ -7,10 +7,10 @@ dojo.provide("betterform.ui.tree.OPMLTree");
 
 dojo.require("dijit._Widget");
 dojo.require("dijit._Templated");
-dojo.require("betterform.ui.ControlValue");
+
 dojo.require("dijit.Tree");
 dojo.require("dojox.data.OpmlStore");
-dojo.require("dojox.data.dom");
+dojo.require("dojox.xml.parser");
 
 /*
     CLASS: OPMLTree represents an XForms OPML Tree Control
@@ -81,7 +81,7 @@ dojo.declare(
         this.store = this._createStore(data);
         this.model = this._createModel();
 
-        dojox.data.dom.removeChildren(this.domNode);
+        dojox.xml.parser.removeChildren(this.domNode);
         var treeNode = dojo.doc.createElement("div");
         dojo.place(treeNode, this.domNode)
 

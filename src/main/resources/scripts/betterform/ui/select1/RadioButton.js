@@ -6,7 +6,7 @@
 dojo.provide("betterform.ui.select1.RadioButton");
 
 
-dojo.require("betterform.ui.ControlValue");
+
 dojo.require("dijit.form.CheckBox");
 
 

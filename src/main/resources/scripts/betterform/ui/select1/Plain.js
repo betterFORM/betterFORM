@@ -6,8 +6,8 @@
 dojo.provide("betterform.ui.select1.Plain");
 
 
-dojo.require("betterform.ui.ControlValue");
-dojo.require("dojox.form.DropDownSelect");
+
+dojo.require("dijit.form.Select");
 
 
 dojo.declare(

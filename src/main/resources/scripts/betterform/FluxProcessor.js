@@ -5,19 +5,6 @@
 
 dojo.provide("betterform.FluxProcessor");
 
-dojo.require("betterform.XFormsProcessor");
-dojo.require("dojo.NodeList-fx");
-dojo.require("betterform.ui.UIElementFactory");
-dojo.require("dojox.layout.FloatingPane");
-dojo.require("dojox.widget.Toaster");
-dojo.require("betterform.ui.common.GlobalAlert");
-dojo.require("betterform.ui.common.BowlAlert");
-dojo.require("betterform.ui.common.InlineRoundBordersAlert");
-dojo.require("betterform.ui.common.InlineAlert");
-dojo.require("betterform.ui.common.ToolTipAlert");
-dojo.require("betterform.ClientServerEvent");
-dojo.require("dojo._base.html");
-
 /**
  All Rights Reserved.
  @author Joern Turner
@@ -28,8 +15,7 @@ dojo.require("dojo._base.html");
  de.betterform.web.betterform.FluxFacade.
  **/
 
-dojo.declare("betterform.FluxProcessor",
-        betterform.XFormsProcessor,
+dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
 {
     sessionKey:"",
     skipshutdown:false,
@@ -98,7 +84,6 @@ dojo.declare("betterform.FluxProcessor",
 
         var inlineRoundBordersAlertEnabled = dojo.query(".InlineRoundBordersAlert", dojo.doc)[0];
         if (inlineRoundBordersAlertEnabled != undefined) {
-            dojo.require("betterform.ui.common.InlineRoundBordersAlert");
             this.defaultAlertHandler = new betterform.ui.common.InlineRoundBordersAlert({});
         }
 
@@ -136,7 +121,6 @@ dojo.declare("betterform.FluxProcessor",
     setInlineRoundBorderAlertHandler:function() {
         //console.debug("setInlineRoundBorderAlertHandler");
         this.unsubscribeFromAlertHandler();
-        dojo.require("betterform.ui.common.InlineRoundBordersAlert");
         this.defaultAlertHandler = new betterform.ui.common.InlineRoundBordersAlert({});
         this.subscribers[0] = dojo.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
         this.subscribers[1] = dojo.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");

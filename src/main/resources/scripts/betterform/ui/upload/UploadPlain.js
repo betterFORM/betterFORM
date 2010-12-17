@@ -5,9 +5,7 @@
 
 dojo.provide("betterform.ui.upload.UploadPlain");
 
-dojo.require("betterform.ui.ControlValue");
-dojo.require("betterform.FluxProcessor");
-
+dojo.require("dojo.NodeList-fx");
 
 dojo.declare(
         "betterform.ui.upload.UploadPlain",
