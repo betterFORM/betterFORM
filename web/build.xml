@@ -440,6 +440,49 @@
     </target>
 
 
+    <target name="compress-css" description="compress all CSS placed at betterFORM/resources/styles">
+        <path id="task.classpath">
+            <pathelement location="${basedir}/src/main/lib/yuicompressor-2.4.2.jar"/>
+            <pathelement location="${basedir}/src/main/lib/yui-compressor-ant-task-0.5.jar"/>
+        </path>
+
+        <!-- yui-compressor task definition -->
+        <taskdef name="yui-compressor"
+                 classname="net.noha.tools.ant.yuicompressor.tasks.YuiCompressorTask">
+            <classpath refid="task.classpath"/>
+        </taskdef>
+
+        <!-- an easy way to concat files into one -->
+    <!--
+        <concat destfile="${webapp.dir}/resources/styles/global.css" force="no">
+           <fileset dir="${webapp.dir}" includes="resources/styles/registration.css" />
+       </concat>
+    -->
+
+        <echo message="Building global cascading stylesheets"/>
+        <yui-compressor charset="UTF-8"
+                        fromdir="${webapp.dir}"
+                        todir="${webapp.dir}"
+                        warn="false">
+            <include name="resources/styles/*.css"/>
+        </yui-compressor>
+
+        <move todir="${webapp.dir}/resources/styles">
+            <fileset dir="${webapp.dir}/resources/styles"/>
+            <regexpmapper from="(.*)-min.css" to="\1.neu"/>
+        </move>
+        <delete>
+            <fileset dir="${webapp.dir}/resources/styles">
+                <include name="*.css"/>
+            </fileset>
+        </delete>
+        <move todir="${webapp.dir}/resources/styles">
+            <fileset dir="${webapp.dir}/resources/styles"/>
+            <regexpmapper from="(.*).neu" to="\1.css"/>
+        </move>
+    </target>
+
+
     <target name="check.dojo">
         <echo>Check condition</echo>
         <condition property="dojo.not.available">
