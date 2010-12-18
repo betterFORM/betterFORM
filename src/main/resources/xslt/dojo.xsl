@@ -52,13 +52,12 @@
     <!--- path to javascript files -->
     <xsl:param name="scriptPath" select="concat($resourcesPath,'scripts/')"/>
 
-    <!-- path to core CSS file -->
-    <xsl:param name="CSSPath" select="concat($resourcesPath,'styles/')"/>
-
     <xsl:param name="keepalive-pulse" select="'0'"/>
 
     <!-- CDN support is disabled by default -->
     <xsl:param name="useCDN" select="'false'"/>
+
+    <xsl:param name="betterform-js" select="concat($contextroot,$scriptPath,'release/dojo/betterform/betterform.js')"/>
 
     <!-- locale Parameter -->
     <xsl:param name="locale" select="'en'"/>
@@ -70,9 +69,6 @@
     <!-- ### checks, whether this form makes use of <textarea xf:mediatype='text/html'/> ### -->
     <!--<xsl:variable name="uses-html-textarea" select="boolean(//xf:textarea[@mediatype='text/html'])"/>-->
 
-    <!-- ### the CSS stylesheet to use ### -->
-    <xsl:variable name="default-css" select="concat($contextroot,$CSSPath,'xforms.css')"/>
-    <xsl:variable name="betterform-css" select="concat($contextroot,$CSSPath,'betterform.css')"/>
 
     <xsl:variable name="default-hint-appearance" select="'bubble'"/>
 
@@ -100,7 +96,6 @@
             <title>
                 <xsl:value-of select="$form-name"/>
             </title>
-
             <!-- copy base if present -->
 <!--
             <xsl:if test="$baseURI != ''">
@@ -114,20 +109,15 @@
 
             <xsl:choose>
                 <xsl:when test="$useCDN='true'">
-                    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.3/dojo/resources/dojo.css"/>
-                    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.3/dijit/themes/tundra/tundra.css"/>
+                    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/resources/dojo.css"/>
+                    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dijit/themes/tundra/tundra.css"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:call-template name="addDojoCSS"/>
+                    <xsl:call-template name="addCSS"/>
                 </xsl:otherwise>
             </xsl:choose>
 
-            <!-- include betterForm default stylesheet -->
-            <link rel="stylesheet" type="text/css" href="{$default-css}"/>
-            <link rel="stylesheet" type="text/css" href="{$betterform-css}"/>
 
-            <!-- copy user-defined stylesheets and inline styles -->
-            <xsl:call-template name="getLinkAndStyle"/>
 
             <!-- include needed javascript files -->
             <xsl:call-template name="addDojoConfig"/>
@@ -198,30 +188,34 @@
     </xsl:template>
 
 
-    <xsl:template name="addDojoCSS"><xsl:text>
+    <xsl:template name="addCSS"><xsl:text>
 </xsl:text>
-                <style type="text/css">
-                    <xsl:choose>
-                        <xsl:when test="contains(//body/@class, 'soria')">
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/soria/soria.css";
-                        </xsl:when>
-                        <xsl:when test="contains(//body/@class, 'nihilo')">
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/nihilo/nihilo.css";
-                        </xsl:when>
-                        <xsl:when test="contains(//body/@class, 'claro')">
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/claro/claro.css";
-                        </xsl:when>
-                        <xsl:otherwise>
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/tundra/tundra.css";
-                        </xsl:otherwise>
-                    </xsl:choose>
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dojo/resources/dojo.css";
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dojox/widget/Toaster/Toaster.css";
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dojox/layout/resources/FloatingPane.css";
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dojox/layout/resources/ResizeHandle.css";
-                    
-                </style><xsl:text>
+        		    <style type="text/css">
+                    	<xsl:call-template name="chooseTheme"/>
+    				</style><xsl:text>
 </xsl:text>
+                <link rel="stylesheet" type="text/css" href="{concat($contextroot,$scriptPath,'release/dojo/betterform/css/static.css')}"/><xsl:text>
+</xsl:text>
+        		<xsl:call-template name="getLinkAndStyle"/><xsl:text>
+</xsl:text>
+    </xsl:template>
+
+
+    <xsl:template name="chooseTheme">
+        <xsl:choose>
+            <xsl:when test="contains(//body/@class, 'soria')">
+        @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/soria/soria.css";
+            </xsl:when>
+            <xsl:when test="contains(//body/@class, 'nihilo')">
+        @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/nihilo/nihilo.css";
+            </xsl:when>
+             <xsl:when test="contains(//body/@class, 'claro')">
+        @import "<xsl:value-of select="$contextroot"/>release/dojo/dijit/themes/claro/claro.css";
+            </xsl:when>
+            <xsl:otherwise>
+        @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/tundra/tundra.css";
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template name="addDojoConfig">
@@ -266,7 +260,8 @@
             </xsl:otherwise>
         </xsl:choose>
 
-        <script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/betterform/betterform.js')}">
+        <!--<script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/betterform/betterform.js')}">-->
+        <script type="text/javascript" src="{$betterform-js}">
             &#160;</script>
         <xsl:text>
 </xsl:text>

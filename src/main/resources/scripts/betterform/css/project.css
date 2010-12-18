@@ -1,0 +1,8 @@
+/* this is the place to be when custom CSS is intended to be compressed .
+   All files found in this directory are subject of optimization.
+
+   As custom (project-specific) CSS typically exists in a different location (not
+   in a script directory) this file may use an arbitrary number of @import statements
+   that relatively refer to the actual css files.
+*/
+@import url("../../../../../styles/custom.css");
