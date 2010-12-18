@@ -71,7 +71,6 @@
                 <path refid="compile.class.path"/>
                 <pathelement location="${web.dir}/src/main/lib/dwr-2.0.5.jar" groupid="org.directwebremoting.dwr" version="2.0.5" artifactId="dwr"/>
                 <pathelement location="${web.dir}/src/main/lib/servlet-api-2.4.jar" groupid="javax.servlet" version="2.4" artifactId="servlet-api" scope="provided"/>
-                <pathelement location="${web.dir}/src/main/lib/yuicompressor-2.4.2.jar" groupid="yui.compressor" version="2.4.2" artifactId="yui-compressor" />
             </classpath>
         </compile>
         <test>

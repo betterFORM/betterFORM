@@ -5,7 +5,7 @@
 
 dependencies = {
 	//Strip all console.* calls except console.warn and console.error.
-	stripConsole: "normal",
+	// stripConsole: "normal",
 
     layers: [
         /** excluded Dojo JavaScript Resource */
@@ -78,7 +78,7 @@ dependencies = {
 
         /** betterFORM Full Release  **/
         {
-            name: "../betterform/betterform.js",
+            name: "../betterform/betterform-full.js",
             resourceName: "betterform.full",
             layerDependencies: [
                 "betterform.compact"

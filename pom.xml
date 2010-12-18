@@ -76,6 +76,20 @@
     <!-- Repository management, including extra repositories if needed -->
     <repositories>
         <repository>
+            <id>ibiblio</id>
+            <name>ibiblio</name>
+            <url>http://repo1.maven.org/maven2</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
             <id>jboss-public-repository-group</id>
             <name>JBoss Public Maven Repository Group</name>
             <url>https://repository.jboss.org/nexus/content/groups/public
@@ -124,6 +138,7 @@
         <system>Trac</system>
         <url>https://betterform.de/trac</url>
     </issueManagement>
+<!--
     <pluginRepositories>
         <pluginRepository>
             <id>jboss-public-repository-group</id>
@@ -155,11 +170,11 @@
                 <updatePolicy>never</updatePolicy>
             </snapshots>
         </pluginRepository>
+
         <pluginRepository>
             <id>jboss-snapshots-repository</id>
             <name>JBoss Snapshots Repository</name>
-            <url>https://repository.jboss.org/nexus/content/repositories/snapshots/
-            </url>
+            <url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
             <layout>default</layout>
             <releases>
                 <enabled>true</enabled>
@@ -171,6 +186,8 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
+-->
+
 
     <build>
         <plugins>
@@ -212,8 +229,35 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <dependencies>
+                  <dependency>
+                    <groupId>org.apache.maven.scm</groupId>
+                    <artifactId>maven-scm-provider-gitexe</artifactId>
+                    <version>1.1-db-1</version>
+                  </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-scm-plugin</artifactId>
+                 <dependencies>
+                   <dependency>
+                     <groupId>org.apache.maven.scm</groupId>
+                     <artifactId>maven-scm-provider-gitexe</artifactId>
+                     <version>1.1-db-1</version>
+                   </dependency>
+                 </dependencies>
+             </plugin>
         </plugins>
         <extensions>
+            <extension>
+                <groupId>org.jvnet.wagon-svn</groupId>
+                <artifactId>wagon-svn</artifactId>
+                <version>1.8</version>
+            </extension>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-ssh-external</artifactId>
@@ -224,7 +268,7 @@
                 <artifactId>wagon-webdav</artifactId>
                 <version>1.0-beta-2</version>
             </extension>
-        </extensions>        
+        </extensions>
     </build>
     <dependencies>
       	<dependency>
