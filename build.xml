@@ -20,7 +20,7 @@
     <target name="clean" description="clean build target directory">
         <echo/>
         <echo message="************************************************************************************"/>
-        <echo message="cleaning up core, web and betty"/>
+        <echo message="cleaning up project target, to clean up core, web and betty call 'ant clean-all'"/>
         <echo message="************************************************************************************"/>
         <echo/>
         <delete dir="${target.dir}"/>

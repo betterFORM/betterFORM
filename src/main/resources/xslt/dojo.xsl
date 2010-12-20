@@ -141,9 +141,7 @@
 
             <script type="text/javascript">
                 <xsl:call-template name="addDojoRequires"/>
-
-                <xsl:if test="$debug-enabled">
-                    function getXFormsDOM(){
+                <xsl:if test="$debug-enabled">function getXFormsDOM(){
                         Flux.getXFormsDOM(document.getElementById("bfSessionKey").value,
                             function(data){
                                 console.dirxml(data);
@@ -159,15 +157,12 @@
                             });
                     }
                 </xsl:if>
-
 <!--
                 function switchToEdit(target){
                     //console.debug("target,"target);
                     new betterform.ui.input.TextField({id:target.id,value:dojo.byId(target.id).innerHTML},target.id)
 
                 }
--->
-
                 var hideLoader = function(){
                     dojo.fadeOut({
                         node:"fluxProcessor",
@@ -177,17 +172,14 @@
                             dojo.style(dojo.body(),"overflow","auto");
                         }
                     }).play();
-                }
-
+                };
+-->
                 dojo.addOnLoad(function(){
-
                     dojo.addOnLoad(function(){
                         dojo.require("dojo.parser");
                         dojo.parser.parse();
-
                         Flux._path = dojo.attr(dojo.byId("fluxProcessor"), "contextroot") + "/Flux";
                         Flux.init( dojo.attr(dojo.byId("fluxProcessor"),"sessionkey"), dojo.hitch(fluxProcessor,fluxProcessor.applyChanges));
-                        <!--hideLoader();-->
                     });
                 });
             </script><xsl:text>

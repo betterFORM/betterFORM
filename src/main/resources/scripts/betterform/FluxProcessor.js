@@ -1183,6 +1183,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     _handleUploadProgressEvent:function(xmlEvent) {
+        // console.debug("_handleUploadProgressEvent: xmlEvent:",xmlEvent);
         var xfControlId = xmlEvent.contextInfo.targetid;
         // if XForms Control Dijit allready exists call handleStateChanged on selected control
         if (dijit.byId(xfControlId) != undefined) {
@@ -1261,6 +1262,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
 
     fetchProgress:function(id, fileName) {
         try {
+            console.debug("FluxProcessor.fetchProgress id:", id, "fileName: " , fileName , " this.sessionKey:", this.sessionKey);
             Flux.fetchProgress(id, fileName, this.sessionKey, this.applyChanges);
         }
         catch(ex) {
