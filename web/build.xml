@@ -110,17 +110,19 @@
     <!-- **************************************** DEPLOYMENT **************************************** -->
     <!-- **************************************** DEPLOYMENT **************************************** -->
     <target name="prepare-site" description="generates the betterFORM site">
-        <delete dir="${basedir}/src/main/webapp/pages" includes="*.html"/>
         <xslt basedir="${basedir}/src/main/webapp/pages"
-              destdir="${basedir}/src/main/webapp"
+              destdir="${basedir}/src/main/webapp/site"
               style="${basedir}/src/main/webapp/resources/xslt/site.xsl"
               force="true"
-              includes="*.xhtml"
-              excludes="demo.xhtml"
+              includes="**/*.xhtml"
+              excludes="**/demo.xhtml"
               extension=".html"
               filenameparameter="currentFile">
             <classpath refid="transform.class.path"/>
         </xslt>
+        <!-- copy demo pages unmodified -->
+        <copy file="${basedir}/src/main/webapp/pages/en/demo.xhtml" todir="${basedir}/src/main/webapp/site/en"/>
+        <copy file="${basedir}/src/main/webapp/pages/de/demo.xhtml" todir="${basedir}/src/main/webapp/site/de"/>
     </target>
 
     <target name="exploded-webapp" depends="compile"
@@ -430,10 +432,14 @@
             <arg value="optimize=shrinksafe"/>
             <arg value="mini=true "/>
             <arg value="copyTests=false"/>
+            <arg value="internStrings=true"/>
+            <arg value="stripConsole=warn"/>
             <arg value="cssOptimize=comments"/>
             <arg value="action=clean,release"/>
             <arg value="symbol=short"/>
-            <arg value="version=1.3"/>
+            <arg value="layerOptimize=shrinksafe"/>
+
+            <arg value="version=1.5"/>
         </java>
     </target>
 

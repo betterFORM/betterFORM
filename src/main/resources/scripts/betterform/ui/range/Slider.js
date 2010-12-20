@@ -5,8 +5,8 @@
 
 dojo.provide("betterform.ui.range.Slider");
 
-dojo.require("dijit.form.Slider");
-dojo.require("betterform.ui.ControlValue");
+dojo.require("dijit.form.HorizontalSlider");
+
 
 dojo.require("dijit._Widget");
 dojo.require("dijit._Templated");

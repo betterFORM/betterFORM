@@ -5,7 +5,7 @@
 
 dojo.provide("betterform.ui.trigger.LinkButton");
 
-dojo.require("betterform.ui.ControlValue");
+
 
 dojo.declare(
         "betterform.ui.trigger.LinkButton",

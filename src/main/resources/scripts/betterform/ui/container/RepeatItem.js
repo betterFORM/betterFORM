@@ -7,7 +7,7 @@ dojo.provide("betterform.ui.container.RepeatItem");
 
 dojo.require("betterform.ui.container.Container");
 dojo.require("dijit._Templated");
-dojo.require("dijit.Dialog")
+dojo.require("dijit.Dialog");
 dojo.require("dojo.NodeList-fx");
 
 dojo.declare(

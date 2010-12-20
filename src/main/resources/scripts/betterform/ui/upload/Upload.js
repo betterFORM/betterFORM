@@ -5,7 +5,7 @@
 
 dojo.provide("betterform.ui.upload.Upload");
 
-dojo.require("betterform.ui.ControlValue");
+
 /*dojo.require("dojox.form.FileUploader");*/
 dojo.require("dijit.form.Button");
 

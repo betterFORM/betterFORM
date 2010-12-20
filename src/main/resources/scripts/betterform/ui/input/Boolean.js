@@ -5,7 +5,6 @@
 
 dojo.provide("betterform.ui.input.Boolean");
 
-dojo.require("betterform.ui.ControlValue");
 dojo.require("dijit.form.CheckBox");
 
 dojo.declare(

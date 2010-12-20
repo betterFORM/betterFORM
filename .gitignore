@@ -1,0 +1,36 @@
+
+
+## generic files to ignore
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
+*.class
+pom.xml.old
+
+
+## intellij project files
+*.iml
+*.ipr
+*.iws
+
+## eclipse project files
+.classpath
+.project
+.settings
+
+
+## directories to ignore
+.gitignore
+.svn
+
+
+
+target/*
+betty/target*
+core/target*
+exist/target/*
+web/target*
+xApp/target*
+zaphod/target*

@@ -266,7 +266,7 @@
             </xsl:otherwise>
         </xsl:choose>
 
-        <script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/betterform/betterform.js')}">
+        <script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/betterform/betterform-full.js')}">
             &#160;</script>
         <xsl:text>
 </xsl:text>
@@ -299,8 +299,7 @@
                      alt="loading"/>
             </div>
             <!-- Toaster widget for ephemeral messages -->
-            <script type="javascript">dojo.require("dojox.widget.Toaster");</script><xsl:text>
-</xsl:text>
+
             <div dojoType="dojox.widget.Toaster"
                  id="betterformMessageToaster"
                  positionDirection="bl-up"
@@ -339,8 +338,7 @@
                             <xsl:call-template name="createForm"/>
                         </xsl:otherwise>
                     </xsl:choose>
-                    <xsl:if test="exists(//xf:help)"><script type="text/javascript">dojo.require("dijit.form.Button");</script><xsl:text>
-</xsl:text>
+                    <xsl:if test="exists(//xf:help)">
                         <div id="bfHelpTrigger">
                             <a href="javascript:fluxProcessor.showHelp();"><img id="bfHelpIcon" src="{concat($contextroot,$resourcesPath,'images/helpBubble.png')}" alt="Help"/></a>
                             <div dojotype="dijit.Tooltip" connectid="bfHelpIcon">Focus control and click here for help</div>

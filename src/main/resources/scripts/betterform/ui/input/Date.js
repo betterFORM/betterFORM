@@ -5,7 +5,7 @@
 
 dojo.provide("betterform.ui.input.Date");
 
-dojo.require("betterform.ui.ControlValue");
+
 dojo.require("dijit._Widget");
 dojo.require("dijit._Templated");
 dojo.require("dijit.form.DateTextBox");

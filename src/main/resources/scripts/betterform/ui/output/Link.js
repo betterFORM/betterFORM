@@ -9,7 +9,7 @@ dojo.provide("betterform.ui.output.Link");
 
 dojo.require("dijit._Widget");
 dojo.require("dijit._Templated");
-dojo.require("betterform.ui.ControlValue");
+
 
 
 dojo.declare(
