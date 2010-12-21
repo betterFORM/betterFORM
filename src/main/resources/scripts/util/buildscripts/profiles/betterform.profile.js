@@ -11,6 +11,7 @@ dependencies = {
 		{
 			name: "../betterform/betterform.js",
             dependencies: [
+                "dojo.parser",
                 "betterform.FluxProcessor",
                 "betterform.ClientServerEvent.js",
                 "betterform.XFormsModelElement",
@@ -69,10 +70,16 @@ dependencies = {
                 "betterform.ui.trigger.LinkButton",
 
                 "betterform.ui.upload.Upload",
-                "betterform.ui.upload.UploadPlain",
+                "betterform.ui.upload.UploadPlain"
             ]
-		}
-
+		},
+        {
+            name: "../dijit/dijit.js",
+            resourceName: "dijit.dijit",
+            dependencies: [
+                "dijit.dijit"
+            ]
+        }
 	],
 
 	prefixes: [

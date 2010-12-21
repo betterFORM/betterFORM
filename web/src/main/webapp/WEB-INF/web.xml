@@ -72,16 +72,7 @@
 		<servlet-name>XFormsPostServlet</servlet-name>
 	</filter-mapping>
 -->
-    <error-page>
-        <exception-type>javax.servlet.ServletException</exception-type>
-        <location>/jsp/error.jsp</location>
-    </error-page>
 
-    <error-page>
-        <error-code>500</error-code>
-        <location>/jsp/error.jsp</location>
-    </error-page>
-    
 <!--
     alternative mapping if binding the Filter to a servlet.
 	<filter-mapping>
