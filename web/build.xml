@@ -312,6 +312,14 @@
              <fileset dir="${bfReleaseSrc}/dijit" includes="dijit.js"/>
         </copy>
 
+        <property name="dojoxRelease" value="${bfJSRelease}/dojox"/>
+        <copy todir="${dojoxRelease}" flatten="false">
+             <fileset dir="${bfReleaseSrc}/dojox" includes="layout/resources/FloatingPane.css"/>
+             <fileset dir="${bfReleaseSrc}/dojox" includes="layout/resources/ResizeHandle.css"/>
+             <fileset dir="${bfReleaseSrc}/dojox" includes="widget/Toaster/Toaster.css"/>
+        </copy>
+
+
         <!-- delete compiled js -->
         <delete dir="${bfReleaseSrc}"/>
     </target>
