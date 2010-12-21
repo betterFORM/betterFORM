@@ -61,8 +61,8 @@
     </xsl:template>
 
     <xsl:template name="addDojoRequires">
-                dojo.require("betterform.bfRequiredFull");
-                var bfRequiredFull = new betterform.bfRequiredFull();
+                dojo.require("betterform.BfRequiredFull");
+                var bfRequiredFull = new betterform.BfRequiredFull();
 
     </xsl:template>
 
