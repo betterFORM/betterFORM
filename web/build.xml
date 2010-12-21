@@ -271,152 +271,49 @@
         <echo message="************************************************************************************"/>
         <echo/>
 
+        <property name="bfReleaseSrc" value="${webapp.dir}/resources/scripts/release/bfReleaseSrc"/>
 
-        <property name="bfJSRelease" value="${webapp.dir}/resources/scripts/release/dojo"/>
+        <move file="${webapp.dir}/resources/scripts/release/dojo"
+              tofile="${bfReleaseSrc}"/>
 
-        <!-- delete not needed dojo package -->
+        <property name="bfJSRelease"  value="${webapp.dir}/resources/scripts/release/dojo"/>
+
+        <mkdir dir="${bfJSRelease}" />
+        <!-- copy betterFORM JS resources -->
         <property name="bfRelease" value="${bfJSRelease}/betterform"/>
-        <delete dir="${bfRelease}/ui"/>
+        <copy todir="${bfRelease}" flatten="false">
+             <fileset dir="${bfReleaseSrc}/betterform" includes="nls/**/*"/>
+             <fileset dir="${bfReleaseSrc}/betterform">
+                 <include name="betterform-full.js"/>
+                 <include name="betterform-compact.js"/>
+                 <include name="betterform-minimal.js"/>
+                 <include name="manifest.js"/>
+             </fileset>
+        </copy>
 
-        <delete includeemptydirs="true">
-            <fileset dir="${bfRelease}">
-                <include name="*uncompressed*"/>
-                <include name="bfRequiredCompact.js"/>
-                <include name="bfRequiredFull.js"/>
-                <include name="bfRequiredMinimal.js"/>
-                <include name="ClientServerEvent.js"/>
-                <include name="ConvexProcessor.js"/>
-                <include name="FluxProcessor.js"/>
-                <include name="symboltable.txt"/>
-                <include name="XFormsModelElement.js"/>
-                <include name="XFormsProcessor.js"/>
-            </fileset>
-        </delete>
-
-        <!-- delete not needed dojo package -->
+        <!-- copy required dojo js resources -->
         <property name="dojoRelease" value="${bfJSRelease}/dojo"/>
-        <delete dir="${dojoRelease}/cldr"/>
-        <delete dir="${dojoRelease}/data"/>
-        <delete dir="${dojoRelease}/date"/>
-        <delete dir="${dojoRelease}/dnd"/>
-        <delete dir="${dojoRelease}/fx"/>
-        <delete dir="${dojoRelease}/io"/>
-        <delete dir="${dojoRelease}/nls"/>
-        <delete dir="${dojoRelease}/rpc"/>
+        <copy todir="${dojoRelease}" flatten="false">
+             <fileset dir="${bfReleaseSrc}/dojo" includes="_base/_loader/**/*"/>
+             <fileset dir="${bfReleaseSrc}/dojo" includes="_firebug/**/*"/>
+             <fileset dir="${bfReleaseSrc}/dojo" includes="resources/**/*"/>
+             <fileset dir="${bfReleaseSrc}/dojo">
+                 <include name="_base.js"/>
+                 <include name="dojo.js"/>
+                 <include name="i18n.js"/>
+             </fileset>
+        </copy>
 
-        <delete includeemptydirs="true">
-            <fileset dir="${dojoRelease}">
-                <include name="AdapterRegistry.js"/>
-                <include name="back.js"/>
-                <include name="behavior.js"/>
-                <include name="build.txt"/>
-                <include name="cache.js"/>
-                <include name="colors.js"/>
-                <include name="cookie.js"/>
-                <include name="currency.js"/>
-                <include name="date.js"/>
-                <include name="DeferredList.js"/>
-                <include name="fx.js"/>
-                <include name="gears.js"/>
-                <include name="hash.js"/>
-                <include name="html.js"/>
-                <include name="jaxer.js"/>
-                <include name="NodeList-fx.js"/>
-                <include name="NodeList-html.js"/>
-                <include name="NodeList-manipulate.js"/>
-                <include name="NodeList-traverse.js"/>
-                <include name="number.js"/>
-                <include name="OpenAjax.js"/>
-                <include name="parser.js"/>
-                <include name="regexp.js"/>
-                <include name="robot.js"/>
-                <include name="robotx.js"/>
-                <include name="Stateful.js"/>
-                <include name="string.js"/>
-                <include name="symboltable.txt"/>
-                <include name="uacss.js"/>
-                <include name="window.js"/>
-                <include name="*uncompressed*"/>
-            </fileset>
-            <fileset dir="${dojoRelease}/_base">
-                <include name="array.js"/>
-                <include name="browser.js"/>
-                <include name="declare.js"/>
-                <include name="Color.js"/>
-                <include name="connect.js"/>
-                <include name="deklare.js"/>
-                <include name="Deferred.js"/>
-                <include name="event.js"/>
-                <include name="fx.js"/>
-                <include name="html.js"/>
-                <include name="json.js"/>
-                <include name="lang.js"/>
-                <include name="NodeList.js"/>
-                <include name="query-sizzle.js"/>
-                <include name="query.js"/>
-                <include name="window.js"/>
-                <include name="xhr.js"/>
-            </fileset>
-        </delete>
-
-        <!-- delete not needed dijit package -->
+        <!-- copy required dijit js resources -->
         <property name="dijitRelease" value="${bfJSRelease}/dijit"/>
-        <delete dir="${dijitRelease}/_base"/>
-        <delete dir="${dijitRelease}/_editor"/>
-        <delete dir="${dijitRelease}/_tree"/>
-        <delete dir="${dijitRelease}/form"/>
-        <delete dir="${dijitRelease}/icons"/>
-        <delete dir="${dijitRelease}/layout"/>
-        <delete dir="${dijitRelease}/resources"/>
-        <delete dir="${dijitRelease}/tree"/>
+        <copy todir="${dijitRelease}" flatten="false">
+             <fileset dir="${bfReleaseSrc}/dijit" includes="nls/**/*"/>
+             <fileset dir="${bfReleaseSrc}/dijit" includes="themes/**/"/>
+             <fileset dir="${bfReleaseSrc}/dijit" includes="dijit.js"/>
+        </copy>
 
-        <delete includeemptydirs="true">
-            <fileset dir="${dijitRelease}">
-                <include name="_base.js"/>
-                <include name="_Calendar.js"/>
-                <include name="_Contained.js"/>
-                <include name="_Container.js"/>
-                <include name="_CssStateMixin.js"/>
-                <include name="_DialogMixin.js"/>
-                <include name="dijit-all.js"/>
-                <include name="_HasDropDown.js"/>
-                <include name="_KeyNavContainer.js"/>
-                <include name="_PaletteMixin.js"/>
-                <include name="_Templated.js"/>
-                <include name="_TimePicker.js"/>
-                <include name="_Widget.js"/>
-                <include name="Calendar.js"/>
-                <include name="CheckedMenuItem.js"/>
-                <include name="ColorPalette.js"/>
-                <include name="Declaration.js"/>
-                <include name="Dialog.js"/>
-                <include name="DialogUnderlay.js"/>
-                <include name="Editor.js"/>
-                <include name="InlineEditBox.js"/>
-                <include name="Menu.js"/>
-                <include name="MenuBar.js"/>
-                <include name="MenuBarItem.js"/>
-                <include name="MenuItem.js"/>
-                <include name="MenuSeparator.js"/>
-                <include name="PopupMenuBarItem.js"/>
-                <include name="PopupMenuItem.js"/>
-                <include name="ProgressBar.js"/>
-                <include name="robot.js"/>
-                <include name="robotx.js"/>
-                <include name="symboltable.txt"/>
-                <include name="TitlePane.js"/>
-                <include name="Toolbar.js"/>
-                <include name="ToolbarSeparator.js"/>
-                <include name="Tooltip.js"/>
-                <include name="TooltipDialog.js"/>
-                <include name="Tree.js"/>
-                <include name="*uncompressed*"/>
-            </fileset>
-        </delete>
-
-        <!-- delete not needed dojox package -->
-        <delete dir="${bfJSRelease}/dojox"/>
-
+        <!-- delete compiled js -->
+        <delete dir="${bfReleaseSrc}"/>
     </target>
 
     <!-- **************************************** BUILDING JAR/WAR **************************************** -->
