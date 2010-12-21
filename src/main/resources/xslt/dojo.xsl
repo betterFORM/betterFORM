@@ -276,16 +276,23 @@
 
     <xsl:template match="body">
         <!-- todo: add 'overflow:hidden' to @style here -->
+
         <xsl:variable name="theme">
             <xsl:choose>
-                <xsl:when test="contains(//body/@class, 'soria')">soria</xsl:when>
-                <xsl:when test="contains(//body/@class, 'claro')">claro</xsl:when>
-                <xsl:when test="contains(//body/@class, 'nihilo')">nihilo</xsl:when>
-                <xsl:otherwise>tundra</xsl:otherwise>
+                <xsl:when test="not(exists(//body/@class)) or string-length(//body/@class) = 0">tundra</xsl:when>
+
+                <xsl:when test="not(contains(//body/@class, 'tundra')) and
+                                not(contains(//body/@class, 'soria'))  and
+                                not(contains(//body/@class, 'claro'))  and
+                                not(contains(//body/@class, 'nihilo')) and
+                                not(contains(//body/@class, 'ally'))">
+                    <xsl:value-of select="concat('tundra ', //body/@class)"/>
+                </xsl:when>
+                <xsl:otherwise><xsl:value-of select="//body/@class"/></xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
         <body class="{$theme}">
-            <xsl:copy-of select="@*"/>
+            <xsl:copy-of select="@*[name() != 'class']"/>
             <div id="bfLoading" class="disabled">
                 <img src="{concat($contextroot,$resourcesPath,'images/indicator.gif')}" class="xfDisabled" id="indicator"
                      alt="loading"/>
