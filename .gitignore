@@ -14,7 +14,7 @@ pom.xml.old
 *.iml
 *.ipr
 *.iws
-
+.idea
 ## eclipse project files
 .classpath
 .project
