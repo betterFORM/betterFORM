@@ -136,16 +136,20 @@ public class CachingTransformerService implements TransformerService, URIResolve
                 }
             }
 
-            if (entry.templates == null) {
+            if (entry.templates == null && entry.transformer == null) {
                 // create source and templates object (this might trigger uri resolution)
                 Source source = new StreamSource(entry.resource.getInputStream());
                 source.setSystemId(uri.toString());
-                entry.templates = getTransformerFactory().newTemplates(source);
+                //TODO: check if source allready compiled!
+                try {
+                    entry.templates = getTransformerFactory().newTemplates(source);
+                } catch (TransformerException te) {
+                    entry.transformer = getTransformerFactory().newTransformer(source);
+                }
             }
 
-            return entry.templates.newTransformer();
-        }
-        catch (Exception e) {
+            return (entry.templates != null)? entry.templates.newTransformer() : entry.transformer;
+        } catch (Exception e) {
             throw new TransformerException(e);
         }
     }
@@ -275,6 +279,7 @@ public class CachingTransformerService implements TransformerService, URIResolve
         long lastModified;
         Resource resource;
         Templates templates;
+        Transformer transformer;
         List dependencies;
 
         CacheEntry(long lastModified, Resource resource) {

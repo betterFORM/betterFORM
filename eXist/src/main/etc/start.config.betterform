@@ -79,5 +79,4 @@ tools/jetty/lib/*                                  mode == standalone
 tools/jetty/lib/*                                  mode == other
 lib/user/*                                         always
 tools/ircbot/lib/*                                 mode == jetty
-extensions/betterform/target/betterform/WEB-INF/lib/*	always
-extensions/betterform/target/betterform/WEB-INF/classes	always
+extensions/betterform/src/main/lib/*               always
