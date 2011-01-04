@@ -68,6 +68,8 @@
                     <fileset dir="${basedir}/src">
                         <exclude name="**/lib/*.jar"/>
                         <exclude name="**/web.xml"/>
+                        <exclude name="**/resources/**"/>
+                        <exclude name="**/forms/**"/>
                     </fileset>
                 </copy>
         </target>
@@ -116,23 +118,23 @@
                 <echo message="------------------------------------------------------------------------------------"/>
                 <!-- Copy current forms from ... -->
                 <!-- ... reference. -->
-                <copy todir="${webapp.dir}/forms/reference/" overwrite="true">
+                <copy todir="${src.target.dir}/db/forms/reference/" overwrite="true">
                     <fileset dir="${src.dir}/main/xforms/reference/" includes = "*.xhtml"/>
                 </copy>
 
                 <!-- ... demo. -->
-                <copy todir="${webapp.dir}/forms/demo/" overwrite="true">
+                <copy todir="${src.target.dir}/db/forms/demo/" overwrite="true">
                     <fileset dir="${src.dir}/main/xforms/demo/" includes = "*.xhtml *.xml"/>
                 </copy>
 
                 <!-- RESOURCES -->
                 <!-- Copy images, styles, xsd and xslt -->
-                <copy todir="${webapp.dir}/resources/" overwrite="true">
-                     <fileset dir="${src.dir}/main/resources" includes = "styles xsd xslt"/>
+                <copy todir="${src.target.dir}/db/resources/" overwrite="true">
+                     <fileset dir="${src.dir}/main/resources"/>
                 </copy>
 
                 <copy description="copy images seperately to avoid filtering"
-                      todir="${webapp.dir}/resources"
+                      todir="${src.target.dir}/db/resources"
                       overwrite="true"
                       filtering="false">
                         <fileset dir="${src.dir}/main/resources">
@@ -142,6 +144,8 @@
                         </fileset>
                 </copy>
 
+                <antcall target="build-dojo-release"/>
+
                 <antcall target="copy-betterFORM-website"/>
 
                 <!-- <antcall target="build-dojo-release"/> -->
@@ -150,10 +154,15 @@
         <target name="copy-betterFORM-website" if="betterform">
             <copy description="copy betterFORM website files to target" todir="${src.target.dir}/etc/overwrites/webapp" overwrite="true">
                   <fileset dir="${web.dir}/src/main/webapp/">
-                      <exclude name="WEB-INF"/>
+                      <exclude name="**/WEB-INF/**"/>
+                      <exclude name="**/META-INF/**"/>
+                      <exclude name="**/pages/**"/>
+                      <exclude name="**/jsp/**"/>
+                      <exclude name="**/resources/**"/>
+                      <exclude name="**/forms/**"/>
                   </fileset>
             </copy>
-
+            
              <copy description="copy images seperately to avoid filtering"
                       todir="${src.target.dir}/etc/overwrites/webapp"
                       overwrite="true"
@@ -165,16 +174,6 @@
                                 <include name="**/*.ico"/>
                         </fileset>
                 </copy>
-        </target>
-
-        <target  name="build-up-to-date-dojo-release" depends="build-dojo-release">
-                <echo message="------------------------------------------------------------------------------------"/>
-                <echo message="--- Build dojo release                                                           ---"/>
-                <echo message="------------------------------------------------------------------------------------"/>
-                <ant antfile="${web.dir}/build.xml" target="build-dojo" dir="${web.dir}" inheritall="false">
-                        <property name="target.dir" value="${src.target.dir}/lib"/>
-                        <property name="webapp.dir" value="${webapp.dir}"/>
-                </ant>
         </target>
 
         <target name="copy-eXist-build-file">
@@ -222,7 +221,7 @@
         <echo message="merging Dojo into tree ..."/>
         <echo message="************************************************************************************"/>
         <echo/>
-        <move todir="${dojo.dir}/resources/scripts/dijit">
+        <move todir="${dojo.dir}/resources/scripts/dijit"admin>
             <fileset dir="${dojo.dir}/${properties.dojo}/dijit"/>
         </move>
         <move todir="${dojo.dir}/resources/scripts/dojo">
@@ -279,10 +278,12 @@
         <echo message="merging Dojo into webapp ..."/>
         <echo message="************************************************************************************"/>
         <echo/>
-        <delete dir="${dojo.dir}${webapp.dir}/resources/scripts/release"/>
+        <!-- <delete dir="${dojo.dir}${webapp.dir}/resources/scripts/release"/> -->
 
-        <move todir="${webapp.dir}/resources/scripts/" overwrite="true">
-            <fileset dir="${dojo.dir}/resources/scripts/"  includes="release"/>
+        <mkdir dir="${src.target.dir}/db/resources/scripts/release"/>
+
+        <move todir="${src.target.dir}/db/resources/scripts/release" overwrite="true">
+            <fileset dir="${dojo.dir}/resources/scripts/release"/>
         </move>
 
         <delete dir="${dojo.dir}"/>

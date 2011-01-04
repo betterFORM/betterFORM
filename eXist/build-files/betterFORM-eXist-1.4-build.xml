@@ -28,6 +28,7 @@
     <property name="betterform.etc" value="${betterform.home}/src/main/etc"/>
     <property name="betterform.xrx" value="${betterform.home}/src/main/xrx"/>
     <property name="betterform.lib" value="${betterform.home}/src/main/lib"/>
+    <property name="betterform.db" value="${betterform.home}/src/main/db"/>
 
     <property name="betterform.webapp" value="${betterform.home}/src/main/webapp"/>
 
@@ -78,15 +79,18 @@
 
 
     <target name="deploy-betterFORM-resources">
+
         <!--
         <copy todir="${exist.rootdir}/webapp/forms">
             <fileset dir="${betterform.webapp}/forms" excludes="**/.svn **/.svn/**"/>
         </copy>
-        -->
+
+
 
         <copy todir="${exist.rootdir}/webapp/resources">
             <fileset dir="${betterform.webapp}/resources" excludes="**/.svn **/.svn/**"/>
         </copy>
+        -->
 
         <copy file="${betterform.webapp}/WEB-INF/betterform-config.xml" todir="${exist.rootdir}/webapp/WEB-INF"/>
         <copy file="${betterform.webapp}/WEB-INF/dwr.xml" todir="${exist.rootdir}/webapp/WEB-INF"/>
@@ -151,20 +155,91 @@
         </move>
     </target>
 
-    <target name="install-betterFORM-Samples" depends="start-eXist" if="betterform.installed">
-        <antcall target="wrapped-install-betterFORM-Forms"/>
-        <sleep seconds="10"/>
-        <antcall target="wrapped-install-betterFORM-XRX-Sample"/>
-        <sleep seconds="10"/>
-        <antcall target="wrapped-install-betterFORM-Forms"/>
-        <sleep seconds="10"/>
-        <antcall target="wrapped-install-betterFORM-XRX-Sample"/>
+    <target name="install-betterFORM-resources" depends="stop-eXist">
+        <!-- ensure db is shutdown -->
         <antcall target="stop-eXist"/>
+        <!-- start db -->
+        <antcall target="start-eXist"/>
+
+        <!-- Install Dojo etc to db -->
+        <antcall target="wrapped-install-betterFORM-resources"/>
+        <!-- wait for import task to finish in db -->
+        <sleep seconds="10"/>
+        <!-- Install betterFORM-XRX-Sample-App -->
+        <antcall target="wrapped-install-betterFORM-XRX-Sample"/>
+        <!-- wait for import task to finish in db -->
+        <sleep seconds="10"/>
+        <!-- Redo previous steps to be extra save everything is in place -->
+        <!-- Install Dojo etc to db -->
+        <antcall target="wrapped-install-betterFORM-resources"/>
+        <!-- wait for import task to finish in db -->
+        <sleep seconds="10"/>
+        <!-- Install betterFORM-XRX-Sample-App -->
+        <antcall target="wrapped-install-betterFORM-XRX-Sample"/>
+        <!-- wait for import task to finish in db -->
+        <sleep seconds="10"/>
+        <!-- shutdown db --->
+        <antcall target="stop-eXist"/>
+
+        <delete dir="${betterform.webapp}/resources" includeemptydirs="yes" failonerror="yes"/>
+        <delete dir="${betterform.webapp}/forms" includeemptydirs="yes" failonerror="yes"/>
+    </target>
+
+    <target name="wrapped-install-betterFORM-resources">
+        <echo message="------------------------------------------------------------------------------------"/>
+        <echo message="  install betterFORM resources into db"/>
+        <echo message="------------------------------------------------------------------------------------"/>
+        <!--
+        TODO:
+            - dojo-dev files in fs?
+        -->
+        <xdb:store xmlns:xdb="http://exist-db.org/ant"
+                   uri="xmldb:exist://localhost:8080/exist/xmlrpc/db/betterform/resources/"
+                   createsubcollections="true"
+                   createcollection="true"
+                   user="${user}"
+                   password="${passwd}"
+                   type="binary">
+            <fileset dir="${betterform.db}/resources" excludes="**/.svn **/.svn/**"/>
+        </xdb:store>
+
+        <xdb:store xmlns:xdb="http://exist-db.org/ant"
+                   uri="xmldb:exist://localhost:8080/exist/xmlrpc/db/betterform/forms/"
+                   createsubcollections="true"
+                   createcollection="true"
+                   user="${user}"
+                   password="${passwd}"
+                   type="binary">
+            <fileset dir="${betterform.db}/forms" excludes="**/.svn **/.svn/**"/>
+        </xdb:store>
+        <!--
+        <xdb:store xmlns:xdb="http://exist-db.org/ant"
+                   uri="xmldb:exist://localhost:8080/exist/xmlrpc/db/betterform/resources/"
+                   createsubcollections="true"
+                   createcollection="true"
+                   user="${user}"
+                   password="${passwd}"
+                   type="binary">
+            <fileset dir="${betterform.db}/resources" includes="**/*.png **/*.gif **/*.jpg **/*.swf"
+                     excludes="styles/*.* scripts/*.* xsd/*.* xslt/*.* **/.svn **/.svn/**"/>
+        </xdb:store>
+
+
+        <xdb:store xmlns:xdb="http://exist-db.org/ant"
+                   uri="xmldb:exist://localhost:8080/exist/xmlrpc/db/betterform/resources/"
+                   createsubcollections="true"
+                   createcollection="true"
+                   user="${user}"
+                   password="${passwd}">
+            <fileset dir="${betterform.db}/resources" includes="**/*.*"
+                     excludes="**/.svn **/.svn/** **/*.png **/*.gif **/*.jpg **/*.swf"/>
+        </xdb:store>
+        -->
     </target>
 
     <target name="wrapped-install-betterFORM-XRX-Sample">
         <xdb:store xmlns:xdb="http://exist-db.org/ant"
-                   uri="xmldb:exist://localhost:8080/betterform/xmlrpc/db/betterform/apps/"
+                   uri="xmldb:exist://localhost:8080/exist/xmlrpc/db/betterform/apps/"
                    createsubcollections="true"
                    createcollection="true"
                    user="${user}"
@@ -177,32 +252,12 @@
 
         <!--timetracker lucene indexes-->
         <xdb:store xmlns:xdb="http://exist-db.org/ant"
-                   uri="xmldb:exist://localhost:8080/betterform/xmlrpc/db/system/config/db/betterform/apps/timetracker/data/task"
+                   uri="xmldb:exist://localhost:8080/exist/xmlrpc/db/system/config/db/betterform/apps/timetracker/data/task"
                    createsubcollections="true"
                    createcollection="true"
                    user="admin"
                    password="">
             <fileset dir="${betterform.xrx}/timetracker/lucene" includes="*.*"/>
-        </xdb:store>
-    </target>
-
-    <!--
-    <target name="install-betterFORM-Samples" depends="start-eXist">
-        <antcall target="wrapped-install-betterFORM-Samples"/>
-        <sleep seconds="10"/>
-        <antcall target="wrapped-install-betterFORM-Samples"/>
-        <antcall target="stop-eXist"/>
-    </target>
-    -->
-
-    <target name="wrapped-install-betterFORM-Forms">
-        <xdb:store xmlns:xdb="http://exist-db.org/ant"
-                   uri="xmldb:exist://localhost:8080/betterform/xmlrpc/db/betterform/apps/forms"
-                   createsubcollections="true"
-                   createcollection="true"
-                   user="${user}"
-                   password="${passwd}">
-            <fileset dir="${betterform.webapp}/forms" includes="**/*.*" excludes="**/.svn **/.svn/**"/>
         </xdb:store>
     </target>
 
@@ -219,8 +274,8 @@
             <arg value="${exist.rootdir}/bin/startup.bat"/>
         </exec>
 
-
-        <sleep seconds="30"/>
+        <!-- wait for db startup -->
+        <sleep seconds="20"/>
     </target>
 
     <target name="stop-eXist">
@@ -228,7 +283,7 @@
         <echo message="* Stopping eXist-DB                                                           *"/>
         <echo message="*******************************************************************************"/>
 
-        <sleep seconds="10"/>
+
 
         <!-- TODO: use admin passwd -->
         <exec executable="${exist.rootdir}/bin/shutdown.sh" osfamily="unix">
@@ -237,6 +292,9 @@
             <arg value="/c"/>
             <arg value="${exist.rootdir}/bin/shutdown.bat"/>
         </exec>
+
+        <!-- wait for db shutdown -->
+        <sleep seconds="20"/>
     </target>
 
     <target name="uninstall" xmlns:xmldb="http://exist-db.org/ant" description="uninstall betterFORM"

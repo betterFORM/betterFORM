@@ -9,7 +9,7 @@
 		<field type="space"/>
         <field type="password" variable="adminPasswd" align="left">
         	<description align="left" txt="Please enter a password for user 'admin', the database administrator:"/>
-            <validator class="org.exist.izpack.PasswordValidator" txt="Passwords did not match!"/>
+            <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Passwords did not match!"/>
             <spec>
                 <pwd txt="Enter password: " size="20" set=""/>
                 <pwd txt="Retype password: " size="20" set=""/>

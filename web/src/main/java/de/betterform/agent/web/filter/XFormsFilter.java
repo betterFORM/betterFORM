@@ -43,7 +43,7 @@ import java.util.Map;
 @SuppressWarnings({"JavadocReference"})
 public class XFormsFilter implements Filter {
     private static final Log LOG = LogFactory.getLog(XFormsFilter.class);
-    protected WebFactory webFactory;
+    protected WebFactory webFactoryX;
     protected String useragent;
     protected String defaultRequestEncoding = "UTF-8";
     private FilterConfig filterConfig;
@@ -56,18 +56,41 @@ public class XFormsFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         this.filterConfig = filterConfig;
         useragent = filterConfig.getInitParameter(WebProcessor.USERAGENT);
+       /*
         webFactory = new WebFactory();
         webFactory.setServletContext(filterConfig.getServletContext());
         try {
             webFactory.initConfiguration(useragent);
             defaultRequestEncoding = webFactory.getConfig().getProperty("defaultRequestEncoding", defaultRequestEncoding);
             webFactory.initLogging(this.getClass());
-            webFactory.initTransformerService();
+            //webFactory.initTransformerService();
             webFactory.initXFormsSessionCache();
         } catch (XFormsConfigException e) {
             throw new ServletException(e);
         }
+
+        */
     }
+
+
+    public WebFactory getWebFactory() throws ServletException {
+        if (this.webFactoryX == null) {
+            this.webFactoryX = new WebFactory();
+            this.webFactoryX.setServletContext(filterConfig.getServletContext());
+            try {
+                this.webFactoryX.initConfiguration(this.useragent);
+                this.defaultRequestEncoding = this.webFactoryX.getConfig().getProperty("defaultRequestEncoding", this.defaultRequestEncoding);
+                this.webFactoryX.initLogging(this.getClass());
+                this.webFactoryX.initTransformerService();
+                this.webFactoryX.initXFormsSessionCache();
+            } catch (XFormsConfigException e) {
+                throw new ServletException(e);
+            }
+        }
+
+        return this.webFactoryX;
+    }
+
 
     /**
      * Filter shutdown
@@ -111,7 +134,7 @@ public class XFormsFilter implements Filter {
             LOG.warn("Request from internal betterForm HTTP Client arrived in XFormsFilter");
             String requestURI = request.getRequestURI();
 
-            String mimeType = webFactory.getServletContext().getMimeType(requestURI);
+            String mimeType = getWebFactory().getServletContext().getMimeType(requestURI);
 
             if(LOG.isDebugEnabled()){
                 LOG.debug("request URI: " + requestURI);
@@ -224,8 +247,8 @@ public class XFormsFilter implements Filter {
                             //remove session from XFormsSessionManager
                             WebUtil.removeSession(webProcessor.getKey());
 
-                            String path = "/" + webFactory.getConfig().getProperty(WebFactory.ERROPAGE_PROPERTY);
-                            webFactory.getServletContext().getRequestDispatcher(path).forward(request,response);
+                            String path = "/" + getWebFactory().getConfig().getProperty(WebFactory.ERROPAGE_PROPERTY);
+                            getWebFactory().getServletContext().getRequestDispatcher(path).forward(request,response);
                         }
                     }
 
@@ -307,7 +330,7 @@ public class XFormsFilter implements Filter {
      * @return true if the response contains an XForm, false otherwise
      * @throws UnsupportedEncodingException
      */
-    protected boolean handleResponseBody(HttpServletRequest request, BufferedHttpServletResponseWrapper bufResponse) throws UnsupportedEncodingException {
+    protected boolean handleResponseBody(HttpServletRequest request, BufferedHttpServletResponseWrapper bufResponse) throws UnsupportedEncodingException, ServletException {
 
         //[1] check if body parsing is explicitly requested
         if (request.getAttribute(WebFactory.PARSE_RESPONSE_BODY) != null) return true;
@@ -317,7 +340,7 @@ public class XFormsFilter implements Filter {
 
         // s+c extension for enginframe (ef) response handling
         // responses containing xhtml but not necessarily xforms markup should be transformed to html, too.
-        String acceptedContentType = webFactory.getConfig().getProperty(WebFactory.ACCEPT_CONTENTTYPE, "");
+        String acceptedContentType = getWebFactory().getConfig().getProperty(WebFactory.ACCEPT_CONTENTTYPE, "");
         if (!"".equals(acceptedContentType)) {
             if (acceptedContentType.equalsIgnoreCase(WebFactory.ALL_XML_TYPES)) {
                 if (bufResponse.hasXMLContentType()) return true;

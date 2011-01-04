@@ -148,9 +148,9 @@
         </useragents>
 
      <ui-generators>
-        <ui-generator useragent="dojo" stylesheet="dojo.xsl"/>
-        <ui-generator useragent="dojodev" stylesheet="dojo-dev.xsl"/>
-        <ui-generator useragent="html" stylesheet="html4.xsl"/>
+        <ui-generator useragent="dojo" stylesheet="http://localhost:8080/betterform/rest/betterform/resources/xslt/dojo.xsl"/>
+        <ui-generator useragent="dojodev" stylesheet="http://localhost:8080/betterform/rest/betterform/resources/xslt/dojo-dev.xsl"/>
+        <ui-generator useragent="html" stylesheet="http://localhost:8080/betterform/rest/betterform/resources/xslt/html4.xsl"/>
     </ui-generators>
 
     <connectors>

@@ -118,7 +118,7 @@
               excludes="**/demo.xhtml"
               extension=".html"
               filenameparameter="currentFile">
-            <classpath refid="transform.class.path"/>
+            <classpath refid="web.class.path"/>
         </xslt>
         <!-- copy demo pages unmodified -->
         <copy file="${basedir}/src/main/webapp/pages/en/demo.xhtml" todir="${basedir}/src/main/webapp/site/en"/>
