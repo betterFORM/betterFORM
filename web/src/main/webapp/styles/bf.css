@@ -735,18 +735,11 @@ h3 {
 
 #bfFormBrowser .formBrowserHeader {
 	padding-bottom: 10px;
-	background: #488AA6;
 	color: white;
 	padding: 5px;
 	font-size: 12pt;
 	text-align: left;
 }
 
-#bfFormBrowser .textLink {
-	display: block;
-	margin-top: 10px;
-	vertical-align: middle;
-	font-size:1.1em;
-}
 
 
