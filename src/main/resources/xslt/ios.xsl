@@ -54,7 +54,7 @@
     </xsl:template>
 
     <xsl:template name="addDojoRequires">
-                dojo.require("betterform.bfRequiredMinimal");
+                dojo.require("betterform.BfRequiredMinimal");
     </xsl:template>
 
 </xsl:stylesheet>

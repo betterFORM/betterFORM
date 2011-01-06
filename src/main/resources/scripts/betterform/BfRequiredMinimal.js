@@ -4,11 +4,11 @@
 	@author Lars Windauer
 **/
 
-dojo.provide("betterform.bfRequiredMinimal");
+dojo.provide("betterform.BfRequiredMinimal");
 
     // Class to dojo.require a minimal set of dojo classes
 
-dojo.declare("betterform.bfRequiredMinimal", null,
+dojo.declare("betterform.BfRequiredMinimal", null,
 {
     // betterFORM Lifecycle Classes
 

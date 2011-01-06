@@ -60,7 +60,7 @@ dependencies = {
             ],
 
             dependencies: [
-                "betterform.bfRequiredMinimal"
+                "betterform.BfRequiredMinimal"
             ]
         },
 
@@ -72,7 +72,7 @@ dependencies = {
                 "betterform.minimal"
             ],
             dependencies: [
-                "betterform.bfRequiredCompact"
+                "betterform.BfRequiredCompact"
             ]
         },
 
@@ -84,7 +84,7 @@ dependencies = {
                 "betterform.compact"
             ],
             dependencies: [
-                "betterform.bfRequiredFull"
+                "betterform.BfRequiredFull"
             ]
         }
     ],

@@ -63,6 +63,9 @@
     <!-- locale Parameter -->
     <xsl:param name="locale" select="'en'"/>
 
+    <!-- Dojo Default Theme -->
+    <xsl:param name="defaultTheme" select="'tundra'"/>
+
     <!-- ############################################ VARIABLES ################################################ -->
     <!-- ### checks, whether this form uses uploads. Used to set form enctype attribute ### -->
     <xsl:variable name="uses-upload" select="exists(//*/xf:upload)"/>
@@ -192,26 +195,23 @@
 
     <xsl:template name="addDojoCSS"><xsl:text>
 </xsl:text>
-                <style type="text/css">
+                <xsl:variable name="cssTheme">
                     <xsl:choose>
-                        <xsl:when test="contains(//body/@class, 'soria')">
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/soria/soria.css";
-                        </xsl:when>
-                        <xsl:when test="contains(//body/@class, 'nihilo')">
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/nihilo/nihilo.css";
-                        </xsl:when>
-                        <xsl:when test="contains(//body/@class, 'claro')">
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/claro/claro.css";
-                        </xsl:when>
-                        <xsl:otherwise>
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/tundra/tundra.css";
-                        </xsl:otherwise>
+                        <xsl:when test="contains(//body/@class, 'tundra')">tundra</xsl:when>
+                        <xsl:when test="contains(//body/@class, 'soria')">soria</xsl:when>
+                        <xsl:when test="contains(//body/@class, 'nihilo')">nihilo</xsl:when>
+                        <xsl:when test="contains(//body/@class, 'claro')">claro</xsl:when>
+                        <xsl:when test="contains(//body/@class, 'a11y')">a11y</xsl:when>
+                        <xsl:otherwise><xsl:value-of select="$defaultTheme"/></xsl:otherwise>
                     </xsl:choose>
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dojo/resources/dojo.css";
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dojox/widget/Toaster/Toaster.css";
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dojox/layout/resources/FloatingPane.css";
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dojox/layout/resources/ResizeHandle.css";
-                    
+                </xsl:variable>
+
+                <style type="text/css">
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'release/dojo/dijit/themes/', $cssTheme, '/', $cssTheme,'.css')"/>";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'release/dojo/dojo/resources/dojo.css')"/>";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'release/dojo/dojox/widget/Toaster/Toaster.css')"/>";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'release/dojo/dojox/layout/resources/FloatingPane.css')"/>";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'release/dojo/dojox/layout/resources/ResizeHandle.css')"/>";
                 </style><xsl:text>
 </xsl:text>
     </xsl:template>
@@ -278,14 +278,20 @@
         <!-- todo: add 'overflow:hidden' to @style here -->
         <xsl:variable name="theme">
             <xsl:choose>
-                <xsl:when test="contains(//body/@class, 'soria')">soria</xsl:when>
-                <xsl:when test="contains(//body/@class, 'claro')">claro</xsl:when>
-                <xsl:when test="contains(//body/@class, 'nihilo')">nihilo</xsl:when>
-                <xsl:otherwise>tundra</xsl:otherwise>
+                <xsl:when test="not(exists(//body/@class)) or string-length(//body/@class) = 0"><xsl:value-of select="$defaultTheme"/></xsl:when>
+                <xsl:when test="not(contains(//body/@class, $defaultTheme)) and
+                                not(contains(//body/@class, 'tundra')) and
+                                not(contains(//body/@class, 'soria'))  and
+                                not(contains(//body/@class, 'claro'))  and
+                                not(contains(//body/@class, 'nihilo')) and
+                                not(contains(//body/@class, 'ally'))">
+                    <xsl:value-of select="concat($defaultTheme, ' ', //body/@class)"/>
+                </xsl:when>
+                <xsl:otherwise><xsl:value-of select="//body/@class"/></xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
         <body class="{$theme}">
-            <xsl:copy-of select="@*"/>
+            <xsl:copy-of select="@*[name() != 'class']"/>
             <div id="bfLoading" class="disabled">
                 <img src="{concat($contextroot,$resourcesPath,'images/indicator.gif')}" class="xfDisabled" id="indicator"
                      alt="loading"/>

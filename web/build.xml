@@ -245,48 +245,97 @@
             <fileset dir="../src/test/resources"/>
         </copy>
     </target>
-    
 
-    <!-- **************************************** BUILDING JAR/WAR **************************************** -->
-    <!-- **************************************** BUILDING JAR/WAR **************************************** -->
-    <!-- **************************************** BUILDING JAR/WAR **************************************** -->
 
-    <!-- todo: when package is executed it should be made sure that 'dojo' is configured as useragent in betterform-config.xml -->
-    <target name="package" depends="build-dojo" description="create war file">
-        <echo/>
-        <property name="onlineVersion" value="true"/>
-
+    <target name="cleanup-bf-release">
         <echo message="************************************************************************************"/>
-        <echo message="clean up package..."/>
+        <echo message="clean up forms package..."/>
         <echo message="************************************************************************************"/>
         <echo/>
         <delete dir="${webapp.dir}/forms/incubator"/>
         <delete dir="${webapp.dir}/forms/test"/>
+
+        <echo message="************************************************************************************"/>
+        <echo message="clean up not packaged javascript..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
         <delete dir="${webapp.dir}/resources/scripts/betterform"/>
         <delete dir="${webapp.dir}/resources/scripts/dijit"/>
         <delete dir="${webapp.dir}/resources/scripts/dojo"/>
         <delete dir="${webapp.dir}/resources/scripts/dojox"/>
         <delete dir="${webapp.dir}/resources/scripts/util"/>
 
-        <delete includeemptydirs="true">
-            <fileset dir="${webapp.dir}/resources/scripts/release/dojo" includes="**/tests/"/>
-        </delete>
+
+        <echo message="************************************************************************************"/>
+        <echo message="clean up not needed dojo files..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+
+        <property name="bfReleaseSrc" value="${webapp.dir}/resources/scripts/release/bfReleaseSrc"/>
+
+        <move file="${webapp.dir}/resources/scripts/release/dojo"
+              tofile="${bfReleaseSrc}"/>
+
+        <property name="bfJSRelease"  value="${webapp.dir}/resources/scripts/release/dojo"/>
+
+        <mkdir dir="${bfJSRelease}" />
+        <!-- copy betterFORM JS resources -->
+        <property name="bfRelease" value="${bfJSRelease}/betterform"/>
+        <copy todir="${bfRelease}" flatten="false">
+             <fileset dir="${bfReleaseSrc}/betterform" includes="nls/**/*"/>
+             <fileset dir="${bfReleaseSrc}/betterform">
+                 <include name="betterform-full.js"/>
+                 <include name="betterform-compact.js"/>
+                 <include name="betterform-minimal.js"/>
+                 <include name="manifest.js"/>
+             </fileset>
+        </copy>
+
+        <!-- copy required dojo js resources -->
+        <property name="dojoRelease" value="${bfJSRelease}/dojo"/>
+        <copy todir="${dojoRelease}" flatten="false">
+             <fileset dir="${bfReleaseSrc}/dojo" includes="_base/_loader/**/*"/>
+             <fileset dir="${bfReleaseSrc}/dojo" includes="_firebug/**/*"/>
+             <fileset dir="${bfReleaseSrc}/dojo" includes="resources/**/*"/>
+             <fileset dir="${bfReleaseSrc}/dojo">
+                 <include name="_base.js"/>
+                 <include name="dojo.js"/>
+                 <include name="i18n.js"/>
+             </fileset>
+        </copy>
+
+        <!-- copy required dijit js resources -->
+        <property name="dijitRelease" value="${bfJSRelease}/dijit"/>
+        <copy todir="${dijitRelease}" flatten="false">
+             <fileset dir="${bfReleaseSrc}/dijit" includes="nls/**/*"/>
+             <fileset dir="${bfReleaseSrc}/dijit" includes="themes/**/"/>
+             <fileset dir="${bfReleaseSrc}/dijit" includes="dijit.js"/>
+        </copy>
+
+        <property name="dojoxRelease" value="${bfJSRelease}/dojox"/>
+        <copy todir="${dojoxRelease}" flatten="false">
+             <fileset dir="${bfReleaseSrc}/dojox" includes="layout/resources/FloatingPane.css"/>
+             <fileset dir="${bfReleaseSrc}/dojox" includes="layout/resources/ResizeHandle.css"/>
+             <fileset dir="${bfReleaseSrc}/dojox" includes="widget/Toaster/Toaster.css"/>
+        </copy>
+
+
+        <!-- delete compiled js -->
+        <delete dir="${bfReleaseSrc}"/>
+    </target>
+
+    <!-- **************************************** BUILDING JAR/WAR **************************************** -->
+    <!-- **************************************** BUILDING JAR/WAR **************************************** -->
+    <!-- **************************************** BUILDING JAR/WAR **************************************** -->
+    <!-- todo: when package is executed it should be made sure that 'dojo' is configured as useragent in betterform-config.xml -->
+    <target name="package" depends="build-dojo" description="create war file">
+        <echo/>
+        <property name="onlineVersion" value="true"/>
+
+        <antcall target="cleanup-bf-release"/>
+
         <copy todir="${webapp.dir}"
               file="${basedir}/../src/test/resources/XFormsTestSuite1.1E1/Edition1/driverPages/Results/results.html"/>
-
-
-<!--
-        <copy todir="${webapp.dir}/forms">
-            <fileset dir="${webapp.dir}/forms"/>
-            <globmapper from="*.xhtml" to="*.txt"/>
-        </copy>
--->
-
-<!--
-        <copy todir="${webapp.dir}/${forms.target}">
-            <fileset dir="../src/test/resources"/>
-        </copy>
--->
 
         <antcall target="create-war"/>
     </target>

@@ -6,15 +6,15 @@
 * Licensed under the terms of BSD License
 */
 
-dojo.provide("betterform.bfRequiredCompact");
+dojo.provide("betterform.BfRequiredCompact");
 
-dojo.declare("betterform.bfRequiredCompact", null,
+dojo.declare("betterform.BfRequiredCompact", null,
 {
     // Class to dojo.require all other classes
 
     constructor:function() {
-        dojo.require("betterform.bfRequiredMinimal");
-        compactDependencies = new betterform.bfRequiredMinimal();
+        dojo.require("betterform.BfRequiredMinimal");
+        var compactDependencies = new betterform.BfRequiredMinimal();
         // UI Controls
         dojo.require("betterform.ui.input.Date");
         dojo.require("betterform.ui.input.DateTime");

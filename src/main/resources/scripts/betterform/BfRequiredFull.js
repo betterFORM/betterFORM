@@ -6,15 +6,15 @@
 * Licensed under the terms of BSD License
 */
 
-dojo.provide("betterform.bfRequiredFull");
+dojo.provide("betterform.BfRequiredFull");
 
-dojo.declare("betterform.bfRequiredFull", null,
+dojo.declare("betterform.BfRequiredFull", null,
 {
     // Class to dojo.require all other classes
 
     constructor:function() {
-        dojo.require("betterform.bfRequiredCompact");
-        var compactDependencies = new betterform.bfRequiredCompact();
+        dojo.require("betterform.BfRequiredCompact");
+        var compactDependencies = new betterform.BfRequiredCompact();
         // Alerts
         dojo.require("betterform.ui.common.GlobalAlert");
         dojo.require("betterform.ui.common.BowlAlert");
@@ -26,7 +26,6 @@ dojo.declare("betterform.bfRequiredFull", null,
         dojo.require("betterform.ui.tree.OPMLTree");
         dojo.require("betterform.ui.range.Rating");
         dojo.require("betterform.ui.range.Slider");
-        dojo.require("betterform.ui.secret.Secret");
         dojo.require("betterform.ui.textarea.HtmlEditor");
         dojo.require("betterform.ui.textarea.DojoEditor");
         dojo.require("betterform.ui.textarea.SimpleTextarea");
