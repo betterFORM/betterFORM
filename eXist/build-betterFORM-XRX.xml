@@ -221,7 +221,7 @@
         <echo message="merging Dojo into tree ..."/>
         <echo message="************************************************************************************"/>
         <echo/>
-        <move todir="${dojo.dir}/resources/scripts/dijit"admin>
+        <move todir="${dojo.dir}/resources/scripts/dijit">
             <fileset dir="${dojo.dir}/${properties.dojo}/dijit"/>
         </move>
         <move todir="${dojo.dir}/resources/scripts/dojo">
@@ -253,25 +253,11 @@
             </fileset>
         </copy>
 
-        <java classname="org.mozilla.javascript.tools.shell.Main"
-              dir="${dojo.dir}/resources/scripts/util/buildscripts"
-              classpath="${dojo.dir}/resources/scripts/util/shrinksafe/js.jar:${dojo.dir}/resources/scripts/util/shrinksafe/shrinksafe.jar"
-              jvmversion="1.5"
-              fork="true"
-              maxmemory="512m">
-            <arg value="build.js"/>
-            <arg value="profile=betterform"/>
-            <arg value="localeList='en'"/>
-            <arg value="log=1"/>
-            <arg value="optimize=shrinksafe"/>
-            <arg value="mini=true "/>
-            <arg value="copyTests=false"/>
-            <arg value="cssOptimize=comments"/>
-            <arg value="action=clean,release"/>
-            <arg value="symbol=short"/>
-            <arg value="version=1.5"/>
-        </java>
 
+        <ant antfile="${web.dir}/build.xml" target="build-dojo" dir="${web.dir}" inheritall="false">
+                <property name="target.dir" value="${target.dir}"/>
+                <property name="webapp.dir" value="${dojo.dir}"/>
+        </ant>
 
         <echo/>
         <echo message="************************************************************************************"/>

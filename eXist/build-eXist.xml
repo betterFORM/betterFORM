@@ -1,8 +1,8 @@
 <project name="betterFORM XRX deployer" default="install" basedir=".">
 
     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
-    <property name="exist.dir" value="/home/zwobit/eXist-deploy"/>
-    
+    <property name="exist.dir" value="/Users/dev/projects/eXist"/>
+
     <target name="clean">
         <delete dir="${basedir}/target"/>
     </target>
@@ -32,8 +32,8 @@
         <antcall target="copyExtension"/>
 
 
-        <ant dir="${exist.dir}/extensions/betterform" antfile="build.xml" target="wrapped-install"/>
-        <ant dir="${exist.dir}/extensions/betterform" antfile="build.xml" target="install-betterFORM-XRX-Sample"/>
+        <ant dir="${exist.dir}/extensions/betterform" antfile="${exist.dir}/extensions/betterform/build.xml" target="wrapped-install"/>
+        <ant dir="${exist.dir}/extensions/betterform" antfile="${exist.dir}/extensions/betterform/build.xml" target="install-betterFORM-XRX-Sample"/>
     </target>
 
     <target  name="start-eXist">
@@ -84,6 +84,6 @@
     </target>
 
     <target name="set-extension-dir-1.5" if="eXist-1.5">
-        <property name="extension.dir" value="${basedir}/eXist/target/eXist-1.5"/>
+        <property name="extension.dir" value="${basedir}/target/eXist-1.5"/>
     </target>
 </project>

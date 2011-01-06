@@ -730,17 +730,7 @@ h3 {
 }
 
 #bfFormBrowser {
-	height: 405px;
-	overflow: auto;
 	background: #D3D3D3;
-}
-
-#bfFormBrowser table {
-	width: 100%;
-	padding: 0;
-	margin: 0 0 30px 0;
-	background: #D3D3D3;
-	border: none;
 }
 
 #bfFormBrowser .formBrowserHeader {
@@ -752,24 +742,11 @@ h3 {
 	text-align: left;
 }
 
-#bfFormBrowser .directory {
-	background: white;
-}
-
-#bfFormBrowser .directory td {
-	text-align: left;
-}
-
-#bfFormBrowser .file td {
-	background: white;
-	text-align: left;
-
-}
-
-#bfFormBrowser .directory .textLink {
-	display: inline-block;
-	margin-bottom: 10px;
+#bfFormBrowser .textLink {
+	display: block;
+	margin-top: 10px;
 	vertical-align: middle;
+	font-size:1.1em;
 }
 
 

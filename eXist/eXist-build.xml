@@ -33,8 +33,7 @@
 
 
     <path id="generator.libs" description="classpath for using Saxon XSLT">
-        <pathelement location="${exist.rootdir}/lib/endorsed/saxonb-9.1.0.8.jar"/>
-        <pathelement location="${exist.rootdir}/lib/endorsed/saxonb-dom-9.1.0.8.jar"/>
+        <pathelement location="${exist.rootdir}/lib/endorsed/saxonhe-9.2.1.5.jar"/>
     </path>
 
     

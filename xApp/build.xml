@@ -164,6 +164,9 @@
         <echo message="compiling JavaScript..."/>
         <echo message="####################################################################################"/>
         <echo/>
+        <ant antfile="${basedir}/../web/build.xml" target="deploy-resources" dir="${basedir}/../web" inheritall="false">
+            <property name="webapp.dir" value="${basedir}/target/${xapp.app.name}"/>
+        </ant>
         <ant antfile="${basedir}/../web/build.xml" target="build-dojo" dir="${basedir}/../web" inheritall="false">
             <property name="webapp.dir" value="${basedir}/target/${xapp.app.name}"/>
         </ant>

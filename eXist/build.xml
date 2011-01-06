@@ -3,7 +3,9 @@
     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
     <!-- >>>>> These properties only apply to the targets that deal with deployment into *existing* eXist installation-->
-    <property name="exist.dir" value="ENTER-YOUR-EXIST-INSTALL-DIR"/>
+
+    <!-- exist.dir defaults to betterform sibling dir named 'eXist' -->
+    <property name="exist.dir" value="${basedir}/../../eXist"/>
 
     <property name="exist.bfExtension.home" value="${exist.dir}/extensions/betterform"/>
     <property name="exist.bfExtension.dir" value="${exist.bfExtension.home}/target/betterform"/>
@@ -51,28 +53,15 @@
             <!-- delete all forms except 'demo' and 'reference' -->
             <fileset dir="${webapp.dir}/forms" excludes="demo/*, reference/*"/>
 
-            <fileset dir="${webapp.dir}" includes="*.html"/>
-            <fileset file="${webapp.dir}/demo.xhtml"/>
             <fileset dir="${webapp.dir}/doc" />
             <fileset dir="${webapp.dir}/images" />
-            <fileset dir="${webapp.dir}/iPhone" />
             <fileset dir="${webapp.dir}/jsp" />
-            <fileset dir="${webapp.dir}/lang" />
+            <fileset dir="${webapp.dir}/pages" />
             <fileset dir="${webapp.dir}/META-INF" />
             <fileset dir="${webapp.dir}/reports" />
             <fileset file="${webapp.dir}/robots.txt"/>
             <fileset file="${webapp.dir}/sitemap.xml"/>
             <fileset dir="${webapp.dir}/styles"/>
-
-
-            <!-- delete not relevant JavaScript sources -->
-            <fileset dir="${webapp.dir}/resources/scripts/release/dojo" includes="**/tests/"/>
-            <fileset dir="${webapp.dir}/resources/scripts/release/dojo/dojox/atom" includes="**/tests/"/>
-            <fileset dir="${webapp.dir}/resources/scripts/betterform"/>
-            <fileset dir="${webapp.dir}/resources/scripts/dijit"/>
-            <fileset dir="${webapp.dir}/resources/scripts/dojo"/>
-            <fileset dir="${webapp.dir}/resources/scripts/dojox"/>
-            <fileset dir="${webapp.dir}/resources/scripts/util"/>
 
             <!-- delete all libs eXist 1.4 brings with -->
             <fileset dir="${webapp.dir}/WEB-INF/lib" includes="commons-logging-* ,
@@ -94,7 +83,10 @@
 
     <target name="package" 
             description="creates a zip archive used by the extension-installer ant-file">
-        <ant antfile="${web.dir}/build.xml" target="clean" dir="${web.dir}" inheritall="false"/>
+        <ant antfile="${web.dir}/build.xml" target="clean" dir="${web.dir}" inheritall="false">
+                <property name="target.dir" value="${target.dir}"/>
+                <property name="webapp.dir" value="${webapp.dir}"/>
+        </ant>
         <available property="warAvailable" file ="${basedir}/../release-${web.app.version}/web-dist/${web.app.name}-${web.app.version}.war"/>
         <antcall target="buildBetterForm"/>
         <antcall target="extractReleaseWar"/>
@@ -114,6 +106,17 @@
         <copy todir="${target.dir}/xrx">
             <fileset dir="${basedir}/src/main/xrx"/>
         </copy>
+
+        <zip description="create betterform resources zip file"
+             zipfile="${target.dir}/lib/${web.app.name}-${web.app.version}-resources.zip"
+             basedir="${target.dir}/webapp/resources"/>
+    </target>
+
+    <target name="package-and-distribute-to-exist"
+            description="packages and distributes the betterFORM extension to a local eXist installation">
+        <copy todir="${exist.bfExtension.home}">
+            <fileset dir="${basedir}/target"/>
+        </copy>
     </target>
 
     <target  name="buildBetterForm" unless="warAvailable">
@@ -123,7 +126,6 @@
                 <property name="target.dir" value="${target.dir}"/>
                 <property name="webapp.dir" value="${webapp.dir}"/>
         </ant>
-
     </target>
 
     <target  name="extractReleaseWar" if="warAvailable">

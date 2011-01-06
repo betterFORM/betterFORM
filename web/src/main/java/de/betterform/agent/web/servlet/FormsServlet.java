@@ -12,19 +12,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.DateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author <a href="mailto:tobias.krebs@betterform.de">tobi</a>
  * @version $Id: FormsServlet 23.11.10 tobi $
  */
 public class FormsServlet extends HttpServlet {
+    private List ignores;
 
     @Override
     public void init() throws ServletException {
         super.init();
+        String ignoreString= getInitParameter("ignores");
+        ignores = Arrays.asList(ignoreString.split(" "));
     }
 
     /**
@@ -159,8 +162,7 @@ public class FormsServlet extends HttpServlet {
         addTableHead(html, uri);
         handleFileListing(html, request, uri,ajaxFunction);
         html.append(
-                "    </table>\n" +
-                        "</div>");
+                "    </div>");
 
         return html.toString();
     }
@@ -168,12 +170,11 @@ public class FormsServlet extends HttpServlet {
     private void addTableHead(StringBuffer html, String uri) {
         html.append(
                 "<div id=\"bfFormBrowser\">\n" +
-                        "    <table>\n" +
-                        "        <tr class=\"formBrowserHead\">\n" +
-                        "            <td class=\"formBrowserHeader\" colspan=\"3\">\n" +
+                        "        <div class=\"formBrowserHead\">\n" +
+                        "            <div class=\"formBrowserHeader\">\n" +
                         "               <span id=\"path\">/" + uri + "\n" +
-                        "            </td>\n" +
-                        "        </tr>\n");
+                        "            </div>\n" +
+                        "        </div>\n");
     }
 
     private void handleFileListing(StringBuffer html, HttpServletRequest request, String uri,String ajaxFunction) throws IOException {
@@ -199,14 +200,15 @@ public class FormsServlet extends HttpServlet {
                     up = uri.substring(0, uri.lastIndexOf("/"));
                     handleUp(html, request, up,ajaxFunction);
                 }
-                for (int i = 0; i < files.size(); i++) {
-                    File aFile = files.get(i);
-                    f = new File(readDir + "/" + aFile.getName());
+                for (File aFile : files) {
+                    if (!ignores.contains(aFile.getName())) {
+                        f = new File(readDir + "/" + aFile.getName());
 
-                    if (f.isDirectory()) {
-                        handleDirectory(html, request, uri, aFile,ajaxFunction);
-                    } else if (f.isFile()) {
-                        handleFile(html, request, uri, aFile, f);
+                        if (f.isDirectory()) {
+                            handleDirectory(html, request, uri, aFile, ajaxFunction);
+                        } else if (f.isFile()) {
+                            handleFile(html, request, uri, aFile, f);
+                        }
                     }
                 }
             }
@@ -218,20 +220,16 @@ public class FormsServlet extends HttpServlet {
             String wrapperStart = ajaxFunction + "('";
             String wrapperEnd = "');";
             html.append(
-                    "        <tr class=\"directory\">\n" +
-                            "            <td colspan=\"3\">\n" +
-                            "                <a href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, up) + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\"><img src=\"" + request.getContextPath() + "/resources/images/folder.gif\" border=\"0\"></a>\n" +
+                    "        <div class=\"directory\">\n" +
+                            "                <a href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, up) + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\"><img src=\"" + request.getContextPath() + "/resources/images/bf_logo_square_effect_gray_dark.gif\" border=\"0\"></a>\n" +
                             "                <a class=\"textLink\" href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, up)  + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\">..</a>\n" +
-                            "            </td>\n" +
-                            "        </tr>");
+                            "        </div>");
         } else {
             html.append(
-                    "        <tr>\n" +
-                            "            <td class=\"directory\" colspan=\"3\">\n" +
-                            "                <a href=\"" + getRequestURI(request, up) + "\"><img src=\"" + request.getContextPath() + "/resources/images/folder.gif\" border=\"0\"></a>\n" +
+                    "        <div class=\"directory\" >\n" +
+                            "                <a href=\"" + getRequestURI(request, up) + "\"><img src=\"" + request.getContextPath() + "/resources/images/bf_logo_square_effect_gray_dark.gif\" border=\"0\"></a>\n" +
                             "                <a class=\"textLink\" href=\"" + getRequestURI(request, up) + "\">..</a>\n" +
-                            "            </td>\n" +
-                            "        </tr>");
+                            "            </div>\n");
         }
     }
 
@@ -240,39 +238,53 @@ public class FormsServlet extends HttpServlet {
             String wrapperStart = ajaxFunction + "('";
             String wrapperEnd = "');";
             html.append(
-                    "        <tr class=\"directory\">\n" +
-                            "            <td colspan=\"3\">\n" +
-                            "                <a href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, uri) + "/" + aFile.getName()  + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\"><img src=\"" + request.getContextPath() + "/resources/images/folder.gif\" border=\"0\"></a>\n" +
-                            "                <a class=\"textLink\" href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, uri) + "/" + aFile.getName()  + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\">" + aFile.getName() + "</a>\n" +
-                            "            </td>\n" +
-                            "        </tr>");
+                    "        <div class=\"directory\">\n" +
+                            "                <a class=\"bfIconDirectory\" href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, uri) + "/" + aFile.getName()  + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\">\n" +
+                            "                   <img src=\"" + request.getContextPath() + "/resources/images/bf_logo_square_effect_gray_dark.png\" border=\"0\">" +
+                            "                </a>\n" +
+                            "                <a class=\"textLink\" title=\""+ aFile.getName()+"\" href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, uri) + "/" + aFile.getName()  + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\">" + getFileName(aFile)+ "</a>\n" +
+                            "        </div>");
         } else {
             html.append(
-                    "        <tr class=\"directory\">\n" +
-                            "            <td colspan=\"3\">\n" +
-                            "                <a href=\"" + getRequestURI(request, uri) + "/" + aFile.getName() + "\"><img src=\"" + request.getContextPath() + "/resources/images/folder.gif\" border=\"0\"></a>\n" +
-                            "                <a class=\"textLink\" href=\"" + getRequestURI(request, uri) + "/" + aFile.getName() + "\">" + aFile.getName() + "</a>\n" +
-                            "            </td>\n" +
-                            "        </tr>");
+                    "        <div class=\"directory\">\n" +
+                            "                <a class=\"bfIconDirectory\" href=\"" + getRequestURI(request, uri) + "/" + aFile.getName() + "\">" +
+                            "                   <img src=\"" + request.getContextPath() + "/resources/images/bf_logo_square_effect_gray_dark.png\" border=\"0\">" +
+                        "                   </a>\n" +
+                            "                <a class=\"textLink\" href=\"" + getRequestURI(request, uri) + "/" + aFile.getName() + "\">" + getFileName(aFile) + "</a>\n" +
+                            "        </div>");
         }
 
     }
 
     private void handleFile(StringBuffer html, HttpServletRequest request, String uri, File aFile, File f) {
         html.append(
-                "        <tr class=\"file\">\n" +
-                        "            <td width=\"25%\">\n" +
-                        "                <a href=\"" + request.getContextPath() + "/" + uri + "/" + aFile.getName() + "\" target=\"_blank\">" + aFile.getName() + "\n" +
+                "        <div class=\"file\">\n" +
+                        "                <a class=\"bfIconFile\" href=\"" + request.getContextPath() + "/" + uri + "/" + aFile.getName() + "\" target=\"_blank\">" +
+                        "                   <img src=\"" + request.getContextPath() + "/resources/images/bf_logo_square_no_effect_gray.png\" border=\"0\">\n" +
                         "                </a>\n" +
-                        "            </td>\n" +
-                        "            <td width=\"25%\">\n" +
+                        "                <a class=\"textLink\" title=\""+ aFile.getName()+"\" href=\"" + request.getContextPath() + "/" + uri + "/" + aFile.getName() + "\" target=\"_blank\">" + getFileName(aFile) + "</a>\n" +
+/*
+                        "            <div>\n" +
                         "                <a href=\"" + request.getContextPath() + "/" + uri + "/" + aFile.getName() + "?source=true\" target=\"_blank\">source</a>\n" +
-                        "            </td>\n" +
-                        "            <td>" + DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).format(new Date(f.lastModified())) + "</td>\n" +
-                        "        </tr>");
+                        "            </div>\n" +
+                        "            <div>" + DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).format(new Date(f.lastModified())) + "</div>\n" +
+*/
+                        "        </div>");
     }
 
     private String getRequestURI(HttpServletRequest request, String path) {
         return request.getRequestURI() + "?path=" + path;
+    }
+
+    private String getFileName(File aFile) {
+
+        String fileName = aFile.getName();
+        if(fileName.indexOf(".xhtml") != -1 ){
+            fileName = fileName.replace(".xhtml","");
+        }
+        if(fileName.length() > 15){
+            fileName = fileName.substring(0,10) + "..." + fileName.substring(fileName.length()-5);
+        }
+        return fileName;
     }
 }

@@ -120,6 +120,13 @@
               filenameparameter="currentFile">
             <classpath refid="web.class.path"/>
         </xslt>
+        <xslt in="${basedir}/src/main/webapp/dashboard.xhtml"
+              out="${basedir}/src/main/webapp/dashboard.html"
+              style="${basedir}/src/main/webapp/resources/xslt/site.xsl"
+              force="true"
+              filenameparameter="currentFile">
+            <classpath refid="web.class.path"/>
+        </xslt>
         <!-- copy demo pages unmodified -->
         <copy file="${basedir}/src/main/webapp/pages/en/demo.xhtml" todir="${basedir}/src/main/webapp/site/en"/>
         <copy file="${basedir}/src/main/webapp/pages/de/demo.xhtml" todir="${basedir}/src/main/webapp/site/de"/>
@@ -328,11 +335,11 @@
     <!-- **************************************** BUILDING JAR/WAR **************************************** -->
     <!-- **************************************** BUILDING JAR/WAR **************************************** -->
     <!-- todo: when package is executed it should be made sure that 'dojo' is configured as useragent in betterform-config.xml -->
-    <target name="package" depends="build-dojo" description="create war file">
+    <target name="package" depends="deploy-resources" description="create war file">
+        <antcall target="build-dojo"/>
         <echo/>
         <property name="onlineVersion" value="true"/>
 
-        <antcall target="cleanup-bf-release"/>
 
         <copy todir="${webapp.dir}"
               file="${basedir}/../src/test/resources/XFormsTestSuite1.1E1/Edition1/driverPages/Results/results.html"/>
@@ -467,7 +474,7 @@
     <!-- **************************************** DOJO TARGETS **************************************** -->
     <!-- **************************************** DOJO TARGETS **************************************** -->
     <!-- **************************************** DOJO TARGETS **************************************** -->
-    <target name="build-dojo" depends="deploy-resources" >
+    <target name="build-dojo" >
         <java classname="org.mozilla.javascript.tools.shell.Main"
               dir="${webapp.dir}/resources/scripts/util/buildscripts"
               classpath="${webapp.dir}/resources/scripts/util/shrinksafe/js.jar:${webapp.dir}/resources/scripts/util/shrinksafe/shrinksafe.jar"
@@ -490,6 +497,9 @@
 
             <arg value="version=1.5"/>
         </java>
+        <!-- cleanup JS/CSS resources of betterform dojo release -->
+        <antcall target="cleanup-bf-release"/>
+
     </target>
 
 
