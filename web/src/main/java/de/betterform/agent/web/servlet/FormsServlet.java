@@ -43,7 +43,9 @@ public class FormsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean fragment = false;
         String ajaxFunction = request.getParameter("ajax");
-
+        if(ajaxFunction == null || ajaxFunction.equals("")){
+            ajaxFunction="load";
+        }
         String fragmentParameter = request.getParameter("fragment");
         String uri = request.getParameter("path");
 
@@ -159,7 +161,7 @@ public class FormsServlet extends HttpServlet {
             uri = "forms";
         }
 
-        addTableHead(html, uri);
+        addTableHead(request,html, uri,ajaxFunction);
         handleFileListing(html, request, uri,ajaxFunction);
         html.append(
                 "    </div>");
@@ -167,12 +169,35 @@ public class FormsServlet extends HttpServlet {
         return html.toString();
     }
 
-    private void addTableHead(StringBuffer html, String uri) {
+    private void addTableHead(HttpServletRequest request,StringBuffer html, String uri,String ajaxFunction) {
+        String wrapperStart = ajaxFunction + "('";
+        String wrapperEnd = "');";
+        StringBuffer crumb=new StringBuffer("");
+        String[] steps = uri.split("/");
+        String currentPath="";
+        for (int i = 0; i < steps.length; i++) {
+            String step = steps[i];
+
+            if(i>0){
+                currentPath += "/";
+            }
+            currentPath += step;
+            crumb.append("<div");
+            if(i+1==steps.length){
+                crumb.append(" id=\"current\"");
+            }
+            crumb.append(" class=\"pathName\">");
+            crumb.append("<a href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, currentPath) + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\">\n");
+            crumb.append(step);
+            crumb.append("</a>");
+            crumb.append("</div>");
+            crumb.append(" ");
+        }
         html.append(
                 "<div id=\"bfFormBrowser\">\n" +
                         "        <div class=\"formBrowserHead\">\n" +
-                        "            <div class=\"formBrowserHeader\">\n" +
-                        "               <span id=\"path\">/" + uri + "\n" +
+                        "            <div class=\"formBrowserHeader\">\n" + crumb.toString() +
+//                        "               <span id=\"path\">/" + uri + "\n" +
                         "            </div>\n" +
                         "        </div>\n");
     }
@@ -280,6 +305,7 @@ public class FormsServlet extends HttpServlet {
                         "                   <img src=\"" + request.getContextPath() + "/resources/images/bf_logo_square_no_effect_gray.png\" border=\"0\">\n" +
                         "                </a>\n" +
                         "                <a class=\"textLink\" title=\""+ aFile.getName()+"\" href=\"" + request.getContextPath() + "/" + uri + "/" + aFile.getName() + "\" target=\"_blank\">" + getFileName(aFile,shortenNames) + "</a>\n" +
+                        "                <a class=\"sourceLink\" title=\""+ "view" +"\" href=\"" + request.getContextPath() + "/" + uri + "/" + aFile.getName() + "?source=true \" target=\"_blank\">" + "<&nbsp;/&nbsp;>" + "</a>\n" +
 /*
                         "            <div>\n" +
                         "                <a href=\"" + request.getContextPath() + "/" + uri + "/" + aFile.getName() + "?source=true\" target=\"_blank\">source</a>\n" +
