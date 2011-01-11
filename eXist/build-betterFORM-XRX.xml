@@ -68,7 +68,6 @@
                     <fileset dir="${basedir}/src">
                         <exclude name="**/lib/*.jar"/>
                         <exclude name="**/web.xml"/>
-                        <exclude name="**/resources/**"/>
                         <exclude name="**/forms/**"/>
                     </fileset>
                 </copy>
@@ -129,12 +128,12 @@
 
                 <!-- RESOURCES -->
                 <!-- Copy images, styles, xsd and xslt -->
-                <copy todir="${src.target.dir}/db/resources/" overwrite="true">
+                <copy todir="${src.target.dir}/etc/overwrites/webapp/resources/" overwrite="true">
                      <fileset dir="${src.dir}/main/resources"/>
                 </copy>
 
                 <copy description="copy images seperately to avoid filtering"
-                      todir="${src.target.dir}/db/resources"
+                      todir="${src.target.dir}/etc/overwrites/webapp/resources"
                       overwrite="true"
                       filtering="false">
                         <fileset dir="${src.dir}/main/resources">
@@ -158,7 +157,6 @@
                       <exclude name="**/META-INF/**"/>
                       <exclude name="**/pages/**"/>
                       <exclude name="**/jsp/**"/>
-                      <exclude name="**/resources/**"/>
                       <exclude name="**/forms/**"/>
                   </fileset>
             </copy>
@@ -266,9 +264,9 @@
         <echo/>
         <!-- <delete dir="${dojo.dir}${webapp.dir}/resources/scripts/release"/> -->
 
-        <mkdir dir="${src.target.dir}/db/resources/scripts/release"/>
+        <mkdir dir="${src.target.dir}/etc/overwrites/webapp/resources/scripts/release"/>
 
-        <move todir="${src.target.dir}/db/resources/scripts/release" overwrite="true">
+        <move todir="${src.target.dir}/etc/overwrites/webapp/resources/scripts/release" overwrite="true">
             <fileset dir="${dojo.dir}/resources/scripts/release"/>
         </move>
 

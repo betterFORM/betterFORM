@@ -25,10 +25,8 @@ import org.apache.log4j.xml.DOMConfigurator;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Map;
 
 
@@ -207,11 +205,6 @@ public class WebFactory {
     }
 
     public URI getXsltURI(String xsltPath, String xsltDefault) throws URISyntaxException {
-         try {
-             URL url = new URL(xsltPath + xsltDefault);
-             return url.toURI();
-        } catch (MalformedURLException mae) {
-        }
         return new File(resolvePath(xsltPath, servletContext)).toURI().resolve(new URI(xsltDefault));
     }
 

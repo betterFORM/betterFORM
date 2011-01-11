@@ -221,13 +221,13 @@ public class FormsServlet extends HttpServlet {
             String wrapperEnd = "');";
             html.append(
                     "        <div class=\"directory\">\n" +
-                            "                <a href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, up) + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\"><img src=\"" + request.getContextPath() + "/resources/images/bf_logo_square_effect_gray_dark.gif\" border=\"0\"></a>\n" +
+                            "                <a href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, up) + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\"><img src=\"" + request.getContextPath() + "/resources/images/bf_logo_square_effect_gray_dark.png\" border=\"0\"></a>\n" +
                             "                <a class=\"textLink\" href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, up)  + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\">..</a>\n" +
                             "        </div>");
         } else {
             html.append(
                     "        <div class=\"directory\" >\n" +
-                            "                <a href=\"" + getRequestURI(request, up) + "\"><img src=\"" + request.getContextPath() + "/resources/images/bf_logo_square_effect_gray_dark.gif\" border=\"0\"></a>\n" +
+                            "                <a href=\"" + getRequestURI(request, up) + "\"><img src=\"" + request.getContextPath() + "/resources/images/bf_logo_square_effect_gray_dark.png\" border=\"0\"></a>\n" +
                             "                <a class=\"textLink\" href=\"" + getRequestURI(request, up) + "\">..</a>\n" +
                             "            </div>\n");
         }

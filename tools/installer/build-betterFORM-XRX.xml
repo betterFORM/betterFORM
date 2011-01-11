@@ -68,7 +68,7 @@
         <mkdir dir="${basedir}/target/bf-eXist/extensions/betterform"/>
 
         <!-- build an updated extension -->
-      <!--  <ant dir="${basedir}/../../eXist" antfile="build-betterFORM-XRX.xml" target="build-up-to-date-extension"/> -->
+        <ant dir="${basedir}/../../eXist" antfile="build-betterFORM-XRX.xml" target="build-up-to-date-extension"/>
 
         <!-- copy updated extension to eXist-->
         <antcall target="copyExtension"/>
@@ -77,13 +77,12 @@
         <!-- See eXist-build-file for password -->
         <antcall target="setupBetterFORMUser"/>
 
-        <!-- Store Dojo etc into db -->
-        <ant dir="${basedir}/target/bf-eXist/extensions/betterform" antfile="build.xml" target="install-betterFORM-resources"/>
-
-
         <!-- Install betterFORM extension -->
         <ant dir="${basedir}/target/bf-eXist/extensions/betterform" antfile="build.xml" target="wrapped-install"/>
 
+
+        <!-- Store Forms etc into db -->
+        <ant dir="${basedir}/target/bf-eXist/extensions/betterform" antfile="build.xml" target="install-betterFORM-apps-and-forms"/>
 
         <!-- Copy template-files which will be modified by the Installer-->
 

@@ -9,6 +9,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xslt.TransformerService;
+import de.betterform.xml.xslt.impl.Resource;
+import de.betterform.xml.xslt.impl.ResourceResolver;
 
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamSource;
@@ -136,20 +138,16 @@ public class CachingTransformerService implements TransformerService, URIResolve
                 }
             }
 
-            if (entry.templates == null && entry.transformer == null) {
+            if (entry.templates == null) {
                 // create source and templates object (this might trigger uri resolution)
                 Source source = new StreamSource(entry.resource.getInputStream());
                 source.setSystemId(uri.toString());
-                //TODO: check if source allready compiled!
-                try {
-                    entry.templates = getTransformerFactory().newTemplates(source);
-                } catch (TransformerException te) {
-                    entry.transformer = getTransformerFactory().newTransformer(source);
-                }
+                entry.templates = getTransformerFactory().newTemplates(source);
             }
 
-            return (entry.templates != null)? entry.templates.newTransformer() : entry.transformer;
-        } catch (Exception e) {
+            return entry.templates.newTransformer();
+        }
+        catch (Exception e) {
             throw new TransformerException(e);
         }
     }

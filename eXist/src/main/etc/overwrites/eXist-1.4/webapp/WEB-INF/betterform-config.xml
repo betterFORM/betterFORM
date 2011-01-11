@@ -31,7 +31,7 @@
 
         <property name="xslt.cache.enabled" value="true" description="flag for XSLT caching"/>
 
-        <property name="error.page" value="betterform/xquery/xferror.xql"
+        <property name="error.page" value="xquery/xferror.xql"
                   description="location of error-page relative to context"/>
         
 		<!-- DEPRECATED -->
@@ -148,9 +148,9 @@
         </useragents>
 
      <ui-generators>
-        <ui-generator useragent="dojo" stylesheet="http://localhost:8080/betterform/rest/betterform/resources/xslt/dojo.xsl"/>
-        <ui-generator useragent="dojodev" stylesheet="http://localhost:8080/betterform/rest/betterform/resources/xslt/dojo-dev.xsl"/>
-        <ui-generator useragent="html" stylesheet="http://localhost:8080/betterform/rest/betterform/resources/xslt/html4.xsl"/>
+        <ui-generator useragent="dojo" stylesheet="dojo.xsl"/>
+        <ui-generator useragent="dojodev" stylesheet="dojo-dev.xsl"/>
+        <ui-generator useragent="html" stylesheet="html4.xsl"/>
     </ui-generators>
 
     <connectors>

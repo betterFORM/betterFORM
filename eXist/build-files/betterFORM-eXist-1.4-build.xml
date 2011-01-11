@@ -80,13 +80,13 @@
 
     <target name="deploy-betterFORM-resources">
 
-        <!--
+        <!-- Installed to DB
         <copy todir="${exist.rootdir}/webapp/forms">
             <fileset dir="${betterform.webapp}/forms" excludes="**/.svn **/.svn/**"/>
         </copy>
+        -->
 
-
-
+        <!-- installed via overwrites 
         <copy todir="${exist.rootdir}/webapp/resources">
             <fileset dir="${betterform.webapp}/resources" excludes="**/.svn **/.svn/**"/>
         </copy>
@@ -155,44 +155,43 @@
         </move>
     </target>
 
-    <target name="install-betterFORM-resources" depends="stop-eXist">
-        <!-- ensure db is shutdown -->
-        <antcall target="stop-eXist"/>
+    <target name="install-betterFORM-apps-and-forms" depends="stop-eXist">
         <!-- start db -->
         <antcall target="start-eXist"/>
 
-        <!-- Install Dojo etc to db -->
-        <antcall target="wrapped-install-betterFORM-resources"/>
+        <!-- Install Forms into db -->
+        <antcall target="wrapped-install-betterFORM-forms"/>
         <!-- wait for import task to finish in db -->
         <sleep seconds="10"/>
         <!-- Install betterFORM-XRX-Sample-App -->
         <antcall target="wrapped-install-betterFORM-XRX-Sample"/>
         <!-- wait for import task to finish in db -->
         <sleep seconds="10"/>
+        
         <!-- Redo previous steps to be extra save everything is in place -->
-        <!-- Install Dojo etc to db -->
-        <antcall target="wrapped-install-betterFORM-resources"/>
+        <!-- Install Forms into db -->
+        <antcall target="wrapped-install-betterFORM-forms"/>
         <!-- wait for import task to finish in db -->
         <sleep seconds="10"/>
         <!-- Install betterFORM-XRX-Sample-App -->
         <antcall target="wrapped-install-betterFORM-XRX-Sample"/>
         <!-- wait for import task to finish in db -->
         <sleep seconds="10"/>
-        <!-- shutdown db --->
+        
+        <!-- shutdown db -->
         <antcall target="stop-eXist"/>
 
-        <delete dir="${betterform.webapp}/resources" includeemptydirs="yes" failonerror="yes"/>
+        <!--
+            <delete dir="${betterform.webapp}/resources" includeemptydirs="yes" failonerror="yes"/>
+         -->
         <delete dir="${betterform.webapp}/forms" includeemptydirs="yes" failonerror="yes"/>
     </target>
 
-    <target name="wrapped-install-betterFORM-resources">
+    <target name="wrapped-install-betterFORM-forms">
         <echo message="------------------------------------------------------------------------------------"/>
-        <echo message="  install betterFORM resources into db"/>
+        <echo message="  install betterFORM forms into db"/>
         <echo message="------------------------------------------------------------------------------------"/>
         <!--
-        TODO:
-            - dojo-dev files in fs?
-        -->
         <xdb:store xmlns:xdb="http://exist-db.org/ant"
                    uri="xmldb:exist://localhost:8080/exist/xmlrpc/db/betterform/resources/"
                    createsubcollections="true"
@@ -202,14 +201,14 @@
                    type="binary">
             <fileset dir="${betterform.db}/resources" excludes="**/.svn **/.svn/**"/>
         </xdb:store>
+        -->
 
         <xdb:store xmlns:xdb="http://exist-db.org/ant"
-                   uri="xmldb:exist://localhost:8080/exist/xmlrpc/db/betterform/forms/"
+                   uri="xmldb:exist://localhost:8080/betterform/xmlrpc/db/betterform/forms/"
                    createsubcollections="true"
                    createcollection="true"
                    user="${user}"
-                   password="${passwd}"
-                   type="binary">
+                   password="${passwd}">
             <fileset dir="${betterform.db}/forms" excludes="**/.svn **/.svn/**"/>
         </xdb:store>
         <!--
@@ -239,7 +238,7 @@
 
     <target name="wrapped-install-betterFORM-XRX-Sample">
         <xdb:store xmlns:xdb="http://exist-db.org/ant"
-                   uri="xmldb:exist://localhost:8080/exist/xmlrpc/db/betterform/apps/"
+                   uri="xmldb:exist://localhost:8080/betterform/xmlrpc/db/betterform/apps/"
                    createsubcollections="true"
                    createcollection="true"
                    user="${user}"
@@ -252,7 +251,7 @@
 
         <!--timetracker lucene indexes-->
         <xdb:store xmlns:xdb="http://exist-db.org/ant"
-                   uri="xmldb:exist://localhost:8080/exist/xmlrpc/db/system/config/db/betterform/apps/timetracker/data/task"
+                   uri="xmldb:exist://localhost:8080/betterform/xmlrpc/db/system/config/db/betterform/apps/timetracker/data/task"
                    createsubcollections="true"
                    createcollection="true"
                    user="admin"

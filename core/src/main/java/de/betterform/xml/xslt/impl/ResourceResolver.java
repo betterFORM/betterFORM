@@ -9,6 +9,7 @@ import de.betterform.xml.xforms.exception.XFormsException;
 
 import java.io.IOException;
 import java.net.URI;
+import de.betterform.xml.xslt.impl.Resource;
 
 /**
  * Resolves resources by URIs.
