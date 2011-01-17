@@ -1,0 +1,117 @@
+<!--
+  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<project name="betterFORM eXist integration helper targets" default="deploy-all-into-exist" basedir=".">
+    <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
+    <property name="src.dir" value="${basedir}/../src"/>
+    <property name="web.dir" value="${basedir}/../web"/>
+
+    <property name="target" value="${basedir}/target-utils"/>
+    <property name="dojo.release.dir" value="${target}/dojo-release"/>
+
+    <target name="deploy-all-into-betterFORM-XRX" description="copy dojo (release) and xslt into installed betterFORM-XRX">
+        <antcall target="deploy-dojo-dev-into-betterFORM-XRX"/>
+        <available property="dojo-release-built" file="${target}/dojo-release/resources/scripts/release/dojo/betterform/betterform-full.js/"/>
+        <antcall target="deploy-xslt">
+            <param name="target.dir" value="${exist.betterform.xrx.installed}/webapp"/>
+        </antcall>
+        <antcall target="deploy-dojo-release">
+            <param name="target.dir" value="${exist.betterform.xrx.installed}/webapp"/>
+        </antcall>
+    </target>
+
+    <target name="deploy-dojo-dev-into-betterFORM-XRX" description="copy dojo (dev) into installed betterFORM-XRX">
+         <antcall target="deploy-dojo-dev">
+            <param name="target.dir" value="${exist.betterform.xrx.installed}/webapp"/>
+        </antcall>
+    </target>
+
+
+    <!-- GENERIC TARGETS -->
+
+    <target name="deploy-xslt">
+         <copy todir="${target.dir}/xslt" overwrite="true">
+             <fileset dir="${src.dir}/main/resources/xslt"/>
+         </copy>
+    </target>
+
+
+
+    <target name="deploy-dojo-dev">
+        <ant antfile="${web.dir}/build.xml" target="copy-src-resources-scripts" usenativebasedir="yes">
+            <property name="webapp.dir" value="${target.dir}"/>
+        </ant>
+
+        <ant antfile="${web.dir}/build.xml" target="prepare-dojo" usenativebasedir="yes">
+            <property name="target" value="${target.dir}"/>
+            <property name="webapp.dir" value="${target.dir}"/>
+        </ant>
+    </target>
+
+    <target name="deploy-dojo-release" depends="build-dojo-release">
+         <copy todir="${target.dir}/resources" overwrite="true">
+             <fileset dir="${dojo.release.dir}/resources"/>
+         </copy>
+    </target>
+
+    <target name="build-dojo-release" unless="dojo-release-built">
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="unpacking Dojo..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+        <mkdir dir="${dojo.release.dir}"/>
+        <gunzip src="${src.dir}/main/lib/${properties.dojo}.tar.gz"
+                dest="${dojo.release.dir}"/>
+        <untar src="${dojo.release.dir}/${properties.dojo}.tar"
+               dest="${dojo.release.dir}"/>
+        <delete file="${dojo.release.dir}/${properties.dojo}"/>
+        <delete file="${dojo.release.dir}/${properties.dojo}.tar"/>
+
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="merging Dojo into tree ..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+        <move todir="${dojo.release.dir}/resources/scripts/dijit">
+            <fileset dir="${dojo.release.dir}/${properties.dojo}/dijit"/>
+        </move>
+        <move todir="${dojo.release.dir}/resources/scripts/dojo">
+            <fileset dir="${dojo.release.dir}/${properties.dojo}/dojo"/>
+        </move>
+        <move todir="${dojo.release.dir}/resources/scripts/dojox">
+            <fileset dir="${dojo.release.dir}/${properties.dojo}/dojox"/>
+        </move>
+
+        <move todir="${dojo.release.dir}/resources/scripts/util">
+            <fileset dir="${dojo.release.dir}/${properties.dojo}/util"/>
+        </move>
+
+
+        <unzip src="${src.dir}/main/lib/${properties.timeline}.zip" dest="${dojo.release.dir}"/>
+        <move todir="${dojo.release.dir}/resources/scripts/simile/timeline">
+            <fileset dir="${dojo.release.dir}/timeline_2.3.0/timeline_js"/>
+        </move>
+        <move todir="${dojo.release.dir}/resources/scripts/simile/timeline">
+            <fileset dir="${dojo.release.dir}/timeline_2.3.0/timeline_ajax"/>
+        </move>
+        <delete dir="${dojo.release.dir}/timeline_2.3.0"/>
+
+        <copy description="copy javascript resources from global directory"
+              todir="${dojo.release.dir}/resources/scripts"
+              includeemptydirs="true">
+            <fileset dir="${src.dir}/main/resources/scripts">
+                <include name="**/*.*"/>
+            </fileset>
+        </copy>
+
+
+        <ant antfile="${web.dir}/build.xml" target="build-dojo" dir="${web.dir}" inheritall="false">
+                <property name="webapp.dir" value="${dojo.release.dir}"/>
+        </ant>
+    </target>
+
+
+</project>

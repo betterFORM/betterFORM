@@ -243,5 +243,13 @@
             </classpath>
         </compile>
     </installer>
+    <exist>
+        <betterform>
+            <xrx>
+                <installed>/home/zwobit/betterForm-3</installed>
+            </xrx>
+        </betterform>
+        <installed></installed>
+    </exist>
 </root>
 

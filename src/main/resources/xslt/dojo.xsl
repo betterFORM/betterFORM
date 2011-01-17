@@ -94,7 +94,7 @@
     <!-- ####################################################################################################### -->
     <xsl:template match="head">
 
-        <xsl:comment> *** powered by betterFORM, &amp;copy; 2010 *** </xsl:comment>
+        <xsl:comment> *** powered by betterFORM, &amp;copy; 2011 *** </xsl:comment>
 
         <head>
             <!-- copy all meta tags except 'contenttype' -->
@@ -258,8 +258,10 @@
             </xsl:otherwise>
         </xsl:choose>
 
-        <script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/betterform/betterform-full.js')}">
+        <xsl:if test="not(exists(//script[@id='betterformJs']))">
+            <script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/betterform/betterform-full.js')}">
             &#160;</script>
+        </xsl:if>
         <xsl:text>
 </xsl:text>
     </xsl:template>

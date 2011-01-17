@@ -86,6 +86,17 @@ dependencies = {
             dependencies: [
                 "betterform.BfRequiredFull"
             ]
+        },
+                    /** betterFORM XFormsFeatureExplorer Release  **/
+        {
+            name: "../betterform/betterform-xforms-feature-explorer.js",
+            resourceName: "betterform.feature.explorer",
+            layerDependencies: [
+                "betterform.full"
+            ],
+            dependencies: [
+                "betterform.BfRequiredXFormsFeatureExplorer"
+            ]
         }
     ],
 

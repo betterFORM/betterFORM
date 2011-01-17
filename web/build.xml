@@ -155,7 +155,12 @@
               todir="${webapp.dir}/reports">
             <fileset dir="${root.dir}/src/main/doc/site/content/reports"/>
         </copy>
+
+
 -->
+
+        <antcall target="copy-src-resources"/>
+<!--  *** MOVED TO EXTRA TARGET ***
         <copy description="copy resources from global 'src' directory"
               todir="${webapp.dir}/resources"
               includeemptydirs="true">
@@ -174,7 +179,7 @@
                 <include name="**/*.jpg"/>
             </fileset>
         </copy>
-
+-->
 
         <mkdir dir="${webapp.dir}/WEB-INF/lib"/>
 
@@ -208,6 +213,41 @@
         <delete file="${webapp.dir}/WEB-INF/classes/log4j.xml"/>
         <delete file="${webapp.dir}/WEB-INF/classes/log4j.dtd"/>
 
+    </target>
+
+    <target name="copy-src-resources">
+         <copy description="copy resources from global 'src' directory"
+              todir="${webapp.dir}/resources"
+              includeemptydirs="true">
+            <fileset dir="${src.dir}/main/resources">
+                <include name="**/*.*"/>
+                <exclude name="**/scripts/*.*"/>"
+            </fileset>
+        </copy>
+
+        <antcall target="copy-src-resources-scripts"/>
+
+        <copy description="copy images seperately to avoid filtering"
+              todir="${webapp.dir}/resources"
+              overwrite="true"
+              filtering="false">
+            <fileset dir="${src.dir}/main/resources">
+                <include name="**/*.gif"/>
+                <include name="**/*.png"/>
+                <include name="**/*.jpg"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="copy-src-resources-scripts">
+        <copy description="copy resources from global 'src' directory"
+              todir="${webapp.dir}/resources"
+              includeemptydirs="true"
+              overwrite="true">
+            <fileset dir="${src.dir}/main/resources">
+                <include name="**/scripts/*.*"/>
+            </fileset>
+        </copy>
     </target>
 
     <!-- todo: rename to deploy-forms. 'resources' is misleading here. Docs must be changed appropriately -->

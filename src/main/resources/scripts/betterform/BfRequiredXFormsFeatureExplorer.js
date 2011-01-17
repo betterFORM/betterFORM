@@ -9,6 +9,8 @@ dojo.declare("betterform.BfRequiredXFormsFeatureExplorer", null,
 
         var fullDependencies = new betterform.BfRequiredFull();
 
-
+        dojo.require("dijit.MenuBar");
+        dojo.require("dijit.PopupMenuBarItem");
+        dojo.require("dijit.Tooltip");
     }
 });
