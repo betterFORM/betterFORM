@@ -109,7 +109,7 @@
     <!-- **************************************** DEPLOYMENT **************************************** -->
     <!-- **************************************** DEPLOYMENT **************************************** -->
     <!-- **************************************** DEPLOYMENT **************************************** -->
-    <target name="prepare-site" description="generates the betterFORM site">
+    <target name="prepare-site" depends="deploy-resources" description="generates the betterFORM site">
         <xslt basedir="${basedir}/src/main/webapp/pages"
               destdir="${basedir}/src/main/webapp/site"
               style="${basedir}/src/main/webapp/resources/xslt/site.xsl"
