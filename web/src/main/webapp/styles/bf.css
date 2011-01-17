@@ -733,20 +733,137 @@ h3 {
 	background: #D3D3D3;
 }
 
+#bfFormBrowser .directory,
+#bfFormBrowser .file {
+	width:120px;
+	padding:30px;
+	margin:6px;
+	float:left;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	text-align:center;
+	background:white;
+	height:100px;
+	position:relative;
+}
+
+
 #bfFormBrowser .formBrowserHeader {
 	padding-bottom: 10px;
-	background: #488AA6;
 	color: white;
 	padding: 5px;
 	font-size: 12pt;
 	text-align: left;
+	height:18px;
 }
+#bfFormBrowser .formBrowserHeader .pathName{
+	background:url(../resources/images/arrow-right.png) left no-repeat;
+	padding:3px 3px 3px 20px;
+	float:left;
+	color:#333333;
+}
+
+#browser{
+	width: 100%;
+	margin-top: 10px;
+	top: 120px;
+	/*left:-2000px;*/
+	position: absolute;
+}
+
 
 #bfFormBrowser .textLink {
 	display: block;
-	margin-top: 10px;
 	vertical-align: middle;
-	font-size:1.1em;
+}
+
+#bfFormBrowser .directory .textLink {
+	margin-top: 10px;
+}
+
+#bfFormBrowser .file .bfIconFile {
+	margin-top:20px;
+	display:inline-block;
+}
+
+#bfFormBrowser .file .textLink {
+	margin-top: 24px;
+}
+
+#bfFormBrowser .file .sourceLink {
+	position:absolute;
+	top:3px;
+	right:3px;
+	letter-spacing:-2px;
+	padding:4px;
+/*
+	-moz-border-radius-bottomleft:8px;
+	-moz-border-radius-topright:8px;
+	-moz-border-radius-bottomright:0px;
+	-moz-border-radius-topleft:0px;
+	-webkit-border-bottom-left-radius:8px;
+	-webkit-border-top-right-radius:8px;
+	-webkit-border-bottom-right-radius:0px;
+	-webkit-border-top-left-radius:0px;
+*/
+	-moz-border-radius:35px;
+	border:thin dotted #999999;
+	background:#d3d3d3;
+}
+
+
+#bfFormBrowser #bfListView .file {
+	clear:left;
+	width:100%;
+	height:24px;
+	text-align:left;
+	padding:10px 0;
+	float:none;
+	margin:5px;
+	position:relative;
+}
+
+#bfFormBrowser #bfListView .file a{
+	vertical-align:bottom;
+	display:inline-block;
+	margin:0;
+	margin-left:10px;
+}
+#bfFormBrowser  .file .sourceLink{
+	font-size:3pt;
+	padding:1px;
+	background:#d3d3d3;
+	color:#d3d3d3;
+}
+#bfFormBrowser  .file .sourceLink:hover{
+	font-size:10pt;
+	padding:10px;
+	color:transparent;
+	z-index:100;
+	-moz-border-radius:100px;
+	background:url(../resources/images/eye.png) no-repeat center bottom;
+
+}
+
+#bfFormBrowser #bfListView .file .bfIconFile img {
+	width:24px;
+	height:24px;
+}
+#bfFormBrowser .file .bfIconFile{
+
+}
+#bfFormBrowser .file .bfIconFile img{
+	width:48px;
+	height:48px;
+}
+#bfFormBrowser .directory a img{
+	width:80px;
+	height:80px;
+}
+#bfFormBrowser #go-up{
+	width:100px;
+	height:100px;
+	margin-top:-10px;
 }
 
 

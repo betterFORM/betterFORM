@@ -43,6 +43,7 @@
                 background: #D3D3D3;
                 display: block; /*float:left;*/
                 color: #999;
+				height:inherit;
             }
 
             #index #main-content .col {
@@ -90,25 +91,14 @@
 			}
 			#sub-header{display:none;}
 
-			#bfFormBrowser .directory,
-			#bfFormBrowser .file {
-				width:120px;
-				padding:30px;
-				margin:20px;
-				float:left;
-				-moz-border-radius:10px;
-				text-align:center;
-				background:white;
-				height:100px;
-			}
-
 
         </style>
         <script type="text/javascript">
             <!--
             dojo.require("dojo.fx");
             dojo.require("dojo.fx.easing");
-            
+            dojo.require("dojox.fx");
+
             function slideIt() {
                 var effect1 = dojo.fx.easing["linear"];
                 var effect2 = dojo.fx.easing["linear"];
@@ -153,6 +143,8 @@
 					load: function(data) {
 						console.debug("load", data);
 						targetNode.innerHTML = data;
+						var currentPath=dojo.byId("current");
+						dojox.fx.highlight({node:currentPath, color:'#ffffff', duration:400}).play()
 					},
 					error: function(error) {
 						targetNode.innerHTML = "An unexpected error occurred: " + error;
@@ -162,6 +154,7 @@
 				//Call the asynchronous xhrGet
 				console.debug("args", xhrArgs);
 				var deferred = dojo.xhrGet(xhrArgs);
+
 			}
 
 			dojo.addOnLoad (function() {
@@ -172,13 +165,8 @@
         </script>
         <style type="text/css">
            
-			#browser{
-				width: 100%;				
-				margin-top: 10px;
-				top: 120px;
-				/*left:-2000px;*/
-				position: absolute;
-			}
+
+
         </style>
     </head>
     <body id="index">

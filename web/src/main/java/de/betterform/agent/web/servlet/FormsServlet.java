@@ -43,7 +43,9 @@ public class FormsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean fragment = false;
         String ajaxFunction = request.getParameter("ajax");
-
+        if(ajaxFunction == null || ajaxFunction.equals("")){
+            ajaxFunction="load";
+        }
         String fragmentParameter = request.getParameter("fragment");
         String uri = request.getParameter("path");
 
@@ -159,7 +161,7 @@ public class FormsServlet extends HttpServlet {
             uri = "forms";
         }
 
-        addTableHead(html, uri);
+        addTableHead(request,html, uri,ajaxFunction);
         handleFileListing(html, request, uri,ajaxFunction);
         html.append(
                 "    </div>");
@@ -167,12 +169,35 @@ public class FormsServlet extends HttpServlet {
         return html.toString();
     }
 
-    private void addTableHead(StringBuffer html, String uri) {
+    private void addTableHead(HttpServletRequest request,StringBuffer html, String uri,String ajaxFunction) {
+        String wrapperStart = ajaxFunction + "('";
+        String wrapperEnd = "');";
+        StringBuffer crumb=new StringBuffer("");
+        String[] steps = uri.split("/");
+        String currentPath="";
+        for (int i = 0; i < steps.length; i++) {
+            String step = steps[i];
+
+            if(i>0){
+                currentPath += "/";
+            }
+            currentPath += step;
+            crumb.append("<div");
+            if(i+1==steps.length){
+                crumb.append(" id=\"current\"");
+            }
+            crumb.append(" class=\"pathName\">");
+            crumb.append("<a href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, currentPath) + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\">\n");
+            crumb.append(step);
+            crumb.append("</a>");
+            crumb.append("</div>");
+            crumb.append(" ");
+        }
         html.append(
                 "<div id=\"bfFormBrowser\">\n" +
                         "        <div class=\"formBrowserHead\">\n" +
-                        "            <div class=\"formBrowserHeader\">\n" +
-                        "               <span id=\"path\">/" + uri + "\n" +
+                        "            <div class=\"formBrowserHeader\">\n" + crumb.toString() +
+//                        "               <span id=\"path\">/" + uri + "\n" +
                         "            </div>\n" +
                         "        </div>\n");
     }
@@ -193,29 +218,46 @@ public class FormsServlet extends HttpServlet {
         if (filesroot.exists()) {
             List<File> files = SortingWalker.sortDirsAndFiles(filesroot);
 
+            //if we get more than 8 entries (yes, i know - lets make that configurable later) add a CSS class to switch into list mode
+            int amount = files.size();
+            final int maxDisplayed=8;
+            /*
+            create an additional div when we are in listView mode - this is not ideal but easier to implement in the current
+            */
+            boolean isListView = amount > maxDisplayed;
+            boolean shorten = true;
+            if(isListView){
+                shorten = false;
+                html.append("    <div id=\"bfListView\">\n");
+            }
+
             File f = null;
             String up = null;
             if (files != null) {
                 if (uri.indexOf("/") != -1) {
                     up = uri.substring(0, uri.lastIndexOf("/"));
-                    handleUp(html, request, up,ajaxFunction);
+                    handleUp(html, request, up,ajaxFunction,filesroot.getName());
                 }
                 for (File aFile : files) {
                     if (!ignores.contains(aFile.getName())) {
                         f = new File(readDir + "/" + aFile.getName());
 
                         if (f.isDirectory()) {
-                            handleDirectory(html, request, uri, aFile, ajaxFunction);
+                            handleDirectory(html, request, uri, aFile, ajaxFunction,shorten);
                         } else if (f.isFile()) {
-                            handleFile(html, request, uri, aFile, f);
+                            handleFile(html, request, uri, aFile, f,shorten);
                         }
                     }
                 }
             }
+            if(isListView){
+                html.append("    </div>\n");
+            }
+
         }
     }
 
-    private void handleUp(StringBuffer html, HttpServletRequest request, String up,String ajaxFunction) {
+    private void handleUp(StringBuffer html, HttpServletRequest request, String up,String ajaxFunction,String parentName) {
         if (ajaxFunction != null) {
             String wrapperStart = ajaxFunction + "('";
             String wrapperEnd = "');";
@@ -233,36 +275,37 @@ public class FormsServlet extends HttpServlet {
         }
     }
 
-    private void handleDirectory(StringBuffer html, HttpServletRequest request, String uri, File aFile,String ajaxFunction) {
+    private void handleDirectory(StringBuffer html, HttpServletRequest request, String uri, File aFile,String ajaxFunction,boolean shortenNames) {
         if (ajaxFunction != null) {
             String wrapperStart = ajaxFunction + "('";
             String wrapperEnd = "');";
             html.append(
                     "        <div class=\"directory\">\n" +
                             "                <a class=\"bfIconDirectory\" href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, uri) + "/" + aFile.getName()  + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\">\n" +
-                            "                   <img src=\"" + request.getContextPath() + "/resources/images/bf_logo_square_effect_gray_dark.png\" border=\"0\">" +
+                            "                   <img src=\"" + request.getContextPath() + "/resources/images/arrow-down.png\" border=\"0\">" +
                             "                </a>\n" +
-                            "                <a class=\"textLink\" title=\""+ aFile.getName()+"\" href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, uri) + "/" + aFile.getName()  + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\">" + getFileName(aFile)+ "</a>\n" +
+                            "                <a class=\"textLink\" title=\""+ aFile.getName()+"\" href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, uri) + "/" + aFile.getName()  + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\">" + getFileName(aFile,shortenNames)+ "</a>\n" +
                             "        </div>");
         } else {
             html.append(
                     "        <div class=\"directory\">\n" +
                             "                <a class=\"bfIconDirectory\" href=\"" + getRequestURI(request, uri) + "/" + aFile.getName() + "\">" +
-                            "                   <img src=\"" + request.getContextPath() + "/resources/images/bf_logo_square_effect_gray_dark.png\" border=\"0\">" +
+                            "                   <img src=\"" + request.getContextPath() + "/resources/images/arrow-down.png\" border=\"0\">" +
                         "                   </a>\n" +
-                            "                <a class=\"textLink\" href=\"" + getRequestURI(request, uri) + "/" + aFile.getName() + "\">" + getFileName(aFile) + "</a>\n" +
+                            "                <a class=\"textLink\" href=\"" + getRequestURI(request, uri) + "/" + aFile.getName() + "\">" + getFileName(aFile,shortenNames) + "</a>\n" +
                             "        </div>");
         }
 
     }
 
-    private void handleFile(StringBuffer html, HttpServletRequest request, String uri, File aFile, File f) {
+    private void handleFile(StringBuffer html, HttpServletRequest request, String uri, File aFile, File f, boolean shortenNames) {
         html.append(
                 "        <div class=\"file\">\n" +
                         "                <a class=\"bfIconFile\" href=\"" + request.getContextPath() + "/" + uri + "/" + aFile.getName() + "\" target=\"_blank\">" +
                         "                   <img src=\"" + request.getContextPath() + "/resources/images/bf_logo_square_no_effect_gray.png\" border=\"0\">\n" +
                         "                </a>\n" +
-                        "                <a class=\"textLink\" title=\""+ aFile.getName()+"\" href=\"" + request.getContextPath() + "/" + uri + "/" + aFile.getName() + "\" target=\"_blank\">" + getFileName(aFile) + "</a>\n" +
+                        "                <a class=\"textLink\" title=\""+ aFile.getName()+"\" href=\"" + request.getContextPath() + "/" + uri + "/" + aFile.getName() + "\" target=\"_blank\">" + getFileName(aFile,shortenNames) + "</a>\n" +
+                        "                <a class=\"sourceLink\" title=\""+ "view" +"\" href=\"" + request.getContextPath() + "/" + uri + "/" + aFile.getName() + "?source=true \" target=\"_blank\">" + "<&nbsp;/&nbsp;>" + "</a>\n" +
 /*
                         "            <div>\n" +
                         "                <a href=\"" + request.getContextPath() + "/" + uri + "/" + aFile.getName() + "?source=true\" target=\"_blank\">source</a>\n" +
@@ -276,15 +319,18 @@ public class FormsServlet extends HttpServlet {
         return request.getRequestURI() + "?path=" + path;
     }
 
-    private String getFileName(File aFile) {
-
+    private String getFileName(File aFile,boolean shortenNames) {
         String fileName = aFile.getName();
-        if(fileName.indexOf(".xhtml") != -1 ){
-            fileName = fileName.replace(".xhtml","");
+        if(shortenNames){
+            if(fileName.indexOf(".xhtml") != -1 ){
+                fileName = fileName.replace(".xhtml","");
+            }
+            if(fileName.length() > 15){
+                fileName = fileName.substring(0,10) + "..." + fileName.substring(fileName.length()-5);
+            }
+            return fileName;
+        }else {
+            return fileName;
         }
-        if(fileName.length() > 15){
-            fileName = fileName.substring(0,10) + "..." + fileName.substring(fileName.length()-5);
-        }
-        return fileName;
     }
 }
