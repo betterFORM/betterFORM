@@ -19,7 +19,8 @@
       <link rev="made" href="mailto:info@betterform.de" />
       <link rel="SHORTCUT ICON" href="./images/betterform.ico" />
       <link rel="ICON" href="./images/betterform.ico" type="image/x-icon" />
-      <link rel="stylesheet" type="text/css" href="./styles/bf.css" /><style type="text/css">
+      <link rel="stylesheet" type="text/css" href="./styles/bf.css" />
+	  <style type="text/css">
             #index{
                 background:#D3D3D3;
             }
@@ -136,12 +137,33 @@
 				display:none;
 			}
 
-        </style><style type="text/css">
-           
+		#bfFormBrowser .dijitArrowButtonChar,
+		#bfFormBrowser .dijitArrowButtonInner {
+			display:none;
+		}
+		#bfFormBrowser .dijitDropDownButton .dijitButtonNode {
+			background:transparent;
+			border:0;
+		}
 
 
         </style>
-      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js"></script><script type="text/javascript">
+
+      <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js"></script>-->
+	  <script type="text/javascript">
+		  var djConfig = {
+		  debugAtAllCosts: true,
+		  dojoBlankHtmlUrl:"/blank.html",
+		  isDebug: true };
+	  </script>
+
+	  <script type="text/javascript" src="resources/scripts/dojo/dojo.js" djConfig="parseOnLoad:true">&#160;</script>
+	  <style type="text/css">
+		  @import "resources/scripts/dijit/themes/tundra/tundra.css";
+		  @import "resources/scripts/dojo/resources/dojo.css";
+
+	  </style>
+	  <script type="text/javascript">
             
          <!--
             dojo.require("dojo.fx");
@@ -150,6 +172,11 @@
 			dojo.require("dijit.form.Form");
 			dojo.require("dijit.form.Button");
 			dojo.require("dojo.io.iframe");
+
+        	dojo.require("dijit.form.TextBox");
+			dojo.require("dijit.form.DropDownButton");
+			dojo.require("dijit.TooltipDialog");
+		 	dojo.config.dojoBlankHtmlUrl = '/blank.html';
 
             function slideIt() {
                 var effect1 = dojo.fx.easing["linear"];
@@ -186,6 +213,14 @@
 
 			function load(url) {
 				//Look up the node we'll stick the text under.
+				console.debug("DropDownDialog");
+				var popups = dojo.query(".dijitPopup .dijitTooltipDialog");
+				popups.forEach(function(item) {
+					console.debug("Dijit Popup item: ", item);
+					var popUpDijit = dijit.byId(dojo.attr(item,"id"));
+					console.debug("destroy popup widget: ",popUpDijit);
+					popUpDijit.destroy();
+				});
 				var targetNode = dojo.byId("browser");
 
 				//The parameters to pass to xhrGet, the url, how to handle it, and the callbacks.
@@ -193,8 +228,9 @@
 					url: url,
 					handleAs: "text",
 					load: function(data) {
-						console.debug("load", data);
+						// console.debug("load", data);
 						targetNode.innerHTML = data;
+						dojo.parser.parse(targetNode);
 						var currentPath=dojo.byId("current");
 						dojox.fx.highlight({node:currentPath, color:'#ffffff', duration:400}).play()
 					},
@@ -204,7 +240,7 @@
 				};
 
 				//Call the asynchronous xhrGet
-				console.debug("args", xhrArgs);
+				// console.debug("args", xhrArgs);
 				var deferred = dojo.xhrGet(xhrArgs);
 
 			}
@@ -215,7 +251,7 @@
 			);
 			// -->
         </script></head>
-   <body id="index">
+   <body id="index" class="tundra">
       <div class="page">
          <div id="header">
             <div class="pageMarginBox">
@@ -245,26 +281,21 @@
          <div id="footer">
             <div class="pageMarginBox">
                <div class="languages"><a href="./site/en/index.html"><img src="./images/en.png" class="langSelector" alt="english version" title="english version" /></a><a href="./site/de/index.html"><img src="./images/de.png" class="langSelector" alt="deutsch" title="deutsche Version" /></a></div><span id="bottomMenu">
-                  © 2010 betterFORM   |   
-                  
-                  
-                  
-                  
-                  
-                  <a href="contact.html">contact / impressum</a>  |   
-                  
-                  </span></div>
+                  © 2010 betterFORM   | <a href="contact.html">contact / impressum</a>  |   </span></div>
          </div>
          <div style="display:none"><img src="./images/b_tryit_hover.png" alt="" /><img src="./images/b_getit_hover.png" alt="" /><img src="./images/b_exploreit_hover.png" alt="" /></div>
       </div><script type="text/javascript">
                         function sendFile() {
                             dojo.io.iframe.send({
-                                url: "/betterform/FileUpload?path=",
+                                url: "/betterform/FileUpload",
                                 method: "post",
                                 handleAs: "text",
-                                form: dojo.byId("upload"),
+                                form: dojo.query(".upload")[0],
                                 load: function(response, ioArgs) {
                                     console.log("Upload OK", response, ioArgs);
+									var link = dojo.byId("current").childNodes[0];
+									console.debug("link: ",link);
+									link.onclick();
                                     return response;
                                 },
                                 error: function(response, ioArgs) {

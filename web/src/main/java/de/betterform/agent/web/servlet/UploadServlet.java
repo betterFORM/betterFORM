@@ -6,10 +6,6 @@
 
 package de.betterform.agent.web.servlet;
 
-import de.betterform.agent.web.WebProcessor;
-import de.betterform.agent.web.WebUtil;
-import de.betterform.generator.UIGenerator;
-import de.betterform.xml.xforms.XFormsProcessor;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
@@ -22,9 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Iterator;
 import java.util.List;
 
@@ -60,31 +54,61 @@ public class UploadServlet extends HttpServlet /* extends AbstractXFormsServlet 
             List /* FileItem */ items = upload.parseRequest(request);
 
             Iterator iter = items.iterator();
+            FileItem uploadItem = null;
+            String relativeUploadPath = "";
             while (iter.hasNext()) {
                FileItem item = (FileItem) iter.next();
-               if (item.isFormField()) {
-                    String fieldName = item.getFieldName();
-                    String fileName = item.getName();
-                    String contentType = item.getContentType();
-                    boolean isInMemory = item.isInMemory();
-                    long sizeInBytes = item.getSize();
-
-                } else {
-                    //stuff for non file input (text box etc)
-                   File localFile = new File("/Users/dev/projects/betterform-git/web/target/upload", item.getName());
-                   localFile.getParentFile().mkdirs();
-                   item.write(localFile);
-
-                   if(LOGGER.isDebugEnabled()){
-                       LOGGER.debug("saving data to path: " + localFile);
-                   }
-
+               String fieldName = item.getFieldName();
+                if (item.isFormField() && "bfUploadPath".equals(fieldName)) {
+                    InputStream is = item.getInputStream();
+                    if (is != null) {
+                        Writer writer = new StringWriter();
+                        try {
+                            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                            int n;
+                            char[] buffer = new char[1024];
+                            while ((n = reader.read(buffer)) != -1) {
+                                writer.write(buffer, 0, n);
+                            }
+                        } finally {
+                            is.close();
+                        }
+                        relativeUploadPath = writer.toString();
+                    }
+                } else if(item.getName() != null) {
+                    // FileItem of the uploaded file
+                    uploadItem = item;
                 }
             }
+
+            if(uploadItem != null && !"".equals(relativeUploadPath)) {
+                String realPath = request.getSession().getServletContext().getRealPath("");
+                  if (realPath == null) {
+                      realPath = request.getSession().getServletContext().getRealPath(".");
+                  }
+                File uploadDirectory = new File(realPath, relativeUploadPath);
+                String fileName = uploadItem.getName();
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("uploading file '" + fileName + "' to directory '" + uploadDirectory +"'");
+                }
+
+                File localFile = new File(uploadDirectory.getAbsolutePath(), fileName);
+
+                if (!localFile.getParentFile().exists()) {
+                    localFile.getParentFile().mkdirs();
+                }
+                uploadItem.write(localFile);
+
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("file '" + fileName + "' successfully uploaded to directory '" + uploadDirectory +"'");
+                }
+            } else {
+                LOGGER.warn("error uploading file to '" + relativeUploadPath + "'");
+            }
         } catch (FileUploadException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
 
     }

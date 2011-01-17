@@ -63,7 +63,7 @@ public class FormsServlet extends HttpServlet {
 
         response.flushBuffer();
     }
-                            u
+
     private static final String getHTMLHead(HttpServletRequest request) {
         return
                 "<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:xf=\"http://www.w3.org/2002/xforms\" xmlns:ev=\"http://www.w3.org/2001/xml-events\" xml:lang=\"en\" lang=\"en\">\n" +
@@ -199,21 +199,16 @@ public class FormsServlet extends HttpServlet {
                 "        </div>\n" +
                 "        <div id=\"commands\">\n" +
 //                "            <img src=\"resources/images/add-folder.png\"/>\n" +
-                "            <div dojotype=\"dijit.form.DropDownButton\">\n" +
-                "               <span>" +
-                "                   <img src=\"resources/images/add-file.png\"/>\n" +
-                "               </span>" +
-                "                <div dojotype=\"dijit.TooltipDialog\">" +
-                "                    <form type=\"dijit.form.Form\" id=\"upload\" name=\"upload\" method=\"post\" enctype=\"multipart/form-data\">\n" +
-                "                        <label for=\"file\">File to upload: </label>\n" +
-                "                        <div dojoType=\"dijit.form.DropDownButton\" id=\"uploadDropDownButton\">\n" +
-                "                            <span><img style=\"height:28px;width:28px;\" src=\"../resources/images/add-file.png\"></span>\n" +
-                "                            <div dojoType=\"dijit.TooltipDialog\" id=\"uploadTooltip\" style=\"display:none;\">\n" +
-                "                                 <input type=\"file\" name=\"file\" id=\"file\" onchange=\"sendFile();this.blur();\"/>\n" +
-                "                            </div>\n" +
-                "                        </div>\n" +
-                "                    </form>" +
-                "                </div>" +
+                "           <div dojoType=\"dijit.form.DropDownButton\" class=\"uploadDropDownButton\">\n" +
+                "               <span class=\"label\"><img style=\"height:28px;width:28px;\" src=\"resources/images/add-file.png\"></span>\n" +
+                "               <div dojoType=\"dijit.TooltipDialog\" name=\"uploadTooltip\" >\n" +
+                "                   <form type=\"dijit.form.Form\" name=\"upload\" class=\"upload\" method=\"post\" enctype=\"multipart/form-data\">\n" +
+                "                       <input id=\"bfUploadPath\" name=\"bfUploadPath\" style=\"display:none\" value=\""+ currentPath +"\"> </input>" +
+                "                       <input id=\"bfUploadControl\" type=\"file\" name=\"file\" class=\"bfFileUpload\" onchange=\"sendFile();this.blur();dojo.attr(dojo.query('.bfFileUpload')[0],'value','');\"/>\n" +
+
+                "                   </form>\n" +
+                "               </div>\n" +
+                "           </div>" +
                 "        </div>\n" +
                 "</div>\n");
         
@@ -243,7 +238,7 @@ public class FormsServlet extends HttpServlet {
             create an additional div when we are in listView mode - this is not ideal but easier to implement in the current
             */
 //            boolean isListView = amount > maxDisplayed;
-            boolean isListView = ROOTCOLLECTION.equalsIgnoreCase(uri) ? false:true;
+            boolean isListView = !ROOTCOLLECTION.equalsIgnoreCase(uri);
 
             boolean shorten = true;
             if(isListView){
