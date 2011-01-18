@@ -1,7 +1,9 @@
 dojo.provide("betterform.ui.common.BowlAlert");
 
+dojo.require("betterform.ui.common.Alert");
+
 dojo.declare("betterform.ui.common.BowlAlert",
-        null,
+        betterform.ui.common.Alert,
 {
     handleValid:function(id,action){
         console.warn("COMING SOON GROWL STYLE ALERTS - betterform.ui.common.BowlAlert.valid [id:" + id , " action: " + action + "]");

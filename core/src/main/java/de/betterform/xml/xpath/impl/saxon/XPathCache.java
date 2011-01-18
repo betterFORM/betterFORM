@@ -18,6 +18,7 @@ import net.sf.saxon.Configuration;
 import net.sf.saxon.dom.NodeWrapper;
 import net.sf.saxon.expr.LastPositionFinder;
 import net.sf.saxon.expr.XPathContextMajor;
+import net.sf.saxon.functions.ConstructorFunctionLibrary;
 import net.sf.saxon.functions.FunctionLibraryList;
 import net.sf.saxon.functions.SystemFunctionLibrary;
 import net.sf.saxon.om.Item;
@@ -26,6 +27,7 @@ import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.sxpath.IndependentContext;
 import net.sf.saxon.trans.XPathException;
+import net.sf.saxon.xpath.XPathFunctionLibrary;
 import org.w3c.dom.Node;
 
 import java.util.*;
@@ -47,6 +49,8 @@ public class XPathCache {
     static {
         fgXFormsFunctionLibrary = new FunctionLibraryList();
         fgXFormsFunctionLibrary.addFunctionLibrary(SystemFunctionLibrary.getSystemFunctionLibrary(Configuration.XPATH));
+        fgXFormsFunctionLibrary.addFunctionLibrary(new ConstructorFunctionLibrary(XPathCache.kCONFIG));
+        fgXFormsFunctionLibrary.addFunctionLibrary(new XPathFunctionLibrary());
         fgXFormsFunctionLibrary.addFunctionLibrary(new XFormsFunctionLibrary());
         fgXFormsFunctionLibrary.addFunctionLibrary(new BetterFormFunctionLibrary());
 //        fgXFormsFunctionLibrary.addFunctionLibrary(new JavaExtensionLibrary(XPathCache.kCONFIG));

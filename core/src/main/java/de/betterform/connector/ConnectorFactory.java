@@ -6,6 +6,11 @@
 package de.betterform.connector;
 
 
+import de.betterform.xml.xforms.XFormsConstants;
+import de.betterform.xml.xforms.exception.XFormsInternalSubmitException;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.base.XMLBaseResolver;
@@ -21,6 +26,8 @@ import de.betterform.xml.xpath.XPathUtil;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import org.w3c.dom.Element;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
@@ -272,6 +279,26 @@ public abstract class ConnectorFactory {
         }
 
         return substitutedString.toString();
+    }
+
+    public InputStream getHTTPResourceAsStream(URI uri) throws XFormsException {
+        try {
+            HttpMethod httpMethod = new GetMethod(uri.toString());
+            HttpClient client = new HttpClient();
+            client.executeMethod(httpMethod);
+            if (httpMethod.getStatusCode() >= 300) {
+                // Allow 302 only
+                if (httpMethod.getStatusCode() != 302) {
+                    throw new XFormsInternalSubmitException(httpMethod.getStatusCode(), httpMethod.getStatusText(), httpMethod.getResponseBodyAsString(), XFormsConstants.RESOURCE_ERROR);
+                }
+            }
+            return httpMethod.getResponseBodyAsStream();
+
+        } catch (IOException e) {
+            throw new XFormsException(e);
+        } catch (XFormsInternalSubmitException e) {
+            throw new XFormsException(e);
+        }
     }
 
     protected XFormsProcessorImpl getProcessor(Element e) {

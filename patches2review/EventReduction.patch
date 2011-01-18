@@ -1,0 +1,286 @@
+Index: core/src/main/java/de/betterform/xml/xforms/model/constraints/ConstraintVertex.java
+===================================================================
+--- core/src/main/java/de/betterform/xml/xforms/model/constraints/ConstraintVertex.java	(revision 279116be42c82c9caad05a06d0b9a191c8b0086c)
++++ core/src/main/java/de/betterform/xml/xforms/model/constraints/ConstraintVertex.java	(revision )
+@@ -53,7 +53,6 @@
+     public void compute() throws XFormsException {
+         boolean result = XPathCache.getInstance().evaluateAsBoolean(relativeContext, "boolean(" + this.xpathExpression + ")");
+         ModelItem modelItem = (ModelItem) this.instanceNode.getUserData("");
+-        modelItem.getLocalUpdateView().setConstraintValid(result);
+ 
+         if(result){
+             modelItem.getRefreshView().setValidMarker();
+@@ -61,6 +60,8 @@
+             modelItem.getRefreshView().setInvalidMarker();
+         }
+ 
++        modelItem.getLocalUpdateView().setConstraintValid(result);
++
+         if (LOGGER.isDebugEnabled()) {
+             LOGGER.debug("evaluated expression '" + this.xpathExpression + "' to '" + result + "'");
+         }
+Index: core/src/main/java/de/betterform/xml/xforms/model/constraints/RequiredVertex.java
+===================================================================
+--- core/src/main/java/de/betterform/xml/xforms/model/constraints/RequiredVertex.java	(revision 279116be42c82c9caad05a06d0b9a191c8b0086c)
++++ core/src/main/java/de/betterform/xml/xforms/model/constraints/RequiredVertex.java	(revision )
+@@ -53,13 +53,14 @@
+     public void compute() throws XFormsException {
+         boolean result = XPathCache.getInstance().evaluateAsBoolean(relativeContext, "boolean(" + this.xpathExpression + ")");
+         ModelItem modelItem = (ModelItem) this.instanceNode.getUserData("");
+-        modelItem.getLocalUpdateView().setLocalRequired(result);
+         if(result){
+             modelItem.getRefreshView().setRequiredMarker();
+         }else{
+             modelItem.getRefreshView().setOptionalMarker();
+         }
+ 
++        modelItem.getLocalUpdateView().setLocalRequired(result);
++
+         if (LOGGER.isDebugEnabled()) {
+             LOGGER.debug("evaluated expression '" + this.xpathExpression + "' to '" + result + "'");
+         }
+Index: core/src/main/java/de/betterform/xml/xforms/model/constraints/ReadonlyVertex.java
+===================================================================
+--- core/src/main/java/de/betterform/xml/xforms/model/constraints/ReadonlyVertex.java	(revision 279116be42c82c9caad05a06d0b9a191c8b0086c)
++++ core/src/main/java/de/betterform/xml/xforms/model/constraints/ReadonlyVertex.java	(revision )
+@@ -53,7 +53,6 @@
+     public void compute() throws XFormsException {
+         boolean result = XPathCache.getInstance().evaluateAsBoolean(relativeContext, "boolean(" + this.xpathExpression + ")");
+         ModelItem modelItem = (ModelItem) this.instanceNode.getUserData("");
+-        modelItem.getLocalUpdateView().setLocalReadonly(result);
+ 
+         if(result){
+             modelItem.getRefreshView().setReadonlyMarker();
+@@ -61,6 +60,8 @@
+             modelItem.getRefreshView().setReadWriteMarker();
+         }
+ 
++        modelItem.getLocalUpdateView().setLocalReadonly(result);
++
+         if (LOGGER.isDebugEnabled()) {
+             LOGGER.debug("evaluated expression '" + this.xpathExpression + "' to '" + result + "'");
+         }
+Index: core/src/main/java/de/betterform/xml/xforms/model/constraints/RelevantVertex.java
+===================================================================
+--- core/src/main/java/de/betterform/xml/xforms/model/constraints/RelevantVertex.java	(revision 279116be42c82c9caad05a06d0b9a191c8b0086c)
++++ core/src/main/java/de/betterform/xml/xforms/model/constraints/RelevantVertex.java	(revision )
+@@ -53,13 +53,15 @@
+     public void compute() throws XFormsException {
+         boolean result = XPathCache.getInstance().evaluateAsBoolean(relativeContext, "boolean(" + this.xpathExpression + ")");
+         ModelItem modelItem = (ModelItem) this.instanceNode.getUserData("");
+-        modelItem.getLocalUpdateView().setLocalRelevant(result);
++
+         if(result){
+             modelItem.getRefreshView().setEnabledMarker();
+         }else{
+             modelItem.getRefreshView().setDisabledMarker();
+         }
+ 
++        modelItem.getLocalUpdateView().setLocalRelevant(result);
++
+         if (LOGGER.isDebugEnabled()) {
+             LOGGER.debug("evaluated expression '" + this.xpathExpression + "' to '" + result + "'");
+         }
+Index: core/src/main/java/de/betterform/xml/xforms/model/bind/impl/RefreshViewImpl.java
+===================================================================
+--- core/src/main/java/de/betterform/xml/xforms/model/bind/impl/RefreshViewImpl.java	(revision 279116be42c82c9caad05a06d0b9a191c8b0086c)
++++ core/src/main/java/de/betterform/xml/xforms/model/bind/impl/RefreshViewImpl.java	(revision )
+@@ -52,70 +52,86 @@
+     }
+ 
+     public void setReadonlyMarker() {
++        if (!this.modelItem.isReadonly()) {
+-        this.readwriteMarker = false;
+-        this.readonlyMarker = true;
+-        if (LOGGER.isDebugEnabled()) {
+-            LOGGER.debug("readonly MIP marked for dispatching for " + DOMUtil.getCanonicalPath((Node) this.modelItem.getNode()));
+-        }
++            this.readwriteMarker = false;
++            this.readonlyMarker = true;
++            if (LOGGER.isDebugEnabled()) {
++                LOGGER.debug("readonly MIP marked for dispatching for " + DOMUtil.getCanonicalPath((Node) this.modelItem.getNode()));
++            }
++        }
+ 
+     }
+ 
+     public void setReadWriteMarker() {
++        if (this.modelItem.isReadonly()) {
+-        this.readonlyMarker = false;
+-        this.readwriteMarker = true;
+-        if (LOGGER.isDebugEnabled()) {
+-            LOGGER.debug("readwrite MIP marked for dispatching for " + DOMUtil.getCanonicalPath((Node) this.modelItem.getNode()));
+-        }
++            this.readonlyMarker = false;
++            this.readwriteMarker = true;
++            if (LOGGER.isDebugEnabled()) {
++                LOGGER.debug("readwrite MIP marked for dispatching for " + DOMUtil.getCanonicalPath((Node) this.modelItem.getNode()));
++            }
++        }
+ 
+     }
+ 
+     public void setEnabledMarker() {
++        if (!this.modelItem.isRelevant()) {
+-        this.disabledMarker = false;
+-        this.enabledMarker = true;
+-        if (LOGGER.isDebugEnabled()) {
++            this.disabledMarker = false;
++            this.enabledMarker = true;
++            if (LOGGER.isDebugEnabled()) {
+-            LOGGER.debug("enabled MIP marked for dispatching for " + DOMUtil.getCanonicalPath((Node) this.modelItem.getNode()));
++                LOGGER.debug("enabled MIP marked for dispatching for "+ DOMUtil.getCanonicalPath((Node) this.modelItem.getNode()));
+-        }
+-    }
++            }
++        }
++    }
+ 
+     public void setDisabledMarker() {
++        if (this.modelItem.isRelevant()) {
+-        this.enabledMarker = false;
+-        this.disabledMarker = true;
+-        if (LOGGER.isDebugEnabled()) {
+-            LOGGER.debug("disabled MIP marked for dispatching for " + DOMUtil.getCanonicalPath((Node) this.modelItem.getNode()));
+-        }
+-    }
++            this.enabledMarker = false;
++            this.disabledMarker = true;
++            if (LOGGER.isDebugEnabled()) {
++                LOGGER.debug("disabled MIP marked for dispatching for " + DOMUtil.getCanonicalPath((Node) this.modelItem.getNode()));
++            }
++        }
++    }
+ 
+     public void setOptionalMarker() {
++        if (this.modelItem.isRequired()) {
+-        this.requiredMarker = false;
+-        this.optionalMarker = true;
+-        if (LOGGER.isDebugEnabled()) {
+-            LOGGER.debug("optional MIP marked for dispatching for " + DOMUtil.getCanonicalPath((Node) this.modelItem.getNode()));
+-        }
+-    }
++            this.requiredMarker = false;
++            this.optionalMarker = true;
++            if (LOGGER.isDebugEnabled()) {
++                LOGGER.debug("optional MIP marked for dispatching for " + DOMUtil.getCanonicalPath((Node) this.modelItem.getNode()));
++            }
++        }
++    }
+ 
+     public void setRequiredMarker() {
++        if (!this.modelItem.isRequired()) {
+-        this.optionalMarker = false;
+-        this.requiredMarker = true;
+-        if (LOGGER.isDebugEnabled()) {
+-            LOGGER.debug("required MIP marked for dispatching for " + DOMUtil.getCanonicalPath((Node) this.modelItem.getNode()));
+-        }
+-    }
++            this.optionalMarker = false;
++            this.requiredMarker = true;
++            if (LOGGER.isDebugEnabled()) {
++                LOGGER.debug("required MIP marked for dispatching for " + DOMUtil.getCanonicalPath((Node) this.modelItem.getNode()));
++            }
++        }
++    }
+ 
+     public void setValidMarker() {
++        if (!this.modelItem.isValid()) {
+-        this.invalidMarker = false;
+-        this.validMarker = true;
+-        if (LOGGER.isDebugEnabled()) {
+-            LOGGER.debug("valid MIP marked for dispatching for " + DOMUtil.getCanonicalPath((Node) this.modelItem.getNode()));
+-        }
+-    }
++            this.invalidMarker = false;
++            this.validMarker = true;
++            if (LOGGER.isDebugEnabled()) {
++                LOGGER.debug("valid MIP marked for dispatching for " + DOMUtil.getCanonicalPath((Node) this.modelItem.getNode()));
++            }
++        }
++    }
+ 
+     public void setInvalidMarker() {
++        if (this.modelItem.isValid()) {
+-        this.validMarker = false;
+-        this.invalidMarker = true;
+-        if (LOGGER.isDebugEnabled()) {
++            this.validMarker = false;
++            this.invalidMarker = true;
++            if (LOGGER.isDebugEnabled()) {
+-            LOGGER.debug("invalid MIP marked for dispatching for " + DOMUtil.getCanonicalPath((Node) this.modelItem.getNode()));
++                LOGGER.debug("invalid MIP marked for dispatching for "+ DOMUtil.getCanonicalPath((Node) this.modelItem.getNode()));
+-        }
+-    }
++            }
++        }
++    }
+ 
+     /**
+      * Resets all state changes so that no changes are reported.
+@@ -137,11 +153,11 @@
+     }
+ 
+     public boolean isValidMarked() {
+-        return this.validMarker == true ? true : false;
++        return this.validMarker;
+     }
+ 
+     public boolean isInvalidMarked() {
+-        return this.invalidMarker == true ? true : false;
++        return this.invalidMarker;
+     }
+ 
+     public boolean isReadonlyMarked() {
+@@ -155,7 +171,7 @@
+             return this.readonlyMarker;
+         }
+ 
+-        return this.readonlyMarker == true ? true : false;
++        return this.readonlyMarker;
+     }
+ 
+     public boolean isReadwriteMarked() {
+@@ -168,15 +184,15 @@
+             }
+             return this.readwriteMarker;
+         }
+-        return this.readwriteMarker ? true : false;
++        return this.readwriteMarker;
+     }
+ 
+     public boolean isRequiredMarked() {
+-        return this.requiredMarker ? true : false;
++        return this.requiredMarker;
+     }
+ 
+     public boolean isOptionalMarked() {
+-        return this.optionalMarker ? true : false;
++        return this.optionalMarker;
+     }
+ 
+     private boolean inheritsReadWriteMip() {
+@@ -206,7 +222,7 @@
+             return this.enabledMarker;
+         }
+ 
+-        return this.enabledMarker ? true : false;
++        return this.enabledMarker;
+     }
+ 
+     public boolean isDisabledMarked() {
+@@ -219,12 +235,12 @@
+             }
+             return this.disabledMarker;
+         }
+-        return this.disabledMarker ? true : false;
++        return this.disabledMarker;
+     }
+ 
+     @Override
+     public String toString() {
+-        return this.modelItem.toString(); 
++        return this.modelItem.toString();
+     }
+ 
+     private void addParentRefreshViewToModel() {
