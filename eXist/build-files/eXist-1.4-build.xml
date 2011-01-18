@@ -1,6 +1,15 @@
 <!--
+    Status: Work in progress.
+    Purpose of file: Build a eXist-1.4-Installation running betterForm as extension
+    Used by: exist/build-betterFORM-XRX.xml
+
+    TODO:
+-->
+
+<!--
   ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
+  ~ Author: betterFORM Team (info AT betterform.de)
   -->
 
 <project name="betterFORM extension for eXist" default="install" basedir="../..//">

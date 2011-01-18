@@ -1,3 +1,11 @@
+<!--
+    Purpose of file: Build bettterform extension for integration into eXist
+-->
+
+<!--
+  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
 <project name="eXist extension builder" default="package" basedir=".">
 
     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>

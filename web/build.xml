@@ -67,7 +67,7 @@
         <copy description="copy javascript resources from global directory"
               todir="${webapp.dir}/resources/scripts"
               includeemptydirs="true">
-            <fileset dir="${basedir}/target/resources/scripts">
+            <fileset dir="${target}/resources/scripts">
                 <include name="**/*.*"/>
             </fileset>
         </copy>
@@ -220,10 +220,10 @@
               todir="${webapp.dir}/resources"
               includeemptydirs="true">
             <fileset dir="${src.dir}/main/resources">
-                <include name="**/*.*"/>
-                <exclude name="**/scripts/*.*"/>"
+                <exclude name="**/scripts/**"/>
             </fileset>
         </copy>
+
 
         <antcall target="copy-src-resources-scripts"/>
 
@@ -237,6 +237,7 @@
                 <include name="**/*.jpg"/>
             </fileset>
         </copy>
+
     </target>
 
     <target name="copy-src-resources-scripts">
@@ -245,7 +246,7 @@
               includeemptydirs="true"
               overwrite="true">
             <fileset dir="${src.dir}/main/resources">
-                <include name="**/scripts/*.*"/>
+                <include name="scripts/**"/>
             </fileset>
         </copy>
     </target>
@@ -335,6 +336,7 @@
         <copy todir="${bfRelease}" flatten="false">
              <fileset dir="${bfReleaseSrc}/betterform" includes="nls/**/*"/>
              <fileset dir="${bfReleaseSrc}/betterform">
+                 <include name="betterform-xforms-feature-explorer.js"/>
                  <include name="betterform-full.js"/>
                  <include name="betterform-compact.js"/>
                  <include name="betterform-minimal.js"/>

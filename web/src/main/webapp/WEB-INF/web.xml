@@ -173,6 +173,10 @@
 -->
 
     <servlet>
+        <servlet-name>ResourceServlet</servlet-name>
+        <servlet-class>de.betterform.agent.web.resources.ResourceServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>PlainHtml</servlet-name>
         <servlet-class>de.betterform.agent.web.servlet.PlainHtmlServlet</servlet-class>
     </servlet>
@@ -215,6 +219,11 @@
             <url-pattern>/xfrequest</url-pattern>
         </servlet-mapping>
 -->
+
+    <servlet-mapping>
+        <servlet-name>ResourceServlet</servlet-name>
+        <url-pattern>/bfResources/*</url-pattern>
+    </servlet-mapping>
 	<servlet-mapping>
         <servlet-name>PlainHtml</servlet-name>
         <url-pattern>/PlainHtml/*</url-pattern>

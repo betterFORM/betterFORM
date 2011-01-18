@@ -1,7 +1,14 @@
 <!--
+    Status: Work in progress. eXist-1.4-betterFORM-root-integration is working
+    Purpose of file: Build a bettterFORM/eXist-Bundle. Version (1.4/trunk) and context ("root" or "extension") is triggered by build.properties
+    Used by: tools/installer/build-betterFORM-XRX.xml
+    TODO:
+-->
+
+<!--
   ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
-  ~ Author: Tobi Krebs (tobias.krebs AT betterform.de)
+  ~ Author: betterFORM Team (info AT betterform.de)
 -->
 <project name="eXist extension builder" default="build-up-to-date-extension" basedir=".">
 

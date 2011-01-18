@@ -1,6 +1,6 @@
-<project name="betterFORM XRX deployer" default="install" basedir=".">
+<project name="betterFORM XRX deployer" default="install" basedir="../">
 
-    <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
+    <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
     <property name="exist.dir" value="/Users/dev/projects/eXist"/>
 
     <target name="clean">
@@ -27,7 +27,7 @@
     <target name="install">
         <mkdir dir="${exist.dir}/extensions/betterform"/>
 
-        <ant dir="${basedir}" antfile="build-betterFORM-XRX.xml" target="build-up-to-date-extension"/>
+        <ant dir="${basedir}" antfile="../build-betterFORM-XRX.xml" target="build-up-to-date-extension"/>
 
         <antcall target="copyExtension"/>
 

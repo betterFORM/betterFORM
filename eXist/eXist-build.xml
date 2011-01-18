@@ -1,8 +1,12 @@
 <!--
+    Purpose: Install betterForm as extension into eXist
+    Intended file location :<exist-trunk>/exist/extension/betterform/build.xml
+ -->
+
+<!--
   ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
-
 <project name="betterFORM extension for eXist" default="install" basedir=".">
 
     <property name="pass" value="betterform"/>
