@@ -14,11 +14,11 @@
 <head>
     <title>Registration </title>
 
-    <link rel="stylesheet" type="text/css" href="../../resources/styles/registration.css"/>
+    <link rel="stylesheet" type="text/css" href="registration.css"/>
 </head>
 <body>
 <div id="xforms">
-    <div id="registration" class="{alertTheme}">
+    <div id="registration" class="InlineRoundBordersAlert">
     <div style="display:none">
         <xf:model>
             <xf:instance>
@@ -30,8 +30,6 @@
                     <pass1/>
                     <pass2/>
                     <agreement>true</agreement>
-					<alertTheme>InlineRoundBordersAlert</alertTheme>
-					<!--<alertTheme>ToolTipAlert</alertTheme>-->
                 </data>
             </xf:instance>
 
@@ -100,30 +98,6 @@
 			</xf:trigger>
 		</xf:group>
 	</div>
-	<xf:group appearance="full">
-		<xf:select1 id="select" ref="alertTheme" appearance="minimal">
-		   <xf:label>Switch Alert Theme</xf:label>
-		   <xf:item>
-			  <xf:label>ToolTipAlert</xf:label>
-			  <xf:value>ToolTipAlert</xf:value>
-			   <xf:action ev:event="xforms-select">
-				   <script type="text/javascript">
-					   fluxProcessor.setToolTipAlertHandler();
-				   </script>
-			   </xf:action>
-		   </xf:item>
-		   <xf:item>
-			  <xf:label>InlineRoundBordersAlert</xf:label>
-			  <xf:value>InlineRoundBordersAlert</xf:value>
-			   <xf:action ev:event="xforms-select">
-				   <script type="text/javascript">
-					   fluxProcessor.setInlineRoundBorderAlertHandler();
-				   </script>
-			   </xf:action>
-		   </xf:item>
-		</xf:select1>
-
-	</xf:group>
 </div>
 </body>
 </html>

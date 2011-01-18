@@ -1,8 +1,8 @@
 /* 
     Document   : reference.css
     Created on : Oct 19, 2009, 1:48:59 PM
-    Author     : Jörn Turner <joern.turner@chiba-project.org,
-                 Fabian Otto <fabian.otto@chiba-project.org>
+    Author     : Jörn Turner <joern.turner@betterform.de>,
+                 Fabian Otto <fabian.otto@betterform.de>
     Description:
         Styling for refrence pages.
 */
@@ -108,5 +108,5 @@ pre, code {
 }
 
 .soria .dijitCheckBox {
-    background-image:url( '../images/spriteCheckbox.gif' );
+    background-image:url( 'images/spriteCheckbox.gif' );
 }

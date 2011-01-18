@@ -36,7 +36,7 @@
                         <link rel="stylesheet" type="text/css"
                               href="../../resources/scripts/dojox/highlight/resources/pygments/borland.css"/>
             -->
-            <link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css"/>
+            <link rel="stylesheet" type="text/css" href="reference.css"/>
             <script type="text/javascript">
                 dojo.require("dojox.highlight");
                 dojo.require("dojox.highlight.languages.xml");
@@ -142,7 +142,7 @@
                 <tr>
                     <td rowspan="3">
                         <a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank">
-                            <img id="logo" class="image" src="../../resources/images/w3c_home_nb.png" alt="W3C"/>
+                            <img id="logo" class="image" src="images/w3c_home_nb.png" alt="W3C"/>
                         </a>
                     </td>
                     <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
