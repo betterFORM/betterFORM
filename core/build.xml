@@ -85,10 +85,10 @@
         <filter token="app.build" value="${DSTAMP}/${TSTAMP}"/>
         <!-- <filter token="revision.number" value="${Revision}"/> -->
 
-        <copy todir="${basedir}/src/main/resources/META-INF"
+<!--        <copy todir="${basedir}/src/main/resources/META-INF"
               file="src/main/java/version.info"
               filtering="true"
-              overwrite="true"/>
+              overwrite="true"/>-->
 
         <echo />
         <echo message="************************************************************************************"/>
