@@ -119,8 +119,8 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     setInlineRoundBorderAlertHandler:function() {
-        console.debug("setInlineRoundBorderAlertHandler");
-        this.hideAllCommonChilds(dojo.doc);
+        console.debug("FluxProcessor.setInlineRoundBorderAlertHandler");
+        // this.hideAllCommonChilds(dojo.doc);
         this.unsubscribeFromAlertHandler();
         this.defaultAlertHandler = new betterform.ui.common.InlineRoundBordersAlert({});
         this.subscribers[0] = dojo.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
@@ -132,7 +132,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
 
     setToolTipAlertHandler:function() {
         console.debug("setToolTipAlertHandler");
-        this.hideAllCommonChilds(dojo.doc);
+        // this.hideAllCommonChilds(dojo.doc);
         this.unsubscribeFromAlertHandler();
         dojo.require("betterform.ui.common.ToolTipAlert");
         this.defaultAlertHandler = new betterform.ui.common.ToolTipAlert({});
