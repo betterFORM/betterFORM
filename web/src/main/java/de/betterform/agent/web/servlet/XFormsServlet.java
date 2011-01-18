@@ -142,6 +142,13 @@ public class XFormsServlet extends HttpServlet {
             }
         }
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute(WebFactory.XFORMS_INPUTSTREAM,req.getInputStream());
+        req.setAttribute(XFormsPostServlet.INIT_BY_POST,true);
+        doGet(req,resp);
+    }
 }
 // end of class
 
