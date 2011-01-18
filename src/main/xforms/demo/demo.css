@@ -12,7 +12,7 @@
  .backgroundImage {
 	 width: 100%;
 	 height: 100%;
-	 background: transparent url(resources/images/play.png) no-repeat 50%;
+	 background: transparent url(images/play.png) no-repeat 50%;
  }
  #demoWrapper {
 	 position: relative;
@@ -23,7 +23,7 @@
 	 float: left;
 	 border: 1px dotted #666;
 	 /*margin-bottom: 20px;*/
-	 background: url(resources/images/ajax-loader.gif) no-repeat center center;
+	 /*background: url(images/ajax-loader.gif) no-repeat center center;*/
  }
 
  #demoTrigger {
@@ -80,7 +80,7 @@
 }
 
 .Sample {
-    background-color: lightsteelblue;
+    background-color:#b0c4de;
     vertical-align: middle;
     padding: 20px 10px 20px 10px;
     overflow: auto;
@@ -97,7 +97,7 @@
 .atomReload button {
     height: 24px;
     width: 27px;
-    background: url(../../resources/images/001_39.png) no-repeat 2px 2px;
+    background: url(images/001_39.png) no-repeat 2px 2px;
 }
 
 .atomSubtitle .xfLabel {
@@ -190,7 +190,7 @@
 }
 
 .contactsMasterTrigger button {
-    background: url(../../resources/images/001_22.png) no-repeat 5px 5px;
+    background: url(images/001_22.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
     line-height: 29px;
@@ -207,7 +207,7 @@
 }
 
 .contactsSubTrigger button {
-    background: url(../../resources/images/001_22.png) no-repeat 5px 5px;
+    background: url(images/001_22.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
     line-height: 29px;
@@ -225,7 +225,7 @@
 }
 
 .contactsUpdateMasterTrigger button {
-    background: url(../../resources/images/001_24.png) no-repeat 5px 5px;
+    background: url(images/001_24.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
     line-height: 29px;
@@ -301,7 +301,7 @@
 }
 
 .orderListNewTrigger button {
-    background: url(../../resources/images/001_47.png) no-repeat 5px 5px;
+    background: url(images/001_47.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
     line-height: 29px;
@@ -318,7 +318,7 @@
 }
 
 .orderListAddTrigger button {
-    background: url(../../resources/images/001_03.png) no-repeat 5px 5px;
+    background: url(images/001_03.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
     line-height: 29px;
@@ -336,7 +336,7 @@
 }
 
 .orderListDelTrigger button {
-    background: url(../../resources/images/001_04.png) no-repeat 5px 5px;
+    background: url(images/001_04.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
     line-height: 29px;
@@ -354,7 +354,7 @@
 }
 
 .orderListResetTrigger button {
-    background: url(../../resources/images/001_39.png) no-repeat 5px 5px;
+    background: url(images/001_39.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
     line-height: 29px;
@@ -371,7 +371,7 @@
 }
 
 .orderListOKTrigger button {
-    background: url(../../resources/images/001_06.png) no-repeat 5px 5px;
+    background: url(images/001_06.png) no-repeat 5px 5px;
     display: inline;
     height: 30px;
     line-height: 29px;
@@ -388,7 +388,7 @@
 }
 
 .orderListAbortTrigger button {
-    background: url(../../resources/images/001_05.png) no-repeat 5px 5px;
+    background: url(images/001_05.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
     line-height: 29px;
@@ -427,7 +427,7 @@
 }
 
 .twitterReload button {
-    background: url(../../resources/images/001_39.png) no-repeat 1px 1px;
+    background: url(images/001_39.png) no-repeat 1px 1px;
     display: block;
     height: 23px;
     width: 150px;
@@ -443,7 +443,7 @@
 }
 
 .twitterGo button {
-    background: url(../../resources/images/001_60.png) no-repeat 1px 1px;
+    background: url(images/001_60.png) no-repeat 1px 1px;
     display: block;
     height: 23px;
     line-height: 19px;
@@ -461,7 +461,7 @@
 }
 
 .twitterUserIcon .xfLabel {
-    width: 0px;
+    width:0;
 }
 
 .twitterUserIcon .xfValue{
@@ -532,7 +532,7 @@
 }
 
 .twitterPublic button {
-    background: url(../../resources/images/001_60-r.png) no-repeat 5px 5px;
+    background: url(images/001_60-r.png) no-repeat 5px 5px;
     display: block;
     height: 32px;
     line-height: 29px;

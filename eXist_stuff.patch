@@ -1,0 +1,150 @@
+Index: eXist/src/main/webapp/xquery/xferror.xql
+===================================================================
+--- eXist/src/main/webapp/xquery/xferror.xql	(revision 089e48b72e86688117663e66e439bbce87809753)
++++ eXist/src/main/webapp/xquery/xferror.xql	(revision )
+@@ -20,7 +20,7 @@
+ 	body{
+         font-family:Tahoma;
+         font-size:14pt;
+-        background:url('/exist/resources/images/bgOne.gif') repeat-x scroll;
++        background:url('/exist/betterform/resources/images/bgOne.gif') repeat-x scroll;
+     }
+ 	pre { font-size:8pt; }
+     .errorContent{
+Index: eXist/eXist-build.xml
+===================================================================
+--- eXist/eXist-build.xml	(revision 089e48b72e86688117663e66e439bbce87809753)
++++ eXist/eXist-build.xml	(revision )
+@@ -33,8 +33,7 @@
+ 
+ 
+     <path id="generator.libs" description="classpath for using Saxon XSLT">
+-        <pathelement location="${exist.rootdir}/lib/endorsed/saxonb-9.1.0.8.jar"/>
+-        <pathelement location="${exist.rootdir}/lib/endorsed/saxonb-dom-9.1.0.8.jar"/>
++        <pathelement location="${exist.rootdir}/lib/endorsed/saxonhe-9.2.1.5.jar"/>
+     </path>
+ 
+     
+Index: web/build.xml
+===================================================================
+--- web/build.xml	(revision 089e48b72e86688117663e66e439bbce87809753)
++++ web/build.xml	(revision )
+@@ -332,8 +332,6 @@
+         <echo/>
+         <property name="onlineVersion" value="true"/>
+ 
+-        <antcall target="cleanup-bf-release"/>
+-
+         <copy todir="${webapp.dir}"
+               file="${basedir}/../src/test/resources/XFormsTestSuite1.1E1/Edition1/driverPages/Results/results.html"/>
+ 
+@@ -490,6 +488,9 @@
+ 
+             <arg value="version=1.5"/>
+         </java>
++        <!-- cleanup JS/CSS resources of betterform dojo release -->
++        <antcall target="cleanup-bf-release"/>
++
+     </target>
+ 
+ 
+Index: eXist/build.xml
+===================================================================
+--- eXist/build.xml	(revision 089e48b72e86688117663e66e439bbce87809753)
++++ eXist/build.xml	(revision )
+@@ -3,8 +3,10 @@
+     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
+ 
+     <!-- >>>>> These properties only apply to the targets that deal with deployment into *existing* eXist installation-->
+-    <property name="exist.dir" value="ENTER-YOUR-EXIST-INSTALL-DIR"/>
+ 
++    <!-- exist.dir defaults to betterform sibling dir named 'eXist' -->
++    <property name="exist.dir" value="${basedir}/../../eXist"/>
++
+     <property name="exist.bfExtension.home" value="${exist.dir}/extensions/betterform"/>
+     <property name="exist.bfExtension.dir" value="${exist.bfExtension.home}/target/betterform"/>
+     <property name="exist.xrx.dir" value="${exist.bfExtension.home}/target/xrx"/>
+@@ -51,29 +53,16 @@
+             <!-- delete all forms except 'demo' and 'reference' -->
+             <fileset dir="${webapp.dir}/forms" excludes="demo/*, reference/*"/>
+ 
+-            <fileset dir="${webapp.dir}" includes="*.html"/>
+-            <fileset file="${webapp.dir}/demo.xhtml"/>
+             <fileset dir="${webapp.dir}/doc" />
+             <fileset dir="${webapp.dir}/images" />
+-            <fileset dir="${webapp.dir}/iPhone" />
+             <fileset dir="${webapp.dir}/jsp" />
+-            <fileset dir="${webapp.dir}/lang" />
++            <fileset dir="${webapp.dir}/pages" />
+             <fileset dir="${webapp.dir}/META-INF" />
+             <fileset dir="${webapp.dir}/reports" />
+             <fileset file="${webapp.dir}/robots.txt"/>
+             <fileset file="${webapp.dir}/sitemap.xml"/>
+             <fileset dir="${webapp.dir}/styles"/>
+ 
+-
+-            <!-- delete not relevant JavaScript sources -->
+-            <fileset dir="${webapp.dir}/resources/scripts/release/dojo" includes="**/tests/"/>
+-            <fileset dir="${webapp.dir}/resources/scripts/release/dojo/dojox/atom" includes="**/tests/"/>
+-            <fileset dir="${webapp.dir}/resources/scripts/betterform"/>
+-            <fileset dir="${webapp.dir}/resources/scripts/dijit"/>
+-            <fileset dir="${webapp.dir}/resources/scripts/dojo"/>
+-            <fileset dir="${webapp.dir}/resources/scripts/dojox"/>
+-            <fileset dir="${webapp.dir}/resources/scripts/util"/>
+-
+             <!-- delete all libs eXist 1.4 brings with -->
+             <fileset dir="${webapp.dir}/WEB-INF/lib" includes="commons-logging-* ,
+                                                                log4j-* ,
+@@ -94,7 +83,10 @@
+ 
+     <target name="package" 
+             description="creates a zip archive used by the extension-installer ant-file">
+-        <ant antfile="${web.dir}/build.xml" target="clean" dir="${web.dir}" inheritall="false"/>
++        <ant antfile="${web.dir}/build.xml" target="clean" dir="${web.dir}" inheritall="false">
++                <property name="target.dir" value="${target.dir}"/>
++                <property name="webapp.dir" value="${webapp.dir}"/>
++        </ant>
+         <available property="warAvailable" file ="${basedir}/../release-${web.app.version}/web-dist/${web.app.name}-${web.app.version}.war"/>
+         <antcall target="buildBetterForm"/>
+         <antcall target="extractReleaseWar"/>
+@@ -114,8 +106,19 @@
+         <copy todir="${target.dir}/xrx">
+             <fileset dir="${basedir}/src/main/xrx"/>
+         </copy>
++
++        <zip description="create betterform resources zip file"
++             zipfile="${target.dir}/lib/${web.app.name}-${web.app.version}-resources.zip"
++             basedir="${target.dir}/webapp/resources"/>
+     </target>
+ 
++    <target name="package-and-distribute-to-exist"
++            description="packages and distributes the betterFORM extension to a local eXist installation">
++        <copy todir="${exist.bfExtension.home}">
++            <fileset dir="${basedir}/target"/>
++        </copy>
++    </target>
++
+     <target  name="buildBetterForm" unless="warAvailable">
+         <ant antfile="${web.dir}/build.xml" target="create-jar" dir="${web.dir}" inheritall="false"/>        
+ 
+@@ -123,7 +126,6 @@
+                 <property name="target.dir" value="${target.dir}"/>
+                 <property name="webapp.dir" value="${webapp.dir}"/>
+         </ant>
+-
+     </target>
+ 
+     <target  name="extractReleaseWar" if="warAvailable">
+Index: eXist/src/main/xrx/timetracker/edit/edit-item.xql
+===================================================================
+--- eXist/src/main/xrx/timetracker/edit/edit-item.xql	(revision 089e48b72e86688117663e66e439bbce87809753)
++++ eXist/src/main/xrx/timetracker/edit/edit-item.xql	(revision )
+@@ -89,7 +89,7 @@
+                     </xf:header>
+                     <xf:header>
+                         <xf:name>password</xf:name>
+-                        <xf:value>betterform</xf:value>
++                        <xf:value></xf:value>
+                     </xf:header>
+                     <xf:header>
+                         <xf:name>realm</xf:name>

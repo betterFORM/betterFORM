@@ -119,22 +119,46 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     setInlineRoundBorderAlertHandler:function() {
-        //console.debug("setInlineRoundBorderAlertHandler");
+        console.debug("FluxProcessor.setInlineRoundBorderAlertHandler");
+        // this.hideAllCommonChilds(dojo.doc);
         this.unsubscribeFromAlertHandler();
         this.defaultAlertHandler = new betterform.ui.common.InlineRoundBordersAlert({});
         this.subscribers[0] = dojo.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
         this.subscribers[1] = dojo.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");
+        this.showAllCommonChilds(dojo.doc);
+
     },
 
 
     setToolTipAlertHandler:function() {
-        // console.debug("setToolTipAlertHandler");
+        console.debug("setToolTipAlertHandler");
+        // this.hideAllCommonChilds(dojo.doc);
         this.unsubscribeFromAlertHandler();
-        this.defaultAlertHandler = undefined;
         dojo.require("betterform.ui.common.ToolTipAlert");
         this.defaultAlertHandler = new betterform.ui.common.ToolTipAlert({});
         this.subscribers[0] = dojo.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
         this.subscribers[1] = dojo.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");
+        this.showAllCommonChilds(dojo.doc);
+    },
+
+    // Hide commonChilds 'alert', 'hint', 'info'
+    hideAllCommonChilds:function(node) {
+        dojo.query(".xfControl", node).forEach(dojo.hitch(this, function(control) {
+            console.debug("hide commonChild for control: ", control);
+            this.defaultAlertHandler._displayNone(dojo.attr(control,"id"),"applyChanges");
+        }));
+    },
+
+    // Show commonChilds 'alert', 'hint', 'info'
+    showAllCommonChilds:function(node) {
+        dojo.query(".xfControl", node).forEach(dojo.hitch(this, function(control) {
+            console.debug("hide/show commonChild for control: ", control, " control valid state is:", dojo.hasClass(control),"xfValid");
+            if(dojo.hasClass(control),"xfValid"){
+                this.defaultAlertHandler.handleValid(dojo.attr(control,"id"),"onFocus");
+            }else {
+                this.defaultAlertHandler.handleInvalid(dojo.attr(control,"id"),"onFocus");
+            }
+        }));
     },
 
     unsubscribeFromAlertHandler:function() {
@@ -635,6 +659,17 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
         dojo.query(".xfInvalid", dojo.doc).forEach(function(control) {
             // console.debug("_handleSubmitError: invalid control: ", control);
             dojo.publish("/xf/invalid", [dojo.attr(control, "id"),"submitError"]);
+        });
+        dojo.query(".xfRequired", dojo.doc).forEach(function(control) {
+            //if control has no value add CSS class xfRequiredEmpty
+            var xfControl = dijit.byId(control.id);
+            if(xfControl != undefined){
+                var xfValue = xfControl.getControlValue();
+                if(xfValue != undefined || xfValue != ''){
+                    dojo.addClass(xfControl.domNode,"xfRequiredEmpty");
+
+                }
+            }
         });
     },
 

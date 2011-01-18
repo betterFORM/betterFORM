@@ -3,67 +3,82 @@ dojo.provide("betterform.ui.common.ToolTipAlert");
 dojo.require("dojo.NodeList-fx");
 
 dojo.declare("betterform.ui.common.ToolTipAlert",
-        null,
+        betterform.ui.common.Alert,
 {
-    handleValid:function(id,action){
-        var control = dijit.byId(id+"-value");
-        // console.debug("betterform.ui.common.ToolTipAlert.valid [id:" + id , " action: " + action + " control: ", control, "]");
-        var alertDijit = undefined;
-        alertDijit = dijit.byId(id + "-MasterToolTip-alert");
+    displayDuration:3000,
+    hideSpeed:1000,
 
-        if (alertDijit != undefined) {
-            alertDijit.hide(control.domNode);
+    _show:function(id, commonChild,action) {
+        // console.debug("ToolTipAlert._show: [id:" + id , " commonChild: " + commonChild + "]");
+        var commonChildNode = dojo.byId(id + '-' + commonChild);
+
+        if(commonChildNode == undefined || commonChild != this.alert) {
+            return;
         }
 
-        if(dojo.hasClass(control.domNode,"bfInvalidControl")){
-            dojo.removeClass(control.domNode, "bfInvalidControl");
-        }
 
-    },
 
-    handleInvalid:function(id,action){
-        // console.debug("betterform.ui.common.ToolTipAlert.invalid [id:" + id , " action: " + action + "]");
-        var alertTooltip = dijit.byId(id+"-MasterToolTip-alert");
+        var toolTipId = id+"-MasterToolTip-" +commonChild;
+        var alertTooltip = dijit.byId(toolTipId);
+
         if(alertTooltip == undefined) {
-            alertTooltip = new dijit._MasterTooltip({id:id+"-MasterToolTip-alert"});
+            alertTooltip = new dijit._MasterTooltip({id:toolTipId});
+
+            var valueNode = dojo.byId(id + '-value');
+            dojo.connect(alertTooltip, "onClick", this, dojo.hitch(this, function() {
+                    alertTooltip.hide(valueNode);
+            }));
         }
 
-        var control = dijit.byId(id);
-        var alert = dojo.byId(id + '-alert');
-        // console.debug("betterform.ui.common.ToolTipAlert.invalid [alertTooltip:" + alertTooltip , " alertNode: " + alert + "]");
-        if (alert != undefined) {
-            if(action == "xfDisabled") {
-                alertTooltip.hide(control.domNode);
-            }
-            if( (action=="onFocus" || action=="onBlur") && (control.getControlValue() != '')){
-                alertTooltip.show(alert.innerHTML, dojo.byId(id+"-value"));
-            }
-            else  if(action=="applyChanges" && (control.getControlValue() != '' || dojo.hasClass(control.domNode,"xsdBoolean"))){
+        var controlValue = dijit.byId(id+"-value");
+        var controlValueIsEmpty = (controlValue.getControlValue() == undefined || controlValue.getControlValue() == '') && !(dojo.hasClass(controlValue.domNode, "xsdBoolean"));
 
-                alertTooltip.show(alert.innerHTML, dojo.byId(id+"-value"));
-                dojo.style(alertTooltip.domNode, "opacity", "1");
-                dojo.addClass(control.domNode, "bfInvalidControl");
+        alertTooltip.show(commonChildNode.innerHTML, dojo.byId(id+"-value"));
 
-                setTimeout(dojo.hitch(this,"_fadeOutAndHide", id),3000);
+        if (action == "applyChanges" && (!controlValueIsEmpty || dojo.hasClass(controlValue.domNode, "xsdBoolean"))) {
+            dojo.style(alertTooltip.domNode, "opacity", "1");
+            dojo.addClass(controlValue.domNode, "bfInvalidControl");
 
-                    }
-            else {
-                alertTooltip.hide(dojo.byId(id+"-value"));
+            setTimeout(dojo.hitch(this,function() {this._fadeOutAndHide(id,commonChild)}),this.displayDuration);
+        }
+
+        dojo.style(alertTooltip.domNode, "opacity", "1");
+        dojo.addClass(controlValue.domNode, "bfInvalidControl");
+
+
+
+    },
+
+
+    _hide:function(id, commonChild,action) {
+        // console.debug("ToolTipAlert._hide: [id:" + id , " commonChild: " + commonChild + "]");
+        var commonChildNode = dojo.byId(id + '-' + commonChild);
+
+
+        if (commonChildNode != undefined && commonChild == this.alert) {
+            var controlValue = dojo.byId(id + "-value");
+            var alertDijit = dijit.byId(id+"-MasterToolTip-" +commonChild);
+            if (alertDijit != undefined && controlValue != undefined) {
+                alertDijit.hide(controlValue);
             }
         }
     },
 
-    _fadeOutAndHide:function(id) {
-        var alertTooltip = dijit.byId(id+"-MasterToolTip-alert");
-        // No need to check if tooltip exists since this function is only called if (after a check before) it exists
 
+    _fadeOutAndHide:function(id,commonChild) {
+        var alertTooltip = dijit.byId(id+"-MasterToolTip-" +commonChild);
+        // No need to check if tooltip exists since this function is only called if (after a check before) it exists
+        // console.debug("ToolTipAlert._fadeOutAndHide  [id: " + id + " - alertTooltip:" , alertTooltip ,"]");
+        var speed = this.hideSpeed;
         dojo.fadeOut({
             node:alertTooltip.domNode,
-            duration:1000,
+            duration:speed,
             onEnd:function() {
                 alertTooltip.hide(dojo.byId(id+"-value"));
     	}
         }).play();
     }
+
+
 
 });

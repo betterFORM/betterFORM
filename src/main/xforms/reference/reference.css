@@ -253,11 +253,11 @@ pre, code {
 }
 
 .soria .dijitCheckBox {
-    background-image: url('../images/spriteCheckbox.gif');
+    background-image: url(images/spriteCheckbox.gif);
 }
 
 #imageTrigger-value {
-    background: url(../../images/bf_logo_67x27.png) no-repeat center;
+    background: url(images/bf_logo_67x27.png) no-repeat center;
     width: 100px;
     height: 40px;
 }

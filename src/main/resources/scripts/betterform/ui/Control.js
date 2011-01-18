@@ -335,6 +335,7 @@ dojo.declare(
         if(this.controlValue.currentValue != value) {
             this.controlValue.currentValue = value;
             this.controlValue._handleSetControlValue(value);
+            this._handleRequiredEmpty();
         }
         // dojo.publish("/xf/valueChanged",[this,value])
     },
@@ -370,9 +371,6 @@ dojo.declare(
         }
         else {
             betterform.ui.util.replaceClass(this.domNode, "xfRequired", "xfOptional");
-            if (dojo.hasClass(this.domNode, "xfRequiredEmpty")) {
-                dojo.removeClass(this.domNode, "xfRequiredEmpty");
-            }
         }
     },
 
@@ -480,6 +478,7 @@ dojo.declare(
 
     setControlValue:function(/* String */ value) {
         fluxProcessor.setControlValue(this.id, value);
+        this._handleRequiredEmpty();
     },
 
     _setHelp:function(value) {
@@ -552,6 +551,12 @@ dojo.declare(
 
     _setValueChild:function(value) {
         console.warn("TBD: Control._setValueChild value:" + value);
+    },
+
+    _handleRequiredEmpty:function(){
+        if (dojo.hasClass(this.domNode, "xfRequiredEmpty")) {
+            dojo.removeClass(this.domNode, "xfRequiredEmpty");
+        }
     }
 });
 
