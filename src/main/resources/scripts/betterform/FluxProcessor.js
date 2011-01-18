@@ -660,6 +660,17 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
             // console.debug("_handleSubmitError: invalid control: ", control);
             dojo.publish("/xf/invalid", [dojo.attr(control, "id"),"submitError"]);
         });
+        dojo.query(".xfRequired", dojo.doc).forEach(function(control) {
+            //if control has no value add CSS class xfRequiredEmpty
+            var xfControl = dijit.byId(control.id);
+            if(xfControl != undefined){
+                var xfValue = xfControl.getControlValue();
+                if(xfValue != undefined || xfValue != ''){
+                    dojo.addClass(xfControl.domNode,"xfRequiredEmpty");
+
+                }
+            }
+        });
     },
 
     _handleBetterFormLoadURI:function(/*XMLEvent*/ xmlEvent) {

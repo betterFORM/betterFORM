@@ -45,6 +45,10 @@
     font-weight: normal;
 }
 
+.xfRequiredEmpty .xfValue{
+	border:thin solid #8b0000;
+}
+
 .xfSelectOpen .xfValue {
     width: 100%;
 }
