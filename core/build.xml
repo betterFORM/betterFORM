@@ -11,6 +11,8 @@
              semanticAttributes="true" keepRoot="false" />
 
     <property name="target" value="${basedir}/target"/>
+    <property name="target.classes" value="${basedir}/target/classes"/>
+
     <property name="dist.path" value="${basedir}/target/${core.app.name}"/>
     <property name="dist.name" value="${core.app.name}-${core.app.version}"/>
 
@@ -98,7 +100,7 @@
         
         <javac description="compile source files"
             srcdir="${basedir}/src/main/java"
-            destdir="${basedir}/target/classes"
+            destdir="${target.classes}"
             classpathref="compile.class.path"
             target="${properties.javac.version}"                
             debug="${properties.javac.debug}"

@@ -665,7 +665,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
             var xfControl = dijit.byId(control.id);
             if(xfControl != undefined){
                 var xfValue = xfControl.getControlValue();
-                if(xfValue != undefined || xfValue != ''){
+                if(xfValue == undefined || xfValue == ''){
                     dojo.addClass(xfControl.domNode,"xfRequiredEmpty");
 
                 }
