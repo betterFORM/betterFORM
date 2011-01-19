@@ -22,6 +22,12 @@ dojo.declare("betterform.BfRequiredMinimal", null,
         dojo.require("betterform.ui.Control");
         dojo.require("betterform.ui.ControlValue");
         dojo.require("betterform.ui.UIElementFactory");
+        dojo.require("betterform.ui.factory.UIElementFactoryImpl");
+        dojo.require("betterform.ui.factory.InputElementFactory");
+        dojo.require("betterform.ui.factory.OutputElementFactory");
+        dojo.require("betterform.ui.factory.RangeElementFactory");
+        dojo.require("betterform.ui.factory.SelectElementFactory");
+
 
         // default alert implementation
         dojo.require("betterform.ui.common.InlineRoundBordersAlert");
