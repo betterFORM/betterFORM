@@ -58,10 +58,7 @@
                 <td>
                     <xf:trigger style="float:left;margin-right:4px;">
                         <xf:label>Login</xf:label>
-                        <xf:action>
-                            <bfc:hide dialog="loginDialog" />
-                            <xf:message level="ephemeral">Login successfull</xf:message>
-                        </xf:action>
+                         <bfc:hide dialog="loginDialog" ev:event="DOMActivate"/>
                     </xf:trigger>
                 </td>
                 <td>

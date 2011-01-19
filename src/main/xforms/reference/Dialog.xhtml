@@ -43,8 +43,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d2e137" onmouseover="showClass('xfDialog');" onmouseout="hideClass('xfDialog');">xfDialog
-                     <div dojoType="dijit.Tooltip" connectId="d2e137">matches an Element that represents a betterFORM
+                  <td id="d2e131" onmouseover="showClass('xfDialog');" onmouseout="hideClass('xfDialog');">xfDialog
+                     <div dojoType="dijit.Tooltip" connectId="d2e131">matches an Element that represents a betterFORM
                         Dialog
                         
                      </div>
@@ -240,13 +240,7 @@
                               
                               <xf:label>Login</xf:label>
                               
-                              <xf:action>
-                                 
-                                 <bfc:hide dialog="loginDialog"></bfc:hide>
-                                 
-                                 <xf:message level="ephemeral">Login successfull</xf:message>
-                                 
-                              </xf:action>
+                              <bfc:hide dialog="loginDialog" ev:event="DOMActivate"></bfc:hide>
                               
                            </xf:trigger>
                            
@@ -315,10 +309,7 @@
                 &lt;td&gt;
                     &lt;xf:trigger style="float:left;margin-right:4px;"&gt;
                         &lt;xf:label&gt;Login&lt;/xf:label&gt;
-                        &lt;xf:action&gt;
-                            &lt;bfc:hide dialog="loginDialog"&gt;&lt;/bfc:hide&gt;
-                            &lt;xf:message level="ephemeral"&gt;Login successfull&lt;/xf:message&gt;
-                        &lt;/xf:action&gt;
+                         &lt;bfc:hide dialog="loginDialog" ev:event="DOMActivate"&gt;&lt;/bfc:hide&gt;
                     &lt;/xf:trigger&gt;
                 &lt;/td&gt;
                 &lt;td&gt;

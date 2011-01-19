@@ -9,12 +9,12 @@ dojo.declare("betterform.ui.common.InlineAlert",
 
     // @Override
     _show:function(id, commonChild) {
-        // console.debug("InlineAlert._show [id:'",id,"' commonChild:'", commonChild,"']");
+        //console.debug("InlineAlert._show [id:'",id,"' commonChild:'", commonChild,"']");
         var commonChildNode = dojo.byId(id + '-' + commonChild);
-        if(commonChildNode == undefined || commonChild != this.info) {
+        if(commonChildNode == undefined || commonChild == this.info) {
             return;
         }
-        this_render(id, commonChild,"inline");
+        this._render(id, commonChild,"inline");
     },
 
 
@@ -22,10 +22,10 @@ dojo.declare("betterform.ui.common.InlineAlert",
     _hide:function(id, commonChild) {
         // console.debug("InlineAlert._hide [id:'",id,"' commonChild:'", commonChild,"']");
         var commonChildNode = dojo.byId(id + '-' + commonChild);
-        if(commonChildNode == undefined || commonChild != this.info) {
+        if(commonChildNode == undefined || commonChild == this.info) {
             return;
         }
-        this_render(id, commonChild,"none");
+        this._render(id, commonChild,"none");
 
     },
 
