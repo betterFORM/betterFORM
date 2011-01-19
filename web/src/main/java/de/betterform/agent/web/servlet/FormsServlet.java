@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.text.DateFormat;
 import java.util.*;
 
 /**
@@ -262,15 +260,15 @@ public class FormsServlet extends HttpServlet {
             String wrapperStart = ajaxFunction + "('";
             String wrapperEnd = "');";
             html.append(
-                    "        <div class=\"directory\">\n" +
-                            "                <a href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, up) + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\"><img src=\"" + request.getContextPath() + "/resources/images/bf_logo_square_effect_gray_dark.png\" border=\"0\"></a>\n" +
-                            "                <a class=\"textLink\" href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, up)  + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\">..</a>\n" +
+                    "        <div class=\"directory parent\">\n" +
+                            "                <a href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, up) + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\"><img id=\"go-up\" alt=\"up one level\" src=\"" + request.getContextPath() + "/resources/images/arrow-up.png\" border=\"0\"></a>\n" +
+                            "                <a class=\"textLink\" href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, up)  + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\">" + parentName + "</a>\n" +
                             "        </div>");
         } else {
             html.append(
-                    "        <div class=\"directory\" >\n" +
-                            "                <a href=\"" + getRequestURI(request, up) + "\"><img src=\"" + request.getContextPath() + "/resources/images/bf_logo_square_effect_gray_dark.png\" border=\"0\"></a>\n" +
-                            "                <a class=\"textLink\" href=\"" + getRequestURI(request, up) + "\">..</a>\n" +
+                    "        <div class=\"directory parent\" >\n" +
+                            "                <a href=\"" + getRequestURI(request, up) + "\"><img id=\"go-up\"  alt=\"up one level\" src=\"" + request.getContextPath() + "/resources/images/arrow-up.png\" border=\"0\"></a>\n" +
+                            "                <a class=\"textLink\" href=\"" + getRequestURI(request, up) + "\">" + parentName + "</a>\n" +
                             "            </div>\n");
         }
     }
