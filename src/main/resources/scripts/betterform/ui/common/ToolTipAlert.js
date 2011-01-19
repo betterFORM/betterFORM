@@ -1,7 +1,6 @@
 dojo.provide("betterform.ui.common.ToolTipAlert");
 
 dojo.require("dojo.NodeList-fx");
-dojo.require("betterform.ui.common.Tooltip");
 
 dojo.declare("betterform.ui.common.ToolTipAlert",
         betterform.ui.common.Alert,

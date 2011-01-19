@@ -391,7 +391,7 @@
                     <xsl:attribute name="href">#</xsl:attribute>
                     <xsl:attribute name="style">text-decoration:none;</xsl:attribute>
                     <xsl:attribute name="class">help-icon</xsl:attribute>
-                    <img src="{concat($contextroot,'/resources/images/help_icon.gif')}" class="help-symbol" alt="?" border="0"/>
+                    <img src="{concat($contextroot,'/resources/images/help.png')}" class="help-symbol" alt="?" border="0"/>
                 </xsl:element>
                 <!--<span id="{../@id}-helptext" class="help-text" style="position:absolute;display:none;width:250px;border:thin solid gray 1px;background:lightgrey;padding:5px;">-->
                 <span id="{../@id}-helptext" class="help-text">

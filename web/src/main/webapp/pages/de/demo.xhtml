@@ -23,9 +23,9 @@
     <link rel="SHORTCUT ICON" href="../../images/betterform.ico"/>
     <link rel="ICON" href="../../images/betterform.ico" type="image/x-icon"/>
     <link rel="stylesheet" type="text/css" href="../../styles/bf.css"/>
-    <link rel="stylesheet" type="text/css" href="../resources/styles/reference.css"/>
-    <link rel="stylesheet" type="text/css" href="../resources/styles/demo.css"/>
-    <link rel="stylesheet" type="text/css" href="../resources/styles/registration.css"/>
+    <link rel="stylesheet" type="text/css" href="../../forms/reference/reference.css"/>
+    <link rel="stylesheet" type="text/css" href="../../forms/demo/demo.css"/>
+    <link rel="stylesheet" type="text/css" href="../../forms/demo/registration.css"/>
 
     <style type="text/css">
 		.contentBody{
@@ -45,7 +45,7 @@
         .backgroundImage {
             width: 100%;
             height: 100%;
-            background: transparent url(../resources/images/play.png) no-repeat 50%;
+            background: transparent url(../../resources/images/play.png) no-repeat 50%;
         }
         #demoWrapper {
             position: relative;
@@ -56,7 +56,7 @@
             float: left;
             border: 1px dotted #666;
             /*margin-bottom: 20px;*/
-            background: url(../resources/images/ajax-loader.gif) no-repeat center center;
+            /*background: url(../resources/images/ajax-loader.gif) no-repeat center center;*/
         }
 
         #demoTrigger {
@@ -156,12 +156,11 @@
 		dojo.subscribe("/xf/ready", function(){
 			fluxProcessor.skipshutdown=true;
 		});
-
     </script>
 
 
 </head>
-<body id="demo">
+<body id="demo" class="soria">
 <div class="page">
     <div style="display:none">
         <xf:model id="model-1">
@@ -173,30 +172,30 @@
         <div id="template" onclick="runDemo();" class="backgroundImage"></div>
 
         <xf:trigger id="contactsDemoTrigger">
-            <xf:label>run demo</xf:label>
+            <xf:label>demo starten</xf:label>
             <xf:toggle case="c-demoArea"/>
             <xf:load show="embed" targetid="demoTarget">
-                <xf:resource value="'../forms/demo/contacts.xhtml#xforms'"/>
+                <xf:resource value="'../../forms/demo/contacts.xhtml#xforms'"/>
             </xf:load>
         </xf:trigger>
         <xf:trigger id="orderlistDemoTrigger">
-            <xf:label>run demo</xf:label>
+            <xf:label>demo starten</xf:label>
             <xf:toggle case="c-demoArea"/>
             <xf:load show="embed" targetid="demoTarget">
-                <xf:resource value="'../forms/demo/orderlist.xhtml#xforms'"/>
+                <xf:resource value="'../../forms/demo/orderlist.xhtml#xforms'"/>
             </xf:load>
         </xf:trigger>
         <xf:trigger id="registrationDemoTrigger">
-            <xf:label>run demo</xf:label>
+            <xf:label>demo starten</xf:label>
             <xf:toggle case="c-demoArea"/>
             <xf:load show="embed" targetid="demoTarget">
-                <xf:resource value="'../forms/demo/registration.xhtml#xforms'"/>
+                <xf:resource value="'../../forms/demo/registration.xhtml#xforms'"/>
             </xf:load>
         </xf:trigger>
         <xf:trigger id="featureExplorerDemoTrigger">
-            <xf:label>run demo</xf:label>
+            <xf:label>demo starten</xf:label>
             <xf:load show="new" >
-                <xf:resource value="'../forms/reference/XFormsFeatureExplorer.xhtml'"/>
+                <xf:resource value="'../../forms/reference/XFormsFeatureExplorer.xhtml'"/>
             </xf:load>
         </xf:trigger>
     </div>
@@ -252,7 +251,7 @@
 		<div id="demoHeader">
 			<img id="shadowTop" src="../../images/shad_top.jpg" alt=""/>
 			<div class="pageMarginBox">
-				<h2>Bitte klicken Sie einen der Screenshots, um die Demo auszuführen</h2>
+				<h2>Bitte klicken Sie eins der Bilder, um die Demo auszuführen</h2>
 			</div>
 		</div>
 
