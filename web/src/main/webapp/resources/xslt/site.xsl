@@ -8,7 +8,8 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:html="http://www.w3.org/1999/xhtml"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="xsl html">
+                xmlns:xf="http://www.w3.org/2002/xforms"
+                exclude-result-prefixes="xsl html xf">
 
 
     <xsl:output method="xhtml" version="1.0" encoding="UTF-8" media-type="text/xml"
@@ -21,6 +22,9 @@
     <xsl:variable name="calcRoot" select="if ($currentFile='dashboard.xhtml')
                                             then '.'
                                             else '../..' "/>
+    <xsl:variable name="dashboard" select="if ($currentFile='dashboard.xhtml')
+                                            then 'true'
+                                            else 'false'"/>
     <xsl:template match="/">
         <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
             <head>
@@ -57,14 +61,24 @@
             <body id="{//html:body/@id}">
                 <xsl:copy-of select="//html:body/@style"/>
                 <div class="page">
-
+<!--
+                    <xsl:if test="$dashboard='true'">
+                        <div style="display:none">
+                            <xf:model>
+                                <xf:instance id="i-default">
+                                    <data/>
+                                </xf:instance>
+                            </xf:model>
+                        </div>
+                    </xsl:if>
+-->
                     <div id="header">
                         <div class="pageMarginBox">
                             <div id="logoBar">
                                 <a href="index.html" class="link" id="linkLogo">
                                     <img id="logo" src="{$calcRoot}/images/logo.png" alt="betterFORM project"/>
                                 </a>
-
+                                <div id="dashboardTitle">Dashboard</div>
                                 <div id="mission">the XForms way to build the web</div>
 
                                 <xsl:variable name="links">
@@ -77,25 +91,27 @@
                                 </xsl:variable>
 
                                 <div id="topnav">
-                                    <xsl:for-each select="$links/*">
-<!--
-                                        <xsl:copy>
-                                            <xsl:copy-of select="@*"/>
-                                            <xsl:copy-of select="*"/>
-                                        </xsl:copy>
--->
-                                        <xsl:choose>
-                                            <xsl:when test="substring-before(./@href,'.') = substring-before($currentFile,'.')">
-                                                <xsl:copy>
-                                                    <xsl:attribute name="style">color:#488aa6;</xsl:attribute>                                                                                 <xsl:attribute name="href" select="@href"/>
-                                                    <xsl:copy-of select="text()"/>
-                                                </xsl:copy>
-                                            </xsl:when>
-                                            <xsl:otherwise>
-                                                <xsl:copy-of select="."/>
-                                            </xsl:otherwise>
-                                        </xsl:choose>
-                                    </xsl:for-each>
+                                    <xsl:if test="$dashboard='false'">
+                                        <xsl:for-each select="$links/*">
+    <!--
+                                            <xsl:copy>
+                                                <xsl:copy-of select="@*"/>
+                                                <xsl:copy-of select="*"/>
+                                            </xsl:copy>
+    -->
+                                            <xsl:choose>
+                                                <xsl:when test="substring-before(./@href,'.') = substring-before($currentFile,'.')">
+                                                    <xsl:copy>
+                                                        <xsl:attribute name="style">color:#488aa6;</xsl:attribute>                                                                                 <xsl:attribute name="href" select="@href"/>
+                                                        <xsl:copy-of select="text()"/>
+                                                    </xsl:copy>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <xsl:copy-of select="."/>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
+                                        </xsl:for-each>
+                                    </xsl:if>
 <!--
                                     <a href="index.html" style="{$linkColor}">home</a><span class="menuDevider"> | </span>
                                     <a href="demo.xhtml" style="{$linkColor}">demo</a><span class="menuDevider"> | </span>
@@ -103,6 +119,8 @@
                                     <a href="product.html" style="{$linkColor}">product</a><span class="menuDevider"> | </span>
                                     <a href="support.html" style="{$linkColor}">support</a><span class="menuDevider"> | </span>
                                     <a href="whoweare.html" style="{$linkColor}">who we are</a>
+
+                                    </xsl:if>
 -->
                                 </div>
 
@@ -134,7 +152,7 @@
                             <div id="browser"></div>
                         </div>
                     </div>
-                    <img id="shadowBottom" src="{$calcRoot}/images/shad_bottom.jpg" alt=""/>
+                    <!--<img id="shadowBottom" src="{$calcRoot}/images/shad_bottom.jpg" alt=""/>-->
                     <div id="footer">
 
                         <div class="pageMarginBox">
@@ -148,7 +166,7 @@
                                          title="deutsche Version"/>
                                 </a>
                             </div>
-                            
+
                             <span id="bottomMenu">
                                 &#169; 2010 betterFORM&#160;&#160; | &#160;&#160;
                                 <!--<a href="index.html">home</a>&#160; | &#160;&#160;-->
@@ -167,6 +185,7 @@
                         <img src="{$calcRoot}/images/b_exploreit_hover.png" alt=""/>
                     </div>
                 </div>
+<!--
                 <script type="text/javascript">
                     var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
                     document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -178,6 +197,27 @@
                     } catch(err) {
                     }
                 </script>
+-->
+                <xsl:if test="$dashboard='true'">
+                    <script type="text/javascript">
+                        function sendFile() {
+                            dojo.io.iframe.send({
+                                url: "/betterform/FileUpload?path=",
+                                method: "post",
+                                handleAs: "text",
+                                form: dojo.byId("upload"),
+                                load: function(response, ioArgs) {
+                                    console.log("Upload OK", response, ioArgs);
+                                    return response;
+                                },
+                                error: function(response, ioArgs) {
+                                    console.log("Upload FAILED!!!", response, ioArgs);
+                                    return response;
+                                }
+                            });
+                        }
+                    </script>
+                </xsl:if>
             </body>
         </html>
     </xsl:template>

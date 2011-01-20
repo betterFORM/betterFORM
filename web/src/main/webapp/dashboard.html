@@ -19,10 +19,14 @@
       <link rev="made" href="mailto:info@betterform.de" />
       <link rel="SHORTCUT ICON" href="./images/betterform.ico" />
       <link rel="ICON" href="./images/betterform.ico" type="image/x-icon" />
-      <link rel="stylesheet" type="text/css" href="./styles/bf.css" /><style type="text/css">
+      <link rel="stylesheet" type="text/css" href="./styles/bf.css" />
+	  <style type="text/css">
             #index{
                 background:#D3D3D3;
             }
+			#logoBar{
+				margin-top:42px;
+			}
             #content-area{
                 background:#999999;
             }
@@ -45,7 +49,8 @@
             }
 
             .pageMarginBox {
-                width: 890px;
+                /*width: 890px;*/
+                width: 800px;
 				position:relative;
             }
 
@@ -54,6 +59,7 @@
                 background: #D3D3D3;
                 display: block; /*float:left;*/
                 color: #999;
+				height:inherit;
             }
 
             #index #main-content .col {
@@ -101,95 +107,77 @@
 			}
 			#sub-header{display:none;}
 
-			#bfFormBrowser .directory,
-			#bfFormBrowser .file {
-				width:120px;
-				padding:30px;
-				margin:20px;
-				float:left;
+			.formBrowserHead{
+				position:relative;
 				-moz-border-radius:10px;
-				text-align:center;
-				background:white;
-				height:100px;
+				-webkit-border-radius:10px;
+				margin:6px;
+				padding:10px;
+			}
+			.formBrowserHead #commands{
+				position:absolute;
+				right:5px;
+				top:10px;
+			}
+			.formBrowserHead #commands img{
+				width:28px;
+				height:28px;
+			}
+			#dashboardTitle{
+				float:left;
+				color:#488aa6;
+				font-size:26pt;
+				margin-top:24px;
+				margin-left:5px;
+			}
+			#bfFormBrowser #bfListView .parent{
+				margin-top:10px;
+			}
+			#mission{
+				display:none;
 			}
 
-
-        </style><style type="text/css">
-           
-			#browser{
-				width: 100%;				
-				margin-top: 10px;
-				top: 120px;
-				/*left:-2000px;*/
-				position: absolute;
-			}
-
-
-			#bfFormBrowser .textLink {
-				display: block;
-				vertical-align: middle;
-			}
-
-			#bfFormBrowser .directory .textLink {
-				margin-top: 10px;
-			}
-
-			#bfFormBrowser .file .bfIconFile {
-				margin-top:20px;
-				display:inline-block;
-			}
-
-			#bfFormBrowser .file .textLink {
-				margin-top: 24px;
-			}
-
-
-			#bfFormBrowser #bfListView .file {
-				clear:left;
-				width:100%;
-				height:24px;
-				text-align:left;
-				padding:10px 0;
-				float:none;
-				margin:5px 20px;
-			}
-
-			#bfFormBrowser #bfListView .file a{
-				vertical-align:bottom;
-				display:inline-block;
-				margin:0;
-				margin-left:10px;
-				font-size:11pt;
-			}
-			#bfFormBrowser #bfListView .file .bfIconFile img {
-				width:24px;
-				height:24px;
-			}
-			#bfFormBrowser .file .bfIconFile{
-
-			}
-			#bfFormBrowser .file .bfIconFile img{
-				width:48px;
-				height:48px;
-			}
-			#bfFormBrowser .directory a img{
-				width:80px;
-				height:80px;
-			}
-			#bfFormBrowser #go-up{
-				width:100px;
-				height:100px;
-				margin-top:-10px;
-			}
+		#bfFormBrowser .dijitArrowButtonChar,
+		#bfFormBrowser .dijitArrowButtonInner {
+			display:none;
+		}
+		#bfFormBrowser .dijitDropDownButton .dijitButtonNode {
+			background:transparent;
+			border:0;
+		}
 
 
         </style>
-      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js"></script><script type="text/javascript">
+
+      <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js"></script>-->
+	  <script type="text/javascript">
+		  var djConfig = {
+		  debugAtAllCosts: true,
+		  dojoBlankHtmlUrl:"/blank.html",
+		  isDebug: true };
+	  </script>
+
+	  <script type="text/javascript" src="resources/scripts/dojo/dojo.js" djConfig="parseOnLoad:true">&#160;</script>
+	  <style type="text/css">
+		  @import "resources/scripts/dijit/themes/tundra/tundra.css";
+		  @import "resources/scripts/dojo/resources/dojo.css";
+
+	  </style>
+	  <script type="text/javascript">
             
          <!--
             dojo.require("dojo.fx");
             dojo.require("dojo.fx.easing");
-            
+            dojo.require("dojox.fx");
+			dojo.require("dijit.form.Form");
+			dojo.require("dijit.form.Button");
+			dojo.require("dojo.io.iframe");
+
+        	dojo.require("dijit.form.TextBox");
+			dojo.require("dijit.form.DropDownButton");
+			dojo.require("dijit.TooltipDialog");
+		 	dojo.config.dojoBlankHtmlUrl = '/blank.html';
+
             function slideIt() {
                 var effect1 = dojo.fx.easing["linear"];
                 var effect2 = dojo.fx.easing["linear"];
@@ -225,6 +213,14 @@
 
 			function load(url) {
 				//Look up the node we'll stick the text under.
+				console.debug("DropDownDialog");
+				var popups = dojo.query(".dijitPopup .dijitTooltipDialog");
+				popups.forEach(function(item) {
+					console.debug("Dijit Popup item: ", item);
+					var popUpDijit = dijit.byId(dojo.attr(item,"id"));
+					console.debug("destroy popup widget: ",popUpDijit);
+					popUpDijit.destroy();
+				});
 				var targetNode = dojo.byId("browser");
 
 				//The parameters to pass to xhrGet, the url, how to handle it, and the callbacks.
@@ -232,8 +228,11 @@
 					url: url,
 					handleAs: "text",
 					load: function(data) {
-						console.debug("load", data);
+						// console.debug("load", data);
 						targetNode.innerHTML = data;
+						dojo.parser.parse(targetNode);
+						var currentPath=dojo.byId("current");
+						dojox.fx.highlight({node:currentPath, color:'#ffffff', duration:400}).play()
 					},
 					error: function(error) {
 						targetNode.innerHTML = "An unexpected error occurred: " + error;
@@ -241,8 +240,9 @@
 				};
 
 				//Call the asynchronous xhrGet
-				console.debug("args", xhrArgs);
+				// console.debug("args", xhrArgs);
 				var deferred = dojo.xhrGet(xhrArgs);
+
 			}
 
 			dojo.addOnLoad (function() {
@@ -251,12 +251,13 @@
 			);
 			// -->
         </script></head>
-   <body id="index">
+   <body id="index" class="tundra">
       <div class="page">
          <div id="header">
             <div class="pageMarginBox">
-               <div id="logoBar"><a href="index.html" class="link" id="linkLogo"><img id="logo" src="./images/logo.png" alt="betterFORM project" /></a><div id="mission">the XForms way to build the web</div>
-                  <div id="topnav"><a href="index.html">home</a><span class="menuDevider"> | </span><a href="demo.xhtml">demo</a><span class="menuDevider"> | </span><a href="download.html">download</a><span class="menuDevider"> | </span><a href="product.html">product</a><span class="menuDevider"> | </span><a href="support.html">support</a><span class="menuDevider"> | </span><a href="whoweare.html">who we are</a></div>
+               <div id="logoBar"><a href="index.html" class="link" id="linkLogo"><img id="logo" src="./images/logo.png" alt="betterFORM project" /></a><div id="dashboardTitle">Dashboard</div>
+                  <div id="mission">the XForms way to build the web</div>
+                  <div id="topnav"></div>
                </div>
             </div>
          </div>
@@ -276,28 +277,32 @@
             <div class="pageMarginBox">
                <div id="browser"></div>
             </div>
-         </div><img id="shadowBottom" src="./images/shad_bottom.jpg" alt="" /><div id="footer">
+         </div>
+         <div id="footer">
             <div class="pageMarginBox">
                <div class="languages"><a href="./site/en/index.html"><img src="./images/en.png" class="langSelector" alt="english version" title="english version" /></a><a href="./site/de/index.html"><img src="./images/de.png" class="langSelector" alt="deutsch" title="deutsche Version" /></a></div><span id="bottomMenu">
-                  © 2010 betterFORM   |   
-                  
-                  
-                  
-                  
-                  
-                  <a href="contact.html">contact / impressum</a>  |   
-                  
-                  </span></div>
+                  © 2010 betterFORM   | <a href="contact.html">contact / impressum</a>  |   </span></div>
          </div>
          <div style="display:none"><img src="./images/b_tryit_hover.png" alt="" /><img src="./images/b_getit_hover.png" alt="" /><img src="./images/b_exploreit_hover.png" alt="" /></div>
       </div><script type="text/javascript">
-                    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-                    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-                </script><script type="text/javascript">
-                    try {
-                        var pageTracker = _gat._getTracker("UA-15044944-1");
-                        pageTracker._trackPageview();
-                    } catch(err) {
-                    }
-                </script></body>
+                        function sendFile() {
+                            dojo.io.iframe.send({
+                                url: "/betterform/FileUpload",
+                                method: "post",
+                                handleAs: "text",
+                                form: dojo.query(".upload")[0],
+                                load: function(response, ioArgs) {
+                                    console.log("Upload OK", response, ioArgs);
+									var link = dojo.byId("current").childNodes[0];
+									console.debug("link: ",link);
+									link.onclick();
+                                    return response;
+                                },
+                                error: function(response, ioArgs) {
+                                    console.log("Upload FAILED!!!", response, ioArgs);
+                                    return response;
+                                }
+                            });
+                        }
+                    </script></body>
 </html>

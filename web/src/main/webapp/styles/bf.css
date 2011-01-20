@@ -225,6 +225,7 @@ a:hover {
 #header .link,
 #sub-header .link {
 	color: transparent;
+	float:left;
 }
 
 #sub-header .linkbox a,
@@ -812,15 +813,19 @@ h3 {
 }
 
 
-#bfFormBrowser #bfListView .file {
+#bfFormBrowser #bfListView .directory,#bfFormBrowser #bfListView .file {
 	clear:left;
-	width:100%;
+	width:760px;
 	height:24px;
 	text-align:left;
 	padding:10px 0;
 	float:none;
 	margin:5px;
 	position:relative;
+}
+
+#bfFormBrowser #bfListView .directory{
+	height:38px;
 }
 
 #bfFormBrowser #bfListView .file a{
@@ -841,10 +846,16 @@ h3 {
 	color:transparent;
 	z-index:100;
 	-moz-border-radius:100px;
-	background:url(../resources/images/eye.png) no-repeat center bottom;
+	background:#d3d3d3 url(../resources/images/eye.png) no-repeat center bottom;
+	border-color:#666666;
 
 }
-
+#bfFormBrowser #bfListView .directory img{
+	width:38px;
+	height:38px;
+	float:left;
+	margin:0 5px;
+}
 #bfFormBrowser #bfListView .file .bfIconFile img {
 	width:24px;
 	height:24px;
