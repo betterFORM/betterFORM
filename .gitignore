@@ -24,3 +24,6 @@ version.info
 .gitignore
 .svn
 target/*
+core/target/*
+web/target/*
+betty/target/*
