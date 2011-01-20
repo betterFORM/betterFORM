@@ -8,18 +8,15 @@
             <deprecation>off</deprecation>
             <debug>on</debug>
             <optimize>off</optimize>
-            <!-- TODO: to be implemented in all javac tasks -->
             <version>1.5</version>
         </javac>
         <dojo>dojo-release-1.5.0-src</dojo>
-        <!--<dojo>dojo-release-1.3.3-src</dojo>-->
-
         <timeline>timeline_libraries_v2.3.0</timeline>
     </properties>
     <core>
         <app>
             <name>betterform-core</name>
-            <version>3.1.0</version>
+            <version>3.2.0-prerelease</version>
         </app>
         <transform>
             <classpath pathid="transform.class.path" description="classpath for saxon XPath and XSLT engine">
@@ -64,7 +61,7 @@
     <web>
         <app>
             <name>betterform</name>
-            <version>3.1.0</version>
+            <version>3.2.0-prerelease</version>
         </app>
         <transform>
             <classpath pathid="transform2.class.path" description="classpath for saxon XPath and XSLT engine">
