@@ -67,30 +67,13 @@
 
     <target name="compile" depends="prepare" description="compile all core sources">
 
-<!--
-        <exec executable="svn" output="svnlog.out">
-             <arg line="info"/>
-         </exec>
-         <loadproperties srcFile="svnlog.out">
-               <filterchain>  
-                 <linecontains>
-                   <contains value="Revision"/>
-                 </linecontains>
-               </filterchain>
-         </loadproperties>
-         <delete file="svnlog.out"/>
-
-        <echo>SVN Revision ${Revision}</echo>
--->
         <filter token="app.name" value="${web.app.name}"/>
         <filter token="app.version" value="${web.app.version}"/>
-        <filter token="app.build" value="${DSTAMP}/${TSTAMP}"/>
-        <!-- <filter token="revision.number" value="${Revision}"/> -->
 
-<!--        <copy todir="${basedir}/src/main/resources/META-INF"
+        <copy todir="${basedir}/src/main/resources/META-INF"
               file="src/main/java/version.info"
               filtering="true"
-              overwrite="true"/>-->
+              overwrite="true"/>
 
         <echo />
         <echo message="************************************************************************************"/>

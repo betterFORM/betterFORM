@@ -1,0 +1,215 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <!--
+          ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+          ~ Licensed under the terms of BSD License
+          -->
+
+        <title>betterFORM lightSteelBlue: XForms Dojo Framework</title>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js"></script>
+
+        <style type="text/css">
+            #index{
+                background:#D3D3D3;
+            }
+			#logoBar{
+				margin-top:42px;
+			}
+            #content-area{
+                background:#999999;
+            }
+			.box {
+				margin-top: 10px;
+				width: 100%;
+				top: 110px;
+				position: absolute;
+				border: 1px solid #BABABA;
+			}
+			
+            #footer{
+                display:none;
+            }
+            #index #sub-header .contentBody a {
+                width: 295px;
+                height: 100px;
+                display: block;
+                float: left;
+            }
+
+            .pageMarginBox {
+                /*width: 890px;*/
+                width: 800px;
+				position:relative;
+            }
+
+            #index #main-content {
+                height: 264px;
+                background: #D3D3D3;
+                display: block; /*float:left;*/
+                color: #999;
+				height:inherit;
+            }
+
+            #index #main-content .col {
+                width: 260px;
+                float: left;
+                margin-top: 23px;
+                padding: 0 5px 0 5px;
+                line-height: 1.6;
+                font-size: 10pt;
+            }
+
+            #index #main-content #leftCol {
+                width: 565px;
+            }
+			#index #main-content #leftCol strong{
+				font-weight:bold;
+			}
+
+
+            #index #main-content #rightCol {
+                margin-right: 0;
+                margin-left: 16px;
+                color: #888888;
+                text-align: center;
+                line-height: 0;
+                font-size: 1.6em;
+            }
+
+            #index #main-content #rightCol a:hover {
+                text-decoration: underline;
+            }
+
+            .page #bottomMenu {
+                float: left;
+            }
+
+            #index .languages {
+                display: block;
+            }
+			#browseLink{
+				font-size:1em;
+			}
+			#shadowBottom {
+				display:none;
+			}
+			#sub-header{display:none;}
+
+			.formBrowserHead{
+				position:relative;
+				-moz-border-radius:10px;
+				-webkit-border-radius:10px;
+				margin:6px;
+				padding:10px;
+			}
+			.formBrowserHead #commands{
+				position:absolute;
+				right:5px;
+				top:10px;
+			}
+			.formBrowserHead #commands img{
+				width:28px;
+				height:28px;
+			}
+			#dashboardTitle{
+				float:left;
+				color:#488aa6;
+				font-size:26pt;
+				margin-top:24px;
+				margin-left:5px;
+			}
+			#bfFormBrowser #bfListView .parent{
+				margin-top:10px;
+			}
+			#mission{
+				display:none;
+			}
+
+        </style>
+        <script type="text/javascript">
+            <!--
+            dojo.require("dojo.fx");
+            dojo.require("dojo.fx.easing");
+            dojo.require("dojox.fx");
+			dojo.require("dijit.form.Form");
+			dojo.require("dijit.form.Button");
+			dojo.require("dojo.io.iframe");
+
+            function slideIt() {
+                var effect1 = dojo.fx.easing["linear"];
+                var effect2 = dojo.fx.easing["linear"];
+
+                var anim1args = {
+                    node: "box",
+                    top: (dojo.coords("box").t).toString(),
+                    left: (dojo.coords("box").l + 2000).toString(),
+                    unit: "px",
+					duration:600,
+					delay:100,
+                    easing:effect1,
+					onBegin:function(){
+						load('/betterform/FormBrowser?path=forms&fragment=true&ajax=load');
+					}
+                };
+
+				var anim2args = {
+					node: "browser",
+					top: (dojo.coords("browser").t).toString(),
+					left: (dojo.coords("browser").l + 2000).toString(),
+					unit: "px",
+					duration:600,
+					delay:100,
+					easing:effect2
+				};
+
+				var anim1 = dojo.fx.slideTo(anim1args);
+				var anim2 = dojo.fx.slideTo(anim2args);
+//                dojo.fx.slideTo(anim1).play();
+				dojo.fx.combine([anim1, anim2]).play();
+            }
+
+			function load(url) {
+				//Look up the node we'll stick the text under.
+				var targetNode = dojo.byId("browser");
+
+				//The parameters to pass to xhrGet, the url, how to handle it, and the callbacks.
+				var xhrArgs = {
+					url: url,
+					handleAs: "text",
+					load: function(data) {
+						console.debug("load", data);
+						targetNode.innerHTML = data;
+						var currentPath=dojo.byId("current");
+						dojox.fx.highlight({node:currentPath, color:'#ffffff', duration:400}).play()
+					},
+					error: function(error) {
+						targetNode.innerHTML = "An unexpected error occurred: " + error;
+					}
+				};
+
+				//Call the asynchronous xhrGet
+				console.debug("args", xhrArgs);
+				var deferred = dojo.xhrGet(xhrArgs);
+
+			}
+
+			dojo.addOnLoad (function() {
+								load('/betterform/FormBrowser?path=forms&fragment=true&ajax=load');
+							}
+			);
+			// -->
+        </script>
+        <style type="text/css">
+           
+
+
+        </style>
+    </head>
+    <body id="index">
+        <div id="sub-header">
+        </div>
+        <div id="main-content">
+
+        </div>
+    </body>
+</html>

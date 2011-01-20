@@ -12,8 +12,7 @@ version.info
 *.iml
 *.ipr
 *.iws
-.idea/*
-
+.idea
 ## eclipse project files
 .classpath
 .project
@@ -24,6 +23,9 @@ version.info
 .gitignore
 .svn
 target/*
-core/target/*
-web/target/*
 betty/target/*
+core/target/*
+exist/target/*
+web/target/*
+xApp/target/*
+zaphod/target/*

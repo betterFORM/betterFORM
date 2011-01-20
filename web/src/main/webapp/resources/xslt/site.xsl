@@ -8,7 +8,8 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:html="http://www.w3.org/1999/xhtml"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="xsl html">
+                xmlns:xf="http://www.w3.org/2002/xforms"
+                exclude-result-prefixes="xsl html xf">
 
 
     <xsl:output method="xhtml" version="1.0" encoding="UTF-8" media-type="text/xml"
@@ -18,6 +19,12 @@
     <xsl:param name="rootDir" select="'../..'"/>
     <xsl:param name="currentFile" select="''"/>
 
+    <xsl:variable name="calcRoot" select="if ($currentFile='dashboard.xhtml')
+                                            then '.'
+                                            else '../..' "/>
+    <xsl:variable name="dashboard" select="if ($currentFile='dashboard.xhtml')
+                                            then 'true'
+                                            else 'false'"/>
     <xsl:template match="/">
         <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
             <head>
@@ -44,9 +51,9 @@
 
 
                 <link rev="made" href="mailto:info@betterform.de"/>
-                <link rel="SHORTCUT ICON" href="{$rootDir}/images/betterform.ico"/>
-                <link rel="ICON" href="{$rootDir}/images/betterform.ico" type="image/x-icon"/>
-                <link rel="stylesheet" type="text/css" href="{$rootDir}/styles/bf.css"/>
+                <link rel="SHORTCUT ICON" href="{$calcRoot}/images/betterform.ico"/>
+                <link rel="ICON" href="{$calcRoot}/images/betterform.ico" type="image/x-icon"/>
+                <link rel="stylesheet" type="text/css" href="{$calcRoot}/styles/bf.css"/>
                 <xsl:copy-of select="//html:head/html:style"/><xsl:text>
 </xsl:text>
                 <xsl:copy-of select="//html:head/html:script"/>
@@ -54,14 +61,24 @@
             <body id="{//html:body/@id}">
                 <xsl:copy-of select="//html:body/@style"/>
                 <div class="page">
-
+<!--
+                    <xsl:if test="$dashboard='true'">
+                        <div style="display:none">
+                            <xf:model>
+                                <xf:instance id="i-default">
+                                    <data/>
+                                </xf:instance>
+                            </xf:model>
+                        </div>
+                    </xsl:if>
+-->
                     <div id="header">
                         <div class="pageMarginBox">
                             <div id="logoBar">
                                 <a href="index.html" class="link" id="linkLogo">
-                                    <img id="logo" src="{$rootDir}/images/logo.png" alt="betterFORM project"/>
+                                    <img id="logo" src="{$calcRoot}/images/logo.png" alt="betterFORM project"/>
                                 </a>
-
+                                <div id="dashboardTitle">Dashboard</div>
                                 <div id="mission">the XForms way to build the web</div>
 
                                 <xsl:variable name="links">
@@ -74,25 +91,27 @@
                                 </xsl:variable>
 
                                 <div id="topnav">
-                                    <xsl:for-each select="$links/*">
-<!--
-                                        <xsl:copy>
-                                            <xsl:copy-of select="@*"/>
-                                            <xsl:copy-of select="*"/>
-                                        </xsl:copy>
--->
-                                        <xsl:choose>
-                                            <xsl:when test="substring-before(./@href,'.') = substring-before($currentFile,'.')">
-                                                <xsl:copy>
-                                                    <xsl:attribute name="style">color:#488aa6;</xsl:attribute>                                                                                 <xsl:attribute name="href" select="@href"/>
-                                                    <xsl:copy-of select="text()"/>
-                                                </xsl:copy>
-                                            </xsl:when>
-                                            <xsl:otherwise>
-                                                <xsl:copy-of select="."/>
-                                            </xsl:otherwise>
-                                        </xsl:choose>
-                                    </xsl:for-each>
+                                    <xsl:if test="$dashboard='false'">
+                                        <xsl:for-each select="$links/*">
+    <!--
+                                            <xsl:copy>
+                                                <xsl:copy-of select="@*"/>
+                                                <xsl:copy-of select="*"/>
+                                            </xsl:copy>
+    -->
+                                            <xsl:choose>
+                                                <xsl:when test="substring-before(./@href,'.') = substring-before($currentFile,'.')">
+                                                    <xsl:copy>
+                                                        <xsl:attribute name="style">color:#488aa6;</xsl:attribute>                                                                                 <xsl:attribute name="href" select="@href"/>
+                                                        <xsl:copy-of select="text()"/>
+                                                    </xsl:copy>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <xsl:copy-of select="."/>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
+                                        </xsl:for-each>
+                                    </xsl:if>
 <!--
                                     <a href="index.html" style="{$linkColor}">home</a><span class="menuDevider"> | </span>
                                     <a href="demo.xhtml" style="{$linkColor}">demo</a><span class="menuDevider"> | </span>
@@ -100,6 +119,8 @@
                                     <a href="product.html" style="{$linkColor}">product</a><span class="menuDevider"> | </span>
                                     <a href="support.html" style="{$linkColor}">support</a><span class="menuDevider"> | </span>
                                     <a href="whoweare.html" style="{$linkColor}">who we are</a>
+
+                                    </xsl:if>
 -->
                                 </div>
 
@@ -109,7 +130,7 @@
                     </div>
 
                     <div id="content-area">
-                        <img id="shadowTop" src="{$rootDir}/images/shad_top.jpg" alt=""/>
+                        <img id="shadowTop" src="{$calcRoot}/images/shad_top.jpg" alt=""/>
                         <noscript>
                             <div style="border: thin solid ; width: 100%; color: darkred;position:absolute;top:120px;z-index:999;padding:5px;background:orange">Sorry - this site was optimized for use with JavaScript. You won't be able to access all content until you activate JavaScript</div>
                         </noscript>
@@ -131,21 +152,21 @@
                             <div id="browser"></div>
                         </div>
                     </div>
-                    <img id="shadowBottom" src="{$rootDir}/images/shad_bottom.jpg" alt=""/>
+                    <!--<img id="shadowBottom" src="{$calcRoot}/images/shad_bottom.jpg" alt=""/>-->
                     <div id="footer">
 
                         <div class="pageMarginBox">
                             <div class="languages">
-                                <a href="{$rootDir}/site/en/index.html">
-                                <img src="{$rootDir}/images/en.png" class="langSelector" alt="english version"
+                                <a href="{$calcRoot}/site/en/index.html">
+                                <img src="{$calcRoot}/images/en.png" class="langSelector" alt="english version"
                                      title="english version"/>
                                 </a>
-                                <a href="{$rootDir}/site/de/index.html">
-                                    <img src="{$rootDir}/images/de.png" class="langSelector" alt="deutsch"
+                                <a href="{$calcRoot}/site/de/index.html">
+                                    <img src="{$calcRoot}/images/de.png" class="langSelector" alt="deutsch"
                                          title="deutsche Version"/>
                                 </a>
                             </div>
-                            
+
                             <span id="bottomMenu">
                                 &#169; 2010 betterFORM&#160;&#160; | &#160;&#160;
                                 <!--<a href="index.html">home</a>&#160; | &#160;&#160;-->
@@ -159,11 +180,12 @@
                         </div>
                     </div>
                     <div style="display:none">
-                        <img src="{$rootDir}/images/b_tryit_hover.png" alt=""/>
-                        <img src="{$rootDir}/images/b_getit_hover.png" alt=""/>
-                        <img src="{$rootDir}/images/b_exploreit_hover.png" alt=""/>
+                        <img src="{$calcRoot}/images/b_tryit_hover.png" alt=""/>
+                        <img src="{$calcRoot}/images/b_getit_hover.png" alt=""/>
+                        <img src="{$calcRoot}/images/b_exploreit_hover.png" alt=""/>
                     </div>
                 </div>
+<!--
                 <script type="text/javascript">
                     var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
                     document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -175,6 +197,27 @@
                     } catch(err) {
                     }
                 </script>
+-->
+                <xsl:if test="$dashboard='true'">
+                    <script type="text/javascript">
+                        function sendFile() {
+                            dojo.io.iframe.send({
+                                url: "/betterform/FileUpload?path=",
+                                method: "post",
+                                handleAs: "text",
+                                form: dojo.byId("upload"),
+                                load: function(response, ioArgs) {
+                                    console.log("Upload OK", response, ioArgs);
+                                    return response;
+                                },
+                                error: function(response, ioArgs) {
+                                    console.log("Upload FAILED!!!", response, ioArgs);
+                                    return response;
+                                }
+                            });
+                        }
+                    </script>
+                </xsl:if>
             </body>
         </html>
     </xsl:template>

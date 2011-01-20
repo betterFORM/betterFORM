@@ -26,6 +26,9 @@ dojo.declare("betterform.BfRequiredFull", null,
         dojo.require("betterform.ui.tree.OPMLTree");
         dojo.require("betterform.ui.range.Rating");
         dojo.require("betterform.ui.range.Slider");
+            // classes required by betterform.ui.range.Slider:
+            dojo.require("dijit.form.HorizontalRule");
+            dojo.require("dijit.form.HorizontalRuleLabels");
         dojo.require("betterform.ui.textarea.HtmlEditor");
         dojo.require("betterform.ui.textarea.DojoEditor");
         dojo.require("betterform.ui.textarea.SimpleTextarea");

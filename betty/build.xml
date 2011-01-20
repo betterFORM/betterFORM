@@ -61,7 +61,6 @@
         <!-- set version filter -->
         <filter token="betty.name" value="${betty.app.name}"/>
         <filter token="betty.version" value="${betty.app.version}"/>
-        <filter token="app.build" value="${DSTAMP}/${TSTAMP}"/>
 
         <copy todir="${targetname}"
               file="${basedir}/src/resources/version.info"

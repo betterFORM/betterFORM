@@ -30,7 +30,7 @@ dojo.declare(
     },
     
     onChange: function(/*anything*/ newValue, /*Boolean, optional*/ priorityChange){
-        console.debug("betterform.ui.input.Date.onChange");
+        // console.debug("betterform.ui.input.Date.onChange");
         this.inherited(arguments);
         if(this.incremental){
             this.setControlValue();
@@ -52,11 +52,11 @@ dojo.declare(
     validate: function(/*Boolean*/ isFocused){},
 
     getControlValue:function(){
-        console.debug("betterform.ui.input.Date.getControlValue for Control "+ this.id +": ",this.getValue() + " attr: ",this.attr('value'));
+        // console.debug("betterform.ui.input.Date.getControlValue for Control "+ this.id +": ",this.getValue() + " attr: ",this.attr('value'));
         var currentDate;
         var notISODate = this.attr('value');
         if(notISODate == undefined){
-           console.debug("Empty (undefined) date: this: " , this);
+           // console.debug("Empty (undefined) date: this: " , this);
            currentDate = this.focusNode.value;
         }else {
             currentDate = dojo.date.stamp.toISOString(notISODate,this.constraint);
@@ -68,7 +68,7 @@ dojo.declare(
     },
 
     _handleSetControlValue:function(date) {
-        console.debug("Date._handleSetControlValue date:",date);
+        // console.debug("Date._handleSetControlValue date:",date);
         if(date == undefined || date == ""){
             this._setValueAttr("");    
         }

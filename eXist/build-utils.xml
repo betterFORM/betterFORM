@@ -1,0 +1,121 @@
+<!--
+    Status: Work in progress.
+    Purpose of file: minimal-repeating targeta to be called by other build-files
+    Used by:
+
+    TODO:
+    - classpath.exist: 1st: check for exist.installed 2nd. Check for exist.betterform.xrx.installed
+-->
+<!--
+  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  ~ Author: betterFORM Team (info AT betterform.de)
+  -->
+
+<project name="betterFORM eXist integration helper targets" default="deploy-all-into-exist" basedir=".">
+    <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
+    <property name="root.dir" value="${basedir}/.."/>
+    <property name="src.dir" value="${basedir}/../src"/>
+    <property name="web.dir" value="${basedir}/../web"/>
+
+    <property name="target" value="${basedir}/target-utils"/>
+    <property name="dojo.release.dir" value="${target}/dojo-release"/>
+
+    <!-- eXist ant-tasks -->
+    <path id="classpath.exist">
+        <fileset dir="${exist.installed}/lib/core">
+            <include name="*.jar"/>
+        </fileset>
+        <pathelement path="${exist.installed}/exist.jar"/>
+        <pathelement path="${exist.installed}/exist-optional.jar"/>
+    </path>
+
+    <typedef resource="org/exist/ant/antlib.xml" uri="http://exist-db.org/ant">
+        <classpath refid="classpath.exist"/>
+    </typedef>
+
+
+    <target name="deploy-all-into-betterFORM-XRX" description="copy dojo (release) and xslt into installed betterFORM-XRX">
+        <antcall target="deploy-dojo-dev-into-betterFORM-XRX"/>
+        <available property="dojo-release-built" file="${target}/dojo-release/resources/scripts/release/dojo/betterform/betterform-full.js/"/>
+        <antcall target="deploy-xslt">
+            <param name="target.dir" value="${exist.betterform.xrx.installed}/webapp"/>
+        </antcall>
+        <antcall target="deploy-dojo-release">
+            <param name="target.dir" value="${exist.betterform.xrx.installed}/webapp"/>
+        </antcall>
+    </target>
+
+    <target name="deploy-dojo-dev-into-betterFORM-XRX" description="copy dojo (dev) into installed betterFORM-XRX">
+         <antcall target="deploy-dojo-dev">
+            <param name="target.dir" value="${exist.betterform.xrx.installed}/webapp"/>
+        </antcall>
+    </target>
+
+
+    <!-- GENERIC TARGETS -->
+
+    <target name="deploy-xslt">
+         <copy todir="${target.dir}/xslt" overwrite="true">
+             <fileset dir="${src.dir}/main/resources/xslt"/>
+         </copy>
+    </target>
+
+
+
+    <target name="deploy-dojo-dev">
+        <ant antfile="${web.dir}/build.xml" target="copy-src-resources-scripts" usenativebasedir="yes">
+            <property name="webapp.dir" value="${target.dir}"/>
+        </ant>
+
+        <ant antfile="${web.dir}/build.xml" target="prepare-dojo" usenativebasedir="yes">
+            <property name="target" value="${target.dir}"/>
+            <property name="webapp.dir" value="${target.dir}"/>
+        </ant>
+    </target>
+
+    <target name="deploy-dojo-release" depends="build-dojo-release">
+         <copy todir="${target.dir}/resources" overwrite="true">
+             <fileset dir="${dojo.release.dir}/resources"/>
+         </copy>
+    </target>
+
+    <target name="build-dojo-release" unless="dojo-release-built" description="build a dojo release">
+        <ant antfile="${web.dir}/build.xml" target="copy-src-resources-scripts" usenativebasedir="yes">
+              <property name="webapp.dir" value="${dojo.release.dir}"/>
+        </ant>
+
+        <ant antfile="${web.dir}/build.xml" target="prepare-dojo" usenativebasedir="yes">
+            <property name="target" value="${dojo.release.dir}"/>
+            <property name="webapp.dir" value="${dojo.release.dir}"/>
+        </ant>
+
+        <ant antfile="${web.dir}/build.xml" target="build-dojo" dir="${web.dir}" inheritall="false">
+                <property name="webapp.dir" value="${dojo.release.dir}"/>
+        </ant>
+
+    </target>
+
+
+    <target name="install-files-into-eXist-DB" description="Generic xdb:store target. Set properties as needed when you call it.">
+        <property name="file-source-dir" value="${basedir}/db-resources"/>
+        <property name="db-uri" value="xmldb:exist://localhost:8080/betterform/xmlrpc/db/betterform/resources"/>
+        <property name="db-user" value="betterform"/>
+        <property name="db-passwd" value="betterform"/>
+
+        <echo message="------------------------------------------------------------------------------------"/>
+        <echo message="  install files from into db"/>
+        <echo message="------------------------------------------------------------------------------------"/>
+
+
+        <xdb:store xmlns:xdb="http://exist-db.org/ant"
+                   uri="${db-uri}"
+                   createsubcollections="true"
+                   createcollection="true"
+                   user="${db-user}"
+                   password="${db-passwd}">
+            <fileset dir="${file-source-dir}" excludes="**/.svn **/.svn/**"/>
+        </xdb:store>
+    </target>
+
+</project>

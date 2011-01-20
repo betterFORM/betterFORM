@@ -67,7 +67,7 @@
         <copy description="copy javascript resources from global directory"
               todir="${webapp.dir}/resources/scripts"
               includeemptydirs="true">
-            <fileset dir="${basedir}/target/resources/scripts">
+            <fileset dir="${target}/resources/scripts">
                 <include name="**/*.*"/>
             </fileset>
         </copy>
@@ -109,7 +109,7 @@
     <!-- **************************************** DEPLOYMENT **************************************** -->
     <!-- **************************************** DEPLOYMENT **************************************** -->
     <!-- **************************************** DEPLOYMENT **************************************** -->
-    <target name="prepare-site" description="generates the betterFORM site">
+    <target name="prepare-site" depends="deploy-resources" description="generates the betterFORM site">
         <xslt basedir="${basedir}/src/main/webapp/pages"
               destdir="${basedir}/src/main/webapp/site"
               style="${basedir}/src/main/webapp/resources/xslt/site.xsl"
@@ -119,6 +119,13 @@
               extension=".html"
               filenameparameter="currentFile">
             <classpath refid="transform.class.path"/>
+        </xslt>
+        <xslt in="${basedir}/src/main/webapp/dashboard.xhtml"
+              out="${basedir}/src/main/webapp/dashboard.html"
+              style="${basedir}/src/main/webapp/resources/xslt/site.xsl"
+              force="true"
+              filenameparameter="currentFile">
+            <classpath refid="web.class.path"/>
         </xslt>
         <!-- copy demo pages unmodified -->
         <copy file="${basedir}/src/main/webapp/pages/en/demo.xhtml" todir="${basedir}/src/main/webapp/site/en"/>
@@ -148,7 +155,12 @@
               todir="${webapp.dir}/reports">
             <fileset dir="${root.dir}/src/main/doc/site/content/reports"/>
         </copy>
+
+
 -->
+
+        <antcall target="copy-src-resources"/>
+<!--  *** MOVED TO EXTRA TARGET ***
         <copy description="copy resources from global 'src' directory"
               todir="${webapp.dir}/resources"
               includeemptydirs="true">
@@ -167,7 +179,7 @@
                 <include name="**/*.jpg"/>
             </fileset>
         </copy>
-
+-->
 
         <mkdir dir="${webapp.dir}/WEB-INF/lib"/>
 
@@ -201,6 +213,42 @@
         <delete file="${webapp.dir}/WEB-INF/classes/log4j.xml"/>
         <delete file="${webapp.dir}/WEB-INF/classes/log4j.dtd"/>
 
+    </target>
+
+    <target name="copy-src-resources">
+         <copy description="copy resources from global 'src' directory"
+              todir="${webapp.dir}/resources"
+              includeemptydirs="true">
+            <fileset dir="${src.dir}/main/resources">
+                <exclude name="**/scripts/**"/>
+            </fileset>
+        </copy>
+
+
+        <antcall target="copy-src-resources-scripts"/>
+
+        <copy description="copy images seperately to avoid filtering"
+              todir="${webapp.dir}/resources"
+              overwrite="true"
+              filtering="false">
+            <fileset dir="${src.dir}/main/resources">
+                <include name="**/*.gif"/>
+                <include name="**/*.png"/>
+                <include name="**/*.jpg"/>
+            </fileset>
+        </copy>
+
+    </target>
+
+    <target name="copy-src-resources-scripts">
+        <copy description="copy resources from global 'src' directory"
+              todir="${webapp.dir}/resources"
+              includeemptydirs="true"
+              overwrite="true">
+            <fileset dir="${src.dir}/main/resources">
+                <include name="scripts/**"/>
+            </fileset>
+        </copy>
     </target>
 
     <!-- todo: rename to deploy-forms. 'resources' is misleading here. Docs must be changed appropriately -->
@@ -245,7 +293,11 @@
             <fileset dir="../src/test/resources"/>
         </copy>
     </target>
+    
 
+    <!-- **************************************** BUILDING JAR/WAR **************************************** -->
+    <!-- **************************************** BUILDING JAR/WAR **************************************** -->
+    <!-- **************************************** BUILDING JAR/WAR **************************************** -->
 
     <target name="cleanup-bf-release">
         <echo message="************************************************************************************"/>
@@ -284,6 +336,7 @@
         <copy todir="${bfRelease}" flatten="false">
              <fileset dir="${bfReleaseSrc}/betterform" includes="nls/**/*"/>
              <fileset dir="${bfReleaseSrc}/betterform">
+                 <include name="betterform-xforms-feature-explorer.js"/>
                  <include name="betterform-full.js"/>
                  <include name="betterform-compact.js"/>
                  <include name="betterform-minimal.js"/>
@@ -328,11 +381,11 @@
     <!-- **************************************** BUILDING JAR/WAR **************************************** -->
     <!-- **************************************** BUILDING JAR/WAR **************************************** -->
     <!-- todo: when package is executed it should be made sure that 'dojo' is configured as useragent in betterform-config.xml -->
-    <target name="package" depends="build-dojo" description="create war file">
+    <target name="package" depends="deploy-resources" description="create war file">
+        <antcall target="build-dojo"/>
         <echo/>
         <property name="onlineVersion" value="true"/>
 
-        <antcall target="cleanup-bf-release"/>
 
         <copy todir="${webapp.dir}"
               file="${basedir}/../src/test/resources/XFormsTestSuite1.1E1/Edition1/driverPages/Results/results.html"/>
@@ -467,7 +520,7 @@
     <!-- **************************************** DOJO TARGETS **************************************** -->
     <!-- **************************************** DOJO TARGETS **************************************** -->
     <!-- **************************************** DOJO TARGETS **************************************** -->
-    <target name="build-dojo" depends="deploy-resources" >
+    <target name="build-dojo" >
         <java classname="org.mozilla.javascript.tools.shell.Main"
               dir="${webapp.dir}/resources/scripts/util/buildscripts"
               classpath="${webapp.dir}/resources/scripts/util/shrinksafe/js.jar:${webapp.dir}/resources/scripts/util/shrinksafe/shrinksafe.jar"
@@ -490,6 +543,9 @@
 
             <arg value="version=1.5"/>
         </java>
+        <!-- cleanup JS/CSS resources of betterform dojo release -->
+        <antcall target="cleanup-bf-release"/>
+
     </target>
 
 

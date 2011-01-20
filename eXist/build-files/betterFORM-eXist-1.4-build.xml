@@ -1,0 +1,352 @@
+<!--
+    Status: Working.
+    Purpose of file: Install betterForm as  "root-content" into an eXist-1.4-Installation
+    Used by: exist/build-betterFORM-XRX.xml
+
+    TODO:
+-->
+<!--
+  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  ~ Author: betterFORM Team (info AT betterform.de)
+  -->
+
+<project name="betterFORM extension for eXist" default="install" basedir="cleanup">
+
+
+    <property name="exist.rootdir" value="${basedir}/../.."/>
+    <property name="exist.web.xml" value="${exist.rootdir}/webapp/WEB-INF/web.xml"/>
+
+    <property name="bf.shortname" value="betterform"/>
+    <!--todo:move property to build.properties.xml-->
+    <property name="bf.version" value="3.1.0"/>
+    <property file="../local.build.properties"/>
+    <property file="../build.properties"/>
+
+    <condition property="include.feature.betterform.config">
+        <istrue value="${include.feature.betterform}"/>
+    </condition>
+
+    <condition property="betterform.installed">
+        <available file="${exist.rootdir}/webapp/WEB-INF/betterform-config.xml"/>
+    </condition>
+
+    <property name="betterform.home" value="${exist.rootdir}/extensions/betterform"/>
+
+    <property name="betterform.etc" value="${betterform.home}/src/main/etc"/>
+    <property name="betterform.xrx" value="${betterform.home}/src/main/xrx"/>
+    <property name="betterform.lib" value="${betterform.home}/src/main/lib"/>
+    <property name="betterform.db" value="${betterform.home}/src/main/db"/>
+
+    <property name="betterform.webapp" value="${betterform.home}/src/main/webapp"/>
+
+    <!-- TODO: filter on creation -->
+    <property name="user" value="betterFORM"/>
+    <property name="passwd" value="Tha0xeiC8a"/>
+
+
+    <!-- eXist ant-tasks -->
+    <path id="classpath.exist">
+        <fileset dir="${exist.rootdir}/lib/core">
+            <include name="*.jar"/>
+        </fileset>
+        <pathelement path="${exist.rootdir}/exist.jar"/>
+        <pathelement path="${exist.rootdir}/exist-optional.jar"/>
+    </path>
+
+    <typedef resource="org/exist/ant/antlib.xml" uri="http://exist-db.org/ant">
+        <classpath refid="classpath.exist"/>
+    </typedef>
+
+
+    <!-- XSLT-libs -->
+    <path id="generator.libs" description="classpath for using Saxon XSLT">
+        <pathelement location="${betterform.lib}/saxon-9.2.1.5.jar"/>
+    </path>
+
+    <target name="install" description="install betterFORM into an existing eXist XML Db installation"
+            if="include.feature.betterform.config" unless="betterform.installed">
+        <antcall target="wrapped-install"/>
+    </target>
+
+    <target name="wrapped-install" description="install betterFORM into an existing eXist XML Db installation"
+            unless="betterform.installed">
+        <echo message="************************************************************************************"/>
+        <echo message="deploy betterFORM resources to eXist webapp  (${exist.web.xml}/webapp)"/>
+        <echo message="************************************************************************************"/>
+
+        <antcall target="deploy-betterFORM-resources"/>
+
+        <echo message="************************************************************************************"/>
+        <echo message="add betterFORM config parameters to eXist to ${exist.web.xml}"/>
+        <echo message="************************************************************************************"/>
+
+        <antcall target="patch-web-xml"/>
+        <antcall target="install-overwrites"/>
+    </target>
+
+
+    <target name="deploy-betterFORM-resources">
+
+        <!-- Installed to DB
+        <copy todir="${exist.rootdir}/webapp/forms">
+            <fileset dir="${betterform.webapp}/forms" excludes="**/.svn **/.svn/**"/>
+        </copy>
+        -->
+
+        <!-- installed via overwrites 
+        <copy todir="${exist.rootdir}/webapp/resources">
+            <fileset dir="${betterform.webapp}/resources" excludes="**/.svn **/.svn/**"/>
+        </copy>
+        -->
+
+        <copy file="${betterform.webapp}/WEB-INF/betterform-config.xml" todir="${exist.rootdir}/webapp/WEB-INF"/>
+        <copy file="${betterform.webapp}/WEB-INF/dwr.xml" todir="${exist.rootdir}/webapp/WEB-INF"/>
+        <copy file="${betterform.webapp}/WEB-INF/dwr20.dtd" todir="${exist.rootdir}/webapp/WEB-INF"/>
+
+        <mkdir dir="${basedir}/uninstall"/>
+        <move file="${exist.rootdir}/lib/cocoon/ehcache-1.1.jar" tofile="${basedir}/uninstall/ehcache-1.1.jar"/>
+
+        <copy todir="${exist.rootdir}/webapp/xquery">
+            <fileset file="${betterform.webapp}/xquery/xferror.xql"/>
+        </copy>
+
+        <!-- start.config points to extension lib-dir -->
+        <!-- TODO: check if working -->
+        <!-- <antcall target="install-betterFORM-libs"/> -->
+    </target>
+
+    <target name="install-betterFORM-libs">
+        <echo message="------------------------------------------------------------------------------------"/>
+        <echo message="  install libs needed by betterFORM to ${exist.rootdir}/lib/extensions/betterform   "/>
+        <echo message="------------------------------------------------------------------------------------"/>
+        <mkdir dir="${exist.rootdir}/lib/extensions/betterform"/>
+        <move todir="${exist.rootdir}/lib/extensions/betterform/">
+            <fileset dir="${betterform.lib}"/>
+        </move>
+
+
+    </target>
+
+    <target name="patch-web-xml">
+        <mkdir dir="${basedir}/uninstall"/>
+
+        <copy file="${exist.web.xml}" tofile="${basedir}/uninstall/web.xml"/>
+
+        <xslt in="${exist.web.xml}" out="${exist.web.xml}.bf" force="true"
+              style="${betterform.etc}/MergeWebXML-1.4.xsl">
+            <classpath refid="generator.libs"/>
+            <!--<factory name="net.sf.saxon.TransformerFactoryImpl"/>-->
+            <param name="webxml.path" expression="${exist.web.xml}"/>
+        </xslt>
+        <delete file="${exist.web.xml}"/>
+        <move file="${exist.web.xml}.bf" tofile="${exist.web.xml}"/>
+    </target>
+
+    <target name="install-overwrites">
+        <echo message="------------------------------------------------------------------------------------"/>
+        <echo message="  install betterFORM site to webapp directory"/>
+        <echo message="------------------------------------------------------------------------------------"/>
+        <mkdir dir="${basedir}/uninstall"/>
+
+        <copy file="${exist.rootdir}/build.properties" tofile="${basedir}/uninstall/build.properties"/>
+        <copy file="${exist.rootdir}/client.properties" tofile="${basedir}/uninstall/client.properties"/>
+        <copy file="${exist.rootdir}/tools/jetty/etc/jetty.xml" tofile="${basedir}/uninstall/jetty.xml"/>
+
+        <move todir="${exist.rootdir}" overwrite="true">
+            <fileset dir="${basedir}/src/main/etc/overwrites/">
+                <include name="**/*"/>
+                <exclude name="**/dwr.xml"/>
+                <exclude name="**/web.xml"/>
+                <exclude name="**/dwr20.dtd"/>
+            </fileset>
+        </move>
+    </target>
+
+    <target name="install-betterFORM-apps-and-forms" depends="stop-eXist">
+        <!-- start db -->
+        <antcall target="start-eXist"/>
+
+        <!-- Install Forms into db -->
+        <antcall target="wrapped-install-betterFORM-forms"/>
+        <!-- wait for import task to finish in db -->
+        <sleep seconds="10"/>
+        <!-- Install betterFORM-XRX-Sample-App -->
+        <antcall target="wrapped-install-betterFORM-XRX-Sample"/>
+        <!-- wait for import task to finish in db -->
+        <sleep seconds="10"/>
+        
+        <!-- Redo previous steps to be extra save everything is in place -->
+        <!-- Install Forms into db -->
+        <antcall target="wrapped-install-betterFORM-forms"/>
+        <!-- wait for import task to finish in db -->
+        <sleep seconds="10"/>
+        <!-- Install betterFORM-XRX-Sample-App -->
+        <antcall target="wrapped-install-betterFORM-XRX-Sample"/>
+        <!-- wait for import task to finish in db -->
+        <sleep seconds="10"/>
+        
+        <!-- shutdown db -->
+        <antcall target="stop-eXist"/>
+
+        <!--
+            <delete dir="${betterform.webapp}/resources" includeemptydirs="yes" failonerror="yes"/>
+         -->
+        <delete dir="${betterform.webapp}/forms" includeemptydirs="yes" failonerror="yes"/>
+    </target>
+
+    <target name="wrapped-install-betterFORM-forms">
+        <echo message="------------------------------------------------------------------------------------"/>
+        <echo message="  install betterFORM forms into db"/>
+        <echo message="------------------------------------------------------------------------------------"/>
+        <!--
+        <xdb:store xmlns:xdb="http://exist-db.org/ant"
+                   uri="xmldb:exist://localhost:8080/exist/xmlrpc/db/betterform/resources/"
+                   createsubcollections="true"
+                   createcollection="true"
+                   user="${user}"
+                   password="${passwd}"
+                   type="binary">
+            <fileset dir="${betterform.db}/resources" excludes="**/.svn **/.svn/**"/>
+        </xdb:store>
+        -->
+
+        <xdb:store xmlns:xdb="http://exist-db.org/ant"
+                   uri="xmldb:exist://localhost:8080/betterform/xmlrpc/db/betterform/forms/"
+                   createsubcollections="true"
+                   createcollection="true"
+                   user="${user}"
+                   password="${passwd}">
+            <fileset dir="${betterform.db}/forms" excludes="**/.svn **/.svn/**"/>
+        </xdb:store>
+        <!--
+        <xdb:store xmlns:xdb="http://exist-db.org/ant"
+                   uri="xmldb:exist://localhost:8080/exist/xmlrpc/db/betterform/resources/"
+                   createsubcollections="true"
+                   createcollection="true"
+                   user="${user}"
+                   password="${passwd}"
+                   type="binary">
+            <fileset dir="${betterform.db}/resources" includes="**/*.png **/*.gif **/*.jpg **/*.swf"
+                     excludes="styles/*.* scripts/*.* xsd/*.* xslt/*.* **/.svn **/.svn/**"/>
+        </xdb:store>
+
+
+        <xdb:store xmlns:xdb="http://exist-db.org/ant"
+                   uri="xmldb:exist://localhost:8080/exist/xmlrpc/db/betterform/resources/"
+                   createsubcollections="true"
+                   createcollection="true"
+                   user="${user}"
+                   password="${passwd}">
+            <fileset dir="${betterform.db}/resources" includes="**/*.*"
+                     excludes="**/.svn **/.svn/** **/*.png **/*.gif **/*.jpg **/*.swf"/>
+        </xdb:store>
+        -->
+    </target>
+
+    <target name="wrapped-install-betterFORM-XRX-Sample">
+        <xdb:store xmlns:xdb="http://exist-db.org/ant"
+                   uri="xmldb:exist://localhost:8080/betterform/xmlrpc/db/betterform/apps/"
+                   createsubcollections="true"
+                   createcollection="true"
+                   user="${user}"
+                   password="${passwd}">
+            <fileset dir="${betterform.xrx}" includes="**/*.*">
+                <exclude name="lucene"/>
+                <exclude name="lucene/collection.xconf"/>
+            </fileset>
+        </xdb:store>
+
+        <!--timetracker lucene indexes-->
+        <xdb:store xmlns:xdb="http://exist-db.org/ant"
+                   uri="xmldb:exist://localhost:8080/betterform/xmlrpc/db/system/config/db/betterform/apps/timetracker/data/task"
+                   createsubcollections="true"
+                   createcollection="true"
+                   user="admin"
+                   password="">
+            <fileset dir="${betterform.xrx}/timetracker/lucene" includes="*.*"/>
+        </xdb:store>
+    </target>
+
+    <target name="start-eXist">
+        <echo message="*******************************************************************************"/>
+        <echo message="* Starting eXist-DB                                                           *"/>
+        <echo message="*******************************************************************************"/>
+
+
+        <exec executable="${exist.rootdir}/bin/startup.sh" osfamily="unix" spawn="true"/>
+
+        <exec executable="cmd" osfamily="windows" spawn="true">
+            <arg value="/c"/>
+            <arg value="${exist.rootdir}/bin/startup.bat"/>
+        </exec>
+
+        <!-- wait for db startup -->
+        <sleep seconds="20"/>
+    </target>
+
+    <target name="stop-eXist">
+        <echo message="*******************************************************************************"/>
+        <echo message="* Stopping eXist-DB                                                           *"/>
+        <echo message="*******************************************************************************"/>
+
+
+
+        <!-- TODO: use admin passwd -->
+        <exec executable="${exist.rootdir}/bin/shutdown.sh" osfamily="unix">
+        </exec>
+        <exec executable="cmd" osfamily="windows">
+            <arg value="/c"/>
+            <arg value="${exist.rootdir}/bin/shutdown.bat"/>
+        </exec>
+
+        <!-- wait for db shutdown -->
+        <sleep seconds="20"/>
+    </target>
+
+    <target name="uninstall" xmlns:xmldb="http://exist-db.org/ant" description="uninstall betterFORM"
+            if="include.feature.betterform.config">
+        <antcall target="wrapped-uninstall"/>
+    </target>
+
+    <target name="wrapped-uninstall" if="betterform.installed">
+        <delete file="${exist.web.xml}" failonerror="false"/>
+        <delete dir="${exist.rootdir}/webapp/betterform"/>
+
+        <!--
+        <antcall target="uninstall-betterFORM-libs"/>
+        -->
+        <move file="${basedir}/uninstall/ehcache-1.1.jar" tofile="${exist.rootdir}/lib/cocoon/ehcache-1.1.jar"
+              failonerror="false"/>
+
+        <!--delete files from WEB-INF-->
+        <delete file="${exist.rootdir}/webapp/WEB-INF/betterform-config.xml" failonerror="false"/>
+        <delete file="${exist.rootdir}/webapp/WEB-INF/dwr.xml" failonerror="false"/>
+        <delete file="${exist.rootdir}/webapp/WEB-INF/dwr20.dtd" failonerror="false"/>
+        <delete file="${exist.rootdir}/webapp/WEB-INF/web.xml.original" failonerror="false"/>
+
+        <!--delete sample file-->
+        <!-- <delete file="${exist.rootdir}/webapp/xquery/xfGuess.xql" failonerror="false"/> -->
+
+        <!-- restore web.xml -->
+        <move tofile="${exist.rootdir}/webapp/WEB-INF/web.xml" file="${basedir}/uninstall/web.xml"/>
+        <move tofile="${exist.rootdir}/build.properties" file="${basedir}/uninstall/build.properties"/>
+        <move tofile="${exist.rootdir}/client.properties" file="${basedir}/uninstall/client.properties"/>
+        <move tofile="${exist.rootdir}/tools/jetty/etc/jetty.xml" file="${basedir}/uninstall/jetty.xml"/>
+    </target>
+
+    <target name="uninstall-betterFORM-libs">
+        <echo message="------------------------------------------------------------------------------------"/>
+        <echo message="            uninstall libs needed by betterFORM to ${betterform.lib}                "/>
+        <echo message="------------------------------------------------------------------------------------"/>
+        <mkdir dir="${basedir}/src/main/lib"/>
+        <move todir="${basedir}/src/main/lib/">
+            <fileset dir="${exist.rootdir}/lib/extensions/betterform/"/>
+        </move>
+
+        <echo message="------------------------------------------------------------------------------------"/>
+        <echo message="        uninstall betterFORM start.config from eXist rootdir  (${exist.rootdir})        "/>
+        <echo message="------------------------------------------------------------------------------------"/>
+        <move file="${exist.rootdir}/start.config" tofile="${basedir}/src/main/etc/eXist-1.4/start.config.betterform"/>
+    </target>
+</project>

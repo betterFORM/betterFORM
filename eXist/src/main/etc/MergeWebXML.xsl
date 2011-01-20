@@ -3,10 +3,7 @@
                 xmlns="http://java.sun.com/xml/ns/j2ee"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="webxml">
-        <xsl:output method="xml" indent="yes" />
-
-    <!-- author: Joern Turner / Lars Windauer
-         TODO: check if eXist web.xml is already patched -->
+    <xsl:output method="xml" indent="yes" />
 
     <xsl:param name="webxml.path" select="''"/>
 
@@ -34,7 +31,6 @@
             <param-value>WEB-INF/betterform-config.xml</param-value>
         </context-param>
     </xsl:template>
-
 
 
     <xsl:template match="/webxml:web-app/webxml:filter[last()]">
@@ -75,6 +71,11 @@
             <servlet-name>XFormsPostServlet</servlet-name>
             <servlet-class>de.betterform.agent.web.servlet.XFormsPostServlet</servlet-class>
         </servlet>
+
+        <servlet>
+            <servlet-name>FormsServlet</servlet-name>
+            <servlet-class>de.betterform.agent.web.servlet.FormsServlet</servlet-class>
+        </servlet>
     </xsl:template>
 
     <xsl:template match="/webxml:web-app/webxml:filter-mapping[webxml:filter-name/text()='XQueryURLRewrite']">
@@ -110,6 +111,11 @@
         <servlet-mapping>
                <servlet-name>XQueryServlet</servlet-name>
                <url-pattern>*.xql</url-pattern>
+        </servlet-mapping>
+
+        <servlet-mapping>
+            <servlet-name>FormsServlet</servlet-name>
+            <url-pattern>/forms/formslist</url-pattern>
         </servlet-mapping>
     </xsl:template>
 
