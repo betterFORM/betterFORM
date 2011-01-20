@@ -176,6 +176,8 @@
         	dojo.require("dijit.form.TextBox");
 			dojo.require("dijit.form.DropDownButton");
 			dojo.require("dijit.TooltipDialog");
+			dojo.require("dijit.Dialog");
+
 		 	dojo.config.dojoBlankHtmlUrl = '/blank.html';
 
             function slideIt() {
@@ -286,23 +288,75 @@
          <div style="display:none"><img src="./images/b_tryit_hover.png" alt="" /><img src="./images/b_getit_hover.png" alt="" /><img src="./images/b_exploreit_hover.png" alt="" /></div>
       </div><script type="text/javascript">
                         function sendFile() {
-                            dojo.io.iframe.send({
-                                url: "/betterform/FileUpload",
-                                method: "post",
-                                handleAs: "text",
-                                form: dojo.query(".upload")[0],
-                                load: function(response, ioArgs) {
-                                    console.log("Upload OK", response, ioArgs);
-									var link = dojo.byId("current").childNodes[0];
-									console.debug("link: ",link);
-									link.onclick();
-                                    return response;
-                                },
-                                error: function(response, ioArgs) {
-                                    console.log("Upload FAILED!!!", response, ioArgs);
-                                    return response;
-                                }
-                            });
+							var value = dojo.attr(dojo.query(".bfFileUpload")[0],"value");
+							if(value == null || value == "") {
+								var noFileDialog = new dijit.Dialog({
+									title: "Missing file",
+									content:"No file to upload was given",
+									style: "width: 300px"
+								  });
+								noFileDialog.show();
+
+							} else {
+								dojo.io.iframe.send({
+									url: "/betterform/FileUpload",
+									method: "post",
+									handleAs: "text",
+									form: dojo.query(".upload")[0],
+									load: function(response, ioArgs) {
+										console.log("Upload OK", response, ioArgs);
+										var link = dojo.byId("current").childNodes[0];
+										console.debug("link: ",link);
+										link.onclick();
+										return response;
+									},
+									error: function(response, ioArgs) {
+										console.log("Upload FAILED!!!", response, ioArgs);
+										return response;
+									}
+								});
+							}
                         }
-                    </script></body>
+
+                        function createCollection() {
+							var controlNode = dojo.query(".bfCollectionName .dijitInputInner")[0];
+							var value = dojo.attr(controlNode, "value");
+							if(value == null || value == "") {
+								var emptyCollectionNameDialog = new dijit.Dialog({
+									title: "Collection name is empty",
+									content:"Collection was not created.<br/>\n" +
+											"<b>Reason</b>: given collection name is empty.",
+									style: "width: 300px"
+								  });
+								emptyCollectionNameDialog.show();
+							} else {
+								dojo.io.iframe.send({
+									url: "/betterform/FileUpload",
+									method: "post",
+									handleAs: "text",
+									form: dojo.query(".createCollection")[0],
+									load: function(response, ioArgs) {
+										console.log("Collection created ", response, ioArgs);
+										var link = dojo.byId("current").childNodes[0];
+										console.debug("link: ",link);
+										link.onclick();
+										return response;
+									},
+									error: function(response, ioArgs) {
+										console.log("Creating Collection FAILED!!!", response, ioArgs);
+										return response;
+									}
+								});
+							}
+						}
+
+						function userInputIsEmpty(/*Class*/ className) {
+							console.debug("userInputIsEmpty: Get value of for control with class: ", className);
+							var controlNode = dojo.query("." + className + " .dijitInputInner")[0];
+							console.debug("userInputIsEmpty: node: ", controlNode);
+							var value = dojo.attr(controlNode, "value");
+							console.debug("userInputIsEmpty: value: ", value);
+							return (value == null || value == "");
+						}
+   </script></body>
 </html>

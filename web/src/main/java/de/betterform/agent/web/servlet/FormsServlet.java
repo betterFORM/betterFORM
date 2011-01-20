@@ -192,6 +192,8 @@ public class FormsServlet extends HttpServlet {
             crumb.append("</div>");
             crumb.append(" ");
         }
+        String altTextFormUpload = "Upload your form into this collection";
+        String altTextCreateCollection = "Create a new collection";
         html.append(
                 "<div id=\"bfFormBrowser\">\n" +
                 "        <div class=\"formBrowserHead\">\n" +
@@ -199,8 +201,26 @@ public class FormsServlet extends HttpServlet {
                 "        </div>\n" +
                 "        <div id=\"commands\">\n" +
 //                "            <img src=\"resources/images/add-folder.png\"/>\n" +
+                "           <div dojoType=\"dijit.form.DropDownButton\" class=\"createCollectionDropDownButton\">\n" +
+                "               <span class=\"label\"><img style=\"height:28px;width:28px;\" src=\"" + request.getContextPath() + "/resources/images/add-folder.png\" alt=\"" + altTextCreateCollection+ "\"></span>\n" +
+                "               <div dojoType=\"dijit.TooltipDialog\" name=\"collectionTooltip\" >\n" +
+                "                   <form type=\"dijit.form.Form\" name=\"createCollection\" class=\"createCollection\" method=\"post\" enctype=\"multipart/form-data\">\n" +
+                "                       <input id=\"bfColectionPath\" name=\"bfCollectionPath\" style=\"display:none\" value=\""+ currentPath +"\"> </input>" +
+                "                       <b>Collection name:</b>"+
+                "                       <input dojoType=\"dijit.form.TextBox\" class=\"bfCollectionName\" name=\"bfCollectionName\" value=\"\"> </input>" +
+                "                       <button dojoType=\"dijit.form.Button\" type=\"button\">\n" +
+                "                           create\n" +
+                "                           <script type=\"dojo/method\" event=\"onClick\" args=\"evt\">\n" +
+                "                               // Do something:\n" +
+                "                               createCollection();" +
+                "                           </script>\n" +
+                "                       </button>" +
+                "                   </form>\n" +
+                "               </div>\n" +
+                "           </div>" +
+
                 "           <div dojoType=\"dijit.form.DropDownButton\" class=\"uploadDropDownButton\">\n" +
-                "               <span class=\"label\"><img style=\"height:28px;width:28px;\" src=\"resources/images/add-file.png\"></span>\n" +
+                "               <span class=\"label\"><img style=\"height:28px;width:28px;\" src=\"" + request.getContextPath() + "/resources/images/add-file.png\" alt=\"" + altTextFormUpload + "\"></span>\n" +
                 "               <div dojoType=\"dijit.TooltipDialog\" name=\"uploadTooltip\" >\n" +
                 "                   <form type=\"dijit.form.Form\" name=\"upload\" class=\"upload\" method=\"post\" enctype=\"multipart/form-data\">\n" +
                 "                       <input id=\"bfUploadPath\" name=\"bfUploadPath\" style=\"display:none\" value=\""+ currentPath +"\"> </input>" +
@@ -374,7 +394,7 @@ public class FormsServlet extends HttpServlet {
         }
 
         html.append(
-                "        <div class=\"file\">\n" +
+                        "        <div class=\"file\">\n" +
                         "                <a class=\"bfIconFile\" href=\"" + request.getContextPath() + "/" + uri + "/" + aFile.getName() + "\" target=\"_blank\">" +
                         "                   <img src=\"" + request.getContextPath() + "/resources/images/"+iconFile+"\" border=\"0\">\n" +
                         "                </a>\n" +

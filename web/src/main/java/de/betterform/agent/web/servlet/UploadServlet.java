@@ -55,26 +55,18 @@ public class UploadServlet extends HttpServlet /* extends AbstractXFormsServlet 
 
             Iterator iter = items.iterator();
             FileItem uploadItem = null;
+            String collectionPath ="";
+            String collectionName ="";
             String relativeUploadPath = "";
             while (iter.hasNext()) {
                FileItem item = (FileItem) iter.next();
                String fieldName = item.getFieldName();
                 if (item.isFormField() && "bfUploadPath".equals(fieldName)) {
-                    InputStream is = item.getInputStream();
-                    if (is != null) {
-                        Writer writer = new StringWriter();
-                        try {
-                            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-                            int n;
-                            char[] buffer = new char[1024];
-                            while ((n = reader.read(buffer)) != -1) {
-                                writer.write(buffer, 0, n);
-                            }
-                        } finally {
-                            is.close();
-                        }
-                        relativeUploadPath = writer.toString();
-                    }
+                    relativeUploadPath = this.getFieldValue(item);
+                } else if (item.isFormField() && "bfCollectionPath".equals(fieldName)) {
+                    collectionPath = this.getFieldValue(item);
+                } else if (item.isFormField() && "bfCollectionName".equals(fieldName)) {
+                    collectionName = this.getFieldValue(item);
                 } else if(item.getName() != null) {
                     // FileItem of the uploaded file
                     uploadItem = item;
@@ -82,26 +74,9 @@ public class UploadServlet extends HttpServlet /* extends AbstractXFormsServlet 
             }
 
             if(uploadItem != null && !"".equals(relativeUploadPath)) {
-                String realPath = request.getSession().getServletContext().getRealPath("");
-                  if (realPath == null) {
-                      realPath = request.getSession().getServletContext().getRealPath(".");
-                  }
-                File uploadDirectory = new File(realPath, relativeUploadPath);
-                String fileName = uploadItem.getName();
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("uploading file '" + fileName + "' to directory '" + uploadDirectory +"'");
-                }
-
-                File localFile = new File(uploadDirectory.getAbsolutePath(), fileName);
-
-                if (!localFile.getParentFile().exists()) {
-                    localFile.getParentFile().mkdirs();
-                }
-                uploadItem.write(localFile);
-
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("file '" + fileName + "' successfully uploaded to directory '" + uploadDirectory +"'");
-                }
+                this.uploadFile(request, uploadItem, relativeUploadPath);
+            } else if(!"".equals(collectionName) && !"".equals(collectionPath)) {
+                this.createColection(request, collectionName, collectionPath);
             } else {
                 LOGGER.warn("error uploading file to '" + relativeUploadPath + "'");
             }
@@ -111,5 +86,73 @@ public class UploadServlet extends HttpServlet /* extends AbstractXFormsServlet 
             e.printStackTrace();
         }
 
+    }
+
+    private void createColection(HttpServletRequest request, String collectionName, String collectionPath) {
+        String realPath = request.getSession().getServletContext().getRealPath("");
+        if (realPath == null) {
+            realPath = request.getSession().getServletContext().getRealPath(".");
+        }
+        File path2Collection = new File(realPath, collectionPath);
+
+
+        File localFile = new File(path2Collection.getAbsolutePath(), collectionName);
+
+        if (localFile.getParentFile().exists()) {
+            boolean created = localFile.mkdir();
+            if(created){
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("collection '" + collectionName + "' created in directory '" + path2Collection.getAbsolutePath() + "'");
+                }
+            }else {
+                LOGGER.warn("collection'" + collectionName + "' could not be created in in directory '" + path2Collection.getAbsolutePath() + "'");
+            }
+
+        } else {
+            LOGGER.warn("Could not create collection " + collectionName + " because parent collection " + localFile.getParentFile().getAbsolutePath() + " does not exist");
+        }
+    }
+
+    private String getFieldValue(FileItem item) throws IOException {
+        InputStream is = item.getInputStream();
+        if (is != null) {
+            Writer writer = new StringWriter();
+            try {
+                Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                int n;
+                char[] buffer = new char[1024];
+                while ((n = reader.read(buffer)) != -1) {
+                    writer.write(buffer, 0, n);
+                }
+            } finally {
+                is.close();
+            }
+            return writer.toString();
+        }else {
+            return null;
+        }
+    }
+
+    private void uploadFile(HttpServletRequest request, FileItem uploadItem, String relativeUploadPath) throws Exception {
+        String realPath = request.getSession().getServletContext().getRealPath("");
+        if (realPath == null) {
+            realPath = request.getSession().getServletContext().getRealPath(".");
+        }
+        File uploadDirectory = new File(realPath, relativeUploadPath);
+        String fileName = uploadItem.getName();
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("uploading file '" + fileName + "' to directory '" + uploadDirectory + "'");
+        }
+
+        File localFile = new File(uploadDirectory.getAbsolutePath(), fileName);
+
+        if (!localFile.getParentFile().exists()) {
+            localFile.getParentFile().mkdirs();
+        }
+        uploadItem.write(localFile);
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("file '" + fileName + "' successfully uploaded to directory '" + uploadDirectory + "'");
+        }
     }
 }
