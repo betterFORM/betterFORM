@@ -122,16 +122,9 @@
                 <echo message="------------------------------------------------------------------------------------"/>
                 <echo message="--- Copy current betterFORM demo/reference forms and resources to target-dir     ---"/>
                 <echo message="------------------------------------------------------------------------------------"/>
-                <!-- Copy current forms from ... -->
-                <!-- ... reference. -->
-                <copy todir="${src.target.dir}/db/forms/reference/" overwrite="true">
-                    <fileset dir="${src.dir}/main/xforms/reference/" includes = "*.xhtml"/>
-                </copy>
 
-                <!-- ... demo. -->
-                <copy todir="${src.target.dir}/db/forms/demo/" overwrite="true">
-                    <fileset dir="${src.dir}/main/xforms/demo/" includes = "*.xhtml *.xml"/>
-                </copy>
+                <antcall target="prepare-db-installation-dir"/>
+
 
                 <!-- RESOURCES -->
                 <!-- Copy images, styles, xsd and xslt -->
@@ -155,6 +148,15 @@
                 <antcall target="copy-betterFORM-website"/>
 
                 <!-- <antcall target="build-dojo-release"/> -->
+        </target>
+
+        <target name="prepare-db-installation-dir">
+            <!-- Copy current forms from main to db-install-dir -->
+            <copy todir="${src.target.dir}/db/forms" overwrite="true" filtering="false" description="copy forms form ${src.dir} to db-installition-dir ${src.target.dir}/db/">
+                <fileset dir="${src.dir}/main/xforms" includes = "*.xhtml"/>
+            </copy>
+
+            <delete dir="${src.target.dir}/db/forms" excludes="demo reference"/>
         </target>
 
         <target name="copy-betterFORM-website" if="betterform">
@@ -182,6 +184,7 @@
         </target>
 
         <target name="copy-eXist-build-file">
+            <copy file="${basedir}/build-utils.xml" todir="${target.dir}" description="copy utility-build-file"/>
             <antcall target="copy-eXist-1.4-build-file"/>
             <antcall target="copy-betterFORM-eXist-1.4-build-file"/>
             <antcall target="copy-eXist-1.5-build-file"/>
@@ -206,78 +209,9 @@
         </target>
 
     <target name="build-dojo-release">
-        <property name="dojo.dir" value="${src.target.dir}/dojo"/>
-        
-        <echo/>
-        <echo message="************************************************************************************"/>
-        <echo message="unpacking Dojo..."/>
-        <echo message="************************************************************************************"/>
-        <echo/>
-        <mkdir dir="${dojo.dir}"/>
-        <gunzip src="${src.dir}/main/lib/${properties.dojo}.tar.gz"
-                dest="${dojo.dir}"/>
-        <untar src="${dojo.dir}/${properties.dojo}.tar"
-               dest="${dojo.dir}"/>
-        <delete file="${dojo.dir}/${properties.dojo}"/>
-        <delete file="${dojo.dir}/${properties.dojo}.tar"/>
-
-        <echo/>
-        <echo message="************************************************************************************"/>
-        <echo message="merging Dojo into tree ..."/>
-        <echo message="************************************************************************************"/>
-        <echo/>
-        <move todir="${dojo.dir}/resources/scripts/dijit">
-            <fileset dir="${dojo.dir}/${properties.dojo}/dijit"/>
-        </move>
-        <move todir="${dojo.dir}/resources/scripts/dojo">
-            <fileset dir="${dojo.dir}/${properties.dojo}/dojo"/>
-        </move>
-        <move todir="${dojo.dir}/resources/scripts/dojox">
-            <fileset dir="${dojo.dir}/${properties.dojo}/dojox"/>
-        </move>
-
-        <move todir="${dojo.dir}/resources/scripts/util">
-            <fileset dir="${dojo.dir}/${properties.dojo}/util"/>
-        </move>
-
-
-        <unzip src="${src.dir}/main/lib/${properties.timeline}.zip" dest="${dojo.dir}"/>
-        <move todir="${dojo.dir}/resources/scripts/simile/timeline">
-            <fileset dir="${dojo.dir}/timeline_2.3.0/timeline_js"/>
-        </move>
-        <move todir="${dojo.dir}/resources/scripts/simile/timeline">
-            <fileset dir="${dojo.dir}/timeline_2.3.0/timeline_ajax"/>
-        </move>
-        <delete dir="${dojo.dir}/timeline_2.3.0"/>
-
-        <copy description="copy javascript resources from global directory"
-              todir="${dojo.dir}/resources/scripts"
-              includeemptydirs="true">
-            <fileset dir="${src.dir}/main/resources/scripts">
-                <include name="**/*.*"/>
-            </fileset>
-        </copy>
-
-
-        <ant antfile="${web.dir}/build.xml" target="build-dojo" dir="${web.dir}" inheritall="false">
-                <property name="target.dir" value="${target.dir}"/>
-                <property name="webapp.dir" value="${dojo.dir}"/>
+        <ant antfile="build-utils.xml" target="deploy-dojo-release">
+            <property name="dojo.release.dir" value="${src.target.dir}/dojo"/>
         </ant>
-
-        <echo/>
-        <echo message="************************************************************************************"/>
-        <echo message="merging Dojo into webapp ..."/>
-        <echo message="************************************************************************************"/>
-        <echo/>
-        <!-- <delete dir="${dojo.dir}${webapp.dir}/resources/scripts/release"/> -->
-
-        <mkdir dir="${src.target.dir}/etc/overwrites/webapp/resources/scripts/release"/>
-
-        <move todir="${src.target.dir}/etc/overwrites/webapp/resources/scripts/release" overwrite="true">
-            <fileset dir="${dojo.dir}/resources/scripts/release"/>
-        </move>
-
-        <delete dir="${dojo.dir}"/>
     </target>
 
     <target name="cleanup-target" description="cleanout unneeded files from target">

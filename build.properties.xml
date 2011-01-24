@@ -229,7 +229,7 @@
         <installerType>standard</installerType>
         <exist>
             <jar>/home/zwobit/Downloads/betterFORM/binaries/eXist-setup-1.4.0-rev10440.jar</jar>
-            <version>1.5</version>
+            <version>1.4</version>
             <user>admin</user>
             <passwd>betterform</passwd>
             <betterform>true</betterform>

@@ -36,7 +36,7 @@
     <property name="betterform.etc" value="${betterform.home}/src/main/etc"/>
     <property name="betterform.xrx" value="${betterform.home}/src/main/xrx"/>
     <property name="betterform.lib" value="${betterform.home}/src/main/lib"/>
-    <property name="betterform.db" value="${betterform.home}/src/main/db"/>
+    <property name="" value="${betterform.home}/src/main/db"/>
 
     <property name="betterform.webapp" value="${betterform.home}/src/main/webapp"/>
 
