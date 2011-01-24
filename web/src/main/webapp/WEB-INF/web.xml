@@ -186,6 +186,11 @@
     </servlet>
 
     <servlet>
+        <servlet-name>UploadServlet</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.UploadServlet</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>XFormsServlet</servlet-name>
         <servlet-class>de.betterform.agent.web.servlet.XFormsRepeater</servlet-class>
         <init-param>
@@ -196,6 +201,11 @@
 	<servlet-mapping>
         <servlet-name>Flux</servlet-name>
         <url-pattern>/Flux/*</url-pattern>
+    </servlet-mapping>
+
+	<servlet-mapping>
+        <servlet-name>UploadServlet</servlet-name>
+        <url-pattern>/FileUpload</url-pattern>
     </servlet-mapping>
 
 
@@ -237,7 +247,7 @@
         <url-pattern>/repeater/*</url-pattern>
     </servlet-mapping>
 	<welcome-file-list>
-        <welcome-file>index.xhtml</welcome-file>
+        <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
     <servlet>

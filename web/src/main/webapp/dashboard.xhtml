@@ -12,6 +12,9 @@
             #index{
                 background:#D3D3D3;
             }
+			#logoBar{
+				margin-top:42px;
+			}
             #content-area{
                 background:#999999;
             }
@@ -34,7 +37,8 @@
             }
 
             .pageMarginBox {
-                width: 890px;
+                /*width: 890px;*/
+                width: 800px;
 				position:relative;
             }
 
@@ -91,6 +95,35 @@
 			}
 			#sub-header{display:none;}
 
+			.formBrowserHead{
+				position:relative;
+				-moz-border-radius:10px;
+				-webkit-border-radius:10px;
+				margin:6px;
+				padding:10px;
+			}
+			.formBrowserHead #commands{
+				position:absolute;
+				right:5px;
+				top:10px;
+			}
+			.formBrowserHead #commands img{
+				width:28px;
+				height:28px;
+			}
+			#dashboardTitle{
+				float:left;
+				color:#488aa6;
+				font-size:26pt;
+				margin-top:24px;
+				margin-left:5px;
+			}
+			#bfFormBrowser #bfListView .parent{
+				margin-top:10px;
+			}
+			#mission{
+				display:none;
+			}
 
         </style>
         <script type="text/javascript">
@@ -98,6 +131,9 @@
             dojo.require("dojo.fx");
             dojo.require("dojo.fx.easing");
             dojo.require("dojox.fx");
+			dojo.require("dijit.form.Form");
+			dojo.require("dijit.form.Button");
+			dojo.require("dojo.io.iframe");
 
             function slideIt() {
                 var effect1 = dojo.fx.easing["linear"];
