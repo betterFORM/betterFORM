@@ -94,6 +94,7 @@
             <fileset dir="${basedir}/target/bf-eXist/installer/scripts" includes="build.sh build.bat"/>
         </copy>
 
+	<sleep seconds="20"/>
 
     </target>
 
