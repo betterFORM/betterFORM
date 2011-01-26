@@ -184,7 +184,7 @@ public class XPathCache {
 
         IndependentContext independentContext = (IndependentContext) xpe.getStaticContext();
         independentContext.setDefaultFunctionNamespace(NamespaceConstants.XFORMS_NS);
-        independentContext.setBackwardsCompatibilityMode(true);
+        independentContext.setBackwardsCompatibilityMode(false);
 
         // XXX set base URI
 
