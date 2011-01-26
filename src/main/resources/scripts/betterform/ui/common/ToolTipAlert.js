@@ -9,49 +9,43 @@ dojo.declare("betterform.ui.common.ToolTipAlert",
     hideSpeed:1000,
 
     _show:function(id, commonChild,action) {
-        // console.debug("ToolTipAlert._show: [id:" + id , " commonChild: " + commonChild + "]");
+        console.debug("ToolTipAlert._show: [id:" + id , " commonChild: " + commonChild + "]");
         var commonChildNode = dojo.byId(id + '-' + commonChild);
 
-        if(commonChildNode == undefined || commonChild != this.alert) {
-            return;
+        if(commonChild != undefined && commonChild == this.hint) {
+            this._render(id, commonChild,"inline");
         }
+        else if(commonChildNode != undefined && commonChild == this.alert) {
+            var toolTipId = id+"-MasterToolTip-" +commonChild;
+            var alertTooltip = dijit.byId(toolTipId);
 
+            if(alertTooltip == undefined) {
+                alertTooltip = new dijit._MasterTooltip({id:toolTipId});
 
+                var valueNode = dojo.byId(id + '-value');
+                dojo.connect(alertTooltip, "onClick", this, dojo.hitch(this, function() {
+                        alertTooltip.hide(valueNode);
+                }));
+            }
 
-        var toolTipId = id+"-MasterToolTip-" +commonChild;
-        var alertTooltip = dijit.byId(toolTipId);
+            var controlValue = dijit.byId(id+"-value");
+            var controlValueIsEmpty = (controlValue.getControlValue() == undefined || controlValue.getControlValue() == '') && !(dojo.hasClass(controlValue.domNode, "xsdBoolean"));
 
-        if(alertTooltip == undefined) {
-            alertTooltip = new dijit._MasterTooltip({id:toolTipId});
+            alertTooltip.show(commonChildNode.innerHTML, dojo.byId(id+"-value"));
 
-            var valueNode = dojo.byId(id + '-value');
-            dojo.connect(alertTooltip, "onClick", this, dojo.hitch(this, function() {
-                    alertTooltip.hide(valueNode);
-            }));
-        }
-
-        var controlValue = dijit.byId(id+"-value");
-        var controlValueIsEmpty = (controlValue.getControlValue() == undefined || controlValue.getControlValue() == '') && !(dojo.hasClass(controlValue.domNode, "xsdBoolean"));
-
-        alertTooltip.show(commonChildNode.innerHTML, dojo.byId(id+"-value"));
-
-        if (action == "applyChanges" && (!controlValueIsEmpty || dojo.hasClass(controlValue.domNode, "xsdBoolean"))) {
             dojo.style(alertTooltip.domNode, "opacity", "1");
             dojo.addClass(controlValue.domNode, "bfInvalidControl");
 
+/*        if (action == "applyChanges" && (!controlValueIsEmpty || dojo.hasClass(controlValue.domNode, "xsdBoolean"))) {
             setTimeout(dojo.hitch(this,function() {this._fadeOutAndHide(id,commonChild)}),this.displayDuration);
+          }
+*/
         }
-
-        dojo.style(alertTooltip.domNode, "opacity", "1");
-        dojo.addClass(controlValue.domNode, "bfInvalidControl");
-
-
-
     },
 
 
     _hide:function(id, commonChild,action) {
-        // console.debug("ToolTipAlert._hide: [id:" + id , " commonChild: " + commonChild + "]");
+        console.debug("ToolTipAlert._hide: [id:" + id , " commonChild: " + commonChild + "]");
         var commonChildNode = dojo.byId(id + '-' + commonChild);
 
 
@@ -61,14 +55,27 @@ dojo.declare("betterform.ui.common.ToolTipAlert",
             if (alertDijit != undefined && controlValue != undefined) {
                 alertDijit.hide(controlValue);
             }
+        } else if (commonChild != undefined && commonChild == this.hint) {
+            this._render(id, commonChild,"none");
         }
     },
+
+    _render:function(id, commonChild, show) {
+        console.debug("ToolTipAlert._render [id:'",id,"' commonChild:'", commonChild," ' show:'",show, "']");
+        var mip = dojo.byId(id + "-" + commonChild);
+        if (mip != undefined && mip.innerHTML != '') {
+            dojo.style(mip, "display", show);
+        } else {
+            console.warn(id + "-" + commonChild + " is not defined for Control " + id);
+        }
+    },
+
 
 
     _fadeOutAndHide:function(id,commonChild) {
         var alertTooltip = dijit.byId(id+"-MasterToolTip-" +commonChild);
         // No need to check if tooltip exists since this function is only called if (after a check before) it exists
-        // console.debug("ToolTipAlert._fadeOutAndHide  [id: " + id + " - alertTooltip:" , alertTooltip ,"]");
+        console.debug("ToolTipAlert._fadeOutAndHide  [id: " + id + " - alertTooltip:" , alertTooltip ,"]");
         var speed = this.hideSpeed;
         dojo.fadeOut({
             node:alertTooltip.domNode,

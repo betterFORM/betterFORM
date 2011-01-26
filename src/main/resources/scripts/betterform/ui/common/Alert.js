@@ -11,7 +11,9 @@ dojo.declare("betterform.ui.common.Alert",
 
 
     handleValid:function(id,action){
-        // console.debug("Alert.handleValid[id:" + id , " action: " + action + "]");
+        // TODO: applyChanges must remove an existing alert
+
+        console.debug("Alert.handleValid[id:" + id , " action: " + action + "]");
 
         var control = dijit.byId(id);
         if(control == null) {
@@ -43,12 +45,12 @@ dojo.declare("betterform.ui.common.Alert",
     },
 
     handleInvalid:function(id,action) {
-        // console.debug("Alert.handleInvalid [id:" + id , " action: " + action + "]");
+        console.debug("Alert.handleInvalid [id:" + id , " action: " + action + "]");
 
         //##### SHOW NOTHING ON INIT #######
         var control = dijit.byId(id);
         if(control == null) {
-            console.warn("control '" +id +"' does not exist")
+            console.warn("control '" +id +"' does not exist");
             return;
         }
 
@@ -58,26 +60,27 @@ dojo.declare("betterform.ui.common.Alert",
             return;
         }
 
-        //##### SHOW ALL ALERTS IN RESPONSE TO SUBMIT ERRORS #######
-        if(action == "submitError") {
-            this._displayAlert(id,action);
-            return;
-        }
-
-
-
-        if(action == "xfDisabled"|| (action =="onBlur" || action =="applyChanges") && controlValueIsEmpty) {
+/*
+        else if((action == "xfDisabled"|| action =="onBlur" || action =="applyChanges") && controlValueIsEmpty) {
             this._displayNone(id,action);
         }
+*/
 
         else if(action == "onFocus" && controlValueIsEmpty ) {
             this._displayHint(id,action);
         }
         //##### SHOW ALERT #######
-        else if(action =="applyChanges" || action == "onFocus"){
+        else if(action == "onFocus" || action == "xfDisabled"|| action =="onBlur" || action =="applyChanges" || action == "submitError"){
             this._displayAlert(id,action);
         }
 
+        //##### SHOW ALL ALERTS IN RESPONSE TO SUBMIT ERRORS #######
+/*
+        else if(action == "submitError") {
+            this._displayAlert(id,action);
+            return;
+        }
+*/
         else {
             console.warn("Alert.handleInvalid: action:'", action , "' unknown, commonChild handling for control '", id, "', execution stopped");
         }
@@ -85,9 +88,6 @@ dojo.declare("betterform.ui.common.Alert",
         if(!dojo.hasClass(control.domNode,"bfInvalidControl")) {
             dojo.addClass(control.domNode,"bfInvalidControl");
         }
-
-
-
     },
 
     _displayAlert:function(id,action) {

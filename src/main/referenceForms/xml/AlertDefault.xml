@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Default Alert Handler - inline alerts</title>
+    </head>
+    <body>
+        <div class="description">
+            <p>
+            This form shows the default alert handling which is choosen when you do not specify
+            via some custom class (see other examples). This will show alert messages inline with their controls.
+            </p>
+            <p>
+            By default alerts are displayed to the right of the widget but this can be influenced by overwriting
+            the xfAlert styles.
+                It is the most common rendering of an input which is bound to a string value in the
+                Instance.
+            </p>
+        </div>
+        <div class="references">
+            <a href="#"/>
+            <a href="#"/>
+        </div>
+        <div class="sample">
+            <div class="markup">
+                <xf:model>
+                    <xf:instance xmlns="">
+                        <data xmlns="">
+                            <grouped-data>
+                                <group>
+                                    <a></a>
+                                    <b></b>
+                                    <c></c>
+                                    <d></d>
+                                </group>
+                            </grouped-data>
+                        </data>
+                    </xf:instance>
+                    <code class="ui">
+<xf:bind nodeset="grouped-data">
+    <xf:bind nodeset="group">
+        <xf:bind nodeset="a"  constraint="string-length(.) &gt; 5"/>
+        <xf:bind nodeset="b"  constraint="string-length(.) &gt; 5"/>
+        <xf:bind nodeset="c"  constraint="string-length(.) &gt; 5"/>
+        <xf:bind nodeset="d"  constraint="string-length(.) &gt; 5"/>
+    </xf:bind>
+</xf:bind>
+                    </code>
+                </xf:model>
+                <code class="ui">
+<xf:group ref="grouped-data/group" appearance="compact" class="InlineAlert">
+    <xf:label>a compact group with inline inputs - no initial data</xf:label>
+    <xf:input ref="a">
+        <xf:label>A-label</xf:label>
+        <xf:alert>Your input is not long enough</xf:alert>
+        <xf:hint>The input must be longer than 5 characters</xf:hint>
+        <xf:help>Help für Control A</xf:help>
+    </xf:input>
+    <xf:input ref="b">
+        <xf:label>Bb-label</xf:label>
+        <xf:alert>Your input is not long enough</xf:alert>
+        <!--<xf:hint>The input must be longer than 5 characters</xf:hint>-->
+        <xf:help>Help für Control B</xf:help>
+    </xf:input>
+    <xf:input ref="c">
+        <xf:label>Ccc-label</xf:label>
+        <xf:hint>The input must be longer than 5 characters</xf:hint>
+        <xf:alert>Your input is not long enough</xf:alert>
+        <xf:help>Help für Control C</xf:help>
+    </xf:input>
+    <xf:input ref="d">
+        <xf:label>Dddd-label</xf:label>
+        <xf:hint>The input must be longer than 5 characters</xf:hint>
+        <xf:alert>Your input is not long enough</xf:alert>
+        <xf:help>Help für Control D</xf:help>
+    </xf:input>
+</xf:group>
+<xf:group ref="grouped-data/group" appearance="compact" class="InlineAlert">
+    <xf:label>a compact group with inline inputs - no initial data</xf:label>
+    <xf:input ref="a" incremental="true">
+        <xf:label>A-label</xf:label>
+        <xf:alert>Your input is not long enough</xf:alert>
+        <xf:hint>The input must be longer than 5 characters</xf:hint>
+        <xf:help>Help für Control A</xf:help>
+    </xf:input>
+    <xf:input ref="b" incremental="true">
+        <xf:label>Bb-label</xf:label>
+        <xf:alert>Your input is not long enough</xf:alert>
+        <xf:hint>The input must be longer than 5 characters</xf:hint>
+        <xf:help>Help für Control B</xf:help>
+    </xf:input>
+    <xf:input ref="c" incremental="true">
+        <xf:label>Ccc-label</xf:label>
+        <xf:hint>The input must be longer than 5 characters</xf:hint>
+        <xf:alert>Your input is not long enough</xf:alert>
+        <xf:help>Help für Control C</xf:help>
+    </xf:input>
+    <xf:input ref="d" incremental="true">
+        <xf:label>Dddd-label</xf:label>
+        <xf:hint>The input must be longer than 5 characters</xf:hint>
+        <xf:alert>Your input is not long enough</xf:alert>
+        <xf:help>Help für Control D</xf:help>
+    </xf:input>
+</xf:group>
+                </code>
+            </div>
+<!--
+            <div class="MIPS">
+                <xf:group appearance="full">
+                    <xf:label></xf:label>
+                    <xf:input id="input1-readonly" navindex="-1" ref="input1/@readonly" incremental="true">
+                        <xf:label>readonly</xf:label>
+                    </xf:input>
+                    <xf:input id="input1-required" navindex="-1" ref="input1/@required" incremental="true">
+                        <xf:label>required</xf:label>
+                    </xf:input>
+                    <xf:input id="input1-relevant" navindex="-1" ref="input1/@relevant" incremental="true">
+                        <xf:label>relevant</xf:label>
+                    </xf:input>
+                    <xf:input id="input1-valid" navindex="-1" ref="input1/@constraint" incremental="true">
+                        <xf:label>valid</xf:label>
+                    </xf:input>
+                </xf:group>
+            </div>
+-->
+        </div>
+        <div class="CSS">
+            <table>
+<!--
+                <tr>
+                    <th>Class</th>
+                    <th>Description</th>
+                </tr>
+-->
+                <tr>
+                    <td>InlineAlert</td>
+                    <td>matches a body that uses inline alerts</td>
+                </tr>
+                <tr>
+                    <td>xfInput</td>
+                    <td>matches an Element that represents a XForms input element</td>
+                </tr>
+                <tr>
+                    <td>xfAlert</td>
+                    <td>matches an Element that represents a XForms alert element</td>
+                </tr>
+            </table>
+        </div>
+
+    </body>
+</html>

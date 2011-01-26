@@ -169,20 +169,25 @@ a.active {
 .xfInvalid .xfRadioLabel,
 .xfInvalid .xfCheckBoxLabel,
 .xfInvalid .dijitTextBox {
-	/*color:#CC0000;*/
+/*
+	border-color:#8B0000;
+	border-width:1px 1px 1px 1px;
+	border-style:solid;
+*/
 }
 
-.tundra .xfControl .bfInvalidControl,
-.tundra .xfControl .bfInvalidControl .xfDateTextBox,
-.tundra .xfMinimalTextarea .bfInvalidControl .xfValue,
-.tundra .xfControl .bfInvalidControl .xfTimeTextBox {
-	/*border:1px solid #CC0000;*/
-    /*background: #FFCFCF;*/
+.bfInvalidControl .xfValue,
+.bfInvalidControl .xfDateTextBox,
+.bfInvalidControl .xfValue,
+.bfInvalidControl .xfTimeTextBox {
+	border-color:#8B0000;
+	border-width:1px 1px 1px 1px;
+	border-style:solid;
 }
 
 .xfAlert {
-    border: 1px solid #CC0000;
-	background-color:white;
+    border: 1px solid #8b0000;
+	background-color:transparent;
     color: #333333;
     margin: 2px;
 	padding:5px;
@@ -191,11 +196,18 @@ a.active {
 	-webkit-border-radius:5px;
 	
 }
+.xfHint{
+	border:thin solid #666666;
+	margin:2px;
+	padding:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+}
 
 /* for tundra checkboxes */
 .tundra .dijitCheckBox,
 .tundra .dijitCheckBoxIcon {
-    background-image: url('../images/checkmarkNoBorder.png'); /* checkbox sprite image */
+   	background-image: url('../images/checkmarkNoBorder.png');
     border: 1px solid gray;
     height: 14px;
     width: 14px;
@@ -594,31 +606,33 @@ table .xfContainer{
     background-position: -129px 50%;
 }
 
-.xfReadWrite .dijitCheckBox, .xfReadWrite .dijitCheckBoxIcon {
-    background-image: url(../images/checkmarkNoBorder.png);
-    background-position: -16px 50%;
+.xfReadWrite .dijitCheckBox,
+.xfReadWrite .dijitCheckBoxIcon {
+    /*background-image: url(../images/checkmarkNoBorder.png);*/
     background-repeat: no-repeat;
     height: 14px;
-    margin: 0;
-    padding: 0;
     width: 14px;
+	background-position: -16px 50%;
+	margin: 0;
+	padding: 0;
 }
 
 .xfReadWrite .dijitCheckBoxChecked {
-    background-image: url(../images/checkmarkNoBorder.png);
+    /*background-image: url(../images/checkmarkNoBorder.png);*/
+	background-repeat: no-repeat;
+	height: 14px;
+	width: 14px;
     background-position: 0 50%;
-    background-repeat: no-repeat;
-    height: 14px;
-    width: 14px;
 
 }
 
-.xfReadOnly .dijitCheckBox, .xfReadOnly .dijitCheckBoxIcon {
-    background-image: url(../images/checkmarkNoBorder.png);
-    background-position: -48px 50%;
+.xfReadOnly .dijitCheckBox,
+.xfReadOnly .dijitCheckBoxIcon {
+    /*background-image: url(../images/checkmarkNoBorder.png);*/
     background-repeat: no-repeat;
-    height: 14px;
-    width: 14px;
+	height: 14px;
+	width: 14px;
+	background-position: -48px 50%;
 }
 
 .xfReadOnly .dijitCheckBoxChecked {
@@ -636,7 +650,7 @@ table .xfContainer{
 }
 
 .tundra .dijitCheckBoxIcon {
-    background-image: url(../images/checkmarkNoBorder.png);
+    /*background-image: url(../images/checkmarkNoBorder.png);*/
 }
 
 .xfControl select {

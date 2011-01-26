@@ -8,7 +8,7 @@ dojo.declare("betterform.ui.common.InlineRoundBordersAlert",
 {
     // @Override
     _show:function(id, commonChild) {
-        // console.debug("InlineRoundBordersAlert._show: [id:'",id,"' commonChild:'", commonChild,"']");
+        console.debug("InlineRoundBordersAlert._show: [id:'",id,"' commonChild:'", commonChild,"']");
         var commonChildNode = dojo.byId(id + '-' + commonChild);
         if(commonChildNode == undefined) {
             return;
@@ -19,7 +19,7 @@ dojo.declare("betterform.ui.common.InlineRoundBordersAlert",
 
     // @Override
     _hide:function(id, commonChild) {
-        // console.debug("InlineRoundBordersAlert._hide: [id:'",id,"' commonChild:'", commonChild,"']");
+        console.debug("InlineRoundBordersAlert._hide: [id:'",id,"' commonChild:'", commonChild,"']");
         var commonChildNode = dojo.byId(id + '-' + commonChild);
         if(commonChildNode == undefined) {
             return;
@@ -30,28 +30,28 @@ dojo.declare("betterform.ui.common.InlineRoundBordersAlert",
 
     // @Override
     _displayAlert:function(id) {
-        // console.debug("InlineRoundBordersAlert._displayAlert id: ", id);
+        console.debug("InlineRoundBordersAlert._displayAlert id: ", id);
         this._handleBorders(id, this.alert);
         this.inherited(arguments);
     },
 
     // @Override
     _displayHint:function(id) {
-        // console.debug("InlineRoundBordersAlert._displayHint id: ", id);
+        console.debug("InlineRoundBordersAlert._displayHint id: ", id);
         this._handleBorders(id, this.hint);
         this.inherited(arguments);
     },
 
     // @Override
     _displayInfo:function(id) {
-        // console.debug("InlineRoundBordersAlert._displayInfo id: ", id);
+        console.debug("InlineRoundBordersAlert._displayInfo id: ", id);
         this._handleBorders(id, this.info);
         this.inherited(arguments);
     },
 
     // @Override
     _displayNone:function(id) {
-        // console.debug("InlineRoundBordersAlert._displayNone id: ", id);
+        console.debug("InlineRoundBordersAlert._displayNone id: ", id);
         this._handleBorders(id, this.none);
         this.inherited(arguments);
     },
@@ -68,7 +68,7 @@ dojo.declare("betterform.ui.common.InlineRoundBordersAlert",
     },
 
     _roundBorders:function(id, state) {
-        // console.debug("InlineRoundBordersAlert._roundBorders: id:", id + "-value");
+        console.debug("InlineRoundBordersAlert._roundBorders: id:", id + "-value");
         var controlValue = dijit.byId(id + "-value");
         // console.debug("InlineRoundBordersAlert._roundBorders: value: ", controlValue);
         if (controlValue != undefined) {
