@@ -36,7 +36,8 @@
     <property name="betterform.etc" value="${betterform.home}/src/main/etc"/>
     <property name="betterform.xrx" value="${betterform.home}/src/main/xrx"/>
     <property name="betterform.lib" value="${betterform.home}/src/main/lib"/>
-    <property name="" value="${betterform.home}/src/main/db"/>
+    <property name="betterform.db" value="${betterform.home}/src/main/db"/>
+    <property name="betterform.dojo" value="${betterform.home}/src/main/dojo"/>
 
     <property name="betterform.webapp" value="${betterform.home}/src/main/webapp"/>
 
@@ -109,6 +110,10 @@
 
         <copy todir="${exist.rootdir}/webapp/xquery">
             <fileset file="${betterform.webapp}/xquery/xferror.xql"/>
+        </copy>
+
+        <copy todir="${exist.rootdir}/webapp/resources">
+            <fileset dir="${betterform.dojo}/resources/"/>
         </copy>
 
         <!-- start.config points to extension lib-dir -->

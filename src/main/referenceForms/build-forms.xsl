@@ -246,7 +246,7 @@
                 <td id="xfvalue" onmouseover="showClass('xfValue');"
                     onmouseout="hideClass('xfValue');">xfValue
                     <div dojoType="dijit.Tooltip" connectId="xfvalue">
-                        matches the wigdet part of an XForms control
+                        matches the widget part of an XForms control
                     </div>
                 </td>
             </tr>

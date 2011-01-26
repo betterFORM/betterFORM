@@ -39,6 +39,7 @@
 
         <target name="clean">
                 <delete dir="${basedir}/target" failonerror="false"/>
+                <delete dir="${basedir}/target-utils" failonerror="false"/>
         </target>
 
         <target name="set-target-dir" depends="clean, set-target-dir-1.4, set-target-dir-1.5"/>
@@ -153,10 +154,13 @@
         <target name="prepare-db-installation-dir">
             <!-- Copy current forms from main to db-install-dir -->
             <copy todir="${src.target.dir}/db/forms" overwrite="true" filtering="false" description="copy forms form ${src.dir} to db-installition-dir ${src.target.dir}/db/">
-                <fileset dir="${src.dir}/main/xforms" includes = "*.xhtml"/>
+                <fileset dir="${src.dir}/main/xforms"/>
             </copy>
 
-            <delete dir="${src.target.dir}/db/forms" excludes="demo reference"/>
+            <!-- <delete dir="${src.target.dir}/db/forms" excludes="demo reference"/> -->
+                <delete includeemptydirs="yes">
+                    <fileset dir="${src.target.dir}/db/forms" excludes="demo/**/*.* reference/**/*.* FeatureExplorer.xhtml"/>
+                </delete>
         </target>
 
         <target name="copy-betterFORM-website" if="betterform">
