@@ -3,18 +3,12 @@
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       
-      <title>growing Textarea control</title>
-      <style type="text/css">
-            .xfControl{
-				/* this should be set for xfControl in general probably */
-				display:inline-block;
-			}
-        </style>
-       xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"<link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
+      <title>Text input control</title>
+       xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
       <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="reference.css" /><script xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="text/javascript">
                 dojo.require("dojox.highlight");
                 dojo.require("dojox.highlight.languages.xml");
-                //                dojo.require("dojox.highlight.languages.pygments.xml");
                 dojo.require("dijit.form.Button");
                 dojo.require('dijit.layout.ContentPane');
             </script></head>
@@ -25,33 +19,9 @@
             <xf:model>
                
                <xf:instance xmlns="">
-                  
                   <data>
-                     
-                     <textarea1 constraint="true" readonly="false" required="true" relevant="true">
-                        
-                        <value></value>
-                        
-                     </textarea1>
-                     
                   </data>
-                  
                </xf:instance>
-               
-               <xf:bind nodeset="textarea1">
-                  
-                  <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="string"></xf:bind>
-                  
-                  <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
-                  
-                  <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
-                  
-                  <xf:bind nodeset="@required" type="boolean"></xf:bind>
-                  
-                  <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
-                  
-               </xf:bind>
-               
                
             </xf:model>
          </div>
@@ -65,8 +35,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d35e123" onmouseover="showClass('xfTextarea');" onmouseout="hideClass('xfTextarea');">xfTextarea
-                     <div dojoType="dijit.Tooltip" connectId="d35e123">matches an Element that represents a XForms input element</div>
+                  <td id="d14e117" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
+                     <div dojoType="dijit.Tooltip" connectId="d14e117">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
@@ -179,24 +149,19 @@
             </table>
          </div>
          <div class="pageintro">
-            <h1>growing Textarea control</h1>
+            <h1>Text input control</h1>
             <div class="description">
                
                <p>
-                  
-                  This form control enables free-form data entry and is
-                  intended for use in entering multiline content, e.g., the
-                  body of an email message.
+                  This form control enables free-form data entry or a user
+                  interface component appropriate to the datatype of the bound
+                  node.
                   
                </p>
                
                <p>
-                  A
-                  <span class="keyword">textarea</span>
-                  using attribute
-                  <span class="keyword">mediatype</span>
-                  with
-                  value 'dojo' will be rendered as a growing textarea that expands as the user types in more text.
+                  It is the most common rendering of an input which is bound to a string value in the
+                  Instance.
                   
                </p>
                
@@ -207,7 +172,7 @@
                   <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
                </tr>
                <tr>
-                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-textarea" target="_blank">
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-input" target="_blank">
                         Recommendation
                         </a></td>
                </tr>
@@ -220,17 +185,17 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:textarea id="textarea1" ref="textarea1/value" mediatype="dojo" incremental="true">
+            <xf:input id="input1" ref="input1/value" incremental="true">
                
                <xf:label>a text</xf:label>
                
-               <xf:hint>a Hint for this control</xf:hint>
+               <xf:hint>Hint for this input</xf:hint>
                
-               <xf:help>help for textarea1</xf:help>
+               <xf:help>help for input1</xf:help>
                
                <xf:alert>invalid</xf:alert>
                
-            </xf:textarea>
+            </xf:input>
          </div>
          <div class="MIPS">
             
@@ -238,25 +203,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="textarea1-readonly" navindex="-1" ref="textarea1/@readonly" incremental="true">
+               <xf:input id="input1-readonly" navindex="-1" ref="input1/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="textarea1-required" navindex="-1" ref="textarea1/@required" incremental="true">
+               <xf:input id="input1-required" navindex="-1" ref="input1/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="textarea1-relevant" navindex="-1" ref="textarea1/@relevant" incremental="true">
+               <xf:input id="input1-relevant" navindex="-1" ref="input1/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="textarea1-valid" navindex="-1" ref="textarea1/@constraint" incremental="true">
+               <xf:input id="input1-valid" navindex="-1" ref="input1/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   
@@ -266,12 +231,12 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:textarea id="textarea1" ref="textarea1/value" mediatype="dojo" incremental="true"&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:input id="input1" ref="input1/value" incremental="true"&gt;
     &lt;xf:label&gt;a text&lt;/xf:label&gt;
-    &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
-    &lt;xf:help&gt;help for textarea1&lt;/xf:help&gt;
+    &lt;xf:hint&gt;Hint for this input&lt;/xf:hint&gt;
+    &lt;xf:help&gt;help for input1&lt;/xf:help&gt;
     &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
-&lt;/xf:textarea&gt;
+&lt;/xf:input&gt;
 </code></pre></div><script type="text/javascript">
                     function showClass(cssClass){
                         dojo.query('.sample .'+ cssClass).forEach(function(item){

@@ -169,7 +169,8 @@ public class FormsServlet extends HttpServlet {
     }
 
     private void addTableHead(HttpServletRequest request,StringBuffer html, String uri,String ajaxFunction) {
-        String wrapperStart = ajaxFunction + "('";
+//        String wrapperStart = ajaxFunction + "('";
+        String wrapperStart = "viewParent(this,'";
         String wrapperEnd = "');";
         StringBuffer crumb=new StringBuffer("");
         String[] steps = uri.split("/");
@@ -195,7 +196,7 @@ public class FormsServlet extends HttpServlet {
         String altTextFormUpload = "Upload your form into this collection";
         String altTextCreateCollection = "Create a new collection";
         html.append(
-                "<div id=\"bfFormBrowser\">\n" +
+                "<div class=\"bfFormBrowser\">\n" +
                 "        <div class=\"formBrowserHead\">\n" +
                 "            <div class=\"formBrowserHeader\">\n" + crumb.toString() +
                 "        </div>\n" +
@@ -271,7 +272,12 @@ public class FormsServlet extends HttpServlet {
             if (files != null) {
                 if (uri.indexOf("/") != -1) {
                     up = uri.substring(0, uri.lastIndexOf("/"));
-                    handleUp(html, request, up,ajaxFunction,filesroot.getParentFile().getName());
+                    String parent = filesroot.getParentFile().getName();
+                    if(ROOTCOLLECTION.equals(parent)){
+                        handleUp(html, request, up,ajaxFunction,filesroot.getParentFile().getName(),true);
+                    }else {
+                        handleUp(html, request, up,ajaxFunction,filesroot.getParentFile().getName(),false);
+                    }
                 }
                 //process dirs/collections first
                 for (File aFile : files) {
@@ -302,9 +308,16 @@ public class FormsServlet extends HttpServlet {
         }
     }
 
-    private void handleUp(StringBuffer html, HttpServletRequest request, String up,String ajaxFunction,String parentName) {
+    private void handleUp(StringBuffer html, HttpServletRequest request, String up,String ajaxFunction,String parentName,boolean isRoot) {
         if (ajaxFunction != null) {
-            String wrapperStart = ajaxFunction + "('";
+//            String wrapperStart = ajaxFunction + "('";
+            String wrapperStart;
+            if(isRoot){
+                wrapperStart = "viewRoot(this,'";
+            }else{
+                wrapperStart = "viewParent(this,'";
+            }
+//            String wrapperStart = "viewParent('";
             String wrapperEnd = "');";
             html.append(
                     "        <div class=\"directory parent\">\n" +
@@ -322,7 +335,8 @@ public class FormsServlet extends HttpServlet {
 
     private void handleDirectory(StringBuffer html, HttpServletRequest request, String uri, File aFile,String ajaxFunction,boolean shortenNames) {
         if (ajaxFunction != null) {
-            String wrapperStart = ajaxFunction + "('";
+//            String wrapperStart = ajaxFunction + "('";
+            String wrapperStart = "viewContent(this,'";
             String wrapperEnd = "');";
             html.append(
                     "        <div class=\"directory\">\n" +

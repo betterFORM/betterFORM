@@ -120,13 +120,6 @@
               filenameparameter="currentFile">
             <classpath refid="transform.class.path"/>
         </xslt>
-        <xslt in="${basedir}/src/main/webapp/dashboard.xhtml"
-              out="${basedir}/src/main/webapp/dashboard.html"
-              style="${basedir}/src/main/webapp/resources/xslt/site.xsl"
-              force="true"
-              filenameparameter="currentFile">
-            <classpath refid="web.class.path"/>
-        </xslt>
         <!-- copy demo pages unmodified -->
         <copy file="${basedir}/src/main/webapp/pages/en/demo.xhtml" todir="${basedir}/src/main/webapp/site/en"/>
         <copy file="${basedir}/src/main/webapp/pages/de/demo.xhtml" todir="${basedir}/src/main/webapp/site/de"/>

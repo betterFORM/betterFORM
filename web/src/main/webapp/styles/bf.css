@@ -39,10 +39,9 @@ body, a {
 body {
 	background-image: none;
 	padding: 0;
-	margin: 0;
 	color: #363636;
 	overflow: auto;
-	background: #565656;
+	background: #efefef;
 	text-align: center; /*height:100%;*/
 }
 
@@ -183,12 +182,14 @@ ul {
 }
 */
 
+/*
 .box {
 	margin-top: -24px;
 	width: 100%;
 	border: 1px solid #BABABA;
 	overflow: hidden;
 }
+*/
 
 /*
 	##################################################
@@ -294,6 +295,7 @@ a:hover {
 	position: absolute;
 	top: 120px;
 	z-index: 100;
+	display:none;
 }
 
 #sub-header {
@@ -730,14 +732,23 @@ h3 {
 	overflow: hidden;
 }
 
-#bfFormBrowser {
-	background: #D3D3D3;
+.bfFormBrowser {
+	background: #dedede;
+	border:thin solid #999999;
+	-moz-border-radius-bottomleft:10px;
+	-moz-border-radius-bottomright:10px;
+	-webkit-border-bottom-left-radius:10px;
+	-webkit-border-bottom-right-radius:10px;
+	float:left;
+	text-align:center;
+	position:relative;
+	margin-top:16px;
 }
 
-#bfFormBrowser .directory,
-#bfFormBrowser .file {
+.bfFormBrowser .directory,
+.bfFormBrowser .file {
 	width:120px;
-	padding:30px;
+	padding:33px;
 	margin:6px;
 	float:left;
 	-moz-border-radius:10px;
@@ -749,49 +760,55 @@ h3 {
 }
 
 
-#bfFormBrowser .formBrowserHeader {
+.bfFormBrowser .formBrowserHeader {
 	padding-bottom: 10px;
 	color: white;
 	padding: 5px;
 	font-size: 12pt;
 	text-align: left;
 	height:18px;
+	margin-left:-20px;
 }
-#bfFormBrowser .formBrowserHeader .pathName{
+.bfFormBrowser .formBrowserHeader .pathName{
 	background:url(../resources/images/arrow-right.png) left no-repeat;
 	padding:3px 3px 3px 20px;
 	float:left;
 	color:#333333;
 }
 
-#browser{
+.browser{
+/*
 	width: 100%;
-	margin-top: 10px;
-	top: 120px;
-	/*left:-2000px;*/
 	position: absolute;
+	top: 120px;
+*/
+	/*margin-top: 10px;*/
+	/*left:-2000px;*/
+	text-align:center;
+	position:absolute;
+	top:115px;
 }
 
 
-#bfFormBrowser .textLink {
+.bfFormBrowser .textLink {
 	display: block;
 	vertical-align: middle;
 }
 
-#bfFormBrowser .directory .textLink {
-	margin-top: 10px;
+.bfFormBrowser .directory .textLink {
+	margin-top: 7px;
 }
 
-#bfFormBrowser .file .bfIconFile {
+.bfFormBrowser .file .bfIconFile {
 	margin-top:20px;
 	display:inline-block;
 }
 
-#bfFormBrowser .file .textLink {
+.bfFormBrowser .file .textLink {
 	margin-top: 24px;
 }
 
-#bfFormBrowser .file .sourceLink {
+.bfFormBrowser .file .sourceLink {
 	position:absolute;
 	top:3px;
 	right:3px;
@@ -813,9 +830,9 @@ h3 {
 }
 
 
-#bfFormBrowser #bfListView .directory,#bfFormBrowser #bfListView .file {
+.bfFormBrowser #bfListView .directory,.bfFormBrowser #bfListView .file {
 	clear:left;
-	width:760px;
+	width:788px;
 	height:24px;
 	text-align:left;
 	padding:10px 0;
@@ -824,23 +841,20 @@ h3 {
 	position:relative;
 }
 
-#bfFormBrowser #bfListView .directory{
-	height:38px;
-}
 
-#bfFormBrowser #bfListView .file a{
+.bfFormBrowser #bfListView .file a{
 	vertical-align:bottom;
 	display:inline-block;
 	margin:0;
 	margin-left:10px;
 }
-#bfFormBrowser  .file .sourceLink{
+.bfFormBrowser  .file .sourceLink{
 	font-size:3pt;
 	padding:1px;
 	background:#d3d3d3;
 	color:#d3d3d3;
 }
-#bfFormBrowser  .file .sourceLink:hover{
+.bfFormBrowser  .file .sourceLink:hover{
 	font-size:10pt;
 	padding:10px;
 	color:transparent;
@@ -850,28 +864,30 @@ h3 {
 	border-color:#666666;
 
 }
-#bfFormBrowser #bfListView .directory img{
+.bfFormBrowser #bfListView .directory img{
 	width:38px;
 	height:38px;
 	float:left;
 	margin:0 5px;
+	position:relative;
+	top:-7px;
 }
-#bfFormBrowser #bfListView .file .bfIconFile img {
+.bfFormBrowser #bfListView .file .bfIconFile img {
 	width:24px;
 	height:24px;
 }
-#bfFormBrowser .file .bfIconFile{
+.bfFormBrowser .file .bfIconFile{
 
 }
-#bfFormBrowser .file .bfIconFile img{
+.bfFormBrowser .file .bfIconFile img{
 	width:48px;
 	height:48px;
 }
-#bfFormBrowser .directory a img{
+.bfFormBrowser .directory a img{
 	width:80px;
 	height:80px;
 }
-#bfFormBrowser #go-up{
+.bfFormBrowser #go-up{
 	width:100px;
 	height:100px;
 	margin-top:-10px;
