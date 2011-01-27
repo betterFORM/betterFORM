@@ -1319,33 +1319,22 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
         }
     },
 
-    showHelp:function() {
-        // console.debug("showng help for:", this.currentControlId);
-        if (this.currentControlId == undefined || this.currentControlId == "" || this.currentControlId == '') {
-            console.warn("No Control selected to show help for");
-            return;
-        }
-        var helpCtrl = dojo.byId(this.currentControlId + '-help');
+    showHelp:function(id) {
+//        console.debug("showng help for:", id);
+        var helpCtrl = dojo.byId(id + '-help');
         if (helpCtrl == undefined) {
-            console.warn("No help available for Control Id: '" + this.currentControlId + "'");
+            console.warn("No help available for Control Id: '" + id + "'");
             return;
         }
 
-        var helpWnd = dojo.byId('bfHelpTrigger');
-        var newdiv = document.createElement('div');
-        dojo.style(newdiv, { "display":"none"});
+        var helpText = dojo.byId(id + "-help-text");
+        var currentState = dojo.style(helpText,"display");
 
-        helpWnd.appendChild(newdiv);
-        newdiv.innerHTML = helpCtrl.innerHTML;
-        var helpDijit = new dojox.layout.FloatingPane({
-            title: 'Help',
-            closeable:true,
-            resizable:true,
-            dockable: false
-        }, newdiv);
-        dojo.addClass(helpDijit.domNode, "bfHelpPane");
-        helpDijit.startup();
-
+        if(currentState == "none"){
+            dojo.style(helpText, { "display":"inline-block"});
+        }else{
+            dojo.style(helpText, { "display":"none"});
+        }
     },
 
     getInstanceDocument:function(modelId, instanceId){

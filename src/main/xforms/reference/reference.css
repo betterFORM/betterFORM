@@ -10,11 +10,20 @@ body {
     margin: 0;
     padding: 0;
 }
+.tundra *{
+	font-size:9pt;
+}
 
 #bfLoading {
     top: 0;
     right: 5px;
 }
+
+/*overwrites*/
+.xfControl .xfValue{
+	/*height:1em;*/
+}
+/*overwrites*/
 
 #navMenu {
     position: fixed;
@@ -22,7 +31,6 @@ body {
     left: 0;
     width: 100%;
     z-index:1000;
-	background:#b0c4de;
 }
 
 #boilerPlate {
@@ -86,11 +94,12 @@ table {
     font-size: 0.8em;
     padding: 0;
     margin: 0;
+	padding:5px;
 }
 
 #xforms .sample {
     padding: 20px;
-    background: #eeeeee;
+    background: #f3f3f3;
 }
 
 #xforms .CSS {
@@ -103,7 +112,7 @@ table {
 }
 #xforms .CSS table{
     width:100%;
-    background:#eeeeee;
+    background:#f3f3f3;
 }
 
 #xforms .CSS caption{
@@ -211,7 +220,7 @@ pre {
 pre, code {
     border-width: 0px; /*background:#ddddff;*/
 /*background:white;*/
-    background-color: LightYellow;
+    background-color: #f3f3f3;
     font-size: 1.0em;
     overflow: auto;
 }
@@ -237,9 +246,6 @@ pre, code {
     display: block;
 }
 
-.tundra *{
-	font-size:12pt;
-}
 .tundra .xml *{
 	font-size:10pt !important;
 	font-weight:normal;

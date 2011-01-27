@@ -407,16 +407,26 @@ public class FormsServlet extends HttpServlet {
             iconFile = "type-js-png";
         }
 
+        /* starting dirty hack here - we are not yet able to handle subform inline references when parent document is in a different location
+        *  As we want FeatureExplorer on the root level we put a fake file there just as placeholder and output a link to the real document.
+        */
+        String fileName = aFile.getName();
+        if(fileName.equals("FeatureExplorer.xhtml")){
+            fileName = "reference/" + fileName;
+        }
+        /*
+        * end of hack here
+        */
         html.append(
                         "        <div class=\"file\">\n" +
-                        "                <a class=\"bfIconFile\" href=\"" + request.getContextPath() + "/" + uri + "/" + aFile.getName() + "\" target=\"_blank\">" +
+                        "                <a class=\"bfIconFile\" href=\"" + request.getContextPath() + "/" + uri + "/" + fileName + "\" target=\"_blank\">" +
                         "                   <img src=\"" + request.getContextPath() + "/resources/images/"+iconFile+"\" border=\"0\">\n" +
                         "                </a>\n" +
-                        "                <a class=\"textLink\" title=\""+ aFile.getName()+"\" href=\"" + request.getContextPath() + "/" + uri + "/" + aFile.getName() + "\" target=\"_blank\">" + getFileName(aFile,shortenNames) + "</a>\n" +
-                        "                <a class=\"sourceLink\" title=\""+ "view" +"\" href=\"" + request.getContextPath() + "/" + uri + "/" + aFile.getName() + "?source=true \" target=\"_blank\">" + "<&nbsp;/&nbsp;>" + "</a>\n" +
+                        "                <a class=\"textLink\" title=\""+ fileName+"\" href=\"" + request.getContextPath() + "/" + uri + "/" + fileName + "\" target=\"_blank\">" + getFileName(aFile,shortenNames) + "</a>\n" +
+                        "                <a class=\"sourceLink\" title=\""+ "view" +"\" href=\"" + request.getContextPath() + "/" + uri + "/" + fileName + "?source=true \" target=\"_blank\">" + "<&nbsp;/&nbsp;>" + "</a>\n" +
 /*
                         "            <div>\n" +
-                        "                <a href=\"" + request.getContextPath() + "/" + uri + "/" + aFile.getName() + "?source=true\" target=\"_blank\">source</a>\n" +
+                        "                <a href=\"" + request.getContextPath() + "/" + uri + "/" + fileName + "?source=true\" target=\"_blank\">source</a>\n" +
                         "            </div>\n" +
                         "            <div>" + DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).format(new Date(f.lastModified())) + "</div>\n" +
 */

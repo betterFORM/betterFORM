@@ -338,12 +338,14 @@
                             <xsl:call-template name="createForm"/>
                         </xsl:otherwise>
                     </xsl:choose>
+<!--
                     <xsl:if test="exists(//xf:help)">
                         <div id="bfHelpTrigger">
                             <a href="javascript:fluxProcessor.showHelp();"><img id="bfHelpIcon" src="{concat($contextroot,$resourcesPath,'images/helpBubble.png')}" alt="Help"/></a>
                             <div dojotype="dijit.Tooltip" connectid="bfHelpIcon">Focus control and click here for help</div>
                         </div>
                     </xsl:if>
+-->
                     <div id="helpWindow" style="display:none"/>
 <!--
                     <div id="bfCopyright">
@@ -569,7 +571,20 @@
     <!-- ##### HELP ##### -->
     <!-- ##### HELP ##### -->
     <xsl:template match="xf:help">
-        <span id="{../@id}-help" class="xfHelp" style="display:none;"><xsl:apply-templates/></span>
+        <!--<span id="{../@id}-help" class="xfHelp" style="display:none;">-->
+            <!--<div id="{../@id}-help" class="xfHelp">-->
+        <div class="bfHelpWrapper">
+            <div id="{../@id}-help-text" class="bfHelpText" style="display:none;">
+                <xsl:apply-templates/>
+            </div>
+            <a tabindex="-1" href="javascript:fluxProcessor.showHelp('{../@id}');" id="{../@id}-help" class="xfHelp">
+                <img id="{../@id}-help-HelpIcon" src="{concat($contextroot,$resourcesPath,'images/helpBubble.png')}"
+                     alt="Help"/>
+                <!--<div dojotype="dijit.Tooltip" connectid="bfHelpIcon">Focus control and click here for help</div>-->
+            </a>
+        </div>
+        <!--</div>-->
+        <!--</span>-->
     </xsl:template>
 
     <!-- ##### ALERT ##### -->

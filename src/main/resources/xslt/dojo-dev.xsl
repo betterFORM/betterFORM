@@ -27,7 +27,7 @@
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dijit/themes/nihilo/nihilo.css";
                         </xsl:when>
                          <xsl:when test="contains(//body/@class, 'claro')">
-                    @import "<xsl:value-of select="$contextroot"/>dijit/themes/claro/claro.css";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dijit/themes/claro/claro.css";
                         </xsl:when>
                         <xsl:otherwise>
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dijit/themes/tundra/tundra.css";

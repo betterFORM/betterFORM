@@ -17,7 +17,6 @@
     -parameter passing from incoming element to shadow content
     ##### -->
 
-    #
     <!-- used in stylesheet generation to build include the base stylesheet (useragent stylesheet) -->
     <bfb:resources>
         <bfb:xslt id="dojo" href="dojo.xsl"/>

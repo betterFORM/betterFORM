@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml">
+<?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events">
    
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       
       <title>Default Alert Handler - inline alerts</title>
-       xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
-      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="reference.css" /><script xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="text/javascript">
+       xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
+      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="reference.css" /><script xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="text/javascript">
                 dojo.require("dojox.highlight");
                 dojo.require("dojox.highlight.languages.xml");
                 //                dojo.require("dojox.highlight.languages.pygments.xml");
@@ -15,7 +15,7 @@
             </script></head>
    
    <body class="soria InlineAlert" style="margin:30px">
-      <div xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="xforms" class="InlineAlert">
+      <div xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="xforms" class="InlineAlert">
          <div style="display:none">
             <xf:model>
                
@@ -42,6 +42,15 @@
                   </data>
                   
                </xf:instance>
+               
+               <xf:submission id="echo" resource="echo:foo" method="GET" replace="none">
+                  
+                  <xf:message ev:event="xforms-submit-error">An error occurred</xf:message>
+                  
+                  <xf:message ev:event="xforms-submit-done">Success</xf:message>
+                  
+               </xf:submission>
+               
                
                
                <xf:bind nodeset="grouped-data">
@@ -73,18 +82,18 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d2e215" onmouseover="showClass('InlineAlert');" onmouseout="hideClass('InlineAlert');">InlineAlert
-                     <div dojoType="dijit.Tooltip" connectId="d2e215">matches a body that uses inline alerts</div>
+                  <td id="d2e160" onmouseover="showClass('InlineAlert');" onmouseout="hideClass('InlineAlert');">InlineAlert
+                     <div dojoType="dijit.Tooltip" connectId="d2e160">matches a body that uses inline alerts</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d2e224" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
-                     <div dojoType="dijit.Tooltip" connectId="d2e224">matches an Element that represents a XForms input element</div>
+                  <td id="d2e169" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
+                     <div dojoType="dijit.Tooltip" connectId="d2e169">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d2e233" onmouseover="showClass('xfAlert');" onmouseout="hideClass('xfAlert');">xfAlert
-                     <div dojoType="dijit.Tooltip" connectId="d2e233">matches an Element that represents a XForms alert element</div>
+                  <td id="d2e178" onmouseover="showClass('xfAlert');" onmouseout="hideClass('xfAlert');">xfAlert
+                     <div dojoType="dijit.Tooltip" connectId="d2e178">matches an Element that represents a XForms alert element</div>
                   </td>
                </tr>
                <tr>
@@ -109,7 +118,7 @@
                   <td id="xfvalue" onmouseover="showClass('xfValue');" onmouseout="hideClass('xfValue');">xfValue
                      
                      <div dojoType="dijit.Tooltip" connectId="xfvalue">
-                        matches the wigdet part of an XForms control
+                        matches the widget part of an XForms control
                         
                      </div>
                   </td>
@@ -129,8 +138,13 @@
                <p>
                   By default alerts are displayed to the right of the widget but this can be influenced by overwriting
                   the xfAlert styles.
-                  It is the most common rendering of an input which is bound to a string value in the
-                  Instance.
+                  
+               </p>
+               
+               <p>
+                  This form also uses hints and shows the coordination between alert and hint. A hint is always shown
+                  when focussing a field that has a hint. Alerts are shown once the data value attached to the control
+                  become invalid.
                   
                </p>
                
@@ -141,12 +155,12 @@
                   <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
                </tr>
                <tr>
-                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#" target="_blank">
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-commonelems-alert" target="_blank">
                         Recommendation
                         </a></td>
                </tr>
                <tr>
-                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html#" target="_blank">
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html#alert" target="_blank">
                         Quick Reference
                         </a></td>
                </tr>
@@ -171,7 +185,7 @@
             </xf:bind>
             <xf:group ref="grouped-data/group" appearance="compact" class="InlineAlert">
                
-               <xf:label>a compact group with inline inputs - no initial data</xf:label>
+               <xf:label>Each field must have more than 5 characters to become valid</xf:label>
                
                <xf:input ref="a">
                   
@@ -181,8 +195,6 @@
                   
                   <xf:hint>The input must be longer than 5 characters</xf:hint>
                   
-                  <xf:help>Help für Control A</xf:help>
-                  
                </xf:input>
                
                <xf:input ref="b">
@@ -191,9 +203,7 @@
                   
                   <xf:alert>Your input is not long enough</xf:alert>
                   
-                  <!--<xf:hint>The input must be longer than 5 characters</xf:hint>-->
-                  
-                  <xf:help>Help für Control B</xf:help>
+                  <xf:hint>The input must be longer than 5 characters</xf:hint>
                   
                </xf:input>
                
@@ -205,8 +215,6 @@
                   
                   <xf:alert>Your input is not long enough</xf:alert>
                   
-                  <xf:help>Help für Control C</xf:help>
-                  
                </xf:input>
                
                <xf:input ref="d">
@@ -217,64 +225,16 @@
                   
                   <xf:alert>Your input is not long enough</xf:alert>
                   
-                  <xf:help>Help für Control D</xf:help>
-                  
                </xf:input>
                
             </xf:group>
-            <xf:group ref="grouped-data/group" appearance="compact" class="InlineAlert">
+            <xf:trigger>
                
-               <xf:label>a compact group with inline inputs - no initial data</xf:label>
+               <xf:label>Send</xf:label>
                
-               <xf:input ref="a" incremental="true">
-                  
-                  <xf:label>A-label</xf:label>
-                  
-                  <xf:alert>Your input is not long enough</xf:alert>
-                  
-                  <xf:hint>The input must be longer than 5 characters</xf:hint>
-                  
-                  <xf:help>Help für Control A</xf:help>
-                  
-               </xf:input>
+               <xf:send submission="echo"></xf:send>
                
-               <xf:input ref="b" incremental="true">
-                  
-                  <xf:label>Bb-label</xf:label>
-                  
-                  <xf:alert>Your input is not long enough</xf:alert>
-                  
-                  <xf:hint>The input must be longer than 5 characters</xf:hint>
-                  
-                  <xf:help>Help für Control B</xf:help>
-                  
-               </xf:input>
-               
-               <xf:input ref="c" incremental="true">
-                  
-                  <xf:label>Ccc-label</xf:label>
-                  
-                  <xf:hint>The input must be longer than 5 characters</xf:hint>
-                  
-                  <xf:alert>Your input is not long enough</xf:alert>
-                  
-                  <xf:help>Help für Control C</xf:help>
-                  
-               </xf:input>
-               
-               <xf:input ref="d" incremental="true">
-                  
-                  <xf:label>Dddd-label</xf:label>
-                  
-                  <xf:hint>The input must be longer than 5 characters</xf:hint>
-                  
-                  <xf:alert>Your input is not long enough</xf:alert>
-                  
-                  <xf:help>Help für Control D</xf:help>
-                  
-               </xf:input>
-               
-            </xf:group>
+            </xf:trigger>
          </div>
          <h2>XForms Markup</h2>
          <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:bind nodeset="grouped-data"&gt;
@@ -287,60 +247,33 @@
 &lt;/xf:bind&gt;
 
 &lt;xf:group ref="grouped-data/group" appearance="compact" class="InlineAlert"&gt;
-    &lt;xf:label&gt;a compact group with inline inputs - no initial data&lt;/xf:label&gt;
+    &lt;xf:label&gt;Each field must have more than 5 characters to become valid&lt;/xf:label&gt;
     &lt;xf:input ref="a"&gt;
         &lt;xf:label&gt;A-label&lt;/xf:label&gt;
         &lt;xf:alert&gt;Your input is not long enough&lt;/xf:alert&gt;
         &lt;xf:hint&gt;The input must be longer than 5 characters&lt;/xf:hint&gt;
-        &lt;xf:help&gt;Help für Control A&lt;/xf:help&gt;
     &lt;/xf:input&gt;
     &lt;xf:input ref="b"&gt;
         &lt;xf:label&gt;Bb-label&lt;/xf:label&gt;
         &lt;xf:alert&gt;Your input is not long enough&lt;/xf:alert&gt;
-        
-        &lt;xf:help&gt;Help für Control B&lt;/xf:help&gt;
+        &lt;xf:hint&gt;The input must be longer than 5 characters&lt;/xf:hint&gt;
     &lt;/xf:input&gt;
     &lt;xf:input ref="c"&gt;
         &lt;xf:label&gt;Ccc-label&lt;/xf:label&gt;
         &lt;xf:hint&gt;The input must be longer than 5 characters&lt;/xf:hint&gt;
         &lt;xf:alert&gt;Your input is not long enough&lt;/xf:alert&gt;
-        &lt;xf:help&gt;Help für Control C&lt;/xf:help&gt;
     &lt;/xf:input&gt;
     &lt;xf:input ref="d"&gt;
         &lt;xf:label&gt;Dddd-label&lt;/xf:label&gt;
         &lt;xf:hint&gt;The input must be longer than 5 characters&lt;/xf:hint&gt;
         &lt;xf:alert&gt;Your input is not long enough&lt;/xf:alert&gt;
-        &lt;xf:help&gt;Help für Control D&lt;/xf:help&gt;
     &lt;/xf:input&gt;
 &lt;/xf:group&gt;
 
-&lt;xf:group ref="grouped-data/group" appearance="compact" class="InlineAlert"&gt;
-    &lt;xf:label&gt;a compact group with inline inputs - no initial data&lt;/xf:label&gt;
-    &lt;xf:input ref="a" incremental="true"&gt;
-        &lt;xf:label&gt;A-label&lt;/xf:label&gt;
-        &lt;xf:alert&gt;Your input is not long enough&lt;/xf:alert&gt;
-        &lt;xf:hint&gt;The input must be longer than 5 characters&lt;/xf:hint&gt;
-        &lt;xf:help&gt;Help für Control A&lt;/xf:help&gt;
-    &lt;/xf:input&gt;
-    &lt;xf:input ref="b" incremental="true"&gt;
-        &lt;xf:label&gt;Bb-label&lt;/xf:label&gt;
-        &lt;xf:alert&gt;Your input is not long enough&lt;/xf:alert&gt;
-        &lt;xf:hint&gt;The input must be longer than 5 characters&lt;/xf:hint&gt;
-        &lt;xf:help&gt;Help für Control B&lt;/xf:help&gt;
-    &lt;/xf:input&gt;
-    &lt;xf:input ref="c" incremental="true"&gt;
-        &lt;xf:label&gt;Ccc-label&lt;/xf:label&gt;
-        &lt;xf:hint&gt;The input must be longer than 5 characters&lt;/xf:hint&gt;
-        &lt;xf:alert&gt;Your input is not long enough&lt;/xf:alert&gt;
-        &lt;xf:help&gt;Help für Control C&lt;/xf:help&gt;
-    &lt;/xf:input&gt;
-    &lt;xf:input ref="d" incremental="true"&gt;
-        &lt;xf:label&gt;Dddd-label&lt;/xf:label&gt;
-        &lt;xf:hint&gt;The input must be longer than 5 characters&lt;/xf:hint&gt;
-        &lt;xf:alert&gt;Your input is not long enough&lt;/xf:alert&gt;
-        &lt;xf:help&gt;Help für Control D&lt;/xf:help&gt;
-    &lt;/xf:input&gt;
-&lt;/xf:group&gt;
+&lt;xf:trigger&gt;
+    &lt;xf:label&gt;Send&lt;/xf:label&gt;
+    &lt;xf:send submission="echo"&gt;&lt;/xf:send&gt;
+&lt;/xf:trigger&gt;
 </code></pre></div><script type="text/javascript">
                     function showClass(cssClass){
                         dojo.query('.sample .'+ cssClass).forEach(function(item){

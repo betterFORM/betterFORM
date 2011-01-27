@@ -25,6 +25,9 @@ body {
     padding: 0; /*overflow: hidden;*/
 }
 
+.bfHelpWrapper a:active{
+	border:none;
+}
 /*
 #fluxProcessor {
     width: 100%;
@@ -161,6 +164,13 @@ a.active {
 */
 
 /* ***************************************************************************** */
+/* ********************* GENERAL betterFORM STYLES ************ */
+/* ***************************************************************************** */
+.xfControl{
+	position:relative;
+}
+
+/* ***************************************************************************** */
 /* ********************* GENERAL XFORMS MIP AND COMMON-CHILD STYLES ************ */
 /* ***************************************************************************** */
 
@@ -202,6 +212,28 @@ a.active {
 	padding:5px;
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
+}
+
+.bfHelpWrapper{
+	position:absolute;
+	right:-30px;
+	top:-15px;
+}
+
+.xfHelp{
+	height:24px;
+	margin:0;
+	display:inline-block;
+}
+.bfHelpText{
+	background:#ffffe0;
+	padding:3px;
+	width:300px;
+	position:absolute;
+	left:30px;
+	top:1px;
+	border:thin solid #dedede;
+
 }
 
 /* for tundra checkboxes */
