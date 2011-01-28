@@ -384,7 +384,9 @@ public class FormsServlet extends HttpServlet {
 
         String fileExtension = aFile.getName().substring(aFile.getName().lastIndexOf(".") +1 , aFile.getName().length()).toUpperCase();
         String iconFile = "standardIcon.png";
-        if(fileExtension.equals("XHTML")){
+        if(aFile.getName().equals("FeatureExplorer.xhtml")){
+            iconFile = "gear-blue.png";
+        }else if(fileExtension.equals("XHTML")){
 //            iconFile = "bf_logo_square_no_effect_gray.png";
             iconFile = "type-bf.png";
         }else if(fileExtension.equals("TXT")){
