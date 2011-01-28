@@ -1320,7 +1320,9 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     showHelp:function(id) {
-//        console.debug("showng help for:", id);
+        console.debug("showng help for:", id);
+
+
         var helpCtrl = dojo.byId(id + '-help');
         if (helpCtrl == undefined) {
             console.warn("No help available for Control Id: '" + id + "'");
@@ -1335,6 +1337,8 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
         }else{
             dojo.style(helpText, { "display":"none"});
         }
+        //make sure that the input control at work does not loose the focus
+//        dojo.byId(id).focus();
     },
 
     getInstanceDocument:function(modelId, instanceId){

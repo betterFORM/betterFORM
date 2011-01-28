@@ -195,45 +195,65 @@ a.active {
 	border-style:solid;
 }
 
-.xfAlert {
-    border: 1px solid #8b0000;
-	background-color:transparent;
-    color: #333333;
-    margin: 2px;
-	padding:5px;
-	vertical-align:middle;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	
-}
-.xfHint{
-	border:thin solid #666666;
-	margin:2px;
-	padding:5px;
+
+.xfAlert, .xfHint{
+	position:absolute;
+	/*bottom:2px;*/
+	font-size:9pt;
+	border:thin solid #cccccc;
+	padding-top:3px;
+	padding-bottom:3px;
+	padding-left:26px;
+	padding-right:20px;
+	min-width:150px;
+	max-width:300px;
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
 }
 
+.xfAlert {
+    border: 1px solid #E5A3A3;
+    color: #333333;
+	vertical-align:middle;
+	background:#FFCFCF url(../images/error.png) 5px 50% no-repeat;
+	z-index:200;
+}
+.xfAlert .closeAlertIcon{
+	background:#F2F2F2 url(../images/tabClose.gif) right center no-repeat;)
+}
+.xfHint{
+	border-color:#DBDBDB;
+	background:#F2F2F2 url(../images/hint.png) 5px 50% no-repeat;
+	z-index:100;
+	color:#666666;
+}
+
 .bfHelpWrapper{
-	position:absolute;
-	right:-30px;
-	top:-15px;
+	display:inline-block;
 }
 
 .xfHelp{
 	height:24px;
 	margin:0;
 	display:inline-block;
+	position:absolute;
+	right:0px;
+	top:0px;
+	z-index:800;
+	padding:0px;
 }
 .bfHelpText{
-	background:#ffffe0;
-	padding:3px;
-	width:300px;
-	position:absolute;
-	left:30px;
-	top:1px;
+	background:white;
+	padding:10px;
 	border:thin solid #dedede;
-
+	position:absolute;
+	top:22px;
+	right:1px;
+	-moz-border-radius-topleft:10px;
+	-moz-border-radius-bottomright:10px;
+	-webkit-border-bottom-right-radius:10px;
+	-webkit-border-top-left-radius:10px;
+	z-index:800;
 }
 
 /* for tundra checkboxes */

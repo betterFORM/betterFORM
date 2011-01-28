@@ -68,6 +68,7 @@ dojo.declare("betterform.ui.common.Alert",
 
         else if(action == "onFocus" && controlValueIsEmpty ) {
             this._displayHint(id,action);
+            return;
         }
         //##### SHOW ALERT #######
         else if(action == "onFocus" || action == "xfDisabled"|| action =="onBlur" || action =="applyChanges" || action == "submitError"){

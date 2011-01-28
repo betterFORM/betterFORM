@@ -440,7 +440,7 @@
             <xsl:call-template name="assemble-label-classes"/>
         </xsl:variable>
 
-        <span id="{$id}" dojoType="betterform.ui.Control" class="{$control-classes}">
+        <div id="{$id}" dojoType="betterform.ui.Control" class="{$control-classes}">
 
             <xsl:call-template name="copy-style-attribute"/>
             <xsl:if test="@bf:incremental-delay">
@@ -455,11 +455,11 @@
 
             <xsl:call-template name="buildControl"/>
             <xsl:apply-templates select="xf:alert"/>
-            <xsl:apply-templates select="xf:help"/>
             <xsl:apply-templates select="xf:hint"/>
+            <!--<xsl:apply-templates select="xf:help"/>-->
 
             <xsl:copy-of select="script"/>
-        </span>
+        </div>
     </xsl:template>
 
     <!-- cause outputs can be inline they should not use a block element wrapper -->
@@ -484,8 +484,8 @@
             <xsl:call-template name="buildControl"/>
 
             <xsl:apply-templates select="xf:alert"/>
-            <xsl:apply-templates select="xf:help"/>
             <xsl:apply-templates select="xf:hint"/>
+            <!--<xsl:apply-templates select="xf:help"/>-->
 
             <xsl:copy-of select="script"/>
         </span>
@@ -511,8 +511,8 @@
                 </label>
             <xsl:call-template name="buildControl"/>
             <span id="{$id}-alertAttachPoint" style="display:none;" class="alertAttachPoint"/>
-            <xsl:apply-templates select="xf:help"/>
             <xsl:apply-templates select="xf:hint"/>
+            <!--<xsl:apply-templates select="xf:help"/>-->
 
             <xsl:copy-of select="script"/>
         </span>
@@ -573,15 +573,8 @@
     <xsl:template match="xf:help">
         <!--<span id="{../@id}-help" class="xfHelp" style="display:none;">-->
             <!--<div id="{../@id}-help" class="xfHelp">-->
-        <div class="bfHelpWrapper">
-            <div id="{../@id}-help-text" class="bfHelpText" style="display:none;">
-                <xsl:apply-templates/>
-            </div>
-            <a tabindex="-1" href="javascript:fluxProcessor.showHelp('{../@id}');" id="{../@id}-help" class="xfHelp">
-                <img id="{../@id}-help-HelpIcon" src="{concat($contextroot,$resourcesPath,'images/helpBubble.png')}"
-                     alt="Help"/>
-                <!--<div dojotype="dijit.Tooltip" connectid="bfHelpIcon">Focus control and click here for help</div>-->
-            </a>
+        <div id="{../@id}-help-text" class="bfHelpText" style="display:none;">
+            <xsl:apply-templates/>
         </div>
         <!--</div>-->
         <!--</span>-->
@@ -591,15 +584,35 @@
     <!-- ##### ALERT ##### -->
     <!-- ##### ALERT ##### -->
     <xsl:template match="xf:alert">
-        <span id="{../@id}-alert" class="xfAlert" style="display:none;"><xsl:apply-templates/></span>
+        <span id="{../@id}-alert" class="xfAlert" style="display:none;">
+            <xsl:apply-templates/>
+            <span class="closeAlertIcon"> </span>
+        </span>
     </xsl:template>
 
     <!-- ##### HINT ##### -->
     <!-- ##### HINT ##### -->
     <!-- ##### HINT ##### -->
     <xsl:template match="xf:hint">
+        <xsl:variable name="parentId" select="../@id"/>
         <!--<xsl:message terminate="no">parentId: <xsl:value-of select="../@id"/>  id: <xsl:value-of select="@id"/> </xsl:message>-->
-        <span id="{../@id}-hint" class="xfHint" style="display:none"><xsl:apply-templates/></span>
+        <div id="{../@id}-hint" class="xfHint" style="display:none">
+            <xsl:apply-templates/>
+
+            <!-- if help exists we output the linking icon here -->
+            <xsl:if test="exists(../xf:help)">
+                <a tabindex="-1" onmouseover="dojo.style(dojo.byId('{$parentId}'+'-help-text'),'display','inline-block');"
+                                 onmouseout="dojo.style(dojo.byId('{$parentId}'+'-help-text'),'display','none');"
+                   href=""
+                   id="{$parentId}-help"
+                   class="xfHelp">
+                    <img id="{$parentId}-help-HelpIcon" src="{concat($contextroot,$resourcesPath,'images/helpBubble.png')}"
+                         alt="Help" width="16" height="16"/>
+                </a>
+            </xsl:if>
+            <xsl:apply-templates select="../xf:help"/>
+
+        </div>
     </xsl:template>
 
 
@@ -648,7 +661,7 @@
                             $lname='textarea' or
                             $lname='upload'">
 
-                <span id="{concat($id,'-value')}"
+                <div id="{concat($id,'-value')}"
                      class="xfValue"
                      dataType="{$datatype}"
                      controlType="{$lname}"
@@ -715,7 +728,7 @@
                         </xsl:otherwise>
                     </xsl:choose>
 
-                </span>
+                </div>
                 <!--<div style="display:none;" id="{concat($id,'-hint')}"><xsl:value-of select="xf:hint"/></div>-->
             </xsl:when>
 
