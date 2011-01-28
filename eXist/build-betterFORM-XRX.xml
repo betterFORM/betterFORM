@@ -189,6 +189,8 @@
 
         <target name="copy-eXist-build-file">
             <copy file="${basedir}/build-utils.xml" todir="${target.dir}" description="copy utility-build-file"/>
+            <copy file="${basedir}/build-utils-database.xml" todir="${target.dir}" description="copy database-releated utility-build-file"/>
+
             <antcall target="copy-eXist-1.4-build-file"/>
             <antcall target="copy-betterFORM-eXist-1.4-build-file"/>
             <antcall target="copy-eXist-1.5-build-file"/>
@@ -214,6 +216,7 @@
 
     <target name="build-dojo-release">
         <ant antfile="build-utils.xml" target="deploy-dojo-release">
+            <property name="exist.installed" value="" />
             <property name="dojo.release.dir" value="${src.target.dir}/dojo"/>
         </ant>
     </target>
