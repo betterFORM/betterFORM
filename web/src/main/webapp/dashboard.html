@@ -23,6 +23,9 @@
             #index{
                 background:#efefef;
             }
+			#shadowTop{
+				display:none;
+			}
 			#logoBar{
 				margin-top:42px;
 			}
@@ -108,6 +111,10 @@
 			}
 			#sub-header{display:none;}
 
+			.browser{
+				position:absolute;
+				top:126px;
+			}
 			.formBrowserHead{
 				position:relative;
 				margin:6px;
@@ -136,7 +143,7 @@
 				float:left;
 				color:#488aa6;
 				font-size:26pt;
-				margin-top:22px;
+				margin-top:23px;
 				margin-left:5px;
 			}
 			.bfFormBrowser #bfListView .parent{
@@ -149,14 +156,26 @@
 				font-weight:bold;
 			}
 
-		.bfFormBrowser .dijitArrowButtonChar,
-		.bfFormBrowser .dijitArrowButtonInner {
-			display:none;
-		}
-		.bfFormBrowser .dijitDropDownButton .dijitButtonNode {
-			background:transparent;
-			border:0;
-		}
+			.bfFormBrowser .dijitArrowButtonChar,
+			.bfFormBrowser .dijitArrowButtonInner {
+				display:none;
+			}
+			.bfFormBrowser .dijitDropDownButton .dijitButtonNode {
+				background:transparent;
+				border:0;
+			}
+
+			.tundra .dijitButtonHover .dijitButtonNode,
+			.tundra .dijitButtonNodeHover,
+			.tundra .dijitToggleButtonHover .dijitButtonNode,
+			.tundra #commands .dijitDropDownButtonHover .dijitButtonNode,
+			.tundra .dijitComboButton .dijitButtonContentsHover,
+			.tundra .dijitComboButton .dijitDownArrowButtonHover,
+			.tundra #commands .dijitFocused .dijitButtonNode,
+			.tundra #commands .dijitHoverFocused .dijitButtonNode{
+				background-image:none;
+				background:transparent;
+			}
 
         </style>
 

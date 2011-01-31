@@ -134,7 +134,7 @@
                             <div id="browser"></div>
                         </div>
                     </div>
-                    <!--<img id="shadowBottom" src="{$calcRoot}/images/shad_bottom.jpg" alt=""/>-->
+                    <img id="shadowBottom" src="{$calcRoot}/images/shad_bottom.jpg" alt=""/>
                     <div id="footer">
 
                         <div class="pageMarginBox">

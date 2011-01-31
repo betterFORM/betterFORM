@@ -95,7 +95,7 @@ public class FormsServlet extends HttpServlet {
                         "                <img src=\"" + request.getContextPath() + "/images/de.png\" class=\"langSelector\" alt=\"deutsch\"/>\n" +
                         "            </div>\n" +
                         "            <div id=\"logoBar\">\n" +
-                        "                <a href=\"" + request.getContextPath() + "/index.html\" id=\"linkLogo\" class=\"link\"><img id=\"logo\" src=\"" + request.getContextPath() + "/images/logo.png\" alt=\"betterFORM project\"/></a>\n" +
+                        "                <a href=\"" + request.getContextPath() + "/index.html\" id=\"linkLogo\" class=\"link\"><img id=\"logo\" src=\"" + request.getContextPath() + "/images/logo.png\" title=\"betterFORM project\"/></a>\n" +
                         "                <div id=\"topnav\">\n" +
                         "                    <a href=\"" + request.getContextPath() + "/index.html\">home</a><span class=\"menuDevider\"> | </span>\n" +
                         "                    <a href=\"" + request.getContextPath() + "/demo.xhtml\">demo</a><span class=\"menuDevider\"> | </span>\n" +
@@ -109,7 +109,7 @@ public class FormsServlet extends HttpServlet {
                         "    </div>\n" +
                         "\n" +
                         "    <div id=\"content\" class=\"contact\">\n" +
-                        "        <img id=\"shadowTop\" src=\"" + request.getContextPath() + "/images/shad_top.jpg\" alt=\"\"/>\n" +
+                        "        <img id=\"shadowTop\" src=\"" + request.getContextPath() + "/images/shad_top.jpg\" title=\"\"/>\n" +
                         "        <div class=\"pageMarginBox\">\n" +
                         "            <div class=\"contentBody\">\n " +
                         "                 <h1>Forms Browser</h1>\n";
@@ -122,7 +122,7 @@ public class FormsServlet extends HttpServlet {
                         "        </div>\n" +
                         "    </div>\n" +
                         "    <div id=\"footer\">\n" +
-                        "        <img id=\"shadowBottom\" src=\"" + request.getContextPath() + "/images/shad_bottom.jpg\" alt=\"\"/>\n" +
+                        "        <img id=\"shadowBottom\" src=\"" + request.getContextPath() + "/images/shad_bottom.jpg\" title=\"\"/>\n" +
                         "        <div class=\"pageMarginBox\">\n" +
                         "            <span id=\"bottomMenu\">\n" +
                         "                &#169; 2010 betterFORM" +
@@ -201,9 +201,9 @@ public class FormsServlet extends HttpServlet {
                 "            <div class=\"formBrowserHeader\">\n" + crumb.toString() +
                 "        </div>\n" +
                 "        <div id=\"commands\">\n" +
-//                "            <img src=\"resources/images/add-folder.png\"/>\n" +
+//              "            <img src=\"resources/images/add-folder.png\" alt=\"add a collection\"/>\n" +
                 "           <div dojoType=\"dijit.form.DropDownButton\" class=\"createCollectionDropDownButton\">\n" +
-                "               <span class=\"label\"><img style=\"height:28px;width:28px;\" src=\"" + request.getContextPath() + "/resources/images/add-folder.png\" alt=\"" + altTextCreateCollection+ "\"></span>\n" +
+                "               <span class=\"label\"><img style=\"height:28px;width:28px;\" src=\"" + request.getContextPath() + "/resources/images/add-folder.png\" title=\"" + altTextCreateCollection+ "\"></span>\n" +
                 "               <div dojoType=\"dijit.TooltipDialog\" name=\"collectionTooltip\" >\n" +
                 "                   <form type=\"dijit.form.Form\" name=\"createCollection\" class=\"createCollection\" method=\"post\" enctype=\"multipart/form-data\">\n" +
                 "                       <input id=\"bfColectionPath\" name=\"bfCollectionPath\" style=\"display:none\" value=\""+ currentPath +"\"> </input>" +
@@ -221,7 +221,7 @@ public class FormsServlet extends HttpServlet {
                 "           </div>" +
 
                 "           <div dojoType=\"dijit.form.DropDownButton\" class=\"uploadDropDownButton\">\n" +
-                "               <span class=\"label\"><img style=\"height:28px;width:28px;\" src=\"" + request.getContextPath() + "/resources/images/add-file.png\" alt=\"" + altTextFormUpload + "\"></span>\n" +
+                "               <span class=\"label\"><img style=\"height:28px;width:28px;\" src=\"" + request.getContextPath() + "/resources/images/add-file.png\" title=\"" + altTextFormUpload + "\"></span>\n" +
                 "               <div dojoType=\"dijit.TooltipDialog\" name=\"uploadTooltip\" >\n" +
                 "                   <form type=\"dijit.form.Form\" name=\"upload\" class=\"upload\" method=\"post\" enctype=\"multipart/form-data\">\n" +
                 "                       <input id=\"bfUploadPath\" name=\"bfUploadPath\" style=\"display:none\" value=\""+ currentPath +"\"> </input>" +
@@ -327,7 +327,7 @@ public class FormsServlet extends HttpServlet {
         } else {
             html.append(
                     "        <div class=\"directory parent\" >\n" +
-                            "                <a href=\"" + getRequestURI(request, up) + "\"><img id=\"go-up\"  alt=\"up one level\" src=\"" + request.getContextPath() + "/resources/images/arrow-up.png\" border=\"0\"></a>\n" +
+                            "                <a href=\"" + getRequestURI(request, up) + "\"><img id=\"go-up\"  title=\"up one level\" src=\"" + request.getContextPath() + "/resources/images/arrow-up.png\" border=\"0\"></a>\n" +
                             "                <a class=\"textLink\" href=\"" + getRequestURI(request, up) + "\">" + parentName + "</a>\n" +
                             "            </div>\n");
         }

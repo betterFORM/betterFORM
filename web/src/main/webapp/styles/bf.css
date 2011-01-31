@@ -130,13 +130,11 @@ ul {
 #sub-header,
 #main-content,
 #footer {
-/*width:760px;*/
+	width:760px;
 	width: 100%;
 	float: left;
-	/*
 	margin-left:auto;
 	margin-right:auto;
-*/
 }
 
 #sub-header {
@@ -147,13 +145,13 @@ ul {
 	letter-spacing: 0.3em;
 	font-size: 11pt;
 	float: right;
-	margin-top: 7px;
 }
 
 #topnav {
 	font-size: 11pt;
 	text-align: right;
-	margin-top: -12px;
+	margin-top: 23px;
+	float:right;
 }
 
 #topnav .menuDevider {
@@ -287,7 +285,7 @@ a:hover {
 	background: white;
 }
 
-#index #shadowTop {
+#shadowTop {
 	width: 760px;
 	margin-left: auto;
 	margin-right: auto;
@@ -295,7 +293,7 @@ a:hover {
 	position: absolute;
 	top: 120px;
 	z-index: 100;
-	display:none;
+	left: 260px;
 }
 
 #sub-header {
@@ -305,13 +303,21 @@ a:hover {
 
 }
 
+/*
 #shadowTop {
 	width: 760px;
 	margin-left: auto;
 	margin-right: auto;
 	margin-bottom: 15px;
 	position: inherit;
-	left: 260px;
+}
+*/
+.box {
+	margin-top: 10px;
+	width: 100%;
+	top: 110px;
+	position: absolute;
+	border: 1px solid #BABABA;
 }
 
 #columnLeft {
@@ -371,9 +377,7 @@ a:hover {
 
 #footer {
 	text-align: center;
-	/*
 	background:#565656 url(../images/bg_footer.jpg);
-*/
 	height: 120px;
 	background: #565656;
 	/*
@@ -423,7 +427,7 @@ h1, h2, h3, h4, h5, h6 {
 	display: block;
 	font-weight: bold;
 	clear: both;
-	margin-top: 0;
+	margin-top: -10px;
 }
 
 h2 {
@@ -515,6 +519,17 @@ h3 {
 }
 
 /* ############################  page specific ############################## */
+#product #featureTable tr{
+	height:20px;
+}
+
+#product #featureTable td{
+	padding:5px 30px 5px 0;
+	vertical-align: top;
+	font-size: 0.9em;
+	color: #666666;
+
+}
 #product #boxleft,
 #download #boxleft {
 	float: left;
@@ -539,6 +554,7 @@ h3 {
 	width: 99%;
 	overflow: hidden;
 }
+
 
 /*
 #download .header1 {
@@ -719,6 +735,10 @@ h3 {
 	float: right;
 }
 
+#support #sub-header p,
+#whoweare #sub-header p{
+	line-height:1.8;
+}
 #whoweare .tableContent p {
 	line-height: 1em;
 	text-align: left;
