@@ -82,7 +82,7 @@
 
 
         <!-- Store Forms etc into db -->
-        <ant dir="${basedir}/target/bf-eXist/extensions/betterform" antfile="build.xml" target="install-betterFORM-apps-and-forms"/>
+        <ant dir="${basedir}/target/bf-eXist/extensions/betterform" antfile="build.xml" target="wrapped-install-betterFORM-apps-and-forms"/>
 
         <!-- Copy template-files which will be modified by the Installer-->
 

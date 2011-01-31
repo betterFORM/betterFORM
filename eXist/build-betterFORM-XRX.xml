@@ -37,7 +37,7 @@
                 <equals arg1="${installer.exist.version}" arg2="1.5"/>
         </condition>
 
-        <target name="clean">
+        <target name="clean" description="cleans target dirs">
                 <delete dir="${basedir}/target" failonerror="false"/>
                 <delete dir="${basedir}/target-utils" failonerror="false"/>
         </target>
@@ -147,8 +147,6 @@
                 <antcall target="build-dojo-release"/>
 
                 <antcall target="copy-betterFORM-website"/>
-
-                <!-- <antcall target="build-dojo-release"/> -->
         </target>
 
         <target name="prepare-db-installation-dir">
@@ -216,7 +214,6 @@
 
     <target name="build-dojo-release">
         <ant antfile="build-utils.xml" target="deploy-dojo-release">
-            <property name="exist.installed" value="" />
             <property name="dojo.release.dir" value="${src.target.dir}/dojo"/>
         </ant>
     </target>

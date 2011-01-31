@@ -11,7 +11,7 @@
   ~ Author: betterFORM Team (info AT betterform.de)
   -->
 
-<project name="betterFORM extension for eXist" default="install" basedir="cleanup">
+<project name="betterFORM extension for eXist" default="install" basedir=".">
 
 
     <property name="exist.rootdir" value="${basedir}/../.."/>
@@ -41,10 +41,10 @@
 
     <property name="betterform.webapp" value="${betterform.home}/src/main/webapp"/>
 
-    <!-- TODO: filter on creation -->
-    <property name="user" value="betterFORM"/>
-    <property name="passwd" value="Tha0xeiC8a"/>
-
+    <!-- TODO: filter on creation
+        <property name="user" value="betterFORM"/>
+        <property name="passwd" value="Tha0xeiC8a"/>
+    -->
 
     <!-- eXist ant-tasks -->
     <path id="classpath.exist">
@@ -168,7 +168,34 @@
         </move>
     </target>
 
-    <target name="install-betterFORM-apps-and-forms" depends="stop-eXist">
+    <target name="check-login">
+        <condition property="login.ok">
+            <and>
+                <isset property="user"/>
+                <isset property="passwd"/>
+                <isset property="admin.passwd"/>
+            </and>
+        </condition>
+        <fail message="Please call ant with -Duser=[USERNAME] -Dpasswd=[PASSWD] -Dadmin.passwd=[PASSWD]" unless="login.ok"/>
+    </target>
+
+    <target name="check-admin-login">
+        <condition property="login.ok">
+                <isset property="passwd"/>
+        </condition>
+        <fail message="Please call ant with -Dpasswd=[PASSWD]" unless="login.ok"/>
+    </target>
+
+    <target name="install-betterFORM-apps-and-forms-as-admin" depends="check-admin-login">
+        <property name="admin.passwd" value="${passwd}"/>
+        <property name="user" value="admin"/>
+        <antcall target="wrapped-install-betterFORM-apps-and-forms"/>
+    </target>
+
+    <target name="wrapped-install-betterFORM-apps-and-forms" depends="stop-eXist">
+        <property name="user" value="betterFORM"/>
+        <property name="passwd" value="Tha0xeiC8a"/>
+
         <!-- start db -->
         <antcall target="start-eXist"/>
 
@@ -250,6 +277,8 @@
     </target>
 
     <target name="wrapped-install-betterFORM-XRX-Sample">
+        <property name="adminPasswd" value=""/>
+
         <xdb:store xmlns:xdb="http://exist-db.org/ant"
                    uri="xmldb:exist://localhost:8080/betterform/xmlrpc/db/betterform/apps/"
                    createsubcollections="true"
@@ -268,7 +297,7 @@
                    createsubcollections="true"
                    createcollection="true"
                    user="admin"
-                   password="">
+                   password="${admin.passwd}">
             <fileset dir="${betterform.xrx}/timetracker/lucene" includes="*.*"/>
         </xdb:store>
     </target>
@@ -299,10 +328,11 @@
 
         <!-- TODO: use admin passwd -->
         <exec executable="${exist.rootdir}/bin/shutdown.sh" osfamily="unix">
+            <arg value="-p ${admin.passwd}"/>
         </exec>
         <exec executable="cmd" osfamily="windows">
             <arg value="/c"/>
-            <arg value="${exist.rootdir}/bin/shutdown.bat"/>
+            <arg value="${exist.rootdir}/bin/shutdown.bat -p ${admin.passwd}"/>
         </exec>
 
         <!-- wait for db shutdown -->

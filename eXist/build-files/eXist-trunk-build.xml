@@ -12,7 +12,7 @@
   ~ Author: betterFORM Team (info AT betterform.de)
   -->
 
-<project name="betterFORM extension for eXist" default="install" basedir="../">
+<project name="betterFORM extension for eXist" default="install" basedir=".">
 
     <property name="pass" value="betterform"/>
     <property name="exist.rootdir" value="${basedir}/../.."/>
