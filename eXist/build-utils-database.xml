@@ -46,7 +46,7 @@
         <property name="db-passwd" value="betterform"/>
 
         <echo message="------------------------------------------------------------------------------------"/>
-        <echo message="  install files from into db"/>
+        <echo message="  install all files from  ${file-source-dir} into db"/>
         <echo message="------------------------------------------------------------------------------------"/>
 
 
