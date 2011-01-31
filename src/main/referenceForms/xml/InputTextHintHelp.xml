@@ -2,24 +2,20 @@
 <html xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>Text input control</title>
+        <title>Text input control with alert, hint and help</title>
     </head>
     <body>
         <div class="description">
             <p>
-                This form control enables free-form data entry or a user
-                interface component appropriate to the datatype of the bound
-                node.
-            </p>
-            <p>
-                It is the most common rendering of an input which is bound to a string value in the
-                Instance.
+                An input element with full set of common child elements.
             </p>
         </div>
+<!--
         <div class="references">
             <a href="#ui-input"/>
             <a href="#elems-form-controls"/>
         </div>
+-->
         <div class="sample">
             <div class="markup">
                 <xf:model>
@@ -44,12 +40,22 @@
 
                 </xf:model>
                 <code class="ui">
-<xf:input id="input1" ref="input1/value" incremental="true">
-    <xf:label>a text</xf:label>
-    <xf:hint>Hint for this input</xf:hint>
-    <xf:help>help for input1</xf:help>
-    <xf:alert>invalid</xf:alert>
-</xf:input>
+<xf:group>
+    <xf:input ref="input1/value" incremental="true">
+        <xf:label>a text</xf:label>
+        <xf:hint>typical hint is not much more than this</xf:hint>
+        <xf:help>help for input1 - <br/> This commonly a more long text <b>sometimes</b> even with markup.</xf:help>
+        <xf:alert>In this case the author was not a lazy man and gave us detailed instruction. And he probably even
+        invites you to dinner. But even this does not make a bar of gold of a swine.</xf:alert>
+    </xf:input>
+    <xf:input id="input1" ref="input1/value" incremental="true">
+        <xf:label>a text</xf:label>
+        <xf:hint>Hint for this input with some more text than usual. But sometime you have to say more and more - and nobody will listen anyway. But
+        to test or not to test is not the question</xf:hint>
+        <xf:help>help for input1 - <br/> This commonly a more long text <b>sometimes</b> even with markup.</xf:help>
+        <xf:alert>invalid</xf:alert>
+    </xf:input>
+</xf:group>
                 </code>
             </div>
             <div class="MIPS">

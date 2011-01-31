@@ -33,9 +33,10 @@
                   
                </xf:instance>
                
+               
                <xf:bind nodeset="input1">
                   
-                  <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="boolean"></xf:bind>
+                  <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="xf:boolean"></xf:bind>
                   
                   <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
                   
@@ -60,13 +61,13 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d16e114" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
-                     <div dojoType="dijit.Tooltip" connectId="d16e114">matches an Element that represents a XForms input element</div>
+                  <td id="d16e117" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
+                     <div dojoType="dijit.Tooltip" connectId="d16e117">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d16e123" onmouseover="showClass('xsdBoolean');" onmouseout="hideClass('xsdBoolean');">xsdBoolean
-                     <div dojoType="dijit.Tooltip" connectId="d16e123">matches an Element that is bound to a node with datatype
+                  <td id="d16e126" onmouseover="showClass('xsdBoolean');" onmouseout="hideClass('xsdBoolean');">xsdBoolean
+                     <div dojoType="dijit.Tooltip" connectId="d16e126">matches an Element that is bound to a node with datatype
                         boolean
                         
                      </div>
@@ -263,7 +264,15 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:input id="input1" ref="input1/value" incremental="true"&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:bind nodeset="input1"&gt;
+                        &lt;xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="xf:boolean"&gt;&lt;/xf:bind&gt;
+                        &lt;xf:bind nodeset="@constraint" type="boolean"&gt;&lt;/xf:bind&gt;
+                        &lt;xf:bind nodeset="@readonly" type="boolean"&gt;&lt;/xf:bind&gt;
+                        &lt;xf:bind nodeset="@required" type="boolean"&gt;&lt;/xf:bind&gt;
+                        &lt;xf:bind nodeset="@relevant" type="boolean"&gt;&lt;/xf:bind&gt;
+                    &lt;/xf:bind&gt;
+
+&lt;xf:input id="input1" ref="input1/value" incremental="true"&gt;
     &lt;xf:label&gt;a text&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
     &lt;xf:help&gt;help for input1&lt;/xf:help&gt;
