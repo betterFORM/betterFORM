@@ -283,8 +283,8 @@ public class FormsServlet extends HttpServlet {
                 for (File aFile : files) {
                     if (!ignores.contains(aFile.getName())) {
                         f = new File(readDir + "/" + aFile.getName());
-
-                        if (f.isDirectory()) {
+                        // file is directory and does not start with '.'
+                        if (f.isDirectory() && !aFile.getName().startsWith(".")) {
                             handleDirectory(html, request, uri, aFile, ajaxFunction,shorten);
                         }
                     }
@@ -292,8 +292,8 @@ public class FormsServlet extends HttpServlet {
                 for (File aFile : files) {
                     if (!ignores.contains(aFile.getName())) {
                         f = new File(readDir + "/" + aFile.getName());
-
-                        if (f.isFile()) {
+                        // file is not a directory and does not start with '.'
+                        if (f.isFile() && !aFile.getName().startsWith(".")) {
                             handleFile(html, request, uri, aFile, f,shorten);
                         }
                     }
@@ -384,8 +384,12 @@ public class FormsServlet extends HttpServlet {
 
         String fileExtension = aFile.getName().substring(aFile.getName().lastIndexOf(".") +1 , aFile.getName().length()).toUpperCase();
         String iconFile = "standardIcon.png";
-        if(aFile.getName().equals("FeatureExplorer.xhtml")){
+        if(aFile.getName().equalsIgnoreCase("FeatureExplorer.xhtml")){
             iconFile = "gear-blue.png";
+        } else if(aFile.getName().equalsIgnoreCase("Status.xhtml")){
+            iconFile = "settings_blue.png";
+        }else if(aFile.getName().equalsIgnoreCase("Demo.xhtml")){
+            iconFile = "atomium_blue.png";
         }else if(fileExtension.equals("XHTML")){
 //            iconFile = "bf_logo_square_no_effect_gray.png";
             iconFile = "type-bf.png";
