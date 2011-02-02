@@ -365,6 +365,10 @@ public class Container {
     public boolean dispatch(String targetId, String eventType, Object info, boolean bubbles, boolean cancelable) throws XFormsException {
         XFormsElement xFormsElement = lookup(targetId);
         if(xFormsElement != null && xFormsElement instanceof AbstractFormControl && (DOMEventNames.FOCUS_IN.equals(eventType) || DOMEventNames.FOCUS_OUT.equals(eventType))){
+            // if focussedContainerId xforms element does not exist set focussedContainerId to null
+            if(!this.xFormsElements.containsKey(focussedContainerId)) {
+                focussedContainerId = null;
+            }
             //fetch parent XForms Element if any
             XFormsElement parent = xFormsElement.getEnclosingXFormsContainer();
             if(parent == null) {
@@ -375,10 +379,10 @@ public class Container {
             }
             //todo: ...or switch or repeat
             else if(parent instanceof Group || parent instanceof Switch || parent instanceof Repeat){
-                //check if parent group is already focussed
+                //check if parent group has not(!) already the focus
                 if(!(parent.getId().equals(focussedContainerId))){
                     if(focussedContainerId != null) {
-                        dispatch(focussedContainerId,DOMEventNames.FOCUS_OUT);    
+                        dispatch(focussedContainerId,DOMEventNames.FOCUS_OUT);
                     }
                     //remember current group
                     this.focussedContainerId = parent.getId();
