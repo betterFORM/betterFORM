@@ -193,43 +193,56 @@ public class FormsServlet extends HttpServlet {
             crumb.append("</div>");
             crumb.append(" ");
         }
-        String altTextFormUpload = "Upload your form into this collection";
+
         String altTextCreateCollection = "Create a new collection";
+
+        // HTML Markup for Create Collection DrowpDownButton
+        StringBuffer createCollectionMarkup = new StringBuffer();
+        createCollectionMarkup.append(
+                "           <div dojoType=\"dijit.form.DropDownButton\" class=\"createCollectionDropDownButton\">\n" +
+                "               <span class=\"label\"><img style=\"height:28px;width:28px;\" src=\"" + request.getContextPath() + "/resources/images/add-folder.png\" title=\"" + altTextCreateCollection+ "\"></span>\n" +
+                "               <div dojoType=\"dijit.TooltipDialog\" name=\"collectionTooltip\" >\n" +
+                "                   <form type=\"dijit.form.Form\" name=\"createCollection\" class=\"createCollection\" method=\"post\" enctype=\"multipart/form-data\">\n" +
+                "                       <input id=\"bfColectionPath\" name=\"bfCollectionPath\" style=\"display:none\" value=\""+ currentPath +"\"> </input>" +
+                "                       <p><b>Create Collection</b></p>"+
+                "                       <p>Name: <input dojoType=\"dijit.form.TextBox\" class=\"bfCollectionName\" name=\"bfCollectionName\" value=\"\"> </input></p>" +
+                "                       <p><button dojoType=\"dijit.form.Button\" type=\"button\">\n" +
+                "                           create\n" +
+                "                           <script type=\"dojo/method\" event=\"onClick\" args=\"evt\">\n" +
+                "                               // Do something:\n" +
+                "                               createCollection();" +
+                "                           </script>\n" +
+                "                       </button></p>" +
+                "                   </form>\n" +
+                "               </div>\n" +
+                "           </div>"
+        );
+
+        // HTML Markup for Upload File DrowpDownButton
+        String altTextFormUpload = "Upload your form into this collection";
+        StringBuffer uploadFormMarkup = new StringBuffer();
+        uploadFormMarkup.append(
+                "           <div dojoType=\"dijit.form.DropDownButton\" class=\"uploadDropDownButton\">\n" +
+                "               <span class=\"label\"><img style=\"height:28px;width:28px;\" src=\"" + request.getContextPath() + "/resources/images/add-file.png\" title=\"" + altTextFormUpload + "\"></span>\n" +
+                "               <div dojoType=\"dijit.TooltipDialog\" name=\"uploadTooltip\" >\n" +
+                "                   <form type=\"dijit.form.Form\" name=\"upload\" class=\"upload\" method=\"post\" enctype=\"multipart/form-data\">\n" +
+                "                       <input id=\"bfUploadPath\" name=\"bfUploadPath\" style=\"display:none\" value=\""+ currentPath +"\"> </input>\n" +
+                "                       <p><b>Upload file into current collection</b></p>\n"+
+                "                       <p><input id=\"bfUploadControl\" type=\"file\" name=\"file\" class=\"bfFileUpload\" onchange=\"sendFile();this.blur();dojo.attr(dojo.query('.bfFileUpload')[0],'value','');\"/></p>\n" +
+                "                   </form>\n" +
+                "               </div>\n" +
+                "           </div>"
+        );
+
+        // HTML Markup to return
         html.append(
                 "<div class=\"bfFormBrowser\">\n" +
                 "        <div class=\"formBrowserHead\">\n" +
                 "            <div class=\"formBrowserHeader\">\n" + crumb.toString() +
                 "        </div>\n" +
                 "        <div id=\"commands\">\n" +
-//              "            <img src=\"resources/images/add-folder.png\" alt=\"add a collection\"/>\n" +
-                "           <div dojoType=\"dijit.form.DropDownButton\" class=\"createCollectionDropDownButton\">\n" +
-                "               <span class=\"label\"><img style=\"height:28px;width:28px;\" src=\"" + request.getContextPath() + "/resources/images/add-folder.png\" title=\"" + altTextCreateCollection+ "\"></span>\n" +
-                "               <div dojoType=\"dijit.TooltipDialog\" name=\"collectionTooltip\" >\n" +
-                "                   <form type=\"dijit.form.Form\" name=\"createCollection\" class=\"createCollection\" method=\"post\" enctype=\"multipart/form-data\">\n" +
-                "                       <input id=\"bfColectionPath\" name=\"bfCollectionPath\" style=\"display:none\" value=\""+ currentPath +"\"> </input>" +
-                "                       <b>Collection name:</b>"+
-                "                       <input dojoType=\"dijit.form.TextBox\" class=\"bfCollectionName\" name=\"bfCollectionName\" value=\"\"> </input>" +
-                "                       <button dojoType=\"dijit.form.Button\" type=\"button\">\n" +
-                "                           create\n" +
-                "                           <script type=\"dojo/method\" event=\"onClick\" args=\"evt\">\n" +
-                "                               // Do something:\n" +
-                "                               createCollection();" +
-                "                           </script>\n" +
-                "                       </button>" +
-                "                   </form>\n" +
-                "               </div>\n" +
-                "           </div>" +
-
-                "           <div dojoType=\"dijit.form.DropDownButton\" class=\"uploadDropDownButton\">\n" +
-                "               <span class=\"label\"><img style=\"height:28px;width:28px;\" src=\"" + request.getContextPath() + "/resources/images/add-file.png\" title=\"" + altTextFormUpload + "\"></span>\n" +
-                "               <div dojoType=\"dijit.TooltipDialog\" name=\"uploadTooltip\" >\n" +
-                "                   <form type=\"dijit.form.Form\" name=\"upload\" class=\"upload\" method=\"post\" enctype=\"multipart/form-data\">\n" +
-                "                       <input id=\"bfUploadPath\" name=\"bfUploadPath\" style=\"display:none\" value=\""+ currentPath +"\"> </input>" +
-                "                       <input id=\"bfUploadControl\" type=\"file\" name=\"file\" class=\"bfFileUpload\" onchange=\"sendFile();this.blur();dojo.attr(dojo.query('.bfFileUpload')[0],'value','');\"/>\n" +
-
-                "                   </form>\n" +
-                "               </div>\n" +
-                "           </div>" +
+                            createCollectionMarkup +
+                            uploadFormMarkup +
                 "        </div>\n" +
                 "</div>\n");
         

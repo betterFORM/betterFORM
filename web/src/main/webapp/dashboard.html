@@ -31,7 +31,7 @@
 			}
             #content-area{
                 background:#efefef;
-				min-height:1000px;
+				/*min-height:1000px;*/
 				/*position:relative;*/
             }
 			.box {
@@ -176,6 +176,9 @@
 				background-image:none;
 				background:transparent;
 			}
+	   		.bf .dijitTooltipDialogPopup{
+				text-align:left;
+		    }
 
         </style>
 
@@ -186,7 +189,7 @@
 
         </style>
 </head>
-   <body id="index" class="tundra">
+   <body id="index" class="tundra bf">
       <div class="page">
          <div id="header">
             <div class="pageMarginBox">
@@ -282,9 +285,9 @@
 							unit:"px"
 						},
 						height:{
-							start:800,
-							end:800,
-							unit:"px"
+							start:100,
+							end:100,
+							unit:"%"
 						},
 						opacity:{
 							start:0,
