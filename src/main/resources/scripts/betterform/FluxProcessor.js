@@ -125,7 +125,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
         this.defaultAlertHandler = new betterform.ui.common.InlineRoundBordersAlert({});
         this.subscribers[0] = dojo.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
         this.subscribers[1] = dojo.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");
-        this.showAllCommonChilds(dojo.doc);
+        this.showAllCommonChilds(dojo.doc, "changeAlertType");
 
     },
 
@@ -138,7 +138,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
         this.defaultAlertHandler = new betterform.ui.common.ToolTipAlert({});
         this.subscribers[0] = dojo.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
         this.subscribers[1] = dojo.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");
-        this.showAllCommonChilds(dojo.doc);
+        this.showAllCommonChilds(dojo.doc,"changeAlertType");
     },
 
     // Hide commonChilds 'alert', 'hint', 'info'
@@ -150,13 +150,13 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     // Show commonChilds 'alert', 'hint', 'info'
-    showAllCommonChilds:function(node) {
+    showAllCommonChilds:function(node,event) {
         dojo.query(".xfControl", node).forEach(dojo.hitch(this, function(control) {
             console.debug("hide/show commonChild for control: ", control, " control valid state is:", dojo.hasClass(control),"xfValid");
             if(dojo.hasClass(control),"xfValid"){
-                this.defaultAlertHandler.handleValid(dojo.attr(control,"id"),"onFocus");
+                this.defaultAlertHandler.handleValid(dojo.attr(control,"id"),event);
             }else {
-                this.defaultAlertHandler.handleInvalid(dojo.attr(control,"id"),"onFocus");
+                this.defaultAlertHandler.handleInvalid(dojo.attr(control,"id"),event);
             }
         }));
     },

@@ -27,7 +27,7 @@ dojo.declare("betterform.ui.common.Alert",
             // do nothing on init
             return;
         }
-        else if(action == "xfDisabled" || ((action =="applyChanges" || action=="onBlur") && controlValueIsEmpty)) {
+        else if(action == "xfDisabled"|| action == "changeAlertType" || ((action =="applyChanges" || action=="onBlur") && controlValueIsEmpty)) {
             this._displayNone(id,action);
         }
         if(action =="onFocus" && controlValueIsEmpty){
@@ -56,7 +56,7 @@ dojo.declare("betterform.ui.common.Alert",
 
         var controlValueIsEmpty = (control.getControlValue() == undefined || control.getControlValue() == '') && !(dojo.hasClass(control.domNode, "xsdBoolean"));
 
-        if(dojo.byId(id + "-" + this.alert) == undefined || action == "init") {
+        if(dojo.byId(id + "-" + this.alert) == undefined || action == "init" || action == "changeAlertType") {
             return;
         }
 

@@ -7,30 +7,30 @@
     border-collapse: collapse;
 }
 
-.tundra #registration * {
+#registration * {
     font-size: 11pt;
     font-family: sans-serif;
     color: #666666;
 }
 
-.tundra #registration .dijitButtonNode {
+#registration .dijitButtonNode {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
 }
 
-.tundra #registration .dijitTextBoxFocused,
-.tundra #registration .dijitComboBoxFocused,
-.tundra #registration .dijitSpinnerFocused,
-.tundra #registration .dijitSpinnerUpArrowActive,
-.tundra #registration .dijitSpinnerDownArrowActive,
-.tundra #registration .dijitTextAreaFocused {
+#registration .dijitTextBoxFocused,
+#registration .dijitComboBoxFocused,
+#registration .dijitSpinnerFocused,
+#registration .dijitSpinnerUpArrowActive,
+#registration .dijitSpinnerDownArrowActive,
+#registration .dijitTextAreaFocused {
     border-color: gray;
 }
 
-.tundra #registration .dijitInputField input,
-.tundra #registration .dijitTextBox,
-.tundra #registration .dijitComboBox,
-.tundra #registration .dijitSpinner {
+#registration .dijitInputField input,
+#registration .dijitTextBox,
+#registration .dijitComboBox,
+#registration .dijitSpinner {
     margin: 0;
 }
 
@@ -97,10 +97,10 @@
     background: white;
 }
 
-.tundra #registration  .xfAlert,
-.tundra #registration  .xfHint,
-.tundra #registration  .xfHelp,
-.tundra #registration  .info {
+#registration  .xfAlert,
+#registration  .xfHint,
+#registration  .xfHelp,
+#registration  .info {
     font-size: 9pt;
     font-family: sans-serif;
     width: 95%;
@@ -122,6 +122,7 @@
     white-space: nowrap;
     width: 100%;
     border-color: #E5A3A3 !important;
+	position: relative;
 }
 
 #registration .xfHint {
@@ -136,6 +137,7 @@
     white-space: nowrap;
     width: 190px;
     border-color: #DBDBDB !important;
+	position: relative;
 
 }
 
@@ -151,6 +153,7 @@
     white-space: nowrap;
     width: 190px;
     border-color: #E1EFDB !important;
+	position:relative;
 }
 
 #registration .xfControl, #registration .xfAlert, #registration .xfHint, #registration .info {
