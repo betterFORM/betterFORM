@@ -18,21 +18,20 @@
 
     <xsl:template name="addDojoCSS"><xsl:text>
 </xsl:text>
-                <style type="text/css">
+                <xsl:variable name="cssTheme">
                     <xsl:choose>
-                        <xsl:when test="contains(//body/@class, 'soria')">
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dijit/themes/soria/soria.css";
-                        </xsl:when>
-                        <xsl:when test="contains(//body/@class, 'nihilo')">
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dijit/themes/nihilo/nihilo.css";
-                        </xsl:when>
-                         <xsl:when test="contains(//body/@class, 'claro')">
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dijit/themes/claro/claro.css";
-                        </xsl:when>
-                        <xsl:otherwise>
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dijit/themes/tundra/tundra.css";
-                        </xsl:otherwise>
+                        <xsl:when test="contains(//body/@class, 'tundra')">tundra</xsl:when>
+                        <xsl:when test="contains(//body/@class, 'soria')">soria</xsl:when>
+                        <xsl:when test="contains(//body/@class, 'nihilo')">nihilo</xsl:when>
+                        <xsl:when test="contains(//body/@class, 'claro')">claro</xsl:when>
+                        <xsl:when test="contains(//body/@class, 'a11y')">a11y</xsl:when>
+                        <xsl:otherwise><xsl:value-of select="$defaultTheme"/></xsl:otherwise>
                     </xsl:choose>
+                </xsl:variable>
+
+                <style type="text/css">
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dijit/themes/', $cssTheme, '/', $cssTheme,'.css')"/>";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojo/resources/dojo.css";
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojo/resources/dojo.css";
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojox/widget/Toaster/Toaster.css";
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojox/layout/resources/FloatingPane.css";

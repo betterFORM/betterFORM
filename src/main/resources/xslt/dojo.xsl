@@ -292,7 +292,7 @@
                 <xsl:otherwise><xsl:value-of select="//body/@class"/></xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <body class="{$theme}">
+        <body class="{$theme} bf">
             <xsl:copy-of select="@*[name() != 'class']"/>
             <div id="bfLoading" class="disabled">
                 <img src="{concat($contextroot,$resourcesPath,'images/indicator.gif')}" class="xfDisabled" id="indicator"

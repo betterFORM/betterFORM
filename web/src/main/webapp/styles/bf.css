@@ -28,6 +28,8 @@ a img {
 }
 
 *,
+.bf * ,
+.soria *,
 .tundra * {
 	font-family: Arial, Helvetica, sans-serif;
 }
@@ -58,7 +60,9 @@ ul, li {
 	padding: 0;
 }
 
-.tundra body {
+.bf body ,
+.tundra body ,
+.soria body {
 	font-size: 12pt;
 	padding: 0;
 	margin: 0;
@@ -677,6 +681,7 @@ h3 {
 
 #demo #backToDemo .dijitButtonNode {
 	background: none;
+	border:0;
 }
 
 #demo #backToDemo-value {

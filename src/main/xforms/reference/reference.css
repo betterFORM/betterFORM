@@ -10,6 +10,8 @@ body {
     margin: 0;
     padding: 0;
 }
+.bf *,
+.soria *,
 .tundra *{
 	font-size:9pt;
 }
@@ -246,11 +248,15 @@ pre, code {
     display: block;
 }
 
-.tundra .xml *{
+.bf .xml *,
+.tundra .xml *,
+.soria .xml *{
 	font-size:10pt !important;
 	font-weight:normal;
 }
-.tundra .dijitTitlePaneContentInner {
+.bf .dijitTitlePaneContentInner,
+.tundra .dijitTitlePaneContentInner,
+.soria .dijitTitlePaneContentInner {
     padding: 4px;
 }
 

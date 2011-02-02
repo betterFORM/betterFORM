@@ -90,17 +90,17 @@ a.active {
 }
 
 /* ################### some theme-specific (Dojo tundra) styles ################### */
-.tundra * {
+.bf * {
     font-family: sans-serif;
     font-size: 10pt;
 }
 
-.tundra .dijitToasterContainer {
+.bf .dijitToasterContainer {
     padding: 2px;
     border: thin dotted gray;
 }
 
-.tundra .dijitToasterContent {
+.bf .dijitToasterContent {
     font-size: smaller;
     color: black;
     padding-top: 2px;
@@ -108,7 +108,7 @@ a.active {
 
 }
 
-.tundra .xsdDateTime .dijitError {
+.bf .xsdDateTime .dijitError {
     background: #FFFFFF url(../images/validationInputBg.png) repeat-x scroll left top;
 }
 
@@ -257,8 +257,8 @@ a.active {
 }
 
 /* for tundra checkboxes */
-.tundra .dijitCheckBox,
-.tundra .dijitCheckBoxIcon {
+.bf .dijitCheckBox,
+.bf .dijitCheckBoxIcon {
    	background-image: url('../images/checkmarkNoBorder.png');
     border: 1px solid gray;
     height: 14px;
@@ -267,7 +267,7 @@ a.active {
 }
 
 /* matches selection open controls in tundra */
-.tundra .xfSelectOpen .xfValue {
+.bf .xfSelectOpen .xfValue {
     width: 150px;
     display: block;
 }
@@ -280,7 +280,7 @@ a.active {
     top: 0px;
 }
 
-.tundra .xfSelectOpen .dijitTextBox {
+.bf .xfSelectOpen .dijitTextBox {
     width: 140px;
 }
 
@@ -701,7 +701,7 @@ table .xfContainer{
     vertical-align: top;
 }
 
-.tundra .dijitCheckBoxIcon {
+.bf .dijitCheckBoxIcon {
     /*background-image: url(../images/checkmarkNoBorder.png);*/
 }
 

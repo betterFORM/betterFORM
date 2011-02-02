@@ -1,3 +1,8 @@
+#demo #demoTarget * {
+    font-family: sans-serif;
+    font-size: 9pt;
+}
+
 #demoTarget {
 	 height: 400px;
 	 overflow: auto; /*padding:10px;*/
@@ -37,7 +42,9 @@
 	 position: absolute;
 	 float: right;
  }
+ .bf .dijitButtonNode {
  .tundra .dijitButtonNode {
+ .soria .dijitButtonNode {
 	 border:none;
  }
 

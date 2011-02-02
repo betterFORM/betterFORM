@@ -100,7 +100,9 @@ pre, code {
 .notes{
     font-size:9pt;
 }
+.bf .dijitTitlePaneContentInner {
 .tundra .dijitTitlePaneContentInner {
+.soria .dijitTitlePaneContentInner {
     padding:4px;
 }
 .soria .dijitTitlePaneContentInner {
