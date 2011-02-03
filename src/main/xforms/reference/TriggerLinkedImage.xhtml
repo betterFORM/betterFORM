@@ -21,25 +21,21 @@
                
                <xf:instance xmlns="">
                   
-                  <code>
+                  <data>
                      
-                     <data>
+                     <output constraint="true" readonly="false" required="false" relevant="true">
                         
-                        <output constraint="true" readonly="false" required="false" relevant="true">
-                           
-                           <value>../../images/bf_logo_482x195.png</value>
-                           
-                        </output>
+                        <value>../../images/bf_logo_482x195.png</value>
                         
-                        <output constraint="true" readonly="false" required="false" relevant="true">
-                           
-                           <value>../../images/betterform_icon_118x118.png</value>
-                           
-                        </output>
-                        
-                     </data>
+                     </output>
                      
-                  </code>
+                     <output constraint="true" readonly="false" required="false" relevant="true">
+                        
+                        <value>../../images/betterform_icon_118x118.png</value>
+                        
+                     </output>
+                     
+                  </data>
                   
                </xf:instance>
                
@@ -70,8 +66,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d44e125" onmouseover="showClass('xfTrigger');" onmouseout="hideClass('xfTrigger');">xfTrigger
-                     <div dojoType="dijit.Tooltip" connectId="d44e125">matches an Element that represents a XForms input element</div>
+                  <td id="d44e128" onmouseover="showClass('xfTrigger');" onmouseout="hideClass('xfTrigger');">xfTrigger
+                     <div dojoType="dijit.Tooltip" connectId="d44e128">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
@@ -219,22 +215,27 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:trigger id="trigger1" incremental="true">
+            <xf:trigger id="trigger1">
                
                <xf:label>
                   
-                  <xf:output ref="output[1]" mediatype="image/*"></xf:output>
+                  <xf:output ref="output[1]/value" mediatype="image/png"></xf:output>
                   
                </xf:label>
+               
+               <xf:message>The trigger1 was clicked</xf:message>
                
             </xf:trigger>
-            <xf:trigger id="trigger2" incremental="true">
+            <xf:trigger id="trigger2">
                
                <xf:label>
                   
-                  <xf:output ref="output[2]" mediatype="image/*"></xf:output>
+                  <xf:output ref="output[2]/value" mediatype="image/png"></xf:output>
                   
                </xf:label>
+               
+               <xf:message>The trigger2 was clicked</xf:message>
+               
                
             </xf:trigger>
          </div>
@@ -272,16 +273,19 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:trigger id="trigger1" incremental="true"&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:trigger id="trigger1"&gt;
     &lt;xf:label&gt;
-        &lt;xf:output ref="output[1]" mediatype="image/*"&gt;&lt;/xf:output&gt;
+        &lt;xf:output ref="output[1]/value" mediatype="image/png"&gt;&lt;/xf:output&gt;
     &lt;/xf:label&gt;
+    &lt;xf:message&gt;The trigger1 was clicked&lt;/xf:message&gt;
 &lt;/xf:trigger&gt;
 
-&lt;xf:trigger id="trigger2" incremental="true"&gt;
+&lt;xf:trigger id="trigger2"&gt;
     &lt;xf:label&gt;
-        &lt;xf:output ref="output[2]" mediatype="image/*"&gt;&lt;/xf:output&gt;
+        &lt;xf:output ref="output[2]/value" mediatype="image/png"&gt;&lt;/xf:output&gt;
     &lt;/xf:label&gt;
+    &lt;xf:message&gt;The trigger2 was clicked&lt;/xf:message&gt;
+
 &lt;/xf:trigger&gt;
 </code></pre></div><script type="text/javascript">
                     function showClass(cssClass){

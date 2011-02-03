@@ -60,8 +60,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d42e122" onmouseover="showClass('xfTrigger');" onmouseout="hideClass('xfTrigger');">xfTrigger
-                     <div dojoType="dijit.Tooltip" connectId="d42e122">matches an Element that represents a XForms input element</div>
+                  <td id="d42e119" onmouseover="showClass('xfTrigger');" onmouseout="hideClass('xfTrigger');">xfTrigger
+                     <div dojoType="dijit.Tooltip" connectId="d42e119">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
@@ -214,7 +214,7 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:trigger id="trigger1" ref="trigger1/value" src="images/bf_logo_67x27.png" incremental="true">
+            <xf:trigger id="trigger1" ref="trigger1/value" src="images/bf_logo_67x27.png">
                
                <xf:label></xf:label>
                
@@ -222,9 +222,7 @@
                
                <xf:help>help for trigger1</xf:help>
                
-               <xf:alert>invalid</xf:alert>
-               
-               <xf:message>The trigger was clicked</xf:message>
+               <xf:message>The image trigger was clicked</xf:message>
                
             </xf:trigger>
          </div>
@@ -262,12 +260,11 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:trigger id="trigger1" ref="trigger1/value" src="images/bf_logo_67x27.png" incremental="true"&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:trigger id="trigger1" ref="trigger1/value" src="images/bf_logo_67x27.png"&gt;
     &lt;xf:label&gt;&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
     &lt;xf:help&gt;help for trigger1&lt;/xf:help&gt;
-    &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
-    &lt;xf:message&gt;The trigger was clicked&lt;/xf:message&gt;
+    &lt;xf:message&gt;The image trigger was clicked&lt;/xf:message&gt;
 &lt;/xf:trigger&gt;
 </code></pre></div><script type="text/javascript">
                     function showClass(cssClass){

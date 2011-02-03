@@ -48,12 +48,11 @@
 
                 </xf:model>
                 <code class="ui">
-<xf:trigger id="trigger1" ref="trigger1/value" src="images/bf_logo_67x27.png" incremental="true">
+<xf:trigger id="trigger1" ref="trigger1/value" src="images/bf_logo_67x27.png">
     <xf:label></xf:label>
     <xf:hint>a Hint for this control</xf:hint>
     <xf:help>help for trigger1</xf:help>
-    <xf:alert>invalid</xf:alert>
-    <xf:message>The trigger was clicked</xf:message>
+    <xf:message>The image trigger was clicked</xf:message>
 </xf:trigger>
                 </code>
             </div>

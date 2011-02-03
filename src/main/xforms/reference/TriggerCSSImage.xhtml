@@ -225,7 +225,7 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:trigger id="trigger1" ref="trigger1/value" incremental="true">
+            <xf:trigger id="trigger1" ref="trigger1/value">
                
                <xf:label></xf:label>
                
@@ -233,7 +233,7 @@
                
                <xf:help>help for trigger1</xf:help>
                
-               <xf:alert>invalid</xf:alert>
+               <xf:message>The trigger was clicked</xf:message>
                
             </xf:trigger>
          </div>
@@ -271,11 +271,11 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:trigger id="trigger1" ref="trigger1/value" incremental="true"&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:trigger id="trigger1" ref="trigger1/value"&gt;
     &lt;xf:label&gt;&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
     &lt;xf:help&gt;help for trigger1&lt;/xf:help&gt;
-    &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
+    &lt;xf:message&gt;The trigger was clicked&lt;/xf:message&gt;
 &lt;/xf:trigger&gt;
 </code></pre></div><script type="text/javascript">
                     function showClass(cssClass){
