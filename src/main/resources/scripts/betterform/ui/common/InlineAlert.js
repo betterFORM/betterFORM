@@ -33,6 +33,15 @@ dojo.declare("betterform.ui.common.InlineAlert",
         console.debug("InlineAlert._render [id:'",id,"' commonChild:'", commonChild," ' show:'",show, "']");
         var mip = dojo.byId(id + "-" + commonChild);
         if (mip != undefined && mip.innerHTML != '') {
+            // add onclick handler to alerts to close them by mouse click
+            if(commonChild == "alert" && show=="inline") {
+                dojo.style(mip, "cursor", "pointer");
+                mip.onclick = dojo.hitch(this, function(evt) {
+                    // console.debug("Alert clicked id: ", id, " commonChild: ", commonChild, " show: " , show);
+                    this._hide(id,commonChild);
+                    this._show(id,"hint");
+                });
+            };
             dojo.style(mip, "display", show);
         } else {
             console.warn(id + "-" + commonChild + " is not defined for Control " + id);
