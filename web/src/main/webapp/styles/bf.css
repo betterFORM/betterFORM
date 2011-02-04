@@ -113,8 +113,8 @@ ul {
 	position:inherit;
 	top:0;
 	z-index:999;
-*/
 	border-bottom: thin dotted;
+*/
 	padding-top: 2px;
 	float: left;
 }
@@ -134,7 +134,7 @@ ul {
 #sub-header,
 #main-content,
 #footer {
-	width:760px;
+	/* width:760px; */
 	width: 100%;
 	float: left;
 	margin-left:auto;
@@ -263,9 +263,11 @@ a:hover {
 
 #sub-header {
 	background: #d3d3d3;
+/*
 	text-align: center;
 	display: block;
 	float: left;
+*/
 }
 
 #sub-header .contentBody {
@@ -285,6 +287,10 @@ a:hover {
 }
 */
 
+#content-area {
+	height:100%;
+}
+
 #main-content {
 	background: white;
 }
@@ -298,10 +304,11 @@ a:hover {
 	top: 120px;
 	z-index: 100;
 	left: 260px;
+	height: 10px;
 }
 
 #sub-header {
-	float: none;
+	/*float: none;*/
 	padding-top: 30px;
 	height: 130px;
 
@@ -317,10 +324,10 @@ a:hover {
 }
 */
 .box {
-	margin-top: 10px;
-	width: 100%;
+	margin-top: -1px;
+/*  width: 100%;
 	top: 110px;
-	position: absolute;
+	position: absolute; */
 	border: 1px solid #BABABA;
 }
 
@@ -382,11 +389,9 @@ a:hover {
 #footer {
 	text-align: center;
 	background:#565656 url(../images/bg_footer.jpg);
-	height: 120px;
-	background: #565656;
 	/*
-moves the footer in Webkit browsern to the far right.
-*/
+	moves the footer in Webkit browsern to the far right.
+	*/
 
 	overflow: hidden;
 	margin: 0;
@@ -397,10 +402,9 @@ moves the footer in Webkit browsern to the far right.
 
 #shadowBottom {
 	width: 760px;
-	padding: 0;
 	margin: 0;
-	display: block;
-	padding: 0 0 0 20%;
+	position: relative;
+	top:5px;
 }
 
 .page #bottomMenu {
@@ -468,9 +472,9 @@ h3 {
 	padding-top: 11px;
 }
 
-.languages img {
+/*.languages img {
 	display: none;
-}
+}*/
 
 #index .languages img {
 	display: block;

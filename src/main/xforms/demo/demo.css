@@ -1,3 +1,7 @@
+#demo .contentBody{
+	width:100%;
+}
+
 #demo #demoTarget * {
     font-family: sans-serif;
     font-size: 9pt;
@@ -25,28 +29,46 @@
 	 height: 421px;
 	 min-height: 421px;
 	 max-height: 421px;
-	 float: left;
+	 /*float: left;*/
 	 border: 1px dotted #666;
-	 /*margin-bottom: 20px;*/
-	 /*background: url(images/ajax-loader.gif) no-repeat center center;*/
  }
 
  #demoTrigger {
 	 display: none;
  }
 
+#shadowBottom {
+	top:10px;
+}
+#sub-header{
+	height:30px;
+}
+
+
+
  #content {
 	 min-height: 500px;
+	 background:white;
  }
  #backTrigger {
 	 position: absolute;
 	 float: right;
  }
- .bf .dijitButtonNode {
- .tundra .dijitButtonNode {
+ .bf .dijitButtonNode ,
+ .tundra .dijitButtonNode ,
  .soria .dijitButtonNode {
 	 border:none;
  }
+
+#demoHeader{
+	background:#d3d3d3;
+}
+#demoHeader h2{
+	margin-top:-16px;
+	padding-bottom:10px;
+
+}
+
 
 #xforms {
     background: none repeat scroll 0 0 white;

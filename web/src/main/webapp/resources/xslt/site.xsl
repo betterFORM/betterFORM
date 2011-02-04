@@ -130,20 +130,23 @@
                                     </div>
                             </div>
                         </div>
+<!--
                         <div class="pageMarginBox">
                             <div id="browser"></div>
                         </div>
+-->
                     </div>
                     <img id="shadowBottom" src="{$calcRoot}/images/shad_bottom.jpg" alt=""/>
                     <div id="footer">
-
+                        <!--<xsl:message>META NAME=NAME CONTENT=<xsl:value-of select="//html:meta[@name='name']/@content"/> </xsl:message>-->
                         <div class="pageMarginBox">
                             <div class="languages">
-                                <a href="{$calcRoot}/site/en/index.html">
+                                <a href="{$calcRoot}/site/en/{//html:meta[@name='name']/@content}.html">
                                 <img src="{$calcRoot}/images/en.png" class="langSelector" alt="english version"
                                      title="english version"/>
                                 </a>
-                                <a href="{$calcRoot}/site/de/index.html">
+
+                                <a href="{$calcRoot}/site/de/{//html:meta[@name='name']/@content}.html">
                                     <img src="{$calcRoot}/images/de.png" class="langSelector" alt="deutsch"
                                          title="deutsche Version"/>
                                 </a>
