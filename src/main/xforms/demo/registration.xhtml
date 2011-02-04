@@ -32,7 +32,7 @@
             </xf:instance>
 
             <xf:bind nodeset="alias" constraint="string-length(.) &gt; 3" required="true()"/>
-            <xf:bind nodeset="email" type="email" required="true()"/>
+            <xf:bind nodeset="email" type="email" constraint="string-length(.) &gt; 3" required="true()"/>
             <xf:bind nodeset="pass1" constraint="string-length(.) &gt;= 6" required="true()"/>
             <xf:bind nodeset="pass2" constraint=". = ../pass1" required="true()"/>
             <xf:bind nodeset="agreement" type="boolean" />
@@ -50,7 +50,7 @@
             </xf:submission>
 
 
-            <xf:setfocus control="first" ev:event="xforms-ready"/>
+            <!--<xf:setfocus control="first" ev:event="xforms-ready"/>-->
 
 
         </xf:model>
