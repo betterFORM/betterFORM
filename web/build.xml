@@ -110,9 +110,9 @@
     <!-- **************************************** DEPLOYMENT **************************************** -->
     <!-- **************************************** DEPLOYMENT **************************************** -->
     <target name="prepare-site" description="generates the betterFORM site">
-        <xslt basedir="${basedir}/src/main/webapp/pages"
+        <xslt basedir="${basedir}/../src/main/website/pages"
               destdir="${basedir}/src/main/webapp/site"
-              style="${basedir}/src/main/webapp/resources/xslt/site.xsl"
+              style="${basedir}/../src/main/website/xslt/site.xsl"
               force="true"
               includes="**/*.xhtml"
               excludes="**/demo.xhtml"
@@ -121,8 +121,8 @@
             <classpath refid="transform.class.path"/>
         </xslt>
         <!-- copy demo pages unmodified -->
-        <copy file="${basedir}/src/main/webapp/pages/en/demo.xhtml" todir="${basedir}/src/main/webapp/site/en"/>
-        <copy file="${basedir}/src/main/webapp/pages/de/demo.xhtml" todir="${basedir}/src/main/webapp/site/de"/>
+        <copy file="${basedir}/../src/main/website/pages/en/demo.xhtml" todir="${basedir}/src/main/webapp/site/en"/>
+        <copy file="${basedir}/../src/main/website/pages/de/demo.xhtml" todir="${basedir}/src/main/webapp/site/de"/>
     </target>
 
     <target name="exploded-webapp" depends="compile"
@@ -537,7 +537,7 @@
             <arg value="version=1.5"/>
         </java>
         <!-- cleanup JS/CSS resources of betterform dojo release -->
-        <antcall target="cleanup-bf-release"/>
+        <!--<antcall target="cleanup-bf-release"/>-->
 
     </target>
 
