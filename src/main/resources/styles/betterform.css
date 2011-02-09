@@ -260,7 +260,7 @@ a.active {
 .bf .dijitCheckBox,
 .bf .dijitCheckBoxIcon {
    	background-image: url('../images/checkmarkNoBorder.png');
-    border: 1px solid gray;
+	/* border: 1px solid gray; */
     height: 14px;
     width: 14px;
 
