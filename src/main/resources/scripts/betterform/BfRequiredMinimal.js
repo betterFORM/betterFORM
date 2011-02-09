@@ -25,28 +25,49 @@ dojo.declare("betterform.BfRequiredMinimal", null,
         dojo.require("betterform.ui.factory.UIElementFactoryImpl");
         dojo.require("betterform.ui.factory.InputElementFactory");
         dojo.require("betterform.ui.factory.OutputElementFactory");
-        dojo.require("betterform.ui.factory.RangeElementFactory");
-        dojo.require("betterform.ui.factory.SelectElementFactory");
 
         // default alert implementation
+        dojo.require("betterform.ui.common.InlineAlert");
         dojo.require("betterform.ui.common.InlineRoundBordersAlert");
-
+        dojo.require("betterform.ui.common.ToolTipAlert");
 
         // betterform UI Controls
         dojo.require("betterform.ui.input.Boolean");
         dojo.require("betterform.ui.input.TextField");
+        dojo.require("betterform.ui.input.Date");
+        dojo.require("betterform.ui.input.DateTime");
+        dojo.require("betterform.ui.output.Link");
+        dojo.require("betterform.ui.output.Image");
+        dojo.require("betterform.ui.output.Html");
+        dojo.require("betterform.ui.output.InputLook");
+        dojo.require("betterform.ui.output.Html");
+        dojo.require("betterform.ui.output.Image");
+
+
         dojo.require("betterform.ui.output.Plain");
         dojo.require("betterform.ui.secret.Secret");
         dojo.require("betterform.ui.trigger.Button");
+        dojo.require("betterform.ui.trigger.LinkButton");
+        dojo.require("betterform.ui.trigger.ImageButton");
+
         // needed for FormsBrowser (?!)
         dojo.require("betterform.ui.output.SourceCode");
 
+        dojo.require("betterform.ui.container.Container");
+        dojo.require("betterform.ui.container.ContentPaneGroup");
+        dojo.require("betterform.ui.container.Group");
+        dojo.require("betterform.ui.container.OuterGroup");
+        dojo.require("betterform.ui.container.Dialog");
+
         /** Dojo Classes that are allways required **/
         /** Dojo Classes that are allways required **/
         /** Dojo Classes that are allways required **/
 
+        // used in various forms
+        dojo.require("dijit.Tooltip");
 
         // iuitially needed to hide (fadeOut) / show  (fadeIn) overlays (e.q. at startup dojo.xsl )
+
         dojo.require("dojo.NodeList-fx");
 
         // Toaster widget for ephemeral messages

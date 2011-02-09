@@ -258,10 +258,20 @@
             </xsl:otherwise>
         </xsl:choose>
 
-        <xsl:if test="not(exists(//script[@id='betterformJs']))">
-            <script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/betterform/betterform-full.js')}">
-            &#160;</script>
-        </xsl:if>
+        <xsl:choose>
+            <xsl:when test="exists(//script[@id='betterformJs'])">
+                <!-- do nothin if id 'betterformJs' is available (means betterform.js is allready importet -->
+            </xsl:when>
+            <xsl:when test="not(exists(//xf:select)) and not(exists(//xf:select1)) and not(exists(//xf:upload)) and not(exists(//xf:repeat)) and not(exists(//xf:switch)) and not(exists(//xf:range))  and not(exists(//xf:textarea))">
+                <script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/betterform/betterform-minimal.js')}">&#160;</script>
+            </xsl:when>
+            <xsl:when test="not(exists(//xf:range)) and not(exists(//xf:textarea))">
+                <script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/betterform/betterform-compact.js')}">&#160;</script>
+            </xsl:when>
+            <xsl:otherwise>
+                <script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/betterform/betterform-full.js')}">&#160;</script>
+            </xsl:otherwise>
+        </xsl:choose>
         <xsl:text>
 </xsl:text>
     </xsl:template>

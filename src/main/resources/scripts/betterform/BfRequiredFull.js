@@ -15,11 +15,13 @@ dojo.declare("betterform.BfRequiredFull", null,
     constructor:function() {
         dojo.require("betterform.BfRequiredCompact");
         var compactDependencies = new betterform.BfRequiredCompact();
+        // Range UI Factory
+        dojo.require("betterform.ui.factory.RangeElementFactory");
+
         // Alerts
         dojo.require("betterform.ui.common.GlobalAlert");
         dojo.require("betterform.ui.common.BowlAlert");
-        dojo.require("betterform.ui.common.InlineAlert");
-        dojo.require("betterform.ui.common.ToolTipAlert");
+
 
         // UI Controls
         dojo.require("betterform.ui.timeline.TimeLine");
@@ -29,13 +31,12 @@ dojo.declare("betterform.BfRequiredFull", null,
             // classes required by betterform.ui.range.Slider:
             dojo.require("dijit.form.HorizontalRule");
             dojo.require("dijit.form.HorizontalRuleLabels");
+
+        dojo.require("betterform.ui.textarea.MinimalTextarea");
         dojo.require("betterform.ui.textarea.HtmlEditor");
         dojo.require("betterform.ui.textarea.DojoEditor");
         dojo.require("betterform.ui.textarea.SimpleTextarea");
 
-        /** CONTAINER **/
-        dojo.require("betterform.ui.container.TabSwitch");
-        dojo.require("betterform.ui.container.TitlePaneGroup");
         /** TODO: verfify if still needed /wanted **/
         // betterform.ui.container.AccordionSwitch
 
