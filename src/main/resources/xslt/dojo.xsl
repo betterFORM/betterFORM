@@ -117,8 +117,8 @@
 
             <xsl:choose>
                 <xsl:when test="$useCDN='true'">
-                    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.3/dojo/resources/dojo.css"/>
-                    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.3/dijit/themes/tundra/tundra.css"/>
+                    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/resources/dojo.css"/>
+                    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dijit/themes/tundra/tundra.css"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:call-template name="addDojoCSS"/>
@@ -143,7 +143,6 @@
             </xsl:if>
 
             <script type="text/javascript">
-                <xsl:call-template name="addDojoRequires"/>
                 <xsl:if test="$debug-enabled">function getXFormsDOM(){
                         Flux.getXFormsDOM(document.getElementById("bfSessionKey").value,
                             function(data){
@@ -175,8 +174,36 @@
                             dojo.style(dojo.body(),"overflow","auto");
                         }
                     }).play();
-                };
+                }       ;
 -->
+                var stringToFunction = function(str) {
+                 var arr = str.split(".");
+
+                  var fn = (window || this);
+                  for (var i = 0; i != arr.length; i++) {
+                    console.debug('fn',fn, " arr[i]:",arr[i]);
+                    fn = fn[arr[i]];
+                  }
+
+                  if (typeof fn !== "function") {
+                    console.error("function '" , fn, "' not found");
+                  }
+                  return  fn;
+                };
+
+                function loadBetterFORMJs(pathToRelease, developmentJsClass){
+                    if (isBetterFORMRelease) {
+                        var scriptElement = document.createElement('script');
+                        scriptElement.type = 'text/javascript';
+                        scriptElement.src = pathToRelease;
+                        document.getElementsByTagName('head')[0].appendChild(scriptElement);
+                    } else {
+                        dojo.require(developmentJsClass);
+                        var jsClass = stringToFunction(developmentJsClass);
+                        var instance = new jsClass();
+                    }
+                }
+
                 dojo.addOnLoad(function(){
                     dojo.addOnLoad(function(){
                         dojo.require("dojo.parser");
@@ -247,9 +274,12 @@
     </xsl:template>
 
     <xsl:template name="addDojoImport">
+        <script type="text/javascript">
+            var isBetterFORMRelease = true;
+        </script>
         <xsl:choose>
             <xsl:when test="$useCDN='true'">
-                <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.3/dojo/dojo.xd.js"> </script><xsl:text>
+                <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js"> </script><xsl:text>
 </xsl:text>
             </xsl:when>
             <xsl:otherwise>

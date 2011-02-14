@@ -287,9 +287,9 @@ public class FormsServlet extends HttpServlet {
                     up = uri.substring(0, uri.lastIndexOf("/"));
                     String parent = filesroot.getParentFile().getName();
                     if(ROOTCOLLECTION.equals(parent)){
-                        handleUp(html, request, up,ajaxFunction,filesroot.getParentFile().getName(),true);
+                        handleUp(html, request, up,ajaxFunction,parent,true);
                     }else {
-                        handleUp(html, request, up,ajaxFunction,filesroot.getParentFile().getName(),false);
+                        handleUp(html, request, up,ajaxFunction,parent,false);
                     }
                 }
                 //process dirs/collections first

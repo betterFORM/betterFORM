@@ -17,7 +17,7 @@ return
 	(: redirect webapp root to index.xml :)
     if ($exist:path eq '/') then
 		<dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-			<redirect url="index.html"/>
+			<redirect url="dashboard.html"/>
 		</dispatch>
 	(: ignore Cocoon :)
 	else if (matches($exist:path, "/cocoon")) then

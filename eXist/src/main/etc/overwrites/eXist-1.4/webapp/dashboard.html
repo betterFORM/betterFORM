@@ -193,7 +193,7 @@
       <div class="page">
          <div id="header">
             <div class="pageMarginBox">
-               <div id="logoBar"><a href="." class="link" id="linkLogo"><img id="logo" src="./images/logo.png" alt="betterFORM project" /></a><div id="dashboardTitle">Dashboard</div>
+               <div id="logoBar"><a href="../../../../webapp" class="link" id="linkLogo"><img id="logo" src="./images/logo.png" alt="betterFORM project" /></a><div id="dashboardTitle">Dashboard</div>
                   <div id="mission">the XForms way to build the web</div>
                   <div id="topnav"></div>
                </div>
@@ -268,7 +268,7 @@
 
 					},
 					onPlay:function(){
-						load('/betterform/FormBrowser?path=forms&fragment=true&ajax=load');
+						load('/betterform/rest/db/betterform/utils/FormsQuery.xql?fragment=true&ajax=load');
 					},
 					onEnd:function(){
 						dojo.style("bfLogo", "display", "none");
@@ -379,7 +379,7 @@
 			}
 
 			dojo.addOnLoad(function() {
-				animateOne('/betterform/FormBrowser?path=forms&fragment=true&ajax=load');
+				animateOne('/betterform/rest/db/betterform/utils/FormsQuery.xql?fragment=true&ajax=load');
 			});
 
 			// -->
@@ -395,13 +395,13 @@
 
 				} else {
 					dojo.io.iframe.send({
-						url: "/betterform/FileUpload",
+						url: "/betterform/rest/db/betterform/utils/upload-document.xql",
 						method: "post",
 						handleAs: "text",
 						form: dojo.query(".upload")[0],
 						load: function(response, ioArgs) {
 							//console.log("Upload OK", response, ioArgs);
-							var link = dojo.byId("current").childNodes[0];
+							var link = dojo.byId("current").childNodes[1];
 							console.debug("link: ", link);
 							link.onclick();
 							return response;
@@ -427,13 +427,13 @@
 					emptyCollectionNameDialog.show();
 				} else {
 					dojo.io.iframe.send({
-						url: "/betterform/FileUpload",
+						url: "/betterform/rest/db/betterform/utils/create-collection.xql",
 						method: "post",
 						handleAs: "text",
 						form: dojo.query(".createCollection")[0],
 						load: function(response, ioArgs) {
 							console.log("Collection created ", response, ioArgs);
-							var link = dojo.byId("current").childNodes[0];
+							var link = dojo.byId("current").childNodes[1];
 							console.debug("link: ", link);
 							link.onclick();
 							return response;

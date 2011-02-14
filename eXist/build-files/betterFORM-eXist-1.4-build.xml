@@ -251,6 +251,16 @@
                    password="${passwd}">
             <fileset dir="${betterform.db}/forms" excludes="**/.svn **/.svn/**"/>
         </xdb:store>
+
+        <xdb:store xmlns:xdb="http://exist-db.org/ant"
+                   uri="xmldb:exist://localhost:8080/betterform/xmlrpc/db/betterform/utils/"
+                   createsubcollections="true"
+                   createcollection="true"
+                   user="${user}"
+                   password="${passwd}">
+            <fileset dir="${betterform.db}/utils" excludes="**/.svn **/.svn/**"/>
+        </xdb:store>
+
         <!--
         <xdb:store xmlns:xdb="http://exist-db.org/ant"
                    uri="xmldb:exist://localhost:8080/exist/xmlrpc/db/betterform/resources/"

@@ -97,6 +97,17 @@ dependencies = {
             dependencies: [
                 "betterform.BfRequiredXFormsFeatureExplorer"
             ]
+        },
+
+        {
+            name: "../betterform/betterform-timetracker.js",
+            resourceName: "betterform.timetracker",
+            layerDependencies: [
+                "betterform.full"
+            ],
+            dependencies: [
+                "betterform.BfRequiredTimeTracker"
+            ]
         }
     ],
 

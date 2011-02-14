@@ -57,6 +57,21 @@
     <xsl:template name="addDojoImport">
         <script type="text/javascript" src="{concat($contextroot,$scriptPath,'dojo/dojo.js')}"> </script><xsl:text>
 </xsl:text>
+         <xsl:choose>
+            <xsl:when test="exists(//script[@id='betterformJs'])">
+                <script type="text/javascript">
+                    var isBetterFORMRelease = false;
+                </script><xsl:text>
+</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+                 <script type="text/javascript">
+                    var isBetterFORMRelease = false;
+                    dojo.require("betterform.BfRequiredFull");
+                    var bfRequiredFull = new betterform.BfRequiredFull(); </script><xsl:text>
+</xsl:text>
+             </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template name="addDojoRequires">

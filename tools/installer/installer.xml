@@ -241,7 +241,7 @@ FOR LATER: installinig the war should switch the above pack off. Did not yet fou
 
         </pack>
 
-        <pack name="Forms" required="no" condition="container">
+        <pack name="Forms" required="no" preselected="no" condition="container-1">
             <description>betterFORM demos, reference and test forms</description>
             <fileset dir="../../../src/main/xforms/demo" targetdir="$INSTALL_PATH/betterform/forms/demo"
                      excludes=""
@@ -257,13 +257,6 @@ FOR LATER: installinig the war should switch the above pack off. Did not yet fou
                   condition="jetty"/>
             <fileset dir="../../../src/main/xforms/test" targetdir="$INSTALL_PATH/web/root/forms/test"
                   condition="jetty"/>
-
-            <fileset dir="../../../src/main/xforms/demo" targetdir="$INSTALL_PATH/webapp/forms/demo"
-                  condition="exist" override="true"/>
-            <fileset dir="../../../src/main/xforms/reference" targetdir="$INSTALL_PATH/webapp/forms/reference"
-                  condition="exist" override="true"/>
-            <fileset dir="../../../src/main/xforms/test" targetdir="$INSTALL_PATH/webapp/forms/test"
-                  condition="exist" override="true"/>
         </pack>
 
         <pack name="Testsuite1.1" id ="testsuite" required="no" preselected="no" condition="container">

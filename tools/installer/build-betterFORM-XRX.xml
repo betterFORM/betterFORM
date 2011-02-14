@@ -63,7 +63,6 @@
             <arg line="-p ${basedir}/target/bf-eXist/"/>
         </java>
 
-
         <!-- create make temorary extension-directory for installation -->
         <mkdir dir="${basedir}/target/bf-eXist/extensions/betterform"/>
 
