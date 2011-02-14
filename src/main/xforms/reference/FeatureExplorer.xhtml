@@ -41,20 +41,20 @@
 
     <link rel="stylesheet" type="text/css" href="reference.css"/>
 
-	<script id="betterformJs" type="text/javascript" src="../../resources/scripts/betterform/BfRequiredXFormsFeatureExplorer.js"> </script>
+
+    <script id="betterformJs" type="text/javascript" >
+        loadBetterFORMJs('../../resources/scripts/release/dojo/betterform/betterform-xforms-feature-explorer.js', 'betterform.BfRequiredXFormsFeatureExplorer');
+    </script>
 
     <script type="text/javascript">
-		dojo.require("betterform.BfRequiredXFormsFeatureExplorer");
-		new betterform.BfRequiredXFormsFeatureExplorer();
-
         function addToDocument(id) {
             var model = dojo.query(".xfModel", dojo.doc)[0];
             dijit.byId(dojo.attr(model, "id")).getInstanceAsString(id,
-                    function(data) {
-                        dojo.byId("instanceData").innerHTML = data;
-                    });
+                function(data) {
+                    dojo.byId("instanceData").innerHTML = data;
+                }
+            );
         }
-
         function hideStatic() {
             dojo.byId('static').style.display = "none";
             dojo.byId('xforms').style.display = "block";
