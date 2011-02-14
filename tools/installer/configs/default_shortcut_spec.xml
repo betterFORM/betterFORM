@@ -4,7 +4,7 @@
   <programGroup defaultName="betterFORM"
                 location="startMenu"/>
   <shortcut
-    name="betterFORM lightSteelBlue"
+    name="betterFORM limeGreen"
     target="javaw"
     commandLine="-jar &quot;$INSTALL_PATH/betterform.jar&quot; -Xmx512m"
     workingDirectory="$INSTALL_PATH"

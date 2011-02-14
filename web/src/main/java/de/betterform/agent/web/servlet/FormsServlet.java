@@ -79,7 +79,7 @@ public class FormsServlet extends HttpServlet {
                         "<meta name=\"robots\" content=\"all\">\n" +
                         "<meta http-equiv=\"expires\" content=\"Wed, 9 Feb 2011 12:21:57 GMT\">\n" +
                         "<meta name=\"revisit-after\" content=\"5 days\">\n" +
-                        "        <title>betterFORM lightSteelBlue Forms Browser</title>\n" +
+                        "        <title>betterFORM limeGreen Forms Browser</title>\n" +
                         "        <link REV=\"made\" HREF=\"mailto:info@betterform.de\"/>\n" +
                         "        <link rel=\"SHORTCUT ICON\" href=\"" + request.getContextPath() + "/images/betterform.ico\"/>\n" +
                         "        <link rel=\"ICON\" href=\"" + request.getContextPath() + "/images/betterform.ico\" type=\"image/x-icon\"/>\n" +
