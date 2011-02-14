@@ -15,15 +15,11 @@ dojo.declare("betterform.BfRequiredCompact", null,
     constructor:function() {
         dojo.require("betterform.BfRequiredMinimal");
         var compactDependencies = new betterform.BfRequiredMinimal();
+
+        // Select(1) UI Factories
+        dojo.require("betterform.ui.factory.SelectElementFactory");
+
         // UI Controls
-        dojo.require("betterform.ui.input.Date");
-        dojo.require("betterform.ui.input.DateTime");
-        dojo.require("betterform.ui.output.Link");
-        dojo.require("betterform.ui.output.Image");
-        dojo.require("betterform.ui.output.Html");
-        dojo.require("betterform.ui.output.InputLook");
-        dojo.require("betterform.ui.output.Html");
-        dojo.require("betterform.ui.output.Image");
 
         
         dojo.require("betterform.ui.select.CheckBox");
@@ -39,20 +35,14 @@ dojo.declare("betterform.BfRequiredCompact", null,
         dojo.require("betterform.ui.select1.RadioGroup");
         dojo.require("betterform.ui.select1.RadioItemset");
 
-        dojo.require("betterform.ui.textarea.MinimalTextarea");
-
-        dojo.require("betterform.ui.trigger.LinkButton");
-        dojo.require("betterform.ui.trigger.ImageButton");
         dojo.require("betterform.ui.upload.UploadPlain");
 
         /** CONTAINER **/
-        dojo.require("betterform.ui.container.Container");
-        dojo.require("betterform.ui.container.ContentPaneGroup");
-        dojo.require("betterform.ui.container.Group");
-        dojo.require("betterform.ui.container.OuterGroup");
-        dojo.require("betterform.ui.container.Dialog");
         dojo.require("betterform.ui.container.Repeat");
         dojo.require("betterform.ui.container.RepeatItem");
         dojo.require("betterform.ui.container.Switch");
+        dojo.require("betterform.ui.container.TabSwitch");
+        dojo.require("betterform.ui.container.TitlePaneGroup");
+
     }
 });

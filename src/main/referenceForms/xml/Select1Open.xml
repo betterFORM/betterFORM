@@ -32,7 +32,7 @@
                     <xf:instance id="instance-1">
                         <data xmlns="">
                             <select1 constraint="true" readonly="false" required="true" relevant="true">
-                                <value>AX DZ</value>
+                                <value>AL</value>
                             </select1>
                         </data>
                     </xf:instance>
@@ -49,20 +49,20 @@
                     <xf:instance id="codes">
                         <countrylist xmlns="">
                             <country>
-                                <country-name>AFGHANISTAN</country-name>
-                                <code>AF</code>
+                                <country-name>SPAIN</country-name>
+                                <code>ES</code>
                             </country>
                             <country>
-                                <country-name>LAND ISLANDS</country-name>
-                                <code>AX</code>
+                                <country-name>SWEDEN</country-name>
+                                <code>SE</code>
                             </country>
                             <country>
-                                <country-name>ALBANIA</country-name>
-                                <code>AL</code>
+                                <country-name>PORTUGAL</country-name>
+                                <code>PT</code>
                             </country>
                             <country>
-                                <country-name>ALGERIA</country-name>
-                                <code>DZ</code>
+                                <country-name>CONGO</country-name>
+                                <code>CG</code>
                             </country>
                         </countrylist>
                     </xf:instance>
@@ -77,6 +77,26 @@
         <xf:label ref="country-name"/>
         <xf:value ref="code"/>
     </xf:itemset>
+    <!--
+        <xf:choices>
+            <xf:item class="af">
+                <xf:label class="afLabel">AFGHANISTAN</xf:label>
+                <xf:value class="afValue">AF</xf:value>
+            </xf:item>
+            <xf:item class="ak">
+                <xf:label class="akLabel">LAND ISLANDS</xf:label>
+                <xf:value class="afValue">AK</xf:value>
+            </xf:item>
+            <xf:item>
+                <xf:label>ALBANIA</xf:label>
+                <xf:value>AL</xf:value>
+            </xf:item>
+            <xf:item>
+                <xf:label>ALGERIA</xf:label>
+                <xf:value>DZ</xf:value>
+            </xf:item>
+        </xf:choices>
+    -->
 </xf:select1>
                 </code>
             </div>

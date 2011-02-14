@@ -28,7 +28,7 @@
                      
                      <select1 constraint="true" readonly="false" required="true" relevant="true">
                         
-                        <value>AX DZ</value>
+                        <value>AL</value>
                         
                      </select1>
                      
@@ -56,33 +56,33 @@
                      
                      <country>
                         
-                        <country-name>AFGHANISTAN</country-name>
+                        <country-name>SPAIN</country-name>
                         
-                        <code>AF</code>
-                        
-                     </country>
-                     
-                     <country>
-                        
-                        <country-name>LAND ISLANDS</country-name>
-                        
-                        <code>AX</code>
+                        <code>ES</code>
                         
                      </country>
                      
                      <country>
                         
-                        <country-name>ALBANIA</country-name>
+                        <country-name>SWEDEN</country-name>
                         
-                        <code>AL</code>
+                        <code>SE</code>
                         
                      </country>
                      
                      <country>
                         
-                        <country-name>ALGERIA</country-name>
+                        <country-name>PORTUGAL</country-name>
                         
-                        <code>DZ</code>
+                        <code>PT</code>
+                        
+                     </country>
+                     
+                     <country>
+                        
+                        <country-name>CONGO</country-name>
+                        
+                        <code>CG</code>
                         
                      </country>
                      
@@ -102,8 +102,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d31e170" onmouseover="showClass('xfSelect1');" onmouseout="hideClass('xfSelect1');">xfSelect1
-                     <div dojoType="dijit.Tooltip" connectId="d31e170">matches an Element that represents a XForms
+                  <td id="d31e173" onmouseover="showClass('xfSelect1');" onmouseout="hideClass('xfSelect1');">xfSelect1
+                     <div dojoType="dijit.Tooltip" connectId="d31e173">matches an Element that represents a XForms
                         select
                         element
                         
@@ -111,8 +111,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d31e182" onmouseover="showClass('xfSelectorItem');" onmouseout="hideClass('xfSelectorItem');">xfSelectorItem
-                     <div dojoType="dijit.Tooltip" connectId="d31e182">matches an item of a XForms
+                  <td id="d31e185" onmouseover="showClass('xfSelectorItem');" onmouseout="hideClass('xfSelectorItem');">xfSelectorItem
+                     <div dojoType="dijit.Tooltip" connectId="d31e185">matches an item of a XForms
                         select1
                         element
                         
@@ -277,6 +277,32 @@
                
                <xf:alert>invalid</xf:alert>
                
+               <!--
+    <xf:choices>
+        <xf:item>
+            <xf:label />
+            <xf:value/>
+        </xf:item>
+        <xf:item class="af">
+            <xf:label class="afLabel">AFGHANISTAN</xf:label>
+            <xf:value class="afValue">AF</xf:value>
+        </xf:item>
+        <xf:item class="ak">
+            <xf:label class="akLabel">LAND ISLANDS</xf:label>
+            <xf:value class="afValue">AK</xf:value>
+        </xf:item>
+        <xf:item>
+            <xf:label>ALBANIA</xf:label>
+            <xf:value>AL</xf:value>
+        </xf:item>
+        <xf:item>
+            <xf:label>ALGERIA</xf:label>
+            <xf:value>DZ</xf:value>
+        </xf:item>
+    </xf:choices>
+-->
+               
+               
                <xf:itemset nodeset="instance('codes')/country">
                   
                   <xf:label ref="country-name"></xf:label>
@@ -326,6 +352,8 @@
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
     &lt;xf:help&gt;help for select1&lt;/xf:help&gt;
     &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
+
+
     &lt;xf:itemset nodeset="instance('codes')/country"&gt;
         &lt;xf:label ref="country-name"&gt;&lt;/xf:label&gt;
         &lt;xf:value ref="code"&gt;&lt;/xf:value&gt;
