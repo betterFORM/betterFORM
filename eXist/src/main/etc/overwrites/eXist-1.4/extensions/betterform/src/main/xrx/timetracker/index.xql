@@ -8,28 +8,15 @@ declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
     <head>
         <title>betterFORM Demo XForms: Address, Registration, FeatureExplorer</title>
 
-        <link rel="stylesheet" type="text/css" href="/betterform/resources/styles/bf.css"/>
-        <link rel="stylesheet" type="text/css" href="/betterform/resources/styles/demo.css"/>
-        <link rel="stylesheet" type="text/css"
-              href="/betterform/rest/db/betterform/apps/timetracker/resources/InlineRoundBordersAlert.css"/>
-        <link rel="stylesheet" type="text/css"
-              href="/betterform/rest/db/betterform/apps/timetracker/resources/timetracker.css"/>
+        <link rel="stylesheet" type="text/css" href="./resources/InlineRoundBordersAlert.css"/>
+        <link rel="stylesheet" type="text/css" href="./resources/timetracker.css"/>
+
+        <script id="betterformJs" type="text/javascript" >
+            loadBetterFORMJs('/betterform/resources/scripts/release/dojo/betterform/betterform-timetracker.js', 'betterform.BfTimeTracker');
+        </script>
 
         <script type="text/javascript">
             <!--
-            dojo.require("dojo.parser");
-            dojo.require("dijit.dijit");
-            dojo.require("dijit.Declaration");
-            dojo.require("dijit.Toolbar");
-            dojo.require("dijit.ToolbarSeparator");
-            dojo.require("dijit.Dialog");
-            dojo.require("dijit.TitlePane");
-            dojo.require("betterform.ui.container.Group");
-            dojo.require('dijit.layout.ContentPane');
-            dojo.require("dijit.form.Button");
-            dojo.require("dijit.form.CheckBox");
-
-
             var xfReadySubscribers;
 
             function embed(targetTrigger,targetMount){

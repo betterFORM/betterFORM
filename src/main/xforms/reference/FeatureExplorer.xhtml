@@ -36,56 +36,11 @@
     <link REV="made" HREF="mailto:info@betterform.de"/>
     <link rel="SHORTCUT ICON" href="../../images/betterform.ico"/>
     <link rel="ICON" href="../../images/betterform.ico" type="image/x-icon"/>
-    <link rel="stylesheet" type="text/css"
-          href="../../resources/scripts/dojox/highlight/resources/highlight.css"/>
+    <link rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css"/>
 
     <link rel="stylesheet" type="text/css" href="reference.css"/>
 
 
-    <script id="betterformJs" type="text/javascript" >
-        loadBetterFORMJs('../../resources/scripts/release/dojo/betterform/betterform-xforms-feature-explorer.js', 'betterform.BfRequiredXFormsFeatureExplorer');
-    </script>
-
-    <script type="text/javascript">
-        function addToDocument(id) {
-            var model = dojo.query(".xfModel", dojo.doc)[0];
-            dijit.byId(dojo.attr(model, "id")).getInstanceAsString(id,
-                function(data) {
-                    dojo.byId("instanceData").innerHTML = data;
-                }
-            );
-        }
-        function hideStatic() {
-            dojo.byId('static').style.display = "none";
-            dojo.byId('xforms').style.display = "block";
-
-        }
-        function showStatic() {
-            dojo.byId('xforms').style.display = "none";
-            dojo.byId('static').style.display = "block";
-        }
-
-		function showClass(cssClass){
-			dojo.query('.sample .'+ cssClass).forEach(function(item){
-				dojo.addClass(item,'showClass');
-			});
-		}
-		function hideClass(cssClass){
-			dojo.query('.sample .'+ cssClass).forEach(function(item){
-				dojo.removeClass(item,'showClass');
-			});
-		}
-
-		dojo.addOnLoad(function(){
-			  new dijit.Tooltip({
-				 connectId: ["navMenu"],
-				 label: "use the menu to select forms"
-			  });
-
-//			dijit.byId("navMenu").focus();
-		});
-
-    </script>
 
 
     <style type="text/css">
@@ -826,6 +781,51 @@
     </a>
     <span>&#xA9; 2010 betterFORM</span>
 </div>
+
+    <script id="betterformJs" type="text/javascript" >
+        loadBetterFORMJs(dojo.attr(dojo.byId("fluxProcessor"), "contextroot") + '/resources/scripts/release/dojo/betterform/betterform-xforms-feature-explorer.js', 'betterform.BfRequiredXFormsFeatureExplorer');
+    </script>
+
+    <script type="text/javascript">
+        function addToDocument(id) {
+            var model = dojo.query(".xfModel", dojo.doc)[0];
+            dijit.byId(dojo.attr(model, "id")).getInstanceAsString(id,
+                function(data) {
+                    dojo.byId("instanceData").innerHTML = data;
+                }
+            );
+        }
+        function hideStatic() {
+            dojo.byId('static').style.display = "none";
+            dojo.byId('xforms').style.display = "block";
+
+        }
+        function showStatic() {
+            dojo.byId('xforms').style.display = "none";
+            dojo.byId('static').style.display = "block";
+        }
+
+		function showClass(cssClass){
+			dojo.query('.sample .'+ cssClass).forEach(function(item){
+				dojo.addClass(item,'showClass');
+			});
+		}
+		function hideClass(cssClass){
+			dojo.query('.sample .'+ cssClass).forEach(function(item){
+				dojo.removeClass(item,'showClass');
+			});
+		}
+
+		dojo.addOnLoad(function(){
+			  new dijit.Tooltip({
+				 connectId: ["navMenu"],
+				 label: "use the menu to select forms"
+			  });
+
+//			dijit.byId("navMenu").focus();
+		});
+
+    </script>
 
 </body>
 </html>
