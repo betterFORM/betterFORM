@@ -15,6 +15,9 @@
                 //                dojo.require("dojox.highlight.languages.pygments.xml");
                 dojo.require("dijit.form.Button");
                 dojo.require('dijit.layout.ContentPane');
+                dojo.subscribe("/xf/ready", function(){
+                    fluxProcessor.skipshutdown=true;
+                });
             </script></head>
    
    <body class="soria InlineAlert" style="margin:30px">
@@ -26,17 +29,17 @@
                   
                   <data xmlns="">
                      
-                     <select1 constraint="true" readonly="false" required="true" relevant="true">
+                     <control1 constraint="true" readonly="false" required="true" relevant="true">
                         
                         <value>AL</value>
                         
-                     </select1>
+                     </control1>
                      
                   </data>
                   
                </xf:instance>
                
-               <xf:bind nodeset="select1">
+               <xf:bind nodeset="control1">
                   
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
                   
@@ -102,8 +105,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d31e173" onmouseover="showClass('xfSelect1');" onmouseout="hideClass('xfSelect1');">xfSelect1
-                     <div dojoType="dijit.Tooltip" connectId="d31e173">matches an Element that represents a XForms
+                  <td id="d13e172" onmouseover="showClass('xfcontrol1');" onmouseout="hideClass('xfcontrol1');">xfcontrol1
+                     <div dojoType="dijit.Tooltip" connectId="d13e172">matches an Element that represents a XForms
                         select
                         element
                         
@@ -111,9 +114,9 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d31e185" onmouseover="showClass('xfSelectorItem');" onmouseout="hideClass('xfSelectorItem');">xfSelectorItem
-                     <div dojoType="dijit.Tooltip" connectId="d31e185">matches an item of a XForms
-                        select1
+                  <td id="d13e184" onmouseover="showClass('xfSelectorItem');" onmouseout="hideClass('xfSelectorItem');">xfSelectorItem
+                     <div dojoType="dijit.Tooltip" connectId="d13e184">matches an item of a XForms
+                        control1
                         element
                         
                      </div>
@@ -239,7 +242,7 @@
                </p>
                
                <p>
-                  <span class="keyword">Select1</span>
+                  <span class="keyword">control1</span>
                   with @selection='open' allows the user to input a value that does
                   not exist in the list
                   of choices. Simply type into the input field.
@@ -267,41 +270,15 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:select1 id="select1" ref="select1/value" selection="open" incremental="true">
+            <xf:control1 id="control1" ref="control1/value" selection="open" incremental="true">
                
                <xf:label>a text</xf:label>
                
                <xf:hint>a Hint for this control</xf:hint>
                
-               <xf:help>help for select1</xf:help>
+               <xf:help>help for control1</xf:help>
                
                <xf:alert>invalid</xf:alert>
-               
-               <!--
-    <xf:choices>
-        <xf:item>
-            <xf:label />
-            <xf:value/>
-        </xf:item>
-        <xf:item class="af">
-            <xf:label class="afLabel">AFGHANISTAN</xf:label>
-            <xf:value class="afValue">AF</xf:value>
-        </xf:item>
-        <xf:item class="ak">
-            <xf:label class="akLabel">LAND ISLANDS</xf:label>
-            <xf:value class="afValue">AK</xf:value>
-        </xf:item>
-        <xf:item>
-            <xf:label>ALBANIA</xf:label>
-            <xf:value>AL</xf:value>
-        </xf:item>
-        <xf:item>
-            <xf:label>ALGERIA</xf:label>
-            <xf:value>DZ</xf:value>
-        </xf:item>
-    </xf:choices>
--->
-               
                
                <xf:itemset nodeset="instance('codes')/country">
                   
@@ -311,7 +288,28 @@
                   
                </xf:itemset>
                
-            </xf:select1>
+               <!--
+        <xf:choices>
+            <xf:item class="af">
+                <xf:label class="afLabel">AFGHANISTAN</xf:label>
+                <xf:value class="afValue">AF</xf:value>
+            </xf:item>
+            <xf:item class="ak">
+                <xf:label class="akLabel">LAND ISLANDS</xf:label>
+                <xf:value class="afValue">AK</xf:value>
+            </xf:item>
+            <xf:item>
+                <xf:label>ALBANIA</xf:label>
+                <xf:value>AL</xf:value>
+            </xf:item>
+            <xf:item>
+                <xf:label>ALGERIA</xf:label>
+                <xf:value>DZ</xf:value>
+            </xf:item>
+        </xf:choices>
+    -->
+               
+            </xf:control1>
          </div>
          <div class="MIPS">
             
@@ -319,25 +317,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="select1-readonly" navindex="-1" ref="select1/@readonly" incremental="true">
+               <xf:input id="control1-readonly" navindex="-1" ref="control1/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="select1-required" navindex="-1" ref="select1/@required" incremental="true">
+               <xf:input id="control1-required" navindex="-1" ref="control1/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="select1-relevant" navindex="-1" ref="select1/@relevant" incremental="true">
+               <xf:input id="control1-relevant" navindex="-1" ref="control1/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="select1-valid" navindex="-1" ref="select1/@constraint" incremental="true">
+               <xf:input id="control1-valid" navindex="-1" ref="control1/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   
@@ -347,18 +345,17 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:select1 id="select1" ref="select1/value" selection="open" incremental="true"&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:control1 id="control1" ref="control1/value" selection="open" incremental="true"&gt;
     &lt;xf:label&gt;a text&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
-    &lt;xf:help&gt;help for select1&lt;/xf:help&gt;
+    &lt;xf:help&gt;help for control1&lt;/xf:help&gt;
     &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
-
-
     &lt;xf:itemset nodeset="instance('codes')/country"&gt;
         &lt;xf:label ref="country-name"&gt;&lt;/xf:label&gt;
         &lt;xf:value ref="code"&gt;&lt;/xf:value&gt;
     &lt;/xf:itemset&gt;
-&lt;/xf:select1&gt;
+    
+&lt;/xf:control1&gt;
 </code></pre></div><script type="text/javascript">
                     function showClass(cssClass){
                         dojo.query('.sample .'+ cssClass).forEach(function(item){

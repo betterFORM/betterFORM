@@ -3,7 +3,7 @@
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       
-      <title>select control allowing users to type in a value</title>
+      <title>control1 control allowing users to type in a value</title>
       <script type="text/javascript">
             dojo.require("dijit.Tooltip");
         </script>
@@ -14,6 +14,9 @@
                 //                dojo.require("dojox.highlight.languages.pygments.xml");
                 dojo.require("dijit.form.Button");
                 dojo.require('dijit.layout.ContentPane');
+                dojo.subscribe("/xf/ready", function(){
+                    fluxProcessor.skipshutdown=true;
+                });
             </script></head>
    
    <body class="soria InlineAlert" style="margin:30px">
@@ -25,17 +28,17 @@
                   
                   <data xmlns="" constraint="true" readonly="false" required="false" relevant="true">
                      
-                     <select constraint="true" readonly="false" required="true" relevant="true">
+                     <control1 constraint="true" readonly="false" required="true" relevant="true">
                         
                         <value>AX DZ</value>
                         
-                     </select>
+                     </control1>
                      
                   </data>
                   
                </xf:instance>
                
-               <xf:bind nodeset="select">
+               <xf:bind nodeset="control1">
                   
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
                   
@@ -113,18 +116,18 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d34e182" onmouseover="showClass('xfMinimalSelect');" onmouseout="hideClass('xfMinimalSelect');">xfMinimalSelect
-                     <div dojoType="dijit.Tooltip" connectId="d34e182">matches an Element that represents a XForms
-                        select
+                  <td id="d16e182" onmouseover="showClass('xfMinimalcontrol1');" onmouseout="hideClass('xfMinimalcontrol1');">xfMinimalcontrol1
+                     <div dojoType="dijit.Tooltip" connectId="d16e182">matches an Element that represents a XForms
+                        control1
                         element
                         
                      </div>
                   </td>
                </tr>
                <tr>
-                  <td id="d34e194" onmouseover="showClass('xfSelectorItem');" onmouseout="hideClass('xfSelectorItem');">xfSelectorItem
-                     <div dojoType="dijit.Tooltip" connectId="d34e194">matches all list entries of the Element that represents a XForms
-                        select
+                  <td id="d16e194" onmouseover="showClass('xfcontrol1orItem');" onmouseout="hideClass('xfcontrol1orItem');">xfcontrol1orItem
+                     <div dojoType="dijit.Tooltip" connectId="d16e194">matches all list entries of the Element that represents a XForms
+                        control1
                         element
                         
                      </div>
@@ -240,20 +243,20 @@
             </table>
          </div>
          <div class="pageintro">
-            <h1>select control allowing users to type in a value</h1>
+            <h1>control1 control allowing users to type in a value</h1>
             <div class="description">
                
                <p>
-                  This form control allows the user to make multiple selections from a set of choices.
+                  This form control allows the user to make multiple control1ions from a set of choices.
                   
                   
                </p>
                
                <p>
                   A
-                  <span class="keyword">select</span>
+                  <span class="keyword">control1</span>
                   using attribute
-                  <span class="keyword">selection</span>
+                  <span class="keyword">control1ion</span>
                   with value
                   'open' allows a user to input a value that is not available in the predefined list of values.
                   
@@ -261,7 +264,7 @@
                
                <p>
                   the
-                  <span class="keyword">selection</span>
+                  <span class="keyword">control1ion</span>
                   attribute takes precedence of the
                   <span class="keyword">appearance</span>
                   attribute. The rendered control will always be a dropdown.
@@ -275,7 +278,7 @@
                   <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
                </tr>
                <tr>
-                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-selectMany" target="_blank">
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-control1Many" target="_blank">
                         Recommendation
                         </a></td>
                </tr>
@@ -288,13 +291,13 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:select id="select" ref="select/value" selection="open" incremental="true">
+            <xf:control1 id="control1" ref="control1/value" control1ion="open" incremental="true">
                
                <xf:label>a text</xf:label>
                
                <xf:hint>a Hint for this control</xf:hint>
                
-               <xf:help>help for select</xf:help>
+               <xf:help>help for control1</xf:help>
                
                <xf:alert>invalid</xf:alert>
                
@@ -306,7 +309,7 @@
                   
                </xf:itemset>
                
-            </xf:select>
+            </xf:control1>
          </div>
          <div class="MIPS">
             
@@ -314,25 +317,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="select-readonly" navindex="-1" ref="select/@readonly" incremental="true">
+               <xf:input id="control1-readonly" navindex="-1" ref="control1/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="select-required" navindex="-1" ref="select/@required" incremental="true">
+               <xf:input id="control1-required" navindex="-1" ref="control1/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="select-relevant" navindex="-1" ref="select/@relevant" incremental="true">
+               <xf:input id="control1-relevant" navindex="-1" ref="control1/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="select-valid" navindex="-1" ref="select/@constraint" incremental="true">
+               <xf:input id="control1-valid" navindex="-1" ref="control1/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   
@@ -342,16 +345,16 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:select id="select" ref="select/value" selection="open" incremental="true"&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:control1 id="control1" ref="control1/value" control1ion="open" incremental="true"&gt;
     &lt;xf:label&gt;a text&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
-    &lt;xf:help&gt;help for select&lt;/xf:help&gt;
+    &lt;xf:help&gt;help for control1&lt;/xf:help&gt;
     &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
     &lt;xf:itemset nodeset="instance('codes')/country"&gt;
         &lt;xf:label ref="country-name"&gt;&lt;/xf:label&gt;
         &lt;xf:value ref="code"&gt;&lt;/xf:value&gt;
     &lt;/xf:itemset&gt;
-&lt;/xf:select&gt;
+&lt;/xf:control1&gt;
 </code></pre></div>
          <h2>XForms Instance</h2>
          <div class="Other" title="XForms Instance">

@@ -12,6 +12,9 @@
                 //                dojo.require("dojox.highlight.languages.pygments.xml");
                 dojo.require("dijit.form.Button");
                 dojo.require('dijit.layout.ContentPane');
+                dojo.subscribe("/xf/ready", function(){
+                    fluxProcessor.skipshutdown=true;
+                });
             </script></head>
    
    <body class="soria InlineAlert" style="margin:30px">
@@ -23,18 +26,18 @@
                   
                   <data>
                      
-                     <input1 constraint="true" readonly="false" required="true" relevant="true">
+                     <control1 constraint="true" readonly="false" required="true" relevant="true">
                         
                         <value></value>
                         
-                     </input1>
+                     </control1>
                      
                   </data>
                   
                </xf:instance>
                
                
-               <xf:bind nodeset="input1">
+               <xf:bind nodeset="control1">
                   
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="xf:boolean"></xf:bind>
                   
@@ -61,13 +64,13 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d16e117" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
-                     <div dojoType="dijit.Tooltip" connectId="d16e117">matches an Element that represents a XForms input element</div>
+                  <td id="d3e117" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
+                     <div dojoType="dijit.Tooltip" connectId="d3e117">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d16e126" onmouseover="showClass('xsdBoolean');" onmouseout="hideClass('xsdBoolean');">xsdBoolean
-                     <div dojoType="dijit.Tooltip" connectId="d16e126">matches an Element that is bound to a node with datatype
+                  <td id="d3e126" onmouseover="showClass('xsdBoolean');" onmouseout="hideClass('xsdBoolean');">xsdBoolean
+                     <div dojoType="dijit.Tooltip" connectId="d3e126">matches an Element that is bound to a node with datatype
                         boolean
                         
                      </div>
@@ -218,13 +221,13 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:input id="input1" ref="input1/value" incremental="true">
+            <xf:input id="control1" ref="control1/value" incremental="true">
                
                <xf:label>a text</xf:label>
                
                <xf:hint>a Hint for this control</xf:hint>
                
-               <xf:help>help for input1</xf:help>
+               <xf:help>help for control1</xf:help>
                
                <xf:alert>invalid</xf:alert>
                
@@ -236,25 +239,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="input1-readonly" navindex="-1" ref="input1/@readonly" incremental="true">
+               <xf:input id="control1-readonly" navindex="-1" ref="control1/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="input1-required" navindex="-1" ref="input1/@required" incremental="true">
+               <xf:input id="control1-required" navindex="-1" ref="control1/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="input1-relevant" navindex="-1" ref="input1/@relevant" incremental="true">
+               <xf:input id="control1-relevant" navindex="-1" ref="control1/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="input1-valid" navindex="-1" ref="input1/@constraint" incremental="true">
+               <xf:input id="control1-valid" navindex="-1" ref="control1/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   
@@ -264,7 +267,7 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:bind nodeset="input1"&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:bind nodeset="control1"&gt;
                         &lt;xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="xf:boolean"&gt;&lt;/xf:bind&gt;
                         &lt;xf:bind nodeset="@constraint" type="boolean"&gt;&lt;/xf:bind&gt;
                         &lt;xf:bind nodeset="@readonly" type="boolean"&gt;&lt;/xf:bind&gt;
@@ -272,10 +275,10 @@
                         &lt;xf:bind nodeset="@relevant" type="boolean"&gt;&lt;/xf:bind&gt;
                     &lt;/xf:bind&gt;
 
-&lt;xf:input id="input1" ref="input1/value" incremental="true"&gt;
+&lt;xf:input id="control1" ref="control1/value" incremental="true"&gt;
     &lt;xf:label&gt;a text&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
-    &lt;xf:help&gt;help for input1&lt;/xf:help&gt;
+    &lt;xf:help&gt;help for control1&lt;/xf:help&gt;
     &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
 &lt;/xf:input&gt;
 </code></pre></div><script type="text/javascript">
