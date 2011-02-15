@@ -44,7 +44,7 @@
         change to WARN in production environments
     -->
     <category name="de.betterform.xml.xforms.model.Model">
-        <priority value="DEBUG"/>
+        <priority value="ERROR"/>
     </category>
 
 <!--
@@ -66,7 +66,7 @@
 -->
 
     <root>
-        <priority value="WARN"/>
+        <priority value="ERROR"/>
         <appender-ref ref="SHELL"/>
     </root>
 
