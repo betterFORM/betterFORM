@@ -542,13 +542,13 @@
              zipfile="target/${web.app.name}-${web.app.version}-js-optimized.zip"
              basedir="${webapp.dir}/resources/scripts/release"/>
 
-        <move file="target/${web.app.name}-${web.app.version}-js-optimized.zip" todir="${src.dir}/src/main/lib"/>
+        <move file="target/${web.app.name}-${web.app.version}-js-optimized.zip" todir="${src.dir}/main/lib"/>
     </target>
 
 
     <target name="unpack-betterform-js-release" depends="check-if-bf-js-release-unpacked" if="bf.js.release.not.available">
         <mkdir dir="${webapp.dir}/resources/scripts/release"/>
-        <unzip src="${src.dir}/src/main/lib/${web.app.name}-${web.app.version}-js-optimized.zip" dest="${webapp.dir}/resources/scripts/release"/>
+        <unzip src="${src.dir}/main/lib/${web.app.name}-${web.app.version}-js-optimized.zip" dest="${webapp.dir}/resources/scripts/release"/>
     </target>
 
     <!--  Check if dojo is already unpacked -->
