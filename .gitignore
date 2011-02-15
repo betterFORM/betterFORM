@@ -25,7 +25,8 @@ version.info
 target/*
 betty/target/*
 core/target/*
-exist/target/*
+eXist/target/*
+tools/installer/target/*
 web/target/*
 xApp/target/*
 zaphod/target/*
