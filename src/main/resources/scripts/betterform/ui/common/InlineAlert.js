@@ -41,10 +41,10 @@ dojo.declare("betterform.ui.common.InlineAlert",
                     this._hide(id,commonChild);
                     this._show(id,"hint");
                 });
-            };
+            }
             dojo.style(mip, "display", show);
         } else {
-            console.warn(id + "-" + commonChild + " is not defined for Control " + id);
+            console.info(id + "-" + commonChild + " is not defined for Control " + id);
         }
     }
 

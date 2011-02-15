@@ -12,6 +12,7 @@
       <meta name="keywords" content="betterFORM, xforms, forms, form, xhtml, xpath, xslt, xslt2.0, dojo, dojotoolkit, java, javascript, xml, schema, web, web2.0, web2, web3.0, web3, semantic, semantic web, joern turner, turner, lars windauer, ajax, xforms processor, processor" />
       <meta name="copyright" content="betterForm Project" />
       <meta name="content-language" content="en" />
+      <meta http-equiv="expires" content="60" />
       <meta name="robots" content="all" />
       <meta http-equiv="expires" content="Wed, 9 Feb 2011 12:21:57 GMT" />
       <meta name="revisit-after" content="2 days" />
@@ -208,25 +209,24 @@
       </div>
 	  <script type="text/javascript">
 		  var djConfig = {
-		  debugAtAllCosts: true,
+		  debugAtAllCosts: false,
+		  parseOnLoad:true,
 		  dojoBlankHtmlUrl:"/blank.html",
-		  isDebug: true };
+		  isDebug: false };
 	  </script>
 
+
+
+	  <script type="text/javascript" src="resources/scripts/release/dojo/dojo/dojo.js" >&#160;</script>
+	  <script type="text/javascript" src="resources/scripts/release/dojo/betterform/betterform-dashboard.js">&#160;</script>
+
+<!--
 	  <script type="text/javascript" src="resources/scripts/dojo/dojo.js" djConfig="parseOnLoad:true">&#160;</script>
+	  <script type="text/javascript" src="resources/scripts/betterform/BfRequiredDashboard.js">&#160;</script>
+-->
+
+
 	  <script type="text/javascript">
-            dojo.require("dojo.fx");
-            dojo.require("dojox.fx");
-            dojo.require("dojo.fx.easing");
-			dojo.require("dijit.form.Form");
-			dojo.require("dijit.form.Button");
-			dojo.require("dojo.io.iframe");
-
-        	dojo.require("dijit.form.TextBox");
-			dojo.require("dijit.form.DropDownButton");
-			dojo.require("dijit.TooltipDialog");
-			dojo.require("dijit.Dialog");
-
 		 	dojo.config.dojoBlankHtmlUrl = '/blank.html';
 
             function animateOne() {
@@ -326,12 +326,12 @@
 
 			function load(url,show) {
 				//Look up the node we'll stick the text under.
-				console.debug("DropDownDialog");
+				// console.debug("DropDownDialog");
 				var popups = dojo.query(".dijitPopup .dijitTooltipDialog");
 				popups.forEach(function(item) {
-					console.debug("Dijit Popup item: ", item);
+					// console.debug("Dijit Popup item: ", item);
 					var popUpDijit = dijit.byId(dojo.attr(item,"id"));
-					console.debug("destroy popup widget: ",popUpDijit);
+					// console.debug("destroy popup widget: ",popUpDijit);
 					popUpDijit.destroy();
 				});
 				var targetNode = dojo.byId("browser");
@@ -348,7 +348,7 @@
 						if(show){
 							dojo.style(targetNode,"opacity","1");
 						}
-						console.debug("inserted Node: ",targetNode);
+						// console.debug("inserted Node: ",targetNode);
 						var currentPath=dojo.byId("current");
 						dojox.fx.highlight({node:currentPath, color:'#ffffff', duration:400}).play();
 					},
@@ -387,7 +387,7 @@
 						load: function(response, ioArgs) {
 							//console.log("Upload OK", response, ioArgs);
 							var link = dojo.byId("current").childNodes[0];
-							console.debug("link: ", link);
+							// console.debug("link: ", link);
 							link.onclick();
 							return response;
 						},
@@ -419,7 +419,7 @@
 						load: function(response, ioArgs) {
 							console.log("Collection created ", response, ioArgs);
 							var link = dojo.byId("current").childNodes[0];
-							console.debug("link: ", link);
+							// console.debug("link: ", link);
 							link.onclick();
 							return response;
 						},
@@ -432,11 +432,11 @@
 			}
 
 			function userInputIsEmpty(/*Class*/ className) {
-				console.debug("userInputIsEmpty: Get value of for control with class: ", className);
+				// console.debug("userInputIsEmpty: Get value of for control with class: ", className);
 				var controlNode = dojo.query("." + className + " .dijitInputInner")[0];
-				console.debug("userInputIsEmpty: node: ", controlNode);
+				// console.debug("userInputIsEmpty: node: ", controlNode);
 				var value = dojo.attr(controlNode, "value");
-				console.debug("userInputIsEmpty: value: ", value);
+				// console.debug("userInputIsEmpty: value: ", value);
 				return (value == null || value == "");
 			}
 	  </script>

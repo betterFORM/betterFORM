@@ -89,6 +89,7 @@ public class XFormsInspectorServlet extends HttpServlet /* extends AbstractXForm
                 Node host = processor.getXForms();
                 OutputStream out = response.getOutputStream();
                 response.setContentType("text/plain");
+                request.setAttribute(WebFactory.IGNORE_RESPONSE_BODY, "TRUE");
                 DOMUtil.prettyPrintDOM(host, out);
                 out.close();
             } else {

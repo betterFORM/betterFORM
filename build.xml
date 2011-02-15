@@ -10,6 +10,7 @@
     <property name="betty.dir" value="${basedir}/betty"/>
     <property name="server.dir" value="${basedir}/tools/server"/>
     <property name="target.dir" value="${basedir}/target"/>
+    <property name="src.target.dir" value="${basedir}/target"/>
 
 
     <!-- local Web properties -->
@@ -86,33 +87,29 @@
         <echo message="unpacking Dojo..."/>
         <echo message="************************************************************************************"/>
         <echo/>
-        <mkdir dir="${target.dir}"/>
+        <mkdir dir="${src.target.dir}"/>
         <gunzip src="${basedir}/src/main/lib/${properties.dojo}.tar.gz"
-                dest="${target.dir}"/>
-        <untar src="${target.dir}/${properties.dojo}.tar"
-               dest="${target.dir}"/>
-        <delete file="${target.dir}/${properties.dojo}"/>
-        <delete file="${target.dir}/${properties.dojo}.tar"/>
+                dest="${src.target.dir}"/>
+        <untar src="${src.target.dir}/${properties.dojo}.tar"
+               dest="${src.target.dir}"/>
+
+        <delete file="${src.target.dir}/${properties.dojo}.tar"/>
 
         <echo/>
         <echo message="************************************************************************************"/>
         <echo message="merging Dojo into tree ..."/>
         <echo message="************************************************************************************"/>
         <echo/>
-        <move todir="${target.dir}/resources/scripts/dijit">
-            <fileset dir="${target.dir}/${properties.dojo}/dijit"/>
-        </move>
-        <move todir="${target.dir}/resources/scripts/dojo">
-            <fileset dir="${target.dir}/${properties.dojo}/dojo"/>
-        </move>
-        <move todir="${target.dir}/resources/scripts/dojox">
-            <fileset dir="${target.dir}/${properties.dojo}/dojox"/>
-        </move>
+        <move file="${src.target.dir}/${properties.dojo}" tofile="${target.dir}/resources/scripts"/>
 
-        <move todir="${target.dir}/resources/scripts/util">
-            <fileset dir="${target.dir}/${properties.dojo}/util"/>
+<!--
+        <move todir="${target.dir}/resources/scripts">
+            <fileset dir="${src.target.dir}/${properties.dojo}">
+                <include name="**/**"/>
+			</fileset>
         </move>
-
+-->
+        <delete file="${src.target.dir}/${properties.dojo}"/>
 
         <unzip src="${basedir}/src/main/lib/${properties.timeline}.zip" dest="${target.dir}"/>
         <move todir="${target.dir}/resources/scripts/simile/timeline">

@@ -13,11 +13,11 @@ dojo.declare("betterform.ui.common.Alert",
     handleValid:function(id,action){
         // TODO: applyChanges must remove an existing alert
 
-        console.debug("Alert.handleValid[id:" + id , " action: " + action + "]");
+        // console.debug("Alert.handleValid[id:" + id , " action: " + action + "]");
 
         var control = dijit.byId(id);
         if(control == null) {
-            console.warn("control '" +id +"' does not exist")
+            console.warn("control '" +id +"' does not exist");
             return; 
         }
         
@@ -36,7 +36,7 @@ dojo.declare("betterform.ui.common.Alert",
         else if((action =="applyChanges" || action=="onBlur") && !controlValueIsEmpty) {
             this._displayInfo(id,action);
         }else {
-            console.warn("Alert.handleValid: action:'", action , "' unknown, commonChild handling for control '", id, "', execution stopped");
+            console.info("Alert.handleValid: action:'", action , "' unknown, commonChild handling for control '", id, "', execution stopped");
         }
 
         if(dojo.hasClass(control.domNode,"bfInvalidControl")) {
@@ -45,12 +45,12 @@ dojo.declare("betterform.ui.common.Alert",
     },
 
     handleInvalid:function(id,action) {
-        console.debug("Alert.handleInvalid [id:" + id , " action: " + action + "]");
+        // console.debug("Alert.handleInvalid [id:" + id , " action: " + action + "]");
 
         //##### SHOW NOTHING ON INIT #######
         var control = dijit.byId(id);
         if(control == null) {
-            console.warn("control '" +id +"' does not exist");
+            console.info("control '" +id +"' does not exist");
             return;
         }
 
@@ -83,7 +83,7 @@ dojo.declare("betterform.ui.common.Alert",
         }
 */
         else {
-            console.warn("Alert.handleInvalid: action:'", action , "' unknown, commonChild handling for control '", id, "', execution stopped");
+            console.info("Alert.handleInvalid: action:'", action , "' unknown, commonChild handling for control '", id, "', execution stopped");
         }
 
         if(!dojo.hasClass(control.domNode,"bfInvalidControl")) {

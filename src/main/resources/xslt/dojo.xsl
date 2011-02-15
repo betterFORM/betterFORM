@@ -159,37 +159,6 @@
                             });
                     }
                 </xsl:if>
-<!--
-                function switchToEdit(target){
-                    //console.debug("target,"target);
-                    new betterform.ui.input.TextField({id:target.id,value:dojo.byId(target.id).innerHTML},target.id)
-
-                }
-                var hideLoader = function(){
-                    dojo.fadeOut({
-                        node:"fluxProcessor",
-                        duration:400,
-                        onEnd: function(){
-                            dojo.style("fluxProcessor", "display", "none");
-                            dojo.style(dojo.body(),"overflow","auto");
-                        }
-                    }).play();
-                }       ;
--->
-                var stringToFunction = function(str) {
-                 var arr = str.split(".");
-
-                  var fn = (window || this);
-                  for (var i = 0; i != arr.length; i++) {
-                    console.debug('fn',fn, " arr[i]:",arr[i]);
-                    fn = fn[arr[i]];
-                  }
-
-                  if (typeof fn !== "function") {
-                    console.error("function '" , fn, "' not found");
-                  }
-                  return  fn;
-                };
 
                 function loadBetterFORMJs(pathToRelease, developmentJsClass){
                     if (isBetterFORMRelease) {
@@ -199,8 +168,6 @@
                         document.getElementsByTagName('head')[0].appendChild(scriptElement);
                     } else {
                         dojo.require(developmentJsClass);
-                        var jsClass = stringToFunction(developmentJsClass);
-                        var instance = new jsClass();
                     }
                 }
 
@@ -292,12 +259,14 @@
             <xsl:when test="exists(//script[@id='betterformJs'])">
                 <!-- do nothin if id 'betterformJs' is available (means betterform.js is allready importet -->
             </xsl:when>
+<!--
             <xsl:when test="not(exists(//xf:select)) and not(exists(//xf:select1)) and not(exists(//xf:upload)) and not(exists(//xf:repeat)) and not(exists(//xf:switch)) and not(exists(//xf:range))  and not(exists(//xf:textarea))">
                 <script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/betterform/betterform-minimal.js')}">&#160;</script>
             </xsl:when>
             <xsl:when test="not(exists(//xf:range)) and not(exists(//xf:textarea))">
                 <script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/betterform/betterform-compact.js')}">&#160;</script>
             </xsl:when>
+-->
             <xsl:otherwise>
                 <script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/betterform/betterform-full.js')}">&#160;</script>
             </xsl:otherwise>
