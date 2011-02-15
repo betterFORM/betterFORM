@@ -97,18 +97,6 @@
             dojo.query("code").forEach(dojox.highlight.init);
         });
 
-        dojo.require("dijit.form.Button");
-        dojo.require("dijit.TitlePane");
-        dojo.require('dijit.layout.ContentPane');
-        dojo.require("betterform.ui.select.OptGroup");
-        dojo.require("betterform.ui.select1.RadioItemset");
-        dojo.require("betterform.ui.select.CheckBoxItemset");
-        dojo.require("betterform.ui.util");
-        dojo.require("betterform.ui.container.Switch");
-        dojo.require("betterform.ui.container.Repeat");
-        dojo.require("betterform.ui.container.RepeatItem");
-        dojo.require("betterform.ui.container.TabSwitch");
-        dojo.require("betterform.ui.container.Group");
 
         function addToDocument(id) {
             var model = dojo.query(".xfModel", dojo.doc)[0];
@@ -306,6 +294,9 @@
     </div>
 </div>
     <script type="text/javascript">
+		    loadBetterFORMJs(dojo.attr(dojo.byId("fluxProcessor"), "contextroot") + '/resources/scripts/release/dojo/betterform/betterform-demo.js', 'betterform.BfRequiredCompact');
+
+
         var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
         document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
     </script>

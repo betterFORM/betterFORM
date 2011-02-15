@@ -87,19 +87,30 @@ dependencies = {
                 "betterform.BfRequiredFull"
             ]
         },
-                    /** betterFORM Timetracker  Release  **/
+        /** betterFORM Timetracker  Release  **/
+		{
+		name: "../betterform/betterform-timetracker.js",
+		resourceName: "betterform.timetracker",
+		layerDependencies: [
+			"betterform.compact"
+		],
+		dependencies: [
+			"betterform.BfRequiredTimeTracker"
+		]
+		},
+
+        /** betterFORM Dashboard Release  **/
+		{
+			name: "../betterform/betterform-dashboard.js",
+			resourceName: "betterform.dashboard",
+			dependencies: [
+               "betterform.BfRequiredDashboard"
+			]
+		},
+            
+            
+        /** betterFORM XFormsFeatureExplorer Release  **/
         {
-            name: "../betterform/betterform-timetracker.js",
-            resourceName: "betterform.time.tracker",
-            layerDependencies: [
-                "betterform.full"
-            ],
-            dependencies: [
-                "betterform.BfRequiredTimeTracker"
-            ]
-        },
-             /** betterFORM XFormsFeatureExplorer Release  **/
-      {
             name: "../betterform/betterform-xforms-feature-explorer.js",
             resourceName: "betterform.feature.explorer",
             layerDependencies: [
@@ -109,8 +120,6 @@ dependencies = {
                 "betterform.BfRequiredXFormsFeatureExplorer"
             ]
         }
-
-
     ],
 
     prefixes: [

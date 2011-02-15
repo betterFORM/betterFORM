@@ -31,11 +31,10 @@
 
                 <style type="text/css">
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dijit/themes/', $cssTheme, '/', $cssTheme,'.css')"/>";
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojo/resources/dojo.css";
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojo/resources/dojo.css";
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojox/widget/Toaster/Toaster.css";
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojox/layout/resources/FloatingPane.css";
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojox/layout/resources/ResizeHandle.css";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojo/resources/dojo.css')"/>";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/widget/Toaster/Toaster.css')"/>";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/layout/resources/FloatingPane.css')"/>";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/layout/resources/ResizeHandle.css')"/>";
                 </style><xsl:text>
 </xsl:text>
     </xsl:template>
@@ -68,15 +67,17 @@
                  <script type="text/javascript">
                     var isBetterFORMRelease = false;
                     dojo.require("betterform.BfRequiredFull");
-                    var bfRequiredFull = new betterform.BfRequiredFull(); </script><xsl:text>
+                 </script><xsl:text>
 </xsl:text>
              </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 
     <xsl:template name="addDojoRequires">
+<!--
                 dojo.require("betterform.BfRequiredFull");
                 var bfRequiredFull = new betterform.BfRequiredFull();
+-->
 
     </xsl:template>
 
