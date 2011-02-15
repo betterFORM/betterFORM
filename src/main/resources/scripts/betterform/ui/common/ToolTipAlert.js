@@ -9,7 +9,7 @@ dojo.declare("betterform.ui.common.ToolTipAlert",
     hideSpeed:1000,
 
     _show:function(id, commonChild,action) {
-        console.debug("ToolTipAlert._show: [id:" + id , " commonChild: " + commonChild + "]");
+        // console.debug("ToolTipAlert._show: [id:" + id , " commonChild: " + commonChild + "]");
         var commonChildNode = dojo.byId(id + '-' + commonChild);
 
         if(commonChild != undefined && commonChild == this.hint) {
@@ -46,7 +46,7 @@ dojo.declare("betterform.ui.common.ToolTipAlert",
 
 
     _hide:function(id, commonChild,action) {
-        console.debug("ToolTipAlert._hide: [id:" + id , " commonChild: " + commonChild + "]");
+        // console.debug("ToolTipAlert._hide: [id:" + id , " commonChild: " + commonChild + "]");
         var commonChildNode = dojo.byId(id + '-' + commonChild);
 
 
@@ -62,12 +62,12 @@ dojo.declare("betterform.ui.common.ToolTipAlert",
     },
 
     _render:function(id, commonChild, show) {
-        console.debug("ToolTipAlert._render [id:'",id,"' commonChild:'", commonChild," ' show:'",show, "']");
+        // console.debug("ToolTipAlert._render [id:'",id,"' commonChild:'", commonChild," ' show:'",show, "']");
         var mip = dojo.byId(id + "-" + commonChild);
         if (mip != undefined && mip.innerHTML != '') {
             dojo.style(mip, "display", show);
         } else {
-            console.warn(id + "-" + commonChild + " is not defined for Control " + id);
+            console.info(id + "-" + commonChild + " is not defined for Control " + id);
         }
     },
 
@@ -76,7 +76,7 @@ dojo.declare("betterform.ui.common.ToolTipAlert",
     _fadeOutAndHide:function(id,commonChild) {
         var alertTooltip = dijit.byId(id+"-MasterToolTip-" +commonChild);
         // No need to check if tooltip exists since this function is only called if (after a check before) it exists
-        console.debug("ToolTipAlert._fadeOutAndHide  [id: " + id + " - alertTooltip:" , alertTooltip ,"]");
+        // console.debug("ToolTipAlert._fadeOutAndHide  [id: " + id + " - alertTooltip:" , alertTooltip ,"]");
         var speed = this.hideSpeed;
         dojo.fadeOut({
             node:alertTooltip.domNode,

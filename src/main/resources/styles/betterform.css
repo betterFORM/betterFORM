@@ -137,9 +137,8 @@ a.active {
 /* matches Rating control (range) */
 .dojoxRatingStar {
     display: inline-block;
-    background-image: url(../images/rating_empty.gif);
-    background-position: left center;
-    position: relative;
+	background: url(../images/rating_empty.gif) left center;
+	position: relative;
     height: 15px;
     width: 15px;
     float: left;
@@ -190,9 +189,7 @@ a.active {
 .bfInvalidControl .xfDateTextBox,
 .bfInvalidControl .xfValue,
 .bfInvalidControl .xfTimeTextBox {
-	border-color:#8B0000;
-	border-width:1px 1px 1px 1px;
-	border-style:solid;
+	border: 1px solid #8B0000;
 }
 
 
@@ -202,10 +199,7 @@ a.active {
 	/*bottom:2px;*/
 	font-size:9pt;
 	border:thin solid #cccccc;
-	padding-top:3px;
-	padding-bottom:3px;
-	padding-left:26px;
-	padding-right:20px;
+	padding: 3px 20px 3px 26px;
 	min-width:150px;
 	max-width:300px;
 	-moz-border-radius:5px;
@@ -220,9 +214,10 @@ a.active {
 	z-index:200;
 }
 .xfAlert .closeAlertIcon{
-	background:#F2F2F2 url(../images/tabClose.gif) right center no-repeat;)
+	background:#F2F2F2 url(../images/tabClose.gif) right center no-repeat;
 }
-.xfHint{
+
+.xfHint {
 	border-color:#DBDBDB;
 	background:#F2F2F2 url(../images/hint.png) 5px 50% no-repeat;
 	z-index:100;
@@ -238,10 +233,10 @@ a.active {
 	margin:0;
 	display:inline-block;
 	position:absolute;
-	right:0px;
-	top:0px;
+	right:0;
+	top:0;
 	z-index:800;
-	padding:0px;
+	padding:0;
 }
 .bfHelpText{
 	background:white;
@@ -261,7 +256,7 @@ a.active {
 .bf .dijitCheckBox,
 .bf .dijitCheckBoxIcon {
    	background-image: url('../images/checkmarkNoBorder.png');
-	/* border: 1px solid gray; */
+	 border: 1px solid gray;
     height: 14px;
     width: 14px;
 
@@ -278,7 +273,7 @@ a.active {
     overflow-x: hidden; /*overflow-y: scroll;*/
     position: relative;
     width: 152px;
-    top: 0px;
+    top: 0;
 }
 
 .bf .xfSelectOpen .dijitTextBox {
@@ -298,7 +293,7 @@ a.active {
 .bfHelpPane {
     position: absolute;
     top: 20px;
-    right: 0px;
+    right: 0;
     height: 40px;
     width: 500px;
 }
@@ -331,7 +326,7 @@ a.active {
 .bfProgressbar .background {
     background: url(../images/progress-bar.gif) repeat-x;
     height: 18px;
-    width: 0%;
+    width: 0;
 }
 
 .xfDisabled .bfProgressbar {
@@ -538,19 +533,19 @@ a.active {
 /* ***************************************************************************** */
 
 .xfRepeatIndex {
-    background-color: lightyellow;
+    background-color:#FFCC33;
 }
 
 .xfRepeatIndex .xfValue {
-    background-color: lightyellow;
+    background-color:#FFCC33;
 }
 
 .bfRepeatIndexMouseOver {
-    background-color: lightblue;
+    background-color:#ADD8E6;
 }
 
 .bfRepeatIndexMouseOver .xfValue {
-    background-color: lightblue;
+    background-color:#ADD8E6;
 }
 
 .xfMinimalRepeat {
@@ -625,20 +620,16 @@ table .xfContainer{
 /* ***************************************************************************** */
 
 .xfReadWrite .dijitRadio, .xfReadWrite .dijitRadioIcon {
-    background-image: url(../images/checkmark.png);
-    background-position: -112px 50%;
-    background-repeat: no-repeat;
-    height: 16px;
+	background: url(../images/checkmark.png) no-repeat -112px 50%;
+	height: 16px;
     margin: 0;
     padding: 0;
     width: 16px;
 }
 
 .xfReadWrite .dijitRadioChecked {
-    background-image: url(../images/checkmark.png);
-    background-position: -96px 50%;
-    background-repeat: no-repeat;
-    height: 16px;
+	background: url(../images/checkmark.png) no-repeat -96px 50%;
+	height: 16px;
     margin: 0;
     padding: 0;
     width: 16px;
@@ -646,10 +637,8 @@ table .xfContainer{
 }
 
 .xfReadOnly .dijitRadio, .xfReadOnly .dijitRadioIcon {
-    background-image: url(../images/checkmark.png);
-    background-position: -144px 50%;
-    background-repeat: no-repeat;
-    height: 16px;
+	background: url(../images/checkmark.png) no-repeat -144px 50%;
+	height: 16px;
     margin: 0;
     padding: 0;
     width: 16px;
@@ -662,30 +651,26 @@ table .xfContainer{
 .xfReadWrite .dijitCheckBox,
 .xfReadWrite .dijitCheckBoxIcon {
     /*background-image: url(../images/checkmarkNoBorder.png);*/
-    background-repeat: no-repeat;
-    height: 14px;
+	background: no-repeat -16px 50%;
+	height: 14px;
     width: 14px;
-	background-position: -16px 50%;
 	margin: 0;
 	padding: 0;
 }
 
 .xfReadWrite .dijitCheckBoxChecked {
     /*background-image: url(../images/checkmarkNoBorder.png);*/
-	background-repeat: no-repeat;
+	background: no-repeat 0 50%;
 	height: 14px;
 	width: 14px;
-    background-position: 0 50%;
-
 }
 
 .xfReadOnly .dijitCheckBox,
 .xfReadOnly .dijitCheckBoxIcon {
     /*background-image: url(../images/checkmarkNoBorder.png);*/
-    background-repeat: no-repeat;
+	background: no-repeat -48px 50%;
 	height: 14px;
 	width: 14px;
-	background-position: -48px 50%;
 }
 
 .xfReadOnly .dijitCheckBoxChecked {
@@ -828,7 +813,7 @@ td > div.bfPending > span {
 
 .dojoxRangeSlider .dijitSliderProgressBarV {
     position: absolute !important;
-    border-width: 0px;
+    border-width: 0;
 }
 
 .xfOutOfRange {

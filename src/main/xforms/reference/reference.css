@@ -260,12 +260,17 @@ pre, code {
     padding: 4px;
 }
 
+.bf .dijitTitlePaneContentInner,
+.tundra .dijitTitlePaneContentInner ,
 .soria .dijitTitlePaneContentInner {
     padding: 0;
 }
 
+.tundra .dijitCheckBox,
+.bf .dijitCheckBox,
 .soria .dijitCheckBox {
-    background-image: url(images/spriteCheckbox.gif);
+    background-image: url("../../resources/images/checkmarkNoBorder.png");
+
 }
 
 #imageTrigger-value {

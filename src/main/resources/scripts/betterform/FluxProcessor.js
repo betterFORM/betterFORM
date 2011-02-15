@@ -152,7 +152,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     // Show commonChilds 'alert', 'hint', 'info'
     showAllCommonChilds:function(node,event) {
         dojo.query(".xfControl", node).forEach(dojo.hitch(this, function(control) {
-            console.debug("hide/show commonChild for control: ", control, " control valid state is:", dojo.hasClass(control),"xfValid");
+            // console.debug("hide/show commonChild for control: ", control, " control valid state is:", dojo.hasClass(control),"xfValid");
             if(dojo.hasClass(control),"xfValid"){
                 this.defaultAlertHandler.handleValid(dojo.attr(control,"id"),event);
             }else {
