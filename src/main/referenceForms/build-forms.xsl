@@ -43,6 +43,9 @@
                 //                dojo.require("dojox.highlight.languages.pygments.xml");
                 dojo.require("dijit.form.Button");
                 dojo.require('dijit.layout.ContentPane');
+                dojo.subscribe("/xf/ready", function(){
+                    fluxProcessor.skipshutdown=true;
+                });
             </script>
         </xsl:copy>
     </xsl:template>

@@ -255,7 +255,7 @@
         <servlet-class>de.betterform.agent.web.servlet.FormsServlet</servlet-class>
         <init-param>
             <param-name>ignores</param-name>
-            <param-value>demo reference</param-value>
+            <param-value>demo incubator</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>

@@ -12,6 +12,9 @@
                 //                dojo.require("dojox.highlight.languages.pygments.xml");
                 dojo.require("dijit.form.Button");
                 dojo.require('dijit.layout.ContentPane');
+                dojo.subscribe("/xf/ready", function(){
+                    fluxProcessor.skipshutdown=true;
+                });
             </script></head>
    
    <body class="soria InlineAlert" style="margin:30px">
@@ -60,13 +63,13 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d13e114" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
-                     <div dojoType="dijit.Tooltip" connectId="d13e114">matches an Element that represents a XForms input element</div>
+                  <td id="d1e114" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
+                     <div dojoType="dijit.Tooltip" connectId="d1e114">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d13e123" onmouseover="showClass('xsdDate');" onmouseout="hideClass('xsdDate');">xsdDate
-                     <div dojoType="dijit.Tooltip" connectId="d13e123">matches an Element that is bound to a node widht datatype
+                  <td id="d1e123" onmouseover="showClass('xsdDate');" onmouseout="hideClass('xsdDate');">xsdDate
+                     <div dojoType="dijit.Tooltip" connectId="d1e123">matches an Element that is bound to a node widht datatype
                         date
                         
                      </div>
@@ -218,7 +221,7 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:input id="input1" ref="input1/value" incremental="true">
+            <xf:input id="control1" ref="input1/value" incremental="true">
                
                <xf:label>a text</xf:label>
                
@@ -236,25 +239,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="input1-readonly" navindex="-1" ref="input1/@readonly" incremental="true">
+               <xf:input id="control1-readonly" navindex="-1" ref="input1/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="input1-required" navindex="-1" ref="input1/@required" incremental="true">
+               <xf:input id="control1-required" navindex="-1" ref="input1/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="input1-relevant" navindex="-1" ref="input1/@relevant" incremental="true">
+               <xf:input id="control1-relevant" navindex="-1" ref="input1/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="input1-valid" navindex="-1" ref="input1/@constraint" incremental="true">
+               <xf:input id="control1-valid" navindex="-1" ref="input1/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   
@@ -264,7 +267,7 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:input id="input1" ref="input1/value" incremental="true"&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:input id="control1" ref="input1/value" incremental="true"&gt;
     &lt;xf:label&gt;a text&lt;/xf:label&gt;
     &lt;xf:hint&gt;Hint for this date control&lt;/xf:hint&gt;
     &lt;xf:help&gt;help for input1&lt;/xf:help&gt;

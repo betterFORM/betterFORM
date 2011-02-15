@@ -211,6 +211,8 @@
 
     <!-- must be a seprate target due to it is called by by eXist/build-utils.xml -->
     <target name="copy-src-resources-scripts">
+        <antcall target="unpack-betterform-js-release"/>
+
         <copy description="copy resources from global 'src' directory"
               todir="${webapp.dir}/resources/scripts"
               includeemptydirs="true"
@@ -298,8 +300,11 @@
         <delete dir="${webapp.dir}/resources/scripts/dojo"/>
         <delete dir="${webapp.dir}/resources/scripts/dojox"/>
         <delete dir="${webapp.dir}/resources/scripts/util"/>
+    </target>
 
-
+    <!-- delete all uncalled JavaScript resources from betterFORM / JavaScript release
+        (only resources beneath ${webapp.dir}/resources/scripts/release are deleted  -->
+    <target name="cleanup-js-release">
         <echo message="************************************************************************************"/>
         <echo message="clean up not needed dojo files..."/>
         <echo message="************************************************************************************"/>
@@ -364,6 +369,7 @@
     <!-- todo: when package is executed it should be made sure that 'dojo' is configured as useragent in betterform-config.xml -->
     <target name="package" depends="deploy-resources" description="create js optimized war file">
         <antcall target="build-dojo"/>
+        <antcall target="cleanup-js-release"/>
         <antcall target="cleanup-bf-release"/>
 
         <echo/>
@@ -504,7 +510,10 @@
     <!-- **************************************** DOJO TARGETS **************************************** -->
     <!-- **************************************** DOJO TARGETS **************************************** -->
 
-    <target name="build-dojo" depends="check-if-js-is-up-to-date" unless="build-js-required" >
+    <target name="build-dojo"
+            description="create a custom Javascript build of betterFORM"
+            depends="prepare-dojo, copy-src-resources-scripts, unpack-betterform-js-release, check-if-js-is-up-to-date"
+            unless="build-js-required" >
         <java classname="org.mozilla.javascript.tools.shell.Main"
               dir="${webapp.dir}/resources/scripts/util/buildscripts"
               classpath="${webapp.dir}/resources/scripts/util/shrinksafe/js.jar:${webapp.dir}/resources/scripts/util/shrinksafe/shrinksafe.jar"
@@ -528,24 +537,37 @@
             <arg value="version=1.5"/>
         </java>
         <!-- cleanup JS/CSS resources of betterform dojo release -->
-        <!--<antcall target="cleanup-bf-release"/>-->
+        <antcall target="cleanup-js-release"/>
+        <zip description="create optimized JavaSCript zip"
+             zipfile="target/${web.app.name}-${web.app.version}-js-optimized.zip"
+             basedir="${webapp.dir}/resources/scripts/release"/>
 
+        <move file="target/${web.app.name}-${web.app.version}-js-optimized.zip" todir="${src.dir}/src/main/lib"/>
     </target>
 
 
+    <target name="unpack-betterform-js-release" depends="check-if-bf-js-release-unpacked" if="bf.js.release.not.available">
+        <mkdir dir="${webapp.dir}/resources/scripts/release"/>
+        <unzip src="${src.dir}/src/main/lib/${web.app.name}-${web.app.version}-js-optimized.zip" dest="${webapp.dir}/resources/scripts/release"/>
+    </target>
+
+    <!--  Check if dojo is already unpacked -->
     <target name="check-if-dojo-is-unpacked">
-        <echo>Check condition</echo>
         <condition property="dojo.not.available">
             <not>
                 <available file="${webapp.dir}/resources/scripts/dojo/dojo.js"/>
-<!--
-                <or>
+				<!-- <or>
                     <available file="${webapp.dir}/resources/scripts/dojo/dojo.js"/>
                     <available file="${webapp.dir}/resources/scripts/release/dojo/betterform/betterform-full.js"/>    
-                </or>
--->
-
+                </or> -->
             </not>
+        </condition>
+    </target>
+
+    <target name="check-if-bf-js-release-unpacked">
+        <echo>Check if betterFORM JS release is unpacked</echo>
+        <condition property="bf.js.release.not.available">
+            <not><available file="${webapp.dir}/resources/scripts/release/dojo/dojo/dojo.js"/></not>
         </condition>
     </target>
 

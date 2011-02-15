@@ -12,6 +12,9 @@
                 //                dojo.require("dojox.highlight.languages.pygments.xml");
                 dojo.require("dijit.form.Button");
                 dojo.require('dijit.layout.ContentPane');
+                dojo.subscribe("/xf/ready", function(){
+                    fluxProcessor.skipshutdown=true;
+                });
             </script></head>
    
    <body class="soria InlineAlert" style="margin:30px">
@@ -23,17 +26,17 @@
                   
                   <data>
                      
-                     <textarea1 constraint="true" readonly="false" required="true" relevant="true">
+                     <control1 constraint="true" readonly="false" required="true" relevant="true">
                         
                         <value></value>
                         
-                     </textarea1>
+                     </control1>
                      
                   </data>
                   
                </xf:instance>
                
-               <xf:bind nodeset="textarea1">
+               <xf:bind nodeset="control1">
                   
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="string"></xf:bind>
                   
@@ -60,8 +63,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d38e120" onmouseover="showClass('xfTextarea');" onmouseout="hideClass('xfTextarea');">xfTextarea
-                     <div dojoType="dijit.Tooltip" connectId="d38e120">matches an Element that represents a XForms input element</div>
+                  <td id="d18e120" onmouseover="showClass('xfTextarea');" onmouseout="hideClass('xfTextarea');">xfTextarea
+                     <div dojoType="dijit.Tooltip" connectId="d18e120">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
@@ -215,13 +218,13 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:textarea id="textarea1" ref="textarea1/value" mediatype="text/html" incremental="true">
+            <xf:textarea id="control1" ref="control1/value" mediatype="text/html" incremental="true">
                
                <xf:label>a text</xf:label>
                
                <xf:hint>a Hint for this control</xf:hint>
                
-               <xf:help>help for textarea1</xf:help>
+               <xf:help>help for control1</xf:help>
                
                <xf:alert>invalid</xf:alert>
                
@@ -233,25 +236,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="textarea1-readonly" navindex="-1" ref="textarea1/@readonly" incremental="true">
+               <xf:input id="control1-readonly" navindex="-1" ref="control1/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="textarea1-required" navindex="-1" ref="textarea1/@required" incremental="true">
+               <xf:input id="control1-required" navindex="-1" ref="control1/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="textarea1-relevant" navindex="-1" ref="textarea1/@relevant" incremental="true">
+               <xf:input id="control1-relevant" navindex="-1" ref="control1/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="textarea1-valid" navindex="-1" ref="textarea1/@constraint" incremental="true">
+               <xf:input id="control1-valid" navindex="-1" ref="control1/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   
@@ -261,10 +264,10 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:textarea id="textarea1" ref="textarea1/value" mediatype="text/html" incremental="true"&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:textarea id="control1" ref="control1/value" mediatype="text/html" incremental="true"&gt;
     &lt;xf:label&gt;a text&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
-    &lt;xf:help&gt;help for textarea1&lt;/xf:help&gt;
+    &lt;xf:help&gt;help for control1&lt;/xf:help&gt;
     &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
 &lt;/xf:textarea&gt;
 </code></pre></div><script type="text/javascript">

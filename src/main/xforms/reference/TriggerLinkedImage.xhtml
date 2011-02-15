@@ -12,6 +12,9 @@
                 //                dojo.require("dojox.highlight.languages.pygments.xml");
                 dojo.require("dijit.form.Button");
                 dojo.require('dijit.layout.ContentPane');
+                dojo.subscribe("/xf/ready", function(){
+                    fluxProcessor.skipshutdown=true;
+                });
             </script></head>
    
    <body class="soria InlineAlert" style="margin:30px">
@@ -66,8 +69,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d44e128" onmouseover="showClass('xfTrigger');" onmouseout="hideClass('xfTrigger');">xfTrigger
-                     <div dojoType="dijit.Tooltip" connectId="d44e128">matches an Element that represents a XForms input element</div>
+                  <td id="d24e128" onmouseover="showClass('xfTrigger');" onmouseout="hideClass('xfTrigger');">xfTrigger
+                     <div dojoType="dijit.Tooltip" connectId="d24e128">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
@@ -215,7 +218,7 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:trigger id="trigger1">
+            <xf:trigger id="control1">
                
                <xf:label>
                   
@@ -223,7 +226,7 @@
                   
                </xf:label>
                
-               <xf:message>The trigger1 was clicked</xf:message>
+               <xf:message>The control1 was clicked</xf:message>
                
             </xf:trigger>
             <xf:trigger id="trigger2">
@@ -273,11 +276,11 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:trigger id="trigger1"&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:trigger id="control1"&gt;
     &lt;xf:label&gt;
         &lt;xf:output ref="output[1]/value" mediatype="image/png"&gt;&lt;/xf:output&gt;
     &lt;/xf:label&gt;
-    &lt;xf:message&gt;The trigger1 was clicked&lt;/xf:message&gt;
+    &lt;xf:message&gt;The control1 was clicked&lt;/xf:message&gt;
 &lt;/xf:trigger&gt;
 
 &lt;xf:trigger id="trigger2"&gt;

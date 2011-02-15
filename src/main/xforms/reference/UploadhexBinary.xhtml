@@ -12,6 +12,9 @@
                 //                dojo.require("dojox.highlight.languages.pygments.xml");
                 dojo.require("dijit.form.Button");
                 dojo.require('dijit.layout.ContentPane');
+                dojo.subscribe("/xf/ready", function(){
+                    fluxProcessor.skipshutdown=true;
+                });
             </script></head>
    
    <body class="soria InlineAlert" style="margin:30px">
@@ -23,17 +26,17 @@
                   
                   <data>
                      
-                     <upload1 constraint="true" readonly="false" required="true" relevant="true">
+                     <control1 constraint="true" readonly="false" required="true" relevant="true">
                         
                         <value type="" value=""></value>
                         
-                     </upload1>
+                     </control1>
                      
                   </data>
                   
                </xf:instance>
                
-               <xf:bind nodeset="upload1">
+               <xf:bind nodeset="control1">
                   
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="hexBinary"></xf:bind>
                   
@@ -60,13 +63,13 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d47e124" onmouseover="showClass('xfUpload');" onmouseout="hideClass('xfUpload');">xfUpload
-                     <div dojoType="dijit.Tooltip" connectId="d47e124">matches an Element that represents a XForms input element</div>
+                  <td id="d27e124" onmouseover="showClass('xfUpload');" onmouseout="hideClass('xfUpload');">xfUpload
+                     <div dojoType="dijit.Tooltip" connectId="d27e124">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d47e133" onmouseover="showClass('xsdHexBinary');" onmouseout="hideClass('xsdHexBinary');">xsdHexBinary
-                     <div dojoType="dijit.Tooltip" connectId="d47e133">matches an Element that is bound to a node with datatype
+                  <td id="d27e133" onmouseover="showClass('xsdHexBinary');" onmouseout="hideClass('xsdHexBinary');">xsdHexBinary
+                     <div dojoType="dijit.Tooltip" connectId="d27e133">matches an Element that is bound to a node with datatype
                         hexBinary
                         
                      </div>
@@ -223,7 +226,7 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:upload id="upload1" ref="upload1/value">
+            <xf:upload id="control1" ref="control1/value">
                
                <xf:label>a base64 upload</xf:label>
                
@@ -234,7 +237,7 @@
             </xf:upload>
             <xf:group appearance="bf:verticalTable">
                
-               <xf:output value="upload1/value">
+               <xf:output value="control1/value">
                   
                   <xf:label>hexBinary-encoded value:</xf:label>
                   
@@ -248,25 +251,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="upload1-readonly" navindex="-1" ref="upload1/@readonly" incremental="true">
+               <xf:input id="control1-readonly" navindex="-1" ref="control1/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="upload1-required" navindex="-1" ref="upload1/@required" incremental="true">
+               <xf:input id="control1-required" navindex="-1" ref="control1/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="upload1-relevant" navindex="-1" ref="upload1/@relevant" incremental="true">
+               <xf:input id="control1-relevant" navindex="-1" ref="control1/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="upload1-valid" navindex="-1" ref="upload1/@constraint" incremental="true">
+               <xf:input id="control1-valid" navindex="-1" ref="control1/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   
@@ -276,14 +279,14 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:upload id="upload1" ref="upload1/value"&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:upload id="control1" ref="control1/value"&gt;
     &lt;xf:label&gt;a base64 upload&lt;/xf:label&gt;
     &lt;xf:filename ref="attribute::file"&gt;&lt;/xf:filename&gt;
     &lt;xf:mediatype ref="attribute::type"&gt;&lt;/xf:mediatype&gt;
 &lt;/xf:upload&gt;
 
 &lt;xf:group appearance="bf:verticalTable"&gt;
-    &lt;xf:output value="upload1/value"&gt;
+    &lt;xf:output value="control1/value"&gt;
         &lt;xf:label&gt;hexBinary-encoded value:&lt;/xf:label&gt;
     &lt;/xf:output&gt;
 &lt;/xf:group&gt;

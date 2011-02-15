@@ -12,6 +12,9 @@
                 //                dojo.require("dojox.highlight.languages.pygments.xml");
                 dojo.require("dijit.form.Button");
                 dojo.require('dijit.layout.ContentPane');
+                dojo.subscribe("/xf/ready", function(){
+                    fluxProcessor.skipshutdown=true;
+                });
             </script></head>
    
    <body class="soria InlineAlert" style="margin:30px">
@@ -23,17 +26,17 @@
                   
                   <data>
                      
-                     <trigger1 constraint="true" readonly="false" required="true" relevant="true">
+                     <control1 constraint="true" readonly="false" required="true" relevant="true">
                         
                         <value></value>
                         
-                     </trigger1>
+                     </control1>
                      
                   </data>
                   
                </xf:instance>
                
-               <xf:bind nodeset="trigger1">
+               <xf:bind nodeset="control1">
                   
                   <xf:bind nodeset="value" constraint="true()" readonly="boolean-from-string(../@readonly)" required="false()" relevant="boolean-from-string(../@relevant)" type="string"></xf:bind>
                   
@@ -60,8 +63,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d42e119" onmouseover="showClass('xfTrigger');" onmouseout="hideClass('xfTrigger');">xfTrigger
-                     <div dojoType="dijit.Tooltip" connectId="d42e119">matches an Element that represents a XForms input element</div>
+                  <td id="d22e119" onmouseover="showClass('xfTrigger');" onmouseout="hideClass('xfTrigger');">xfTrigger
+                     <div dojoType="dijit.Tooltip" connectId="d22e119">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
@@ -214,13 +217,13 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:trigger id="trigger1" ref="trigger1/value" src="images/bf_logo_67x27.png">
+            <xf:trigger id="control1" ref="control1/value" src="images/bf_logo_67x27.png">
                
                <xf:label></xf:label>
                
                <xf:hint>a Hint for this control</xf:hint>
                
-               <xf:help>help for trigger1</xf:help>
+               <xf:help>help for control1</xf:help>
                
                <xf:message>The image trigger was clicked</xf:message>
                
@@ -232,25 +235,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="trigger1-readonly" navindex="-1" ref="trigger1/@readonly" incremental="true">
+               <xf:input id="control1-readonly" navindex="-1" ref="control1/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="trigger1-required" navindex="-1" ref="trigger1/@required" incremental="true">
+               <xf:input id="control1-required" navindex="-1" ref="control1/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="trigger1-relevant" navindex="-1" ref="trigger1/@relevant" incremental="true">
+               <xf:input id="control1-relevant" navindex="-1" ref="control1/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="trigger1-valid" navindex="-1" ref="trigger1/@constraint" incremental="true">
+               <xf:input id="control1-valid" navindex="-1" ref="control1/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   
@@ -260,10 +263,10 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:trigger id="trigger1" ref="trigger1/value" src="images/bf_logo_67x27.png"&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:trigger id="control1" ref="control1/value" src="images/bf_logo_67x27.png"&gt;
     &lt;xf:label&gt;&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
-    &lt;xf:help&gt;help for trigger1&lt;/xf:help&gt;
+    &lt;xf:help&gt;help for control1&lt;/xf:help&gt;
     &lt;xf:message&gt;The image trigger was clicked&lt;/xf:message&gt;
 &lt;/xf:trigger&gt;
 </code></pre></div><script type="text/javascript">
