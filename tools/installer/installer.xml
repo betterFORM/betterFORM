@@ -137,9 +137,9 @@
         <panel classname="TargetPanel"/>
         <panel classname="HTMLInfoPanel" id="readme" />
         <panel classname="PacksPanel"/>
-        <panel classname="UserInputPanel" id="UserInputPanel.0" />
+        <panel classname="UserInputPanel" id="UserInputPanel.0" condition="exist"/>
         <panel classname="InstallPanel"/>
-        <panel classname="ProcessPanel"/>
+        <panel classname="ProcessPanel" condition="exist"/>
         <panel classname="FinishPanel"/>
     </panels>
 

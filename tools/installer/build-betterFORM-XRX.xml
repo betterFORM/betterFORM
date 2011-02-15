@@ -39,7 +39,7 @@
 
 
         <mkdir dir="${basedir}/target/jetty"/>
-        <unzip src="${basedir}/lib/bfServer-1.2-bin.zip" dest="${basedir}/target/jetty"/>
+        <unzip src="${basedir}/lib/betterFORM-Launcher-1.3-jetty-distribution.zip" dest="${basedir}/target/jetty"/>
 
         <mkdir dir="${basedir}/target/bf-resources/"/>
         <copy description="copy betterform script resources"
@@ -63,6 +63,7 @@
             <arg line="-p ${basedir}/target/bf-eXist/"/>
         </java>
 
+        <delete file="${basedir}/target/bf-eXist/Install_V1.4.0*.log"/>
         <!-- create make temorary extension-directory for installation -->
         <mkdir dir="${basedir}/target/bf-eXist/extensions/betterform"/>
 
@@ -93,7 +94,7 @@
             <fileset dir="${basedir}/target/bf-eXist/installer/scripts" includes="build.sh build.bat"/>
         </copy>
 
-	<sleep seconds="20"/>
+	    <unzip src="${basedir}/lib/betterFORM-Launcher-1.3-xrx-distribution.zip" dest="${basedir}/target/bf-eXist"/>
 
     </target>
 
