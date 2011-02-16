@@ -89,6 +89,9 @@
   		<modifier key="useLabelIcons" value="yes"/>
 		<modifier key="labelGap" value="6"/>
  	</guiprefs>
+    <native type="izpack" name="COIOSHelper_x64.dll">
+        <os family="windows"/>
+    </native>
 
     <!--
         The locale section.
