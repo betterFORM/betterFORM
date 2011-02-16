@@ -124,13 +124,15 @@
                 <echo message="--- Copy current betterFORM demo/reference forms and resources to target-dir     ---"/>
                 <echo message="------------------------------------------------------------------------------------"/>
 
-                <antcall target="prepare-db-installation-dir"/>
+
 
 
                 <!-- RESOURCES -->
                 <!-- Copy images, styles, xsd and xslt -->
                 <copy todir="${src.target.dir}/etc/overwrites/webapp/resources/" overwrite="true">
-                     <fileset dir="${src.dir}/main/resources"/>
+                     <fileset dir="${src.dir}/main/resources">
+                        <exclude name="**/scripts/**"/>
+                     </fileset>
                 </copy>
 
                 <copy description="copy images seperately to avoid filtering"
@@ -146,6 +148,8 @@
 
                 <antcall target="build-dojo-release"/>
 
+                <antcall target="prepare-db-installation-dir"/>
+
                 <antcall target="copy-betterFORM-website"/>
         </target>
 
@@ -155,10 +159,17 @@
                 <fileset dir="${src.dir}/main/xforms"/>
             </copy>
 
+            <copy todir="${src.target.dir}/db/" overwrite="true" filtering="false" description="copy forms form ${src.dir} to db-installition-dir ${src.target.dir}/db/">
+                <fileset dir="${src.target.dir}/db/forms" includes="FeatureExplorer.xhtml Demo.xhtml Status.xhtml"/>
+            </copy>
+
+            <copy todir="${src.target.dir}/db/forms/reference" overwrite="true" filtering="false" file="${basedir}/target-utils/dojo-release/forms/reference/highlight.css" failonerror="true"/>
+
+
             <!-- <delete dir="${src.target.dir}/db/forms" excludes="demo reference"/> -->
-                <delete includeemptydirs="yes">
-                    <fileset dir="${src.target.dir}/db/forms" excludes="demo/**/*.* reference/**/*.* FeatureExplorer.xhtml"/>
-                </delete>
+            <delete includeemptydirs="yes">
+                    <fileset dir="${src.target.dir}/db/forms" excludes="demo/**/*.* reference/**/*.* FeatureExplorer.xhtml Demo.xhtml Status.xhtml"/>
+            </delete>
         </target>
 
         <target name="copy-betterFORM-website" if="betterform">
@@ -169,6 +180,7 @@
                       <exclude name="**/pages/**"/>
                       <exclude name="**/jsp/**"/>
                       <exclude name="**/forms/**"/>
+                      <exclude name="**/scripts/**"/>
                   </fileset>
             </copy>
             
@@ -213,8 +225,11 @@
         </target>
 
     <target name="build-dojo-release">
+        <echo message="------------------------------------------------------------------------------------"/>
+        <echo message="build-dojo-release: dojo.release.dir: ${src.target.dir}/dojo"/>
+        <echo message="------------------------------------------------------------------------------------"/>
         <ant antfile="build-utils.xml" target="deploy-dojo-release">
-            <property name="dojo.release.dir" value="${src.target.dir}/dojo"/>
+            <property name="target.dir" value="${src.target.dir}/dojo"/>
         </ant>
     </target>
 

@@ -432,6 +432,8 @@ public class FormsServlet extends HttpServlet {
         String fileName = aFile.getName();
         if(fileName.equals("FeatureExplorer.xhtml")){
             fileName = "reference/" + fileName;
+        } else if (fileName.equals("Demo.xhtml")){
+            fileName = "demo/" + fileName;
         }
         /*
         * end of hack here

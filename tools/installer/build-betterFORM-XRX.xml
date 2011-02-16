@@ -4,6 +4,7 @@
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
     <target name="clean">
+        <delete dir="${basedir}/../../eXist/target"/>
         <delete dir="${basedir}/target"/>
     </target>
 
