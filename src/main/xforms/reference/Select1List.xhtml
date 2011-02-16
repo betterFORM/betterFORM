@@ -26,17 +26,17 @@
                   
                   <data xmlns="" constraint="true" readonly="false" required="false" relevant="true">
                      
-                     <control1 constraint="true" readonly="false" required="true" relevant="true">
+                     <select1 constraint="true" readonly="false" required="true" relevant="true">
                         
                         <value>AX DZ</value>
                         
-                     </control1>
+                     </select1>
                      
                   </data>
                   
                </xf:instance>
                
-               <xf:bind nodeset="control1">
+               <xf:bind nodeset="select1">
                   
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
                   
@@ -114,8 +114,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d12e170" onmouseover="showClass('xfcontrol1');" onmouseout="hideClass('xfcontrol1');">xfcontrol1
-                     <div dojoType="dijit.Tooltip" connectId="d12e170">matches an Element that represents a XForms
+                  <td id="d30e170" onmouseover="showClass('xfSelect1');" onmouseout="hideClass('xfSelect1');">xfSelect1
+                     <div dojoType="dijit.Tooltip" connectId="d30e170">matches an Element that represents a XForms
                         select
                         element
                         
@@ -123,9 +123,9 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d12e182" onmouseover="showClass('xfSelectorItem');" onmouseout="hideClass('xfSelectorItem');">xfSelectorItem
-                     <div dojoType="dijit.Tooltip" connectId="d12e182">matches an item of a XForms
-                        control1
+                  <td id="d30e182" onmouseover="showClass('xfSelectorItem');" onmouseout="hideClass('xfSelectorItem');">xfSelectorItem
+                     <div dojoType="dijit.Tooltip" connectId="d30e182">matches an item of a XForms
+                        select1
                         element
                         
                      </div>
@@ -252,7 +252,7 @@
                
                <p>
                   A
-                  <span class="keyword">control1</span>
+                  <span class="keyword">select1</span>
                   with
                   <span class="keyword">appearance</span>
                   'compact' will be
@@ -280,13 +280,13 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:control1 id="control1" ref="control1/value" appearance="compact" incremental="true">
+            <xf:select1 id="select1" ref="select1/value" appearance="compact" incremental="true">
                
                <xf:label>a text</xf:label>
                
                <xf:hint>a Hint for this control</xf:hint>
                
-               <xf:help>help for control1</xf:help>
+               <xf:help>help for select1</xf:help>
                
                <xf:alert>invalid</xf:alert>
                
@@ -298,7 +298,7 @@
                   
                </xf:itemset>
                
-            </xf:control1>
+            </xf:select1>
          </div>
          <div class="MIPS">
             
@@ -306,25 +306,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="control1-readonly" navindex="-1" ref="control1/@readonly" incremental="true">
+               <xf:input id="select1-readonly" navindex="-1" ref="select1/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="control1-required" navindex="-1" ref="control1/@required" incremental="true">
+               <xf:input id="select1-required" navindex="-1" ref="select1/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="control1-relevant" navindex="-1" ref="control1/@relevant" incremental="true">
+               <xf:input id="select1-relevant" navindex="-1" ref="select1/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="control1-valid" navindex="-1" ref="control1/@constraint" incremental="true">
+               <xf:input id="select1-valid" navindex="-1" ref="select1/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   
@@ -334,16 +334,16 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:control1 id="control1" ref="control1/value" appearance="compact" incremental="true"&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:select1 id="select1" ref="select1/value" appearance="compact" incremental="true"&gt;
     &lt;xf:label&gt;a text&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
-    &lt;xf:help&gt;help for control1&lt;/xf:help&gt;
+    &lt;xf:help&gt;help for select1&lt;/xf:help&gt;
     &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
     &lt;xf:itemset nodeset="instance('codes')/country"&gt;
         &lt;xf:label ref="country-name"&gt;&lt;/xf:label&gt;
         &lt;xf:value ref="code"&gt;&lt;/xf:value&gt;
     &lt;/xf:itemset&gt;
-&lt;/xf:control1&gt;
+&lt;/xf:select1&gt;
 </code></pre></div><script type="text/javascript">
                     function showClass(cssClass){
                         dojo.query('.sample .'+ cssClass).forEach(function(item){

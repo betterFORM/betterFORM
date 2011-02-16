@@ -26,17 +26,17 @@
                   
                   <data>
                      
-                     <control1 constraint="true" readonly="false" required="true" relevant="true">
+                     <input1 constraint="true" readonly="false" required="true" relevant="true">
                         
                         <value></value>
                         
-                     </control1>
+                     </input1>
                      
                   </data>
                   
                </xf:instance>
                
-               <xf:bind nodeset="control1">
+               <xf:bind nodeset="input1">
                   
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="dateTime"></xf:bind>
                   
@@ -63,13 +63,13 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d1e120" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
-                     <div dojoType="dijit.Tooltip" connectId="d1e120">matches an Element that represents a XForms input element</div>
+                  <td id="d14e120" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
+                     <div dojoType="dijit.Tooltip" connectId="d14e120">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d1e129" onmouseover="showClass('xsdDateTime');" onmouseout="hideClass('xsdDateTime');">xsdDateTime
-                     <div dojoType="dijit.Tooltip" connectId="d1e129">matches an Element that is bound to a node with datatype
+                  <td id="d14e129" onmouseover="showClass('xsdDateTime');" onmouseout="hideClass('xsdDateTime');">xsdDateTime
+                     <div dojoType="dijit.Tooltip" connectId="d14e129">matches an Element that is bound to a node with datatype
                         dateTime
                         
                      </div>
@@ -225,13 +225,13 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:input id="control1" ref="control1/value" incremental="true">
+            <xf:input id="input1" ref="input1/value" incremental="true">
                
                <xf:label>a text</xf:label>
                
                <xf:hint>a Hint for this control</xf:hint>
                
-               <xf:help>help for control1</xf:help>
+               <xf:help>help for input1</xf:help>
                
                <xf:alert>invalid</xf:alert>
                
@@ -243,25 +243,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="control1-readonly" navindex="-1" ref="control1/@readonly" incremental="true">
+               <xf:input id="input1-readonly" navindex="-1" ref="input1/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="control1-required" navindex="-1" ref="control1/@required" incremental="true">
+               <xf:input id="input1-required" navindex="-1" ref="input1/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="control1-relevant" navindex="-1" ref="control1/@relevant" incremental="true">
+               <xf:input id="input1-relevant" navindex="-1" ref="input1/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="control1-valid" navindex="-1" ref="control1/@constraint" incremental="true">
+               <xf:input id="input1-valid" navindex="-1" ref="input1/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   
@@ -271,10 +271,10 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:input id="control1" ref="control1/value" incremental="true"&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:input id="input1" ref="input1/value" incremental="true"&gt;
     &lt;xf:label&gt;a text&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
-    &lt;xf:help&gt;help for control1&lt;/xf:help&gt;
+    &lt;xf:help&gt;help for input1&lt;/xf:help&gt;
     &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
 &lt;/xf:input&gt;
 </code></pre></div>

@@ -26,17 +26,17 @@
                   
                   <data>
                      
-                     <control1 constraint="true" readonly="false" required="true" relevant="true">
+                     <range1 constraint="true" readonly="false" required="true" relevant="true">
                         
                         <value>0</value>
                         
-                     </control1>
+                     </range1>
                      
                   </data>
                   
                </xf:instance>
                
-               <xf:bind nodeset="control1">
+               <xf:bind nodeset="range1">
                   
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="integer"></xf:bind>
                   
@@ -63,8 +63,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d8e124" onmouseover="showClass('xfRange');" onmouseout="hideClass('xfRange');">xfRange
-                     <div dojoType="dijit.Tooltip" connectId="d8e124">matches an Element that represents a XForms
+                  <td id="d23e124" onmouseover="showClass('xfRange');" onmouseout="hideClass('xfRange');">xfRange
+                     <div dojoType="dijit.Tooltip" connectId="d23e124">matches an Element that represents a XForms
                         range
                         element
                         
@@ -225,13 +225,13 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:range id="control1" ref="control1/value" start="0" step="1" end="5" appearance="bf:rating" incremental="true">
+            <xf:range id="range1" ref="range1/value" start="0" step="1" end="5" appearance="bf:rating" incremental="true">
                
                <xf:label>a text</xf:label>
                
                <xf:hint>a Hint for this control</xf:hint>
                
-               <xf:help>help for control1</xf:help>
+               <xf:help>help for range1</xf:help>
                
                <xf:alert>invalid</xf:alert>
                
@@ -243,25 +243,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="control1-readonly" navindex="-1" ref="control1/@readonly" incremental="true">
+               <xf:input id="range1-readonly" navindex="-1" ref="range1/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="control1-required" navindex="-1" ref="control1/@required" incremental="true">
+               <xf:input id="range1-required" navindex="-1" ref="range1/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="control1-relevant" navindex="-1" ref="control1/@relevant" incremental="true">
+               <xf:input id="range1-relevant" navindex="-1" ref="range1/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="control1-valid" navindex="-1" ref="control1/@constraint" incremental="true">
+               <xf:input id="range1-valid" navindex="-1" ref="range1/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   
@@ -271,10 +271,10 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:range id="control1" ref="control1/value" start="0" step="1" end="5" appearance="bf:rating" incremental="true"&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:range id="range1" ref="range1/value" start="0" step="1" end="5" appearance="bf:rating" incremental="true"&gt;
     &lt;xf:label&gt;a text&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
-    &lt;xf:help&gt;help for control1&lt;/xf:help&gt;
+    &lt;xf:help&gt;help for range1&lt;/xf:help&gt;
     &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
 &lt;/xf:range&gt;
 </code></pre></div>

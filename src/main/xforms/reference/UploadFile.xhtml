@@ -26,17 +26,17 @@
                   
                   <data>
                      
-                     <control1 constraint="true" readonly="false" required="true" relevant="true">
+                     <upload1 constraint="true" readonly="false" required="true" relevant="true">
                         
                         <value type="" value=""></value>
                         
-                     </control1>
+                     </upload1>
                      
                   </data>
                   
                </xf:instance>
                
-               <xf:bind nodeset="control1">
+               <xf:bind nodeset="upload1">
                   
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="anyURI"></xf:bind>
                   
@@ -63,13 +63,13 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d25e115" onmouseover="showClass('xfUpload');" onmouseout="hideClass('xfUpload');">xfUpload
-                     <div dojoType="dijit.Tooltip" connectId="d25e115">matches an Element that represents a XForms input element</div>
+                  <td id="d45e115" onmouseover="showClass('xfUpload');" onmouseout="hideClass('xfUpload');">xfUpload
+                     <div dojoType="dijit.Tooltip" connectId="d45e115">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d25e124" onmouseover="showClass('xsdAnyURI');" onmouseout="hideClass('xsdAnyURI');">xsdAnyURI
-                     <div dojoType="dijit.Tooltip" connectId="d25e124">matches an Element that is bound to a node with datatype
+                  <td id="d45e124" onmouseover="showClass('xsdAnyURI');" onmouseout="hideClass('xsdAnyURI');">xsdAnyURI
+                     <div dojoType="dijit.Tooltip" connectId="d45e124">matches an Element that is bound to a node with datatype
                         anyURI
                         
                      </div>
@@ -226,7 +226,7 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:upload id="control1" ref="control1/value">
+            <xf:upload id="upload1" ref="upload1/value">
                
                <xf:label>a standard file upload</xf:label>
                
@@ -242,25 +242,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="control1-readonly" navindex="-1" ref="control1/@readonly" incremental="true">
+               <xf:input id="upload1-readonly" navindex="-1" ref="upload1/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="control1-required" navindex="-1" ref="control1/@required" incremental="true">
+               <xf:input id="upload1-required" navindex="-1" ref="upload1/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="control1-relevant" navindex="-1" ref="control1/@relevant" incremental="true">
+               <xf:input id="upload1-relevant" navindex="-1" ref="upload1/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="control1-valid" navindex="-1" ref="control1/@constraint" incremental="true">
+               <xf:input id="upload1-valid" navindex="-1" ref="upload1/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   
@@ -270,7 +270,7 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:upload id="control1" ref="control1/value"&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:upload id="upload1" ref="upload1/value"&gt;
     &lt;xf:label&gt;a standard file upload&lt;/xf:label&gt;
     &lt;xf:filename ref="."&gt;&lt;/xf:filename&gt;
     &lt;xf:mediatype ref="attribute::type"&gt;&lt;/xf:mediatype&gt;

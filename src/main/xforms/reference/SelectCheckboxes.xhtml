@@ -3,7 +3,7 @@
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       
-      <title>control1 control rendered as a group of checkboxes</title>
+      <title>select control rendered as a group of checkboxes</title>
       <script type="text/javascript">
             dojo.require("dijit.form.Button");
         </script>
@@ -31,11 +31,11 @@
                   
                   <data xmlns="">
                      
-                     <control1 constraint="true" readonly="false" required="true" relevant="true">
+                     <select constraint="true" readonly="false" required="true" relevant="true">
                         
                         <value>AX DZ</value>
                         
-                     </control1>
+                     </select>
                      
                   </data>
                   
@@ -43,7 +43,7 @@
                
                <!--</code>-->
                
-               <xf:bind nodeset="control1">
+               <xf:bind nodeset="select">
                   
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
                   
@@ -111,27 +111,27 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d14e180" onmouseover="showClass('xfcontrol1');" onmouseout="hideClass('xfcontrol1');">xfcontrol1
-                     <div dojoType="dijit.Tooltip" connectId="d14e180">matches an Element that represents a XForms
-                        control1
+                  <td id="d32e180" onmouseover="showClass('xfSelect');" onmouseout="hideClass('xfSelect');">xfSelect
+                     <div dojoType="dijit.Tooltip" connectId="d32e180">matches an Element that represents a XForms
+                        select
                         element
                         
                      </div>
                   </td>
                </tr>
                <tr>
-                  <td id="d14e192" onmouseover="showClass('xfCheckBoxLabel');" onmouseout="hideClass('xfCheckBoxLabel');">xfCheckBoxLabel
-                     <div dojoType="dijit.Tooltip" connectId="d14e192">matches all checkbox labels of the element that represents a XForms
-                        control1
+                  <td id="d32e192" onmouseover="showClass('xfCheckBoxLabel');" onmouseout="hideClass('xfCheckBoxLabel');">xfCheckBoxLabel
+                     <div dojoType="dijit.Tooltip" connectId="d32e192">matches all checkbox labels of the element that represents a XForms
+                        select
                         element
                         
                      </div>
                   </td>
                </tr>
                <tr>
-                  <td id="d14e204" onmouseover="showClass('xfCheckBoxValue');" onmouseout="hideClass('xfCheckBoxValue');">xfCheckBoxValue
-                     <div dojoType="dijit.Tooltip" connectId="d14e204">matches all checkbox values of the element that represents a XForms
-                        control1
+                  <td id="d32e204" onmouseover="showClass('xfCheckBoxValue');" onmouseout="hideClass('xfCheckBoxValue');">xfCheckBoxValue
+                     <div dojoType="dijit.Tooltip" connectId="d32e204">matches all checkbox values of the element that represents a XForms
+                        select
                         element
                         
                      </div>
@@ -247,11 +247,11 @@
             </table>
          </div>
          <div class="pageintro">
-            <h1>control1 control rendered as a group of checkboxes</h1>
+            <h1>select control rendered as a group of checkboxes</h1>
             <div class="description">
                
                <p>
-                  This form control allows the user to make multiple control1ions from a set of choices.
+                  This form control allows the user to make multiple selections from a set of choices.
                   
                   
                </p>
@@ -259,7 +259,7 @@
                
                <p>
                   A
-                  <span class="keyword">control1</span>
+                  <span class="keyword">select</span>
                   with
                   <span class="keyword">appearance</span>
                   'full' is rendered
@@ -274,7 +274,7 @@
                   <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
                </tr>
                <tr>
-                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-control1Many" target="_blank">
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-selectMany" target="_blank">
                         Recommendation
                         </a></td>
                </tr>
@@ -287,13 +287,13 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:control1 id="control1" ref="control1/value" appearance="full" incremental="true">
+            <xf:select id="select" ref="select/value" appearance="full" incremental="true">
                
                <xf:label>a text</xf:label>
                
                <xf:hint>a Hint for this control</xf:hint>
                
-               <xf:help>help for control1</xf:help>
+               <xf:help>help for select</xf:help>
                
                <xf:alert>invalid</xf:alert>
                
@@ -305,7 +305,7 @@
                   
                </xf:itemset>
                
-            </xf:control1>
+            </xf:select>
          </div>
          <div class="MIPS">
             
@@ -313,25 +313,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="control1-readonly" navindex="-1" ref="control1/@readonly" incremental="true">
+               <xf:input id="select-readonly" navindex="-1" ref="select/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="control1-required" navindex="-1" ref="control1/@required" incremental="true">
+               <xf:input id="select-required" navindex="-1" ref="select/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="control1-relevant" navindex="-1" ref="control1/@relevant" incremental="true">
+               <xf:input id="select-relevant" navindex="-1" ref="select/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="control1-valid" navindex="-1" ref="control1/@constraint" incremental="true">
+               <xf:input id="select-valid" navindex="-1" ref="select/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   
@@ -362,16 +362,16 @@
     &lt;/countrylist&gt;
 &lt;/xf:instance&gt;
 
-&lt;xf:control1 id="control1" ref="control1/value" appearance="full" incremental="true"&gt;
+&lt;xf:select id="select" ref="select/value" appearance="full" incremental="true"&gt;
     &lt;xf:label&gt;a text&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
-    &lt;xf:help&gt;help for control1&lt;/xf:help&gt;
+    &lt;xf:help&gt;help for select&lt;/xf:help&gt;
     &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
     &lt;xf:itemset nodeset="instance('codes')/country"&gt;
         &lt;xf:label ref="country-name"&gt;&lt;/xf:label&gt;
         &lt;xf:value ref="code"&gt;&lt;/xf:value&gt;
     &lt;/xf:itemset&gt;
-&lt;/xf:control1&gt;
+&lt;/xf:select&gt;
 </code></pre></div>
          <h2>XForms Instance</h2>
          <div class="Other" title="XForms Instance">

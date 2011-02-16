@@ -27,18 +27,18 @@
                   
                   <data>
                      
-                     <control1 constraint="true" readonly="false" required="false" relevant="true">
+                     <output1 constraint="true" readonly="false" required="false" relevant="true">
                         
                         <value>http://www.betterform.de</value>
                         
-                     </control1>
+                     </output1>
                      
                   </data>
                   
                </xf:instance>
                
                
-               <xf:bind nodeset="control1">
+               <xf:bind nodeset="output1">
                   
                   
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="anyURI"></xf:bind>
@@ -67,8 +67,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d7e127" onmouseover="showClass('xfOutput');" onmouseout="hideClass('xfOutput');">xfOutput
-                     <div dojoType="dijit.Tooltip" connectId="d7e127">matches an Element that represents a XForms
+                  <td id="d22e127" onmouseover="showClass('xfOutput');" onmouseout="hideClass('xfOutput');">xfOutput
+                     <div dojoType="dijit.Tooltip" connectId="d22e127">matches an Element that represents a XForms
                         output
                         element
                         
@@ -76,8 +76,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d7e139" onmouseover="showClass('xsdAnyURI');" onmouseout="hideClass('xsdAnyURI');">xsdAnyURI
-                     <div dojoType="dijit.Tooltip" connectId="d7e139">matches an Element that is bound to a node with datatype
+                  <td id="d22e139" onmouseover="showClass('xsdAnyURI');" onmouseout="hideClass('xsdAnyURI');">xsdAnyURI
+                     <div dojoType="dijit.Tooltip" connectId="d22e139">matches an Element that is bound to a node with datatype
                         anyURI
                         
                      </div>
@@ -231,13 +231,13 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:output id="control1" ref="control1/value" incremental="true">
+            <xf:output id="output1" ref="output1/value" incremental="true">
                
                <xf:label>betterform Homepage</xf:label>
                
                <xf:hint>a Hint for this control</xf:hint>
                
-               <xf:help>help for control1</xf:help>
+               <xf:help>help for output1</xf:help>
                
                <xf:alert>invalid</xf:alert>
                
@@ -249,25 +249,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="control1-readonly" navindex="-1" ref="control1/@readonly" incremental="true">
+               <xf:input id="output1-readonly" navindex="-1" ref="output1/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="control1-required" navindex="-1" ref="control1/@required" incremental="true">
+               <xf:input id="output1-required" navindex="-1" ref="output1/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="control1-relevant" navindex="-1" ref="control1/@relevant" incremental="true">
+               <xf:input id="output1-relevant" navindex="-1" ref="output1/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="control1-valid" navindex="-1" ref="control1/@constraint" incremental="true">
+               <xf:input id="output1-valid" navindex="-1" ref="output1/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   
@@ -279,18 +279,18 @@
          <h2>XForms Markup</h2>
          <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:instance&gt;
     &lt;data&gt;
-        &lt;control1 constraint="true" readonly="false" required="false" relevant="true"&gt;
+        &lt;output1 constraint="true" readonly="false" required="false" relevant="true"&gt;
             &lt;value&gt;http://www.betterform.de&lt;/value&gt;
-        &lt;/control1&gt;
+        &lt;/output1&gt;
     &lt;/data&gt;
 &lt;/xf:instance&gt;
 
 &lt;xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="anyURI"&gt;&lt;/xf:bind&gt;
 
-&lt;xf:output id="control1" ref="control1/value" incremental="true"&gt;
+&lt;xf:output id="output1" ref="output1/value" incremental="true"&gt;
     &lt;xf:label&gt;betterform Homepage&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
-    &lt;xf:help&gt;help for control1&lt;/xf:help&gt;
+    &lt;xf:help&gt;help for output1&lt;/xf:help&gt;
     &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
 &lt;/xf:output&gt;
 </code></pre></div>
