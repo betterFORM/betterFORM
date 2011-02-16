@@ -1,5 +1,6 @@
 <project name="Installer" default="create-betterFormInstaller" basedir=".">
     <property name="installer.dir" value="."/>
+    <property name="target" value="${basedir}/target"/>
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
     <target name="clean">
@@ -53,11 +54,11 @@
 
     </target>
 
-    <target name="prepareExistBundle">
+    <target name="prepareExistBundle" depends="get-eXist">
         <mkdir dir="${basedir}/target/bf-eXist/"/>
 
         <!-- Install eXist-db to target -->
-        <java jar="${installer.exist.jar}"
+        <java jar="${target}/exist-install.jar"
               fork="true"
               spawn="false" failonerror="true">
             <arg line="-p ${basedir}/target/bf-eXist/"/>
@@ -193,6 +194,28 @@
 
     <target name="set-eXist-dir-1.5" if="eXist-1.5">
         <property name="eXist.dir" value="${basedir}/../../eXist/target/eXist-1.5"/>
+    </target>
+
+    <!-- <target name="get-eXist" depends="exist-src-availabled" unless="exist.src.missing"> -->
+    <target name="get-eXist"  >
+        <echo>downloaded eXist</echo>
+        <antcall target="get-eXist-1.4"/>
+        <antcall target="get-eXist-1.5"/>
+    </target>
+
+    <target name="exist-src-availabled">
+
+    </target>
+
+    <target name="get-eXist-1.5" if="eXist-1.5">
+        <fail message="TBD: Download link for eXist 1.5 mising"/>
+    </target>
+    <target name="get-eXist-1.4" if="eXist-1.4">
+        <property name="eXist.1.4.src"
+                  value="http://netcologne.dl.sourceforge.net/project/exist/Stable/1.4/eXist-setup-1.4.0-rev10440.jar"/>
+         <get src="${eXist.1.4.src}"
+             dest="${target}/exist-install.jar"/>
+
     </target>
 
 </project>
