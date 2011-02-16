@@ -65,6 +65,8 @@
         <ant antfile="build.xml" target="prepare-js" dir=".." inheritall="false">
             <property name="target.dir" value="${webapp.dir}"/>
         </ant>
+
+        <copy file="${webapp.dir}/resources/scripts/dojox/highlight/resources/highlight.css" todir="${webapp.dir}/forms/reference" failonerror="true"/>
     </target>
 
     <!-- **************************************** COMPILATION **************************************** -->

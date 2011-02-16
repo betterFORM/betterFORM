@@ -154,7 +154,7 @@ declare function local:handleDirectory($uri as xs:string, $contextPath as xs:str
 declare function local:handleDirectory($uri as xs:string, $contextPath as xs:string, $path as xs:string, $ajaxFunction as xs:string, $childCollection as xs:string) {
 	let $wrapperStart := "viewParent(this, '"
 	let $wrapperEnd := "');"
-	let $ignores := 'reference utils'
+	let $ignores := 'reference utils demo incubator'
 	return
 if (fn:not(fn:contains($ignores, $childCollection)))
 		then (		
@@ -200,7 +200,8 @@ declare function local:getIconForExtension($fileName as xs:string) as xs:string 
 
 declare function local:handleFile($uri as xs:string, $contextPath as xs:string, $path as xs:string, $ajaxFunction as xs:string, $fileName as xs:string, $shorten as xs:string) {
 	let $icon := local:getIconForExtension($fileName)
-	let $fileLink := if ($fileName eq 'FeatureExplorer.xhtml') then ( fn:concat('reference/', $fileName) ) else ($fileName)
+	let $referenceLink := if ($fileName eq 'FeatureExplorer.xhtml') then ( if (contains($path, 'forms')) then ( fn:concat('reference/', $fileName) ) else (fn:concat('forms/reference/', $fileName)) ) else ($fileName)
+	let $fileLink := if ($referenceLink eq 'Demo.xhtml') then ( if (contains($path, 'forms')) then (fn:concat('demo/', $referenceLink)) else (fn:concat('forms/demo/', $referenceLink)) ) else ($referenceLink)
 	let $fileName := if (fn:contains($fileName, '.xhtml')) then( functx:substring-before-last($fileName, '.xhtml') ) else ( $fileName )
 	let $shortendFileName := if (fn:string-length($fileName) gt 15 and $shorten eq 'true') then (fn:concat(fn:substring($fileName,0,10), '...', fn:substring($fileName, fn:string-length($fileName) -5))) else ($fileName)  
 	let $filePath := functx:substring-before-last($uri, 'db')
@@ -258,11 +259,11 @@ declare function local:generateFileListing($uri as xs:string, $contextPath as xs
 		
 	)
 	else (),
-		for $fileName in xmldb:get-child-resources($path)
-		return
-			<div>
-				{local:handleFile($uri, $contextPath, $path, $ajaxFunction, $fileName, $shorten)}
-			</div>
+	for $fileName in xmldb:get-child-resources($path)
+	return
+	    <div>
+			{local:handleFile($uri, $contextPath, $path, $ajaxFunction, $fileName, $shorten)}
+		</div>
 };
 
 declare function local:handleUp($uri as xs:string, $contextPath as xs:string, $path as xs:string, $ajaxFunction as xs:string) {
@@ -277,7 +278,7 @@ declare function local:getHTMLFilesListing($uri as xs:string, $contextPath as xs
 	let $altTextFormUpload := 'Upload your form into this collection'	
 	(: Check for up :)
 	return
-	<div class="bfFormBrowser">
+	<div class="bfFormBrowser" style="width:800px">
 		<div class="formBrowserHead">
 			<div class="formBrowserHeader">
 			 	  {local:generateCrumbs($uri, $path, $ajaxFunction)}

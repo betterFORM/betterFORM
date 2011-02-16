@@ -41,6 +41,9 @@
     <!-- GENERIC TARGETS -->
 
     <target name="check-4-dojo-release">
+        <echo message="------------------------------------------------------------------------------------"/>
+        <echo message="check-4-dojo-release: file: ${target}/dojo-release/resources/scripts/release/dojo/betterform/betterform-full.js"/>
+        <echo message="------------------------------------------------------------------------------------"/>
         <available property="dojo-release-built" file="${target}/dojo-release/resources/scripts/release/dojo/betterform/betterform-full.js/"/>
     </target>
 
@@ -62,12 +65,21 @@
     </target>
 
     <target name="deploy-dojo-release" depends="check-4-dojo-release, build-dojo-release">
-         <copy todir="${target.dir}/resources" overwrite="true">
-             <fileset dir="${dojo.release.dir}/resources"/>
+        <echo message="------------------------------------------------------------------------------------"/>
+        <echo message="deploy-dojo-release: dojo.release.dir: ${dojo.release.dir}"/>
+        <echo message="deploy-dojo-release: target.dir: ${target.dir}"/>
+        <echo message="------------------------------------------------------------------------------------"/>
+        <copy todir="${target.dir}/resources/scripts/release" overwrite="true">
+             <fileset dir="${dojo.release.dir}/resources/scripts/release"/>
          </copy>
     </target>
 
     <target name="build-dojo-release" unless="dojo-release-built" description="build a dojo release">
+        <echo message="------------------------------------------------------------------------------------"/>
+        <echo message="build-dojo-release: webapp.dir: ${dojo.release.dir}"/>
+        <echo message="build-dojo-release: web.dir: ${web.dir}"/>
+        <echo message="build-dojo-release: target: ${dojo.release.dir}"/>
+        <echo message="------------------------------------------------------------------------------------"/>
         <ant antfile="${web.dir}/build.xml" target="copy-src-resources-scripts" usenativebasedir="yes">
               <property name="webapp.dir" value="${dojo.release.dir}"/>
         </ant>
