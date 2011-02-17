@@ -162,12 +162,8 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
         if (isEventUsed(XFormsEventNames.DESELECT)) {
             this.root.addEventListener(XFormsEventNames.DESELECT, this, true);
         }
-        if (isEventUsed(BetterFormEventNames.HIDE)) {
-            this.root.addEventListener(BetterFormEventNames.HIDE, this, true);
-        }
-        if (isEventUsed(BetterFormEventNames.SHOW)) {
-            this.root.addEventListener(BetterFormEventNames.SHOW, this, true);
-        }
+        this.root.addEventListener(BetterFormEventNames.HIDE, this, true);
+        this.root.addEventListener(BetterFormEventNames.SHOW, this, true);
 
         if(isDebugOn()){
             this.root.addEventListener(BetterFormEventNames.INSTANCE_CREATED, this, true);
