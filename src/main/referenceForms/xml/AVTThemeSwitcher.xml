@@ -28,7 +28,7 @@
             .claro .xfInput .xfValue{height:1.6em;}
         </style>
     </head>
-    <body class="{theme} InlineAlert">
+    <body class="{theme} InlineAlert bf">
         <div class="description">
             <p>
                 This page demonstrates the use of Attribute Value Templates (AVT) as known from XSL. By

@@ -44,7 +44,7 @@
         <echo message="------------------------------------------------------------------------------------"/>
         <echo message="check-4-dojo-release: file: ${target}/dojo-release/resources/scripts/release/dojo/betterform/betterform-full.js"/>
         <echo message="------------------------------------------------------------------------------------"/>
-        <available property="dojo-release-built" file="${target}/dojo-release/resources/scripts/release/dojo/betterform/betterform-full.js/"/>
+        <available property="dojo-release-built" file="${dojo.release.dir}/dojo-release/resources/scripts/release/dojo/betterform/betterform-full.js/"/>
     </target>
 
     <target name="deploy-xslt">

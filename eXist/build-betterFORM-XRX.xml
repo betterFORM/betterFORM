@@ -155,11 +155,11 @@
 
         <target name="prepare-db-installation-dir">
             <!-- Copy current forms from main to db-install-dir -->
-            <copy todir="${src.target.dir}/db/forms" overwrite="true" filtering="false" description="copy forms form ${src.dir} to db-installition-dir ${src.target.dir}/db/">
+            <copy todir="${src.target.dir}/db/forms" overwrite="true" filtering="false" description="copy forms from ${src.dir} to db-installition-dir ${src.target.dir}/db/">
                 <fileset dir="${src.dir}/main/xforms"/>
             </copy>
 
-            <copy todir="${src.target.dir}/db/" overwrite="true" filtering="false" description="copy forms form ${src.dir} to db-installition-dir ${src.target.dir}/db/">
+            <copy todir="${src.target.dir}/db/" overwrite="true" filtering="false" description="copy forms from ${src.dir} to db-installition-dir ${src.target.dir}/db/">
                 <fileset dir="${src.target.dir}/db/forms" includes="FeatureExplorer.xhtml Demo.xhtml Status.xhtml"/>
             </copy>
 
@@ -170,6 +170,16 @@
             <delete includeemptydirs="yes">
                     <fileset dir="${src.target.dir}/db/forms" excludes="demo/**/*.* reference/**/*.* FeatureExplorer.xhtml Demo.xhtml Status.xhtml css/**"/>
             </delete>
+
+            <mkdir dir="${src.target.dir}/db/images"/>
+            <copy todir="${src.target.dir}/db/images" overwrite="true" filtering="false" description="copy neede images from ${src.dir} to db-installition-dir ${src.target.dir}/db/">
+                <fileset dir="${src.target.dir}/etc/overwrites/webapp/resources/images">
+                    <include name="betterform_icon16x16.png"/>
+                    <include name="betterform.ico"/>
+                    <include name="en.png"/>
+                    <include name="de.png"/>
+                </fileset>
+            </copy>
         </target>
 
         <target name="copy-betterFORM-website" if="betterform">
@@ -229,6 +239,7 @@
         <echo message="build-dojo-release: dojo.release.dir: ${src.target.dir}/dojo"/>
         <echo message="------------------------------------------------------------------------------------"/>
         <ant antfile="build-utils.xml" target="deploy-dojo-release">
+            <property name="target" value="${basedir}/target-utils"/>
             <property name="target.dir" value="${src.target.dir}/dojo"/>
         </ant>
     </target>
