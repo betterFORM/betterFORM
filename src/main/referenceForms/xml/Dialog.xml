@@ -47,7 +47,7 @@
     <xf:group appearance="full">
         <xf:input>
             <xf:label>Username</xf:label>
-            <xf:value ref="username"/>
+            <xf:value ref="login"/>
         </xf:input>
         <xf:input>
             <xf:label>Password</xf:label>

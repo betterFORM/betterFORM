@@ -179,7 +179,7 @@ public class Dialog extends BindingElement implements EventListener {
     private String getFirstFocusableControl() throws XFormsException {
         return XPathUtil.evaluateAsString(this.element, ".//*["
                 + NamespaceConstants.BETTERFORM_PREFIX + ":data/@"
-                + NamespaceConstants.BETTERFORM_PREFIX
+                    + NamespaceConstants.BETTERFORM_PREFIX
                 + ":enabled='true'][1]/@id");
     }
 

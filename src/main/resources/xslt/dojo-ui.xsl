@@ -45,9 +45,6 @@
             </xsl:call-template>
         </xsl:variable>
 
-        <script type="text/javascript">dojo.require("betterform.ui.container.Dialog");</script><xsl:text>
-</xsl:text>
-
         <span id="{$dialog-id}" class="{$dialog-classes}" dojoType="betterform.ui.container.Dialog"
               title="{$dialog-label}">
 
@@ -71,9 +68,6 @@
             </xsl:call-template>
         </xsl:variable>
 
-        <script type="text/javascript">dojo.require("betterform.ui.container.Dialog");</script><xsl:text>
-</xsl:text>
-
         <span id="{$dialog-id}" class="{$dialog-classes}" dojoType="betterform.ui.container.Dialog"
               title="{$dialog-label}">
 
@@ -96,9 +90,6 @@
                 <xsl:with-param name="label-elements" select="xforms:label"/>
             </xsl:call-template>
         </xsl:variable>
-
-        <script type="text/javascript">dojo.require("betterform.ui.container.Dialog");</script><xsl:text>
-</xsl:text>
 
         <button dojoType="dijit.form.Button" id="{$dialog-id}-button" type="button" iconClass="dijitIconSearch"
                 showLabel="false" onCLick="show{$dialog-id}Dialog()">

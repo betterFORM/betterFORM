@@ -204,7 +204,7 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:trigger>
+            <xf:trigger ref="login">
                
                <xf:label>show dialog</xf:label>
                
@@ -221,7 +221,7 @@
                      
                      <xf:label>Username</xf:label>
                      
-                     <xf:value ref="username"></xf:value>
+                     <xf:value ref="login"></xf:value>
                      
                   </xf:input>
                   
@@ -291,7 +291,7 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:trigger&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:trigger ref="login"&gt;
     &lt;xf:label&gt;show dialog&lt;/xf:label&gt;
     &lt;bfc:show dialog="loginDialog" ev:event="DOMActivate"&gt;&lt;/bfc:show&gt;
 &lt;/xf:trigger&gt;
@@ -301,7 +301,7 @@
     &lt;xf:group appearance="full"&gt;
         &lt;xf:input&gt;
             &lt;xf:label&gt;Username&lt;/xf:label&gt;
-            &lt;xf:value ref="username"&gt;&lt;/xf:value&gt;
+            &lt;xf:value ref="login"&gt;&lt;/xf:value&gt;
         &lt;/xf:input&gt;
         &lt;xf:input&gt;
             &lt;xf:label&gt;Password&lt;/xf:label&gt;
