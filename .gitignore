@@ -25,6 +25,7 @@ version.info
 target/*
 betty/target/*
 core/target/*
+eXist/target-utils/
 eXist/target/*
 tools/installer/target/*
 web/target/*
