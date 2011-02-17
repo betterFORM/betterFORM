@@ -1,6 +1,13 @@
 <project name="Installer" default="create-betterFormInstaller" basedir=".">
     <property name="installer.dir" value="."/>
     <property name="target" value="${basedir}/target"/>
+    <property name="target-utils" value="${basedir}/target-utils"/>
+    <property name="eXist.1.4.src" value="http://netcologne.dl.sourceforge.net/project/exist/Stable/1.4/eXist-setup-1.4.0-rev10440.jar"/>
+    <property name="eXist.1.5.src" value="http://netcologne.dl.sourceforge.net/project/exist/Stable/1.4/eXist-setup-1.4.0-rev10440.jar"/>
+
+    <available property="eXist-1.4-available" file="${target-utils}/exist-install-1.4.jar"/>
+    <available property="eXist-1.5-available" file="${target-utils}/exist-install-1.5.jar"/>
+
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
     <target name="clean">
@@ -154,10 +161,8 @@
               tofile="${basedir}/target/betterform.war"/>
     </target>
 
-    <target name="create-betterFormInstaller" description="Builds a betterForm Installer for deploying existing webcontainer">
-        <!-- depends="prepare"
+    <target name="create-betterFormInstaller" description="Builds a betterForm Installer for deploying existing webcontainer" depends="prepare">
         <sleep seconds="30" description="wait for fs to settle"/>
-         -->
 
         <!-- Allows us to use the IzPack Ant task -->
         <taskdef name="izpack"
@@ -189,6 +194,7 @@
         </copy>
     </target>
 
+    <!-- Set target-dir for extension dependent on version. Needed by extension-builder. -->
     <target name="set-eXist-dir" depends="set-eXist-dir-1.4, set-eXist-dir-1.5"/>
 
     <target name="set-eXist-dir-1.4" if="eXist-1.4">
@@ -199,26 +205,29 @@
         <property name="eXist.dir" value="${basedir}/../../eXist/target/eXist-1.5"/>
     </target>
 
-    <!-- <target name="get-eXist" depends="exist-src-availabled" unless="exist.src.missing"> -->
-    <target name="get-eXist"  >
-        <echo>downloaded eXist</echo>
+    <!-- Download eXist installer dependent on version -->
+    <target name="get-eXist">
+        <mkdir dir="${target-utils}"/>
+        <antcall target="get-and-set-eXist-1.4-installer"/>
+        <antcall target="get-and-set-eXist-1.5-installer"/>
+    </target>
+
+    <target name="get-and-set-eXist-1.4-installer" if="eXist-1.4">
         <antcall target="get-eXist-1.4"/>
+        <copy file="${target-utils}/exist-install-1.4.jar" tofile="${target}/exist-install.jar" description="setting eXist installer to version 1.4"/>
+    </target>
+
+    <target name="get-eXist-1.4" if="eXist-1.4" unless="eXist-1.4-available">
+        <get src="${eXist.1.4.src}" dest="${target-utils}/exist-install-1.4.jar" description="downloads eXist 1.4 installer"/>
+    </target>
+
+    <target name="get-and-set-eXist-1.5-installer" if="eXist-1.5">
         <antcall target="get-eXist-1.5"/>
+        <copy file="${target-utils}/exist-install-1.5.jar" tofile="${target}/exist-install.jar" description="setting eXist installer to version 1.5"/>
     </target>
 
-    <target name="exist-src-availabled">
-
-    </target>
-
-    <target name="get-eXist-1.5" if="eXist-1.5">
-        <fail message="TBD: Download link for eXist 1.5 mising"/>
-    </target>
-    <target name="get-eXist-1.4" if="eXist-1.4">
-        <property name="eXist.1.4.src"
-                  value="http://netcologne.dl.sourceforge.net/project/exist/Stable/1.4/eXist-setup-1.4.0-rev10440.jar"/>
-         <get src="${eXist.1.4.src}"
-             dest="${target}/exist-install.jar"/>
-
+    <target name="get-eXist-1.5" if="eXist-1.5" unless="eXist-1.5-available">
+        <get src="${eXist.1.5.src}" dest="${target-utils}/exist-install-1.5.jar" description="downloads eXist 1.5 installer"/>
     </target>
 
 </project>

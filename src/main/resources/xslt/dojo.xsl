@@ -364,7 +364,7 @@
                 </div>
             </div>
 
-            <div id="bfMessageDialog" dojotype="dijit.Dialog" style="text-align:center;">
+            <div id="bfMessageDialog" dojotype="dijit.Dialog" style="text-align:center;display:none;">
                 <div id="messageContent"></div>
                 <button dojotype="dijit.form.Button" type="button" style="margin:10px;">OK
                     <script type="dojo/method" event="onClick" args="evt">

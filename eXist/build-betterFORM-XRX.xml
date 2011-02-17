@@ -31,7 +31,7 @@
 
         <condition property="eXist">
             <isfalse value="${installer.exist.betterform}"/>
-        </condition>
+        </condition>                     /usr/portage/metadata/timestamp.chk
 
         <condition property="eXist-1.5">
                 <equals arg1="${installer.exist.version}" arg2="1.5"/>
@@ -148,9 +148,9 @@
 
                 <antcall target="build-dojo-release"/>
 
-                <antcall target="prepare-db-installation-dir"/>
-
                 <antcall target="copy-betterFORM-website"/>
+
+                <antcall target="prepare-db-installation-dir"/>
         </target>
 
         <target name="prepare-db-installation-dir">
@@ -173,7 +173,7 @@
 
             <mkdir dir="${src.target.dir}/db/images"/>
             <copy todir="${src.target.dir}/db/images" overwrite="true" filtering="false" description="copy neede images from ${src.dir} to db-installition-dir ${src.target.dir}/db/">
-                <fileset dir="${src.target.dir}/etc/overwrites/webapp/resources/images">
+                <fileset dir="${src.target.dir}/etc/overwrites/webapp/images">
                     <include name="betterform_icon16x16.png"/>
                     <include name="betterform.ico"/>
                     <include name="en.png"/>

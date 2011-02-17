@@ -851,7 +851,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
                 if (exception != undefined) {
                     console.warn("An Exception occured in Facade: ", exception);
                 } else {
-                    dojo.require("dijit.Dialog");
+                    //dojo.require("dijit.Dialog");
                     var messageDialog = dijit.byId("bfMessageDialog");
                     dojo.query("#messageContent",messageDialog.domNode)[0].innerHTML=message;
                     messageDialog.show();

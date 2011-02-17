@@ -48,30 +48,35 @@
         <copy file="${web.dir}/target/${web.app.name}-${web.app.version}.war" todir="${release.dir}-${web.app.version}/web-dist"/>
 
         <!-- create betterFORM exist extension -->
+<!-- 17.02.2010
         <mkdir dir="${release.dir}-${web.app.version}/extension-dist"/>
+-->
 
         <!-- installer zip -->
+<!-- 17.02.2010
         <mkdir dir="${release.dir}-${web.app.version}/extension-dist/exist-extension-installer"/>
         <ant antfile="${extension.dir}/build.xml" target="package" dir="${extension.dir}" inheritall="false"/>
         <copy todir="${release.dir}-${web.app.version}/extension-dist/exist-extension">
             <fileset file="${extension.dir}/target/**"/>
        </copy>
-        <!--
+-->
+
+<!-- ???
             <copy file="${extension.dir}/target/exist-extension-installer/betterform.zip" todir="${release.dir}-${web.app.version}/extension-dist/exist-extension-installer"/>
-        -->
+-->
         <!-- betterForm and XRX zip -->
-        <!--
+<!-- ???
             <mkdir dir="${release.dir}-${web.app.version}/extension-dist/exist-extension"/>
 
             <ant antfile="${extension.dir}/build.xml" target="package" dir="${extension.dir}" inheritall="false"/>
             <copy file="${extension.dir}/target/betterform.zip" todir="${release.dir}-${web.app.version}/extension-dist/exist-extension"/>
             <copy file="${extension.dir}/target/xrx.zip" todir="${release.dir}-${web.app.version}/extension-dist/exist-extension"/>
-        -->
+-->
         <!-- create installer -->
         <mkdir dir="${release.dir}-${web.app.version}/installer-dist"/>
 
         <!-- build installer -->
-        <ant antfile="${installer.dir}/build.xml" target="create-betterFormInstaller" dir="${installer.dir}" inheritall="false"/>
+        <ant antfile="${installer.dir}/build-betterFORM-XRX.xml" target="create-betterFormInstaller" dir="${installer.dir}" inheritall="false"/>
         <copy todir="${release.dir}-${web.app.version}/installer-dist">
             <fileset dir="${installer.dir}/target" includes="*.jar"/>
         </copy>
