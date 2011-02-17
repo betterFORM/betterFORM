@@ -11,7 +11,7 @@
     <property name="server.dir" value="${basedir}/tools/server"/>
     <property name="target.dir" value="${basedir}/target"/>
     <property name="src.target.dir" value="${basedir}/target"/>
-
+    <antversion property="antversion" atleast="1.7"/>
 
     <!-- local Web properties -->
 
@@ -44,7 +44,7 @@
     <!-- **************************************** BUILDING JAR **************************************** -->
     <!-- **************************************** BUILDING JAR **************************************** -->
     <!-- **************************************** BUILDING JAR **************************************** -->
-    <target name="package" description="package core, web and betty">
+    <target name="package" description="package core, web and betty" depends="check-ant-version" if="antversion">
         <ant antfile="${core.dir}/build.xml" target="package" dir="${core.dir}" inheritall="false"/>
         <ant antfile="${web.dir}/build.xml"  target="package" dir="${web.dir}"  inheritall="false"/>
         <ant antfile="${betty.dir}/build.xml"  target="package" dir="${betty.dir}"  inheritall="false"/>
@@ -67,12 +67,12 @@
     <!-- **************************************** BUILDING JAR **************************************** -->
     <!-- **************************************** BUILDING JAR **************************************** -->
     <!-- **************************************** BUILDING JAR **************************************** -->
-    <target name="install-maven-dependencies" description="install all project dependencies into local maven repository">
+    <target name="install-maven-dependencies" description="install all project dependencies into local maven repository" depends="check-ant-version" if="antversion">
         <ant antfile="${basedir}/tools/maven/build.xml"  target="install-maven-dependencies" dir="${basedir}/tools/maven"  inheritall="false"/>
 
     </target>
 
-    <target name="update-maven-poms" description="update core, web and betty pom.xml">
+    <target name="update-maven-poms" description="update core, web and betty pom.xml" depends="check-ant-version" if="antversion">>
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-core-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-web-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-betty-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
@@ -81,7 +81,7 @@
     </target>
 
 
-    <target name="prepare-js">
+    <target name="prepare-js" depends="check-ant-version" if="antversion">
         <echo/>
         <echo message="************************************************************************************"/>
         <echo message="unpacking Dojo..."/>
@@ -122,7 +122,7 @@
 
     </target>
 
-    <target name="transformToXFormsUsingComponent">
+    <target name="transformToXFormsUsingComponent" depends="check-ant-version" if="antversion">
          <xslt in="${basedir}/src/main/xforms/demo/registration.xhtml"
                out="${basedir}/registration.xhtml"
                style="${basedir}/src/main/resources/xslt/component.xsl"
@@ -162,5 +162,10 @@
             <classpath refid="transform.class.path"/>
         </xslt>
     </target>
+
+    <target name="check-ant-version" unless="antversion">
+        <echo>Apache Ant 1.7 or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.7 You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</echo>
+    </target>
+
 
 </project>
