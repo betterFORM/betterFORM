@@ -27,7 +27,7 @@
     <property name="webapp.dir" value="${target}/${web.app.name}"/>
     <property name="targetname" value="${target}/${web.app.name}-${web.app.version}"/>
     <property name="servlet.container" value="${properties.webappPath}"/>
-
+    <antversion property="antversion" atleast="1.7"/>
     <!-- **************************************** HOUSEKEEPING **************************************** -->
     <!-- **************************************** HOUSEKEEPING **************************************** -->
     <!-- **************************************** HOUSEKEEPING **************************************** -->
@@ -43,7 +43,7 @@
     <!-- **************************************** PREPARATION **************************************** -->
     <!-- **************************************** PREPARATION **************************************** -->
     <!-- **************************************** PREPARATION **************************************** -->
-    <target name="prepare" description="init the build process">
+    <target name="prepare" description="init the build process" depends="check-ant-version" if="antversion">
         <echo/>
         <echo message="************************************************************************************"/>
         <echo message="copying Core classes..."/>
@@ -593,7 +593,7 @@
 
 
     <!-- ### applies include.xsl to all forms found in 'src/main/forms/xforms' and
-deploys the result to target ### -->
+             deploys the result to target ### -->
     <target name="assembleForms">
 
         <xslt basedir="${basedir}/${properties.rootDir}/src/main/xforms"
@@ -605,4 +605,9 @@ deploys the result to target ### -->
             <classpath refid="saxon.libs"/>
         </xslt>
     </target>
+
+    <target name="check-ant-version" unless="antversion">
+        <echo>Apache Ant 1.7 or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.7 You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</echo>
+    </target>
+
 </project>
