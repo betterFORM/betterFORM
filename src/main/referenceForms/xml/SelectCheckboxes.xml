@@ -75,7 +75,7 @@
                 </xf:model>
                 <code class="ui">
 <xf:select id="select" ref="select/value" appearance="full" incremental="true">
-    <xf:label>a text</xf:label>
+    <xf:label>a combobox select</xf:label>
     <xf:hint>a Hint for this control</xf:hint>
     <xf:help>help for select</xf:help>
     <xf:alert>invalid</xf:alert>

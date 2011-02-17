@@ -69,7 +69,7 @@
                 </xf:model>
                 <code class="ui">
 <xf:select1 id="select1" ref="select1/value" selection="open" incremental="true">
-    <xf:label>a text</xf:label>
+    <xf:label>an open select1</xf:label>
     <xf:hint>a Hint for this control</xf:hint>
     <xf:help>help for select1</xf:help>
     <xf:alert>invalid</xf:alert>

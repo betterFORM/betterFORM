@@ -56,7 +56,7 @@
                 </xf:model>
                 <code class="ui">
 <xf:input id="input1" ref="input1/value" appearance="iso8601:dd.MMMM.yyyy" incremental="true">
-    <xf:label>a text</xf:label>
+    <xf:label>a calendar with a date pattern</xf:label>
     <xf:hint>a Hint for this control</xf:hint>
     <xf:help>help for input1</xf:help>
     <xf:alert>invalid</xf:alert>

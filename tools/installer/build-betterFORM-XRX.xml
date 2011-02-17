@@ -154,9 +154,10 @@
               tofile="${basedir}/target/betterform.war"/>
     </target>
 
-    <target name="create-betterFormInstaller" depends="prepare"
-            description="Builds a betterForm Installer for deploying existing webcontainer">
-
+    <target name="create-betterFormInstaller" description="Builds a betterForm Installer for deploying existing webcontainer">
+        <!-- depends="prepare"
+        <sleep seconds="30" description="wait for fs to settle"/>
+         -->
 
         <!-- Allows us to use the IzPack Ant task -->
         <taskdef name="izpack"
@@ -177,7 +178,8 @@
                 installerType="${installer.installerType}"
                 basedir="${basedir}/target"/>
 
-        <chmod file="${basedir}/target/betterform-install.jar" perm="770"/>
+        <chmod file="${basedir}/target/betterform-install.jar" perm="775"/>
+
 
     </target>
 

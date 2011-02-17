@@ -56,7 +56,7 @@
                 </xf:model>
                 <code class="ui">
 <xf:textarea id="textarea1" ref="textarea1/value" mediatype="dojo" incremental="true">
-    <xf:label>a text</xf:label>
+    <xf:label>a growing textarea</xf:label>
     <xf:hint>a Hint for this control</xf:hint>
     <xf:help>help for textarea1</xf:help>
     <xf:alert>invalid</xf:alert>

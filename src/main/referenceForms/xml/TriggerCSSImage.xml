@@ -22,9 +22,9 @@
                 A trigger can be styled by CSS.
                 Here the trigger is given an id and a CSS matcher is added for it. The corresponding
                 button rendered in HTML will have the original id with '-value' attached. The matcher
-                for the button is therefore #imageTrigger-value.
+                for the button is therefore #trigger1-value.
                 This is only one example how to style controls with CSS. Besides identity matching alternative
-                style rules are possible to achieve the same result. E.g. instead of #imageTrigger .xfValue
+                style rules are possible to achieve the same result. E.g. instead of #trigger1 .xfValue
                 would match the same element in the tree.
             </p>
         </div>

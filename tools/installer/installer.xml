@@ -11,12 +11,20 @@
         The meaning of the tags should be natural ...
     -->
 
+
     <info>
-        <appname>betterForm</appname>
-        <appversion>3.1</appversion>
+        <appname>betterFORM</appname>
+        <appversion>limeGreen</appversion>
+        <authors>
+                 <author email="info@betterform.de" name="betterFORM"/>
+        </authors>
         <url>http://www.betterform.de</url>
+        <uninstaller name="Uninstaller.jar" write="yes"/>
         <javaversion>1.5</javaversion>
-        <!--<webdir>http://localhost:8080/packs</webdir>-->
+        <requiresjdk>yes</requiresjdk>
+        <writeinstallationinformation>yes</writeinstallationinformation>
+        <pack200/>
+        <run-privileged condition="izpack.windowsinstall.vista|izpack.windowsinstall.7"/>
         <webdir>http://www.betterform.de/packs</webdir>
     </info>
 
@@ -43,6 +51,7 @@
                 <condition type="ref" refid="bf"/>
             </condition>
             <condition type="not">
+
                 <condition type="ref" refid="exist"/>
             </condition>
         </condition>
@@ -71,11 +80,19 @@
         <variable name="JDKPathPanel.minVersion" value="1.5"/>
         <variable name="dataDir" value="webapp/WEB-INF/data" />
     </variables>
+
+    <dynamicvariables>
+      <variable name="DATA_DIR" condition="izpack.windowsinstall" value="$USER_HOME/eXist/data"/>
+      <variable name="DATA_DIR" condition="izpack.macinstall" value="/Users/Shared/eXist/data"/>
+      <variable name="DATA_DIR" condition="!izpack.macinstall+!izpack.windowsinstall"
+		value="$INSTALL_PATH/webapp/WEB-INF/data"/>
+    </dynamicvariables>
     <!--
         The gui preferences indication.
         Sets the installer window to 640x480. It will not be able to change the size.
     -->
-    <guiprefs width="640" height="580" resizable="no">
+    <guiprefs width="640" height="600" resizable="no">
+        <splash>../resource/bf_logo_145x59.png</splash>
         <modifier key="useButtonIcons" value="no"/>
   		<modifier key="useLabelIcons" value="no"/>
   		<modifier key="layoutAnchor" value="NORTHWEST"/>
@@ -89,10 +106,28 @@
   		<modifier key="useLabelIcons" value="yes"/>
 		<modifier key="labelGap" value="6"/>
  	</guiprefs>
-    <native type="izpack" name="COIOSHelper_x64.dll">
+	<listeners>
+		<listener installer="RegistryInstallerListener"	uninstaller="RegistryUninstallerListener" >
+			<os family="windows"/>
+		</listener>
+	</listeners>
+
+    <native name="ShellLink.dll" type="izpack"/>
+    <native name="ShellLink_x64.dll" type="izpack"/>
+    <native type="3rdparty" name="COIOSHelper.dll" stage="both">
         <os family="windows"/>
     </native>
-
+    <native type="3rdparty" name="COIOSHelper_x64.dll" stage="both">
+        <os family="windows"/>
+    </native>
+    <!--
+    <native type="3rdparty" name="COIOSHelper_x64.dll">
+        <os family="windows"/>
+    </native>
+    <native type="3rdparty" name="COIOSHelper.dll">
+        <os family="windows"/>
+    </native>
+    -->
     <!--
         The locale section.
         Asks here to include the English and French langpacks.
@@ -113,9 +148,8 @@
         <res id="LicencePanel.licence" src="BSD-license.txt"/>
         <res id="HTMLInfoPanel.readme" src="../resource/readme.html"/>
         <res id="HTMLHelloPanel.welcome" src="../resource/welcome.html"/>
-
+        <!-- <res id="TargetPanel.dir" src="../resource/TargetDir.txt" conditon="izpack.windowsinstall"/> -->
         <res id="Installer.image" src="../resource/logo.png" />
-
         <res id="Installer.image" src="../resource/info-border.png" />
         <res src="../resource/info-border.png" id="Installer.image.0"/>
         <res src="../resource/info-border.png" id="Installer.image.1"/>
@@ -125,7 +159,8 @@
         <res src="../resource/pack-border.png" id="Installer.image.5"/>
         <res id="userInputSpec.xml" src="../resource/userInput.xml"/>
         <res id="ProcessPanel.Spec.xml" src="../resource/jobs.xml"/>
-
+        <res id="CustomLangpack.xml_deu" src="../resource/custom.deu.xml"/>
+        <res id="CustomLangpack.xml_eng" src="../resource/custom.eng.xml"/>
     </resources>
 
 
@@ -136,6 +171,7 @@
 
     <panels labelFontSize="2.0">
         <panel classname="HTMLHelloPanel" id="welcome"/>
+        <panel classname="JDKPathPanel"/>
         <panel classname="LicencePanel"/>
         <panel classname="TargetPanel"/>
         <panel classname="HTMLInfoPanel" id="readme" />
@@ -143,6 +179,7 @@
         <panel classname="UserInputPanel" id="UserInputPanel.0" condition="exist"/>
         <panel classname="InstallPanel"/>
         <panel classname="ProcessPanel" condition="exist"/>
+        <!-- <panel classname="ShortcutPanel"/> -->
         <panel classname="FinishPanel"/>
     </panels>
 
