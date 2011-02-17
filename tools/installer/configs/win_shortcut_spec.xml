@@ -6,9 +6,9 @@
   <shortcut
     name="betterFORM limeGreen"
     target="javaw"
-    commandLine="-jar &quot;$INSTALL_PATH/betterform.jar&quot; -Xmx512m"
+    commandLine="-jar &quot;$INSTALL_PATH/betterFORM-Launcher-1.3.jar&quot; -Xmx512m"
     workingDirectory="$INSTALL_PATH"
-    description="betterFORM 3.0 "
+    description="betterFORM 3.2 prerelease"
     type="Application"
     iconFile="$INSTALL_PATH\images\betterform_icon16x16.ico"
     iconIndex="0"

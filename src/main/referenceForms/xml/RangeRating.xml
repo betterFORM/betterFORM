@@ -52,7 +52,7 @@
                 <code class="ui">
 <xf:range id="range1" ref="range1/value" start="0" step="1" end="5" appearance="bf:rating"
           incremental="true">
-    <xf:label>a text</xf:label>
+    <xf:label>a rating</xf:label>
     <xf:hint>a Hint for this control</xf:hint>
     <xf:help>help for range1</xf:help>
     <xf:alert>invalid</xf:alert>

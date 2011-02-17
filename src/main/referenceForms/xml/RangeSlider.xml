@@ -43,7 +43,7 @@
                 </xf:model>
                 <code class="ui">
 <xf:range id="range1" ref="range1/value" start="1" step="1" end="5" incremental="true">
-    <xf:label>a text</xf:label>
+    <xf:label>a slider</xf:label>
     <xf:hint>a Hint for this control</xf:hint>
     <xf:help>help for range1</xf:help>
     <xf:alert>invalid</xf:alert>

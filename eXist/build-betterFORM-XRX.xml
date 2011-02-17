@@ -168,7 +168,7 @@
 
             <!-- <delete dir="${src.target.dir}/db/forms" excludes="demo reference"/> -->
             <delete includeemptydirs="yes">
-                    <fileset dir="${src.target.dir}/db/forms" excludes="demo/**/*.* reference/**/*.* FeatureExplorer.xhtml Demo.xhtml Status.xhtml"/>
+                    <fileset dir="${src.target.dir}/db/forms" excludes="demo/**/*.* reference/**/*.* FeatureExplorer.xhtml Demo.xhtml Status.xhtml css/**"/>
             </delete>
         </target>
 
