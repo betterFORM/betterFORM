@@ -66,7 +66,9 @@
             <property name="target.dir" value="${webapp.dir}"/>
         </ant>
 
+        <!--
         <copy file="${webapp.dir}/resources/scripts/dojox/highlight/resources/highlight.css" todir="${webapp.dir}/forms/reference" failonerror="true"/>
+        -->
     </target>
 
     <!-- **************************************** COMPILATION **************************************** -->
@@ -335,7 +337,13 @@
         <!-- copy required dojo js resources -->
         <property name="dojoRelease" value="${bfJSRelease}/dojo"/>
         <copy todir="${dojoRelease}" flatten="false">
-             <fileset dir="${bfReleaseSrc}/dojo" includes="_base/_loader/**/*"/>
+            <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.png"/>
+            <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.jpg"/>
+            <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.jpeg"/>
+            <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.gif"/>
+            <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.css"/>
+           <!-- <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.html"/> -->
+            <fileset dir="${bfReleaseSrc}/dojo" includes="_base/_loader/**/*"/>
              <fileset dir="${bfReleaseSrc}/dojo" includes="_firebug/**/*"/>
              <fileset dir="${bfReleaseSrc}/dojo" includes="resources/**/*"/>
              <fileset dir="${bfReleaseSrc}/dojo">
@@ -348,16 +356,25 @@
         <!-- copy required dijit js resources -->
         <property name="dijitRelease" value="${bfJSRelease}/dijit"/>
         <copy todir="${dijitRelease}" flatten="false">
-             <fileset dir="${bfReleaseSrc}/dijit" includes="nls/**/*"/>
-             <fileset dir="${bfReleaseSrc}/dijit" includes="themes/**/"/>
-             <fileset dir="${bfReleaseSrc}/dijit" includes="dijit.js"/>
+            <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.png"/>
+            <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.jpg"/>
+            <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.jpeg"/>
+            <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.gif"/>
+            <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.css"/>
+            <!-- <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.html"/> -->
+            <fileset dir="${bfReleaseSrc}/dijit" includes="nls/**/*"/>
+            <fileset dir="${bfReleaseSrc}/dijit" includes="themes/**/"/>
+            <fileset dir="${bfReleaseSrc}/dijit" includes="dijit.js"/>
         </copy>
 
         <property name="dojoxRelease" value="${bfJSRelease}/dojox"/>
         <copy todir="${dojoxRelease}" flatten="false">
-             <fileset dir="${bfReleaseSrc}/dojox" includes="layout/resources/FloatingPane.css"/>
-             <fileset dir="${bfReleaseSrc}/dojox" includes="layout/resources/ResizeHandle.css"/>
-             <fileset dir="${bfReleaseSrc}/dojox" includes="widget/Toaster/Toaster.css"/>
+             <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.png"/>
+            <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.jpg"/>
+            <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.jpeg"/>
+            <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.gif"/>
+            <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.css"/>
+         <!--   <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.html"/> -->
         </copy>
 
 
@@ -578,6 +595,7 @@
         <echo>Check if dojo is up to date</echo>
         <uptodate property="build-js-required" targetfile="${webapp.dir}/resources/scripts/release/dojo/betterform/betterform-full.js">
             <srcfiles dir="${src.dir}/main/resources/scripts" includes="**/*.*" />
+            <srcfiles dir="${basedir}" includes="build.xml" />
             <srcfiles dir="${src.dir}/main/lib" includes="${properties.dojo}.tar.gz" />
         </uptodate>
     </target>
