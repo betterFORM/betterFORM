@@ -650,8 +650,7 @@ table .xfContainer{
 
 .xfReadWrite .dijitCheckBox,
 .xfReadWrite .dijitCheckBoxIcon {
-    /*background-image: url(../images/checkmarkNoBorder.png);*/
-	background: no-repeat -16px 50%;
+	background: url(../images/checkmarkNoBorder.png) no-repeat -16px 50%;
 	height: 14px;
     width: 14px;
 	margin: 0;
@@ -659,16 +658,14 @@ table .xfContainer{
 }
 
 .xfReadWrite .dijitCheckBoxChecked {
-    /*background-image: url(../images/checkmarkNoBorder.png);*/
-	background: no-repeat 0 50%;
+	background: url(../images/checkmarkNoBorder.png) no-repeat 0 50%;
 	height: 14px;
 	width: 14px;
 }
 
 .xfReadOnly .dijitCheckBox,
 .xfReadOnly .dijitCheckBoxIcon {
-    /*background-image: url(../images/checkmarkNoBorder.png);*/
-	background: no-repeat -48px 50%;
+    background: url(../images/checkmarkNoBorder.png) no-repeat -48px 50%;
 	height: 14px;
 	width: 14px;
 }

@@ -160,9 +160,9 @@
                 <fileset dir="${src.dir}/main/xforms"/>
             </copy>
 
-            <copy todir="${src.target.dir}/db/" overwrite="true" filtering="false" description="copy forms from ${src.dir} to db-installition-dir ${src.target.dir}/db/">
+            <move todir="${src.target.dir}/db/" overwrite="true" filtering="false" description="copy forms from ${src.dir} to db-installition-dir ${src.target.dir}/db/">
                 <fileset dir="${src.target.dir}/db/forms" includes="FeatureExplorer.xhtml Demo.xhtml Status.xhtml"/>
-            </copy>
+            </move>
 
             <!--
             <copy todir="${src.target.dir}/db/forms/reference" overwrite="true" filtering="false" file="${basedir}/target-utils/dojo-release/forms/reference/highlight.css" failonerror="true"/>
@@ -184,7 +184,11 @@
                     <include name="betterform_icon16x16.png"/>
                     <include name="betterform.ico"/>
                     <include name="en.png"/>
-                    <include name="de.png"/>
+                    <include name="logo.png"/>
+                    <include name="shad_top.png"/>
+                    <include name="shad_bottom.png"/>
+                    <include name="bg_footer.jpg"/>
+                    <include name="b_tryit_ohne_klein.png"/>
                 </fileset>
             </copy>
 

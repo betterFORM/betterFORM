@@ -1,6 +1,6 @@
 let $filename := request:get-uploaded-file-name('file')
 let $path := request:get-parameter('path', '')
-let $collection := concat('/db/betterform',$path)
+let $collection := concat('/db/',$path)
 
 (: make sure you use the right user permissions that has write access to this collection :)
 let $login := xmldb:login($collection, 'betterFORM', 'Tha0xeiC8a', true())
