@@ -154,7 +154,7 @@ declare function local:handleDirectory($uri as xs:string, $contextPath as xs:str
 declare function local:handleDirectory($uri as xs:string, $contextPath as xs:string, $path as xs:string, $ajaxFunction as xs:string, $childCollection as xs:string) {
 	let $wrapperStart := "viewParent(this, '"
 	let $wrapperEnd := "');"
-	let $ignores := 'reference utils demo incubator css'
+	let $ignores := 'utils incubator images resources css'
 	return
 if (fn:not(fn:contains($ignores, $childCollection)))
 		then (		
