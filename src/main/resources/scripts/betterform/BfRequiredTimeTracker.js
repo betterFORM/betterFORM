@@ -1,6 +1,6 @@
 dojo.provide("betterform.BfRequiredTimeTracker");
 
-dojo.require("betterform.BfRequiredCompact");
+dojo.require("betterform.BfRequiredFull");
 
 dojo.require("dijit.Declaration");
 dojo.require("dijit.Toolbar");
