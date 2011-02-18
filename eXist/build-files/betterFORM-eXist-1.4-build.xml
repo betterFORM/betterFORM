@@ -15,7 +15,9 @@
 
 
     <property name="exist.rootdir" value="${basedir}/../.."/>
-    <property name="exist.web.xml" value="${exist.rootdir}/webapp/WEB-INF/web.xml"/>
+    <property name="web.inf" value="${exist.rootdir}/webapp/WEB-INF"/>
+    <property name="exist.web.xml" value="${web.inf}/web.xml"/>
+    <property name="betterform.config.out" value="${web.inf}/betterform-config.xml"/>
 
     <property name="bf.shortname" value="betterform"/>
     <!--todo:move property to build.properties.xml-->
@@ -146,6 +148,15 @@
         </xslt>
         <delete file="${exist.web.xml}"/>
         <move file="${exist.web.xml}.bf" tofile="${exist.web.xml}"/>
+
+        <xslt in="${betterform.webapp}/WEB-INF/betterform-config.xml" out="${betterform.config.out}" force="true"
+              style="${betterform.etc}/MergeBetterformConfig.xsl">
+            <classpath refid="generator.libs"/>
+            <!--<factory name="net.sf.saxon.TransformerFactoryImpl"/>-->
+            <param name="webxml.path" expression="${exist.web.xml}"/>
+            <param name="context" expression="betterform"/>
+            <param name="exist.version" expression="1.4"/>
+        </xslt>
     </target>
 
     <target name="install-overwrites">
