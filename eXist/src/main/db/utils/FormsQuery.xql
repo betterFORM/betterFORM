@@ -201,7 +201,7 @@ declare function local:getIconForExtension($fileName as xs:string) as xs:string 
 declare function local:handleFile($uri as xs:string, $contextPath as xs:string, $path as xs:string, $ajaxFunction as xs:string, $fileName as xs:string, $shorten as xs:string) {
 	let $icon := local:getIconForExtension($fileName)
 	let $referenceLink := if ($fileName eq 'FeatureExplorer.xhtml') then ( if (contains($path, 'forms')) then ( fn:concat('reference/', $fileName) ) else (fn:concat('forms/reference/', $fileName)) ) else ($fileName)
-	let $fileLink := if ($referenceLink eq 'Demo.xhtml') then ( if (contains($path, 'forms')) then (fn:concat('demo/', $referenceLink)) else (fn:concat('forms/demo/', $referenceLink)) ) else ($referenceLink)
+	let $fileLink := if ($referenceLink eq 'Demo.xhtml' and not(contains($path, 'forms/demo'))) then ( fn:concat('forms/demo/', $referenceLink)) else ($referenceLink)
 	let $fileName := if (fn:contains($fileName, '.xhtml')) then( functx:substring-before-last($fileName, '.xhtml') ) else ( $fileName )
 	let $shortendFileName := if (fn:string-length($fileName) gt 15 and $shorten eq 'true') then (fn:concat(fn:substring($fileName,0,10), '...', fn:substring($fileName, fn:string-length($fileName) -5))) else ($fileName)  
 	let $filePath := functx:substring-before-last($uri, 'db')
