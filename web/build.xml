@@ -540,6 +540,7 @@
         </java>
         <!-- cleanup JS/CSS resources of betterform dojo release -->
         <antcall target="cleanup-js-release"/>
+        <copy file="${src.dir}/main/lib/dwr.js.optimized" tofile="${webapp.dir}/resources/scripts/release/dwr.js"/>
         <zip description="create optimized JavaSCript zip"
              zipfile="target/${web.app.name}-${web.app.version}-js-optimized.zip"
              basedir="${webapp.dir}/resources/scripts/release"/>

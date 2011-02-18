@@ -72,7 +72,7 @@
 
     </target>
 
-    <target name="update-maven-poms" description="update core, web and betty pom.xml" depends="check-ant-version" if="antversion">>
+    <target name="update-maven-poms" description="update core, web and betty pom.xml" depends="check-ant-version" if="antversion">
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-core-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-web-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-betty-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
