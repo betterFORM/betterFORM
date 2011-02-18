@@ -830,3 +830,7 @@ td > div.bfPending > span {
 ##################################################################*/
 
 
+/* SORIA THEME BUGFIX */
+.dijitTextBoxFocused {
+    outline:none;
+}

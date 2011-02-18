@@ -17,6 +17,7 @@
 	<meta http-equiv="expires" content="Wed, 9 Feb 2011 12:21:57 GMT"></meta>
 	<meta name="revisit-after" content="3 days"></meta>
 	<meta name="google-site-verification" content="L5gmOYcZv-vwF2q0e-qSIXx8ecpKUN8A7lrW4ia9YR0" />
+	<meta name="name" content="demo"/>
 
 
     <link rev="made" href="mailto:info@betterform.de"/>
@@ -28,67 +29,16 @@
     <link rel="stylesheet" type="text/css" href="registration.css"/>
 
     <style type="text/css">
-		.xfContainer{
-			text-align:center;
-		}
-		.contentBody{
-			width:100%;
-		}
-        #demoTarget {
-            height: 400px;
-            overflow: auto; /*padding:10px;*/
-            border: thin solid #bbbbbb; /*text-align:left;*/
-            background: white;
-            min-height: 400px;
-            max-height: 400px;
-            padding: 10px;
+        * {
+            font-size:9pt;
+        }
+        #demo #backToDemo-value {
+            background: url("../../images/b_tryit_ohne_klein.png") no-repeat scroll 0 0 transparent;
         }
 
-
-        .backgroundImage {
-            width: 100%;
-            height: 100%;
-            background: transparent url(../../resources/images/play.png) no-repeat 50%;
-        }
-        #demoWrapper {
-            position: relative;
-            width: 100%;
-            height: 421px;
-            min-height: 421px;
-            max-height: 421px;
-            float: left;
-            border: 1px dotted #666;
-            /*margin-bottom: 20px;*/
-            /*background: url(../resources/images/ajax-loader.gif) no-repeat center center;*/
-        }
-
-        #demoTrigger {
-            display: none;
-        }
-
-        #content {
-            min-height: 500px;
-			background:white;
-        }
-        #backTrigger {
-            position: absolute;
-            float: right;
-        }
-		.tundra .dijitButtonNode {
-			border:none;
-		}
-		#demoHeader{
-			background:#d3d3d3;
-		}
-		#demoHeader h2{
-			margin-top:-16px;
-			padding-bottom:10px;
-
-		}
 		#noScript{
 			display:none;
 		}
-
     </style>
 
     <script type="text/javascript">
@@ -97,18 +47,6 @@
             dojo.query("code").forEach(dojox.highlight.init);
         });
 
-        dojo.require("dijit.form.Button");
-        dojo.require("dijit.TitlePane");
-        dojo.require('dijit.layout.ContentPane');
-        dojo.require("betterform.ui.select.OptGroup");
-        dojo.require("betterform.ui.select1.RadioItemset");
-        dojo.require("betterform.ui.select.CheckBoxItemset");
-        dojo.require("betterform.ui.util");
-        dojo.require("betterform.ui.container.Switch");
-        dojo.require("betterform.ui.container.Repeat");
-        dojo.require("betterform.ui.container.RepeatItem");
-        dojo.require("betterform.ui.container.TabSwitch");
-        dojo.require("betterform.ui.container.Group");
 
         function addToDocument(id) {
             var model = dojo.query(".xfModel", dojo.doc)[0];
@@ -155,7 +93,6 @@
 		dojo.subscribe("/xf/ready", function(){
 			fluxProcessor.skipshutdown=true;
 		});
-		
     </script>
 
 
@@ -223,30 +160,26 @@
 
     <div id="header">
         <div class="pageMarginBox">
-            <div class="languages">
-                <img src="../../images/en.png" class="langSelector" alt="english"/>
-                <img src="../../images/de.png" class="langSelector" alt="deutsch"/>
-            </div>
             <div id="logoBar">
                  <a href="index.html" class="link" id="linkLogo"><img id="logo" src="../../images/logo.png" alt="betterFORM project"/></a>
+				<div id="mission">the XForms way to build the web</div>
                 <div id="topnav">
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="content">
+    <div id="content-area">
+		<img id="shadowTop" src="../../images/shad_top.jpg" alt=""/>
 		<noscript>
 			<div style="border: thin solid ; width: 100%; color: darkred;position:absolute;top:120px;z-index:999;padding:10px;background:orange">Sorry - this site was optimized for use with JavaScript. You won't be able to run the demos until you activate JavaScript</div>
 		</noscript>
 
-		<div id="demoHeader">
-			<img id="shadowTop" src="../../images/shad_top.jpg" alt=""/>
-			<div class="pageMarginBox">
-				<h2>Click the desired screenshot to run the demo.</h2>
+		<div id="box" class="box">
+			<div id="sub-header" class="sub-header">
+				<h1>Click the desired screenshot to run the demo.</h1>
 			</div>
-		</div>
-
+			<div id="main-content" class="main-content">
         <div class="pageMarginBox">
             <div class="contentBody">
 
@@ -293,15 +226,17 @@
             </div>
         </div>
     </div>
+		</div>
+    </div>
 
-    <div id="footer">
         <img id="shadowBottom" src="../../images/shad_bottom.jpg" alt=""/>
 
+    <div id="footer">
         <div class="pageMarginBox">
-                    <span id="bottomMenu">
-                        &#169; 2011 betterFORM<span class="menuDevider"> | </span>
-                        <a href="contact.html">contact / impressum</a>
-                    </span>
+            <span id="bottomMenu">
+                &#169; 2011 betterFORM<span class="menuDevider"> | </span>
+                <a href="../../site/en/contact.html">contact / impressum</a>
+            </span>
         </div>
     </div>
 </div>

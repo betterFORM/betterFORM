@@ -36,27 +36,10 @@
 
     <script type="text/javascript">
 		var xfReadySubscribers;
-        dojo.require("dojox.highlight");
-        dojo.require("dojox.highlight.languages.xml");
-        //dojo.require("dojox.highlight.languages._static");
-        //dojo.require("dojox.highlight.languages._dynamic");
-        //dojo.require("dojox.highlight.languages._www");
         dojo.addOnLoad(function() {
             dojo.query("code").forEach(dojox.highlight.init);
         });
 
-        dojo.require("dijit.form.Button");
-        dojo.require("dijit.TitlePane");
-        dojo.require('dijit.layout.ContentPane');
-        dojo.require("betterform.ui.select.OptGroup");
-        dojo.require("betterform.ui.select1.RadioItemset");
-        dojo.require("betterform.ui.select.CheckBoxItemset");
-        dojo.require("betterform.ui.util");
-        dojo.require("betterform.ui.container.Switch");
-        dojo.require("betterform.ui.container.Repeat");
-        dojo.require("betterform.ui.container.RepeatItem");
-        dojo.require("betterform.ui.container.TabSwitch");
-        dojo.require("betterform.ui.container.Group");
 
         function addToDocument(id) {
             var model = dojo.query(".xfModel", dojo.doc)[0];
