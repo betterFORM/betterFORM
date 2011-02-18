@@ -31,18 +31,13 @@
             <xsl:apply-templates/>
             <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8"/>
             <link rel="stylesheet" type="text/css"
-                  href="../../resources/scripts/dojox/highlight/resources/highlight.css"/>
+                  href="../../resources/scripts/release/dojo/dojox/highlight/resources/highlight.css"/>
             <!--
                         <link rel="stylesheet" type="text/css"
                               href="../../resources/scripts/dojox/highlight/resources/pygments/borland.css"/>
             -->
             <link rel="stylesheet" type="text/css" href="reference.css"/>
             <script type="text/javascript">
-                dojo.require("dojox.highlight");
-                dojo.require("dojox.highlight.languages.xml");
-                //                dojo.require("dojox.highlight.languages.pygments.xml");
-                dojo.require("dijit.form.Button");
-                dojo.require('dijit.layout.ContentPane');
                 dojo.subscribe("/xf/ready", function(){
                     fluxProcessor.skipshutdown=true;
                 });

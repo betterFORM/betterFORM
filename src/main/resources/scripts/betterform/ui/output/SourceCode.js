@@ -21,8 +21,8 @@ dojo.declare(
     postCreate:function() {
         this.containerNode.innerHTML = this.value;
 //        this.inherited(arguments);
-        this.load_css("/betterform/resources/scripts/dojox/highlight/resources/highlight.css");
-        this.load_css("/betterform/resources/scripts/dojox/highlight/resources/pygments/pastie.css");
+        this.load_css("/betterform/resources/scripts/release/dojo/dojox/highlight/resources/highlight.css");
+        this.load_css("/betterform/resources/scripts/release/dojo/dojox/highlight/resources/pygments/pastie.css");
         this.highlight();
     },
 

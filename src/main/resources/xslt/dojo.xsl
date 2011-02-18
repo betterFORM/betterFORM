@@ -173,7 +173,6 @@
 
                 dojo.addOnLoad(function(){
                     dojo.addOnLoad(function(){
-                        dojo.require("dojo.parser");
                         dojo.parser.parse();
                         Flux._path = dojo.attr(dojo.byId("fluxProcessor"), "contextroot") + "/Flux";
                         Flux.init( dojo.attr(dojo.byId("fluxProcessor"),"sessionkey"), dojo.hitch(fluxProcessor,fluxProcessor.applyChanges));
