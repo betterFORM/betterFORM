@@ -31,7 +31,7 @@
 
         <condition property="eXist">
             <isfalse value="${installer.exist.betterform}"/>
-        </condition>                     /usr/portage/metadata/timestamp.chk
+        </condition>
 
         <condition property="eXist-1.5">
                 <equals arg1="${installer.exist.version}" arg2="1.5"/>
@@ -60,6 +60,7 @@
                 <echo message="------------------------------------------------------------------------------------"/>
                 <echo message="--- Build up to date betterFORM-eXist-Extension                                  ---"/>
                 <echo message="------------------------------------------------------------------------------------"/>
+                <ant antfile="${web.dir}/build.xml" target="clean" dir="${web.dir}" inheritall="false"/>
                 <antcall target="copy-extension"/>
                 <antcall target="update-betterFORM-libs"/>
                 <antcall target="update-betterFORM-forms-resources"/>
@@ -159,11 +160,17 @@
                 <fileset dir="${src.dir}/main/xforms"/>
             </copy>
 
-            <copy todir="${src.target.dir}/db/" overwrite="true" filtering="false" description="copy forms from ${src.dir} to db-installition-dir ${src.target.dir}/db/">
+            <move todir="${src.target.dir}/db/" overwrite="true" filtering="false" description="copy forms from ${src.dir} to db-installition-dir ${src.target.dir}/db/">
                 <fileset dir="${src.target.dir}/db/forms" includes="FeatureExplorer.xhtml Demo.xhtml Status.xhtml"/>
-            </copy>
+            </move>
 
+            <!--
             <copy todir="${src.target.dir}/db/forms/reference" overwrite="true" filtering="false" file="${basedir}/target-utils/dojo-release/forms/reference/highlight.css" failonerror="true"/>
+            -->
+            <mkdir dir="${src.target.dir}/db/resources/scripts/release"/>
+            <copy todir="${src.target.dir}/db/resources/scripts/release" overwrite="true" filtering="false">
+                <fileset dir="${basedir}/target-utils/dojo-release/resources/scripts/release" excludes="**/*.js"/>
+            </copy>
 
 
             <!-- <delete dir="${src.target.dir}/db/forms" excludes="demo reference"/> -->
@@ -177,7 +184,19 @@
                     <include name="betterform_icon16x16.png"/>
                     <include name="betterform.ico"/>
                     <include name="en.png"/>
-                    <include name="de.png"/>
+                    <include name="logo.png"/>
+                    <include name="shad_top.png"/>
+                    <include name="shad_bottom.png"/>
+                    <include name="bg_footer.jpg"/>
+                    <include name="b_tryit_ohne_klein.png"/>
+                </fileset>
+            </copy>
+
+            <mkdir dir="${src.target.dir}/db/resources"/>
+            <copy todir="${src.target.dir}/db/resources" overwrite="true" filtering="false" description="copy neede images from ${src.dir} to db-installition-dir ${src.target.dir}/db/">
+                <fileset dir="${src.target.dir}/etc/overwrites/webapp/resources">
+                    <include name="images/**"/>
+                    <include name="styles/**"/>
                 </fileset>
             </copy>
         </target>
@@ -193,6 +212,8 @@
                       <exclude name="**/scripts/**"/>
                   </fileset>
             </copy>
+
+            <copy description="copy betterFORM-config to target" tofile="${webapp.dir}/WEB-INF/betterform-config.xml" file="${web.dir}/src/main/webapp/WEB-INF/betterform-config.xml" overwrite="true"/>
             
              <copy description="copy images seperately to avoid filtering"
                       todir="${src.target.dir}/etc/overwrites/webapp"

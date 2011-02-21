@@ -176,7 +176,8 @@
 }
 
 #registration .dijitFocused {
-    background-color: #F2F2F2 !important;
+    /* background-color: #F2F2F2 !important;
+    border:none;            */
 }
 
 #registration td, td span {

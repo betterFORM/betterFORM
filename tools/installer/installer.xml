@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-
 <!--
-  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
 <installation version="1.0">
-    <!--
-        The info section.
-        The meaning of the tags should be natural ...
-    -->
-
-
     <info>
         <appname>betterFORM</appname>
         <appversion>limeGreen</appversion>
@@ -71,7 +64,6 @@
                 <condition type="ref" refid="bf"/>
                 <condition type="ref" refid="jetty"/>
         </condition>
-
     </conditions>
 
     <variables>
@@ -84,15 +76,11 @@
     <dynamicvariables>
       <variable name="DATA_DIR" condition="izpack.windowsinstall" value="$USER_HOME/eXist/data"/>
       <variable name="DATA_DIR" condition="izpack.macinstall" value="/Users/Shared/eXist/data"/>
-      <variable name="DATA_DIR" condition="!izpack.macinstall+!izpack.windowsinstall"
-		value="$INSTALL_PATH/webapp/WEB-INF/data"/>
+      <variable name="DATA_DIR" condition="!izpack.macinstall+!izpack.windowsinstall" value="$INSTALL_PATH/webapp/WEB-INF/data"/>
     </dynamicvariables>
-    <!--
-        The gui preferences indication.
-        Sets the installer window to 640x480. It will not be able to change the size.
-    -->
+
     <guiprefs width="640" height="600" resizable="no">
-        <splash>../resource/bf_logo_145x59.png</splash>
+        <!-- <splash>../resource/bf_logo_145x59.png</splash> -->
         <modifier key="useButtonIcons" value="no"/>
   		<modifier key="useLabelIcons" value="no"/>
   		<modifier key="layoutAnchor" value="NORTHWEST"/>
@@ -120,28 +108,11 @@
     <native type="3rdparty" name="COIOSHelper_x64.dll" stage="both">
         <os family="windows"/>
     </native>
-    <!--
-    <native type="3rdparty" name="COIOSHelper_x64.dll">
-        <os family="windows"/>
-    </native>
-    <native type="3rdparty" name="COIOSHelper.dll">
-        <os family="windows"/>
-    </native>
-    -->
-    <!--
-        The locale section.
-        Asks here to include the English and French langpacks.
-    -->
+
     <locale>
-        <langpack iso3="deu"/>
+        <!-- <langpack iso3="deu"/> -->
         <langpack iso3="eng"/>
     </locale>
-
-
-    <!--
-        The resources section.
-        The ids must be these ones if you want to use the LicencePanel and/or the InfoPanel.
-    -->
 
     <resources>
     	<res id="Heading.image" src="../resource/bf_logo_145x59.png"/>
@@ -159,15 +130,9 @@
         <res src="../resource/pack-border.png" id="Installer.image.5"/>
         <res id="userInputSpec.xml" src="../resource/userInput.xml"/>
         <res id="ProcessPanel.Spec.xml" src="../resource/jobs.xml"/>
-        <res id="CustomLangpack.xml_deu" src="../resource/custom.deu.xml"/>
+        <!-- <res id="CustomLangpack.xml_deu" src="../resource/custom.deu.xml"/> -->
         <res id="CustomLangpack.xml_eng" src="../resource/custom.eng.xml"/>
     </resources>
-
-
-    <!--
-        The panels section.
-        We indicate here which panels we want to use. The order will be respected.
-    -->
 
     <panels labelFontSize="2.0">
         <panel classname="HTMLHelloPanel" id="welcome"/>
@@ -183,40 +148,7 @@
         <panel classname="FinishPanel"/>
     </panels>
 
-    <!--
-        The packs section.
-        We specify here our packs.
-    -->
-
     <packs>
-
-        <pack name="betterFORM WAR" id="betterForm" required="no" preselected="no" condition="bf-install">
-            <description>betterFORM 3.0 XForms Engine packaged as WAR</description>
-            <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/betterform"/>
-        </pack>
-
-<!--
-FOR LATER: installinig the war should switch the above pack off. Did not yet found a way to do that quickly
-        <pack name="betterForm 3.0 war" required="no" preselected="no">
-            <description>betterForm 3.0 as war-file</description>
-            <file src="betterform.war" targetdir="$INSTALL_PATH" condition="!jetty+!bf" />
-        </pack>
--->
-
-        <pack id="jetty" name="betterFORM standalone" required="no" preselected="no" condition="jetty-install">
-            <description>betterFORM standalone running on jetty webcontainer</description>
-            <fileset dir="jetty/betterform" targetdir="$INSTALL_PATH" includes="*/**"/>
-
-            <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/web/root"/>
-        </pack>
-
-        <!--
-        <pack name="eXist" required="no" preselected="no">
-            <description>eXist 1.4 XML Database</description>
-            <depends packname="Jetty"/>
-            <file src="exist.war" unpack="true" targetdir="$INSTALL_PATH/web/exist"/>
-        </pack>
-        -->
         <pack name="betterFORM XRX" id="betterFORM-eXist-bundle" required="no" preselected="yes" condition="exist-install">
             <description>betterFORM and eXist bundled</description>
 
@@ -247,6 +179,18 @@ FOR LATER: installinig the war should switch the above pack off. Did not yet fou
 
             <singlefile src="bf-eXist/tools/wrapper/conf/wrapper.conf.install" target="$INSTALL_PATH/tools/wrapper/conf/wrapper.conf" override="true"/>
             <parsable targetfile="$INSTALL_PATH/tools/wrapper/conf/wrapper.conf"/>
+        </pack>
+
+        <pack id="jetty" name="betterFORM standalone" required="no" preselected="no" condition="jetty-install">
+            <description>betterFORM standalone running on jetty webcontainer</description>
+            <fileset dir="jetty/betterform" targetdir="$INSTALL_PATH" includes="*/**"/>
+
+            <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/web/root"/>
+        </pack>
+
+        <pack name="betterFORM WAR" id="betterForm" required="no" preselected="no" condition="bf-install">
+            <description>betterFORM 3.0 XForms Engine packaged as WAR</description>
+            <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/betterform"/>
         </pack>
 
         <pack name="DeveloperPack" required="no" preselected="no" condition="container">
@@ -299,7 +243,7 @@ FOR LATER: installinig the war should switch the above pack off. Did not yet fou
                   condition="jetty"/>
         </pack>
 
-        <pack name="Testsuite1.1" id ="testsuite" required="no" preselected="no" condition="container">
+        <pack name="Testsuite1.1" id ="testsuite" required="no" preselected="no" condition="container-1">
             <description>official XForms 1.1 Conformance Test Suite</description>
 
             <fileset dir="../../../src/test/resources/XFormsTestSuite1.1E1" targetdir="$INSTALL_PATH/betterform/forms/XFormsTestSuite1.1E1"
@@ -307,12 +251,8 @@ FOR LATER: installinig the war should switch the above pack off. Did not yet fou
 
             <fileset dir="../../../src/test/resources/XFormsTestSuite1.1E1" targetdir="$INSTALL_PATH/web/root/forms/XFormsTestSuite1.1E1"
                   condition="jetty"/>
-
-            <fileset dir="../../../src/test/resources/XFormsTestSuite1.1E1" targetdir="$INSTALL_PATH/webapp/forms/XFormsTestSuite1.1E1"
-                  condition="exist"/>
         </pack>
     </packs>
 
-    <!-- <jar src="tools/izpack/clinstaller.jar" stage="install"/> -->
 </installation>
 

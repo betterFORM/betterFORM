@@ -137,8 +137,7 @@
         <xsl:param name="group-id"/>
         <xsl:param name="group-classes"/>
         <xsl:param name="group-label" select="true()"/>
-        <script type="text/javascript">dojo.require("betterform.ui.container.Group");</script><xsl:text>
-</xsl:text>
+
 
         <span id="{$group-id}" class="{$group-classes}" dojoType="betterform.ui.container.Group">
 
@@ -207,8 +206,7 @@
         <xsl:variable name="mip-classes">
             <xsl:call-template name="get-mip-classes"/>
         </xsl:variable>
-        <script type="text/javascript">dojo.require("betterform.ui.container.Group");</script><xsl:text>
-</xsl:text>
+
 
         <xsl:variable name="bfGroupLabelLeft"> </xsl:variable>
         <table cellspacing="0" cellpadding="0" class="xfContainer bfVerticalTable {$mip-classes}" id="{$group-id}"
@@ -331,8 +329,7 @@
         <xsl:variable name="mip-classes">
             <xsl:call-template name="get-mip-classes"/>
         </xsl:variable>
-        <script type="text/javascript">dojo.require("betterform.ui.container.Group");</script><xsl:text>
-</xsl:text>
+
 
         <table class="xfContainer bfHorizontalTable {$mip-classes}" dojoType="betterform.ui.container.Group">
             <tr>
@@ -391,11 +388,7 @@
                 <xsl:call-template name="processItemsetPrototype"/>
             </xsl:for-each>
         </xsl:if>
-        <script type="text/javascript">
-            dojo.require("betterform.ui.container.Repeat");
-            dojo.require("betterform.ui.container.RepeatItem");
-        </script><xsl:text>
-</xsl:text>
+
 
         <table repeatId="{$repeat-id}"
                jsId="{$repeat-id}"
@@ -967,11 +960,7 @@
                 <xsl:call-template name="processItemsetPrototype"/>
             </xsl:for-each>
         </xsl:if>
-        <script type="text/javascript">
-            dojo.require("betterform.ui.container.Repeat");
-            dojo.require("betterform.ui.container.RepeatItem");
-        </script><xsl:text>
-</xsl:text>
+
 
         <div repeatId="{$repeat-id}" class="{$repeat-classes}" dojoType="betterform.ui.container.Repeat">
             <!-- loop repeat entries -->
@@ -1270,8 +1259,7 @@
                 <xsl:with-param name="appearance" select="@appearance"/>
             </xsl:call-template>
         </xsl:variable>
-        <script type="text/javascript">dojo.require("betterform.ui.container.Switch");</script><xsl:text>
-</xsl:text>
+
 
         <div id="{$switch-id}" class="{$switch-classes}" dojoType="betterform.ui.container.Switch">
             <xsl:call-template name="copy-style-attribute"/>
@@ -1308,8 +1296,7 @@
                 <xsl:with-param name="appearance" select="@appearance"/>
             </xsl:call-template>
         </xsl:variable>
-        <script type="text/javascript">dojo.require("dijit.layout.AccordionContainer");</script><xsl:text>
-</xsl:text>
+
 
         <div id="{$switch-id}" class="{$switch-classes} xfSwitch" dojoType="dijit.layout.AccordionContainer"
              duration="200"
@@ -1339,8 +1326,7 @@
                 <xsl:call-template name="trigger"/>
             </xsl:for-each>
         </div>
-        <script type="text/javascript">dojo.require("betterform.ui.container.AccordionSwitch");</script><xsl:text>
-</xsl:text>
+
         <div id="{$switch-id}" class="{$switch-classes} xfAccordion" dojoType="betterform.ui.container.AccordionSwitch"
              duration="200">
             <!--
@@ -1354,8 +1340,7 @@
                         <xsl:otherwise>false</xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
-                <script>dojo.require("betterform.ui.container.AccordionSwitchPane");</script><xsl:text>
-</xsl:text>
+
                 <xsl:variable name="label">
                     <xsl:call-template name="create-label">
                         <xsl:with-param name="label-elements" select="xforms:label"/>
@@ -1378,8 +1363,7 @@
             </xsl:call-template>
         </xsl:variable>
 -->
-        <script type="text/javascript">dojo.require("betterform.ui.container.TabSwitch");</script><xsl:text>
-</xsl:text>
+
         <div style="display:none">
             <xsl:for-each select="xforms:case[@name='switch-toggles']/xforms:trigger">
                 <xsl:call-template name="trigger"/>
@@ -1394,8 +1378,7 @@
                         <xsl:otherwise>false</xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
-                <script type="text/javascript">dojo.require("dijit.layout.ContentPane");</script><xsl:text>
-</xsl:text>
+
                 <!--<div dojoType="dijit.layout.ContentPane" style="width:100%;height:100%;" class="xfCase" caseId="{@id}" selected="{$selected}" title="{xforms:label}" onscroll="betterform.ui.util.closeSelect1(this);">-->
                 <xsl:variable name="label">
                     <xsl:call-template name="create-label">
@@ -1417,8 +1400,6 @@
                 <xsl:with-param name="appearance" select="@appearance"/>
             </xsl:call-template>
         </xsl:variable>
-        <script type="text/javascript">dojo.require("betterform.ui.container.TitlePaneGroup");</script><xsl:text>
-</xsl:text>
 
         <div id="{$switch-id}" class="{$switch-classes}"
              style="width: 600px; height: 300px;">

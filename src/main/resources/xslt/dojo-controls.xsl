@@ -49,7 +49,6 @@
         <xsl:variable name="datatype"><xsl:call-template name="getType"/></xsl:variable>
 
         <xsl:if test="exists(.//xforms:itemset)"><xsl:text>
-</xsl:text>            <script type="text/javascript">dojo.require("betterform.ui.select.OptGroup");</script><xsl:text>
 </xsl:text>
         </xsl:if>
         
@@ -159,11 +158,6 @@
         <xsl:variable name="incremental" select="if (exists(@incremental)) then @incremental else 'true'"/>
         <xsl:variable name="schemaValue" select="bf:data/@bf:schema-value"/>
         <xsl:variable name="datatype"><xsl:call-template name="getType"/></xsl:variable>
-
-        <xsl:if test="exists(.//xforms:itemset)">
-            <script type="text/javascript">dojo.require("betterform.ui.select.OptGroup");</script><xsl:text>
-</xsl:text>
-        </xsl:if>
         <xsl:choose>
             <!-- only 'full' is supported as explicit case and renders a group of checkboxes. All other values
             of appearance will be matched and represented as a list control. -->
@@ -468,8 +462,7 @@
 
     <xsl:template name="build-checkboxes-itemset">
     	<xsl:param name="name"/>
-        <xsl:param name="parent"/><script type="text/javascript">dojo.require("betterform.ui.select.CheckBoxItemset");</script><xsl:text>
-</xsl:text>
+        <xsl:param name="parent"/>
 		<span id="{@id}" dojoType="betterform.ui.select.CheckBoxItemset" >
 			<xsl:for-each select="xforms:item">
 				<xsl:call-template name="build-checkboxes-item">
@@ -483,8 +476,7 @@
 	<xsl:template name="build-checkboxes-item">
     	<xsl:param name="name"/>
         <xsl:param name="parent"/>
-        <xsl:param name="navindex"/><script type="text/javascript">dojo.require("betterform.ui.select.CheckBox");</script><xsl:text>
-</xsl:text>
+        <xsl:param name="navindex"/>
         <span id="{@id}" class="xfSelectorItem">
             <input id="{@id}-value"
                    class="xfCheckBoxValue"
@@ -628,8 +620,7 @@
 
     <xsl:template name="build-radiobuttons-itemset">
     	<xsl:param name="name"/>
-    	<xsl:param name="parent"/><script type="text/javascript">dojo.require("betterform.ui.select1.RadioItemset");</script><xsl:text>
-</xsl:text>
+    	<xsl:param name="parent"/>
 
 		<span id="{@id}" dojoType="betterform.ui.select1.RadioItemset" class="xfRadioItemset">
 			<xsl:for-each select="xforms:item">

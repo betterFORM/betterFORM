@@ -36,7 +36,7 @@
     <link REV="made" HREF="mailto:info@betterform.de"/>
     <link rel="SHORTCUT ICON" href="../../images/betterform.ico"/>
     <link rel="ICON" href="../../images/betterform.ico" type="image/x-icon"/>
-    <link rel="stylesheet" type="text/css" href="./highlight.css"/>
+    <link rel="stylesheet" type="text/css" href="../../resources/scripts/release/dojo/dojox/highlight/resources/highlight.css"/>
 
     <link rel="stylesheet" type="text/css" href="reference.css"/>
 
@@ -605,7 +605,8 @@
 					<div dojotype="dijit.Menu">
 						<div dojoType="dijit.MenuItem"
 							 onClick="hideStatic();fluxProcessor.dispatchEvent('alertDefaultTrigger');" label="inline alert (default)"/>
-						<div dojoType="dijit.MenuItem" iconClass="externalLink"
+						<div dojoType="dijit.MenuItem" label="Popups must be allowed for external links"/>
+                        <div dojoType="dijit.MenuItem" iconClass="externalLink"
 							 onClick="hideStatic();fluxProcessor.dispatchEvent('alertTooltipTrigger');" label="Tooltip alert"/>
 					</div>
 				</div>
@@ -613,7 +614,8 @@
 		</div>
 		<div dojoType="dijit.PopupMenuBarItem" label="Extensions">
 			<div dojoType="dijit.Menu" id="extensions">
-				<div dojoType="dijit.MenuItem" iconClass="externalLink"
+                <div dojoType="dijit.MenuItem" label="Popups must be allowed for external links"/>
+                <div dojoType="dijit.MenuItem" iconClass="externalLink"
 					 onClick="hideStatic();fluxProcessor.dispatchEvent('AVTThemeSwitcherTrigger');" label="AVT Theme Switcher"/>
 				<div dojoType="dijit.MenuItem" iconClass="externalLink"
 					 onClick="hideStatic();fluxProcessor.dispatchEvent('DialogTrigger');" label="Dialog"/>

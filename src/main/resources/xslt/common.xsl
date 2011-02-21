@@ -130,16 +130,20 @@
     <!-- #### Note - the whitespace in this template shouldn't be touched to produce line breaks in the output -->
     <xsl:template name="addDWRImports">
         <!-- for DWR AJAX -->
+        <script type="text/javascript" src="{concat($contextroot,'/resources/scripts/release/dwr.js')}">&#160;</script><xsl:text>
+</xsl:text>
+<!--
         <script type="text/javascript" src="{concat($contextroot,'/Flux/engine.js')}">&#160;</script><xsl:text>
 </xsl:text>
-        <!-- for DWR AJAX -->
+        &lt;!&ndash; for DWR AJAX &ndash;&gt;
         <script type="text/javascript" src="{concat($contextroot,'/Flux/interface/Flux.js')}">&#160;</script><xsl:text>
 </xsl:text>
         <script type="text/javascript" src="{concat($contextroot,'/Flux/interface/XFormsModelElement.js')}">&#160;</script><xsl:text>
 </xsl:text>
-        <!-- for DWR AJAX -->
+        &lt;!&ndash; for DWR AJAX &ndash;&gt;
         <script type="text/javascript" src="{concat($contextroot,'/Flux/util.js')}">&#160;</script><xsl:text>
 </xsl:text>
+-->
     </xsl:template>
 
     <xsl:template name="copyInlineScript">

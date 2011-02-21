@@ -6,9 +6,9 @@
     <head>
         <title>AVT Theme Switcher</title>
         <style type="text/css">
-            @import "../../resources/scripts/dijit/themes/tundra/tundra.css";
-            @import "../../resources/scripts/dijit/themes/soria/soria.css";
-            @import "../../resources/scripts/dijit/themes/claro/claro.css";
+            @import "../../resources/scripts/release/dojo/dijit/themes/tundra/tundra.css";
+            @import "../../resources/scripts/release/dojo/dijit/themes/soria/soria.css";
+            @import "../../resources/scripts/release/dojo/dijit/themes/claro/claro.css";
 
             .tundra h1, .soria h1, .claro h1 {
                 font-size: 20pt;

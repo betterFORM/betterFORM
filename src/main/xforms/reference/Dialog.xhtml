@@ -5,13 +5,8 @@
       
       <title>The Dialog Element</title>
        xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
+      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/scripts/release/dojo/dojox/highlight/resources/highlight.css" />
       <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="reference.css" /><script xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="text/javascript">
-                dojo.require("dojox.highlight");
-                dojo.require("dojox.highlight.languages.xml");
-                //                dojo.require("dojox.highlight.languages.pygments.xml");
-                dojo.require("dijit.form.Button");
-                dojo.require('dijit.layout.ContentPane');
                 dojo.subscribe("/xf/ready", function(){
                     fluxProcessor.skipshutdown=true;
                 });
@@ -204,7 +199,7 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:trigger ref="login">
+            <xf:trigger>
                
                <xf:label>show dialog</xf:label>
                
@@ -291,7 +286,7 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:trigger ref="login"&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:trigger&gt;
     &lt;xf:label&gt;show dialog&lt;/xf:label&gt;
     &lt;bfc:show dialog="loginDialog" ev:event="DOMActivate"&gt;&lt;/bfc:show&gt;
 &lt;/xf:trigger&gt;
