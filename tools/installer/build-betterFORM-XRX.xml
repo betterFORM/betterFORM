@@ -166,7 +166,8 @@
               tofile="${basedir}/target/betterform.war"/>
     </target>
 
-    <target name="create-betterFormInstaller" description="Builds a betterForm Installer for deploying existing webcontainer" depends="prepare">
+    <target name="create-betterFormInstaller" description="Builds a betterForm Installer for deploying existing webcontainer">
+<!--  depends="prepare"> -->
         <sleep seconds="30" description="wait for fs to settle"/>
 
         <!-- Allows us to use the IzPack Ant task -->

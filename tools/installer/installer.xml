@@ -135,9 +135,9 @@
         <!-- <res id="CustomLangpack.xml_deu" src="../resource/custom.deu.xml"/> -->
         <res id="CustomLangpack.xml_eng" src="../resource/custom.eng.xml"/>
         <!-- default path to install betterFORM at -->
-        <res id="TargetPanel.dir.windows"   src="targetdir-windows.txt" />
-        <res id="TargetPanel.dir.unix"      src="targetdir-unix.txt" />
-        <res id="TargetPanel.dir.macosx"    src="/Applications/betterFORM" />
+        <res id="TargetPanel.dir.windows"   src="../resource/targetdir-windows.txt" />
+        <res id="TargetPanel.dir.unix"      src="../resource/targetdir-unix.txt" />
+        <res id="TargetPanel.dir.macosx"    src="../resource/targetdir-mac.txt" />
 
     </resources>
 
