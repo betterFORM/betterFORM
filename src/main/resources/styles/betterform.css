@@ -194,7 +194,7 @@ a.active {
 
 
 .xfAlert, .xfHint{
-	/*position:absolute;*/
+	position:absolute;
 	top:-3px;
 	/*bottom:2px;*/
 	font-size:9pt;

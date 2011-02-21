@@ -21,7 +21,7 @@
  .backgroundImage {
 	 width: 100%;
 	 height: 100%;
-	 background: transparent url(images/play.png) no-repeat 50%;
+	 background: transparent url(../images/play.png) no-repeat 50%;
  }
  #demoWrapper {
 	 position: relative;
@@ -126,7 +126,7 @@
 .atomReload .dijitButtonContents {
     height: 24px;
     width: 27px;
-    background: url(images/001_39.png) no-repeat 2px 2px;
+    background: url(../images/001_39.png) no-repeat 2px 2px;
 }
 
 .atomSubtitle .xfLabel {
@@ -219,7 +219,7 @@
 }
 
 .contactsMasterTrigger .dijitButtonContents {
-    background: url(images/001_22.png) no-repeat 5px 5px;
+    background: url(../images/001_22.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
     line-height: 29px;
@@ -236,7 +236,7 @@
 }
 
 .contactsSubTrigger .dijitButtonContents {
-    background: url(images/001_22.png) no-repeat 5px 5px;
+    background: url(../images/001_22.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
     line-height: 29px;
@@ -254,7 +254,7 @@
 }
 
 .contactsUpdateMasterTrigger .dijitButtonContents {
-    background: url(images/001_24.png) no-repeat 5px 5px;
+    background: url(../images/001_24.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
     line-height: 29px;
@@ -285,6 +285,7 @@
     padding: 5px;
     width: 100%;
 	clear:both;
+	display:table;
 }
 
 .orderListRepeat .xfRepeatHeader {
@@ -330,7 +331,7 @@
 }
 
 .orderListNewTrigger .dijitButtonContents {
-    background: url(images/001_47.png) no-repeat 5px 5px;
+    background: url(../images/001_47.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
     line-height: 29px;
@@ -347,7 +348,7 @@
 }
 
 .orderListAddTrigger .dijitButtonContents {
-    background: url(images/001_03.png) no-repeat 5px 5px;
+    background: url(../images/001_03.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
     line-height: 29px;
@@ -365,7 +366,7 @@
 }
 
 .orderListDelTrigger .dijitButtonContents {
-    background: url(images/001_04.png) no-repeat 5px 5px;
+    background: url(../images/001_04.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
     line-height: 29px;
@@ -383,7 +384,7 @@
 }
 
 .orderListResetTrigger .dijitButtonContents {
-    background: url(images/001_39.png) no-repeat 5px 5px;
+    background: url(../images/001_39.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
     line-height: 29px;
@@ -400,7 +401,7 @@
 }
 
 .orderListOKTrigger .dijitButtonContents {
-    background: url(images/001_06.png) no-repeat 5px 5px;
+    background: url(../images/001_06.png) no-repeat 5px 5px;
     display: inline;
     height: 30px;
     line-height: 29px;
@@ -417,7 +418,7 @@
 }
 
 .orderListAbortTrigger .dijitButtonContents {
-    background: url(images/001_05.png) no-repeat 5px 5px;
+    background: url(../images/001_05.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
     line-height: 29px;
@@ -456,7 +457,7 @@
 }
 
 .twitterReload .dijitButtonContents {
-    background: url(images/001_39.png) no-repeat 1px 1px;
+    background: url(../images/001_39.png) no-repeat 1px 1px;
     display: block;
     height: 23px;
     width: 150px;
@@ -472,7 +473,7 @@
 }
 
 .twitterGo .dijitButtonContents {
-    background: url(images/001_60.png) no-repeat 1px 1px;
+    background: url(../images/001_60.png) no-repeat 1px 1px;
     display: block;
     height: 23px;
     line-height: 19px;
@@ -561,7 +562,7 @@
 }
 
 .twitterPublic .dijitButtonContents {
-    background: url(images/001_60-r.png) no-repeat 5px 5px;
+    background: url(../images/001_60-r.png) no-repeat 5px 5px;
     display: block;
     height: 32px;
     line-height: 29px;

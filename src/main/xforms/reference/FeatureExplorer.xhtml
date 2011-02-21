@@ -14,6 +14,8 @@
       xml:lang="en" lang="en"
 	  xmlns:bf="http://betterform.sourceforge.net/xforms" bf:evalAVTs="src">
 <head>
+	<title>betterFORM XForms Feature Explorer</title>
+	<meta http-equiv="X-UA-Compatible" content="IE9 IE8"/>
 	<base href="http://localhost:8080/betterform/forms/reference"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="Author" content="Joern Turner"/>
@@ -31,8 +33,6 @@
     <meta http-equiv="expires" content="Wed, 9 Feb 2011 12:21:57 GMT"/>
     <meta name="revisit-after" content="3 days"/>
 
-    <title>betterFORM XForms Feature Explorer</title>
-
     <link REV="made" HREF="mailto:info@betterform.de"/>
     <link rel="SHORTCUT ICON" href="../../images/betterform.ico"/>
     <link rel="ICON" href="../../images/betterform.ico" type="image/x-icon"/>
@@ -48,8 +48,13 @@
         /*@import "../../resources/scripts/dojox/layout/resources/ResizeHandle.css";*/
 
         body {
-            margin: 35px 20px 20px 20px;
+            margin: 0;
         }
+
+		.contentBody {
+			margin: 35px 20px 20px 20px;
+		}
+
         #menuHint{
 			opacity:0;
             position:absolute;

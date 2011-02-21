@@ -97,6 +97,7 @@
         <xsl:comment> *** powered by betterFORM, &amp;copy; 2011 *** </xsl:comment>
 
         <head>
+             <meta http-equiv="X-UA-Compatible" content="IE9 IE8"/>
             <!-- copy all meta tags except 'contenttype' -->
             <xsl:call-template name="getMeta"/>
 

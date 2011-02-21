@@ -99,7 +99,7 @@
         -->
         <property name="betterform.ui.defaultAlertText" value="The specified value is invalid"/>
 
-        <property name="betterform.debug-allowed" value="false" description="if debug may be switched by Url param 'debug'"/>
+        <property name="betterform.debug-allowed" value="true" description="if debug may be switched by Url param 'debug'"/>
         <!-- WARNING: not ready for production use -->
         <property name="betterform.event-optimization-enabled" value="false" description="TBD: if event optimization is enabled, only events present within the current form will be processed"/>
 
