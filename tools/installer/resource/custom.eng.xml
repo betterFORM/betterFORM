@@ -75,8 +75,11 @@
 		<str id="PathInputPanel.required" txt="The chosen directory should exist."/>
     <str id="PathInputPanel.required.forModificationInstallation" txt="The chosen directory should exist."/>
     <str id="PathInputPanel.notValid" txt="The chosen directory does not contain the required product."/>
-    <str id="PathInputPanel.extendedIntro" txt="\n\nWARNING: On Windows path must not contain whitespace!\n\n"/>
+    <str id="PathInputPanel.extendedIntro" txt="
 
+WARNING: Path must not contain whitespace!
+
+"/>
 		<!-- TargetPanel strings -->
     <str id="TargetPanel.info" txt="Select the installation path: "/>
     <str id="TargetPanel.browse" txt="Browse..."/>
