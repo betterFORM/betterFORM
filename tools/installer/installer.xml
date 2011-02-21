@@ -93,6 +93,8 @@
         <modifier key="useButtonIcons" value="yes"/>
   		<modifier key="useLabelIcons" value="yes"/>
 		<modifier key="labelGap" value="6"/>
+        <modifier key="" value="0x00ffffff"/>
+
  	</guiprefs>
 	<listeners>
 		<listener installer="RegistryInstallerListener"	uninstaller="RegistryUninstallerListener" >
@@ -132,6 +134,11 @@
         <res id="ProcessPanel.Spec.xml" src="../resource/jobs.xml"/>
         <!-- <res id="CustomLangpack.xml_deu" src="../resource/custom.deu.xml"/> -->
         <res id="CustomLangpack.xml_eng" src="../resource/custom.eng.xml"/>
+        <!-- default path to install betterFORM at -->
+        <res id="TargetPanel.dir.windows"   src="../resource/targetdir-windows.txt" />
+        <res id="TargetPanel.dir.unix"      src="../resource/targetdir-unix.txt" />
+        <res id="TargetPanel.dir.macosx"    src="../resource/targetdir-mac.txt" />
+
     </resources>
 
     <panels labelFontSize="2.0">
