@@ -374,7 +374,16 @@
             <xsl:if test="$debug-enabled='true'">
                 <!-- z-index of 1000 so it is also in front of shim for modal dialogs -->
                 <div id="debug-pane" context="{concat($contextroot,'/inspector/',$sessionKey,'/')}">
-                    <a href="{concat($contextroot,'/inspector/',$sessionKey,'/','hostDOM')}" target="_blank">Host Document</a>
+                    <div style="float:right;margin-right:20px;text-align:right;" id="copyright">
+                        <a href="http://www.betterform.de">
+                            <img style="vertical-align:text-bottom; margin-right:5px;"
+                                 src="{concat($contextroot,'/images/betterform_icon16x16.png')}" alt="betterFORM project"/>
+                        </a>
+                        <span>&#xA9; 2011 betterFORM</span>
+                    </div>
+                    <span id="debug-pane-links" style="float:left;">
+                        <a href="{concat($contextroot,'/inspector/',$sessionKey,'/','hostDOM')}" target="_blank">Host Document</a>
+                    </span>
                 </div>
             </xsl:if>
         </body>

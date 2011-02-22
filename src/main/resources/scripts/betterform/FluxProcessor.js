@@ -603,7 +603,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
 
     _handleInstanceCreated:function(xmlEvent){
         dojo.require("dojox.fx");
-        var debugPane = dojo.byId("debug-pane");
+        var debugPane = dojo.byId("debug-pane-links");
         if(debugPane != null){
             var contextroot = dojo.attr(debugPane,"context");
             var newLink = document.createElement("a");

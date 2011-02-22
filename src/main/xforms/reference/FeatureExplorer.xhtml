@@ -626,8 +626,30 @@
 					 onClick="hideStatic();fluxProcessor.dispatchEvent('DialogTrigger');" label="Dialog"/>
 			</div>
 		</div>
+		<div dojoType="dijit.PopupMenuBarItem" label="Documentation">
+			<div dojoType="dijit.Menu" id="documentation">
+                <div dojoType="dijit.MenuItem" label="Popups must be allowed for external links"/>
+				<div dojoType="dijit.MenuItem" iconClass="externalLink"
+					 onClick="window.open('http://www.betterform.de/doc/betterFormUserGuide.pdf');" label="betterFORM User Guide"/>
+				<div dojoType="dijit.MenuItem" iconClass="externalLink"
+					 onClick="window.open('http://www.betterform.de/doc/betterFormDeveloperGuide.pdf');" label="betterFORM Developer Guide" title="the betterform developer guide for everyone..."/>
+				<div dojoType="dijit.MenuItem" iconClass="externalLink"
+					 onClick="window.open('http://betterform.wordpress.com/');" label="betterFORM Blog"/>
+                <div dojoType="dijit.MenuItem" iconClass="externalLink"
+					 onClick="window.open('../../../../../documentation.xml');" label="eXist Main Documentation"/>
+                <div dojoType="dijit.MenuItem" iconClass="externalLink"
+					 onClick="window.open('http://exist.sf.net/');" label="eXist-db Open Source Native XML Database"/>
+				<div dojoType="dijit.MenuItem" iconClass="externalLink"
+					 onClick="window.open('http://en.wikibooks.org/wiki/XForms');" label="XForms Wikibook"/>
+				<div dojoType="dijit.MenuItem" iconClass="externalLink"
+					 onClick="window.open('http://en.wikibooks.org/wiki/XQuery');" label="XQuery Wikibook"/>
+				<div dojoType="dijit.MenuItem" iconClass="externalLink"
+					 onClick="window.open('http://www.w3.org/MarkUp/Forms/');" label="W3C XForms Working Group"/>
+			</div>
+		</div>
+		<!--<div dojoType="dijit.Menu" label="Documentation" onClick="showStatic();dijit.byId('static').attr('href','Documentation.html');"/>-->
 
-	                                   <!--<img src="../../resources/images/icons/external_link.png" alt="^"/>-->
+	   <!--<img src="../../resources/images/icons/external_link.png" alt="^"/>-->
 	 	<!--
         <div dojoType="dijit.PopupMenuBarItem">
 			<span>
@@ -658,14 +680,6 @@
 <!-- ######################### Content end ################################## -->
 <!-- ######################### Content end ################################## -->
 <!-- ######################### Content end ################################## -->
-
-<div style="text-align:right;margin-top:10px;" id="copyright">
-    <a href="http://www.betterform.de">
-        <img style="vertical-align:text-bottom; margin-right:5px;"
-             src="../../images/betterform_icon16x16.png" alt="betterFORM project"/>
-    </a>
-    <span>&#xA9; 2010 betterFORM</span>
-</div>
 
     <script id="betterformJs" type="text/javascript" >
         loadBetterFORMJs(dojo.attr(dojo.byId("fluxProcessor"), "contextroot") + '/resources/scripts/release/dojo/betterform/betterform-xforms-feature-explorer.js', 'betterform.BfRequiredXFormsFeatureExplorer');
