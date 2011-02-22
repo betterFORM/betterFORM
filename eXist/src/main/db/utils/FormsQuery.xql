@@ -138,6 +138,16 @@ declare function local:generateUploadMarkup($uri as xs:string, $contextPath as x
 	</div>
 };
 
+declare function local:generateExistAdminClientMarkup($uri as xs:string, $contextPath as xs:string, $path as xs:string) {
+<div class="eXistAdminClient" style="display:inline-block;float:left;margin-right:12px;margin-top:4px;">
+	<span class="label">
+		<a href="{fn:concat($contextPath,'/webstart/exist.jnlp')}">
+			<img style="height:28px;width:28px;" src="{fn:concat($contextPath, '/resources/images/eXist-admin.png')}" title="download eXist Admin Client"/>
+		</a>
+	</span>
+</div>
+};
+
 (:
 declare function local:handleDirectory($uri as xs:string, $contextPath as xs:string, $path as xs:string, $ajaxFunction as xs:string, $childCollection as xs:string) {
 	if ( fn:not('betterform' eq $path) )
@@ -285,7 +295,8 @@ declare function local:getHTMLFilesListing($uri as xs:string, $contextPath as xs
 			 	  {local:generateCrumbs($uri, $path, $ajaxFunction)}
             </div>
 			<div id="commands">
-                  {local:generateCollectionMarkup($uri, $contextPath, $path, $altTextCreateCollection)}	
+                  {local:generateExistAdminClientMarkup($uri, $contextPath, $path)}
+                  {local:generateCollectionMarkup($uri, $contextPath, $path, $altTextCreateCollection)}
 			      {local:generateUploadMarkup($uri, $contextPath, $path, $altTextFormUpload)}
   			</div>
 		</div>
