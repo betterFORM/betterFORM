@@ -311,14 +311,6 @@ pre, code {
     width: 275px !important;
 }
 
-.xfRange .xfAlert {
-    border: none;
-    color: #801B1B;
-    font-size: 0.8em;
-    margin: -45px;
-    padding: 2px;
-}
-
 /* code highlighting */
 pre code {
     color: #7ba841;

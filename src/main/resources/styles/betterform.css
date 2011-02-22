@@ -127,6 +127,9 @@ a.active {
 .xsdDateTime .xfDateTextBox {
     width: 90px;
 }
+.xfRange .xfValue {
+	display:inline-block;
+}
 
 /* matches Rating control (range) */
 .dojoxRating ul {
@@ -798,7 +801,8 @@ td > div.bfPending > span {
 ##################################################################*/
 
 /* START DOJOX/FORMS/RESOURCES/RANGESLIDER.CSS */
-.dojoxRangeSlider .dijitSliderLeftBumperH,
+
+/*.dojoxRangeSlider .dijitSliderLeftBumperH,
 .dojoxRangeSlider .dijitSliderBottomBumperV {
     background: #FFFFFF !important;
 }
@@ -813,13 +817,13 @@ td > div.bfPending > span {
 
 .dojoxRangeSlider .dijitSliderProgressBar {
     overflow: hidden;
-    cursor: pointer; /* background:yellow !important; */
+    cursor: pointer; *//* background:yellow !important; *//*
 }
 
 .dojoxRangeSlider .dijitSliderProgressBarV {
     position: absolute !important;
     border-width: 0;
-}
+}*/
 
 .xfOutOfRange {
     background: transparent;
