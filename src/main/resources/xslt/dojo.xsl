@@ -381,7 +381,7 @@
                         </a>
                         <span>&#xA9; 2011 betterFORM</span>
                     </div>
-                    <span id="debug-pane-links" style="float:left;">
+                    <span id="debug-pane-links" style="float:left;width:80%;">
                         <a href="{concat($contextroot,'/inspector/',$sessionKey,'/','hostDOM')}" target="_blank">Host Document</a>
                     </span>
                 </div>
