@@ -51,7 +51,7 @@
                 </xf:model>
                 <code class="ui">
 <xf:range id="range1" ref="range1/value" start="0" step="1" end="5" appearance="bf:rating"
-          incremental="true">
+          incremental="true" >
     <xf:label>a rating</xf:label>
     <xf:hint>a Hint for this control</xf:hint>
     <xf:help>help for range1</xf:help>
@@ -62,16 +62,16 @@
             <div class="MIPS">
                 <xf:group appearance="full">
                     <xf:label></xf:label>
-                    <xf:input id="range1-readonly" navindex="-1" ref="range1/@readonly" incremental="true">
+                    <xf:input id="range1-readonly" ref="range1/@readonly" incremental="true">
                         <xf:label>readonly</xf:label>
                     </xf:input>
-                    <xf:input id="range1-required" navindex="-1" ref="range1/@required" incremental="true">
+                    <xf:input id="range1-required" ref="range1/@required" incremental="true">
                         <xf:label>required</xf:label>
                     </xf:input>
-                    <xf:input id="range1-relevant" navindex="-1" ref="range1/@relevant" incremental="true">
+                    <xf:input id="range1-relevant" ref="range1/@relevant" incremental="true">
                         <xf:label>relevant</xf:label>
                     </xf:input>
-                    <xf:input id="range1-valid" navindex="-1" ref="range1/@constraint" incremental="true">
+                    <xf:input id="range1-valid" ref="range1/@constraint" incremental="true">
                         <xf:label>valid</xf:label>
                     </xf:input>
                 </xf:group>

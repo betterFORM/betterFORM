@@ -674,6 +674,14 @@ table .xfContainer{
     background-position: -32px 50%;
 }
 
+.bf .xfControl .dijitCheckBoxFocused {
+	border:1px solid black;
+}
+
+.bf .xfControl .dijitFocusedLabel {
+	border:1px solid #AAA;
+}
+
 /*
  ########################################################################################
                 Styles from Allcomponent:

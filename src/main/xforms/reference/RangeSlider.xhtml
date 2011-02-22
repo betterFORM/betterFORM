@@ -23,7 +23,7 @@
                      
                      <range1 constraint="true" readonly="false" required="true" relevant="true">
                         
-                        <value></value>
+                        <value>1</value>
                         
                      </range1>
                      
@@ -58,8 +58,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d24e114" onmouseover="showClass('xfRange');" onmouseout="hideClass('xfRange');">xfRange
-                     <div dojoType="dijit.Tooltip" connectId="d24e114">matches an Element that represents a XForms
+                  <td id="d24e115" onmouseover="showClass('xfRange');" onmouseout="hideClass('xfRange');">xfRange
+                     <div dojoType="dijit.Tooltip" connectId="d24e115">matches an Element that represents a XForms
                         range
                         element
                         
@@ -210,7 +210,7 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:range id="range1" ref="range1/value" start="1" step="1" end="5" incremental="true">
+            <xf:range id="range1" ref="range1/value" start="1" step="1" end="10" incremental="true">
                
                <xf:label>a slider</xf:label>
                
@@ -228,25 +228,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="range1-readonly" navindex="-1" ref="range1/@readonly" incremental="true">
+               <xf:input id="range1-readonly" ref="range1/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="range1-required" navindex="-1" ref="range1/@required" incremental="true">
+               <xf:input id="range1-required" ref="range1/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="range1-relevant" navindex="-1" ref="range1/@relevant" incremental="true">
+               <xf:input id="range1-relevant" ref="range1/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="range1-valid" navindex="-1" ref="range1/@constraint" incremental="true">
+               <xf:input id="range1-valid" ref="range1/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   
@@ -256,7 +256,7 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:range id="range1" ref="range1/value" start="1" step="1" end="5" incremental="true"&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:range id="range1" ref="range1/value" start="1" step="1" end="10" incremental="true"&gt;
     &lt;xf:label&gt;a slider&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
     &lt;xf:help&gt;help for range1&lt;/xf:help&gt;

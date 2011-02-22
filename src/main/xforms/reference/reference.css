@@ -304,6 +304,7 @@ pre, code {
 
 .MIPS .xfFullGroup .xfControl {
     display: inline-block;
+	width: 90px;
 }
 
 .longDate .xfLabel {

@@ -48,7 +48,7 @@
 
                 </xf:model>
                 <code class="ui">
-<xf:input id="input1" ref="input1/value" incremental="true">
+<xf:input id="input1" ref="input1/value" incremental="true" >
     <xf:label>a calendar with time</xf:label>
     <xf:hint>a Hint for this control</xf:hint>
     <xf:help>help for input1</xf:help>
@@ -59,16 +59,16 @@
             <div class="MIPS">
                 <xf:group appearance="full">
                     <xf:label></xf:label>
-                    <xf:input id="input1-readonly" navindex="-1" ref="input1/@readonly" incremental="true">
+                    <xf:input id="input1-readonly" ref="input1/@readonly" incremental="true">
                         <xf:label>readonly</xf:label>
                     </xf:input>
-                    <xf:input id="input1-required" navindex="-1" ref="input1/@required" incremental="true">
+                    <xf:input id="input1-required" ref="input1/@required" incremental="true">
                         <xf:label>required</xf:label>
                     </xf:input>
-                    <xf:input id="input1-relevant" navindex="-1" ref="input1/@relevant" incremental="true">
+                    <xf:input id="input1-relevant" ref="input1/@relevant" incremental="true">
                         <xf:label>relevant</xf:label>
                     </xf:input>
-                    <xf:input id="input1-valid" navindex="-1" ref="input1/@constraint" incremental="true">
+                    <xf:input id="input1-valid" ref="input1/@constraint" incremental="true">
                         <xf:label>valid</xf:label>
                     </xf:input>
                 </xf:group>

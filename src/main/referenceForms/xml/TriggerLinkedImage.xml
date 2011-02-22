@@ -64,16 +64,16 @@
             <div class="MIPS">
                 <xf:group appearance="full">
                     <xf:label></xf:label>
-                    <xf:input id="output-readonly" navindex="-1" ref="output/@readonly" incremental="true">
+                    <xf:input id="output-readonly" ref="output/@readonly" incremental="true">
                         <xf:label>readonly</xf:label>
                     </xf:input>
-                    <xf:input id="output-required" navindex="-1" ref="output/@required" incremental="true">
+                    <xf:input id="output-required" ref="output/@required" incremental="true">
                         <xf:label>required</xf:label>
                     </xf:input>
-                    <xf:input id="output-relevant" navindex="-1" ref="output/@relevant" incremental="true">
+                    <xf:input id="output-relevant" ref="output/@relevant" incremental="true">
                         <xf:label>relevant</xf:label>
                     </xf:input>
-                    <xf:input id="output-valid" navindex="-1" ref="output/@constraint" incremental="true">
+                    <xf:input id="output-valid" ref="output/@constraint" incremental="true">
                         <xf:label>valid</xf:label>
                     </xf:input>
                 </xf:group>

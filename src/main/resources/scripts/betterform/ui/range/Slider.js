@@ -22,9 +22,10 @@ dojo.declare(
     postMixInProperties:function() {
         this.inherited(arguments);
         this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);
-        this.start = eval(dojo.attr(this.srcNodeRef, "start"));
-        this.step = eval(dojo.attr(this.srcNodeRef, "step"));
-        this.end = eval(dojo.attr(this.srcNodeRef, "end"));
+        this.start = new Number(dojo.attr(this.srcNodeRef, "start"));
+        this.step = new Number(dojo.attr(this.srcNodeRef, "step"));
+        this.end =   new Number(dojo.attr(this.srcNodeRef, "end"));
+        this.value = new Number(dojo.attr(this.srcNodeRef, "value"));
     },
 
     postCreate:function() {
