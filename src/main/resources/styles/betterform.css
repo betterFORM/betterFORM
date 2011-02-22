@@ -196,6 +196,12 @@ a.active {
 	border: 1px solid #8B0000;
 }
 
+.bfInvalidControl .bfCheckBoxGroup {
+	border:none;
+	border-bottom:1px solid #8B0000;
+	margin-right:4px;
+	padding-bottom:4px;
+}
 
 .xfAlert, .xfHint{
 	position:absolute;
@@ -451,6 +457,9 @@ a.active {
     vertical-align: top;
     display: block; /*float:left;*/
 }
+.bfCheckBoxGroup .xfSelectorItem{
+	margin-right:6px;
+}
 
 .xfFullSelect .xfSelectorItem .xfLabel {
     display: inline;
@@ -537,19 +546,10 @@ a.active {
 /* ***************************************************************************** */
 
 .xfRepeatIndex {
-    background-color:#FFCC33;
+    background-color:#DFDFDF;
 }
-
-.xfRepeatIndex .xfValue {
-    background-color:#FFCC33;
-}
-
-.bfRepeatIndexMouseOver {
-    background-color:#ADD8E6;
-}
-
-.bfRepeatIndexMouseOver .xfValue {
-    background-color:#ADD8E6;
+.bf .xsdBoolean .xfValue {
+	background-color:#FFFFFF;
 }
 
 .xfMinimalRepeat {
@@ -789,8 +789,11 @@ td > div.bfPending > span {
 /*##################################################################
                    START IMPORTANT STYLES (DO NOT OVERWRITE)
 ##################################################################*/
-.xfDisabled {
-    display: none;
+.bf .xfDisabled .xfValue,
+.bf .xfDisabled .xfLabel,
+.bf .xfDisabled .xfGroupLabel,
+.bf .xfDisabled {
+    display: none !important;
 }
 
 /*##################################################################

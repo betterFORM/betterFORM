@@ -17,13 +17,22 @@ dojo.declare(
     buildRendering:function() {
         this.inherited(arguments);
         var imageSource = dojo.attr(this.srcNodeRef,"source");
+        var labelHasImageOutput = dojo.attr(this.srcNodeRef,"labelmediatype");
+        if(imageSource == undefined || imageSource == "" && labelHasImageOutput != undefined && labelHasImageOutput.indexOf("image") != -1){
+            console.debug("labelmedia ;-)")
+            imageSource = dojo.attr(this.srcNodeRef,"label");
+        }
+        // console.debug("imageSource: ",imageSource);
         if(imageSource != undefined && imageSource !=""){
             var image = document.createElement("img");
             dojo.attr(image, "src",imageSource);
             this.iconNode.appendChild(image);
             this.showLabel = false;
+            dojo.style(this.containerNode,"display", "none");
         }
     },
+
+
 
    postMixInProperties:function() {
         this.inherited(arguments);

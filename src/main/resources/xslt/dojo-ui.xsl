@@ -331,7 +331,7 @@
         </xsl:variable>
 
 
-        <table class="xfContainer bfHorizontalTable {$mip-classes}" dojoType="betterform.ui.container.Group">
+        <table id="{@id}" class="xfContainer bfHorizontalTable {$mip-classes}" dojoType="betterform.ui.container.Group">
             <tr>
                 <td colspan="{count(*[position() &gt; 1])}" class="xfGroupLabel">
                     <xsl:if test="exists(xforms:label) and @appearance !='bf:GroupLabelLeft'">

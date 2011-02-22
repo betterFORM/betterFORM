@@ -679,7 +679,7 @@
                      tabindex="{$navindex}"
                      title="{normalize-space(xf:hint)}">
 
-                    <xsl:if test="$accesskey != ' none'">
+                    <xsl:if test="$accesskey != 'none'">
                         <xsl:attribute name="accessKey"><xsl:value-of select="$accesskey"/></xsl:attribute>
                     </xsl:if>
                     <!-- TODO: move mediatype to bf:data for all Controls -->

@@ -54,19 +54,19 @@
 <xf:instance id="codes">
     <countrylist xmlns="">
         <country>
-            <country-name>AFGHANISTAN</country-name>
+            <country-name>Afghanistan</country-name>
             <code>AF</code>
         </country>
         <country>
-            <country-name>LAND ISLANDS</country-name>
+            <country-name>Land Island</country-name>
             <code>AX</code>
         </country>
         <country>
-            <country-name>ALBANIA</country-name>
+            <country-name>Albania</country-name>
             <code>AL</code>
         </country>
         <country>
-            <country-name>ALGERIA</country-name>
+            <country-name>Algeria</country-name>
             <code>DZ</code>
         </country>
     </countrylist>

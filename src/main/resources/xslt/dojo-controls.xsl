@@ -164,7 +164,7 @@
             <xsl:when test="@appearance='full'">
                 <span id="{$parent/@id}-value"
                       name="{$name}"
-                      class="xfValue CheckBoxGroup"
+                      class="xfValue bfCheckBoxGroup"
                       selection="{$selection}"
                       controlType="selectCheckBox"
                       dataType="{$datatype}"
@@ -275,6 +275,28 @@
                         </span>
                     </button>
                 </xsl:when>
+                <xsl:when test="xforms:label//*[exists(@mediatype)][1]/@mediatype">
+                    <xsl:variable name="label">
+                        <xsl:call-template name="create-label">
+                            <xsl:with-param name="label-elements" select="xforms:label"/>
+                        </xsl:call-template>
+         		    </xsl:variable>
+                    <xsl:variable name="labelmediatype" select="xforms:label//*[exists(@mediatype)][1]/@mediatype"/>
+                    <button id="{$id}-value"
+                            appearance="{@appearance}"
+                            controlType="trigger"
+                            label="{$label}"
+                            name="{$name}"
+                            type="button"
+                            class="xfValue"
+                            title="{$hint}"
+                            navindex="{$navindex}"
+                            accesskey="{@accesskey}"
+                            labelmediatype="{$labelmediatype}">
+                        <xsl:apply-templates select="xforms:label"/>
+                    </button>
+                </xsl:when>
+
                 <xsl:otherwise>
                     <xsl:variable name="label">
                         <xsl:call-template name="create-label">
