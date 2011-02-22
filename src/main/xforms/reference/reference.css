@@ -336,6 +336,14 @@ html body #formWrapper #xforms .showClass{
 .xfContainer{
 	display:block;
 }
+.xfTextarea .xfLabel{
+	display:block;
+}
+.bf .xfTextarea .xfAlert,
+.bf .xfTextarea .xfHint {
+	top:12px;
+}
+
 .xfContainer .xfControl{
     padding:5px;
 	display:block;

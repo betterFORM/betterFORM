@@ -127,6 +127,7 @@ a.active {
 .xsdDateTime .xfDateTextBox {
     width: 90px;
 }
+.xfTextarea .xfValue,
 .xfRange .xfValue {
 	display:inline-block;
 }
