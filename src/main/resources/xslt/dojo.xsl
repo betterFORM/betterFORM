@@ -97,13 +97,11 @@
         <xsl:comment> *** powered by betterFORM, &amp;copy; 2011 *** </xsl:comment>
 
         <head>
-             <meta http-equiv="X-UA-Compatible" content="IE9 IE8"/>
-            <!-- copy all meta tags except 'contenttype' -->
-            <xsl:call-template name="getMeta"/>
-
             <title>
                 <xsl:value-of select="$form-name"/>
             </title>
+            <!-- copy all meta tags except 'contenttype' -->
+            <xsl:call-template name="getMeta"/>
 
             <!-- copy base if present -->
 <!--

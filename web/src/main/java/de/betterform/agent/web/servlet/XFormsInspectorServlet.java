@@ -37,7 +37,7 @@ import java.io.OutputStream;
  */
 public class XFormsInspectorServlet extends HttpServlet /* extends AbstractXFormsServlet */ {
     private static final Log LOGGER = LogFactory.getLog(XFormsInspectorServlet.class);
-    public static final String defContentType = "text/html; charset=UTF-8";
+    public static final String defContentType = WebUtil.HTML_CONTENT_TYPE;
     private de.betterform.agent.web.WebFactory webFactory;
 
     /**
