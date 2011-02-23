@@ -138,7 +138,7 @@
         <res id="TargetPanel.dir.windows"   src="../resource/targetdir-windows.txt" />
         <res id="TargetPanel.dir.unix"      src="../resource/targetdir-unix.txt" />
         <res id="TargetPanel.dir.macosx"    src="../resource/targetdir-mac.txt" />
-        <res src="../configs/unix_shortcut_spec.xml" id="unix_shortcut_spec.xml"/>
+     <!--   <res src="../configs/unix_shortcut_spec.xml" id="unix_shortcut_spec.xml"/>-->
 
     </resources>
 
@@ -152,7 +152,7 @@
         <panel classname="UserInputPanel" id="UserInputPanel.0" condition="exist"/>
         <panel classname="InstallPanel"/>
         <panel classname="ProcessPanel" condition="exist"/>
-         <panel classname="ShortcutPanel"/>
+        <!-- <panel classname="ShortcutPanel"/> -->
         <panel classname="FinishPanel"/>
     </panels>
 
@@ -184,9 +184,10 @@
             <executable targetfile="$INSTALL_PATH/bin/shutdown.sh" stage="never" os="unix"/>
             <executable targetfile="$INSTALL_PATH/bin/backup.sh" stage="never" os="unix"/>
             <executable targetfile="$INSTALL_PATH/build.sh" stage="never" os="unix"/>
-
+<!--
             <singlefile src="../resource/start.bat" target="$INSTALL_PATH" override="true"/>
             <singlefile src="../resource/start.sh" target="$INSTALL_PATH" override="true"/>
+-->
             <singlefile src="bf-eXist/tools/wrapper/conf/wrapper.conf.install" target="$INSTALL_PATH/tools/wrapper/conf/wrapper.conf" override="true"/>
             <parsable targetfile="$INSTALL_PATH/tools/wrapper/conf/wrapper.conf"/>
         </pack>
@@ -264,4 +265,3 @@
     </packs>
 
 </installation>
-

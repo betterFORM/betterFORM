@@ -1,17 +1,40 @@
 <project name="Installer" default="create-betterFormInstaller" basedir=".">
+    <property name="installer.dir" value="."/>
+    <property name="target" value="${basedir}/target"/>
+    <property name="target-utils" value="${basedir}/target-utils"/>
+    <property name="eXist.1.4.src" value="http://netcologne.dl.sourceforge.net/project/exist/Stable/1.4/eXist-setup-1.4.0-rev10440.jar"/>
+    <property name="eXist.1.5.src" value="http://netcologne.dl.sourceforge.net/project/exist/Stable/1.4/eXist-setup-1.4.0-rev10440.jar"/>
+
+    <available property="eXist-1.4-available" file="${target-utils}/exist-install-1.4.jar"/>
+    <available property="eXist-1.5-available" file="${target-utils}/exist-install-1.5.jar"/>
 
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
     <target name="clean">
+        <delete dir="${basedir}/../../eXist/target"/>
         <delete dir="${basedir}/target"/>
     </target>
-    
+
+    <condition property="eXist-1.4">
+        <equals arg1="${installer.exist.version}" arg2="1.4"/>
+    </condition>
+
+    <condition property="eXist-1.5">
+        <equals arg1="${installer.exist.version}" arg2="1.5"/>
+    </condition>
+
+    <tstamp>
+        <format property="build.date" pattern="yyyyMMddhhmmss"/>
+    </tstamp>
+
+
     <target name="prepare" description="prepares all files needed for installer EXCEPT exist.war" depends="clean">
 
         <!-- ##### building betterForm war for deployment ##### -->
         <mkdir dir="${basedir}/target"/>
 
-        <available property="warAvailable" file ="${basedir}/../../release-${web.app.version}/web-dist/${web.app.name}-${web.app.version}.war"/>
+        <available property="warAvailable"
+                   file="${basedir}/../../release-${web.app.version}/web-dist/${web.app.name}-${web.app.version}.war"/>
         <antcall target="buildWar"/>
         <antcall target="copyReleaseWar"/>
 
@@ -21,15 +44,16 @@
 
 
         <!-- #### get and unpack dojo -->
-        <gunzip dest="${basedir}/target/${properties.dojo}.tar" src="${basedir}/../../src/main/lib/${properties.dojo}.tar.gz"/>
-        <untar  dest="${basedir}/target/dojo-release" src="${basedir}/target/${properties.dojo}.tar"/>
-        <move  file="${basedir}/target/dojo-release/${properties.dojo}" todir="${basedir}/target"/>
-        <delete dir="${basedir}/target/dojo-release" />
-        <delete file="${basedir}/target/${properties.dojo}.tar" />
+        <gunzip dest="${basedir}/target/${properties.dojo}.tar"
+                src="${basedir}/../../src/main/lib/${properties.dojo}.tar.gz"/>
+        <untar dest="${basedir}/target/dojo-release" src="${basedir}/target/${properties.dojo}.tar"/>
+        <move file="${basedir}/target/dojo-release/${properties.dojo}" todir="${basedir}/target"/>
+        <delete dir="${basedir}/target/dojo-release"/>
+        <delete file="${basedir}/target/${properties.dojo}.tar"/>
 
 
         <mkdir dir="${basedir}/target/jetty"/>
-        <unzip src="${basedir}/lib/bfServer-1.2-bin.zip" dest="${basedir}/target/jetty"/>
+        <unzip src="${basedir}/lib/betterFORM-Launcher-1.3-jetty-distribution.zip" dest="${basedir}/target/jetty"/>
 
         <mkdir dir="${basedir}/target/bf-resources/"/>
         <copy description="copy betterform script resources"
@@ -39,49 +63,43 @@
             <fileset dir="${basedir}/../../src/main/resources/scripts/betterform/"/>
         </copy>
 
-       <antcall target="prepareExistBundle"/>
+        <antcall target="prepareExistBundle"/>
 
     </target>
 
-    <target name="prepareExistBundle">
+    <target name="prepareExistBundle" depends="get-eXist">
         <mkdir dir="${basedir}/target/bf-eXist/"/>
 
-        <java jar="${installer.exist.jar}"
+        <!-- Install eXist-db to target -->
+        <java jar="${target}/exist-install.jar"
               fork="true"
-              spawn="false">
+              spawn="false" failonerror="true">
             <arg line="-p ${basedir}/target/bf-eXist/"/>
         </java>
 
-        <antcall target="set-eXist-admin-passwd"/>
-
+        <delete file="${basedir}/target/bf-eXist/Install_V1.4.0*.log"/>
+        <!-- create make temorary extension-directory for installation -->
         <mkdir dir="${basedir}/target/bf-eXist/extensions/betterform"/>
 
-        <ant dir="${basedir}/../../eXist" target="package"/>
+        <!-- build an updated extension -->
+        <ant dir="${basedir}/../../eXist" antfile="build-betterFORM-XRX.xml" target="build-up-to-date-extension"/>
+
+        <!-- copy updated extension to eXist-->
+        <antcall target="copyExtension"/>
+
+        <!-- Create an 'betterFORM'-DB-User for storing stuff -->
+        <!-- See eXist-build-file for password -->
+        <antcall target="setupBetterFORMUser"/>
+
+        <!-- Install betterFORM extension -->
+        <ant dir="${basedir}/target/bf-eXist/extensions/betterform" antfile="build.xml" target="wrapped-install"/>
 
 
-        <copy todir="${basedir}/target/bf-eXist/extensions/betterform">
-            <fileset dir="${basedir}/../../eXist/target/"/>
-        </copy>
+        <!-- Store Forms etc into db -->
+        <ant dir="${basedir}/target/bf-eXist/extensions/betterform" antfile="build.xml" target="wrapped-install-betterFORM-apps-and-forms"/>
 
-        <!--
-        <mkdir dir="${basedir}/target/bf-eXist/extensions/betterform/target"/>
-        <copy todir="${basedir}/target/bf-eXist/extensions/betterform/target" file="${basedir}/../../eXist/target/betterform.zip"/>
-        -->
+        <!-- Copy template-files which will be modified by the Installer-->
 
-        <ant dir="${basedir}/target/bf-eXist/extensions/betterform" target="install"/>
-
-        <antcall target="start-eXist"/>
-
-
-        <ant dir="${basedir}/target/bf-eXist/extensions/betterform/" target="install-xrx"/>
-
-        <sleep seconds="10"/>
-
-        <ant dir="${basedir}/target/bf-eXist/extensions/betterform/" target="install-xrx"/>
-
-        <antcall target="stop-eXist"/>
-
-        <!-- copy template files to exist-bin-dir and exist-root-dir -->
         <copy todir="${basedir}/target/bf-eXist/bin" overwrite="true">
             <fileset dir="${basedir}/target/bf-eXist/installer/scripts" includes="*.sh *.bat" excludes="build.*"/>
         </copy>
@@ -90,104 +108,132 @@
             <fileset dir="${basedir}/target/bf-eXist/installer/scripts" includes="build.sh build.bat"/>
         </copy>
 
+	    <unzip src="${basedir}/lib/betterFORM-Launcher-1.3-xrx-distribution.zip" dest="${basedir}/target/bf-eXist"/>
+
     </target>
 
-    <target  name="set-eXist-admin-passwd">
-        <echo  message="*******************************************************************************"/>
-        <echo  message="* Setting eXist-DB admin-passwd                                               *"/>
-        <echo  message="*******************************************************************************"/>
+    <target name="setupBetterFORMUser" depends="build-SetupBetterFORMUserJar">
+        <copy file="${basedir}/target/betterFORM-Setup.jar" todir="${basedir}/target/bf-eXist/" overwrite="true"/>
 
-        <exec executable="${basedir}/target/bf-eXist/bin/setup.sh" osfamily="unix" spawn="true">
-            <arg value="${installer.exist.passwd}"/>
-        </exec>
+        <ant dir="${basedir}/target/bf-eXist/extensions/betterform" antfile="build.xml" target="start-eXist"/>
 
-        <exec executable="cmd" osfamily="windows" spawn="true">
-            <arg value="/c"/>
-            <arg value="${basedir}/target/bf-eXist/bin/setup.bat"/>
-            <arg value="${installer.exist.passwd}"/>
-        </exec>
-    </target>
+        <java jar="${basedir}/target/bf-eXist/betterFORM-Setup.jar" fork="true" dir="${basedir}/target/bf-eXist"
+              failonerror="true"/>
 
-    <target  name="start-eXist">
-        <echo  message="*******************************************************************************"/>
-        <echo  message="* Starting eXist-DB                                                           *"/>
-        <echo  message="*******************************************************************************"/>
+        <delete file="${basedir}/target/bf-eXist/betterFORM-Setup.jar"/>
 
-
-        <exec executable="${basedir}/target/bf-eXist/bin/startup.sh" osfamily="unix" spawn="true"/>
-
-        <exec executable="cmd" osfamily="windows" spawn="true">
-            <arg value="/c"/>
-            <arg value="${basedir}/target/bf-eXist/bin/startup.bat"/>
-        </exec>
-
-        <sleep seconds="30"/>
+        <!-- Wait for db-shutdown -->
+        <sleep seconds="20"/>
     </target>
 
 
-    <target name="stop-eXist">
-        <echo  message="*******************************************************************************"/>
-        <echo  message="* Stopping eXist-DB                                                           *"/>
-        <echo  message="*******************************************************************************"/>
+    <target name="build-SetupBetterFORMUserJar">
+        <echo message="*******************************************************************************"/>
+        <echo message="* Building betterFORM-Setup.jar                                               *"/>
+        <echo message="*******************************************************************************"/>
+        <mkdir dir="${basedir}/target/classes"/>
 
-        <sleep seconds="10"/>
+        <javac description="compile source files"
+               srcdir="${basedir}/src/main/java"
+               destdir="${basedir}/target/classes"
+               classpathref="installer.class.path"
+               target="${properties.javac.version}"
+               debug="${properties.javac.debug}"
+               deprecation="${properties.javac.deprecation}"
+               optimize="${properties.javac.optimize}"/>
 
-        <exec executable="${basedir}/target/bf-eXist/bin/shutdown.sh" osfamily="unix">
-            <arg value="-p"/>
-           <arg value="${installer.exist.passwd}"/>
-        </exec>
-        <exec executable="cmd" osfamily="windows">
-            <arg value="/c"/>
-            <arg value="${basedir}/target/bf-eXist/bin/shutdown.bat"/>
-            <arg value="-p"/>
-            <arg value="${installer.exist.passwd}"/>
-        </exec>
+        <jar description="package betterform jar"
+             jarfile="${basedir}/target/betterFORM-Setup.jar"
+             basedir="${basedir}/target/classes"
+             manifest="${basedir}/src/main/resources/MANIFEST.MF"/>
     </target>
 
-    <target  name="buildWar" unless="warAvailable">
+    <target name="buildWar" unless="warAvailable">
         <ant antfile="build.xml" target="package" inheritall="false" dir="../../web/"/>
         <copy todir="${basedir}/target">
             <fileset file="${basedir}/../../web/target/${web.app.name}-${web.app.version}.war"/>
         </copy>
-        <move file="${basedir}/target/${web.app.name}-${web.app.version}.war" tofile="${basedir}/target/betterform.war"/>
+        <move file="${basedir}/target/${web.app.name}-${web.app.version}.war"
+              tofile="${basedir}/target/betterform.war"/>
     </target>
 
-    <target  name="copyReleaseWar" if="warAvailable">
-       <copy todir="${basedir}/target">
-            <fileset file="${basedir}/../../release-${web.app.version}/web-dist/${web.app.name}-${web.app.version}.war"/>
-       </copy>
-       <move file="${basedir}/target/${web.app.name}-${web.app.version}.war" tofile="${basedir}/target/betterform.war"/>
+    <target name="copyReleaseWar" if="warAvailable">
+        <copy todir="${basedir}/target">
+            <fileset
+                    file="${basedir}/../../release-${web.app.version}/web-dist/${web.app.name}-${web.app.version}.war"/>
+        </copy>
+        <move file="${basedir}/target/${web.app.name}-${web.app.version}.war"
+              tofile="${basedir}/target/betterform.war"/>
     </target>
 
-    <target name="create-betterFormInstaller" depends="prepare"
-            description="Builds a betterForm Installer for deploying existing webcontainer">
-
+    <target name="create-betterFormInstaller" description="Builds a betterForm Installer for deploying existing webcontainer">
+<!--  depends="prepare"> -->
+        <sleep seconds="30" description="wait for fs to settle"/>
 
         <!-- Allows us to use the IzPack Ant task -->
         <taskdef name="izpack"
-                 classpath="${basedir}/lib/standalone-compiler.jar"
+                 classpath="${basedir}/lib/standalone-compiler-4.3.3.jar"
                  classname="com.izforge.izpack.ant.IzPackTask"/>
 
         <!-- We call IzPack -->
         <echo message="Makes the installer using IzPack"/>
 
-<!--
-        <izpack input="${basedir}/installer.xml"
-                output="${basedir}/target/betterform-install.jar"
-                installerType="web"
-                basedir="${basedir}/target"/>
--->
+        <!--
+                <izpack input="${basedir}/installer.xml"
+                        output="${basedir}/target/betterform-install.jar"
+                        installerType="web"
+                        basedir="${basedir}/target"/>
+        -->
         <izpack input="${basedir}/installer.xml"
                 output="${basedir}/target/betterform-install.jar"
                 installerType="${installer.installerType}"
                 basedir="${basedir}/target"/>
 
-        <chmod file="${basedir}/target/betterform-install.jar" perm="770"/>
+        <chmod file="${basedir}/target/betterform-install.jar" perm="775"/>
 
+        <move file="${basedir}/target/betterform-install.jar" tofile="${basedir}/betterform-install-${build.date}.jar"/>
     </target>
 
+    <target name="copyExtension" depends="set-eXist-dir">
+        <copy todir="${basedir}/target/bf-eXist/extensions/">
+            <fileset dir="${eXist.dir}"/>
+        </copy>
+    </target>
 
+    <!-- Set target-dir for extension dependent on version. Needed by extension-builder. -->
+    <target name="set-eXist-dir" depends="set-eXist-dir-1.4, set-eXist-dir-1.5"/>
 
-    
+    <target name="set-eXist-dir-1.4" if="eXist-1.4">
+        <property name="eXist.dir" value="${basedir}/../../eXist/target/eXist-1.4"/>
+    </target>
+
+    <target name="set-eXist-dir-1.5" if="eXist-1.5">
+        <property name="eXist.dir" value="${basedir}/../../eXist/target/eXist-1.5"/>
+    </target>
+
+    <!-- Download eXist installer dependent on version -->
+    <target name="get-eXist">
+        <mkdir dir="${target-utils}"/>
+        <antcall target="get-and-set-eXist-1.4-installer"/>
+        <antcall target="get-and-set-eXist-1.5-installer"/>
+    </target>
+
+    <target name="get-and-set-eXist-1.4-installer" if="eXist-1.4">
+        <antcall target="get-eXist-1.4"/>
+        <copy file="${target-utils}/exist-install-1.4.jar" tofile="${target}/exist-install.jar" description="setting eXist installer to version 1.4"/>
+    </target>
+
+    <target name="get-eXist-1.4" if="eXist-1.4" unless="eXist-1.4-available">
+        <get src="${eXist.1.4.src}" dest="${target-utils}/exist-install-1.4.jar" description="downloads eXist 1.4 installer"/>
+    </target>
+
+    <target name="get-and-set-eXist-1.5-installer" if="eXist-1.5">
+        <antcall target="get-eXist-1.5"/>
+        <copy file="${target-utils}/exist-install-1.5.jar" tofile="${target}/exist-install.jar" description="setting eXist installer to version 1.5"/>
+    </target>
+
+    <target name="get-eXist-1.5" if="eXist-1.5" unless="eXist-1.5-available">
+        <get src="${eXist.1.5.src}" dest="${target-utils}/exist-install-1.5.jar" description="downloads eXist 1.5 installer"/>
+    </target>
 
 </project>

@@ -131,7 +131,7 @@ WARNING: Path must not contain whitespace!
     <str id="InstallationTypePanel.modify" txt="Modify installation"/>
 		
 		<!-- FinishPanel strings -->
-		<str id="FinishPanel.success" txt="Installation has completed successfully."/>
+		<str id="FinishPanel.success" txt="Installation has completed successfully. To run betterFORM go to the betterFORM install directory and doubleclick betterFORM-Launcher-1.3.jar"/>
     <str id="FinishPanel.done" txt="Done"/>
     <str id="FinishPanel.fail" txt="Installation has failed!"/>
     <str id="FinishPanel.uninst.info" txt="An uninstaller program has been created in: "/>
