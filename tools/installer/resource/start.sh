@@ -10,4 +10,4 @@ if [ ! -d "$JAVA_HOME" ]; then
     JAVA_HOME="%{JAVA_HOME}"
 fi
 
-"${JAVA_HOME}"/bin/java -jar "./betterFORM-Launcher-1.3.jar"
+"${JAVA_HOME}"/bin/java -jar "./betterFORM.jar" -Xms256m -Xmx1024m

@@ -14,6 +14,6 @@ goto :eof
 :JavaAvailable
 set JAVA_OPTS="-Xms128m -Xmx512m"
 
-"%JAVA_HOME%\bin\java" "%JAVA_OPTS%" -jar ".\betterFORM-Launcher-1.3.jar"
+"%JAVA_HOME%\bin\java" "%JAVA_OPTS%" -jar ".\betterFORM.jar" -Xms256m -Xmx1024m
 :eof
 

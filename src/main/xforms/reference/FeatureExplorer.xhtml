@@ -681,11 +681,11 @@
 <!-- ######################### Content end ################################## -->
 <!-- ######################### Content end ################################## -->
 
-    <script id="betterformJs" type="text/javascript" >
+    <script id="betterformJs" type="text/javascript" defer="defer" >
         loadBetterFORMJs(dojo.attr(dojo.byId("fluxProcessor"), "contextroot") + '/resources/scripts/release/dojo/betterform/betterform-xforms-feature-explorer.js', 'betterform.BfRequiredXFormsFeatureExplorer');
     </script>
 
-    <script type="text/javascript">
+    <script type="text/javascript" defer="defer">
         function addToDocument(id) {
             var model = dojo.query(".xfModel", dojo.doc)[0];
             dijit.byId(dojo.attr(model, "id")).getInstanceAsString(id,

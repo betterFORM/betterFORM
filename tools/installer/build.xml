@@ -10,6 +10,7 @@
 
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
+    <!-- TODO: Write clean-all target to cleanup all modules -->
     <target name="clean">
         <delete dir="${basedir}/../../eXist/target"/>
         <delete dir="${basedir}/target"/>
