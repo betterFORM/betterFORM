@@ -139,7 +139,7 @@ declare function local:generateUploadMarkup($uri as xs:string, $contextPath as x
 };
 
 declare function local:generateExistAdminClientMarkup($uri as xs:string, $contextPath as xs:string, $path as xs:string) {
-<div class="eXistAdminClient" style="display:inline-block;float:left;margin-right:12px;margin-top:4px;">
+<div class="eXistAdminClient" >
 	<span class="label">
 		<a href="{fn:concat($contextPath,'/webstart/exist.jnlp')}">
 			<img style="height:28px;width:28px;" src="{fn:concat($contextPath, '/resources/images/eXist-admin.png')}" title="download eXist Admin Client"/>
