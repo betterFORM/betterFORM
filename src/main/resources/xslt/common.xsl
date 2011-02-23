@@ -150,15 +150,20 @@
         <!-- copy inline javascript -->
         <xsl:for-each select="script">
             <script>
-                    <xsl:attribute name="type">
-                        <xsl:value-of select="@type"/>
-                    </xsl:attribute>
-                    <xsl:if test="@src">
+                <xsl:attribute name="type">
+                    <xsl:value-of select="@type"/>
+                </xsl:attribute>
+                <xsl:if test="@src">
                     <xsl:attribute name="src">
                         <xsl:value-of select="@src"/>
                     </xsl:attribute>
-                    </xsl:if>   
-                    <xsl:apply-templates mode="inline"/>
+                </xsl:if>
+                <xsl:if test="@defer">
+                    <xsl:attribute name="defer">
+                        <xsl:value-of select="@defer"/>
+                    </xsl:attribute>
+                </xsl:if>
+                <xsl:apply-templates mode="inline"/>
             </script>
                 <xsl:text>
 </xsl:text>

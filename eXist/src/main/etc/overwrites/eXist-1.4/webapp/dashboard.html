@@ -254,7 +254,8 @@
 
 					},
 					onPlay:function(){
-						load('/betterform/rest/db/betterform/utils/FormsQuery.xql?fragment=true&ajax=load');
+						var uri = "rest/db/betterform/utils/FormsQuery.xql?fragment=true&ajax=load";
+						load(uri);
 					},
 					onEnd:function(){
 						dojo.style("bfLogo", "display", "none");
@@ -365,12 +366,12 @@
 			}
 
 			dojo.addOnLoad(function() {
-				animateOne('/betterform/rest/db/betterform/utils/FormsQuery.xql?fragment=true&ajax=load');
+				var uri = "rest/db/betterform/utils/FormsQuery.xql?fragment=true&ajax=load";
+				animateOne(uri);
 			});
 
 			// -->
 			function sendFile() {
-                console.warn("")
 				var value = dojo.attr(dojo.query(".bfFileUpload")[0], "value");
 				if (value == null || value == "") {
 					var noFileDialog = new dijit.Dialog({
@@ -382,7 +383,7 @@
 
 				} else {
 					dojo.io.iframe.send({
-						url: "/betterform/rest/db/betterform/utils/upload-document.xql",
+						url:  "rest/db/betterform/utils/upload-document.xql",
 						method: "post",
 						handleAs: "text",
 						form: dojo.query(".upload")[0],
@@ -414,7 +415,7 @@
 					emptyCollectionNameDialog.show();
 				} else {
 					dojo.io.iframe.send({
-						url: "/betterform/rest/db/betterform/utils/create-collection.xql",
+						url: "rest/db/betterform/utils/create-collection.xql",
 						method: "post",
 						handleAs: "text",
 						form: dojo.query(".createCollection")[0],

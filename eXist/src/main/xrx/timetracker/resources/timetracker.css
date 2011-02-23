@@ -76,7 +76,7 @@ select{
 }
 
 #closeFilter-value{
-    background-image:url(/exist/rest/db/betterform/apps/timetracker/resources/images/search.gif);
+    background-image:url(/betterform/rest/db/betterform/apps/timetracker/resources/images/search.gif);
     width:24px;
     height:24px;
 }

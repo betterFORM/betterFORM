@@ -216,6 +216,15 @@ a.active {
 	-webkit-border-radius:5px;
 }
 
+/*
+special handling for alerts and hints in compact groups as the label is above control and changes the situation.
+alert + hints should always be aligned with the control.
+*/
+.xfCompactGroup .xfControl .xfAlert,
+.xfCompactGroup .xfControl .xfHint{
+	bottom:3px;
+}
+
 .xfAlert {
     border: 1px solid #E5A3A3;
     color: #333333;

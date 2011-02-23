@@ -54,7 +54,7 @@
 
         <mkdir dir="${basedir}/target/jetty"/>
         <unzip src="${basedir}/lib/betterFORM-Launcher-1.3-jetty-distribution.zip" dest="${basedir}/target/jetty"/>
-
+        <move file="${basedir}/target/jetty/betterform/betterFORM-Launcher-1.3.jar" tofile="${basedir}/target/jetty/betterform/betterFORM.jar"/>
         <mkdir dir="${basedir}/target/bf-resources/"/>
         <copy description="copy betterform script resources"
               todir="${basedir}/target/bf-resources"
@@ -73,6 +73,7 @@
         <!-- Install eXist-db to target -->
         <java jar="${target}/exist-install.jar"
               fork="true"
+              maxmemory="512m"
               spawn="false" failonerror="true">
             <arg line="-p ${basedir}/target/bf-eXist/"/>
         </java>
@@ -109,6 +110,7 @@
         </copy>
 
 	    <unzip src="${basedir}/lib/betterFORM-Launcher-1.3-xrx-distribution.zip" dest="${basedir}/target/bf-eXist"/>
+        <move file="${basedir}/target/bf-eXist/betterFORM-Launcher-1.3.jar" tofile="${basedir}/target/bf-eXist/betterFORM.jar"/>
 
     </target>
 
@@ -117,7 +119,10 @@
 
         <ant dir="${basedir}/target/bf-eXist/extensions/betterform" antfile="build.xml" target="start-eXist"/>
 
-        <java jar="${basedir}/target/bf-eXist/betterFORM-Setup.jar" fork="true" dir="${basedir}/target/bf-eXist"
+        <java jar="${basedir}/target/bf-eXist/betterFORM-Setup.jar"
+              fork="true"
+              dir="${basedir}/target/bf-eXist"
+              maxmemory="512m"
               failonerror="true"/>
 
         <delete file="${basedir}/target/bf-eXist/betterFORM-Setup.jar"/>

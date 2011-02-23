@@ -93,7 +93,7 @@ declare option exist:serialize "method=html media-type=text/html";
         <div id="pagecontent">
             <div id="wrapper">
                 <div dojoType="dojox.data.XmlStore"
-                     url="/exist/rest/db/betterform/apps/timetracker/data/task?_query=//task&amp;_howmany=5&amp;_xsl=/db/betterform/apps/timetracker/views/flattenAttributes.xsl"
+                     url="/betterform/rest/db/betterform/apps/timetracker/data/task?_query=//task&amp;_howmany=5&amp;_xsl=/db/betterform/apps/timetracker/views/flattenAttributes.xsl"
                      jsId="taskStore"
                      label="title"
                      attributeMap="{{'duration.@hours':'@hours'}}">

@@ -88,7 +88,7 @@ declare function local:project() as element()?
    <head>
       <title>All Tasks</title>
       <link rel="stylesheet" type="text/css"
-                href="/exist/rest/db/betterform/apps/timetracker/resources/timetracker.css"/>
+                href="/betterform/rest/db/betterform/apps/timetracker/resources/timetracker.css"/>
 
     </head>
     <body>

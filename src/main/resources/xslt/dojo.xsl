@@ -141,7 +141,7 @@
                 <xsl:call-template name="addSimileTimelineImports" />
             </xsl:if>
 
-            <script type="text/javascript">
+            <script type="text/javascript" defer="defer">
                 <xsl:if test="$debug-enabled">function getXFormsDOM(){
                         Flux.getXFormsDOM(document.getElementById("bfSessionKey").value,
                             function(data){

@@ -219,10 +219,10 @@
     <exist>
         <betterform>
             <xrx>
-                <installed>/home/zwobit/betterForm-XXX</installed>
+                <installed>/Appications/betterFORM</installed>
             </xrx>
         </betterform>
-        <installed>/home/zwobit/betterForm-YYY</installed>
+        <installed>/Appications/eXist</installed>
     </exist>
 </root>
 

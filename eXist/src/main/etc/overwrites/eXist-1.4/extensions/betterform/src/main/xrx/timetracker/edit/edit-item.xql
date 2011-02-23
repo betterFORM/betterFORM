@@ -30,8 +30,8 @@ declare function local:mode() as xs:string{
         xmlns:ev="http://www.w3.org/2001/xml-events">
    <head>
       <title>Edit Task</title>
-       <link rel="stylesheet" type="text/css" href="/betterform/resources/styles/bf.css"/>
-       <link rel="stylesheet" type="text/css" href="/betterform/resources/styles/demo.css"/>
+       <link rel="stylesheet" type="text/css" href="/betterform/rest/db/betterform/forms/css/bf.css"/>
+       <link rel="stylesheet" type="text/css" href="/betterform/rest/db/betterform/forms/demo/styles/demo.css"/>
        <link rel="stylesheet" type="text/css"
              href="/betterform/rest/db/betterform/apps/timetracker/resources/timetracker.css"/>
        <link rel="stylesheet" type="text/css"

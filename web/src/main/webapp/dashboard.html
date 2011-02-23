@@ -217,13 +217,13 @@
 
 
 
+<!--
 	  <script type="text/javascript" src="resources/scripts/release/dojo/dojo/dojo.js" >&#160;</script>
 	  <script type="text/javascript" src="resources/scripts/release/dojo/betterform/betterform-dashboard.js">&#160;</script>
+-->
 
-<!--
 	  <script type="text/javascript" src="resources/scripts/dojo/dojo.js" djConfig="parseOnLoad:true">&#160;</script>
 	  <script type="text/javascript" src="resources/scripts/betterform/BfRequiredDashboard.js">&#160;</script>
--->
 
 
 	  <script type="text/javascript">
@@ -253,7 +253,9 @@
 
 					},
 					onPlay:function(){
-						load('/betterform/FormBrowser?path=forms&fragment=true&ajax=load');
+						console.debug("onPlay");
+						var uri = "FormBrowser?path=forms&fragment=true&ajax=load";
+						load(uri);
 					},
 					onEnd:function(){
 						dojo.style("bfLogo", "display", "none");
@@ -364,7 +366,9 @@
 			}
 
 			dojo.addOnLoad(function() {
-				animateOne('/betterform/FormBrowser?path=forms&fragment=true&ajax=load');
+				console.debug("dojo.addOnLoad");
+				var uri = "FormBrowser?path=forms&fragment=true&ajax=load";
+				animateOne(uri);
 			});
 
 			// -->
@@ -379,8 +383,10 @@
 					noFileDialog.show();
 
 				} else {
+					console.debug("sendFile.dojo.io.iframe.send");
 					dojo.io.iframe.send({
-						url: "/betterform/FileUpload",
+
+						url: "FileUpload",
 						method: "post",
 						handleAs: "text",
 						form: dojo.query(".upload")[0],
@@ -411,8 +417,9 @@
 					});
 					emptyCollectionNameDialog.show();
 				} else {
+					console.debug("createCollection");
 					dojo.io.iframe.send({
-						url: "/betterform/FileUpload",
+						url: "FileUpload",
 						method: "post",
 						handleAs: "text",
 						form: dojo.query(".createCollection")[0],
