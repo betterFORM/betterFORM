@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <shortcuts>
   <skipIfNotSupported/>
-  <programGroup defaultName="betterFORM"
-                location="startMenu"/>
+  <programGroup defaultName="betterFORM" location="startMenu"/>
   <shortcut
-    name="betterFORM limeGreen"
-    target="javaw"
-    commandLine="-jar &quot;$INSTALL_PATH/betterFORM-Launcher-1.3.jar&quot; -Xmx512m"
+    name="betterFORM XRX"
+    programGroup="yes"
+    target="$INSTALL_PATH\start.bat"
+    commandLine=""
     workingDirectory="$INSTALL_PATH"
-    description="betterFORM 3.2 prerelease"
+    description="betterFORM limegreen prerelease"
     type="Application"
     iconFile="$INSTALL_PATH\images\betterform_icon16x16.ico"
     iconIndex="0"
-    initialState="noShow"
-    programGroup="yes"
+            initialState="normal"
+            encoding="UTF-8"
     desktop="yes"
     applications="no"
+	terminal="true"
     startMenu="yes"
     startup="no">
-    <createForPack name="betterForm"/>
+    <createForPack name="betterForm_XRX"/>
   </shortcut>
 </shortcuts>

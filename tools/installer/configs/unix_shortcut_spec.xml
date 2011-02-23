@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <shortcuts>
-    <programGroup defaultName="betterFORM"
-                  location="applications"/>
+    <skipIfNotSupported/>
+    <programGroup defaultName="betterFORM" location="applications"/>
     <shortcut
-            name="betterFORM limeGreen"
+            name="betterFORM"
             programGroup="yes"
             target="$INSTALL_PATH/start.sh"
             commandLine=""
             workingDirectory="$INSTALL_PATH"
-            description="betterFORM 3.2 prerelease"
+            description="betterFORM limegreen prerelease"
             type="Application"
             iconFile="$INSTALL_PATH/images/betterform_icon16x16.png"
             iconIndex="0"
@@ -21,24 +21,4 @@
             startup="no">
         <createForPack name="betterFORM_XRX"/>
     </shortcut>
-
-    <shortcut
-            name="Uninstaller"
-            programGroup="yes"
-            desktop="yes"
-            applications="no"
-            startMenu="no"
-            startup="no"
-            target="/usr/lib/java/bin/java"
-            commandLine="-jar &quot;$INSTALL_PATH/Uninstaller/uninstaller.jar&quot;"
-            initialState="noShow"
-            iconFile="trashcan_full"
-            iconIndex="0"
-            workingDirectory=""
-            type="Application"
-            encoding="UTF-8"
-            description="betterFORM Uninstaller">
-        <createForPack name="betterFORM_XRX"/>
-    </shortcut>
-
 </shortcuts>

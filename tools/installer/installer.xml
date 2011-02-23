@@ -112,8 +112,8 @@
     </native>
 
     <locale>
-        <!-- <langpack iso3="deu"/> -->
         <langpack iso3="eng"/>
+        <!-- <langpack iso3="deu"/> -->
     </locale>
 
     <resources>
@@ -138,7 +138,8 @@
         <res id="TargetPanel.dir.windows"   src="../resource/targetdir-windows.txt" />
         <res id="TargetPanel.dir.unix"      src="../resource/targetdir-unix.txt" />
         <res id="TargetPanel.dir.macosx"    src="../resource/targetdir-mac.txt" />
-     <!--   <res src="../configs/unix_shortcut_spec.xml" id="unix_shortcut_spec.xml"/>-->
+        <res id="shortcutSpec.xml"          src="../configs/default_shortcut_spec.xml" />
+        <res id="Win_shortcutSpec.xml"      src="../configs/win_shortcut_spec.xml"/>
 
     </resources>
 
@@ -152,7 +153,7 @@
         <panel classname="UserInputPanel" id="UserInputPanel.0" condition="exist"/>
         <panel classname="InstallPanel"/>
         <panel classname="ProcessPanel" condition="exist"/>
-        <!-- <panel classname="ShortcutPanel"/> -->
+         <panel classname="ShortcutPanel"/>
         <panel classname="FinishPanel"/>
     </panels>
 
@@ -184,12 +185,18 @@
             <executable targetfile="$INSTALL_PATH/bin/shutdown.sh" stage="never" os="unix"/>
             <executable targetfile="$INSTALL_PATH/bin/backup.sh" stage="never" os="unix"/>
             <executable targetfile="$INSTALL_PATH/build.sh" stage="never" os="unix"/>
-<!--
-            <singlefile src="../resource/start.bat" target="$INSTALL_PATH" override="true"/>
-            <singlefile src="../resource/start.sh" target="$INSTALL_PATH" override="true"/>
--->
+            <singlefile src="../resource/start.bat" target="$INSTALL_PATH/start.bat" override="true"/>
+            <singlefile src="../resource/start.sh" target="$INSTALL_PATH/start.sh" override="true"/>
             <singlefile src="bf-eXist/tools/wrapper/conf/wrapper.conf.install" target="$INSTALL_PATH/tools/wrapper/conf/wrapper.conf" override="true"/>
             <parsable targetfile="$INSTALL_PATH/tools/wrapper/conf/wrapper.conf"/>
+
+<!--
+            <executable
+                    targetfile="$INSTALL_PATH/start.bat"
+                    stage="postinstall"
+                    keep="true"
+                    />
+-->
         </pack>
 
         <pack id="jetty" name="betterFORM standalone" required="no" preselected="no" condition="jetty-install">
