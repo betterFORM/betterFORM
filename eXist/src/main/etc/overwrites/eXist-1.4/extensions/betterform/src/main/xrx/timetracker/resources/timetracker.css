@@ -56,6 +56,11 @@ select{
     margin:0 10px 0 10px;
 }
 
+.xfControl {
+	width:100%;
+}
+
+
 .xfInput .xfValue{
     height:auto;
 }
@@ -274,8 +279,8 @@ tr.xfRepeatItem  td {
 
 .xsdDate .xfValue {
 	width:100px;
-
 }
+
 #searchBar .xsdDate .xfValue{
     background:transparent;
     width:120px;
@@ -342,6 +347,12 @@ tr.xfRepeatItem  td {
     
 }
 
+#add-task-table .xfAlert,
+#add-task-table .xfHint,
+#add-task-table .xfInfo {
+	position:relative;
+}
+
 #add-task-table .bfGroupLabelLeft {
     width:99%;
 }
@@ -380,6 +391,6 @@ tr.xfRepeatItem  td {
     padding-bottom:2px;
 }
 .InlineRoundBordersAlert .suppressInfo .info{
-	position:absolute;
+	position:relative;
 	left:-1000px;
 }

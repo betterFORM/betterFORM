@@ -11,12 +11,13 @@ declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
         <link rel="stylesheet" type="text/css" href="./resources/InlineRoundBordersAlert.css"/>
         <link rel="stylesheet" type="text/css" href="./resources/timetracker.css"/>
 
-        <script id="betterformJs" type="text/javascript" >
-            loadBetterFORMJs('/betterform/resources/scripts/release/dojo/betterform/betterform-timetracker.js', 'betterform.BfRequiredTimeTracker');
-
+        <script id="betterformJs" type="text/javascript" defer="defer">
+            <!--
+                loadBetterFORMJs('/betterform/resources/scripts/release/dojo/betterform/betterform-timetracker.js', 'betterform.BfRequiredTimeTracker');
+            //-->
         </script>
 
-        <script type="text/javascript">
+        <script type="text/javascript" defer="defer">
             <!--
             var xfReadySubscribers;
 

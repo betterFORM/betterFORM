@@ -153,12 +153,12 @@
                 <xsl:attribute name="type">
                     <xsl:value-of select="@type"/>
                 </xsl:attribute>
-                <xsl:if test="@src">
+                <xsl:if test="exists(@src)">
                     <xsl:attribute name="src">
                         <xsl:value-of select="@src"/>
                     </xsl:attribute>
                 </xsl:if>
-                <xsl:if test="@defer">
+                <xsl:if test="exists(@defer)">
                     <xsl:attribute name="defer">
                         <xsl:value-of select="@defer"/>
                     </xsl:attribute>

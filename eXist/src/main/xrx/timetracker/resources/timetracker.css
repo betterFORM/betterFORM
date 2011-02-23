@@ -380,6 +380,6 @@ tr.xfRepeatItem  td {
     padding-bottom:2px;
 }
 .InlineRoundBordersAlert .suppressInfo .info{
-	position:absolute;
+	position:relative;
 	left:-1000px;
 }
