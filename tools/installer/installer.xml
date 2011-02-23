@@ -138,6 +138,7 @@
         <res id="TargetPanel.dir.windows"   src="../resource/targetdir-windows.txt" />
         <res id="TargetPanel.dir.unix"      src="../resource/targetdir-unix.txt" />
         <res id="TargetPanel.dir.macosx"    src="../resource/targetdir-mac.txt" />
+        <res src="../configs/unix_shortcut_spec.xml" id="unix_shortcut_spec.xml"/>
 
     </resources>
 
@@ -151,12 +152,12 @@
         <panel classname="UserInputPanel" id="UserInputPanel.0" condition="exist"/>
         <panel classname="InstallPanel"/>
         <panel classname="ProcessPanel" condition="exist"/>
-        <!-- <panel classname="ShortcutPanel"/> -->
+         <panel classname="ShortcutPanel"/>
         <panel classname="FinishPanel"/>
     </panels>
 
     <packs>
-        <pack name="betterFORM XRX" id="betterFORM-eXist-bundle" required="no" preselected="yes" condition="exist-install">
+        <pack name="betterFORM_XRX" id="betterFORM-eXist-bundle" required="no" preselected="yes" condition="exist-install">
             <description>betterFORM and eXist bundled</description>
 
             <fileset targetdir="$INSTALL_PATH" dir="bf-eXist"/>
@@ -184,6 +185,8 @@
             <executable targetfile="$INSTALL_PATH/bin/backup.sh" stage="never" os="unix"/>
             <executable targetfile="$INSTALL_PATH/build.sh" stage="never" os="unix"/>
 
+            <singlefile src="../resource/start.bat" target="$INSTALL_PATH" override="true"/>
+            <singlefile src="../resource/start.sh" target="$INSTALL_PATH" override="true"/>
             <singlefile src="bf-eXist/tools/wrapper/conf/wrapper.conf.install" target="$INSTALL_PATH/tools/wrapper/conf/wrapper.conf" override="true"/>
             <parsable targetfile="$INSTALL_PATH/tools/wrapper/conf/wrapper.conf"/>
         </pack>
@@ -191,7 +194,6 @@
         <pack id="jetty" name="betterFORM standalone" required="no" preselected="no" condition="jetty-install">
             <description>betterFORM standalone running on jetty webcontainer</description>
             <fileset dir="jetty/betterform" targetdir="$INSTALL_PATH" includes="*/**"/>
-
             <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/web/root"/>
         </pack>
 
