@@ -37,6 +37,13 @@
         <delete dir="${core.dir}/target"/>
         <delete dir="${web.dir}/target"/>
         <delete dir="${betty.dir}/target"/>
+
+        <delete dir="${basedir}/eXist/target"/>
+        <delete dir="${basedir}/eXist/target-utils"/>
+        <delete dir="${basedir}/tools/AppBuilder/target"/>
+        <delete dir="${basedir}/tools/installer/target"/>
+        <delete dir="${basedir}/tools/installer/target"/>
+        <delete dir="${basedir}/tools/installer/target-utils"/>
     </target>
 
 
