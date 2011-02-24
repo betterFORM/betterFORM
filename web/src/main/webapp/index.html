@@ -5,7 +5,7 @@
    <head>
       <meta http-equiv="refresh" content="0;URL=site/en/index.html">
 	   <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
-      <title>betterFORM lightSteelBlue: XForms Dojo Framework - index.xhtml</title>
+      <title>betterFORM limeGreen: XForms Dojo Framework - index.xhtml</title>
       <meta name="Author" content="Joern Turner" />
       <meta name="Author" content="Lars Windauer" />
       <meta name="publisher" content="betterFORM Project" />
@@ -22,8 +22,34 @@
       <link rel="ICON" href="../../images/betterform.ico" type="image/x-icon" />
 
 
-
-      </head>
-   <body id="index" style="overflow:hidden;">
-   </body>
+		<script type="text/javascript" language="JavaScript">
+			xJS = false;
+			newURL = "site/en/index.html";
+			if (xJS) {
+				window.location.replace(newURL);
+			}
+			else {
+				window.setTimeout(window.location.href = newURL, 1000);
+			}
+		</script>
+        <link rel="stylesheet" type="text/css" href="styles/bf.css">
+	</head>
+	<body id="index" style="overflow:hidden;" >
+		<div class="page">
+			<div id="header">
+				<div class="pageMarginBox">
+					<div id="logoBar"><a href="index.html" class="link" id="linkLogo">
+						<img id="logo" src="images/logo.png" alt="betterFORM project"/></a>
+						<div id="mission">the XForms way to build the web</div>
+					</div>
+				</div>
+			</div>
+			<div id="content-area" style=" background:#FFFFFF;height: 600px;width: 100%;">
+				<div style="text-align:center;">
+					<h3>loading betterFORM</h3>
+					<h3><a href="site/en/index.html">Go</a> ...</h3>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>

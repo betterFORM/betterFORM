@@ -1,7 +1,10 @@
 dojo.provide("betterform.ui.common.GlobalAlert");
 
+
+dojo.require("betterform.ui.common.Alert");
+
 dojo.declare("betterform.ui.common.GlobalAlert",
-        null,
+        betterform.ui.common.Alert,
 {
     handleValid:function(id,action){
         console.warn("COMING SOON GLOBAL ALERTS - betterform.ui.common.GlobalAlert.valid [id:" + id , " action: " + action + "]");

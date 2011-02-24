@@ -7,7 +7,7 @@ dojo.provide("betterform.ui.output.Image");
 
 dojo.require("dijit._Widget");
 dojo.require("dijit._Templated");
-dojo.require("betterform.ui.ControlValue");
+
 
 
 dojo.declare(

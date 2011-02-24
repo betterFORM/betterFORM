@@ -378,7 +378,7 @@
 	</xsl:template>
 
     <xsl:template name="build-items-itemset">
-		<optgroup id="{@id}" dojoType="betterform.ui.select.OptGroup" label="">
+		<optgroup id="{@id}" class="xfOptGroup" dojoType="betterform.ui.select.OptGroup" label="">
 			<xsl:for-each select="xforms:item">
 				<xsl:call-template name="build-items-item"/>
             </xsl:for-each>

@@ -5,19 +5,22 @@
       
       <title>Trigger control rendered as button</title>
       <style type="text/css">
-            #trigger1-value {
-                background: url(../../images/bf_logo_67x27.png) no-repeat center;
+            #control1-value {
+                background: url(images/bf_logo_67x27.png) no-repeat center;
                 width: 100px;
                 height: 40px;
             }
         </style>
        xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"<link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
-      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/styles/reference.css" /><script xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="text/javascript">
+      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="reference.css" /><script xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="text/javascript">
                 dojo.require("dojox.highlight");
                 dojo.require("dojox.highlight.languages.xml");
                 //                dojo.require("dojox.highlight.languages.pygments.xml");
                 dojo.require("dijit.form.Button");
                 dojo.require('dijit.layout.ContentPane');
+                dojo.subscribe("/xf/ready", function(){
+                    fluxProcessor.skipshutdown=true;
+                });
             </script></head>
    
    <body class="soria InlineAlert" style="margin:30px">
@@ -29,17 +32,17 @@
                   
                   <data>
                      
-                     <trigger1 constraint="true" readonly="false" required="false" relevant="true">
+                     <control1 constraint="true" readonly="false" required="false" relevant="true">
                         
                         <value></value>
                         
-                     </trigger1>
+                     </control1>
                      
                   </data>
                   
                </xf:instance>
                
-               <xf:bind nodeset="trigger1">
+               <xf:bind nodeset="control1">
                   
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="string"></xf:bind>
                   
@@ -66,8 +69,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d36e116" onmouseover="showClass('xfTrigger');" onmouseout="hideClass('xfTrigger');">xfTrigger
-                     <div dojoType="dijit.Tooltip" connectId="d36e116">matches an Element that represents a XForms
+                  <td id="d21e116" onmouseover="showClass('xfTrigger');" onmouseout="hideClass('xfTrigger');">xfTrigger
+                     <div dojoType="dijit.Tooltip" connectId="d21e116">matches an Element that represents a XForms
                         trigger
                         element
                         
@@ -96,7 +99,7 @@
                   <td id="xfvalue" onmouseover="showClass('xfValue');" onmouseout="hideClass('xfValue');">xfValue
                      
                      <div dojoType="dijit.Tooltip" connectId="xfvalue">
-                        matches the wigdet part of an XForms control
+                        matches the widget part of an XForms control
                         
                      </div>
                   </td>
@@ -208,7 +211,7 @@
             </div>
             <table id="references">
                <tr>
-                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="../../resources/images/w3c_home_nb.png" alt="W3C" /></a></td>
+                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="images/w3c_home_nb.png" alt="W3C" /></a></td>
                   <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
                </tr>
                <tr>
@@ -225,15 +228,15 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:trigger id="trigger1" ref="trigger1/value" incremental="true">
+            <xf:trigger id="control1" ref="control1/value">
                
                <xf:label></xf:label>
                
                <xf:hint>a Hint for this control</xf:hint>
                
-               <xf:help>help for trigger1</xf:help>
+               <xf:help>help for control1</xf:help>
                
-               <xf:alert>invalid</xf:alert>
+               <xf:message>The trigger was clicked</xf:message>
                
             </xf:trigger>
          </div>
@@ -243,25 +246,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="trigger1-readonly" navindex="-1" ref="trigger1/@readonly" incremental="true">
+               <xf:input id="control1-readonly" navindex="-1" ref="control1/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="trigger1-required" navindex="-1" ref="trigger1/@required" incremental="true">
+               <xf:input id="control1-required" navindex="-1" ref="control1/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="trigger1-relevant" navindex="-1" ref="trigger1/@relevant" incremental="true">
+               <xf:input id="control1-relevant" navindex="-1" ref="control1/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="trigger1-valid" navindex="-1" ref="trigger1/@constraint" incremental="true">
+               <xf:input id="control1-valid" navindex="-1" ref="control1/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   
@@ -271,11 +274,11 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:trigger id="trigger1" ref="trigger1/value" incremental="true"&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:trigger id="control1" ref="control1/value"&gt;
     &lt;xf:label&gt;&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
-    &lt;xf:help&gt;help for trigger1&lt;/xf:help&gt;
-    &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
+    &lt;xf:help&gt;help for control1&lt;/xf:help&gt;
+    &lt;xf:message&gt;The trigger was clicked&lt;/xf:message&gt;
 &lt;/xf:trigger&gt;
 </code></pre></div><script type="text/javascript">
                     function showClass(cssClass){

@@ -101,7 +101,7 @@
         -->
         <property name="betterform.ui.defaultAlertText" value="The specified value is invalid"/>
 
-        <property name="betterform.debug-allowed" value="true" description="if debug may be switched by Url param 'debug'"/>
+        <property name="betterform.debug-allowed" value="false" description="if debug may be switched by Url param 'debug'"/>
 
         <property name="webprocessor.doIncludes" value="true" description="if true the incoming XForms will be scanned for bf:include tags and transformed accordingly"/>
         <property name="admin.mail" value="foo@bar.de" description="a mail address to report problems and errors with forms"/>

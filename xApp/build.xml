@@ -18,7 +18,7 @@
     <property name="root.dir" value=".."/>
     <property name="src.dir" value="../src"/>
     <property name="core.dir" value="../core"/>
-    <property name="web.dir" value="."/>
+    <property name="web.dir" value="../web"/>
     <property name="dojo.name" value="dojo-release-1.2.3"/>
     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
     <property name="targetname" value="${web.app.name}-${web.app.version}"/>
@@ -41,7 +41,6 @@
         <echo message="cleaning up xApp..."/>
         <echo message="####################################################################################"/>
         <echo/>
-        <delete dir="${basedir}/../web/target"/>
         <delete dir="${basedir}/target"/>
     </target>
 
@@ -83,26 +82,8 @@
               overwrite="true">
             <fileset dir="${root.dir}/web/src/main/webapp/WEB-INF" includes="**/*"/>
         </copy>
-
         <echo/>
-        <echo message="####################################################################################"/>
-        <echo message="copying libs from web module..."/>
-        <echo message="####################################################################################"/>
         <echo/>
-        <copy todir="${basedir}/target/${xapp.app.name}/WEB-INF/lib"
-              overwrite="true">
-            <fileset dir="${root.dir}/web/target/${web.app.name}/WEB-INF/lib" />
-        </copy>
-
-        <echo/>
-        <echo message="####################################################################################"/>
-        <echo message="adding/overwriting resources local xApp resources to target..."/>
-        <echo message="####################################################################################"/>
-        <echo/>
-        <copy todir="${basedir}/target/${xapp.app.name}"
-              overwrite="true">
-            <fileset dir="${basedir}/src/main/webapp"/>
-        </copy>
 
     </target>
 
@@ -183,9 +164,23 @@
         <echo message="compiling JavaScript..."/>
         <echo message="####################################################################################"/>
         <echo/>
+        <ant antfile="${basedir}/../web/build.xml" target="deploy-resources" dir="${basedir}/../web" inheritall="false">
+            <property name="webapp.dir" value="${basedir}/target/${xapp.app.name}"/>
+        </ant>
         <ant antfile="${basedir}/../web/build.xml" target="build-dojo" dir="${basedir}/../web" inheritall="false">
             <property name="webapp.dir" value="${basedir}/target/${xapp.app.name}"/>
         </ant>
+
+        <echo message="####################################################################################"/>
+        <echo message="adding/overwriting resources local xApp resources to target..."/>
+        <echo message="####################################################################################"/>
+        <echo/>
+        <copy todir="${basedir}/target/${xapp.app.name}"
+              overwrite="true">
+            <fileset dir="${basedir}/src/main/webapp"/>
+        </copy>
+        <echo/>
+
 
         <echo/>
         <echo message="####################################################################################"/>

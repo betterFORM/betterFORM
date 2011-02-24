@@ -6,12 +6,15 @@
       <title>HTML output control</title>
        xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
-      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/styles/reference.css" /><script xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="text/javascript">
+      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="reference.css" /><script xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="text/javascript">
                 dojo.require("dojox.highlight");
                 dojo.require("dojox.highlight.languages.xml");
                 //                dojo.require("dojox.highlight.languages.pygments.xml");
                 dojo.require("dijit.form.Button");
                 dojo.require('dijit.layout.ContentPane');
+                dojo.subscribe("/xf/ready", function(){
+                    fluxProcessor.skipshutdown=true;
+                });
             </script></head>
    
    <body class="soria InlineAlert" style="margin:30px">
@@ -24,7 +27,7 @@
                   
                   <data>
                      
-                     <output1 constraint="true" readonly="false" required="false" relevant="true">
+                     <control1 constraint="true" readonly="false" required="false" relevant="true">
                         
                         <value>
                            &lt;b&gt;Providing&lt;/b&gt;
@@ -33,14 +36,14 @@
                            
                         </value>
                         
-                     </output1>
+                     </control1>
                      
                   </data>
                   
                </xf:instance>
                
                
-               <xf:bind nodeset="output1">
+               <xf:bind nodeset="control1">
                   
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
                   
@@ -67,8 +70,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d15e127" onmouseover="showClass('xfOutput');" onmouseout="hideClass('xfOutput');">xfOutput
-                     <div dojoType="dijit.Tooltip" connectId="d15e127">matches an Element that represents a XForms
+                  <td id="d5e127" onmouseover="showClass('xfOutput');" onmouseout="hideClass('xfOutput');">xfOutput
+                     <div dojoType="dijit.Tooltip" connectId="d5e127">matches an Element that represents a XForms
                         output
                         element
                         
@@ -97,7 +100,7 @@
                   <td id="xfvalue" onmouseover="showClass('xfValue');" onmouseout="hideClass('xfValue');">xfValue
                      
                      <div dojoType="dijit.Tooltip" connectId="xfvalue">
-                        matches the wigdet part of an XForms control
+                        matches the widget part of an XForms control
                         
                      </div>
                   </td>
@@ -209,7 +212,7 @@
             </div>
             <table id="references">
                <tr>
-                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="../../resources/images/w3c_home_nb.png" alt="W3C" /></a></td>
+                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="images/w3c_home_nb.png" alt="W3C" /></a></td>
                   <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
                </tr>
                <tr>
@@ -226,13 +229,13 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:output id="output1" ref="output1/value" mediatype="text/html" incremental="true">
+            <xf:output id="control1" ref="control1/value" mediatype="text/html" incremental="true">
                
                <xf:label>a label:</xf:label>
                
                <xf:hint>a Hint for this control</xf:hint>
                
-               <xf:help>help for output1</xf:help>
+               <xf:help>help for control1</xf:help>
                
                <xf:alert>invalid</xf:alert>
                
@@ -244,25 +247,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="output1-readonly" navindex="-1" ref="output1/@readonly" incremental="true">
+               <xf:input id="control1-readonly" navindex="-1" ref="control1/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="output1-required" navindex="-1" ref="output1/@required" incremental="true">
+               <xf:input id="control1-required" navindex="-1" ref="control1/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="output1-relevant" navindex="-1" ref="output1/@relevant" incremental="true">
+               <xf:input id="control1-relevant" navindex="-1" ref="control1/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="output1-valid" navindex="-1" ref="output1/@constraint" incremental="true">
+               <xf:input id="control1-valid" navindex="-1" ref="control1/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   
@@ -274,20 +277,20 @@
          <h2>XForms Markup</h2>
          <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:instance&gt;
     &lt;data&gt;
-        &lt;output1 constraint="true" readonly="false" required="false" relevant="true"&gt;
+        &lt;control1 constraint="true" readonly="false" required="false" relevant="true"&gt;
             &lt;value&gt;
                 &lt;b&gt;Providing&lt;/b&gt;
                 &lt;i&gt;basic&lt;/i&gt; HTML &lt;u&gt;formatting&lt;/u&gt;
                 
             &lt;/value&gt;
-        &lt;/output1&gt;
+        &lt;/control1&gt;
     &lt;/data&gt;
 &lt;/xf:instance&gt;
 
-&lt;xf:output id="output1" ref="output1/value" mediatype="text/html" incremental="true"&gt;
+&lt;xf:output id="control1" ref="control1/value" mediatype="text/html" incremental="true"&gt;
     &lt;xf:label&gt;a label:&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
-    &lt;xf:help&gt;help for output1&lt;/xf:help&gt;
+    &lt;xf:help&gt;help for control1&lt;/xf:help&gt;
     &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
 &lt;/xf:output&gt;
 </code></pre></div>

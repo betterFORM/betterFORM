@@ -25,6 +25,9 @@ body {
     padding: 0; /*overflow: hidden;*/
 }
 
+.bfHelpWrapper a:active{
+	border:none;
+}
 /*
 #fluxProcessor {
     width: 100%;
@@ -87,17 +90,17 @@ a.active {
 }
 
 /* ################### some theme-specific (Dojo tundra) styles ################### */
-.tundra * {
+.bf * {
     font-family: sans-serif;
     font-size: 10pt;
 }
 
-.tundra .dijitToasterContainer {
+.bf .dijitToasterContainer {
     padding: 2px;
     border: thin dotted gray;
 }
 
-.tundra .dijitToasterContent {
+.bf .dijitToasterContent {
     font-size: smaller;
     color: black;
     padding-top: 2px;
@@ -105,7 +108,7 @@ a.active {
 
 }
 
-.tundra .xsdDateTime .dijitError {
+.bf .xsdDateTime .dijitError {
     background: #FFFFFF url(../images/validationInputBg.png) repeat-x scroll left top;
 }
 
@@ -134,9 +137,8 @@ a.active {
 /* matches Rating control (range) */
 .dojoxRatingStar {
     display: inline-block;
-    background-image: url(../images/rating_empty.gif);
-    background-position: left center;
-    position: relative;
+	background: url(../images/rating_empty.gif) left center;
+	position: relative;
     height: 15px;
     width: 15px;
     float: left;
@@ -161,6 +163,13 @@ a.active {
 */
 
 /* ***************************************************************************** */
+/* ********************* GENERAL betterFORM STYLES ************ */
+/* ***************************************************************************** */
+.xfControl{
+	position:relative;
+}
+
+/* ***************************************************************************** */
 /* ********************* GENERAL XFORMS MIP AND COMMON-CHILD STYLES ************ */
 /* ***************************************************************************** */
 
@@ -169,41 +178,92 @@ a.active {
 .xfInvalid .xfRadioLabel,
 .xfInvalid .xfCheckBoxLabel,
 .xfInvalid .dijitTextBox {
-	/*color:#CC0000;*/
+/*
+	border-color:#8B0000;
+	border-width:1px 1px 1px 1px;
+	border-style:solid;
+*/
 }
 
-.tundra .xfControl .bfInvalidControl,
-.tundra .xfControl .bfInvalidControl .xfDateTextBox,
-.tundra .xfMinimalTextarea .bfInvalidControl .xfValue,
-.tundra .xfControl .bfInvalidControl .xfTimeTextBox {
-	/*border:1px solid #CC0000;*/
-    /*background: #FFCFCF;*/
+.bfInvalidControl .xfValue,
+.bfInvalidControl .xfDateTextBox,
+.bfInvalidControl .xfValue,
+.bfInvalidControl .xfTimeTextBox {
+	border: 1px solid #8B0000;
+}
+
+
+.xfAlert, .xfHint{
+	position:absolute;
+	top:-3px;
+	/*bottom:2px;*/
+	font-size:9pt;
+	border:thin solid #cccccc;
+	padding: 3px 20px 3px 26px;
+	min-width:150px;
+	max-width:300px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
 }
 
 .xfAlert {
-    border: 1px solid #CC0000;
-	background-color:white;
+    border: 1px solid #E5A3A3;
     color: #333333;
-    margin: 2px;
-	padding:5px;
 	vertical-align:middle;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	
+	background:#FFCFCF url(../images/error.png) 5px 50% no-repeat;
+	z-index:200;
+}
+.xfAlert .closeAlertIcon{
+	background:#F2F2F2 url(../images/tabClose.gif) right center no-repeat;
+}
+
+.xfHint {
+	border-color:#DBDBDB;
+	background:#F2F2F2 url(../images/hint.png) 5px 50% no-repeat;
+	z-index:100;
+	color:#666666;
+}
+
+.bfHelpWrapper{
+	display:inline-block;
+}
+
+.xfHelp{
+	height:24px;
+	margin:0;
+	display:inline-block;
+	position:absolute;
+	right:0;
+	top:0;
+	z-index:800;
+	padding:0;
+}
+.bfHelpText{
+	background:white;
+	padding:10px;
+	border:thin solid #dedede;
+	position:absolute;
+	top:22px;
+	right:1px;
+	-moz-border-radius-topleft:10px;
+	-moz-border-radius-bottomright:10px;
+	-webkit-border-bottom-right-radius:10px;
+	-webkit-border-top-left-radius:10px;
+	z-index:800;
 }
 
 /* for tundra checkboxes */
-.tundra .dijitCheckBox,
-.tundra .dijitCheckBoxIcon {
-    background-image: url('../images/checkmarkNoBorder.png'); /* checkbox sprite image */
-    border: 1px solid gray;
+.bf .dijitCheckBox,
+.bf .dijitCheckBoxIcon {
+   	background-image: url('../images/checkmarkNoBorder.png');
+	 border: 1px solid gray;
     height: 14px;
     width: 14px;
 
 }
 
 /* matches selection open controls in tundra */
-.tundra .xfSelectOpen .xfValue {
+.bf .xfSelectOpen .xfValue {
     width: 150px;
     display: block;
 }
@@ -213,10 +273,10 @@ a.active {
     overflow-x: hidden; /*overflow-y: scroll;*/
     position: relative;
     width: 152px;
-    top: 0px;
+    top: 0;
 }
 
-.tundra .xfSelectOpen .dijitTextBox {
+.bf .xfSelectOpen .dijitTextBox {
     width: 140px;
 }
 
@@ -233,7 +293,7 @@ a.active {
 .bfHelpPane {
     position: absolute;
     top: 20px;
-    right: 0px;
+    right: 0;
     height: 40px;
     width: 500px;
 }
@@ -266,7 +326,7 @@ a.active {
 .bfProgressbar .background {
     background: url(../images/progress-bar.gif) repeat-x;
     height: 18px;
-    width: 0%;
+    width: 0;
 }
 
 .xfDisabled .bfProgressbar {
@@ -296,10 +356,11 @@ a.active {
 /* ***************************************************************************** */
 /* ***************************************************************************** */
 
-/*
+
 .xfContainer{
+	display:block;
 }
-*/
+
 
 .xfGroup {
     margin: 0;
@@ -472,19 +533,19 @@ a.active {
 /* ***************************************************************************** */
 
 .xfRepeatIndex {
-    background-color: lightyellow;
+    background-color:#FFCC33;
 }
 
 .xfRepeatIndex .xfValue {
-    background-color: lightyellow;
+    background-color:#FFCC33;
 }
 
 .bfRepeatIndexMouseOver {
-    background-color: lightblue;
+    background-color:#ADD8E6;
 }
 
 .bfRepeatIndexMouseOver .xfValue {
-    background-color: lightblue;
+    background-color:#ADD8E6;
 }
 
 .xfMinimalRepeat {
@@ -559,20 +620,16 @@ table .xfContainer{
 /* ***************************************************************************** */
 
 .xfReadWrite .dijitRadio, .xfReadWrite .dijitRadioIcon {
-    background-image: url(../images/checkmark.png);
-    background-position: -112px 50%;
-    background-repeat: no-repeat;
-    height: 16px;
+	background: url(../images/checkmark.png) no-repeat -112px 50%;
+	height: 16px;
     margin: 0;
     padding: 0;
     width: 16px;
 }
 
 .xfReadWrite .dijitRadioChecked {
-    background-image: url(../images/checkmark.png);
-    background-position: -96px 50%;
-    background-repeat: no-repeat;
-    height: 16px;
+	background: url(../images/checkmark.png) no-repeat -96px 50%;
+	height: 16px;
     margin: 0;
     padding: 0;
     width: 16px;
@@ -580,10 +637,8 @@ table .xfContainer{
 }
 
 .xfReadOnly .dijitRadio, .xfReadOnly .dijitRadioIcon {
-    background-image: url(../images/checkmark.png);
-    background-position: -144px 50%;
-    background-repeat: no-repeat;
-    height: 16px;
+	background: url(../images/checkmark.png) no-repeat -144px 50%;
+	height: 16px;
     margin: 0;
     padding: 0;
     width: 16px;
@@ -593,31 +648,29 @@ table .xfContainer{
     background-position: -129px 50%;
 }
 
-.xfReadWrite .dijitCheckBox, .xfReadWrite .dijitCheckBoxIcon {
-    background-image: url(../images/checkmarkNoBorder.png);
-    background-position: -16px 50%;
-    background-repeat: no-repeat;
-    height: 14px;
-    margin: 0;
-    padding: 0;
+.xfReadWrite .dijitCheckBox,
+.xfReadWrite .dijitCheckBoxIcon {
+    /*background-image: url(../images/checkmarkNoBorder.png);*/
+	background: no-repeat -16px 50%;
+	height: 14px;
     width: 14px;
+	margin: 0;
+	padding: 0;
 }
 
 .xfReadWrite .dijitCheckBoxChecked {
-    background-image: url(../images/checkmarkNoBorder.png);
-    background-position: 0 50%;
-    background-repeat: no-repeat;
-    height: 14px;
-    width: 14px;
-
+    /*background-image: url(../images/checkmarkNoBorder.png);*/
+	background: no-repeat 0 50%;
+	height: 14px;
+	width: 14px;
 }
 
-.xfReadOnly .dijitCheckBox, .xfReadOnly .dijitCheckBoxIcon {
-    background-image: url(../images/checkmarkNoBorder.png);
-    background-position: -48px 50%;
-    background-repeat: no-repeat;
-    height: 14px;
-    width: 14px;
+.xfReadOnly .dijitCheckBox,
+.xfReadOnly .dijitCheckBoxIcon {
+    /*background-image: url(../images/checkmarkNoBorder.png);*/
+	background: no-repeat -48px 50%;
+	height: 14px;
+	width: 14px;
 }
 
 .xfReadOnly .dijitCheckBoxChecked {
@@ -634,8 +687,8 @@ table .xfContainer{
     vertical-align: top;
 }
 
-.tundra .dijitCheckBoxIcon {
-    background-image: url(../images/checkmarkNoBorder.png);
+.bf .dijitCheckBoxIcon {
+    /*background-image: url(../images/checkmarkNoBorder.png);*/
 }
 
 .xfControl select {
@@ -760,7 +813,7 @@ td > div.bfPending > span {
 
 .dojoxRangeSlider .dijitSliderProgressBarV {
     position: absolute !important;
-    border-width: 0px;
+    border-width: 0;
 }
 
 .xfOutOfRange {

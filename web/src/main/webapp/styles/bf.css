@@ -28,6 +28,8 @@ a img {
 }
 
 *,
+.bf * ,
+.soria *,
 .tundra * {
 	font-family: Arial, Helvetica, sans-serif;
 }
@@ -39,10 +41,9 @@ body, a {
 body {
 	background-image: none;
 	padding: 0;
-	margin: 0;
 	color: #363636;
 	overflow: auto;
-	background: #565656;
+	background: #efefef;
 	text-align: center; /*height:100%;*/
 }
 
@@ -59,7 +60,9 @@ ul, li {
 	padding: 0;
 }
 
-.tundra body {
+.bf body ,
+.tundra body ,
+.soria body {
 	font-size: 12pt;
 	padding: 0;
 	margin: 0;
@@ -110,8 +113,8 @@ ul {
 	position:inherit;
 	top:0;
 	z-index:999;
-*/
 	border-bottom: thin dotted;
+*/
 	padding-top: 2px;
 	float: left;
 }
@@ -131,30 +134,24 @@ ul {
 #sub-header,
 #main-content,
 #footer {
-/*width:760px;*/
+	/* width:760px; */
 	width: 100%;
 	float: left;
-	/*
 	margin-left:auto;
 	margin-right:auto;
-*/
-}
-
-#sub-header {
-	height: 180px;
 }
 
 #mission {
 	letter-spacing: 0.3em;
 	font-size: 11pt;
 	float: right;
-	margin-top: 7px;
 }
 
 #topnav {
 	font-size: 11pt;
 	text-align: right;
-	margin-top: -12px;
+	margin-top: 23px;
+	float:right;
 }
 
 #topnav .menuDevider {
@@ -183,12 +180,14 @@ ul {
 }
 */
 
+/*
 .box {
 	margin-top: -24px;
 	width: 100%;
 	border: 1px solid #BABABA;
 	overflow: hidden;
 }
+*/
 
 /*
 	##################################################
@@ -225,6 +224,7 @@ a:hover {
 #header .link,
 #sub-header .link {
 	color: transparent;
+	float:left;
 }
 
 #sub-header .linkbox a,
@@ -259,9 +259,11 @@ a:hover {
 
 #sub-header {
 	background: #d3d3d3;
+/*
 	text-align: center;
 	display: block;
 	float: left;
+*/
 }
 
 #sub-header .contentBody {
@@ -281,11 +283,15 @@ a:hover {
 }
 */
 
+#content-area {
+	height:100%;
+}
+
 #main-content {
 	background: white;
 }
 
-#index #shadowTop {
+#shadowTop {
 	width: 760px;
 	margin-left: auto;
 	margin-right: auto;
@@ -293,22 +299,32 @@ a:hover {
 	position: absolute;
 	top: 120px;
 	z-index: 100;
+	left: 260px;
+	height: 10px;
 }
 
 #sub-header {
-	float: none;
+	/*float: none;*/
 	padding-top: 30px;
 	height: 130px;
 
 }
 
+/*
 #shadowTop {
 	width: 760px;
 	margin-left: auto;
 	margin-right: auto;
 	margin-bottom: 15px;
 	position: inherit;
-	left: 260px;
+}
+*/
+.box {
+	margin-top: -1px;
+/*  width: 100%;
+	top: 110px;
+	position: absolute; */
+	border: 1px solid #BABABA;
 }
 
 #columnLeft {
@@ -368,14 +384,10 @@ a:hover {
 
 #footer {
 	text-align: center;
-	/*
 	background:#565656 url(../images/bg_footer.jpg);
-*/
-	height: 120px;
-	background: #565656;
 	/*
-moves the footer in Webkit browsern to the far right.
-*/
+	moves the footer in Webkit browsern to the far right.
+	*/
 
 	overflow: hidden;
 	margin: 0;
@@ -386,10 +398,9 @@ moves the footer in Webkit browsern to the far right.
 
 #shadowBottom {
 	width: 760px;
-	padding: 0;
 	margin: 0;
-	display: block;
-	padding: 0 0 0 20%;
+	position: relative;
+	top:5px;
 }
 
 .page #bottomMenu {
@@ -420,7 +431,7 @@ h1, h2, h3, h4, h5, h6 {
 	display: block;
 	font-weight: bold;
 	clear: both;
-	margin-top: 0;
+	margin-top: -10px;
 }
 
 h2 {
@@ -457,9 +468,9 @@ h3 {
 	padding-top: 11px;
 }
 
-.languages img {
+/*.languages img {
 	display: none;
-}
+}*/
 
 #index .languages img {
 	display: block;
@@ -512,6 +523,17 @@ h3 {
 }
 
 /* ############################  page specific ############################## */
+#product #featureTable tr{
+	height:20px;
+}
+
+#product #featureTable td{
+	padding:5px 30px 5px 0;
+	vertical-align: top;
+	font-size: 0.9em;
+	color: #666666;
+
+}
 #product #boxleft,
 #download #boxleft {
 	float: left;
@@ -536,6 +558,7 @@ h3 {
 	width: 99%;
 	overflow: hidden;
 }
+
 
 /*
 #download .header1 {
@@ -658,6 +681,7 @@ h3 {
 
 #demo #backToDemo .dijitButtonNode {
 	background: none;
+	border:0;
 }
 
 #demo #backToDemo-value {
@@ -716,6 +740,10 @@ h3 {
 	float: right;
 }
 
+#support #sub-header p,
+#whoweare #sub-header p{
+	line-height:1.8;
+}
 #whoweare .tableContent p {
 	line-height: 1em;
 	text-align: left;
@@ -729,47 +757,170 @@ h3 {
 	overflow: hidden;
 }
 
-#bfFormBrowser {
-	height: 405px;
-	overflow: auto;
-	background: #D3D3D3;
+.bfFormBrowser {
+	background: #dedede;
+	border:thin solid #999999;
+	-moz-border-radius-bottomleft:10px;
+	-moz-border-radius-bottomright:10px;
+	-webkit-border-bottom-left-radius:10px;
+	-webkit-border-bottom-right-radius:10px;
+	float:left;
+	text-align:center;
+	position:relative;
+	margin-top:16px;
 }
 
-#bfFormBrowser table {
-	width: 100%;
-	padding: 0;
-	margin: 0 0 30px 0;
-	background: #D3D3D3;
-	border: none;
+.bfFormBrowser .directory,
+.bfFormBrowser .file {
+	width:120px;
+	padding:33px;
+	margin:6px;
+	float:left;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	text-align:center;
+	background:white;
+	height:100px;
+	position:relative;
 }
 
-#bfFormBrowser .formBrowserHeader {
+
+.bfFormBrowser .formBrowserHeader {
 	padding-bottom: 10px;
-	background: #488AA6;
 	color: white;
 	padding: 5px;
 	font-size: 12pt;
 	text-align: left;
+	height:18px;
+	margin-left:-20px;
+}
+.bfFormBrowser .formBrowserHeader .pathName{
+	background:url(../resources/images/arrow-right.png) left no-repeat;
+	padding:3px 3px 3px 20px;
+	float:left;
+	color:#333333;
 }
 
-#bfFormBrowser .directory {
-	background: white;
+.browser{
+/*
+	width: 100%;
+	position: absolute;
+	top: 120px;
+*/
+	/*margin-top: 10px;*/
+	/*left:-2000px;*/
+	text-align:center;
+	position:absolute;
+	top:115px;
 }
 
-#bfFormBrowser .directory td {
-	text-align: left;
-}
 
-#bfFormBrowser .file td {
-	background: white;
-	text-align: left;
-
-}
-
-#bfFormBrowser .directory .textLink {
-	display: inline-block;
-	margin-bottom: 10px;
+.bfFormBrowser .textLink {
+	display: block;
 	vertical-align: middle;
+}
+
+.bfFormBrowser .directory .textLink {
+	margin-top: 7px;
+}
+
+.bfFormBrowser .file .bfIconFile {
+	margin-top:20px;
+	display:inline-block;
+}
+
+.bfFormBrowser .file .textLink {
+	margin-top: 24px;
+}
+
+.bfFormBrowser .file .sourceLink {
+	position:absolute;
+	top:3px;
+	right:3px;
+	letter-spacing:-2px;
+	padding:4px;
+/*
+	-moz-border-radius-bottomleft:8px;
+	-moz-border-radius-topright:8px;
+	-moz-border-radius-bottomright:0px;
+	-moz-border-radius-topleft:0px;
+	-webkit-border-bottom-left-radius:8px;
+	-webkit-border-top-right-radius:8px;
+	-webkit-border-bottom-right-radius:0px;
+	-webkit-border-top-left-radius:0px;
+*/
+	/*-moz-border-radius:35px;*/
+	/*border:thin dotted #999999;*/
+	background:#d3d3d3;
+}
+
+
+.bfFormBrowser #bfListView .directory,.bfFormBrowser #bfListView .file {
+	clear:left;
+	width:788px;
+	height:24px;
+	text-align:left;
+	padding:10px 0;
+	float:none;
+	margin:5px;
+	position:relative;
+}
+
+
+.bfFormBrowser #bfListView .file a{
+	vertical-align:bottom;
+	display:inline-block;
+	margin:0;
+	margin-left:10px;
+}
+.bfFormBrowser  .file .sourceLink{
+	font-size:3pt;
+	padding:1px;
+	background:#d3d3d3;
+	color:transparent;
+	background:transparent url(../resources/images/greyled.png) no-repeat center center;
+	width:18px;
+	height:18px;
+}
+.bfFormBrowser  .file .sourceLink:hover{
+	font-size:10pt;
+	/*padding:10px;*/
+	width:22px;
+	height:22px;
+	color:transparent;
+	z-index:100;
+	/*-moz-border-radius:100px;*/
+	background:transparent url(../resources/images/eye-grey.png) no-repeat center center;
+	/*border-color:#666666;*/
+
+}
+.bfFormBrowser #bfListView .directory img{
+	width:38px;
+	height:38px;
+	float:left;
+	margin:0 5px;
+	position:relative;
+	top:-7px;
+}
+.bfFormBrowser #bfListView .file .bfIconFile img {
+	width:24px;
+	height:24px;
+}
+.bfFormBrowser .file .bfIconFile{
+
+}
+.bfFormBrowser .file .bfIconFile img{
+	width:48px;
+	height:48px;
+}
+.bfFormBrowser .directory a img{
+	width:80px;
+	height:80px;
+}
+.bfFormBrowser #go-up{
+	width:100px;
+	height:100px;
+	margin-top:-10px;
 }
 
 

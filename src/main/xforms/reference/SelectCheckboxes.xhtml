@@ -3,18 +3,21 @@
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       
-      <title>select control rendered as a group of checkboxes</title>
+      <title>control1 control rendered as a group of checkboxes</title>
       <script type="text/javascript">
             dojo.require("dijit.form.Button");
         </script>
       
        xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"<link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
-      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/styles/reference.css" /><script xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="text/javascript">
+      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="reference.css" /><script xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="text/javascript">
                 dojo.require("dojox.highlight");
                 dojo.require("dojox.highlight.languages.xml");
                 //                dojo.require("dojox.highlight.languages.pygments.xml");
                 dojo.require("dijit.form.Button");
                 dojo.require('dijit.layout.ContentPane');
+                dojo.subscribe("/xf/ready", function(){
+                    fluxProcessor.skipshutdown=true;
+                });
             </script></head>
    
    <body class="soria InlineAlert" style="margin:30px">
@@ -28,11 +31,11 @@
                   
                   <data xmlns="">
                      
-                     <select constraint="true" readonly="false" required="true" relevant="true">
+                     <control1 constraint="true" readonly="false" required="true" relevant="true">
                         
                         <value>AX DZ</value>
                         
-                     </select>
+                     </control1>
                      
                   </data>
                   
@@ -40,7 +43,7 @@
                
                <!--</code>-->
                
-               <xf:bind nodeset="select">
+               <xf:bind nodeset="control1">
                   
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
                   
@@ -108,27 +111,27 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d27e180" onmouseover="showClass('xfSelect');" onmouseout="hideClass('xfSelect');">xfSelect
-                     <div dojoType="dijit.Tooltip" connectId="d27e180">matches an Element that represents a XForms
-                        select
+                  <td id="d14e180" onmouseover="showClass('xfcontrol1');" onmouseout="hideClass('xfcontrol1');">xfcontrol1
+                     <div dojoType="dijit.Tooltip" connectId="d14e180">matches an Element that represents a XForms
+                        control1
                         element
                         
                      </div>
                   </td>
                </tr>
                <tr>
-                  <td id="d27e192" onmouseover="showClass('xfCheckBoxLabel');" onmouseout="hideClass('xfCheckBoxLabel');">xfCheckBoxLabel
-                     <div dojoType="dijit.Tooltip" connectId="d27e192">matches all checkbox labels of the element that represents a XForms
-                        select
+                  <td id="d14e192" onmouseover="showClass('xfCheckBoxLabel');" onmouseout="hideClass('xfCheckBoxLabel');">xfCheckBoxLabel
+                     <div dojoType="dijit.Tooltip" connectId="d14e192">matches all checkbox labels of the element that represents a XForms
+                        control1
                         element
                         
                      </div>
                   </td>
                </tr>
                <tr>
-                  <td id="d27e204" onmouseover="showClass('xfCheckBoxValue');" onmouseout="hideClass('xfCheckBoxValue');">xfCheckBoxValue
-                     <div dojoType="dijit.Tooltip" connectId="d27e204">matches all checkbox values of the element that represents a XForms
-                        select
+                  <td id="d14e204" onmouseover="showClass('xfCheckBoxValue');" onmouseout="hideClass('xfCheckBoxValue');">xfCheckBoxValue
+                     <div dojoType="dijit.Tooltip" connectId="d14e204">matches all checkbox values of the element that represents a XForms
+                        control1
                         element
                         
                      </div>
@@ -156,7 +159,7 @@
                   <td id="xfvalue" onmouseover="showClass('xfValue');" onmouseout="hideClass('xfValue');">xfValue
                      
                      <div dojoType="dijit.Tooltip" connectId="xfvalue">
-                        matches the wigdet part of an XForms control
+                        matches the widget part of an XForms control
                         
                      </div>
                   </td>
@@ -244,11 +247,11 @@
             </table>
          </div>
          <div class="pageintro">
-            <h1>select control rendered as a group of checkboxes</h1>
+            <h1>control1 control rendered as a group of checkboxes</h1>
             <div class="description">
                
                <p>
-                  This form control allows the user to make multiple selections from a set of choices.
+                  This form control allows the user to make multiple control1ions from a set of choices.
                   
                   
                </p>
@@ -256,7 +259,7 @@
                
                <p>
                   A
-                  <span class="keyword">select</span>
+                  <span class="keyword">control1</span>
                   with
                   <span class="keyword">appearance</span>
                   'full' is rendered
@@ -267,11 +270,11 @@
             </div>
             <table id="references">
                <tr>
-                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="../../resources/images/w3c_home_nb.png" alt="W3C" /></a></td>
+                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="images/w3c_home_nb.png" alt="W3C" /></a></td>
                   <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
                </tr>
                <tr>
-                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-selectMany" target="_blank">
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-control1Many" target="_blank">
                         Recommendation
                         </a></td>
                </tr>
@@ -284,13 +287,13 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:select id="select" ref="select/value" appearance="full" incremental="true">
+            <xf:control1 id="control1" ref="control1/value" appearance="full" incremental="true">
                
                <xf:label>a text</xf:label>
                
                <xf:hint>a Hint for this control</xf:hint>
                
-               <xf:help>help for select</xf:help>
+               <xf:help>help for control1</xf:help>
                
                <xf:alert>invalid</xf:alert>
                
@@ -302,7 +305,7 @@
                   
                </xf:itemset>
                
-            </xf:select>
+            </xf:control1>
          </div>
          <div class="MIPS">
             
@@ -310,25 +313,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="select-readonly" navindex="-1" ref="select/@readonly" incremental="true">
+               <xf:input id="control1-readonly" navindex="-1" ref="control1/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="select-required" navindex="-1" ref="select/@required" incremental="true">
+               <xf:input id="control1-required" navindex="-1" ref="control1/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="select-relevant" navindex="-1" ref="select/@relevant" incremental="true">
+               <xf:input id="control1-relevant" navindex="-1" ref="control1/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="select-valid" navindex="-1" ref="select/@constraint" incremental="true">
+               <xf:input id="control1-valid" navindex="-1" ref="control1/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   
@@ -359,16 +362,16 @@
     &lt;/countrylist&gt;
 &lt;/xf:instance&gt;
 
-&lt;xf:select id="select" ref="select/value" appearance="full" incremental="true"&gt;
+&lt;xf:control1 id="control1" ref="control1/value" appearance="full" incremental="true"&gt;
     &lt;xf:label&gt;a text&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
-    &lt;xf:help&gt;help for select&lt;/xf:help&gt;
+    &lt;xf:help&gt;help for control1&lt;/xf:help&gt;
     &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
     &lt;xf:itemset nodeset="instance('codes')/country"&gt;
         &lt;xf:label ref="country-name"&gt;&lt;/xf:label&gt;
         &lt;xf:value ref="code"&gt;&lt;/xf:value&gt;
     &lt;/xf:itemset&gt;
-&lt;/xf:select&gt;
+&lt;/xf:control1&gt;
 </code></pre></div>
          <h2>XForms Instance</h2>
          <div class="Other" title="XForms Instance">

@@ -55,6 +55,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.Reader;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.*;
 
 
@@ -1158,6 +1159,9 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
                     String baseURI;
 
                     public void setBaseURI(String baseURI) {
+                        if(baseURI == null || "".equals(baseURI)){
+                            baseURI = getContainer().getProcessor().getBaseURI();
+                        }
                         this.baseURI = baseURI;
                     }
 
@@ -1189,37 +1193,50 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
                         if(LOGGER.isTraceEnabled()){
                             LOGGER.trace("Schema resource\n\t\t publicId '" + publicId + "'\n\t\t systemId '" + systemId + "' requested");
                         }
-                        if ("http://www.w3.org/MarkUp/SCHEMA/xml-events-attribs-1.xsd".equals(systemId)) {
-                            if(LOGGER.isTraceEnabled()){
-                                LOGGER.trace("loading resource 'schema/xml-events-attribs-1.xsd'\n\n");
+                        try {
+                            String pathToSchema = null;
+                            if ("http://www.w3.org/MarkUp/SCHEMA/xml-events-attribs-1.xsd".equals(systemId)){
+                                pathToSchema = "schema/xml-events-attribs-1.xsd";
+                            } else if("http://www.w3.org/2001/XMLSchema.xsd".equals(systemId)) {
+                                pathToSchema = "schema/XMLSchema.xsd";
+                            } else if("-//W3C//DTD XMLSCHEMA 200102//EN".equals(publicId)){
+                                pathToSchema = "schema/XMLSchema.dtd";
+                            } else if("datatypes".equals(publicId)){
+                                pathToSchema = "schema/datatypes.dtd";
+                            } else if("http://www.w3.org/2001/xml.xsd".equals(systemId)){
+                                pathToSchema = "schema/xml.xsd";
                             }
-                            return Thread.currentThread().getContextClassLoader().getResourceAsStream("schema/xml-events-attribs-1.xsd");
-                        } else if ("http://www.w3.org/2001/XMLSchema.xsd".equals(systemId)) {
-                            if(LOGGER.isTraceEnabled()){
-                                LOGGER.trace("loading resource 'schema/XMLSchema.xsd'\n\n");
+
+
+                            // LOAD WELL KNOWN SCHEMA
+                            if(pathToSchema != null) {
+                                if (LOGGER.isTraceEnabled()) {
+                                    LOGGER.trace("loading Schema '" +  pathToSchema + "'\n\n");
+                                }
+                                return Thread.currentThread().getContextClassLoader().getResourceAsStream(pathToSchema);
                             }
-                            return Thread.currentThread().getContextClassLoader().getResourceAsStream("schema/XMLSchema.xsd");
-                        } else if ("-//W3C//DTD XMLSCHEMA 200102//EN".equals(publicId) ) {
-                            if(LOGGER.isTraceEnabled()){
-                                LOGGER.trace("loading resource 'schema/XMLSchema.dtd'\n\n");
+                            // LOAD SCHEMA THAT IS NOT(!) YET KNWON TO THE XFORMS PROCESSOR
+                            else if (systemId != null && !"".equals(systemId)) {
+                                URI schemaURI = new URI(baseURI);
+                                schemaURI = schemaURI.resolve(systemId);
+
+                                // ConnectorFactory.getFactory()
+                                if (LOGGER.isDebugEnabled()) {
+                                    LOGGER.debug("loading schema resource '" + schemaURI.toString() + "'\n\n");
+                                }
+                                return ConnectorFactory.getFactory().getHTTPResourceAsStream(schemaURI);
+
+                            } else {
+                                LOGGER.error("resource not known '" + systemId + "'\n\n");
+                                return null;
                             }
-                            return Thread.currentThread().getContextClassLoader().getResourceAsStream("schema/XMLSchema.dtd");
-                        } else if ("datatypes".equals(publicId)) {
-                            if(LOGGER.isTraceEnabled()){
-                                LOGGER.trace("loading resource 'schema/datatypes.dtd'\n\n");
-                            }
-                            return Thread.currentThread().getContextClassLoader().getResourceAsStream("schema/datatypes.dtd");
-                        } else if ("http://www.w3.org/2001/xml.xsd".equals(systemId)) {
-                            if(LOGGER.isTraceEnabled()){
-                                LOGGER.trace("loading resource 'schema/xml.xsd'\n\n");
-                            }
-                            return Thread.currentThread().getContextClassLoader().getResourceAsStream("schema/xml.xsd");
-                        } else {
-                            if(LOGGER.isTraceEnabled()){
-                                LOGGER.trace("resource not known '" + systemId + "'\n\n");
-                            }
-                            return null;
+
+                        } catch (XFormsException e) {
+                            e.printStackTrace();
+                        } catch (URISyntaxException e) {
+                            e.printStackTrace();
                         }
+                        return null;
                     }
 
                     public String getBaseURI() {

@@ -309,7 +309,9 @@ tr.xfRepeatItem  td {
 .dijitButton{
     margin:0.2em 0;
 }
-.tundra .embedDialog .dijitCheckBox{
+.bf .embedDialog .dijitCheckBox,
+.tundra .embedDialog .dijitCheckBox,
+.soria .embedDialog .dijitCheckBox{
     width:20px;
 }
 

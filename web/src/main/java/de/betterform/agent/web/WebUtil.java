@@ -123,12 +123,12 @@ public class WebUtil {
         }
 
         Cache cache = CacheManager.getInstance().getCache("xfSessionCache");
-        net.sf.ehcache.Element elem = cache.get(key);
-        if (elem == null) {
+        if(cache == null || cache.get(key) == null) {
             LOGGER.warn("No xformsSession for key " + key + " in Cache");
             return null;
         }
 
+        net.sf.ehcache.Element elem = cache.get(key);
         WebProcessor webProcessor = (WebProcessor) elem.getObjectValue();
         if (webProcessor == null) {
             LOGGER.warn("Cached WebProcessor for key '" + key + "' is null");
@@ -145,7 +145,12 @@ public class WebUtil {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("removing key: '" + key + "' from cache");
         }
-        return CacheManager.getInstance().getCache("xfSessionCache").remove(key);
+        Cache xfSessionCache = CacheManager.getInstance().getCache("xfSessionCache");
+        boolean removedSession = false;
+        if (xfSessionCache != null) {
+            removedSession = xfSessionCache.remove(key);
+        }
+        return removedSession;
     }
 
     public static String decodeUrl(String formPath, HttpServletRequest request) throws UnsupportedEncodingException {

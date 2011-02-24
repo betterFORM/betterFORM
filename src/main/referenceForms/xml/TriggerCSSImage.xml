@@ -5,7 +5,7 @@
         <title>Trigger control rendered as button</title>
         <style type="text/css">
             #trigger1-value {
-                background: url(../../images/bf_logo_67x27.png) no-repeat center;
+                background: url(images/bf_logo_67x27.png) no-repeat center;
                 width: 100px;
                 height: 40px;
             }
@@ -56,11 +56,11 @@
 
                 </xf:model>
                 <code class="ui">
-<xf:trigger id="trigger1" ref="trigger1/value" incremental="true">
-    <xf:label></xf:label>
+<xf:trigger id="trigger1" ref="trigger1/value">
+    <xf:label/>
     <xf:hint>a Hint for this control</xf:hint>
     <xf:help>help for trigger1</xf:help>
-    <xf:alert>invalid</xf:alert>
+    <xf:message>The trigger was clicked</xf:message>
 </xf:trigger>
                 </code>
             </div>

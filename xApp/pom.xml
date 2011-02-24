@@ -2,7 +2,7 @@
     <parent>
         <groupId>de.betterform</groupId>
         <artifactId>betterform-project</artifactId>
-        <version>3.2</version>
+        <version>3.2.0-prerelease</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -57,7 +57,7 @@
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>validate</phase>
+                        <phase>package</phase>
                         <configuration>
                             <tasks>
                                 <ant antfile="${basedir}/build.xml">
@@ -88,11 +88,6 @@
     and execute ant update-maven-poms
     -->
     <dependencies>
-<dependency>
-<groupId>net.sf.saxon</groupId>
-<artifactId>saxon</artifactId>
-<version>9.2.1.5</version>
-</dependency>
 <dependency>
 <groupId>commons-codec</groupId>
 <artifactId>commons-codec</artifactId>
@@ -147,6 +142,11 @@
 <groupId>com.sun.jmx</groupId>
 </exclusion>
 </exclusions>
+</dependency>
+<dependency>
+<groupId>net.sf.saxon</groupId>
+<artifactId>saxon</artifactId>
+<version>9.2.1.5</version>
 </dependency>
 <dependency>
 <groupId>xerces</groupId>

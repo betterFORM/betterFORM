@@ -4,6 +4,12 @@
          xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:bfb="http://betterform.de/binding">
 
+    <!--
+      ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+      ~ Licensed under the terms of BSD License
+      author: joern turner
+    -->
+
     <!-- ##### STATUS
     simple input mapping should work
     basic groups should work
@@ -11,7 +17,6 @@
     -parameter passing from incoming element to shadow content
     ##### -->
 
-    #
     <!-- used in stylesheet generation to build include the base stylesheet (useragent stylesheet) -->
     <bfb:resources>
         <bfb:xslt id="dojo" href="dojo.xsl"/>

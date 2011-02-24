@@ -6,7 +6,7 @@
 dojo.provide("betterform.ui.select1.ComboBoxOpen");
 
 
-dojo.require("betterform.ui.ControlValue");
+
 dojo.require("dijit.form.ComboBox");
 
 
@@ -15,11 +15,23 @@ dojo.declare(
         [betterform.ui.ControlValue,dijit.form.ComboBox],
 {
     options:null,
+    optgroups:null,
 
     postMixInProperties:function() {
         // console.debug("betterform.ui.select1.ComboBoxOpen.postMixInProperties srcNode",this.srcNodeRef, " domNode:",this.domNode);
-        options = dojo.query("*[value]",this.srcNodeRef);;
+        this.optgroups = dojo.query(".xfOptGroup",this.srcNodeRef);
+        var index = 0;
+        for(index;index < this.optgroups.length; index++){
+            var optgroup = this.optgroups[index];
+            var options = dojo.query(".xfSelectorItem",optgroup);
+            var sourceNode = this.srcNodeRef;
+            dojo.forEach(options, function(item) {
+                dojo.place(item, sourceNode, "last");
+            });
+            this.srcNodeRef = sourceNode;
 
+        }
+        this.options = dojo.query("*[value]",this.srcNodeRef);
         // console.dirxml(this.srcNodeRef);
         this.inherited(arguments);
         this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);
@@ -32,7 +44,7 @@ dojo.declare(
     },
 
     postCreate:function() {
-        // console.debug("betterform.ui.select1.ComboBoxOpen.postCreate");
+        // console.debug("betterform.ui.select1.ComboBoxOpen.postCreate this.srcNodeRef:",this.srcNodeRef);
         this.inherited(arguments);
         var selected = dojo.query("*[selected]",this.srcNodeRef)[0];
         // console.debug("betterform.ui.select1.ComboBoxOpen.postCreate selected ", selected);
@@ -61,7 +73,7 @@ dojo.declare(
     getControlValue:function() {
         var selectedValue;
         var displayedValue = this.focusNode.value;
-        dojo.forEach(options,
+        dojo.forEach(this.options,
                 function(entry) {
                     // console.debug("Option: ",entry, " value: ",dojo.attr(entry,"value"), " label:",entry.innerHTML, " displayed: ",displayedValue);
                     if(entry.innerHTML == displayedValue){
@@ -86,7 +98,7 @@ dojo.declare(
         this.inherited(arguments);
         var selectedNode;
         var displayedValue = this.focusNode.value;
-        dojo.forEach(options, function(entry) {
+        dojo.forEach(this.options, function(entry) {
                     if(entry.innerHTML == displayedValue){
                         //console.debug("found value: ",dojo.attr(entry,"value"), "for option:",entry);
                         selectedNode = entry
@@ -114,7 +126,7 @@ dojo.declare(
     _handleSetControlValue:function(value){
         // console.debug("_handleSetControlValue value",value);
         var labelForValue;
-        dojo.forEach(options,
+        dojo.forEach(this.options,
                 function(entry) {
                     // console.debug("Option: ",entry, " value: ",dojo.attr(entry,"value"), " label:",entry.innerHTML, " value: ",value);
                     if(dojo.attr(entry, "value") == value){
@@ -131,8 +143,6 @@ dojo.declare(
         }
 
     }
-
-
 });
 
 

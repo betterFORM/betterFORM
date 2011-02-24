@@ -6,12 +6,15 @@
       <title>Trigger control with nested image output</title>
        xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
-      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/styles/reference.css" /><script xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="text/javascript">
+      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="reference.css" /><script xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="text/javascript">
                 dojo.require("dojox.highlight");
                 dojo.require("dojox.highlight.languages.xml");
                 //                dojo.require("dojox.highlight.languages.pygments.xml");
                 dojo.require("dijit.form.Button");
                 dojo.require('dijit.layout.ContentPane');
+                dojo.subscribe("/xf/ready", function(){
+                    fluxProcessor.skipshutdown=true;
+                });
             </script></head>
    
    <body class="soria InlineAlert" style="margin:30px">
@@ -21,25 +24,21 @@
                
                <xf:instance xmlns="">
                   
-                  <code>
+                  <data>
                      
-                     <data>
+                     <output constraint="true" readonly="false" required="false" relevant="true">
                         
-                        <output constraint="true" readonly="false" required="false" relevant="true">
-                           
-                           <value>../../images/bf_logo_482x195.png</value>
-                           
-                        </output>
+                        <value>../../images/bf_logo_482x195.png</value>
                         
-                        <output constraint="true" readonly="false" required="false" relevant="true">
-                           
-                           <value>../../images/betterform_icon_118x118.png</value>
-                           
-                        </output>
-                        
-                     </data>
+                     </output>
                      
-                  </code>
+                     <output constraint="true" readonly="false" required="false" relevant="true">
+                        
+                        <value>../../images/betterform_icon_118x118.png</value>
+                        
+                     </output>
+                     
+                  </data>
                   
                </xf:instance>
                
@@ -70,8 +69,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d39e125" onmouseover="showClass('xfTrigger');" onmouseout="hideClass('xfTrigger');">xfTrigger
-                     <div dojoType="dijit.Tooltip" connectId="d39e125">matches an Element that represents a XForms input element</div>
+                  <td id="d24e128" onmouseover="showClass('xfTrigger');" onmouseout="hideClass('xfTrigger');">xfTrigger
+                     <div dojoType="dijit.Tooltip" connectId="d24e128">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
@@ -96,7 +95,7 @@
                   <td id="xfvalue" onmouseover="showClass('xfValue');" onmouseout="hideClass('xfValue');">xfValue
                      
                      <div dojoType="dijit.Tooltip" connectId="xfvalue">
-                        matches the wigdet part of an XForms control
+                        matches the widget part of an XForms control
                         
                      </div>
                   </td>
@@ -202,7 +201,7 @@
             </div>
             <table id="references">
                <tr>
-                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="../../resources/images/w3c_home_nb.png" alt="W3C" /></a></td>
+                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="images/w3c_home_nb.png" alt="W3C" /></a></td>
                   <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
                </tr>
                <tr>
@@ -219,22 +218,27 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:trigger id="trigger1" incremental="true">
+            <xf:trigger id="control1">
                
                <xf:label>
                   
-                  <xf:output ref="output[1]" mediatype="image/*"></xf:output>
+                  <xf:output ref="output[1]/value" mediatype="image/png"></xf:output>
                   
                </xf:label>
+               
+               <xf:message>The control1 was clicked</xf:message>
                
             </xf:trigger>
-            <xf:trigger id="trigger2" incremental="true">
+            <xf:trigger id="trigger2">
                
                <xf:label>
                   
-                  <xf:output ref="output[2]" mediatype="image/*"></xf:output>
+                  <xf:output ref="output[2]/value" mediatype="image/png"></xf:output>
                   
                </xf:label>
+               
+               <xf:message>The trigger2 was clicked</xf:message>
+               
                
             </xf:trigger>
          </div>
@@ -272,16 +276,19 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:trigger id="trigger1" incremental="true"&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:trigger id="control1"&gt;
     &lt;xf:label&gt;
-        &lt;xf:output ref="output[1]" mediatype="image/*"&gt;&lt;/xf:output&gt;
+        &lt;xf:output ref="output[1]/value" mediatype="image/png"&gt;&lt;/xf:output&gt;
     &lt;/xf:label&gt;
+    &lt;xf:message&gt;The control1 was clicked&lt;/xf:message&gt;
 &lt;/xf:trigger&gt;
 
-&lt;xf:trigger id="trigger2" incremental="true"&gt;
+&lt;xf:trigger id="trigger2"&gt;
     &lt;xf:label&gt;
-        &lt;xf:output ref="output[2]" mediatype="image/*"&gt;&lt;/xf:output&gt;
+        &lt;xf:output ref="output[2]/value" mediatype="image/png"&gt;&lt;/xf:output&gt;
     &lt;/xf:label&gt;
+    &lt;xf:message&gt;The trigger2 was clicked&lt;/xf:message&gt;
+
 &lt;/xf:trigger&gt;
 </code></pre></div><script type="text/javascript">
                     function showClass(cssClass){

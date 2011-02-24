@@ -6,7 +6,7 @@
 dojo.provide("betterform.ui.select1.RadioGroup");
 
 dojo.require("dijit._Widget");
-dojo.require("betterform.ui.ControlValue");
+
 
 /**
 	All Rights Reserved.

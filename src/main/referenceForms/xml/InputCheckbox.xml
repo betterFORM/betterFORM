@@ -29,18 +29,19 @@
                             </input1>
                         </data>
                     </xf:instance>
+<code>
                     <xf:bind nodeset="input1">
                         <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)"
                                  readonly="boolean-from-string(../@readonly)"
                                  required="boolean-from-string(../@required)"
                                  relevant="boolean-from-string(../@relevant)"
-                                 type="boolean"/>
+                                 type="xf:boolean"/>
                         <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
                         <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
                         <xf:bind nodeset="@required" type="boolean"></xf:bind>
                         <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
                     </xf:bind>
-
+</code>
                 </xf:model>
                 <code class="ui">
 <xf:input id="input1" ref="input1/value" incremental="true">

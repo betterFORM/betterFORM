@@ -23,7 +23,30 @@
     <xsl:variable name="betterform-css" select="concat($contextroot,$CSSPath,'betterform.css')"/>
     <xsl:variable name="custom-css" select="concat($contextroot,$CSSPath,'custom.css')"/>
 
+    
+<xsl:template name="addDojoCSS"><xsl:text>
+</xsl:text>
+                <xsl:variable name="cssTheme">
+                    <xsl:choose>
+                        <xsl:when test="contains(//body/@class, 'tundra')">tundra</xsl:when>
+                        <xsl:when test="contains(//body/@class, 'soria')">soria</xsl:when>
+                        <xsl:when test="contains(//body/@class, 'nihilo')">nihilo</xsl:when>
+                        <xsl:when test="contains(//body/@class, 'claro')">claro</xsl:when>
+                        <xsl:when test="contains(//body/@class, 'a11y')">a11y</xsl:when>
+                        <xsl:otherwise><xsl:value-of select="$defaultTheme"/></xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
 
+                <style type="text/css">
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dijit/themes/', $cssTheme, '/', $cssTheme,'.css')"/>";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojo/resources/dojo.css')"/>";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/widget/Toaster/Toaster.css')"/>";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/layout/resources/FloatingPane.css')"/>";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/layout/resources/ResizeHandle.css')"/>";
+                </style><xsl:text>
+</xsl:text>
+    </xsl:template>
+    
 
     <xsl:template name="addCSS"><xsl:text>
 </xsl:text>
@@ -66,45 +89,29 @@
     <xsl:template name="addDojoImport">
         <script type="text/javascript" src="{concat($contextroot,$scriptPath,'dojo/dojo.js')}"> </script><xsl:text>
 </xsl:text>
+         <xsl:choose>
+            <xsl:when test="exists(//script[@id='betterformJs'])">
+                <script type="text/javascript">
+                    var isBetterFORMRelease = false;
+                </script><xsl:text>
+</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+                 <script type="text/javascript">
+                    var isBetterFORMRelease = false;
+                    dojo.require("betterform.BfRequiredFull");
+                 </script><xsl:text>
+</xsl:text>
+             </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template name="addDojoRequires">
-                dojo.require("betterform.FluxProcessor");
-                dojo.require("betterform.XFormsModelElement");
-                dojo.require("betterform.ui.Control");
-                dojo.require("betterform.ui.util");
-                // needed for alert Handling
-                dojo.require("dijit.Tooltip");
-                dojo.require("betterform.ui.container.Repeat");
-                dojo.require("betterform.ui.container.RepeatItem");
+<!--
+                dojo.require("betterform.BfRequiredFull");
+                var bfRequiredFull = new betterform.BfRequiredFull();
+-->
 
-                <!--dojo.require("betterform.ui.container.Container");-->
-
-                <!--dojo.require("dojo.parser");-->
-                <!--dojo.require("dojo.fx");-->
-                <!--dojo.require("dojo.NodeList-fx");-->
-                <!--dojo.require("dojo.dnd.Selector");-->
-                <!--dojo.require("dojo.dnd.Source");-->
-
-
-                <!--dojo.require("dijit.Dialog");-->
-                <!--dojo.require("dijit.TitlePane");-->
-               <!-- dojo.require("dijit.Tooltip");-->
-                <!--dojo.require("dijit.form.CheckBox");-->
-                <!--dojo.require("dijit.form.Button");-->
-                <!--dojo.require("dijit.layout.ContentPane");-->
-                <!--dojo.require("dijit.layout.TabContainer");-->
-                <!--dojo.require("dijit.layout.BorderContainer");-->
-                <!--dojo.require("dijit.layout.AccordionContainer");-->
-                <!--dojo.require("dojox.layout.FloatingPane");-->
-
-                <!--dojo.require("dojox.widget.FisheyeLite");-->
-                <!--dojo.require("dojox.widget.Toaster");-->
-                <!-- Not used? -->
-                <!-- dojo.require("betterform.ui.textarea.MinimalTextarea"); -->
-                <!--dojo.require("betterform.ui.upload.Upload");-->
-                <!-- Only used is in OutputElementFactory -->
-                <!-- dojo.require("betterform.ui.tree.OPMLTree"); -->
     </xsl:template>
 
 </xsl:stylesheet>

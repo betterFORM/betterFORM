@@ -6,7 +6,7 @@
 dojo.provide("betterform.ui.select.CheckBoxGroup");
 
 dojo.require("dijit._Widget");
-dojo.require("betterform.ui.ControlValue");
+
 dojo.require("betterform.ui.select.CheckBox");
 
 /**

@@ -5,7 +5,7 @@
 
 dojo.provide("betterform.ui.textarea.MinimalTextarea");
 
-dojo.require("betterform.ui.ControlValue");
+
 
 dojo.declare(
         "betterform.ui.textarea.MinimalTextarea",
