@@ -76,7 +76,7 @@ select{
 }
 
 #closeFilter-value{
-    background-image:url(/exist/rest/db/betterform/apps/timetracker/resources/images/search.gif);
+    background-image:url(/betterform/rest/db/betterform/apps/timetracker/resources/images/search.gif);
     width:24px;
     height:24px;
 }
@@ -309,7 +309,9 @@ tr.xfRepeatItem  td {
 .dijitButton{
     margin:0.2em 0;
 }
-.tundra .embedDialog .dijitCheckBox{
+.bf .embedDialog .dijitCheckBox,
+.tundra .embedDialog .dijitCheckBox,
+.soria .embedDialog .dijitCheckBox{
     width:20px;
 }
 
@@ -378,6 +380,6 @@ tr.xfRepeatItem  td {
     padding-bottom:2px;
 }
 .InlineRoundBordersAlert .suppressInfo .info{
-	position:absolute;
+	position:relative;
 	left:-1000px;
 }

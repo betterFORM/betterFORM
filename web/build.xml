@@ -27,7 +27,7 @@
     <property name="webapp.dir" value="${target}/${web.app.name}"/>
     <property name="targetname" value="${target}/${web.app.name}-${web.app.version}"/>
     <property name="servlet.container" value="${properties.webappPath}"/>
-
+    <antversion property="antversion" atleast="1.7"/>
     <!-- **************************************** HOUSEKEEPING **************************************** -->
     <!-- **************************************** HOUSEKEEPING **************************************** -->
     <!-- **************************************** HOUSEKEEPING **************************************** -->
@@ -43,7 +43,7 @@
     <!-- **************************************** PREPARATION **************************************** -->
     <!-- **************************************** PREPARATION **************************************** -->
     <!-- **************************************** PREPARATION **************************************** -->
-    <target name="prepare" description="init the build process">
+    <target name="prepare" description="init the build process" depends="check-ant-version" if="antversion">
         <echo/>
         <echo message="************************************************************************************"/>
         <echo message="copying Core classes..."/>
@@ -60,17 +60,15 @@
         </copy>
     </target>
 
-    <target name="prepare-dojo" depends="check.dojo" if="dojo.not.available">
+    <!-- check if Dojo is allready unpacked and call unpack target it not -->
+    <target name="prepare-dojo" depends="check-if-dojo-is-unpacked" if="dojo.not.available">
         <ant antfile="build.xml" target="prepare-js" dir=".." inheritall="false">
-            <property name="target.dir" value="${target}"/>
+            <property name="target.dir" value="${webapp.dir}"/>
         </ant>
-        <copy description="copy javascript resources from global directory"
-              todir="${webapp.dir}/resources/scripts"
-              includeemptydirs="true">
-            <fileset dir="${basedir}/target/resources/scripts">
-                <include name="**/*.*"/>
-            </fileset>
-        </copy>
+
+        <!--
+        <copy file="${webapp.dir}/resources/scripts/dojox/highlight/resources/highlight.css" todir="${webapp.dir}/forms/reference" failonerror="true"/>
+        -->
     </target>
 
     <!-- **************************************** COMPILATION **************************************** -->
@@ -110,9 +108,9 @@
     <!-- **************************************** DEPLOYMENT **************************************** -->
     <!-- **************************************** DEPLOYMENT **************************************** -->
     <target name="prepare-site" description="generates the betterFORM site">
-        <xslt basedir="${basedir}/src/main/webapp/pages"
+        <xslt basedir="${basedir}/../src/main/website/pages"
               destdir="${basedir}/src/main/webapp/site"
-              style="${basedir}/src/main/webapp/resources/xslt/site.xsl"
+              style="${basedir}/../src/main/website/xslt/site.xsl"
               force="true"
               includes="**/*.xhtml"
               excludes="**/demo.xhtml"
@@ -121,8 +119,8 @@
             <classpath refid="transform.class.path"/>
         </xslt>
         <!-- copy demo pages unmodified -->
-        <copy file="${basedir}/src/main/webapp/pages/en/demo.xhtml" todir="${basedir}/src/main/webapp/site/en"/>
-        <copy file="${basedir}/src/main/webapp/pages/de/demo.xhtml" todir="${basedir}/src/main/webapp/site/de"/>
+        <copy file="${basedir}/../src/main/website/pages/en/demo.xhtml" todir="${basedir}/src/main/webapp/site/en"/>
+        <copy file="${basedir}/../src/main/website/pages/de/demo.xhtml" todir="${basedir}/src/main/webapp/site/de"/>
     </target>
 
     <target name="exploded-webapp" depends="compile"
@@ -148,26 +146,11 @@
               todir="${webapp.dir}/reports">
             <fileset dir="${root.dir}/src/main/doc/site/content/reports"/>
         </copy>
+
+
 -->
-        <copy description="copy resources from global 'src' directory"
-              todir="${webapp.dir}/resources"
-              includeemptydirs="true">
-            <fileset dir="${src.dir}/main/resources">
-                <include name="**/*.*"/>
-            </fileset>
-        </copy>
 
-        <copy description="copy images seperately to avoid filtering"
-              todir="${webapp.dir}/resources"
-              overwrite="true"
-              filtering="false">
-            <fileset dir="${src.dir}/main/resources">
-                <include name="**/*.gif"/>
-                <include name="**/*.png"/>
-                <include name="**/*.jpg"/>
-            </fileset>
-        </copy>
-
+        <antcall target="copy-src-resources"/>
 
         <mkdir dir="${webapp.dir}/WEB-INF/lib"/>
 
@@ -202,6 +185,59 @@
         <delete file="${webapp.dir}/WEB-INF/classes/log4j.dtd"/>
 
     </target>
+
+    <target name="copy-src-resources">
+         <copy description="copy resources from global 'src' directory"
+              todir="${webapp.dir}/resources"
+              includeemptydirs="true">
+            <fileset dir="${src.dir}/main/resources">
+                <exclude name="**/scripts/**"/>
+            </fileset>
+        </copy>
+
+
+        <antcall target="copy-src-resources-scripts"/>
+
+<!--
+        <copy description="copy images seperately to avoid filtering"
+              todir="${webapp.dir}/resources"
+              overwrite="true"
+              filtering="false">
+            <fileset dir="${src.dir}/main/resources">
+                <include name="**/*.gif"/>
+                <include name="**/*.png"/>
+                <include name="**/*.jpg"/>
+            </fileset>
+        </copy>
+-->
+
+    </target>
+
+    <!-- must be a seprate target due to it is called by by eXist/build-utils.xml -->
+    <target name="copy-src-resources-scripts">
+        <antcall target="unpack-betterform-js-release"/>
+
+        <copy description="copy resources from global 'src' directory"
+              todir="${webapp.dir}/resources/scripts"
+              includeemptydirs="true"
+              overwrite="true">
+            <fileset dir="${src.dir}/main/resources/scripts">
+                <include name="**/**"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <!-- target to concat optimized DWR JS with Dojo / TODO: enhance to fit into buildcycle-->
+    <target name="concat">
+        <move file="${webapp.dir}/resources/scripts/release/dojo/betterform/betterform-full.js" tofile="${webapp.dir}/resources/scripts/release/dojo/betterform/betterform-full.js.original"/>
+        <concat destfile="${webapp.dir}/resources/scripts/release/dojo/betterform/betterform-full.js" force="yes">
+
+            <filelist dir="${webapp.dir}/resources/scripts/release/dojo/betterform" files="betterform-full.js.original"/>
+            <filelist dir="${webapp.dir}/resources/scripts" files="dwr.js"/>
+        </concat>
+    </target>
+
+
 
     <!-- todo: rename to deploy-forms. 'resources' is misleading here. Docs must be changed appropriately -->
     <target name="deploy-resources" depends="exploded-webapp"
@@ -251,42 +287,116 @@
     <!-- **************************************** BUILDING JAR/WAR **************************************** -->
     <!-- **************************************** BUILDING JAR/WAR **************************************** -->
 
-    <!-- todo: when package is executed it should be made sure that 'dojo' is configured as useragent in betterform-config.xml -->
-    <target name="package" depends="build-dojo" description="create war file">
-        <echo/>
-        <property name="onlineVersion" value="true"/>
-
+    <target name="cleanup-bf-release">
         <echo message="************************************************************************************"/>
-        <echo message="clean up package..."/>
+        <echo message="clean up forms package..."/>
         <echo message="************************************************************************************"/>
         <echo/>
         <delete dir="${webapp.dir}/forms/incubator"/>
         <delete dir="${webapp.dir}/forms/test"/>
+
+        <echo message="************************************************************************************"/>
+        <echo message="clean up not packaged javascript..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
         <delete dir="${webapp.dir}/resources/scripts/betterform"/>
         <delete dir="${webapp.dir}/resources/scripts/dijit"/>
         <delete dir="${webapp.dir}/resources/scripts/dojo"/>
         <delete dir="${webapp.dir}/resources/scripts/dojox"/>
         <delete dir="${webapp.dir}/resources/scripts/util"/>
+    </target>
 
-        <delete includeemptydirs="true">
-            <fileset dir="${webapp.dir}/resources/scripts/release/dojo" includes="**/tests/"/>
-        </delete>
+    <!-- delete all uncalled JavaScript resources from betterFORM / JavaScript release
+        (only resources beneath ${webapp.dir}/resources/scripts/release are deleted  -->
+    <target name="cleanup-js-release">
+        <echo message="************************************************************************************"/>
+        <echo message="clean up not needed dojo files..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+
+        <property name="bfReleaseSrc" value="${webapp.dir}/resources/scripts/release/bfReleaseSrc"/>
+
+        <move file="${webapp.dir}/resources/scripts/release/dojo"
+              tofile="${bfReleaseSrc}"/>
+
+        <property name="bfJSRelease"  value="${webapp.dir}/resources/scripts/release/dojo"/>
+
+        <mkdir dir="${bfJSRelease}" />
+        <!-- copy betterFORM JS resources -->
+        <property name="bfRelease" value="${bfJSRelease}/betterform"/>
+        <copy todir="${bfRelease}" flatten="false">
+             <fileset dir="${bfReleaseSrc}/betterform" includes="nls/**/*"/>
+             <fileset dir="${bfReleaseSrc}/betterform">
+                 <include name="betterform-*.js"/>
+                 <exclude name="betterform-*.js.uncompressed.js"/>
+                 <include name="manifest.js"/>
+             </fileset>
+        </copy>
+
+
+        <!-- copy required dojo js resources -->
+        <property name="dojoRelease" value="${bfJSRelease}/dojo"/>
+        <copy todir="${dojoRelease}" flatten="false">
+            <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.png"/>
+            <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.jpg"/>
+            <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.jpeg"/>
+            <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.gif"/>
+            <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.css"/>
+           <!-- <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.html"/> -->
+            <fileset dir="${bfReleaseSrc}/dojo" includes="_base/_loader/**/*"/>
+             <fileset dir="${bfReleaseSrc}/dojo" includes="_firebug/**/*"/>
+             <fileset dir="${bfReleaseSrc}/dojo" includes="resources/**/*"/>
+             <fileset dir="${bfReleaseSrc}/dojo">
+                 <include name="_base.js"/>
+                 <include name="dojo.js"/>
+                 <include name="i18n.js"/>
+             </fileset>
+        </copy>
+
+        <!-- copy required dijit js resources -->
+        <property name="dijitRelease" value="${bfJSRelease}/dijit"/>
+        <copy todir="${dijitRelease}" flatten="false">
+            <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.png"/>
+            <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.jpg"/>
+            <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.jpeg"/>
+            <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.gif"/>
+            <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.css"/>
+            <!-- <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.html"/> -->
+            <fileset dir="${bfReleaseSrc}/dijit" includes="nls/**/*"/>
+            <fileset dir="${bfReleaseSrc}/dijit" includes="themes/**/"/>
+            <fileset dir="${bfReleaseSrc}/dijit" includes="dijit.js"/>
+        </copy>
+
+        <property name="dojoxRelease" value="${bfJSRelease}/dojox"/>
+        <copy todir="${dojoxRelease}" flatten="false">
+             <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.png"/>
+            <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.jpg"/>
+            <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.jpeg"/>
+            <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.gif"/>
+            <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.css"/>
+         <!--   <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.html"/> -->
+        </copy>
+
+
+        <!-- delete compiled js -->
+        <delete dir="${bfReleaseSrc}"/>
+    </target>
+
+    <!-- **************************************** BUILDING JAR/WAR **************************************** -->
+    <!-- **************************************** BUILDING JAR/WAR **************************************** -->
+    <!-- **************************************** BUILDING JAR/WAR **************************************** -->
+    <!-- todo: when package is executed it should be made sure that 'dojo' is configured as useragent in betterform-config.xml -->
+    <target name="package" depends="deploy-resources" description="create js optimized war file">
+        <antcall target="build-dojo"/>
+        <antcall target="cleanup-js-release"/>
+        <antcall target="cleanup-bf-release"/>
+
+        <echo/>
+        <property name="onlineVersion" value="true"/>
+
+
         <copy todir="${webapp.dir}"
               file="${basedir}/../src/test/resources/XFormsTestSuite1.1E1/Edition1/driverPages/Results/results.html"/>
-
-
-<!--
-        <copy todir="${webapp.dir}/forms">
-            <fileset dir="${webapp.dir}/forms"/>
-            <globmapper from="*.xhtml" to="*.txt"/>
-        </copy>
--->
-
-<!--
-        <copy todir="${webapp.dir}/${forms.target}">
-            <fileset dir="../src/test/resources"/>
-        </copy>
--->
 
         <antcall target="create-war"/>
     </target>
@@ -418,7 +528,11 @@
     <!-- **************************************** DOJO TARGETS **************************************** -->
     <!-- **************************************** DOJO TARGETS **************************************** -->
     <!-- **************************************** DOJO TARGETS **************************************** -->
-    <target name="build-dojo" depends="deploy-resources" >
+
+    <target name="build-dojo"
+            description="create a custom Javascript build of betterFORM"
+            depends="prepare-dojo, copy-src-resources-scripts, unpack-betterform-js-release, check-if-js-is-up-to-date"
+            unless="build-js-required" >
         <java classname="org.mozilla.javascript.tools.shell.Main"
               dir="${webapp.dir}/resources/scripts/util/buildscripts"
               classpath="${webapp.dir}/resources/scripts/util/shrinksafe/js.jar:${webapp.dir}/resources/scripts/util/shrinksafe/shrinksafe.jar"
@@ -432,11 +546,23 @@
             <arg value="optimize=shrinksafe"/>
             <arg value="mini=true "/>
             <arg value="copyTests=false"/>
+            <arg value="internStrings=true"/>
+            <arg value="stripConsole=warn"/>
             <arg value="cssOptimize=comments"/>
             <arg value="action=clean,release"/>
             <arg value="symbol=short"/>
-            <arg value="version=1.3"/>
+            <arg value="layerOptimize=shrinksafe"/>
+
+            <arg value="version=1.5"/>
         </java>
+        <!-- cleanup JS/CSS resources of betterform dojo release -->
+        <antcall target="cleanup-js-release"/>
+        <copy file="${src.dir}/main/lib/dwr.js.optimized" tofile="${webapp.dir}/resources/scripts/release/dwr.js"/>
+        <zip description="create optimized JavaSCript zip"
+             zipfile="target/${web.app.name}-${web.app.version}-js-optimized.zip"
+             basedir="${webapp.dir}/resources/scripts/release"/>
+
+        <move file="target/${web.app.name}-${web.app.version}-js-optimized.zip" todir="${src.dir}/main/lib"/>
     </target>
 
 
@@ -488,10 +614,30 @@
         <condition property="dojo.not.available">
             <not>
                 <available file="${webapp.dir}/resources/scripts/dojo/dojo.js"/>
+				<!-- <or>
+                    <available file="${webapp.dir}/resources/scripts/dojo/dojo.js"/>
+                    <available file="${webapp.dir}/resources/scripts/release/dojo/betterform/betterform-full.js"/>    
+                </or> -->
             </not>
         </condition>
     </target>
 
+    <target name="check-if-bf-js-release-unpacked">
+        <echo>Check if betterFORM JS release is unpacked</echo>
+        <condition property="bf.js.release.not.available">
+            <not><available file="${webapp.dir}/resources/scripts/release/dojo/dojo/dojo.js"/></not>
+        </condition>
+    </target>
+
+    <target name="check-if-js-is-up-to-date">
+        <echo>Check if dojo is up to date</echo>
+        <uptodate property="build-js-required" targetfile="${webapp.dir}/resources/scripts/release/dojo/betterform/betterform-full.js">
+            <srcfiles dir="${src.dir}/main/resources/scripts" includes="**/*.*" />
+            <srcfiles dir="${basedir}" includes="build.xml" />
+            <srcfiles dir="${src.dir}/main/lib" includes="${properties.dojo}.tar.gz" />
+        </uptodate>
+    </target>
+    
     <!-- **************************************** FORM AGGREGATION TARGETS **************************************** -->
     <!-- **************************************** FORM AGGREGATION TARGETS **************************************** -->
     <!-- **************************************** FORM AGGREGATION TARGETS **************************************** -->
@@ -504,7 +650,7 @@
 
 
     <!-- ### applies include.xsl to all forms found in 'src/main/forms/xforms' and
-deploys the result to target ### -->
+             deploys the result to target ### -->
     <target name="assembleForms">
 
         <xslt basedir="${basedir}/${properties.rootDir}/src/main/xforms"
@@ -516,4 +662,9 @@ deploys the result to target ### -->
             <classpath refid="saxon.libs"/>
         </xslt>
     </target>
+
+    <target name="check-ant-version" unless="antversion">
+        <echo>Apache Ant 1.7 or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.7 You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</echo>
+    </target>
+
 </project>

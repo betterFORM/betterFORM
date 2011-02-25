@@ -5,13 +5,11 @@
       
       <title>HTML Textarea control</title>
        xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
-      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/styles/reference.css" /><script xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="text/javascript">
-                dojo.require("dojox.highlight");
-                dojo.require("dojox.highlight.languages.xml");
-                //                dojo.require("dojox.highlight.languages.pygments.xml");
-                dojo.require("dijit.form.Button");
-                dojo.require('dijit.layout.ContentPane');
+      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/scripts/release/dojo/dojox/highlight/resources/highlight.css" />
+      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="reference.css" /><script xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="text/javascript">
+                dojo.subscribe("/xf/ready", function(){
+                    fluxProcessor.skipshutdown=true;
+                });
             </script></head>
    
    <body class="soria InlineAlert" style="margin:30px">
@@ -60,8 +58,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d33e120" onmouseover="showClass('xfTextarea');" onmouseout="hideClass('xfTextarea');">xfTextarea
-                     <div dojoType="dijit.Tooltip" connectId="d33e120">matches an Element that represents a XForms input element</div>
+                  <td id="d38e120" onmouseover="showClass('xfTextarea');" onmouseout="hideClass('xfTextarea');">xfTextarea
+                     <div dojoType="dijit.Tooltip" connectId="d38e120">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
@@ -86,7 +84,7 @@
                   <td id="xfvalue" onmouseover="showClass('xfValue');" onmouseout="hideClass('xfValue');">xfValue
                      
                      <div dojoType="dijit.Tooltip" connectId="xfvalue">
-                        matches the wigdet part of an XForms control
+                        matches the widget part of an XForms control
                         
                      </div>
                   </td>
@@ -198,7 +196,7 @@
             </div>
             <table id="references">
                <tr>
-                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="../../resources/images/w3c_home_nb.png" alt="W3C" /></a></td>
+                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="images/w3c_home_nb.png" alt="W3C" /></a></td>
                   <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
                </tr>
                <tr>
@@ -217,7 +215,7 @@
          <div class="Section sample">
             <xf:textarea id="textarea1" ref="textarea1/value" mediatype="text/html" incremental="true">
                
-               <xf:label>a text</xf:label>
+               <xf:label>a HTML editor textarea</xf:label>
                
                <xf:hint>a Hint for this control</xf:hint>
                
@@ -233,25 +231,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="textarea1-readonly" navindex="-1" ref="textarea1/@readonly" incremental="true">
+               <xf:input id="textarea1-readonly" ref="textarea1/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="textarea1-required" navindex="-1" ref="textarea1/@required" incremental="true">
+               <xf:input id="textarea1-required" ref="textarea1/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="textarea1-relevant" navindex="-1" ref="textarea1/@relevant" incremental="true">
+               <xf:input id="textarea1-relevant" ref="textarea1/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="textarea1-valid" navindex="-1" ref="textarea1/@constraint" incremental="true">
+               <xf:input id="textarea1-valid" ref="textarea1/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   
@@ -262,7 +260,7 @@
          </div>
          <h2>XForms Markup</h2>
          <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:textarea id="textarea1" ref="textarea1/value" mediatype="text/html" incremental="true"&gt;
-    &lt;xf:label&gt;a text&lt;/xf:label&gt;
+    &lt;xf:label&gt;a HTML editor textarea&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
     &lt;xf:help&gt;help for textarea1&lt;/xf:help&gt;
     &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;

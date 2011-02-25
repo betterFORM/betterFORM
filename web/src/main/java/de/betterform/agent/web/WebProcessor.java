@@ -302,13 +302,6 @@ public class WebProcessor extends AbstractProcessorDecorator {
             LOGGER.debug("Handling Event " + event.getType());
         }
     }
-
-/*
-    protected boolean isDebugOn() {
-        return (super.isDebugOn() && request.getParameter("debug") != null);
-    }
-*/
-
     /**
      * set the upload location. This string represents the destination (data-sink) for uploads.
      *
@@ -356,6 +349,14 @@ public class WebProcessor extends AbstractProcessorDecorator {
                 } else {
                     //initing ...
                     referer = request.getQueryString();
+                    String userAgent = request.getHeader("User-Agent");
+                    String xuaCompatible = request.getHeader("X-UA-Compatible");
+                    if(xuaCompatible == null && (userAgent.contains("IE8") || userAgent.contains("MSIE 8"))){
+                        response.addHeader("X-UA-Compatible", "IE8");
+                    }
+                    else if(xuaCompatible == null && (userAgent.contains("IE9") || userAgent.contains("MSIE 9"))){
+                        response.addHeader("X-UA-Compatible", "IE9");
+                    }
 
                     response.setContentType(WebUtil.HTML_CONTENT_TYPE);
                     //we got an initialization request (GET) - the session is not registered yet
@@ -367,6 +368,9 @@ public class WebProcessor extends AbstractProcessorDecorator {
                     //actually register the XFormsSession with the manager
                     // getManager().addXFormsSession(this);
                     Cache cache = CacheManager.getInstance().getCache("xfSessionCache");
+                    if(cache == null) {
+                        throw new XFormsException("Ehcache Error: 'xfSessionCache' is missing in WEB-INF/classes/ehcache.xml");
+                    }
                     cache.put(new net.sf.ehcache.Element(this.getKey(), this));
 
                     //todo:check if it's still necessary to set an attribute to the session

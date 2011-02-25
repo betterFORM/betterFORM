@@ -50,11 +50,15 @@
     width:80px;
 }
 
-.tundra h1{
+.bf h1,
+.tundra h1,
+.soria h1{
     font-size:18pt;
 }
 
-.tundra h3{
+.bf h3,
+.tundra h3,
+.soria h3{
     font-size:12pt;
 }
 

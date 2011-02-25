@@ -75,7 +75,7 @@
                 </xf:model>
                 <code class="ui">
 <xf:select1 id="select1" ref="select1/value" appearance="compact" incremental="true">
-    <xf:label>a text</xf:label>
+    <xf:label>a select1 list</xf:label>
     <xf:hint>a Hint for this control</xf:hint>
     <xf:help>help for select1</xf:help>
     <xf:alert>invalid</xf:alert>
@@ -89,16 +89,16 @@
             <div class="MIPS">
                 <xf:group appearance="full">
                     <xf:label></xf:label>
-                    <xf:input id="select1-readonly" navindex="-1" ref="select1/@readonly" incremental="true">
+                    <xf:input id="select1-readonly" ref="select1/@readonly" incremental="true">
                         <xf:label>readonly</xf:label>
                     </xf:input>
-                    <xf:input id="select1-required" navindex="-1" ref="select1/@required" incremental="true">
+                    <xf:input id="select1-required" ref="select1/@required" incremental="true">
                         <xf:label>required</xf:label>
                     </xf:input>
-                    <xf:input id="select1-relevant" navindex="-1" ref="select1/@relevant" incremental="true">
+                    <xf:input id="select1-relevant" ref="select1/@relevant" incremental="true">
                         <xf:label>relevant</xf:label>
                     </xf:input>
-                    <xf:input id="select1-valid" navindex="-1" ref="select1/@constraint" incremental="true">
+                    <xf:input id="select1-valid" ref="select1/@constraint" incremental="true">
                         <xf:label>valid</xf:label>
                     </xf:input>
                 </xf:group>

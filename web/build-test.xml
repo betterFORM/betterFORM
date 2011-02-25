@@ -439,7 +439,7 @@
               extension=".java"
               filedirparameter="filedir"
               filenameparameter="filename">
-            <classpath refid="saxon.libs"/>
+            <classpath refid="transform.class.path"/>
         </xslt>
 
         <delete>

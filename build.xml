@@ -10,7 +10,8 @@
     <property name="betty.dir" value="${basedir}/betty"/>
     <property name="server.dir" value="${basedir}/tools/server"/>
     <property name="target.dir" value="${basedir}/target"/>
-
+    <property name="src.target.dir" value="${basedir}/target"/>
+    <antversion property="antversion" atleast="1.7"/>
 
     <!-- local Web properties -->
 
@@ -20,7 +21,7 @@
     <target name="clean" description="clean build target directory">
         <echo/>
         <echo message="************************************************************************************"/>
-        <echo message="cleaning up core, web and betty"/>
+        <echo message="cleaning up project target, to clean up core, web and betty call 'ant clean-all'"/>
         <echo message="************************************************************************************"/>
         <echo/>
         <delete dir="${target.dir}"/>
@@ -36,6 +37,13 @@
         <delete dir="${core.dir}/target"/>
         <delete dir="${web.dir}/target"/>
         <delete dir="${betty.dir}/target"/>
+
+        <delete dir="${basedir}/eXist/target"/>
+        <delete dir="${basedir}/eXist/target-utils"/>
+        <delete dir="${basedir}/tools/AppBuilder/target"/>
+        <delete dir="${basedir}/tools/installer/target"/>
+        <delete dir="${basedir}/tools/installer/target"/>
+        <delete dir="${basedir}/tools/installer/target-utils"/>
     </target>
 
 
@@ -43,7 +51,7 @@
     <!-- **************************************** BUILDING JAR **************************************** -->
     <!-- **************************************** BUILDING JAR **************************************** -->
     <!-- **************************************** BUILDING JAR **************************************** -->
-    <target name="package" description="package core, web and betty">
+    <target name="package" description="package core, web and betty" depends="check-ant-version" if="antversion">
         <ant antfile="${core.dir}/build.xml" target="package" dir="${core.dir}" inheritall="false"/>
         <ant antfile="${web.dir}/build.xml"  target="package" dir="${web.dir}"  inheritall="false"/>
         <ant antfile="${betty.dir}/build.xml"  target="package" dir="${betty.dir}"  inheritall="false"/>
@@ -66,12 +74,12 @@
     <!-- **************************************** BUILDING JAR **************************************** -->
     <!-- **************************************** BUILDING JAR **************************************** -->
     <!-- **************************************** BUILDING JAR **************************************** -->
-    <target name="install-maven-dependencies" description="install all project dependencies into local maven repository">
+    <target name="install-maven-dependencies" description="install all project dependencies into local maven repository" depends="check-ant-version" if="antversion">
         <ant antfile="${basedir}/tools/maven/build.xml"  target="install-maven-dependencies" dir="${basedir}/tools/maven"  inheritall="false"/>
 
     </target>
 
-    <target name="update-maven-poms" description="update core, web and betty pom.xml">
+    <target name="update-maven-poms" description="update core, web and betty pom.xml" depends="check-ant-version" if="antversion">
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-core-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-web-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-betty-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
@@ -80,39 +88,35 @@
     </target>
 
 
-    <target name="prepare-js">
+    <target name="prepare-js" depends="check-ant-version" if="antversion">
         <echo/>
         <echo message="************************************************************************************"/>
         <echo message="unpacking Dojo..."/>
         <echo message="************************************************************************************"/>
         <echo/>
-        <mkdir dir="${target.dir}"/>
+        <mkdir dir="${src.target.dir}"/>
         <gunzip src="${basedir}/src/main/lib/${properties.dojo}.tar.gz"
-                dest="${target.dir}"/>
-        <untar src="${target.dir}/${properties.dojo}.tar"
-               dest="${target.dir}"/>
-        <delete file="${target.dir}/${properties.dojo}"/>
-        <delete file="${target.dir}/${properties.dojo}.tar"/>
+                dest="${src.target.dir}"/>
+        <untar src="${src.target.dir}/${properties.dojo}.tar"
+               dest="${src.target.dir}"/>
+
+        <delete file="${src.target.dir}/${properties.dojo}.tar"/>
 
         <echo/>
         <echo message="************************************************************************************"/>
         <echo message="merging Dojo into tree ..."/>
         <echo message="************************************************************************************"/>
         <echo/>
-        <move todir="${target.dir}/resources/scripts/dijit">
-            <fileset dir="${target.dir}/${properties.dojo}/dijit"/>
-        </move>
-        <move todir="${target.dir}/resources/scripts/dojo">
-            <fileset dir="${target.dir}/${properties.dojo}/dojo"/>
-        </move>
-        <move todir="${target.dir}/resources/scripts/dojox">
-            <fileset dir="${target.dir}/${properties.dojo}/dojox"/>
-        </move>
+        <move file="${src.target.dir}/${properties.dojo}" tofile="${target.dir}/resources/scripts"/>
 
-        <move todir="${target.dir}/resources/scripts/util">
-            <fileset dir="${target.dir}/${properties.dojo}/util"/>
+<!--
+        <move todir="${target.dir}/resources/scripts">
+            <fileset dir="${src.target.dir}/${properties.dojo}">
+                <include name="**/**"/>
+			</fileset>
         </move>
-
+-->
+        <delete file="${src.target.dir}/${properties.dojo}"/>
 
         <unzip src="${basedir}/src/main/lib/${properties.timeline}.zip" dest="${target.dir}"/>
         <move todir="${target.dir}/resources/scripts/simile/timeline">
@@ -125,7 +129,7 @@
 
     </target>
 
-    <target name="transformToXFormsUsingComponent">
+    <target name="transformToXFormsUsingComponent" depends="check-ant-version" if="antversion">
          <xslt in="${basedir}/src/main/xforms/demo/registration.xhtml"
                out="${basedir}/registration.xhtml"
                style="${basedir}/src/main/resources/xslt/component.xsl"
@@ -165,5 +169,10 @@
             <classpath refid="transform.class.path"/>
         </xslt>
     </target>
+
+    <target name="check-ant-version" unless="antversion">
+        <echo>Apache Ant 1.7 or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.7 You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</echo>
+    </target>
+
 
 </project>

@@ -29,22 +29,23 @@
                             </input1>
                         </data>
                     </xf:instance>
+<code>
                     <xf:bind nodeset="input1">
                         <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)"
                                  readonly="boolean-from-string(../@readonly)"
                                  required="boolean-from-string(../@required)"
                                  relevant="boolean-from-string(../@relevant)"
-                                 type="boolean"/>
+                                 type="xf:boolean"/>
                         <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
                         <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
                         <xf:bind nodeset="@required" type="boolean"></xf:bind>
                         <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
                     </xf:bind>
-
+</code>
                 </xf:model>
                 <code class="ui">
-<xf:input id="input1" ref="input1/value" incremental="true">
-    <xf:label>a text</xf:label>
+<xf:input id="input1" ref="input1/value" incremental="true" >
+    <xf:label>a checkbox</xf:label>
     <xf:hint>a Hint for this control</xf:hint>
     <xf:help>help for input1</xf:help>
     <xf:alert>invalid</xf:alert>
@@ -54,16 +55,16 @@
             <div class="MIPS">
                 <xf:group appearance="full">
                     <xf:label></xf:label>
-                    <xf:input id="input1-readonly" navindex="-1" ref="input1/@readonly" incremental="true">
+                    <xf:input id="input1-readonly" ref="input1/@readonly" incremental="true">
                         <xf:label>readonly</xf:label>
                     </xf:input>
-                    <xf:input id="input1-required" navindex="-1" ref="input1/@required" incremental="true">
+                    <xf:input id="input1-required" ref="input1/@required" incremental="true">
                         <xf:label>required</xf:label>
                     </xf:input>
-                    <xf:input id="input1-relevant" navindex="-1" ref="input1/@relevant" incremental="true">
+                    <xf:input id="input1-relevant" ref="input1/@relevant" incremental="true">
                         <xf:label>relevant</xf:label>
                     </xf:input>
-                    <xf:input id="input1-valid" navindex="-1" ref="input1/@constraint" incremental="true">
+                    <xf:input id="input1-valid" ref="input1/@constraint" incremental="true">
                         <xf:label>valid</xf:label>
                     </xf:input>
                 </xf:group>

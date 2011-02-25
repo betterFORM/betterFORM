@@ -62,16 +62,16 @@
             <div class="MIPS">
                 <xf:group appearance="full">
                     <xf:label></xf:label>
-                    <xf:input id="upload1-readonly" navindex="-1" ref="upload1/@readonly" incremental="true">
+                    <xf:input id="upload1-readonly" ref="upload1/@readonly" incremental="true">
                         <xf:label>readonly</xf:label>
                     </xf:input>
-                    <xf:input id="upload1-required" navindex="-1" ref="upload1/@required" incremental="true">
+                    <xf:input id="upload1-required" ref="upload1/@required" incremental="true">
                         <xf:label>required</xf:label>
                     </xf:input>
-                    <xf:input id="upload1-relevant" navindex="-1" ref="upload1/@relevant" incremental="true">
+                    <xf:input id="upload1-relevant" ref="upload1/@relevant" incremental="true">
                         <xf:label>relevant</xf:label>
                     </xf:input>
-                    <xf:input id="upload1-valid" navindex="-1" ref="upload1/@constraint" incremental="true">
+                    <xf:input id="upload1-valid" ref="upload1/@constraint" incremental="true">
                         <xf:label>valid</xf:label>
                     </xf:input>
                 </xf:group>

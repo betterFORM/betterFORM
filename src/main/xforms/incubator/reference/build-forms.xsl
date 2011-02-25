@@ -48,8 +48,8 @@
 
 
         <link rel="stylesheet" type="text/css"
-              href="../../../resources/scripts/dojox/highlight/resources/highlight.css"/>
-        <link rel="stylesheet" type="text/css" href="../../../resources/styles/reference.css"/>
+              href="../../resources/scripts/release/dojo/dojox/highlight/resources/highlight.css"/>
+        <link rel="stylesheet" type="text/css" href="../../reference/reference.css"/>
 
         <script type="text/javascript">
             dojo.require("dojox.highlight");

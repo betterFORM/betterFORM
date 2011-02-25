@@ -6,8 +6,8 @@
 dojo.provide("betterform.ui.select.CheckBoxItemset");
 
 dojo.require("dijit._Widget");
-dojo.require("betterform.ui.ControlValue");
-dojo.require("dojox.data.dom");
+
+dojo.require("dojox.xml.parser");
 dojo.require("betterform.ui.select.CheckBox");
 /**
 	All Rights Reserved.

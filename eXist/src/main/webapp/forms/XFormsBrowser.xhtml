@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events">
+<head>
+    <title>XFormsBrowser</title>
+</head>
+<body class="tundra">
+    <div id="xforms">
+        <div style="display:none">
+
+            <xf:model id="m-model">
+
+                <xf:instance id="i-controller">
+                    <data xmlns="">
+                        <base>http://localhost:8080/betterform/rest/</base>
+                        <startDirectory>/db/betterform/apps/forms</startDirectory>
+                        <directory>/db/betterform/apps/forms</directory>
+                    </data>
+                </xf:instance>
+
+                <!--
+                <xf:bind nodeset="instance('i-controller')" relevant="boolean(not(startDirectory = directory))"/>
+                -->
+
+                <xf:instance id="i-controller-old">
+                    <data xmlns="">
+                        <startDir/>
+                        <currentDir/>
+                        <prototypes>
+                            <dir name=".."/>
+                        </prototypes>
+                        <parentTrigger/>
+                    </data>
+                </xf:instance>
+
+                <xf:instance id="i-listing">
+                    <data xmlns=""/>
+                </xf:instance>
+
+                <xf:submission id="s-list-files" replace="instance" method="get" instance="i-listing" validate="false">
+                    <xf:resource value="concat(instance('i-controller')/base, instance('i-controller')/directory)"/>
+
+                    <xf:action ev:event="xforms-submit-error">
+                        <xf:message>Submission failed</xf:message>
+                    </xf:action>
+
+                    <xf:action ev:event="xforms-submit-done">
+                        <xf:send submission="s-transform"/>
+                    </xf:action>
+                </xf:submission>
+
+                <xf:submission id="s-transform"
+                           action="xslt:exist.xsl"
+                           method="POST"
+                           replace="instance"
+                           ref="instance('i-listing')"
+                           validate="false"/>
+            </xf:model>
+        </div>
+        <xf:group>
+
+
+            <xf:trigger>
+                <xf:label>Trigger REST.</xf:label>
+                <xf:action>
+                    <xf:send submission="s-list-files"/>
+                </xf:action>
+            </xf:trigger>
+
+            <xf:trigger>
+                <xf:label>Trigger transform</xf:label>
+                <xf:action>
+                    <xf:send submission="s-transform"/>
+                </xf:action>
+            </xf:trigger>
+
+            <xf:trigger>
+                <xf:label>Trigger file-dingens</xf:label>
+                <xf:action>
+                    <xf:send submission="s-list-files"/>
+                </xf:action>
+            </xf:trigger>
+        </xf:group>
+
+        <xf:group>
+            <xf:trigger id="parentDir" ref="instance('i-listing')/parent">
+                <xf:label>..</xf:label>
+                <xf:action>
+                    <xf:setvalue ref="instance('i-controller')/directory" value="instance('i-listing')/parent"/>
+                    <xf:send submission="s-list-files"/>
+                </xf:action>
+            </xf:trigger>
+
+            <div id="directoryListing">
+                <xf:repeat id="dirs" nodeset="instance('i-listing')/directory" appearance="compact">
+                     <xf:trigger ref="." src="resources/images/folder.gif">
+                        <xf:label ref="."/>
+                        <xf:action>
+                            <xf:setvalue ref="instance('i-controller')/directory" value="instance('i-listing')/directory[index('dirs')]/@absolute-path"/>
+                            <xf:send submission="s-list-files"/>
+                        </xf:action>
+                    </xf:trigger>
+                </xf:repeat>
+            </div>
+            <div id="fileListing">
+                <xf:repeat id="files" nodeset="instance('i-listing')/file" appearance="compact">
+                    <xf:label/>
+                    <xf:trigger ref="." appearance="minimal">
+                        <xf:label ref="."/>
+                        <xf:action>
+                            <xf:load show="new">
+                                <xf:resource value="concat(instance('i-controller')/base , instance('i-listing')/file[index('files')]/@absolute-path)"/>
+                            </xf:load>
+                        </xf:action>
+                    </xf:trigger>
+
+                    <xf:trigger ref="." appearance="minimal">
+                        <xf:label>Source</xf:label>
+                        <xf:action>
+                            <xf:load show="new">
+                                <xf:resource value="concat(instance('i-controller')/base , instance('i-listing')/file[index('files')]/@absolute-path, '?source=true')"/>
+                            </xf:load>
+                        </xf:action>
+                    </xf:trigger>
+                    <xf:output ref="./@last-modified"/>
+                </xf:repeat>
+            </div>
+        </xf:group>
+    </div>
+</body>
+</html>

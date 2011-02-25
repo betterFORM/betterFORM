@@ -38,7 +38,7 @@ import java.util.*;
 public class FluxFacade {
     //this is a custom event to activate a trigger in XForms.
     public static final String FLUX_ACTIVATE_EVENT = "flux-action-event";
-    private static final Log LOGGER = LogFactory.getLog(FluxProcessor.class);
+    private static final Log LOGGER = LogFactory.getLog(FluxFacade.class);
     private HttpSession session;
 
 

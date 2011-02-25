@@ -8,18 +8,15 @@
             <deprecation>off</deprecation>
             <debug>on</debug>
             <optimize>off</optimize>
-            <!-- TODO: to be implemented in all javac tasks -->
             <version>1.5</version>
         </javac>
         <dojo>dojo-release-1.5.0-src</dojo>
-        <!--<dojo>dojo-release-1.3.3-src</dojo>-->
-
         <timeline>timeline_libraries_v2.3.0</timeline>
     </properties>
     <core>
         <app>
             <name>betterform-core</name>
-            <version>3.1.0</version>
+            <version>3.2.0-prerelease</version>
         </app>
         <transform>
             <classpath pathid="transform.class.path" description="classpath for saxon XPath and XSLT engine">
@@ -64,14 +61,18 @@
     <web>
         <app>
             <name>betterform</name>
-            <version>3.1.0</version>
+            <version>3.2.0-prerelease</version>
         </app>
+        <transform>
+            <classpath pathid="transform2.class.path" description="classpath for saxon XPath and XSLT engine">
+                    <path refid="compile.class.path"/>
+            </classpath>
+        </transform>
         <compile>
             <classpath pathid="web.class.path" description="classpath for compiling web classes">
                 <path refid="compile.class.path"/>
                 <pathelement location="${web.dir}/src/main/lib/dwr-2.0.5.jar" groupid="org.directwebremoting.dwr" version="2.0.5" artifactId="dwr"/>
                 <pathelement location="${web.dir}/src/main/lib/servlet-api-2.4.jar" groupid="javax.servlet" version="2.4" artifactId="servlet-api" scope="provided"/>
-                <pathelement location="${web.dir}/src/main/lib/yuicompressor-2.4.2.jar" groupid="yui.compressor" version="2.4.2" artifactId="yui-compressor" />
             </classpath>
         </compile>
         <test>
@@ -200,12 +201,28 @@
         <!-- ### installerType must be either 'standard' or 'web'. Default value is 'web' ### -->
         <installerType>standard</installerType>
         <exist>
-            <!-- <jar>/home/zwobit/Downloads/eXist-setup-1.4.0-rev10440.jar</jar> -->
-            <jar>/home/zwobit/Downloads/eXist-setup-1.5.0dev.jar</jar>
-            <version>1.5</version>
+            <jar>/home/zwobit/Downloads/betterFORM/binaries/eXist-setup-1.4.0-rev10440.jar</jar>
+            <version>1.4</version>
             <user>admin</user>
             <passwd>betterform</passwd>
+            <betterform>true</betterform>
         </exist>
+        <compile>
+            <classpath pathid="installer.class.path" description="classpath for compiling installer classes">
+                <pathelement location="${installer.dir}/src/main/lib/exist-1.4.jar" groupid="org.exist" version="1.4"
+                             artifactId="exist"/>
+                <pathelement location="${installer.dir}/src/main/lib/xmldb.jar" groupid="org.xmldb" version="11112001"
+                             artifactId="xmldb"/>
+            </classpath>
+        </compile>
     </installer>
+    <exist>
+        <betterform>
+            <xrx>
+                <installed>/Appications/betterFORM</installed>
+            </xrx>
+        </betterform>
+        <installed>/Appications/eXist</installed>
+    </exist>
 </root>
 

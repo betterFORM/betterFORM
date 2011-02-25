@@ -130,31 +130,40 @@
     <!-- #### Note - the whitespace in this template shouldn't be touched to produce line breaks in the output -->
     <xsl:template name="addDWRImports">
         <!-- for DWR AJAX -->
+        <script type="text/javascript" src="{concat($contextroot,'/resources/scripts/release/dwr.js')}">&#160;</script><xsl:text>
+</xsl:text>
+<!--
         <script type="text/javascript" src="{concat($contextroot,'/Flux/engine.js')}">&#160;</script><xsl:text>
 </xsl:text>
-        <!-- for DWR AJAX -->
+        &lt;!&ndash; for DWR AJAX &ndash;&gt;
         <script type="text/javascript" src="{concat($contextroot,'/Flux/interface/Flux.js')}">&#160;</script><xsl:text>
 </xsl:text>
         <script type="text/javascript" src="{concat($contextroot,'/Flux/interface/XFormsModelElement.js')}">&#160;</script><xsl:text>
 </xsl:text>
-        <!-- for DWR AJAX -->
+        &lt;!&ndash; for DWR AJAX &ndash;&gt;
         <script type="text/javascript" src="{concat($contextroot,'/Flux/util.js')}">&#160;</script><xsl:text>
 </xsl:text>
+-->
     </xsl:template>
 
     <xsl:template name="copyInlineScript">
         <!-- copy inline javascript -->
         <xsl:for-each select="script">
             <script>
-                    <xsl:attribute name="type">
-                        <xsl:value-of select="@type"/>
-                    </xsl:attribute>
-                    <xsl:if test="@src">
+                <xsl:attribute name="type">
+                    <xsl:value-of select="@type"/>
+                </xsl:attribute>
+                <xsl:if test="exists(@src)">
                     <xsl:attribute name="src">
                         <xsl:value-of select="@src"/>
                     </xsl:attribute>
-                    </xsl:if>   
-                    <xsl:apply-templates mode="inline"/>
+                </xsl:if>
+                <xsl:if test="exists(@defer)">
+                    <xsl:attribute name="defer">
+                        <xsl:value-of select="@defer"/>
+                    </xsl:attribute>
+                </xsl:if>
+                <xsl:apply-templates mode="inline"/>
             </script>
                 <xsl:text>
 </xsl:text>

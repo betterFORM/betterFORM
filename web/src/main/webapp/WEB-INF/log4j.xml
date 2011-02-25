@@ -57,7 +57,7 @@
     </category>
 
     <category name="de.betterform.agent.web">
-        <priority value="DEBUG"/>
+        <priority value="ERROR"/>
     </category>
 
     <logger name="net.sf.ehcache">

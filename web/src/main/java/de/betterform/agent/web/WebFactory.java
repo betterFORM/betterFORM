@@ -6,9 +6,6 @@
 
 package de.betterform.agent.web;
 
-import de.betterform.agent.web.flux.FluxProcessor;
-import de.betterform.agent.web.servlet.PlainHtmlProcessor;
-import de.betterform.connector.URIResolver;
 import de.betterform.generator.XSLTGenerator;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;

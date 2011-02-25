@@ -30,7 +30,7 @@
                     <xf:instance>
                         <data xmlns="">
                             <trigger1 constraint="true" readonly="false" required="true" relevant="true">
-                                <value></value>
+                                <value/>
                             </trigger1>
                         </data>
                     </xf:instance>
@@ -40,10 +40,10 @@
                                  required="boolean-from-string(../@required)"
                                  relevant="boolean-from-string(../@relevant)"
                                  type="string"/>
-                        <xf:bind nodeset="@constraint" type="boolean" readonly="true()"></xf:bind>
-                        <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
-                        <xf:bind nodeset="@required" type="boolean" readonly="true()"></xf:bind>
-                        <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
+                        <xf:bind nodeset="@constraint" type="boolean" readonly="true()"/>
+                        <xf:bind nodeset="@readonly" type="boolean"/>
+                        <xf:bind nodeset="@required" type="boolean" readonly="true()"/>
+                        <xf:bind nodeset="@relevant" type="boolean"/>
                     </xf:bind>
 
                 </xf:model>
@@ -52,9 +52,8 @@
     <xf:label>a text</xf:label>
     <xf:hint>a Hint for this control</xf:hint>
     <xf:help>help for trigger1</xf:help>
-    <xf:alert>invalid</xf:alert>
     <script type="text/javascript">
-        alert('trigger was clicked');
+        alert('trigger was clicked, script action executed');
     </script>
 </xf:trigger>
                 </code>
@@ -62,16 +61,16 @@
             <div class="MIPS">
                 <xf:group appearance="full">
                     <xf:label></xf:label>
-                    <xf:input id="trigger1-readonly" navindex="-1" ref="trigger1/@readonly" incremental="true">
+                    <xf:input id="trigger1-readonly" ref="trigger1/@readonly" incremental="true">
                         <xf:label>readonly</xf:label>
                     </xf:input>
-                    <xf:input id="trigger1-required" navindex="-1" ref="trigger1/@required" incremental="true">
+                    <xf:input id="trigger1-required" ref="trigger1/@required" incremental="true">
                         <xf:label>required</xf:label>
                     </xf:input>
-                    <xf:input id="trigger1-relevant" navindex="-1" ref="trigger1/@relevant" incremental="true">
+                    <xf:input id="trigger1-relevant" ref="trigger1/@relevant" incremental="true">
                         <xf:label>relevant</xf:label>
                     </xf:input>
-                    <xf:input id="trigger1-valid" navindex="-1" ref="trigger1/@constraint" incremental="true">
+                    <xf:input id="trigger1-valid" ref="trigger1/@constraint" incremental="true">
                         <xf:label>valid</xf:label>
                     </xf:input>
                 </xf:group>

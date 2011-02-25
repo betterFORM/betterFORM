@@ -5,7 +5,7 @@
         <title>Trigger control rendered as button</title>
         <style type="text/css">
             #trigger1-value {
-                background: url(../../images/bf_logo_67x27.png) no-repeat center;
+                background: url(images/bf_logo_67x27.png) no-repeat center;
                 width: 100px;
                 height: 40px;
             }
@@ -22,9 +22,9 @@
                 A trigger can be styled by CSS.
                 Here the trigger is given an id and a CSS matcher is added for it. The corresponding
                 button rendered in HTML will have the original id with '-value' attached. The matcher
-                for the button is therefore #imageTrigger-value.
+                for the button is therefore #trigger1-value.
                 This is only one example how to style controls with CSS. Besides identity matching alternative
-                style rules are possible to achieve the same result. E.g. instead of #imageTrigger .xfValue
+                style rules are possible to achieve the same result. E.g. instead of #trigger1 .xfValue
                 would match the same element in the tree.
             </p>
         </div>
@@ -56,27 +56,27 @@
 
                 </xf:model>
                 <code class="ui">
-<xf:trigger id="trigger1" ref="trigger1/value" incremental="true">
-    <xf:label></xf:label>
+<xf:trigger id="trigger1" ref="trigger1/value">
+    <xf:label/>
     <xf:hint>a Hint for this control</xf:hint>
     <xf:help>help for trigger1</xf:help>
-    <xf:alert>invalid</xf:alert>
+    <xf:message>The trigger was clicked</xf:message>
 </xf:trigger>
                 </code>
             </div>
             <div class="MIPS">
                 <xf:group appearance="full">
                     <xf:label></xf:label>
-                    <xf:input id="trigger1-readonly" navindex="-1" ref="trigger1/@readonly" incremental="true">
+                    <xf:input id="trigger1-readonly" ref="trigger1/@readonly" incremental="true">
                         <xf:label>readonly</xf:label>
                     </xf:input>
-                    <xf:input id="trigger1-required" navindex="-1" ref="trigger1/@required" incremental="true">
+                    <xf:input id="trigger1-required" ref="trigger1/@required" incremental="true">
                         <xf:label>required</xf:label>
                     </xf:input>
-                    <xf:input id="trigger1-relevant" navindex="-1" ref="trigger1/@relevant" incremental="true">
+                    <xf:input id="trigger1-relevant" ref="trigger1/@relevant" incremental="true">
                         <xf:label>relevant</xf:label>
                     </xf:input>
-                    <xf:input id="trigger1-valid" navindex="-1" ref="trigger1/@constraint" incremental="true">
+                    <xf:input id="trigger1-valid" ref="trigger1/@constraint" incremental="true">
                         <xf:label>valid</xf:label>
                     </xf:input>
                 </xf:group>

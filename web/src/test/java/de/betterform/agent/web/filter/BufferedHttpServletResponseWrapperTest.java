@@ -1,5 +1,6 @@
 package de.betterform.agent.web.filter;
 
+import de.betterform.agent.web.WebUtil;
 import junit.framework.TestCase;
 
 import javax.servlet.ServletOutputStream;
@@ -76,7 +77,7 @@ public class BufferedHttpServletResponseWrapperTest extends TestCase {
     	media = wrapper2.getMediaType();
     	assertEquals("", media);
 
-    	wrapper2.setContentType("text/html;charset=UTF-8");
+    	wrapper2.setContentType(WebUtil.HTML_CONTENT_TYPE);
     	media = wrapper2.getMediaType();
     	assertEquals("text/html", media);
     }
@@ -88,11 +89,11 @@ public class BufferedHttpServletResponseWrapperTest extends TestCase {
 		boolean isXML = wrapper2.hasXMLContentType();
 		assertEquals(false, isXML);
 
-		wrapper2.setContentType("text/html;charset=UTF-8");
+		wrapper2.setContentType(WebUtil.HTML_CONTENT_TYPE);
 		isXML = wrapper2.hasXMLContentType();
 		assertEquals(false, isXML);
 
-		wrapper2.setContentType("application/xhtml+xml");
+		wrapper2.setContentType(WebUtil.HTML_CONTENT_TYPE);
 		isXML = wrapper2.hasXMLContentType();
 		assertEquals(true, isXML);
     }

@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- $Id: build.xml,v 1.90 2006/11/16 23:55:43 joernt Exp $ -->
+<project id="betterform-application" name="betterForm AppBuilder" default="package" basedir=".">
+
+    <!--
+
+     This build file can be used to build application based upon betterFORM (http://betterform.de).
+
+     A betterFORM application (aka 'xApplication') is a project that uses one of the binary products of
+     the betterFORM XForms implementation. Products are:
+     - the betterFORM core jar (actual implementation of XForms 1.1 in Java)
+     - the betterFORM web application (integration of betterFORM core into a web application)
+     - betterFORM XRX (bundling of betterFORM webapp with the eXist XML database)
+     - betterFORM betty (an integration of betterFORM core in a Java applet)
+
+
+
+     -->
+
+    <!-- you need to reference a valid GitHub tag here which your xApplication takes as a base -->
+    <property name="betterform.version" value="https://github.com/betterFORM/betterFORM/zipball/development"/>
+    <property name="eXist.version"
+              value="http://netcologne.dl.sourceforge.net/project/exist/Stable/1.4/eXist-setup-1.4.0-rev10440.jar"/>
+
+
+    <property name="xApp.name" value="xApp-01"/>
+    <!-- If set XRX-Applications will be stored in this rootcollection. -->
+    <property name="rootcollection.name" value=""/>
+    <property name="server.port" value="8080"/>
+    <property name="server.name" value="localhost"/>
+    <property name="webapp.context" value="betterform"/>
+    <property name="db.user" value="admin"/>
+    <property name="db.pwd" value=""/>
+
+    <property name="core.dir" value="${basedir}/core"/>
+    <property name="web.dir" value="${basedir}/web"/>
+    <property name="betty.dir" value="${basedir}/betty"/>
+    <property name="target.dir" value="${basedir}/target"/>
+    <property name="xApp.src" value="${basedir}/src"/>
+    <property name="xApp.target" value="${target.dir}/${xApp.name}"/>
+    <property name="bf.src" value="${target.dir}/bf-src"/>
+    <property name="templates.dir" value="${bf.src}/tools/AppBuilder/templates"/>
+
+    <available property="betterform.available" file="${target.dir}/betterform-src.zip"/>
+    <available property="eXist.available" file="${target.dir}/exist-install.jar"/>
+    <available property="xrx.installed" file="${xApp.target}/webapp/WEB-INF/betterform-config.xml"/>
+    <antversion property="antversion" atleast="1.8.2"/>
+
+
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <target name="clean" description="clean build target directory">
+
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="cleaning up project"/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+        <delete dir="${xApp.target}"/>
+    </target>
+
+
+    <target name="check-ant-version" unless="antversion">
+        <echo>Apache Ant 1.8.2 or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.8.2. You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</echo>
+    </target>
+
+    <target name="clean-all" description="clean build target directory">
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="cleaning up target dir"/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+        <delete dir="${target.dir}"/>
+    </target>
+
+    <target name="prepare">
+        <mkdir dir="${bf.src}"/>
+        <antcall target="get-dependencies"/>
+
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="Unpacking betterform "/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+        <unzip src="${target.dir}/betterform-src.zip"
+               dest="${bf.src}">
+            <cutdirsmapper dirs="1"/>
+        </unzip>
+
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="Installing eXist"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+        <java jar="${target.dir}/exist-install.jar"
+              fork="true"
+              spawn="false" failonerror="true">
+            <arg line="-p ${xApp.target}"/>
+        </java>
+
+
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="Building betterForm extension"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+        <ant antfile="${bf.src}/eXist/build-betterFORM-XRX.xml" target="build-up-to-date-extension"
+             useNativeBasedir="true" inheritAll="false"/>
+
+
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="Copying betterForm extension to eXist"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+        <mkdir dir="${xApp.target}/extensions"/>
+        <copy todir="${xApp.target}/extensions">
+            <fileset dir="${bf.src}/eXist/target/eXist-1.4/"/>
+        </copy>
+
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="Installing betterForm extension"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+        <ant antfile="${xApp.target}/extensions/betterform/build.xml" target="wrapped-install" inheritall="false" usenativebasedir="true"/>
+
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="Copying base Application-Structure"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+        <copy todir="${xApp.src}" includeemptydirs="true">
+            <fileset dir="${templates.dir}/xrx/src"/>
+        </copy>
+
+        <!-- TODO: Test!
+         <move todir="${xApp.src}/main/xrx/${xApp.name}" file="${xApp.src}/main/xrx/sample"/>
+         -->
+
+
+
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="Deploying base Application-Structure into eXist"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+
+        <antcall target="start"/>
+        <antcall target="deploy-to-db"/>
+        <sleep seconds="15"/>
+        <antcall target="stop"/>
+    </target>
+
+    <target name="start" description="start XRX Application">
+        <ant antfile="${xApp.target}/extensions/betterform/build.xml" target="start-eXist" inheritall="false" usenativebasedir="true"/>
+    </target>
+
+    <target name="stop" description="stop XRX Application" >
+        <ant antfile="${xApp.target}/extensions/betterform/build.xml" target="stop-eXist" inheritall="false" usenativebasedir="true"/>
+    </target>
+
+    <target name="deploy-to-db" description="deploy xrx-application to database" if="xrx.installed">
+        <ant antfile="${xApp.target}/extensions/betterform/build-utils-database.xml" target="install-files-into-eXist-DB">
+           <property name="exist.installed" value="${xApp.target}"/>
+           <property name="db-user" value="${db.user}"/>
+           <property name="db-passwd" value="${db.pwd}"/>
+           <property name="file-source-dir" value="${xApp.src}/main/xrx/"/>
+           <property name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}"/>
+        </ant>
+    </target>
+
+    <target name="deploy-dojo-dev">
+        <ant antfile="${bf.src}/eXist/build-utils.xml" target="deploy-dojo-dev" inheritall="false" usenativebasedir="true">
+              <property name="target.dir" value="${xApp.target}/webapp"/>
+        </ant>
+    </target>
+
+    <target name="get-dependencies">
+        <antcall target="get-betterform"/>
+        <antcall target="get-eXist"/>
+    </target>
+
+    <target name="get-betterform" unless="betterform.available" description="download betterform sources">
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="Downloading betterform dependency"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+        <get src="${betterform.version}"
+             dest="${target.dir}/betterform-src.zip"/>
+    </target>
+
+    <target name="get-eXist" unless="eXist.available" description="download eXist installer jar">
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="Downloading eXist dependency"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+        <get src="${eXist.version}"
+             dest="${target.dir}/exist-install.jar"/>
+    </target>
+
+
+    <target name="unpack" depends="check-ant-version" if="antversion">
+        <available property="betterform.unzipped" file="${target.dir}/betterform-src.zip"/>
+        <available property="eXist.unzipped" file="${target.dir}/exist-install.jar"/>
+
+        <unzip src="${target.dir}/betterform-src.zip"
+               dest="${bf.src}">
+            <cutdirsmapper dirs="1"/>
+        </unzip>
+
+
+        <java jar="${target.dir}/exist-install.jar"
+              fork="true"
+              spawn="false" failonerror="true">
+            <arg line="-p ${xApp.target}"/>
+        </java>
+    </target>
+
+
+    <target name="create-core-project">
+        <!--<mkdir dir=""-->
+    </target>
+
+    <target name="create-web-project">
+    </target>
+
+    <target name="create-xrx-project">
+        <!-- 1. copy template structure for xrx -->
+        <!-- -->
+
+        <ant antfile="${xApp.target}/extensions/betterform/build-utils-database.xml" target="install-files-into-eXist-DB" />
+
+    </target>
+
+    <target name="deploy" description="deploys betterFORM application during development">
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="Deploying webapp into eXist"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+        <copy todir="${xApp.target}/webapp/">
+            <fileset dir="/src/main/etc/overwrites/webapp/"/>
+        </copy>
+
+        <antcall target="deploy-to-db"/>
+    </target>
+
+    <!-- **************************************** BUILDING JAR **************************************** -->
+    <!-- **************************************** BUILDING JAR **************************************** -->
+    <!-- **************************************** BUILDING JAR **************************************** -->
+    <target name="package" description="package core, web and betty">
+        <ant antfile="${core.dir}/build.xml" target="package" dir="${core.dir}" inheritall="false"/>
+        <ant antfile="${web.dir}/build.xml" target="package" dir="${web.dir}" inheritall="false"/>
+        <ant antfile="${betty.dir}/build.xml" target="package" dir="${betty.dir}" inheritall="false"/>
+    </target>
+
+    <target name="install-overwrites" description="copy project-specific overrites into eXist" depends="stop">
+        <copy todir="${xApp.target}" overwrite="true" includeemptydirs="true">
+            <fileset dir="${xApp.src}/main/etc/overwrites"/>
+        </copy>
+    </target>
+
+</project>

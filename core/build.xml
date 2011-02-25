@@ -11,8 +11,11 @@
              semanticAttributes="true" keepRoot="false" />
 
     <property name="target" value="${basedir}/target"/>
+    <property name="target.classes" value="${basedir}/target/classes"/>
+
     <property name="dist.path" value="${basedir}/target/${core.app.name}"/>
     <property name="dist.name" value="${core.app.name}-${core.app.version}"/>
+    <antversion property="antversion" atleast="1.7"/>
 
     <!-- **************************************** HOUSEKEEPING **************************************** -->
     <!-- **************************************** HOUSEKEEPING **************************************** -->
@@ -29,7 +32,7 @@
     <!-- **************************************** PREPARATION **************************************** -->
     <!-- **************************************** PREPARATION **************************************** -->
     <!-- **************************************** PREPARATION **************************************** -->
-    <target name="prepare" description="init the build process">
+    <target name="prepare" description="init the build process" depends="check-ant-version" if="antversion">
         <!-- set timestamp -->
         <tstamp/>
         <echo message="basedir: ${basedir}"/>
@@ -65,25 +68,8 @@
 
     <target name="compile" depends="prepare" description="compile all core sources">
 
-<!--
-        <exec executable="svn" output="svnlog.out">
-             <arg line="info"/>
-         </exec>
-         <loadproperties srcFile="svnlog.out">
-               <filterchain>  
-                 <linecontains>
-                   <contains value="Revision"/>
-                 </linecontains>
-               </filterchain>
-         </loadproperties>
-         <delete file="svnlog.out"/>
-
-        <echo>SVN Revision ${Revision}</echo>
--->
         <filter token="app.name" value="${web.app.name}"/>
         <filter token="app.version" value="${web.app.version}"/>
-        <filter token="app.build" value="${DSTAMP}/${TSTAMP}"/>
-        <!-- <filter token="revision.number" value="${Revision}"/> -->
 
         <copy todir="${basedir}/src/main/resources/META-INF"
               file="src/main/java/version.info"
@@ -98,7 +84,7 @@
         
         <javac description="compile source files"
             srcdir="${basedir}/src/main/java"
-            destdir="${basedir}/target/classes"
+            destdir="${target.classes}"
             classpathref="compile.class.path"
             target="${properties.javac.version}"                
             debug="${properties.javac.debug}"
@@ -300,6 +286,10 @@
          <!--set version filter-->
          <filter token="core.app.version" value="${core.app.version}"/>
      </target>
+
+    <target name="check-ant-version" unless="antversion">
+        <echo>Apache Ant 1.7 or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.7 You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</echo>
+    </target>
 
 
 </project>

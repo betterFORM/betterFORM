@@ -1,7 +1,6 @@
-betterFORM (Version 3.2)
+betterFORM limeGreen
 -------------------------------------------------------
-TBD
-
+See http://betterform.wordpress.com/2011/01/20/whats-new-in-betterform-limegreen/
 
 betterFORM lightSteelBlue (Version 3.1) XRX Edition
 -------------------------------------------------------

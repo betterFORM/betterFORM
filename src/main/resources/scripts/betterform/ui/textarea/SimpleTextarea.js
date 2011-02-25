@@ -5,7 +5,7 @@
 
 dojo.provide("betterform.ui.textarea.SimpleTextarea");
 
-dojo.require("betterform.ui.ControlValue");
+
 dojo.require("dijit.form.SimpleTextarea");
 
 dojo.declare(

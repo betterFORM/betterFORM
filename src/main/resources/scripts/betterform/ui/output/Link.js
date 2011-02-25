@@ -9,7 +9,7 @@ dojo.provide("betterform.ui.output.Link");
 
 dojo.require("dijit._Widget");
 dojo.require("dijit._Templated");
-dojo.require("betterform.ui.ControlValue");
+
 
 
 dojo.declare(
@@ -21,7 +21,7 @@ dojo.declare(
         href: "",
         label:null,
 		
-        templateString:"<span><a href=\"${href}\" target=\"_blank\" dojoAttachPoint=\"containerNode\"></a></span>",
+        templateString:"<span><a href=\"javascript:void(0)\" value=\"${href}\"  dojoAttachPoint=\"containerNode\"></a></span>",
 
         postMixInProperties:function() {
             this.inherited(arguments);
@@ -32,6 +32,7 @@ dojo.declare(
             this.label = dojo.byId(this.xfControl.id+ "-label");
             if(this.label != undefined){
                 this.containerNode.innerHTML = this.label.innerHTML;
+                this.containerNode.onclick = dojo.hitch(this,this._onClick);
                 this.label.innerHTML = '';
             }
 
@@ -45,6 +46,12 @@ dojo.declare(
         _onBlur:function(){
             this.inherited(arguments);
             this.handleOnBlur();
+        },
+
+        _onClick:function(){
+            if(!this.xfControl.isReadonly()){
+                window.open(dojo.attr(this.containerNode,"value"), '_blank');
+            }
         },
 
         getControlValue:function(){
@@ -80,9 +87,6 @@ dojo.declare(
             // console.debug("this.containerNode", this.containerNode);
 
         }
-
-        
-
 	}
 );
 }

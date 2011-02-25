@@ -5,10 +5,6 @@
 
 dojo.provide("betterform.XFormsModelElement");
 
-dojo.require("dijit._Widget");
-
-dojo.require("betterform.XFormsModelElement");
-
 /**
 	All Rights Reserved.
 	@author Joern Turner
@@ -22,8 +18,7 @@ dojo.require("betterform.XFormsModelElement");
     param 'func' is required which is the callback function to be called with the response.
 
 **/
-dojo.declare("betterform.XFormsModelElement",
-        dijit._Widget,
+dojo.declare("betterform.XFormsModelElement", dijit._Widget,
 {
     constructor: function() {
     },

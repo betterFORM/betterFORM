@@ -23,6 +23,26 @@
     display: none;
 }
 
+.xfReadWrite .xfValue a:hover,
+.xfReadWrite .xfValue a:focus,
+.xfReadWrite .xfValue a:link,
+.xfReadWrite .xfValue a:visited,
+.xfReadWrite .xfValue a:active  {
+	color:#7080A0;
+
+}
+
+.xfReadOnly .xfValue a:focus,
+.xfReadOnly .xfValue a:hover,
+.xfReadOnly .xfValue a:link,
+.xfReadOnly .xfValue a:visited,
+.xfReadOnly .xfValue a:active  {
+	color:#AFAFAF;
+	border:0;
+}
+
+.xfReadOnly .xfValue a,
+.xfReadOnly .xfValue .dijitButtonNode,
 .xfReadOnly .xfValue {
     background: #E4E4E4 url(../images/buttonDisabled.png) repeat-x scroll center top;
     border-color: #D5D5D5 #D5D5D5 #BDBDBD;
@@ -43,6 +63,10 @@
 /*background:url(../images/required.gif) no-repeat left top;*/
     padding-left: 0px;
     font-weight: normal;
+}
+
+.xfRequiredEmpty .xfValue{
+	border:thin solid #8b0000;
 }
 
 .xfSelectOpen .xfValue {

@@ -32,13 +32,11 @@
 				overflow:auto;
 			}
         </style>
-       xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"<link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
-      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/styles/reference.css" /><script xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="text/javascript">
-                dojo.require("dojox.highlight");
-                dojo.require("dojox.highlight.languages.xml");
-                //                dojo.require("dojox.highlight.languages.pygments.xml");
-                dojo.require("dijit.form.Button");
-                dojo.require('dijit.layout.ContentPane');
+       xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"<link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/scripts/release/dojo/dojox/highlight/resources/highlight.css" />
+      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="reference.css" /><script xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="text/javascript">
+                dojo.subscribe("/xf/ready", function(){
+                    fluxProcessor.skipshutdown=true;
+                });
             </script></head>
    
    <body class="soria InlineAlert" style="margin:30px">
@@ -97,8 +95,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d8e363" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
-                     <div dojoType="dijit.Tooltip" connectId="d8e363">matches any Element that represents a XForms
+                  <td id="d12e363" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
+                     <div dojoType="dijit.Tooltip" connectId="d12e363">matches any Element that represents a XForms
                         group
                         |
                         repeat
@@ -110,13 +108,13 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d8e381" onmouseover="showClass('xfGroupLabel');" onmouseout="hideClass('xfGroupLabel');">xfGroupLabel
-                     <div dojoType="dijit.Tooltip" connectId="d8e381">matches the  label of a group</div>
+                  <td id="d12e381" onmouseover="showClass('xfGroupLabel');" onmouseout="hideClass('xfGroupLabel');">xfGroupLabel
+                     <div dojoType="dijit.Tooltip" connectId="d12e381">matches the  label of a group</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d8e395" onmouseover="showClass('bfVerticalTable');" onmouseout="hideClass('bfVerticalTable');">bfVerticalTable
-                     <div dojoType="dijit.Tooltip" connectId="d8e395">matches an Element that represents a XForms
+                  <td id="d12e395" onmouseover="showClass('bfVerticalTable');" onmouseout="hideClass('bfVerticalTable');">bfVerticalTable
+                     <div dojoType="dijit.Tooltip" connectId="d12e395">matches an Element that represents a XForms
                         group
                         element with
                         'bf:verticalTable'
@@ -126,59 +124,59 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d8e410" onmouseover="showClass('bfVerticalTableLabel');" onmouseout="hideClass('bfVerticalTableLabel');">bfVerticalTableLabel
-                     <div dojoType="dijit.Tooltip" connectId="d8e410">matches the label column of a vertical table layout
+                  <td id="d12e410" onmouseover="showClass('bfVerticalTableLabel');" onmouseout="hideClass('bfVerticalTableLabel');">bfVerticalTableLabel
+                     <div dojoType="dijit.Tooltip" connectId="d12e410">matches the label column of a vertical table layout
                         
                      </div>
                   </td>
                </tr>
                <tr>
-                  <td id="d8e419" onmouseover="showClass('bfVerticalTableValue');" onmouseout="hideClass('bfVerticalTableValue');">bfVerticalTableValue
-                     <div dojoType="dijit.Tooltip" connectId="d8e419">matches the value column of a vertical table layout
+                  <td id="d12e419" onmouseover="showClass('bfVerticalTableValue');" onmouseout="hideClass('bfVerticalTableValue');">bfVerticalTableValue
+                     <div dojoType="dijit.Tooltip" connectId="d12e419">matches the value column of a vertical table layout
                         
                      </div>
                   </td>
                </tr>
                <tr>
-                  <td id="d8e429" onmouseover="showClass('bfVerticalTableInfo');" onmouseout="hideClass('bfVerticalTableInfo');">bfVerticalTableInfo
-                     <div dojoType="dijit.Tooltip" connectId="d8e429">matches the info column of a vertical table layout
+                  <td id="d12e429" onmouseover="showClass('bfVerticalTableInfo');" onmouseout="hideClass('bfVerticalTableInfo');">bfVerticalTableInfo
+                     <div dojoType="dijit.Tooltip" connectId="d12e429">matches the info column of a vertical table layout
                         
                      </div>
                   </td>
                </tr>
                <tr>
-                  <td id="d8e438" onmouseover="showClass('xfGroup');" onmouseout="hideClass('xfGroup');">xfGroup
-                     <div dojoType="dijit.Tooltip" connectId="d8e438">tbd</div>
+                  <td id="d12e438" onmouseover="showClass('xfGroup');" onmouseout="hideClass('xfGroup');">xfGroup
+                     <div dojoType="dijit.Tooltip" connectId="d12e438">tbd</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d8e447" onmouseover="showClass('xfMinimalGroup');" onmouseout="hideClass('xfMinimalGroup');">xfMinimalGroup
-                     <div dojoType="dijit.Tooltip" connectId="d8e447">tbd</div>
+                  <td id="d12e447" onmouseover="showClass('xfMinimalGroup');" onmouseout="hideClass('xfMinimalGroup');">xfMinimalGroup
+                     <div dojoType="dijit.Tooltip" connectId="d12e447">tbd</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d8e456" onmouseover="showClass('xfCompactGroup');" onmouseout="hideClass('xfCompactGroup');">xfCompactGroup
-                     <div dojoType="dijit.Tooltip" connectId="d8e456">tbd</div>
+                  <td id="d12e456" onmouseover="showClass('xfCompactGroup');" onmouseout="hideClass('xfCompactGroup');">xfCompactGroup
+                     <div dojoType="dijit.Tooltip" connectId="d12e456">tbd</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d8e465" onmouseover="showClass('xfFullGroup');" onmouseout="hideClass('xfFullGroup');">xfFullGroup
-                     <div dojoType="dijit.Tooltip" connectId="d8e465">tbd</div>
+                  <td id="d12e465" onmouseover="showClass('xfFullGroup');" onmouseout="hideClass('xfFullGroup');">xfFullGroup
+                     <div dojoType="dijit.Tooltip" connectId="d12e465">tbd</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d8e474" onmouseover="showClass('bfHorizontalTable');" onmouseout="hideClass('bfHorizontalTable');">bfHorizontalTable
-                     <div dojoType="dijit.Tooltip" connectId="d8e474">tbd</div>
+                  <td id="d12e474" onmouseover="showClass('bfHorizontalTable');" onmouseout="hideClass('bfHorizontalTable');">bfHorizontalTable
+                     <div dojoType="dijit.Tooltip" connectId="d12e474">tbd</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d8e484" onmouseover="showClass('bfHorizontalTableLabel');" onmouseout="hideClass('bfHorizontalTableLabel');">bfHorizontalTableLabel
-                     <div dojoType="dijit.Tooltip" connectId="d8e484">tbd</div>
+                  <td id="d12e484" onmouseover="showClass('bfHorizontalTableLabel');" onmouseout="hideClass('bfHorizontalTableLabel');">bfHorizontalTableLabel
+                     <div dojoType="dijit.Tooltip" connectId="d12e484">tbd</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d8e493" onmouseover="showClass('bfGroupLabelLeft');" onmouseout="hideClass('bfGroupLabelLeft');">bfGroupLabelLeft
-                     <div dojoType="dijit.Tooltip" connectId="d8e493">tbd</div>
+                  <td id="d12e493" onmouseover="showClass('bfGroupLabelLeft');" onmouseout="hideClass('bfGroupLabelLeft');">bfGroupLabelLeft
+                     <div dojoType="dijit.Tooltip" connectId="d12e493">tbd</div>
                   </td>
                </tr>
                <tr>
@@ -203,7 +201,7 @@
                   <td id="xfvalue" onmouseover="showClass('xfValue');" onmouseout="hideClass('xfValue');">xfValue
                      
                      <div dojoType="dijit.Tooltip" connectId="xfvalue">
-                        matches the wigdet part of an XForms control
+                        matches the widget part of an XForms control
                         
                      </div>
                   </td>
@@ -305,7 +303,7 @@
             </div>
             <table id="references">
                <tr>
-                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="../../resources/images/w3c_home_nb.png" alt="W3C" /></a></td>
+                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="images/w3c_home_nb.png" alt="W3C" /></a></td>
                   <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
                </tr>
                <tr>
@@ -595,25 +593,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="input1-readonly" navindex="-1" ref="grouped-data/@readonly" incremental="true">
+               <xf:input id="input1-readonly" ref="grouped-data/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="input1-required" navindex="-1" ref="grouped-data/@required" incremental="true">
+               <xf:input id="input1-required" ref="grouped-data/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="input1-relevant" navindex="-1" ref="grouped-data/@relevant" incremental="true">
+               <xf:input id="input1-relevant" ref="grouped-data/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="input1-valid" navindex="-1" ref="grouped-data/@constraint" incremental="true">
+               <xf:input id="input1-valid" ref="grouped-data/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   

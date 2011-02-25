@@ -5,19 +5,6 @@
 
 dojo.provide("betterform.FluxProcessor");
 
-dojo.require("betterform.XFormsProcessor");
-dojo.require("dojo.NodeList-fx");
-dojo.require("betterform.ui.UIElementFactory");
-dojo.require("dojox.layout.FloatingPane");
-dojo.require("dojox.widget.Toaster");
-dojo.require("betterform.ui.common.GlobalAlert");
-dojo.require("betterform.ui.common.BowlAlert");
-dojo.require("betterform.ui.common.InlineRoundBordersAlert");
-dojo.require("betterform.ui.common.InlineAlert");
-dojo.require("betterform.ui.common.ToolTipAlert");
-dojo.require("betterform.ClientServerEvent");
-dojo.require("dojo._base.html");
-
 /**
  All Rights Reserved.
  @author Joern Turner
@@ -28,8 +15,7 @@ dojo.require("dojo._base.html");
  de.betterform.web.betterform.FluxFacade.
  **/
 
-dojo.declare("betterform.FluxProcessor",
-        betterform.XFormsProcessor,
+dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
 {
     sessionKey:"",
     skipshutdown:false,
@@ -98,7 +84,6 @@ dojo.declare("betterform.FluxProcessor",
 
         var inlineRoundBordersAlertEnabled = dojo.query(".InlineRoundBordersAlert", dojo.doc)[0];
         if (inlineRoundBordersAlertEnabled != undefined) {
-            dojo.require("betterform.ui.common.InlineRoundBordersAlert");
             this.defaultAlertHandler = new betterform.ui.common.InlineRoundBordersAlert({});
         }
 
@@ -134,23 +119,46 @@ dojo.declare("betterform.FluxProcessor",
     },
 
     setInlineRoundBorderAlertHandler:function() {
-        //console.debug("setInlineRoundBorderAlertHandler");
+        console.debug("FluxProcessor.setInlineRoundBorderAlertHandler");
+        // this.hideAllCommonChilds(dojo.doc);
         this.unsubscribeFromAlertHandler();
-        dojo.require("betterform.ui.common.InlineRoundBordersAlert");
         this.defaultAlertHandler = new betterform.ui.common.InlineRoundBordersAlert({});
         this.subscribers[0] = dojo.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
         this.subscribers[1] = dojo.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");
+        this.showAllCommonChilds(dojo.doc, "changeAlertType");
+
     },
 
 
     setToolTipAlertHandler:function() {
-        // console.debug("setToolTipAlertHandler");
+        console.debug("setToolTipAlertHandler");
+        // this.hideAllCommonChilds(dojo.doc);
         this.unsubscribeFromAlertHandler();
-        this.defaultAlertHandler = undefined;
         dojo.require("betterform.ui.common.ToolTipAlert");
         this.defaultAlertHandler = new betterform.ui.common.ToolTipAlert({});
         this.subscribers[0] = dojo.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
         this.subscribers[1] = dojo.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");
+        this.showAllCommonChilds(dojo.doc,"changeAlertType");
+    },
+
+    // Hide commonChilds 'alert', 'hint', 'info'
+    hideAllCommonChilds:function(node) {
+        dojo.query(".xfControl", node).forEach(dojo.hitch(this, function(control) {
+            console.debug("hide commonChild for control: ", control);
+            this.defaultAlertHandler._displayNone(dojo.attr(control,"id"),"applyChanges");
+        }));
+    },
+
+    // Show commonChilds 'alert', 'hint', 'info'
+    showAllCommonChilds:function(node,event) {
+        dojo.query(".xfControl", node).forEach(dojo.hitch(this, function(control) {
+            // console.debug("hide/show commonChild for control: ", control, " control valid state is:", dojo.hasClass(control),"xfValid");
+            if(dojo.hasClass(control),"xfValid"){
+                this.defaultAlertHandler.handleValid(dojo.attr(control,"id"),event);
+            }else {
+                this.defaultAlertHandler.handleInvalid(dojo.attr(control,"id"),event);
+            }
+        }));
     },
 
     unsubscribeFromAlertHandler:function() {
@@ -595,9 +603,9 @@ dojo.declare("betterform.FluxProcessor",
 
     _handleInstanceCreated:function(xmlEvent){
         dojo.require("dojox.fx");
-        var debugPane = dojo.byId("debug-pane");
+        var debugPane = dojo.byId("debug-pane-links");
         if(debugPane != null){
-            var contextroot = dojo.attr(debugPane,"context");
+            var contextroot = dojo.attr(dojo.byId("debug-pane"),"context");
             var newLink = document.createElement("a");
             dojo.attr(newLink,"href",contextroot + xmlEvent.contextInfo.modelId + "/" + xmlEvent.contextInfo.instanceId);
             dojo.attr(newLink,"target","_blank");
@@ -651,6 +659,17 @@ dojo.declare("betterform.FluxProcessor",
         dojo.query(".xfInvalid", dojo.doc).forEach(function(control) {
             // console.debug("_handleSubmitError: invalid control: ", control);
             dojo.publish("/xf/invalid", [dojo.attr(control, "id"),"submitError"]);
+        });
+        dojo.query(".xfRequired", dojo.doc).forEach(function(control) {
+            //if control has no value add CSS class xfRequiredEmpty
+            var xfControl = dijit.byId(control.id);
+            if(xfControl != undefined){
+                var xfValue = xfControl.getControlValue();
+                if(xfValue == undefined || xfValue == ''){
+                    dojo.addClass(xfControl.domNode,"xfRequiredEmpty");
+
+                }
+            }
         });
     },
 
@@ -832,7 +851,7 @@ dojo.declare("betterform.FluxProcessor",
                 if (exception != undefined) {
                     console.warn("An Exception occured in Facade: ", exception);
                 } else {
-                    dojo.require("dijit.Dialog");
+                    //dojo.require("dijit.Dialog");
                     var messageDialog = dijit.byId("bfMessageDialog");
                     dojo.query("#messageContent",messageDialog.domNode)[0].innerHTML=message;
                     messageDialog.show();
@@ -1199,6 +1218,7 @@ dojo.declare("betterform.FluxProcessor",
     },
 
     _handleUploadProgressEvent:function(xmlEvent) {
+        // console.debug("_handleUploadProgressEvent: xmlEvent:",xmlEvent);
         var xfControlId = xmlEvent.contextInfo.targetid;
         // if XForms Control Dijit allready exists call handleStateChanged on selected control
         if (dijit.byId(xfControlId) != undefined) {
@@ -1277,6 +1297,7 @@ dojo.declare("betterform.FluxProcessor",
 
     fetchProgress:function(id, fileName) {
         try {
+            console.debug("FluxProcessor.fetchProgress id:", id, "fileName: " , fileName , " this.sessionKey:", this.sessionKey);
             Flux.fetchProgress(id, fileName, this.sessionKey, this.applyChanges);
         }
         catch(ex) {
@@ -1298,33 +1319,26 @@ dojo.declare("betterform.FluxProcessor",
         }
     },
 
-    showHelp:function() {
-        // console.debug("showng help for:", this.currentControlId);
-        if (this.currentControlId == undefined || this.currentControlId == "" || this.currentControlId == '') {
-            console.warn("No Control selected to show help for");
-            return;
-        }
-        var helpCtrl = dojo.byId(this.currentControlId + '-help');
+    showHelp:function(id) {
+        console.debug("showng help for:", id);
+
+
+        var helpCtrl = dojo.byId(id + '-help');
         if (helpCtrl == undefined) {
-            console.warn("No help available for Control Id: '" + this.currentControlId + "'");
+            console.warn("No help available for Control Id: '" + id + "'");
             return;
         }
 
-        var helpWnd = dojo.byId('bfHelpTrigger');
-        var newdiv = document.createElement('div');
-        dojo.style(newdiv, { "display":"none"});
+        var helpText = dojo.byId(id + "-help-text");
+        var currentState = dojo.style(helpText,"display");
 
-        helpWnd.appendChild(newdiv);
-        newdiv.innerHTML = helpCtrl.innerHTML;
-        var helpDijit = new dojox.layout.FloatingPane({
-            title: 'Help',
-            closeable:true,
-            resizable:true,
-            dockable: false
-        }, newdiv);
-        dojo.addClass(helpDijit.domNode, "bfHelpPane");
-        helpDijit.startup();
-
+        if(currentState == "none"){
+            dojo.style(helpText, { "display":"inline-block"});
+        }else{
+            dojo.style(helpText, { "display":"none"});
+        }
+        //make sure that the input control at work does not loose the focus
+//        dojo.byId(id).focus();
     },
 
     getInstanceDocument:function(modelId, instanceId){

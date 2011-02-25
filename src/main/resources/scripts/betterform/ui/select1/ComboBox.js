@@ -6,7 +6,7 @@
 dojo.provide("betterform.ui.select1.ComboBox");
 
 
-dojo.require("betterform.ui.ControlValue");
+
 
 
 dojo.declare(

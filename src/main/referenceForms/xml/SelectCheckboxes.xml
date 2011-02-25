@@ -54,19 +54,19 @@
 <xf:instance id="codes">
     <countrylist xmlns="">
         <country>
-            <country-name>AFGHANISTAN</country-name>
+            <country-name>Afghanistan</country-name>
             <code>AF</code>
         </country>
         <country>
-            <country-name>LAND ISLANDS</country-name>
+            <country-name>Land Island</country-name>
             <code>AX</code>
         </country>
         <country>
-            <country-name>ALBANIA</country-name>
+            <country-name>Albania</country-name>
             <code>AL</code>
         </country>
         <country>
-            <country-name>ALGERIA</country-name>
+            <country-name>Algeria</country-name>
             <code>DZ</code>
         </country>
     </countrylist>
@@ -75,7 +75,7 @@
                 </xf:model>
                 <code class="ui">
 <xf:select id="select" ref="select/value" appearance="full" incremental="true">
-    <xf:label>a text</xf:label>
+    <xf:label>a combobox select</xf:label>
     <xf:hint>a Hint for this control</xf:hint>
     <xf:help>help for select</xf:help>
     <xf:alert>invalid</xf:alert>
@@ -89,16 +89,16 @@
             <div class="MIPS">
                 <xf:group appearance="full">
                     <xf:label></xf:label>
-                    <xf:input id="select-readonly" navindex="-1" ref="select/@readonly" incremental="true">
+                    <xf:input id="select-readonly" ref="select/@readonly" incremental="true">
                         <xf:label>readonly</xf:label>
                     </xf:input>
-                    <xf:input id="select-required" navindex="-1" ref="select/@required" incremental="true">
+                    <xf:input id="select-required" ref="select/@required" incremental="true">
                         <xf:label>required</xf:label>
                     </xf:input>
-                    <xf:input id="select-relevant" navindex="-1" ref="select/@relevant" incremental="true">
+                    <xf:input id="select-relevant" ref="select/@relevant" incremental="true">
                         <xf:label>relevant</xf:label>
                     </xf:input>
-                    <xf:input id="select-valid" navindex="-1" ref="select/@constraint" incremental="true">
+                    <xf:input id="select-valid" ref="select/@constraint" incremental="true">
                         <xf:label>valid</xf:label>
                     </xf:input>
                 </xf:group>

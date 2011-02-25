@@ -52,6 +52,9 @@
     <!--- path to javascript files -->
     <xsl:param name="scriptPath" select="concat($resourcesPath,'scripts/')"/>
 
+    <!-- path to core CSS file -->
+    <xsl:param name="CSSPath" select="concat($resourcesPath,'styles/')"/>
+
     <xsl:param name="keepalive-pulse" select="'0'"/>
 
     <!-- CDN support is disabled by default -->
@@ -69,6 +72,9 @@
     <!-- ### checks, whether this form makes use of <textarea xf:mediatype='text/html'/> ### -->
     <!--<xsl:variable name="uses-html-textarea" select="boolean(//xf:textarea[@mediatype='text/html'])"/>-->
 
+    <!-- ### the CSS stylesheet to use ### -->
+    <xsl:variable name="default-css" select="concat($contextroot,$CSSPath,'xforms.css')"/>
+    <xsl:variable name="betterform-css" select="concat($contextroot,$CSSPath,'betterform.css')"/>
 
     <xsl:variable name="default-hint-appearance" select="'bubble'"/>
 
@@ -96,6 +102,7 @@
             <title>
                 <xsl:value-of select="$form-name"/>
             </title>
+
             <!-- copy base if present -->
 <!--
             <xsl:if test="$baseURI != ''">
@@ -117,7 +124,12 @@
                 </xsl:otherwise>
             </xsl:choose>
 
+            <!-- include betterForm default stylesheet -->
+            <link rel="stylesheet" type="text/css" href="{$default-css}"/>
+            <link rel="stylesheet" type="text/css" href="{$betterform-css}"/>
 
+            <!-- copy user-defined stylesheets and inline styles -->
+            <xsl:call-template name="getLinkAndStyle"/>
 
             <!-- include needed javascript files -->
             <xsl:call-template name="addDojoConfig"/>
@@ -202,20 +214,27 @@
 
 
     <xsl:template name="chooseTheme">
-        <xsl:choose>
-            <xsl:when test="contains(//body/@class, 'soria')">
-        @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/soria/soria.css";
-            </xsl:when>
-            <xsl:when test="contains(//body/@class, 'nihilo')">
-        @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/nihilo/nihilo.css";
-            </xsl:when>
-             <xsl:when test="contains(//body/@class, 'claro')">
-        @import "<xsl:value-of select="$contextroot"/>release/dojo/dijit/themes/claro/claro.css";
-            </xsl:when>
-            <xsl:otherwise>
-        @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/tundra/tundra.css";
-            </xsl:otherwise>
-        </xsl:choose>
+        <style type="text/css">
+            <xsl:choose>
+                <xsl:when test="contains(//body/@class, 'soria')">
+            @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/soria/soria.css";
+                </xsl:when>
+                <xsl:when test="contains(//body/@class, 'nihilo')">
+            @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/nihilo/nihilo.css";
+                </xsl:when>
+                <xsl:when test="contains(//body/@class, 'claro')">
+            @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/claro/claro.css";
+                </xsl:when>
+                <xsl:otherwise>
+            @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/tundra/tundra.css";
+                </xsl:otherwise>
+            </xsl:choose>
+            @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dojo/resources/dojo.css";
+            @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dojox/widget/Toaster/Toaster.css";
+            @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dojox/layout/resources/FloatingPane.css";
+            @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dojox/layout/resources/ResizeHandle.css";
+        </style><xsl:text>
+</xsl:text>
     </xsl:template>
 
     <xsl:template name="addDojoConfig">

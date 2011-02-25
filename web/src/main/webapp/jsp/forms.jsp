@@ -22,7 +22,7 @@
 		<meta http-equiv="expires" content="Wed, 9 Feb 2011 12:21:57 GMT">
 		<meta name="revisit-after" content="5 days">
 
-        <title>betterFORM lightSteelBlue Forms Browser</title>
+        <title>betterFORM limeGreen Forms Browser</title>
 
         <link REV="made" HREF="mailto:info@betterform.de"/>
         <link rel="SHORTCUT ICON" href="images/betterform.ico"/>

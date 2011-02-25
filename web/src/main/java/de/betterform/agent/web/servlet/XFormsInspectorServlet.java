@@ -37,7 +37,7 @@ import java.io.OutputStream;
  */
 public class XFormsInspectorServlet extends HttpServlet /* extends AbstractXFormsServlet */ {
     private static final Log LOGGER = LogFactory.getLog(XFormsInspectorServlet.class);
-    public static final String defContentType = "text/html; charset=UTF-8";
+    public static final String defContentType = WebUtil.HTML_CONTENT_TYPE;
     private de.betterform.agent.web.WebFactory webFactory;
 
     /**
@@ -89,6 +89,7 @@ public class XFormsInspectorServlet extends HttpServlet /* extends AbstractXForm
                 Node host = processor.getXForms();
                 OutputStream out = response.getOutputStream();
                 response.setContentType("text/plain");
+                request.setAttribute(WebFactory.IGNORE_RESPONSE_BODY, "TRUE");
                 DOMUtil.prettyPrintDOM(host, out);
                 out.close();
             } else {

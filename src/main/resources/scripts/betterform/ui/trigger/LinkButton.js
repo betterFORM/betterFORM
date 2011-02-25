@@ -5,7 +5,7 @@
 
 dojo.provide("betterform.ui.trigger.LinkButton");
 
-dojo.require("betterform.ui.ControlValue");
+
 
 dojo.declare(
         "betterform.ui.trigger.LinkButton",
@@ -35,7 +35,7 @@ dojo.declare(
     },
 
     getControlValue:function(){
-        console.warn("TBD: betterform.ui.trigger.Button.getControlValue");
+        // console.warn("TBD: betterform.ui.trigger.Button.getControlValue");
         return dojo.attr(this.domNode,"value");
     },
 

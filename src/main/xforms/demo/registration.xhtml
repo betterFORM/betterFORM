@@ -11,6 +11,8 @@
       xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 <head>
     <title>Registration </title>
+
+    <link rel="stylesheet" type="text/css" href="styles/registration.css"/>
 </head>
 <body>
 <div id="xforms">
@@ -30,7 +32,7 @@
             </xf:instance>
 
             <xf:bind nodeset="alias" constraint="string-length(.) &gt; 3" required="true()"/>
-            <xf:bind nodeset="email" type="email" required="true()"/>
+            <xf:bind nodeset="email" type="email" constraint="string-length(.) &gt; 3" required="true()"/>
             <xf:bind nodeset="pass1" constraint="string-length(.) &gt;= 6" required="true()"/>
             <xf:bind nodeset="pass2" constraint=". = ../pass1" required="true()"/>
             <xf:bind nodeset="agreement" type="boolean" />
@@ -48,7 +50,7 @@
             </xf:submission>
 
 
-            <xf:setfocus control="first" ev:event="xforms-ready"/>
+            <!--<xf:setfocus control="first" ev:event="xforms-ready"/>-->
 
 
         </xf:model>
@@ -93,12 +95,6 @@
 				<xf:send submission="s-send"/>
 			</xf:trigger>
 		</xf:group>
-		<div class="absolute">Absolut (green)</div>
-		<div class="relative">Relative (red)</div>
-		<div class="inline1">inline 1</div>
-		<div class="inline2">inline 2</div>
-		<div class="inline3">inline 3</div>
-
 	</div>
 </div>
 </body>

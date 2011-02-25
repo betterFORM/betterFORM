@@ -5,8 +5,8 @@
 
 dojo.provide("betterform.ui.range.Slider");
 
-dojo.require("dijit.form.Slider");
-dojo.require("betterform.ui.ControlValue");
+dojo.require("dijit.form.HorizontalSlider");
+
 
 dojo.require("dijit._Widget");
 dojo.require("dijit._Templated");
@@ -22,9 +22,10 @@ dojo.declare(
     postMixInProperties:function() {
         this.inherited(arguments);
         this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);
-        this.start = eval(dojo.attr(this.srcNodeRef, "start"));
-        this.step = eval(dojo.attr(this.srcNodeRef, "step"));
-        this.end = eval(dojo.attr(this.srcNodeRef, "end"));
+        this.start = new Number(dojo.attr(this.srcNodeRef, "start"));
+        this.step = new Number(dojo.attr(this.srcNodeRef, "step"));
+        this.end =   new Number(dojo.attr(this.srcNodeRef, "end"));
+        this.value = new Number(dojo.attr(this.srcNodeRef, "value"));
     },
 
     postCreate:function() {

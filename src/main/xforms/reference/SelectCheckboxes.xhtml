@@ -8,13 +8,11 @@
             dojo.require("dijit.form.Button");
         </script>
       
-       xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"<link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/scripts/dojox/highlight/resources/highlight.css" />
-      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/styles/reference.css" /><script xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="text/javascript">
-                dojo.require("dojox.highlight");
-                dojo.require("dojox.highlight.languages.xml");
-                //                dojo.require("dojox.highlight.languages.pygments.xml");
-                dojo.require("dijit.form.Button");
-                dojo.require('dijit.layout.ContentPane');
+       xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"<link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="../../resources/scripts/release/dojo/dojox/highlight/resources/highlight.css" />
+      <link xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" rel="stylesheet" type="text/css" href="reference.css" /><script xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="text/javascript">
+                dojo.subscribe("/xf/ready", function(){
+                    fluxProcessor.skipshutdown=true;
+                });
             </script></head>
    
    <body class="soria InlineAlert" style="margin:30px">
@@ -61,7 +59,7 @@
                      
                      <country>
                         
-                        <country-name>AFGHANISTAN</country-name>
+                        <country-name>Afghanistan</country-name>
                         
                         <code>AF</code>
                         
@@ -69,7 +67,7 @@
                      
                      <country>
                         
-                        <country-name>LAND ISLANDS</country-name>
+                        <country-name>Land Island</country-name>
                         
                         <code>AX</code>
                         
@@ -77,7 +75,7 @@
                      
                      <country>
                         
-                        <country-name>ALBANIA</country-name>
+                        <country-name>Albania</country-name>
                         
                         <code>AL</code>
                         
@@ -85,7 +83,7 @@
                      
                      <country>
                         
-                        <country-name>ALGERIA</country-name>
+                        <country-name>Algeria</country-name>
                         
                         <code>DZ</code>
                         
@@ -108,8 +106,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d27e180" onmouseover="showClass('xfSelect');" onmouseout="hideClass('xfSelect');">xfSelect
-                     <div dojoType="dijit.Tooltip" connectId="d27e180">matches an Element that represents a XForms
+                  <td id="d32e180" onmouseover="showClass('xfSelect');" onmouseout="hideClass('xfSelect');">xfSelect
+                     <div dojoType="dijit.Tooltip" connectId="d32e180">matches an Element that represents a XForms
                         select
                         element
                         
@@ -117,8 +115,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d27e192" onmouseover="showClass('xfCheckBoxLabel');" onmouseout="hideClass('xfCheckBoxLabel');">xfCheckBoxLabel
-                     <div dojoType="dijit.Tooltip" connectId="d27e192">matches all checkbox labels of the element that represents a XForms
+                  <td id="d32e192" onmouseover="showClass('xfCheckBoxLabel');" onmouseout="hideClass('xfCheckBoxLabel');">xfCheckBoxLabel
+                     <div dojoType="dijit.Tooltip" connectId="d32e192">matches all checkbox labels of the element that represents a XForms
                         select
                         element
                         
@@ -126,8 +124,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d27e204" onmouseover="showClass('xfCheckBoxValue');" onmouseout="hideClass('xfCheckBoxValue');">xfCheckBoxValue
-                     <div dojoType="dijit.Tooltip" connectId="d27e204">matches all checkbox values of the element that represents a XForms
+                  <td id="d32e204" onmouseover="showClass('xfCheckBoxValue');" onmouseout="hideClass('xfCheckBoxValue');">xfCheckBoxValue
+                     <div dojoType="dijit.Tooltip" connectId="d32e204">matches all checkbox values of the element that represents a XForms
                         select
                         element
                         
@@ -156,7 +154,7 @@
                   <td id="xfvalue" onmouseover="showClass('xfValue');" onmouseout="hideClass('xfValue');">xfValue
                      
                      <div dojoType="dijit.Tooltip" connectId="xfvalue">
-                        matches the wigdet part of an XForms control
+                        matches the widget part of an XForms control
                         
                      </div>
                   </td>
@@ -267,7 +265,7 @@
             </div>
             <table id="references">
                <tr>
-                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="../../resources/images/w3c_home_nb.png" alt="W3C" /></a></td>
+                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="images/w3c_home_nb.png" alt="W3C" /></a></td>
                   <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
                </tr>
                <tr>
@@ -286,7 +284,7 @@
          <div class="Section sample">
             <xf:select id="select" ref="select/value" appearance="full" incremental="true">
                
-               <xf:label>a text</xf:label>
+               <xf:label>a combobox select</xf:label>
                
                <xf:hint>a Hint for this control</xf:hint>
                
@@ -310,25 +308,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="select-readonly" navindex="-1" ref="select/@readonly" incremental="true">
+               <xf:input id="select-readonly" ref="select/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="select-required" navindex="-1" ref="select/@required" incremental="true">
+               <xf:input id="select-required" ref="select/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="select-relevant" navindex="-1" ref="select/@relevant" incremental="true">
+               <xf:input id="select-relevant" ref="select/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="select-valid" navindex="-1" ref="select/@constraint" incremental="true">
+               <xf:input id="select-valid" ref="select/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   
@@ -341,26 +339,26 @@
          <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:instance id="codes"&gt;
     &lt;countrylist&gt;
         &lt;country&gt;
-            &lt;country-name&gt;AFGHANISTAN&lt;/country-name&gt;
+            &lt;country-name&gt;Afghanistan&lt;/country-name&gt;
             &lt;code&gt;AF&lt;/code&gt;
         &lt;/country&gt;
         &lt;country&gt;
-            &lt;country-name&gt;LAND ISLANDS&lt;/country-name&gt;
+            &lt;country-name&gt;Land Island&lt;/country-name&gt;
             &lt;code&gt;AX&lt;/code&gt;
         &lt;/country&gt;
         &lt;country&gt;
-            &lt;country-name&gt;ALBANIA&lt;/country-name&gt;
+            &lt;country-name&gt;Albania&lt;/country-name&gt;
             &lt;code&gt;AL&lt;/code&gt;
         &lt;/country&gt;
         &lt;country&gt;
-            &lt;country-name&gt;ALGERIA&lt;/country-name&gt;
+            &lt;country-name&gt;Algeria&lt;/country-name&gt;
             &lt;code&gt;DZ&lt;/code&gt;
         &lt;/country&gt;
     &lt;/countrylist&gt;
 &lt;/xf:instance&gt;
 
 &lt;xf:select id="select" ref="select/value" appearance="full" incremental="true"&gt;
-    &lt;xf:label&gt;a text&lt;/xf:label&gt;
+    &lt;xf:label&gt;a combobox select&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
     &lt;xf:help&gt;help for select&lt;/xf:help&gt;
     &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
