@@ -65,6 +65,9 @@
     <!-- locale Parameter -->
     <xsl:param name="locale" select="'en'"/>
 
+    <!-- Dojo Default Theme -->
+    <xsl:param name="defaultTheme" select="'tundra'"/>
+
     <!-- ############################################ VARIABLES ################################################ -->
     <!-- ### checks, whether this form uses uploads. Used to set form enctype attribute ### -->
     <xsl:variable name="uses-upload" select="exists(//*/xf:upload)"/>
@@ -93,7 +96,7 @@
     <!-- ####################################################################################################### -->
     <xsl:template match="head">
 
-        <xsl:comment> *** powered by betterFORM, &amp;copy; 2010 *** </xsl:comment>
+        <xsl:comment> *** powered by betterFORM, &amp;copy; 2011 *** </xsl:comment>
 
         <head>
             <!-- copy all meta tags except 'contenttype' -->
@@ -102,7 +105,6 @@
             <title>
                 <xsl:value-of select="$form-name"/>
             </title>
-
             <!-- copy base if present -->
 <!--
             <xsl:if test="$baseURI != ''">
@@ -142,10 +144,7 @@
             </xsl:if>
 
             <script type="text/javascript">
-                <xsl:call-template name="addDojoRequires"/>
-
-                <xsl:if test="$debug-enabled">
-                    function getXFormsDOM(){
+                <xsl:if test="$debug-enabled">function getXFormsDOM(){
                         Flux.getXFormsDOM(document.getElementById("bfSessionKey").value,
                             function(data){
                                 console.dirxml(data);
@@ -162,34 +161,23 @@
                     }
                 </xsl:if>
 
-<!--
-                function switchToEdit(target){
-                    //console.debug("target,"target);
-                    new betterform.ui.input.TextField({id:target.id,value:dojo.byId(target.id).innerHTML},target.id)
-
-                }
--->
-
-                var hideLoader = function(){
-                    dojo.fadeOut({
-                        node:"fluxProcessor",
-                        duration:400,
-                        onEnd: function(){
-                            dojo.style("fluxProcessor", "display", "none");
-                            dojo.style(dojo.body(),"overflow","auto");
-                        }
-                    }).play();
+                function loadBetterFORMJs(pathToRelease, developmentJsClass){
+                    if (isBetterFORMRelease) {
+                        var scriptElement = document.createElement('script');
+                        scriptElement.type = 'text/javascript';
+                        scriptElement.src = pathToRelease;
+                        document.getElementsByTagName('head')[0].appendChild(scriptElement);
+                    } else {
+                        dojo.require(developmentJsClass);
+                    }
                 }
 
                 dojo.addOnLoad(function(){
-
                     dojo.addOnLoad(function(){
                         dojo.require("dojo.parser");
                         dojo.parser.parse();
-
                         Flux._path = dojo.attr(dojo.byId("fluxProcessor"), "contextroot") + "/Flux";
                         Flux.init( dojo.attr(dojo.byId("fluxProcessor"),"sessionkey"), dojo.hitch(fluxProcessor,fluxProcessor.applyChanges));
-                        <!--hideLoader();-->
                     });
                 });
             </script><xsl:text>
@@ -200,40 +188,30 @@
     </xsl:template>
 
 
-    <xsl:template name="addCSS"><xsl:text>
+    <xsl:template name="addDojoCSS"><xsl:text>
 </xsl:text>
-        		    <style type="text/css">
-                    	<xsl:call-template name="chooseTheme"/>
-    				</style><xsl:text>
+                <xsl:variable name="cssTheme">
+                    <xsl:choose>
+                        <xsl:when test="contains(//body/@class, 'tundra')">tundra</xsl:when>
+                        <xsl:when test="contains(//body/@class, 'soria')">soria</xsl:when>
+                        <xsl:when test="contains(//body/@class, 'nihilo')">nihilo</xsl:when>
+                        <xsl:when test="contains(//body/@class, 'claro')">claro</xsl:when>
+                        <xsl:when test="contains(//body/@class, 'a11y')">a11y</xsl:when>
+                        <xsl:otherwise><xsl:value-of select="$defaultTheme"/></xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+
+                <style type="text/css">
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'release/dojo/dijit/themes/', $cssTheme, '/', $cssTheme,'.css')"/>";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'release/dojo/dojo/resources/dojo.css')"/>";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'release/dojo/dojox/widget/Toaster/Toaster.css')"/>";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'release/dojo/dojox/layout/resources/FloatingPane.css')"/>";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'release/dojo/dojox/layout/resources/ResizeHandle.css')"/>";
+                </style><xsl:text>
 </xsl:text>
                 <link rel="stylesheet" type="text/css" href="{concat($contextroot,$scriptPath,'release/dojo/betterform/css/static.css')}"/><xsl:text>
 </xsl:text>
         		<xsl:call-template name="getLinkAndStyle"/><xsl:text>
-</xsl:text>
-    </xsl:template>
-
-
-    <xsl:template name="chooseTheme">
-        <style type="text/css">
-            <xsl:choose>
-                <xsl:when test="contains(//body/@class, 'soria')">
-            @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/soria/soria.css";
-                </xsl:when>
-                <xsl:when test="contains(//body/@class, 'nihilo')">
-            @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/nihilo/nihilo.css";
-                </xsl:when>
-                <xsl:when test="contains(//body/@class, 'claro')">
-            @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/claro/claro.css";
-                </xsl:when>
-                <xsl:otherwise>
-            @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dijit/themes/tundra/tundra.css";
-                </xsl:otherwise>
-            </xsl:choose>
-            @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dojo/resources/dojo.css";
-            @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dojox/widget/Toaster/Toaster.css";
-            @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dojox/layout/resources/FloatingPane.css";
-            @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>release/dojo/dojox/layout/resources/ResizeHandle.css";
-        </style><xsl:text>
 </xsl:text>
     </xsl:template>
 
@@ -268,9 +246,12 @@
     </xsl:template>
 
     <xsl:template name="addDojoImport">
+        <script type="text/javascript">
+            var isBetterFORMRelease = true;
+        </script>
         <xsl:choose>
             <xsl:when test="$useCDN='true'">
-                <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.3/dojo/dojo.xd.js"> </script><xsl:text>
+                <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js"> </script><xsl:text>
 </xsl:text>
             </xsl:when>
             <xsl:otherwise>
@@ -279,9 +260,22 @@
             </xsl:otherwise>
         </xsl:choose>
 
-        <!--<script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/betterform/betterform.js')}">-->
-        <script type="text/javascript" src="{$betterform-js}">
-            &#160;</script>
+        <xsl:choose>
+            <xsl:when test="exists(//script[@id='betterformJs'])">
+                <!-- do nothin if id 'betterformJs' is available (means betterform.js is allready importet -->
+            </xsl:when>
+<!--
+            <xsl:when test="not(exists(//xf:select)) and not(exists(//xf:select1)) and not(exists(//xf:upload)) and not(exists(//xf:repeat)) and not(exists(//xf:switch)) and not(exists(//xf:range))  and not(exists(//xf:textarea))">
+                <script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/betterform/betterform-minimal.js')}">&#160;</script>
+            </xsl:when>
+            <xsl:when test="not(exists(//xf:range)) and not(exists(//xf:textarea))">
+                <script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/betterform/betterform-compact.js')}">&#160;</script>
+            </xsl:when>
+-->
+            <xsl:otherwise>
+                <script type="text/javascript" src="{concat($contextroot,$scriptPath,'release/dojo/betterform/betterform-full.js')}">&#160;</script>
+            </xsl:otherwise>
+        </xsl:choose>
         <xsl:text>
 </xsl:text>
     </xsl:template>
@@ -300,21 +294,26 @@
         <!-- todo: add 'overflow:hidden' to @style here -->
         <xsl:variable name="theme">
             <xsl:choose>
-                <xsl:when test="contains(//body/@class, 'soria')">soria</xsl:when>
-                <xsl:when test="contains(//body/@class, 'claro')">claro</xsl:when>
-                <xsl:when test="contains(//body/@class, 'nihilo')">nihilo</xsl:when>
-                <xsl:otherwise>tundra</xsl:otherwise>
+                <xsl:when test="not(exists(//body/@class)) or string-length(//body/@class) = 0"><xsl:value-of select="$defaultTheme"/></xsl:when>
+                <xsl:when test="not(contains(//body/@class, $defaultTheme)) and
+                                not(contains(//body/@class, 'tundra')) and
+                                not(contains(//body/@class, 'soria'))  and
+                                not(contains(//body/@class, 'claro'))  and
+                                not(contains(//body/@class, 'nihilo')) and
+                                not(contains(//body/@class, 'ally'))">
+                    <xsl:value-of select="concat($defaultTheme, ' ', //body/@class)"/>
+                </xsl:when>
+                <xsl:otherwise><xsl:value-of select="//body/@class"/></xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <body class="{$theme}">
-            <xsl:copy-of select="@*"/>
+        <body class="{$theme} bf">
+            <xsl:copy-of select="@*[name() != 'class']"/>
             <div id="bfLoading" class="disabled">
                 <img src="{concat($contextroot,$resourcesPath,'images/indicator.gif')}" class="xfDisabled" id="indicator"
                      alt="loading"/>
             </div>
             <!-- Toaster widget for ephemeral messages -->
-            <script type="javascript">dojo.require("dojox.widget.Toaster");</script><xsl:text>
-</xsl:text>
+
             <div dojoType="dojox.widget.Toaster"
                  id="betterformMessageToaster"
                  positionDirection="bl-up"
@@ -353,13 +352,14 @@
                             <xsl:call-template name="createForm"/>
                         </xsl:otherwise>
                     </xsl:choose>
-                    <xsl:if test="exists(//xf:help)"><script type="text/javascript">dojo.require("dijit.form.Button");</script><xsl:text>
-</xsl:text>
+<!--
+                    <xsl:if test="exists(//xf:help)">
                         <div id="bfHelpTrigger">
                             <a href="javascript:fluxProcessor.showHelp();"><img id="bfHelpIcon" src="{concat($contextroot,$resourcesPath,'images/helpBubble.png')}" alt="Help"/></a>
                             <div dojotype="dijit.Tooltip" connectid="bfHelpIcon">Focus control and click here for help</div>
                         </div>
                     </xsl:if>
+-->
                     <div id="helpWindow" style="display:none"/>
 <!--
                     <div id="bfCopyright">
@@ -454,7 +454,7 @@
             <xsl:call-template name="assemble-label-classes"/>
         </xsl:variable>
 
-        <span id="{$id}" dojoType="betterform.ui.Control" class="{$control-classes}">
+        <div id="{$id}" dojoType="betterform.ui.Control" class="{$control-classes}">
 
             <xsl:call-template name="copy-style-attribute"/>
             <xsl:if test="@bf:incremental-delay">
@@ -469,11 +469,11 @@
 
             <xsl:call-template name="buildControl"/>
             <xsl:apply-templates select="xf:alert"/>
-            <xsl:apply-templates select="xf:help"/>
             <xsl:apply-templates select="xf:hint"/>
+            <!--<xsl:apply-templates select="xf:help"/>-->
 
             <xsl:copy-of select="script"/>
-        </span>
+        </div>
     </xsl:template>
 
     <!-- cause outputs can be inline they should not use a block element wrapper -->
@@ -498,8 +498,8 @@
             <xsl:call-template name="buildControl"/>
 
             <xsl:apply-templates select="xf:alert"/>
-            <xsl:apply-templates select="xf:help"/>
             <xsl:apply-templates select="xf:hint"/>
+            <!--<xsl:apply-templates select="xf:help"/>-->
 
             <xsl:copy-of select="script"/>
         </span>
@@ -525,8 +525,8 @@
                 </label>
             <xsl:call-template name="buildControl"/>
             <span id="{$id}-alertAttachPoint" style="display:none;" class="alertAttachPoint"/>
-            <xsl:apply-templates select="xf:help"/>
             <xsl:apply-templates select="xf:hint"/>
+            <!--<xsl:apply-templates select="xf:help"/>-->
 
             <xsl:copy-of select="script"/>
         </span>
@@ -585,22 +585,48 @@
     <!-- ##### HELP ##### -->
     <!-- ##### HELP ##### -->
     <xsl:template match="xf:help">
-        <span id="{../@id}-help" class="xfHelp" style="display:none;"><xsl:apply-templates/></span>
+        <!--<span id="{../@id}-help" class="xfHelp" style="display:none;">-->
+            <!--<div id="{../@id}-help" class="xfHelp">-->
+        <div id="{../@id}-help-text" class="bfHelpText" style="display:none;">
+            <xsl:apply-templates/>
+        </div>
+        <!--</div>-->
+        <!--</span>-->
     </xsl:template>
 
     <!-- ##### ALERT ##### -->
     <!-- ##### ALERT ##### -->
     <!-- ##### ALERT ##### -->
     <xsl:template match="xf:alert">
-        <span id="{../@id}-alert" class="xfAlert" style="display:none;"><xsl:apply-templates/></span>
+        <span id="{../@id}-alert" class="xfAlert" style="display:none;">
+            <xsl:apply-templates/>
+            <span class="closeAlertIcon"> </span>
+        </span>
     </xsl:template>
 
     <!-- ##### HINT ##### -->
     <!-- ##### HINT ##### -->
     <!-- ##### HINT ##### -->
     <xsl:template match="xf:hint">
+        <xsl:variable name="parentId" select="../@id"/>
         <!--<xsl:message terminate="no">parentId: <xsl:value-of select="../@id"/>  id: <xsl:value-of select="@id"/> </xsl:message>-->
-        <span id="{../@id}-hint" class="xfHint" style="display:none"><xsl:apply-templates/></span>
+        <div id="{../@id}-hint" class="xfHint" style="display:none">
+            <xsl:apply-templates/>
+
+            <!-- if help exists we output the linking icon here -->
+            <xsl:if test="exists(../xf:help)">
+                <a tabindex="-1" onmouseover="dojo.style(dojo.byId('{$parentId}'+'-help-text'),'display','inline-block');"
+                                 onmouseout="dojo.style(dojo.byId('{$parentId}'+'-help-text'),'display','none');"
+                   href=""
+                   id="{$parentId}-help"
+                   class="xfHelp">
+                    <img id="{$parentId}-help-HelpIcon" src="{concat($contextroot,$resourcesPath,'images/helpBubble.png')}"
+                         alt="Help" width="16" height="16"/>
+                </a>
+            </xsl:if>
+            <xsl:apply-templates select="../xf:help"/>
+
+        </div>
     </xsl:template>
 
 
@@ -649,7 +675,7 @@
                             $lname='textarea' or
                             $lname='upload'">
 
-                <span id="{concat($id,'-value')}"
+                <div id="{concat($id,'-value')}"
                      class="xfValue"
                      dataType="{$datatype}"
                      controlType="{$lname}"
@@ -716,7 +742,7 @@
                         </xsl:otherwise>
                     </xsl:choose>
 
-                </span>
+                </div>
                 <!--<div style="display:none;" id="{concat($id,'-hint')}"><xsl:value-of select="xf:hint"/></div>-->
             </xsl:when>
 

@@ -23,14 +23,8 @@
     <xsl:variable name="betterform-css" select="concat($contextroot,$CSSPath,'betterform.css')"/>
     <xsl:variable name="custom-css" select="concat($contextroot,$CSSPath,'custom.css')"/>
 
-    <!-- ### the CSS stylesheet to use ### -->
-    <xsl:variable name="default-css" select="concat($contextroot,$CSSPath,'xforms.css')"/>
-    <xsl:variable name="betterform-css" select="concat($contextroot,$CSSPath,'betterform.css')"/>
-    <xsl:variable name="custom-css" select="concat($contextroot,$CSSPath,'custom.css')"/>
-
-
-
-    <xsl:template name="addCSS"><xsl:text>
+    
+<xsl:template name="addDojoCSS"><xsl:text>
 </xsl:text>
                 <xsl:variable name="cssTheme">
                     <xsl:choose>
@@ -49,6 +43,19 @@
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/widget/Toaster/Toaster.css')"/>";
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/layout/resources/FloatingPane.css')"/>";
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/layout/resources/ResizeHandle.css')"/>";
+                </style><xsl:text>
+</xsl:text>
+    </xsl:template>
+    
+
+    <xsl:template name="addCSS"><xsl:text>
+</xsl:text>
+                <style type="text/css">
+                    <xsl:call-template name="chooseTheme"/>
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojo/resources/dojo.css";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojox/widget/Toaster/Toaster.css";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojox/layout/resources/FloatingPane.css";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath)"/>dojox/layout/resources/ResizeHandle.css";
                 </style><xsl:text>
 </xsl:text>
         <!-- include betterForm default stylesheet -->
