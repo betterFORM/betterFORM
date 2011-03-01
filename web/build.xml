@@ -294,6 +294,7 @@
         <echo/>
         <delete dir="${webapp.dir}/forms/incubator"/>
         <delete dir="${webapp.dir}/forms/test"/>
+        <delete dir="${webapp.dir}/forms/template"/>
 
         <echo message="************************************************************************************"/>
         <echo message="clean up not packaged javascript..."/>
