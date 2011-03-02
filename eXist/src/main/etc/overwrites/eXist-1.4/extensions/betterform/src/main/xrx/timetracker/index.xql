@@ -2,6 +2,7 @@ xquery version "1.0";
 declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
 
 let $contextPath := request:get-context-path()
+return
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns:ev="http://www.w3.org/2001/xml-events"
