@@ -6,6 +6,7 @@
 package de.betterform.xml.xforms.action;
 
 
+import com.sun.mail.imap.protocol.Namespaces;
 import de.betterform.connector.ConnectorFactory;
 import de.betterform.connector.URIResolver;
 import de.betterform.xml.config.Config;
@@ -96,6 +97,15 @@ public class LoadAction extends AbstractBoundAction {
     public void perform() throws XFormsException {
         String bindAttribute = getXFormsAttribute(BIND_ATTRIBUTE);
         String refAttribute = getXFormsAttribute(REF_ATTRIBUTE);
+        boolean includeCSS = true;
+        boolean includeScript = true;
+
+        Element extension = DOMUtil.findFirstChildNS(this.element, NamespaceConstants.XFORMS_NS, EXTENSION);
+        if (extension != null) {
+            includeCSS = ("true".equalsIgnoreCase(getXFormsAttribute(extension, "includeCSS")))? true: false;
+            includeScript = ("true".equalsIgnoreCase(getXFormsAttribute(extension, "includeScript")))? true: false;
+        }
+
         if (this.resource.isAvailable() && (bindAttribute != null || refAttribute != null)) {
             // issue warning
             getLogger().warn(this + " perform: since both binding and linking attributes are present this action has no effect");
@@ -149,7 +159,7 @@ public class LoadAction extends AbstractBoundAction {
             absoluteURI = this.container.getConnectorFactory().getAbsoluteURI(relativeURI, this.element).toString();
 
             HashMap map = new HashMap();
-            handleEmbedding(absoluteURI, map);
+            handleEmbedding(absoluteURI, map, includeCSS, includeScript);
 
         } catch (XFormsException e) {
             LOGGER.error("Error performing xf:load action at: " + DOMUtil.getCanonicalPath(this.getElement()));
@@ -160,7 +170,7 @@ public class LoadAction extends AbstractBoundAction {
 //        storeInContext(absoluteURI, this.showAttribute);
     }
 
-    private void handleEmbedding(String absoluteURI, HashMap map) throws XFormsException {
+    private void handleEmbedding(String absoluteURI, HashMap map, boolean includeCSS, boolean includeScript) throws XFormsException {
 
 //        if(this.targetAttribute == null) return;
         //todo: handle multiple params
@@ -190,7 +200,20 @@ public class LoadAction extends AbstractBoundAction {
         }
         Node embed = getEmbeddedDocument(absoluteURI);
         // fetch CSS
-        String cssRules = getInlineCSS(embed);
+
+        String inlineCssRules = "";
+        String externalCssRules = "";
+        String inlineJavaScript = "";
+        String externalJavaScript = "";
+
+        if (includeCSS) {
+            inlineCssRules = getInlineCSS(embed);
+            externalCssRules = getExternalCSS(embed);
+        }
+        if (includeScript) {
+            inlineJavaScript = getInlineJavaScript(embed);
+            externalJavaScript = getExternalJavaScript(embed);
+        }
         embed = extractFragment(absoluteURI, embed);
         if(LOGGER.isDebugEnabled()){
             DOMUtil.prettyPrintDOM(embed);
@@ -207,42 +230,62 @@ public class LoadAction extends AbstractBoundAction {
         Element embeddedNode;
         Element targetElem = getTargetElement(evaluatedTarget);
 
-        // destroy existing embedded form within targetNode
-        if (targetElem.hasChildNodes()) {
-            destroyembeddedModels(targetElem);
-            Initializer.disposeUIElements(targetElem);
+        //Test if targetElem exist.
+        if (targetElem != null) {
+            // destroy existing embedded form within targetNode
+            if ( targetElem.hasChildNodes()) {
+                destroyembeddedModels(targetElem);
+                Initializer.disposeUIElements(targetElem);
+            }
+
+            // import referenced embedded form into host document
+            embeddedNode = (Element) this.container.getDocument().importNode(embed, true);
+
+            //import namespaces
+            NamespaceResolver.applyNamespaces(targetElem.getOwnerDocument().getDocumentElement(), (Element) embeddedNode);
+
+            // keep original targetElem id within hostdoc
+            embeddedNode.setAttributeNS(null, "id", targetElem.getAttributeNS(null, "id"));
+            //copy all Attributes that might have been on original mountPoint to embedded node
+            DOMUtil.copyAttributes(targetElem, embeddedNode, null);
+            targetElem.getParentNode().replaceChild(embeddedNode, targetElem);
+
+
+            map.put("uri", absoluteURI);
+            map.put("show", this.showAttribute);
+            map.put("targetElement", embeddedNode);
+            map.put("nameTarget", evaluatedTarget);
+            map.put("xlinkTarget", getXFormsAttribute(targetElem, "id"));
+            map.put("inlineCSS", inlineCssRules);
+            map.put("externalCSS", externalCssRules);
+            map.put("inlineJavascript", inlineJavaScript);
+            map.put("externalJavascript", externalJavaScript);
+
+            this.container.dispatch((EventTarget) embeddedNode, BetterFormEventNames.EMBED, map);
+            //create model for it
+            this.container.createEmbeddedForm((Element) embeddedNode);
+
+            // dispatch internal betterform event
+            this.container.dispatch((EventTarget) embeddedNode, BetterFormEventNames.EMBED_DONE, map);
+
+
+            this.container.dispatch(this.target, BetterFormEventNames.LOAD_URI, map);
+    //        storeInContext(absoluteURI, this.showAttribute);
+        } else {
+            String message = "Element reference for targetid: " + this.targetAttribute + " not found. " + DOMUtil.getCanonicalPath(this.element);
+            /*
+            Element div = this.element.getOwnerDocument().createElementNS("", "div");
+            div.setAttribute("class", "bfException");
+            div.setTextContent("Element reference for targetid: " + this.targetAttribute + "not found. " + DOMUtil.getCanonicalPath(this.element));
+
+            Element body = (Element) this.container.getDocument().getElementsByTagName("body").item(0);
+            body.insertBefore(div, DOMUtil.getFirstChildElement(body));
+            */
+            map.put("message", message);
+            map.put("exceptionPath", DOMUtil.getCanonicalPath(this.element));
+            this.container.dispatch(this.target, BetterFormEventNames.EXCEPTION, map);
+            //throw new XFormsException(message);
         }
-
-        // import referenced embedded form into host document
-        embeddedNode = (Element) this.container.getDocument().importNode(embed, true);
-
-        //import namespaces
-        NamespaceResolver.applyNamespaces(targetElem.getOwnerDocument().getDocumentElement(), (Element) embeddedNode);
-
-        // keep original targetElem id within hostdoc
-        embeddedNode.setAttributeNS(null, "id", targetElem.getAttributeNS(null, "id"));
-        //copy all Attributes that might have been on original mountPoint to embedded node
-        DOMUtil.copyAttributes(targetElem, embeddedNode, null);
-        targetElem.getParentNode().replaceChild(embeddedNode, targetElem);
-
-
-        map.put("uri", absoluteURI);
-        map.put("show", this.showAttribute);
-        map.put("targetElement", embeddedNode);
-        map.put("nameTarget", evaluatedTarget);
-        map.put("xlinkTarget", getXFormsAttribute(targetElem, "id"));
-        map.put("inlineCSS", cssRules);
-
-        this.container.dispatch((EventTarget) embeddedNode, BetterFormEventNames.EMBED, map);
-        //create model for it
-        this.container.createEmbeddedForm((Element) embeddedNode);
-
-        // dispatch internal betterform event
-        this.container.dispatch((EventTarget) embeddedNode, BetterFormEventNames.EMBED_DONE, map);
-
-
-        this.container.dispatch(this.target, BetterFormEventNames.LOAD_URI, map);
-//        storeInContext(absoluteURI, this.showAttribute);
     }
 
     private String getInlineCSS(Node embed) throws XFormsException {
@@ -251,7 +294,7 @@ public class LoadAction extends AbstractBoundAction {
         if(embed instanceof Document){
             embed = ((Document) embed).getDocumentElement();
         }
-        List result = XPathUtil.evaluate((Element) embed, "//*[@type='text/css']");
+        List result = XPathUtil.evaluate((Element) embed, "//*[@type='text/css' and (not(boolean(@href)))]");
         if (result.size() == 0) {
             return null;
         }
@@ -266,6 +309,74 @@ public class LoadAction extends AbstractBoundAction {
         return cssRules;
     }
 
+    private String getExternalCSS(Node embed) throws XFormsException {
+        //fetch style element(s) from Node to embed
+        String cssRules = "";
+        if(embed instanceof Document){
+            embed = ((Document) embed).getDocumentElement();
+        }
+        List result = XPathUtil.evaluate((Element) embed, "//*[@type='text/css' and boolean(@href)]");
+        if (result.size() == 0) {
+            return null;
+        }
+
+        for (int i = 0; i < result.size(); i++) {
+            Object item = result.get(i);
+            if (result.get(i) instanceof NodeWrapper) {
+                NodeWrapper wrapper = (NodeWrapper) item;
+                Node n = (Node) wrapper.getUnderlyingNode();
+                cssRules += n.getAttributes().getNamedItem("href").getNodeValue() + "#";
+            }
+        }
+        return cssRules;
+    }
+
+    private String getInlineJavaScript(Node embed) throws XFormsException {
+        //fetch style element(s) from Node to embed
+        String javaScriptCode = "";
+        if(embed instanceof Document){
+            embed = ((Document) embed).getDocumentElement();
+        }
+
+
+        //Get all inline script ignoring script that folllows a xforms:node
+        List result = XPathUtil.evaluate((Element) embed, "//*[not( namespace-uri()='http://www.w3.org/2002/xforms' )]/*[(@type='text/javascript') and (not(boolean(@src)))]");
+        if (result.size() == 0) {
+            return null;
+        }
+        for (int i = 0; i < result.size(); i++) {
+            Object item = result.get(i);
+            if (result.get(i) instanceof NodeWrapper) {
+                NodeWrapper wrapper = (NodeWrapper) item;
+                if (! "action".equals( ((NodeWrapper) item).getParent().getLocalPart()))  {
+                    Node n = (Node) wrapper.getUnderlyingNode();
+                    javaScriptCode += DOMUtil.getTextNodeAsString(n);
+                }
+            }
+        }
+
+        return javaScriptCode;
+    }
+
+    private String getExternalJavaScript(Node embed) throws XFormsException {
+        String javaScriptCode = "";
+        if(embed instanceof Document){
+            embed = ((Document) embed).getDocumentElement();
+        }
+
+
+        List result = XPathUtil.evaluate((Element) embed, "//*[(@type='text/javascript') and (boolean(@src)) ]");
+        for (int i = 0; i < result.size(); i++) {
+            Object item = result.get(i);
+            if (result.get(i) instanceof NodeWrapper) {
+                NodeWrapper wrapper = (NodeWrapper) item;
+                Node n = (Node) wrapper.getUnderlyingNode();
+                javaScriptCode += n.getAttributes().getNamedItem("src").getNodeValue() + "#";
+            }
+        }
+
+        return javaScriptCode;
+    }
     /**
      * fetches the Element that is the target for embedding. This Element will be replaced by the markup
      * to be embedded or all of its contents is erased in case of an 'unload'.

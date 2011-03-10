@@ -548,6 +548,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
                             case "betterform-AVT-changed"        : fluxProcessor._handleAVTChanged(xmlEvent);break;
                             case "betterform-instance-created"   : fluxProcessor._handleInstanceCreated(xmlEvent);break;
                             case "betterform-model-removed"      : fluxProcessor._handleModelRemoved(xmlEvent);break;
+                            case "betterform-exception"         : fluxProcessor._handleBetterformException(xmlEvent); break;
                             case "upload-progress-event"         : fluxProcessor._handleUploadProgressEvent(xmlEvent); break;
                             case "xforms-focus"                  : fluxProcessor._handleXFormsFocus(xmlEvent); break;
                             case "xforms-help"                   : fluxProcessor._handleShowHelp(xmlEvent); break;
@@ -654,6 +655,32 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
         }
     },
 
+     _handleBetterformException:function(xmlEvent) {
+        if (this.webtest != 'true') {
+            var description = xmlEvent.contextInfo.message;
+            console.error(xmlEvent.contextInfo.message);
+            var exception = dojo.byId('betterFORM-exception');
+            var log;
+            if (!exception) {
+                log = document.createElement('div');
+                log.id = 'betterFORM-exceptionLog';
+                document.body.appendChild(log);
+                exception = document.createElement('exception');
+                exception.id = 'betterFORM-exception';
+                var exceptionText = document.createTextNode(description);
+                exception.appendChild(exceptionText);
+                log.appendChild(exception);
+            } else {
+                exception.removeChild(exception.firstChild);
+                var exceptionText = document.createTextNode(description);
+                exception.appendChild(exceptionText);
+            }
+        } else {
+            //only for testing purposes
+            fluxProcessor.logTestMessage(xmlEvent.contextInfo.message);
+        }
+    },
+
     _handleSubmitError:function(xmlEvent) {
         console.warn("xforms-submit-error at ", xmlEvent.contextInfo);
         dojo.query(".xfInvalid", dojo.doc).forEach(function(control) {
@@ -727,9 +754,8 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
             // finally dynamically load the CSS (if some) form the embedded form
             var cssToLoad = xmlEvent.contextInfo.inlineCSS;
 //            console.debug("css to load: ", cssToLoad);
+            var headID = document.getElementsByTagName("head")[0];
             if(cssToLoad != undefined && cssToLoad != ""){
-                var headID = document.getElementsByTagName("head")[0];
-
                 var newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","style");
                 dojo.attr(newScript,"name",xlinkTarget);
                 dojo.attr(newScript,"type","text/css");
@@ -737,6 +763,54 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
                 headID.appendChild(newScript);
                 console.debug("new Style: ", newScript);
             }
+
+            var externalCssToLoad = xmlEvent.contextInfo.externalCSS;
+            if (externalCssToLoad != undefined && externalCssToLoad != "") {
+                var styles = externalCssToLoad.split('#');
+
+                for (var i = 0; i <= styles.length; i = i+1) {
+                    if (styles[i] != undefined && styles[i] != "") {
+                        var newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","link");
+                        dojo.attr(newScript,"href",styles[i]);
+                        dojo.attr(newScript,"type","text/css");
+                        dojo.attr(newScript,"rel","stylesheet");
+                        newScript.appendChild(dojo.doc.createTextNode(''));
+                        headID.appendChild(newScript);
+                        console.debug("new Style: ", newScript);
+                    }
+                }
+            }
+
+
+            var inlineJavaScriptToLoad = xmlEvent.contextInfo.inlineJavascript;
+            if (inlineJavaScriptToLoad != undefined && inlineJavaScriptToLoad != "") {
+                var script = document.createElement('script');
+
+                var newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","script");
+                dojo.attr(newScript,"name",xlinkTarget);
+                dojo.attr(newScript,"type","text/javascript");
+                newScript.appendChild(dojo.doc.createTextNode(inlineJavaScriptToLoad));
+                headID.appendChild(newScript);
+                console.debug("new Script: ", newScript);
+            }
+
+
+            var externalJavaScriptToLoad = xmlEvent.contextInfo.externalJavascript;
+            if (externalJavaScriptToLoad != undefined && externalJavaScriptToLoad != "") {
+                var scripts = externalJavaScriptToLoad.split('#');
+
+                for (var i = 0; i <= scripts.length; i = i+1) {
+                    if (scripts[i] != undefined && scripts[i] != "") {
+                        var newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","script");
+                        dojo.attr(newScript,"src",scripts[i]);
+                        dojo.attr(newScript,"type","text/javascript");
+                        newScript.appendChild(dojo.doc.createTextNode(''));
+                        headID.appendChild(newScript);
+                        console.debug("new Script: ", newScript);
+                    }
+                }
+            }
+
         }
         /*  xf:load show=none
          to unload (loaded) subforms
