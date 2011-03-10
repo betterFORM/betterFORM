@@ -18,7 +18,7 @@
 
         <!-- root dir for resources. Do not forget the ending slash! -->
         <property name="resources.dir.name" description="name of the resources directory - the root of all betterForm resources files like JS, CSS, XSLT..."
-                  value="resources/"/>
+                  value="WEB-INF/classes/META-INF/resources/"/>
 
         <property name="xslt.cache.enabled" value="true" description="flag for XSLT caching"/>
 

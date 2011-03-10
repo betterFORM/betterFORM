@@ -14,8 +14,8 @@
 <html>
     <head>
         <title>Instance Data submitted</title>
-        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/styles/xforms.css"/>
-        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/styles/betterform-theme.css"/>
+        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/bfRsources/styles/xforms.css"/>
+        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/bfResources/styles/betterform-theme.css"/>
      </head>
     <body>
         <%

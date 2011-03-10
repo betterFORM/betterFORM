@@ -133,9 +133,9 @@ public class ResourceServlet extends HttpServlet {
         long now = System.currentTimeMillis();
         long oneYear = 31363200000L;
 
-        response.setHeader("Cache-Control", "no-cache");
-        //response.setHeader("Cache-Control", "Public");
-        //response.setDateHeader("Expires", now + oneYear);
+//        response.setHeader("Cache-Control", "no-cache");
+        response.setHeader("Cache-Control", "Public");
+        response.setDateHeader("Expires", now + oneYear);
     }
 
     protected String getResourcePath(String requestURI) {

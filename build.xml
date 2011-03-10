@@ -89,11 +89,11 @@
 
 
     <target name="prepare-js" depends="check-ant-version" if="antversion">
-        <echo/>
-        <echo message="************************************************************************************"/>
-        <echo message="unpacking Dojo..."/>
-        <echo message="************************************************************************************"/>
-        <echo/>
+        <echo>
+        ************************************************************************************
+        unpacking Dojo distribution...
+        ************************************************************************************
+        </echo>
         <mkdir dir="${src.target.dir}"/>
         <gunzip src="${basedir}/src/main/lib/${properties.dojo}.tar.gz"
                 dest="${src.target.dir}"/>
@@ -102,11 +102,11 @@
 
         <delete file="${src.target.dir}/${properties.dojo}.tar"/>
 
-        <echo/>
-        <echo message="************************************************************************************"/>
-        <echo message="merging Dojo into tree ..."/>
-        <echo message="************************************************************************************"/>
-        <echo/>
+        <echo>
+        ************************************************************************************
+        merging Dojo distribution into target ...
+        ************************************************************************************
+        </echo>
         <move file="${src.target.dir}/${properties.dojo}" tofile="${target.dir}/resources/scripts"/>
 
 <!--

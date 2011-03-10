@@ -8,6 +8,7 @@ package de.betterform.agent.web;
 import de.betterform.agent.web.event.DefaultUIEventImpl;
 import de.betterform.agent.web.event.UIEvent;
 import de.betterform.agent.web.flux.FluxProcessor;
+import de.betterform.agent.web.servlet.FormsServlet;
 import de.betterform.agent.web.servlet.HttpRequestHandler;
 import de.betterform.agent.web.servlet.XFormsPostServlet;
 import de.betterform.generator.UIGenerator;
@@ -527,12 +528,13 @@ public class WebProcessor extends AbstractProcessorDecorator {
             xslFile = configuration.getStylesheet(this.useragent);
         }
 
-        String resourcesPath = configuration.getProperty("resources.dir.name");
-        String xsltPath = resourcesPath + "xslt";
+//        String resourcesPath = configuration.getProperty("resources.dir.name");
+        String resourcesPath = FormsServlet.RESOURCE_PATH;
+        String xsltPath = resourcesPath + "/xslt";
 
         XSLTGenerator generator = setupTransformer(xsltPath, xslFile);
 
-        generator.setParameter("resourcesPath", "/" + resourcesPath);
+        generator.setParameter("resourcesPath", resourcesPath);
 
         if (relativeUris.equals("true")) {
             generator.setParameter("contextroot", ".");
