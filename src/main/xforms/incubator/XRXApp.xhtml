@@ -8,15 +8,18 @@
         <title>XRX App Starter</title>
 
         <style type="text/css">
+			body{
+				background:none;
+			}
             .tundra * {
-                font-size: 12pt;
+                font-size: 10pt;
+				color:#333333;
             }
             .xfRepeatIndex{
                 background-color:transparent;
             }
             #outer-label{
                 font-size:1.8em;
-                text-align:center;
                 width:100%;
                 display:block;
             }
@@ -64,17 +67,14 @@
             .xfMinimalGroup .xfTrigger {
                 display: inline-block;
             }
-            #authorButtons{
-                margin-left:165px;
-            }
-            .tundra #authorButtons .dijitButtonText{
-                font-size:0.8em;
-            }
             .xfSelectorItem{
                 margin-left:165px;
                 display:block;
             }
-
+			#version .xfValue,
+			#releaseDate .xfValue{
+				width:100px;
+			}
         </style>
     </head>
     <body>
@@ -100,15 +100,16 @@
                 <xf:instance id="i-appInfo">
                     <data xmlns="">
                         <app name="" rootCollection="">
-                            <description></description>
-                            <version></version>
-                            <authors>
-                                <author/>
-                            </authors>
-                            <license></license>
-                            <dependencies>
-                                <dependency/>
-                            </dependencies>
+							<organisation></organisation>
+							<description>XRX Timetracker Sample</description>
+							<version>0.2</version>
+							<release-date></release-date>
+							<authors></authors>
+							<license>BSD</license>
+							<dependencies>
+								<dependency/>
+							</dependencies>
+							<!--<dbPath></dbPath>-->
                             <operations/>
                         </app>
                     </data>
@@ -119,6 +120,7 @@
                     <xf:bind nodeset="app/@rootCollection"
                              calculate="concat(instance('i-globalSettings')/global/appsCollection,'/',../@name)"
                              required="true()"/>
+					<xf:bind nodeset="release-date" type="xf:date"/>
                 </xf:bind>
 
                 <xf:instance id="i-globalSettings">
@@ -164,48 +166,48 @@
         <!-- ##### ui ##### -->
         <!-- ##### ui ##### -->
         <xf:group id="outer">
-            <xf:label>XRX App Starter</xf:label>
+            <xf:label>XRX App-Info Editor</xf:label>
             <xf:group appearance="full" ref="app">
-                <xf:label>General</xf:label>
+                <!--<xf:label>General</xf:label>-->
                 <xf:input ref="@name">
-                    <xf:label>Name</xf:label>
+                    <xf:label>Application Name</xf:label>
+					<xf:alert>The name must not contain whitespace or special characters</xf:alert>
                     <xf:hint>The name of your application</xf:hint>
+					<xf:help>This name will also be used in the URL of the application.</xf:help>
                 </xf:input>
+<!--
                 <xf:input ref="@rootCollection">
                     <xf:label>Collection</xf:label>
                     <xf:hint>The main collection of this application</xf:hint>
                 </xf:input>
-                <xf:textarea ref="description">
+-->
+                <xf:textarea ref="description" mediatype="dojo">
                     <xf:label>Description</xf:label>
                     <xf:hint>some descriptive text about your application</xf:hint>
                 </xf:textarea>
+
+                <xf:input id="version" ref="version">
+                    <xf:label>Version</xf:label>
+					<xf:hint>The version number of this application</xf:hint>
+                </xf:input>
+
+                <xf:input id="releaseDate" ref="release-date">
+                    <xf:label>Release Date</xf:label>
+					<xf:hint>release date of the current version</xf:hint>
+                </xf:input>
 
                 <xf:input ref="license">
                     <xf:label>License</xf:label>
                 </xf:input>
 
-                <xf:group appearance="minimal">
-                    <xf:label>Authors</xf:label>
-                    <xf:repeat id="authors" nodeset="authors/author">
-                        <xf:input ref=".">
-                            <xf:label>Author</xf:label>
-                        </xf:input>
-                    </xf:repeat>
-                    <xf:group appearance="minimal" id="authorButtons">
-                        <xf:trigger>
-                            <xf:label>Add</xf:label>
-                            <xf:insert nodeset="authors/author" position="after"/>
-				</xf:trigger>
-                        <xf:trigger>
-                            <xf:label>Delete</xf:label>
-                            <xf:delete nodeset="authors/author" at="index('authors')"
-                                    if="count(authors/author) &gt; 1"/>
-				</xf:trigger>
+                <xf:input ref="authors">
+                    <xf:label>Author(s)</xf:label>
+					<xf:hint></xf:hint>
+                </xf:input>
 
-                    </xf:group>
-                </xf:group>
-            </xf:group>
+			</xf:group>
 
+<!--
             <xf:group ref="app" appearance="full">
                 <xf:label>Operations</xf:label>
                 <xf:select appearance="full" ref="operations">
@@ -232,6 +234,7 @@
                     </xf:item>
                 </xf:select>
             </xf:group>
+-->
 
             <xf:group appearance="minimal">
                 <xf:trigger>

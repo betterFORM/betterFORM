@@ -22,7 +22,7 @@
                                             then '.'
                                             else '../..' "/>
     <xsl:template match="/">
-        <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+        <html xml:lang="en" lang="en">
             <head>
                 <!--
                 ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
@@ -69,7 +69,7 @@
 
                                 <xsl:variable name="links">
                                     <a href="index.html">home</a><span class="menuDevider"> | </span>
-                                    <a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>
+                                    <!--<a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>-->
                                     <a href="download.html">download</a><span class="menuDevider"> | </span>
                                     <a href="product.html">product</a><span class="menuDevider"> | </span>
                                     <a href="support.html">support</a><span class="menuDevider"> | </span>
@@ -117,6 +117,7 @@
                             <div style="border: thin solid ; width: 100%; color: darkred;position:absolute;top:120px;z-index:999;padding:5px;background:orange">Sorry - this site was optimized for use with JavaScript. You won't be able to access all content until you activate JavaScript</div>
                         </noscript>
                         <div id="box" class="box">
+                            <div id="altContent">
                             <div id="sub-header">
                                 <div class="pageMarginBox">
                                     <div class="contentBody">
@@ -128,6 +129,8 @@
                                     <div class="pageMarginBox">
                                         <xsl:copy-of select="//html:div[@id='main-content']/*"/>
                                     </div>
+                            </div>
+
                             </div>
                         </div>
 <!--
@@ -170,6 +173,9 @@
                         <img src="{$calcRoot}/images/b_exploreit_hover.png" alt=""/>
                     </div>
                 </div>
+
+                <xsl:copy-of select="//*[@id='import']"/>
+
                 <script type="text/javascript">
                     var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
                     document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -181,6 +187,7 @@
                     } catch(err) {
                     }
                 </script>
+
             </body>
         </html>
     </xsl:template>

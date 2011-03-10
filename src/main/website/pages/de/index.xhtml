@@ -7,6 +7,8 @@
 
         <title>betterFORM limeGreen: XForms Dojo Framework</title>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js"></script>
+		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dijit/themes/tundra/tundra.css" />
+
 		<meta name="name" content="index"/>
         <style type="text/css">
             #index{
@@ -25,6 +27,10 @@
 				overflow: hidden;
 			}
 
+			#altContent{
+				margin-left:auto;
+				margin-right:auto;
+			}
             #footer{
                 position: absolute;
                 top: 545px;
@@ -76,7 +82,7 @@
                 font-size: 1.6em;
             }
 
-            #index #main-content #rightCol a:hover {
+            #bf #main-content #rightCol a:hover {
                 text-decoration: underline;
             }
 
@@ -95,68 +101,12 @@
 				top:545px;
 				z-index:300;
 			}
-        </style>
-        <script type="text/javascript">
-            <!--
-            dojo.require("dojo.fx");
-            dojo.require("dojo.fx.easing");
-
-            function slideIt() {
-                var effect1 = dojo.fx.easing["linear"];
-                var effect2 = dojo.fx.easing["linear"];
-
-                var anim1args = {
-                    node: "box",
-                    top: (dojo.coords("box").t).toString(),
-                    left: (dojo.coords("box").l + 2000).toString(),
-                    unit: "px",
-					duration:600,
-					delay:100,
-                    easing:effect1,
-					onBegin:function(){
-						load('/betterform/FormBrowser?path=forms&fragment=true&ajax=load');
-					}
-                };
-
-				var anim2args = {
-					node: "browser",
-					top: (dojo.coords("browser").t).toString(),
-					left: (dojo.coords("browser").l + 2000).toString(),
-					unit: "px",
-					duration:600,
-					delay:100,
-					easing:effect2
-				};
-
-				var anim1 = dojo.fx.slideTo(anim1args);
-				var anim2 = dojo.fx.slideTo(anim2args);
-//                dojo.fx.slideTo(anim1).play();
-				dojo.fx.combine([anim1, anim2]).play();
-            }
-
-			function load(url) {
-				//Look up the node we'll stick the text under.
-				var targetNode = dojo.byId("browser");
-
-				//The parameters to pass to xhrGet, the url, how to handle it, and the callbacks.
-				var xhrArgs = {
-					url: url,
-					handleAs: "text",
-					load: function(data) {
-						console.debug("load", data);
-						targetNode.innerHTML = data;
-					},
-					error: function(error) {
-						targetNode.innerHTML = "An unexpected error occurred: " + error;
-					}
-				}
-
-				//Call the asynchronous xhrGet
-				console.debug("args", xhrArgs);
-				var deferred = dojo.xhrGet(xhrArgs);
+			.bfFormBrowser .formBrowserHeader{
+				margin-left:0;
 			}
-			// -->
-        </script>
+			#commands{display:none;}
+        </style>
+
         <style type="text/css">
 
 			#browser{
@@ -171,45 +121,201 @@
     </head>
     <body id="index">
         <div id="sub-header">
-            <a href="demo.xhtml" class="link" id="demoButton"></a>
+            <!--<a href="demo.xhtml" class="link" id="demoButton"></a>-->
+            <a href="javascript:animateOne();" class="link" id="demoButton"></a>
             <a href="download.html" class="link" id="getitButton"></a>
             <a href="product.html" class="link" id="productButton"></a>
         </div>
         <div id="main-content">
-            <div id="leftCol" class="col">
-				<p>
-					<strong>betterFORM</strong> ist eine Plattform für die schnelle Entwicklung von Web Applikationen, die
-					vollständig auf offenen Standards wie <strong>XML</strong>, <strong>XForms 1.1</strong>, <strong>XPath 2</strong>, <strong>XSLT
-                    2</strong>, <strong>XQuery</strong> und anderen beruhen. betterFORM selbst ist als <strong>Open Source</strong>
-					verfügbar.
-				</p>
-				<p>
-					Durch den deklarativen Ansatz wird der massive Einsatz von Javascript vermieden und die
-					Unterhaltungskosten gesenkt. Attraktive, konsistente und Benutzer-freundliche Anwendungsoberflächen,
-					gepaart mit einer Modell-getriebenen Architektur erlauben selbst die komplexesten Anforderungen
-					umzusetzen.
-				</p>
-				<p>
-					<strong>betterFORM XRX</strong> ist eine kompletter XML Anwendungsserver, der einen Grossteil
-					der <strong>W3C XML standards</strong> in einer offenen, erweiterbaren Plattform vereint. XRX-Anwendungen
-					verwenden XML Technologien von der Benutzeroberfläche bis zur Datenspeicherung und sind leicht zu
-					managen und flexibel an neue Anforderungen anpassbar.
-				</p>
-            </div>
-            <!--
-                        <div id="centerCol" class="col">
-                        </div>
-            -->
-            <div id="rightCol" class="col">
-                <!--
-					<strong>betterFORM Central - up-to-date patches, automatic upgrades, issue-tracking for just
-						79€ / month</strong>
-                -->
-         		<!--
-					<a href="javascript:slideIt();"><img src="../../images/document_paper_green4.png" alt="browse pages"/></a>
-					<a id="browseLink" href="javascript:slideIt();"><p>browse</p></a>
-				-->
-            </div>
+			<div>
+				<div id="leftCol" class="col">
+					<p>
+						<strong>betterFORM</strong> ist eine Plattform für die schnelle Entwicklung von Web
+						Applikationen, die
+						vollständig auf offenen Standards wie <strong>XML</strong>, <strong>XForms 1.1</strong>,
+						<strong>XPath 2</strong>, <strong>XSLT
+						2</strong>, <strong>XQuery</strong> und anderen beruhen. betterFORM selbst ist als <strong>Open
+						Source</strong>
+						verfügbar.
+					</p>
+
+					<p>
+						Durch den deklarativen Ansatz wird der massive Einsatz von Javascript vermieden und die
+						Unterhaltungskosten gesenkt. Attraktive, konsistente und Benutzer-freundliche
+						Anwendungsoberflächen,
+						gepaart mit einer Modell-getriebenen Architektur erlauben selbst die komplexesten Anforderungen
+						umzusetzen.
+					</p>
+
+					<p>
+						<strong>betterFORM XRX</strong> ist eine kompletter XML Anwendungsserver, der einen Grossteil
+						der <strong>W3C XML standards</strong> in einer offenen, erweiterbaren Plattform vereint.
+						XRX-Anwendungen
+						verwenden XML Technologien von der Benutzeroberfläche bis zur Datenspeicherung und sind leicht
+						zu
+						managen und flexibel an neue Anforderungen anpassbar.
+					</p>
+				</div>
+
+				<div id="rightCol" class="col">
+					<!--
+	<strong>betterFORM Central - up-to-date patches, automatic upgrades, issue-tracking for just
+		79€ / month</strong>
+-->
+				</div>
+			</div>
         </div>
+
+		<div id="import">
+			<script type="text/javascript">
+				var djConfig = {
+					debugAtAllCosts: false,
+					parseOnLoad:true,
+					dojoBlankHtmlUrl:"/blank.html",
+					isDebug: false };
+			</script>
+
+			<script type="text/javascript" src="../../resources/scripts/dojo/dojo.js"
+					djConfig="parseOnLoad:true"></script>
+			<script type="text/javascript" src="../../resources/scripts/betterform/BfRequiredDashboard.js"></script>
+
+
+			<script type="text/javascript">
+				<!--
+				dojo.config.dojoBlankHtmlUrl = '/blank.html';
+
+				function animateOne() {
+					var easing1 = dojo.fx.easing["linear"];
+					var first = dojo.animateProperty({
+						node: "altContent",
+						duration:400,
+						properties:{
+							opacity:{
+								start:1.0,
+								end:0.2
+							},
+							easing:easing1
+
+						},
+						onPlay:function() {
+							console.debug("onPlay");
+						},
+						onEnd:function() {
+//							dojo.style("box", "display", "none");
+							var uri = "/betterform/FormBrowser?path=forms&fragment=true";
+							load(uri);
+						}
+					});
+
+					var second = dojo.animateProperty({
+						node: "altContent",
+						duration:400,
+						properties:{
+							width:{
+								start:400,
+								end:800,
+								unit:"px"
+							},
+							opacity:{
+								start:0,
+								end:0.7
+							},
+							easing:easing1,
+							onEnd:function() {
+	//							switchIds();
+								dojo.style(dojo.byId("altContent"), "opacity", "1");
+								dojo.style(dojo.byId("altContent"), "margin-left", "auto");
+								dojo.style(dojo.byId("altContent"), "margin-right", "auto");
+
+							},
+							onBeforeBegin:function() {
+//								dojo.style(dojo.byId("box"), "display", "block");
+//								dojo.style(dojo.byId("box"), "opacity", "0");
+//								var uri = "/betterform/FormBrowser?path=forms&fragment=true";
+//								load(uri);
+							}
+						}
+					});
+					var fadeFinal = dojo.fadeIn({
+						duration:300,
+						node:"altContent"
+					});
+					var combined = dojo.fx.chain([first,second,fadeFinal]).play();
+
+				}
+
+				/*
+				 * called from directory links to show contents of collection (link generated by servlet)
+				 */
+				function viewContent(node, url) {
+					load(url, true);
+				}
+
+				/*
+				 * called whenever link to root collection is clicked
+				 */
+				function viewRoot(node, url) {
+					viewContent(node, url);
+				}
+
+				/*
+				 * called whenever link to root collection is clicked
+				 */
+				function viewParent(node, url) {
+					viewContent(node, url);
+				}
+
+				function load(url, show) {
+					//Look up the node we'll stick the text under.
+					// console.debug("DropDownDialog");
+					var popups = dojo.query(".dijitPopup .dijitTooltipDialog");
+					popups.forEach(function(item) {
+						// console.debug("Dijit Popup item: ", item);
+						var popUpDijit = dijit.byId(dojo.attr(item, "id"));
+						// console.debug("destroy popup widget: ",popUpDijit);
+						popUpDijit.destroy();
+					});
+					var targetNode = dojo.byId("altContent");
+
+					//The parameters to pass to xhrGet, the url, how to handle it, and the callbacks.
+					var xhrArgs = {
+						url: url,
+						handleAs: "text",
+						load: function(data) {
+							// console.debug("load", data);
+							dojo.style(targetNode, "opacity", "0");
+							targetNode.innerHTML = data;
+							dojo.parser.parse(targetNode);
+							if (show) {
+								dojo.style(targetNode, "opacity", "1");
+							}
+							// console.debug("inserted Node: ",targetNode);
+							var currentPath = dojo.byId("current");
+							dojox.fx.highlight({node:currentPath, color:'#ffffff', duration:400}).play();
+						},
+						error: function(error) {
+							targetNode.innerHTML = "An unexpected error occurred: " + error;
+						}
+					};
+
+					//Call the asynchronous xhrGet
+					// console.debug("args", xhrArgs);
+					var deferred = dojo.xhrGet(xhrArgs);
+
+				}
+
+
+
+				function userInputIsEmpty(/*Class*/ className) {
+					// console.debug("userInputIsEmpty: Get value of for control with class: ", className);
+					var controlNode = dojo.query("." + className + " .dijitInputInner")[0];
+					// console.debug("userInputIsEmpty: node: ", controlNode);
+					var value = dojo.attr(controlNode, "value");
+					// console.debug("userInputIsEmpty: value: ", value);
+					return (value == null || value == "");
+				}
+				// -->
+			</script>
+		</div>
     </body>
 </html>
