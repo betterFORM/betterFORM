@@ -1,4 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+
 <web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <display-name>betterForm</display-name>
     <context-param>
@@ -80,6 +85,23 @@
 		<servlet-name>XFormsRequest</servlet-name>
 	</filter-mapping>
 -->
+
+<!--
+    <servlet>
+        <servlet-name>XFormsServlet</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.XFormsServlet</servlet-class>
+    </servlet>
+-->
+
+<!--
+    <servlet>
+        <servlet-name>XFormsRequestServlet</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.XFormsRequestServlet</servlet-class>
+    </servlet>
+-->
+
+
+
     <servlet>
         <servlet-name>Flux</servlet-name>
         <servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
@@ -99,6 +121,14 @@
 -->
     </servlet>
 
+
+<!--
+    <servlet-mapping>
+        <servlet-name>XFormsRequestServlet</servlet-name>
+        <url-pattern>/XFormsRequestServlet</url-pattern>
+    </servlet-mapping>
+-->
+
 <!--
      <servlet>
         <servlet-name>CsrfTestServlet</servlet-name>
@@ -109,6 +139,8 @@
         <url-pattern>/CSRF</url-pattern>
     </servlet-mapping>
 -->
+
+
 
 	<!-- XFormsPostServlet
 		Servlet to handle HTTP Post requests containing XForms. See XFormsFilter mapping comments for further
@@ -190,6 +222,7 @@
         <servlet-class>de.betterform.agent.web.servlet.UploadServlet</servlet-class>
     </servlet>
 
+<!--
     <servlet>
         <servlet-name>XFormsServlet</servlet-name>
         <servlet-class>de.betterform.agent.web.servlet.XFormsRepeater</servlet-class>
@@ -198,6 +231,7 @@
             <param-value>dojo</param-value>
         </init-param>
     </servlet>
+-->
 	<servlet-mapping>
         <servlet-name>Flux</servlet-name>
         <url-pattern>/Flux/*</url-pattern>
@@ -242,11 +276,13 @@
         <servlet-name>ViewServlet</servlet-name>
         <url-pattern>/view</url-pattern>
     </servlet-mapping>
+<!--
     <servlet-mapping>
         <servlet-name>XFormsServlet</servlet-name>
         <url-pattern>/repeater/*</url-pattern>
     </servlet-mapping>
-	<welcome-file-list>
+-->
+    <welcome-file-list>
         <welcome-file>dashboard.html</welcome-file>
     </welcome-file-list>
 
@@ -288,3 +324,7 @@
 -->
 
 </web-app>
+
+
+
+

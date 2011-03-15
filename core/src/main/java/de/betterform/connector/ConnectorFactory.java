@@ -6,11 +6,9 @@
 package de.betterform.connector;
 
 
+
 import de.betterform.xml.xforms.XFormsConstants;
 import de.betterform.xml.xforms.exception.XFormsInternalSubmitException;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.base.XMLBaseResolver;
@@ -24,6 +22,16 @@ import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.submission.Submission;
 import de.betterform.xml.xpath.XPathUtil;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.util.EntityUtils;
+import org.esxx.js.protocol.GAEConnectionManager;
 import org.w3c.dom.Element;
 
 import java.io.IOException;
@@ -283,16 +291,19 @@ public abstract class ConnectorFactory {
 
     public InputStream getHTTPResourceAsStream(URI uri) throws XFormsException {
         try {
-            HttpMethod httpMethod = new GetMethod(uri.toString());
-            HttpClient client = new HttpClient();
-            client.executeMethod(httpMethod);
-            if (httpMethod.getStatusCode() >= 300) {
+            HttpRequestBase httpMethod = new HttpGet(uri.toString());
+            HttpParams httpParams = new BasicHttpParams();
+            ClientConnectionManager gaeConnectionManager = new GAEConnectionManager();
+
+            HttpClient client = new DefaultHttpClient(gaeConnectionManager,httpParams);
+            HttpResponse response = client.execute(httpMethod);
+            if (response.getStatusLine().getStatusCode() >= 300) {
                 // Allow 302 only
-                if (httpMethod.getStatusCode() != 302) {
-                    throw new XFormsInternalSubmitException(httpMethod.getStatusCode(), httpMethod.getStatusText(), httpMethod.getResponseBodyAsString(), XFormsConstants.RESOURCE_ERROR);
+                if (response.getStatusLine().getStatusCode() != 302) {
+                    throw new XFormsInternalSubmitException(response.getStatusLine().getStatusCode(), response.getStatusLine().getReasonPhrase(), EntityUtils.toString(response.getEntity()), XFormsConstants.RESOURCE_ERROR);
                 }
             }
-            return httpMethod.getResponseBodyAsStream();
+            return response.getEntity().getContent();
 
         } catch (IOException e) {
             throw new XFormsException(e);

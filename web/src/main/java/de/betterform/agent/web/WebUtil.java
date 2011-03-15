@@ -8,13 +8,15 @@ package de.betterform.agent.web;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
-import org.apache.commons.httpclient.Cookie;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import de.betterform.connector.http.AbstractHTTPConnector;
 import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.model.submission.RequestHeaders;
 import de.betterform.xml.xslt.TransformerService;
+import org.apache.http.cookie.ClientCookie;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.cookie.BasicClientCookie;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -174,15 +176,15 @@ public class WebUtil {
     public static void storeCookies(HttpServletRequest request, XFormsProcessor processor) {
         javax.servlet.http.Cookie[] cookiesIn = request.getCookies();
         if (cookiesIn != null) {
-            Cookie[] commonsCookies = new Cookie[cookiesIn.length];
+            BasicClientCookie[] commonsCookies = new BasicClientCookie[cookiesIn.length];
             for (int i = 0; i < cookiesIn.length; i += 1) {
                 javax.servlet.http.Cookie c = cookiesIn[i];
-                commonsCookies[i] = new Cookie(c.getDomain(),
-                        c.getName(),
-                        c.getValue(),
-                        c.getPath(),
-                        c.getMaxAge(),
-                        c.getSecure());
+                commonsCookies[i] = new BasicClientCookie(c.getName(),c.getValue());
+                commonsCookies[i].setDomain(c.getDomain());
+                commonsCookies[i].setPath(c.getPath());
+                commonsCookies[i].setAttribute(ClientCookie.MAX_AGE_ATTR, Integer.toString(c.getMaxAge()));
+                commonsCookies[i].setSecure(c.getSecure());
+
                 if (WebUtil.LOGGER.isDebugEnabled()) {
                     WebUtil.LOGGER.debug("adding cookie >>>>>");
                     WebUtil.LOGGER.debug("name: " + c.getName());
