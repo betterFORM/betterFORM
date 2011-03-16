@@ -15,9 +15,9 @@ dojo.declare(
         var inputType = dataType;
 
         //TODO: ca deprecated?
-        if (appearance != undefined && appearance.indexOf("ca") != -1) {
+        if (appearance != undefined && (appearance.indexOf("ca") != -1 || appearance.indexOf("bf:") != -1)) {
             inputType = appearance;
-            // console.debug("Custom Input Type: appearance=" + appearance)
+            console.debug("Custom Input Type: appearance=" + appearance)
         }
 
         switch (inputType.toLowerCase()) {
@@ -26,6 +26,12 @@ dojo.declare(
                 break;
             case "caopmltree":
                 newInputWidget = this.createInputOPMLTreeALPHA(controlId, sourceNode, classValue);
+                break;
+            case "bf:time":
+                newInputWidget = this.createInputBfTimeWidget(controlId, sourceNode, classValue, appearance);
+                break;
+            case "bf:dropdowndate":
+                newInputWidget = this.createInputBfDropDownDateWidget(controlId, sourceNode, classValue, appearance);
                 break;
             case "date":
                 newInputWidget = this.createInputDateWidget(controlId, sourceNode, classValue, appearance);
@@ -68,6 +74,66 @@ dojo.declare(
         return newInputTreeWidget;
     },
 
+    createInputBfTimeWidget:function(controlId, sourceNode, classValue, appearance) {
+        var xfValue = sourceNode.innerHTML;
+        return newInputTimeWidget = new betterform.ui.input.Time({
+            name:controlId + "-value",
+            value:xfValue,
+            "class":classValue,
+            title:dojo.attr(sourceNode,"title"),
+            xfControlId:controlId
+        }, sourceNode);
+    },
+
+    createInputBfDropDownDateWidget:function(controlId, sourceNode, classValue, appearance) {
+        var newInputDateWidget = null;
+                var xfValue = dojo.attr(sourceNode, "schemaValue");
+                if(xfValue == undefined){
+                    xfValue = "";
+                }
+                var datePattern;
+
+                if (appearance.indexOf("iso8601:") != -1) {
+                    datePattern = appearance.substring(appearance.indexOf("iso8601:")+8);
+                    //console.debug("UIelementFactory.createWidget 1. datePattern:" + datePattern);
+                    if(datePattern.indexOf(" ") != -1) {
+                        datePattern = datePattern.substring(0,datePattern.indexOf(" ")).trim();
+                        //console.debug("UIelementFactory.createWidget 2. datePattern:" + datePattern);
+                    }
+                }
+
+                if (datePattern != undefined) {
+                    try {
+                        newInputDateWidget = new betterform.ui.input.DropDownDate({
+                            name:controlId + "-value",
+                            value:xfValue,
+                            "class":classValue,
+                            title:dojo.attr(sourceNode, "title"),
+                            constraints:{
+                                selector:'date',
+                                datePattern:datePattern
+                            },
+                            xfControlId:controlId
+                        },
+                                sourceNode);
+                    }
+                    catch (ex) {
+                        alert(ex)
+                    }
+                } else {
+                    newInputDateWidget = new betterform.ui.input.DropDownDate({
+                        name:controlId + "-value",
+                        value:xfValue,
+                        "class":classValue,
+                        title:dojo.attr(sourceNode,"title"),
+                        constraints:{
+                            selector:'date'
+                        },
+                        xfControlId:controlId
+                    }, sourceNode);
+                }
+                return newInputDateWidget;
+    },
 
     createInputDateWidget:function(controlId, sourceNode, classValue, appearance) {
         var newInputDateWidget = null;
@@ -219,5 +285,4 @@ dojo.declare(
         }, sourceNode);
     }
 });
-
 

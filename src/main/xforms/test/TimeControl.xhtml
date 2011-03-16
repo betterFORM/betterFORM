@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:j2ee="http://java.sun.com/xml/ns/j2ee"
+
+        >
+    <head>
+
+
+        <title>Custom Time Control</title>
+		<script type="text/javascript">
+			  var initLoad = dojo.subscribe("/xf/ready", function() {
+				dojo.unsubscribe(initLoad);
+        	});
+		</script>
+    </head>
+    <body>
+
+
+
+        <div style="display:none;">
+            <xf:model>
+                <xf:instance xmlns="">
+                    <data>
+						<input>2003-02-03</input>
+						<input>2003-02-03T12:52:05+02:00</input>
+						<input></input>
+					</data>
+                </xf:instance>
+				<xf:bind nodeset="input[1]" type="date"/>
+				<xf:bind nodeset="input[2]" type="dateTime"/>
+				<xf:bind nodeset="input[3]" type="time"/>
+            </xf:model>
+        </div>
+
+
+        <xf:group id="main" appearance="full">
+            <xf:label>Custom Time Control</xf:label>
+<!--
+			<xf:input ref="input[1]">
+				<xf:label>Date: </xf:label>
+			</xf:input>
+			<xf:input ref="input[2]">
+				<xf:label>DateTime: </xf:label>
+			</xf:input>
+-->
+			<xf:input ref="input[3]" appearance="bf:Time">
+				<xf:label>Time:</xf:label>
+				<xf:alert>No valid date time</xf:alert>
+			</xf:input>
+			<xf:output ref="input[3]" >
+				<xf:label>Time Result:</xf:label>
+				<xf:alert>No valid date time</xf:alert>
+			</xf:output>
+        </xf:group>
+    </body>
+</html>

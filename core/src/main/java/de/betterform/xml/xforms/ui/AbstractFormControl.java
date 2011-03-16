@@ -309,7 +309,9 @@ public abstract class AbstractFormControl extends BindingElement implements Defa
                 } catch (ParseException e) {
                     //try the default locale - else fail with ParseException
                     locale = Locale.US;
-                    df = new SimpleDateFormat("yyyy-MM-dd",locale);
+                    //df = new SimpleDateFormat("yyyy-MM-dd",locale);
+                    df = new SimpleDateFormat("yyyy-MM-dd");
+                    df.setLenient(false);
                     d = df.parse(value);
                 }
                 df = new SimpleDateFormat("yyyy-MM-dd");
