@@ -269,7 +269,7 @@ pre, code {
 .tundra .dijitCheckBox,
 .bf .dijitCheckBox,
 .soria .dijitCheckBox {
-    background-image: url("../../resources/images/checkmarkNoBorder.png");
+    background-image: url("../../bfResources/images/checkmarkNoBorder.png");
 
 }
 

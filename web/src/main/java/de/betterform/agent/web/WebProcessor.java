@@ -69,6 +69,12 @@ public class WebProcessor extends AbstractProcessorDecorator {
     public static final String FORWARD_URL = "betterform.base.url";
     public static final String ADAPTER_PREFIX = "A";
 
+    /**
+     * constant for relative location of resources (relative to web context).
+     * Hardcoded as resources are considered betterFORM-internal and their loading should not be touched by users.
+     */
+    public static final String RESOURCE_DIR = "WEB-INF/classes/META-INF/resources/";
+
     public static final String ALTERNATIVE_ROOT = "ResourcePath";
 
     //todo:review - can be deleted when ehcache is in place
@@ -343,7 +349,6 @@ public class WebProcessor extends AbstractProcessorDecorator {
                     // updating ... - this is only called when PlainHtmlProcessor is in use
 //                    referer = (String) getProperty(XFormsSession.REFERER);
                     referer = (String) getContextParam(REFERER);
-//                    setProperty("update", "true");
                     setContextParam("update", "true");
                     String forwardTo = request.getContextPath() + "/view?sessionKey=" + getKey() + "&referer=" + referer;
                     response.sendRedirect(response.encodeRedirectURL(forwardTo));
@@ -528,13 +533,8 @@ public class WebProcessor extends AbstractProcessorDecorator {
             xslFile = configuration.getStylesheet(this.useragent);
         }
 
-//        String resourcesPath = configuration.getProperty("resources.dir.name");
-        String resourcesPath = FormsServlet.RESOURCE_PATH;
-        String xsltPath = resourcesPath + "/xslt";
-
+        String xsltPath = RESOURCE_DIR + "/xslt";
         XSLTGenerator generator = setupTransformer(xsltPath, xslFile);
-
-        generator.setParameter("resourcesPath", resourcesPath);
 
         if (relativeUris.equals("true")) {
             generator.setParameter("contextroot", ".");
@@ -571,8 +571,6 @@ public class WebProcessor extends AbstractProcessorDecorator {
         String triggerPrefix = Config.getInstance().getProperty("betterform.web.triggerPrefix");
         generator.setParameter("trigger-prefix", triggerPrefix);
 
-//        generator.setParameter("user-agent", request.getHeader("User-Agent"));
-
         generator.setParameter("locale", locale);
         return generator;
     }
@@ -580,7 +578,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
     private void doIncludes() {
         try {
             Node input = getXForms();
-            String xsltPath = this.configuration.getProperty(WebFactory.RESOURCE_PATH_PROPERTY) + "xslt";
+            String xsltPath = RESOURCE_DIR + "xslt/";
             XSLTGenerator xsltGenerator = setupTransformer(xsltPath, "include.xsl");
             String baseURI = getBaseURI();
             String uri = baseURI.substring(0, baseURI.lastIndexOf("/") + 1);

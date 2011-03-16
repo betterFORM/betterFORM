@@ -103,14 +103,12 @@ public class ResourceServlet extends HttpServlet {
 
             resp.setContentType(mimeType);
             resp.setStatus(HttpServletResponse.SC_OK);
-            setCaching(resp);
-
+            setCaching(req, resp);
             streamResource(req, resp, mimeType, inputStream);
 
             if (logger.isLoggable(Level.FINE))
                 logger.log(Level.FINE, "Resource \"{0}\" streamed succesfully", resourcePath);
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             logger.log(Level.SEVERE, "Error in streaming resource \"{0}\". Exception is \"{1}\"", new Object[]{resourcePath, exception.getMessage()});
         } finally {
             if (inputStream != null) {
@@ -129,13 +127,17 @@ public class ResourceServlet extends HttpServlet {
         }
     }
 
-    private void setCaching(HttpServletResponse response) {
+    private void setCaching(HttpServletRequest request, HttpServletResponse response) {
         long now = System.currentTimeMillis();
         long oneYear = 31363200000L;
 
-//        response.setHeader("Cache-Control", "no-cache");
-        response.setHeader("Cache-Control", "Public");
-        response.setDateHeader("Expires", now + oneYear);
+        String query = request.getParameter("nocache");
+        if(query == null){
+            response.setHeader("Cache-Control", "Public");
+            response.setDateHeader("Expires", now + oneYear);
+        }else{
+            response.setHeader("Cache-Control", "no-cache");
+        }
     }
 
     protected String getResourcePath(String requestURI) {

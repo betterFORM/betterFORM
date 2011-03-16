@@ -36,7 +36,6 @@ public class WebFactory {
     public static final String LOG_CONFIG = "log4j.file";
     public static final String BETTERFORM_SUBMISSION_RESPONSE = "betterform.submission.response";
     public static final String XSLT_CACHE_PROPERTY = "xslt.cache.enabled";
-    public static final String RESOURCE_PATH_PROPERTY = "resources.dir.name";
 
     public static final String UPLOADDIR_PROPERTY = "uploadDir";
     public static final String RELATIVE_URI_PROPERTY = "forms.uri.relative";
@@ -168,7 +167,7 @@ public class WebFactory {
         
         boolean xsltCacheEnabled = Config.getInstance().getProperty(WebFactory.XSLT_CACHE_PROPERTY).equalsIgnoreCase("true");
 
-        String xsltPath = Config.getInstance().getProperty(WebFactory.RESOURCE_PATH_PROPERTY) + "xslt/";
+        String xsltPath = WebProcessor.RESOURCE_DIR + "xslt/";
         String xsltDefault = Config.getInstance().getStylesheet(this.userAgentId);
 
         if (xsltCacheEnabled) {

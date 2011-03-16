@@ -31,7 +31,7 @@
             <xsl:apply-templates/>
             <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8"/>
             <link rel="stylesheet" type="text/css"
-                  href="../../resources/scripts/release/dojo/dojox/highlight/resources/highlight.css"/>
+                  href="../../bfResources/scripts/release/dojo/dojox/highlight/resources/highlight.css"/>
             <!--
                         <link rel="stylesheet" type="text/css"
                               href="../../resources/scripts/dojox/highlight/resources/pygments/borland.css"/>

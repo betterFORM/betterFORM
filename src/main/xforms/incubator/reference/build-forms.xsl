@@ -48,7 +48,7 @@
 
 
         <link rel="stylesheet" type="text/css"
-              href="../../resources/scripts/release/dojo/dojox/highlight/resources/highlight.css"/>
+              href="../../bfResources/scripts/release/dojo/dojox/highlight/resources/highlight.css"/>
         <link rel="stylesheet" type="text/css" href="../../reference/reference.css"/>
 
         <script type="text/javascript">

@@ -39,7 +39,7 @@
                     <value><![CDATA[<b>Providing</b> <i>basic</i> HTML <u>formatting</u>]]></value>
                 </output>
                 <output constraint="true" readonly="true" required="true" relevant="true">
-                    <value>../resources/images/betterform50t.gif</value>
+                    <value>../bfResources/images/betterform50t.gif</value>
                 </output>
                 <textarea constraint="true" readonly="false" required="true" relevant="true">
                     <value>Enter your text here. If the text is to long the textarea pane scrolls</value>
@@ -366,13 +366,13 @@
 
 <xf:model id="countries">
     <xf:submission id="s-debug-all-codes"
-                   action="{$contextroot}/resources/jsp/debug-instance.jsp"
+                   action="{$contextroot}/bfResources/jsp/debug-instance.jsp"
                    method="post"
                    replace="all"
                    validate="false"/>
 
     <xf:submission id="s-debug-one-code"
-                   action="{$contextroot}/resources/jsp/debug-instance.jsp"
+                   action="{$contextroot}/bfResources/jsp/debug-instance.jsp"
                    method="post"
                    replace="all"
                    ref="instance('codes')/country[1]"
@@ -2609,7 +2609,7 @@ html, body, #main{
                 <tr>
                     <td>Trigger with attribute 'src' pointing to a picture</td>
                     <td class="entry">
-                        <xf:trigger appearance="compact" src="../resources/images/betterform50t.gif" ref="trigger[3]/value">
+                        <xf:trigger appearance="compact" src="../bfResources/images/betterform50t.gif" ref="trigger[3]/value">
                             <xf:label ref="../label"/>
                             <xf:message level="modal">Clicked image trigger</xf:message>
                         </xf:trigger>

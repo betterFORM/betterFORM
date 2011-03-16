@@ -145,7 +145,7 @@
             </span>
             <div id="betterform-logo">
                 <a href="jsp/forms.jsp">
-                    <img src="{concat($contextroot,'/resources/images/poweredby_sw.gif')}" style="border:none;" alt="powered by betterForm"/>
+                    <img src="{concat($contextroot,'/bfResources/images/poweredby_sw.gif')}" style="border:none;" alt="powered by betterForm"/>
                 </a>
             </div>
             <div id="copyright">
@@ -306,7 +306,7 @@
                     <xsl:attribute name="href">#</xsl:attribute>
                     <xsl:attribute name="style">text-decoration:none;</xsl:attribute>
                     <xsl:attribute name="class">help-icon</xsl:attribute>
-                    <img src="{concat($contextroot,'/resources/images/help.png')}" class="help-symbol" alt="?" border="0"/>
+                    <img src="{concat($contextroot,'/bfResources/images/help.png')}" class="help-symbol" alt="?" border="0"/>
                 </xsl:element>
                 <!--<span id="{../@id}-helptext" class="help-text" style="position:absolute;display:none;width:250px;border:thin solid gray 1px;background:lightgrey;padding:5px;">-->
                 <span id="{../@id}-helptext" class="help-text">

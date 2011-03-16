@@ -47,10 +47,10 @@
     <body class="tundra">
         <div style="display:none;">
             <xf:model functions="bf:context">
-                <xf:submission id="s-debug" action="{$contextroot}/resources/jsp/debug-instance.jsp" method="post" replace="all"/>
-                <xf:submission id="s-debug-partial" action="{$contextroot}/resources/jsp/debug-instance.jsp" method="post" replace="all" ref="instance('default')/repeatdata"/>
-                <xf:submission id="s-update" action="{$contextroot}/resources/jsp/generate-instance.jsp" method="post" replace="instance"/>
-                <xf:submission id="s-test" action="{$contextroot}/resources/jsp/return-instance.jsp" method="post" replace="none">
+                <xf:submission id="s-debug" action="{$contextroot}/bfResources/jsp/debug-instance.jsp" method="post" replace="all"/>
+                <xf:submission id="s-debug-partial" action="{$contextroot}/bfResources/jsp/debug-instance.jsp" method="post" replace="all" ref="instance('default')/repeatdata"/>
+                <xf:submission id="s-update" action="{$contextroot}/bfResources/jsp/generate-instance.jsp" method="post" replace="instance"/>
+                <xf:submission id="s-test" action="{$contextroot}/bfResources/jsp/return-instance.jsp" method="post" replace="none">
                     <xf:message ev:event="xforms-submit-done">Your data have been send.</xf:message>
                 </xf:submission>
 

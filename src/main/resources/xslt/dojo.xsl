@@ -47,7 +47,7 @@
     <xsl:param name="user-agent" select="'default'"/>
 
     <!-- will be set by config and passed from WebProcessor -->
-    <xsl:param name="resourcesPath" select="''"/>
+    <xsl:param name="resourcesPath" select="'/bfResources/'"/>
 
     <!--- path to javascript files -->
     <xsl:param name="scriptPath" select="concat($resourcesPath,'scripts/')"/>

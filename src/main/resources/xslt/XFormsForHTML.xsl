@@ -37,7 +37,7 @@
         <body>
             <xsl:copy-of select="@*"/>
             <div id="bfLoading">
-                <img src="{concat($contextroot,'/resources/images/indicator.gif')}" class="disabled" id="indicator" alt="loading" />
+                <img src="{concat($contextroot,'/bfResources/images/indicator.gif')}" class="disabled" id="indicator" alt="loading" />
             </div>
 
             <xsl:variable name="outermostNodeset"
@@ -70,7 +70,7 @@
             </span>
             <div id="betterform-logo">
                 <a href="resources/jsp/forms.jsp">
-                    <img src="{concat($contextroot,'/resources/images/poweredby_sw.gif')}" style="border:none;" alt="powered by betterForm"/>
+                    <img src="{concat($contextroot,'/bfResources/images/poweredby_sw.gif')}" style="border:none;" alt="powered by betterForm"/>
                 </a>
             </div>
             <div id="copyright">

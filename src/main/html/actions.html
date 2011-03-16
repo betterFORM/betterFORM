@@ -119,11 +119,11 @@
     </script>
 
     <style type="text/css">
-        @import "../resources/scripts/release/dojo/dijit/themes/tundra/tundra.css";
-        @import "../resources/scripts/release/dojo/dojo/resources/dojo.css";
-        @import "../resources/scripts/release/dojo/dojox/widget/Toaster/Toaster.css";
-        @import "../resources/scripts/release/dojo/dojox/layout/resources/FloatingPane.css";
-        @import "../resources/scripts/release/dojo/dojox/layout/resources/ResizeHandle.css";
+        @import "../bfResources/scripts/release/dojo/dijit/themes/tundra/tundra.css";
+        @import "../bfResources/scripts/release/dojo/dojo/resources/dojo.css";
+        @import "../bfResources/scripts/release/dojo/dojox/widget/Toaster/Toaster.css";
+        @import "../bfResources/scripts/release/dojo/dojox/layout/resources/FloatingPane.css";
+        @import "../bfResources/scripts/release/dojo/dojox/layout/resources/ResizeHandle.css";
     </style>
 
     <style type="text/css">
@@ -143,10 +143,10 @@
     <body>
         <div style="display:none">
             <xf:model functions="bf:context">
-                <xf:submission id="s-debug" action="{$contextroot}/resources/jsp/debug-instance.jsp" method="post" replace="all"/>
-                <xf:submission id="s-debug-partial" action="{$contextroot}/resources/jsp/debug-instance.jsp" method="post" replace="all" ref="instance('default')/repeatdata"/>
-                <xf:submission id="s-update" action="{$contextroot}/resources/jsp/generate-instance.jsp" method="post" replace="instance"/>
-                <xf:submission id="s-test" action="{$contextroot}/resources/jsp/return-instance.jsp" method="post" replace="none">
+                <xf:submission id="s-debug" action="{$contextroot}/bfResources/jsp/debug-instance.jsp" method="post" replace="all"/>
+                <xf:submission id="s-debug-partial" action="{$contextroot}/bfResources/jsp/debug-instance.jsp" method="post" replace="all" ref="instance('default')/repeatdata"/>
+                <xf:submission id="s-update" action="{$contextroot}/bfResources/jsp/generate-instance.jsp" method="post" replace="instance"/>
+                <xf:submission id="s-test" action="{$contextroot}/bfResources/jsp/return-instance.jsp" method="post" replace="none">
                     <xf:message ev:event="xforms-submit-done">Your data have been send.</xf:message>
                 </xf:submission>
 
@@ -291,7 +291,7 @@
                     <xf:trigger bind="message-action">
                         <xf:label>Load (new)</xf:label>
                         <xf:action>
-                            <xf:load resource="{$contextroot}/resources/images/betterform50t.gif" show="new"/>
+                            <xf:load resource="{$contextroot}/bfResources/images/betterform50t.gif" show="new"/>
                         </xf:action>
                     </xf:trigger>
                     <xf:trigger>

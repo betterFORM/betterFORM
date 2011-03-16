@@ -20,16 +20,16 @@
                 <style type="text/css">
                     <xsl:choose>
                         <xsl:when test="//xhtml:body/@class='soria'">
-                    @import "<xsl:value-of select="$contextroot"/>/resources/scripts/dijit/themes/soria/soria.css";
+                    @import "<xsl:value-of select="$contextroot"/>/bfResources/scripts/dijit/themes/soria/soria.css";
                         </xsl:when>
                         <xsl:otherwise>
-                    @import "<xsl:value-of select="$contextroot"/>/resources/scripts/dijit/themes/tundra/tundra.css";
+                    @import "<xsl:value-of select="$contextroot"/>/bfResources/scripts/dijit/themes/tundra/tundra.css";
                         </xsl:otherwise>
                     </xsl:choose>
-                    @import "<xsl:value-of select="$contextroot"/>/resources/scripts/dojo/resources/dojo.css";
-                    @import "<xsl:value-of select="$contextroot"/>/resources/scripts/dojox/widget/Toaster/Toaster.css";
-                    @import "<xsl:value-of select="$contextroot"/>/resources/scripts/dojox/layout/resources/FloatingPane.css";
-	                @import "<xsl:value-of select="$contextroot"/>/resources/scripts/dojox/layout/resources/ResizeHandle.css";
+                    @import "<xsl:value-of select="$contextroot"/>/bfResources/scripts/dojo/resources/dojo.css";
+                    @import "<xsl:value-of select="$contextroot"/>/bfResources/scripts/dojox/widget/Toaster/Toaster.css";
+                    @import "<xsl:value-of select="$contextroot"/>/bfResources/scripts/dojox/layout/resources/FloatingPane.css";
+	                @import "<xsl:value-of select="$contextroot"/>/bfResources/scripts/dojox/layout/resources/ResizeHandle.css";
                 </style><xsl:text>
 </xsl:text>
     </xsl:template>
