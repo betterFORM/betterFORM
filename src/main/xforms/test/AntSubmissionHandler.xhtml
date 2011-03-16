@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:xf="http://www.w3.org/2002/xforms"
+	  xmlns:ev="http://www.w3.org/2001/xml-events"
+	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	  xmlns:bf="http://betterform.sourceforge.net/xforms">
+	<head>
+		<title>[PUT YOUR TITLE HERE]</title>
+		<!--
+		Standard template for embedded forms. Uses an additional div Element with @id="xforms" to allow addressing
+		by a xforms load action.
+		-->
+	</head>
+	<body>
+		<div id="xforms">
+			<div style="display:none">
+				<xf:model id="model-1">
+					<xf:instance id="i-default">
+						<data xmlns="">
+                            <target>test</target>
+                            <from>2000-01-01</from>
+                            <to>2020-01-01</to>
+                            <default-duration>30</default-duration>
+                            <currentTask/>
+                            <selectedTasks/>
+                            <lastTime/>
+                            <orderBy>ID</orderBy>
+                            <direction>ascending</direction>
+                            <url></url>
+						</data>
+					</xf:instance>
+
+                       <xf:submission id="s-ant-instance-target"
+                                    method="get"
+                                    replace="none"
+                                    targetid="embedInline"
+                                    ref="instance()"
+                                    validate="false"
+                                    resource="ant://{$webapp.realpath}/antsubmission-handler-test.xml">
+                            <xf:header>
+                            <xf:name>username</xf:name>
+                            <xf:value>admin</xf:value>
+                        </xf:header>
+                        <xf:header>
+                            <xf:name>password</xf:name>
+                            <xf:value>jee5AhBa</xf:value>
+                        </xf:header>
+                        <xf:action ev:event="xforms-submit-error">
+                            <xf:message>Submission failed</xf:message>
+                        </xf:action>
+                    </xf:submission>
+
+                    <xf:submission id="s-ant-uri-target"
+                                    method="get"
+                                    replace="none"
+                                    targetid="embedInline"
+                                    ref="instance()"
+                                    validate="false"
+                                    resource="ant://{$webapp.realpath}/antsubmission-handler-test.xml#test2">
+                            <xf:header>
+                            <xf:name>username</xf:name>
+                            <xf:value>admin</xf:value>
+                        </xf:header>
+                        <xf:header>
+                            <xf:name>password</xf:name>
+                            <xf:value>jee5AhBa</xf:value>
+                        </xf:header>
+                        <xf:action ev:event="xforms-submit-error">
+                            <xf:message>Submission failed</xf:message>
+                        </xf:action>
+                    </xf:submission>
+				</xf:model>
+			</div>
+			<xf:group>
+                  <xf:trigger id="runAnt">
+                    <xf:label>Run Ant with instance target</xf:label>
+                    <xf:send submission="s-ant-instance-target"/>
+                </xf:trigger>
+			</xf:group>
+
+            <xf:group>
+                  <xf:trigger id="runQuery">
+                    <xf:label>Run Ant with uri target (# fragment)</xf:label>
+                    <xf:send submission="s-ant-uri-target"/>
+                </xf:trigger>
+			</xf:group>
+            <div id="embedInline"/>
+		</div>
+	</body>
+</html>

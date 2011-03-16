@@ -192,6 +192,7 @@
         <submission-handler scheme="file" class="de.betterform.connector.file.FileSubmissionHandler"/>
         <submission-handler scheme="http" class="de.betterform.connector.http.HTTPSubmissionHandler"/>
         <submission-handler scheme="https" class="de.betterform.connector.http.HTTPSubmissionHandler"/>
+        <submission-handler scheme="ant" class="de.betterform.connector.ant.AntSubmissionHandler"/>
         <!-- HTTPSubmissionHandlerXI evaluates any bf:include within the data to load -->
 <!--
         <submission-handler scheme="http" class="de.betterform.connector.http.HTTPSubmissionHandlerXI"/>
