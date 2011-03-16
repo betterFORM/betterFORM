@@ -302,9 +302,7 @@
         <body class="{$theme} bf">
             <xsl:copy-of select="@*[name() != 'class']"/>
             <div id="bfLoading" class="disabled">
-                <img src="{concat($contextroot,$resourcesPath,'images/indicator.gif')}" class="xfDisabled" id="indicator-pending"
-                     alt="loading"/>
-                <img src="{concat($contextroot,$resourcesPath,'images/indicator.gif')}" class="xfDisabled" id="indicator-form-loading"
+                <img src="{concat($contextroot,$resourcesPath,'images/indicator.gif')}" class="xfDisabled" id="indicator"
                      alt="loading"/>
             </div>
             <!-- Toaster widget for ephemeral messages -->
