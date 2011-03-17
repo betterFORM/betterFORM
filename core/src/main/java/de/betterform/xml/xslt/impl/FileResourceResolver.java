@@ -35,7 +35,8 @@ public class FileResourceResolver implements ResourceResolver {
 
         File file = new File(uri);
         if (!file.exists()) {
-            throw new XFormsException(new FileNotFoundException(uri.toString()));
+//            throw new XFormsException(new FileNotFoundException(uri.toString()));
+            return null;
         }
 
         return new FileResource(file);

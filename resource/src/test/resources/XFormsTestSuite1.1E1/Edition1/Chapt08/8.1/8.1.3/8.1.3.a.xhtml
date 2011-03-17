@@ -1,0 +1,36 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"           
+      xmlns:xforms="http://www.w3.org/2002/xforms">
+  	<xhtml:head>
+    	<xhtml:title>8.1.3.a incremental attribute of secret element</xhtml:title>
+    	<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    	<xforms:model>
+       		<xforms:instance xmlns="">
+ 		    	<user>
+ 		    		<pin/>
+   			   		<password/>
+        		</user>
+       		</xforms:instance>
+    	</xforms:model>
+  	</xhtml:head>
+  	<xhtml:body>
+  	    <xforms:group>
+  		    <xforms:label class="title">8.1.3.a incremental attribute of secret element</xforms:label>
+  		</xforms:group>
+  		<xforms:group>
+  			<xforms:label>
+  			  You must see an xforms-value-changed message every time the value in the Password secret 
+  			  control changes. 
+			</xforms:label>
+		</xforms:group>
+      		<xforms:secret ref="/user/password" incremental="true">
+         		<xforms:label>Password</xforms:label>
+ 	        	<xforms:action ev:event="xforms-value-changed">
+ 	         		<xforms:message level="modal">xforms-value-changed</xforms:message>
+ 	        	</xforms:action>
+      		</xforms:secret>
+			
+  </xhtml:body>
+</xhtml:html>

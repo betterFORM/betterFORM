@@ -1,0 +1,31 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml"
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+	xmlns:ex="http://example.org">
+	<xhtml:head>
+		<xhtml:title>7.9.4.b days-from-date() function ignores hours, minutes, and seconds components</xhtml:title>
+		<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+		<xforms:model>
+			<xforms:instance xmlns="">
+				<ex:root />
+			</xforms:instance>
+		</xforms:model>
+	</xhtml:head>
+	<xhtml:body>
+	    <xforms:group>
+		    <xforms:label class="title">
+			7.9.4.b days-from-date() function ignores hours, minutes, and seconds components
+		    </xforms:label>
+		</xforms:group>
+		<xforms:group>
+			<xforms:label>
+			  You must see the value &quot;4&quot; for the Test output. 
+			</xforms:label>
+		</xforms:group>
+			<xforms:output value="days-from-date('1970-01-05T01:01:01.01Z')">
+				<xforms:label>Test : </xforms:label>
+			</xforms:output>
+			
+	</xhtml:body>
+</xhtml:html>

@@ -22,7 +22,7 @@
     <!-- <<<<< These properties only apply to the targets that deal with deployment into *existing* eXist installation-->
 
     <property name="tasks.dir" value="/Users/dev/Desktop/task"/>
-    <property name="src.dir" value="${basedir}/../src"/>
+    <property name="src.dir" value="${basedir}/../resource/src"/>
     <property name="web.dir" value="${basedir}/../web"/>
     <property name="core.dir" value="${basedir}/../core"/>
     <xmlproperty file="../build.properties.xml"

@@ -1,0 +1,34 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+	  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"               
+      xmlns:xforms="http://www.w3.org/2002/xforms">
+  <xhtml:head>
+    <xhtml:title>8.2.1.c label element has binding precedence</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+       <xforms:instance xmlns="">
+          <data>       
+             <mylabel>Instance Data</mylabel>
+             <myinput></myinput>
+          </data>
+       </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">8.2.1.c label element has binding precedence</xforms:label>
+  	</xforms:group>	
+	<xforms:group>
+		<xforms:label>
+		  You must see an input control with the label &quot;Instance Data&quot;. 
+		</xforms:label>	
+	</xforms:group>
+	<xforms:input ref="myinput">
+		<xforms:label ref="/data/mylabel">Inline Text (WRONG)</xforms:label>
+	</xforms:input>
+	
+  </xhtml:body>
+</xhtml:html>

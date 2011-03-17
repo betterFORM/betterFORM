@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- $Id: build.xml,v 1.90 2006/11/16 23:55:43 joernt Exp $ -->
+<project id="build Dojo" name="Dojo Build" default="build-dojo" basedir="">
+
+    <xmlproperty file="../build.properties.xml"
+                 semanticAttributes="true" keepRoot="false"/>
+
+    <property name="script.src" value="${basedir}/src/main/resources/scripts"/>
+    <property name="target.dir" value="${basedir}/target"/>
+    <property name="src.dir" value="${basedir}/src"/>
+    <property name="dojo.version" value="dojo-release-1.5.0-src"/>
+    <property name="timeline.version" value="timeline_libraries_v2.3.0" />
+
+    <property name="scripts.target" value="${target.dir}/scripts"/>
+
+    <import file="../build-util.xml" />
+
+    <target name="prepare-js" depends="check-ant-version" if="antversion">
+        <echo>
+        ************************************************************************************
+        unpacking Dojo distribution...
+        ************************************************************************************
+        </echo>
+        <mkdir dir="${scripts.target}"/>
+        <untar src="src/main/lib/${dojo.version}.tar.gz" dest="${scripts.target}" compression="gzip">
+            <cutdirsmapper dirs="1"/>
+        </untar>
+        <unzip src="src/main/lib/${timeline.version}.zip" dest="${scripts.target}/simile/timeline">
+            <cutdirsmapper dirs="1"/>
+        </unzip>
+        <copy file="${src.dir}/main/lib/dwr.js.optimized" tofile="${scripts.target}/dwr.js"/>
+    </target>
+
+    <!-- check if Dojo is allready unpacked and call unpack target if not -->
+    <target name="prepare-dojo" depends="check-if-dojo-is-unpacked, prepare-js" if="dojo.not.available">
+        <!--
+        <antcall target="prepare-js" inheritall="false">
+            <param name="target.dir" value="${webapp.dir}/WEB-INF/classes/META-INF"/>
+            <param name="src.target.dir" value="${webapp.dir}/WEB-INF/classes/META-INF"/>
+        </antcall>
+         -->
+    </target>
+
+    <!-- must be a seprate target due to it is called by by eXist/build-utils.xml -->
+    <target name="copy-src-resources-scripts">
+        <!--<antcall target="unpack-betterform-js-release"/>-->
+
+        <echo>
+        ************************************************************************************
+        copying global betterform scripts (non-optimized version) ...
+        ************************************************************************************
+        </echo>
+
+        <copy description="copy resources from global 'src' directory"
+              todir="${scripts.target}"
+              includeemptydirs="true"
+              overwrite="true">
+            <fileset dir="${script.src}">
+                <include name="**/**"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="check-if-dojo-is-unpacked">
+        <echo>
+        ************************************************************************************"
+        checking if dojo is available
+        ************************************************************************************"
+        </echo>
+        <condition property="dojo.not.available">
+            <not>
+                <available file="${scripts.target}/dojo/dojo.js"/>
+				<!-- <or>
+                    <available file="${scripts.target}/dojo/dojo.js"/>
+                    <available file="${scripts.target}/dojo/betterform/betterform-full.js"/>
+                </or> -->
+            </not>
+        </condition>
+    </target>
+
+    <target name="unpack-betterform-js-release" depends="check-if-bf-js-release-unpacked" if="bf.js.release.not.available">
+        <echo>
+        ************************************************************************************"
+        unpacking existing optimized JavaScript archive ...
+        ************************************************************************************"
+        </echo>
+
+        <mkdir dir="${scripts.target}/release"/>
+        <unzip src="${src.dir}/main/lib/${app.name}-js-optimized.zip" dest="${scripts.target}/release"/>
+    </target>
+
+    <target name="check-if-js-is-up-to-date">
+        <echo>Check if dojo is up to date</echo>
+        <uptodate property="build-js-required" targetfile="${scripts.target}/release/dojo/betterform/betterform-full.js">
+            <srcfiles dir="${src.dir}/main/resources/scripts" includes="**/*.*" />
+            <srcfiles dir="${basedir}" includes="build-dojo.xml" />
+            <srcfiles dir="${src.dir}/main/lib" includes="${dojo.version}.tar.gz" />
+        </uptodate>
+    </target>
+
+    <target name="check-if-bf-js-release-unpacked">
+        <echo>
+            ************************************************************************************"
+            Check if betterFORM JS release is unpacked#
+            ************************************************************************************"
+        </echo>
+        <condition property="bf.js.release.not.available">
+            <not><available file="${scripts.target}/release/dojo/dojo/dojo.js"/></not>
+        </condition>
+    </target>
+
+    <!-- Do we need this depends: unpack-betterform-js-release, ?? -->
+    <target name="build-dojo"
+            description="create a custom Javascript build of betterFORM"
+            depends="prepare-dojo, copy-src-resources-scripts,  check-if-js-is-up-to-date"
+            unless="build-js-required" >
+        <java classname="org.mozilla.javascript.tools.shell.Main"
+              dir="${scripts.target}/util/buildscripts"
+              classpath="${scripts.target}/util/shrinksafe/js.jar:${scripts.target}/util/shrinksafe/shrinksafe.jar"
+              jvmversion="1.5"
+              fork="true"
+              maxmemory="512m">
+            <arg value="build.js"/>
+            <arg value="profile=betterform"/>
+            <arg value="localeList='en'"/>
+            <arg value="log=1"/>
+            <arg value="optimize=shrinksafe"/>
+            <arg value="mini=true "/>
+            <arg value="copyTests=false"/>
+            <arg value="internStrings=true"/>
+            <arg value="stripConsole=warn"/>
+            <arg value="cssOptimize=comments"/>
+            <arg value="action=clean,release"/>
+            <arg value="symbol=short"/>
+            <arg value="layerOptimize=shrinksafe"/>
+
+            <arg value="version=1.5"/>
+        </java>
+        <!-- cleanup JS/CSS resources of betterform dojo release -->
+        <antcall target="cleanup-js-release"/>
+        <copy file="${src.dir}/main/lib/dwr.js.optimized" tofile="${scripts.target}/release/dojo/dwr.js"/>
+        <zip description="create optimized JavaScript zip"
+             zipfile="${src.dir}/main/lib/${app.name}-js-optimized.zip"
+             basedir="${scripts.target}/release/dojo"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${scripts.target}"/>
+    </target>
+
+    <!-- delete all uncalled JavaScript resources from betterFORM / JavaScript release
+        (only resources beneath ${scripts.target}/release are deleted  -->
+    <target name="cleanup-js-release">
+        <echo message="************************************************************************************"/>
+        <echo message="clean up not needed dojo files..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+
+        <property name="bfReleaseSrc" value="${scripts.target}/release/bfReleaseSrc"/>
+
+        <move file="${scripts.target}/release/dojo"
+              tofile="${bfReleaseSrc}"/>
+
+        <property name="bfJSRelease"  value="${scripts.target}/release/dojo"/>
+
+        <mkdir dir="${bfJSRelease}" />
+        <!-- copy betterFORM JS resources -->
+        <property name="bfRelease" value="${bfJSRelease}/betterform"/>
+        <copy todir="${bfRelease}" flatten="false">
+             <fileset dir="${bfReleaseSrc}/betterform" includes="nls/**/*"/>
+             <fileset dir="${bfReleaseSrc}/betterform">
+                 <include name="betterform-*.js"/>
+                 <exclude name="betterform-*.js.uncompressed.js"/>
+                 <include name="manifest.js"/>
+             </fileset>
+        </copy>
+
+
+        <!-- copy required dojo js resources -->
+        <property name="dojoRelease" value="${bfJSRelease}/dojo"/>
+        <copy todir="${dojoRelease}" flatten="false">
+            <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.png"/>
+            <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.jpg"/>
+            <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.jpeg"/>
+            <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.gif"/>
+            <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.css"/>
+           <!-- <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.html"/> -->
+            <fileset dir="${bfReleaseSrc}/dojo" includes="_base/_loader/**/*"/>
+             <fileset dir="${bfReleaseSrc}/dojo" includes="_firebug/**/*"/>
+             <fileset dir="${bfReleaseSrc}/dojo" includes="resources/**/*"/>
+             <fileset dir="${bfReleaseSrc}/dojo">
+                 <include name="_base.js"/>
+                 <include name="dojo.js"/>
+                 <include name="i18n.js"/>
+             </fileset>
+        </copy>
+
+        <!-- copy required dijit js resources -->
+        <property name="dijitRelease" value="${bfJSRelease}/dijit"/>
+        <copy todir="${dijitRelease}" flatten="false">
+            <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.png"/>
+            <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.jpg"/>
+            <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.jpeg"/>
+            <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.gif"/>
+            <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.css"/>
+            <!-- <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.html"/> -->
+            <fileset dir="${bfReleaseSrc}/dijit" includes="nls/**/*"/>
+            <fileset dir="${bfReleaseSrc}/dijit" includes="themes/**/"/>
+            <fileset dir="${bfReleaseSrc}/dijit" includes="dijit.js"/>
+        </copy>
+
+        <property name="dojoxRelease" value="${bfJSRelease}/dojox"/>
+        <copy todir="${dojoxRelease}" flatten="false">
+             <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.png"/>
+            <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.jpg"/>
+            <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.jpeg"/>
+            <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.gif"/>
+            <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.css"/>
+         <!--   <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.html"/> -->
+        </copy>
+
+
+        <!-- delete compiled js -->
+        <delete dir="${bfReleaseSrc}"/>
+    </target>
+
+</project>

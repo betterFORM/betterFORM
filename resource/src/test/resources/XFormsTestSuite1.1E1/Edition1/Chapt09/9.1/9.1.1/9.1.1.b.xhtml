@@ -1,0 +1,57 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"             
+      xmlns:xforms="http://www.w3.org/2002/xforms">
+  	<xhtml:head>
+    	<xhtml:title>9.1.1.b label element in a group element</xhtml:title>
+    	<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    	<xforms:model>
+       	<xforms:instance xmlns="">
+	   			<order>
+	   				<shipTo>
+	   					<street/>
+	   					<city/>
+	   				</shipTo>
+	   				<shipDate>
+	   					<month/>
+	   					<day/>
+	   				</shipDate>
+	   			</order>
+       		</xforms:instance>
+    	</xforms:model>
+  	</xhtml:head>
+  	<xhtml:body>
+  		<xforms:group>
+  			<xforms:label class="title">9.1.1.b label element in a group element</xforms:label>
+  		</xforms:group>	
+  		<xforms:group>
+  			<xforms:label>
+	  			The first element in each of the two groups is a label element.  This label should act as a label
+	  			for the entire group. The group labeled &quot;Shipping Address&quot; must include the inputs 
+	  			Street Name and City. 
+	  			The group labeled &quot;Shipping Date&quot; must include the inputs Day and Month. 
+	  		</xforms:label>	
+  		</xforms:group>
+		<xforms:group>
+			<xforms:label>Shipping Address</xforms:label>
+			<xforms:input ref="/order/shipTo/street">
+ 				<xforms:label>Street Name: </xforms:label>
+ 	     	</xforms:input>
+ 	     	<xforms:input ref="/order/shipTo/city">
+ 	     		<xforms:label>City: </xforms:label>
+ 	     	</xforms:input>
+		</xforms:group>
+		<xforms:group>
+			<xforms:label>Shipping Date</xforms:label>
+			<xforms:input ref="/order/shipDate/day">
+ 				<xforms:label>Day: </xforms:label>
+ 	     	</xforms:input>
+ 	     	<xforms:input ref="/order/shipDate/month">
+ 	     		<xforms:label>Month: </xforms:label>
+ 	     	</xforms:input>
+		</xforms:group>
+  </xhtml:body>
+</xhtml:html>

@@ -1,0 +1,56 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+    <xhtml:head>
+      <xhtml:title>5.2.6.a email datatype</xhtml:title>
+      <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css" />
+      <xforms:model >
+        <xforms:instance>
+          <myEmail>
+            <email_address xsi:type="xforms:email"/>
+          </myEmail>
+        </xforms:instance>
+      </xforms:model>
+    </xhtml:head>
+    <xhtml:body>
+      	<xforms:group>
+            <xforms:label class="title">5.2.6.a email datatype</xforms:label>
+      	</xforms:group>
+      	<xforms:group>
+            <xforms:label>
+              When you activate the Valid Email Test triggers you must see the message &quot;You entered a 
+              valid email&quot;. 
+              When you activate the Invalid Email Test triggers you must see the message &quot;You entered an 
+              invalid email&quot;. 
+            </xforms:label>
+        </xforms:group>
+        <xforms:group>
+            <xforms:input ref="email_address">
+                <xforms:label>Email address : </xforms:label>
+			<xforms:message ev:event="xforms-valid" level="modal">You entered a valid email</xforms:message>
+			<xforms:message ev:event="xforms-invalid" level="modal">You entered an invalid email</xforms:message>
+            </xforms:input>
+        </xforms:group>
+        
+        <xforms:trigger>
+        	<xforms:label>Valid Email Test 1</xforms:label>
+    		<xforms:setvalue ref="/myEmail/email_address" ev:event="DOMActivate">editors@example.com</xforms:setvalue>
+    	</xforms:trigger>
+    	<xforms:trigger>
+        	<xforms:label>Valid Email Test 2</xforms:label>
+    		<xforms:setvalue ref="/myEmail/email_address" ev:event="DOMActivate">~my_mail+{nospam}$?@sub-domain.example.info</xforms:setvalue>
+    	</xforms:trigger>
+    	<xforms:trigger>
+        	<xforms:label>Invalid Email Test 1</xforms:label>
+    		<xforms:setvalue ref="/myEmail/email_address" ev:event="DOMActivate">editors@(this is a comment)example.info</xforms:setvalue>
+    	</xforms:trigger>
+    	<xforms:trigger>
+        	<xforms:label>Invalid Email Test 2</xforms:label>
+    		<xforms:setvalue ref="/myEmail/email_address" ev:event="DOMActivate">editors{at}example{dot}info</xforms:setvalue>
+    	</xforms:trigger>
+    	    
+    </xhtml:body>
+</xhtml:html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- payschema.xsd -->
+<xs:schema xmlns:my="http://commerce.example.com/payment" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://commerce.example.com/payment" elementFormDefault="qualified">
+
+  <xs:element name="payment">
+    <xs:complexType>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:choice>    
+          <xs:element ref="my:cc" />
+          <xs:element ref="my:exp" />
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="as" type="my:paymentAs" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cc" type="my:cc" />
+  <xs:element name="exp" type="xsd:gYearMonth" />
+
+  <xs:simpleType name="cc">
+     <xs:restriction base="xsd:string"> 
+       <xs:minLength value="12" /> 
+       <xs:maxLength value="19" /> 
+       <xs:pattern value="[0-9]+" /> 
+     </xs:restriction> 
+  </xs:simpleType>
+
+  <xs:simpleType name="paymentAs">
+    <xs:restriction base="xsd:string">
+      <xs:enumeration value="cash" />
+      <xs:enumeration value="credit" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

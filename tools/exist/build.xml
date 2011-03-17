@@ -12,7 +12,7 @@
     <!-- <<<<< These properties only apply to the targets that deal with deployment into *existing* eXist installation-->
 
     <property name="tasks.dir" value="/Users/dev/Desktop/task"/>
-    <property name="src.dir" value="${basedir}/../../src"/>
+    <property name="src.dir" value="${basedir}/../resource/src"/>
     <property name="web.dir" value="${basedir}/../../web"/>
     <property name="core.dir" value="${basedir}/../../core"/>
     <property name="target.dir" value="${basedir}/target"/>
@@ -118,7 +118,7 @@
     </target>
 
     <target name="package-xrx">
-        <zip basedir="${src.dir}/main/xrx" zipfile="${target.dir}/xrx.zip" excludes="build.xml"/>
+        <zip basedir="/resource/src/main/xrx" zipfile="${target.dir}/xrx.zip" excludes="build.xml"/>
     </target>
 
     <target name="create-exist-extension-installer"
@@ -149,7 +149,7 @@
         </ant>
 
         <copy todir="${exist.webapp.dir}/forms" overwrite="true">
-            <fileset dir="../../src/main/xforms"/>
+            <fileset dir="../../resource/src/main/xforms"/>
         </copy>
 
         <copy todir="${exist.webapp.dir}/resources">
@@ -160,7 +160,7 @@
               todir="${webapp.dir}/resources"
               overwrite="true"
               filtering="false">
-            <fileset dir="../../src/main/resources">
+            <fileset dir="../../resource/src/main/resources">
                 <include name="**/*.gif"/>
                 <include name="**/*.png"/>
                 <include name="**/*.jpg"/>

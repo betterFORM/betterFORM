@@ -21,7 +21,7 @@
 
 
         <!-- #### get and unpack dojo -->
-        <gunzip dest="${basedir}/target/${properties.dojo}.tar" src="${basedir}/../../src/main/lib/${properties.dojo}.tar.gz"/>
+        <gunzip dest="${basedir}/target/${properties.dojo}.tar" src="/resource/src/main/lib/${properties.dojo}.tar.gz"/>
         <untar  dest="${basedir}/target/dojo-release" src="${basedir}/target/${properties.dojo}.tar"/>
         <move  file="${basedir}/target/dojo-release/${properties.dojo}" todir="${basedir}/target"/>
         <delete dir="${basedir}/target/dojo-release" />
@@ -36,7 +36,7 @@
               todir="${basedir}/target/bf-resources"
               filtering="true"
               includeemptydirs="true">
-            <fileset dir="${basedir}/../../src/main/resources/scripts/betterform/"/>
+            <fileset dir="/resource/src/main/resources/scripts/betterform/"/>
         </copy>
 
        <antcall target="prepareExistBundle"/>

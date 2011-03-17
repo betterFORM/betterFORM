@@ -1,0 +1,95 @@
+<!--$Id: h.1.xml,v 1.1 2007/11/14 20:55:43 kwells Exp $-->
+<html xmlns:my="http://commerce.example.com/payment" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title xml:lang="fr">XForms en XHTML</title>
+
+    <xforms:model schema="payschema.xsd">
+      <xforms:instance>
+        <my:payment as="credit">
+          <my:cc />
+          <my:exp />
+        </my:payment>
+      </xforms:instance>
+      <xforms:submission action="http://www.example.com/buy.rb" method="post" id="s00" />
+      <xforms:bind nodeset="my:cc" relevant="../@as='credit'" required="true()" />
+      <xforms:bind nodeset="my:exp" relevant="../@as='credit'" required="true()" />
+    </xforms:model>
+  </head>
+  <body>
+    <xforms:group xmlns="http://www.w3.org/2002/xforms">
+      <xforms:trigger>
+        <xforms:label>Français</xforms:label>
+        <toggle case="fr" ev:event="DOMActivate" />
+      </xforms:trigger>
+      <xforms:trigger>
+        <xforms:label>English</xforms:label>
+        <toggle case="en" ev:event="DOMActivate" />
+      </xforms:trigger>
+    </xforms:group>
+    
+    <switch xmlns="http://www.w3.org/2002/xforms">
+      <case id="fr">
+        <select1 ref="@as">
+          <xforms:label xml:lang="fr">Choisissez un mode de paiement</xforms:label>
+          <choices>
+            <item>
+              <xforms:label xml:lang="fr">Comptant</xforms:label>
+              <value>cash</value>
+              <message level="modeless" ev:event="xforms-select" xml:lang="fr">
+                         Ne pas envoyer d'argent comptant par la poste.</message>
+            </item>
+            <item>
+              <xforms:label xml:lang="fr">Carte bancaire</xforms:label>
+              <value>credit</value>
+            </item>
+          </choices>
+        </select1>
+
+        <xforms:input ref="my:cc">
+          <xforms:label xml:lang="fr">Numéro de carte bancaire</xforms:label>
+          <alert xml:lang="fr">Saississez un numéro de carte bancaire en cours
+           (séparez par un espace ou un trait d'union chaque groupe de chiffres)</alert>
+        </xforms:input>
+
+        <xforms:input ref="my:exp">
+          <xforms:label xml:lang="fr">Date d'échéance</xforms:label>
+        </xforms:input>
+
+        <submit submission="s00">
+          <xforms:label xml:lang="fr">Achetez</xforms:label>
+        </submit>
+      </case>
+      <case id="en">
+        <select1 ref="@as">
+          <xforms:label xml:lang="en">Select Payment Method</xforms:label>
+          <choices>
+            <item>
+              <xforms:label xml:lang="en">Cash</xforms:label>
+              <value>cash</value>
+              <message level="modeless" ev:event="xforms-select" xml:lang="en">
+              Please do not mail cash.</message>
+            </item>
+            <item>
+              <xforms:label xml:lang="en">Credit</xforms:label>
+              <value>credit</value>
+            </item>
+          </choices>
+        </select1>
+
+        <xforms:input ref="my:cc">
+          <xforms:label xml:lang="en">Credit Card Number</xforms:label>
+          <alert xml:lang="en">Please specify a valid credit card number
+            (use spaces or hyphens between digit groups)</alert>
+        </xforms:input>
+
+        <xforms:input ref="my:exp">
+          <xforms:label xml:lang="en">Expiration Date</xforms:label>
+        </xforms:input>
+
+        <submit submission="s00">
+          <xforms:label xml:lang="en">Buy</xforms:label>
+        </submit>
+      </case>
+    </switch>
+  </body>
+</html>

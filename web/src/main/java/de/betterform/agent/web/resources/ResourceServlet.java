@@ -76,14 +76,37 @@ public class ResourceServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String resourcePath = RESOURCE_FOLDER + getResourcePath(req.getRequestURI());
+        String requestUri = req.getRequestURI();
+        String resourcePath = RESOURCE_FOLDER + getResourcePath(requestUri);
         URL url = ResourceServlet.class.getResource(resourcePath);
+        if (logger.isLoggable(Level.FINE)){
+            logger.log(Level.INFO,"Request URI: " + requestUri);
+            logger.log(Level.INFO,"resourcePath: " + requestUri);
+            logger.log(Level.INFO,"resource url: " + requestUri);
+        }
 
         if (url == null) {
-            logger.log(Level.SEVERE, "Resource \"{0}\" not found", resourcePath);
+            logger.log(Level.WARNING, "Resource \"{0}\" not found", resourcePath);
+            boolean error = true;
 
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-            return;
+            if(requestUri.endsWith(".js")){
+                //try optimized version first
+                if (requestUri.contains("scripts/betterform/betterform-")) {
+                    if (ResourceServlet.class.getResource(resourcePath) == null) {
+                        resourcePath = resourcePath.replace("betterform-", "BfRequired");
+                        if (ResourceServlet.class.getResource(resourcePath) != null)  {
+                            error=false;
+                        }
+                    }
+                }
+            }
+
+
+            if(error) {
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
+
         }
 
         if (logger.isLoggable(Level.FINE))
