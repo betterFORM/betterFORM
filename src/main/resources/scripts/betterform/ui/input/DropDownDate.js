@@ -116,6 +116,12 @@ dojo.declare(
         console.debug("betterform.ui.input.DropDownDate.onChange");
     },
 
+    _handleSetControlValue:function(value) {
+        console.debug("betterform.ui.input.DropDownDate._handleSetControlValue value",value);
+        this.applyValues(value);
+    },
+
+
     getControlValue:function(){
         console.debug("betterform.ui.input.DropDownDate.getControlValue currentValue: ", this.value);
         return this.value;
