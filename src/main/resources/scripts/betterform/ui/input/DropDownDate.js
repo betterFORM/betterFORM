@@ -40,7 +40,7 @@ dojo.declare(
         console.debug("DropDownDate.applyValues value:",value);
         if (value != undefined) {
 
-            var dropDownDateContainer = this.value.split("-");
+            var dropDownDateContainer = value.split("-");
             if(dropDownDateContainer.length != 3) {
                 return;
             }
