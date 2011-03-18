@@ -811,7 +811,16 @@ h3 {
 	/*left:-2000px;*/
 	text-align:center;
 	position:absolute;
-	top:115px;
+	top:135px;
+
+	background: #dedede;
+	border:thin solid #999999;
+	-moz-border-radius-bottomleft:10px;
+	-moz-border-radius-bottomright:10px;
+	-webkit-border-bottom-left-radius:10px;
+	-webkit-border-bottom-right-radius:10px;
+	float:left;
+	min-height:200px;
 }
 
 

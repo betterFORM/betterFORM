@@ -109,7 +109,14 @@
 
 			.browser{
 				position:absolute;
-				top:126px;
+				top:140px;
+				border:none;
+				background:transparent;
+			}
+			.bfFormBrowser{
+				width:100%;
+				margin-top:0;
+				border:none;
 			}
 			.formBrowserHead{
 				position:relative;
@@ -190,7 +197,11 @@
 	   		.bf .dijitTooltipDialogPopup{
 				text-align:left;
 		    }
-
+		    #mountPoint{
+				width:100%;
+				text-align:center;
+				min-height:150px;
+			}
         </style>
 
       <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js"></script>-->
@@ -215,7 +226,8 @@
 
 				</div>
 				 <div id="browser" class="browser">
-
+					 <div id="mountPoint" class="bfFormBrowser">
+					 </div>
 				 </div>
 				 <!--<div id="copyright">© 2010-2011 betterFORM</div>-->
 			 </div>
@@ -267,6 +279,10 @@
 						easing:easing1
 
 					},
+					onBeforeBegin:function(){
+						dojo.style("browser","display","none");
+						dojo.style("mountPoint","display","none");
+					},
 					onPlay:function(){
 						console.debug("onPlay");
 						var uri = "FormBrowser?path=forms&fragment=true&ajax=load";
@@ -277,22 +293,26 @@
 					}
 				});
 
+
 				var second = dojo.animateProperty({
-					node: "browser",
+					node: "mountPoint",
 					duration:400,
+					delay:150,
 					properties:{
 						width:{
 							start:0,
 							end:800,
 							unit:"px"
 						},
+/*
 						height:{
-							start:100,
+							start:0,
 							end:100,
 							unit:"%"
 						},
+*/
 						opacity:{
-							start:0,
+							start:0.2,
 							end:0.7
 						},
 						marginLeft:{
@@ -303,20 +323,19 @@
 						},
 						easing:easing1,
 						onEnd:function() {
-//							switchIds();
-							dojo.style(dojo.byId("browser"),"opacity","1");
-
+							dojo.style(dojo.byId("mountPoint"),"opacity","1");
 						},
 						onBeforeBegin:function(){
-							dojo.style(dojo.byId("browser"),"opacity","0");
+							dojo.style(dojo.byId("mountPoint"),"opacity","0");
 						}
 					}
 				});
 				var fadeFinal = dojo.fadeIn({
+					delay:800,
 					duration:300,
-					node:"browser"
+					node:"mountPoint"
 				});
-			    var combined = dojo.fx.chain([first,second,fadeFinal]).play();
+			    var combined = dojo.fx.combined([first,second,fadeFinal]).play();
 
             }
 
@@ -351,7 +370,7 @@
 					// console.debug("destroy popup widget: ",popUpDijit);
 					popUpDijit.destroy();
 				});
-				var targetNode = dojo.byId("browser");
+				var targetNode = dojo.byId("mountPoint");
 
 				//The parameters to pass to xhrGet, the url, how to handle it, and the callbacks.
 				var xhrArgs = {

@@ -239,13 +239,14 @@ public class FormsServlet extends HttpServlet {
         // HTML Markup to return
         html.append(
                 "<div class=\"bfFormBrowser\">\n" +
-                "        <div class=\"formBrowserHead\">\n" +
-                "            <div class=\"formBrowserHeader\">\n" + crumb.toString() +
+                "    <div class=\"formBrowserHead\">\n" +
+                "        <div class=\"formBrowserHeader\">\n" + crumb.toString() +
+                "            <div id=\"commands\">\n" +
+                                    createCollectionMarkup +
+                                    uploadFormMarkup +
+                "            </div>\n" +
                 "        </div>\n" +
-                "        <div id=\"commands\">\n" +
-                            createCollectionMarkup +
-                            uploadFormMarkup +
-                "        </div>\n" +
+                "    </div>\n" +
                 "</div>\n");
         
     }
