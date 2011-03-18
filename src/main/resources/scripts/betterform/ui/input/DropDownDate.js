@@ -46,14 +46,14 @@ dojo.declare(
             }
             console.debug("DropDownDate.postCreate this.timeContainer:", dropDownDateContainer);
 
-            years = dropDownDateContainer[0];
-            months = dropDownDateContainer[1];
-            days = dropDownDateContainer[2];
+            this.years = dropDownDateContainer[0];
+            this.months = dropDownDateContainer[1];
+            this.days = dropDownDateContainer[2];
 
-            dijit.byId(this.daysFacet.id).set('value', days);
-            dijit.byId(this.monthsFacet.id).set('value',this.monthsArray[parseInt(months)-1]);
+            dijit.byId(this.daysFacet.id).set('value', this.days);
+            dijit.byId(this.monthsFacet.id).set('value',this.monthsArray[parseInt(this.months)-1]);
             //dijit.byId(this.monthsFacet.id).set('displayValue', this.monthsArray[parseInt(months)-1]);
-            dijit.byId(this.yearsFacet.id).set('value', years);
+            dijit.byId(this.yearsFacet.id).set('value', this.years);
          }
     },
 
