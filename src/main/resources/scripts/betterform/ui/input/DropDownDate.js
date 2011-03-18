@@ -29,16 +29,16 @@ dojo.declare(
         this.inherited(arguments);
 
         dojo.attr(this.valueNode, "value", this.value);
-        this.applyValues();
+        this.applyValues(this.value);
         dojo.connect(dijit.byId(this.daysFacet.id), "onChange", this, "onDaysChanged");
         dojo.connect(dijit.byId(this.monthsFacet.id), "onChange", this, "onMonthsChanged");
         dojo.connect(dijit.byId(this.yearsFacet.id), "onChange", this, "onYearsChanged");
         //dojo.connect(dijit.byId(this.yearsFacet.id), "onBlur", this, "onYearsBlur");
     },
 
-    applyValues:function() {
-        console.debug("DropDownDate.applyValues value:",this.value);
-        if (this.value != undefined) {
+    applyValues:function(value) {
+        console.debug("DropDownDate.applyValues value:",value);
+        if (value != undefined) {
 
             var dropDownDateContainer = this.value.split("-");
             if(dropDownDateContainer.length != 3) {
