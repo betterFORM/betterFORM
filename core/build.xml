@@ -87,7 +87,9 @@
             target="${properties.javac.version}"                
             debug="${properties.javac.debug}"
             deprecation="${properties.javac.deprecation}"
-            optimize="${properties.javac.optimize}"/>
+            optimize="${properties.javac.optimize}"
+            includeantruntime="false"
+            nowarn="true"/>
     </target>
 
     <!-- **************************************** BUILDING JAR **************************************** -->
@@ -106,7 +108,8 @@
         <jar description="package betterform jar"
             jarfile="${target}/${dist.name}.jar"
             basedir="${basedir}/target/classes"
-            excludes="**/test/** **/schemabuilder/** **/aop.xml"/>
+            excludes="**/test/** **/schemabuilder/** **/aop.xml"
+            />
     </target>
 
     <!-- **************************************** SOURCE DISTRIBUTION **************************************** -->

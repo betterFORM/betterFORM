@@ -86,7 +86,6 @@ public class ResourceServlet extends HttpServlet {
         }
 
         if (url == null) {
-            logger.log(Level.WARNING, "Resource \"{0}\" not found", resourcePath);
             boolean error = true;
 
             if(requestUri.endsWith(".js")){
@@ -103,6 +102,7 @@ public class ResourceServlet extends HttpServlet {
 
 
             if(error) {
+                logger.log(Level.WARNING, "Resource \"{0}\" not found", resourcePath);
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND);
                 return;
             }

@@ -93,6 +93,8 @@
                debug="${properties.javac.debug}"
                deprecation="${properties.javac.deprecation}"
                optimize="${properties.javac.optimize}"
+               includeantruntime="false"
+               nowarn="true"
                 />
     </target>
 
@@ -172,6 +174,9 @@
     <target name="exploded-webapp-base"
             description="deployment for new resource loading">
         <echo>
+        ************************************************************************************
+                                unoptimized DEVELOPMENT deployment
+        ************************************************************************************
         ************************************************************************************
         build deployment structure (exploded war) - creates bare-bone structure of webapp with:
         - dashboard.html (should be moved to resources too)
@@ -260,15 +265,28 @@
 
         <antcall target="copy-src-resources"/>
         <ant antfile="${resource.module.dir}/build-dojo.xml" target="prepare-dojo" usenativebasedir="true">
-            <property name="scripts.target" value="${resources.dir}/scripts/dojo"/>
+            <property name="scripts.target" value="${resources.dir}/scripts"/>
         </ant>
 
-
+        <ant antfile="${resource.module.dir}/build-dojo.xml" target="copy-src-resources-scripts" usenativebasedir="true">
+            <property name="scripts.target" value="${resources.dir}/scripts"/>
+        </ant>
     </target>
 
     <target name="deploy" depends="compile, exploded-webapp-base, create-single-jar" description="default deployment as single jar">
+        <echo>
+        ************************************************************************************
+                                optimized PRODUCUTION deployment
+        ************************************************************************************
+        </echo>
+
         <!-- todo: integrate with one-jar -->
         <antcall target="copy-libs"/>
+        <echo>
+        ************************************************************************************
+        copying betterform.jar to WEB-INF/lib
+        ************************************************************************************
+        </echo>
         <copy todir="${webapp.dir}/WEB-INF/lib" file="${web.dir}/target/betterform.jar"/>
     </target>
 

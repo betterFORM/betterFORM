@@ -42,9 +42,7 @@
     </target>
 
     <!-- must be a seprate target due to it is called by by eXist/build-utils.xml -->
-    <target name="copy-src-resources-scripts">
-        <!--<antcall target="unpack-betterform-js-release"/>-->
-
+    <target name="copy-src-resources-scripts" description="copies the uncompressed betterFORM JS classes from resource/src/main/resources/scripts">
         <echo>
         ************************************************************************************
         copying global betterform scripts (non-optimized version) ...
