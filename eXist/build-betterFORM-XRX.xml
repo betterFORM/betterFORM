@@ -131,7 +131,7 @@
                 <!-- RESOURCES -->
                 <!-- Copy images, styles, xsd and xslt -->
                 <copy todir="${src.target.dir}/etc/overwrites/webapp/resources/" overwrite="true">
-                     <fileset dir="/resource/src/main/resources">
+                     <fileset dir="../resource/src/main/resources">
                         <exclude name="**/scripts/**"/>
                      </fileset>
                 </copy>
@@ -140,7 +140,7 @@
                       todir="${src.target.dir}/etc/overwrites/webapp/resources"
                       overwrite="true"
                       filtering="false">
-                        <fileset dir="/resource/src/main/resources">
+                        <fileset dir="../resource/src/main/resources">
                                 <include name="**/*.gif"/>
                                 <include name="**/*.png"/>
                                 <include name="**/*.jpg"/>
@@ -157,7 +157,7 @@
         <target name="prepare-db-installation-dir">
             <!-- Copy current forms from main to db-install-dir -->
             <copy todir="${src.target.dir}/db/forms" overwrite="true" filtering="false" description="copy forms from ${src.dir} to db-installition-dir ${src.target.dir}/db/">
-                <fileset dir="/resource/src/main/xforms"/>
+                <fileset dir="../resource/src/main/xforms"/>
             </copy>
 
             <move todir="${src.target.dir}/db/" overwrite="true" filtering="false" description="copy forms from ${src.dir} to db-installition-dir ${src.target.dir}/db/">

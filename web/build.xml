@@ -224,7 +224,7 @@
 
     </target>
 
-    <target name="copy-libs">
+    <target name="copy-libs" unless="should.not.copy.libs">
         <echo>
         ************************************************************************************
         copying libs betterFORM is dependent on (core + web) ...

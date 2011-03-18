@@ -10,6 +10,7 @@
 
     TODO:
     - classpath.exist: 1st: check for exist.installed 2nd. Check for exist.betterform.xrx.installed
+    - refactor exist.installed to exist.homem, admin.passwd to exist.admin.passwd
 -->
 <!--
   ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
@@ -28,11 +29,11 @@
 
     <!-- eXist ant-tasks -->
     <path id="classpath.exist">
-        <fileset dir="${exist.installed}/lib/core">
+        <fileset dir="${eXist.home}/lib/core">
             <include name="*.jar"/>
         </fileset>
-        <pathelement path="${exist.installed}/exist.jar"/>
-        <pathelement path="${exist.installed}/exist-optional.jar"/>
+        <pathelement path="${eXist.home}/exist.jar"/>
+        <pathelement path="${eXist.home}/exist-optional.jar"/>
     </path>
 
     <typedef resource="org/exist/ant/antlib.xml" uri="http://exist-db.org/ant">
@@ -58,6 +59,40 @@
                    password="${db-passwd}">
             <fileset dir="${file-source-dir}" excludes="**/.svn **/.svn/**"/>
         </xdb:store>
+    </target>
+
+    <target name="start-eXist">
+        <echo message="*******************************************************************************"/>
+        <echo message="* Starting eXist-DB                                                           *"/>
+        <echo message="*******************************************************************************"/>
+
+
+        <exec executable="${eXist.home}/bin/startup.sh" osfamily="unix" spawn="true"/>
+
+        <exec executable="cmd" osfamily="windows" spawn="true">
+            <arg value="/c"/>
+            <arg value="${eXist.home}/bin/startup.bat"/>
+        </exec>
+
+        <!-- wait for db startup -->
+        <sleep seconds="20"/>
+    </target>
+
+    <target name="stop-eXist">
+        <echo message="*******************************************************************************"/>
+        <echo message="* Stopping eXist-DB                                                           *"/>
+        <echo message="*******************************************************************************"/>
+
+        <exec executable="${eXist.home}/bin/shutdown.sh" osfamily="unix">
+            <arg value="-p ${admin.passwd}"/>
+        </exec>
+        <exec executable="cmd" osfamily="windows">
+            <arg value="/c"/>
+            <arg value="${eXist.home}/bin/shutdown.bat -p ${admin.passwd}"/>
+        </exec>
+
+        <!-- wait for db shutdown -->
+        <sleep seconds="20"/>
     </target>
 
 </project>
