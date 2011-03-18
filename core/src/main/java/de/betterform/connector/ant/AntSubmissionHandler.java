@@ -19,6 +19,7 @@ import org.w3c.dom.Node;
 
 import java.io.File;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.Map;
 
 public class AntSubmissionHandler extends AbstractConnector implements SubmissionHandler {
@@ -37,24 +38,30 @@ public class AntSubmissionHandler extends AbstractConnector implements Submissio
 
         if (submission.getMethod().equals("get")) {
             try {
-                String uri = getURI();
+                URI uri = new URI(getURI());
 
-                String buildFilePath = (new URI(uri)).getSchemeSpecificPart().substring((new URI(uri)).getSchemeSpecificPart().indexOf(':')+1);
+                String buildFilePath = uri.getPath();// uri.getSchemeSpecificPart().substring(uri.getSchemeSpecificPart().indexOf(':')+1);
                 if (! "".equals(buildFilePath)) {
-                    File buildFile;
+                    File buildFile = new File(buildFilePath);
+                    if (buildFile.exists()) {
                     String target;
                     //get Traget from uri
-                    if (uri.contains("#")) {
-                        buildFile = new File(buildFilePath);
-                        target = uri.substring(uri.indexOf('#'+1));
+                    if (uri.getQuery() != null) {
+                        target = uri.getQuery();
+                        target = target.substring(target.indexOf("target=")+7);
+                        if (target.contains("&")) {
+                            target = target.substring(0,target.indexOf('&'));
+                        }
                     } else {
                         //get target from xform
-                        buildFile = new File(buildFilePath);
                         target = ((Document) instance).getElementsByTagName("target").item(0).getTextContent();
                     }
 
                     LOGGER.debug("AntSubmissionHandler.runTarget() BuildFile: " + buildFile.getAbsolutePath() + " with Target:" + target);
                     runTarget(buildFile, target);
+                    } else {
+                        throw new XFormsException("submission method '" + submission.getMethod() + "' at: " + DOMUtil.getCanonicalPath(submission.getElement()) + " Ant buildfile: " + buildFile + "not found");
+                    }
                 }  else {
                     throw new XFormsException("submission method '" + submission.getMethod() + "' at: " + DOMUtil.getCanonicalPath(submission.getElement()) + " not supported");
                 }
@@ -64,7 +71,7 @@ public class AntSubmissionHandler extends AbstractConnector implements Submissio
         } else {
             throw new XFormsException("submission method '" + submission.getMethod() + "' at: " + DOMUtil.getCanonicalPath(submission.getElement()) + " not supported");
         }
-        return null;
+        return new HashMap();
     }
 
     private void runTarget(File buildFile, String target) {

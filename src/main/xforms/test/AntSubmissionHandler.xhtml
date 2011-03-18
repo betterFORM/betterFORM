@@ -57,19 +57,24 @@
                                     targetid="embedInline"
                                     ref="instance()"
                                     validate="false"
-                                    resource="ant://{$webapp.realpath}/antsubmission-handler-test.xml#test2">
-                            <xf:header>
-                            <xf:name>username</xf:name>
-                            <xf:value>admin</xf:value>
-                        </xf:header>
-                        <xf:header>
-                            <xf:name>password</xf:name>
-                            <xf:value>jee5AhBa</xf:value>
-                        </xf:header>
+                                    resource="ant://{$webapp.realpath}/antsubmission-handler-test.xml?target=test2">
                         <xf:action ev:event="xforms-submit-error">
                             <xf:message>Submission failed</xf:message>
                         </xf:action>
                     </xf:submission>
+
+                    <xf:submission id="s-ant-uri-target-with-xtras"
+                                    method="get"
+                                    replace="none"
+                                    targetid="embedInline"
+                                    ref="instance()"
+                                    validate="false"
+                                    resource="ant://{$webapp.realpath}/antsubmission-handler-test.xml?blub=blub&amp;target=test2&amp;blub2=blub2">
+                        <xf:action ev:event="xforms-submit-error">
+                            <xf:message>Submission failed</xf:message>
+                        </xf:action>
+                    </xf:submission>
+
 				</xf:model>
 			</div>
 			<xf:group>
@@ -81,8 +86,16 @@
 
             <xf:group>
                   <xf:trigger id="runQuery">
-                    <xf:label>Run Ant with uri target (# fragment)</xf:label>
+                    <xf:label>Run Ant with uri target (query)</xf:label>
                     <xf:send submission="s-ant-uri-target"/>
+                </xf:trigger>
+			</xf:group>
+
+
+            <xf:group>
+                  <xf:trigger id="runextras">
+                    <xf:label>Run Ant with uri target (query) + extra !unused! params</xf:label>
+                    <xf:send submission="s-ant-uri-target-with-xtras"/>
                 </xf:trigger>
 			</xf:group>
             <div id="embedInline"/>
