@@ -42,7 +42,7 @@ public class FormsServlet extends HttpServlet {
     */
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        boolean fragment = false;
+        boolean fragment = true;
         String ajaxFunction = request.getParameter("ajax");
         if(ajaxFunction == null || ajaxFunction.equals("")){
             ajaxFunction="load";

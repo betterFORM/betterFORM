@@ -18,7 +18,7 @@
   ~ Author: betterFORM Team (info AT betterform.de)
   -->
 
-<project name="betterFORM eXist integration helper targets" default="install-files-into-eXist-DB" basedir=".">
+<project name="eXist DB helper targets" default="install-files-into-eXist-DB" basedir=".">
     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
     <property name="root.dir" value="${basedir}/.."/>
     <property name="src.dir" value="${basedir}/../resource/src"/>

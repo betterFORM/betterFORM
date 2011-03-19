@@ -207,33 +207,42 @@
       <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js"></script>-->
 </head>
    <body id="index" class="tundra bf">
-      <div class="page">
-         <div id="header">
-            <div class="pageMarginBox">
-               <div id="logoBar"><a href="." class="link" id="linkLogo"><img id="logo" src="bfResources/images/logo.png" alt="betterFORM project" /></a><div id="dashboardTitle">Dashboard</div>
-                  <div id="mission">the XForms way to build the web</div>
-                  <div id="topnav"></div>
-               </div>
-            </div>
-         </div>
-         <div id="content-area"><img id="shadowTop" src="bfResources/images/shad_top.jpg" alt="" />
-			 <noscript>
-               <div style="border: thin solid ; width: 100%; color: darkred;position:absolute;top:120px;z-index:999;padding:5px;background:orange">Sorry - this site was optimized for use with JavaScript. You won't be able to access all content until you activate JavaScript</div>
-            </noscript>
-			 <div class="pageMarginBox">
-				<div id="loaderImage" style="text-align:center;">
-					<img id="bfLogo" src="bfResources/images/betterform_icon_118x118.png" width="200" height="200" style="margin-top:140px;"/>
 
-				</div>
-				 <div id="browser" class="browser">
-					 <div id="mountPoint" class="bfFormBrowser">
-					 </div>
-				 </div>
-				 <!--<div id="copyright">© 2010-2011 betterFORM</div>-->
-			 </div>
+   <div class="page">
+	   <div id="header">
+		   <div class="pageMarginBox">
+			   <div id="logoBar"><a href="." class="link" id="linkLogo"><img id="logo" src="bfResources/images/logo.png"
+																			 alt="betterFORM project"/></a>
 
-         </div>
-      </div>
+				   <div id="dashboardTitle">Dashboard</div>
+				   <div id="mission">the XForms way to build the web</div>
+				   <div id="topnav"></div>
+			   </div>
+		   </div>
+	   </div>
+	   <div id="content-area"><img id="shadowTop" src="bfResources/images/shad_top.jpg" alt=""/>
+		   <noscript>
+			   <div style="border: thin solid ; width: 100%; color: darkred;position:absolute;top:120px;z-index:999;padding:5px;background:orange">
+				   Sorry - this site was optimized for use with JavaScript. You won't be able to access all content
+				   until you activate JavaScript
+			   </div>
+		   </noscript>
+		   <div class="pageMarginBox">
+			   <div id="loaderImage" style="text-align:center;">
+				   <img id="bfLogo" src="bfResources/images/betterform_icon_118x118.png" width="200" height="200"
+						style="margin-top:140px;"/>
+
+			   </div>
+			   <div id="browser" class="browser">
+				   <div id="mountPoint" class="bfFormBrowser">
+				   </div>
+			   </div>
+			   <!--<div dojotype="dijit.layout.ContentPane" class="bfFormBrowser" href="forms/demo/registration.xhtml"></div>-->
+			   <!--<div id="copyright">© 2010-2011 betterFORM</div>-->
+		   </div>
+
+	   </div>
+   </div>
 	  <script type="text/javascript">
 		  var djConfig = {
 		  debugAtAllCosts: false,
@@ -255,6 +264,8 @@
 
 	  <script type="text/javascript">
 		 	dojo.config.dojoBlankHtmlUrl = '/blank.html';
+
+//			dojo.require("dijit.layout.ContentPane");
 
             function animateOne() {
 				var easing1 = dojo.fx.easing["linear"];

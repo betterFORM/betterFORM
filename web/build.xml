@@ -195,6 +195,10 @@
               todir="${webapp.dir}"
               filtering="true"
               file="${basedir}/src/main/webapp/dashboard.html"/>
+        <copy description="copy dashboard xforms"
+              todir="${webapp.dir}"
+              filtering="true"
+              file="${basedir}/src/main/webapp/dashboard.xhtml"/>
         <copy description="copy blank"
               todir="${webapp.dir}"
               filtering="true"
