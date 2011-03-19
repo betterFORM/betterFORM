@@ -18,15 +18,14 @@
       <meta name="revisit-after" content="2 days" />
       <meta name="google-site-verification" content="L5gmOYcZv-vwF2q0e-qSIXx8ecpKUN8A7lrW4ia9YR0" />
       <link rev="made" href="mailto:info@betterform.de" />
-      <link rel="SHORTCUT ICON" href="./images/betterform.ico" />
-      <link rel="ICON" href="./images/betterform.ico" type="image/x-icon" />
-      <link rel="stylesheet" type="text/css" href="./styles/bf.css" />
+      <link rel="SHORTCUT ICON" href="bfResources/images/betterform.ico" />
+      <link rel="ICON" href="bfResources/images/betterform.ico" type="image/x-icon" />
+      <link rel="stylesheet" type="text/css" href="bfResources/styles/bf.css" />
       <style type="text/css">
 		  @import "bfResources/scripts/dijit/themes/tundra/tundra.css";
 		  @import "bfResources/scripts/dojo/resources/dojo.css";
       </style>
       <style type="text/css">
-
             #index{
                 background:#efefef;
             }
@@ -56,6 +55,7 @@
             }
 
             #index #main-content {
+                height: 264px;
                 background: #D3D3D3;
                 display: block; /*float:left;*/
                 color: #999;
@@ -109,7 +109,14 @@
 
 			.browser{
 				position:absolute;
-				top:126px;
+				top:140px;
+				border:none;
+				background:transparent;
+			}
+			.bfFormBrowser{
+				width:100%;
+				margin-top:0;
+				border:none;
 			}
 			.formBrowserHead{
 				position:relative;
@@ -124,15 +131,14 @@
 				margin:0;
 				width: 160px;
 				margin-right: 6px;
+				margin-left: 4px;
 			}
 			.formBrowserHead #commands .eXistAdminClient{
 				display: inline-block;
 				float: right;
 				margin-right: 2px;
 				margin-top: 4px;
-				margin-left: 4px;
 			}
-
 			.formBrowserHead #commands .uploadDropDownButton,
 			.formBrowserHead #commands .createCollectionDropDownButton{
 				float: right;
@@ -191,33 +197,37 @@
 	   		.bf .dijitTooltipDialogPopup{
 				text-align:left;
 		    }
-
+		    #mountPoint{
+				width:100%;
+				text-align:center;
+				min-height:150px;
+			}
         </style>
 
       <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js"></script>-->
-
 </head>
    <body id="index" class="tundra bf">
       <div class="page">
          <div id="header">
             <div class="pageMarginBox">
-               <div id="logoBar"><a href="." class="link" id="linkLogo"><img id="logo" src="./images/logo.png" alt="betterFORM project" /></a><div id="dashboardTitle">Dashboard</div>
+               <div id="logoBar"><a href="." class="link" id="linkLogo"><img id="logo" src="bfResources/images/logo.png" alt="betterFORM project" /></a><div id="dashboardTitle">Dashboard</div>
                   <div id="mission">the XForms way to build the web</div>
                   <div id="topnav"></div>
                </div>
             </div>
          </div>
-         <div id="content-area"><img id="shadowTop" src="./images/shad_top.jpg" alt="" />
+         <div id="content-area"><img id="shadowTop" src="bfResources/images/shad_top.jpg" alt="" />
 			 <noscript>
                <div style="border: thin solid ; width: 100%; color: darkred;position:absolute;top:120px;z-index:999;padding:5px;background:orange">Sorry - this site was optimized for use with JavaScript. You won't be able to access all content until you activate JavaScript</div>
             </noscript>
 			 <div class="pageMarginBox">
 				<div id="loaderImage" style="text-align:center;">
-					<img id="bfLogo" src="images/betterform_icon_118x118.png" width="200" height="200" style="margin-top:140px;"/>
+					<img id="bfLogo" src="bfResources/images/betterform_icon_118x118.png" width="200" height="200" style="margin-top:140px;"/>
 
 				</div>
 				 <div id="browser" class="browser">
-
+					<div id="mountPoint" class="bfFormBrowser">
+				 	</div>
 				 </div>
 				 <!--<div id="copyright">© 2010-2011 betterFORM</div>-->
 			 </div>
@@ -234,13 +244,13 @@
 
 
 
-	  <script type="text/javascript" src="bfResources/scripts/dojo/dojo.js" >&#160;</script>
-	  <script type="text/javascript" src="bfResources/scripts/betterform/betterform-Dashboard.js">&#160;</script>
-
 <!--
-	  <script type="text/javascript" src="bfResources/scripts/dojo.js" djConfig="parseOnLoad:true">&#160;</script>
-	  <script type="text/javascript" src="bfResources/scripts/betterform/BfRequiredDashboard.js">&#160;</script>
+	  <script type="text/javascript" src="bfResources/scripts/dojo/dojo.js" >&#160;</script>
+	  <script type="text/javascript" src="bfResources/scripts/betterform/betterform-dashboard.js">&#160;</script>
 -->
+
+	  <script type="text/javascript" src="bfResources/scripts/dojo/dojo.js" djConfig="parseOnLoad:true">&#160;</script>
+	  <script type="text/javascript" src="bfResources/scripts/betterform/betterform-Dashboard.js">&#160;</script>
 
 
 	  <script type="text/javascript">
@@ -269,7 +279,12 @@
 						easing:easing1
 
 					},
+					onBeforeBegin:function(){
+						dojo.style("browser","display","none");
+						dojo.style("mountPoint","display","none");
+					},
 					onPlay:function(){
+						console.debug("onPlay");
 						var uri = "rest/db/betterform/utils/FormsQuery.xql?fragment=true&ajax=load";
 						load(uri);
 					},
@@ -278,20 +293,24 @@
 					}
 				});
 
+
 				var second = dojo.animateProperty({
-					node: "browser",
+					node: "mountPoint",
 					duration:400,
+					delay:250,
 					properties:{
 						width:{
 							start:0,
 							end:800,
 							unit:"px"
 						},
+/*
 						height:{
-							start:100,
+							start:0,
 							end:100,
 							unit:"%"
 						},
+*/
 						opacity:{
 							start:0,
 							end:0.7
@@ -304,20 +323,19 @@
 						},
 						easing:easing1,
 						onEnd:function() {
-//							switchIds();
-							dojo.style(dojo.byId("browser"),"opacity","1");
-
+							dojo.style(dojo.byId("mountPoint"),"opacity","1");
 						},
 						onBeforeBegin:function(){
-							dojo.style(dojo.byId("browser"),"opacity","0");
+							dojo.style(dojo.byId("mountPoint"),"opacity","0");
 						}
 					}
 				});
 				var fadeFinal = dojo.fadeIn({
-					duration:300,
-					node:"browser"
+					delay:400,
+					duration:400,
+					node:"mountPoint"
 				});
-			    var combined = dojo.fx.chain([first,second,fadeFinal]).play();
+			    var combined = dojo.fx.combine([first,second,fadeFinal]).play();
 
             }
 
@@ -352,7 +370,7 @@
 					// console.debug("destroy popup widget: ",popUpDijit);
 					popUpDijit.destroy();
 				});
-				var targetNode = dojo.byId("browser");
+				var targetNode = dojo.byId("mountPoint");
 
 				//The parameters to pass to xhrGet, the url, how to handle it, and the callbacks.
 				var xhrArgs = {
