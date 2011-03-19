@@ -1,7 +1,11 @@
 <project name="Installer" default="create-betterFormInstaller" basedir=".">
     <property name="installer.dir" value="."/>
+
+    <property name="eXist.dir" value="${basedir}/../../eXist"/>
+
     <property name="target" value="${basedir}/target"/>
     <property name="target-utils" value="${basedir}/target-utils"/>
+
     <property name="eXist.1.4.src" value="http://netcologne.dl.sourceforge.net/project/exist/Stable/1.4/eXist-setup-1.4.0-rev10440.jar"/>
     <property name="eXist.1.5.src" value="http://netcologne.dl.sourceforge.net/project/exist/Stable/1.4/eXist-setup-1.4.0-rev10440.jar"/>
 
@@ -10,7 +14,9 @@
 
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
-    <!-- TODO: Write clean-all target to cleanup all modules -->
+
+
+    <!-- T>: Write clean-all target to cleanup all modules -->
     <target name="clean">
         <delete dir="${basedir}/../../eXist/target"/>
         <delete dir="${basedir}/target"/>
@@ -34,8 +40,7 @@
         <!-- ##### building betterForm war for deployment ##### -->
         <mkdir dir="${basedir}/target"/>
 
-        <available property="warAvailable"
-                   file="${basedir}/../../release-${web.app.version}/web-dist/${web.app.name}-${web.app.version}.war"/>
+        <available property="warAvailable" file="${basedir}/../../release-${web.app.version}/web-dist/${web.app.name}-${web.app.version}.war"/>
         <antcall target="buildWar"/>
         <antcall target="copyReleaseWar"/>
 
@@ -69,6 +74,7 @@
     </target>
 
     <target name="prepareExistBundle" depends="get-eXist">
+        <delete dir="${basedir}/target/bf-eXist/"/>
         <mkdir dir="${basedir}/target/bf-eXist/"/>
 
         <!-- Install eXist-db to target -->
@@ -80,27 +86,26 @@
         </java>
 
         <delete file="${basedir}/target/bf-eXist/Install_V1.4.0*.log"/>
-        <!-- create make temorary extension-directory for installation -->
-        <mkdir dir="${basedir}/target/bf-eXist/extensions/betterform"/>
-
-        <!-- build an updated extension -->
-        <ant dir="${basedir}/../../eXist" antfile="build-betterFORM-XRX.xml" target="build-up-to-date-extension"/>
-
-        <!-- copy updated extension to eXist-->
-        <antcall target="copyExtension"/>
 
         <!-- Create an 'betterFORM'-DB-User for storing stuff -->
         <!-- See eXist-build-file for password -->
         <antcall target="setupBetterFORMUser"/>
 
-        <!-- Install betterFORM extension -->
-        <ant dir="${basedir}/target/bf-eXist/extensions/betterform" antfile="build.xml" target="wrapped-install"/>
 
+        <ant antfile="${eXist.dir}/build-exist.xml" target="install-betterFORM" inheritall="false" usenativebasedir="true">
+            <property name="eXist.home" value="${basedir}/target/bf-eXist/"/>
+            <property name="db-user" value="betterFORM"/>
+            <property name="db-passwd" value="Tha0xeiC8a"/>
+        </ant>
 
-        <!-- Store Forms etc into db -->
-        <ant dir="${basedir}/target/bf-eXist/extensions/betterform" antfile="build.xml" target="wrapped-install-betterFORM-apps-and-forms"/>
+        <ant antfile="${eXist.dir}/build-exist.xml" target="install-forms" inheritall="false" usenativebasedir="true">
+            <property name="eXist.home" value="${basedir}/target/bf-eXist/"/>
+            <property name="db-user" value="betterFORM"/>
+            <property name="db-passwd" value="Tha0xeiC8a"/>
+        </ant>
 
         <!-- Copy template-files which will be modified by the Installer-->
+
 
         <copy todir="${basedir}/target/bf-eXist/bin" overwrite="true">
             <fileset dir="${basedir}/target/bf-eXist/installer/scripts" includes="*.sh *.bat" excludes="build.*"/>
@@ -118,7 +123,9 @@
     <target name="setupBetterFORMUser" depends="build-SetupBetterFORMUserJar">
         <copy file="${basedir}/target/betterFORM-Setup.jar" todir="${basedir}/target/bf-eXist/" overwrite="true"/>
 
-        <ant dir="${basedir}/target/bf-eXist/extensions/betterform" antfile="build.xml" target="start-eXist"/>
+        <ant antfile="${eXist.dir}/build-utils-database.xml" target="start-eXist">
+            <property name="eXist.home" value="${basedir}/target/bf-eXist/"/>
+        </ant>
 
         <java jar="${basedir}/target/bf-eXist/betterFORM-Setup.jar"
               fork="true"
@@ -155,7 +162,7 @@
     </target>
 
     <target name="buildWar" unless="warAvailable">
-        <ant antfile="build.xml" target="package" inheritall="false" dir="../../web/"/>
+        <ant antfile="../../web/build.xml" target="package" inheritall="false"/>
         <copy todir="${basedir}/target">
             <fileset file="${basedir}/../../web/target/${web.app.name}-${web.app.version}.war"/>
         </copy>
@@ -172,8 +179,16 @@
               tofile="${basedir}/target/betterform.war"/>
     </target>
 
-    <target name="create-betterFormInstaller" description="Builds a betterForm Installer for deploying existing webcontainer">
-<!--  depends="prepare"> -->
+    <target name="create-betterFormInstaller" description="Builds a betterForm Installer for deploying existing webcontainer" depends="prepareExistBundle">
+        <echo>
+        *******************************************************************************
+        *******************************************************************************
+        *******************************************************************************
+            creating installer for betterFORM XRX...
+        *******************************************************************************
+        *******************************************************************************
+        *******************************************************************************
+        </echo>
         <sleep seconds="30" description="wait for fs to settle"/>
 
         <!-- Allows us to use the IzPack Ant task -->
@@ -190,7 +205,7 @@
                         installerType="web"
                         basedir="${basedir}/target"/>
         -->
-        <izpack input="${basedir}/installer.xml"
+        <izpack input="${basedir}/installer-xrx.xml"
                 output="${basedir}/target/betterform-install.jar"
                 installerType="${installer.installerType}"
                 basedir="${basedir}/target"/>

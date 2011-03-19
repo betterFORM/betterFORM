@@ -186,6 +186,7 @@
             <fileset dir="${bfReleaseSrc}/dojo" includes="_base/_loader/**/*"/>
              <fileset dir="${bfReleaseSrc}/dojo" includes="_firebug/**/*"/>
              <fileset dir="${bfReleaseSrc}/dojo" includes="resources/**/*"/>
+             <fileset dir="${bfReleaseSrc}/dojo" includes="cldr/**/*"/>
              <fileset dir="${bfReleaseSrc}/dojo">
                  <include name="_base.js"/>
                  <include name="dojo.js"/>
