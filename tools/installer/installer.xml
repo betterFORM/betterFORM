@@ -186,7 +186,10 @@
             <executable targetfile="$INSTALL_PATH/bin/backup.sh" stage="never" os="unix"/>
             <executable targetfile="$INSTALL_PATH/build.sh" stage="never" os="unix"/>
             <singlefile src="../resource/start.bat" target="$INSTALL_PATH/start.bat" override="true"/>
+            <parsable targetfile="$INSTALL_PATH/start.bat"/>
             <singlefile src="../resource/start.sh" target="$INSTALL_PATH/start.sh" override="true"/>
+            <parsable type="shell" targetfile="$INSTALL_PATH/start.sh"/>
+            <executable targetfile="$INSTALL_PATH/start.sh" stage="never" os="unix"/>
             <singlefile src="bf-eXist/tools/wrapper/conf/wrapper.conf.install" target="$INSTALL_PATH/tools/wrapper/conf/wrapper.conf" override="true"/>
             <parsable targetfile="$INSTALL_PATH/tools/wrapper/conf/wrapper.conf"/>
 

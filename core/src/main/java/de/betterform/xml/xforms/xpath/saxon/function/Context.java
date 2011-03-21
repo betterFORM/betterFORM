@@ -81,10 +81,21 @@ public class Context extends XFormsFunction {
         }
 
         if(id != null && !(id.equals(""))){
+/*
             RepeatItem item = (RepeatItem) xformsElement.getContainerObject().lookup(id);
             pos = item.getPosition();
+*/
+
+            XFormsElement element = xformsElement.getContainerObject().lookup(id);
+            if (element != null) {
+                if (element instanceof RepeatItem) {
+                    RepeatItem item = (RepeatItem) element;
+                    pos = item.getPosition();
+                }
+            }
+
         }
-        
+
         try {
             return (Item) xformsElement.evalInScopeContext().get(pos-1);
         } catch (XFormsException e) {

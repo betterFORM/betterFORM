@@ -31,7 +31,7 @@
     </condition>
 
     <tstamp>
-        <format property="build.date" pattern="yyyyMMddhhmmss"/>
+        <format property="build.date" pattern="yyyyMMddHHmmss"/>
     </tstamp>
 
 

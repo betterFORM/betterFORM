@@ -16,6 +16,9 @@
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 xpath-default-namespace="http://www.w3.org/1999/xhtml"
         >
+
+    <xsl:param name="webContext" select="'/betterform'"/>
+
     <xsl:output method="xhtml" version="1.0" encoding="UTF-8" media-type="text/xml"/>
 
     <!--<xsl:strip-space elements="*"/>-->
@@ -31,7 +34,7 @@
             <xsl:apply-templates/>
             <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8"/>
             <link rel="stylesheet" type="text/css"
-                  href="../../bfResources/scripts/dojox/highlight/resources/highlight.css"/>
+                  href="{$webContext}/bfResources/scripts/dojox/highlight/resources/highlight.css"/>
             <!--
                         <link rel="stylesheet" type="text/css"
                               href="../../resources/scripts/dojox/highlight/resources/pygments/borland.css"/>

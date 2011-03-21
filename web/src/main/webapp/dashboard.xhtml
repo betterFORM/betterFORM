@@ -22,6 +22,8 @@
 <link rel="SHORTCUT ICON" href="./images/betterform.ico"/>
 <link rel="ICON" href="./images/betterform.ico" type="image/x-icon"/>
 <link rel="stylesheet" type="text/css" href="bfResources/styles/bf.css"/>
+<!--<link rel="stylesheet" type="text/css" href="/betterform/forms/demo/styles/registration.css"/>-->
+
 <style type="text/css">
 	@import "bfResources/scripts/dijit/themes/tundra/tundra.css";
 	@import "bfResources/scripts/dojo/resources/dojo.css";
@@ -272,6 +274,7 @@
 			<div id="browser" class="browser">
 				<div id="mountPoint" class="bfFormBrowser">
 				</div>
+
 				<div id="appSpace" class="bfEmbeddedContent">
 
 				</div>
@@ -283,7 +286,7 @@
 					<xf:action>
 						<xf:load show="embed" targetid="appSpace">
 							<xf:resource
-									value="'forms/reference/InputText.xhtml#xforms'"/>
+									value="'forms/demo/registration.xhtml#xforms'"/>
 						</xf:load>
 					</xf:action>
 				</xf:trigger>
@@ -309,8 +312,8 @@
 	  <script type="text/javascript" src="bfResources/scripts/betterform/betterform-dashboard.js">&#160;</script>
 -->
 
-	  <script type="text/javascript" src="bfResources/scripts/dojo/dojo.js" djConfig="parseOnLoad:true">&#160;</script>
-	  <script type="text/javascript" src="bfResources/scripts/betterform/betterform-Full.js">&#160;</script>
+	  <!--<script type="text/javascript" src="bfResources/scripts/dojo/dojo.js" djConfig="parseOnLoad:true">&#160;</script>-->
+	  <!--<script type="text/javascript" src="bfResources/scripts/betterform/betterform-Full.js">&#160;</script>-->
 
 <script type="text/javascript">
 dojo.config.dojoBlankHtmlUrl = '/blank.html';
@@ -318,6 +321,7 @@ dojo.config.dojoBlankHtmlUrl = '/blank.html';
 			dojo.require("dojo.fx.easing");
 
 function animateOne() {
+	console.debug("animateOne called")
 	var easing1 = dojo.fx.easing["linear"];
 	var first = dojo.animateProperty({
 		node: "bfLogo",
