@@ -116,6 +116,8 @@ dojo.declare(
                     if (rangeEnd != undefined) {
                             if (rangeEnd.indexOf("+") != -1) {
                                 rangeEnd = now + parseInt(rangeEnd.substring(rangeEnd.indexOf("+")+1));
+                            } else if (rangeEnd.indexOf("-") != -1) {
+                                rangeEnd = now - parseInt(rangeEnd.substring(rangeEnd.indexOf("-")+1));
                             }
                     } else {
                         rangeEnd = now;
