@@ -10,9 +10,9 @@
   ~ Licensed under the terms of BSD License
   ~ Author: betterFORM Team (info AT betterform.de)
 -->
-<project name="eXist extension builder" default="build-up-to-date-extension" basedir=".">
+<project name="eXist extension builder" default="build-up-to-date-extension" basedir="../">
 
-        <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
+        <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
         <property name="src.dir" value="${basedir}/../resource/src"/>
         <property name="web.dir" value="${basedir}/../web"/>
@@ -131,7 +131,7 @@
                 <!-- RESOURCES -->
                 <!-- Copy images, styles, xsd and xslt -->
                 <copy todir="${src.target.dir}/etc/overwrites/webapp/resources/" overwrite="true">
-                     <fileset dir="../resource/src/main/resources">
+                     <fileset dir="../../resource/src/main/resources">
                         <exclude name="**/scripts/**"/>
                      </fileset>
                 </copy>
@@ -140,7 +140,7 @@
                       todir="${src.target.dir}/etc/overwrites/webapp/resources"
                       overwrite="true"
                       filtering="false">
-                        <fileset dir="../resource/src/main/resources">
+                        <fileset dir="../../resource/src/main/resources">
                                 <include name="**/*.gif"/>
                                 <include name="**/*.png"/>
                                 <include name="**/*.jpg"/>
@@ -157,7 +157,7 @@
         <target name="prepare-db-installation-dir">
             <!-- Copy current forms from main to db-install-dir -->
             <copy todir="${src.target.dir}/db/forms" overwrite="true" filtering="false" description="copy forms from ${src.dir} to db-installition-dir ${src.target.dir}/db/">
-                <fileset dir="../resource/src/main/xforms"/>
+                <fileset dir="../../resource/src/main/xforms"/>
             </copy>
 
             <move todir="${src.target.dir}/db/" overwrite="true" filtering="false" description="copy forms from ${src.dir} to db-installition-dir ${src.target.dir}/db/">
@@ -252,14 +252,14 @@
         </target>
 
         <target name="copy-eXist-1.5-build-file" if="eXist-1.5">
-            <copy file="${basedir}/build-files/eXist-trunk-build.xml" tofile="${target.dir}/build.xml"/>
+            <copy file="/eXist/eXist-trunk-build.xml" tofile="${target.dir}/build.xml"/>
         </target>
 
     <target name="build-dojo-release">
         <echo message="------------------------------------------------------------------------------------"/>
         <echo message="build-dojo-release: dojo.release.dir: ${src.target.dir}/dojo"/>
         <echo message="------------------------------------------------------------------------------------"/>
-        <ant antfile="build-utils.xml" target="deploy-dojo-release">
+        <ant antfile="../build-utils.xml" target="deploy-dojo-release">
             <property name="target" value="${basedir}/target-utils"/>
             <property name="target.dir" value="${src.target.dir}/dojo"/>
         </ant>
@@ -284,7 +284,7 @@
         <move file="${src.target.dir}/etc/overwrites/eXist-1.4/build.properties" todir="${src.target.dir}/etc/overwrites/"/>
         
         <delete dir="${src.target.dir}/etc/overwrites/">
-            <fileset dir="./">
+            <fileset dir="..//">
                 <exclude name="start.config"/>
                 <exclude name="build.properties"/>
             </fileset>

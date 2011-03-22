@@ -17,7 +17,7 @@ body{
     float:right;
     color:#b0c4de;
     font-size:20pt;
-    margin-right:10px;
+    margin-right:10px;                                                                                        
     margin-top:55px;
 }
 #bfLoading {
@@ -342,6 +342,14 @@ tr.xfRepeatItem  td {
     
 }
 
+#add-task-table .xfAlert,
+#add-task-table .xfHint,
+#add-task-table .xfInfo {
+	position:relative;
+	top: 0px;
+	margin-left: 0px;
+}
+
 #add-task-table .bfGroupLabelLeft {
     width:99%;
 }
@@ -382,4 +390,13 @@ tr.xfRepeatItem  td {
 .InlineRoundBordersAlert .suppressInfo .info{
 	position:relative;
 	left:-1000px;
+}
+
+.xfLabel{
+    padding-top:6px;
+    display:block;
+}
+
+#date-value{
+	width:248px;
 }

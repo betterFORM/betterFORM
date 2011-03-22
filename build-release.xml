@@ -89,7 +89,7 @@
 
     <target name="clean-all">
         <ant antfile="build.xml" target="clean-all" inheritall="false"/>
-        <ant antfile="${extension.dir}/build.xml" target="clean" dir="${extension.dir}" inheritall="false"/>
+        <!-- <ant antfile="${extension.dir}/build.xml" target="clean" dir="${extension.dir}" inheritall="false"/> -->
         <ant antfile="${installer.dir}/build.xml" target="clean" dir="${installer.dir}" inheritall="false"/>
     </target>
 

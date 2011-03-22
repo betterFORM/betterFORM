@@ -12,7 +12,7 @@
     <property name="eXist.home" value="POINT-ME-TO-YOUR-EXIST-INSTALLATION"/>
     <property name="eXist.admin.passwd" value="YOUR-EXIST-ADMIN-PASSWD"/>
     -->
-    <property name="eXist.home" value="/Applications/TEMP/eXist"/>
+    <property name="eXist.home" value="/Applications/betterform-ultimate"/>
     <property name="eXist.admin.passwd" value=""/>
 
     <!-- Properties for storing files in Database -->
@@ -160,7 +160,8 @@
         <copy tofile="${eXist.home}/uninstall-betterform/webapp/WEB-INF/web.xml" file="${eXist.home}/webapp/WEB-INF/web.xml"/>
         <copy tofile="${eXist.home}/uninstall-betterform/client.properties" file="${eXist.home}/client.properties"/>
         <copy tofile="${eXist.home}/uninstall-betterform/start.config" file="${eXist.home}/start.config" failonerror="false"/>
-        <move tofile="${eXist.home}/uninstall/lib/cocoon/ehcache-1.1.jar" file="${eXist.home}/lib/cocoon/ehcache-1.1.jar" />
+        <move tofile="${eXist.home}/uninstall-betterform/lib/cocoon/ehcache-1.1.jar" file="${eXist.home}/lib/cocoon/ehcache-1.1.jar" />
+        <move tofile="${eXist.home}/uninstall-betterform/lib/cocoon/commons-lang-2.0-20041007T2305.jar" file="${eXist.home}/lib/cocoon/commons-lang-2.0-20041007T2305.jar" />
     </target>
 
     <!-- *********************************************************************************************************** -->
@@ -267,6 +268,19 @@
         </antcall>
     </target>
 
+    <target name="install-demo-xrx" description="install demo Forms into db" depends="exist-installed" if="betterform.base.installed">
+        <echo>
+            __== Installing demo forms ==__
+        </echo>
+        <antcall target="db.install-files-into-eXist-DB">
+           <param name="db-user" value="${db.user}"/>
+           <param name="db-passwd" value="${db.pwd}"/>
+           <param name="file-source-dir" value="${main.dir}/xrx"/>
+           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}/apps"/>
+        </antcall>
+    </target>
+
+
     <!-- *********************************************************************************************************** -->
 
     <!--
@@ -295,6 +309,7 @@
         <echo>
             __== Deploying betterFORM resources in exploded Mode ==__
         </echo>
+        <ant antfile="${web.dir}/build.xml" target="clean" usenativebasedir="true" inheritall="false"/>
         <ant antfile="${web.dir}/build.xml" target="deploy-exploded" usenativebasedir="true" inheritall="false">
             <property name="webapp.dir" value="${eXist.home}/webapp"/>
             <property name="should.not.copy.libs" value="YES MA´AM"/>
@@ -334,6 +349,7 @@
         <echo>
             __== Deploying betterFORM resources in single JAR Mode ==__
         </echo>
+        <ant antfile="${web.dir}/build.xml" target="clean" usenativebasedir="true" inheritall="false"/>
         <ant antfile="${web.dir}/build.xml" target="deploy" usenativebasedir="true" inheritall="false">
             <property name="webapp.dir" value="${eXist.home}/webapp"/>
             <property name="should.not.copy.libs" value="YES MA´AM"/>
