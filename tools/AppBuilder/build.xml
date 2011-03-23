@@ -163,7 +163,7 @@
 
     <target name="deploy-to-db" description="deploy xrx-application to database" if="xrx.installed">
         <ant antfile="${xApp.target}/extensions/betterform/build-utils-database.xml" target="install-files-into-eXist-DB">
-           <property name="exist.installed" value="${xApp.target}"/>
+           <property name="eXist.home" value="${xApp.target}"/>
            <property name="db-user" value="${db.user}"/>
            <property name="db-passwd" value="${db.pwd}"/>
            <property name="file-source-dir" value="${xApp.src}/main/xrx/"/>
