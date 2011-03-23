@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+  <xhtml:head>
+    <xhtml:title>11.4.a xforms-submit-done event</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model id="m_001">
+      <xforms:instance id="i1">
+        <car xmlns="">
+          <make>Acura</make>
+          <year>1994</year>
+          <color>white</color>
+          <hp>120</hp>
+        </car>
+      </xforms:instance>
+      <xforms:instance id="i2">
+        <tires/>
+      </xforms:instance>
+      <!-- submission submits only what the bind is attached to -->
+      <xforms:submission id="submit" action="http://xformstest.org/cgi-bin/echo.sh"
+        	bind="year_bind" method="post" replace="none">
+	      	<xforms:action ev:event="xforms-submit-done">
+	      		<xforms:message level="modal">xforms-submit-done</xforms:message>
+	      	</xforms:action>
+      </xforms:submission>
+      <xforms:bind id="make_bind" nodeset="/car/make"/>
+      <xforms:bind id="year_bind" nodeset="/car/year"/>
+      <xforms:bind id="color_bind" nodeset="/car/color"/>
+      <xforms:bind id="hp_bind" nodeset="/car/hp"/>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">11.4.a xforms-submit-done event</xforms:label>
+  	</xforms:group>
+  	<xforms:group>
+  		<xforms:label>
+  		  When you activate the Submit Now submit control you must see an xforms-submit-done message. 
+	  	</xforms:label>	
+  	</xforms:group>
+	<xforms:submit submission="submit">
+	    <xforms:label>Submit Now</xforms:label>
+	</xforms:submit>
+	
+  </xhtml:body>
+</xhtml:html>

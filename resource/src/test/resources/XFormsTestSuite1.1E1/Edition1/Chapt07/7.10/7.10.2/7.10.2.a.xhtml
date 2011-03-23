@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <xhtml:head>
+        <xhtml:title>7.10.2.a current() function example 1</xhtml:title>
+        <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css" />
+        <xforms:model >
+            <xforms:instance xmlns="">
+                <converter>
+                    <amount>100</amount>
+                    <currency>jpy</currency>
+                    <convertedAmount></convertedAmount>
+                </converter>
+            </xforms:instance>
+            <xforms:instance xmlns="" id="convTable">
+                <convTable date="20040212" currency="cdn">
+                    <rate currency="eur">0.59376</rate>
+                    <rate currency="mxn">8.37597</rate>
+                    <rate currency="jpy">80.23451</rate>
+                    <rate currency="usd">0.76138</rate>
+                </convTable>
+            </xforms:instance>
+            <xforms:bind nodeset="convertedAmount"
+                calculate="../amount * instance('convTable')/rate[@currency=current()/../currency]" />
+        </xforms:model>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group>
+            <xforms:label class="title">7.10.2.a current() function example 1</xforms:label>
+        </xforms:group>
+        <xforms:group>
+        	<xforms:label>You must see the value &quot;8023.451&quot; for the Converted Amount output.</xforms:label>
+        </xforms:group>
+        <xforms:output ref="convertedAmount">
+            <xforms:label>Converted Amount :</xforms:label>
+        </xforms:output>
+    </xhtml:body>
+</xhtml:html>

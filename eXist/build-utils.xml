@@ -15,7 +15,7 @@
 <project name="betterFORM eXist integration helper targets" default="deploy-all-into-exist" basedir=".">
     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
     <property name="root.dir" value="${basedir}/.."/>
-    <property name="src.dir" value="${basedir}/../src"/>
+    <property name="src.dir" value="${basedir}/../resource/src"/>
     <property name="web.dir" value="${basedir}/../web"/>
 
     <property name="target" value="${basedir}/target-utils"/>
@@ -49,7 +49,7 @@
 
     <target name="deploy-xslt">
          <copy todir="${target.dir}/xslt" overwrite="true">
-             <fileset dir="${src.dir}/main/resources/xslt"/>
+             <fileset dir="${basedir}/../resource/src/main/resources/xslt"/>
          </copy>
     </target>
 

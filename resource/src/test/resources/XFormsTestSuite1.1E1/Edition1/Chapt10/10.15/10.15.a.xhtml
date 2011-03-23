@@ -1,0 +1,59 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"             
+      xmlns:xforms="http://www.w3.org/2002/xforms">
+  	<xhtml:head>
+    	<xhtml:title>10.15.a send element</xhtml:title>
+    	<xhtml:link rel="stylesheet" href="../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    	<xforms:model>
+       		<xforms:instance xmlns="">
+				<car>
+					<color>Blue</color>
+					<condition>good</condition>
+				</car>
+       		</xforms:instance>
+			<xforms:submission id="submit_color" action="http://xformstest.org/cgi-bin/echo.sh"
+        		ref="/car/color" method="post" replace="none">
+        		<xforms:action ev:event="xforms-submit-done">
+        			<xforms:message level="modal">xforms-submit-done</xforms:message>
+        		</xforms:action>
+        	</xforms:submission>
+			<xforms:submission id="submit_condition" action="http://xformstest.org/cgi-bin/echo.sh"
+        		ref="/car/condition" method="post" replace="none">
+        		<xforms:action ev:event="xforms-submit-done">
+        			<xforms:message level="modal">xforms-submit-done</xforms:message>
+        		</xforms:action>
+        	</xforms:submission>
+    	</xforms:model>
+  	</xhtml:head>
+  	<xhtml:body>
+  		<xforms:group>
+	  		<xforms:label class="title">10.15.a send element</xforms:label>
+	  	</xforms:group>
+  		<xforms:group>
+  			<xforms:label>
+  			  When you activate either trigger on this page you must see an xforms-submit-done message. 
+  			</xforms:label>
+  		</xforms:group>
+
+		<xforms:trigger>
+			<xforms:label>Send Color</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<xforms:send submission="submit_color"/>
+			</xforms:action>
+		</xforms:trigger>
+
+		<xforms:trigger>
+			<xforms:label>Send Condition</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<xforms:send submission="submit_condition"/>
+			</xforms:action>
+		</xforms:trigger>
+
+		
+
+  </xhtml:body>
+</xhtml:html>

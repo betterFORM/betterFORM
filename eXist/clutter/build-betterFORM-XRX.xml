@@ -1,0 +1,317 @@
+<!--
+    Status: Work in progress. eXist-1.4-betterFORM-root-integration is working
+    Purpose of file: Build a bettterFORM/eXist-Bundle. Version (1.4/trunk) and context ("root" or "extension") is triggered by build.properties
+    Used by: tools/installer/build-betterFORM-XRX.xml
+    TODO:
+-->
+
+<!--
+  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  ~ Author: betterFORM Team (info AT betterform.de)
+-->
+<project name="eXist extension builder" default="build-up-to-date-extension" basedir="../">
+
+        <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
+
+        <property name="src.dir" value="${basedir}/../resource/src"/>
+        <property name="web.dir" value="${basedir}/../web"/>
+        <property name="core.dir" value="${basedir}/../core"/>
+
+        <property name="eXist-14.dir" value="${basedir}/target/eXist-1.4/betterform"/>
+        <property name="eXist-15.dir" value="${basedir}/target/eXist-1.5"/>
+
+        <condition property="eXist-1.4">
+                <equals arg1="${installer.exist.version}" arg2="1.4"/>
+        </condition>
+
+        <condition property="betterform">
+            <istrue value="${installer.exist.betterform}"/>
+        </condition>
+
+        <condition property="eXist">
+            <isfalse value="${installer.exist.betterform}"/>
+        </condition>
+
+        <condition property="eXist-1.5">
+                <equals arg1="${installer.exist.version}" arg2="1.5"/>
+        </condition>
+
+        <target name="clean" description="cleans target dirs">
+                <delete dir="${basedir}/target" failonerror="false"/>
+                <delete dir="${basedir}/target-utils" failonerror="false"/>
+        </target>
+
+        <target name="set-target-dir" depends="clean, set-target-dir-1.4, set-target-dir-1.5"/>
+
+        <target name="set-target-dir-1.4" if="eXist-1.4">
+                <property name="target.dir" value="${eXist-14.dir}"/>
+                <property name="src.target.dir" value="${target.dir}/src/main"/>
+                <property name="webapp.dir" value="${src.target.dir}/webapp"/>
+        </target>
+
+        <target name="set-target-dir-1.5" if="eXist-1.5">
+                <property name="target.dir" value="${eXist-15.dir}"/>
+                <property name="src.target.dir" value="${target.dir}/src/main"/>
+                <property name="webapp.dir" value="${src.target.dir}/webapp"/>
+        </target>
+
+        <target name="build-up-to-date-extension" depends="set-target-dir">
+                <echo message="------------------------------------------------------------------------------------"/>
+                <echo message="--- Build up to date betterFORM-eXist-Extension                                  ---"/>
+                <echo message="------------------------------------------------------------------------------------"/>
+                <ant antfile="${web.dir}/build.xml" target="clean" dir="${web.dir}" inheritall="false"/>
+                <antcall target="copy-extension"/>
+                <antcall target="update-betterFORM-libs"/>
+                <antcall target="update-betterFORM-forms-resources"/>
+                <antcall target="copy-eXist-build-file"/>
+                <antcall target="cleanup-target"/>
+        </target>
+
+        <target name="copy-extension">
+                <echo message="------------------------------------------------------------------------------------"/>
+                <echo message="--- Copy current betterFORM extension to target-dir                              ---"/>
+                <echo message="------------------------------------------------------------------------------------"/>
+                <!-- copy trunk extension to target-dir -->
+                <copy todir="${target.dir}/src" overwrite="true">
+                    <fileset dir="${basedir}/src">
+                        <exclude name="**/lib/*.jar"/>
+                        <exclude name="**/web.xml"/>
+                        <exclude name="**/forms/**"/>
+                    </fileset>
+                </copy>
+        </target>
+
+        <target name="update-betterFORM-libs">
+                <echo message="------------------------------------------------------------------------------------"/>
+                <echo message="--- Copy current betterFORM libs to target-dir                                   ---"/>
+                <echo message="------------------------------------------------------------------------------------"/>
+                <!-- Copy current betterFORM libs from ... -->
+                <!-- ... core. -->
+                <copy todir="${src.target.dir}/lib" overwrite="true">
+                        <fileset dir = "${core.dir}/src/main/lib/" includes = "commons-lang-*.jar ehcache-*.jar" />
+                </copy>
+
+                <!-- ... web. -->
+                <copy todir="${src.target.dir}/lib" overwrite="true">
+                        <fileset dir = "${web.dir}/src/main/lib/" includes = "dwr-*.jar" />
+                </copy>
+
+                <antcall target="copy-saxon-libs"/>
+                <antcall target="build-up-to-date-betterFORM-jar"/>
+        </target>
+
+        <target  name="copy-saxon-libs" if="eXist-1.4">
+                <echo message="------------------------------------------------------------------------------------"/>
+                <echo message="--- Copy current saxon libs to target-dir                                   ---"/>
+                <echo message="------------------------------------------------------------------------------------"/>
+                <copy todir="${src.target.dir}/lib" >
+                        <fileset dir="${core.dir}/src/main/lib" includes="saxon*"/>
+                </copy>
+        </target>
+
+        <target  name="build-up-to-date-betterFORM-jar">
+                <echo message="------------------------------------------------------------------------------------"/>
+                <echo message="--- Build betterFORM jar                                                         ---"/>
+                <echo message="------------------------------------------------------------------------------------"/>
+                <ant antfile="${web.dir}/build.xml" target="create-jar" dir="${web.dir}" inheritall="false"/>
+                <copy file="${web.dir}/target/${web.app.name}-${web.app.version}.jar" tofile="${src.target.dir}/lib/betterform.jar" overwrite="true"/>
+        </target>
+
+
+
+        <target name="update-betterFORM-forms-resources">
+                <echo message="------------------------------------------------------------------------------------"/>
+                <echo message="--- Copy current betterFORM demo/reference forms and resources to target-dir     ---"/>
+                <echo message="------------------------------------------------------------------------------------"/>
+
+
+
+
+                <!-- RESOURCES -->
+                <!-- Copy images, styles, xsd and xslt -->
+                <copy todir="${src.target.dir}/etc/overwrites/webapp/resources/" overwrite="true">
+                     <fileset dir="../../resource/src/main/resources">
+                        <exclude name="**/scripts/**"/>
+                     </fileset>
+                </copy>
+
+                <copy description="copy images seperately to avoid filtering"
+                      todir="${src.target.dir}/etc/overwrites/webapp/resources"
+                      overwrite="true"
+                      filtering="false">
+                        <fileset dir="../../resource/src/main/resources">
+                                <include name="**/*.gif"/>
+                                <include name="**/*.png"/>
+                                <include name="**/*.jpg"/>
+                        </fileset>
+                </copy>
+
+                <antcall target="build-dojo-release"/>
+
+                <antcall target="copy-betterFORM-website"/>
+
+                <antcall target="prepare-db-installation-dir"/>
+        </target>
+
+        <target name="prepare-db-installation-dir">
+            <!-- Copy current forms from main to db-install-dir -->
+            <copy todir="${src.target.dir}/db/forms" overwrite="true" filtering="false" description="copy forms from ${src.dir} to db-installition-dir ${src.target.dir}/db/">
+                <fileset dir="../../resource/src/main/xforms"/>
+            </copy>
+
+            <move todir="${src.target.dir}/db/" overwrite="true" filtering="false" description="copy forms from ${src.dir} to db-installition-dir ${src.target.dir}/db/">
+                <fileset dir="${src.target.dir}/db/forms" includes="FeatureExplorer.xhtml Demo.xhtml Status.xhtml"/>
+            </move>
+
+            <!--
+            <copy todir="${src.target.dir}/db/forms/reference" overwrite="true" filtering="false" file="${basedir}/target-utils/dojo-release/forms/reference/highlight.css" failonerror="true"/>
+            -->
+            <mkdir dir="${src.target.dir}/db/resources/scripts/release"/>
+            <copy todir="${src.target.dir}/db/resources/scripts/release" overwrite="true" filtering="false">
+                <fileset dir="${basedir}/target-utils/dojo-release/resources/scripts/release" excludes="**/*.js"/>
+            </copy>
+
+
+            <!-- <delete dir="${src.target.dir}/db/forms" excludes="demo reference"/> -->
+            <delete includeemptydirs="yes">
+                    <fileset dir="${src.target.dir}/db/forms" excludes="demo/**/*.* reference/**/*.* FeatureExplorer.xhtml Demo.xhtml Status.xhtml css/**"/>
+            </delete>
+
+            <mkdir dir="${src.target.dir}/db/images"/>
+            <copy todir="${src.target.dir}/db/images" overwrite="true" filtering="false" description="copy neede images from ${src.dir} to db-installition-dir ${src.target.dir}/db/">
+                <fileset dir="${src.target.dir}/etc/overwrites/webapp/images">
+                    <include name="betterform_icon16x16.png"/>
+                    <include name="betterform.ico"/>
+                    <include name="en.png"/>
+                    <include name="logo.png"/>
+                    <include name="shad_top.png"/>
+                    <include name="shad_bottom.png"/>
+                    <include name="bg_footer.jpg"/>
+                    <include name="b_tryit_ohne_klein.png"/>
+                </fileset>
+            </copy>
+
+            <mkdir dir="${src.target.dir}/db/resources"/>
+            <copy todir="${src.target.dir}/db/resources" overwrite="true" filtering="false" description="copy neede images from ${src.dir} to db-installition-dir ${src.target.dir}/db/">
+                <fileset dir="${src.target.dir}/etc/overwrites/webapp/resources">
+                    <include name="images/**"/>
+                    <include name="styles/**"/>
+                </fileset>
+            </copy>
+        </target>
+
+        <target name="copy-betterFORM-website" if="betterform">
+            <copy description="copy betterFORM website files to target" todir="${src.target.dir}/etc/overwrites/webapp" overwrite="true">
+                  <fileset dir="${web.dir}/src/main/webapp/">
+                      <exclude name="**/WEB-INF/**"/>
+                      <exclude name="**/META-INF/**"/>
+                      <exclude name="**/pages/**"/>
+                      <exclude name="**/jsp/**"/>
+                      <exclude name="**/forms/**"/>
+                      <exclude name="**/scripts/**"/>
+                  </fileset>
+            </copy>
+
+            <copy description="copy betterFORM-config to target" tofile="${webapp.dir}/WEB-INF/betterform-config.xml" file="${web.dir}/src/main/webapp/WEB-INF/betterform-config.xml" overwrite="true"/>
+            
+             <copy description="copy images seperately to avoid filtering"
+                      todir="${src.target.dir}/etc/overwrites/webapp"
+                      overwrite="true"
+                      filtering="false">
+                        <fileset dir="${web.dir}/src/main/webapp/">
+                                <include name="**/*.gif"/>
+                                <include name="**/*.png"/>
+                                <include name="**/*.jpg"/>
+                                <include name="**/*.ico"/>
+                        </fileset>
+                </copy>
+        </target>
+
+        <target name="copy-eXist-build-file">
+            <copy file="${basedir}/build-utils.xml" todir="${target.dir}" description="copy utility-build-file"/>
+            <copy file="${basedir}/build-utils-database.xml" todir="${target.dir}" description="copy database-releated utility-build-file"/>
+
+            <antcall target="copy-eXist-1.4-build-file"/>
+            <antcall target="copy-betterFORM-eXist-1.4-build-file"/>
+            <antcall target="copy-eXist-1.5-build-file"/>
+        </target>
+
+        <target name="copy-eXist-1.4-build-file" if="eXist-1.4" unless="betterform">
+            <echo message="------------------------------------------------------------------------------------"/>
+            <echo message="--- Copy eXist 1.4 non-website buildfile                                                   ---"/>
+            <echo message="------------------------------------------------------------------------------------"/>
+            <copy file="${basedir}/build-files/eXist-1.4-build.xml" tofile="${target.dir}/build.xml"/>
+        </target>
+
+        <target name="copy-betterFORM-eXist-1.4-build-file" if="betterform" unless="eXist-1.5">
+            <echo message="------------------------------------------------------------------------------------"/>
+            <echo message="--- Copy eXist 1.4 website buildfile                                                   ---"/>
+            <echo message="------------------------------------------------------------------------------------"/>
+            <copy file="${basedir}/build-files/betterFORM-eXist-1.4-build.xml" tofile="${target.dir}/build.xml"/>
+        </target>
+
+        <target name="copy-eXist-1.5-build-file" if="eXist-1.5">
+            <copy file="/eXist/eXist-trunk-build.xml" tofile="${target.dir}/build.xml"/>
+        </target>
+
+    <target name="build-dojo-release">
+        <echo message="------------------------------------------------------------------------------------"/>
+        <echo message="build-dojo-release: dojo.release.dir: ${src.target.dir}/dojo"/>
+        <echo message="------------------------------------------------------------------------------------"/>
+        <ant antfile="../build-utils.xml" target="deploy-dojo-release">
+            <property name="target" value="${basedir}/target-utils"/>
+            <property name="target.dir" value="${src.target.dir}/dojo"/>
+        </ant>
+    </target>
+
+    <target name="cleanup-target" description="cleanout unneeded files from target">
+        <echo message="------------------------------------------------------------------------------------"/>
+        <echo message="--- performing final cleanups                                                    ---"/>
+        <echo message="------------------------------------------------------------------------------------"/>
+        <antcall target="cleanup-website"/>
+        <antcall target="move-overwrites"/>
+    </target>
+
+    <target name="cleanup-website" description="cleanout unneeded files in non-website-mode" unless="betterform">
+        <antcall target="cleanup-website-eXist-1.4"/>
+        <antcall target="cleanup-website-eXist-1.5"/>
+    </target>
+
+
+    <target name="cleanup-website-eXist-1.4" description="cleanout unneeded files in non-website-mode" if="eXist-1.4">
+        <move file="${src.target.dir}/etc/overwrites/eXist-1.4/start.config" todir="${src.target.dir}/etc/overwrites/"/>
+        <move file="${src.target.dir}/etc/overwrites/eXist-1.4/build.properties" todir="${src.target.dir}/etc/overwrites/"/>
+        
+        <delete dir="${src.target.dir}/etc/overwrites/">
+            <fileset dir="..//">
+                <exclude name="start.config"/>
+                <exclude name="build.properties"/>
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="cleanup-website-eXist-1.5" description="cleanout unneeded files in non-website-mode" if="eXist-1.5">
+        <delete dir="${src.target.dir}/etc/overwrites/"/>
+    </target>
+
+    <target name="move-overwrites" description="move overwrite-files so installer finds them" if="betterform">
+        <antcall target="move-overwrites-eXist-1.4"/>
+        <antcall target="move-overwrites-eXist-1.5"/>
+    </target>
+
+    <target name="move-overwrites-eXist-1.4" description="move overwrite-files so installer finds them" if="eXist-1.4">
+        <move todir="${src.target.dir}/etc/overwrites">
+            <fileset dir="${src.target.dir}/etc/overwrites/eXist-1.4">
+                <include name="**/*"/>
+            </fileset>
+        </move>
+        <delete dir="${src.target.dir}/etc/overwrites/eXist-1.4"/>
+        <delete dir="${src.target.dir}/etc/overwrites/eXist-1.5"/>
+    </target>
+
+    <target name="move-overwrites-eXist-1.5" description="move overwrite-files so installer finds them" unless="eXist-1.5">
+        <delete dir="${src.target.dir}/etc/overwrites/eXist-1.4"/>
+        <delete dir="${src.target.dir}/etc/overwrites/eXist-1.5"/>
+    </target>
+</project>

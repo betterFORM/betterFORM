@@ -795,7 +795,7 @@ h3 {
 	margin-left:-20px;
 }
 .bfFormBrowser .formBrowserHeader .pathName{
-	background:url(../resources/images/arrow-right.png) left no-repeat;
+	background:url(../images/arrow-right.png) left no-repeat;
 	padding:3px 3px 3px 20px;
 	float:left;
 	color:#333333;
@@ -878,7 +878,7 @@ h3 {
 	padding:1px;
 	background:#d3d3d3;
 	color:transparent;
-	background:transparent url(../resources/images/greyled.png) no-repeat center center;
+	background:transparent url(../bfResources/images/greyled.png) no-repeat center center;
 	width:18px;
 	height:18px;
 }
@@ -890,7 +890,7 @@ h3 {
 	color:transparent;
 	z-index:100;
 	/*-moz-border-radius:100px;*/
-	background:transparent url(../resources/images/eye-grey.png) no-repeat center center;
+	background:transparent url(../bfResources/images/eye-grey.png) no-repeat center center;
 	/*border-color:#666666;*/
 
 }

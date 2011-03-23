@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml"
+	xmlns:xforms="http://www.w3.org/2002/xforms">
+  <xhtml:head>
+  	<xhtml:title>4.2.2.c1 form control referenced instance that did not exist yet</xhtml:title>
+  	<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+  	<xforms:model>
+  	</xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:model>
+  	</xforms:model>
+  	<xforms:group>
+  		<xforms:label class="title">4.2.2.c1 form control referenced instance that did not exist yet</xforms:label>
+  	</xforms:group>
+  	<xforms:group>
+  		<xforms:label>
+	  		You must be able to type in the input and see the result in the output as car="your input"
+		</xforms:label>
+  	</xforms:group>
+	<xforms:input ref="car">
+		<xforms:label>Type a car model:</xforms:label>
+	</xforms:input>
+	<xforms:output value="concat(local-name(*[1]),'=',car)"/>
+		
+  </xhtml:body>
+  
+</xhtml:html>

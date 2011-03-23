@@ -1,0 +1,35 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xforms="http://www.w3.org/2002/xforms">
+	<head>
+		<title>3.4.1.a extension element (non-normative)</title>
+		<link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+		<xforms:model id="m_001">
+			<xforms:instance id="i_001" xmlns="">
+				<r>
+					<color>blue</color>
+				</r>
+			</xforms:instance>
+		</xforms:model>
+	</head>
+	<body>
+		<xforms:group>
+			<xforms:label class="title">3.4.1.a extension element (non-normative)</xforms:label>
+		</xforms:group>
+		<xforms:group>
+			<xforms:label>
+			  The output element below has a label with the value &quot;color&quot; and should display the value 
+			  &quot;blue&quot;. It also has an extension element. How it is handled is determined by your renderer. 
+			</xforms:label>
+		</xforms:group>
+		<xforms:output ref="color">
+			<xforms:label>Color : </xforms:label>
+			<xforms:extension>
+				<ons:stuff xmlns:ons="http://example.com/ons" />
+			</xforms:extension>
+		</xforms:output>
+	</body>
+</html>

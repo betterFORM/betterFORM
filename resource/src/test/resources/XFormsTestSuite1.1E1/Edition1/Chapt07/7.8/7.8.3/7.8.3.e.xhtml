@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+    <xhtml:head>
+        <xhtml:title>7.8.3.e digest() function with invalid encoding method</xhtml:title>
+        <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css" />
+        <xforms:model >
+            <xforms:instance xmlns="">
+                <root />
+            </xforms:instance>
+        </xforms:model>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group>
+            <xforms:label class="title">7.8.3.e digest() function with invalid encoding method</xforms:label>
+        </xforms:group>
+        <xforms:group>
+            <xforms:label>
+	          You must have seen an xforms-binding-exception message or a fatal error due to an 
+			  xforms-binding-exception. 
+            </xforms:label>
+        </xforms:group>
+        <xforms:output value="digest('abc', 'SHA-1', 'INVALID')">
+          <xforms:label>Invalid Digest : </xforms:label>
+          <xforms:message ev:event="xforms-binding-exception" level="modal">xforms-binding-exception</xforms:message>
+        </xforms:output>
+        
+    </xhtml:body>
+</xhtml:html>

@@ -1,0 +1,42 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml"
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xforms="http://www.w3.org/2002/xforms">
+	<xhtml:head>
+		<xhtml:title>11.9.6.a serialization as multipart/related</xhtml:title>
+		<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+		<xforms:model id="form1">
+			<xforms:submission id="submit01" method="multipart-post"
+				action="http://xformstest.org/cgi-bin/echo.sh"/>
+			<xforms:instance id="instance1" xmlns="">
+				<car>
+					<carOwner>Henry</carOwner>
+					<make>Acura</make>
+					<color>white</color>
+				</car>
+			</xforms:instance>
+		</xforms:model>
+	</xhtml:head>
+	<xhtml:body>
+		<xforms:group>
+			<xforms:label class="title">11.9.6.a serialization as multipart/related</xforms:label>
+		</xforms:group>
+		<xforms:group>
+			<xforms:label>
+			  When you activate the Submit Data submit control the page must be replaced by the form 
+			  data. 
+			  The data must contain the values &quot;Henry&quot;, &quot;Acura&quot;, and &quot;white&quot;. 
+			  The form data must be in multipart/related format according to the W3C specification at this link: 
+			  <xhtml:a href="http://www.w3.org/TR/xforms11/#serialize-multipart" target="_blank">XForms 1.1 
+			  specification</xhtml:a>
+			</xforms:label>
+		</xforms:group>
+		
+		<xforms:submit submission="submit01">
+			<xforms:label>Submit Data</xforms:label>
+		</xforms:submit>
+		
+	</xhtml:body>
+</xhtml:html>

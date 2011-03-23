@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:xforms="http://www.w3.org/2002/xforms" 
+	xmlns:ev="http://www.w3.org/2001/xml-events">
+  	<xhtml:head>
+   		<xhtml:title>4.3.2.a xforms-recalculate event</xhtml:title>
+		<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+		<xforms:model id="car">
+      		<xforms:instance>
+      			<carColors xmlns="">
+      				<color>phoenix yellow metallic</color>
+      				<color>imola red</color>
+		      		<color>interlago blue metallic</color>
+     				<color>alpine white</color>
+		      	</carColors>
+	      	</xforms:instance>
+   			<xforms:action ev:event="xforms-recalculate">
+   				<xforms:message level="modal">xforms-recalculate</xforms:message>
+   			</xforms:action>
+   			
+	      	<xforms:bind id="bind_carColors" nodeset="/carColors/color"/>
+	    </xforms:model>
+  	</xhtml:head>
+  	<xhtml:body>
+   		<xforms:group>
+   			<xforms:label class="title">4.3.2.a xforms-recalculate event</xforms:label>
+   		</xforms:group>
+    	<xforms:group>
+    		<xforms:label>
+				When you activate the Recalculate trigger you must see an xforms-recalculate message. 
+			</xforms:label>	
+    	</xforms:group>
+    	
+    	<xforms:trigger>
+        	<xforms:label>Recalculate</xforms:label>
+        		<xforms:action ev:event="DOMActivate">
+        			<xforms:delete nodeset="/carColors/color" at="index('repeat_001')"/>
+        		</xforms:action>
+      	</xforms:trigger>
+    	
+    	<xforms:repeat id="repeat_002" nodeset="/carColors/color" startindex="1">
+    		<xforms:group>
+    		</xforms:group>
+    	</xforms:repeat>
+      	<xforms:repeat id="repeat_001" nodeset="/carColors/color" startindex="1">
+      	</xforms:repeat>
+      	
+  	</xhtml:body>
+</xhtml:html>

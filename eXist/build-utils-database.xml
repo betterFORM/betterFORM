@@ -10,6 +10,7 @@
 
     TODO:
     - classpath.exist: 1st: check for exist.installed 2nd. Check for exist.betterform.xrx.installed
+    - refactor exist.installed to exist.homem, admin.passwd to exist.admin.passwd
 -->
 <!--
   ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
@@ -17,10 +18,10 @@
   ~ Author: betterFORM Team (info AT betterform.de)
   -->
 
-<project name="betterFORM eXist integration helper targets" default="install-files-into-eXist-DB" basedir=".">
+<project name="eXist DB helper targets" default="install-files-into-eXist-DB" basedir=".">
     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
     <property name="root.dir" value="${basedir}/.."/>
-    <property name="src.dir" value="${basedir}/../src"/>
+    <property name="src.dir" value="${basedir}/../resource/src"/>
     <property name="web.dir" value="${basedir}/../web"/>
 
     <property name="target" value="${basedir}/target-utils"/>
@@ -28,11 +29,11 @@
 
     <!-- eXist ant-tasks -->
     <path id="classpath.exist">
-        <fileset dir="${exist.installed}/lib/core">
+        <fileset dir="${eXist.home}/lib/core">
             <include name="*.jar"/>
         </fileset>
-        <pathelement path="${exist.installed}/exist.jar"/>
-        <pathelement path="${exist.installed}/exist-optional.jar"/>
+        <pathelement path="${eXist.home}/exist.jar"/>
+        <pathelement path="${eXist.home}/exist-optional.jar"/>
     </path>
 
     <typedef resource="org/exist/ant/antlib.xml" uri="http://exist-db.org/ant">
@@ -58,6 +59,61 @@
                    password="${db-passwd}">
             <fileset dir="${file-source-dir}" excludes="**/.svn **/.svn/**"/>
         </xdb:store>
+    </target>
+
+     <target name="install-file-into-eXist-DB" description="Generic xdb:store target. Set properties as needed when you call it.">
+        <property name="file-source-dir" value="${basedir}/db-resources"/>
+        <property name="db-uri" value="xmldb:exist://localhost:8080/betterform/xmlrpc/db/betterform/resources"/>
+        <property name="db-user" value="betterform"/>
+        <property name="db-passwd" value="betterform"/>
+
+        <echo message="------------------------------------------------------------------------------------"/>
+        <echo message="  install all files from  ${file-source-dir} into db"/>
+        <echo message="------------------------------------------------------------------------------------"/>
+
+
+        <xdb:store xmlns:xdb="http://exist-db.org/ant"
+                   uri="${db-uri}"
+                   createsubcollections="true"
+                   createcollection="true"
+                   user="${db-user}"
+                   password="${db-passwd}">
+            <fileset file="${file-source}"/>
+        </xdb:store>
+    </target>
+
+    <target name="start-eXist">
+        <echo message="*******************************************************************************"/>
+        <echo message="* Starting eXist-DB                                                           *"/>
+        <echo message="*******************************************************************************"/>
+
+
+        <exec executable="${eXist.home}/bin/startup.sh" osfamily="unix" spawn="true"/>
+
+        <exec executable="cmd" osfamily="windows" spawn="true">
+            <arg value="/c"/>
+            <arg value="${eXist.home}/bin/startup.bat"/>
+        </exec>
+
+        <!-- wait for db startup -->
+        <sleep seconds="20"/>
+    </target>
+
+    <target name="stop-eXist">
+        <echo message="*******************************************************************************"/>
+        <echo message="* Stopping eXist-DB                                                           *"/>
+        <echo message="*******************************************************************************"/>
+
+        <exec executable="${eXist.home}/bin/shutdown.sh" osfamily="unix">
+            <arg value="-p ${admin.passwd}"/>
+        </exec>
+        <exec executable="cmd" osfamily="windows">
+            <arg value="/c"/>
+            <arg value="${eXist.home}/bin/shutdown.bat -p ${admin.passwd}"/>
+        </exec>
+
+        <!-- wait for db shutdown -->
+        <sleep seconds="20"/>
     </target>
 
 </project>

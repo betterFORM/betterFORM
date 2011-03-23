@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xforms="http://www.w3.org/2002/xforms" 
+    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>4.4.18.a xforms-scroll-first and xforms-scroll-last events</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+      <xforms:instance>
+      	<carColors xmlns="">
+      		<color>pheonix yellow metallic</color>
+      		<color>imola red</color>
+      		<color>interlago blue metallic</color>
+      		<color>alpine white</color>
+      	</carColors>
+      </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group>
+    	<xforms:label class="title">4.4.18.a xforms-scroll-first and xforms-scroll-last events</xforms:label>
+    </xforms:group>
+    
+    <xforms:group>
+    	<xforms:label>
+    		You must see an xforms-scroll-first message when you activate the Scroll First trigger. 
+    		You must see an xforms-scroll-last message when you activate the Scroll Last trigger. 
+    	</xforms:label>	
+    </xforms:group>
+    
+    <xforms:trigger>
+        <xforms:label>Scroll First</xforms:label>
+        <!-- decrement the index by 500, which should be out of range -->
+        <xforms:action ev:event="DOMActivate">
+          <xforms:setindex repeat="repeat_001" index="index('repeat_001')-500"/>
+        </xforms:action>
+    </xforms:trigger>
+    
+    <xforms:trigger>
+        <xforms:label>Scroll Last</xforms:label>
+        <!-- increment the index by 500, which should be out of range -->
+        <xforms:action ev:event="DOMActivate">
+          <xforms:setindex repeat="repeat_001" index="index('repeat_001')+500"/>
+        </xforms:action>
+    </xforms:trigger>
+    
+    <xforms:repeat id="repeat_001" nodeset="/carColors/color" startindex="1">
+    	<xforms:group>
+    		<xforms:label></xforms:label>
+	    </xforms:group>
+    </xforms:repeat>
+	<xforms:action ev:event="xforms-scroll-first" ev:observer="repeat_001">
+		<xforms:message level="modal">xforms-scroll-first</xforms:message>
+	</xforms:action>    
+	<xforms:action ev:event="xforms-scroll-last" ev:observer="repeat_001">
+		<xforms:message level="modal">xforms-scroll-last</xforms:message>
+	</xforms:action>	
+  </xhtml:body>
+</xhtml:html>

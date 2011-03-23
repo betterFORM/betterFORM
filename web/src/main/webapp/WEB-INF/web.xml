@@ -22,10 +22,6 @@
 	<filter>
 		<filter-name>XFormsFilter</filter-name>
 		<filter-class>de.betterform.agent.web.filter.XFormsFilter</filter-class>
-        <init-param>
-            <param-name>useragent</param-name>
-            <param-value>dojo</param-value>
-        </init-param>
     </filter>
 
 	<!--

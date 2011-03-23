@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms" 
+            xmlns:xhtml="http://www.w3.org/1999/xhtml"
+            xmlns:ev="http://www.w3.org/2001/xml-events">
+    <xhtml:head>
+        <xhtml:title>10.7.1.a setfocus element with control child element</xhtml:title>
+        <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css"
+            type="text/css" />
+        <xforms:model id="mod1" >
+            <xforms:instance xmlns="">
+                <data>
+                  <name>Alex</name>
+                  <age>23</age>
+                  <dob>1/25/72</dob> 
+                </data>
+            </xforms:instance>
+            <xforms:instance id="focus_holder" xmlns="">
+              <root>
+                <focus>DOB</focus>
+              </root>
+            </xforms:instance>
+        </xforms:model>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group>
+          <xforms:label class="title">10.7.1.a setfocus element with control child element</xforms:label>
+        </xforms:group>
+        <xforms:group>
+          <xforms:label>
+            The triggers below must shift the focus to the proper form controls when activated. 
+            The &quot;Set Focus To Age&quot; trigger must place the focus into the input control labeled Age. 
+            The &quot;Set Focus To DOB&quot; trigger must place the focus into the input control labeled DOB. 
+          </xforms:label>
+        </xforms:group>
+        <xforms:group>
+          <xforms:input id="Name" ref="name">
+            <xforms:label>Name:</xforms:label>
+          </xforms:input>
+        </xforms:group>
+        <xforms:group>
+          <xforms:input id="Age" ref="age">
+            <xforms:label>Age:</xforms:label>
+          </xforms:input>
+        </xforms:group>
+        <xforms:group>
+          <xforms:input id="DOB" ref="dob">
+            <xforms:label>DOB:</xforms:label>
+          </xforms:input>
+        </xforms:group>
+        
+        <xforms:trigger>
+	      <xforms:label>Set focus to Age field</xforms:label>
+			<xforms:setfocus ev:event="DOMActivate">
+			  <xforms:control>Age</xforms:control>
+		    </xforms:setfocus>
+		</xforms:trigger>
+		
+		<xforms:trigger>
+	      <xforms:label>Set focus to DOB field</xforms:label>
+			<xforms:setfocus ev:event="DOMActivate">
+			  <xforms:control value="instance('focus_holder')/focus"/>
+		    </xforms:setfocus>
+		</xforms:trigger>
+    </xhtml:body>
+</xhtml:html>

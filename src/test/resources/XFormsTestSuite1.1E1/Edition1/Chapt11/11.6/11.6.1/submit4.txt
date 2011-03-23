@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<root xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    			<data>1</data>
-    			<data>2</data>
-    		</root>

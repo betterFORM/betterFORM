@@ -9,7 +9,7 @@ declare option exist:serialize "method=xhtml media-type=text/xml";
 declare function local:timestamp() as xs:string{
       let $timestamp := request:get-parameter("timestamp", "")
       let $contextPath := request:get-context-path()
-      let $path2resource := concat("{$contextPath}/rest/db/betterform/apps/timetracker/data/task?_query=/*/task",encode-for-uri('['), "created='" ,$timestamp,"'",encode-for-uri(']'))
+      let $path2resource := concat($contextPath,"/rest/db/betterform/apps/timetracker/data/task?_query=/*/task",encode-for-uri('['), "created='" ,$timestamp,"'",encode-for-uri(']'))
       return $path2resource
 };
 

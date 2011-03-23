@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<installation version="1.0">
+    <info>
+        <appname>betterFORM</appname>
+        <appversion>limeGreen</appversion>
+        <authors>
+                 <author email="info@betterform.de" name="betterFORM"/>
+        </authors>
+        <url>http://www.betterform.de</url>
+        <uninstaller name="Uninstaller.jar" write="yes"/>
+        <javaversion>1.5</javaversion>
+        <!--<webdir>http://localhost:8080/packs</webdir>-->
+        <webdir>http://www.betterform.de/packs</webdir>
+    </info>
+
+    <conditions>
+        <condition id="betterform-XRX" type="packselection">
+            <packid>betterFORM-eXist-bundle</packid>
+        </condition>
+    </conditions>
+
+    <variables>
+        <variable name="JETTY_HOME" value="$EXIST_HOME/tools/jetty"/>
+        <variable name="JDKPathPanel.skipIfValid" value="yes"/>
+        <variable name="JDKPathPanel.minVersion" value="1.5"/>
+        <variable name="dataDir" value="webapp/WEB-INF/data" />
+    </variables>
+
+    <dynamicvariables>
+      <variable name="DATA_DIR" condition="izpack.windowsinstall" value="$USER_HOME/eXist/data"/>
+      <variable name="DATA_DIR" condition="izpack.macinstall" value="/Users/Shared/eXist/data"/>
+      <variable name="DATA_DIR" condition="!izpack.macinstall+!izpack.windowsinstall" value="$INSTALL_PATH/webapp/WEB-INF/data"/>
+    </dynamicvariables>
+
+    <guiprefs width="640" height="600" resizable="no">
+        <!-- <splash>../resource/bf_logo_145x59.png</splash> -->
+        <modifier key="useButtonIcons" value="no"/>
+  		<modifier key="useLabelIcons" value="no"/>
+  		<modifier key="layoutAnchor" value="NORTHWEST"/>
+  		<modifier key="useHeadingPanel" value="yes"/>
+  		<modifier key="headingImageOnLeft" value="yes"/>
+  		<modifier key="headingLineCount" value="1"/>
+  		<modifier key="headingFontSize" value="1.5"/>
+  		<modifier key="headingBackgroundColor" value="0x00ffffff"/>
+		<modifier key="labelFontSize" value="1.2"/>
+        <modifier key="useButtonIcons" value="yes"/>
+  		<modifier key="useLabelIcons" value="yes"/>
+		<modifier key="labelGap" value="6"/>
+        <modifier key="" value="0x00ffffff"/>
+
+ 	</guiprefs>
+	<listeners>
+		<listener installer="RegistryInstallerListener"	uninstaller="RegistryUninstallerListener" >
+			<os family="windows"/>
+		</listener>
+	</listeners>
+
+    <native name="ShellLink.dll" type="izpack"/>
+    <native name="ShellLink_x64.dll" type="izpack"/>
+    <native type="3rdparty" name="COIOSHelper.dll" stage="both">
+        <os family="windows"/>
+    </native>
+    <native type="3rdparty" name="COIOSHelper_x64.dll" stage="both">
+        <os family="windows"/>
+    </native>
+
+    <locale>
+        <langpack iso3="eng"/>
+        <!-- <langpack iso3="deu"/> -->
+    </locale>
+
+    <resources>
+    	<res id="Heading.image" src="../resource/bf_logo_145x59.png"/>
+        <res id="LicencePanel.licence" src="../resource/BSD-license-inlined.txt"/>
+        <res id="HTMLInfoPanel.readme" src="../resource/readme.html"/>
+        <res id="HTMLHelloPanel.welcome" src="../resource/welcome.html"/>
+        <!-- <res id="TargetPanel.dir" src="../resource/TargetDir.txt" conditon="izpack.windowsinstall"/> -->
+        <res id="Installer.image" src="../resource/logo.png" />
+        <res id="Installer.image" src="../resource/info-border.png" />
+        <res src="../resource/info-border.png" id="Installer.image.0"/>
+        <res src="../resource/info-border.png" id="Installer.image.1"/>
+        <res src="../resource/pack-border.png" id="Installer.image.2"/>
+        <res src="../resource/pack-border.png" id="Installer.image.3"/>
+        <res src="../resource/pack-border.png" id="Installer.image.4"/>
+        <res src="../resource/pack-border.png" id="Installer.image.5"/>
+        <res id="userInputSpec.xml" src="../resource/userInput.xml"/>
+        <res id="ProcessPanel.Spec.xml" src="../resource/jobs.xml"/>
+        <!-- <res id="CustomLangpack.xml_deu" src="../resource/custom.deu.xml"/> -->
+        <res id="CustomLangpack.xml_eng" src="../resource/custom.eng.xml"/>
+        <!-- default path to install betterFORM at -->
+        <res id="TargetPanel.dir.windows"   src="../resource/targetdir-windows.txt" />
+        <res id="TargetPanel.dir.unix"      src="../resource/targetdir-unix.txt" />
+        <res id="TargetPanel.dir.macosx"    src="../resource/targetdir-mac.txt" />
+        <res id="shortcutSpec.xml"          src="../configs/default_shortcut_spec.xml" />
+        <res id="Win_shortcutSpec.xml"      src="../configs/win_shortcut_spec.xml"/>
+
+    </resources>
+
+    <panels labelFontSize="2.0">
+        <panel classname="HTMLHelloPanel" id="welcome"/>
+        <panel classname="JDKPathPanel"/>
+        <panel classname="LicencePanel"/>
+        <panel classname="TargetPanel"/>
+        <panel classname="HTMLInfoPanel" id="readme" />
+        <panel classname="PacksPanel"/>
+        <panel classname="UserInputPanel" id="UserInputPanel.0"/>
+        <panel classname="InstallPanel"/>
+        <panel classname="ProcessPanel"/>
+         <panel classname="ShortcutPanel"/>
+        <panel classname="FinishPanel"/>
+    </panels>
+
+    <packs>
+        <pack name="betterFORM XRX" id="betterFORM-eXist-bundle" required="yes" preselected="yes">
+            <description>betterFORM and eXist bundled</description>
+
+            <fileset targetdir="$INSTALL_PATH" dir="bf-eXist"/>
+
+            <parsable type="shell" targetfile="$INSTALL_PATH/bin/client.sh"/>
+            <parsable type="shell" targetfile="$INSTALL_PATH/bin/startup.sh"/>
+            <parsable type="shell" targetfile="$INSTALL_PATH/bin/server.sh"/>
+            <parsable type="shell" targetfile="$INSTALL_PATH/bin/shutdown.sh"/>
+            <parsable type="shell" targetfile="$INSTALL_PATH/bin/backup.sh"/>
+            <parsable type="shell" targetfile="$INSTALL_PATH/build.sh"/>
+            <parsable type="shell" targetfile="$INSTALL_PATH/bin/setup.sh"/>
+            <parsable targetfile="$INSTALL_PATH/bin/client.bat"/>
+            <parsable targetfile="$INSTALL_PATH/bin/startup.bat"/>
+            <parsable targetfile="$INSTALL_PATH/bin/server.bat"/>
+            <parsable targetfile="$INSTALL_PATH/bin/shutdown.bat"/>
+            <parsable targetfile="$INSTALL_PATH/bin/backup.bat"/>
+            <parsable targetfile="$INSTALL_PATH/bin/setup.bat"/>
+            <parsable targetfile="$INSTALL_PATH/build.bat"/>
+            <parsable type="xml" targetfile="$INSTALL_PATH/conf.xml"/>
+            <executable targetfile="$INSTALL_PATH/bin/setup.sh" stage="never" os="unix"/>
+            <executable targetfile="$INSTALL_PATH/bin/client.sh" stage="never" os="unix"/>
+            <executable targetfile="$INSTALL_PATH/bin/startup.sh" stage="never" os="unix"/>
+            <executable targetfile="$INSTALL_PATH/bin/server.sh" stage="never" os="unix"/>
+            <executable targetfile="$INSTALL_PATH/bin/shutdown.sh" stage="never" os="unix"/>
+            <executable targetfile="$INSTALL_PATH/bin/backup.sh" stage="never" os="unix"/>
+            <executable targetfile="$INSTALL_PATH/build.sh" stage="never" os="unix"/>
+            <singlefile src="../resource/start.bat" target="$INSTALL_PATH/start.bat" override="true"/>
+            <singlefile src="../resource/start.sh" target="$INSTALL_PATH/start.sh" override="true"/>
+            <singlefile src="bf-eXist/tools/wrapper/conf/wrapper.conf.install" target="$INSTALL_PATH/tools/wrapper/conf/wrapper.conf" override="true"/>
+            <parsable targetfile="$INSTALL_PATH/tools/wrapper/conf/wrapper.conf"/>
+        </pack>
+    </packs>
+
+</installation>

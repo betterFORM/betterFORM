@@ -11,7 +11,7 @@
     <property name="server.dir" value="${basedir}/tools/server"/>
     <property name="target.dir" value="${basedir}/target"/>
     <property name="src.target.dir" value="${basedir}/target"/>
-    <antversion property="antversion" atleast="1.7"/>
+    <import file="build-util.xml"/>
 
     <!-- local Web properties -->
 
@@ -88,49 +88,9 @@
     </target>
 
 
-    <target name="prepare-js" depends="check-ant-version" if="antversion">
-        <echo/>
-        <echo message="************************************************************************************"/>
-        <echo message="unpacking Dojo..."/>
-        <echo message="************************************************************************************"/>
-        <echo/>
-        <mkdir dir="${src.target.dir}"/>
-        <gunzip src="${basedir}/src/main/lib/${properties.dojo}.tar.gz"
-                dest="${src.target.dir}"/>
-        <untar src="${src.target.dir}/${properties.dojo}.tar"
-               dest="${src.target.dir}"/>
-
-        <delete file="${src.target.dir}/${properties.dojo}.tar"/>
-
-        <echo/>
-        <echo message="************************************************************************************"/>
-        <echo message="merging Dojo into tree ..."/>
-        <echo message="************************************************************************************"/>
-        <echo/>
-        <move file="${src.target.dir}/${properties.dojo}" tofile="${target.dir}/resources/scripts"/>
-
-<!--
-        <move todir="${target.dir}/resources/scripts">
-            <fileset dir="${src.target.dir}/${properties.dojo}">
-                <include name="**/**"/>
-			</fileset>
-        </move>
--->
-        <delete file="${src.target.dir}/${properties.dojo}"/>
-
-        <unzip src="${basedir}/src/main/lib/${properties.timeline}.zip" dest="${target.dir}"/>
-        <move todir="${target.dir}/resources/scripts/simile/timeline">
-            <fileset dir="${target.dir}/timeline_2.3.0/timeline_js"/>
-        </move>
-        <move todir="${target.dir}/resources/scripts/simile/timeline">
-            <fileset dir="${target.dir}/timeline_2.3.0/timeline_ajax"/>
-        </move>
-        <delete dir="${target.dir}/timeline_2.3.0"/>
-
-    </target>
 
     <target name="transformToXFormsUsingComponent" depends="check-ant-version" if="antversion">
-         <xslt in="${basedir}/src/main/xforms/demo/registration.xhtml"
+         <xslt in="${basedir}/resource/src/main/xforms/demo/registration.xhtml"
                out="${basedir}/registration.xhtml"
                style="${basedir}/src/main/resources/xslt/component.xsl"
                force="true">
@@ -140,16 +100,16 @@
 
 
     <target name="componentXSL">
-        <xslt in="${basedir}/src/main/components/mapping.xml"
-              out="${basedir}/src/main/resources/xslt/mappings.xsl"
+        <xslt in="${basedir}/resource/src/main/components/mapping.xml"
+              out="${basedir}/resource/src/main/resources/xslt/mappings.xsl"
               style="${basedir}/src/main/components/mapping2xsl.xsl">
             <classpath refid="transform.class.path"/>
         </xslt>
     </target>
     
     <target name="xbl2xsl">
-        <xslt in="${basedir}/src/main/components/binding.xml"
-              out="${basedir}/src/main/resources/xslt/dummy.xsl"
+        <xslt in="${basedir}/resource/src/main/components/binding.xml"
+              out="${basedir}/resource/src/main/resources/xslt/dummy.xsl"
               style="${basedir}/src/main/components/xbl2xsl.xsl">
             <classpath refid="transform.class.path"/>
         </xslt>
@@ -170,9 +130,6 @@
         </xslt>
     </target>
 
-    <target name="check-ant-version" unless="antversion">
-        <echo>Apache Ant 1.7 or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.7 You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</echo>
-    </target>
 
 
 </project>

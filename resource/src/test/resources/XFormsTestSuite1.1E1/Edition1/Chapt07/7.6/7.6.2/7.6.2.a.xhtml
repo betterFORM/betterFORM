@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>7.6.2.a is-card-number() function</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model >
+      <xforms:instance>
+		<root>341111111111111</root>
+      </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">7.6.2.a is-card-number() function</xforms:label>
+  	</xforms:group>
+  	
+  	<xforms:group>
+  		<xforms:label>
+  			You must see the value &quot;true&quot; for the Test 1, Test 2, and Test 3 output controls. 
+  			You must see the value &quot;false&quot; for the Test 4, Test 5, and Test 6 output controls.
+  		</xforms:label>
+  	</xforms:group>
+  	
+  	<xforms:group>
+      <xforms:output value="is-card-number('541234567890125')">
+        <xforms:label>Test 1 : </xforms:label>
+        <!-- must output true -->
+      </xforms:output>
+    </xforms:group>
+    <xforms:group>
+      <xforms:output value="is-card-number('1002312234567990000')">
+      	<xforms:label>Test 2 : </xforms:label>
+      	<!-- must output true -->
+      </xforms:output>
+    </xforms:group>
+    <xforms:group>
+      <xforms:output value="is-card-number(.)"> <!-- trying to use the root node in instance data, the # itself is valid -->
+      	<xforms:label>Test 3 : </xforms:label>
+      	<!-- must output true (if it doesn't the XPath may be broken) -->
+      </xforms:output>
+    </xforms:group> 
+    <xforms:group>
+      <xforms:output value="is-card-number('123456789012')">
+        <xforms:label>Test 4 : </xforms:label>
+        <!-- must output false -->
+      </xforms:output>
+    </xforms:group>
+    <xforms:group>
+      <xforms:output value="is-card-number('123')">
+        <xforms:label>Test 5 : </xforms:label>
+        <!-- must output false -->
+      </xforms:output>
+    </xforms:group>
+    <xforms:group>
+      <xforms:output value="is-card-number('12345a789012')">
+      	<xforms:label>Test 6 : </xforms:label>
+      	<!-- must output false -->
+      </xforms:output>
+    </xforms:group>
+		
+  </xhtml:body>
+</xhtml:html>

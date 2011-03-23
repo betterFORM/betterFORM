@@ -10,14 +10,9 @@ return
     <head>
         <title>betterFORM Demo XForms: Address, Registration, FeatureExplorer</title>
 
-        <link rel="stylesheet" type="text/css" href="./resources/InlineRoundBordersAlert.css"/>
         <link rel="stylesheet" type="text/css" href="./resources/timetracker.css"/>
 
-        <script id="betterformJs" type="text/javascript" defer="defer">
-            <!--
-                loadBetterFORMJs('/betterform/resources/scripts/release/dojo/betterform/betterform-timetracker.js', 'betterform.BfRequiredTimeTracker');
-            //-->
-        </script>
+         <script type="text/javascript" src="../../bfResources/scripts/betterform/betterform-TimeTracker.js"> </script>
 
         <script type="text/javascript" defer="defer">
             <!--
@@ -55,12 +50,14 @@ return
             }
 
             var editSubcriber = dojo.subscribe("/task/edit", function(data){
+                alert('EDIT');
                 fluxProcessor.setControlValue("currentTask",data);
                 embed('editTask','embedDialog');
 
             });
 
             var deleteSubscriber = dojo.subscribe("/task/delete", function(data){
+                alert('DELETE');
                 var check = confirm("Really delete this entry?");
                 if (check == true){
                     fluxProcessor.setControlValue("currentTask",data);
