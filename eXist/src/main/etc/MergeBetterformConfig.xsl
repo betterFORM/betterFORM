@@ -45,6 +45,7 @@
         </xsl:choose>
     </xsl:template>
 
+<!--
     <xsl:template match="property[@name='resources.dir.name']/@value" priority="10">
         <xsl:choose>
             <xsl:when test="$context = 'extension'">
@@ -57,5 +58,6 @@
 
 
     </xsl:template>
+-->
 
 </xsl:stylesheet>

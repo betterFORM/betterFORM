@@ -157,7 +157,7 @@
 
     <target name="prepare-jetty-embedded" description="copies forms into src tree for live-editing with embedded jetty">
         <copy todir="${project.dir}/web/src/main/webapp/forms">
-            <fileset dir="${project.dir}/src/main/xforms"/>
+            <fileset dir="${basedir}/../../resource/src/main/xforms"/>
         </copy>
     </target>
 </project>

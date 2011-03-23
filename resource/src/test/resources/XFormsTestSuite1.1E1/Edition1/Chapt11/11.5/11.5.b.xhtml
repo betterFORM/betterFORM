@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:ev="http://www.w3.org/2001/xml-events" 
+            xmlns:xforms="http://www.w3.org/2002/xforms" 
+            xmlns:xhtml="http://www.w3.org/1999/xhtml">
+     <xhtml:head>
+          <xhtml:title>11.5.b accessing context information for xforms-submit-error event</xhtml:title>
+          <xforms:model>
+               <xforms:instance id="data">
+                    <this xmlns="">
+                         <that>
+                              <the_other>
+							this that and the other...
+						</the_other>
+                         </that>
+                    </this>
+               </xforms:instance>
+               <xforms:instance id="resource">
+                    <root xmlns="">
+                         <resource>http://</resource>
+                    </root>
+               </xforms:instance>
+               <xforms:instance id="error_catcher">
+                    <sub_error xmlns="">
+                         <error_name/>
+                         <error_info/>
+                         <error_code/>
+                         <error_headers/>
+                    </sub_error>
+               </xforms:instance>
+               <xforms:submission action="http://invaliduri.com8565/inval1d" id="sub_1" method="post" ref="instance('data')" replace="none">
+                    <xforms:action ev:event="xforms-submit-error">
+                         <xforms:setvalue ref="instance('error_catcher')/error_name" value="event('error-type')"/>
+                         <xforms:setvalue ref="instance('error_catcher')/error_info" value="event('resource-uri')"/>
+                         <xforms:setvalue ref="instance('error_catcher')/error_code" value="event('response-status-code')"/>
+                         <!--  xforms 1.1 will return headers/header[] from event('headers') -->
+                         <xforms:insert context="instance('error_catcher')/error_headers" nodeset="*" origin="event('response-headers')"/>
+                    </xforms:action>
+               </xforms:submission>
+               <xforms:submission id="sub_2" method="post" ref="instance('data')" replace="none">
+                    <xforms:resource value="instance('resource')/resource"/>
+                    <xforms:action ev:event="xforms-submit-error">
+                         <xforms:setvalue ref="instance('error_catcher')/error_name" value="event('error-type')"/>
+                         <xforms:setvalue ref="instance('error_catcher')/error_info" value="event('resource-uri')"/>
+                         <xforms:setvalue ref="instance('error_catcher')/error_code" value="event('response-status-code')"/>
+                         <xforms:setvalue ref="instance('error_catcher')/error_headers" value="event('response-headers')"/>
+                    </xforms:action>
+               </xforms:submission>
+          </xforms:model>
+          <xhtml:link href="../../driverPages/forms/TestSuite11.css" rel="stylesheet"/>
+     </xhtml:head>
+     <xhtml:body>
+          <xforms:group>
+               <xforms:label class="title">11.5.b accessing context information for xforms-submit-error event</xforms:label>
+          </xforms:group>
+          <xforms:group>
+               <xforms:label>
+                 After activating the Submit To Bad URL submit control, the value &quot;resource-error&quot; must 
+                 appear in the Error Name output control and the value &quot;http://invaliduri.com8565/inval1d&quot; 
+                 must appear in the Error Information output control. 
+			</xforms:label>
+          </xforms:group>
+          <xforms:group>
+               <xforms:label/>
+               <xforms:submit submission="sub_1">
+                    <xforms:label>Submit To Bad URL</xforms:label>
+               </xforms:submit>
+          </xforms:group>
+          <xforms:group>
+               <xforms:label/>
+               <xforms:output ref="instance('error_catcher')/error_name">
+                    <xforms:label>Error Name : </xforms:label>
+               </xforms:output>
+          </xforms:group>
+          <xforms:group>
+               <xforms:label/>
+               <xforms:output ref="instance('error_catcher')/error_info">
+                    <xforms:label>Error Information : </xforms:label>
+               </xforms:output>
+          </xforms:group>
+          <xforms:group>
+               <xforms:label/>
+               <xforms:output ref="instance('error_catcher')/error_code">
+                    <xforms:label>Protocol Return Code : </xforms:label>
+               </xforms:output>
+          </xforms:group>
+          <xforms:group>
+               <xforms:label>Header Information : </xforms:label>
+               <xforms:repeat nodeset="instance('error_catcher')/error_headers/header">
+                    <xforms:group>
+                         <xforms:label/>
+                         <xforms:output ref="./name">
+                              <xforms:label>Header Name : </xforms:label>
+                         </xforms:output>
+                    </xforms:group>
+                    <xforms:group>
+                         <xforms:label/>
+                         <xforms:output ref="./value">
+                              <xforms:label>Header Contents : </xforms:label>
+                         </xforms:output>
+                    </xforms:group>
+               </xforms:repeat>
+          </xforms:group>
+     	
+     </xhtml:body>
+</xhtml:html>

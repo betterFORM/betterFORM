@@ -1,0 +1,53 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml"
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xforms="http://www.w3.org/2002/xforms">
+	<xhtml:head>
+		<xhtml:title>6.1.4.b relevant property</xhtml:title>
+		<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+		<xforms:model>
+			<xforms:instance xmlns="">
+				<order>
+					<item>
+						<amount/>
+						<discount>100</discount>
+					</item>
+				</order>
+			</xforms:instance>
+			<xforms:bind nodeset="/order/item/discount" readonly="true()"
+				relevant="/order/item/amount &gt; 1000"/>
+		</xforms:model>
+	</xhtml:head>
+	<xhtml:body>
+		<xforms:group>
+			<xforms:label class="title">6.1.4.b relevant property</xforms:label>
+		</xforms:group>
+		<xforms:group>
+			<xforms:label>
+				You must see the output &quot;Discount : 100&quot; after you activate the Enter 1500 trigger, but 
+				not when you activate the Enter 250 trigger. 
+			</xforms:label>	
+		</xforms:group>
+		
+		<xforms:input ref="/order/item/amount">
+			<xforms:label>Order Amount:</xforms:label>
+		</xforms:input>
+		
+		<xforms:output ref="/order/item/discount">
+			<xforms:label>Discount : </xforms:label>
+		</xforms:output>
+		
+		<xforms:trigger>
+			<xforms:label>Enter 250</xforms:label>
+			<xforms:setvalue ref="/order/item/amount" ev:event="DOMActivate">250</xforms:setvalue>
+		</xforms:trigger>
+		
+		<xforms:trigger>
+			<xforms:label>Enter 1500</xforms:label>
+			<xforms:setvalue ref="/order/item/amount" ev:event="DOMActivate">1500</xforms:setvalue>
+		</xforms:trigger>
+		
+	</xhtml:body>
+</xhtml:html>

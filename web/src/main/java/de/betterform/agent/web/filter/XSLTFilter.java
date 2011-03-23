@@ -23,13 +23,14 @@ public class XSLTFilter implements Filter {
     private static final Log LOG = LogFactory.getLog(XSLTFilter.class);
 
     private FilterConfig filterConfig = null;
-    private static final String XSLT_PARAM = "xslt";
     private String xsltPath;
+    private String xslFile;
 
     public void init(FilterConfig filterConfig) throws
             ServletException {
         this.filterConfig = filterConfig;
-        this.xsltPath = filterConfig.getInitParameter("xsltDir");
+        this.xsltPath = filterConfig.getInitParameter("xsltHome");
+        this.xslFile = filterConfig.getInitParameter("xsltFile");
     }
 
     public void destroy() {
@@ -42,9 +43,8 @@ public class XSLTFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         ServletContext servletContext = filterConfig.getServletContext();
 
-        String xslFile = request.getParameter(XSLT_PARAM);
         String stylePath = servletContext.getRealPath(xsltPath);
-        File styleFile = new File(stylePath,stylePath);
+        File styleFile = new File(stylePath,xslFile);
 
 
         PrintWriter out = response.getWriter();

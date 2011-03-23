@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+  <xhtml:head>
+  	<xhtml:title>b.8.a Copy Nodeset</xhtml:title>
+  	<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css" />
+  	<xforms:model>
+	  	<xforms:action ev:event="xforms-ready">
+	  		<xforms:insert context="people" nodeset="person" origin="instance('prototypes')/person"/>
+	  	</xforms:action>
+  		<xforms:instance>
+  			<data xmlns="">
+  				<people/>
+  			</data>
+  		</xforms:instance>
+  		<xforms:instance id="prototypes">
+  			<prototypes xmlns="">
+  				<person>
+  					<name>Jane Doe</name>
+  				</person>
+  				<person>
+  					<name>John Doe</name>
+  				</person>
+  				<person>
+  					<name>Joe Sixpack</name>
+  				</person>
+  			</prototypes>
+  		</xforms:instance>
+  	</xforms:model>  	
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">
+  			b.8.a Copy Nodeset
+  		</xforms:label>
+  	</xforms:group>
+  	<xforms:group>
+  		<xforms:label>
+  			You must see the strings &quot;Jane Doe&quot;, &quot;John Doe&quot;, and &quot;Joe Sixpack&quot; : 
+  		</xforms:label>
+  		<xforms:repeat nodeset="people/person">
+  			<xforms:output
+  				class="hlist"
+  				value="concat(./name , ' ')">
+  				<xforms:label/>
+  			</xforms:output>
+  		</xforms:repeat>
+  	</xforms:group>
+  </xhtml:body>
+</xhtml:html>

@@ -80,7 +80,7 @@ public class XFormsServlet extends HttpServlet {
         try {
             webFactory.initConfiguration(useragent);
             webFactory.initLogging(getClass());
-            webFactory.initTransformerService();
+            webFactory.initTransformerService(getServletContext().getRealPath("."));
             webFactory.initXFormsSessionCache();
 
         } catch (XFormsConfigException e) {

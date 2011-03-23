@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xhtml:head>
+        <xhtml:title>11.1.u separator attribute of submission element</xhtml:title>
+        <xforms:model id="form1">
+            <xforms:submission action="http://xformstest.org/cgi-bin/echo.sh" id="submit01" method="urlencoded-post"/>
+            <xforms:submission action="http://xformstest.org/cgi-bin/echo.sh" id="submit02" method="urlencoded-post" separator=";"/>
+            <xforms:instance id="instance1" xmlns="">
+                <car>
+                    <carOwner>Greg</carOwner>
+                    <make>Toyota</make>
+                    <color>Silver</color>
+                </car>
+            </xforms:instance>
+        </xforms:model>
+        <xhtml:link href="../../driverPages/html/TestSuite11.css" rel="stylesheet"/>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <xforms:label class="title">11.1.u separator attribute of submission element</xforms:label>
+        </xforms:group>
+        <xforms:group xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <xforms:label>
+            	Both submit controls below replace this page with the form data. 
+            	The instance data for this page is the values &quot;carOwner=Greg&quot;, &quot;make=Toyota&quot; and 
+            	&quot;color=Silver&quot;. When you activate the Separate With '&amp;' control you must see the instance 
+            	data values separated by ampersands(&amp;) on the page. 
+            	When you activate the Separate With ';' control you must see the instance 
+            	data values separated by semicolons(;) on the page. 
+			</xforms:label>
+        </xforms:group>
+        <xforms:submit submission="submit01">
+            <xforms:label>Separate With '&amp;'</xforms:label>
+        </xforms:submit>
+        <xforms:submit submission="submit02">
+            <xforms:label>Separate With ';'</xforms:label>
+        </xforms:submit>
+        
+    </xhtml:body>
+</xhtml:html>

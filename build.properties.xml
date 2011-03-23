@@ -13,6 +13,10 @@
         <dojo>dojo-release-1.5.0-src</dojo>
         <timeline>timeline_libraries_v2.3.0</timeline>
     </properties>
+    <app>
+        <name>betterform</name>
+        <version>3.2.0-RC2</version>
+    </app>
     <core>
         <app>
             <name>betterform-core</name>

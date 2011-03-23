@@ -1,0 +1,40 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+	  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"               
+      xmlns:xforms="http://www.w3.org/2002/xforms">
+  <xhtml:head>
+    <xhtml:title>8.1.7.c step attribute of range element</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+       <xforms:instance xmlns="">       
+			<car>
+				<mileage xsi:type="xsd:integer"/>
+				<age xsi:type="xsd:integer">2</age>	
+			</car>
+       </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group>
+  	    <xforms:label class="title">8.1.7.c step attribute of range element</xforms:label>
+  	</xforms:group>
+  	<xforms:group>
+  		<xforms:label>
+  			You must see a range control that increments by 2. No start or end values are defined.
+  		</xforms:label>
+  	</xforms:group>
+  	<xforms:group>
+  		<xforms:range ref="/car/age" step="2">
+  			<xforms:label>Car age</xforms:label>
+  		</xforms:range>
+  	</xforms:group>
+  	<xforms:group>
+  		<xforms:output ref="/car/age">
+			<xforms:label>Car age : </xforms:label>
+		</xforms:output>
+  	</xforms:group>
+  </xhtml:body>
+</xhtml:html>

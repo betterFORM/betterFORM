@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>g.1.b required and optional pseudo-classes (non-normative)</xhtml:title>
+    <xhtml:link rel="stylesheet" href="g1b.css" type="text/css"/>
+    <xforms:model>
+      <xforms:instance>
+        <car xmlns="">
+          <make>Honda</make>
+          <model>Civic</model>
+        </car>
+      </xforms:instance>
+      <xforms:bind id="make" nodeset="/car/make" required="true()" />
+      <xforms:bind id="model" nodeset="/car/model" required="false()" />
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">g.1.b required and optional pseudo-classes (non-normative)</xforms:label>
+  	</xforms:group>
+  	<xforms:group>
+  		<xforms:label>
+  		The first output must have a red background and the second output 
+  		must have a blue background with bold font.
+  		</xforms:label>
+  	</xforms:group>
+
+	<xforms:output bind="make">
+		<xforms:label>Car Make (required = true) : </xforms:label>
+	</xforms:output>
+	
+	<xforms:output bind="model">
+		<xforms:label>Car Model (required = false) : </xforms:label>
+	</xforms:output>
+	
+	
+  </xhtml:body>
+</xhtml:html>

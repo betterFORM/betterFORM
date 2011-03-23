@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+  <xhtml:head>
+    <xhtml:title>4.5.1.a2 xforms-binding-exception, invalid bind attribute</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model id="car">
+      <xforms:instance>
+        <make xmlns=""/>
+      </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group>
+    	<xforms:label class="title">4.5.1.a2 xforms-binding-exception, invalid bind attribute</xforms:label>
+    </xforms:group>
+    <xforms:group>
+    	<xforms:label>
+    		You must see an xforms-binding-exception message or a fatal error due to an 
+			xforms-binding-exception. 
+    	</xforms:label>	
+    </xforms:group>
+    <!-- bind attribute fails to point to the ID of a bind element -->
+    <xforms:input bind="invalid">
+      	<xforms:label>Input : </xforms:label>
+      	<xforms:action ev:event="xforms-binding-exception">
+      		<xforms:message level="modal">xforms-binding-exception</xforms:message>
+      	</xforms:action>
+    </xforms:input>
+	
+  </xhtml:body>
+</xhtml:html>

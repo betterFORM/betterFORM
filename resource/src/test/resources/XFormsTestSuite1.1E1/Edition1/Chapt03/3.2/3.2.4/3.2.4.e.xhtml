@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+  <xhtml:head>
+    <xhtml:title>3.2.4.e node-set binding - invalid model IDREF</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model id="order">
+      <xforms:instance>
+        <carOrder/>
+      </xforms:instance>
+      <xforms:submission id="submit_car" method="post" action="http://xformstest.org/cgi-bin/echo.sh"/>
+    </xforms:model>
+    <xforms:model id="carsForSale">
+      <xforms:instance>
+        <carsAvailable xmlns="">
+          <car>Audi</car>
+          <car>BMW</car>
+          <car>Mercedes</car>
+          <car>Porsche</car>
+          <car>Volkswagen</car>
+        </carsAvailable>
+      </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">3.2.4.e node-set binding - invalid model IDREF</xforms:label>
+  	</xforms:group>
+    <xforms:group>
+    	<xforms:label>
+    	  You must have seen an xforms-binding-exception message or a fatal error due to an 
+		  xforms-binding-exception. 
+      	</xforms:label>
+    </xforms:group>
+
+    <xforms:select ref="/carOrder" model="order">
+      	<xforms:label>Cars</xforms:label>
+        <xforms:action ev:event="xforms-binding-exception">
+      		<xforms:message level="modal">xforms-binding-exception</xforms:message>
+      	</xforms:action>      	
+	    <!-- itemset has invalid model attribute, exception thrown -->
+        <xforms:itemset nodeset="/carsAvailable/car" model="invalidModel">
+        	<xforms:label ref="."></xforms:label>
+          	<xforms:value ref="."></xforms:value>
+        </xforms:itemset>
+    </xforms:select>
+
+    <xforms:submit submission="submit_car">
+        <xforms:label>Submit Cars</xforms:label>
+    </xforms:submit>
+
+	
+  </xhtml:body>
+</xhtml:html>

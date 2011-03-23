@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+  <xhtml:head>
+  	<xhtml:title>6.2.1.a atomic datatype</xhtml:title>
+  	<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+      <xforms:instance xmlns="">
+      	<first-name>Frank</first-name>
+      </xforms:instance>
+      <xsd:schema>
+        <xsd:simpleType name="nonEmptyString">
+  		  <xsd:restriction base="xsd:string">
+  			  <xsd:minLength value="1"/>
+  		  </xsd:restriction>
+  	    </xsd:simpleType>
+  	  </xsd:schema>
+  	  <xforms:bind type="nonEmptyString" nodeset="/first-name"/>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group>
+  	    <xforms:label class="title">6.2.1.a atomic datatype</xforms:label>
+    </xforms:group>
+	<xforms:group>
+		<xforms:label>
+			The First Name input control is bound to an atomic datatype. 
+			When you activate the Use Joe trigger you must see an xforms-valid message. 
+			When you activate the Use Empty String trigger you must see an xforms-invalid message. 
+		</xforms:label>
+	</xforms:group>
+	
+	<xforms:input ref="/first-name">
+		<xforms:label>First Name : </xforms:label>
+		<xforms:message ev:event="xforms-valid" level="modal">xforms-valid</xforms:message>
+  	  	<xforms:message ev:event="xforms-invalid" level="modal">xforms-invalid</xforms:message>
+	</xforms:input>
+	
+	<xforms:trigger>
+		<xforms:label>Use Empty String</xforms:label>
+		<xforms:setvalue ref="/first-name" ev:event="DOMActivate"></xforms:setvalue>
+	</xforms:trigger>
+	
+	<xforms:trigger>
+		<xforms:label>Use Joe</xforms:label>
+		<xforms:setvalue ref="/first-name" ev:event="DOMActivate">Joe</xforms:setvalue>
+	</xforms:trigger>
+	
+  </xhtml:body>
+</xhtml:html>

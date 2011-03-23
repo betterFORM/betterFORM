@@ -3,6 +3,9 @@ xquery version "1.0";
 declare namespace request="http://exist-db.org/xquery/request";
 declare namespace functx = "http://www.functx.com";
 
+(:
+        todo: the hard-coded '/bfResources' should be replaced with a config param
+:)
 declare function functx:substring-before-last
   ( $arg as xs:string? ,
     $delim as xs:string )  as xs:string {
@@ -54,7 +57,7 @@ let $xqeuryPath := functx:substring-before-last($uri, 'FormsQuery.xql')
 	return
 	<div dojoType="dijit.form.DropDownButton" class="createCollectionDropDownButton">
 		<span class="label">
-			<img style="height:28px;width:28px;" src="{fn:concat($contextPath, '/resources/images/add-folder.png')}" title="{$altTextCreateCollection}"/>
+			<img style="height:28px;width:28px;" src="{fn:concat($contextPath, '/bfResources/images/add-folder.png')}" title="{$altTextCreateCollection}"/>
 		</span>
 		<div dojoType="dijit.TooltipDialog" name="collectionTooltip" >
 			<form enctype="text/plain" method="get" action="{$xqeuryPath}create-collection.xql" target="targetFrame">
@@ -75,7 +78,7 @@ let $xqeuryPath := functx:substring-before-last($uri, 'FormsQuery.xql')
 	return
 	<div dojoType="dijit.form.DropDownButton" class="createCollectionDropDownButton">
 		<span class="label">
-			<img style="height:28px;width:28px;" src="{fn:concat($contextPath, '/resources/images/add-folder.png')}" title="{$altTextCreateCollection}"/>
+			<img style="height:28px;width:28px;" src="{fn:concat($contextPath, '/bfResources/images/add-folder.png')}" title="{$altTextCreateCollection}"/>
 		</span>
 		<div dojoType="dijit.TooltipDialog" name="collectionTooltip" >
 			<form type="dijit.form.Form"  name="createCollection" class="createCollection" method="post" enctype="multipart/form-data">
@@ -104,7 +107,7 @@ declare function local:generateUploadMarkup($uri as xs:string, $contextPath as x
 	return
 	<div dojoType="dijit.form.DropDownButton" class="uploadDropDownButton">
 		<span class="label">
-			<img style="height:28px;width:28px;" src="{fn:concat($contextPath, '/resources/images/add-file.png')}" title="{$altTextFormUpload}"/>
+			<img style="height:28px;width:28px;" src="{fn:concat($contextPath, '/bfResources/images/add-file.png')}" title="{$altTextFormUpload}"/>
 		</span>
 		<div dojoType="dijit.TooltipDialog" name="uploadTooltip" >
 			<form method="post" enctype="multipart/form-data" action="{$xqeuryPath}upload-document.xql?path=/forms">
@@ -124,7 +127,7 @@ declare function local:generateUploadMarkup($uri as xs:string, $contextPath as x
 	return
 	<div dojoType="dijit.form.DropDownButton" class="uploadDropDownButton">
 		<span class="label">
-			<img style="height:28px;width:28px;" src="{fn:concat($contextPath, '/resources/images/add-file.png')}" title="{$altTextFormUpload}"/>
+			<img style="height:28px;width:28px;" src="{fn:concat($contextPath, '/bfResources/images/add-file.png')}" title="{$altTextFormUpload}"/>
 		</span>
 		<div dojoType="dijit.TooltipDialog" name="uploadTooltip" >
 			<form type="dijit.form.Form" name="upload" class="upload" method="post"  enctype="multipart/form-data" action="{$xqeuryPath}upload-document.xql" >
@@ -142,7 +145,7 @@ declare function local:generateExistAdminClientMarkup($uri as xs:string, $contex
 <div class="eXistAdminClient" >
 	<span class="label">
 		<a href="{fn:concat($contextPath,'/webstart/exist.jnlp')}">
-			<img style="height:28px;width:28px;" src="{fn:concat($contextPath, '/resources/images/eXist-admin.png')}" title="download eXist Admin Client"/>
+			<img style="height:28px;width:28px;" src="{fn:concat($contextPath, '/bfResources/images/eXist-admin.png')}" title="download eXist Admin Client"/>
 		</a>
 	</span>
 </div>
@@ -172,7 +175,7 @@ if (fn:not(fn:contains($ignores, $childCollection)))
 	then (
 	<div class="directory">
 		<a class="bfIconDirectory" href="{fn:concat(local:getRequestURI($uri, $path), '/', $childCollection)}">
-			<img src="{fn:concat($contextPath, '/resources/images/arrow-down.png')}" border="0" />
+			<img src="{fn:concat($contextPath, '/bfResources/images/arrow-down.png')}" border="0" />
 		</a>
 		<a class="textLink" href="{fn:concat(local:getRequestURI($uri, $path), '/', $childCollection)}"> {$childCollection} </a>
 	</div>
@@ -180,7 +183,7 @@ if (fn:not(fn:contains($ignores, $childCollection)))
 	<div class="directory">
 
 		<a class="bfIconDirectory" href="#" onclick="{fn:concat($wrapperStart, local:getRequestURI($uri, $path), '/', $childCollection , '&amp;fragment=true&amp;ajax=', $ajaxFunction, $wrapperEnd)}">
-			<img src="{fn:concat($contextPath, '/resources/images/arrow-down.png')}" border="0" />
+			<img src="{fn:concat($contextPath, '/bfResources/images/arrow-down.png')}" border="0" />
 		</a>
 		<a class="textLink" title="{$childCollection}" href="#" onclick="{fn:concat($wrapperStart, local:getRequestURI($uri, $path), '/', $childCollection , '&amp;fragment=true&amp;ajax=', $ajaxFunction, $wrapperEnd)}"> {$childCollection} </a>
 	</div>
@@ -218,7 +221,7 @@ declare function local:handleFile($uri as xs:string, $contextPath as xs:string, 
 	return
 	<div class="file">
 		<a class="bfIconFile" href="{fn:concat($filePath, 'db/', $path, '/', $fileLink)}" target="_blank">
-			<img src="{fn:concat($contextPath, '/resources/images/', $icon)}" border="0" />
+			<img src="{fn:concat($contextPath, '/bfResources/images/', $icon)}" border="0" />
 		</a>
 		<a class="textLink" title="{$fileName}" href="{fn:concat($filePath, 'db/', $path, '/', $fileLink)}" target="_blank">{$shortendFileName}</a>
 		<a class="sourceLink" title="view" href="{fn:concat($filePath, 'db/', $path, '/', $fileLink, '?source=true')}" target="_blank">source</a>
@@ -234,14 +237,14 @@ declare function local:generateUp($uri as xs:string, $contextPath as xs:string, 
 	then (
              <div class="directory parent" >
 					<a href="{local:getRequestURI($uri, $up)}">
-						<img id="go-up" title="up one level" src="{fn:concat($contextPath, '/resources/images/arrow-up.png')}" border="0"/>
+						<img id="go-up" title="up one level" src="{fn:concat($contextPath, '/bfResources/images/arrow-up.png')}" border="0"/>
 					</a>
 					<a class="textLink" href="{local:getRequestURI($uri,$up)}">..</a>
 			</div>
 	) else (
 		<div class="directory parent">
 			<a href="#" onclick="{fn:concat($wrapperStart, local:getRequestURI($uri ,$up), '&amp;fragment=true&amp;ajax=', $ajaxFunction, $wrapperEnd)}">
-				<img id="go-up" title="up one level" src="{fn:concat($contextPath, '/resources/images/arrow-up.png')}" border="0"/>
+				<img id="go-up" title="up one level" src="{fn:concat($contextPath, '/bfResources/images/arrow-up.png')}" border="0"/>
 			</a>
 			<a class="textLink" href="#" onclick="{fn:concat($wrapperStart, local:getRequestURI($uri ,$up), '&amp;fragment=true&amp;ajax=', $ajaxFunction, $wrapperEnd)}">..</a>
 		</div>

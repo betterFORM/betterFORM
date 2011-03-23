@@ -9,16 +9,11 @@ return
       xml:lang="en">
     <head>
         <title>betterFORM Demo XForms: Address, Registration, FeatureExplorer</title>
-
-        <link rel="stylesheet" type="text/css" href="{$contextPath}/rest/db/betterform/forms/css/bf.css"/>
         <link rel="stylesheet" type="text/css" href="{$contextPath}/rest/db/betterform/forms/demo/styles/demo.css"/>
         <link rel="stylesheet" type="text/css" href="./resources/InlineRoundBordersAlert.css"/>
         <link rel="stylesheet" type="text/css" href="./resources/timetracker.css"/>
 
-        <script id="betterformJs" type="text/javascript" >
-            loadBetterFORMJs('/betterform/resources/scripts/release/dojo/betterform/betterform-timetracker.js', 'betterform.BfRequiredTimeTracker');
-
-        </script>
+        <script type="text/javascript" src="{$contextPath}/bfResources/scripts/betterform/betterform-TimeTracker.js"> </script>
 
         <script type="text/javascript">
             <!--
@@ -233,8 +228,7 @@ return
                     <xf:label>new</xf:label>
                     <xf:action>
                         <xf:load show="embed" targetid="embedDialog">
-                            <xf:resource
-                                    value="concat('{$contextPath}/rest/db/betterform/apps/timetracker/edit/edit-item.xql#xforms?timestamp=',instance('i-vars')/currentTask)"/>
+                            <xf:resource value="concat('{$contextPath}/rest/db/betterform/apps/timetracker/edit/edit-item.xql#xforms?timestamp=',instance('i-vars')/currentTask)"/>
                         </xf:load>
                     </xf:action>
                 </xf:trigger>
