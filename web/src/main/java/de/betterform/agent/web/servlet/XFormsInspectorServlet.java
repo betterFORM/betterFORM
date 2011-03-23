@@ -74,8 +74,14 @@ public class XFormsInspectorServlet extends HttpServlet /* extends AbstractXForm
         // later probably and optional xpath locationpath can be added
         HttpSession session = request.getSession(true);
 
+
         String[] steps = XPathUtil.splitPathExpr(resource);
-        String xformsSessionId = steps[3];
+        String xformsSessionId;
+        if (resource.indexOf("hostDOM") != -1) {
+            xformsSessionId = steps[steps.length-2];
+        } else {
+            xformsSessionId = steps[steps.length-3];
+        }
         XFormsProcessor processor = WebUtil.getWebProcessor(xformsSessionId);
         if(processor == null){
             sendError(request, response, session, null,"Processor with sessionId '" + xformsSessionId + "' not found.");
@@ -93,8 +99,8 @@ public class XFormsInspectorServlet extends HttpServlet /* extends AbstractXForm
                 DOMUtil.prettyPrintDOM(host, out);
                 out.close();
             } else {
-                String modelId = steps[4];
-                String instanceId = steps[5];
+                String modelId = steps[steps.length-2];
+                String instanceId = steps[steps.length-1];
 
                 //try to get model
                 XFormsModelElement model;

@@ -10,7 +10,7 @@
     workingDirectory="$INSTALL_PATH"
     description="betterFORM limegreen prerelease"
     type="Application"
-    iconFile="$INSTALL_PATH\images\betterform_icon16x16.ico"
+    iconFile="$INSTALL_PATH\webapp\images\betterform_icon.ico"
     iconIndex="0"
             initialState="normal"
             encoding="UTF-8"

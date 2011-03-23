@@ -292,8 +292,20 @@
         <echo message="clean up forms package..."/>
         <echo message="************************************************************************************"/>
         <echo/>
+        <delete dir="${webapp.dir}/forms/demo"/>
         <delete dir="${webapp.dir}/forms/incubator"/>
+        <delete dir="${webapp.dir}/forms/reference"/>
+        <delete dir="${webapp.dir}/forms/template"/>
         <delete dir="${webapp.dir}/forms/test"/>
+        <delete file="${webapp.dir}/forms/FeatureExplorer.xhmtl"/>
+        <delete file="${webapp.dir}/forms/Status.xhtml"/>
+        <delete dir="${webapp.dir}/site"/>
+
+        <delete>
+            <fileset dir="${webapp.dir}/">
+                <include name="*.html"/>
+            </fileset>
+        </delete>
 
         <echo message="************************************************************************************"/>
         <echo message="clean up not packaged javascript..."/>

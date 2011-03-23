@@ -1,3 +1,4 @@
+
 /*
  * Copyright (c) 2010. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
@@ -170,6 +171,7 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
             this.root.addEventListener(BetterFormEventNames.MODEL_REMOVED, this, true);
         }
 
+        this.root.addEventListener(BetterFormEventNames.EXCEPTION, this, true);
     }
 
     /**
@@ -217,6 +219,7 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
             this.root.removeEventListener(BetterFormEventNames.SHOW, this, true);
             this.root.removeEventListener(BetterFormEventNames.INSTANCE_CREATED, this, true);
             this.root.removeEventListener(BetterFormEventNames.MODEL_REMOVED, this, true);
+            this.root.removeEventListener(BetterFormEventNames.EXCEPTION, this, true);
             this.root = null;
         }
     }

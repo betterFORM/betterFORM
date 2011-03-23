@@ -1,6 +1,8 @@
 xquery version "1.0";
 declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
 
+let $contextPath := request:get-context-path()
+return
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns:ev="http://www.w3.org/2001/xml-events"
@@ -122,7 +124,7 @@ declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
                     <xf:bind nodeset="to" type="xf:date" />
 
                     <xf:submission id="s-query-tasks"
-                                    resource="/betterform/rest/db/betterform/apps/timetracker/views/list-items.xql"
+                                    resource="{$contextPath}/rest/db/betterform/apps/timetracker/views/list-items.xql"
                                     method="get"
                                     replace="embedHTML"
                                     targetid="embedInline"
@@ -137,7 +139,7 @@ declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
                                     method="delete"
                                     replace="none"
                                     validate="false">
-                        <xf:resource value="concat('/betterform/rest/db/betterform/apps/timetracker/data/task/',instance('i-vars')/currentTask,'.xml')"/>
+                        <xf:resource value="concat('{$contextPath}/rest/db/betterform/apps/timetracker/data/task/',instance('i-vars')/currentTask,'.xml')"/>
                         <xf:header>
                             <xf:name>username</xf:name>
                             <xf:value>betterFORM</xf:value>
@@ -159,7 +161,7 @@ declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
                         </xf:action>
                     </xf:submission>
 
-                    <xf:instance id="i-project" src="/betterform/rest/db/betterform/apps/timetracker/data/project.xml" />
+                    <xf:instance id="i-project" src="{$contextPath}/rest/db/betterform/apps/timetracker/data/project.xml" />
 
                     <xf:instance id="i-vars">
                         <data xmlns="">
@@ -174,7 +176,7 @@ declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
                                     ref="instance('i-vars')/selectedTasks"
                                     method="post"
                                     replace="new"
-                                    resource="/betterform/rest/db/betterform/apps/timetracker/reports/timeAndEffort.xql">
+                                    resource="{$contextPath}/rest/db/betterform/apps/timetracker/reports/timeAndEffort.xql">
                                     <xf:message ev:event="xforms-submit">here it comes...</xf:message>
                     </xf:submission>
 
@@ -198,7 +200,7 @@ declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
                     </xf:instance>
 
                     <xf:submission id="s-query-tasks-rest"
-                                    resource="/betterform/rest/db/betterform/apps/timetracker/data/task"
+                                    resource="{$contextPath}/rest/db/betterform/apps/timetracker/data/task"
                                     method="get"
                                     replace="embedHTML"
                                     targetid="embedInline"
@@ -221,7 +223,7 @@ declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
                     <xf:action>
                         <xf:load show="embed" targetid="embedDialog">
                             <xf:resource
-                                    value="'/betterform/rest/db/betterform/apps/timetracker/edit/edit-item.xql#xforms'"/>
+                                    value="'{$contextPath}/rest/db/betterform/apps/timetracker/edit/edit-item.xql#xforms'"/>
                         </xf:load>
                     </xf:action>
                 </xf:trigger>
@@ -231,7 +233,7 @@ declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
                     <xf:action>
                         <xf:load show="embed" targetid="embedDialog">
                             <xf:resource
-                                    value="concat('/betterform/rest/db/betterform/apps/timetracker/edit/edit-item.xql#xforms?timestamp=',instance('i-vars')/currentTask)"/>
+                                    value="concat('{$contextPath}/rest/db/betterform/apps/timetracker/edit/edit-item.xql#xforms?timestamp=',instance('i-vars')/currentTask)"/>
                         </xf:load>
                     </xf:action>
                 </xf:trigger>
@@ -259,7 +261,7 @@ declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
             <!-- ######################### Content here ################################## -->
             <div id="content">
                 <div id="header">
-                    <a href="http://www.betterform.de"><img src="/betterform/rest/db/betterform/apps/timetracker/resources/images/bf_logo_201x81.png" alt="betterFORM"/></a>
+                    <a href="http://www.betterform.de"><img src="{$contextPath}/rest/db/betterform/apps/timetracker/resources/images/bf_logo_201x81.png" alt="betterFORM"/></a>
                     <div id="appName">Timetracker</div>
                 </div>
                 <div id="toolbar" dojoType="dijit.Toolbar">
@@ -357,7 +359,7 @@ declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
                     </div>
                 </div>
 
-                <img id="shadowTop" src="/betterform/rest/db/betterform/apps/timetracker/resources/images/shad_top.jpg" alt=""/>
+                <img id="shadowTop" src="{$contextPath}/rest/db/betterform/apps/timetracker/resources/images/shad_top.jpg" alt=""/>
 
                 <div id="fromTo">
                     <xf:output value="concat(from,' - ',to)" id="durationLabel">
