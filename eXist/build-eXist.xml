@@ -119,7 +119,7 @@
             </fileset>
         </copy>
 
-        <copy todir="${eXist.home}/webapp/xquery/xferror.xql" file="${main.dir}/webapp/xquery/xferror.xql"/>
+        <copy tofile="${eXist.home}/webapp/xquery/xferror.xql" file="${main.dir}/webapp/xquery/xferror.xql"/>
 
         <echo>
             __== Setting up start.config ==__
@@ -131,7 +131,7 @@
             <cutdirsmapper dirs="3"/>
         </unzip>
         <echo message="lib/betterform/* always${line.separator}" append="true" file="${eXist.home}/start.config"/>
-        <echo message="webapp/WEB_INF/lib/* always" append="true" file="${eXist.home}/start.config"/>
+        <echo message="webapp/WEB-INF/lib/* always" append="true" file="${eXist.home}/start.config"/>
 
         <echo>
             __== Installing Stylesheets ==__
