@@ -111,12 +111,12 @@
 <dependency>
 <groupId>httpcomponents</groupId>
 <artifactId>httpcomponents-client</artifactId>
-<version>4.1</version>
+<version>4.1.1</version>
 </dependency>
 <dependency>
 <groupId>httpcomponents</groupId>
 <artifactId>httpcomponents-mime</artifactId>
-<version>4.1</version>
+<version>4.1.1</version>
 </dependency>
 <dependency>
 <groupId>commons-io</groupId>
