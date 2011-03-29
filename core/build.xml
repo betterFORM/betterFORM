@@ -36,15 +36,13 @@
         <!-- set timestamp -->
         <tstamp/>
         <echo message="basedir: ${basedir}"/>
-        
         <mkdir dir="${basedir}/target"/>
 
-
-        <echo />
-        <echo message="************************************************************************************"/>
-        <echo message="copying Core resources"/>
-        <echo message="************************************************************************************"/>
-        <echo />
+        <echo>
+        ************************************************************************************
+        copying Core resources
+        ************************************************************************************
+        </echo>
 
         <!-- copy all resources -->
         <copy description="copy all resources"
@@ -76,11 +74,11 @@
               filtering="true"
               overwrite="true"/>
 
-        <echo />
-        <echo message="************************************************************************************"/>
-        <echo message="compiling Core classes"/>
-        <echo message="************************************************************************************"/>
-        <echo />
+        <echo level="info">
+        ************************************************************************************
+        compiling Core classes
+        ************************************************************************************
+        </echo>
         
         <javac description="compile source files"
             srcdir="${basedir}/src/main/java"
@@ -89,7 +87,9 @@
             target="${properties.javac.version}"                
             debug="${properties.javac.debug}"
             deprecation="${properties.javac.deprecation}"
-            optimize="${properties.javac.optimize}"/>
+            optimize="${properties.javac.optimize}"
+            includeantruntime="false"
+            nowarn="true"/>
     </target>
 
     <!-- **************************************** BUILDING JAR **************************************** -->
@@ -108,7 +108,8 @@
         <jar description="package betterform jar"
             jarfile="${target}/${dist.name}.jar"
             basedir="${basedir}/target/classes"
-            excludes="**/test/** **/schemabuilder/** **/aop.xml"/>
+            excludes="**/test/** **/schemabuilder/** **/aop.xml"
+            />
     </target>
 
     <!-- **************************************** SOURCE DISTRIBUTION **************************************** -->

@@ -1,0 +1,44 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"             
+      xmlns:xforms="http://www.w3.org/2002/xforms">
+  	<xhtml:head>
+    	<xhtml:title>10.8.3.c value attribute has precedence in delay element</xhtml:title>
+    	<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    	<xforms:model id="mymodel" >
+       		<xforms:instance xmlns="">
+				<car/>
+       		</xforms:instance>
+			<xforms:message level="modal" ev:event="xforms-rebuild">xforms-rebuild</xforms:message>
+    	</xforms:model>
+  	</xhtml:head>
+  	<xhtml:body>
+  		<xforms:group>
+	  		<xforms:label class="title">10.8.3.c value attribute has precedence in delay element</xforms:label>
+	  	</xforms:group>	
+  		<xforms:group>
+  			<xforms:label>
+  			  After you activate either trigger you must see an xforms-rebuild message. However, 
+  			  the Rebuild Without Delay trigger must display the message faster than the Rebuild With Delay trigger. 
+			</xforms:label>
+  		</xforms:group>
+  		<xforms:trigger>
+	        <xforms:label>Rebuild Without Delay</xforms:label>
+	        <xforms:action ev:event="DOMActivate">
+				<xforms:dispatch name="xforms-rebuild" targetid="mymodel"/>
+			</xforms:action>
+		</xforms:trigger>
+		<xforms:trigger>
+	        <xforms:label>Rebuild With Delay</xforms:label>
+	        <xforms:action ev:event="DOMActivate">
+				<xforms:dispatch name="xforms-rebuild" targetid="mymodel">
+					<xforms:delay value="5000">0</xforms:delay>
+				</xforms:dispatch>
+			</xforms:action>
+		</xforms:trigger>
+
+  </xhtml:body>
+</xhtml:html>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xhtml:head>
+    <xhtml:title>4.4.11.a xforms-disabled event</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+      <xforms:instance>
+	    <car>
+	      <make>Toyota</make>
+	    </car>
+      </xforms:instance>
+	  <xforms:bind nodeset="make" relevant=".='Toyota'" />
+	  <xforms:setvalue ev:event="xforms-ready" ref="make">Honda</xforms:setvalue>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group>
+    	<xforms:label class="title">4.4.11.a xforms-disabled event</xforms:label>
+    </xforms:group>
+    
+    <xforms:group>
+    	<xforms:label>
+	    	You must have seen an xforms-disabled event message.
+	    </xforms:label>	
+    </xforms:group>
+    
+    <xforms:input ref="make">
+    	<xforms:label>Car make : </xforms:label>
+    	<xforms:message ev:event="xforms-disabled" level="modal">xforms-disabled event</xforms:message>
+    </xforms:input>
+  </xhtml:body>
+</xhtml:html>

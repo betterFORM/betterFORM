@@ -1,0 +1,12 @@
+@namespace xforms url(http://www.w3.org/2002/xforms);
+/* Display a red background on all invalid form controls */
+*:invalid { background-color:red; }
+*:valid { background-color:teal; }
+
+xf\:label.title, xforms|label.title 
+{
+    font-size: 15pt; 
+    font-weight: bold;
+    color: #000099;
+    margin-bottom: 2em;
+}

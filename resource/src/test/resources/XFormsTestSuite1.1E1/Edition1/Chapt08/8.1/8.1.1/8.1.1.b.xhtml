@@ -1,0 +1,55 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml"
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xforms="http://www.w3.org/2002/xforms">
+	<xhtml:head>
+		<xhtml:title>8.1.1.b non-relevant form control becoming relevant</xhtml:title>
+		<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+		<xforms:model>
+			<xforms:instance xmlns="">
+				<person-name>
+					<first-name>
+						<title/>
+						<name/>
+					</first-name>
+					<last-name/>
+					<switch>0</switch>
+				</person-name>
+			</xforms:instance>
+			<xforms:bind id="fname_bind" nodeset="/person-name/first-name" relevant="/person-name/switch &gt; 1"/>
+			<xforms:setvalue ev:event="xforms-ready" ref="/person-name/switch">2</xforms:setvalue>
+		</xforms:model>
+	</xhtml:head>
+	<xhtml:body>
+		<xforms:group>
+			<xforms:label class="title">8.1.1.b non-relevant form control becoming relevant</xforms:label>
+		</xforms:group>
+		<xforms:group>
+			<xforms:label>
+			  You must see an xforms-enabled message, an xforms-value-changed message, an xforms-valid 
+			  message, an xforms-readwrite message, and an xforms-optional message. 
+			</xforms:label>	
+		</xforms:group>
+		  <xforms:input ref="/person-name/first-name/name">
+			<xforms:label>First Name:</xforms:label>
+			<xforms:action ev:event="xforms-enabled">
+			  <xforms:message level="modal">xforms-enabled</xforms:message>
+			</xforms:action>
+			<xforms:action ev:event="xforms-value-changed">
+			  <xforms:message level="modal">xforms-value-changed</xforms:message>
+			</xforms:action>
+			<xforms:action ev:event="xforms-valid">
+			  <xforms:message level="modal">xforms-valid</xforms:message>
+			</xforms:action>
+			<xforms:action ev:event="xforms-readwrite">
+			  <xforms:message level="modal">xforms-readwrite</xforms:message>
+			</xforms:action>
+			<xforms:action ev:event="xforms-optional">
+			  <xforms:message level="modal">xforms-optional</xforms:message>
+			</xforms:action>
+		  </xforms:input>
+		
+	</xhtml:body>
+</xhtml:html>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>g.1.a enabled and disabled pseudo-classes (non-normative)</xhtml:title>
+    <xhtml:link rel="stylesheet" href="g1a.css" type="text/css"/>
+    <xforms:model>
+      <xforms:instance>
+        <car xmlns="">
+          <make>Honda</make>
+          <model>Civic</model>
+        </car>
+      </xforms:instance>
+      <xforms:bind id="make" nodeset="/car/make" relevant="true()" />
+      <xforms:bind id="model" nodeset="/car/model" relevant="false()" />
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+
+  	<xforms:group>
+  		<xforms:label class="title">g.1.a enabled and disabled pseudo-classes (non-normative)</xforms:label>
+  	</xforms:group>
+	<xforms:group>
+		<xforms:label>The first input must have a background color of red.</xforms:label>
+	</xforms:group>
+
+	<xforms:input bind="make">
+		<xforms:label>Car Make (relevant = true) : </xforms:label>
+	</xforms:input>
+
+	<xforms:input bind="model">
+		<xforms:label>Car Model (relevant = false) : </xforms:label>
+	</xforms:input>
+
+	
+
+  </xhtml:body>
+</xhtml:html>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:et="http://w3c.org/eventtracker"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xhtml:head>
+    <xhtml:title>4.6.1.b1 event sequencing for input, secret, textarea controls - focus change with value change</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+      <xforms:instance xmlns="">
+        <car>
+          <make/>
+          <vin/>
+          <color/>
+        </car>
+      </xforms:instance>
+      <xforms:bind id="bind1" nodeset="/car/make"/>
+      <xforms:bind id="bind2" nodeset="/car/vin"/>
+      <xforms:bind id="bind3" nodeset="/car/color"/>
+      <xforms:bind id="bind14" nodeset="/car/price"/>
+      <xforms:action ev:event="xforms-recalculate">
+      	<xforms:insert at="index('repeat_event_tracker')" position="after" nodeset="/et:events/et:event" model="event_tracker"/>
+        <xforms:setvalue model="event_tracker" ref="/et:events/et:event[index('repeat_event_tracker')]/@name">xforms-recalculate</xforms:setvalue>
+      </xforms:action>
+      <xforms:action ev:event="xforms-revalidate">
+      	<xforms:insert at="index('repeat_event_tracker')" position="after" nodeset="/et:events/et:event" model="event_tracker"/>
+        <xforms:setvalue model="event_tracker" ref="/et:events/et:event[index('repeat_event_tracker')]/@name">xforms-revalidate</xforms:setvalue>
+      </xforms:action>
+      <xforms:action ev:event="xforms-refresh">
+      	<xforms:insert at="index('repeat_event_tracker')" position="after" nodeset="/et:events/et:event" model="event_tracker"/>
+        <xforms:setvalue model="event_tracker" ref="/et:events/et:event[index('repeat_event_tracker')]/@name">xforms-refresh</xforms:setvalue>
+      </xforms:action>
+    </xforms:model>
+    <xforms:model id="event_tracker">
+      <xforms:instance id="tracker_instance">
+      	<et:events>
+      	   <et:event name=""/>
+      	</et:events>
+      </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group>
+    	<xforms:label class="title">4.6.1.b1 event sequencing for input, secret, textarea controls - focus change with value change</xforms:label>
+    </xforms:group>
+    <xforms:group>
+    	<xforms:label>
+    		When you activate one of the 'Test' triggers below you must see a series of outputs for a &quot;Value Change&quot; 
+    		sequence (xforms-recalculate, xforms-revalidate, and xforms-refresh). 
+    		Reload the form to reset the event list. 
+    	</xforms:label>	
+    </xforms:group>
+    
+    <xforms:input ref="/car/make" id="input1">
+        <xforms:label>input </xforms:label>
+    </xforms:input>
+    
+    <xforms:secret ref="/car/vin" id="secret1">
+        <xforms:label>secret </xforms:label>
+    </xforms:secret>
+    
+    <xforms:textarea ref="/car/color" id="textarea1">
+        <xforms:label>textarea </xforms:label>
+    </xforms:textarea>
+    
+    <xforms:group>
+    	<xforms:trigger>
+    		<xforms:label>Test input</xforms:label>
+    		<xforms:setvalue ev:event="DOMActivate" ref="/car/make">Honda</xforms:setvalue>
+    		<xforms:setfocus ev:event="DOMActivate" control="secret1"/>
+    	</xforms:trigger>
+    	
+    	<xforms:trigger>
+    		<xforms:label>Test secret</xforms:label>
+    		<xforms:setvalue ev:event="DOMActivate" ref="/car/vin">1337</xforms:setvalue>
+    		<xforms:setfocus ev:event="DOMActivate" control="input1"/>
+    	</xforms:trigger>
+    	
+    	<xforms:trigger>
+    		<xforms:label>Test textarea</xforms:label>
+    		<xforms:setvalue ev:event="DOMActivate" ref="/car/color">blue</xforms:setvalue>
+    		<xforms:setfocus ev:event="DOMActivate" control="input1"/>
+    	</xforms:trigger>
+    </xforms:group>	
+    
+    <xforms:repeat model="event_tracker" id="repeat_event_tracker" nodeset="/et:events/et:event">
+      <xforms:output ref="./@name" model="event_tracker">
+        <xforms:label>Event fired:</xforms:label>
+      </xforms:output>
+    </xforms:repeat>
+  </xhtml:body>
+</xhtml:html>

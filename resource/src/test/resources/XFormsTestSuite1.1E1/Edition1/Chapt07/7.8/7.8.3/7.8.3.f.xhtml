@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+	    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>7.8.3.f digest() function default encoding base64</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css" />
+    <xforms:model >
+      <xforms:instance xmlns="">
+	<root />
+      </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group>
+      <xforms:label class="title">7.8.3.f digest() function default encoding is 'base64'</xforms:label>
+    </xforms:group>
+
+    <xforms:group>
+      <xforms:label>
+	You must see the group label &quot;PASS&quot; for all Tests. 
+	If the function does not return the correct value you will see a group label
+	with the word &quot;FAIL&quot; and the incorrect value.
+      </xforms:label>
+    </xforms:group>
+
+    <!-- Test that default encoding is 'base64' -->
+    <xforms:group>
+      <xforms:label>Test 1</xforms:label>
+      <xforms:group ref="self::node()[digest('abc', 'SHA-256')='ungWv48Bz+pBQUDeXa4iI7ADYaOWF3qctBD/YfIAFa0=']">
+	<xforms:label>Test 1 : PASS </xforms:label>
+      </xforms:group>
+      <xforms:group ref="self::node()[digest('abc', 'SHA-256')!='ungWv48Bz+pBQUDeXa4iI7ADYaOWF3qctBD/YfIAFa0=']">
+	<xforms:label>Test 1 : FAIL </xforms:label>
+	<xforms:output value="digest('abc', 'SHA-256')">
+	  <xforms:label>Bad Value=</xforms:label>
+	</xforms:output>
+      </xforms:group>
+    </xforms:group>
+
+  </xhtml:body>
+</xhtml:html>

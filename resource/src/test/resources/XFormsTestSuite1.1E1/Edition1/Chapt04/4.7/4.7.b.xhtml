@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:et="http://w3c.org/eventtracker"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xhtml:head>
+    <xhtml:title>4.7.b xforms-submit event not dispatched</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+       <xforms:instance xmlns="">
+           <root/>
+       </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group>
+    	<xforms:label class="title">4.7.b xforms-submit event not dispatched</xforms:label>
+    </xforms:group>
+    <xforms:group>
+    	<xforms:label>
+    		When you activate the Invalid Submit submit control you must not see an xforms-submit message. 
+    	</xforms:label>	
+    </xforms:group>
+    
+    <xforms:submit submission="invalid">
+    	<xforms:label>Invalid Submit</xforms:label>
+    	<xforms:message level="modal" ev:event="xforms-submit">xforms-submit</xforms:message>
+    </xforms:submit>
+    
+  </xhtml:body>
+</xhtml:html>

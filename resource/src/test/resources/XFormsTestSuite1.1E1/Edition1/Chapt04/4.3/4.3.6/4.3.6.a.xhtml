@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+  <xhtml:head>
+  	<xhtml:title>4.3.6.a xforms-previous and xforms-next</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+      <xforms:instance>
+        <car xmlns=""/>
+      </xforms:instance>      
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">4.3.6.a xforms-previous and xforms-next</xforms:label>
+  	</xforms:group>
+	<xforms:group>
+		<xforms:label>
+		  When you activate the Previous trigger you must see an xforms-previous message. 
+		  When you activate the Next trigger you must see an xforms-next message. 
+		</xforms:label>	
+	</xforms:group>
+	
+	<xforms:trigger id="prevtrigger">
+	    <xforms:label>Previous</xforms:label>
+	    <xforms:action ev:event="DOMActivate">
+      		<xforms:dispatch name="xforms-previous" targetid="input3"/> 
+     	</xforms:action>
+	</xforms:trigger>
+
+	<xforms:trigger id="nexttrigger">
+	      <xforms:label>Next</xforms:label>
+	      <xforms:action ev:event="DOMActivate">
+      		<xforms:dispatch name="xforms-next" targetid="input1"/> 
+      	  </xforms:action>
+	</xforms:trigger>
+	
+	<xforms:group>
+	    <xforms:input ref="/car" id="input1">
+			<xforms:label>First Input:</xforms:label>
+	      	<xforms:action ev:event="xforms-next">
+			     <xforms:message level="modal">xforms-next</xforms:message>
+			</xforms:action>
+			<xforms:action ev:event="xforms-previous">
+		     	<xforms:message level="modal">xforms-previous</xforms:message>
+		    </xforms:action>
+	    </xforms:input>
+	
+	    <xforms:input ref="/car" id="input2">
+			<xforms:label>Second Input:</xforms:label>
+		    <xforms:message level="modal" ev:event="xforms-next">xforms-next</xforms:message>
+		    <xforms:message level="modal" ev:event="xforms-previous">xforms-previous</xforms:message>
+	    </xforms:input>
+	
+	    <xforms:input ref="/car" id="input3">
+	       	<xforms:label>Third Input:</xforms:label>
+	      	<xforms:message level="modal" ev:event="xforms-next">xforms-next</xforms:message>
+		    <xforms:message level="modal" ev:event="xforms-previous">xforms-previous</xforms:message>
+	    </xforms:input>
+	</xforms:group>
+	
+  </xhtml:body>
+</xhtml:html>

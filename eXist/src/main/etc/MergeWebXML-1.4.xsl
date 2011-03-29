@@ -82,6 +82,10 @@
             <servlet-class>de.betterform.agent.web.servlet.XFormsInspectorServlet</servlet-class>
         </servlet>
 
+        <servlet>
+            <servlet-name>ResourceServlet</servlet-name>
+            <servlet-class>de.betterform.agent.web.resources.ResourceServlet</servlet-class>
+        </servlet>
     </xsl:template>
 
     <xsl:template match="/webxml:web-app/webxml:filter-mapping[webxml:filter-name/text()='XQueryURLRewrite']">
@@ -127,6 +131,11 @@
         <servlet-mapping>
             <servlet-name>inspector</servlet-name>
             <url-pattern>/inspector/*</url-pattern>
+        </servlet-mapping>
+
+        <servlet-mapping>
+            <servlet-name>ResourceServlet</servlet-name>
+            <url-pattern>/bfResources/*</url-pattern>
         </servlet-mapping>
     </xsl:template>
 

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xhtml:head>
+        <xhtml:title>8.1.a navindex and accesskey (non-normative)</xhtml:title>
+        <xforms:model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <xforms:instance xmlns="">
+                <order>
+                    <quantity>3</quantity>
+                    <name>Steven</name>
+                    <item>Ball</item>
+                </order>
+            </xforms:instance>
+        </xforms:model>
+        <xhtml:link href="../../driverPages/forms/TestSuite11.css" rel="stylesheet"/>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <xforms:label class="title">8.1.a navindex and accesskey (non-normative)</xforms:label>
+        </xforms:group>
+        <xforms:group xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <xforms:label>
+		    This test case is non-normative and assumes that navindex attributes 
+		    will be recognized and interpreted as described in section 4.3.1 of the specification. 
+			Navigation order must be the Name input first, the Quantity input second, and the Item input third. 
+			Keyboard users can use the Tab key to test the navigation order. 
+			The input controls are also set to use access keys. Keyboard users can hold down the Alt key, the Shift 
+			key, and the key in parentheses in the labels of the input controls to jump directly to an input control. 
+			</xforms:label>
+        </xforms:group>
+        <xforms:group>
+	        <xforms:input accesskey="q" navindex="2" ref="/order/quantity" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	            <xforms:label>Quantity(q):</xforms:label>
+	        </xforms:input>
+        </xforms:group>
+        <xforms:group>
+	        <xforms:input accesskey="n" navindex="1" ref="/order/name" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	            <xforms:label>Name(n):</xforms:label>
+	        </xforms:input>
+        </xforms:group>
+        <xforms:group>
+	        <xforms:input accesskey="i" navindex="3" ref="/order/item" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	            <xforms:label>Item(i):</xforms:label>
+	        </xforms:input>
+        </xforms:group>
+        
+    </xhtml:body>
+</xhtml:html>

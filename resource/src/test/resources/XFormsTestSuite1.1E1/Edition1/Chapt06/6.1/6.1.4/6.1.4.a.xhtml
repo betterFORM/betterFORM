@@ -1,0 +1,48 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml"
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xforms="http://www.w3.org/2002/xforms">
+	<xhtml:head>
+		<xhtml:title>6.1.4.a inheritance rules for relevant property</xhtml:title>
+		<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+		<xforms:model>
+			<xforms:instance xmlns="">
+				<person-name>
+					<first-name>
+						<title/>
+						<name/>
+					</first-name>
+					<last-name/>
+				</person-name>
+			</xforms:instance>
+			<xforms:bind id="fname_bind" nodeset="/person-name/first-name" relevant="false()"/>
+		</xforms:model>
+	</xhtml:head>
+	<xhtml:body>
+		<xforms:group>
+			<xforms:label class="title">6.1.4.a inheritance rules for relevant property</xforms:label>
+		</xforms:group>
+		<xforms:group>
+			<xforms:label>
+				You must only be able to enter a value into the Last Name input field. The Title and First Name input 
+				fields must be hidden or unavailable. 
+			</xforms:label> 
+		</xforms:group>
+
+			<xforms:input ref="/person-name/first-name/title">
+				<xforms:label>Title:</xforms:label>
+			</xforms:input>
+
+			<xforms:input ref="/person-name/first-name/name">
+				<xforms:label>First Name:</xforms:label>
+			</xforms:input>
+
+			<xforms:input ref="/person-name/last-name">
+				<xforms:label>Last Name:</xforms:label>
+			</xforms:input>
+			
+			
+	</xhtml:body>
+</xhtml:html>

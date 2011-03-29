@@ -1,0 +1,39 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml"
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:xforms="http://www.w3.org/2002/xforms">
+	<xhtml:head>
+		<xhtml:title>4.8.1.b getInstanceDocument() throws a DOMException (non-normative)</xhtml:title>
+		<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+		<xforms:model id="my_model1">
+			<xforms:instance id="my_data1">
+				<car>
+					<color>blue</color>
+				</car>
+			</xforms:instance>
+		</xforms:model>
+	</xhtml:head>
+	<xhtml:body>
+	    <xforms:group>
+		    <xforms:label class="title">4.8.1.b getInstanceDocument() throws a DOMException (non-normative)</xforms:label>
+		</xforms:group>
+		<xforms:group>
+			<xforms:label>
+				This test case uses Javascript to execute the getInstanceDocument() method. 
+				You may have seen a message box with the value &quot;DOMException&quot;.
+			</xforms:label>
+		</xforms:group>
+		<xhtml:script type="text/javascript">
+			try	{
+				var model = document.getElementById('my_model1');
+				var inst1 = model.getInstanceDocument('my_INVALID');
+				var my_color = inst1.getElementsByTagName('color')[0];
+				alert(my_color.textContent);
+			}
+			catch(DOMException)	{
+				alert('DOMException');
+			}
+		</xhtml:script>
+	</xhtml:body>
+	
+</xhtml:html>
