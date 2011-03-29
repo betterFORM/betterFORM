@@ -18,7 +18,7 @@
      -->
 
     <!-- you need to reference a valid GitHub tag here which your xApplication takes as a base -->
-    <property name="betterform.version" value="https://github.com/betterFORM/betterFORM/zipball/development"/>
+    <property name="betterform.version" value="https://github.com/betterFORM/betterFORM/zipball/ResourceLoading"/>
     <property name="eXist.version"
               value="http://netcologne.dl.sourceforge.net/project/exist/Stable/1.4/eXist-setup-1.4.0-rev10440.jar"/>
 
@@ -105,26 +105,9 @@
         <echo message="Building betterForm extension"/>
         <echo message="************************************************************************************************************"/>
         <echo/>
-        <ant antfile="${bf.src}/eXist/build-betterFORM-XRX.xml" target="build-up-to-date-extension"
-             useNativeBasedir="true" inheritAll="false"/>
-
-
-        <echo/>
-        <echo message="************************************************************************************************************"/>
-        <echo message="Copying betterForm extension to eXist"/>
-        <echo message="************************************************************************************************************"/>
-        <echo/>
-        <mkdir dir="${xApp.target}/extensions"/>
-        <copy todir="${xApp.target}/extensions">
-            <fileset dir="${bf.src}/eXist/target/eXist-1.4/"/>
-        </copy>
-
-        <echo/>
-        <echo message="************************************************************************************************************"/>
-        <echo message="Installing betterForm extension"/>
-        <echo message="************************************************************************************************************"/>
-        <echo/>
-        <ant antfile="${xApp.target}/extensions/betterform/build.xml" target="wrapped-install" inheritall="false" usenativebasedir="true"/>
+        <ant antfile="${bf.src}/eXist/build-eXist.xml" target="install-betterFORM" useNativeBasedir="true" inheritAll="false">
+            <property name="eXist.home" value="${xApp.target}"/>
+        </ant>
 
         <echo/>
         <echo message="************************************************************************************************************"/>
@@ -154,15 +137,21 @@
     </target>
 
     <target name="start" description="start XRX Application">
-        <ant antfile="${xApp.target}/extensions/betterform/build.xml" target="start-eXist" inheritall="false" usenativebasedir="true"/>
+        <ant antfile="${bf.src}/eXist/build-utils-database.xml" target="start-eXist" inheritall="false" usenativebasedir="true">
+            <property name="eXist.home" value="${xApp.target}"/>
+        </ant>
     </target>
 
     <target name="stop" description="stop XRX Application" >
-        <ant antfile="${xApp.target}/extensions/betterform/build.xml" target="stop-eXist" inheritall="false" usenativebasedir="true"/>
+        <ant antfile="${bf.src}/eXist/build-utils-database.xml" target="stop-eXist" inheritall="false" usenativebasedir="true">
+            <property name="eXist.home" value="${xApp.target}"/>
+            <property name="admin.passwd" value=" "/>
+
+        </ant>
     </target>
 
     <target name="deploy-to-db" description="deploy xrx-application to database" if="xrx.installed">
-        <ant antfile="${xApp.target}/extensions/betterform/build-utils-database.xml" target="install-files-into-eXist-DB">
+        <ant antfile="${bf.src}/eXist/build-utils-database.xml" target="install-files-into-eXist-DB">
            <property name="eXist.home" value="${xApp.target}"/>
            <property name="db-user" value="${db.user}"/>
            <property name="db-passwd" value="${db.pwd}"/>

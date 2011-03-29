@@ -50,14 +50,12 @@ return
             }
 
             var editSubcriber = dojo.subscribe("/task/edit", function(data){
-                alert('EDIT');
                 fluxProcessor.setControlValue("currentTask",data);
                 embed('editTask','embedDialog');
 
             });
 
             var deleteSubscriber = dojo.subscribe("/task/delete", function(data){
-                alert('DELETE');
                 var check = confirm("Really delete this entry?");
                 if (check == true){
                     fluxProcessor.setControlValue("currentTask",data);

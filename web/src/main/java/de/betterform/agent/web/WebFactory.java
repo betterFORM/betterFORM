@@ -229,8 +229,15 @@ public class WebFactory {
      * @return the absolute path or path relative to the servlet context
      */
     public static final String resolvePath(String path, ServletContext servletContext) {
-        if (!new File(path).isAbsolute())
-            path = servletContext.getRealPath(path);
+        String tmpPath;
+        if (!new File(path).isAbsolute()) {
+            tmpPath = servletContext.getRealPath(path);
+            if (tmpPath == null) {
+                tmpPath =  servletContext.getRealPath(".") + "/" + path;
+            }
+
+            path = tmpPath;
+        }
 
         return path;
     }
