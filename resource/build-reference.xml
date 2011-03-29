@@ -8,6 +8,8 @@
     <property name="core.dir" value="${basedir}/../core"/>
     <xmlproperty file="../../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
     <property name="web.dir" value="${basedir}/../web"/>
+    <property name="form.src" value="${basedir}/src/main/referenceForms"/>
+
 
     <target name="generate-forms" description="generate reference forms">
         <echo>
@@ -16,9 +18,9 @@
         ************************************************************************************
         </echo>
 
-        <xslt basedir="${basedir}/xml"
-              destdir="${basedir}/../xforms/reference"
-              style="${basedir}/build-forms.xsl"
+        <xslt basedir="${form.src}/xml"
+              destdir="${form.src}/../xforms/reference"
+              style="${form.src}/build-forms.xsl"
               force="true"
               includes="*.xml"
               extension=".xhtml">
