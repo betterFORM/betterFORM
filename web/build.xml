@@ -280,7 +280,7 @@
     <target name="deploy-forms" description="deploy the forms to target">
         <echo>
         ************************************************************************************
-        copying forms...
+        copying forms to target...
         ************************************************************************************
         </echo>
 
