@@ -358,7 +358,9 @@
             <fileset dir="${bfReleaseSrc}/dojo" includes="_base/_loader/**/*"/>
              <fileset dir="${bfReleaseSrc}/dojo" includes="_firebug/**/*"/>
              <fileset dir="${bfReleaseSrc}/dojo" includes="resources/**/*"/>
-            <fileset dir="${bfReleaseSrc}/dojo" includes="cldr/**/*"/>
+             <fileset dir="${bfReleaseSrc}/dojo" includes="cldr/**/*"/>
+             <fileset dir="${bfReleaseSrc}/dojo" includes="date/**/*"/>
+
              <fileset dir="${bfReleaseSrc}/dojo">
                  <include name="_base.js"/>
                  <include name="dojo.js"/>
@@ -554,7 +556,7 @@
               maxmemory="512m">
             <arg value="build.js"/>
             <arg value="profile=betterform"/>
-            <arg value="localeList='en'"/>
+           <arg value="localeList=de,de-at,de-be,de-ch,de-de,de-li,de-lu,en,en-au,en-be,en-bw,en-bz,en-ca,en-gb,en-hk,en-ie,en-in,en-jm,en-mt,en-na,en-nz,en-ph,en-pk,en-sg,en-tt,en-us,en-za,en-zw,es,es-ar,es-cl,es-co,es-do,es-ec,es-es,es-gt,es-hn,es-mx,es-ni,es-pa,es-pe,es-pr,es-py,es-sv,es-us,es-uy,es-ve,et,eu,fr,fr-be,fr-ca,fr-ch,fr-lu"/>
             <arg value="log=1"/>
             <arg value="optimize=shrinksafe"/>
             <arg value="mini=true "/>
