@@ -25,12 +25,10 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
-import org.esxx.js.protocol.GAEConnectionManager;
 import org.w3c.dom.Element;
 
 import java.io.IOException;
@@ -257,7 +255,7 @@ public abstract class ConnectorFactory {
             start = toReplace.indexOf("{$");
             end = toReplace.indexOf('}');
             if (start == -1 || end == -1) {
-                hasTokens = false; //exit
+                hasTokens = false; //exit                                    ›
                 substitutedString.append(toReplace);
             } else {
                 substitutedString.append(toReplace.substring(0, start));
@@ -282,9 +280,8 @@ public abstract class ConnectorFactory {
         try {
             HttpRequestBase httpMethod = new HttpGet(uri.toString());
             HttpParams httpParams = new BasicHttpParams();
-            ClientConnectionManager gaeConnectionManager = new GAEConnectionManager();
 
-            HttpClient client = new DefaultHttpClient(gaeConnectionManager, httpParams);
+            HttpClient client = getHttpClient(httpParams);
             HttpResponse response = client.execute(httpMethod);
             if (response.getStatusLine().getStatusCode() >= 300) {
                 // Allow 302 only
@@ -311,4 +308,7 @@ public abstract class ConnectorFactory {
         return null;
     }
 
+    public DefaultHttpClient getHttpClient(HttpParams httpParams) {
+          return new DefaultHttpClient(httpParams);
+    }
 }

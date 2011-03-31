@@ -5,6 +5,7 @@
 
 package de.betterform.connector.http;
 
+import de.betterform.connector.ConnectorFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import de.betterform.connector.AbstractConnector;
@@ -43,9 +44,7 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.util.EntityUtils;
-import org.esxx.js.protocol.GAEConnectionManager;
 
-import javax.print.URIException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -77,7 +76,7 @@ public class AbstractHTTPConnector extends AbstractConnector {
     public static final String HTTPCLIENT_SSL_FACTORY_DEFAULTPORT= "httpclient.ssl.factory.defaultPort";
     public static final String HTTPCLIENT_SSL_KEYSTORE_PATH= "httpclient.ssl.keystore.path";
     public static final String HTTPCLIENT_SSL_KEYSTORE_PASSWD= "httpclient.ssl.keystore.passwd";
-    
+
     /**
      * The response body.
      */
@@ -209,7 +208,7 @@ public class AbstractHTTPConnector extends AbstractConnector {
             configureRequest(httpMethod, body, type, encoding);
 
             execute(httpMethod);
-            
+
         } catch (XFormsException e) {
         	throw e;
         } catch (Exception e) {
@@ -227,23 +226,22 @@ public class AbstractHTTPConnector extends AbstractConnector {
     	HttpRequestBase httpMethod = new HttpDelete(uri);
     	try {
     		execute(httpMethod);
-    		
+
     	} catch (XFormsException e) {
     		throw e;
     	} catch (Exception e) {
     		throw new XFormsException(e);
     	}
     }
-    
+
     //protected void execute(HttpMethod httpMethod) throws Exception{
     protected void execute(HttpRequestBase httpRequestBase) throws Exception{
         //		(new HttpClient()).executeMethod(httpMethod);
         //HttpClient client = new HttpClient();
          HttpParams httpParams = new BasicHttpParams();
-            ClientConnectionManager gaeConnectionManager = new GAEConnectionManager();
 
-            DefaultHttpClient client = new DefaultHttpClient(gaeConnectionManager,httpParams);
 
+            DefaultHttpClient client = ConnectorFactory.getFactory().getHttpClient(httpParams);
 
 
 /*
@@ -309,7 +307,7 @@ public class AbstractHTTPConnector extends AbstractConnector {
             }
             Iterator keyIterator = headersToAdd.keySet().iterator();
             while(keyIterator.hasNext()){
-                String key = (String) keyIterator.next();                 
+                String key = (String) keyIterator.next();
                 //httpMethod.setRequestHeader(new Header(key,(String) headersToAdd.get(key)));
                 httpRequestBase.addHeader(key, (String) headersToAdd.get(key));
             }

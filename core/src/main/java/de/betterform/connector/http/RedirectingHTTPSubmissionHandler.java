@@ -12,6 +12,7 @@
 package de.betterform.connector.http;
 
 
+import de.betterform.connector.ConnectorFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.xforms.exception.XFormsException;
@@ -20,11 +21,8 @@ import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.conn.ClientConnectionManager;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
-import org.esxx.js.protocol.GAEConnectionManager;
 import org.w3c.dom.Node;
 
 import java.util.Map;
@@ -59,9 +57,8 @@ public class RedirectingHTTPSubmissionHandler extends HTTPSubmissionHandler {
     protected void execute(HttpRequestBase httpMethod) throws Exception {
         LOGGER.info("RedirectingHTTPSubmissionDriver.execute");
         HttpParams httpParams = new BasicHttpParams();
-        ClientConnectionManager gaeConnectionManager = new GAEConnectionManager();
+        HttpClient client = ConnectorFactory.getFactory().getHttpClient(httpParams);
 
-        HttpClient client = new DefaultHttpClient(gaeConnectionManager,httpParams);
         HttpResponse response = client.execute(httpMethod);
 
         if (response.getStatusLine().getStatusCode() >= 400) {
