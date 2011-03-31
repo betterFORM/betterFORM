@@ -19,13 +19,13 @@ dojo.declare(
     monthsArray: new Array( "January","February","March","April","May","June","July","August","September","October","November","December"),
 
     postMixInProperties:function() {
-        console.debug("DropDownDate.postMixInProperties");
+        //console.debug("DropDownDate.postMixInProperties");
         this.inherited(arguments);
         this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);
     },
 
     postCreate:function() {
-        console.debug("DropDownDate.postCreate this.domNode:", this.valueNode, " this.value: ", this.value);
+        //console.debug("DropDownDate.postCreate this.domNode:", this.valueNode, " this.value: ", this.value);
         this.inherited(arguments);
 
         dojo.attr(this.valueNode, "value", this.value);
@@ -37,14 +37,14 @@ dojo.declare(
     },
 
     applyValues:function(value) {
-        console.debug("DropDownDate.applyValues value:",value);
+        //console.debug("DropDownDate.applyValues value:",value);
         if (value != undefined) {
 
             var dropDownDateContainer = value.split("-");
             if(dropDownDateContainer.length != 3) {
                 return;
             }
-            console.debug("DropDownDate.postCreate this.timeContainer:", dropDownDateContainer);
+            //console.debug("DropDownDate.postCreate this.timeContainer:", dropDownDateContainer);
 
             this.years = dropDownDateContainer[0];
             this.months = dropDownDateContainer[1];
@@ -58,7 +58,7 @@ dojo.declare(
     },
 
     onDaysChanged:function(evt) {
-        console.debug("DropDownDate.onDaysChanged.");
+        //console.debug("DropDownDate.onDaysChanged.");
         var selectedItem = dijit.byId(this.daysFacet.id).get('item');
         if (selectedItem != undefined) {
             this.days =  selectedItem.value;
@@ -69,7 +69,7 @@ dojo.declare(
     },
 
     onMonthsChanged:function(evt) {
-        console.debug("DropDownDate.onMonthsChanged.");
+        //console.debug("DropDownDate.onMonthsChanged.");
         var selectedItem = dijit.byId(this.monthsFacet.id).get('item');
         if (selectedItem != undefined) {
             this.months =  selectedItem.value;
@@ -85,7 +85,7 @@ dojo.declare(
     },
 
     onYearsChanged:function(evt) {
-        console.debug("DropDownDate.onYearsChanged.");
+        //console.debug("DropDownDate.onYearsChanged.");
         var selectedItem = dijit.byId(this.yearsFacet.id).get('item');
         if (selectedItem != undefined) {
             this.years =  selectedItem.value;
@@ -96,41 +96,41 @@ dojo.declare(
     },
 
     onYearsBlur:function(evt) {
-        console.debug("DropDownDate.onYearsBlur.");
+        //console.debug("DropDownDate.onYearsBlur.");
         this.setControlValue();
     },
 
     _onFocus:function() {
-        console.debug("betterform.ui.input.DropDownDate._onFocus");
+        //console.debug("betterform.ui.input.DropDownDate._onFocus");
         this.inherited(arguments);
         this.handleOnFocus();
     },
 
     _onBlur:function() {
-        console.debug("betterform.ui.input.DropDownDate._onBlur");
+        //console.debug("betterform.ui.input.DropDownDate._onBlur");
         this.inherited(arguments);
         this.handleOnBlur();
     },
 
     onChange: function(/*anything*/ newValue, /*Boolean, optional*/ priorityChange){
-        console.debug("betterform.ui.input.DropDownDate.onChange");
+        //console.debug("betterform.ui.input.DropDownDate.onChange");
     },
 
     _handleSetControlValue:function(value) {
-        console.debug("betterform.ui.input.DropDownDate._handleSetControlValue value",value);
+        //console.debug("betterform.ui.input.DropDownDate._handleSetControlValue value",value);
         this.applyValues(value);
     },
 
 
     getControlValue:function(){
-        console.debug("betterform.ui.input.DropDownDate.getControlValue currentValue: ", this.value);
+        //console.debug("betterform.ui.input.DropDownDate.getControlValue currentValue: ", this.value);
         return this.value;
     },
 
      setCurrentDate:function(){
-         console.debug("betterform.ui.input.DropDownDate.setCurrentDate computeDate: ", this.years + "-" + this.months + "-" + this.days);
+         //console.debug("betterform.ui.input.DropDownDate.setCurrentDate computeDate: ", this.years + "-" + this.months + "-" + this.days);
          var currentDate = this.years + "-" + this.months + "-" + this.days;
-         console.debug("betterform.ui.input.DropDownDate.setCurrentDate currentDate: ", currentDate);
+         //console.debug("betterform.ui.input.DropDownDate.setCurrentDate currentDate: ", currentDate);
          dojo.attr(this.valueNode, "value", currentDate);
          this.value = currentDate;
          this.setControlValue();

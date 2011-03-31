@@ -715,7 +715,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
          to embed an existing form into the running form
          */
         else if (xmlEvent.contextInfo.show == "embed") {
-//            console.debug("xmlEvent.contextInfo.show='embed'", this);
+            console.debug("xmlEvent.contextInfo.show='embed'", this);
             // getting target from event - can be either the value of a 'name' or 'id' Attribute
             var xlinkTarget = xmlEvent.contextInfo.xlinkTarget;
 
@@ -731,6 +731,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
                 console.debug("target id for embedding is: ", targetid);
             }
 
+            console.debug("targetid:", targetid);
             this._unloadDOM(targetid);
 
             //get original Element in master DOM
@@ -753,7 +754,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
 
             // finally dynamically load the CSS (if some) form the embedded form
             var cssToLoad = xmlEvent.contextInfo.inlineCSS;
-//            console.debug("css to load: ", cssToLoad);
+            console.debug("css to load: ", cssToLoad);
             var headID = document.getElementsByTagName("head")[0];
             if(cssToLoad != undefined && cssToLoad != ""){
                 var newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","style");
@@ -771,6 +772,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
                 for (var i = 0; i <= styles.length; i = i+1) {
                     if (styles[i] != undefined && styles[i] != "") {
                         var newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","link");
+                        dojo.attr(newScript,"name",xlinkTarget);
                         dojo.attr(newScript,"href",styles[i]);
                         dojo.attr(newScript,"type","text/css");
                         dojo.attr(newScript,"rel","stylesheet");
@@ -802,6 +804,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
                 for (var i = 0; i <= scripts.length; i = i+1) {
                     if (scripts[i] != undefined && scripts[i] != "") {
                         var newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","script");
+                        dojo.attr(newScript,"name",xlinkTarget);
                         dojo.attr(newScript,"src",scripts[i]);
                         dojo.attr(newScript,"type","text/javascript");
                         newScript.appendChild(dojo.doc.createTextNode(''));
@@ -868,12 +871,38 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
 
     _unloadDOM:function(target) {
         //delete CSS specific to subform
+        var htmlEntryPoint = dojo.byId(target);
+
         var styleList = document.getElementsByTagName("style");
-        dojo.forEach(styleList, function(item) {
-            if(dojo.attr(item,"name") == target){
-                item.parentNode.removeChild(item);
-            }
-        });
+        //console.debug("styleList" , styleList);
+        if (styleList != undefined) {
+            dojo.forEach(styleList, function(item) {
+                //console.debug("style: ", item);
+                if (item != undefined) {
+                    if(dojo.attr(item,"name") == target){
+                        //console.debug("removing: ", item);
+                        //console.debug("parentNode: ", item.parentNode);
+                        item.parentNode.removeChild(item);
+                    }
+                }
+            });
+        }
+
+        var scriptList = document.getElementsByTagName("script");
+        //console.debug("scriptList" , scriptList);
+        if (scriptList != undefined) {
+            dojo.forEach(scriptList, function(item) {
+                //console.debug("script: ", item);
+                if (item != undefined) {
+                    if(dojo.attr(item,"name") == target){
+                        //console.debug("removing: ", item);
+                        //console.debug("parentNode: ", item.parentNode);
+                        item.parentNode.removeChild(item);
+                    }
+                }
+            });
+        }
+
 
         var htmlEntryPoint = dojo.byId(target);
         if (htmlEntryPoint == undefined) {
