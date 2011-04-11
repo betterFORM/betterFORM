@@ -18,7 +18,7 @@
      -->
 
     <!-- you need to reference a valid GitHub tag here which your xApplication takes as a base -->
-    <property name="betterform.version" value="https://github.com/betterFORM/betterFORM/zipball/ResourceLoading"/>
+    <property name="betterform.version" value="https://github.com/betterFORM/betterFORM/zipball/AppBuilder"/>
     <property name="eXist.version"
               value="http://netcologne.dl.sourceforge.net/project/exist/Stable/1.4/eXist-setup-1.4.0-rev10440.jar"/>
 
@@ -97,7 +97,7 @@
             <fileset dir="${templates.dir}/xrx/src"/>
         </copy>
 
-        <copy todir="${basedir}" includeemptydirs="true" overwrite="false">
+        <copy todir="${basedir}/installer" includeemptydirs="true" overwrite="false">
             <fileset dir="${templates.dir}/xrx/installer"/>
         </copy>
 
@@ -143,7 +143,6 @@
         <ant antfile="${bf.src}/eXist/build-utils-database.xml" target="stop-eXist" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${xApp.target}"/>
             <property name="admin.passwd" value=" "/>
-
         </ant>
     </target>
 
