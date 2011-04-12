@@ -15,12 +15,12 @@
             doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
             doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" />
 
-    <xsl:param name="rootDir" select="'../..'"/>
+    <!--<xsl:param name="rootDir" select="'../..'"/>-->
     <xsl:param name="currentFile" select="''"/>
 
     <xsl:variable name="calcRoot" select="if ($currentFile='dashboard.xhtml')
                                             then '.'
-                                            else '../..' "/>
+                                            else '..'"/>
     <xsl:template match="/">
         <html xml:lang="en" lang="en">
             <head>
@@ -49,7 +49,7 @@
                 <link rev="made" href="mailto:info@betterform.de"/>
                 <link rel="SHORTCUT ICON" href="{$calcRoot}/images/betterform.ico"/>
                 <link rel="ICON" href="{$calcRoot}/images/betterform.ico" type="image/x-icon"/>
-                <link rel="stylesheet" type="text/css" href="{$calcRoot}/styles/bf.css"/>
+                <link rel="stylesheet" type="text/css" href="{$calcRoot}/styles/website.css"/>
                 <xsl:copy-of select="//html:head/html:style"/><xsl:text>
 </xsl:text>
                 <xsl:copy-of select="//html:head/html:script"/>
@@ -78,12 +78,6 @@
 
                                 <div id="topnav">
                                         <xsl:for-each select="$links/*">
-    <!--
-                                            <xsl:copy>
-                                                <xsl:copy-of select="@*"/>
-                                                <xsl:copy-of select="*"/>
-                                            </xsl:copy>
-    -->
                                             <xsl:choose>
                                                 <xsl:when test="substring-before(./@href,'.') = substring-before($currentFile,'.')">
                                                     <xsl:copy>
@@ -96,17 +90,7 @@
                                                 </xsl:otherwise>
                                             </xsl:choose>
                                         </xsl:for-each>
-<!--
-                                    <a href="index.html" style="{$linkColor}">home</a><span class="menuDevider"> | </span>
-                                    <a href="demo.xhtml" style="{$linkColor}">demo</a><span class="menuDevider"> | </span>
-                                    <a href="download.html" style="{$linkColor}">download</a><span class="menuDevider"> | </span>
-                                    <a href="product.html" style="{$linkColor}">product</a><span class="menuDevider"> | </span>
-                                    <a href="support.html" style="{$linkColor}">support</a><span class="menuDevider"> | </span>
-                                    <a href="whoweare.html" style="{$linkColor}">who we are</a>
--->
                                 </div>
-
-                                <!--<div id="topnav">Full and Open Source W3C XForms 1.1 for the Enterprise</div>-->
                             </div>
                         </div>
                     </div>
@@ -133,23 +117,17 @@
 
                             </div>
                         </div>
-<!--
-                        <div class="pageMarginBox">
-                            <div id="browser"></div>
-                        </div>
--->
                     </div>
-                    <img id="shadowBottom" src="{$calcRoot}/images/shad_bottom.jpg" alt=""/>
+                    <!--<img id="shadowBottom" src="{$calcRoot}/images/shad_bottom.jpg" alt=""/>-->
                     <div id="footer">
-                        <!--<xsl:message>META NAME=NAME CONTENT=<xsl:value-of select="//html:meta[@name='name']/@content"/> </xsl:message>-->
                         <div class="pageMarginBox">
                             <div class="languages">
-                                <a href="{$calcRoot}/site/en/{//html:meta[@name='name']/@content}.html">
+                                <a href="{$calcRoot}/en/{//html:meta[@name='name']/@content}.html">
                                 <img src="{$calcRoot}/images/en.png" class="langSelector" alt="english version"
                                      title="english version"/>
                                 </a>
 
-                                <a href="{$calcRoot}/site/de/{//html:meta[@name='name']/@content}.html">
+                                <a href="{$calcRoot}/de/{//html:meta[@name='name']/@content}.html">
                                     <img src="{$calcRoot}/images/de.png" class="langSelector" alt="deutsch"
                                          title="deutsche Version"/>
                                 </a>
@@ -157,13 +135,7 @@
 
                             <span id="bottomMenu">
                                 &#169; 2010 betterFORM&#160;&#160; | &#160;&#160;
-                                <!--<a href="index.html">home</a>&#160; | &#160;&#160;-->
-                                <!--<a href="support.html">support</a>&#160; | &#160;&#160;-->
-                                <!--<a href="download.html">download</a>&#160; | &#160;&#160;-->
-                                <!--<a href="doc.html">documentation</a>&#160; | &#160;&#160;-->
-                                <!--<a href="whoweare.html">who we are</a>&#160; | &#160;&#160;-->
                                 <a href="contact.html">contact / impressum</a>&#160; | &#160;&#160;
-                                <!--<a href="jsp/forms.jsp">browse forms</a>-->
                             </span>
                         </div>
                     </div>

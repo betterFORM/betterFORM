@@ -1,0 +1,34 @@
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<project name="betterFORM website generator" default="build" basedir=".">
+    <property name="project.dir" value="${basedir}/.."/>
+    <xmlproperty file="${project.dir}/build.properties.xml"  semanticAttributes="true" keepRoot="false"/>
+
+
+    <target name="clean">
+        <delete dir="${basedir}/target"/>
+    </target>
+
+    <target name="prepare">
+         <copy todir="${basedir}/target">
+             <fileset dir="${basedir}/src/main/website" excludes="*page-src/**"/>
+         </copy>
+    </target>
+
+    <target name="build" depends="prepare" description="generates the betterFORM site">
+        <xslt basedir="${basedir}/src/main/website/page-src"
+              destdir="${basedir}/target"
+              style="${basedir}/src/main/website/page-src/site.xsl"
+              force="true"
+              includes="**/*.xhtml"
+              extension=".html"
+              filenameparameter="currentFile"
+              classpathref="transform.class.path">
+        </xslt>
+    </target>
+
+
+</project>
