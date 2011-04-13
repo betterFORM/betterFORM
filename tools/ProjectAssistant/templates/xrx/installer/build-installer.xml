@@ -41,11 +41,11 @@
                         basedir="${basedir}/target"/>
         -->
         <izpack input="${basedir}/installer.xml"
-                output="${basedir}/target/betterform-install.jar"
+                output="${basedir}/target/${xApp.name}-install.jar"
                 installerType="standard"
                 basedir="${basedir}/target"/>
 
-        <chmod file="${basedir}/target/betterform-install.jar" perm="770"/>
+        <chmod file="${basedir}/target/${xApp.name}-install.jar" perm="770"/>
 
     </target>
 </project>
