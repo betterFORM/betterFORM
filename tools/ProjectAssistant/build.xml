@@ -142,7 +142,6 @@
     <target name="stop" description="stop XRX Application" >
         <ant antfile="${bf.src}/eXist/build-utils-database.xml" target="stop-eXist" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${xApp.target}"/>
-            <property name="admin.passwd" value=" "/>
         </ant>
     </target>
 
