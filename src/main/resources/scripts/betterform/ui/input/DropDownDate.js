@@ -13,9 +13,9 @@ dojo.declare(
     widgetsInTemplate:true,
     rangeStart: 1900,
     rangeEnd:0,
-    years:0,
-    months:0,
-    days:0,
+    years:'',
+    months:'',
+    days:'',
     monthsArray: new Array( "January","February","March","April","May","June","July","August","September","October","November","December"),
 
     postMixInProperties:function() {

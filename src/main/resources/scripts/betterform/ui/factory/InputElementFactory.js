@@ -90,6 +90,7 @@ dojo.declare(
     },
 
     createInputBfDropDownDateWidget:function(controlId, sourceNode, classValue, appearance) {
+        //TODO: no rangeStart/rangeEnd -> use predefined template
         var newInputDateWidget = null;
                 var xfValue = dojo.attr(sourceNode, "schemaValue");
                 if(xfValue == undefined){
@@ -131,9 +132,10 @@ dojo.declare(
                 rangeStart = parseInt(rangeStart);
                 rangeEnd = parseInt(rangeEnd);
 
-                var templateString = "<div class='xfDropDownDateControl'><input class='xfValue' type='hidden' dojoAttachPoint='valueNode' value=''/><span class='xfDropDownDate'><select size='1' dojoType='dijit.form.ComboBox' dojoAttachPoint='daysFacet' class='xfDropDownDateDays'><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option><option>21</option><option>22</option><option>23</option><option>24</option><option>25</option><option>26</option><option>27</option><option>28</option><option>29</option><option>30</option><option>31</option></select><select size='1' dojoType='dijit.form.ComboBox' dojoAttachPoint='monthsFacet' class='xfDropDownDateMonths'><option value='01'>January</option><option value='02'>February</option><option value='03'>March</option><option value='04'>April</option><option value='05'>May</option><option value='06'>June</option><option value='07'>July</option><option value='08'>August</option><option value='09'>September</option><option value='10'>October</option><option value='11'>November</option><option value='12'>December</option></select><select size='1' dojoType='dijit.form.ComboBox' dojoAttachPoint='yearsFacet' class='xfDropDownDateYears'>";
+                var templateString = "<div class='xfDropDownDateControl'><input class='xfValue' type='hidden' dojoAttachPoint='valueNode' value=''/><span class='xfDropDownDate'><select size='1' dojoType='dijit.form.ComboBox' dojoAttachPoint='daysFacet' class='xfDropDownDateDays'><option></option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option><option>21</option><option>22</option><option>23</option><option>24</option><option>25</option><option>26</option><option>27</option><option>28</option><option>29</option><option>30</option><option>31</option></select><select size='1' dojoType='dijit.form.ComboBox' dojoAttachPoint='monthsFacet' class='xfDropDownDateMonths'><option value=''></option><option value='01'>January</option><option value='02'>February</option><option value='03'>March</option><option value='04'>April</option><option value='05'>May</option><option value='06'>June</option><option value='07'>July</option><option value='08'>August</option><option value='09'>September</option><option value='10'>October</option><option value='11'>November</option><option value='12'>December</option></select><select size='1' dojoType='dijit.form.ComboBox' dojoAttachPoint='yearsFacet' class='xfDropDownDateYears'>";
                 var end = "</select></span></div>";
 
+                templateString = templateString + "<option></option>";
                 for (var i = rangeStart; i <= rangeEnd; i++) {
                     templateString = templateString + "<option>" + i + "</option>";
                 }
