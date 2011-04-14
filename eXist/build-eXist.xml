@@ -161,7 +161,7 @@
         </echo>
 
         <copy file="${etc.dir}/MergeWebXML-1.4.xsl" tofile="${eXist.home}/MergeWebXML.xsl"/>
-        <copy file="${etc.dir}/MergeBetterformConfig.xsl" todir="${betterFORM.utils}"/>
+        <copy file="${etc.dir}/MergeBetterformConfig.xsl" tofile="${eXist.home}/MergeBetterformConfig.xsl"/>
 
         <antcall target="patch-web-xml"/>
 
@@ -210,10 +210,12 @@
             __== Patching betterFORM-config.xml ==__
         </echo>
         <xslt in="${eXist.home}/webapp/WEB-INF/betterform-config.xml" out="${eXist.home}/webapp/WEB-INF/betterform-config.xml.out" force="true"
-              style="${betterFORM.utils}/MergeBetterformConfig.xsl">
+              style="${eXist.home}/MergeBetterformConfig.xsl">
             <classpath refid="generator.libs"/>
             <param name="context" expression="betterform"/>
         </xslt>
+        <delete file="${eXist.home}/MergeBetterformConfig.xsl"/>
+
 
         <move file="${eXist.home}/webapp/WEB-INF/betterform-config.xml.out" tofile="${eXist.home}/webapp/WEB-INF/betterform-config.xml"/>
     </target>
