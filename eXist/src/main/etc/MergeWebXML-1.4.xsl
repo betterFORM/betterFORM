@@ -5,20 +5,11 @@
                 exclude-result-prefixes="webxml">
         <xsl:output method="xml" indent="yes" />
 
-    <xsl:param name="webxml.path" select="''"/>
-
     <xsl:template match="/">
-        <xsl:choose>
-            <xsl:when test="exists(/webxml:web-app/webxml:context-param/webxml:param-name[.='betterform.configfile'])">
+        <xsl:if test="exists(/webxml:web-app/webxml:context-param/webxml:param-name[.='betterform.configfile'])">
                 <xsl:message terminate="yes">betterFORM is already installed. Please run 'ant uninstall' before installing it again</xsl:message>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:result-document href="{$webxml.path}.original" encoding="UTF-8"><xsl:copy-of select="."/></xsl:result-document>
-                <xsl:copy>
-                    <xsl:apply-templates/>
-                </xsl:copy>
-            </xsl:otherwise>
-        </xsl:choose>
+        </xsl:if>
+        <xsl:apply-templates/>
     </xsl:template>
 
     <xsl:template match="/webxml:web-app/webxml:description">

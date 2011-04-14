@@ -107,10 +107,10 @@
         </echo>
         <mkdir dir="${betterFORM.libs}"/>
 
-        <delete dir="${betterFORM.libs}">
-            <fileset>
+        <delete failonerror="false">
+            <fileset dir="${betterFORM.libs}">
                 <include name="saxon*"/>
-                <include name="dwr-*.jarr"/>
+                <include name="dwr-*.jar"/>
             </fileset>
         </delete>
 
@@ -119,8 +119,8 @@
             <fileset dir="${web.dir}/src/main/lib/" includes="dwr-*.jar" />
         </copy>
 
-        <delete dir="${eXist.home}/lib/optional">
-            <fileset>
+        <delete failonerror="false">
+            <fileset dir="${eXist.home}/lib/optional">
                 <include name="commons-lang-*.jar"/>
                 <include name="ehcache-*.jar"/>
             </fileset>
@@ -134,7 +134,7 @@
             __== Setting up betterFORM context and fixing files ==__
         </echo>
 
-        <copy todir="${eXist.home}">
+        <copy todir="${eXist.home}" overwrite="true">
             <fileset dir="${overwrites.dir}">
                 <include name="tools/**/*"/>
                 <include name="webapp/**/*"/>
@@ -153,8 +153,8 @@
             </patternset>
             <cutdirsmapper dirs="3"/>
         </unzip>
-        <echo message="lib/betterform/* always${line.separator}" append="true" file="${eXist.home}/start.config"/>
-        <echo message="webapp/WEB-INF/lib/* always" append="true" file="${eXist.home}/start.config"/>
+        <echo message="lib/optional/* always${line.separator}" append="true" file="${eXist.home}/start.config"/>
+        <echo message="extensions/betterform/src/main/lib/* always" append="true" file="${eXist.home}/start.config"/>
 
         <echo>
             __== Installing Stylesheets ==__
@@ -175,6 +175,7 @@
         <mkdir dir="${eXist.home}/uninstall-betterform/tools/jetty/etc"/>
         <mkdir dir="${eXist.home}/uninstall-betterform/webapp/admin"/>
         <mkdir dir="${eXist.home}/uninstall-betterform/webapp/WEB-INF"/>
+        <mkdir dir="${eXist.home}/uninstall-betterform/lib/cocoon"/>
 
         <copy tofile="${eXist.home}/uninstall-betterform/tools/jetty/etc/jetty.xml" file="${eXist.home}/tools/jetty/etc/jetty.xml"/>
         <copy tofile="${eXist.home}/uninstall-betterform/webapp/controller.xql" file="${eXist.home}/webapp/controller.xql"/>
@@ -182,6 +183,8 @@
         <copy tofile="${eXist.home}/uninstall-betterform/webapp/WEB-INF/web.xml" file="${eXist.home}/webapp/WEB-INF/web.xml"/>
         <copy tofile="${eXist.home}/uninstall-betterform/client.properties" file="${eXist.home}/client.properties"/>
         <copy tofile="${eXist.home}/uninstall-betterform/start.config" file="${eXist.home}/start.config" failonerror="false"/>
+        <move tofile="${eXist.home}/uninstall-betterform/lib/cocoon/ehcache-1.1.jar" file="${eXist.home}/lib/cocoon/ehcache-1.1.jar" failonerror="false"/>
+        <move tofile="${eXist.home}/uninstall-betterform/lib/cocoon/commons-lang-2.0-20041007T2305.jar" file="${eXist.home}/lib/cocoon/commons-lang-2.0-20041007T2305.jar" failonerror="false"/>
     </target>
 
     <!-- *********************************************************************************************************** -->
@@ -197,7 +200,6 @@
         <xslt in="${eXist.home}/webapp/WEB-INF/web.xml" out="${eXist.home}/webapp/WEB-INF/web.xml.out" force="true"
               style="${eXist.home}/MergeWebXML.xsl">
             <classpath refid="generator.libs"/>
-            <param name="webxml.path" expression="${eXist.home}/webapp/WEB-INF/web.xml"/>
         </xslt>
         <move file="${eXist.home}/webapp/WEB-INF/web.xml.out" tofile="${eXist.home}/webapp/WEB-INF/web.xml"/>
         <delete file="${eXist.home}/MergeWebXML.xsl"/>
@@ -210,9 +212,7 @@
         <xslt in="${eXist.home}/webapp/WEB-INF/betterform-config.xml" out="${eXist.home}/webapp/WEB-INF/betterform-config.xml.out" force="true"
               style="${betterFORM.utils}/MergeBetterformConfig.xsl">
             <classpath refid="generator.libs"/>
-            <param name="webxml.path" expression="${eXist.home}/webapp/WEB-INF/web.xml"/>
             <param name="context" expression="betterform"/>
-            <param name="exist.version" expression="1.4"/>
         </xslt>
 
         <move file="${eXist.home}/webapp/WEB-INF/betterform-config.xml.out" tofile="${eXist.home}/webapp/WEB-INF/betterform-config.xml"/>
@@ -312,7 +312,7 @@
         </echo>
 
         <antcall target="uninstall-betterFORM-single-jar-mode"/>
-        <antcall target="deploy-resources-exploded"/>
+        <antcall target="update-resources-exploded"/>
         <touch file="${betterFORM.install.marker}"/>
     </target>
 
@@ -336,6 +336,17 @@
     </target>
 
     <target name="deploy-resources-exploded" if="exist.installed">
+        <echo>
+            __== Deploying betterFORM resources in exploded Mode ==__
+        </echo>
+        <ant antfile="${web.dir}/build.xml" target="clean" usenativebasedir="true" inheritall="false"/>
+        <ant antfile="${web.dir}/build.xml" target="deploy-exploded" usenativebasedir="true" inheritall="false">
+            <property name="webapp.dir" value="${eXist.home}/webapp"/>
+            <property name="should.not.copy.libs" value="YES MA´AM"/>
+        </ant>
+    </target>
+
+    <target name="update-resources-exploded" if="exist.installed">
         <echo>
             __== Deploying betterFORM resources in exploded Mode ==__
         </echo>
@@ -366,7 +377,7 @@
         </echo>
 
         <antcall target="uninstall-betterFORM-exploded-mode"/>
-        <antcall target="deploy-resources"/>
+        <antcall target="update-resources"/>
         <touch file="${betterFORM.install.marker}"/>
     </target>
 
@@ -394,6 +405,17 @@
     </target>
 
     <target name="deploy-resources" if="exist.installed">
+        <echo>
+            __== Deploying betterFORM resources in single JAR Mode ==__
+        </echo>
+        <ant antfile="${web.dir}/build.xml" target="clean" usenativebasedir="true" inheritall="false"/>
+        <ant antfile="${web.dir}/build.xml" target="deploy" usenativebasedir="true" inheritall="false">
+            <property name="webapp.dir" value="${eXist.home}/webapp"/>
+            <property name="should.not.copy.libs" value="YES MA´AM"/>
+        </ant>
+    </target>
+
+    <target name="update-resources" if="exist.installed">
         <echo>
             __== Deploying betterFORM resources in single JAR Mode ==__
         </echo>
