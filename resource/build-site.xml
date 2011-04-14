@@ -6,6 +6,7 @@
 <project name="betterFORM website generator" default="build" basedir=".">
     <property name="project.dir" value="${basedir}/.."/>
     <xmlproperty file="${project.dir}/build.properties.xml"  semanticAttributes="true" keepRoot="false"/>
+    <property name="webapp.dir" value="${basedir}/../web/target/${web.app.name}"/>
 
 
     <target name="clean">
@@ -30,5 +31,9 @@
         </xslt>
     </target>
 
-
+    <target name="deploy" depends="build" description="deploy to betterFORM webapp">
+        <copy todir="${webapp.dir}">
+            <fileset dir="${basedir}/target" includes="**/*"/>
+        </copy>
+    </target>
 </project>

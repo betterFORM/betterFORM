@@ -35,13 +35,17 @@ p, li {
 	line-height: 1.2;
 }
 
-ul, ol {
+ul {
 	list-style-type: none;
 }
 
 ul, li {
 	margin: 0;
 	padding: 0;
+}
+
+ol > li{
+    margin-left:20px;
 }
 
 p {
@@ -148,7 +152,7 @@ ul {
 }
 
 #main-content {
-	color: #666666;
+	color: #999999;
 }
 
 /*
@@ -454,6 +458,36 @@ h3 {
 	display: none;
 }*/
 
+#index{
+    overflow:hidden;
+    background:#D3D3D3;
+}
+
+#index #content-area{
+    background:#999999;
+}
+
+#index .box {
+    margin-top: 10px;
+    width: 100%;
+    top: 110px;
+    position: absolute;
+    border: 1px solid #BABABA;
+    overflow: hidden;
+}
+
+#index #altContent{
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:20px;
+}
+#index  #footer{
+    position: absolute;
+    top: 545px;
+    height:800px;
+}
+
+
 #index .languages img {
 	display: block;
 	float: right;
@@ -489,6 +523,82 @@ h3 {
 #index #productButton:hover {
 	background: url(../images/b_exploreit_hover.png) no-repeat;
 }
+#index #sub-header .contentBody a {
+    width: 295px;
+    height: 100px;
+    display: block;
+    float: left;
+}
+#index .pageMarginBox {
+    width: 890px;
+    position:relative;
+}
+
+#index #main-content {
+    height: 264px;
+    background: white;
+    display: block; /*float:left;*/
+    color: #999;
+}
+
+#index #main-content .col {
+    width: 260px;
+    height: 250px;
+    float: left;
+    margin-top: 23px;
+    padding: 0 5px 0 5px;
+    line-height: 1.6;
+    font-size: 10pt;
+}
+
+#index #main-content #leftCol {
+    width: 565px;
+}
+#index #main-content #leftCol strong{
+    font-weight:bold;
+}
+
+
+#index #main-content #rightCol {
+    margin-right: 0;
+    margin-left: 16px;
+    color: #888888;
+    text-align: center;
+    font-size: 1.6em;
+}
+#index .page #bottomMenu {
+    float: left;
+}
+
+#index .languages {
+    display: block;
+}
+#index #browseLink{
+    font-size:1em;
+}
+#index #shadowBottom {
+    position:absolute;
+    top:545px;
+    z-index:300;
+}
+#index .bfFormBrowser .formBrowserHeader{
+    margin-left:0;
+}
+#index #commands{display:none;}
+
+#index #browser{
+    width: 100%;
+    margin-top: 10px;
+    top: 120px;
+    left:-2000px;
+    position: absolute;
+    /*background:white;*/
+}
+
+#bf #main-content #rightCol a:hover {
+    text-decoration: underline;
+}
+
 
 .sub-header {
 	width: 700px;
@@ -574,6 +684,33 @@ h3 {
 	text-decoration: underline;
 
 }
+
+#product .features {
+    font-size: 1.8em;
+    padding-right: 60px;
+    color: #525252;
+}
+
+#product .feature {
+    float: left;
+    width: 250px;
+    margin-right: 20px;
+}
+
+#product #boxleft {
+    width: 100%;
+}
+
+#product #chart {
+    margin-right: 330px;
+    height: 150px;
+    width: 150px;
+}
+#product .supporter{
+    float:left;
+    padding-right:20px;
+}
+
 
 /* download page */
 /* download page */
@@ -775,6 +912,104 @@ h3 {
 	width: 33%;
 	float: right;
 }
+#support h2{
+    margin-top:35px;
+}
+#support td {
+    padding:5px;
+    background:white;
+}
+
+#support .col-1 {
+    border-top: 1px solid #565656;
+    border-bottom: 1px solid #565656;
+    border-left: 1px solid #565656;
+    text-align: left;
+    width: 230px;
+    vertical-align:middle;
+    text-align:left;
+
+}
+
+#support .col-2 {
+    border-top: 1px solid #565656;
+    border-bottom: 1px solid #565656;
+    width: 100px;
+    vertical-align:middle;
+    text-align:center;
+}
+
+#support .col-3 {
+    border-top: 1px solid #565656;
+    border-bottom: 1px solid #565656;
+    text-align:center;
+    width: 114px;
+    vertical-align:middle;
+    text-align:center;
+}
+
+#support .col-4 {
+    border-top: 1px solid #565656;
+    border-bottom: 1px solid #565656;
+    border-right: 1px solid #565656;
+    text-align: center;
+    width: 142px;
+    vertical-align:middle;
+    text-align:center;
+}
+
+#support table{
+    margin-bottom:30px;
+    border-collapse:collapse;
+}
+#support table td{
+    border-color:#488AA6;
+    border-left:none;
+    border-right:none;
+}
+#support .tableHeading {
+    color:#666666;
+    font-size:large;
+    border-top:none;
+}
+#support .subTableHeading {
+    background:#e6e6e6;
+    font-weight:bold;
+}
+#support #packages{
+    margin-top:-40px;
+}
+
+#support .contentBody p{
+    margin-right:134px;
+}
+#support ul{
+    list-style-image:url(../images/menu_pfeil.png);
+    list-style-position:inside;
+}
+#support .hint{
+    font-size:0.9em;
+    font-style:italic;
+    margin-top:-25px;
+}
+#support #generalPrices{
+    margin-top:-50px;
+}
+#support #generalPrices .col-1{
+    width:180px;
+}
+
+#support #generalPrices .col-2{
+    text-align:right;
+    padding-right:50px;
+}
+#support .generalPricesHeader .col-1,#support .generalPricesHeader .col-2{
+    background:transparent;
+    border:none;
+}
+#support .generalPricesHeader .col-3,#support .generalPricesHeader .col-4{
+    border:none;
+}
 
 #support #sub-header p,
 #whoweare #sub-header p{
@@ -798,6 +1033,8 @@ h3 {
 	top:115px;
 }
 
+.wordcloud{
 
+}
 
 
