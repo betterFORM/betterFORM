@@ -16,7 +16,7 @@ dojo.declare(
     years:'',
     months:'',
     days:'',
-    monthsArray: new Array( "January","February","March","April","May","June","July","August","September","October","November","December"),
+    monthsArray: new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"),
 
     postMixInProperties:function() {
         //console.debug("DropDownDate.postMixInProperties");
@@ -41,7 +41,7 @@ dojo.declare(
         if (value != undefined) {
 
             var dropDownDateContainer = value.split("-");
-            if(dropDownDateContainer.length != 3) {
+            if (dropDownDateContainer.length != 3) {
                 return;
             }
             //console.debug("DropDownDate.postCreate this.timeContainer:", dropDownDateContainer);
@@ -51,19 +51,19 @@ dojo.declare(
             this.days = dropDownDateContainer[2];
 
             dijit.byId(this.daysFacet.id).set('value', this.days);
-            dijit.byId(this.monthsFacet.id).set('value',this.monthsArray[parseInt(this.months)-1]);
+            dijit.byId(this.monthsFacet.id).set('value', this.monthsArray[parseInt(this.months) - 1]);
             //dijit.byId(this.monthsFacet.id).set('displayValue', this.monthsArray[parseInt(months)-1]);
             dijit.byId(this.yearsFacet.id).set('value', this.years);
-         }
+        }
     },
 
     onDaysChanged:function(evt) {
         //console.debug("DropDownDate.onDaysChanged.");
         var selectedItem = dijit.byId(this.daysFacet.id).get('item');
         if (selectedItem != undefined) {
-            this.days =  selectedItem.value;
+            this.days = selectedItem.value;
         } else {
-            this.days =  dijit.byId(this.daysFacet.id).getValue();
+            this.days = dijit.byId(this.daysFacet.id).getValue();
         }
         this.setCurrentDate();
     },
@@ -74,18 +74,18 @@ dojo.declare(
         var value;
         if (selectedItem != undefined) {
             //console.debug("DropDownDate.onMonthsChanged() selectedItem defined:", selectedItem.value);
-            value =  selectedItem.value;
+            value = parseInt(selectedItem.value);
         } else {
             var month = dijit.byId(this.monthsFacet.id).getValue();
             if (isNaN(month)) {
-                value =  this.monthsArray.indexOf(month) +1;
+                value = parseInt(this.monthsArray.indexOf(month) + 1);
             } else {
-                value = month;
+                value = parseInt(month);
             }
         }
 
         //console.debug("DropDownDate.onMonthsChanged() current month value:", value);
-        if (value.length < 2) {
+        if (value < 10) {
             //console.debug("DropDownDate.onMonthsChanged() adding leading zero to month.");
             value = "0" + value;
             //console.debug("DropDownDate.onMonthsChanged() modified month value:", value);
@@ -99,9 +99,9 @@ dojo.declare(
         //console.debug("DropDownDate.onYearsChanged.");
         var selectedItem = dijit.byId(this.yearsFacet.id).get('item');
         if (selectedItem != undefined) {
-            this.years =  selectedItem.value;
+            this.years = selectedItem.value;
         } else {
-            this.years =  dijit.byId(this.yearsFacet.id).getValue();
+            this.years = dijit.byId(this.yearsFacet.id).getValue();
         }
         this.setCurrentDate();
     },
@@ -123,7 +123,7 @@ dojo.declare(
         this.handleOnBlur();
     },
 
-    onChange: function(/*anything*/ newValue, /*Boolean, optional*/ priorityChange){
+    onChange: function(/*anything*/ newValue, /*Boolean, optional*/ priorityChange) {
         //console.debug("betterform.ui.input.DropDownDate.onChange");
     },
 
@@ -133,17 +133,17 @@ dojo.declare(
     },
 
 
-    getControlValue:function(){
+    getControlValue:function() {
         //console.debug("betterform.ui.input.DropDownDate.getControlValue currentValue: ", this.value);
         return this.value;
     },
 
-     setCurrentDate:function(){
-         //console.debug("betterform.ui.input.DropDownDate.setCurrentDate computeDate: ", this.years + "-" + this.months + "-" + this.days);
-         var currentDate = this.years + "-" + this.months + "-" + this.days;
-         //console.debug("betterform.ui.input.DropDownDate.setCurrentDate currentDate: ", currentDate);
-         dojo.attr(this.valueNode, "value", currentDate);
-         this.value = currentDate;
-         this.setControlValue();
-     }
+    setCurrentDate:function() {
+        //console.debug("betterform.ui.input.DropDownDate.setCurrentDate computeDate: ", this.years + "-" + this.months + "-" + this.days);
+        var currentDate = this.years + "-" + this.months + "-" + this.days;
+        //console.debug("betterform.ui.input.DropDownDate.setCurrentDate currentDate: ", currentDate);
+        dojo.attr(this.valueNode, "value", currentDate);
+        this.value = currentDate;
+        this.setControlValue();
+    }
 });
