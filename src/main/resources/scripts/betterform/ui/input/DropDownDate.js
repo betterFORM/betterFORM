@@ -71,16 +71,27 @@ dojo.declare(
     onMonthsChanged:function(evt) {
         //console.debug("DropDownDate.onMonthsChanged.");
         var selectedItem = dijit.byId(this.monthsFacet.id).get('item');
+        var value;
         if (selectedItem != undefined) {
-            this.months =  selectedItem.value;
+            //console.debug("DropDownDate.onMonthsChanged() selectedItem defined:", selectedItem.value);
+            value =  selectedItem.value;
         } else {
             var month = dijit.byId(this.monthsFacet.id).getValue();
             if (isNaN(month)) {
-                this.months =  this.monthsArray.indexOf(month) +1;
+                value =  this.monthsArray.indexOf(month) +1;
             } else {
-                this.months = month;
+                value = month;
             }
         }
+
+        //console.debug("DropDownDate.onMonthsChanged() current month value:", value);
+        if (value.length < 2) {
+            //console.debug("DropDownDate.onMonthsChanged() adding leading zero to month.");
+            value = "0" + value;
+            //console.debug("DropDownDate.onMonthsChanged() modified month value:", value);
+        }
+
+        this.months = value;
         this.setCurrentDate();
     },
 
