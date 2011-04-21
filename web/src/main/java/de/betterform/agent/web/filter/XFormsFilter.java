@@ -7,6 +7,7 @@
 
 package de.betterform.agent.web.filter;
 
+import de.betterform.xml.dom.DOMUtil;
 import net.sf.ehcache.CacheManager;
 import org.apache.commons.fileupload.FileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
@@ -207,6 +208,7 @@ public class XFormsFilter implements Filter {
                         webProcessor.handleRequest();
                         if (LOG.isDebugEnabled() && CacheManager.getInstance().getCache("xfSessionCache") != null) {
                             LOG.debug(CacheManager.getInstance().getCache("xfSessionCache").getStatistics());
+                            DOMUtil.prettyPrintDOM(webProcessor.getXForms());
                         }
                     }
                     catch (Exception e) {
