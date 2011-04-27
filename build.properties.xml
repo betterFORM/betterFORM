@@ -65,9 +65,11 @@
                 <pathelement location="${core.dir}/src/main/lib/xmlrpc-server-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-server"/>
                 <pathelement location="${core.dir}/src/main/lib/ehcache-1.6.2.jar" groupid="net.sf.ehcache" version="1.6.2" artifactId="ehcache"/>
 
+                <!--
                 <pathelement location="${core.dir}/../tools/AppEngine/GAE.jar"
                              groupid="GoogleAppEngine" version="0.0.1"
                              artifactId="gae"/>
+                             -->
 
             </classpath>
         </compile>

@@ -15,7 +15,7 @@
   ###  -->
 
     <property name="root.dir" value=".."/>
-    <property name="src.dir" value="../src"/>
+    <property name="src.dir" value="../resource/src"/>
     <property name="core.dir" value="../core"/>
     <property name="web.dir" value="."/>
     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
@@ -364,7 +364,7 @@
     <target name="generateSeleniumHTMLTestsChapter"
             description="batch generates HTML Selenium Test from HTML-Templates">
         <copy todir="${basedir}/target/test-sources/seleniumIDE/conformance/x11edition1/chapt${chapterNo}/" overwrite="true" filtering="true">
-            <fileset dir="${basedir}/../src/test/seleniumIDE/conformance/x11edition1/chapt${chapterNo}/" includes="*.html"/>
+            <fileset dir="${basedir}/../resource/src/test/seleniumIDE/conformance/x11edition1/chapt${chapterNo}/" includes="*.html"/>
             <filterset>
                 <filter token="URL-TO-TEST-FORMS" value="${web.test.selenium.url-to-test-forms}"/>            
             </filterset>
@@ -414,7 +414,7 @@
     <target name="generateSeleniumHTMLTestsAppendix"
             description="batch generates HTML Selenium Test from HTML-Templates">
         <copy todir="${basedir}/target/test-sources/seleniumIDE/conformance/x11edition1/appendix/" overwrite="true" filtering="true">
-            <fileset dir="${basedir}/../src/test/seleniumIDE/conformance/x11edition1/appendix/" includes="*.html"/>
+            <fileset dir="${basedir}/../resource/src/test/seleniumIDE/conformance/x11edition1/appendix/" includes="*.html"/>
             <filterset>
                 <filter token="URL-TO-TEST-FORMS" value="${web.test.selenium.url-to-test-forms}"/>
             </filterset>
@@ -606,7 +606,7 @@
               filedirparameter="filedir"
               out="${basedir}/target/doc/w3cResults/allResultsTemplate.xml">
             <classpath refid="saxon.libs"/>
-            <param name="basePath" expression="${basedir}/../src/test/resources/XFormsTestSuite1.1E1/Edition1/driverPages/Results/emptyStructure"/>
+            <param name="basePath" expression="${basedir}/../resource/src/test/resources/XFormsTestSuite1.1E1/Edition1/driverPages/Results/emptyStructure"/>
         </xslt>
 
         <xslt basedir="${root.dir}/src/test/resources/XFormsTestSuite1.1E1/Edition1/driverPages/Results/emptyStructure"
@@ -628,7 +628,7 @@
               filedirparameter="filedir"
               filenameparameter="filename">
             <classpath refid="saxon.libs"/>
-            <param name="basePath" expression="${basedir}/../src/test/resources/XFormsTestSuite1.1E1/Edition1/driverPages/Results/"/>
+            <param name="basePath" expression="${basedir}/../resource/src/test/resources/XFormsTestSuite1.1E1/Edition1/driverPages/Results/"/>
         </xslt>
 
 <!--

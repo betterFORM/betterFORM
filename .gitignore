@@ -22,6 +22,7 @@ version.info
 ## directories to ignore
 .gitignore
 .svn
+resource/target/*
 target/*
 betty/target/*
 core/target/*
