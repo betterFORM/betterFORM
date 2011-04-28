@@ -309,8 +309,13 @@ public class AbstractHTTPConnector extends AbstractConnector {
             while(keyIterator.hasNext()){
                 String key = (String) keyIterator.next();
                 //httpMethod.setRequestHeader(new Header(key,(String) headersToAdd.get(key)));
-                httpRequestBase.addHeader(key, (String) headersToAdd.get(key));
+                httpRequestBase.setHeader(key, (String) headersToAdd.get(key));
+                //httpRequestBase.addHeader(key, (String) headersToAdd.get(key));
             }
+        }
+        if (httpRequestBase.containsHeader("Content-Length")) {
+            //remove content-length if present httpclient will recalucalte the value.
+            httpRequestBase.removeHeaders("Content-Length");
         }
         if(username !=null && password!=null) {
             URI targetURI = null;
@@ -425,7 +430,7 @@ public class AbstractHTTPConnector extends AbstractConnector {
     private void configureRequest(HttpEntityEnclosingRequestBase httpMethod, String body, String type, String encoding) throws UnsupportedEncodingException {
         HttpEntity entity = new StringEntity(body, type, encoding);
         httpMethod.setEntity(entity);
-        httpMethod.setHeader(new BasicHeader("Content-Length", String.valueOf(body.getBytes(encoding).length)));
+        //httpMethod.setHeader(new BasicHeader("Content-Length", String.valueOf(body.getBytes(encoding).length)));
     }
 
     /*
