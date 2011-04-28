@@ -552,7 +552,8 @@ h3 {
 }
 
 #index #main-content #leftCol {
-    width: 565px;
+    /*width: 565px;*/
+    width: 280px;
 }
 #index #main-content #leftCol strong{
     font-weight:bold;

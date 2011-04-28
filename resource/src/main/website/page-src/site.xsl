@@ -52,7 +52,41 @@
                 <link rel="stylesheet" type="text/css" href="{$calcRoot}/styles/website.css"/>
                 <xsl:copy-of select="//html:head/html:style"/><xsl:text>
 </xsl:text>
+
                 <xsl:copy-of select="//html:head/html:script"/>
+                <xsl:if test="//html:body/@id='index'">
+                    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script><xsl:text>
+</xsl:text>
+
+                     <!-- Anything Slider optional plugins -->
+                     <script src="../js/jquery.easing.1.2.js" type="text/javascript"></script><xsl:text>
+</xsl:text>
+
+                     <!-- Anything Slider -->
+                     <link href="../styles/anythingslider.css" type="text/css" rel="stylesheet" /><xsl:text>
+</xsl:text>
+
+                     <script src="../js/jquery.anythingslider.min.js" type="text/javascript"></script><xsl:text>
+</xsl:text>
+
+                     <!-- Anything Slider optional FX extension -->
+                     <!--<script src="js/jquery.anythingslider.fx.min.js" type="text/javascript"></script>-->
+                    <script type="text/javascript">
+                        $(document).ready(function(){
+                             $('#slider2')
+                              .anythingSlider({
+                               width               : 520,
+                               height              : 300,
+                               startStopped        : false,
+                               resizeContents      : false,
+                               navigationFormatter : function(i, panel){
+                                return ['Recipe', 'Quote', 'Image', 'Quote #2', 'Image #2', 'Test'][i - 1];
+                               }
+                              });
+                            });
+                    </script>
+
+                </xsl:if>
             </head>
             <body id="{//html:body/@id}">
                 <xsl:copy-of select="//html:body/@style"/>
