@@ -75,10 +75,12 @@
                         $(document).ready(function(){
                              $('#slider2')
                               .anythingSlider({
-                               width               : 520,
+                               width               : 580,
                                height              : 300,
                                startStopped        : false,
                                resizeContents      : false,
+                               animationTime       : 1000,
+                               buildNavigation     : false,
                                navigationFormatter : function(i, panel){
                                 return ['Recipe', 'Quote', 'Image', 'Quote #2', 'Image #2', 'Test'][i - 1];
                                }
@@ -99,7 +101,7 @@
                                     <img id="logo" src="{$calcRoot}/images/logo.png" alt="betterFORM project"/>
                                 </a>
 
-                                <div id="mission">the XForms way to build the web</div>
+                                <!--<div id="mission">the XForms way to build the web</div>-->
 
                                 <xsl:variable name="links">
                                     <a href="index.html">home</a><span class="menuDevider"> | </span>

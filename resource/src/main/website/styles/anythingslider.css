@@ -8,7 +8,7 @@
 /******* SET DEFAULT DIMENSIONS HERE ********/
 div.anythingSlider {
 	display: block;
-	width: 530px;
+	width: 550px;
 	height: 320px;
 	margin: 0 auto;
 	overflow: hidden; /* needed for Opera and Safari */
@@ -98,7 +98,7 @@ ul.anythingBase li.panel {
 div.anythingSlider .arrow {
 	top: 50%;
 	position: absolute;
-	display: none;
+	display: block;
 }
 div.anythingSlider .arrow a {
 	display: block;
@@ -109,7 +109,7 @@ div.anythingSlider .arrow a {
 	outline: 0;
 	background: url(../images/arrows-default.png) no-repeat;
 }
-div.anythingSlider .arrow a span { display: none; text-indent: -9999px; }
+div.anythingSlider .arrow a span { display: block; text-indent: -9999px; }
 div.anythingSlider .forward { right: 0; }
 div.anythingSlider .back { left: 0; }
 div.anythingSlider .forward a { background-position: 0 -40px; }
@@ -122,7 +122,7 @@ div.anythingSlider .back.disabled { display: none; }
 /* Navigation Links */
 div.anythingSlider .anythingControls { outline: 0; display: none; }
 div.anythingSlider .thumbNav { margin: 0; }
-div.anythingSlider .thumbNav li { display: none; }
+div.anythingSlider .thumbNav li { display: inline; }
 div.anythingSlider .thumbNav a {
 	font: 11px/18px Georgia, Serif;
 	display: inline-block;

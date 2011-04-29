@@ -130,7 +130,8 @@ ul {
 #topnav {
 	font-size: 11pt;
 	text-align: right;
-	margin-top: 23px;
+	margin-top: 40px;
+    padding-right:20px;
 	float:right;
 }
 
@@ -524,7 +525,7 @@ h3 {
 	background: url(../images/b_exploreit_hover.png) no-repeat;
 }
 #index #sub-header .contentBody a {
-    width: 295px;
+    width: 290px;
     height: 100px;
     display: block;
     float: left;
@@ -554,6 +555,7 @@ h3 {
 #index #main-content #leftCol {
     /*width: 565px;*/
     width: 280px;
+    padding:0;
 }
 #index #main-content #leftCol strong{
     font-weight:bold;
@@ -573,6 +575,7 @@ h3 {
 
 #index .languages {
     display: block;
+    padding-right:20px;
 }
 #index #browseLink{
     font-size:1em;
@@ -1037,5 +1040,11 @@ h3 {
 .wordcloud{
 
 }
-
+#index .statement{
+    font-size:13pt;
+}
+#index .statement-list{
+    padding:0;
+    margin:0;
+}
 
