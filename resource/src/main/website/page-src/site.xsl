@@ -25,7 +25,7 @@
         <html xml:lang="en" lang="en">
             <head>
                 <!--
-                ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+                ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
                 ~ Licensed under the terms of BSD License
                 -->
 
@@ -79,7 +79,8 @@
                                height              : 300,
                                startStopped        : false,
                                resizeContents      : false,
-                               animationTime       : 1000,
+                               animationTime       : 300,
+                               delay               : 4000,
                                buildNavigation     : false,
                                navigationFormatter : function(i, panel){
                                 return ['Recipe', 'Quote', 'Image', 'Quote #2', 'Image #2', 'Test'][i - 1];
@@ -170,7 +171,7 @@
                             </div>
 
                             <span id="bottomMenu">
-                                &#169; 2010 betterFORM&#160;&#160; | &#160;&#160;
+                                &#169; 2011 betterFORM&#160;&#160; | &#160;&#160;
                                 <a href="contact.html">contact / impressum</a>&#160; | &#160;&#160;
                             </span>
                         </div>

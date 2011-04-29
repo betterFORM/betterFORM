@@ -13,6 +13,7 @@ div.anythingSlider {
 	margin: 0 auto;
 	overflow: hidden; /* needed for Opera and Safari */
     text-align:left;
+    cursor:wait;
 }
 div.anythingSlider h3{
     font-size:11pt;
