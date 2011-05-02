@@ -324,4 +324,5 @@
             <fileset dir="../resource/src/test/resources"/>
         </copy>
     </target>
+
 </project>
