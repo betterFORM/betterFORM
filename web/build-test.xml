@@ -209,7 +209,7 @@
         <echo/>
 
         <filter token="WEBTEST" value="true"/>
-        <copy tofile="${basedir}/target/betterform/resources/scripts/betterform/FluxProcessor.js" filtering="true"
+        <copy tofile="${basedir}/target/betterform/WEB-INF/classes/META-INF/resources/scripts/betterform/FluxProcessor.js" filtering="true"
               overwrite="true">
             <file file="${src.dir}/main/resources/scripts/betterform/FluxProcessor.js"/>
         </copy>
