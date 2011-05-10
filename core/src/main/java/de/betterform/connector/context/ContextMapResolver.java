@@ -14,7 +14,7 @@ import java.net.URISyntaxException;
 import java.util.Map;
 
 /**
- * This Resolver retrieves java objects from the ChibaContext map. it uses a opaque URI notation like this:
+ * This Resolver retrieves java objects from the betterformContext map. it uses a opaque URI notation like this:
  * context:KEY1
  * where 'KEY1' is the key under which the java object is stored in the context map.
  *

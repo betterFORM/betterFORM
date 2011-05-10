@@ -10,11 +10,20 @@
     </head>
     <body>
         <div style="display:none">
-            <xf:model id="model-1">
-                <xf:instance id="i-default">
+            <xf:model id="m-model-fieldset">
+                <xf:instance id="i-m-default">
                     <data xmlns="">
+						<dummy/>
                     </data>
                 </xf:instance>
+				<xf:instance id="i-fieldset">
+					<data xmlns="">
+						<repeated></repeated>
+						<repeated></repeated>
+						<repeated></repeated>
+						<repeated></repeated>
+					</data>
+				</xf:instance>
             </xf:model>
         </div>
 
@@ -48,6 +57,17 @@
                     </xf:load>
                 </xf:action>
             </xf:trigger>
+
+			<xf:trigger id="initial">
+
+                <xf:label>Load Subform containing HTML-Fieldset.</xf:label>
+                <xf:action>
+                    <xf:load show="embed" targetid="embedInlineNoInclude">
+                            <xf:resource value="'Load-Embed-Fieldset.xhtml#xforms'"/>
+                    </xf:load>
+                </xf:action>
+            </xf:trigger>
+
 		</xf:group>
 
         <xf:group apperance="full">
@@ -59,5 +79,16 @@
             <xf:label>No Include</xf:label>
             <div id="embedInlineNoInclude" />
         </xf:group>
+
+
+
+		<script type="text/javascript" defer="defer">
+				dojo.addOnLoad(function(){{
+					var initLoad = dojo.subscribe("/xf/ready", function() {{
+						dojo.unsubscribe(initLoad);
+						fluxProcessor.dispatchEvent('initial');
+					}});
+				}});
+			</script>
     </body>
 </html>
