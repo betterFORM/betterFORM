@@ -25,7 +25,7 @@
         <html xml:lang="en" lang="en">
             <head>
                 <!--
-                ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+                ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
                 ~ Licensed under the terms of BSD License
                 -->
 
@@ -52,7 +52,44 @@
                 <link rel="stylesheet" type="text/css" href="{$calcRoot}/styles/website.css"/>
                 <xsl:copy-of select="//html:head/html:style"/><xsl:text>
 </xsl:text>
+
                 <xsl:copy-of select="//html:head/html:script"/>
+                <xsl:if test="//html:body/@id='index'">
+                    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script><xsl:text>
+</xsl:text>
+
+                     <!-- Anything Slider optional plugins -->
+                     <script src="../js/jquery.easing.1.2.js" type="text/javascript"></script><xsl:text>
+</xsl:text>
+
+                     <!-- Anything Slider -->
+                     <link href="../styles/anythingslider.css" type="text/css" rel="stylesheet" /><xsl:text>
+</xsl:text>
+
+                     <script src="../js/jquery.anythingslider.min.js" type="text/javascript"></script><xsl:text>
+</xsl:text>
+
+                     <!-- Anything Slider optional FX extension -->
+                     <!--<script src="js/jquery.anythingslider.fx.min.js" type="text/javascript"></script>-->
+                    <script type="text/javascript">
+                        $(document).ready(function(){
+                             $('#slider2')
+                              .anythingSlider({
+                               width               : 580,
+                               height              : 300,
+                               startStopped        : false,
+                               resizeContents      : false,
+                               animationTime       : 300,
+                               delay               : 4000,
+                               buildNavigation     : false,
+                               navigationFormatter : function(i, panel){
+                                return ['Recipe', 'Quote', 'Image', 'Quote #2', 'Image #2', 'Test'][i - 1];
+                               }
+                              });
+                            });
+                    </script>
+
+                </xsl:if>
             </head>
             <body id="{//html:body/@id}">
                 <xsl:copy-of select="//html:body/@style"/>
@@ -65,7 +102,7 @@
                                     <img id="logo" src="{$calcRoot}/images/logo.png" alt="betterFORM project"/>
                                 </a>
 
-                                <div id="mission">the XForms way to build the web</div>
+                                <!--<div id="mission">the XForms way to build the web</div>-->
 
                                 <xsl:variable name="links">
                                     <a href="index.html">home</a><span class="menuDevider"> | </span>
@@ -134,7 +171,7 @@
                             </div>
 
                             <span id="bottomMenu">
-                                &#169; 2010 betterFORM&#160;&#160; | &#160;&#160;
+                                &#169; 2011 betterFORM&#160;&#160; | &#160;&#160;
                                 <a href="contact.html">contact / impressum</a>&#160; | &#160;&#160;
                             </span>
                         </div>

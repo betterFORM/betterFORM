@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- $Id: build.xml,v 1.90 2006/11/16 23:55:43 joernt Exp $ -->
-<project id="betterform-application" name="betterForm AppBuilder" default="prepare" basedir=".">
+<project id="betterform-application" name="betterForm ProjectAssistant" default="prepare" basedir=".">
 
     <!--
 
@@ -39,7 +39,7 @@
     <property name="xApp.src" value="${basedir}/src"/>
     <property name="xApp.target" value="${target.dir}/${xApp.name}"/>
     <property name="bf.src" value="${target.dir}/bf-src"/>
-    <property name="templates.dir" value="${bf.src}/tools/AppBuilder/templates"/>
+    <property name="templates.dir" value="${bf.src}/tools/ProjectAssistant/templates"/>
 
     <available property="betterform.available" file="${target.dir}/betterform-src.zip"/>
     <available property="eXist.available" file="${target.dir}/exist-install.jar"/>
@@ -74,7 +74,7 @@
         <delete dir="${target.dir}"/>
     </target>
 
-    <target name="prepare" depends="check-ant-version" description="Setup base AppBuilder environment. Fetches betterFORM and eXist 1.4 automatically and does primary setup for development.">
+    <target name="prepare" depends="check-ant-version" description="Setup base ProjectAssistant environment. Fetches betterFORM and eXist 1.4 automatically and does primary setup for development.">
         <mkdir dir="${bf.src}"/>
         <antcall target="_get-dependencies"/>
         <antcall target="_unpack"/>
