@@ -25,10 +25,15 @@
             <xf:model>
                 <xf:instance xmlns="">
                     <data>
-						<input>2011-02-03</input>
+						<input readonly="true">
+                            <value>2011-02-03</value>
+                        </input>
 					</data>
                 </xf:instance>
-				<xf:bind nodeset="input[1]" type="date"/>
+				<xf:bind nodeset="input"> readonly="boolean-from-string(@readonly)">
+                    <xf:bind nodeset="value" type="date" readonly="boolean-from-string(../@readonly)"/>
+                    <xf:bind nodeset="@readonly" type="boolean"/>
+                </xf:bind>
             </xf:model>
         </div>
 
@@ -43,29 +48,33 @@
 				<xf:label>DateTime: </xf:label>
 			</xf:input>
 -->
-			<xf:input ref="input[1]" appearance="bf:dropdowndate=1910">
+			<xf:input ref="input/value" appearance="bf:dropdowndate=1910">
 				<xf:label>Date 1910:</xf:label>
                 <xf:hint>Enter you Date of birth</xf:hint>
                 <xf:alert>Not valid</xf:alert>
 			</xf:input>
 
-            <xf:input ref="input[1]" appearance="bf:dropdowndate=-50:+50">
+            <xf:input ref="input/value" appearance="bf:dropdowndate=-50:+50">
 				<xf:label>Date: -50:+50</xf:label>
                 <xf:hint>Enter you Date of birth</xf:hint>
                 <xf:alert>Not valid</xf:alert>
 			</xf:input>
 
-            <xf:input ref="input[1]" appearance="bf:dropdowndate=1900:1920">
+            <xf:input ref="input/value" appearance="bf:dropdowndate=1900:1920">
 				<xf:label>Date 1900:1920:</xf:label>
                 <xf:hint>Enter you Date of birth</xf:hint>
                 <xf:alert>Not valid</xf:alert>
 			</xf:input>
 
-            <xf:input ref="input[1]" appearance="bf:dropdowndate=-50:-20">
+            <xf:input ref="input/value" appearance="bf:dropdowndate=-50:-20">
 				<xf:label>Date -50:-20:</xf:label>
                 <xf:hint>Enter you Date of birth</xf:hint>
                 <xf:alert>Not valid</xf:alert>
 			</xf:input>
+
+            <xf:input id="input1-readonly" ref="input/@readonly" incremental="true">
+                  <xf:label>readonly</xf:label>
+           </xf:input>
         </xf:group>
     </body>
 </html>
