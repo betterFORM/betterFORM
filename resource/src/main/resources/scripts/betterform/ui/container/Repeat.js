@@ -87,14 +87,30 @@ dojo.declare(
         }
         this._replacePrototypeIds(insertedNode, generatedIds);
 
+
         // create dijit and place it within repeat
         var position = eval(contextInfo.position);
-        var repeatItemWidget = this._createRepeatItem(insertedNode, position);
+
+        // console.debug("InsertedNode: " + insertedNode.id );
+        var repeatItemExists = dojo.query("*[repeatItemId='" + insertedNode.id + "']");
+        var repeatItemWidget = undefined;
+        if ( repeatItemExists[0] != null ) {
+            console.warn("Skipping already present repeatItem: ", repeatItemExists);
+            console.debug("repeatItemExists.id: " , dojo.attr(repeatItemExists[0], "id"));
+            repeatItemWidget = dijit.byId(dojo.attr(repeatItemExists[0], "id"));
+        }else {
+            repeatItemWidget = this._createRepeatItem(insertedNode, position);
+        }
         // console.debug("repeatItemWidget",repeatItemWidget.domNode);
         dojo.query("*[unbound='true']", repeatItemWidget.domNode).forEach(
                 function(item) {
-                    // console.debug("Create UIControl for unbound item", item);
-                    var xfControl = new betterform.ui.Control({}, item);
+                    console.debug("Create UIControl for unbound item", item, " id:",item.id);
+                    var controlAlreadyExists = dijit.byId(item.id);
+                    if(controlAlreadyExists== undefined) {
+                        var xfControl = new betterform.ui.Control({}, item);
+                    }else {
+                        console.debug("UIControl for RepeatItem " + repeatItemWidget, " is allready present: dijit: ",controlAlreadyExists, "  item: " ,item);
+                    }
                 }
         );
         repeatItemWidget.showRepeatItem();
