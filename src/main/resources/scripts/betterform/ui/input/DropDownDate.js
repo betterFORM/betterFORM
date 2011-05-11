@@ -78,7 +78,7 @@ dojo.declare(
         } else {
             var month = dijit.byId(this.monthsFacet.id).getValue();
             if (isNaN(month)) {
-                value = parseInt(this.monthsArray.indexOf(month) + 1, "10");
+                value = parseInt(dojo.indexOf(this.monthsArray,month) + 1, "10");
             } else {
                 value = parseInt(month, "10");
             }
