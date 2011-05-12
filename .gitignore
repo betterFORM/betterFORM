@@ -21,6 +21,7 @@ version.info
 
 ## directories to ignore
 .svn
+resource/target/*
 target/*
 betty/target/*
 core/target/*

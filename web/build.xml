@@ -312,4 +312,15 @@
         <echo>Apache Ant 1.7 or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.7 You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</echo>
     </target>
 
+    <target name="deploy-test-resources" description="copy all official XForms test suite files to webapp dir">
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="copying Test Suites..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+        <copy todir="${webapp.dir}/${forms.target}">
+            <fileset dir="../resource/src/test/resources"/>
+        </copy>
+    </target>
+
 </project>
