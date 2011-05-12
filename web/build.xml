@@ -132,9 +132,7 @@
         compressing classes plus resources into a single jar
         ************************************************************************************
         </echo>
-        <jar basedir="${target}/classes" compress="true" jarfile="${basedir}/target/betterform.jar" update="true">
-            <exclude name="schema/**"/>
-        </jar>
+        <jar basedir="${target}/classes" compress="true" jarfile="${basedir}/target/betterform.jar" update="true"/>
 
         <echo>
             ************************************************************************************

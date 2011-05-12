@@ -12,8 +12,10 @@
     <property name="eXist.home" value="POINT-ME-TO-YOUR-EXIST-INSTALLATION"/>
     <property name="eXist.admin.passwd" value="YOUR-EXIST-ADMIN-PASSWD"/>
     -->
-    <property name="eXist.home" value="/Applications/betterform-ultimate"/>
+    <property name="eXist.home" value="/home/zwobit/eXist"/>
     <property name="eXist.admin.passwd" value=""/>
+
+    <property name="betterFORM.src" value="${basedir}/../"/>
 
     <!-- Properties for storing files in Database -->
     <property name="rootcollection.name" value="betterform"/>
@@ -23,25 +25,27 @@
     <property name="db.user" value="admin"/>
     <property name="db.pwd" value=""/>
 
+    <!-- betterFORM module directories -->
+    <property name="root.dir" value="${betterFORM.src}"/>
+    <property name="core.dir" value="${betterFORM.src}/core"/>
+    <property name="web.dir" value="${betterFORM.src}/web"/>
+    <property name="resource.dir" value="${betterFORM.src}/resource"/>
+    <property name="eXist.dir" value="${betterFORM.src}/eXist"/>
 
-    <property name="main.dir" value="${basedir}/src/main"/>
-    <property name="etc.dir" value="${basedir}/src/main/etc"/>
+    <!-- eXist-module sub-dirs -->
+    <property name="main.dir" value="${eXist.dir}/src/main"/>
+    <property name="etc.dir" value="${eXist.dir}/src/main/etc"/>
     <property name="overwrites.dir" value="${etc.dir}/overwrites/eXist-1.4"/>
 
-    <!-- betterFORM module directories -->
-    <property name="root.dir" value="${basedir}/../"/>
-    <property name="core.dir" value="${basedir}/../core"/>
-    <property name="web.dir" value="${basedir}/../web"/>
-    <property name="resource.dir" value="${basedir}/../resource"/>
-
     <!-- betterFORM installation directories -->
-    <property name="betterform.libs" value="${eXist.home}/lib/betterform"/>
-    <property name="betterform.utils" value="${eXist.home}/betterform-utils"/>
+    <property name="betterFORM.extension" value="${eXist.home}/extensions/betterform/"/>
+    <property name="betterFORM.libs" value="${betterFORM.extension}/src/main/lib"/>
+    <property name="betterFORM.utils" value="${eXist.home}/betterform-utils"/>
 
     <!-- classpaths -->
     <!-- Saxon for xslt-transformation -->
     <path id="generator.libs" description="classpath for using Saxon XSLT">
-        <pathelement location="${betterform.libs}/saxon-9.2.1.5.jar"/>
+        <pathelement location="${betterFORM.libs}/saxon-9.2.1.5.jar"/>
     </path>
 
     <!-- Include helper buildfiles -->
@@ -51,12 +55,12 @@
 
     <!-- Available properties -->
     <!-- betterFORM installed -->
-    <property name="betterform.install.marker" value="${eXist.home}/webapp/WEB-INF/betterFORM.installed"/>
-    <available file="${betterform.install.marker}" property="betterform.base.installed"/>
+    <property name="betterFORM.install.marker" value="${eXist.home}/webapp/WEB-INF/betterFORM.installed"/>
+    <available file="${betterFORM.install.marker}" property="betterFORM.base.installed"/>
     <!-- Exploded mode -->
-    <available file="${eXist.home}/webapp/WEB-INF/classes/de/betterform/agent/web/WebFactory.class" property="betterform.exploded.mode"/>
+    <available file="${eXist.home}/webapp/WEB-INF/classes/de/betterform/agent/web/WebFactory.class" property="betterFORM.exploded.mode"/>
     <!-- Single JAR mode -->
-    <available file="${eXist.home}/webapp/WEB-INF/lib/betterform.jar" property="betterform.single.jar.mode"/>
+    <available file="${betterFORM.libs}/betterform.jar" property="betterFORM.single.jar.mode"/>
 
     <!--
         Helper Targets
@@ -91,7 +95,7 @@
         Base install Targets
     -->
 
-    <target name="install-betterFORM-base" unless="betterform.base.installed" description="Installs a betterFORM base installation to eXist">
+    <target name="install-betterFORM-base" unless="betterFORM.base.installed" description="Installs a betterFORM base installation to eXist">
         <echo>
             __== Setting up betterFORM-base ==__
         </echo>
@@ -101,17 +105,36 @@
         <echo>
             __== Installing libs ==__
         </echo>
-        <mkdir dir="${betterform.libs}"/>
-        <copy todir="${betterform.libs}" overwrite="true">
-            <fileset dir="${core.dir}/src/main/lib/" includes="commons-lang-*.jar ehcache-*.jar saxon*" />
+        <mkdir dir="${betterFORM.libs}"/>
+
+        <delete failonerror="false">
+            <fileset dir="${betterFORM.libs}">
+                <include name="saxon*"/>
+                <include name="dwr-*.jar"/>
+            </fileset>
+        </delete>
+
+        <copy todir="${betterFORM.libs}" overwrite="true">
+            <fileset dir="${core.dir}/src/main/lib/" includes="saxon*" />
             <fileset dir="${web.dir}/src/main/lib/" includes="dwr-*.jar" />
+        </copy>
+
+        <delete failonerror="false">
+            <fileset dir="${eXist.home}/lib/optional">
+                <include name="commons-lang-*.jar"/>
+                <include name="ehcache-*.jar"/>
+            </fileset>
+        </delete>
+
+        <copy todir="${eXist.home}/lib/optional">
+            <fileset dir="${core.dir}/src/main/lib/" includes="commons-lang-*.jar ehcache-*.jar" />
         </copy>
 
         <echo>
             __== Setting up betterFORM context and fixing files ==__
         </echo>
 
-        <copy todir="${eXist.home}">
+        <copy todir="${eXist.home}" overwrite="true">
             <fileset dir="${overwrites.dir}">
                 <include name="tools/**/*"/>
                 <include name="webapp/**/*"/>
@@ -130,19 +153,19 @@
             </patternset>
             <cutdirsmapper dirs="3"/>
         </unzip>
-        <echo message="lib/betterform/* always${line.separator}" append="true" file="${eXist.home}/start.config"/>
-        <echo message="webapp/WEB-INF/lib/* always" append="true" file="${eXist.home}/start.config"/>
+        <echo message="lib/optional/* always${line.separator}" append="true" file="${eXist.home}/start.config"/>
+        <echo message="extensions/betterform/src/main/lib/* always" append="true" file="${eXist.home}/start.config"/>
 
         <echo>
             __== Installing Stylesheets ==__
         </echo>
 
         <copy file="${etc.dir}/MergeWebXML-1.4.xsl" tofile="${eXist.home}/MergeWebXML.xsl"/>
-        <copy file="${etc.dir}/MergeBetterformConfig.xsl" todir="${betterform.utils}"/>
+        <copy file="${etc.dir}/MergeBetterformConfig.xsl" tofile="${eXist.home}/MergeBetterformConfig.xsl"/>
 
         <antcall target="patch-web-xml"/>
 
-        <touch file="${betterform.install.marker}"/>
+        <touch file="${betterFORM.install.marker}"/>
     </target>
 
     <target name="create-uninstall-directory">
@@ -160,8 +183,8 @@
         <copy tofile="${eXist.home}/uninstall-betterform/webapp/WEB-INF/web.xml" file="${eXist.home}/webapp/WEB-INF/web.xml"/>
         <copy tofile="${eXist.home}/uninstall-betterform/client.properties" file="${eXist.home}/client.properties"/>
         <copy tofile="${eXist.home}/uninstall-betterform/start.config" file="${eXist.home}/start.config" failonerror="false"/>
-        <move tofile="${eXist.home}/uninstall-betterform/lib/cocoon/ehcache-1.1.jar" file="${eXist.home}/lib/cocoon/ehcache-1.1.jar" />
-        <move tofile="${eXist.home}/uninstall-betterform/lib/cocoon/commons-lang-2.0-20041007T2305.jar" file="${eXist.home}/lib/cocoon/commons-lang-2.0-20041007T2305.jar" />
+        <move tofile="${eXist.home}/uninstall-betterform/lib/cocoon/ehcache-1.1.jar" file="${eXist.home}/lib/cocoon/ehcache-1.1.jar" failonerror="false"/>
+        <move tofile="${eXist.home}/uninstall-betterform/lib/cocoon/commons-lang-2.0-20041007T2305.jar" file="${eXist.home}/lib/cocoon/commons-lang-2.0-20041007T2305.jar" failonerror="false"/>
     </target>
 
     <!-- *********************************************************************************************************** -->
@@ -177,23 +200,22 @@
         <xslt in="${eXist.home}/webapp/WEB-INF/web.xml" out="${eXist.home}/webapp/WEB-INF/web.xml.out" force="true"
               style="${eXist.home}/MergeWebXML.xsl">
             <classpath refid="generator.libs"/>
-            <param name="webxml.path" expression="${eXist.home}/webapp/WEB-INF/web.xml"/>
         </xslt>
         <move file="${eXist.home}/webapp/WEB-INF/web.xml.out" tofile="${eXist.home}/webapp/WEB-INF/web.xml"/>
         <delete file="${eXist.home}/MergeWebXML.xsl"/>
     </target>
 
-    <target name="patch-betterform-config">
+    <target name="patch-betterFORM-config">
         <echo>
             __== Patching betterFORM-config.xml ==__
         </echo>
         <xslt in="${eXist.home}/webapp/WEB-INF/betterform-config.xml" out="${eXist.home}/webapp/WEB-INF/betterform-config.xml.out" force="true"
-              style="${betterform.utils}/MergeBetterformConfig.xsl">
+              style="${eXist.home}/MergeBetterformConfig.xsl">
             <classpath refid="generator.libs"/>
-            <param name="webxml.path" expression="${eXist.home}/webapp/WEB-INF/web.xml"/>
             <param name="context" expression="betterform"/>
-            <param name="exist.version" expression="1.4"/>
         </xslt>
+        <delete file="${eXist.home}/MergeBetterformConfig.xsl"/>
+
 
         <move file="${eXist.home}/webapp/WEB-INF/betterform-config.xml.out" tofile="${eXist.home}/webapp/WEB-INF/betterform-config.xml"/>
     </target>
@@ -203,7 +225,7 @@
     <!--
         Install various stuff to database
     -->
-    <target name="install-dashboard" description="install XQeury Dashboard to eXist" depends="exist-installed" if="betterform.base.installed">
+    <target name="install-dashboard" description="install XQuery Dashboard to eXist" depends="exist-installed" if="betterFORM.base.installed">
         <echo>
             __== Installing dashboard ==__
         </echo>
@@ -220,7 +242,7 @@
         <copy file="${overwrites.dir}/webapp/dashboard.html" tofile="${eXist.home}/webapp/dashboard.html" overwrite="true"/>
     </target>
 
-    <target name="install-forms" description="install reference and demo forms into db" depends="exist-installed" if="betterform.base.installed">
+    <target name="install-forms" description="install reference and demo forms into db" depends="exist-installed" if="betterFORM.base.installed">
         <echo>
             __== Installing reference and demo forms ==__
         </echo>
@@ -230,7 +252,7 @@
         <antcall target="db.stop-eXist"/>
     </target>
 
-    <target name="install-reference-forms" description="install reference forms into db" depends="exist-installed" if="betterform.base.installed">
+    <target name="install-reference-forms" description="install reference forms into db" depends="exist-installed" if="betterFORM.base.installed">
         <echo>
             __== Installing reference forms ==__
         </echo>
@@ -256,7 +278,7 @@
         </antcall>
     </target>
 
-    <target name="install-demo-forms" description="install demo Forms into db" depends="exist-installed" if="betterform.base.installed">
+    <target name="install-demo-forms" description="install demo Forms into db" depends="exist-installed" if="betterFORM.base.installed">
         <echo>
             __== Installing demo forms ==__
         </echo>
@@ -268,7 +290,7 @@
         </antcall>
     </target>
 
-    <target name="install-demo-xrx" description="install demo Forms into db" depends="exist-installed" if="betterform.base.installed">
+    <target name="install-demo-xrx" description="install demo Forms into db" depends="exist-installed" if="betterFORM.base.installed">
         <echo>
             __== Installing demo forms ==__
         </echo>
@@ -286,7 +308,17 @@
     <!--
         Exploded Mode
     -->
-    <target name="install-betterFORM-exploded" depends="ant.check-ant-version, check-if-eXist-installed" description="Installs betterFORM in exploded mode into eXist">
+    <target name="update-betterFORM-exploded" depends="ant.check-ant-version, check-if-eXist-installed" description="updates betterFORM in exploded mode into eXist">
+        <echo>
+            __== Updating betterFORM-extension in exlopded Mode ==__
+        </echo>
+
+        <antcall target="uninstall-betterFORM-single-jar-mode"/>
+        <antcall target="update-resources-exploded"/>
+        <touch file="${betterFORM.install.marker}"/>
+    </target>
+
+    <target name="install-betterFORM-exploded" depends="ant.check-ant-version, check-if-eXist-installed" description="Installs betterFORM in exploded mode">
         <echo>
             __== Installing betterFORM to eXist in exlopded Mode ==__
         </echo>
@@ -294,15 +326,15 @@
         <antcall target="uninstall-betterFORM-single-jar-mode"/>
         <antcall target="install-betterFORM-base"/>
         <antcall target="deploy-resources-exploded"/>
-        <antcall target="patch-betterform-config"/>
+        <antcall target="patch-betterFORM-config"/>
         <antcall target="install-dashboard"/>
     </target>
 
-    <target name="uninstall-betterFORM-single-jar-mode" if="betterform.single.jar.mode" description="removes betterFORM from eXist if installed in single jar mode">
+    <target name="uninstall-betterFORM-single-jar-mode" if="betterFORM.single.jar.mode" description="removes betterFORM from eXist if installed in single jar mode">
         <echo>
             __== betterFORM in single jar mode found! It will be uninstalled now. ==__
         </echo>
-        <delete file="${eXist.home}/webapp/WEB-INF/lib/betterform.jar"/>
+        <delete file="${betterFORM.libs}/betterform.jar"/>
     </target>
 
     <target name="deploy-resources-exploded" if="exist.installed">
@@ -316,12 +348,41 @@
         </ant>
     </target>
 
+    <target name="update-resources-exploded" if="exist.installed">
+        <echo>
+            __== Deploying betterFORM resources in exploded Mode ==__
+        </echo>
+        <ant antfile="${web.dir}/build.xml" target="clean" usenativebasedir="true" inheritall="false"/>
+        <ant antfile="${web.dir}/build.xml" target="deploy-exploded" usenativebasedir="true" inheritall="false">
+            <property name="webapp.dir" value="${betterFORM.extension}/target"/>
+            <property name="should.not.copy.libs" value="YES MA´AM"/>
+        </ant>
+
+        <move todir="${eXist.home}/webapp/WEB-INF/classes">
+            <fileset dir="${betterFORM.extension}/target/WEB-INF/classes"/>
+        </move>
+
+        <!--
+            <delete dir="${betterFORM.extension}/target"" includeemptydirs="true"/>
+        -->
+    </target>
+
 
     <!-- *********************************************************************************************************** -->
 
     <!--
         Single JAR Mode
     -->
+    <target name="update-betterFORM" depends="ant.check-ant-version, check-if-eXist-installed" description="Updates betterFORM in single jar mode">
+        <echo>
+            __== Updating betterFORM-extension in single JAR Mode ==__
+        </echo>
+
+        <antcall target="uninstall-betterFORM-exploded-mode"/>
+        <antcall target="update-resources"/>
+        <touch file="${betterFORM.install.marker}"/>
+    </target>
+
     <target name="install-betterFORM" depends="ant.check-ant-version, check-if-eXist-installed" description="Installs betterFORM in single jar mode into eXist">
         <echo>
             __== Installing betterFORM to eXist in single JAR Mode ==__
@@ -330,12 +391,12 @@
         <antcall target="install-betterFORM-base"/>
         <antcall target="uninstall-betterFORM-exploded-mode"/>
         <antcall target="deploy-resources"/>
-        <antcall target="patch-betterform-config"/>
+        <antcall target="patch-betterFORM-config"/>
         <antcall target="install-dashboard"/>
     </target>
 
 
-    <target name="uninstall-betterFORM-exploded-mode" if="betterform.exploded.mode" description="removes betterFORM from eXist if installed in exploded mode">
+    <target name="uninstall-betterFORM-exploded-mode" if="betterFORM.exploded.mode" description="removes betterFORM from eXist if installed in exploded mode">
         <echo>
             __== betterFORM in exploded mode found! It will be uninstalled now. ==__
         </echo>
@@ -356,7 +417,19 @@
         </ant>
     </target>
 
-    <target name="test">
+    <target name="update-resources" if="exist.installed">
+        <echo>
+            __== Deploying betterFORM resources in single JAR Mode ==__
+        </echo>
+        <ant antfile="${web.dir}/build.xml" target="clean" usenativebasedir="true" inheritall="false"/>
 
+        <ant antfile="${web.dir}/build.xml" target="deploy" usenativebasedir="true" inheritall="false">
+            <property name="webapp.dir" value="${betterFORM.extension}/target"/>
+            <property name="should.not.copy.libs" value="YES MA´AM"/>
+        </ant>
+
+        <move file="${betterFORM.extension}/target/WEB-INF/lib/betterform.jar" tofile="${betterFORM.libs}/betterform.jar"/>
+
+        <delete dir="${betterFORM.extension}/target" includeemptydirs="true"/>
     </target>
 </project>

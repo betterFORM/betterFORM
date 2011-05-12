@@ -68,7 +68,7 @@ dojo.declare(
         dojo.addClass(itemNode, "xfSelectorItem");
         // find CheckBoxGroup widget
         var myParentNode = this.domNode.parentNode;
-        while(!dojo.hasClass(myParentNode,"CheckBoxGroup")){
+        while(!dojo.hasClass(myParentNode,"bfCheckBoxGroup")){
             myParentNode = myParentNode.parentNode;
         }
         console.debug("CheckBoxItemset.handleInsert [id: ",this.id, " / parentNode:",myParentNode,"]");

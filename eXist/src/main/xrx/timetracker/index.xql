@@ -9,7 +9,6 @@ return
       xml:lang="en">
     <head>
         <title>betterFORM Demo XForms: Address, Registration, FeatureExplorer</title>
-
         <link rel="stylesheet" type="text/css" href="{$contextPath}/rest/db/betterform/forms/demo/styles/demo.css"/>
         <link rel="stylesheet" type="text/css" href="./resources/InlineRoundBordersAlert.css"/>
         <link rel="stylesheet" type="text/css" href="./resources/timetracker.css"/>

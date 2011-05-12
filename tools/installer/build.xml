@@ -92,13 +92,13 @@
         <antcall target="setupBetterFORMUser"/>
 
 
-        <ant antfile="${eXist.dir}/build-exist.xml" target="install-betterFORM" inheritall="false" usenativebasedir="true">
+        <ant antfile="${eXist.dir}/build-eXist.xml" target="install-betterFORM" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${basedir}/target/bf-eXist/"/>
             <property name="db-user" value="betterFORM"/>
             <property name="db-passwd" value="Tha0xeiC8a"/>
         </ant>
 
-        <ant antfile="${eXist.dir}/build-exist.xml" target="install-forms" inheritall="false" usenativebasedir="true">
+        <ant antfile="${eXist.dir}/build-eXist.xml" target="install-forms" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${basedir}/target/bf-eXist/"/>
             <property name="db-user" value="betterFORM"/>
             <property name="db-passwd" value="Tha0xeiC8a"/>
