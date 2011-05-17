@@ -925,9 +925,33 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
                 if (exception != undefined) {
                     console.warn("An Exception occured in Facade: ", exception);
                 } else {
-                    //dojo.require("dijit.Dialog");
-                    var messageDialog = dijit.byId("bfMessageDialog");
-                    dojo.query("#messageContent",messageDialog.domNode)[0].innerHTML=message;
+                    var messageNode = dojo.create("div",  null, dojo.body());
+                    dojo.attr(messageNode, "title", "Message");
+                    dojo.require("dijit.Dialog");
+                    var messageDialog = new dijit.Dialog({
+                        title: "Message: ",
+                        content: message
+
+                    }, messageNode);
+
+                    var closeBtnWrapper = dojo.create("div", null , messageDialog.domNode);
+
+                    dojo.style(closeBtnWrapper, "position","relative");
+                    dojo.style(closeBtnWrapper, "right","5px");
+                    dojo.style(closeBtnWrapper, "text-align","right");
+                    dojo.style(closeBtnWrapper, "width","40px;");
+
+                    var emptySpace= dojo.create("div", null , messageDialog.domNode);
+                    dojo.style(emptySpace,"height","10px");
+                    var closeBtnNode = dojo.create("div", null , closeBtnWrapper);
+                    var closeBtnDijit = new dijit.form.Button({label: "OK",
+                                                   onClick: function() {
+                                                       messageDialog.hide();
+                                                       messageDialog.destroy();
+                                                       dojo.empty(messageNode);
+                                                   }
+                                                },
+                                                closeBtnNode);
                     messageDialog.show();
                 }
             }
