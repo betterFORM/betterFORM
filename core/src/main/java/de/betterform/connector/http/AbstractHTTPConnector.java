@@ -5,16 +5,7 @@
 
 package de.betterform.connector.http;
 
-import de.betterform.xml.config.Config;
-import org.apache.commons.httpclient.*;
-import org.apache.commons.httpclient.auth.AuthScope;
-import org.apache.commons.httpclient.cookie.CookiePolicy;
-import org.apache.commons.httpclient.cookie.CookieSpecBase;
-import org.apache.commons.httpclient.cookie.MalformedCookieException;
-import org.apache.commons.httpclient.methods.*;
-import org.apache.commons.httpclient.protocol.Protocol;
-import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
-import org.apache.commons.httpclient.protocol.SecureProtocolSocketFactory;
+import de.betterform.connector.ConnectorFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import de.betterform.connector.AbstractConnector;
@@ -23,12 +14,42 @@ import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.exception.XFormsInternalSubmitException;
 import de.betterform.xml.xforms.model.submission.RequestHeader;
 import de.betterform.xml.xforms.model.submission.RequestHeaders;
+
+import org.apache.http.Header;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
+
+import org.apache.http.client.AuthCache;
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.*;
+import org.apache.http.client.params.ClientPNames;
+import org.apache.http.client.params.CookiePolicy;
+import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.cookie.MalformedCookieException;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.impl.client.BasicAuthCache;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.auth.Credentials;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.impl.cookie.BrowserCompatSpec;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.util.EntityUtils;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.net.URI;
+import java.util.*;
 
 /**
  * A simple base class for convenient HTTP connector interface implementation.
@@ -55,7 +76,7 @@ public class AbstractHTTPConnector extends AbstractConnector {
     public static final String HTTPCLIENT_SSL_FACTORY_DEFAULTPORT= "httpclient.ssl.factory.defaultPort";
     public static final String HTTPCLIENT_SSL_KEYSTORE_PATH= "httpclient.ssl.keystore.path";
     public static final String HTTPCLIENT_SSL_KEYSTORE_PASSWD= "httpclient.ssl.keystore.passwd";
-    
+
     /**
      * The response body.
      */
@@ -107,10 +128,12 @@ public class AbstractHTTPConnector extends AbstractConnector {
      * @throws XFormsException if any error occurred during the request.
      */
     protected void get(String uri) throws XFormsException {
-        HttpMethod httpMethod = new GetMethod(uri);
+        //HttpMethod httpMethod = new GetMethod(uri);
+        HttpRequestBase httpRequestBase = new HttpGet(uri);
         try {
 //            httpMethod.setRequestHeader(new Header("User-Agent", XFormsProcessorImpl.getAppInfo()));
-            execute(httpMethod);
+            //execute(httpMethod);
+            execute(httpRequestBase);
 
         } catch (XFormsException e) {
         	throw e;
@@ -143,7 +166,7 @@ public class AbstractHTTPConnector extends AbstractConnector {
      * @throws XFormsException if any error occurred during the request.
      */
     protected void post(String uri, String body, String type, String encoding) throws XFormsException {
-        EntityEnclosingMethod httpMethod = new PostMethod(uri);
+        HttpEntityEnclosingRequestBase httpMethod = new HttpPost(uri);
         try {
             configureRequest(httpMethod, body, type, encoding);
 
@@ -180,12 +203,12 @@ public class AbstractHTTPConnector extends AbstractConnector {
      * @throws XFormsException if any error occurred during the request.
      */
     protected void put(String uri, String body, String type, String encoding) throws XFormsException {
-        EntityEnclosingMethod httpMethod = new PutMethod(uri);
+        HttpEntityEnclosingRequestBase httpMethod = new HttpPut(uri);
         try {
             configureRequest(httpMethod, body, type, encoding);
 
             execute(httpMethod);
-            
+
         } catch (XFormsException e) {
         	throw e;
         } catch (Exception e) {
@@ -200,30 +223,35 @@ public class AbstractHTTPConnector extends AbstractConnector {
      * @throws XFormsException if any error occurred during the request.
      */
     protected void delete(String uri) throws XFormsException {
-    	DeleteMethod httpMethod = new DeleteMethod(uri);
+    	HttpRequestBase httpMethod = new HttpDelete(uri);
     	try {
     		execute(httpMethod);
-    		
+
     	} catch (XFormsException e) {
     		throw e;
     	} catch (Exception e) {
     		throw new XFormsException(e);
     	}
     }
-    
-    protected void execute(HttpMethod httpMethod) throws Exception{
+
+    //protected void execute(HttpMethod httpMethod) throws Exception{
+    protected void execute(HttpRequestBase httpRequestBase) throws Exception{
         //		(new HttpClient()).executeMethod(httpMethod);
-        HttpClient client = new HttpClient();
+        //HttpClient client = new HttpClient();
+         HttpParams httpParams = new BasicHttpParams();
 
 
+            DefaultHttpClient client = ConnectorFactory.getFactory().getHttpClient(httpParams);
 
+
+/*
         if (! getContext().containsKey(AbstractHTTPConnector.SSL_CUSTOM_PROTOCOL)) {
             String factoryPath = Config.getInstance().getProperty(AbstractHTTPConnector.HTTPCLIENT_SSL_FACTORY);
             if (factoryPath != null) {
                 initSSLProtocol(factoryPath);
             }
         }
-        
+*/
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("context params>>>");
             Map map = getContext();
@@ -241,7 +269,8 @@ public class AbstractHTTPConnector extends AbstractConnector {
         String realm = null;
 
         //add custom header to signal XFormsFilter to not process this internal request
-        httpMethod.setRequestHeader("betterform-internal","true");
+        //httpMethod.setRequestHeader("betterform-internal","true");
+        httpRequestBase.addHeader("betterform-internal", "true");
 
         /// *** copy all keys in map HTTP_REQUEST_HEADERS as http-submissionHeaders
         if (getContext().containsKey(HTTP_REQUEST_HEADERS)) {
@@ -278,78 +307,113 @@ public class AbstractHTTPConnector extends AbstractConnector {
             }
             Iterator keyIterator = headersToAdd.keySet().iterator();
             while(keyIterator.hasNext()){
-                String key = (String) keyIterator.next();                 
-                httpMethod.setRequestHeader(new Header(key,(String) headersToAdd.get(key)));
+                String key = (String) keyIterator.next();
+                //httpMethod.setRequestHeader(new Header(key,(String) headersToAdd.get(key)));
+                httpRequestBase.setHeader(key, (String) headersToAdd.get(key));
+                //httpRequestBase.addHeader(key, (String) headersToAdd.get(key));
             }
+        }
+        if (httpRequestBase.containsHeader("Content-Length")) {
+            //remove content-length if present httpclient will recalucalte the value.
+            httpRequestBase.removeHeaders("Content-Length");
         }
         if(username !=null && password!=null) {
             URI targetURI = null;
-            try {
-                targetURI = httpMethod.getURI();
-                client.getParams().setAuthenticationPreemptive(true);
+                //targetURI = httpMethod.getURI();
+                targetURI = httpRequestBase.getURI();
+                //client.getParams().setAuthenticationPreemptive(true);
+
                 Credentials defaultcreds = new UsernamePasswordCredentials(username, password);
                 if(realm == null){
                     realm = AuthScope.ANY_REALM;
                 }
-                client.getState().setCredentials(new AuthScope(targetURI.getHost(), targetURI.getPort(), realm), defaultcreds);
-            }
-            catch (URIException e) {
-                throw new XFormsException(e);
-            }
-            httpMethod.setDoAuthentication(true);
+               //client.getState().setCredentials(new AuthScope(targetURI.getHost(), targetURI.getPort(), realm), defaultcreds);
+               client.getCredentialsProvider().setCredentials(new AuthScope(targetURI.getHost(), targetURI.getPort(), realm), defaultcreds);
+               AuthCache authCache = new BasicAuthCache();
+               BasicScheme basicAuth = new BasicScheme();
+
+                authCache.put(new HttpHost(targetURI.getHost()), basicAuth);
+                BasicHttpContext localContext = new BasicHttpContext();
+                localContext.setAttribute(ClientContext.AUTH_CACHE, authCache);
+
+
+
+
+            //Needed? httpMethod.setDoAuthentication(true);
+
 
         }
         //alternative method for non-tomcat servers
         if (getContext().containsKey(REQUEST_COOKIE)) {
-            HttpState state = client.getState();
-            state.setCookiePolicy(CookiePolicy.COMPATIBILITY);
+            //HttpState state = client.getState();
+            HttpParams state = client.getParams();
+
+            //state.setCookiePolicy(CookiePolicy.COMPATIBILITY);
+            state.setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.BROWSER_COMPATIBILITY);
 
             if (getContext().get(REQUEST_COOKIE) instanceof Cookie[]) {
                 Cookie[] cookiesIn = (Cookie[]) getContext().get(REQUEST_COOKIE);
                 if (cookiesIn[0] != null) {
                     for (int i = 0; i < cookiesIn.length; i++) {
                         Cookie cookie = cookiesIn[i];
-                        state.addCookie(cookie);
+                        //state.addCookie(cookie);
+                        client.getCookieStore().addCookie(cookie);
                     }
-                    Cookie[] cookies = state.getCookies();
+                    /*
+                          Cookie[] cookies = state.getCookies();
+
                     Header cookieOut = new CookieSpecBase().formatCookieHeader(cookies);
                     httpMethod.setRequestHeader(cookieOut);
                     client.setState(state);
+                          */
+                    List<Cookie> cookies = client.getCookieStore().getCookies();
+                    List<Header> cookieHeaders= new BrowserCompatSpec().formatCookies(cookies);
+                    Header[] headers = cookieHeaders.toArray(new Header[0]);
+
+                    for (int i = 0; i < headers.length; i++) {
+                        httpRequestBase.addHeader(headers[i]);
+                    }
+
+                    client.setParams(state);
                 }
             } else {
                 throw new MalformedCookieException("Cookies must be passed as org.apache.commons.httpclient.Cookie objects.");
             }
         }
+        HttpResponse httpResponse = client.execute(httpRequestBase);
 
         try {
+            /* TODO
             if (getContext().containsKey(AbstractHTTPConnector.SSL_CUSTOM_PROTOCOL)) {
                 LOGGER.debug("Using customSSL-Protocol-Handler");
+
                 HostConfiguration hc = new HostConfiguration();
                 hc.setHost(httpMethod.getURI().getHost(), httpMethod.getURI().getPort(), (Protocol) getContext().get(AbstractHTTPConnector.SSL_CUSTOM_PROTOCOL));
                 client.executeMethod(hc, httpMethod);
             } else {
                 client.executeMethod(httpMethod);
-            }
-            if (httpMethod.getStatusCode() >= 300) {
+            }      */
+
+            if (httpResponse.getStatusLine().getStatusCode() >= 300) {
                 // Allow 302 only
-                if (httpMethod.getStatusCode() != 302) {
-                    throw new XFormsInternalSubmitException(httpMethod.getStatusCode(), httpMethod.getStatusText(), httpMethod.getResponseBodyAsString(), XFormsConstants.RESOURCE_ERROR);
+                if (httpResponse.getStatusLine().getStatusCode() != 302) {
+                    throw new XFormsInternalSubmitException(httpResponse.getStatusLine().getStatusCode(), httpResponse.getStatusLine().getReasonPhrase(), EntityUtils.toString(httpResponse.getEntity()), XFormsConstants.RESOURCE_ERROR);
                 }
             }
-            this.handleHttpMethod(httpMethod);
+            this.handleHttpMethod(httpResponse);
         }
         catch (Exception e) {
             try {
-                throw new XFormsInternalSubmitException(httpMethod.getStatusCode(), httpMethod.getStatusText(), httpMethod.getResponseBodyAsString(), XFormsConstants.RESOURCE_ERROR);
+                throw new XFormsInternalSubmitException(httpResponse.getStatusLine().getStatusCode(), httpResponse.getStatusLine().getReasonPhrase(), EntityUtils.toString(httpResponse.getEntity()), XFormsConstants.RESOURCE_ERROR);
             } catch (IOException e1) {
-                throw new XFormsInternalSubmitException(httpMethod.getStatusCode(), httpMethod.getStatusText(), XFormsConstants.RESOURCE_ERROR); 
+                throw new XFormsInternalSubmitException(httpResponse.getStatusLine().getStatusCode(), httpResponse.getStatusLine().getReasonPhrase(), XFormsConstants.RESOURCE_ERROR);
             }
         }
 
     }
 
-    protected void handleHttpMethod(HttpMethod httpMethod) throws Exception {
-        Header[] responseHeaders = httpMethod.getResponseHeaders();
+    protected void handleHttpMethod(HttpResponse httpResponse) throws Exception {
+        Header[] responseHeaders = httpResponse.getAllHeaders();
         this.responseHeader = new HashMap();
 
         for (int index = 0; index < responseHeaders.length; index++) {
@@ -359,16 +423,17 @@ public class AbstractHTTPConnector extends AbstractConnector {
             responseHeader.put(responseHeaders[index].getName(), responseHeaders[index].getValue());
         }
 
-        this.responseBody = httpMethod.getResponseBodyAsStream();
+        this.responseBody = httpResponse.getEntity().getContent();
 
     }
 
-    private void configureRequest(EntityEnclosingMethod httpMethod, String body, String type, String encoding) throws UnsupportedEncodingException {
-        StringRequestEntity entity = new StringRequestEntity(body, type, encoding);
-        httpMethod.setRequestEntity(entity);
-        httpMethod.setRequestHeader(new Header("Content-Length", String.valueOf(body.getBytes(encoding).length)));
+    private void configureRequest(HttpEntityEnclosingRequestBase httpMethod, String body, String type, String encoding) throws UnsupportedEncodingException {
+        HttpEntity entity = new StringEntity(body, type, encoding);
+        httpMethod.setEntity(entity);
+        //httpMethod.setHeader(new BasicHeader("Content-Length", String.valueOf(body.getBytes(encoding).length)));
     }
 
+    /*
     private void initSSLProtocol(String factoryPath) throws Exception {
         Protocol sslProtocol;
             LOGGER.debug("creating sslProtocol ...");
@@ -395,6 +460,8 @@ public class AbstractHTTPConnector extends AbstractConnector {
                 getContext().put(AbstractHTTPConnector.SSL_CUSTOM_PROTOCOL, sslProtocol);
             }
     }
+
+    */
 }
 
 //end of class

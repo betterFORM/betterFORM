@@ -16,9 +16,10 @@ import de.betterform.xml.xslt.impl.CachingTransformerService;
 import de.betterform.xml.xslt.impl.FileResourceResolver;
 import netscape.javascript.JSException;
 import netscape.javascript.JSObject;
-import org.apache.commons.httpclient.Cookie;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -463,14 +464,16 @@ public class Betty extends Applet {
 
             //parse cookiestring
             String[] browserCookies = cookieString.split(";");
-            Cookie[] cookies = new Cookie[browserCookies.length];
+            BasicClientCookie[] cookies = new BasicClientCookie[browserCookies.length];
 
             for (int i = 0; i < browserCookies.length; i++) {
                 String cName = browserCookies[i].substring(0, browserCookies[i].indexOf("="));
                 String cValue = browserCookies[i].substring(browserCookies[i].indexOf("=") + 1);
 
-                cookies[i] = new Cookie(host, cName, cValue, "/", null, false);
-
+                cookies[i] = new BasicClientCookie(cName, cValue);
+                cookies[i].setDomain(host);
+                cookies[i].setPath("/");
+                cookies[i].setSecure(false);
 
                 //System.out.println("found cookie: " + cookies[i].toExternalForm());
 

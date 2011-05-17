@@ -6,24 +6,29 @@
 package de.betterform.connector;
 
 
-import de.betterform.xml.xforms.XFormsConstants;
-import de.betterform.xml.xforms.exception.XFormsInternalSubmitException;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.base.XMLBaseResolver;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
-import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.Container;
+import de.betterform.xml.xforms.XFormsConstants;
 import de.betterform.xml.xforms.XFormsElement;
+import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.action.AbstractBoundAction;
 import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xforms.exception.XFormsInternalSubmitException;
 import de.betterform.xml.xforms.model.submission.Submission;
 import de.betterform.xml.xpath.XPathUtil;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.util.EntityUtils;
 import org.w3c.dom.Element;
 
 import java.io.IOException;
@@ -31,7 +36,6 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
-
 
 
 /**
@@ -53,26 +57,26 @@ public abstract class ConnectorFactory {
     /**
      * Creates a new submission handler for the specified URI.
      *
-     * @param uri the relative or absolute URI string.
+     * @param uri     the relative or absolute URI string.
      * @param element the element to start with XML Base resolution for relative
-     * URIs.
+     *                URIs.
      * @return a new submission handler for the specified URI.
      * @throws XFormsException if a relative URI could not be resolved, no
-     * submission handler is registered for the specified URI or any error
-     * occurred during submission handler creation.
+     *                         submission handler is registered for the specified URI or any error
+     *                         occurred during submission handler creation.
      */
     public abstract SubmissionHandler createSubmissionHandler(final String uri, final Element element) throws XFormsException;
 
     /**
      * Creates a new URI resolver for the specified URI.
      *
-     * @param uri the relative or absolute URI string.
+     * @param uri     the relative or absolute URI string.
      * @param element the element to start with XML Base resolution for relative
-     * URIs.
+     *                URIs.
      * @return a new URI resolver for the specified URI.
      * @throws XFormsException if a relative URI could not be resolved, if no
-     * URI resolver is registered for the specified URI or any error occurred
-     * during URI resolver creation.
+     *                         URI resolver is registered for the specified URI or any error occurred
+     *                         during URI resolver creation.
      */
     public abstract URIResolver createURIResolver(final String uri, final Element element) throws XFormsException;
 
@@ -97,23 +101,18 @@ public abstract class ConnectorFactory {
 
         if (className == null || className.equals("")) {
             factory = new DefaultConnectorFactory();
-        }
-        else {
+        } else {
             try {
-                Class clazz = Class.forName(className,true, ConnectorFactory.class.getClassLoader()); 
+                Class clazz = Class.forName(className, true, ConnectorFactory.class.getClassLoader());
 
                 factory = (ConnectorFactory) clazz.newInstance();
-            }
-            catch (ClassNotFoundException cnfe) {
+            } catch (ClassNotFoundException cnfe) {
                 throw new XFormsConfigException(cnfe);
-            }
-            catch (ClassCastException cce) {
+            } catch (ClassCastException cce) {
                 throw new XFormsConfigException(cce);
-            }
-            catch (InstantiationException ie) {
+            } catch (InstantiationException ie) {
                 throw new XFormsConfigException(ie);
-            }
-            catch (IllegalAccessException iae) {
+            } catch (IllegalAccessException iae) {
                 throw new XFormsConfigException(iae);
             }
         }
@@ -128,14 +127,14 @@ public abstract class ConnectorFactory {
      * Attributes<br> [2] if that fails the URI is resolved against the baseURI
      * of the processor
      *
-     * @param uri the URI string to start with
+     * @param uri     the URI string to start with
      * @param element the start Element
      * @return an evaluated URI object
      * @throws XFormsException if the URI has syntax errors
      */
     public URI getAbsoluteURI(String uri, Element element) throws XFormsException {
 
-        String uriString = evalAttributeValueTemplates(uri,element);
+        String uriString = evalAttributeValueTemplates(uri, element);
         try {
             // resolve xml base
             String baseUri = XMLBaseResolver.resolveXMLBase(element, uriString);
@@ -152,8 +151,7 @@ public abstract class ConnectorFactory {
 
             // return resolved xml base uri
             return new URI(baseUri);
-        }
-        catch (URISyntaxException e) {
+        } catch (URISyntaxException e) {
             throw new XFormsException(e);
         }
     }
@@ -169,12 +167,12 @@ public abstract class ConnectorFactory {
      * @return
      * @throws XFormsException
      */
-    public String evalAttributeValueTemplates(String uri,Element element) throws XFormsException {
+    public String evalAttributeValueTemplates(String uri, Element element) throws XFormsException {
         String toReplace = uri;
         int start;
         int end;
         String valueTemplate;
-        String value="";
+        String value = "";
         StringBuffer substitutedString = new StringBuffer();
         boolean hasTokens = true;
         while (hasTokens) {
@@ -183,29 +181,28 @@ public abstract class ConnectorFactory {
             if (start == -1 || end == -1) {
                 hasTokens = false; //exit
                 substitutedString.append(toReplace);
-            }
-            else {
+            } else {
                 substitutedString.append(toReplace.substring(0, start));
                 valueTemplate = toReplace.substring(start + 1, end);
 
                 //distinguish normal valueTemplate versus context $var
-                if(valueTemplate.startsWith("$")){
+                if (valueTemplate.startsWith("$")) {
                     //read key from context
                     valueTemplate = valueTemplate.substring(1);
                     if (this.context.containsKey(valueTemplate)) {
                         value = this.context.get(valueTemplate).toString();
                     }
-                }else{
+                } else {
                     value = evalXPath(element, valueTemplate);
                 }
-                if(value.equals("")){
+                if (value.equals("")) {
                     LOGGER.warn("valueTemplate could not be evaluated. Replacing '" + valueTemplate + "' with empty string");
                 }
                 substitutedString.append(value);
                 toReplace = toReplace.substring(end + 1);
             }
         }
-        if(LOGGER.isDebugEnabled()){
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Uri: " + uri + " evaluated to: " + substitutedString);
         }
         return substitutedString.toString();
@@ -215,25 +212,25 @@ public abstract class ConnectorFactory {
         XFormsElement xElement = (XFormsElement) element.getUserData("");
         String xpath;
 
-        if(XPathUtil.hasInstanceFunction(valueTemplate)){
+        if (XPathUtil.hasInstanceFunction(valueTemplate)) {
             xpath = valueTemplate;
-        }else{
+        } else {
             String path;
-            if(xElement instanceof AbstractBoundAction) {
-                path =  ((AbstractBoundAction)xElement).getLocationPath();
-            }else if (xElement instanceof Submission){
+            if (xElement instanceof AbstractBoundAction) {
+                path = ((AbstractBoundAction) xElement).getLocationPath();
+            } else if (xElement instanceof Submission) {
                 path = ((Submission) xElement).getLocationPath();
-            }else{
+            } else {
                 LOGGER.warn("no AVT processing for this element implemented - returning default instance root as context path");
-                path =  "instance('default')";
+                path = "instance('default')";
             }
             xpath = evalJoinedXPath(path, valueTemplate);
         }
         return XPathCache.getInstance().evaluateAsString(xElement.getModel().getDefaultInstance().getRootContext(), xpath);
     }
 
-    private String evalJoinedXPath( String path, String valueTemplate) {
-        String[] steps = {path,valueTemplate};
+    private String evalJoinedXPath(String path, String valueTemplate) {
+        String[] steps = {path, valueTemplate};
         return XPathUtil.joinPathExpr(steps);
     }
 
@@ -258,17 +255,15 @@ public abstract class ConnectorFactory {
             start = toReplace.indexOf("{$");
             end = toReplace.indexOf('}');
             if (start == -1 || end == -1) {
-                hasTokens = false; //exit
+                hasTokens = false; //exit                                    ›
                 substitutedString.append(toReplace);
-            }
-            else {
+            } else {
                 substitutedString.append(toReplace.substring(0, start));
                 key = toReplace.substring(start + 2, end);
 
                 if (this.context.containsKey(key)) {
                     value = this.context.get(key).toString();
-                }
-                else {
+                } else {
                     value = "";
                     LOGGER.warn("replaced non-existing key '" + key + "' with empty string");
                 }
@@ -283,16 +278,18 @@ public abstract class ConnectorFactory {
 
     public InputStream getHTTPResourceAsStream(URI uri) throws XFormsException {
         try {
-            HttpMethod httpMethod = new GetMethod(uri.toString());
-            HttpClient client = new HttpClient();
-            client.executeMethod(httpMethod);
-            if (httpMethod.getStatusCode() >= 300) {
+            HttpRequestBase httpMethod = new HttpGet(uri.toString());
+            HttpParams httpParams = new BasicHttpParams();
+
+            HttpClient client = getHttpClient(httpParams);
+            HttpResponse response = client.execute(httpMethod);
+            if (response.getStatusLine().getStatusCode() >= 300) {
                 // Allow 302 only
-                if (httpMethod.getStatusCode() != 302) {
-                    throw new XFormsInternalSubmitException(httpMethod.getStatusCode(), httpMethod.getStatusText(), httpMethod.getResponseBodyAsString(), XFormsConstants.RESOURCE_ERROR);
+                if (response.getStatusLine().getStatusCode() != 302) {
+                    throw new XFormsInternalSubmitException(response.getStatusLine().getStatusCode(), response.getStatusLine().getReasonPhrase(), EntityUtils.toString(response.getEntity()), XFormsConstants.RESOURCE_ERROR);
                 }
             }
-            return httpMethod.getResponseBodyAsStream();
+            return response.getEntity().getContent();
 
         } catch (IOException e) {
             throw new XFormsException(e);
@@ -311,4 +308,7 @@ public abstract class ConnectorFactory {
         return null;
     }
 
+    public DefaultHttpClient getHttpClient(HttpParams httpParams) {
+          return new DefaultHttpClient(httpParams);
+    }
 }

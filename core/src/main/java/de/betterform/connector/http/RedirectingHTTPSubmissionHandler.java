@@ -11,13 +11,18 @@
 
 package de.betterform.connector.http;
 
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
+
+import de.betterform.connector.ConnectorFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.submission.Submission;
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
 import org.w3c.dom.Node;
 
 import java.util.Map;
@@ -49,31 +54,31 @@ public class RedirectingHTTPSubmissionHandler extends HTTPSubmissionHandler {
     /**
      * Override the execute method to redirect if appropriate
      */
-    protected void execute(HttpMethod httpMethod) throws Exception {
+    protected void execute(HttpRequestBase httpMethod) throws Exception {
         LOGGER.info("RedirectingHTTPSubmissionDriver.execute");
+        HttpParams httpParams = new BasicHttpParams();
+        HttpClient client = ConnectorFactory.getFactory().getHttpClient(httpParams);
 
-        (new HttpClient()).executeMethod(httpMethod);
+        HttpResponse response = client.execute(httpMethod);
 
-        if (httpMethod.getStatusCode() >= 400) {
+        if (response.getStatusLine().getStatusCode() >= 400) {
             throw new XFormsException("HTTP status "
-                    + httpMethod.getStatusCode()
+                    + response.getStatusLine().getStatusCode()
                     + ": "
-                    + httpMethod.getStatusText());
+                    + response.getStatusLine().getReasonPhrase());
         }
 
         String locationURL = null;
 
         // if Created then redirect to the new uri
-        if (httpMethod.getStatusCode() == 201) {
-            Header locationURLHdr = httpMethod.getResponseHeader("Location");
+        if (response.getStatusLine().getStatusCode() == 201) {
+            Header locationURLHdr =  response.getFirstHeader("Location");
             if (null == locationURLHdr)
-                locationURLHdr = httpMethod.getResponseHeader("location");
+                locationURLHdr = response.getFirstHeader("location");
             if (null == locationURLHdr)
-                locationURLHdr =
-                        httpMethod.getResponseHeader("Content-Location");
+                locationURLHdr = response.getFirstHeader("Content-Location");
             if (null == locationURLHdr)
-                locationURLHdr =
-                        httpMethod.getResponseHeader("content-location");
+                locationURLHdr = response.getFirstHeader("content-location");
 
             if (null != locationURLHdr) {
                 locationURL = locationURLHdr.getValue();
@@ -82,7 +87,7 @@ public class RedirectingHTTPSubmissionHandler extends HTTPSubmissionHandler {
         }
         // if Updated with no content then redirect to the existing uri
         // (i.e. not the betterForm post address)
-        else if (httpMethod.getStatusCode() == 204) {
+        else if (response.getStatusLine().getStatusCode() == 204) {
             locationURL = httpMethod.getURI().toString();
             // make sure redirects to the container
             // i.e. strip off any filename
@@ -100,7 +105,7 @@ public class RedirectingHTTPSubmissionHandler extends HTTPSubmissionHandler {
             this.mySubmission.redirect(locationURL);
         }
 
-        this.handleHttpMethod(httpMethod);
+        this.handleHttpMethod(response);
     }
 
 }
