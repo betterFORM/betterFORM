@@ -152,6 +152,20 @@
 
     </target>
 
+    <target name="create-war">
+        <echo>
+        ************************************************************************************
+        creating war-file...
+        ************************************************************************************
+        </echo>
+
+        <war warfile="${targetname}.war"
+             webxml="${webapp.dir}/WEB-INF/web.xml"
+             basedir="${webapp.dir}">
+        </war>
+    </target>
+
+
     <target name="exploded-webapp-base"
             description="deployment for new resource loading">
         <echo>
