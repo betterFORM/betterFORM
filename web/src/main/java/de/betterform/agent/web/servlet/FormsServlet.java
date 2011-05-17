@@ -433,7 +433,7 @@ public class FormsServlet extends HttpServlet {
         *  As we want FeatureExplorer on the root level we put a fake file there just as placeholder and output a link to the real document.
         */
         String fileName = aFile.getName();
-        if(fileName.equals("FeatureExplorer.xhtml")){
+        if(fileName.equals("FeatureExplorer.xhtml") && ! uri.contains("reference")){
             fileName = "reference/" + fileName;
         } else if (fileName.equals("Demo.xhtml")){
             fileName = "demo/" + fileName;
