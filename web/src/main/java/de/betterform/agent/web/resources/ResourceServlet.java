@@ -25,6 +25,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -43,7 +45,7 @@ public class ResourceServlet extends HttpServlet {
     private static final Log LOG = LogFactory.getLog(ResourceServlet.class);
     private static Map<String, String> mimeTypes;
     private List<ResourceStreamer> resourceStreamers;
-
+    private boolean caching;
     /**
      * RESOURCE_FOLDER refers to the location in the classpath where resources are found.
      */
@@ -64,7 +66,11 @@ public class ResourceServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-
+        if("false".equals(config.getInitParameter("caching"))){
+            caching=false;
+        }else {
+            caching=true;
+        }
         initMimeTypes();
         initResourceStreamers();
     }
@@ -130,7 +136,12 @@ public class ResourceServlet extends HttpServlet {
         InputStream inputStream = null;
 
         try {
-            inputStream = ResourceServlet.class.getResourceAsStream(resourcePath);
+            if(!caching){
+                String path = ResourceServlet.class.getResource(resourcePath).getPath();
+                inputStream = new FileInputStream(new File(path));
+            }else{
+                inputStream = ResourceServlet.class.getResourceAsStream(resourcePath);
+            }
             String mimeType = getResourceContentType(resourcePath);
 
             if (mimeType == null) {
@@ -182,11 +193,11 @@ public class ResourceServlet extends HttpServlet {
         long oneYear = 31363200000L;
 
         String referer = request.getHeader("referer");
-        if (referer.indexOf("nocache") != -1) {
-            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-        } else {
+        if (caching) {
             response.setHeader("Cache-Control", "Public");
             response.setDateHeader("Expires", now + oneYear);
+        } else {
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         }
     }
 
