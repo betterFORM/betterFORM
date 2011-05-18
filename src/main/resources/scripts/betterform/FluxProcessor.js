@@ -757,7 +757,13 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
             console.debug("css to load: ", cssToLoad);
             var headID = document.getElementsByTagName("head")[0];
             if(cssToLoad != undefined && cssToLoad != ""){
-                var newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","style");
+                var newScript = undefined;
+                if(dojo.doc.createElementNS) {
+                    newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","style");
+                }else {
+                    newScript = dojo.doc.createElement("style");
+                }
+
                 dojo.attr(newScript,"name",xlinkTarget);
                 dojo.attr(newScript,"type","text/css");
                 newScript.appendChild(dojo.doc.createTextNode(cssToLoad));
@@ -771,7 +777,12 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
 
                 for (var i = 0; i <= styles.length; i = i+1) {
                     if (styles[i] != undefined && styles[i] != "") {
-                        var newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","link");
+                        var newScript = undefined;
+                        if(dojo.doc.createElementNS) {
+                            newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","link");
+                        }else {
+                            newScript = dojo.doc.createElement("link");
+                        }
                         dojo.attr(newScript,"name",xlinkTarget);
                         dojo.attr(newScript,"href",styles[i]);
                         dojo.attr(newScript,"type","text/css");
@@ -787,8 +798,12 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
             var inlineJavaScriptToLoad = xmlEvent.contextInfo.inlineJavascript;
             if (inlineJavaScriptToLoad != undefined && inlineJavaScriptToLoad != "") {
                 var script = document.createElement('script');
-
-                var newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","script");
+                var newScript = undefined;
+                if(dojo.doc.createElementNS) {
+                    newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","script");
+                }else {
+                    newScript = dojo.doc.createElement("script");
+                }
                 dojo.attr(newScript,"name",xlinkTarget);
                 dojo.attr(newScript,"type","text/javascript");
                 newScript.appendChild(dojo.doc.createTextNode(inlineJavaScriptToLoad));
@@ -803,7 +818,12 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
 
                 for (var i = 0; i <= scripts.length; i = i+1) {
                     if (scripts[i] != undefined && scripts[i] != "") {
-                        var newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","script");
+                        var newScript = undefined;
+                        if(dojo.doc.createElementNS) {
+                            newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","script");
+                        }else {
+                            newScript = dojo.doc.createElement("script");
+                        }
                         dojo.attr(newScript,"name",xlinkTarget);
                         dojo.attr(newScript,"src",scripts[i]);
                         dojo.attr(newScript,"type","text/javascript");
