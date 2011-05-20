@@ -152,7 +152,7 @@
 
     </target>
 
-    <target name="create-war">
+    <target name="create-war" description="create a betterFORM web application archive">
         <echo>
         ************************************************************************************
         creating war-file...
