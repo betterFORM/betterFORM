@@ -546,13 +546,16 @@ public class WebProcessor extends AbstractProcessorDecorator {
             generator.setParameter("keepalive-pulse", getContextParam(KEEPALIVE_PULSE));
         }
 
-        if (useragent.equalsIgnoreCase("dojo") || useragent.equalsIgnoreCase("dojodev")) {
-            generator.setParameter("action-url", getActionURL(true));
-        } else if (useragent.equalsIgnoreCase("html")) {
+        if (useragent.equalsIgnoreCase("html")) {
             generator.setParameter("action-url", getActionURL(false));
-        } else {
+        }
+        else if(Config.getInstance().getUserAgents().containsKey(useragent)) {
+            generator.setParameter("action-url", getActionURL(true));
+        }
+        else {
             throw new XFormsConfigException("Invalid useragent: " + useragent + "'");
         }
+
         if (isDebugOn()) {
             generator.setParameter("debug-enabled", "true");
         }
