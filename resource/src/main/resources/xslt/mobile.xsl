@@ -30,15 +30,6 @@
 
             <link rel="stylesheet" type="text/css" href="{$default-css}"/>
 
-            <link rel="stylesheet" media="all and (orientation:portrait)">
-                <xsl:attribute name="href"><xsl:value-of select="concat($contextroot,$CSSPath, 'mobile_portrait.css')"/></xsl:attribute>
-            </link>
-
-            <link rel="stylesheet" media="all and (orientation:landscape)">
-                <xsl:attribute name="href"><xsl:value-of select="concat($contextroot,$CSSPath, 'mobile_landscape.css')"/></xsl:attribute>
-            </link>
-
-
             <xsl:choose>
                 <xsl:when test="$useCDN='true'">
                     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/resources/dojo.css"/>
@@ -105,6 +96,15 @@
             </script><xsl:text>
 </xsl:text>
             <xsl:call-template name="copyInlineScript"/>
+
+
+            <link rel="stylesheet" media="all and (orientation:portrait) and (max-device-width: 1024px)">
+                <xsl:attribute name="href"><xsl:value-of select="concat($contextroot,$CSSPath, 'mobile_portrait.css')"/></xsl:attribute>
+            </link>
+
+            <link rel="stylesheet" media="all and (orientation:landscape) and (max-device-width: 1024px)">
+                <xsl:attribute name="href"><xsl:value-of select="concat($contextroot,$CSSPath, 'mobile_landscape.css')"/></xsl:attribute>
+            </link>
 
         </head>
     </xsl:template>

@@ -1,9 +1,21 @@
 body {
-    background:red;
-    color:yellow;
+    background: #f5f5f5;
 }
-.xfValue  {
-    display:block;
-    background:maroon;
-    color: #ffebcd;
+
+#debug-pane {
+    display: none;
+}
+
+.xfLabel {
+    display: block;
+}
+
+.xfValue {
+    display: block;
+    color: red;
+}
+
+table {
+    border: 5px solid green;
+    width: 100%;
 }

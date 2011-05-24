@@ -2,6 +2,10 @@ body {
     background:blue;
     color:green;
 }
+
+#debug-pane {
+    display:none;
+}
 .xfValue  {
     display:block;
     background:maroon;
