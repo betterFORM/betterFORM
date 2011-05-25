@@ -11,7 +11,7 @@
                 exclude-result-prefixes="xf bf"
                 xpath-default-namespace= "http://www.w3.org/1999/xhtml">
 
-    <xsl:import href="dojo.xsl"/>
+    <xsl:import href="dojo-dev.xsl"/>
 
     <xsl:template match="head">
 
@@ -23,10 +23,15 @@
             <!-- copy all meta tags except 'contenttype' -->
             <xsl:call-template name="getMeta"/>
 
+            <!-- iPhone 4 -->
+            <meta name="viewport" content="width = 640" />
+
+            <!--
             <meta name = "viewport" content = "width = device-width">  </meta>
-            <meta name="apple-mobile-web-app-capable" content="yes"> </meta>
-            <meta name="apple-mobile-web-app-status-bar-style" content="black"> </meta>
-            <meta name="format-detection" content="telephone=yes"> </meta>
+            -->
+            <meta name="apple-mobile-web-app-capable" content="yes"/>
+            <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+            <meta name="format-detection" content="telephone=yes"/>
 
             <link rel="stylesheet" type="text/css" href="{$default-css}"/>
 
@@ -41,9 +46,9 @@
             </xsl:choose>
 
             <!-- include betterForm default stylesheet -->
-            <link rel="stylesheet" type="text/css" href="{$default-css}"/>
+<!--
             <link rel="stylesheet" type="text/css" href="{$betterform-css}"/>
-
+-->
             <!-- copy user-defined stylesheets and inline styles -->
             <xsl:call-template name="getLinkAndStyle"/>
 

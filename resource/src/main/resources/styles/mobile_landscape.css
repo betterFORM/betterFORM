@@ -1,13 +1,22 @@
 body {
-    background:blue;
-    color:green;
+    background: #ffa07a;
+    /*border: 1px solid blue;*/
 }
 
+.bf .xfControl .xfLabel {
+    display: block;
+    color: #2a00ff;
+}
+
+.bf .xfControl .xfValue {
+    display: block;
+}
+
+table {
+    border:none;
+}
+#debug-pane *,
 #debug-pane {
-    display:none;
+    display: none;
 }
-.xfValue  {
-    display:block;
-    background:maroon;
-    color: #ffebcd;
-}
+

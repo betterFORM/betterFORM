@@ -795,19 +795,6 @@ td > div.bfPending > span {
 		display: block;
 } */
 
-/*##################################################################
-                   START IMPORTANT STYLES (DO NOT OVERWRITE)
-##################################################################*/
-.bf .xfDisabled .xfValue,
-.bf .xfDisabled .xfLabel,
-.bf .xfDisabled .xfGroupLabel,
-.bf .xfDisabled {
-    display: none !important;
-}
-
-/*##################################################################
-                   END IMPORTANT STYLES
-##################################################################*/
 
 /*##################################################################
                    START Imported (overwritten) STYLES
