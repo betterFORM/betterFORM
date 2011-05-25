@@ -215,7 +215,7 @@
 
         <pack name="DeveloperPack" required="no" preselected="no" condition="container">
             <description>adds uncompressed Dojo for full debug capabilities</description>
-           <fileset dir="dojo-release-1.5.0-src"
+           <fileset dir="dojo-release-1.6.1-src"
                      targetdir="$INSTALL_PATH/betterform/resources/scripts"
                      condition="bf"
                      excludes="util/**"/>
@@ -223,7 +223,7 @@
                      targetdir="$INSTALL_PATH/betterform/resources/scripts/betterform"
                      condition="bf"
                      excludes="util/**"/>
-            <fileset dir="dojo-release-1.5.0-src"
+            <fileset dir="dojo-release-1.6.1-src"
                       targetdir="$INSTALL_PATH/web/root/resources/scripts"
                      condition="jetty"
                      excludes="util/**"/>
@@ -233,7 +233,7 @@
                      condition="jetty"
                      excludes="util/**"/>
 
-            <fileset dir="dojo-release-1.5.0-src"
+            <fileset dir="dojo-release-1.6.1-src"
                      targetdir="$INSTALL_PATH/webapp/resources/scripts"
                      condition="exist"
                      excludes="util/**"/>

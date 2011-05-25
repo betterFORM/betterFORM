@@ -8,7 +8,7 @@
     <property name="script.src" value="${basedir}/src/main/resources/scripts"/>
     <property name="target.dir" value="${basedir}/target"/>
     <property name="src.dir" value="${basedir}/src"/>
-    <property name="dojo.version" value="dojo-release-1.5.0-src"/>
+    <property name="dojo.version" value="dojo-release-1.6.1-src"/>
     <property name="timeline.version" value="timeline_libraries_v2.3.0" />
 
     <property name="scripts.target" value="${target.dir}/scripts"/>

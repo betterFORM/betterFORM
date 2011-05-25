@@ -10,7 +10,7 @@
             <optimize>off</optimize>
             <version>1.5</version>
         </javac>
-        <dojo>dojo-release-1.5.0-src</dojo>
+        <dojo>dojo-release-1.6.1-src</dojo>
         <timeline>timeline_libraries_v2.3.0</timeline>
     </properties>
     <app>
