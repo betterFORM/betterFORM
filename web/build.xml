@@ -152,7 +152,7 @@
 
     </target>
 
-    <target name="create-war">
+    <target name="create-war" description="create a betterFORM web application archive">
         <echo>
         ************************************************************************************
         creating war-file...
@@ -335,6 +335,22 @@
         <copy todir="${webapp.dir}/${forms.target}">
             <fileset dir="../resource/src/test/resources"/>
         </copy>
+    </target>
+
+    <target name="doc" depends="compile" description="generate documentation">
+        <!--create deploy directory-->
+        <mkdir dir="${basedir}/target/doc"/>
+
+        <!--generate source code documentation-->
+        <javadoc description="generate api documentation"
+                 sourcepath="${basedir}/src/main/java"
+                 destdir="${basedir}/target/doc"
+                 classpathref="compile.class.path"
+                 packagenames="de.betterform.*">
+        </javadoc>
+
+        <!--set version filter-->
+        <filter token="app.version" value="${app.version}"/>
     </target>
 
 </project>
