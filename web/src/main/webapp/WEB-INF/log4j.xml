@@ -60,6 +60,10 @@
         <priority value="DEBUG"/>
     </category>
 
+    <category name="de.betterform.agent.web.resources">
+        <priority value="TRACE"/>
+    </category>
+
     <logger name="net.sf.ehcache">
         <level value="ERROR"/>
     </logger>

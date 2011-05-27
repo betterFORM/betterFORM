@@ -41,8 +41,8 @@ public class ClasspathResourceResolver implements ResourceResolver {
         }
         String uriString = uri.toString();
         String filename = uriString.substring(uriString.lastIndexOf("/")+ 1);
-        if (logger.isLoggable(Level.INFO)){
-            logger.log(Level.INFO,"file: " + filename + " loaded from classpath");
+        if (logger.isLoggable(Level.FINER)){
+            logger.log(Level.FINER,"file: " + filename + " loaded from classpath");
         }
 
         InputStream inputStream = ClasspathResourceResolver.class.getResourceAsStream(RESOURCE_PATH + filename);

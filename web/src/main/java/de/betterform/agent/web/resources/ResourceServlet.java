@@ -68,8 +68,14 @@ public class ResourceServlet extends HttpServlet {
         super.init(config);
         if("false".equals(config.getInitParameter("caching"))){
             caching=false;
+            if(LOG.isTraceEnabled()){
+                LOG.trace("Caching of Resources is disabled");
+            }
         }else {
             caching=true;
+            if(LOG.isTraceEnabled()){
+                LOG.trace("Caching of Resources is enabled - resources are loaded from classpath");
+            }
         }
         initMimeTypes();
         initResourceStreamers();
@@ -100,8 +106,7 @@ public class ResourceServlet extends HttpServlet {
         URL url = ResourceServlet.class.getResource(resourcePath);
         if (LOG.isTraceEnabled()) {
             LOG.trace("Request URI: " + requestUri);
-            LOG.trace("resourcePath: " + requestUri);
-            LOG.trace("resource url: " + requestUri);
+            LOG.trace("resource fpath: " + resourcePath);
         }
 
         if (url == null) {
@@ -129,8 +134,8 @@ public class ResourceServlet extends HttpServlet {
 
         }
 
-        if (LOG.isInfoEnabled()){
-            LOG.info("Streaming resource \"{0}\" - " + resourcePath);
+        if (LOG.isTraceEnabled()){
+            LOG.trace("Streaming resource \"{0}\" - " + resourcePath);
         }
 
         InputStream inputStream = null;
@@ -139,14 +144,17 @@ public class ResourceServlet extends HttpServlet {
             if(!caching){
                 String path = ResourceServlet.class.getResource(resourcePath).getPath();
                 inputStream = new FileInputStream(new File(path));
+                if(LOG.isTraceEnabled()){
+                    LOG.trace("loading reources form file: " + path);
+                }
             }else{
                 inputStream = ResourceServlet.class.getResourceAsStream(resourcePath);
             }
             String mimeType = getResourceContentType(resourcePath);
 
             if (mimeType == null) {
-                if(LOG.isWarnEnabled()){
-                LOG.warn("MimeType for \"{0}\" not found. Sending 'not found' response - " + resourcePath);
+                if(LOG.isTraceEnabled()){
+                    LOG.trace("MimeType for \"{0}\" not found. Sending 'not found' response - " + resourcePath);
                 }
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND);
                 return;
@@ -180,10 +188,8 @@ public class ResourceServlet extends HttpServlet {
     }
 
     /**
-     * set the caching headers for the resource response. 'no-cache' used as URL param allows to switch off
-     * caching.
-     *
-     * todo: disabling cache does not work yet
+     * set the caching headers for the resource response. Caching can be disabled by adding and init-param
+     * of 'caching' with value 'false' to web.xml
      *
      * @param request  the http servlet request
      * @param response the http servlet response
@@ -192,7 +198,6 @@ public class ResourceServlet extends HttpServlet {
         long now = System.currentTimeMillis();
         long oneYear = 31363200000L;
 
-        String referer = request.getHeader("referer");
         if (caching) {
             response.setHeader("Cache-Control", "Public");
             response.setDateHeader("Expires", now + oneYear);
