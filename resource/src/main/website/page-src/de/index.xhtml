@@ -1,3 +1,53 @@
+<!DOCTYPE html [
+        <!ELEMENT html (head|body)*>
+        <!ATTLIST html
+                xmlns CDATA #REQUIRED
+                xml:lang CDATA #REQUIRED
+                lang CDATA #REQUIRED>
+        <!ELEMENT head (title|meta)*>
+        <!ELEMENT title (#PCDATA)>
+        <!ELEMENT meta (#PCDATA)>
+        <!ATTLIST meta
+                name CDATA #REQUIRED
+                content CDATA #REQUIRED>
+        <!ELEMENT body (div)*>
+        <!ATTLIST body
+                id CDATA #REQUIRED
+                class CDATA #REQUIRED>
+        <!ELEMENT div (a|div|p|ul|table)*>
+        <!ATTLIST div
+                class CDATA #IMPLIED
+                id CDATA #IMPLIED>
+        <!ELEMENT a (img)*>
+        <!ATTLIST a
+                class CDATA #IMPLIED
+                href CDATA #REQUIRED
+                id CDATA #IMPLIED
+                style CDATA #IMPLIED
+                target CDATA #IMPLIED>
+        <!ELEMENT p (strong)*>
+        <!ATTLIST p
+                class CDATA #REQUIRED>
+        <!ELEMENT strong (#PCDATA)>
+        <!ELEMENT ul (li)*>
+        <!ATTLIST ul
+                id CDATA #REQUIRED>
+        <!ELEMENT li (div)*>
+        <!ATTLIST li
+                class CDATA #REQUIRED>
+        <!ELEMENT table (tr)*>
+        <!ATTLIST table
+                style CDATA #REQUIRED>
+        <!ELEMENT tr (td)*>
+        <!ELEMENT td (a|h3|blockquote|h4|img)*>
+        <!ELEMENT img (#PCDATA)>
+        <!ATTLIST img
+                alt CDATA #REQUIRED
+                src CDATA #REQUIRED>
+        <!ELEMENT h3 (#PCDATA)>
+        <!ELEMENT blockquote (#PCDATA)>
+        <!ELEMENT h4 (#PCDATA)>
+        ]>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
     <head>
         <!--
@@ -173,6 +223,30 @@
                             </table>
                         </div>
                     </li>
+                    <li class="panel9">
+                        <div class="textSlide">
+                            <table style="width:555px;height:180px;">
+                                <tr>
+                                    <td>
+                                        <img src="../images/mom-logo.png" alt="Monasterium Collaborative Archive."/>
+                                        <h3>Monasterium Collaborative Archive</h3>
+                                        <blockquote>
+                                            "betterFORM's 'XRX approach' ist der ideale Weg für uns, um XML-basierte und
+                                            benutzerfreudliche, kollaborative Webapplikationen für eine Vielzahl von
+                                            Anforderungen zu entwicklen. Das Design von Benutzeroberflächen mit XForms
+                                            ist schnell und flexibel und erlaubte uns ein komplettes Content Management
+                                            System für das Indexieren und Annotieren von XML-kodierten Archiv Metadaten
+                                            zu implementieren. The hoch modulare Architektur des betterFORM Quellcodes
+                                            ermöglichte uns, eigene Widgets und Funktionen hinzuzufügen. Dank der vollständig
+                                            autonomen betterFORM-eXist Integration war es einfach unsere Applikationen
+                                            auf verschiedenen Servers zu installieren."
+                                        </blockquote>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+
                 </ul>
 					<!--
 	<strong>betterFORM Central - up-to-date patches, automatic upgrades, issue-tracking for just
