@@ -55,7 +55,6 @@ public class WebProcessor extends AbstractProcessorDecorator {
     /**
      * Defines the key for accessing (HTTP) session ids.
      */
-    public static final String USERAGENT = "useragent";
     public static final String REQUEST_URI = "requestURI";
     public static final String REQUEST_URL = "requestURL";
     public static final String QUERY_STRING = "queryString";
@@ -546,13 +545,12 @@ public class WebProcessor extends AbstractProcessorDecorator {
             generator.setParameter("keepalive-pulse", getContextParam(KEEPALIVE_PULSE));
         }
 
-        if (useragent.equalsIgnoreCase("dojo") || useragent.equalsIgnoreCase("dojodev")) {
-            generator.setParameter("action-url", getActionURL(true));
-        } else if (useragent.equalsIgnoreCase("html")) {
+        if (useragent.equalsIgnoreCase("html")) {
             generator.setParameter("action-url", getActionURL(false));
-        } else {
-            throw new XFormsConfigException("Invalid useragent: " + useragent + "'");
+        }else{
+            generator.setParameter("action-url", getActionURL(true));
         }
+
         if (isDebugOn()) {
             generator.setParameter("debug-enabled", "true");
         }

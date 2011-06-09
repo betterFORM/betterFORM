@@ -109,7 +109,7 @@ public class WebFactory {
                     throw new XFormsConfigException("This useragent is not configured properly: '" + useragent + "'");
         }
                 processor = (WebProcessor) o;
-        processor.setUseragent(useragent);
+                processor.setUseragent(useragent);
                 return processor;
             }
             catch (ClassNotFoundException cnfe) {
