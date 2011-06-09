@@ -7,12 +7,13 @@
 
 <project name="betterFORM extension installer" default="install-betterFORM-exploded" basedir=".">
 
+    <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
     <!-- Set this porperties so they match your environment -->
     <!--
     <property name="eXist.home" value="POINT-ME-TO-YOUR-EXIST-INSTALLATION"/>
     <property name="eXist.admin.passwd" value="YOUR-EXIST-ADMIN-PASSWD"/>
     -->
-    <property name="eXist.home" value="/home/zwobit/eXist"/>
+    <property name="eXist.home" value="${exist.installed}"/>
     <property name="eXist.admin.passwd" value=""/>
 
     <property name="betterFORM.src" value="${basedir}/../"/>
@@ -116,6 +117,7 @@
 
         <copy todir="${betterFORM.libs}" overwrite="true">
             <fileset dir="${core.dir}/src/main/lib/" includes="saxon*" />
+            <fileset dir="${core.dir}/src/main/lib/" includes="http*.jar" />
             <fileset dir="${web.dir}/src/main/lib/" includes="dwr-*.jar" />
         </copy>
 

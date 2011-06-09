@@ -51,8 +51,11 @@ dependencies = {
             ]
         },
 
+        // WARNING: MINIMAL AND COMPACT PROFILES ARE NOT AVAILABLE YET
+        // WARNING: MINIMAL AND COMPACT PROFILES ARE NOT AVAILABLE YET
+        // WARNING: MINIMAL AND COMPACT PROFILES ARE NOT AVAILABLE YET
         /** betterFORM Minimal Release Resource */
-        {
+  /*      {
             name: "../betterform/betterform-Minimal.js",
             resourceName: "betterform.minimal",
             layerDependencies: [
@@ -64,7 +67,7 @@ dependencies = {
             ]
         },
 
-        /** betterFORM Compact Release  **/
+        *//** betterFORM Compact Release  **//*
         {
             name: "../betterform/betterform-Compact.js",
             resourceName: "betterform.compact",
@@ -75,7 +78,7 @@ dependencies = {
                 "betterform.BfRequiredCompact"
             ]
         },
-
+*/
         /** betterFORM Full Release  **/
         {
             name: "../betterform/betterform-Full.js",
@@ -113,9 +116,6 @@ dependencies = {
         {
             name: "../betterform/betterform-XFormsFeatureExplorer.js",
             resourceName: "betterform.feature.explorer",
-            layerDependencies: [
-                "betterform.full"
-            ],
             dependencies: [
                 "betterform.BfRequiredXFormsFeatureExplorer"
             ]

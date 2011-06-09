@@ -238,7 +238,7 @@
         <!-- ### installerType must be either 'standard' or 'web'. Default value is 'web' ### -->
         <installerType>standard</installerType>
         <exist>
-            <jar>/home/zwobit/Downloads/betterFORM/binaries/eXist-setup-1.4.0-rev10440.jar</jar>
+            <jar>/Users/windauer/Downloads/betterFORM/binaries/eXist-setup-1.4.0-rev10440.jar</jar>
             <version>1.4</version>
             <user>admin</user>
             <passwd>betterform</passwd>
@@ -259,7 +259,8 @@
                 <installed>/Appications/betterFORM</installed>
             </xrx>
         </betterform>
-        <installed>/Appications/eXist</installed>
+        <installed>/Applications/eXist</installed>
+        <passwd>betterform</passwd>
     </exist>
 </root>
 
