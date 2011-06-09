@@ -5,6 +5,7 @@
 
 package de.betterform.connector;
 
+import de.betterform.connector.http.URIUtils;
 import de.betterform.connector.serializer.SerializerRequestWrapper;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.dom.DOMUtil;
@@ -13,7 +14,6 @@ import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.model.submission.Submission;
 import org.w3c.dom.Node;
 
-import java.io.OutputStream;
 import java.net.URI;
 import java.util.Map;
 
@@ -151,28 +151,7 @@ public class AbstractConnector implements Connector {
      * @return URI string with fragment cut off
      */
     protected String getURIWithoutFragment() {
-
-        //if there is a query string we re-append that at the end
-        String query=null;
-        if(this.uri.indexOf("?") != -1){
-            query = this.uri.substring(this.uri.indexOf("?"));
-        }
-
-        if (this.uri == null) {
-            return null;
-        }
-
-        int fragmentIndex = this.uri.indexOf('#');
-
-        if (fragmentIndex == -1) {
-            return this.uri;
-        }
-
-        if(query != null){
-            return this.uri.substring(0, fragmentIndex) + query;
-        }
-
-        return this.uri.substring(0, fragmentIndex);
+        return URIUtils.getURIWithoutFragment(this.uri);
     }
 
     protected final void serialize(Submission submission, Node instance, SerializerRequestWrapper wrapper) throws Exception {

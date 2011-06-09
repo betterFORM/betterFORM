@@ -47,7 +47,7 @@ public class UploadServlet extends HttpServlet /* extends AbstractXFormsServlet 
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        String payload ="";
         try {
             FileItemFactory factory = new DiskFileItemFactory();
             ServletFileUpload upload = new ServletFileUpload(factory);
@@ -82,10 +82,12 @@ public class UploadServlet extends HttpServlet /* extends AbstractXFormsServlet 
             }
         } catch (FileUploadException e) {
             e.printStackTrace();
+            payload = e.getMessage();
         } catch (Exception e) {
             e.printStackTrace();
+            payload = e.getMessage();
         }
-
+        response.getOutputStream().println("<html><body><textarea>"+payload+"</textarea></body></html>");
     }
 
     private void createColection(HttpServletRequest request, String collectionName, String collectionPath) {

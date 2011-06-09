@@ -207,6 +207,8 @@
             <fileset dir="${bfReleaseSrc}/dijit" includes="nls/**/*"/>
             <fileset dir="${bfReleaseSrc}/dijit" includes="themes/**/"/>
             <fileset dir="${bfReleaseSrc}/dijit" includes="dijit.js"/>
+            <fileset dir="${bfReleaseSrc}/dijit" includes="**/en/common.js"/>
+            <fileset dir="${bfReleaseSrc}/dijit" includes="**/form/nls/*.js"/>
         </copy>
 
         <property name="dojoxRelease" value="${bfJSRelease}/dojox"/>

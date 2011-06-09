@@ -263,9 +263,9 @@ public class XFormsFilter implements Filter {
             boolean isUpload = FileUpload.isMultipartContent(new ServletRequestContext(request));
 
             if (isUpload) {
-                ServletOutputStream out = response.getOutputStream();
-                out.println("<html><head><title>status</title></head><body></body></html>");
-                out.close();
+                /*ServletOutputStream out = response.getOutputStream();
+                out.println("<html><body><textarea>status</textarea></body></html>");
+                out.close();*/
             }
         } catch (Exception e) {
             throw new ServletException(e);
