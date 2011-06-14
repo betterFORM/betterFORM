@@ -89,6 +89,7 @@
     <xsl:preserve-space elements="*"/>
     <xsl:strip-space elements="xf:action"/>
 
+
     <!-- ####################################################################################################### -->
     <!-- ##################################### TEMPLATES ####################################################### -->
     <!-- ####################################################################################################### -->
@@ -124,9 +125,7 @@
                 </xsl:otherwise>
             </xsl:choose>
 
-            <!-- include betterForm default stylesheet -->
-            <link rel="stylesheet" type="text/css" href="{$default-css}"/>
-            <link rel="stylesheet" type="text/css" href="{$betterform-css}"/>
+            <xsl:call-template name="include-xforms-css"/>
 
             <!-- copy user-defined stylesheets and inline styles -->
             <xsl:call-template name="getLinkAndStyle"/>
@@ -141,53 +140,65 @@
                 <xsl:call-template name="addSimileTimelineImports" />
             </xsl:if>
 
-            <script type="text/javascript" defer="defer">
-                <xsl:if test="$debug-enabled">function getXFormsDOM(){
-                        Flux.getXFormsDOM(document.getElementById("bfSessionKey").value,
-                            function(data){
-                                console.dirxml(data);
-                            }
-                        );
-                    }
-
-                    function getInstanceDocument(instanceId){
-                        var model = dojo.query(".xfModel", dojo.doc)[0];
-                        dijit.byId(dojo.attr(model, "id")).getInstanceDocument(instanceId,
-                            function(data){
-                                console.dirxml(data);
-                            });
-                    }
-                </xsl:if>
-
-                function loadBetterFORMJs(pathToRelease, developmentJsClass){
-                    if (isBetterFORMRelease) {
-                        var scriptElement = document.createElement('script');
-                        scriptElement.type = 'text/javascript';
-                        scriptElement.src = pathToRelease;
-                        document.getElementsByTagName('head')[0].appendChild(scriptElement);
-                    } else {
-                        dojo.require(developmentJsClass);
-                    }
-                }
-
-                dojo.addOnLoad(function(){
-                    dojo.addOnLoad(function(){
-                        dojo.parser.parse();
-                        Flux._path = dojo.attr(dojo.byId("fluxProcessor"), "contextroot") + "/Flux";
-                        Flux.init( dojo.attr(dojo.byId("fluxProcessor"),"sessionkey"), dojo.hitch(fluxProcessor,fluxProcessor.applyChanges));
-                    });
-                });
-            </script><xsl:text>
-</xsl:text>
+            <xsl:call-template name="addLocalScript"/>
             <xsl:call-template name="copyInlineScript"/>
 
         </head>
     </xsl:template>
 
+    <xsl:template name="include-xforms-css">
+        <!-- include betterForm default stylesheet -->
+        <link rel="stylesheet" type="text/css" href="{$default-css}"/>
+        <link rel="stylesheet" type="text/css" href="{$betterform-css}"/>
+    </xsl:template>
+
+    <xsl:template name="addLocalScript">
+        <script type="text/javascript" defer="defer">
+            <xsl:if test="$debug-enabled">function getXFormsDOM(){
+                Flux.getXFormsDOM(document.getElementById("bfSessionKey").value,
+                function(data){
+                console.dirxml(data);
+                }
+                );
+                }
+
+                function getInstanceDocument(instanceId){
+                var model = dojo.query(".xfModel", dojo.doc)[0];
+                dijit.byId(dojo.attr(model, "id")).getInstanceDocument(instanceId,
+                function(data){
+                console.dirxml(data);
+                });
+                }
+            </xsl:if>
+
+            <!--
+                            function loadBetterFORMJs(pathToRelease, developmentJsClass){
+                                if (isBetterFORMRelease) {
+                                    var scriptElement = document.createElement('script');
+                                    scriptElement.type = 'text/javascript';
+                                    scriptElement.src = pathToRelease;
+                                    document.getElementsByTagName('head')[0].appendChild(scriptElement);
+                                } else {
+                                    dojo.require(developmentJsClass);
+                                }
+                            }
+            -->
+
+            dojo.addOnLoad(function(){
+            dojo.addOnLoad(function(){
+            dojo.parser.parse();
+            Flux._path = dojo.attr(dojo.byId("fluxProcessor"), "contextroot") + "/Flux";
+            Flux.init( dojo.attr(dojo.byId("fluxProcessor"),"sessionkey"),
+            dojo.hitch(fluxProcessor,fluxProcessor.applyChanges));
+            });
+            });
+        </script><xsl:text>
+</xsl:text>
+    </xsl:template>
 
     <xsl:template name="addDojoCSS"><xsl:text>
 </xsl:text>
-                <xsl:variable name="cssTheme">
+        <xsl:variable name="cssTheme">
                     <xsl:choose>
                         <xsl:when test="contains(//body/@class, 'tundra')">tundra</xsl:when>
                         <xsl:when test="contains(//body/@class, 'soria')">soria</xsl:when>
@@ -282,6 +293,8 @@
             <script type="text/javascript" src="{concat($contextroot,$scriptPath, 'simile/timeline/timeline-api.js?timeline-use-local-resources=true&amp;bundle=true&amp;forceLocale=en')}">&#160;</script><xsl:text>
 </xsl:text>
     </xsl:template>
+
+
 
     <xsl:template match="body">
         <!-- todo: add 'overflow:hidden' to @style here -->

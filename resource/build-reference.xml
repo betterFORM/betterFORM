@@ -21,7 +21,7 @@
         <xslt basedir="${form.src}/xml"
               destdir="${form.src}/../xforms/reference"
               style="${form.src}/build-forms.xsl"
-              force="true"
+              force="false"
               includes="*.xml"
               extension=".xhtml">
             <classpath refid="transform.class.path"/>
