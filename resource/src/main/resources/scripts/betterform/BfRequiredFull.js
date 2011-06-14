@@ -30,3 +30,4 @@ dojo.require("betterform.ui.textarea.MinimalTextarea");
 dojo.require("betterform.ui.textarea.HtmlEditor");
 dojo.require("betterform.ui.textarea.DojoEditor");
 dojo.require("betterform.ui.textarea.SimpleTextarea");
+dojo.require("betterform.editor.Editor");

@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <script type="text/javascript">
     var xfId = dojo.attr(dojo.byId("xfMount"),"xfId");
-    console.debug("xfid: ",xfId);
-
-    updateProperties(xfId);
+    console.log("xfid: ",xfId);
+    betterform.Editor.editProperties(xfId);
 </script>
 <div xmlns="http://www.w3.org/1999/xhtml">
    <div class="propertyTitle">Attributes</div>
    <form method="post" action="#" enctype="application/x-www-form-urlencoded">
-      <ul style="list-style-type:none;">
+       <ul style="list-style-type:none;">
+         <li>
+            <div class="saveBtn">
+               <input type="button" onclick="betterform.Editor.saveProperties(dojo.attr(dojo.byId('xfMount'),'xfId'));" value="save"/>
+               <input type="button" onclick="betterform.Editor.editProperties(dojo.attr(dojo.byId('xfMount'),'xfId'));" value="reset"/>
+            </div>
+         </li>
+      </ul>
+
+       <ul style="list-style-type:none;">
          <li>
             <div class="attrEditor">
                <h4>

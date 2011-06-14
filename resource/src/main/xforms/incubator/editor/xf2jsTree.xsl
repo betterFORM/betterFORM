@@ -19,35 +19,7 @@
                 <script type="text/javascript" src="/betterform/bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.hotkeys.js"></script>
                 <script type="text/javascript" src="/betterform/bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
                 <script type="text/javascript">
-                    dojo.require("dijit.layout.ContentPane");
-
-                    function updateProperties(xfId){
-                        console.debug("jsTree: id of property sheet: ",xfId);
-                        var dataXfAttrs = dojo.attr(dojo.byId(xfId), "data-xf-attrs");
-                        var dataXfType = dojo.attr(dojo.byId(xfId), "data-xf-type");
-
-                        console.debug("dataXfAttrs: ",dataXfAttrs, " dataXfType" ,dataXfType);
-                        var xfAppearance = dataXfAttrs['appearance'];
-                        var xfRef= dataXfAttrs['ref'];
-                        console.debug("xfAppearance:",xfAppearance, " ref:",xfRef);
-
-                        // var testObject = { dataXfAttrs };
-                        // console.log('typeof testObject: ' + typeof testObject);
-                        // console.log('testObject properties:');
-                        // for (var prop in testObject) {
-                        //     console.log('  ' + prop + ': ' + testObject[prop]);
-                        // }
-
-                        // Put the object into storage
-                        // localStorage.setItem('testObject', testObject);
-
-                        // Retrieve the object from storage
-                        // var retrievedObject = localStorage.getItem('testObject');
-
-                        // console.log('typeof retrievedObject: ' + typeof retrievedObject);
-                        // console.log('Value of retrievedObject: ' + retrievedObject);
-
-                    }
+                    dojo.require("betterform.editor.Editor");
                 </script>
                 <style type="text/css">
                     html, body,#mainWindow {
@@ -162,7 +134,7 @@
                         </div>
                         <div id="rightPane" tabindex="0">
                             <div id="xfMount" dojotype="dijit.layout.ContentPane"
-                                 href="/betterform/forms/incubator/editor/initial.html"
+                                 href="/betterform/forms/incubator/editor/document.html"
                                  executeScripts="true"
                                  preload="true"
                                  />
@@ -204,7 +176,7 @@
                                     dojo.attr(dojo.byId("xfMount"),"xfId", id);
 
                                     dijit.byId("xfMount").set("href", "/betterform/forms/incubator/editor/" + xfType + ".html");
-                                    // alert('hallo');
+                                    //alert('hallo');
                                 })
                             // EVENTS
                             // each instance triggers its own events - to process those listen on the container
@@ -235,9 +207,9 @@
         </xsl:variable>
 
 
-        <xsl:variable name="props"><xsl:for-each select="@*">
+        <xsl:variable name="props">{<xsl:for-each select="@*">
                 <xsl:value-of select="local-name()"/>:'<xsl:value-of select="."/>'<xsl:if test="position()!=last()">,</xsl:if>
-            </xsl:for-each></xsl:variable>
+            </xsl:for-each>}</xsl:variable>
 
 
         <li id="{$id}" data-xf-type="{local-name()}" data-xf-attrs="{$props}">
