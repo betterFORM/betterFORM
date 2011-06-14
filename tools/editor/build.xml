@@ -40,6 +40,78 @@
         </xslt>
     </target>
 
+    <target name="generate-HTML-Forms" depends="generate-XForms" description="generates HTML forms from XForms">
+        <xslt basedir="${basedir}/target/target"
+              destdir="${basedir}/target/html/"
+              style="${basedir}/generate-html-forms.xsl"
+              extension=".html"
+              force="true"
+              classpathref="transform.class.path">
+            <classpath refid="transform.class.path"/>
+
+        </xslt>
+
+<!--
+        <xslt basedir="${basedir}/XFormsFull"
+              destdir="${basedir}/target"
+              style="${basedir}/convert2x4h.xsl"
+              force="true"
+              includes="*.xhtml"
+              extension=".html">
+            <classpath refid="transform.class.path"/>
+        </xslt>
+-->
+
+    </target>
+
+
+    <target name="generate-Prototypes" depends="prepare" description="generate Prototypes for XForms element structure">
+        <xslt in="${basedir}/XForms-11-Schema.xsd"
+              out="${basedir}/target/prototypes.xml"
+              style="${basedir}/generatePrototypes.xsl"
+              force="true"
+              classpathref="transform.class.path">
+        </xslt>
+    </target>
+
+    <target name="generate-test-form" depends="prepare" description="generate test form for editor">
+        <xslt in="${basedir}/testinput/registration.xhtml"
+              out="${basedir}/target/registration.xml"
+              style="${basedir}/xf2instance.xsl"
+              force="true"
+              classpathref="transform.class.path">
+        </xslt>
+    </target>
+
+    <target name="generate-test-nested-form" depends="prepare" description="generate test form for editor">
+        <xslt in="${basedir}/testinput/registration.xhtml"
+              out="${basedir}/target/registration-nested.xml"
+              style="${basedir}/xf2nestedinstance.xsl"
+              force="true"
+              classpathref="transform.class.path">
+        </xslt>
+    </target>
+
+    <target name="generate-test-form-nested-divs" depends="prepare" description="generate test form for editor">
+        <xslt in="${basedir}/testinput/registration.xhtml"
+              out="${basedir}/target/registration-div.xml"
+              style="${basedir}/xf2div.xsl"
+              force="true"
+              classpathref="transform.class.path">
+        </xslt>
+    </target>
+
+
+
+    <target name="xf2jsTree" depends="prepare" description="generate test form for editor">
+        <xslt in="${basedir}/testinput/registration.xhtml"
+              out="${basedir}/target/registration-jsTree.xml"
+              style="${basedir}/xf2jsTree.xsl"
+              force="true"
+              classpathref="transform.class.path">
+        </xslt>
+    </target>
+
     <target  name="deployEditor" depends="generate-XForms">
 
         <copy todir="${basedir}/../../web/target/betterform/forms/editor" flatten="true">

@@ -977,7 +977,8 @@
                 <div repeatItemId="{$repeat-item-id}"
                      class="{$repeat-item-classes}"
                      dojoType="betterform.ui.container.RepeatItem"
-                     appearance="full">
+                     appearance="full"
+                     tabindex="0">
                     <div class="legend">
                         <xsl:choose>
                             <xsl:when test="$group-label and xforms:label">

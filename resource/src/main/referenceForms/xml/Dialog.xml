@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+    <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ev="http://www.w3.org/2001/xml-events"
@@ -18,8 +18,6 @@
             </p>
             <p>
                 XForms 1.1 does not provide any Dialog control, but the 1.2 recommendation will probably contain a <a href="http://www.w3.org/MarkUp/Forms/wiki/The_XForms_Dialog_Module" target="_blank">XForms Dialog Module</a>.
-
-
             </p>
         </div>
         <div class="references">

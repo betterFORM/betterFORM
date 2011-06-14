@@ -13,8 +13,10 @@ import de.betterform.agent.web.servlet.HttpRequestHandler;
 import de.betterform.agent.web.servlet.XFormsPostServlet;
 import de.betterform.generator.UIGenerator;
 import de.betterform.generator.XSLTGenerator;
+import de.betterform.session.DefaultSerializer;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
+import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.XMLEvent;
 import de.betterform.xml.xforms.AbstractProcessorDecorator;
@@ -569,7 +571,11 @@ public class WebProcessor extends AbstractProcessorDecorator {
         String triggerPrefix = Config.getInstance().getProperty("betterform.web.triggerPrefix");
         generator.setParameter("trigger-prefix", triggerPrefix);
 
+        DOMUtil.prettyPrintDOM(((XFormsProcessorImpl)  this.xformsProcessor).getContainer().getDefaultModel().getDefaultInstance().getInstanceDocument());
         generator.setParameter("locale", locale);
+//        if(useragent.equals("bfEditor")){
+//            new DefaultSerializer((XFormsProcessorImpl) this.xformsProcessor).inlineInstances(this.xformsProcessor.getXForms().getOwnerDocument());
+//        }
         return generator;
     }
 

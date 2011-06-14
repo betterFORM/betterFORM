@@ -158,9 +158,29 @@
         <servlet-class>de.betterform.agent.web.servlet.XFormsInspectorServlet</servlet-class>
     </servlet>
 
+    
+
     <servlet-mapping>
         <servlet-name>inspector</servlet-name>
         <url-pattern>/inspector/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>bfEditor</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.XSLTServlet</servlet-class>
+        <init-param>
+            <param-name>xsltHome</param-name>
+            <param-value>/forms/incubator/editor/</param-value>
+        </init-param>
+        <init-param>
+            <param-name>xsltFile</param-name>
+            <param-value>xf2jsTree.xsl</param-value>
+        </init-param>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>bfEditor</servlet-name>
+        <url-pattern>/bfEditor/*</url-pattern>
     </servlet-mapping>
     <!--
     <servlet>
