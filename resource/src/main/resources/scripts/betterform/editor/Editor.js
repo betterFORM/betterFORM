@@ -5,134 +5,100 @@ dojo.require("dijit.layout.ContentPane");
 dojo.require("dojox.json.ref") ;
 
 dojo.provide("betterform.Editor");
+
+
+betterform.Editor.editProperty =  function(xfAttrObj, attributeName){
+    var xfAttrValue = xfAttrObj[attributeName];
+    var xfAttrPropertyNode = dojo.byId(attributeName);
+    console.log("Editor.editProperty", attributeName, ":  xfAttrValue :",xfAttrValue , " xfAttrPropertyNode :",xfAttrPropertyNode );
+    if(xfAttrPropertyNode != undefined) {
+        if(!xfAttrValue)xfAttrValue ="";
+        dojo.attr(xfAttrPropertyNode,"value", xfAttrValue);
+     }
+
+}
 betterform.Editor.editProperties =  function(targetId){
     console.log("betterform.Editor.editProperties: id of property sheet: ",targetId);
     var dataXfAttrs = dojo.attr(dojo.byId(targetId), "data-xf-attrs");
     var dataXfType = dojo.attr(dojo.byId(targetId), "data-xf-type");
 
     console.log("dataXfAttrs: ",dataXfAttrs, " dataXfType" ,dataXfType);
-/*
-                        if (jQuery) {
-                            console.log("jquery loaded");
-                        } else {
-                            console.log("jquery not(!) loaded");
-                        }
-*/
 
     var xfAttrObj = dojox.json.ref.fromJson(dataXfAttrs);
     console.log("xfAttrObj:",xfAttrObj);
-    if(dataXfAttrs != undefined) {
-        var xfAppearance = xfAttrObj.appearance;
-        var xfAppearancePropertyNode = dojo.byId("appearance");
-        console.log("xfAppearance:",xfAppearance, " xfAppearancePropertyNode :",xfAppearancePropertyNode );
-        if(xfAppearancePropertyNode  != undefined) {
-            if(!xfAppearance)xfAppearance="";
-            dojo.attr(xfAppearancePropertyNode,"value", xfAppearance);
-         }
+    if(xfAttrObj != undefined ) {
+        for(value in xfAttrObj) {
+            console.debug("value: ",value);
+            betterform.Editor.editProperty(xfAttrObj,value);
+/*
+        var commonAttributes = new Array("id");
+        var uiCommonAttributes = new Array("appearance","navindex","accesskey");
+        var singleNodeBindingAttributes = new Array("ref","model","bind");
+        var nodeSetBindingAttributes = new Array("nodeset","model","bind");
+        var modelItemPropertyAttributes = new Array("type","readonly","required","relevant","calculate","constraint");
 
-        var nodeset = xfAttrObj.nodeset;
-        var nodesetPropertyNode = dojo.byId("nodeset");
-        console.log("nodeset:",nodeset, " nodesetPropertyNode:",nodesetPropertyNode);
-        if(nodesetPropertyNode!= undefined) {
-            dojo.attr(nodesetPropertyNode,"value", nodeset);
-         }
-        var xfRef = xfAttrObj.ref;
-        var xfRefPropertyNode = dojo.byId("ref");
-        console.log("xfRef:",xfRef, " refPropertyNode:",xfRefPropertyNode);
-        if(xfRefPropertyNode!= undefined) {
-            if(!xfRef)xfRef="";
-            dojo.attr(xfRefPropertyNode,"value", xfRef);
-         }
-        var xfBind = xfAttrObj.bind;
-        var xfBindPropertyNode = dojo.byId("bind");
-        console.log("xfBind:",xfBind , " refPropertyNode:",xfBindPropertyNode);
-        if(xfBindPropertyNode  != undefined) {
-            if(!xfBind)xfBind="";
-            dojo.attr(xfBindPropertyNode ,"value", xfBind);
-         }
-
-        var constraint= xfAttrObj.constraint;
-        var constraintPropertyNode = dojo.byId("constraint");
-        console.log("constraint:",constraint, " constraintPropertyNode:",constraintPropertyNode);
-        if(constraintPropertyNode!= undefined) {
-            dojo.attr(constraintPropertyNode,"value", constraint);
-         }
-
-        var required= xfAttrObj.required;
-        var requiredPropertyNode = dojo.byId("required");
-        console.log("required:",required, " requiredPropertyNode:",requiredPropertyNode);
-        if(requiredPropertyNode!= undefined) {
-            dojo.attr(requiredPropertyNode,"value", required);
-         }
-
-        var relevant= xfAttrObj.relevant;
-        var relevantPropertyNode = dojo.byId("relevant");
-        console.log("relevant:",relevant, " relevantPropertyNode:",relevantPropertyNode);
-        if(relevantPropertyNode!= undefined) {
-            dojo.attr(relevantPropertyNode,"value", relevant);
-         }
-
-        var readonly= xfAttrObj.readonly;
-        var readonlyPropertyNode = dojo.byId("readonly");
-        console.log("readonly:",readonly, " readonlyPropertyNode:",readonlyPropertyNode);
-        if(readonlyPropertyNode!= undefined) {
-            dojo.attr(readonlyPropertyNode,"value", readonly);
-         }
-
-        var xfId= xfAttrObj.id;
-        var xfIdPropertyNode = dojo.byId("id");
-        console.log("xfId:",readonly, " xfIdPropertyNode:",xfIdPropertyNode);
-        if(xfIdPropertyNode!= undefined) {
-            if(xfId == undefined) xfId = "";
-            dojo.attr(xfIdPropertyNode,"value", xfId);
-         }
-
-        var xfReplace= xfAttrObj.replace;
-        var xfReplacePropertyNode = dojo.byId("replace");
-        console.log("xfReplace:",readonly, " xfReplacePropertyNode:",xfReplacePropertyNode);
-        if(xfReplacePropertyNode!= undefined) {
-            dojo.attr(xfReplacePropertyNode,"value", xfReplace);
-         }
-        var xfModel= xfAttrObj.model;
-        var xfModelPropertyNode = dojo.byId("model");
-        console.log("xfModel:",readonly, " xfModelPropertyNode:",xfModelPropertyNode);
-        if(xfModelPropertyNode!= undefined) {
-            if(!xfModel)xfModel="";
-            dojo.attr(xfModelPropertyNode,"value", xfModel);
-         }
-
-        var xfResource= xfAttrObj.resource;
-        var xfResourcePropertyNode = dojo.byId("resource");
-        console.log("xfResource:",readonly, " xfResourcePropertyNode:",xfResourcePropertyNode);
-        if(xfResourcePropertyNode!= undefined) {
-            if(!xfResource)xfResource="";
-            dojo.attr(xfResourcePropertyNode,"value", xfResource);
-         }
+        var xfDocument = new Object();
+        xfDocument.model = new Array("functions","schema", "version");
+        xfDocument.instance = new Array(commonAttributes, "src","resource");
+        xfDocument.submission = new Array(commonAttributes, "ref","bind","resource","action","mode","method","validate",
+                                            "relevant","serialization","version","indent", "mediatype","encoding","omit-xml-declaration",
+                                            "standalone","cdata-section-elements","replace","instance","targetref","separator","includenamespaceprefixes");
+        xfDocument.bind = new Array(commonAttributes,modelItemPropertyAttributes,"nodeset");
 
 
-        var xfMethod= xfAttrObj.method;
-        var xfMethodPropertyNode = dojo.byId("method");
-        console.log("xfMethod:",readonly, " xfMethodPropertyNode:",xfMethodPropertyNode);
-        if(xfMethodPropertyNode!= undefined) {
-            dojo.attr(xfMethodPropertyNode,"value", xfMethod);
-         }
+        xfDocument.group = new Array(commonAttributes,uiCommonAttributes, singleNodeBindingAttributes);
+        xfDocument.input = new Array(commonAttributes,uiCommonAttributes,singleNodeBindingAttributes,"inputmode","incremental");
+        xfDocument.secret = xfDocument.input;
+        xfDocument.textarea = xfDocument.input;
+        xfDocument.output = new Array(commonAttributes,"appearance","value","mediatype");
+        xfDocument.upload = new Array(commonAttributes,uiCommonAttributes, singleNodeBindingAttributes,"mediatype", "incremental");
+        xfDocument.range = new Array(commonAttributes,uiCommonAttributes,singleNodeBindingAttributes,"start","end","step","incremental");
+        xfDocument.trigger= new Array(commonAttributes,uiCommonAttributes,singleNodeBindingAttributes);
+        xfDocument.submit = new Array(commonAttributes,uiCommonAttributes,singleNodeBindingAttributes,"submission");
+        xfDocument.select = new Array(commonAttributes,uiCommonAttributes,singleNodeBindingAttributes,"selection","incremental");
+        xfDocument.select1 = new Array(commonAttributes,uiCommonAttributes,singleNodeBindingAttributes,"selection","incremental");
+
+        if(dataXfType != undefined && xfDocument[dataXfType] != undefined){
+            // console.log("udpate instance properties");
+            dojo.forEach(xfDocument[dataXfType], function(value) {
+                // console.debug("value: ",value);
+                if(value instanceof Array) {
+                    // console.log("udpate instance properties: found array");
+                    dojo.forEach(value, function(arrayValue) {
+                        // console.debug("arrayvalue: ",arrayValue);
+                        betterform.Editor.editProperty(xfAttrObj,arrayValue);
+                    });
+                }else {
+                    betterform.Editor.editProperty(xfAttrObj,value);
+                }
+            });
+*/
+        }
     }
 
 };
-
 
 betterform.Editor.saveProperties =  function(targetId){
     console.log("betterform.Editor.saveProperties: id",targetId);
     var xfAttrObj = new Object();
 
     var nodeId = dojo.attr(dojo.byId("id"),"value");
-    console.log("id for current target: ", nodeId);
     if(nodeId != undefined) {
         xfAttrObj.id = nodeId;
     }
     var xfModel = dojo.attr(dojo.byId("model"),"value");
     if(xfModel  != undefined) {
         xfAttrObj.model= xfModel;
+    }
+
+    var xfAppearance= dojo.attr(dojo.byId("appearance"),"value");
+    if(xfAppearance!= undefined) {
+        xfAttrObj.appearance= xfAppearance;
+    }
+
+    var xfNodeset= dojo.attr(dojo.byId("nodeset"),"value");
+    if(xfAppearance!= undefined) {
+        xfAttrObj.appearance= xfAppearance;
     }
 
     var xfRef= dojo.attr(dojo.byId("ref"),"value");
@@ -145,10 +111,6 @@ betterform.Editor.saveProperties =  function(targetId){
         xfAttrObj.bind= xfBind;
     }
 
-    var xfAppearance= dojo.attr(dojo.byId("appearance"),"value");
-    if(xfAppearance!= undefined) {
-        xfAttrObj.appearance= xfAppearance;
-    }
 
     var xfAttrString = dojox.json.ref.toJson(xfAttrObj);
     console.debug("xfAttrString :",xfAttrString);
