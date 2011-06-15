@@ -22,6 +22,9 @@
                     dojo.require("betterform.editor.Editor");
                     dojo.require("betterform.Editor");
                     dojo.require("dijit.layout.TabContainer");
+                    dojo.require("dijit.form.Select");
+                    dojo.require("dijit.form.TextBox");
+
                 </script>
                 <style type="text/css">
                     html, body,#mainWindow {
@@ -91,7 +94,7 @@
                         line-height:1;
                         font-style:italic;
                     }
-                    #xfMount .attrEditor input{
+                    #xfMount .attrEditor .dojoInput{
                         width:200px;
                     }
                     #xfMount .propertyTitle{

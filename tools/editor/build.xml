@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- $Id: build.xml,v 1.90 2006/11/16 23:55:43 joernt Exp $ -->
-<project name="Editor generator tools" default="generate-HTML-Forms" basedir=".">
+<project name="Editor generator tools" default="deployEditor" basedir=".">
 
 
     <!--
@@ -45,6 +45,30 @@
               destdir="${basedir}/target/html/"
               style="${basedir}/generate-html-forms.xsl"
               extension=".html"
+              force="true"
+              classpathref="transform.class.path">
+            <classpath refid="transform.class.path"/>
+
+        </xslt>
+
+<!--
+        <xslt basedir="${basedir}/XFormsFull"
+              destdir="${basedir}/target"
+              style="${basedir}/convert2x4h.xsl"
+              force="true"
+              includes="*.xhtml"
+              extension=".html">
+            <classpath refid="transform.class.path"/>
+        </xslt>
+-->
+
+    </target>
+
+    <target name="generate-xf-datatype-list"  description="generates HTML forms from XForms">
+        <xslt in="${basedir}/XForms-11-Schema.xsd"
+              out="${basedir}/target/xfDatatype.json"
+              style="${basedir}/generateXFDatatypeList.xsl"
+              extension=".json"
               force="true"
               classpathref="transform.class.path">
             <classpath refid="transform.class.path"/>
@@ -112,8 +136,7 @@
         </xslt>
     </target>
 
-    <target  name="deployEditor" depends="generate-HTML-Forms">
-
+    <target  name="deployEditor" depends="generate-HTML-Forms" description="generates HTML forms and deploys them to xforms/incubator/editor">
         <copy todir="${basedir}/../../resource/src/main/xforms/incubator/editor" flatten="true" overwrite="true">
             <fileset dir="${basedir}" includes="target/html/*.html"/>
         </copy>
