@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<script xmlns="http://www.w3.org/1999/xhtml" type="text/javascript">
+            var xfId = dojo.attr(dojo.byId("xfMount"),"xfId");
+            console.log("xfid: ",xfId);
+            betterform.Editor.editProperties(xfId);
+        </script>
 <div xmlns="http://www.w3.org/1999/xhtml">
    <div class="propertyTitle">Attributes</div>
    <form method="post" action="#" enctype="application/x-www-form-urlencoded">
@@ -9,7 +14,8 @@
                   <label for="id">id</label>
                </h4>
                <p>hint text here</p>
-               <input id="id" name="id" type="text" value="" placeholder=""/>
+               <input id="id" name="id" type="text" value="" placeholder=""
+                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'id')"/>
             </div>
          </li>
       </ul>
@@ -20,7 +26,8 @@
                   <label for="if">if</label>
                </h4>
                <p>hint text here</p>
-               <input id="if" name="if" type="text" value="" placeholder=""/>
+               <input id="if" name="if" type="text" value="" placeholder=""
+                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'if')"/>
             </div>
          </li>
       </ul>
@@ -31,7 +38,8 @@
                   <label for="while">while</label>
                </h4>
                <p>hint text here</p>
-               <input id="while" name="while" type="text" value="" placeholder=""/>
+               <input id="while" name="while" type="text" value="" placeholder=""
+                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'while')"/>
             </div>
          </li>
       </ul>
@@ -42,7 +50,8 @@
                   <label for="control">control</label>
                </h4>
                <p>hint text here</p>
-               <input id="control" name="control" type="text" value="" placeholder=""/>
+               <input id="control" name="control" type="text" value="" placeholder=""
+                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'control')"/>
             </div>
          </li>
       </ul>

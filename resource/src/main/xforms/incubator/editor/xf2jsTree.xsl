@@ -20,6 +20,8 @@
                 <script type="text/javascript" src="/betterform/bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
                 <script type="text/javascript">
                     dojo.require("betterform.editor.Editor");
+                    dojo.require("betterform.Editor");
+                    dojo.require("dijit.layout.TabContainer");
                 </script>
                 <style type="text/css">
                     html, body,#mainWindow {

@@ -16,7 +16,8 @@ betterform.Editor.editProperty =  function(xfAttrObj, attributeName){
         dojo.attr(xfAttrPropertyNode,"value", xfAttrValue);
      }
 
-}
+};
+
 betterform.Editor.editProperties =  function(targetId){
     console.log("betterform.Editor.editProperties: id of property sheet: ",targetId);
     var dataXfAttrs = dojo.attr(dojo.byId(targetId), "data-xf-attrs");
@@ -75,6 +76,26 @@ betterform.Editor.editProperties =  function(targetId){
 */
         }
     }
+
+};
+betterform.Editor.saveProperty = function(targetId, propertyId) {
+    console.log("betterform.Editor.saveProperty: id",targetId, " propertyId:",propertyId);
+
+    var dataXfAttrs = dojo.attr(dojo.byId(targetId), "data-xf-attrs");
+    console.log("dataXfAttrs orig: ",dataXfAttrs);
+
+    var xfAttrObj = dojox.json.ref.fromJson(dataXfAttrs);
+    console.log("xfAttrObj:",xfAttrObj);
+    var newValue = dojo.attr(dojo.byId(propertyId),"value");
+    if(!newValue)newValue="";
+    xfAttrObj[propertyId]=newValue;
+    var xfAttrString = dojox.json.ref.toJson(xfAttrObj);
+    console.debug("xfAttr new:",xfAttrString);
+    dojo.attr(dojo.byId(targetId), "data-xf-attrs",xfAttrString);
+
+
+
+
 
 };
 

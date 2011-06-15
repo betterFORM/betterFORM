@@ -40,7 +40,7 @@
         </xslt>
     </target>
 
-    <target name="generate-HTML-Forms" depends="generate-XForms" description="generates HTML forms from XForms">
+    <target name="generate-HTML-Forms"  description="generates HTML forms from XForms">
         <xslt basedir="${basedir}/target/target"
               destdir="${basedir}/target/html/"
               style="${basedir}/generate-html-forms.xsl"
@@ -112,10 +112,10 @@
         </xslt>
     </target>
 
-    <target  name="deployEditor" depends="generate-XForms">
+    <target  name="deployEditor" depends="generate-HTML-Forms">
 
-        <copy todir="${basedir}/../../web/target/betterform/forms/editor" flatten="true">
-            <fileset dir="${basedir}" includes="**/*.xhtml"/>
+        <copy todir="${basedir}/../../resource/src/main/xforms/incubator/editor" flatten="true" overwrite="true">
+            <fileset dir="${basedir}" includes="target/html/*.html"/>
         </copy>
     </target>
 
