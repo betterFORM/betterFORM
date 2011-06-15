@@ -31,12 +31,6 @@
               style="${basedir}/generateXForms.xsl"
               force="true"
                 classpathref="transform.class.path">
-            <!--<classpath refid="transform.class.path"/>-->
-            
-<!--
-            <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
-            <param name="module" expression="${core.app.name}"/>
--->
         </xslt>
     </target>
 
@@ -51,20 +45,9 @@
 
         </xslt>
 
-<!--
-        <xslt basedir="${basedir}/XFormsFull"
-              destdir="${basedir}/target"
-              style="${basedir}/convert2x4h.xsl"
-              force="true"
-              includes="*.xhtml"
-              extension=".html">
-            <classpath refid="transform.class.path"/>
-        </xslt>
--->
-
     </target>
 
-
+<!--
     <target name="generate-Prototypes" depends="prepare" description="generate Prototypes for XForms element structure">
         <xslt in="${basedir}/XForms-11-Schema.xsd"
               out="${basedir}/target/prototypes.xml"
@@ -73,24 +56,7 @@
               classpathref="transform.class.path">
         </xslt>
     </target>
-
-    <target name="generate-test-form" depends="prepare" description="generate test form for editor">
-        <xslt in="${basedir}/testinput/registration.xhtml"
-              out="${basedir}/target/registration.xml"
-              style="${basedir}/xf2instance.xsl"
-              force="true"
-              classpathref="transform.class.path">
-        </xslt>
-    </target>
-
-    <target name="generate-test-nested-form" depends="prepare" description="generate test form for editor">
-        <xslt in="${basedir}/testinput/registration.xhtml"
-              out="${basedir}/target/registration-nested.xml"
-              style="${basedir}/xf2nestedinstance.xsl"
-              force="true"
-              classpathref="transform.class.path">
-        </xslt>
-    </target>
+-->
 
     <target name="generate-test-form-nested-divs" depends="prepare" description="generate test form for editor">
         <xslt in="${basedir}/testinput/registration.xhtml"
@@ -102,11 +68,31 @@
     </target>
 
 
+    <!-- for testing - real version is in incubator/editor -->
+    <target name="dom2xf" depends="prepare" description="turn DOM from client into xforms againr">
+        <xslt in="${basedir}/testinput/dump.xml"
+              out="${basedir}/target/dump-xforms.xhtml"
+              style="${basedir}/dom2xf.xsl"
+              force="true"
+              classpathref="transform.class.path">
+        </xslt>
+    </target>
 
-    <target name="xf2jsTree" depends="prepare" description="generate test form for editor">
-        <xslt in="${basedir}/testinput/registration.xhtml"
-              out="${basedir}/target/registration-jsTree.xml"
-              style="${basedir}/xf2jsTree.xsl"
+    <!-- base transform that generates a list of possible child elements for a given parent. The whole
+    thing is generated to ul/li structures and should be used as a base for further transforms. -->
+    <target name="generateChildList" depends="prepare" description="generate list of possible child elements">
+        <xslt in="${basedir}/XForms-11-Schema.xsd"
+              out="${basedir}/target/childlist.xml"
+              style="${basedir}/generateChildList.xsl"
+              force="true"
+              classpathref="transform.class.path">
+        </xslt>
+    </target>
+
+    <target name="generateJSforChildElementCheck" depends="generateChildList" description="generate list of possible child elements">
+        <xslt in="${basedir}/target/childlist.xml"
+              out="${basedir}/target/xfUtil.js"
+              style="${basedir}/generateJSforChildElementCheck.xsl"
               force="true"
               classpathref="transform.class.path">
         </xslt>

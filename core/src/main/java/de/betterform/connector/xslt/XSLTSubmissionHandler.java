@@ -5,6 +5,7 @@
 
 package de.betterform.connector.xslt;
 
+import de.betterform.xml.dom.DOMUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import de.betterform.connector.AbstractConnector;
@@ -46,7 +47,12 @@ import java.util.Map;
  * <li>The result is provided in the Submission's response via a stream.</li>
  * </ol>
  *
+ * Parsing of an instance node is also supported with the 'parseString=true' param. It is assumed that the
+ * instance node that is passed contains markup as a string that is to be parsed before feeding into
+ * transformer.
+ *
  * @author Ulrich Nicolas Liss&eacute;
+ * @author Joern Turner
  * @version $Id: XSLTSubmissionHandler.java 559 2006-12-11 09:59:13Z joern $
  */
 public class XSLTSubmissionHandler extends AbstractConnector implements SubmissionHandler {
@@ -135,7 +141,18 @@ public class XSLTSubmissionHandler extends AbstractConnector implements Submissi
             // transform instance to byte array
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             long start = System.currentTimeMillis();
-            transformer.transform(new DOMSource(instance), new StreamResult(outputStream));
+
+            DOMSource domSource;
+            //check for 'parse' param
+            String parseParam = (String) parameters.get("parseString");
+            if(parseParam != null && parseParam.equalsIgnoreCase("true")){
+                String xmlString = DOMUtil.getTextNodeAsString(instance);
+                domSource = new DOMSource(DOMUtil.parseString(xmlString,true,false));
+            }else{
+                domSource = new DOMSource(instance);
+            }
+
+            transformer.transform(domSource, new StreamResult(outputStream));
             long end = System.currentTimeMillis();
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("transformation time: " + (end - start) + " ms");
