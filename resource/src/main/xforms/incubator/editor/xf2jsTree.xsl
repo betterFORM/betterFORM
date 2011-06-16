@@ -263,7 +263,7 @@
                     .bf #mainWindow .instance,
                     .bf #mainWindow .submission,
                     .bf #mainWindow .bind{
-                        background-color:#888888;
+                        background-color:#999999;
                         color:#eeeeee;
                     }
                     .bf #mainWindow .action{
@@ -465,12 +465,38 @@
                             // call `.jstree` with the options object
                                 .jstree({
                                     // each plugin you have included can have its own config object
-                                    "core" : { "initially_open" : [ "root" ] },
+                                    "core" : { "initially_open" : [ "root",".group",".switch",".repeat" ] },
                                     "crrm" : {
                                         "move" : {
                                             "check_move" : function (m) {
                                                 console.log("check move:",m);
-                                                return false;
+                                                console.log("check move:",m.o);
+                                                var origin = m.o;
+
+                                                //the the xf type
+                                                var xfType = origin.attr("data-xf-type");
+                                                console.log("xfType ",xfType);
+
+                                                var target = m.r;
+                                                var targetType = target.attr("data-xf-type");
+                                                console.log("check target:",targetType);
+
+
+                                                //check rules
+                                                //look for match in drop target elements list of allowed children
+                                                //if found 'true' 'false' otherwise
+                                                var childArray=eval(targetType+"Childs");
+                                                if(childArray == undefined){
+                                                    return false;
+                                                }
+                                                if(dojo.indexOf(childArray,xfType) != -1){
+                                                    return true;
+                                                }else{
+                                                    return false;
+                                                }
+
+
+
                                             }
                                         }
                                     },
@@ -480,7 +506,8 @@
                                         "icons" : false
                                     },
                                     "dnd" : {
-
+                                        "drop_target" : false,
+                        	            "drag_target" : false
                                     },
                                     types : {
                                         // the default type
