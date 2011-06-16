@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<script xmlns="http://www.w3.org/1999/xhtml" type="text/javascript">
+            var xfId = dojo.attr(dojo.byId("xfMount"),"xfId");
+            console.log("xfid: ",xfId);
+            betterform.Editor.editProperties(xfId);
+        </script>
 <div xmlns="http://www.w3.org/1999/xhtml">
    <div class="propertyTitle">Attributes</div>
    <form method="post" action="#" enctype="application/x-www-form-urlencoded">
@@ -9,7 +14,10 @@
                   <label for="id">id</label>
                </h4>
                <p>hint text here</p>
-               <input id="id" name="id" type="text" value="" placeholder=""/>
+               <input class="dojoInput" dojoType="dijit.form.TextBox" id="id" name="id" type="text"
+                      value=""
+                      placeholder=""
+                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'id')"/>
             </div>
          </li>
       </ul>
@@ -20,7 +28,11 @@
                   <label for="model">model</label>
                </h4>
                <p>hint text here</p>
-               <input id="model" name="model" type="text" value="" placeholder=""/>
+               <input class="dojoInput" dojoType="dijit.form.TextBox" id="model" name="model"
+                      type="text"
+                      value=""
+                      placeholder=""
+                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'model')"/>
             </div>
          </li>
       </ul>
@@ -31,7 +43,10 @@
                   <label for="ref">ref</label>
                </h4>
                <p>hint text here</p>
-               <input id="ref" name="ref" type="text" value="" placeholder=""/>
+               <input class="dojoInput" dojoType="dijit.form.TextBox" id="ref" name="ref" type="text"
+                      value=""
+                      placeholder=""
+                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'ref')"/>
             </div>
          </li>
       </ul>
@@ -42,7 +57,11 @@
                   <label for="bind">bind</label>
                </h4>
                <p>hint text here</p>
-               <input id="bind" name="bind" type="text" value="" placeholder=""/>
+               <input class="dojoInput" dojoType="dijit.form.TextBox" id="bind" name="bind"
+                      type="text"
+                      value=""
+                      placeholder=""
+                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'bind')"/>
             </div>
          </li>
       </ul>
@@ -53,7 +72,12 @@
                   <label for="appearance">appearance</label>
                </h4>
                <p>hint text here</p>
-               <input id="appearance" name="appearance" type="text" value="" placeholder=""/>
+               <input class="dojoInput" dojoType="dijit.form.TextBox" id="appearance"
+                      name="appearance"
+                      type="text"
+                      value=""
+                      placeholder=""
+                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'appearance')"/>
             </div>
          </li>
       </ul>
@@ -64,7 +88,11 @@
                   <label for="inputmode">inputmode</label>
                </h4>
                <p>hint text here</p>
-               <input id="inputmode" name="inputmode" type="text" value="" placeholder=""/>
+               <input class="dojoInput" dojoType="dijit.form.TextBox" id="inputmode" name="inputmode"
+                      type="text"
+                      value=""
+                      placeholder=""
+                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'inputmode')"/>
             </div>
          </li>
       </ul>
@@ -75,7 +103,12 @@
                   <label for="incremental">incremental</label>
                </h4>
                <p>hint text here</p>
-               <input id="incremental" name="incremental" type="text" value="" placeholder=""/>
+               <input class="dojoInput" dojoType="dijit.form.TextBox" id="incremental"
+                      name="incremental"
+                      type="text"
+                      value=""
+                      placeholder=""
+                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'incremental')"/>
             </div>
          </li>
       </ul>

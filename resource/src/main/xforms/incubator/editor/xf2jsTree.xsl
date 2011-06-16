@@ -25,34 +25,12 @@
                     dojo.require("dijit.MenuBar");
                     dojo.require("dijit.PopupMenuBarItem");
                     dojo.require("dijit.MenuItem");
-
-                    function updateProperties(xfId){
-                        console.debug("jsTree: id of property sheet: ",xfId);
-                        var dataXfAttrs = dojo.attr(dojo.byId(xfId), "data-xf-attrs");
-                        var dataXfType = dojo.attr(dojo.byId(xfId), "data-xf-type");
-
-                        console.debug("dataXfAttrs: ",dataXfAttrs, " dataXfType" ,dataXfType);
-                        var xfAppearance = dataXfAttrs['appearance'];
-                        var xfRef= dataXfAttrs['ref'];
-                        console.debug("xfAppearance:",xfAppearance, " ref:",xfRef);
-
-                        // var testObject = { dataXfAttrs };
-                        // console.log('typeof testObject: ' + typeof testObject);
-                        // console.log('testObject properties:');
-                        // for (var prop in testObject) {
-                        //     console.log('  ' + prop + ': ' + testObject[prop]);
-                        // }
-
-                        // Put the object into storage
-                        // localStorage.setItem('testObject', testObject);
-
-                        // Retrieve the object from storage
-                        // var retrievedObject = localStorage.getItem('testObject');
-
-                        // console.log('typeof retrievedObject: ' + typeof retrievedObject);
-                        // console.log('Value of retrievedObject: ' + retrievedObject);
-
-                    }
+                    
+                    dojo.require("betterform.editor.Editor");
+                    dojo.require("betterform.Editor");
+                    dojo.require("dijit.layout.TabContainer");
+                    dojo.require("dijit.form.Select");
+                    dojo.require("dijit.form.TextBox");
 
                 </script>
                 <style type="text/css">
@@ -62,23 +40,33 @@
                         margin: 0;
                         padding: 0;
                         background: #F3F3F3;
+                        overflow:auto;
                     }
                     #mainWindow #docWrapper{
                         width:100%;
                         overflow:auto;
                         position:relative;
+                        margin-bottom:30px;
                     }
                     #docPane{
                         background: #ffffff;
-                        -moz-border-radius: 10px;
-                        -webkit-border-radius: 10px;
-                        border-radius: 10px;
+                        border-radius: 10px 0 0 10px;
                         width:70%;
                         float:left;
                         margin-top:90px;
                     }
                     #xfDoc{
                         overflow-x:hidden;
+                        background:white;
+                        border:none;
+                    }
+                    #xfDoc .jstree-hovered{
+                        width:100%;
+                        background:green;
+                    }
+                    #xfDoc .jstree-clicked{
+                        width:100%;
+                        background:red;
                     }
                     #topPane{
                         height: 90px;
@@ -92,30 +80,33 @@
                         height:32px;
                         margin:9px;
                         position:absolute;
-                        top:-5px;
-                        right:-3px;
+                        top:-9px;
+                        right:-9px;
                     }
                     #topPane a:link{
-                        color:steelblue;
+                        color:#cccccc;
+                        text-decoration:none;
                     }
                     #topPane a:hover{
                         border:thin solid limegreen;
-                        -moz-border-radius:5px;
-                        -webkit-border-radius:5px;
                         font-size:1.2em;
                         padding:3px;
                         background:white;
+                        color:#555555;
+                        border-radius:10px 10px 10px 10px
                     }
                     #rightPane {
-                        background: #F3F3F3;
-                        border-bottom-left-radius: 10px;
-                        border-top-left-radius: 10px;
+                        background: #666666;
+                        color:#e9e9e9;
                         display: block;
                         float: right;
                         min-height: 200px;
                         overflow: auto;
-                        width: 30%;
+                        width: 280px;
                         margin-top:90px;
+                        border-left:thin solid #cecece;
+                        border-bottom:thin solid #cecece;
+                        border-bottom-left-radius:10px;
                     }
                     .jstree-default,.jstree-default{
                         margin: 5px;
@@ -126,28 +117,36 @@
                     .jstree > ul > li{
                         font-size: 14pt;
                     }
-                    .jstree li{
-                        line-height: 32px;
+                    #docPane .jstree li{
+                        border: thin solid #999999;
+                        border-radius: 10px 0 0 10px;
+                        margin-bottom: 5px;
+                        margin-right:10px;
 
                     }
                     .jstree a{
                         font-size:1.2em;
                         height:28px;
-
+                        padding:5px;
+                        width:95%;
                     }
                     #xfMount{
+                        background:#666666;
+                        color:#dedede;
                     }
                     #xfMount .attrEditor p{
                         margin:0;
                         line-height:1;
                         font-style:italic;
                     }
-                    #xfMount .attrEditor input{
+                    #xfMount .attrEditor .dojoInput{
                         width:200px;
                     }
                     #xfMount .propertyTitle{
                         font-size:12pt;
-                        padding:5px;
+                        padding:15px;
+                        font-size:1.2em;
+                        color:white;
                     }
                     .tundra .dijitMenu, .tundra .dijitMenuBar{
                         padding:7px;
@@ -155,6 +154,9 @@
                     #addToolbar{
                         padding-top:5px;
                         padding-left:5px;
+                        background:#555555;
+                        padding:10px;
+                        color:#e9e9e9;
                     }
                     #addToolbar ul{
                         display:block;
@@ -169,22 +171,122 @@
                         padding-right:10px;
                         font-size:1.2em;
                         float:left;
-                        margin:1px 1px 1px 7px;
+                        margin:1px 1px 1px 10px;
                     }
                     #addToolbar ul li{
                         display:none;
                         padding-right:20px;
                     }
-                    #docPane #xfDoc .model{
-                    }
+                    #docPane #xfDoc .model,
                     #docPane #xfDoc .group{
+                        border-radius: 10px 0 0 10px;
+                        border: 2px solid #cecece;
+                        margin-bottom: 5px;
+                        padding:0 10px;
+                        margin-right:10px;
                     }
+
                     .buttonWrapper{
                         display:none;
                     }
-                    .jstree a:hover .buttonWrapper{
+                    .bf #mainWindow .jstree a:hover .buttonWrapper{
                         display:inline;
                     }
+                    .jstree-default.jstree-focused {
+                        background:white;
+                    }
+                    .bf #mainWindow  .jstree-clicked {
+                        padding:10px 5px;
+                        width:95%;
+                        background:transparent;
+                        color:#444444;
+                        border-color:limegreen;
+                        border:2px solid limegreen;
+                        border-radius:10px 0;
+                    }
+                    .bf #mainWindow .jstree-hovered{
+                        width:95%;
+                        background:#eeeeee;
+                        border-color:limegreen;
+                    }
+                    .bf #mainWindow .dijitMenu, .bf #mainWindow .dijitMenuBar {
+                        background:#444444;
+                        border:none;
+                        border-top:1px solid limegreen;
+                    }
+                    .bf #mainWindow .dijitMenuItem{
+                        color:#e9e9e9;
+                    }
+                    .bf #mainWindow .dijitTextBox {
+                        color:#333333;
+                    }
+                    .bf #mainWindow .deleteBtn{
+                        display:none;
+                    }
+                    .bf #mainWindow .jstree-clicked .deleteBtn{
+                        display:inline;
+                        float:right;
+                        margin-top:-18px;
+                    }
+
+                    .bf #mainWindow .group,
+                    .bf #mainWindow .switch,
+                    .bf #mainWindow .repeat
+                    {
+                        background-color:#aaaaaa;
+                    }
+
+                    .bf #mainWindow .input,
+                    .bf #mainWindow .ouput,
+                    .bf #mainWindow .secret,
+                    .bf #mainWindow .range,
+                    .bf #mainWindow .select,
+                    .bf #mainWindow .select1,
+                    .bf #mainWindow .textarea,
+                    .bf #mainWindow .trigger,
+                    .bf #mainWindow .submit,
+                    .bf #mainWindow .upload{
+                        background-color:#bbbbbb;
+                    }
+                    .bf #mainWindow .label,
+                    .bf #mainWindow .hint,
+                    .bf #mainWindow .help,
+                    .bf #mainWindow .alert{
+                        background-color:#cccccc;
+                    }
+
+                    .bf #mainWindow .model{
+                        background-color:#777777;
+                        color:#eeeeee;
+                    }
+
+                    .bf #mainWindow .instance,
+                    .bf #mainWindow .submission,
+                    .bf #mainWindow .bind{
+                        background-color:#888888;
+                        color:#eeeeee;
+                    }
+                    .bf #mainWindow .action{
+                        background-color:orangered;
+                    }
+                    .bf #mainWindow .insert,
+                    .bf #mainWindow .delete,
+                    .bf #mainWindow .setvalue,
+                    .bf #mainWindow .send,
+                    .bf #mainWindow .dispatch,
+                    .bf #mainWindow .message,
+                    .bf #mainWindow .load,
+                    .bf #mainWindow .rebuild,
+                    .bf #mainWindow .recalculate,
+                    .bf #mainWindow .revalidate,
+                    .bf #mainWindow .refresh,
+                    .bf #mainWindow .setfocus,
+                    .bf #mainWindow .setindex,
+                    .bf #mainWindow .toggle,
+                    .bf #mainWindow .reset{
+                        background-color:orange;
+                    }
+
                 </style>
             </head>
             <body>
@@ -198,7 +300,9 @@
                                        method="get"
                                        resource="xslt:/betterform/forms/incubator/editor/dom2xf.xsl?parseString=true"
                                        replace="instance">
-                            <xf:message ev:event="xform-submit-done">Data stored</xf:message>
+                            <xf:action ev:event="xforms-submit-done">
+                                <xf:message>Data stored</xf:message>
+                            </xf:action>
                             <xf:message ev:event="xform-submit-error">Storing failed</xf:message>
                        </xf:submission>
                     </xf:model>
@@ -246,10 +350,10 @@
 -->
                         </div>
                         <img src="/betterform/bfResources/images/betterform_icon16x16.png"/>
-                        <div id="addToolbar" tabindex="0">
+                        <div id="addToolbar">
                             <span class="title">Add...</span>
                             <ul id="childList">
-                                <li class="instance-lnk"><a href="javascript:addElement('instance');" tabindex="0">instance</a></li>
+                                <li class="instance-lnk"><a href="javascript:addElement('instance');">instance</a></li>
                                 <li class="schema-lnk"><a href="javascript:addElement('schema');">schema</a></li>
                                 <li class="submission-lnk"><a href="javascript:addElement('submission');">submission</a></li>
                                 <li class="bind-lnk"><a href="javascript:addElement('bind');">bind</a></li>
@@ -309,25 +413,25 @@
                         </div>
                     </div>
 
-                    <div id="docWrapper">
-                        <div id="docPane">
+                    <div id="docWrapper" tabindex="-1">
+                        <div id="docPane" tabindex="-1">
                             <xsl:variable name="elements" select="//xf:model[not(ancestor::xf:*)]|//xf:group[not(ancestor::xf:*)]"/>
                             <!--<xsl:variable name="uiElements" select="//*[name()='xf:group']"/>-->
 
-                            <div id="xfDoc" class="xfDoc" tabindex="0">
+                            <div id="xfDoc" class="xfDoc">
                                 <ul>
                                     <li id="root" data-xf-type="document">
-                                        <a href="some_value_here">Document</a>
+                                        <a href="#">Document</a>
                                         <ul>
-                                            <xsl:for-each select="$elements">
-                                                <xsl:apply-templates select="." />
-                                            </xsl:for-each>
+                                            <!--<xsl:for-each select="$elements">-->
+                                                <xsl:apply-templates select="$elements" />
+                                            <!--</xsl:for-each>-->
                                         </ul>
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                        <div id="rightPane" tabindex="0">
+                        <div id="rightPane" tabindex="-1">
                             <div id="xfMount" dojotype="dijit.layout.ContentPane"
                                  href="/betterform/forms/incubator/editor/document.html"
                                  executeScripts="true"
@@ -353,33 +457,47 @@
                 </script>
 
                 <script type="text/javascript" class="source below">
-                    /* <![CDATA[ */
+                /* <![CDATA[ */
                     $(function () {
                         // TO CREATE AN INSTANCE
                         // select the tree container using jQuery
                         $("#xfDoc")
                             // call `.jstree` with the options object
                                 .jstree({
-                                    // the `plugins` array allows you to configure the active plugins on this instance
-                                    "plugins" : ["themes","html_data","ui","crrm","hotkeys"],
-
                                     // each plugin you have included can have its own config object
                                     "core" : { "initially_open" : [ "root" ] },
-
-                                    // it makes sense to configure a plugin only if overriding the defaults
-                                    "ui": {
-                                        context : { // Could be a function that should return an object like this one
-                                        "add" : {
-                                            "id"                : "add-cmd",
-                                            "separator_before"	: false,
-                                            "separator_after"	: true,
-                                            "label"				: "Add",
-                                            "action"			: function (obj) { this.create(obj); }
+                                    "crrm" : {
+                                        "move" : {
+                                            "check_move" : function (m) {
+                                                console.log("check move:",m);
+                                                return false;
                                             }
                                         }
-                                    }
-                                })
+                                    },
+                                    "themes" : {
+                                        "theme" : "default",
+                                        "dots" : false,
+                                        "icons" : false
+                                    },
+                                    "dnd" : {
 
+                                    },
+                                    types : {
+                                        // the default type
+                                        "default":{
+                                            "valid_children": "all"
+                                        },
+                                        "model" : {
+                                            "valid_children": ["instance","bind","submission","action","insert","delete","setvalue","send","dispatch","message","load","rebuild","recalculate","revalidate","refresh","setfocus","setindex","toggle","reset"]
+                                        },
+                                        "bind": {
+                                            "valid_children": ["bind"]
+                                        }
+
+                                    },
+                                    // the `plugins` array allows you to configure the active plugins on this instance
+                                    "plugins" : ["themes","html_data","ui","crrm","hotkeys","dnd"]
+                                })
                                 .bind("select_node.jstree", function (event, data) {
                                     // `data.rslt.obj` is the jquery extended node that was clicked
                                     console.log(data);
@@ -395,9 +513,9 @@
                             // each instance triggers its own events - to process those listen on the container
                             // all events are in the `.jstree` namespace
                             // so listen for `function_name`.`jstree` - you can function names from the docs
-                                .bind("loaded.jstree", function (event, data) {
-                                    // you get two params - event & data - check the core docs for a detailed description
-                        });
+                            .bind("loaded.jstree", function (event, data) {
+                                // you get two params - event & data - check the core docs for a detailed description
+                            });
                     });
                     /* ]]> */
                 </script>
@@ -410,19 +528,39 @@
                         $("#xfDoc").jstree("select_node",elem,false,null);
                         $("#id").focus();
                     }
+
                     dojo.subscribe("nodeSelected", function(args){
                         console.log("I got: ", args);
                         console.log("I got: ", args.xfType);
                         var xfType = args.xfType;
-                        console.log("prototypes",eval(xfType+"Childs"));
+
+                        if(xfType =="document"){
+                            //jump back to root
+                            dijit.byId("xfMount").set("href", "/betterform/forms/incubator/editor/document.html");
+                            //hide addToolbars
+                            dojo.query("#actionlist li").forEach(
+                                function(item,index,array){
+                                    dojo.attr(item,"style","display:none;");
+                                }
+                            );
+                            dojo.query("#childList li").forEach(
+                                function(item,index,array){
+                                    dojo.attr(item,"style","display:none;");
+                                }
+                            );
+
+                            return;
+                        }
 
                         dojo.query("#childList li").forEach(
                               function(item, index, array){
                                     var currentClass = dojo.attr(item,"class");
                                     var cutted = currentClass.substring(0,currentClass.indexOf("-",4))
-                    console.log("cutted:",cutted);
 
                                     var childArray=eval(xfType+"Childs");
+                                    if(childArray == undefined){
+                                        return;
+                                    }
                                     if(dojo.indexOf(childArray,cutted) != -1){
                                         dojo.attr(item,"style","display:inline;");
                                     }else{
@@ -451,6 +589,12 @@
     </xsl:template>
 
     <xsl:template match="xf:*">
+        <xsl:variable name="this" select="."/>
+        <!--
+        ####################################################################################################
+        create an id if there's none
+        ####################################################################################################
+        -->
         <xsl:variable name="id">
             <xsl:choose>
                 <xsl:when test="exists(current()/@id) and string-length(current()/@id) != 0">
@@ -462,32 +606,28 @@
             </xsl:choose>
         </xsl:variable>
 
-
+        <!--
+        ####################################################################################################
+        all attributes of the current xforms element are transferred into a 'data-xf-props' attribute
+        ####################################################################################################
+        -->
         <xsl:variable name="props"><xsl:for-each select="@*">
-                <xsl:value-of select="local-name()"/>:'<xsl:value-of select="."/>'<xsl:if test="position()!=last()">,</xsl:if>
-            </xsl:for-each></xsl:variable>
+            <xsl:value-of select="local-name()"/>:'<xsl:value-of select="."/>'<xsl:if test="position()!=last()">,</xsl:if>
+        </xsl:for-each></xsl:variable>
 
+        <li id="{$id}" data-xf-type="{local-name()}" data-xf-attrs="{$props}" class="{local-name()}" rel="{local-name()}">
+            <!--
+            ####################################################################################################
+            the outermost xforms elements found get the id of their parent node written to a 'xpath' attribute.
+            This can later be used to 're-mount' the edited markup.
+            ####################################################################################################
+            -->
+            <xsl:if test="count(ancestor::xf:*) = number(0)">
+                <xsl:attribute name="xpath"><xsl:value-of select="$this/@id"/></xsl:attribute>
+            </xsl:if>
 
-        <li id="{$id}" data-xf-type="{local-name()}" data-xf-attrs="{$props}" class="{local-name()}">
-<!--
-            <xsl:for-each select="@*">
-                <xsl:attribute name="{local-name()}"><xsl:value-of select="."/></xsl:attribute>
-            </xsl:for-each>
--->
-            <a href="#"><xsl:value-of select="local-name()"/>:<xsl:value-of select="@id"/>
-                <div class="buttonWrapper">
-                    <button name="add">add</button>
-                </div>
-            </a>
-<!--
-        <xsl:variable name="props">[<xsl:for-each select="@*">
-                <xsl:value-of select="local-name()"/>:'<xsl:value-of select="."/>'<xsl:if test="position()!=last()">,</xsl:if>
-            </xsl:for-each>]</xsl:variable>
+            <a href="#"><xsl:value-of select="local-name()"/>:<xsl:value-of select="@id"/><button class="deleteBtn" name="deleteItem" onclick="alert('deleting');">x</button></a>
 
-        <li id="{$id}" data-xf-type="{local-name()}" class="{local-name()}">
-            <xsl:attribute name="data-xf-props"><xsl:value-of select="$props"/></xsl:attribute>
-            <a href="#"><xsl:value-of select="local-name()"/>:<xsl:value-of select="@id"/></a>
--->
             <xsl:if test="count(xf:*) != 0">
                 <ul>
                     <xsl:for-each select="*">
@@ -497,26 +637,6 @@
             </xsl:if>
         </li>
      </xsl:template>
-
-
-<!--
-    <ul>
-        <li id="phtml_1">
-            <a href="#">Root node 1</a>
-            <ul>
-                <li id="phtml_2">
-                    <a href="#">Child node 1</a>
-                </li>
-                <li id="phtml_3">
-                    <a href="#">Child node 2</a>
-                </li>
-            </ul>
-        </li>
-        <li id="phtml_4">
-            <a href="#">Root node 2</a>
-        </li>
-    </ul>
--->
 
     <xsl:template match="xf:*/text()"/>
 </xsl:stylesheet>

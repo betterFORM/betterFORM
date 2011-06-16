@@ -20,8 +20,8 @@
 <body>
 <div id="xforms">
     <div id="registration" class="InlineRoundBordersAlert">
-    <div style="display:none">
-        <xf:model>
+    <div style="display:none" id="xf1">
+        <xf:model id="m-registration">
             <xf:instance>
                 <data xmlns="">
                     <firstname/>
@@ -62,7 +62,7 @@
     <div id="signin">
         Already a member? Sign in here
     </div>
-    <xf:group appearance="bf:verticalTable">
+    <xf:group id="registration-ui" appearance="bf:verticalTable">
 			<xf:label>Join the group<span id="subtitle">Enjoy being a part of it!</span></xf:label>
 			<xf:input id="first" ref="firstname">
 				<xf:label>Firstname:</xf:label>

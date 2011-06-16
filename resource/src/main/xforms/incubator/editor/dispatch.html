@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<script xmlns="http://www.w3.org/1999/xhtml" type="text/javascript">
+            var xfId = dojo.attr(dojo.byId("xfMount"),"xfId");
+            console.log("xfid: ",xfId);
+            betterform.Editor.editProperties(xfId);
+        </script>
 <div xmlns="http://www.w3.org/1999/xhtml">
    <div class="propertyTitle">Attributes</div>
    <form method="post" action="#" enctype="application/x-www-form-urlencoded">
@@ -9,7 +14,10 @@
                   <label for="id">id</label>
                </h4>
                <p>hint text here</p>
-               <input id="id" name="id" type="text" value="" placeholder=""/>
+               <input class="dojoInput" dojoType="dijit.form.TextBox" id="id" name="id" type="text"
+                      value=""
+                      placeholder=""
+                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'id')"/>
             </div>
          </li>
       </ul>
@@ -20,7 +28,10 @@
                   <label for="if">if</label>
                </h4>
                <p>hint text here</p>
-               <input id="if" name="if" type="text" value="" placeholder=""/>
+               <input class="dojoInput" dojoType="dijit.form.TextBox" id="if" name="if" type="text"
+                      value=""
+                      placeholder=""
+                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'if')"/>
             </div>
          </li>
       </ul>
@@ -31,7 +42,11 @@
                   <label for="while">while</label>
                </h4>
                <p>hint text here</p>
-               <input id="while" name="while" type="text" value="" placeholder=""/>
+               <input class="dojoInput" dojoType="dijit.form.TextBox" id="while" name="while"
+                      type="text"
+                      value=""
+                      placeholder=""
+                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'while')"/>
             </div>
          </li>
       </ul>
@@ -42,7 +57,11 @@
                   <label for="name">name</label>
                </h4>
                <p>hint text here</p>
-               <input id="name" name="name" type="text" value="" placeholder=""/>
+               <input class="dojoInput" dojoType="dijit.form.TextBox" id="name" name="name"
+                      type="text"
+                      value=""
+                      placeholder=""
+                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'name')"/>
             </div>
          </li>
       </ul>
@@ -53,7 +72,11 @@
                   <label for="targetid">targetid</label>
                </h4>
                <p>hint text here</p>
-               <input id="targetid" name="targetid" type="text" value="" placeholder=""/>
+               <input class="dojoInput" dojoType="dijit.form.TextBox" id="targetid" name="targetid"
+                      type="text"
+                      value=""
+                      placeholder=""
+                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'targetid')"/>
             </div>
          </li>
       </ul>
@@ -64,7 +87,11 @@
                   <label for="target">target</label>
                </h4>
                <p>hint text here</p>
-               <input id="target" name="target" type="text" value="" placeholder=""/>
+               <input class="dojoInput" dojoType="dijit.form.TextBox" id="target" name="target"
+                      type="text"
+                      value=""
+                      placeholder=""
+                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'target')"/>
             </div>
          </li>
       </ul>
@@ -75,7 +102,11 @@
                   <label for="delay">delay</label>
                </h4>
                <p>hint text here</p>
-               <input id="delay" name="delay" type="text" value="" placeholder=""/>
+               <input class="dojoInput" dojoType="dijit.form.TextBox" id="delay" name="delay"
+                      type="text"
+                      value=""
+                      placeholder=""
+                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'delay')"/>
             </div>
          </li>
       </ul>
@@ -86,7 +117,11 @@
                   <label for="bubbles">bubbles</label>
                </h4>
                <p>hint text here</p>
-               <input id="bubbles" name="bubbles" type="text" value="" placeholder=""/>
+               <input class="dojoInput" dojoType="dijit.form.TextBox" id="bubbles" name="bubbles"
+                      type="text"
+                      value=""
+                      placeholder=""
+                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'bubbles')"/>
             </div>
          </li>
       </ul>
@@ -97,7 +132,12 @@
                   <label for="cancelable">cancelable</label>
                </h4>
                <p>hint text here</p>
-               <input id="cancelable" name="cancelable" type="text" value="" placeholder=""/>
+               <input class="dojoInput" dojoType="dijit.form.TextBox" id="cancelable"
+                      name="cancelable"
+                      type="text"
+                      value=""
+                      placeholder=""
+                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'cancelable')"/>
             </div>
          </li>
       </ul>

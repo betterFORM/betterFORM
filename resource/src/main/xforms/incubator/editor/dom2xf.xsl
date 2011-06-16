@@ -5,8 +5,7 @@
                 xmlns:ev="http://www.w3.org/2001/xml-events"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-    <xsl:output method="xhtml" version="1.0" encoding="UTF-8" indent="no"
-                doctype-system="/betterform/bfResources/xsd/xhtml1-transitional.dtd"/>
+    <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="no"/>
     <!-- author: Joern Turner -->
 
     <xsl:template match="/*">

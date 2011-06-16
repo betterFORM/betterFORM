@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- $Id: build.xml,v 1.90 2006/11/16 23:55:43 joernt Exp $ -->
-<project name="Editor generator tools" default="generate-XForms" basedir=".">
+<project name="Editor generator tools" default="deployEditor" basedir=".">
 
 
     <!--
@@ -34,7 +34,7 @@
         </xslt>
     </target>
 
-    <target name="generate-HTML-Forms" depends="generate-XForms" description="generates HTML forms from XForms">
+    <target name="generate-HTML-Forms"  description="generates HTML forms from XForms">
         <xslt basedir="${basedir}/target/target"
               destdir="${basedir}/target/html/"
               style="${basedir}/generate-html-forms.xsl"
@@ -98,10 +98,9 @@
         </xslt>
     </target>
 
-    <target  name="deployEditor" depends="generate-XForms">
-
-        <copy todir="${basedir}/../../web/target/betterform/forms/editor" flatten="true">
-            <fileset dir="${basedir}" includes="**/*.xhtml"/>
+    <target  name="deployEditor" depends="generate-HTML-Forms" description="generates HTML forms and deploys them to xforms/incubator/editor">
+        <copy todir="${basedir}/../../resource/src/main/xforms/incubator/editor" flatten="true" overwrite="true">
+            <fileset dir="${basedir}" includes="target/html/*.html"/>
         </copy>
     </target>
 
