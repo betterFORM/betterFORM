@@ -34,7 +34,7 @@
         </xslt>
     </target>
 
-    <target name="generate-HTML-Forms"  description="generates HTML forms from XForms">
+    <target name="generate-HTML-Forms" depends="generate-xf-datatype-list"  description="generates HTML forms from XForms">
         <xslt basedir="${basedir}/target/target"
               destdir="${basedir}/target/html/"
               style="${basedir}/generate-html-forms.xsl"
@@ -47,7 +47,18 @@
 
     </target>
 
-<!--
+    <target name="generate-xf-datatype-list"  description="generates HTML forms from XForms">
+        <xslt in="${basedir}/XForms-11-Schema.xsd"
+              out="${basedir}/target/html/xfDatatype.json"
+              style="${basedir}/generateXFDatatypeList.xsl"
+              extension=".json"
+              force="true"
+              classpathref="transform.class.path">
+            <classpath refid="transform.class.path"/>
+        </xslt>
+    </target>
+
+
     <target name="generate-Prototypes" depends="prepare" description="generate Prototypes for XForms element structure">
         <xslt in="${basedir}/XForms-11-Schema.xsd"
               out="${basedir}/target/prototypes.xml"
@@ -56,7 +67,6 @@
               classpathref="transform.class.path">
         </xslt>
     </target>
--->
 
     <target name="generate-test-form-nested-divs" depends="prepare" description="generate test form for editor">
         <xslt in="${basedir}/testinput/registration.xhtml"
@@ -101,7 +111,9 @@
     <target  name="deployEditor" depends="generate-HTML-Forms" description="generates HTML forms and deploys them to xforms/incubator/editor">
         <copy todir="${basedir}/../../resource/src/main/xforms/incubator/editor" flatten="true" overwrite="true">
             <fileset dir="${basedir}" includes="target/html/*.html"/>
+            <fileset dir="${basedir}" includes="target/html/*.json"/>
         </copy>
+        <ant antfile="../../web/build.xml" inheritall="false" target="deploy-forms"/>
     </target>
 
 </project>
