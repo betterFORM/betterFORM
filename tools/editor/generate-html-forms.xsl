@@ -9,11 +9,6 @@
     <!-- author: Joern Turner -->
 
     <xsl:template match="/">
-        <script type="text/javascript">
-            var xfId = dojo.attr(dojo.byId("xfMount"),"xfId");
-            console.log("xfid: ",xfId);
-            betterform.Editor.editProperties(xfId);
-        </script>
         <div>
             <div class="propertyTitle">Attributes</div>
             <form method="post" action="#" enctype="application/x-www-form-urlencoded">
@@ -23,25 +18,14 @@
                         <div class="attrEditor">
                             <h4><label for="{@nodeset}"><xsl:value-of select="@nodeset"/></label></h4>
                             <p>hint text here</p>
-
                             <xsl:choose>
                                 <xsl:when test="@nodeset='type'">
-                                    <select dojoType="dijit.form.FilteringSelect" selection="open"  id="{@nodeset}" name="{@nodeset}" value="" placeholder="" class="dojoSelect">
-                                        <xsl:attribute name="onblur">betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'<xsl:value-of select="@nodeset"/>')
-                                        </xsl:attribute>
-                                        <option value="date">
-                                            date
-                                        </option>
-                                        <option value="string" selected="selected">
-                                            string
-                                        </option>
-                                        <option value="dateTime">
-                                            dateTime
-                                        </option>
-                                    </select>
+                                    <input dojoType="dijit.form.FilteringSelect" store="stateStore" selection="open" searchAttr="name" name="type" id="{@nodeset}" value="" placeholder="" class="xf{@nodeset} dojoSelect">
+                                        <xsl:attribute name="onblur">betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'<xsl:value-of select="@nodeset"/>')</xsl:attribute>
+                                    </input>
                                 </xsl:when>
                                 <xsl:otherwise>
-                                    <input class="dojoInput" dojoType="dijit.form.TextBox" id="{@nodeset}" name="{@nodeset}" type="text" value="" placeholder="">
+                                    <input dojoType="dijit.form.TextBox" id="{@nodeset}" name="{@nodeset}" type="text" value="" placeholder="" class="xf{@nodeset} dojoInput">
                                         <xsl:attribute name="onblur">betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'<xsl:value-of select="@nodeset"/>')</xsl:attribute>
                                     </input>
                                 </xsl:otherwise>
@@ -52,6 +36,16 @@
             </xsl:for-each>
             </form>
         </div>
+        <script type="text/javascript" defer="defer">
+            dojo.addOnLoad(function(){
+              dojo.addOnLoad(function(){
+                  var xfId = dojo.attr(dojo.byId("xfMount"),"xfId");
+                  console.log("xfid: ",xfId);
+                  betterform.Editor.editProperties(xfId);
+              });
+            });
+
+        </script>
     </xsl:template>
 
 

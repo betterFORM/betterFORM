@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<script xmlns="http://www.w3.org/1999/xhtml" type="text/javascript">
-            var xfId = dojo.attr(dojo.byId("xfMount"),"xfId");
-            console.log("xfid: ",xfId);
-            betterform.Editor.editProperties(xfId);
-        </script>
 <div xmlns="http://www.w3.org/1999/xhtml">
    <div class="propertyTitle">Attributes</div>
    <form method="post" action="#" enctype="application/x-www-form-urlencoded">
@@ -14,9 +9,9 @@
                   <label for="id">id</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="id" name="id" type="text"
-                      value=""
+               <input dojoType="dijit.form.TextBox" id="id" name="id" type="text" value=""
                       placeholder=""
+                      class="xfid dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'id')"/>
             </div>
          </li>
@@ -28,10 +23,9 @@
                   <label for="combine">combine</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="combine" name="combine"
-                      type="text"
-                      value=""
+               <input dojoType="dijit.form.TextBox" id="combine" name="combine" type="text" value=""
                       placeholder=""
+                      class="xfcombine dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'combine')"/>
             </div>
          </li>
@@ -43,9 +37,9 @@
                   <label for="ref">ref</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="ref" name="ref" type="text"
-                      value=""
+               <input dojoType="dijit.form.TextBox" id="ref" name="ref" type="text" value=""
                       placeholder=""
+                      class="xfref dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'ref')"/>
             </div>
          </li>
@@ -57,10 +51,9 @@
                   <label for="bind">bind</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="bind" name="bind"
-                      type="text"
-                      value=""
+               <input dojoType="dijit.form.TextBox" id="bind" name="bind" type="text" value=""
                       placeholder=""
+                      class="xfbind dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'bind')"/>
             </div>
          </li>
@@ -72,10 +65,10 @@
                   <label for="resource">resource</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="resource" name="resource"
-                      type="text"
+               <input dojoType="dijit.form.TextBox" id="resource" name="resource" type="text"
                       value=""
                       placeholder=""
+                      class="xfresource dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'resource')"/>
             </div>
          </li>
@@ -87,10 +80,9 @@
                   <label for="action">action</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="action" name="action"
-                      type="text"
-                      value=""
+               <input dojoType="dijit.form.TextBox" id="action" name="action" type="text" value=""
                       placeholder=""
+                      class="xfaction dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'action')"/>
             </div>
          </li>
@@ -102,10 +94,9 @@
                   <label for="mode">mode</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="mode" name="mode"
-                      type="text"
-                      value=""
+               <input dojoType="dijit.form.TextBox" id="mode" name="mode" type="text" value=""
                       placeholder=""
+                      class="xfmode dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'mode')"/>
             </div>
          </li>
@@ -117,10 +108,9 @@
                   <label for="method">method</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="method" name="method"
-                      type="text"
-                      value=""
+               <input dojoType="dijit.form.TextBox" id="method" name="method" type="text" value=""
                       placeholder=""
+                      class="xfmethod dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'method')"/>
             </div>
          </li>
@@ -132,10 +122,10 @@
                   <label for="validate">validate</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="validate" name="validate"
-                      type="text"
+               <input dojoType="dijit.form.TextBox" id="validate" name="validate" type="text"
                       value=""
                       placeholder=""
+                      class="xfvalidate dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'validate')"/>
             </div>
          </li>
@@ -147,10 +137,10 @@
                   <label for="relevant">relevant</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="relevant" name="relevant"
-                      type="text"
+               <input dojoType="dijit.form.TextBox" id="relevant" name="relevant" type="text"
                       value=""
                       placeholder=""
+                      class="xfrelevant dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'relevant')"/>
             </div>
          </li>
@@ -162,11 +152,11 @@
                   <label for="serialization">serialization</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="serialization"
-                      name="serialization"
+               <input dojoType="dijit.form.TextBox" id="serialization" name="serialization"
                       type="text"
                       value=""
                       placeholder=""
+                      class="xfserialization dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'serialization')"/>
             </div>
          </li>
@@ -178,10 +168,9 @@
                   <label for="version">version</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="version" name="version"
-                      type="text"
-                      value=""
+               <input dojoType="dijit.form.TextBox" id="version" name="version" type="text" value=""
                       placeholder=""
+                      class="xfversion dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'version')"/>
             </div>
          </li>
@@ -193,10 +182,9 @@
                   <label for="indent">indent</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="indent" name="indent"
-                      type="text"
-                      value=""
+               <input dojoType="dijit.form.TextBox" id="indent" name="indent" type="text" value=""
                       placeholder=""
+                      class="xfindent dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'indent')"/>
             </div>
          </li>
@@ -208,10 +196,10 @@
                   <label for="mediatype">mediatype</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="mediatype" name="mediatype"
-                      type="text"
+               <input dojoType="dijit.form.TextBox" id="mediatype" name="mediatype" type="text"
                       value=""
                       placeholder=""
+                      class="xfmediatype dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'mediatype')"/>
             </div>
          </li>
@@ -223,10 +211,10 @@
                   <label for="encoding">encoding</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="encoding" name="encoding"
-                      type="text"
+               <input dojoType="dijit.form.TextBox" id="encoding" name="encoding" type="text"
                       value=""
                       placeholder=""
+                      class="xfencoding dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'encoding')"/>
             </div>
          </li>
@@ -238,11 +226,12 @@
                   <label for="omit-xml-declaration">omit-xml-declaration</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="omit-xml-declaration"
+               <input dojoType="dijit.form.TextBox" id="omit-xml-declaration"
                       name="omit-xml-declaration"
                       type="text"
                       value=""
                       placeholder=""
+                      class="xfomit-xml-declaration dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'omit-xml-declaration')"/>
             </div>
          </li>
@@ -254,11 +243,10 @@
                   <label for="standalone">standalone</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="standalone"
-                      name="standalone"
-                      type="text"
+               <input dojoType="dijit.form.TextBox" id="standalone" name="standalone" type="text"
                       value=""
                       placeholder=""
+                      class="xfstandalone dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'standalone')"/>
             </div>
          </li>
@@ -270,11 +258,12 @@
                   <label for="cdata-section-elements">cdata-section-elements</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="cdata-section-elements"
+               <input dojoType="dijit.form.TextBox" id="cdata-section-elements"
                       name="cdata-section-elements"
                       type="text"
                       value=""
                       placeholder=""
+                      class="xfcdata-section-elements dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'cdata-section-elements')"/>
             </div>
          </li>
@@ -286,10 +275,9 @@
                   <label for="replace">replace</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="replace" name="replace"
-                      type="text"
-                      value=""
+               <input dojoType="dijit.form.TextBox" id="replace" name="replace" type="text" value=""
                       placeholder=""
+                      class="xfreplace dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'replace')"/>
             </div>
          </li>
@@ -301,10 +289,10 @@
                   <label for="instance">instance</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="instance" name="instance"
-                      type="text"
+               <input dojoType="dijit.form.TextBox" id="instance" name="instance" type="text"
                       value=""
                       placeholder=""
+                      class="xfinstance dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'instance')"/>
             </div>
          </li>
@@ -316,10 +304,10 @@
                   <label for="separator">separator</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="separator" name="separator"
-                      type="text"
+               <input dojoType="dijit.form.TextBox" id="separator" name="separator" type="text"
                       value=""
                       placeholder=""
+                      class="xfseparator dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'separator')"/>
             </div>
          </li>
@@ -331,10 +319,10 @@
                   <label for="targetref">targetref</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="targetref" name="targetref"
-                      type="text"
+               <input dojoType="dijit.form.TextBox" id="targetref" name="targetref" type="text"
                       value=""
                       placeholder=""
+                      class="xftargetref dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'targetref')"/>
             </div>
          </li>
@@ -346,10 +334,9 @@
                   <label for="target">target</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="target" name="target"
-                      type="text"
-                      value=""
+               <input dojoType="dijit.form.TextBox" id="target" name="target" type="text" value=""
                       placeholder=""
+                      class="xftarget dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'target')"/>
             </div>
          </li>
@@ -361,14 +348,25 @@
                   <label for="includenamespaceprefixes">includenamespaceprefixes</label>
                </h4>
                <p>hint text here</p>
-               <input class="dojoInput" dojoType="dijit.form.TextBox" id="includenamespaceprefixes"
+               <input dojoType="dijit.form.TextBox" id="includenamespaceprefixes"
                       name="includenamespaceprefixes"
                       type="text"
                       value=""
                       placeholder=""
+                      class="xfincludenamespaceprefixes dojoInput"
                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'includenamespaceprefixes')"/>
             </div>
          </li>
       </ul>
    </form>
 </div>
+<script xmlns="http://www.w3.org/1999/xhtml" type="text/javascript" defer="defer">
+            dojo.addOnLoad(function(){
+              dojo.addOnLoad(function(){
+                  var xfId = dojo.attr(dojo.byId("xfMount"),"xfId");
+                  console.log("xfid: ",xfId);
+                  betterform.Editor.editProperties(xfId);
+              });
+            });
+
+        </script>

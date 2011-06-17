@@ -29,8 +29,11 @@
                     dojo.require("betterform.editor.Editor");
                     dojo.require("betterform.Editor");
                     dojo.require("dijit.layout.TabContainer");
-                    dojo.require("dijit.form.Select");
                     dojo.require("dijit.form.TextBox");
+                    dojo.require("dijit.form.Select");
+                    dojo.require("dijit.form.FilteringSelect");
+                    dojo.require("dojo.data.ItemFileReadStore");
+
 
                 </script>
                 <style type="text/css">
@@ -313,10 +316,10 @@
                         <xf:label>this is hidden</xf:label>
                         <xf:send submission="s-dom2xforms"/>
                     </xf:trigger>
+
                 </div>
-
                 <div id="mainWindow" style="width:100%;">
-
+                    <div dojoType="dojo.data.ItemFileReadStore" data-dojo-id="stateStore" url="/betterform/forms/incubator/editor/xfDatatype.json" />
                     <div id="topPane">
                         <div dojoType="dijit.MenuBar" id="mainMenu">
                             <div dojoType="dijit.PopupMenuBarItem" label="File">
@@ -638,9 +641,9 @@
         all attributes of the current xforms element are transferred into a 'data-xf-props' attribute
         ####################################################################################################
         -->
-        <xsl:variable name="props"><xsl:for-each select="@*">
+        <xsl:variable name="props">{<xsl:for-each select="@*">
             <xsl:value-of select="local-name()"/>:'<xsl:value-of select="."/>'<xsl:if test="position()!=last()">,</xsl:if>
-        </xsl:for-each></xsl:variable>
+        </xsl:for-each>}</xsl:variable>
 
         <li id="{$id}" data-xf-type="{local-name()}" data-xf-attrs="{$props}" class="{local-name()}" rel="{local-name()}">
             <!--

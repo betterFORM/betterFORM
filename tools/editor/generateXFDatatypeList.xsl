@@ -8,25 +8,26 @@
     <xsl:output method="xml" indent="yes"  omit-xml-declaration="yes"/>
     
     <!-- author: Lars Windauer -->
-    <xsl:template match="/">
-        <xsl:element name="script" xmlns="">
-            <xsl:attribute name="type">text/javascript</xsl:attribute>
-             var types = {
-                    label: "name",
-                    identifier: "typeName",
-                    items: [
-                        <xsl:for-each select="//xsd:simpleType[string-length(@name) != 0]">
-                            <xsl:choose>
-                                <xsl:when test="@name='versionList' or @name='versionNumber' or
-                                                @name='XPathExpression' or @name='QNameList' or
-                                                @name='QNameButNotNCNAME' or @name='appearanceType'"></xsl:when>
-                                <xsl:otherwise><xsl:variable name="type" select="current()/@name"/>{typeName:<xsl:value-of select="$type"/>, name:"<xsl:value-of select="$type"/>"}<xsl:if test="position()!=last()">,</xsl:if><xsl:text>
-                        </xsl:text>
-                                    <xsl:message>Type: <xsl:value-of select="$type"/></xsl:message></xsl:otherwise>
-                            </xsl:choose>
-                        </xsl:for-each><xsl:text>
-                </xsl:text>]<xsl:text>
-          };</xsl:text><xsl:text>
-</xsl:text></xsl:element>        
+    <xsl:template match="/"><xsl:text>
+</xsl:text>
+{<xsl:text>
+</xsl:text>
+        identifier: "value",
+        label: "name",
+
+        items: [
+            <xsl:for-each select="//xsd:simpleType[string-length(@name) != 0]">
+                <xsl:sort select="@name" data-type="text" />
+                <xsl:choose>
+                    <xsl:when test="@name='versionList' or @name='versionNumber' or
+                                    @name='XPathExpression' or @name='QNameList' or
+                                    @name='QNameButNotNCNAME' or @name='appearanceType'"></xsl:when>
+                    <xsl:otherwise><xsl:variable name="type" select="current()/@name"/>{name:"<xsl:value-of select="$type"/>", value:"<xsl:value-of select="$type"/>"}<xsl:if test="position()!=last()">,</xsl:if><xsl:text>
+            </xsl:text>
+                        <xsl:message>Type: <xsl:value-of select="$type"/></xsl:message></xsl:otherwise>
+                </xsl:choose>
+            </xsl:for-each><xsl:text>
+    </xsl:text>]<xsl:text>
+}</xsl:text>
     </xsl:template>
 </xsl:stylesheet>
