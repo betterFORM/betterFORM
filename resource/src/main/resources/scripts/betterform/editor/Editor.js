@@ -11,34 +11,11 @@ betterform.Editor.editProperty = function(xfAttrObj, attributeName) {
     var xfAttrValue = xfAttrObj[attributeName];
 
     if (!xfAttrValue)xfAttrValue = "";
-
     console.log("Editor.editPropertyNode: '", attributeName, "' -  xfAttrValue: '", xfAttrValue, "'");
-
-
     currentDijit = dijit.byId("widget_" + attributeName);
-/*    if (currentDijit == undefined) {
-        if(attributeName == "type") {
-            currentDijit= new dijit.form.FilteringSelect({
-                        name: attributeName,
-                        value: xfAttrValue,
-                        store: stateStore,
-                        searchAttr: "type"
-                    },
-                    dojo.byId(attributeName));
-        } else {
-            currentDijit = new dijit.form.TextBox({
-                        name: attributeName,
-                        value: xfAttrValue
-                    },
-                    dojo.byId(attributeName));
-        }
-    }*/
-
     if (currentDijit != undefined) {
-        console.log("currentDijit: ", currentDijit);
         currentDijit.set("value",xfAttrValue);
     }else {
-        console.log("currentNode: ", dojo.byId(attributeName));
         var attrNode = dojo.byId(attributeName);
         dojo.attr(attrNode, "value", xfAttrValue);
     }
@@ -52,7 +29,7 @@ betterform.Editor.editProperties = function(targetId) {
     console.log("dataXfAttrs: ", dataXfAttrs, " dataXfType", dataXfType);
 
     var xfAttrObj = dojox.json.ref.fromJson(dataXfAttrs);
-    console.log("xfAttrObj:", xfAttrObj);
+    // console.log("xfAttrObj:", xfAttrObj);
     if (xfAttrObj != undefined) {
         for (value in xfAttrObj) {
             betterform.Editor.editProperty(xfAttrObj, value);
@@ -72,14 +49,9 @@ betterform.Editor.saveProperty = function(targetId, propertyId) {
 
     // get the dijit holding the attribute value to save
     var propertyNode = dojo.byId(propertyId);
-    console.log("propertyNode:", propertyNode);
-    //var widgetId= dojo.attr(propertyNode, "id");
-    //console.log("widgetId: ",widgetId);
-    // var propertyDijit = dijit.byId(widgetId,dojo.doc);
-    // console.log("propertyDijit:", propertyDijit);
-    // var newValue = propertyDijit.get("value");
+    // console.log("propertyNode:", propertyNode);
     var newValue = dojo.attr(propertyNode, "value");
-    console.log("newValue:", newValue);
+    // console.log("newValue:", newValue);
     if (!newValue)newValue = "";
     xfAttrObj[propertyId] = newValue;
     var xfAttrString = dojox.json.ref.toJson(xfAttrObj);
