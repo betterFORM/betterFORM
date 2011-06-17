@@ -71,13 +71,14 @@ betterform.Editor.saveProperty = function(targetId, propertyId) {
     // console.log("xfAttrObj:", xfAttrObj);
 
     // get the dijit holding the attribute value to save
-    var propertyNode = dojo.query(".xf" + propertyId)[0];
+    var propertyNode = dojo.byId(propertyId);
     console.log("propertyNode:", propertyNode);
-    var widgetId= dojo.attr(propertyNode, "id");
-    console.log("widgetId: ",widgetId);
-    var propertyDijit = dijit.byId(widgetId);
-    console.log("propertyDijit:", propertyDijit);
-    var newValue = propertyDijit.get("value");
+    //var widgetId= dojo.attr(propertyNode, "id");
+    //console.log("widgetId: ",widgetId);
+    // var propertyDijit = dijit.byId(widgetId,dojo.doc);
+    // console.log("propertyDijit:", propertyDijit);
+    // var newValue = propertyDijit.get("value");
+    var newValue = dojo.attr(propertyNode, "value");
     console.log("newValue:", newValue);
     if (!newValue)newValue = "";
     xfAttrObj[propertyId] = newValue;

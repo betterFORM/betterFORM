@@ -437,9 +437,14 @@
                         <div id="rightPane" tabindex="-1">
                             <div id="xfMount" dojotype="dijit.layout.ContentPane"
                                  href="/betterform/forms/incubator/editor/document.html"
-                                 executeScripts="true"
-                                 preload="true"
-                                 />
+                                 preload="false">
+                                <script type="dojo/connect" event="onDownloadEnd">
+                                    var xfId = dojo.attr(dojo.byId("xfMount"),"xfId");
+                                    if(xfId == undefined) { return;}
+                                    console.log("xfid: ",xfId);
+                                    betterform.Editor.editProperties(xfId);
+                                </script>
+                             </div>
                         </div>
                     </div>
 

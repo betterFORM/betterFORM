@@ -36,16 +36,6 @@
             </xsl:for-each>
             </form>
         </div>
-        <script type="text/javascript" defer="defer">
-            dojo.addOnLoad(function(){
-              dojo.addOnLoad(function(){
-                  var xfId = dojo.attr(dojo.byId("xfMount"),"xfId");
-                  console.log("xfid: ",xfId);
-                  betterform.Editor.editProperties(xfId);
-              });
-            });
-
-        </script>
     </xsl:template>
 
 
