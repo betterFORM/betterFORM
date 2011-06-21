@@ -1,0 +1,13 @@
+<project name="Installer-Helper" default="clean" basedir=".">
+    <property name="target.dir" value="${basedir}/target"/>
+    <property name="temp.dir" value="${basedir}/temp"/>
+
+    <target name="clean">
+        <echo>
+            __== Cleaning up ==__
+        </echo>
+
+        <delete dir="${temp.dir}" includeemptydirs="true"/>
+        <delete dir="${target.dir}" includeemptydirs="true"/>
+    </target>
+</project>

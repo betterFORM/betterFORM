@@ -38,8 +38,8 @@
         <delete dir="${web.dir}/target"/>
         <delete dir="${betty.dir}/target"/>
 
-        <delete dir="${basedir}/eXist/target"/>
-        <delete dir="${basedir}/eXist/target-utils"/>
+        <delete dir="${basedir}/XRX/target"/>
+        <delete dir="${basedir}/XRX/target-utils"/>
         <delete dir="${basedir}/tools/ProjectAssistant/target"/>
         <delete dir="${basedir}/tools/installer/target"/>
         <delete dir="${basedir}/tools/installer/target"/>
@@ -60,7 +60,7 @@
     <target  name="create-src-distribution">
         <delete dir="betty/target" />
         <delete dir="core/target" />
-        <delete dir="tools/exist/target" />
+        <delete dir="XRX/target" />
         <delete dir="tools/installer/target" />
         <delete dir="web/target" />
         <delete dir="xApp/target" />

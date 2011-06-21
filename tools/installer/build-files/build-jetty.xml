@@ -1,0 +1,11 @@
+<project name="Installer-Jetty" default="create-jetty" basedir=".">
+    <target name="create-jetty">
+        <echo>
+            __== Creating jetty-environment for Installer ==__
+        </echo>
+
+        <mkdir dir="${installer.target}/jetty"/>
+        <unzip src="${basedir}/lib/betterFORM-Launcher-1.3-jetty-distribution.zip" dest="${installer.target}/jetty"/>
+        <move file="${installer.target}/jetty/betterform/betterFORM-Launcher-1.3.jar" tofile="${installer.target}/jetty/betterform/betterFORM.jar"/>
+    </target>
+</project>

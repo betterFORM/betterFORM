@@ -1,0 +1,97 @@
+<!--
+    Status: Work in progress.
+    Purpose of file: minimal-repeating targets to be called by other build-files
+    Used by:
+
+    TODO:
+    - classpath.exist: 1st: check for exist.installed 2nd. Check for exist.betterform.xrx.installed
+-->
+<!--
+  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  ~ Author: betterFORM Team (info AT betterform.de)
+  -->
+
+<project name="betterFORM eXist integration helper targets" default="deploy-all-into-exist" basedir="../">
+    <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
+    <property name="root.dir" value="${basedir}/.."/>
+    <property name="src.dir" value="${basedir}/../resource/src"/>
+    <property name="web.dir" value="${basedir}/../web"/>
+
+    <property name="target" value="${basedir}/target-utils"/>
+    <property name="dojo.release.dir" value="${target}/dojo-release"/>
+
+    <target name="deploy-all-into-betterFORM-XRX" description="copy dojo (release) and xslt into installed betterFORM-XRX" depends="check-4-dojo-release">
+        <antcall target="deploy-dojo-dev-into-betterFORM-XRX"/>
+        <antcall target="deploy-xslt">
+            <param name="target.dir" value="${exist.betterform.xrx.installed}/webapp"/>
+        </antcall>
+        <antcall target="deploy-dojo-release">
+            <param name="target.dir" value="${exist.betterform.xrx.installed}/webapp"/>
+        </antcall>
+    </target>
+
+    <target name="deploy-dojo-dev-into-betterFORM-XRX" description="copy dojo (dev) into installed betterFORM-XRX">
+         <antcall target="deploy-dojo-dev">
+            <param name="target.dir" value="${exist.betterform.xrx.installed}/webapp"/>
+        </antcall>
+    </target>
+
+
+    <!-- GENERIC TARGETS -->
+
+    <target name="check-4-dojo-release">
+        <echo message="------------------------------------------------------------------------------------"/>
+        <echo message="check-4-dojo-release: file: ${target}/dojo-release/resources/scripts/release/dojo/betterform/betterform-full.js"/>
+        <echo message="------------------------------------------------------------------------------------"/>
+        <available property="dojo-release-built" file="${dojo.release.dir}/dojo-release/resources/scripts/release/dojo/betterform/betterform-full.js/"/>
+    </target>
+
+    <target name="deploy-xslt">
+         <copy todir="${target.dir}/xslt" overwrite="true">
+             <fileset dir="${basedir}/../resource/src/main/resources/xslt"/>
+         </copy>
+    </target>
+
+    <target name="deploy-dojo-dev">
+        <ant antfile="${web.dir}/build.xml" target="copy-src-resources-scripts" usenativebasedir="yes">
+            <property name="webapp.dir" value="${target.dir}"/>
+        </ant>
+
+        <ant antfile="${web.dir}/build.xml" target="prepare-dojo" usenativebasedir="yes">
+            <property name="target" value="${target.dir}"/>
+            <property name="webapp.dir" value="${target.dir}"/>
+        </ant>
+    </target>
+
+    <target name="deploy-dojo-release" depends="check-4-dojo-release, build-dojo-release">
+        <echo message="------------------------------------------------------------------------------------"/>
+        <echo message="deploy-dojo-release: dojo.release.dir: ${dojo.release.dir}"/>
+        <echo message="deploy-dojo-release: target.dir: ${target.dir}"/>
+        <echo message="------------------------------------------------------------------------------------"/>
+        <copy todir="${target.dir}/resources/scripts/release" overwrite="true">
+             <fileset dir="${dojo.release.dir}/resources/scripts/release"/>
+         </copy>
+    </target>
+
+    <target name="build-dojo-release" unless="dojo-release-built" description="build a dojo release">
+        <echo message="------------------------------------------------------------------------------------"/>
+        <echo message="build-dojo-release: webapp.dir: ${dojo.release.dir}"/>
+        <echo message="build-dojo-release: web.dir: ${web.dir}"/>
+        <echo message="build-dojo-release: target: ${dojo.release.dir}"/>
+        <echo message="------------------------------------------------------------------------------------"/>
+        <ant antfile="${web.dir}/build.xml" target="copy-src-resources-scripts" usenativebasedir="yes">
+              <property name="webapp.dir" value="${dojo.release.dir}"/>
+        </ant>
+
+        <ant antfile="${web.dir}/build.xml" target="prepare-dojo" usenativebasedir="yes">
+            <property name="target" value="${dojo.release.dir}"/>
+            <property name="webapp.dir" value="${dojo.release.dir}"/>
+        </ant>
+
+        <ant antfile="${web.dir}/build.xml" target="build-dojo" dir="${web.dir}" inheritall="false">
+                <property name="webapp.dir" value="${dojo.release.dir}"/>
+        </ant>
+
+    </target>
+</project>

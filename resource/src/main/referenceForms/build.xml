@@ -6,7 +6,7 @@
 <project name="betterFORM reference generator" default="generate-forms" basedir=".">
     <!--<xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>-->
     <property name="core.dir" value="${basedir}/../../../core"/>    
-    <xmlproperty file="../../../build.properties.xml"
+    <xmlproperty file="../../../../build.properties.xml"
                  semanticAttributes="true" keepRoot="false"/>
 
     <target name="generate-forms">
@@ -22,6 +22,6 @@
     </target>
 
     <target name="deploy-forms" depends="generate-forms" description="builds and deploys reference forms to standard webapp">
-        <ant antfile="build.xml" target="deploy-resources" dir="../../../web/"/>
+        <ant antfile="build.xml" target="deploy-forms" dir="../../../../web/"/>
     </target>
 </project>
