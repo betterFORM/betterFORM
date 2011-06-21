@@ -31,17 +31,27 @@
                                                     <xsl:attribute name="type"><xsl:value-of select="@name"/></xsl:attribute>
                                                     <xsl:apply-templates select="$current//xsd:attributeGroup" mode="instance"/>
                                                     <xsl:apply-templates select="$current//xsd:attribute" mode="instance"/>
+                                                    <event>
+                                                        <xsl:apply-templates select="$current//xsd:attributeGroup" mode="event-instance"/>
+                                                    </event>
                                                 </xfElement>
                                             </data>
                                         </xf:instance>
                                         <xsl:apply-templates select="$current//xsd:attributeGroup" mode="bind"/>
                                         <xsl:apply-templates select="$current//xsd:attribute" mode="bind"/>
-
+                                        <xf:bind nodeset="event">
+                                            <xsl:apply-templates select="$current//xsd:attributeGroup" mode="event-bind"/>
+                                        </xf:bind>
                                     </xf:model>
                                 </div>
                                 <xf:group ref="xfElement" id="properties" appearance="bf:verticalTable">
                                     <xsl:apply-templates select="$current//xsd:attributeGroup" mode="ui"/>
                                     <xsl:apply-templates select="$current//xsd:attribute" mode="ui"/>
+                                </xf:group>
+                                <xf:group id="event-properties" appearance="bf:verticalTable">
+                                    <xsl:apply-templates select="$current//xsd:attributeGroup" mode="event-ui">
+                                        <xsl:with-param name="current" select="$current"/>
+                                    </xsl:apply-templates>
                                 </xf:group>
                             </div>
                         </body>
@@ -51,6 +61,7 @@
         </div>
     </xsl:template>
 
+    <!--################################### Mode instance ################################### -->
     <xsl:template match="xsd:attributeGroup[@ref]" mode="instance">
         <xsl:variable name="ref" select="@ref"/>
         <xsl:variable name="targetGroup" select="//*[@name = substring-after($ref,'xforms:')]"/>
@@ -60,6 +71,7 @@
     <xsl:template match="xsd:attributeGroup[@name]" mode="instance">
         <xsl:apply-templates select="xsd:attribute" mode="instance"/>
     </xsl:template>
+
 
     <xsl:template match="xsd:attribute[@name]" mode="instance">
         <xsl:attribute name="{@name}">
@@ -75,6 +87,101 @@
     </xsl:template>
 
     <xsl:template match="*|@*|node()" mode="instance"/>
+
+
+    <!--################################### Mode event-instance ################################### -->
+
+    <xsl:template match="xsd:attributeGroup[@ref='xforms:XML.Events']" mode="event-instance" priority="10">
+        <xsl:message>i'm here</xsl:message>
+        <xsl:variable name="ref" select="@ref"/>
+        <xsl:variable name="targetGroup" select="//*[@name = substring-after($ref,'xforms:')]"/>
+            <xsl:apply-templates select="$targetGroup" mode="event-instance"/>
+    </xsl:template>
+
+    <xsl:template match="xsd:attributeGroup[@name='XML.Events']" mode="event-instance" priority="10">
+        <xsl:message>i'm there</xsl:message>
+            <xsl:apply-templates select="xsd:attribute" mode="event-instance"/>
+    </xsl:template>
+
+    <xsl:template match="xsd:attribute[substring-before(@ref,':') = 'ev']" mode="event-instance" priority="10">
+        <xsl:variable name="attrName"><xsl:value-of select="substring-after(@ref,':')"/></xsl:variable>
+
+        <!--<xsl:message><xsl:value-of select="@ref"/></xsl:message>-->
+        <xsl:variable name="eventXSD" select="document('xml-events-attribs-1.xsd')/xsd:schema"/>
+        <xsl:variable name="defaultValue"><xsl:value-of select="$eventXSD//*[@name=$attrName]/@default"/></xsl:variable>
+        <xsl:attribute name="{$attrName}"><xsl:value-of select="$defaultValue"/></xsl:attribute>
+
+    </xsl:template>
+
+    <!--################################### Mode event-bind ################################### -->
+    <xsl:template match="xsd:attributeGroup[@ref='xforms:XML.Events']" mode="event-bind" priority="10">
+        <xsl:message>i'm here</xsl:message>
+        <xsl:variable name="ref" select="@ref"/>
+        <xsl:variable name="targetGroup" select="//*[@name = substring-after($ref,'xforms:')]"/>
+            <xsl:apply-templates select="$targetGroup" mode="event-bind"/>
+    </xsl:template>
+
+    <xsl:template match="xsd:attributeGroup[@name='XML.Events']" mode="event-bind" priority="10">
+        <xsl:message>i'm there</xsl:message>
+            <xsl:apply-templates select="xsd:attribute" mode="event-bind"/>
+    </xsl:template>
+
+    <xsl:template match="xsd:attribute[substring-before(@ref,':') = 'ev']" mode="event-bind" priority="10">
+        <xsl:variable name="attrName"><xsl:value-of select="substring-after(@ref,':')"/></xsl:variable>
+
+        <!--<xsl:message><xsl:value-of select="@ref"/></xsl:message>-->
+        <xsl:variable name="eventXSD" select="document('xml-events-attribs-1.xsd')/xsd:schema"/>
+        <xsl:variable name="typeAttr"><xsl:value-of select="if(string-length($eventXSD//*[@name=$attrName]/@type) != 0) then $eventXSD//*[@name=$attrName]/@type else 'string'"/></xsl:variable>
+        <xf:bind nodeset="{$attrName}" type="{$typeAttr}"/>
+
+    </xsl:template>
+
+    <!--################################### Mode event-ui ################################### -->
+    <xsl:template match="xsd:attributeGroup[@ref='xforms:XML.Events']" mode="event-ui" priority="10">
+        <xsl:param name="current"/>
+
+        <xsl:message>i'm here</xsl:message>
+        <xsl:variable name="ref" select="@ref"/>
+        <xsl:variable name="targetGroup" select="//*[@name = substring-after($ref,'xforms:')]"/>
+            <xsl:apply-templates select="$targetGroup" mode="event-ui">
+                <xsl:with-param name="current" select="$current"/>
+            </xsl:apply-templates>
+    </xsl:template>
+
+    <xsl:template match="xsd:attributeGroup[@name='XML.Events']" mode="event-ui" priority="10">
+        <xsl:param name="current"/>
+        <xsl:message>i'm there</xsl:message>
+            <xsl:apply-templates select="xsd:attribute" mode="event-ui">
+                <xsl:with-param name="current" select="$current"/>
+            </xsl:apply-templates>
+    </xsl:template>
+
+    <xsl:template match="xsd:attribute[@ref = 'ev:event']" mode="event-ui" priority="10">
+        <xsl:param name="current"/>
+        <xsl:variable name="attrName"><xsl:value-of select="substring-after(@ref,':')"/></xsl:variable>
+
+        <xsl:message><xsl:value-of select="$current/@name"/></xsl:message>
+
+        <!--<xsl:message><xsl:value-of select="@ref"/></xsl:message>-->
+        <xsl:variable name="eventXSD" select="document('xml-events-attribs-1.xsd')/xsd:schema"/>
+        <xsl:variable name="typeAttr"><xsl:value-of select="if(string-length($eventXSD//*[@name=$attrName]/@type) != 0) then $eventXSD//*[@name=$attrName]/@type else 'string'"/></xsl:variable>
+        <xf:select1 ref="event/@event" appearance="minimal">
+            <xf:label>Event</xf:label>
+            <xf:hint>The type of event to listen for</xf:hint>
+            <!-- build item list from external eventTargets.xml file. -->
+            <xsl:variable name="eventTargets" select="document('eventTargets.xml')"/>
+            <xsl:for-each select="$eventTargets/data/target[contains(@match,$current/@name)]/event">
+                <xf:item>
+                    <xf:label><xsl:value-of select="./@name"/></xf:label>
+                    <xf:value><xsl:value-of select="./@name"/></xf:value>
+                </xf:item>
+            </xsl:for-each>
+        </xf:select1>
+
+    </xsl:template>
+
+
+    <!--################################### Mode bind ################################### -->
 
     <xsl:template match="xsd:attributeGroup[@ref]" mode="bind">
         <xsl:variable name="ref" select="@ref"/>
@@ -97,6 +204,8 @@
 
     <xsl:template match="*|@*|node()" mode="bind"/>
 
+
+    <!--################################### Mode ui ################################### -->
 
     <xsl:template match="xsd:attributeGroup[@ref]" mode="ui">
         <xsl:variable name="ref" select="@ref"/>

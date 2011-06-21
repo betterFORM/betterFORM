@@ -19,7 +19,6 @@
                 <script type="text/javascript" src="/betterform/bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.hotkeys.js"></script>
                 <script type="text/javascript" src="/betterform/bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
                 <script type="text/javascript" src="/betterform/bfResources/scripts/betterform/xfEditorUtil.js"></script>
-                <script type="text/javascript" src="/betterform/bfResources/scripts/betterform/bfEditor.js"></script>
                 <script type="text/javascript">
                     dojo.require("dijit.layout.ContentPane");
                     dojo.require("dijit.MenuBar");
@@ -52,7 +51,7 @@
                         margin-bottom:30px;
                     }
                     #docPane{
-                        background: #ffffff;
+                        background: transparent;
                         border-radius: 10px 0 0 10px;
                         width:70%;
                         float:left;
@@ -60,8 +59,11 @@
                     }
                     #xfDoc{
                         overflow-x:hidden;
-                        background:white;
+                        background:transparent;
                         border:none;
+                    }
+                    #root{
+                        background:white;
                     }
                     #xfDoc .jstree-hovered{
                         width:100%;
@@ -347,6 +349,22 @@
                                     -->
                                 </div>
                             </div>
+                            <div dojoType="dijit.PopupMenuBarItem" label="Edit">
+                                <div dojoType="dijit.Menu" id="Edit">
+                                    <div dojoType="dijit.MenuItem"
+                                         onClick="alert('cut');">
+                                        Cut
+                                    </div>
+                                    <div dojoType="dijit.MenuItem"
+                                         onClick="alert('copy');">
+                                        Copy
+                                    </div>
+                                    <div dojoType="dijit.MenuItem"
+                                         onClick="alert('paste');">
+                                        Paste
+                                    </div>
+                                </div>
+                            </div>
 <!--
                             <div dojoType="dijit.PopupMenuBarItem" label="Add" id="addMenu">
                             </div>
@@ -421,9 +439,9 @@
                             <xsl:variable name="elements" select="//xf:model[not(ancestor::xf:*)]|//xf:group[not(ancestor::xf:*)]"/>
                             <!--<xsl:variable name="uiElements" select="//*[name()='xf:group']"/>-->
 
-                            <div id="xfDoc" class="xfDoc">
+                            <div id="xfDoc" class="xfDoc" tabindex="-1">
                                 <ul>
-                                    <li id="root" data-xf-type="document">
+                                    <li id="root" data-xf-type="document" tabindex="0">
                                         <a href="#">Document</a>
                                         <ul>
                                             <!--<xsl:for-each select="$elements">-->
@@ -489,7 +507,6 @@
                                                 var targetType = target.attr("data-xf-type");
                                                 console.log("check target:",targetType);
 
-
                                                 //check rules
                                                 //look for match in drop target elements list of allowed children
                                                 //if found 'true' 'false' otherwise
@@ -502,9 +519,6 @@
                                                 }else{
                                                     return false;
                                                 }
-
-
-
                                             }
                                         }
                                     },
@@ -514,21 +528,26 @@
                                         "icons" : false
                                     },
                                     "dnd" : {
-                                        "drop_target" : false,
-                        	            "drag_target" : false
-                                    },
-                                    types : {
-                                        // the default type
-                                        "default":{
-                                            "valid_children": "all"
-                                        },
-                                        "model" : {
-                                            "valid_children": ["instance","bind","submission","action","insert","delete","setvalue","send","dispatch","message","load","rebuild","recalculate","revalidate","refresh","setfocus","setindex","toggle","reset"]
-                                        },
-                                        "bind": {
-                                            "valid_children": ["bind"]
-                                        }
 
+                                        "drop_target" : false,
+                        	            "drag_target" : false,
+
+                        	            "drop_finish" : function () {
+                                            alert("DROP");
+                                        },
+                                        "drag_check" : function (data) {
+                                            if(data.r.attr("id") == "phtml_1") {
+                                                return false;
+                                            }
+                                            return {
+                                                after : true,
+                                                before : true,
+                                                inside : true
+                                            };
+                                        },
+                                        "drag_finish" : function (data) {
+                                            alert("DRAG OK");
+                                        }
                                     },
                                     // the `plugins` array allows you to configure the active plugins on this instance
                                     "plugins" : ["themes","html_data","ui","crrm","hotkeys","dnd"]
@@ -556,6 +575,9 @@
                 </script>
 
                 <script type="text/javascript">
+                    $("#xfDoc ul").delegate("li", "dblclick", function(){
+                            $("#xfDoc").jstree("toggle_node", this);
+                    });
                     function addElement(type){
                         console.log("addElement type:",type);
                         var elem = $("#xfDoc").jstree("create",null,"last",type,false,true);
