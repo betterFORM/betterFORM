@@ -21,12 +21,12 @@
                             <xsl:choose>
                                 <xsl:when test="@nodeset='type'">
                                     <input dojoType="dijit.form.FilteringSelect" store="stateStore" selection="open" searchAttr="name" name="type" id="{@nodeset}" value="" placeholder="" class="xf{@nodeset} dojoSelect">
-                                        <xsl:attribute name="onblur">betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'<xsl:value-of select="@nodeset"/>')</xsl:attribute>
+                                        <xsl:attribute name="onblur">attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'<xsl:value-of select="@nodeset"/>')</xsl:attribute>
                                     </input>
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <input dojoType="dijit.form.TextBox" id="{@nodeset}" name="{@nodeset}" type="text" value="" placeholder="" class="xf{@nodeset} dojoInput">
-                                        <xsl:attribute name="onblur">betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'<xsl:value-of select="@nodeset"/>')</xsl:attribute>
+                                        <xsl:attribute name="onblur">attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'<xsl:value-of select="@nodeset"/>')</xsl:attribute>
                                     </input>
                                 </xsl:otherwise>
                             </xsl:choose>

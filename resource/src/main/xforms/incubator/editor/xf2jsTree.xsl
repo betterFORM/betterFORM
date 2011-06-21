@@ -33,7 +33,8 @@
                     dojo.require("dijit.form.Select");
                     dojo.require("dijit.form.FilteringSelect");
                     dojo.require("dojo.data.ItemFileReadStore");
-
+                    var attrEditor = new betterform.Editor();
+                    console.debug("attrEditor.: ",attrEditor);
 
                 </script>
                 <style type="text/css">
@@ -442,7 +443,7 @@
                                     var xfId = dojo.attr(dojo.byId("xfMount"),"xfId");
                                     if(xfId == undefined) { return;}
                                     console.log("xfid: ",xfId);
-                                    betterform.Editor.editProperties(xfId);
+                                    attrEditor.editProperties(xfId);
                                 </script>
                              </div>
                         </div>
@@ -530,6 +531,16 @@
                                         }
 
                                     },
+                                    hotkeys: {
+                                        "Alt+up"   : function (event) {
+                                            attrEditor.moveNodeUp(this)
+                                        },
+
+                                        "Alt+down" : function (event) {
+                                            attrEditor.moveNodeDown(this);
+                                        }
+                                    },
+
                                     // the `plugins` array allows you to configure the active plugins on this instance
                                     "plugins" : ["themes","html_data","ui","crrm","hotkeys","dnd"]
                                 })
@@ -542,15 +553,18 @@
                                     dojo.attr(dojo.byId("xfMount"),"xfId", id);
 
                                     dijit.byId("xfMount").set("href", "/betterform/forms/incubator/editor/" + xfType + ".html");
-                                    dojo.publish("nodeSelected",[{xfType:xfType,id:id}]);
+                                    //console.debug("publish: nodeSelected: data", data);
+                                    dojo.publish("nodeSelected", [
+                                        {xfType:xfType,id:id,jsTreeData:data}
+                                    ]);
                                 })
                             // EVENTS
                             // each instance triggers its own events - to process those listen on the container
                             // all events are in the `.jstree` namespace
                             // so listen for `function_name`.`jstree` - you can function names from the docs
-                            .bind("loaded.jstree", function (event, data) {
-                                // you get two params - event & data - check the core docs for a detailed description
-                            });
+                                .bind("loaded.jstree", function (event, data) {
+                                    // you get two params - event & data - check the core docs for a detailed description
+                                })
                     });
                     /* ]]> */
                 </script>
@@ -563,60 +577,6 @@
                         $("#xfDoc").jstree("select_node",elem,false,null);
                         $("#id").focus();
                     }
-
-                    dojo.subscribe("nodeSelected", function(args){
-                        console.log("I got: ", args);
-                        console.log("I got: ", args.xfType);
-                        var xfType = args.xfType;
-
-                        if(xfType =="document"){
-                            //jump back to root
-                            dijit.byId("xfMount").set("href", "/betterform/forms/incubator/editor/document.html");
-                            //hide addToolbars
-                            dojo.query("#actionlist li").forEach(
-                                function(item,index,array){
-                                    dojo.attr(item,"style","display:none;");
-                                }
-                            );
-                            dojo.query("#childList li").forEach(
-                                function(item,index,array){
-                                    dojo.attr(item,"style","display:none;");
-                                }
-                            );
-
-                            return;
-                        }
-
-                        dojo.query("#childList li").forEach(
-                              function(item, index, array){
-                                    var currentClass = dojo.attr(item,"class");
-                                    var cutted = currentClass.substring(0,currentClass.indexOf("-",4))
-
-                                    var childArray=eval(xfType+"Childs");
-                                    if(childArray == undefined){
-                                        return;
-                                    }
-                                    if(dojo.indexOf(childArray,cutted) != -1){
-                                        dojo.attr(item,"style","display:inline;");
-                                    }else{
-                                        dojo.attr(item,"style","display:none;");
-                                    }
-
-                                    //check if actions should be there by looking for 'action' element in the relevant array
-                                    var hasActions = dojo.indexOf(childArray,"action") != -1;
-                                    dojo.query("#actionlist li").forEach(
-                                        function(item,index,array){
-                                            if(hasActions){
-                                                dojo.attr(item,"style","display:inline;");
-                                            }else{
-                                                dojo.attr(item,"style","display:none;");
-                                            }
-                                        }
-                                    );
-
-                              }
-                         );
-                     });
                 </script>
 
             </body>
