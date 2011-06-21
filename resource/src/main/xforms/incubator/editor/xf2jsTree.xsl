@@ -33,8 +33,32 @@
                     dojo.require("dijit.form.Select");
                     dojo.require("dijit.form.FilteringSelect");
                     dojo.require("dojo.data.ItemFileReadStore");
+                    dojo.require("dojox.layout.FloatingPane");
                     var attrEditor = new betterform.Editor();
                     console.debug("attrEditor.: ",attrEditor);
+
+                    function checkKeyboardInput(pEvent){
+                           switch(pEvent.charOrCode){
+                             case '?': //Process the Help key event
+                                dijit.byId("bfEditorHelp").show();
+                                break;
+                           case 't':
+                           case 'T': //Process the Help key event
+                              console.debug("T pressed");
+                              dojo.byId("root").focus();
+                              break;
+
+                             default:
+                               //no defaults at this time
+                                break;
+
+                           }
+                        }
+                    dojo.addOnLoad(
+                        function(){
+                             dojo.connect(dojo.body(),"onkeypress",checkKeyboardInput);
+                        }
+                    );
 
                 </script>
                 <style type="text/css">
@@ -291,6 +315,62 @@
                         background-color:orange;
                     }
 
+
+                    dl.keyboard-mapping {
+                        font-size: 12px;
+                        margin: 5px 0;
+                    }
+                    dl.keyboard-mapping dt {
+                        -moz-border-radius: 2px 2px 2px 2px;
+                        background: none repeat scroll 0 0 #333333;
+                        color: #EEEEEE;
+                        display: inline-block;
+                        font-family: Monaco,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace;
+                        margin: 0;
+                        min-width: 10px;
+                        padding: 3px 6px;
+                        text-align: center;
+                        text-shadow: 1px 1px 0 #000000;
+                    }
+
+                    dl.keyboard-mapping dt em {
+                        color: #999999;
+                        font-family: Helvetica, Arial, freesans, sans-serif;
+                        font-size: 10px;
+                        font-style: normal;
+                        font-weight: normal;
+                        padding: 0 4px;
+                        text-shadow: none;
+                    }
+
+                    .shortcut {
+                        font-family: sans-serif;
+                        font-weight: bold;
+                    }
+
+                    dl.keyboard-mapping dd {
+                        color: #666666;
+                        display: inline;
+                        margin: 0 0 0 5px;
+                    }
+
+                    .bfEditorHelpTitle {
+                        border-bottom: 1px solid #DDDDDD !important;
+                        font-size: 16px;
+                        margin: 0 0 10px -10px;
+                        padding: 0 10px 10px;
+                        width: 100%;
+                    }
+                    #bfEditorHelp .column1 {
+                        float:left;
+                        display:block;
+                        width:250px;
+                        position:relative;
+                    }
+
+                    .dojoxFloatingPaneCanvas {
+                        margin:10px;
+                    }
                 </style>
             </head>
             <body>
@@ -348,12 +428,17 @@
                                     -->
                                 </div>
                             </div>
+                            <div dojoType="dijit.MenuBarItem"
+                                 onClick="dijit.byId('bfEditorHelp').show();">
+                                Help
+                            </div>
+
 <!--
                             <div dojoType="dijit.PopupMenuBarItem" label="Add" id="addMenu">
                             </div>
 -->
                         </div>
-                        <img src="/betterform/bfResources/images/betterform_icon16x16.png"/>
+                        <img src="/betterform/bfResources/images/betterform_icon16x16.png" alt=""/>
                         <div id="addToolbar">
                             <span class="title">Add...</span>
                             <ul id="childList">
@@ -578,7 +663,72 @@
                         $("#id").focus();
                     }
                 </script>
+                <div id="bfEditorHelp" dojoType="dojox.layout.FloatingPane" title="betterFORM Editor Help" resizable="true" dockable="false" style="position:absolute;margin:10px;top:200px;left:200px;width:600px;height:350px;visibility:hidden;">
+<!--
+                    <div class="bfEditorHelpTitle">betterFORM Editor</div>
+-->
+                    <div>The editor is fully accessible via the keyboard</div>
+                    <div>
+                        <h3>Editor Shortcuts</h3>
+                        <dl class="keyboard-mapping">
+                          <dt class="shortcutDesc">?</dt>
+                          <dd>Open Help</dd>
+                        </dl>
+                        <dl class="keyboard-mapping">
+                          <dt class="shortcutDesc">ESC</dt>
+                          <dd>Close Help</dd>
+                        </dl>
+                        <dl class="keyboard-mapping">
+                          <dt class="shortcutDesc">t</dt>
+                          <dd>Focus the XForms tree</dd>
+                        </dl>
+                    </div>
 
+                    <div>
+                        <h3>Tree Shortcuts</h3>
+                        <div class="table">
+                            <div class="column1">
+                                <dl class="keyboard-mapping">
+                                  <dt class="shortcutDesc"><span class="shortcut">↑</span></dt>
+                                  <dd>Go to previous Node</dd>
+                                </dl>
+                                <dl class="keyboard-mapping">
+                                  <dt class="shortcutDesc"><span class="shortcut">↓</span></dt>
+                                  <dd>Go to next Node</dd>
+                                </dl>
+                                <dl class="keyboard-mapping">
+                                  <dt class="shortcutDesc"><span class="shortcut">SPACE</span></dt>
+                                  <dd>Select Node</dd>
+                                </dl>
+
+                                <dl class="keyboard-mapping">
+                                  <dt class="shortcutDesc"><span class="shortcut">←</span></dt>
+                                  <dd>Open Node</dd>
+                                </dl>
+                                <dl class="keyboard-mapping">
+                                  <dt class="shortcutDesc"><span class="shortcut">→</span></dt>
+                                  <dd>Close Node</dd>
+                                </dl>
+                            </div>
+                            <div class="column2">
+                                <dl class="keyboard-mapping">
+                                  <dt class="shortcutDesc"><span class="shortcut">DEL</span></dt>
+                                  <dd>Delete Node</dd>
+                                </dl>
+                                <dl class="keyboard-mapping">
+                                  <dt class="shortcutDesc">ALT <em>and</em> <span class="shortcut">↑</span></dt>
+                                  <dd>Move Node up</dd>
+                                </dl>
+                                <dl class="keyboard-mapping">
+                                  <dt class="shortcutDesc">ALT <em>and</em> <span class="shortcut">↓</span></dt>
+                                  <dd>Move Node down</dd>
+                                </dl>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </body>
         </html>
     </xsl:template>
