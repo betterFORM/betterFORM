@@ -13,20 +13,39 @@
             <div class="propertyTitle">Attributes</div>
             <form method="post" action="#" enctype="application/x-www-form-urlencoded">
             <xsl:for-each select="//xf:bind">
+                <xsl:variable name="attrName">
+                    <xsl:choose>
+                        <xsl:when test="starts-with(@nodeset,'@')">
+                            <xsl:value-of select="substring-after(@nodeset,'@')"/>
+                        </xsl:when>
+                        <xsl:otherwise><xsl:value-of select="@nodeset"/></xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+                <xsl:message>attrName is: <xsl:value-of select="$attrName"/> </xsl:message>
                 <ul style="list-style-type:none;">
                     <li>
                         <div class="attrEditor">
-                            <h4><label for="{@nodeset}"><xsl:value-of select="@nodeset"/></label></h4>
+                            <h4><label for="{$attrName}"><xsl:value-of select="$attrName"/></label></h4>
                             <p>hint text here</p>
                             <xsl:choose>
-                                <xsl:when test="@nodeset='type'">
-                                    <input dojoType="dijit.form.FilteringSelect" store="stateStore" selection="open" searchAttr="name" name="type" id="{@nodeset}" value="" placeholder="" class="xf{@nodeset} dojoSelect">
-                                        <xsl:attribute name="onblur">betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'<xsl:value-of select="@nodeset"/>')</xsl:attribute>
+                                 <xsl:when test="$attrName='xml-event'"/>
+                                 <xsl:when test="$attrName='event'">
+                                     <select dojoType="dijit.form.FilteringSelect" selection="open" searchAttr="name" name="type" id="{$attrName}" value="" placeholder="" class="xf{$attrName} dojoSelect" >
+                                         <xsl:attribute name="onblur">betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'<xsl:value-of select="$attrName"/>')</xsl:attribute>
+                                         <xsl:for-each select="//xf:select1[@ref='@event']/xf:item">
+                                            <option value="{xf:value}"><xsl:value-of select="xf:label"/></option>
+                                         </xsl:for-each>
+                                     </select>
+
+                                 </xsl:when>
+                                <xsl:when test="$attrName='type'">
+                                    <input dojoType="dijit.form.FilteringSelect" store="stateStore" selection="open" searchAttr="name" name="type" id="{$attrName}" value="" placeholder="" class="xf{$attrName} dojoSelect">
+                                        <xsl:attribute name="onblur">betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'<xsl:value-of select="$attrName"/>')</xsl:attribute>
                                     </input>
                                 </xsl:when>
                                 <xsl:otherwise>
-                                    <input dojoType="dijit.form.TextBox" id="{@nodeset}" name="{@nodeset}" type="text" value="" placeholder="" class="xf{@nodeset} dojoInput">
-                                        <xsl:attribute name="onblur">betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'<xsl:value-of select="@nodeset"/>')</xsl:attribute>
+                                    <input dojoType="dijit.form.TextBox" id="{$attrName}" name="{$attrName}" type="text" value="" placeholder="" class="xf{$attrName} dojoInput">
+                                        <xsl:attribute name="onblur">betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'<xsl:value-of select="$attrName"/>')</xsl:attribute>
                                     </input>
                                 </xsl:otherwise>
                             </xsl:choose>

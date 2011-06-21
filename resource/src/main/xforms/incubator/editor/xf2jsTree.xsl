@@ -306,10 +306,25 @@
                                        resource="xslt:/betterform/forms/incubator/editor/dom2xf.xsl?parseString=true"
                                        replace="instance">
                             <xf:action ev:event="xforms-submit-done">
+                                <xf:message>Data transformed to xforms</xf:message>
+                                <xf:send submission="s-replaceContent"/>
+                            </xf:action>
+                            <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
+                       </xf:submission>
+                        <xf:submission id="s-replaceContent"
+                                       method="get"
+                                       action="xslt:/betterform/forms/incubator/editor/updateOriginal.xsl?originDoc={{$contextPath}}"
+                                       replace="instance">
+                            <xf:action ev:event="xforms-submit-done">
                                 <xf:message>Data stored</xf:message>
                             </xf:action>
-                            <xf:message ev:event="xform-submit-error">Storing failed</xf:message>
+                            <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
                        </xf:submission>
+                       <xf:instance id="i-controller">
+                           <data xmlns="">
+                               <originalDoc/>
+                           </data>
+                       </xf:instance>
                     </xf:model>
                     <xf:input id="save" ref="instance()">
                         <xf:label>this is a hidden control set from JS when saving is executed</xf:label>

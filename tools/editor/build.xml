@@ -27,7 +27,7 @@
 
     <target name="generate-XForms" depends="prepare">
         <xslt in="${basedir}/XForms-11-Schema.xsd"
-              out="${basedir}/target/xforms.xml"
+              out="${basedir}/xforms.xml"
               style="${basedir}/generateXForms.xsl"
               force="true"
                 classpathref="transform.class.path">
@@ -35,7 +35,7 @@
     </target>
 
     <target name="generate-HTML-Forms" depends="generate-xf-datatype-list"  description="generates HTML forms from XForms">
-        <xslt basedir="${basedir}/target/target"
+        <xslt basedir="${basedir}/target/xforms"
               destdir="${basedir}/target/html/"
               style="${basedir}/generate-html-forms.xsl"
               extension=".html"

@@ -59,6 +59,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
      */
     public static final String REQUEST_URI = "requestURI";
     public static final String REQUEST_URL = "requestURL";
+    public static final String PATH_INFO = "pathInfo";
     public static final String QUERY_STRING = "queryString";
     public static final String CONTEXTROOT = "contextroot";
     public static final String SESSION_ID = "betterform.session.id";

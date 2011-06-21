@@ -19,6 +19,9 @@ for generating a select1 control for the event. -->
         <event name="xforms-binding-exception"/>
     </target>
     <target match="input output range secret select select1 submit textarea trigger upload">
+        <event name="xforms-binding-exception"/>
+    </target>
+    <target match="action insert delete setvalue send dispatch message load rebuild recalculate revalidate refresh setfocus setindex toggle reset">
         <event name="DOMActivate"/>
         <event name="DOMFocusIn"/>
         <event name="DOMFocusOut"/>
@@ -39,7 +42,6 @@ for generating a select1 control for the event. -->
         <event name="xforms-focus"/>
         <event name="xforms-help"/>
         <event name="xforms-hint"/>
-        <event name="xforms-binding-exception"/>
     </target>
     <target match="output">
         <event name="xforms-output-error"/>
