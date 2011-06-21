@@ -34,11 +34,11 @@
     <property name="core.dir" value="${betterFORM.src}/core"/>
     <property name="web.dir" value="${betterFORM.src}/web"/>
     <property name="resource.dir" value="${betterFORM.src}/resource"/>
-    <property name="eXist.dir" value="${betterFORM.src}/eXist"/>
+    <property name="XRX.dir" value="${betterFORM.src}/XRX"/>
 
     <!-- eXist-module sub-dirs -->
-    <property name="main.dir" value="${eXist.dir}/src/main"/>
-    <property name="etc.dir" value="${eXist.dir}/src/main/etc"/>
+    <property name="main.dir" value="${XRX.dir}/src/main"/>
+    <property name="etc.dir" value="${XRX.dir}/src/main/etc"/>
     <property name="overwrites.dir" value="${etc.dir}/overwrites/eXist-1.4"/>
 
     <!-- betterFORM installation directories -->
@@ -53,7 +53,7 @@
     </path>
 
     <!-- Include helper buildfiles -->
-    <include file="build-utils-database.xml" as="db"/>
+    <include file="build-utils-eXist.xml" as="db"/>
 
     <include file="${root.dir}/build-util.xml" as="ant"/>
 
