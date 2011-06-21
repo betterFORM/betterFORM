@@ -14,6 +14,11 @@
     <xsl:variable name="inputDoc" select="/"/>
     <xsl:template match="/xsd:schema">
         <data>
+            <ul id="document">
+                <li>model</li>
+                <li>group</li>
+                <li>repeat</li>
+            </ul>
             <xsl:for-each select=".//xsd:element[@name][generate-id() = generate-id(key('names',@name)[1])]">
                 <xsl:variable name="current" select="."/>
                 <ul id="{@name}">

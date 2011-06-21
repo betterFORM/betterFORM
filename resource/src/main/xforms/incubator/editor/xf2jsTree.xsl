@@ -19,6 +19,7 @@
                 <script type="text/javascript" src="/betterform/bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.hotkeys.js"></script>
                 <script type="text/javascript" src="/betterform/bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
                 <script type="text/javascript" src="/betterform/bfResources/scripts/betterform/xfEditorUtil.js"></script>
+                <script type="text/javascript" src="/betterform/bfResources/scripts/betterform/bfEditor.js"></script>
                 <script type="text/javascript">
                     dojo.require("dijit.layout.ContentPane");
                     dojo.require("dijit.MenuBar");
@@ -32,7 +33,32 @@
                     dojo.require("dijit.form.Select");
                     dojo.require("dijit.form.FilteringSelect");
                     dojo.require("dojo.data.ItemFileReadStore");
+                    dojo.require("dojox.layout.FloatingPane");
+                    var attrEditor = new betterform.Editor();
+                    console.debug("attrEditor.: ",attrEditor);
 
+                    function checkKeyboardInput(pEvent){
+                           switch(pEvent.charOrCode){
+                             case '?': //Process the Help key event
+                                dijit.byId("bfEditorHelp").show();
+                                break;
+                           case 't':
+                           case 'T': //Process the Help key event
+                              console.debug("T pressed");
+                              dojo.byId("root").focus();
+                              break;
+
+                             default:
+                               //no defaults at this time
+                                break;
+
+                           }
+                        }
+                    dojo.addOnLoad(
+                        function(){
+                             dojo.connect(dojo.body(),"onkeypress",checkKeyboardInput);
+                        }
+                    );
 
                 </script>
                 <style type="text/css">
@@ -292,6 +318,62 @@
                         background-color:orange;
                     }
 
+
+                    dl.keyboard-mapping {
+                        font-size: 12px;
+                        margin: 5px 0;
+                    }
+                    dl.keyboard-mapping dt {
+                        -moz-border-radius: 2px 2px 2px 2px;
+                        background: none repeat scroll 0 0 #333333;
+                        color: #EEEEEE;
+                        display: inline-block;
+                        font-family: Monaco,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace;
+                        margin: 0;
+                        min-width: 10px;
+                        padding: 3px 6px;
+                        text-align: center;
+                        text-shadow: 1px 1px 0 #000000;
+                    }
+
+                    dl.keyboard-mapping dt em {
+                        color: #999999;
+                        font-family: Helvetica, Arial, freesans, sans-serif;
+                        font-size: 10px;
+                        font-style: normal;
+                        font-weight: normal;
+                        padding: 0 4px;
+                        text-shadow: none;
+                    }
+
+                    .shortcut {
+                        font-family: sans-serif;
+                        font-weight: bold;
+                    }
+
+                    dl.keyboard-mapping dd {
+                        color: #666666;
+                        display: inline;
+                        margin: 0 0 0 5px;
+                    }
+
+                    .bfEditorHelpTitle {
+                        border-bottom: 1px solid #DDDDDD !important;
+                        font-size: 16px;
+                        margin: 0 0 10px -10px;
+                        padding: 0 10px 10px;
+                        width: 100%;
+                    }
+                    #bfEditorHelp .column1 {
+                        float:left;
+                        display:block;
+                        width:250px;
+                        position:relative;
+                    }
+
+                    .dojoxFloatingPaneCanvas {
+                        margin:10px;
+                    }
                 </style>
             </head>
             <body>
@@ -380,12 +462,17 @@
                                     </div>
                                 </div>
                             </div>
+                            <div dojoType="dijit.MenuBarItem"
+                                 onClick="dijit.byId('bfEditorHelp').show();">
+                                Help
+                            </div>
+                            
 <!--
                             <div dojoType="dijit.PopupMenuBarItem" label="Add" id="addMenu">
                             </div>
 -->
                         </div>
-                        <img src="/betterform/bfResources/images/betterform_icon16x16.png"/>
+                        <img src="/betterform/bfResources/images/betterform_icon16x16.png" alt=""/>
                         <div id="addToolbar">
                             <span class="title">Add...</span>
                             <ul id="childList">
@@ -475,7 +562,7 @@
                                     var xfId = dojo.attr(dojo.byId("xfMount"),"xfId");
                                     if(xfId == undefined) { return;}
                                     console.log("xfid: ",xfId);
-                                    betterform.Editor.editProperties(xfId);
+                                    attrEditor.editProperties(xfId);
                                 </script>
                              </div>
                         </div>
@@ -522,6 +609,7 @@
                                                 var targetType = target.attr("data-xf-type");
                                                 console.log("check target:",targetType);
 
+
                                                 //check rules
                                                 //look for match in drop target elements list of allowed children
                                                 //if found 'true' 'false' otherwise
@@ -534,6 +622,9 @@
                                                 }else{
                                                     return false;
                                                 }
+
+
+
                                             }
                                         }
                                     },
@@ -543,27 +634,32 @@
                                         "icons" : false
                                     },
                                     "dnd" : {
-
                                         "drop_target" : false,
-                        	            "drag_target" : false,
+                        	            "drag_target" : false
+                                    },
+                                    types : {
+                                        // the default type
+                                        "default":{
+                                            "valid_children": "all"
+                                        },
+                                        "model" : {
+                                            "valid_children": ["instance","bind","submission","action","insert","delete","setvalue","send","dispatch","message","load","rebuild","recalculate","revalidate","refresh","setfocus","setindex","toggle","reset"]
+                                        },
+                                        "bind": {
+                                            "valid_children": ["bind"]
+                                        }
 
-                        	            "drop_finish" : function () {
-                                            alert("DROP");
+                                    },
+                                    hotkeys: {
+                                        "Alt+up"   : function (event) {
+                                            attrEditor.moveNodeUp(this)
                                         },
-                                        "drag_check" : function (data) {
-                                            if(data.r.attr("id") == "phtml_1") {
-                                                return false;
-                                            }
-                                            return {
-                                                after : true,
-                                                before : true,
-                                                inside : true
-                                            };
-                                        },
-                                        "drag_finish" : function (data) {
-                                            alert("DRAG OK");
+
+                                        "Alt+down" : function (event) {
+                                            attrEditor.moveNodeDown(this);
                                         }
                                     },
+
                                     // the `plugins` array allows you to configure the active plugins on this instance
                                     "plugins" : ["themes","html_data","ui","crrm","hotkeys","dnd"]
                                 })
@@ -576,7 +672,10 @@
                                     dojo.attr(dojo.byId("xfMount"),"xfId", id);
 
                                     dijit.byId("xfMount").set("href", "/betterform/forms/incubator/editor/" + xfType + ".html");
-                                    dojo.publish("nodeSelected",[{xfType:xfType,id:id}]);
+                                    //console.debug("publish: nodeSelected: data", data);
+                                    dojo.publish("nodeSelected", [
+                                        {xfType:xfType,id:id,jsTreeData:data}
+                                    ]);
                                 })
                             // EVENTS
                             // each instance triggers its own events - to process those listen on the container
@@ -600,62 +699,73 @@
                         $("#xfDoc").jstree("select_node",elem,false,null);
                         $("#id").focus();
                     }
-
-                    dojo.subscribe("nodeSelected", function(args){
-                        console.log("I got: ", args);
-                        console.log("I got: ", args.xfType);
-                        var xfType = args.xfType;
-
-                        if(xfType =="document"){
-                            //jump back to root
-                            dijit.byId("xfMount").set("href", "/betterform/forms/incubator/editor/document.html");
-                            //hide addToolbars
-                            dojo.query("#actionlist li").forEach(
-                                function(item,index,array){
-                                    dojo.attr(item,"style","display:none;");
-                                }
-                            );
-                            dojo.query("#childList li").forEach(
-                                function(item,index,array){
-                                    dojo.attr(item,"style","display:none;");
-                                }
-                            );
-
-                            return;
-                        }
-
-                        dojo.query("#childList li").forEach(
-                              function(item, index, array){
-                                    var currentClass = dojo.attr(item,"class");
-                                    var cutted = currentClass.substring(0,currentClass.indexOf("-",4))
-
-                                    var childArray=eval(xfType+"Childs");
-                                    if(childArray == undefined){
-                                        return;
-                                    }
-                                    if(dojo.indexOf(childArray,cutted) != -1){
-                                        dojo.attr(item,"style","display:inline;");
-                                    }else{
-                                        dojo.attr(item,"style","display:none;");
-                                    }
-
-                                    //check if actions should be there by looking for 'action' element in the relevant array
-                                    var hasActions = dojo.indexOf(childArray,"action") != -1;
-                                    dojo.query("#actionlist li").forEach(
-                                        function(item,index,array){
-                                            if(hasActions){
-                                                dojo.attr(item,"style","display:inline;");
-                                            }else{
-                                                dojo.attr(item,"style","display:none;");
-                                            }
-                                        }
-                                    );
-
-                              }
-                         );
-                     });
                 </script>
+                <div id="bfEditorHelp" dojoType="dojox.layout.FloatingPane" title="betterFORM Editor Help" resizable="true" dockable="false" style="position:absolute;margin:10px;top:200px;left:200px;width:600px;height:350px;visibility:hidden;">
+<!--
+                    <div class="bfEditorHelpTitle">betterFORM Editor</div>
+-->
+                    <div>The editor is fully accessible via the keyboard</div>
+                    <div>
+                        <h3>Editor Shortcuts</h3>
+                        <dl class="keyboard-mapping">
+                          <dt class="shortcutDesc">?</dt>
+                          <dd>Open Help</dd>
+                        </dl>
+                        <dl class="keyboard-mapping">
+                          <dt class="shortcutDesc">ESC</dt>
+                          <dd>Close Help</dd>
+                        </dl>
+                        <dl class="keyboard-mapping">
+                          <dt class="shortcutDesc">t</dt>
+                          <dd>Focus the XForms tree</dd>
+                        </dl>
+                    </div>
 
+                    <div>
+                        <h3>Tree Shortcuts</h3>
+                        <div class="table">
+                            <div class="column1">
+                                <dl class="keyboard-mapping">
+                                  <dt class="shortcutDesc"><span class="shortcut">↑</span></dt>
+                                  <dd>Go to previous Node</dd>
+                                </dl>
+                                <dl class="keyboard-mapping">
+                                  <dt class="shortcutDesc"><span class="shortcut">↓</span></dt>
+                                  <dd>Go to next Node</dd>
+                                </dl>
+                                <dl class="keyboard-mapping">
+                                  <dt class="shortcutDesc"><span class="shortcut">SPACE</span></dt>
+                                  <dd>Select Node</dd>
+                                </dl>
+
+                                <dl class="keyboard-mapping">
+                                  <dt class="shortcutDesc"><span class="shortcut">←</span></dt>
+                                  <dd>Open Node</dd>
+                                </dl>
+                                <dl class="keyboard-mapping">
+                                  <dt class="shortcutDesc"><span class="shortcut">→</span></dt>
+                                  <dd>Close Node</dd>
+                                </dl>
+                            </div>
+                            <div class="column2">
+                                <dl class="keyboard-mapping">
+                                  <dt class="shortcutDesc"><span class="shortcut">DEL</span></dt>
+                                  <dd>Delete Node</dd>
+                                </dl>
+                                <dl class="keyboard-mapping">
+                                  <dt class="shortcutDesc">ALT <em>and</em> <span class="shortcut">↑</span></dt>
+                                  <dd>Move Node up</dd>
+                                </dl>
+                                <dl class="keyboard-mapping">
+                                  <dt class="shortcutDesc">ALT <em>and</em> <span class="shortcut">↓</span></dt>
+                                  <dd>Move Node down</dd>
+                                </dl>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </body>
         </html>
     </xsl:template>

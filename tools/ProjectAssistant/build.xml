@@ -84,7 +84,7 @@
         <echo message="Building betterForm extension"/>
         <echo message="************************************************************************************************************"/>
         <echo/>
-        <ant antfile="${bf.src}/eXist/build-eXist.xml" target="install-betterFORM" useNativeBasedir="true" inheritAll="false">
+        <ant antfile="${bf.src}/XRX/build-XRX.xml" target="install-betterFORM" useNativeBasedir="true" inheritAll="false">
             <property name="eXist.home" value="${xApp.target}"/>
         </ant>
 
@@ -134,24 +134,16 @@
     </target>
 
     <target name="start" description="start XRX Application">
-        <ant antfile="${bf.src}/eXist/build-utils-database.xml" target="start-eXist" inheritall="false" usenativebasedir="true">
+        <ant antfile="${bf.src}/XRX/build-utils-eXist.xml" target="start-eXist" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${xApp.target}"/>
         </ant>
     </target>
 
     <target name="stop" description="stop XRX Application" >
-        <ant antfile="${bf.src}/eXist/build-utils-database.xml" target="stop-eXist" inheritall="false" usenativebasedir="true">
+        <ant antfile="${bf.src}/XRX/build-eXist-database.xml" target="stop-eXist" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${xApp.target}"/>
         </ant>
     </target>
-
-    <target name="deploy-dojo-dev">
-        <ant antfile="${bf.src}/eXist/build-utils.xml" target="deploy-dojo-dev" inheritall="false" usenativebasedir="true">
-              <property name="target.dir" value="${xApp.target}/webapp"/>
-        </ant>
-    </target>
-
-
 
     <!-- **************************************** HELPER TARGETS **************************************** -->
     <!-- **************************************** HELPER TARGETS **************************************** -->
@@ -209,7 +201,7 @@
     </target>
 
     <target name="_deploy-to-db" description="deploy xrx-application to database" if="xrx.installed">
-        <ant antfile="${bf.src}/eXist/build-utils-database.xml" target="install-files-into-eXist-DB">
+        <ant antfile="${bf.src}/XRX/build-utils-eXist.xml" target="install-files-into-eXist-DB">
            <property name="eXist.home" value="${xApp.target}"/>
            <property name="db-user" value="${db.user}"/>
            <property name="db-passwd" value="${db.pwd}"/>

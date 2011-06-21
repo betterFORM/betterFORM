@@ -32,3 +32,6 @@ tools/editor/target/*
 web/target/*
 xApp/target/*
 zaphod/target/*
+
+## files to ignore
+*/betterform-install-*

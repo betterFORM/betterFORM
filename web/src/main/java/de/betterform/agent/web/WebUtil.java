@@ -258,7 +258,6 @@ public class WebUtil {
         processor.setContextParam(WebProcessor.REQUEST_URL, request.getRequestURL().toString());
         String s1=request.getContextPath()+request.getPathInfo();
         processor.setContextParam("contextPath",request.getContextPath()+request.getPathInfo());
-        processor.setContextParam(WebProcessor.PATH_INFO, request.getPathInfo().toString());
         processor.setContextParam(WebProcessor.QUERY_STRING, (request.getQueryString() != null ? request.getQueryString() : ""));
         processor.setContextParam(WebProcessor.CONTEXTROOT, WebUtil.getContextRoot(request));
 

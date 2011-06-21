@@ -28,7 +28,7 @@
 
         <!-- Allows us to use the IzPack Ant task -->
         <taskdef name="izpack"
-                 classpath="${basedir}/lib/standalone-compiler-4.3.3.jar"
+                 classpath="${basedir}/lib/standalone-compiler-4.3.4.jar"
                  classname="com.izforge.izpack.ant.IzPackTask"/>
 
         <!-- We call IzPack -->

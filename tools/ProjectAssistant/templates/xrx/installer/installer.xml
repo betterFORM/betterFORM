@@ -22,7 +22,7 @@
 
     <conditions>
         <condition id="betterform-XRX" type="packselection">
-            <packid>betterFORM-eXist-bundle</packid>
+            <packid>betterFORM-XRX-bundle</packid>
         </condition>
     </conditions>
 
@@ -106,7 +106,7 @@
     -->
 
     <packs>
-        <pack name="betterFORM XRX" id="betterFORM-eXist-bundle" required="no" preselected="yes">
+        <pack name="betterFORM XRX" id="betterFORM-XRX-bundle" required="no" preselected="yes">
             <description>betterFORM and eXist bundled</description>
 
             <fileset targetdir="$INSTALL_PATH" dir="installer"/>
