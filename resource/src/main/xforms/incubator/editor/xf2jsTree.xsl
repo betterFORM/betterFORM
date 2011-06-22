@@ -377,34 +377,52 @@
                 </style>
             </head>
             <body>
+
                 <div style="display:none">
                     <xf:model id="model-1">
-                        <xf:instance id="i-default">
-                            <data xmlns="">
-                            </data>
-                        </xf:instance>
+                        <!--todo: we need to use the baseURI of the editor here instead of the one we load -->
+                        <xf:instance id="i-default" xmlns="" src="{{$contextroot}}/forms/incubator/editor/cdata-instance.xml"/>
+
                         <xf:submission id="s-dom2xforms"
                                        method="get"
                                        resource="xslt:/betterform/forms/incubator/editor/dom2xf.xsl?parseString=true"
-                                       replace="instance">
+                                       replace="instance"
+                                >
                             <xf:action ev:event="xforms-submit-done">
-                                <xf:message>Data transformed to xforms</xf:message>
+                                <!--<xf:message level="ephemeral">Data transformed to xforms</xf:message>-->
                                 <xf:send submission="s-replaceContent"/>
                             </xf:action>
                             <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
                        </xf:submission>
+
                         <xf:submission id="s-replaceContent"
                                        method="get"
-                                       action="xslt:/betterform/forms/incubator/editor/updateOriginal.xsl?originDoc={{$contextPath}}"
+                                       action="xslt:/betterform/forms/incubator/editor/updateOriginal.xsl?originDoc={{$webapp.realpath}}/{{$pathInfo}}"
                                        replace="instance">
                             <xf:action ev:event="xforms-submit-done">
-                                <xf:message>Data stored</xf:message>
+                                <!--<xf:message level="ephemeral">Data mounted back to original document</xf:message>-->
+                                <xf:send submission="s-save"/>;
                             </xf:action>
                             <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
                        </xf:submission>
+
+                        <xf:submission id="s-save"
+                                       ref="instance()/*[1]"
+                                       method="put"
+                                       action="{{$webapp.realpath}}//{{$pathInfo}}"
+                                       replace="none">
+                            <xf:action ev:event="xforms-submit-done">
+                                <xf:setvalue ref="instance('i-controller')/save-msg"
+                                             value="concat('Data stored to ',bf:appContext('webapp.realpath'),bf:appContext('pathInfo'))"/>
+                                <xf:message level="ephemeral" ref="instance('i-controller')/save-msg"/>
+                            </xf:action>
+                            <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
+                       </xf:submission>
+
                        <xf:instance id="i-controller">
                            <data xmlns="">
                                <originalDoc/>
+                               <save-msg></save-msg>
                            </data>
                        </xf:instance>
                     </xf:model>

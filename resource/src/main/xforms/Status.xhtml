@@ -86,37 +86,58 @@
             <!--<xf:group appearance="bf:verticalTable" id="environment">-->
                 <!--<xf:label>Environment Parameters</xf:label>-->
                 <div class="xfGroupLabel">Environment Parameters</div>
-                <xf:output value="bf:appContext('requestURI')">
-                    <xf:hint>bf:appContext('requestURI')</xf:hint>
-                    <xf:label>Request-URI</xf:label>
-                </xf:output>
-                <xf:output value="bf:appContext('requestURL')">
-                    <xf:hint>bf:appContext('requestURL')</xf:hint>
-                    <xf:label>Request-URL</xf:label>
-                </xf:output>
-                <xf:output value="bf:appContext('pathInfo')">
-                    <xf:hint>bf:appContext('pathInfo')</xf:hint>
-                    <xf:label>Path Info</xf:label>
-                </xf:output>
                 <xf:output value="bf:appContext('webapp.realpath')">
                     <xf:label>Webapp Realpath</xf:label>
                     <xf:hint>bf:appContext('webapp.realpath')</xf:hint>
                 </xf:output>
-                <xf:output value="bf:appContext('contextroot')">
-                    <xf:label>Contextroot</xf:label>
-                    <xf:hint>bf:appContext('contextroot')</xf:hint>
+                <xf:output value="bf:config('initLogging')">
+                    <xf:label>initLogging</xf:label>
+                    <xf:hint>bf:config('initLogging')</xf:hint>
+                </xf:output>
+
+
+                <div class="xfGroupLabel">Request Parameters</div>
+                <xf:output value="bf:appContext('requestURI')">
+                    <xf:hint>bf:appContext('requestURI')</xf:hint>
+                    <xf:label>Request-URI</xf:label>
                 </xf:output>
                 <xf:output value="bf:appContext('betterform.baseURI')">
                     <xf:label>baseURI</xf:label>
                     <xf:hint>bf:appContext('betterform.baseURI')</xf:hint>
                 </xf:output>
+
+                <xf:output value="bf:appContext('requestURL')">
+                    <xf:hint>bf:appContext('requestURL')</xf:hint>
+                    <xf:label>Request-URL</xf:label>
+                </xf:output>
+                <xf:output value="bf:appContext('contextPath')">
+                    <xf:hint>bf:appContext('contextPath')</xf:hint>
+                    <xf:label>Context Path</xf:label>
+                </xf:output>
+                <xf:output value="bf:appContext('contextroot')">
+                    <xf:label>Contextroot</xf:label>
+                    <xf:hint>bf:appContext('contextroot')</xf:hint>
+                </xf:output>
+
+                <xf:output value="bf:appContext('plainPath')">
+                    <xf:hint>bf:appContext('plainPath')</xf:hint>
+                    <xf:label>Plain Path</xf:label>
+                </xf:output>
+                <xf:output value="bf:appContext('fileName')">
+                    <xf:hint>bf:appContext('fileName')</xf:hint>
+                    <xf:label>File name</xf:label>
+                </xf:output>
+                <xf:output value="bf:appContext('pathInfo')">
+                    <xf:hint>bf:appContext('pathInfo')</xf:hint>
+                    <xf:label>Path Info</xf:label>
+                </xf:output>
+                <xf:output value="bf:appContext('queryString')">
+                    <xf:label>Query string</xf:label>
+                    <xf:hint>bf:appContext('queryString')</xf:hint>
+                </xf:output>
                 <xf:output value="bf:appContext('betterform.locale', 'uk')">
                     <xf:label>Locale</xf:label>
                     <xf:hint>bf:appContext('betterform.locale')</xf:hint>
-                </xf:output>
-                <xf:output value="bf:config('initLogging')">
-                    <xf:label>initLogging</xf:label>
-                    <xf:hint>bf:config('initLogging')</xf:hint>
                 </xf:output>
             <!--</xf:group>-->
 

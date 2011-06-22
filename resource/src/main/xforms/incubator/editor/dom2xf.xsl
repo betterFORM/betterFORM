@@ -11,7 +11,6 @@
 
     <xsl:template match="/*">
         <div id="xforms">
-            <!-- <xsl:for-each select="//*[namespace-uri()='http://www.w3.org/2002/xforms']"> -->
             <xsl:apply-templates />
         </div>
     </xsl:template>
@@ -38,7 +37,9 @@
         </xsl:element>
     </xsl:template>
 
-    <xsl:template match="*[@data-xf-type='document']" priority="30"/>
+    <xsl:template match="*[@data-xf-type='document']" priority="30">
+        <xsl:apply-templates />
+    </xsl:template>
 
     <xsl:template match="*">
         <xsl:apply-templates/>

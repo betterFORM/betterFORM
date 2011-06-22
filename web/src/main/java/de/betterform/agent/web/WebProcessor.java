@@ -57,6 +57,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
     /**
      * Defines the key for accessing (HTTP) session ids.
      */
+    // todo: harmonize keys should be: REQUEST_URI="REQUEST_URI"; to have the same name when accessing from form with {$REQUEST_URI}
     public static final String REQUEST_URI = "requestURI";
     public static final String REQUEST_URL = "requestURL";
     public static final String PATH_INFO = "pathInfo";
@@ -70,6 +71,8 @@ public class WebProcessor extends AbstractProcessorDecorator {
     public static final String REFERER = "betterform.referer";
     public static final String FORWARD_URL = "betterform.base.url";
     public static final String ADAPTER_PREFIX = "A";
+    public static final String REQUEST_PATH = "requestpath";
+
 
     /**
      * constant for relative location of resources (relative to web context).
