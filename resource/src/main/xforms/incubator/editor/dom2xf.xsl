@@ -20,11 +20,12 @@
         <xsl:variable name="attrs" select="substring(@data-xf-attrs,2,string-length(@data-xf-attrs) - 2)"/>
         <xsl:message>attrs: <xsl:value-of select="$attrs"/></xsl:message>
         <xsl:element name="{concat('xf:',@data-xf-type)}" namespace="http://www.w3.org/2002/xforms">
-            <!--<xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>-->
+            <xsl:if test="exists(@oid)">
+                <xsl:attribute name="oid"><xsl:value-of select="@oid"/></xsl:attribute>
+            </xsl:if>
             <xsl:if test="string-length($attrs) != 0">
                 <xsl:for-each select="tokenize($attrs,',')">
                     <xsl:variable name="thisAttr"><xsl:value-of select="."/></xsl:variable>
-                    <xsl:message>attr: <xsl:value-of select="$thisAttr"/> </xsl:message>
 
                     <xsl:variable name="quotedValue" select="substring-after($thisAttr,':')"/>
                     <xsl:variable name="unquoted">
@@ -33,9 +34,13 @@
                     <xsl:attribute name="{substring-before($thisAttr,':')}"><xsl:value-of select="$unquoted"/></xsl:attribute>
                 </xsl:for-each>
             </xsl:if>
+            <xsl:if test="*/*[@class='textNode']">
+                <xsl:copy-of select="*/*[@class='textNode']/* | */*[@class='textNode']/text()"/>
+            </xsl:if>
             <xsl:apply-templates  />
         </xsl:element>
     </xsl:template>
+
 
     <xsl:template match="*[@data-xf-type='document']" priority="30">
         <xsl:apply-templates />

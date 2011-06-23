@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0"
                 xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:html="http://www.w3.org/1999/xhtml"
                 xmlns:xf="http://www.w3.org/2002/xforms"
                 xmlns:ev="http://www.w3.org/2001/xml-events"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                exclude-result-prefixes="html"
         xml:base="/betterform/forms/incubator/editor/">
 
     <xsl:output method="xml" indent="yes"/>
@@ -374,6 +376,7 @@
                     .dojoxFloatingPaneCanvas {
                         margin:10px;
                     }
+                    .textNode{display:inline;}
                 </style>
             </head>
             <body>
@@ -823,10 +826,18 @@
             ####################################################################################################
             -->
             <xsl:if test="count(ancestor::xf:*) = number(0)">
-                <xsl:attribute name="xpath"><xsl:value-of select="$this/@id"/></xsl:attribute>
+                <xsl:attribute name="oid"><xsl:value-of select="$this/@id"/></xsl:attribute>
             </xsl:if>
 
-            <a href="#"><xsl:value-of select="local-name()"/>:<xsl:value-of select="@id"/><button class="deleteBtn" name="deleteItem" onclick="alert('deleting');">x</button></a>
+            <a href="#">
+                <xsl:value-of select="local-name()"/>:
+                <xsl:if test="text()">
+                    <span class="textNode">
+                        <xsl:apply-templates select="*|text()"/>
+                    </span>
+                </xsl:if>
+                <xsl:value-of select="@id"/>
+                <button class="deleteBtn" name="deleteItem" onclick="alert('deleting');">x</button></a>
 
             <xsl:if test="count(xf:*) != 0">
                 <ul>
@@ -838,5 +849,12 @@
         </li>
      </xsl:template>
 
-    <xsl:template match="xf:*/text()"/>
+    <xsl:template match="*|text()">
+        <xsl:copy>
+            <xsl:copy-of select="@*"/>
+            <xsl:apply-templates/>
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- <xsl:template match="xf:*/text()"/> -->
 </xsl:stylesheet>
