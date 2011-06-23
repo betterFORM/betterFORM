@@ -281,6 +281,13 @@
            <param name="file-source" value="${resource.dir}/src/main/xforms/Status.xhtml"/>
            <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}"/>
         </antcall>
+
+         <antcall target="db.install-file-into-eXist-DB">
+           <param name="db-user" value="${db.user}"/>
+           <param name="db-passwd" value="${db.pwd}"/>
+           <param name="file-source" value="${resource.dir}/src/main/xforms/TimeTracker.xhtml"/>
+           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}"/>
+        </antcall>
     </target>
 
     <target name="install-demo-forms" description="install demo Forms into db" depends="exist-installed" if="betterFORM.base.installed">

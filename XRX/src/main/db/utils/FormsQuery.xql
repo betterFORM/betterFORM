@@ -306,7 +306,7 @@ declare function local:handleUp($uri as xs:string, $contextPath as xs:string, $p
 declare function local:getHTMLFilesListing($uri as xs:string, $contextPath as xs:string, $path as xs:string, $ajaxFunction as xs:string) {
 	let $altTextCreateCollection := 'Create a new collection'
 	let $altTextFormUpload := 'Upload your form into this collection'	
-	(: Check for up :)
+	(: {local:generateLoginMarkup($uri, $contextPath, $path)} :)
 	return
 	<div class="bfFormBrowser" style="width:800px">
 		<div class="formBrowserHead">
@@ -317,7 +317,6 @@ declare function local:getHTMLFilesListing($uri as xs:string, $contextPath as xs
                   {local:generateExistAdminClientMarkup($uri, $contextPath, $path)}
                   {local:generateCollectionMarkup($uri, $contextPath, $path, $altTextCreateCollection)}
 			      {local:generateUploadMarkup($uri, $contextPath, $path, $altTextFormUpload)}
-			      {local:generateLoginMarkup($uri, $contextPath, $path)}
   			</div>
 		</div>
 			
