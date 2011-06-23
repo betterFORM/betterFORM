@@ -61,6 +61,7 @@
             <div id="xforms" class="InlineAlert">
                 <!-- the xforms model here -->
                 <xsl:apply-templates select="div[@class='sample']/div[@class='markup']/xf:model"/>
+                <xsl:apply-templates select="div[@class='sample']/div[@class='markup']/code/xf:model"/>
                 <!--
                                 <div style="display:none">
                                     <xsl:apply-templates select="div[@class='sample']/div[@class='markup']/xf:model" mode="xforms"/>
@@ -176,6 +177,12 @@
 
 
     <xsl:template match="div[@class='sample']/div[@class='markup']/xf:model">
+        <div style="display:none">
+            <xsl:apply-templates select="." mode="xforms"/>
+        </div>
+    </xsl:template>
+
+    <xsl:template match="div[@class='sample']/div[@class='markup']/code/xf:model">
         <div style="display:none">
             <xsl:apply-templates select="." mode="xforms"/>
         </div>

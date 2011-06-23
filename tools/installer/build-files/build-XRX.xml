@@ -118,6 +118,19 @@
             <property name="db-passwd" value="Tha0xeiC8a"/>
         </ant>
 
+        <ant antfile="${xrx.dir}/build-utils-eXist.xml" target="start-eXist">
+            <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
+        </ant>
+
+         <ant antfile="${xrx.dir}/build-XRX.xml" target="install-demo-xrx" inheritall="false" usenativebasedir="true">
+            <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
+            <property name="db-user" value="betterFORM"/>
+            <property name="db-passwd" value="Tha0xeiC8a"/>
+        </ant>
+
+        <ant antfile="${xrx.dir}/build-utils-eXist.xml" target="stop-eXist">
+            <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
+        </ant>
         <!-- Copy template-files which will be modified by the Installer-->
 
 

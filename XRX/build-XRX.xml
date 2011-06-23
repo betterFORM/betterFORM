@@ -34,11 +34,11 @@
     <property name="core.dir" value="${betterFORM.src}/core"/>
     <property name="web.dir" value="${betterFORM.src}/web"/>
     <property name="resource.dir" value="${betterFORM.src}/resource"/>
-    <property name="eXist.dir" value="${betterFORM.src}/eXist"/>
+    <property name="XRX.dir" value="${betterFORM.src}/XRX"/>
 
     <!-- eXist-module sub-dirs -->
-    <property name="main.dir" value="${eXist.dir}/src/main"/>
-    <property name="etc.dir" value="${eXist.dir}/src/main/etc"/>
+    <property name="main.dir" value="${XRX.dir}/src/main"/>
+    <property name="etc.dir" value="${XRX.dir}/src/main/etc"/>
     <property name="overwrites.dir" value="${etc.dir}/overwrites/eXist-1.4"/>
 
     <!-- betterFORM installation directories -->
@@ -53,7 +53,7 @@
     </path>
 
     <!-- Include helper buildfiles -->
-    <include file="build-utils-database.xml" as="db"/>
+    <include file="build-utils-eXist.xml" as="db"/>
 
     <include file="${root.dir}/build-util.xml" as="ant"/>
 
@@ -279,6 +279,13 @@
            <param name="db-user" value="${db.user}"/>
            <param name="db-passwd" value="${db.pwd}"/>
            <param name="file-source" value="${resource.dir}/src/main/xforms/Status.xhtml"/>
+           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}"/>
+        </antcall>
+
+         <antcall target="db.install-file-into-eXist-DB">
+           <param name="db-user" value="${db.user}"/>
+           <param name="db-passwd" value="${db.pwd}"/>
+           <param name="file-source" value="${resource.dir}/src/main/xforms/TimeTracker.xhtml"/>
            <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}"/>
         </antcall>
     </target>

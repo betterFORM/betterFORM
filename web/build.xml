@@ -298,7 +298,7 @@
 
         <copy todir="${webapp.dir}/${forms.target}"
               overwrite="true">
-            <fileset dir="${resource.module.dir}/src/main/xforms"/>
+            <fileset dir="${resource.module.dir}/src/main/xforms" excludes="**/TimeTracker.xhtml"/>
         </copy>
     </target>
 

@@ -755,13 +755,15 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
             var cssToLoad = xmlEvent.contextInfo.inlineCSS;
 //            console.debug("css to load: ", cssToLoad);
             var headID = document.getElementsByTagName("head")[0];
+            var mountpoint = dojo.byId(xlinkTarget);
+
             if(cssToLoad != undefined && cssToLoad != ""){
-                var newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","style");
-                dojo.attr(newScript,"name",xlinkTarget);
-                dojo.attr(newScript,"type","text/css");
-                newScript.appendChild(dojo.doc.createTextNode(cssToLoad));
-                headID.appendChild(newScript);
-                console.debug("new Style: ", newScript);
+                var newStyle = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","style");
+                dojo.attr(newStyle,"name",xlinkTarget);
+                dojo.attr(newStyle,"type","text/css");
+                newStyle.appendChild(dojo.doc.createTextNode(cssToLoad));
+                headID.appendChild(newStyle);
+                console.debug("new Style: ", newStyle);
             }
 
             var externalCssToLoad = xmlEvent.contextInfo.externalCSS;
@@ -770,13 +772,14 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
 
                 for (var i = 0; i <= styles.length; i = i+1) {
                     if (styles[i] != undefined && styles[i] != "") {
-                        var newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","link");
-                        dojo.attr(newScript,"href",styles[i]);
-                        dojo.attr(newScript,"type","text/css");
-                        dojo.attr(newScript,"rel","stylesheet");
-                        newScript.appendChild(dojo.doc.createTextNode(''));
-                        headID.appendChild(newScript);
-                        console.debug("new Style: ", newScript);
+                        var newStyle = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","link");
+                        dojo.attr(newStyle,"name",xlinkTarget);
+                        dojo.attr(newStyle,"href",styles[i]);
+                        dojo.attr(newStyle,"type","text/css");
+                        dojo.attr(newStyle,"rel","stylesheet");
+                        newStyle.appendChild(dojo.doc.createTextNode(''));
+                        headID.appendChild(newStyle);
+                        console.debug("new Style: ", newStyle);
                     }
                 }
             }
@@ -790,7 +793,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
                 dojo.attr(newScript,"name",xlinkTarget);
                 dojo.attr(newScript,"type","text/javascript");
                 newScript.appendChild(dojo.doc.createTextNode(inlineJavaScriptToLoad));
-                headID.appendChild(newScript);
+                mountpoint.appendChild(newScript);
                 console.debug("new Script: ", newScript);
             }
 
@@ -802,10 +805,11 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
                 for (var i = 0; i <= scripts.length; i = i+1) {
                     if (scripts[i] != undefined && scripts[i] != "") {
                         var newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","script");
+                        dojo.attr(newScript,"name",xlinkTarget);
                         dojo.attr(newScript,"src",scripts[i]);
                         dojo.attr(newScript,"type","text/javascript");
                         newScript.appendChild(dojo.doc.createTextNode(''));
-                        headID.appendChild(newScript);
+                        mountpoint.appendChild(newScript);
                         console.debug("new Script: ", newScript);
                     }
                 }
@@ -868,17 +872,56 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
 
     _unloadDOM:function(target) {
         //delete CSS specific to subform
-        var styleList = document.getElementsByTagName("style");
-        dojo.forEach(styleList, function(item) {
-            if(dojo.attr(item,"name") == target){
-                item.parentNode.removeChild(item);
-            }
-        });
-
         var htmlEntryPoint = dojo.byId(target);
         if (htmlEntryPoint == undefined) {
             return;
         }
+
+        var styleList = document.getElementsByTagName("style");
+        console.debug("styleList" , styleList);
+        if (styleList != undefined) {
+        dojo.forEach(styleList, function(item) {
+                //console.debug("style: ", item);
+                if (item != undefined) {
+            if(dojo.attr(item,"name") == target){
+                        console.debug("removing style: ", item);
+                        console.debug("parentNode: ", item.parentNode);
+                item.parentNode.removeChild(item);
+            }
+                }
+        });
+        }
+
+        var externalStyleList = document.getElementsByTagName("link");
+        console.debug("styleList" , externalStyleList);
+        if (externalStyleList != undefined) {
+        dojo.forEach(externalStyleList, function(item) {
+                //console.debug("style: ", item);
+                if (item != undefined) {
+            if(dojo.attr(item,"name") == target){
+                        console.debug("removing style: ", item);
+                        console.debug("parentNode: ", item.parentNode);
+                item.parentNode.removeChild(item);
+            }
+                }
+        });
+        }
+
+        var scriptList = document.getElementsByTagName("script");
+        console.debug("scriptList" , scriptList);
+        if (scriptList != undefined) {
+            dojo.forEach(scriptList, function(item) {
+                console.debug("script: ", item);
+                if (item != undefined) {
+                    if(dojo.attr(item,"name") == target){
+                        console.debug("removing script: ", item);
+                        console.debug("parentNode: ", item.parentNode);
+                        item.parentNode.removeChild(item);
+                    }
+                }
+            });
+        }
+
         var widgetID = "widgetid";
         if (dojo.isIE) {
             widgetID = "widgetId"
