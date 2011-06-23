@@ -1,5 +1,6 @@
 <xsl:stylesheet version="2.0"
                 xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:html="http://www.w3.org/1999/xhtml"
                 xmlns:xf="http://www.w3.org/2002/xforms"
                 xmlns:ev="http://www.w3.org/2001/xml-events"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
@@ -10,7 +11,9 @@
 
     <xsl:template match="/">
         <div>
-            <div class="propertyTitle">Attributes</div>
+            <xsl:variable name="title"><xsl:value-of select="concat('Property Sheet ',//html:title)"/></xsl:variable>
+            <xsl:message><xsl:value-of select="$title"/></xsl:message>
+            <div class="propertyTitle"><xsl:value-of select="$title"/></div>
             <form method="post" action="#" enctype="application/x-www-form-urlencoded">
             <xsl:for-each select="//xf:bind">
                 <xsl:variable name="attrName">

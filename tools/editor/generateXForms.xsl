@@ -14,12 +14,14 @@
     <xsl:variable name="inputDoc" select="/"/>
     <xsl:template match="/xsd:schema">
         <div>
-            <xsl:for-each select="xsd:element[@name]">
+            <xsl:variable name="unique-list" select="//xsd:element[@name][not(@name = preceding::xsd:element/@name)]" />
+            <xsl:for-each select="$unique-list">
                 <xsl:variable name="current" select="."/>
-                <xsl:result-document href="./target/xforms/{@name}.xhtml" format="xhtml" >
-                    <html xmlns:xf="http://www.w3.org/2002/xforms">
-                        <head>
-                            <title></title>
+                    <!--<xsl:message>create document <xsl:value-of select="@name"/></xsl:message>-->
+                    <xsl:result-document href="./target/xforms/{@name}.xhtml" format="xhtml" >
+                        <html xmlns:xf="http://www.w3.org/2002/xforms">
+                            <head>
+                                <title><xsl:value-of select="@name"/></title>
                         </head>
                         <body>
                             <div id="xforms">
@@ -200,7 +202,7 @@
         <!--<xsl:message><xsl:value-of select="$eventXSD//xsd:attribute[@name = substring-after(@ref,'ev:')]/@name"/></xsl:message>-->
         <!--<xsl:message><xsl:value-of select="substring-after(@ref,'ev:')"/></xsl:message>-->
         <xsl:variable name="targetAttribute" select="$eventXSD//xsd:attribute[@name = substring-after(@ref,'ev:')]"/>
-        <xsl:message><xsl:value-of select="$targetAttribute"/></xsl:message>
+        <xsl:message>targetAttribute: <xsl:value-of select="$targetAttribute"/></xsl:message>
 
         <!--<xsl:apply-templates select="$eventXSD/xs:schema/xs:attribute[@name = substring-after(@ref,'ev:')]" mode="event-ui"/>-->
         <xf:input ref="@{@ref}">

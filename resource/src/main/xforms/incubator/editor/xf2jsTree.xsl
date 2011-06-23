@@ -39,13 +39,17 @@
                     console.debug("attrEditor.: ",attrEditor);
 
                     function checkKeyboardInput(pEvent){
+                            var activeElem = document.activeElement.localName;
+                            if(activeElem=="input") {
+                                return;
+                            }
+                            console.debug("activeElem: ",activeElem);
                            switch(pEvent.charOrCode){
                              case '?': //Process the Help key event
                                 dijit.byId("bfEditorHelp").show();
                                 break;
                            case 't':
-                           case 'T': //Process the Help key event
-                              console.debug("T pressed");
+                           case 'T':
                               dojo.byId("root").focus();
                               break;
 
