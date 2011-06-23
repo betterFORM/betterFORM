@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Showcase for a XForms load element with load="new"</title>
+    </head>
+    <body>
+        <div class="description">
+            <p>
+                 This page demonstrates the use of a XForms load element with load <span class="keyword">new</span>.<br/>
+            </p>
+            <p>
+
+            </p>
+        </div>
+        <div class="sample">
+            <div class="markup">
+                <xf:model>
+                    <xf:instance xmlns="">
+                        <data/>
+                    </xf:instance>
+                </xf:model>
+
+<code class="ui">
+<xf:trigger>
+    <xf:label>Load this Page in a new window</xf:label>
+    <xf:action>
+        <xf:load resource="LoadNew.xhtml" show="new"/>
+    </xf:action>
+</xf:trigger>
+</code>
+
+
+
+            </div>
+        </div>
+    </body>
+</html>

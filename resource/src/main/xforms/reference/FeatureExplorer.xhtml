@@ -408,6 +408,38 @@
 			</xf:load>
 		</xf:trigger>
 
+        <!-- ############### submission trigger ################# -->
+		<!-- ############### submission trigger ################# -->
+		<!-- ############### submission trigger ################# -->
+        <xf:trigger id="ModelToModelTrigger">
+            <xf:label/>
+            <xf:load show="embed" targetid="xforms">
+                <xf:resource value="'ModelToModelSubmission.xhtml#xforms'"/>
+            </xf:load>
+       </xf:trigger>
+
+
+        <xf:trigger id="LoadNewTrigger">
+			<xf:label/>
+			<xf:load show="embed" targetid="xforms">
+				<xf:resource value="'LoadNew.xhtml#xforms'"/>
+			</xf:load>
+		</xf:trigger>
+
+        <xf:trigger id="EmbedHTMLTrigger">
+                <xf:label/>
+                <xf:load show="embed" targetid="xforms">
+                    <xf:resource value="'EmbedHTML.xhtml#xforms'"/>
+                </xf:load>
+        </xf:trigger>
+
+        <xf:trigger id="LoadEmbedTrigger">
+			<xf:label/>
+			<xf:load show="embed" targetid="xforms">
+				<xf:resource value="'LoadEmbed.xhtml#xforms'"/>
+			</xf:load>
+		</xf:trigger>
+
 		<!-- ############### extensions trigger ################# -->
 		<!-- ############### extensions trigger ################# -->
 		<!-- ############### extensions trigger ################# -->
@@ -423,6 +455,8 @@
 			<xf:label/>
 			<xf:load show="new" resource="Dialog.xhtml"/>
 		</xf:trigger>
+
+
 
     </div>
 
@@ -618,6 +652,26 @@
 				</div>
 			</div>
 		</div>
+        <div dojoType="dijit.PopupMenuBarItem" label="Submission/Load-Action">
+            <div dojoType="dijit.Menu" id="submission">
+                <div dojotype="dijit.PopupMenuItem" label="submission">
+                    <div dojotype="dijit.Menu">
+                        <div dojoType="dijit.MenuItem" onClick="hideStatic();fluxProcessor.dispatchEvent('ModelToModelTrigger');" label="Model to Model submission"/>
+                    </div>
+                </div>
+                <div dojotype="dijit.PopupMenuItem" label="load">
+                    <div dojotype="dijit.Menu">
+                        <div dojoType="dijit.MenuItem" onClick="hideStatic();fluxProcessor.dispatchEvent('LoadNewTrigger');" label="Load new"/>
+                        <div dojotype="dijit.PopupMenuItem" label="extensions">
+                             <div dojotype="dijit.Menu">
+                                <div dojoType="dijit.MenuItem" onClick="hideStatic();fluxProcessor.dispatchEvent('LoadEmbedTrigger');" label="Load embed"/>
+                                <div dojoType="dijit.MenuItem" onClick="hideStatic();fluxProcessor.dispatchEvent('EmbedHTMLTrigger');" label="Embed HTML"/>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 		<div dojoType="dijit.PopupMenuBarItem" label="Extensions">
 			<div dojoType="dijit.Menu" id="extensions">
                 <div dojoType="dijit.MenuItem" label="Popups must be allowed for external links"/>
@@ -625,6 +679,8 @@
 					 onClick="hideStatic();fluxProcessor.dispatchEvent('AVTThemeSwitcherTrigger');" label="AVT Theme Switcher"/>
 				<div dojoType="dijit.MenuItem" iconClass="externalLink"
 					 onClick="hideStatic();fluxProcessor.dispatchEvent('DialogTrigger');" label="Dialog"/>
+                <div dojoType="dijit.MenuItem"
+					 onClick="hideStatic();fluxProcessor.dispatchEvent('LoadEmbedTrigger');" label="Load embed"/>
 			</div>
 		</div>
 		<div dojoType="dijit.PopupMenuBarItem" label="Documentation">
@@ -667,6 +723,7 @@
     </div>
 
 <!--
+
     <div id="cssWindow"
         dojoType="dojox.layout.FloatingPane"
         title="CSS"
