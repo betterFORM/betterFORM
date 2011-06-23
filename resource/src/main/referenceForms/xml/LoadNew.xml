@@ -2,7 +2,7 @@
 <html xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>Showcase for a XForms load element with load="new"</title>
+        <title>Load element with load="new"</title>
     </head>
     <body>
         <div class="description">

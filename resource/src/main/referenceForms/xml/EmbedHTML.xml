@@ -2,7 +2,7 @@
 <html xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>Showcase for a XForms submission element with replace="embedHTML"</title>
+        <title>Submission element with replace="embedHTML"</title>
     </head>
     <body>
         <div class="description">

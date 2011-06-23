@@ -3,7 +3,7 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ev="http://www.w3.org/2001/xml-events">
     <head>
-        <title>Showcase for a XForms load element with load="embed"</title>
+        <title>Model-to-Model Submission</title>
     </head>
     <body>
         <div class="description">
