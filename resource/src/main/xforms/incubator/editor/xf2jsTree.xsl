@@ -21,7 +21,6 @@
                 <script type="text/javascript" src="/betterform/bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.hotkeys.js"></script>
                 <script type="text/javascript" src="/betterform/bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
                 <script type="text/javascript" src="/betterform/bfResources/scripts/betterform/xfEditorUtil.js"></script>
-                <script type="text/javascript" src="/betterform/bfResources/scripts/betterform/bfEditor.js"></script>
                 <script type="text/javascript">
                     dojo.require("dijit.layout.ContentPane");
                     dojo.require("dijit.MenuBar");

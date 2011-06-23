@@ -62,6 +62,21 @@
          <li>
             <div class="attrEditor">
                <h4>
+                  <label for="mixedContent">mixedContent</label>
+               </h4>
+               <p>hint text here</p>
+               <input dojoType="dijit.form.TextBox" id="mixedContent" name="mixedContent" type="text"
+                      value=""
+                      placeholder=""
+                      class="xfmixedContent dojoInput"
+                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'mixedContent')"/>
+            </div>
+         </li>
+      </ul>
+      <ul style="list-style-type:none;">
+         <li>
+            <div class="attrEditor">
+               <h4>
                   <label for="xml-event">xml-event</label>
                </h4>
                <p>hint text here</p>
