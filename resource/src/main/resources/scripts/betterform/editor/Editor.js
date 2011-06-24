@@ -69,39 +69,66 @@ dojo.declare("betterform.Editor", null,
          });
     },
 
-    editProperty:function(xfAttrObj, attributeName) {
-        var xfAttrValue = xfAttrObj[attributeName];
-
-        if (!xfAttrValue)xfAttrValue = "";
-        console.log("Editor.editPropertyNode: '", attributeName, "' -  xfAttrValue: '", xfAttrValue, "'");
-        currentDijit = dijit.byId("widget_" + attributeName);
-        if (currentDijit != undefined) {
-            currentDijit.set("value",xfAttrValue);
-        }else {
-            var attrNode = dojo.byId(attributeName);
-            dojo.attr(attrNode, "value", xfAttrValue);
-        }
-    },
 
     editProperties : function(targetId) {
         console.log("attrEditor.editProperties: id of property sheet: ", targetId);
-        var dataXfAttrs = dojo.attr(dojo.byId(targetId), "data-xf-attrs");
-        var dataXfType = dojo.attr(dojo.byId(targetId), "data-xf-type");
+        var  currentNode =  dojo.byId(targetId);
+        var dataXfAttrs = dojo.attr(currentNode, "data-xf-attrs");
+        var dataXfType = dojo.attr(currentNode, "data-xf-type");
 
-        console.log("dataXfAttrs: ", dataXfAttrs, " dataXfType", dataXfType);
+        // console.log("editProperties: dataXfAttrs: ", dataXfAttrs, " dataXfType", dataXfType);
 
         var xfAttrObj = dojox.json.ref.fromJson(dataXfAttrs);
-        // console.log("xfAttrObj:", xfAttrObj);
-        if (xfAttrObj != undefined) {
-            for (value in xfAttrObj) {
-                attrEditor.editProperty(xfAttrObj, value);
+        // console.log("editProperties xfAttrObj:", xfAttrObj);
+        if (xfAttrObj) {
+            for (attributeName in xfAttrObj) {
+                var xfAttrValue = xfAttrObj[attributeName];
+                if (!xfAttrValue)xfAttrValue = "";
+                var currentDijitNode =  dojo.query("xf" + attributeName)[0];
+                console.log("editProperties: currentDijitNode: ", currentDijitNode);
+                if (currentDijitNode) {
+                    var currentDijit = dijit.byId(dojo.attr(currentDijitNode, "id"));
+                    if (currentDijit) {
+                        console.log("editProperties: currentDijit: ", currentDijit, " - xfAttrValue:",xfAttrValue);
+                        currentDijit.set("value", xfAttrValue);
+                    }
+                    else {
+                        console.log("editProperties: currentNode: ", currentDijitNode, " - xfAttrValue:",xfAttrValue);
+                        dojo.attr(currentDijitNode, "value", xfAttrValue);
+                    }
+                }
+                else {
+                    console.log("editProperties: currentNode: ", dojo.byId(attributeName), " - xfAttrValue:",xfAttrValue);
+                    dojo.attr(dojo.byId(attributeName), "value", xfAttrValue);
+
+                }
+
             }
         } else {
-            console.warn("")
+            console.warn("editProperties: Missing xfAttrObj for Element [id='",targetId,"']");
         }
+        var valueNode = dojo.query(".textNode",currentNode)[0];
+        console.log("editProperties: valueNode: ", valueNode);
+        if(valueNode) {
+            var nodeValue =  valueNode.innerHTML;
+            nodeValue.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+            //var nodeValue =  valueNode.innerHTML.replace(/</g, "lt;").replace(/>/g, "gt;").replace(/\&/g, "amp;").replace(/\"/g, "quot;");
+            console.debug("editProperties: node value: ", nodeValue);
+            var mixedContentNode =  dojo.byId("mixedContent");
+            var mixedContentDijit = dijit.byId(dojo.attr(mixedContentNode,"id"));
+            if (mixedContentDijit) {
+                mixedContentDijit.set("value",nodeValue);
+            }else {
+                dojo.attr(mixedContentNode, "value", nodeValue);
+            }
+
+        }
+
+
 
     },
 
+  
     saveProperty:function(targetId, propertyId) {
         console.log("attrEditor.saveProperty: id", targetId, " propertyId:", propertyId);
         // get the former attribute values
@@ -130,6 +157,7 @@ dojo.declare("betterform.Editor", null,
         console.debug("xfAttr new:", result);
         dojo.attr(dojo.byId(targetId), "data-xf-attrs", result);
     },
+    
 
     moveItemUp : function(event) {
         console.debug("moveItemUp:  currentjsTreeData:",this.currentjsTreeData);

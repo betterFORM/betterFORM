@@ -25,7 +25,7 @@
         <mkdir dir="${basedir}/target"/>
     </target>
 
-    <target name="generate-XForms" depends="prepare">
+    <target name="generate-XForms" depends="prepare" description="generates XForms">
         <xslt in="${basedir}/XForms-11-Schema.xsd"
               out="${basedir}/xforms.xml"
               style="${basedir}/generateXForms.xsl"

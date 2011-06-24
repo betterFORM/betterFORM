@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<div xmlns="http://www.w3.org/1999/xhtml">
-   <div class="propertyTitle">Attributes</div>
+<div xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
+   <div class="propertyTitle">Property Sheet setindex</div>
    <form method="post" action="#" enctype="application/x-www-form-urlencoded">
       <ul style="list-style-type:none;">
          <li>
@@ -95,7 +95,7 @@
                        value=""
                        placeholder=""
                        class="xfevent dojoSelect"
-                       onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'event')">
+                       onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'event')">
                   <option value="DOMActivate">DOMActivate</option>
                   <option value="DOMFocusIn">DOMFocusIn</option>
                   <option value="DOMFocusOut">DOMFocusOut</option>
@@ -131,7 +131,7 @@
                       value=""
                       placeholder=""
                       class="xfobserver dojoInput"
-                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'observer')"/>
+                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'observer')"/>
             </div>
          </li>
       </ul>
@@ -145,7 +145,7 @@
                <input dojoType="dijit.form.TextBox" id="target" name="target" type="text" value=""
                       placeholder=""
                       class="xftarget dojoInput"
-                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'target')"/>
+                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'target')"/>
             </div>
          </li>
       </ul>
@@ -159,7 +159,7 @@
                <input dojoType="dijit.form.TextBox" id="handler" name="handler" type="text" value=""
                       placeholder=""
                       class="xfhandler dojoInput"
-                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'handler')"/>
+                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'handler')"/>
             </div>
          </li>
       </ul>
@@ -173,7 +173,7 @@
                <input dojoType="dijit.form.TextBox" id="phase" name="phase" type="text" value=""
                       placeholder=""
                       class="xfphase dojoInput"
-                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'phase')"/>
+                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'phase')"/>
             </div>
          </li>
       </ul>
@@ -188,7 +188,7 @@
                       value=""
                       placeholder=""
                       class="xfpropagate dojoInput"
-                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'propagate')"/>
+                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'propagate')"/>
             </div>
          </li>
       </ul>
@@ -204,7 +204,7 @@
                       value=""
                       placeholder=""
                       class="xfdefaultAction dojoInput"
-                      onblur="betterform.Editor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'defaultAction')"/>
+                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'defaultAction')"/>
             </div>
          </li>
       </ul>

@@ -230,6 +230,35 @@ a:hover {
 	background:#d3d3d3;
 }
 
+.bfFormBrowser .file .editorLink {
+	position:absolute;
+	top:3px;
+	right:20px;
+	letter-spacing:-2px;
+	padding:4px;
+	background:#d3d3d3;
+}
+
+.bfFormBrowser  .file .editorLink{
+	font-size:3pt;
+	padding:1px;
+	background:#d3d3d3;
+	color:transparent;
+	background:transparent url(/betterform/bfResources/images/greyled.png) no-repeat center center;
+	width:18px;
+	height:18px;
+}
+.bfFormBrowser  .file .editorLink:hover{
+	font-size:10pt;
+	/*padding:10px;*/
+	width:22px;
+	height:22px;
+	color:transparent;
+	z-index:100;
+	background:transparent url(/betterform/bfResources/images/wrench.png) no-repeat center center;
+
+}
+
 
 .bfFormBrowser #bfListView .directory,.bfFormBrowser #bfListView .file {
 	clear:left;

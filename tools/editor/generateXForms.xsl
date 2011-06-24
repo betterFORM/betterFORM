@@ -14,12 +14,14 @@
     <xsl:variable name="inputDoc" select="/"/>
     <xsl:template match="/xsd:schema">
         <div>
-            <xsl:for-each select="xsd:element[@name]">
+            <xsl:variable name="unique-list" select="//xsd:element[@name][not(@name = preceding::xsd:element/@name)]" />
+            <xsl:for-each select="$unique-list">
                 <xsl:variable name="current" select="."/>
-                <xsl:result-document href="./target/xforms/{@name}.xhtml" format="xhtml" >
-                    <html xmlns:xf="http://www.w3.org/2002/xforms">
-                        <head>
-                            <title></title>
+                    <!--<xsl:message>create document <xsl:value-of select="@name"/></xsl:message>-->
+                    <xsl:result-document href="./target/xforms/{@name}.xhtml" format="xhtml" >
+                        <html xmlns:xf="http://www.w3.org/2002/xforms">
+                            <head>
+                                <title><xsl:value-of select="@name"/></title>
                         </head>
                         <body>
                             <div id="xforms">
@@ -37,11 +39,13 @@
                                                             <xsl:apply-templates select="$current//xsd:attributeGroup" mode="event-instance"/>
                                                         </xml-event>
                                                     </xsl:if>
+                                                    <xsl:apply-templates select="$current//xsd:complexType[@mixed='true']" mode="instance"/>
                                                 </xfElement>
                                             </data>
                                         </xf:instance>
                                         <xsl:apply-templates select="$current//xsd:attributeGroup" mode="bind"/>
                                         <xsl:apply-templates select="$current//xsd:attribute" mode="bind"/>
+                                        <xsl:apply-templates select="$current//xsd:complexType[@mixed='true']" mode="bind"/>
                                         <xf:bind nodeset="xml-event">
                                             <xsl:apply-templates select="$current//xsd:attributeGroup" mode="event-bind"/>
                                         </xf:bind>
@@ -50,6 +54,7 @@
                                 <xf:group ref="xfElement" id="properties" appearance="bf:verticalTable">
                                     <xsl:apply-templates select="$current//xsd:attributeGroup" mode="ui"/>
                                     <xsl:apply-templates select="$current//xsd:attribute" mode="ui"/>
+                                    <xsl:apply-templates select="$current//xsd:complexType[@mixed='true']" mode="ui"/>
                                 </xf:group>
                                 <xsl:if test="exists(.//xsd:attributeGroup[@ref='xforms:XML.Events'])">
                                     <xf:group id="event-properties" appearance="bf:verticalTable" ref="xfElement/xml-events">
@@ -66,6 +71,8 @@
         </div>
     </xsl:template>
 
+    <!--################################### Mode instance ################################### -->
+    <!--################################### Mode instance ################################### -->
     <!--################################### Mode instance ################################### -->
     <xsl:template match="xsd:attributeGroup[@ref]" mode="instance">
         <xsl:variable name="ref" select="@ref"/>
@@ -91,9 +98,16 @@
         <xsl:apply-templates select="$targetAttribute" mode="instance"/>
     </xsl:template>
 
+    <xsl:template match="xsd:complexType[@mixed='true']" mode="instance">
+        <mixedContent/>
+
+    </xsl:template>
+
     <xsl:template match="*|@*|node()" mode="instance"/>
 
 
+    <!--################################### Mode event-instance ################################### -->
+    <!--################################### Mode event-instance ################################### -->
     <!--################################### Mode event-instance ################################### -->
 
     <xsl:template match="xsd:attributeGroup[@ref='xforms:XML.Events']" mode="event-instance" priority="10">
@@ -117,6 +131,8 @@
     </xsl:template>
 
     <!--################################### Mode event-bind ################################### -->
+    <!--################################### Mode event-bind ################################### -->
+    <!--################################### Mode event-bind ################################### -->
     <xsl:template match="xsd:attributeGroup[@ref='xforms:XML.Events']" mode="event-bind" priority="10">
         <xsl:variable name="ref" select="@ref"/>
         <xsl:variable name="targetGroup" select="//*[@name = substring-after($ref,'xforms:')]"/>
@@ -137,6 +153,8 @@
 
     </xsl:template>
 
+    <!--################################### Mode event-ui ################################### -->
+    <!--################################### Mode event-ui ################################### -->
     <!--################################### Mode event-ui ################################### -->
     <xsl:template match="xsd:attributeGroup[@ref='xforms:XML.Events']" mode="event-ui" priority="10">
         <xsl:param name="current"/>
@@ -184,7 +202,7 @@
         <!--<xsl:message><xsl:value-of select="$eventXSD//xsd:attribute[@name = substring-after(@ref,'ev:')]/@name"/></xsl:message>-->
         <!--<xsl:message><xsl:value-of select="substring-after(@ref,'ev:')"/></xsl:message>-->
         <xsl:variable name="targetAttribute" select="$eventXSD//xsd:attribute[@name = substring-after(@ref,'ev:')]"/>
-        <xsl:message><xsl:value-of select="$targetAttribute"/></xsl:message>
+        <xsl:message>targetAttribute: <xsl:value-of select="$targetAttribute"/></xsl:message>
 
         <!--<xsl:apply-templates select="$eventXSD/xs:schema/xs:attribute[@name = substring-after(@ref,'ev:')]" mode="event-ui"/>-->
         <xf:input ref="@{@ref}">
@@ -193,6 +211,8 @@
 
     </xsl:template>
 
+    <!--################################### Mode bind ################################### -->
+    <!--################################### Mode bind ################################### -->
     <!--################################### Mode bind ################################### -->
 
     <xsl:template match="xsd:attributeGroup[@ref]" mode="bind">
@@ -206,7 +226,7 @@
     </xsl:template>
 
     <xsl:template match="xsd:attribute[@name]" mode="bind">
-        <xf:bind nodeset="{@name}" type="{@type}"/>
+        <xf:bind nodeset="@{@name}" type="{@type}"/>
     </xsl:template>
 
     <xsl:template match="xsd:attribute[@ref]" mode="bind">
@@ -214,9 +234,20 @@
         <xsl:apply-templates select="$targetAttribute" mode="bind"/>
     </xsl:template>
 
+    <xsl:template match="xsd:complexType[@mixed='true']" mode="bind">
+        <xf:bind nodeset="mixedContent" type=""/>
+<!--
+        <xf:input ref="@mixedContent">
+            <xf:label>mixedContent</xf:label>
+        </xf:input>
+-->
+    </xsl:template>
+
     <xsl:template match="*|@*|node()" mode="bind"/>
 
 
+    <!--################################### Mode ui ################################### -->
+    <!--################################### Mode ui ################################### -->
     <!--################################### Mode ui ################################### -->
 
     <xsl:template match="xsd:attributeGroup[@ref]" mode="ui">
@@ -240,8 +271,9 @@
         <xsl:apply-templates select="$targetAttribute"/>
     </xsl:template>
 
-
-
-
-
+    <xsl:template match="xsd:complexType[@mixed='true']" mode="ui">
+        <xf:input ref="@mixedContent">
+            <xf:label>mixedContent</xf:label>
+        </xf:input>
+    </xsl:template>
 </xsl:stylesheet>

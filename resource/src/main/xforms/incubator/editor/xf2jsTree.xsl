@@ -21,7 +21,6 @@
                 <script type="text/javascript" src="/betterform/bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.hotkeys.js"></script>
                 <script type="text/javascript" src="/betterform/bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
                 <script type="text/javascript" src="/betterform/bfResources/scripts/betterform/xfEditorUtil.js"></script>
-                <script type="text/javascript" src="/betterform/bfResources/scripts/betterform/bfEditor.js"></script>
                 <script type="text/javascript">
                     dojo.require("dijit.layout.ContentPane");
                     dojo.require("dijit.MenuBar");
@@ -40,13 +39,17 @@
                     console.debug("attrEditor.: ",attrEditor);
 
                     function checkKeyboardInput(pEvent){
+                            var activeElem = document.activeElement.localName;
+                            if(activeElem=="input") {
+                                return;
+                            }
+                            console.debug("activeElem: ",activeElem);
                            switch(pEvent.charOrCode){
                              case '?': //Process the Help key event
                                 dijit.byId("bfEditorHelp").show();
                                 break;
                            case 't':
-                           case 'T': //Process the Help key event
-                              console.debug("T pressed");
+                           case 'T':
                               dojo.byId("root").focus();
                               break;
 
