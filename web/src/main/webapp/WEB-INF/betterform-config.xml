@@ -181,11 +181,11 @@
         <!--
             For each of the connector types you can specifiy one connector to handle one URI scheme.
         -->
-        <uri-resolver scheme="file" class="de.betterform.connector.file.FileURIResolver"/>
-        <uri-resolver scheme="http" class="de.betterform.connector.http.HTTPURIResolver"/>
-        <uri-resolver scheme="https" class="de.betterform.connector.http.HTTPURIResolver"/>
-        <uri-resolver scheme="xmlrpc" class="de.betterform.connector.xmlrpc.XMLRPCURIResolver"/>
-        <uri-resolver scheme="context" class="de.betterform.connector.context.ContextMapResolver"/>
+        <uri-resolver scheme="file" class="de.betterform.connector.file.FileURIResolver" description="Handler for the file protocol"/>
+        <uri-resolver scheme="http" class="de.betterform.connector.http.HTTPURIResolver" description="Handler for the http protocol"/>
+        <uri-resolver scheme="https" class="de.betterform.connector.http.HTTPURIResolver" description="Handler for the https protocol"/>
+        <uri-resolver scheme="xmlrpc" class="de.betterform.connector.xmlrpc.XMLRPCURIResolver" description="Handler for the xmlrpc protocol"/>
+        <uri-resolver scheme="context" class="de.betterform.connector.context.ContextMapResolver" description="Handler for the context protocol"/>
 <!--
         <uri-resolver scheme="context" class="de.betterform.connector.context.ContextResolver"/>
         <uri-resolver scheme="contextobject" class="de.betterform.connector.context.ContextObjectResolver"/>

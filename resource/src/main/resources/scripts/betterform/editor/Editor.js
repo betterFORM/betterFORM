@@ -117,9 +117,18 @@ dojo.declare("betterform.Editor", null,
         // console.log("newValue:", newValue);
         if (!newValue)newValue = "";
         xfAttrObj[propertyId] = newValue;
-        var xfAttrString = dojox.json.ref.toJson(xfAttrObj);
-        console.debug("xfAttr new:", xfAttrString);
-        dojo.attr(dojo.byId(targetId), "data-xf-attrs", xfAttrString);
+        var result = "{";
+        for(attrValue in xfAttrObj){
+            result += attrValue + ":'" + xfAttrObj[attrValue] +"',";
+        }
+        if(result.charAt(2) != undefined) {
+            result = result.substring(0,result.lastIndexOf(","));
+        }
+
+        result += "}";
+        // var xfAttrString = dojox.json.ref.toJson(xfAttrObj);
+        console.debug("xfAttr new:", result);
+        dojo.attr(dojo.byId(targetId), "data-xf-attrs", result);
     },
 
     moveItemUp : function(event) {

@@ -82,21 +82,17 @@
 
         <xf:group appearance="bf:verticalTable" id="main">
             <xf:label>betterFORM Configuration</xf:label>
-
+            <div style="font-style: italic;color: orangered;text-align: center;width: 100%;">
+                Caution: if you change things here you should know what you are doing. Wrong configuration may
+                cause server malfunction.
+            </div>
             <!--<xf:group appearance="bf:verticalTable" id="environment">-->
                 <!--<xf:label>Environment Parameters</xf:label>-->
-                <div class="xfGroupLabel">Environment Parameters</div>
+                <div class="xfGroupLabel">Request Parameters</div>
                 <xf:output value="bf:appContext('webapp.realpath')">
                     <xf:label>Webapp Realpath</xf:label>
                     <xf:hint>bf:appContext('webapp.realpath')</xf:hint>
                 </xf:output>
-                <xf:output value="bf:config('initLogging')">
-                    <xf:label>initLogging</xf:label>
-                    <xf:hint>bf:config('initLogging')</xf:hint>
-                </xf:output>
-
-
-                <div class="xfGroupLabel">Request Parameters</div>
                 <xf:output value="bf:appContext('requestURI')">
                     <xf:hint>bf:appContext('requestURI')</xf:hint>
                     <xf:label>Request-URI</xf:label>
@@ -144,23 +140,25 @@
             <!--<xf:group appearance="bf:verticalTable">-->
                     <!--<xf:label>web.xml Settings</xf:label>-->
 			<div class="xfGroupLabel">web.xml settings</div>
-                    <xf:output
+                    <xf:input
                             ref="instance('webxml')/j2ee:context-param[j2ee:param-name[.='betterform.configfile']]/j2ee:param-value">
                         <xf:label>config file location</xf:label>
-                    </xf:output>
+                    </xf:input>
                     <xf:output
                             ref="instance('webxml')/j2ee:filter[j2ee:filter-name='XFormsFilter']/j2ee:init-param/j2ee:param-value">
                         <xf:label>default useragent</xf:label>
                     </xf:output>
-                    <xf:output ref="instance('webxml')/j2ee:filter-mapping[j2ee:filter-name='XFormsFilter']/j2ee:url-pattern">
+                    <xf:input ref="instance('webxml')/j2ee:filter-mapping[j2ee:filter-name='XFormsFilter']/j2ee:url-pattern">
                         <xf:label>Filter mapping</xf:label>
-                    </xf:output>
+                    </xf:input>
             <!--</xf:group>-->
-
 
             <!--<xf:group appearance="minimal">-->
                 <!--<xf:label>configured URI Resolvers</xf:label>-->
 			<div class="xfGroupLabel">URI Resolvers</div>
+            <div style="font-style: italic;">
+                URI Resolvers are used to resolve URIs found in the 'src' attribute of element 'instance'.
+            </div>
                 <xf:repeat nodeset="instance('i-config')/connectors/uri-resolver" appearance="compact">
                     <xf:output ref="@scheme">
                         <xf:label>URI Scheme</xf:label>
@@ -168,6 +166,10 @@
                     <xf:output ref="@class">
                         <xf:label>Java Class</xf:label>
                     </xf:output>
+                    <xf:output ref="@description">
+                        <xf:label>Description</xf:label>
+                    </xf:output>
+
                 </xf:repeat>
             <!--</xf:group>-->
 

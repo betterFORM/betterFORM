@@ -400,7 +400,7 @@
 
                         <xf:submission id="s-replaceContent"
                                        method="get"
-                                       action="xslt:/betterform/forms/incubator/editor/updateOriginal.xsl?originDoc={{$webapp.realpath}}/{{$pathInfo}}"
+                                       action="xslt:/betterform/forms/incubator/editor/updateOriginal.xsl?originDoc={{$contextroot}}{{$pathInfo}}"
                                        replace="instance">
                             <xf:action ev:event="xforms-submit-done">
                                 <!--<xf:message level="ephemeral">Data mounted back to original document</xf:message>-->
@@ -410,10 +410,9 @@
                        </xf:submission>
 
                         <xf:submission id="s-save"
-                                       ref="instance()/*[1]"
                                        method="put"
-                                       action="{{$webapp.realpath}}//{{$pathInfo}}"
                                        replace="none">
+                            <xf:resource value="concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2))"/>
                             <xf:action ev:event="xforms-submit-done">
                                 <xf:setvalue ref="instance('i-controller')/save-msg"
                                              value="concat('Data stored to ',bf:appContext('webapp.realpath'),bf:appContext('pathInfo'))"/>
@@ -444,10 +443,12 @@
                         <div dojoType="dijit.MenuBar" id="mainMenu">
                             <div dojoType="dijit.PopupMenuBarItem" label="File">
                                 <div dojoType="dijit.Menu" id="File">
+<!--
                                     <div dojoType="dijit.MenuItem"
-                                         onClick="alert('new');">
+                                         onClick="this.window.href='bfEditor/forms/incubator/editor/standardTemplate.xhtml');">
                                         New
                                     </div>
+-->
                                     <div dojoType="dijit.MenuItem"
                                          onClick="serializeTree();">
                                         Save
@@ -558,6 +559,9 @@
                     </div>
 
                     <div id="docWrapper" tabindex="-1">
+                        <xf:output value="bf:appContext('pathInfo')">
+                            <xf:label>PathInfo</xf:label>
+                        </xf:output>
                         <div id="docPane" tabindex="-1">
                             <xsl:variable name="elements" select="//xf:model[not(ancestor::xf:*)]|//xf:group[not(ancestor::xf:*)]"/>
                             <!--<xsl:variable name="uiElements" select="//*[name()='xf:group']"/>-->
