@@ -119,6 +119,14 @@ dependencies = {
             dependencies: [
                 "betterform.BfRequiredXFormsFeatureExplorer"
             ]
+        },
+        /** betterFORM Editor Release  **/
+        {
+            name: "../betterform/betterform-XFormsEditor.js",
+            resourceName: "betterform.editor",
+            dependencies: [
+                "betterform.BfRequiredXFormsEditor"
+            ]
         }
     ],
 

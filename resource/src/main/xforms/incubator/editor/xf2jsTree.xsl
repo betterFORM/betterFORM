@@ -16,27 +16,16 @@
         <html>
             <head>
                 <title>betterFORM Editor</title>
-                <script type="text/javascript" src="/betterform/bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.js"></script>
-                <script type="text/javascript" src="/betterform/bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.cookie.js"></script>
-                <script type="text/javascript" src="/betterform/bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.hotkeys.js"></script>
-                <script type="text/javascript" src="/betterform/bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
-                <script type="text/javascript" src="/betterform/bfResources/scripts/betterform/xfEditorUtil.js"></script>
-                <script type="text/javascript">
-                    dojo.require("dijit.layout.ContentPane");
-                    dojo.require("dijit.MenuBar");
-                    dojo.require("dijit.PopupMenuBarItem");
-                    dojo.require("dijit.MenuItem");
-                    
-                    dojo.require("betterform.editor.Editor");
-                    dojo.require("betterform.Editor");
-                    dojo.require("dijit.layout.TabContainer");
-                    dojo.require("dijit.form.TextBox");
-                    dojo.require("dijit.form.Select");
-                    dojo.require("dijit.form.FilteringSelect");
-                    dojo.require("dojo.data.ItemFileReadStore");
-                    dojo.require("dojox.layout.FloatingPane");
+                <script type="text/javascript" src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.js"></script>
+                <script type="text/javascript" src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.cookie.js"></script>
+                <script type="text/javascript" src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.hotkeys.js"></script>
+                <script type="text/javascript" src="../../../bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
+                <script type="text/javascript" src="../../../bfResources/scripts/betterform/xfEditorUtil.js"></script>
+                <script type="text/javascript" src="../../../bfResources/scripts/betterform/betterform-XFormsEditor.js"> </script>
+
+                <script type="text/javascript" defer="defer">
                     var attrEditor = new betterform.Editor();
-                    console.debug("attrEditor.: ",attrEditor);
+                    //console.debug("attrEditor.: ",attrEditor);
 
                     function checkKeyboardInput(pEvent){
                             var activeElem = document.activeElement.localName;
@@ -399,7 +388,7 @@
                                 <xf:send submission="s-replaceContent"/>
                             </xf:action>
                             <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
-                       </xf:submission>
+                        </xf:submission>
 
                         <xf:submission id="s-replaceContent"
                                        method="get"
@@ -410,7 +399,7 @@
                                 <xf:send submission="s-save"/>;
                             </xf:action>
                             <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
-                       </xf:submission>
+                        </xf:submission>
 
                         <xf:submission id="s-save"
                                        method="put"
@@ -491,7 +480,7 @@
                                  onClick="dijit.byId('bfEditorHelp').show();">
                                 Help
                             </div>
-                            
+
 <!--
                             <div dojoType="dijit.PopupMenuBarItem" label="Add" id="addMenu">
                             </div>
@@ -716,18 +705,7 @@
                     /* ]]> */
                 </script>
 
-                <script type="text/javascript">
-                    $("#xfDoc ul").delegate("li", "dblclick", function(){
-                            $("#xfDoc").jstree("toggle_node", this);
-                    });
-                    function addElement(type){
-                        console.log("addElement type:",type);
-                        var elem = $("#xfDoc").jstree("create",null,"last",type,false,true);
-                        elem.attr("data-xf-type",type);
-                        $("#xfDoc").jstree("select_node",elem,false,null);
-                        $("#id").focus();
-                    }
-                </script>
+
                 <div id="bfEditorHelp" dojoType="dojox.layout.FloatingPane" title="betterFORM Editor Help" resizable="true" dockable="false" style="position:absolute;margin:10px;top:200px;left:200px;width:600px;height:350px;visibility:hidden;">
 <!--
                     <div class="bfEditorHelpTitle">betterFORM Editor</div>
@@ -794,6 +772,21 @@
                         </div>
                     </div>
                 </div>
+                <script type="text/javascript">
+
+                    dojo.hitch(window, $("#xfDoc ul").delegate("li", "dblclick", function(){
+                            $("#xfDoc").jstree("toggle_node", this);
+                    }));
+
+
+                    function addElement(type){
+                        console.log("addElement type:",type);
+                        var elem = $("#xfDoc").jstree("create",null,"last",type,false,true);
+                        elem.attr("data-xf-type",type);
+                        $("#xfDoc").jstree("select_node",elem,false,null);
+                        $("#id").focus();
+                    }
+                </script>
             </body>
         </html>
     </xsl:template>

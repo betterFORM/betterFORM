@@ -219,6 +219,8 @@
                   condition="bf"/>
             <fileset dir="../../../resource/src/main/xforms/reference" targetdir="$INSTALL_PATH/betterform/forms/reference"
                   condition="bf"/>
+            <fileset dir="../../../resource/src/main/xforms/incubator/editor" targetdir="$INSTALL_PATH/betterform/forms/incubator/editor"
+                  condition="bf"/>
             <singlefile src="../../../resource/src/main/xforms/FeatureExplorer.xhtml" target="$INSTALL_PATH/betterform/forms/FeatureExplorer.xhtml" condition="bf"/>
             <singlefile src="../../../resource/src/main/xforms/Status.xhtml" target="$INSTALL_PATH/betterform/forms/Status.xhtml" condition="bf"/>
 
@@ -226,6 +228,8 @@
             <fileset dir="../../../resource/src/main/xforms/demo" targetdir="$INSTALL_PATH/web/root/forms/demo"
                   condition="jetty"/>
             <fileset dir="../../../resource/src/main/xforms/reference" targetdir="$INSTALL_PATH/web/root/forms/reference"
+                  condition="jetty"/>
+            <fileset dir="../../../resource/src/main/xforms/incubator/editor" targetdir="$INSTALL_PATH/web/root/forms/incubator/editor"
                   condition="jetty"/>
             <singlefile src="../../../resource/src/main/xforms/FeatureExplorer.xhtml" target="$INSTALL_PATH/web/root/forms/FeatureExplorer.xhtml" condition="jetty"/>
             <singlefile src="../../../resource/src/main/xforms/Status.xhtml" target="$INSTALL_PATH/web/root/forms/Status.xhtml" condition="jetty"/>
