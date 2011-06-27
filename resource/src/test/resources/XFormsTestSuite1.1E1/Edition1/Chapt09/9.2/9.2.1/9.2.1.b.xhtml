@@ -1,0 +1,52 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"             
+      xmlns:xforms="http://www.w3.org/2002/xforms">
+  	<xhtml:head>
+    	<xhtml:title>9.2.1.b switch element example</xhtml:title>
+    	<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    	<xforms:model>
+       		<xforms:instance xmlns="">
+				<yourname>Bill</yourname>
+       		</xforms:instance>
+    	</xforms:model>
+  	</xhtml:head>
+  	<xhtml:body>
+  		<xforms:group>
+  			<xforms:label class="title">9.2.1.b switch element example</xforms:label>
+  		</xforms:group>	
+  		<xforms:group>
+  			<xforms:label>
+  			  When you activate the Send Name trigger, the input control and the trigger will be replaced  
+  			  by an output that says &quot;Hello&quot; followed by whatever value was in 
+  			  the input control when it was activated and an Edit trigger. When activated, the output and the 
+  			  Edit trigger 
+  			  must be replaced by the input field and the Send Name trigger. 
+	  		</xforms:label>	
+  		</xforms:group>
+		<xforms:switch>
+		  <xforms:case id="in" selected="true">
+		    <xforms:input ref="/yourname">
+		      <xforms:label>Please tell me your name:</xforms:label>
+		    </xforms:input>
+		    <xforms:trigger>
+		      <xforms:label>Send Name</xforms:label>
+		      <xforms:toggle ev:event="DOMActivate" case="out"/>
+		    </xforms:trigger>
+		  </xforms:case>
+		  <xforms:case id="out" selected="false">
+		    <xforms:output ref="/yourname">
+		      <xforms:label>Hello </xforms:label>
+		    </xforms:output>
+		      <xforms:trigger id="editButton">
+		        <xforms:label>Edit</xforms:label>
+		        <xforms:toggle ev:event="DOMActivate" case="in"/>
+		      </xforms:trigger>
+		  </xforms:case>
+		</xforms:switch>
+		
+  </xhtml:body>
+</xhtml:html>

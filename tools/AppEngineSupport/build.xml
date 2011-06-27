@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- $Id: build.xml,v 1.90 2006/11/16 23:55:43 joernt Exp $ -->
+<project id="betterform-application" name="betterForm AppBuilder" default="package" basedir=".">
+
+    <!--
+
+
+     -->
+
+    <property name="target.dir" value="${basedir}/target"/>
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <target name="clean" description="clean build target directory">
+
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="cleaning up project"/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+        <delete dir="${target.dir}"/>
+    </target>
+
+    <target name="compile" description="build App Engine Support jar for HttpClient">
+        <echo>
+            **************************************** compiling ****************************************
+            **************************************** compiling ****************************************
+            **************************************** compiling ****************************************
+        </echo>
+
+    </target>
+
+
+    <target name="jar" depends="compile">
+        <echo>
+            **************************************** creating jar ****************************************
+            **************************************** creating jar ****************************************
+            **************************************** creating jar ****************************************
+        </echo>
+
+    </target>
+
+
+</project>

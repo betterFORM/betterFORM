@@ -5,13 +5,13 @@
 
 package de.betterform.connector.http;
 
-import de.betterform.connector.serializer.SerializerRequestWrapper;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.connector.SubmissionHandler;
+import de.betterform.connector.serializer.SerializerRequestWrapper;
 import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.submission.Submission;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Node;
 
 import java.io.ByteArrayOutputStream;
@@ -77,12 +77,12 @@ public class HTTPSubmissionHandler extends AbstractHTTPConnector implements Subm
 
             // HTTP GET
             else if (method.equals("get")) {
-                if(getURI().indexOf("?") == -1 && streamNotEmpty){
-                    get(getURI() + "?" + stream.toString(encoding));
+                if(URIUtils.getURIWithoutFragment(getURI()).indexOf("?") == -1 && streamNotEmpty){
+                    get(URIUtils.getURIWithoutFragment(getURI()) + "?" + stream.toString(encoding));
                 }else if(streamNotEmpty){
-                    get(getURI() + "&" + stream.toString(encoding));
+                    get(URIUtils.getURIWithoutFragment(getURI()) + "&" + stream.toString(encoding));
                 }else{
-                    get(getURI());
+                    get(URIUtils.getURIWithoutFragment(getURI()));
                 }
             }
             // HTTP PUT

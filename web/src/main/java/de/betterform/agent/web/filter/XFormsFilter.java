@@ -7,6 +7,7 @@
 
 package de.betterform.agent.web.filter;
 
+import de.betterform.xml.dom.DOMUtil;
 import net.sf.ehcache.CacheManager;
 import org.apache.commons.fileupload.FileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
@@ -43,8 +44,9 @@ import java.util.Map;
 @SuppressWarnings({"JavadocReference"})
 public class XFormsFilter implements Filter {
     private static final Log LOG = LogFactory.getLog(XFormsFilter.class);
+    private static final String USERAGENT = "dojo";
     protected WebFactory webFactory;
-    protected String useragent;
+
     protected String defaultRequestEncoding = "UTF-8";
     private FilterConfig filterConfig;
 
@@ -55,14 +57,14 @@ public class XFormsFilter implements Filter {
      */
     public void init(FilterConfig filterConfig) throws ServletException {
         this.filterConfig = filterConfig;
-        useragent = filterConfig.getInitParameter(WebProcessor.USERAGENT);
+
         webFactory = new WebFactory();
         webFactory.setServletContext(filterConfig.getServletContext());
         try {
-            webFactory.initConfiguration(useragent);
+            webFactory.initConfiguration(XFormsFilter.USERAGENT);
             defaultRequestEncoding = webFactory.getConfig().getProperty("defaultRequestEncoding", defaultRequestEncoding);
             webFactory.initLogging(this.getClass());
-            webFactory.initTransformerService();
+            webFactory.initTransformerService(this.filterConfig.getServletContext().getRealPath("."));
             webFactory.initXFormsSessionCache();
         } catch (XFormsConfigException e) {
             throw new ServletException(e);
@@ -175,11 +177,11 @@ public class XFormsFilter implements Filter {
                 if (bufResponse.isCommitted())
                     return;
 
-                if (this.useragent == null)
-                    throw new ServletException("init-param 'useragent' must be defined in web.xml for XFormsFilter");
+
+
 
                 //pass to request object
-                request.setAttribute(WebFactory.USER_AGENT, useragent);
+                request.setAttribute(WebFactory.USER_AGENT, XFormsFilter.USERAGENT);
 
                 /* dealing with response from chain */
                 if (handleResponseBody(request, bufResponse)) {
@@ -206,6 +208,7 @@ public class XFormsFilter implements Filter {
                         webProcessor.handleRequest();
                         if (LOG.isDebugEnabled() && CacheManager.getInstance().getCache("xfSessionCache") != null) {
                             LOG.debug(CacheManager.getInstance().getCache("xfSessionCache").getStatistics());
+                            DOMUtil.prettyPrintDOM(webProcessor.getXForms());
                         }
                     }
                     catch (Exception e) {
@@ -260,9 +263,9 @@ public class XFormsFilter implements Filter {
             boolean isUpload = FileUpload.isMultipartContent(new ServletRequestContext(request));
 
             if (isUpload) {
-                ServletOutputStream out = response.getOutputStream();
-                out.println("<html><head><title>status</title></head><body></body></html>");
-                out.close();
+                /*ServletOutputStream out = response.getOutputStream();
+                out.println("<html><body><textarea>status</textarea></body></html>");
+                out.close();*/
             }
         } catch (Exception e) {
             throw new ServletException(e);

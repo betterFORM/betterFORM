@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- $Id: build.xml,v 1.90 2006/11/16 23:55:43 joernt Exp $ -->
-<project name="Editor generator tools" default="generate-XForms" basedir=".">
+<project name="Editor generator tools" default="deployEditor" basedir=".">
 
 
     <!--
@@ -25,26 +25,95 @@
         <mkdir dir="${basedir}/target"/>
     </target>
 
-    <target name="generate-XForms" depends="prepare">
+    <target name="generate-XForms" depends="prepare" description="generates XForms">
         <xslt in="${basedir}/XForms-11-Schema.xsd"
-              out="${basedir}/target/xforms.xml"
+              out="${basedir}/xforms.xml"
               style="${basedir}/generateXForms.xsl"
               force="true"
                 classpathref="transform.class.path">
-            <!--<classpath refid="transform.class.path"/>-->
-            
-<!--
-            <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
-            <param name="module" expression="${core.app.name}"/>
--->
         </xslt>
     </target>
 
-    <target  name="deployEditor" depends="generate-XForms">
+    <target name="generate-HTML-Forms" depends="generate-xf-datatype-list"  description="generates HTML forms from XForms">
+        <xslt basedir="${basedir}/target/xforms"
+              destdir="${basedir}/target/html/"
+              style="${basedir}/generate-html-forms.xsl"
+              extension=".html"
+              force="true"
+              classpathref="transform.class.path">
+            <classpath refid="transform.class.path"/>
 
-        <copy todir="${basedir}/../../web/target/betterform/forms/editor" flatten="true">
-            <fileset dir="${basedir}" includes="**/*.xhtml"/>
+        </xslt>
+
+    </target>
+
+    <target name="generate-xf-datatype-list"  description="generates HTML forms from XForms">
+        <xslt in="${basedir}/XForms-11-Schema.xsd"
+              out="${basedir}/target/html/xfDatatype.json"
+              style="${basedir}/generateXFDatatypeList.xsl"
+              extension=".json"
+              force="true"
+              classpathref="transform.class.path">
+            <classpath refid="transform.class.path"/>
+        </xslt>
+    </target>
+
+
+    <target name="generate-Prototypes" depends="prepare" description="generate Prototypes for XForms element structure">
+        <xslt in="${basedir}/XForms-11-Schema.xsd"
+              out="${basedir}/target/prototypes.xml"
+              style="${basedir}/generatePrototypes.xsl"
+              force="true"
+              classpathref="transform.class.path">
+        </xslt>
+    </target>
+
+    <target name="generate-test-form-nested-divs" depends="prepare" description="generate test form for editor">
+        <xslt in="${basedir}/testinput/registration.xhtml"
+              out="${basedir}/target/registration-div.xml"
+              style="${basedir}/xf2div.xsl"
+              force="true"
+              classpathref="transform.class.path">
+        </xslt>
+    </target>
+
+
+    <!-- for testing - real version is in incubator/editor -->
+    <target name="dom2xf" depends="prepare" description="turn DOM from client into xforms againr">
+        <xslt in="${basedir}/testinput/dump.xml"
+              out="${basedir}/target/dump-xforms.xhtml"
+              style="${basedir}/dom2xf.xsl"
+              force="true"
+              classpathref="transform.class.path">
+        </xslt>
+    </target>
+
+    <!-- base transform that generates a list of possible child elements for a given parent. The whole
+    thing is generated to ul/li structures and should be used as a base for further transforms. -->
+    <target name="generateChildList" depends="prepare" description="generate list of possible child elements">
+        <xslt in="${basedir}/XForms-11-Schema.xsd"
+              out="${basedir}/target/childlist.xml"
+              style="${basedir}/generateChildList.xsl"
+              force="true"
+              classpathref="transform.class.path">
+        </xslt>
+    </target>
+
+    <target name="generateJSforChildElementCheck" depends="generateChildList" description="generate list of possible child elements">
+        <xslt in="${basedir}/target/childlist.xml"
+              out="${basedir}/target/xfUtil.js"
+              style="${basedir}/generateJSforChildElementCheck.xsl"
+              force="true"
+              classpathref="transform.class.path">
+        </xslt>
+    </target>
+
+    <target  name="deployEditor" depends="generate-HTML-Forms" description="generates HTML forms and deploys them to xforms/incubator/editor">
+        <copy todir="${basedir}/../../resource/src/main/xforms/incubator/editor" flatten="true" overwrite="true">
+            <fileset dir="${basedir}" includes="target/html/*.html"/>
+            <fileset dir="${basedir}" includes="target/html/*.json"/>
         </copy>
+        <ant antfile="../../web/build.xml" inheritall="false" target="deploy-forms"/>
     </target>
 
 </project>

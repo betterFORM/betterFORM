@@ -13,7 +13,7 @@
 	body{
         font-family:Tahoma;
         font-size:14pt;
-        background:url('<%=request.getContextPath()%>/resources/images/bgOne.gif') repeat-x scroll;
+        background:url('<%=request.getContextPath()%>/bfResources/images/bgOne.gif') repeat-x scroll;
     }
 	pre { font-size:8pt; }
     .errorContent{
@@ -52,7 +52,7 @@
 </head>
 <body>
 <div class="errorContent">
-    <img src="<%=request.getContextPath()%>/resources/images/error.png" width="24" height="24" alt="Error" style="float:left;padding-right:5px;"/>
+    <img src="<%=request.getContextPath()%>/bfResources/images/error.png" width="24" height="24" alt="Error" style="float:left;padding-right:5px;"/>
     <div class="message1">
         Oops, an error occured...<br/>
 

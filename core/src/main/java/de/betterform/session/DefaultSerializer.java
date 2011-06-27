@@ -91,7 +91,7 @@ public class DefaultSerializer {
      *
      * @param out the output document for serialization
      */
-    private void inlineInstances(Document out) {
+    public void inlineInstances(Document out) {
         //imlining instances
         NodeInfo context = getDocumentElementContext(out);
         //iterate all models to get all instances

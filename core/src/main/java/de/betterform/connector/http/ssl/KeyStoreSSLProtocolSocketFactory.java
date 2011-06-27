@@ -62,15 +62,13 @@ package de.betterform.connector.http.ssl;
 import de.betterform.connector.http.AbstractHTTPConnector;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
-import org.apache.commons.httpclient.ConnectTimeoutException;
+
 import org.apache.commons.httpclient.contrib.ssl.AuthSSLInitializationError;
 import org.apache.commons.httpclient.contrib.ssl.AuthSSLX509TrustManager;
-import org.apache.commons.httpclient.params.HttpConnectionParams;
-import org.apache.commons.httpclient.protocol.SecureProtocolSocketFactory;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import javax.net.SocketFactory;
 import javax.net.ssl.*;
 import java.io.File;
 import java.io.IOException;
@@ -85,11 +83,16 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Enumeration;
 
+import org.apache.http.conn.ConnectTimeoutException;
+import org.apache.http.conn.scheme.SocketFactory;
+import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.params.HttpConnectionParams;
+
 /**
  * @author <a href="mailto:tobias.krebs@betterform.de">tobi</a>
  * @version $Id: KeyStoreSSLProtocolSocketFactory 08.10.2010 tobi $
  */
-public class KeyStoreSSLProtocolSocketFactory implements SecureProtocolSocketFactory {
+public class KeyStoreSSLProtocolSocketFactory {
     private static String keyStorePath = null;
     private static String keyStorePasswd = null;
     private SSLContext sslcontext = null;
@@ -134,7 +137,7 @@ public class KeyStoreSSLProtocolSocketFactory implements SecureProtocolSocketFac
         throw new AuthSSLInitializationError("You must configure "+ AbstractHTTPConnector.HTTPCLIENT_SSL_KEYSTORE_PASSWD + " in betterform-config.xml!");
     }
 
-    private static KeyStore createKeyStore(final URL url, final String password)
+    public static KeyStore createKeyStore(final URL url, final String password)
         throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException
     {
         if (url == null) {
@@ -228,14 +231,14 @@ public class KeyStoreSSLProtocolSocketFactory implements SecureProtocolSocketFac
      * To circumvent the limitations of older JREs that do not support connect timeout a
      * controller thread is executed. The controller thread attempts to create a new socket
      * within the given limit of time. If socket constructor does not return until the
-     * timeout expires, the controller terminates and throws an {@link org.apache.commons.httpclient.ConnectTimeoutException}
+
      * </p>
      *
      * @param host the host name/IP
      * @param port the port on the host
      * @param localAddress the local host name/IP to bind the socket to
      * @param localPort the port on the local machine
-     * @param params {@link org.apache.commons.httpclient.params.HttpConnectionParams Http connection parameters}
+
      *
      * @return Socket a new socket
      *
@@ -253,23 +256,20 @@ public class KeyStoreSSLProtocolSocketFactory implements SecureProtocolSocketFac
         if (params == null) {
             throw new IllegalArgumentException("Parameters may not be null");
         }
-        int timeout = params.getConnectionTimeout();
-        SocketFactory socketfactory = getSSLContext().getSocketFactory();
-        if (timeout == 0) {
-            return socketfactory.createSocket(host, port, localAddress, localPort);
-        } else {
+        int timeout = 0;//params.getConnectionTimeout(params);
+        SSLSocketFactory socketfactory = new SSLSocketFactory(getSSLContext());
             Socket socket = socketfactory.createSocket();
             SocketAddress localaddr = new InetSocketAddress(localAddress, localPort);
             SocketAddress remoteaddr = new InetSocketAddress(host, port);
             socket.bind(localaddr);
-            socket.connect(remoteaddr, timeout);
+            if (timeout == 0) {
+                socket.connect(remoteaddr, timeout);
+            } else {
+                socket.connect(remoteaddr);
+            }
             return socket;
-        }
     }
 
-    /**
-     * @see SecureProtocolSocketFactory#createSocket(java.lang.String,int,java.net.InetAddress,int)
-     */
     public Socket createSocket(
         String host,
         int port,
@@ -285,9 +285,7 @@ public class KeyStoreSSLProtocolSocketFactory implements SecureProtocolSocketFac
         );
     }
 
-    /**
-     * @see SecureProtocolSocketFactory#createSocket(java.lang.String,int)
-     */
+
     public Socket createSocket(String host, int port)
         throws IOException, UnknownHostException
     {
@@ -297,9 +295,7 @@ public class KeyStoreSSLProtocolSocketFactory implements SecureProtocolSocketFac
         );
     }
 
-    /**
-     * @see SecureProtocolSocketFactory#createSocket(java.net.Socket,java.lang.String,int,boolean)
-     */
+
     public Socket createSocket(
         Socket socket,
         String host,

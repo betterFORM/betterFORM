@@ -93,8 +93,13 @@ public interface BetterFormEventNames {
      */
     String SCRIPT_ACTION = "betterform-script-action";
 
-    String EMBED_DONE =  "betterform-embed-done";
     String EMBED = "betterform-embed";
+    String EMBED_DONE =  "betterform-embed-done";
+
+    /**
+     * betterFORM exception event constant.
+     */
+    String EXCEPTION = "betterform-exception";
 
     String VARIABLE_CHANGED = "betterform-variable-changed";
 

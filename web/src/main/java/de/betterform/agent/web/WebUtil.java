@@ -6,15 +6,18 @@
 
 package de.betterform.agent.web;
 
+import de.betterform.xml.xforms.ui.Filename;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
-import org.apache.commons.httpclient.Cookie;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import de.betterform.connector.http.AbstractHTTPConnector;
 import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.model.submission.RequestHeaders;
 import de.betterform.xml.xslt.TransformerService;
+import org.apache.http.cookie.ClientCookie;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.cookie.BasicClientCookie;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +26,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -37,6 +41,9 @@ public class WebUtil {
     private static final Log LOGGER = LogFactory.getLog(WebUtil.class);
     public static final String HTML_CONTENT_TYPE = "text/html;charset=UTF-8";
     public static final String HTTP_SESSION_ID = "httpSessionId";
+    private static final String FILENAME = "fileName";
+    private static final String PLAIN_PATH = "plainPath";
+    private static final String CONTEXT_PATH = "contextPath";
 
     public static String getRequestURI(HttpServletRequest request) {
         StringBuffer buffer = new StringBuffer(request.getScheme());
@@ -174,15 +181,15 @@ public class WebUtil {
     public static void storeCookies(HttpServletRequest request, XFormsProcessor processor) {
         javax.servlet.http.Cookie[] cookiesIn = request.getCookies();
         if (cookiesIn != null) {
-            Cookie[] commonsCookies = new Cookie[cookiesIn.length];
+            BasicClientCookie[] commonsCookies = new BasicClientCookie[cookiesIn.length];
             for (int i = 0; i < cookiesIn.length; i += 1) {
                 javax.servlet.http.Cookie c = cookiesIn[i];
-                commonsCookies[i] = new Cookie(c.getDomain(),
-                        c.getName(),
-                        c.getValue(),
-                        c.getPath(),
-                        c.getMaxAge(),
-                        c.getSecure());
+                commonsCookies[i] = new BasicClientCookie(c.getName(),c.getValue());
+                commonsCookies[i].setDomain(c.getDomain());
+                commonsCookies[i].setPath(c.getPath());
+                commonsCookies[i].setAttribute(ClientCookie.MAX_AGE_ATTR, Integer.toString(c.getMaxAge()));
+                commonsCookies[i].setSecure(c.getSecure());
+
                 if (WebUtil.LOGGER.isDebugEnabled()) {
                     WebUtil.LOGGER.debug("adding cookie >>>>>");
                     WebUtil.LOGGER.debug("name: " + c.getName());
@@ -250,16 +257,54 @@ public class WebUtil {
         servletMap.put(WebProcessor.SESSION_ID, sessionkey);
         processor.setContextParam(XFormsProcessor.SUBMISSION_RESPONSE, servletMap);
 
-        //adding the http session id to the context map
-        processor.setContextParam(HTTP_SESSION_ID, httpSession.getId());
+        //adding requestURI to context
         processor.setContextParam(WebProcessor.REQUEST_URI, WebUtil.getRequestURI(request));
-        processor.setContextParam(WebProcessor.REQUEST_URL, request.getRequestURL().toString());
-        processor.setContextParam(WebProcessor.QUERY_STRING, (request.getQueryString() != null ? request.getQueryString() : ""));
-        processor.setContextParam(WebProcessor.CONTEXTROOT, WebUtil.getContextRoot(request));
 
+        //adding request URL to context
+        String requestURL = request.getRequestURL().toString();
+        processor.setContextParam(WebProcessor.REQUEST_URL, requestURL);
+
+        // the web app name with an '/' prepended e.g. '/betterform' by default
+        String contextRoot = WebUtil.getContextRoot(request);
+        processor.setContextParam(WebProcessor.CONTEXTROOT, contextRoot);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("context root of webapp: " + processor.getContextParam(WebProcessor.CONTEXTROOT));
         }
+
+        String requestPath = "";
+        try {
+            URL url = new URL(requestURL);
+            requestPath = url.getPath();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        if(requestPath.length() != 0){
+            //adding request path e.g. '/betterform/forms/demo/registration.xhtml'
+            processor.setContextParam(WebProcessor.REQUEST_PATH, requestPath);
+
+            //adding filename of requested doc to context
+            String fileName = requestPath.substring(requestPath.lastIndexOf('/')+1,requestPath.length());
+            processor.setContextParam(FILENAME, fileName);
+
+            //adding plainPath which is the part between contextroot and filename e.g. '/forms' for a requestPath of '/betterform/forms/Status.xhtml'
+            String plainPath = requestPath.substring(contextRoot.length()+1,requestPath.length() - fileName.length());
+            processor.setContextParam(PLAIN_PATH, plainPath);
+
+            //adding contextPath - requestPath without the filename
+            processor.setContextParam(CONTEXT_PATH,contextRoot+"/"+plainPath);
+
+        }
+
+        //adding session id to context
+        processor.setContextParam(HTTP_SESSION_ID, httpSession.getId());
+        //adding context absolute path to context
+
+        //adding pathInfo to context - attention: this is only available when a servlet is requested
+        String s1=request.getPathInfo();
+        if(s1!=null){
+            processor.setContextParam(WebProcessor.PATH_INFO, s1);
+        }
+        processor.setContextParam(WebProcessor.QUERY_STRING, (request.getQueryString() != null ? request.getQueryString() : ""));
 
         //storing the realpath for webapp
         String realPath = httpSession.getServletContext().getRealPath("");

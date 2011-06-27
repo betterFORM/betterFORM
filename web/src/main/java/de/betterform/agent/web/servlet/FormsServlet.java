@@ -21,12 +21,14 @@ import java.util.*;
 public class FormsServlet extends HttpServlet {
     private List ignores;
     private static final String ROOTCOLLECTION = "forms";
+    public static final String RESOURCE_PATH = "/bfResources";
 
     @Override
     public void init() throws ServletException {
         super.init();
         String ignoreString= getInitParameter("ignores");
         ignores = Arrays.asList(ignoreString.split(" "));
+
     }
 
     /**
@@ -40,7 +42,7 @@ public class FormsServlet extends HttpServlet {
     */
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        boolean fragment = false;
+        boolean fragment = true;
         String ajaxFunction = request.getParameter("ajax");
         if(ajaxFunction == null || ajaxFunction.equals("")){
             ajaxFunction="load";
@@ -84,7 +86,7 @@ public class FormsServlet extends HttpServlet {
                         "        <link rel=\"SHORTCUT ICON\" href=\"" + request.getContextPath() + "/images/betterform.ico\"/>\n" +
                         "        <link rel=\"ICON\" href=\"" + request.getContextPath() + "/images/betterform.ico\" type=\"image/x-icon\"/>\n" +
                         "        <link rel=\"stylesheet\" type=\"text/css\" href=\"" + request.getContextPath() + "/styles/bf.css\"/>\n" +
-                        "        <link rel=\"stylesheet\" type=\"text/css\" href=\"" + request.getContextPath() + "/resources/styles/betterform-styles.css\"/>\n" +
+                        "        <link rel=\"stylesheet\" type=\"text/css\" href=\"" + request.getContextPath() + "/styles/betterform-styles.css\"/>\n" +
                         "</head>\n" +
                         "<body id=\"formsbrowser\">\n" +
                         "<div class=\"page\">\n" +
@@ -200,7 +202,7 @@ public class FormsServlet extends HttpServlet {
         StringBuffer createCollectionMarkup = new StringBuffer();
         createCollectionMarkup.append(
                 "           <div dojoType=\"dijit.form.DropDownButton\" class=\"createCollectionDropDownButton\">\n" +
-                "               <span class=\"label\"><img style=\"height:28px;width:28px;\" src=\"" + request.getContextPath() + "/resources/images/add-folder.png\" title=\"" + altTextCreateCollection+ "\"></span>\n" +
+                "               <span class=\"label\"><img style=\"height:28px;width:28px;\" src=\"" + request.getContextPath() + RESOURCE_PATH + "/images/add-folder.png\" title=\"" + altTextCreateCollection+ "\"></span>\n" +
                 "               <div dojoType=\"dijit.TooltipDialog\" name=\"collectionTooltip\" >\n" +
                 "                   <form type=\"dijit.form.Form\" name=\"createCollection\" class=\"createCollection\" method=\"post\" enctype=\"multipart/form-data\">\n" +
                 "                       <input id=\"bfColectionPath\" name=\"bfCollectionPath\" style=\"display:none\" value=\""+ currentPath +"\"> </input>" +
@@ -223,7 +225,7 @@ public class FormsServlet extends HttpServlet {
         StringBuffer uploadFormMarkup = new StringBuffer();
         uploadFormMarkup.append(
                 "           <div dojoType=\"dijit.form.DropDownButton\" class=\"uploadDropDownButton\">\n" +
-                "               <span class=\"label\"><img style=\"height:28px;width:28px;\" src=\"" + request.getContextPath() + "/resources/images/add-file.png\" title=\"" + altTextFormUpload + "\"></span>\n" +
+                "               <span class=\"label\"><img style=\"height:28px;width:28px;\" src=\"" + request.getContextPath() + RESOURCE_PATH + "/images/add-file.png\" title=\"" + altTextFormUpload + "\"></span>\n" +
                 "               <div dojoType=\"dijit.TooltipDialog\" name=\"uploadTooltip\" >\n" +
                 "                   <form type=\"dijit.form.Form\" name=\"upload\" class=\"upload\" method=\"post\" enctype=\"multipart/form-data\">\n" +
                 "                       <input id=\"bfUploadPath\" name=\"bfUploadPath\" style=\"display:none\" value=\""+ currentPath +"\"> </input>\n" +
@@ -237,13 +239,14 @@ public class FormsServlet extends HttpServlet {
         // HTML Markup to return
         html.append(
                 "<div class=\"bfFormBrowser\">\n" +
-                "        <div class=\"formBrowserHead\">\n" +
-                "            <div class=\"formBrowserHeader\">\n" + crumb.toString() +
+                "    <div class=\"formBrowserHead\">\n" +
+                "        <div class=\"formBrowserHeader\">\n" + crumb.toString() +
+                "            <div id=\"commands\">\n" +
+                                    createCollectionMarkup +
+                                    uploadFormMarkup +
+                "            </div>\n" +
                 "        </div>\n" +
-                "        <div id=\"commands\">\n" +
-                            createCollectionMarkup +
-                            uploadFormMarkup +
-                "        </div>\n" +
+                "    </div>\n" +
                 "</div>\n");
         
     }
@@ -334,13 +337,13 @@ public class FormsServlet extends HttpServlet {
             String wrapperEnd = "');";
             html.append(
                     "        <div class=\"directory parent\">\n" +
-                            "                <a href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, up) + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\"><img id=\"go-up\" alt=\"up one level\" src=\"" + request.getContextPath() + "/resources/images/arrow-up.png\" border=\"0\"></a>\n" +
+                            "                <a href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, up) + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\"><img id=\"go-up\" alt=\"up one level\" src=\"" + request.getContextPath() + RESOURCE_PATH + "/images/arrow-up.png\" border=\"0\"></a>\n" +
                             "                <a class=\"textLink\" href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, up)  + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\">" + parentName + "</a>\n" +
                             "        </div>");
         } else {
             html.append(
                     "        <div class=\"directory parent\" >\n" +
-                            "                <a href=\"" + getRequestURI(request, up) + "\"><img id=\"go-up\"  title=\"up one level\" src=\"" + request.getContextPath() + "/resources/images/arrow-up.png\" border=\"0\"></a>\n" +
+                            "                <a href=\"" + getRequestURI(request, up) + "\"><img id=\"go-up\"  title=\"up one level\" src=\"" + request.getContextPath() + RESOURCE_PATH + "/images/arrow-up.png\" border=\"0\"></a>\n" +
                             "                <a class=\"textLink\" href=\"" + getRequestURI(request, up) + "\">" + parentName + "</a>\n" +
                             "            </div>\n");
         }
@@ -354,7 +357,7 @@ public class FormsServlet extends HttpServlet {
             html.append(
                     "        <div class=\"directory\">\n" +
                             "                <a class=\"bfIconDirectory\" href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, uri) + "/" + aFile.getName()  + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\">\n" +
-                            "                   <img src=\"" + request.getContextPath() + "/resources/images/arrow-down.png\" border=\"0\">" +
+                            "                   <img src=\"" + request.getContextPath() + RESOURCE_PATH + "/images/arrow-down.png\" border=\"0\">" +
                             "                </a>\n" +
                             "                <a class=\"textLink\" title=\""+ aFile.getName()+"\" href=\"#\" onclick=\"" + wrapperStart + getRequestURI(request, uri) + "/" + aFile.getName()  + "&amp;fragment=true&amp;ajax=" + ajaxFunction + wrapperEnd + "\">" + getFileName(aFile,shortenNames)+ "</a>\n" +
                             "        </div>");
@@ -362,7 +365,7 @@ public class FormsServlet extends HttpServlet {
             html.append(
                     "        <div class=\"directory\">\n" +
                             "                <a class=\"bfIconDirectory\" href=\"" + getRequestURI(request, uri) + "/" + aFile.getName() + "\">" +
-                            "                   <img src=\"" + request.getContextPath() + "/resources/images/arrow-down.png\" border=\"0\">" +
+                            "                   <img src=\"" + request.getContextPath() + RESOURCE_PATH + "/images/arrow-down.png\" border=\"0\">" +
                         "                   </a>\n" +
                             "                <a class=\"textLink\" href=\"" + getRequestURI(request, uri) + "/" + aFile.getName() + "\">" + getFileName(aFile,shortenNames) + "</a>\n" +
                             "        </div>");
@@ -374,7 +377,7 @@ public class FormsServlet extends HttpServlet {
         html.append(
                 "        <div class=\"file\">\n" +
                         "       <a class=\"bfIconFile\" href=\"" + request.getContextPath() + "/" + uri + "/addFolder.xhtml" + "\" target=\"_blank\">" +
-                        "          <img src=\"" + request.getContextPath() + "/resources/images/add-folder.png"+"\" border=\"0\">\n" +
+                        "          <img src=\"" + request.getContextPath() + RESOURCE_PATH + "/images/add-folder.png"+"\" border=\"0\">\n" +
                         "       </a>\n" +
                         "       <a class=\"textLink\" title=\"add a folder to this collection\" href=\"" + request.getContextPath() + "/" + uri + "/addFolder.xhtml" + "\" target=\"_blank\">" + "add a folder" + "</a>\n" +
                         "       <a class=\"sourceLink\" title=\""+ "view" +"\" href=\"" + request.getContextPath() + "/" + uri + "/addFolder.xhtml" + "?source=true \" target=\"_blank\">" + "<&nbsp;/&nbsp;>" + "</a>\n" +
@@ -385,7 +388,7 @@ public class FormsServlet extends HttpServlet {
         html.append(
                 "        <div class=\"file\">\n" +
                         "       <a class=\"bfIconFile\" href=\"" + request.getContextPath() + "/" + uri + "/addFileLink.xhtml" + "\" target=\"_blank\">" +
-                        "          <img src=\"" + request.getContextPath() + "/resources/images/add-file.png"+"\" border=\"0\">\n" +
+                        "          <img src=\"" + request.getContextPath() + RESOURCE_PATH + "/images/add-file.png"+"\" border=\"0\">\n" +
                         "       </a>\n" +
                         "       <a class=\"textLink\" title=\"add a file to this collection\" href=\"" + request.getContextPath() + "/" + uri + "/addFileLink.xhtml" + "\" target=\"_blank\">" + "add a file" + "</a>\n" +
                         "       <a class=\"sourceLink\" title=\""+ "view" +"\" href=\"" + request.getContextPath() + "/" + uri + "/addFileLink.xhtml" + "?source=true \" target=\"_blank\">" + "<&nbsp;/&nbsp;>" + "</a>\n" +
@@ -430,7 +433,7 @@ public class FormsServlet extends HttpServlet {
         *  As we want FeatureExplorer on the root level we put a fake file there just as placeholder and output a link to the real document.
         */
         String fileName = aFile.getName();
-        if(fileName.equals("FeatureExplorer.xhtml")){
+        if(fileName.equals("FeatureExplorer.xhtml") && ! uri.contains("reference")){
             fileName = "reference/" + fileName;
         } else if (fileName.equals("Demo.xhtml")){
             fileName = "demo/" + fileName;
@@ -441,7 +444,7 @@ public class FormsServlet extends HttpServlet {
         html.append(
                         "        <div class=\"file\">\n" +
                         "                <a class=\"bfIconFile\" href=\"" + request.getContextPath() + "/" + uri + "/" + fileName + "\" target=\"_blank\">" +
-                        "                   <img src=\"" + request.getContextPath() + "/resources/images/"+iconFile+"\" border=\"0\">\n" +
+                        "                   <img src=\"" + request.getContextPath() + RESOURCE_PATH + "/images/"+iconFile+"\" border=\"0\">\n" +
                         "                </a>\n" +
                         "                <a class=\"textLink\" title=\""+ fileName+"\" href=\"" + request.getContextPath() + "/" + uri + "/" + fileName + "\" target=\"_blank\">" + getFileName(aFile,shortenNames) + "</a>\n" +
                         "                <a class=\"sourceLink\" title=\""+ "view" +"\" href=\"" + request.getContextPath() + "/" + uri + "/" + fileName + "?source=true \" target=\"_blank\">" + "<&nbsp;/&nbsp;>" + "</a>\n" +

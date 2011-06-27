@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>7.7.7.a random() function</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model >
+      <xforms:instance>
+		<root/>
+      </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">7.7.7.a random() function</xforms:label>
+  	</xforms:group>
+  	
+  	<xforms:group>
+  		<xforms:label>
+  			You must see three random numbers between 0.0 and 1.0 for the outputs Test 1, Test 2, and 
+  			Test 3. The Test 3 output is set to be seeded with a source of randomness determined by the 
+  			implementation. 
+  		</xforms:label>
+  	</xforms:group>
+  	
+  	<xforms:group>
+      <xforms:output value="random()">
+        <xforms:label>Test 1 : </xforms:label>
+      </xforms:output>
+    </xforms:group>
+    <xforms:group>
+      <xforms:output value="random()">
+      	<xforms:label>Test 2 : </xforms:label>
+      </xforms:output>
+    </xforms:group>
+    <xforms:group>
+      <xforms:output value="random(true())">
+      	<xforms:label>Test 3 : </xforms:label>
+      </xforms:output>
+    </xforms:group> 
+		
+  </xhtml:body>
+</xhtml:html>

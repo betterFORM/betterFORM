@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <xhtml:head>
+        <xhtml:title>7.8.2.b property() function with conformance-level property</xhtml:title>
+        <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css" />
+        <xforms:model >
+            <xforms:instance xmlns="">
+                <root />
+            </xforms:instance>
+        </xforms:model>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group>
+            <xforms:label class="title">7.8.2.b property() function with conformance-level property</xforms:label>
+        </xforms:group>
+        <xforms:group>
+            <xforms:label>
+            	You must see either the values &quot;basic&quot;, &quot;full&quot;, or an output beginning with 
+            	&quot;basic&quot; or &quot;full&quot; for the Conformance Level output control. You must 
+            	determine if the correct value is displayed for your implementation of XForms. 
+            </xforms:label>
+        </xforms:group>
+        <xforms:output value="property('conformance-level')">
+            <xforms:label>Conformance Level : </xforms:label>
+        </xforms:output>
+    </xhtml:body>
+</xhtml:html>

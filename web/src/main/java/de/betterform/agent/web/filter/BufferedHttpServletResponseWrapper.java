@@ -8,6 +8,9 @@
 package de.betterform.agent.web.filter;
 
 import de.betterform.agent.web.WebUtil;
+import org.apache.http.HeaderElement;
+import org.apache.http.message.BasicHeaderValueParser;
+import org.apache.http.util.CharArrayBuffer;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -137,7 +140,8 @@ public class BufferedHttpServletResponseWrapper extends HttpServletResponseWrapp
         if (strContentType == null) {
             return "";
         }
-        org.apache.commons.httpclient.HeaderElement[] aHeaderelementTmp = org.apache.commons.httpclient.HeaderElement.parseElements(strContentType);
+        HeaderElement[] aHeaderelementTmp = BasicHeaderValueParser.parseElements(strContentType, new BasicHeaderValueParser());
+
 
         strMediaType = null;
         strSubType = null;

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+	    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>7.8.4.b hmac() function using sha384 and sha512 (non-normative)</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css" />
+    <xforms:model >
+      <xforms:instance xmlns="">
+	<root />
+      </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group>
+      <xforms:label class="title">7.8.4.b hmac() function using sha384 and sha512 (non-normative)</xforms:label>
+    </xforms:group>
+    <xforms:group>
+      <xforms:label>
+	You must see the group label &quot;PASS&quot; for all Tests. 
+	If the function does not return the correct value you will see a group label
+	with the word &quot;FAIL&quot; and the incorrect value.
+      </xforms:label>
+    </xforms:group>
+
+    <xforms:group>
+      <xforms:group ref="self::node()[hmac('key', 'abc', 'SHA-384', 'hex') = '30ddb9c8f347cffbfb44e519d814f074cf4047a55d6f563324f1c6a33920e5edfb2a34bac60bdc96cd33a95623d7d638']">
+	<xforms:label>Test 1 PASS </xforms:label>
+      </xforms:group>
+      <xforms:group ref="self::node()[hmac('key', 'abc', 'SHA-384', 'hex') != '30ddb9c8f347cffbfb44e519d814f074cf4047a55d6f563324f1c6a33920e5edfb2a34bac60bdc96cd33a95623d7d638']">
+	<xforms:label>Test 1 FAIL: </xforms:label>
+	<xforms:output value="hmac('key', 'abc', 'SHA-384', 'hex')">
+	  <xforms:label>Bad Value =</xforms:label>
+	</xforms:output>
+      </xforms:group>
+    </xforms:group>
+
+    <xforms:group>
+      <xforms:group ref="self::node()[hmac('key', 'abc', 'SHA-512', 'hex') = '3926a207c8c42b0c41792cbd3e1a1aaaf5f7a25704f62dfc939c4987dd7ce060009c5bb1c2447355b3216f10b537e9afa7b64a4e5391b0d631172d07939e087a']">
+	<xforms:label>Test 2 PASS </xforms:label>
+      </xforms:group>
+      <xforms:group ref="self::node()[hmac('key', 'abc', 'SHA-512', 'hex') != '3926a207c8c42b0c41792cbd3e1a1aaaf5f7a25704f62dfc939c4987dd7ce060009c5bb1c2447355b3216f10b537e9afa7b64a4e5391b0d631172d07939e087a']">
+	<xforms:label>Test 2 FAIL: </xforms:label>
+	<xforms:output value="hmac('key', 'abc', 'SHA-512', 'hex')">
+	  <xforms:label>Bad Value =</xforms:label>
+	</xforms:output>
+      </xforms:group>
+    </xforms:group>
+
+    <xforms:group>
+      <xforms:group ref="self::node()[hmac('key', 'abc', 'SHA-384', 'base64')='MN25yPNHz/v7ROUZ2BTwdM9AR6Vdb1YzJPHGozkg5e37KjS6xgvcls0zqVYj19Y4']">
+	<xforms:label>Test 3 PASS </xforms:label>
+      </xforms:group>
+      <xforms:group ref="self::node()[hmac('key', 'abc', 'SHA-384', 'base64')!='MN25yPNHz/v7ROUZ2BTwdM9AR6Vdb1YzJPHGozkg5e37KjS6xgvcls0zqVYj19Y4']">
+	<xforms:label>Test 3 FAIL: </xforms:label>
+	<xforms:output value="hmac('key', 'abc', 'SHA-384', 'base64')">
+	  <xforms:label>Bad Value =</xforms:label>
+	</xforms:output>
+      </xforms:group>
+    </xforms:group>
+
+    <xforms:group>
+      <xforms:group ref="self::node()[hmac('key', 'abc', 'SHA-512', 'base64')='OSaiB8jEKwxBeSy9PhoaqvX3olcE9i38k5xJh9184GAAnFuxwkRzVbMhbxC1N+mvp7ZKTlORsNYxFy0Hk54Ieg==']">
+	<xforms:label>Test 4 PASS </xforms:label>
+      </xforms:group>
+      <xforms:group ref="self::node()[hmac('key', 'abc', 'SHA-512', 'base64')!='OSaiB8jEKwxBeSy9PhoaqvX3olcE9i38k5xJh9184GAAnFuxwkRzVbMhbxC1N+mvp7ZKTlORsNYxFy0Hk54Ieg==']">
+	<xforms:label>Test 4 FAIL: </xforms:label>
+	<xforms:output value="hmac('key', 'abc', 'SHA-512', 'base64')">
+	  <xforms:label>Bad Value =</xforms:label>
+	</xforms:output>
+      </xforms:group>
+    </xforms:group>
+  </xhtml:body>
+</xhtml:html>

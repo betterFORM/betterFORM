@@ -14,12 +14,12 @@ import de.betterform.generator.UIGenerator;
 import de.betterform.generator.XSLTGenerator;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
+import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.XMLEvent;
 import de.betterform.xml.xforms.AbstractProcessorDecorator;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsException;
-import de.betterform.xml.xslt.TransformerService;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import org.apache.commons.lang.StringUtils;
@@ -54,9 +54,10 @@ public class WebProcessor extends AbstractProcessorDecorator {
     /**
      * Defines the key for accessing (HTTP) session ids.
      */
-    public static final String USERAGENT = "useragent";
+    // todo: harmonize keys should be: REQUEST_URI="REQUEST_URI"; to have the same name when accessing from form with {$REQUEST_URI}
     public static final String REQUEST_URI = "requestURI";
     public static final String REQUEST_URL = "requestURL";
+    public static final String PATH_INFO = "pathInfo";
     public static final String QUERY_STRING = "queryString";
     public static final String CONTEXTROOT = "contextroot";
     public static final String SESSION_ID = "betterform.session.id";
@@ -67,6 +68,14 @@ public class WebProcessor extends AbstractProcessorDecorator {
     public static final String REFERER = "betterform.referer";
     public static final String FORWARD_URL = "betterform.base.url";
     public static final String ADAPTER_PREFIX = "A";
+    public static final String REQUEST_PATH = "requestpath";
+
+
+    /**
+     * constant for relative location of resources (relative to web context).
+     * Hardcoded as resources are considered betterFORM-internal and their loading should not be touched by users.
+     */
+    public static final String RESOURCE_DIR = "WEB-INF/classes/META-INF/resources/";
 
     public static final String ALTERNATIVE_ROOT = "ResourcePath";
 
@@ -342,7 +351,6 @@ public class WebProcessor extends AbstractProcessorDecorator {
                     // updating ... - this is only called when PlainHtmlProcessor is in use
 //                    referer = (String) getProperty(XFormsSession.REFERER);
                     referer = (String) getContextParam(REFERER);
-//                    setProperty("update", "true");
                     setContextParam("update", "true");
                     String forwardTo = request.getContextPath() + "/view?sessionKey=" + getKey() + "&referer=" + referer;
                     response.sendRedirect(response.encodeRedirectURL(forwardTo));
@@ -527,12 +535,8 @@ public class WebProcessor extends AbstractProcessorDecorator {
             xslFile = configuration.getStylesheet(this.useragent);
         }
 
-        String resourcesPath = configuration.getProperty("resources.dir.name");
-        String xsltPath = resourcesPath + "xslt";
-
+        String xsltPath = RESOURCE_DIR + "/xslt";
         XSLTGenerator generator = setupTransformer(xsltPath, xslFile);
-
-        generator.setParameter("resourcesPath", "/" + resourcesPath);
 
         if (relativeUris.equals("true")) {
             generator.setParameter("contextroot", ".");
@@ -544,13 +548,12 @@ public class WebProcessor extends AbstractProcessorDecorator {
             generator.setParameter("keepalive-pulse", getContextParam(KEEPALIVE_PULSE));
         }
 
-        if (useragent.equalsIgnoreCase("dojo") || useragent.equalsIgnoreCase("dojodev")) {
-            generator.setParameter("action-url", getActionURL(true));
-        } else if (useragent.equalsIgnoreCase("html")) {
+        if (useragent.equalsIgnoreCase("html")) {
             generator.setParameter("action-url", getActionURL(false));
-        } else {
-            throw new XFormsConfigException("Invalid useragent: " + useragent + "'");
+        }else{
+            generator.setParameter("action-url", getActionURL(true));
         }
+
         if (isDebugOn()) {
             generator.setParameter("debug-enabled", "true");
         }
@@ -569,16 +572,20 @@ public class WebProcessor extends AbstractProcessorDecorator {
         String triggerPrefix = Config.getInstance().getProperty("betterform.web.triggerPrefix");
         generator.setParameter("trigger-prefix", triggerPrefix);
 
-//        generator.setParameter("user-agent", request.getHeader("User-Agent"));
-
+        if (LOGGER.isDebugEnabled()) {
+            DOMUtil.prettyPrintDOM(((XFormsProcessorImpl)  this.xformsProcessor).getContainer().getDefaultModel().getDefaultInstance().getInstanceDocument());
+        }
         generator.setParameter("locale", locale);
+//        if(useragent.equals("bfEditor")){
+//            new DefaultSerializer((XFormsProcessorImpl) this.xformsProcessor).inlineInstances(this.xformsProcessor.getXForms().getOwnerDocument());
+//        }
         return generator;
     }
 
     private void doIncludes() {
         try {
             Node input = getXForms();
-            String xsltPath = this.configuration.getProperty(WebFactory.RESOURCE_PATH_PROPERTY) + "xslt";
+            String xsltPath = RESOURCE_DIR + "xslt/";
             XSLTGenerator xsltGenerator = setupTransformer(xsltPath, "include.xsl");
             String baseURI = getBaseURI();
             String uri = baseURI.substring(0, baseURI.lastIndexOf("/") + 1);

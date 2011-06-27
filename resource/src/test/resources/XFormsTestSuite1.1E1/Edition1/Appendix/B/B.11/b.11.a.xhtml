@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+  <xhtml:head>
+  	<xhtml:title>b.11.a Replace Attribute</xhtml:title>
+  	<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css" />
+  	<xforms:model>
+	  	<xforms:action ev:event="xforms-ready">
+	  	   <xforms:setvalue ref="item[2]/@key" value="../../item[1]/@key"/>
+		  </xforms:action>
+  		<xforms:instance>
+  			<items xmlns="">
+  				<item key="0" />
+  				<item key="4711" />
+  			</items>
+  		</xforms:instance>
+  	</xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">
+  			b.11.a Replace Attribute
+  		</xforms:label>
+  	</xforms:group>
+  	<xforms:group>
+  		<xforms:label>
+  			You must see the value '0' for both item keys : 
+  		</xforms:label>
+  		<xforms:repeat nodeset="item">
+  			<xforms:output
+  				class="hlist"
+  				value="concat(./@key , ' ')">
+  				<xforms:label>Key : </xforms:label>
+  			</xforms:output>
+  		</xforms:repeat>
+  	</xforms:group>
+  </xhtml:body>
+</xhtml:html>

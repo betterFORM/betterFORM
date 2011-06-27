@@ -1,0 +1,259 @@
+<!DOCTYPE html [
+        <!ELEMENT html (head|body)*>
+        <!ATTLIST html
+                xmlns CDATA #REQUIRED
+                xml:lang CDATA #REQUIRED
+                lang CDATA #REQUIRED>
+        <!ELEMENT head (title|meta)*>
+        <!ELEMENT title (#PCDATA)>
+        <!ELEMENT meta (#PCDATA)>
+        <!ATTLIST meta
+                name CDATA #REQUIRED
+                content CDATA #REQUIRED>
+        <!ELEMENT body (div)*>
+        <!ATTLIST body
+                id CDATA #REQUIRED
+                class CDATA #REQUIRED>
+        <!ELEMENT div (a|div|p|ul|table)*>
+        <!ATTLIST div
+                class CDATA #IMPLIED
+                id CDATA #IMPLIED>
+        <!ELEMENT a (img)*>
+        <!ATTLIST a
+                class CDATA #IMPLIED
+                href CDATA #REQUIRED
+                id CDATA #IMPLIED
+                style CDATA #IMPLIED
+                target CDATA #IMPLIED>
+        <!ELEMENT p (strong)*>
+        <!ATTLIST p
+                class CDATA #REQUIRED>
+        <!ELEMENT strong (#PCDATA)>
+        <!ELEMENT ul (li)*>
+        <!ATTLIST ul
+                id CDATA #REQUIRED>
+        <!ELEMENT li (div)*>
+        <!ATTLIST li
+                class CDATA #REQUIRED>
+        <!ELEMENT table (tr)*>
+        <!ATTLIST table
+                style CDATA #REQUIRED>
+        <!ELEMENT tr (td)*>
+        <!ELEMENT td (a|h3|blockquote|h4|img)*>
+        <!ELEMENT img (#PCDATA)>
+        <!ATTLIST img
+                alt CDATA #REQUIRED
+                src CDATA #REQUIRED>
+        <!ELEMENT h3 (#PCDATA)>
+        <!ELEMENT blockquote (#PCDATA)>
+        <!ELEMENT h4 (#PCDATA)>
+        ]>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+    <head>
+        <!--
+          ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+          ~ Licensed under the terms of BSD License
+          -->
+
+        <title>betterFORM limeGreen: XForms Dojo Framework</title>
+		<meta name="name" content="index"/>
+    </head>
+    <body id="index" class="bf tundra">
+        <div id="sub-header">
+            <!--<a href="demo.xhtml" class="link" id="demoButton"></a>-->
+            <!--<a href="javascript:animateOne();" class="link" id="demoButton"></a>-->
+            <a href="../dashboard.html" class="link" id="demoButton" target="_blank"></a>
+            <a href="download.html" class="link" id="getitButton"></a>
+            <a href="product.html" class="link" id="productButton"></a>
+        </div>
+        <div id="main-content">
+			<div>
+				<div id="leftCol" class="col">
+                    <p class="statement">
+                        <strong>betterFORM</strong> ist eine Plattform für die schnelle Entwicklung von
+                        <strong>XML Anwendungen</strong>, die <strong>vom Client bis zur Speicherung</strong>
+                        vollständig auf XML Technologien aufbauen.
+                    </p>
+<!--
+					<p>
+						<strong>betterFORM</strong> ist eine Plattform für die schnelle Entwicklung von Web
+						Applikationen, die
+						vollständig auf offenen Standards wie <strong>XML</strong>, <strong>XForms 1.1</strong>,
+						<strong>XPath 2</strong>, <strong>XSLT
+						2</strong>, <strong>XQuery</strong> und anderen beruhen. betterFORM selbst ist als <strong>Open
+						Source</strong>
+						verfügbar.
+					</p>
+
+					<p>
+						Durch den deklarativen Ansatz wird der massive Einsatz von Javascript vermieden und die
+						Unterhaltungskosten gesenkt. Attraktive, konsistente und Benutzer-freundliche
+						Anwendungsoberflächen,
+						gepaart mit einer Modell-getriebenen Architektur erlauben selbst die komplexesten Anforderungen
+						umzusetzen.
+					</p>
+
+					<p>
+						<strong>betterFORM XRX</strong> ist eine kompletter XML Anwendungsserver, der einen Grossteil
+						der <strong>W3C XML standards</strong> in einer offenen, erweiterbaren Plattform vereint.
+						XRX-Anwendungen
+						verwenden XML Technologien von der Benutzeroberfläche bis zur Datenspeicherung und sind leicht
+						zu
+						managen und flexibel an neue Anforderungen anpassbar.
+					</p>
+-->
+				</div>
+
+				<div id="rightCol" class="col">
+                <ul id="slider2">
+                    <li class="panel1">
+                        <div class="textSlide">
+                            <table style="width:555px;height:180px;">
+                                <tr>
+                                    <td>
+                            <a href="http://exist.sourceforge.net" target="_blank"><img src="../images/existdb.gif" alt="eXist db"/></a>
+                            <h3>eXist-db - Open Source Native XML Database</h3>
+                            <blockquote>
+                                "Der betterFORM XForms Prozessor ist Bestandteil des eXist-db Application Servers.
+                                Die Kombination der Datenspeicherungs- und Abfragemöglichkeiten von eXist-db mit der
+                                vollen Mächtigkeit des XForms 1.1 Standards, die von betterFORM XForms bereitgestellt
+                                wird, erlaubt eXist-db Benutzern schnell komplette XML Anwendungen
+                                zu entwickeln. "
+                            </blockquote>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+                    <li class="panel2">
+                        <div class="textSlide">
+                            <table style="width:555px;height:180px;">
+                                <tr>
+                                    <td>
+                            <a href="http://www.existsolutions.com/" target="_blank"><img src="../images/existsolutions-logo.png" alt="eXist Solutions GmbH"/></a>
+                            <h3>eXist Solutions GmbH</h3>
+                            <blockquote>
+                                "exist-db und der betterFORM XForms Prozessor ergänzen sich in idealer Weise und
+                                diese logische Synergie erlaubt die schnelle Entwicklung leistungestarker XRX Anwendungen.
+                                eXist Solutions und betterFORM arbeiten oft eng zusammen, um Expertenwissen in Kundenprojekten
+                                bereitzustellen."
+                            </blockquote>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+                    <li class="panel4">
+                        <div class="textSlide">
+                            <table style="width:555px;height:180px;">
+                                <tr>
+                                    <td>
+                            <a href="http://comsoft.aero/index.htm" target="_blank"><img src="../images/comsoft_logo_200x76.gif" alt="Comsoft GmbH"/></a>
+                            <h3>Air Traffic Control</h3>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+                    <li class="panel5">
+                        <div class="textSlide">
+                            <table style="width:555px;height:180px;">
+                                <tr>
+                                    <td>
+                            <a href="http://issat.dcaf.ch/" target="_blank"><img src="../images/issat-dcaf-logo.gif" alt="ISSAT / DCAF"/></a>
+                            <h4>The Geneva Centre for the Democratic Control of Armed Forces (DCAF)</h4>
+                            <h3>International Security Sector Advisory Team (ISSAT)</h3>
+                            <blockquote>
+                                "betterFORM bietet die kompletteste XForms 1.1. Implementierung, die ich finden konnte
+                                und ist eine grossartige Plattform, um die Vorteile der XRX Architektur umsetzen zu
+                                können. Das betterFORM Team ist kenntnisreich, schnell reagierend und es macht Freude
+                                mit ihnen zusammenzuarbeiten."
+                            </blockquote>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+                    <li class="panel6">
+                        <div class="textSlide">
+                            <table style="width:555px;height:180px;">
+                                <tr>
+                                    <td>
+                            <a href="http://www.opensquare.co.uk" target="_blank"><img src="../images/opensq-logo.png" alt="OpenSquare"/></a>
+                            <h3>cloud-based insurance components</h3>
+                                        <blockquote>
+                                            "Bei Open Square entwickeln wir fortgeschrittene Lösungen für Versicherer, die auf offenen Standards und Open Source Technologie
+                                            basieren. betterFORM passt perfekt in unser Konzept - es hält sich eng an die W3C Spezifikationen, hat eine nicht-proprietäre Basis
+                                            und die Entwickler haben ihr Engagement für Open Source über Jahre bewiesen. betterFORM ist für uns schnell zu einer Kernkomponente
+                                            in unserer Benutzerschnittstelle geworden; es bietet nicht nur fortgeschrittene und generische Formulartechnologie, sondern auch
+                                            die Entwickler sind sehr flexibel und schnell in der Beantwortung von Fragen oder der Umsetzung neuer Anforderungen."
+                                        </blockquote>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+                    <li class="panel7">
+                        <div class="textSlide">
+                            <table style="width:555px;height:180px;">
+                                <tr>
+                                    <td>
+                                        <a href="http://www.kavedo.com/" target="_blank"><img src="../images/kavedo_logo.png" alt="Kavedo OG"/></a>
+                                        <h3>Kavedo OG - digital solutions</h3>
+                                        <blockquote>
+                                            "betterFORM hat uns entscheidend geholfen einen durchgängigen XML basierten Worklow für unser Projekt zu verwirklichen.
+                                            Zudem haben wir das betterFORM Team als äußerst kompetente Experten kennengelernt und werden gerne wieder mit ihnen zusammenarbeiten."
+                                        </blockquote>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+                    <li class="panel8">
+                        <div class="textSlide">
+                            <table style="width:555px;height:180px;">
+                                <tr>
+                                    <td>
+                                        <a href="http://www.codewerk.at/" target="_blank" style="vertical-align: top;float:left;"><img src="../images/codewerk-logo.jpg" alt="CodeWerk GmbH"/></a>
+                                        <a href="http://www.tiani-spirit.com/" target="_blank" style="vertical-align: top;float: right;"><img src="../images/spirit_logo_small.jpg" alt="Tiani 'Spirit' GmbH"/></a>
+                                        <h3>CodeWerk GmbH + Tiani "Spirit" GmbH</h3>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+                    <li class="panel9">
+                        <div class="textSlide">
+                            <table style="width:555px;height:180px;">
+                                <tr>
+                                    <td>
+                                        <img src="../images/mom-logo.png" alt="Monasterium Collaborative Archive."/>
+                                        <h3>Monasterium Collaborative Archive</h3>
+                                        <blockquote>
+                                            "betterFORM's 'XRX approach' ist der ideale Weg für uns, um XML-basierte und
+                                            benutzerfreudliche, kollaborative Webapplikationen für eine Vielzahl von
+                                            Anforderungen zu entwicklen. Das Design von Benutzeroberflächen mit XForms
+                                            ist schnell und flexibel und erlaubte uns ein komplettes Content Management
+                                            System für das Indexieren und Annotieren von XML-kodierten Archiv Metadaten
+                                            zu implementieren. The hoch modulare Architektur des betterFORM Quellcodes
+                                            ermöglichte uns, eigene Widgets und Funktionen hinzuzufügen. Dank der vollständig
+                                            autonomen betterFORM-eXist Integration war es einfach unsere Applikationen
+                                            auf verschiedenen Servers zu installieren."
+                                        </blockquote>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+
+                </ul>
+					<!--
+	<strong>betterFORM Central - up-to-date patches, automatic upgrades, issue-tracking for just
+		79€ / month</strong>
+-->
+				</div>
+			</div>
+        </div>
+    </body>
+</html>

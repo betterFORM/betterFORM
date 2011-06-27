@@ -1,0 +1,31 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+            xmlns:xforms="http://www.w3.org/2002/xforms"
+            xmlns:ev="http://www.w3.org/2001/xml-events">
+    <xhtml:head>
+        <xhtml:title>4.7.e3 null search for instance causes exception</xhtml:title>
+        <xhtml:link rel="stylesheet" href="../../driverPages/html/TestSuite11.css" type="text/css" />
+        <xforms:model id="model_1">
+            <xforms:instance id="instance_1">
+                <data1>This is data from instance 1.</data1>
+            </xforms:instance>
+            <xforms:submission id="submission_1" method="get" replace="instance" action="4.7.e3_data.xml" instance="invalid"/>
+        	<xforms:message level="modal" ev:event="xforms-binding-exception">xforms-binding-exception</xforms:message>
+        </xforms:model>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group>
+            <xforms:label class="title">4.7.e3 null search for instance causes exception</xforms:label>
+        </xforms:group>
+        <xforms:group>
+            <xforms:label>
+                When you activate the Submit control below you must see an xforms-binding-exception message or a fatal 
+                error due to an xforms-binding-exception message.
+            </xforms:label>
+        </xforms:group>
+        <xforms:submit submission="submission_1">
+            <xforms:label>Submit</xforms:label>
+        </xforms:submit>
+        
+    </xhtml:body>
+</xhtml:html>

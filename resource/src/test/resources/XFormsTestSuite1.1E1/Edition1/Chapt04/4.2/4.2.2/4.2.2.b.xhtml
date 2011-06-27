@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml"
+	xmlns:xforms="http://www.w3.org/2002/xforms">
+  <xhtml:head>
+  	<xhtml:title>4.2.2.b xforms-model-construct-done</xhtml:title>
+  	<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+  	<xforms:model>
+  		<xforms:instance src="4.2.2.b.data.xml" xmlns=""/>
+  	</xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">4.2.2.b xforms-model-construct-done</xforms:label>
+  	</xforms:group>
+  	<xforms:group>
+  		<xforms:label>
+  		<!-- 
+  			The form control should behave in the same manner as if it had bound to a model item with the 
+  			relevant model item property resolved to false. 
+  		 -->
+	  		You must not see the value &quot;Mitsubishi&quot;:
+		</xforms:label>
+  	</xforms:group>
+
+	<!-- in the external data instance the car attribute does not exist -->
+	<xforms:output ref="/car">
+		<xforms:label></xforms:label>
+	</xforms:output>
+
+	
+  </xhtml:body>
+</xhtml:html>

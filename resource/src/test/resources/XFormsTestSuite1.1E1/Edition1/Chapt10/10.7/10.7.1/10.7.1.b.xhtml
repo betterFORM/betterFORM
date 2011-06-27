@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms" 
+            xmlns:xhtml="http://www.w3.org/1999/xhtml"
+            xmlns:ev="http://www.w3.org/2001/xml-events">
+    <xhtml:head>
+        <xhtml:title>10.7.1.b control element precedence tests</xhtml:title>
+        <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css"
+            type="text/css" />
+        <xforms:model id="mod1" >
+            <xforms:instance xmlns="">
+                <data>
+                  <name>Alex</name>
+                  <age>23</age>
+                  <dob>1/25/72</dob> 
+                </data>
+            </xforms:instance>
+            <xforms:instance id="focus_holder" xmlns="">
+              <root>
+                <focus>Age</focus>
+                <focus2>DOB</focus2>
+              </root>
+            </xforms:instance>
+        </xforms:model>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group>
+          <xforms:label class="title">10.7.1.b control element precedence tests</xforms:label>
+        </xforms:group>
+        <xforms:group>
+          <xforms:label>
+            The triggers below must shift the focus to the proper form controls when activated. 
+            The &quot;Set Focus To Age&quot; trigger must place the focus into the input control labeled Age. 
+            The &quot;Set Focus To DOB&quot; trigger must place the focus into the input control labeled DOB. 
+          </xforms:label>
+        </xforms:group>
+        <xforms:group>
+          <xforms:input id="Name" ref="name">
+            <xforms:label>Name:</xforms:label>
+          </xforms:input>
+        </xforms:group>
+        <xforms:group>
+          <xforms:input id="Age" ref="age">
+            <xforms:label>Age:</xforms:label>
+          </xforms:input>
+        </xforms:group>
+        <xforms:group>
+          <xforms:input id="DOB" ref="dob">
+            <xforms:label>DOB:</xforms:label>
+          </xforms:input>
+        </xforms:group>
+        
+        <xforms:trigger>
+	      <xforms:label>Set Focus To Age</xforms:label>
+	        <!-- value attr with inline content, value attr has precedence -->
+			<xforms:setfocus ev:event="DOMActivate">
+			  <xforms:control value="instance('focus_holder')/focus">Name</xforms:control>
+		    </xforms:setfocus>
+		</xforms:trigger>
+		
+		<xforms:trigger>
+	      <xforms:label>Set Focus To DOB</xforms:label>
+	        <!-- control attr with control element, control element has precedence -->
+			<xforms:setfocus ev:event="DOMActivate" control="Name">
+			  <xforms:control value="instance('focus_holder')/focus2">Age</xforms:control>
+		    </xforms:setfocus>
+		</xforms:trigger>
+		
+    </xhtml:body>
+</xhtml:html>

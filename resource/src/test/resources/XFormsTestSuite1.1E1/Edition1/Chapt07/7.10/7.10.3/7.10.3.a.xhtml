@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+            xmlns:xforms="http://www.w3.org/2002/xforms">
+     <xhtml:head>
+          <xhtml:title>7.10.3.a id() function</xhtml:title>
+          <xforms:model >
+               <xforms:instance xmlns="">
+                    <root>
+                         <level_1a>
+                              <level_1achild xml:id="a">Node-A</level_1achild>
+                              <level_1achild xml:id="d">Node-D</level_1achild>
+                         </level_1a>
+                         <level_1b>
+                              <level_1bchild xml:id="b">Node-B</level_1bchild>
+                              <level_1bchild xml:id="f">Node-F</level_1bchild>
+                              <level_1bchild xml:id="c">Node-C</level_1bchild>
+                         </level_1b>
+                    </root>
+               </xforms:instance>
+          </xforms:model>
+          <xhtml:link href="../../../driverPages/forms/TestSuite11.css" rel="stylesheet" type="text/css" />
+     </xhtml:head>
+     <xhtml:body>
+          <xforms:group>
+               <xforms:label class="title">7.10.3.a id() function</xforms:label>
+          </xforms:group>
+          <xforms:group>
+               <xforms:label>
+                 You must see the values &quot;Node-A&quot;, &quot;Node-B&quot;, and &quot;Node-C&quot; for the Node 
+                 Values output. 
+            </xforms:label>
+          </xforms:group>
+          <xforms:repeat nodeset="id('a b c')">
+               <xforms:output ref=".">
+                    <xforms:label>Node Values : </xforms:label>
+               </xforms:output>
+          </xforms:repeat>
+          
+     </xhtml:body>
+</xhtml:html>

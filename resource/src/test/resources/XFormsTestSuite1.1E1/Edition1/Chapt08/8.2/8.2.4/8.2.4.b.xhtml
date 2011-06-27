@@ -1,0 +1,37 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+	  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"               
+      xmlns:xforms="http://www.w3.org/2002/xforms">
+  <xhtml:head>
+    <xhtml:title>8.2.4.b alert element uses inline text</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+       <xforms:instance xmlns=""> 
+          <data>   
+       	     <numeric_field>0</numeric_field>   
+          </data>
+       </xforms:instance>
+       <xforms:bind nodeset="numeric_field" type="xsd:integer"/>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+  		<xforms:label class="title">8.2.4.b alert element uses inline text</xforms:label>
+  	</xforms:group>	
+	<xforms:group>
+		<xforms:label>
+		  When you enter an alphanumeric value in the input field you must see a message that says 
+		  &quot;Inline Alert Message&quot;. 
+		</xforms:label>	
+	</xforms:group>
+
+  	<xforms:input ref="numeric_field">
+  		<xforms:label>Enter 'abc', tab out, and see the alert message</xforms:label>
+  		<xforms:alert>Inline alert message</xforms:alert>
+  	</xforms:input>
+	
+  </xhtml:body>
+</xhtml:html>

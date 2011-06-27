@@ -1,0 +1,38 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<xhtml:html 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+	  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"               
+      xmlns:xforms="http://www.w3.org/2002/xforms">
+  <xhtml:head>
+    <xhtml:title>10.16.c message element interface created at run time</xhtml:title>
+    <xhtml:link rel="stylesheet" href="../../driverPages/forms/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+       <xforms:instance xmlns="">       
+			<mail>
+				<message>Instance Message</message>
+				<body/>
+			</mail>
+       </xforms:instance>
+       <xforms:bind id="inst_alert" nodeset="/mail/message"/>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group>
+	  	<xforms:label class="title">10.16.c message element interface created at run time</xforms:label>
+  	</xforms:group>
+	<xforms:group>
+		<xforms:label>
+		  When you activate the See Message trigger you must see a message that says &quot;Hello, world!&quot;. 
+		</xforms:label>
+	</xforms:group>
+	<xforms:group>
+	  <xforms:trigger>
+	    <xforms:label>See Message</xforms:label>
+	  	<xforms:setvalue ev:event="DOMActivate" ref="message">world</xforms:setvalue>
+		<xforms:message ev:event="DOMActivate" level="modal">Hello, <xforms:output value="message"/>!</xforms:message>
+	  </xforms:trigger>
+	</xforms:group>
+  </xhtml:body>
+</xhtml:html>

@@ -108,6 +108,8 @@ public abstract class AbstractFormControl extends BindingElement implements Defa
             ModelItem modelItem = this.model.getInstance(getInstanceId()).getModelItem(n);
             if (modelItem != null) {
                 return UIElementStateUtil.getDatatype(modelItem, this.element);
+            }else{
+                return "string";
             }
         }
 

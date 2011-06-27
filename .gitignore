@@ -20,14 +20,19 @@ version.info
 
 
 ## directories to ignore
-.gitignore
 .svn
+resource/target/*
 target/*
 betty/target/*
 core/target/*
 eXist/target-utils/*
 eXist/target/*
 tools/installer/target/*
+tools/editor/target/*
 web/target/*
 xApp/target/*
 zaphod/target/*
+
+## files to ignore
+tools/installer/betterform-install*
+tools/installer/target-utils/*

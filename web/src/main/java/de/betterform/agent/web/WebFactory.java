@@ -12,6 +12,7 @@ import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xslt.TransformerService;
 import de.betterform.xml.xslt.impl.CachingTransformerService;
+import de.betterform.xml.xslt.impl.ClasspathResourceResolver;
 import de.betterform.xml.xslt.impl.FileResourceResolver;
 import de.betterform.xml.xslt.impl.HttpResourceResolver;
 import net.sf.ehcache.CacheManager;
@@ -36,7 +37,6 @@ public class WebFactory {
     public static final String LOG_CONFIG = "log4j.file";
     public static final String BETTERFORM_SUBMISSION_RESPONSE = "betterform.submission.response";
     public static final String XSLT_CACHE_PROPERTY = "xslt.cache.enabled";
-    public static final String RESOURCE_PATH_PROPERTY = "resources.dir.name";
 
     public static final String UPLOADDIR_PROPERTY = "uploadDir";
     public static final String RELATIVE_URI_PROPERTY = "forms.uri.relative";
@@ -109,7 +109,7 @@ public class WebFactory {
                     throw new XFormsConfigException("This useragent is not configured properly: '" + useragent + "'");
         }
                 processor = (WebProcessor) o;
-        processor.setUseragent(useragent);
+                processor.setUseragent(useragent);
                 return processor;
             }
             catch (ClassNotFoundException cnfe) {
@@ -159,16 +159,17 @@ public class WebFactory {
      * @throws XFormsConfigException a Config exception will occur in case there's no valid setting for XSLT_CACHE_PROPERTY,XSLT_DEFAULT_PROPERTY or
      *                               XSLT_PATH_PROPERTY
      */
-    public void initTransformerService() throws XFormsConfigException {
+    public void initTransformerService(String realPath) throws XFormsConfigException {
         CachingTransformerService transformerService = new CachingTransformerService();
 
         transformerService.addResourceResolver(new FileResourceResolver());
+        transformerService.addResourceResolver(new ClasspathResourceResolver(realPath));
         transformerService.addResourceResolver(new HttpResourceResolver());
 
         
         boolean xsltCacheEnabled = Config.getInstance().getProperty(WebFactory.XSLT_CACHE_PROPERTY).equalsIgnoreCase("true");
 
-        String xsltPath = Config.getInstance().getProperty(WebFactory.RESOURCE_PATH_PROPERTY) + "xslt/";
+        String xsltPath = WebProcessor.RESOURCE_DIR + "xslt/";
         String xsltDefault = Config.getInstance().getStylesheet(this.userAgentId);
 
         if (xsltCacheEnabled) {
@@ -228,8 +229,15 @@ public class WebFactory {
      * @return the absolute path or path relative to the servlet context
      */
     public static final String resolvePath(String path, ServletContext servletContext) {
-        if (!new File(path).isAbsolute())
-            path = servletContext.getRealPath(path);
+        String tmpPath;
+        if (!new File(path).isAbsolute()) {
+            tmpPath = servletContext.getRealPath(path);
+            if (tmpPath == null) {
+                tmpPath =  servletContext.getRealPath(".") + "/" + path;
+            }
+
+            path = tmpPath;
+        }
 
         return path;
     }

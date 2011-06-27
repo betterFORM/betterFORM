@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<app name="xfTimeTracker" rootCollection="">
+    <app-id/>
+    <app-name/>
+    <app-version-id/>
+    <app-description-text/>
+    <app-creator-text/>
+    <app-license-type-code/>
+    <commercial-see-app-license-uri/>
+    <app-license-uri/>
+    <breadcrumb-label/>
+    <data-collection/>
+
+
+
+    <organisation></organisation>
+    <description></description>
+    <version></version>
+    <release-date></release-date>
+    <authors>
+        <author></author>
+    </authors>
+    <license></license>
+    <dependencies>
+        <dependency/>
+    </dependencies>
+    <dbPath></dbPath>
+</app>
