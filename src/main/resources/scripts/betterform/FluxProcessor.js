@@ -769,9 +769,10 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
             }
 
             var externalCssToLoad = xmlEvent.contextInfo.externalCSS;
+
             if (externalCssToLoad != undefined && externalCssToLoad != "") {
                 var styles = externalCssToLoad.split('#');
-
+                var headID = document.getElementsByTagName("head")[0];
                 for (var i = 0; i <= styles.length; i = i+1) {
                     if (styles[i] != undefined && styles[i] != "") {
                         var newScript = undefined;
@@ -804,7 +805,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
             var externalJavaScriptToLoad = xmlEvent.contextInfo.externalJavascript;
             if (externalJavaScriptToLoad != undefined && externalJavaScriptToLoad != "") {
                 var scripts = externalJavaScriptToLoad.split('#');
-
+                var headID = document.getElementsByTagName("head")[0];
                 for (var i = 0; i <= scripts.length; i = i+1) {
                     if (scripts[i] != undefined && scripts[i] != "") {
                         var newScript = undefined;
