@@ -46,9 +46,11 @@
                                         <xsl:apply-templates select="$current//xsd:attributeGroup" mode="bind"/>
                                         <xsl:apply-templates select="$current//xsd:attribute" mode="bind"/>
                                         <xsl:apply-templates select="$current//xsd:complexType[@mixed='true']" mode="bind"/>
-                                        <xf:bind nodeset="xml-event">
-                                            <xsl:apply-templates select="$current//xsd:attributeGroup" mode="event-bind"/>
-                                        </xf:bind>
+                                        <xsl:if test="exists(.//xsd:attributeGroup[@ref='xforms:XML.Events'])">
+                                            <xf:bind nodeset="xml-event">
+                                                <xsl:apply-templates select="$current//xsd:attributeGroup" mode="event-bind"/>
+                                            </xf:bind>
+                                        </xsl:if>
                                     </xf:model>
                                 </div>
                                 <xf:group ref="xfElement" id="properties" appearance="bf:verticalTable">

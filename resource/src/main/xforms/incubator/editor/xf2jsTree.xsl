@@ -21,12 +21,15 @@
                 <script type="text/javascript" src="/betterform/bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.hotkeys.js"></script>
                 <script type="text/javascript" src="/betterform/bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
                 <script type="text/javascript" src="/betterform/bfResources/scripts/betterform/xfEditorUtil.js"></script>
+                <script type="text/javascript" src="/betterform/bfResources/scripts/betterform/editor/addMenu.js"></script>
                 <script type="text/javascript">
                     dojo.require("dijit.layout.ContentPane");
+                    dojo.require("dijit.Menu");
                     dojo.require("dijit.MenuBar");
                     dojo.require("dijit.PopupMenuBarItem");
                     dojo.require("dijit.MenuItem");
-                    
+                    dojo.require("dijit.PopupMenuItem");
+
                     dojo.require("betterform.editor.Editor");
                     dojo.require("betterform.Editor");
                     dojo.require("dijit.layout.TabContainer");
@@ -35,6 +38,8 @@
                     dojo.require("dijit.form.FilteringSelect");
                     dojo.require("dojo.data.ItemFileReadStore");
                     dojo.require("dojox.layout.FloatingPane");
+                    dojo.require("dijit.TitlePane");
+
                     var attrEditor = new betterform.Editor();
                     console.debug("attrEditor.: ",attrEditor);
 
@@ -83,7 +88,7 @@
                     }
                     #docPane{
                         background: transparent;
-                        border-radius: 10px 0 0 10px;
+                        border-radius: 10px;
                         width:70%;
                         float:left;
                         margin-top:90px;
@@ -99,6 +104,7 @@
                     #xfDoc .jstree-hovered{
                         width:100%;
                         background:green;
+                        border-radius:10px;
                     }
                     #xfDoc .jstree-clicked{
                         width:100%;
@@ -139,7 +145,7 @@
                         min-height: 200px;
                         overflow: auto;
                         width: 280px;
-                        margin-top:90px;
+                        margin-top:79px;
                         border-left:thin solid #cecece;
                         border-bottom:thin solid #cecece;
                         border-bottom-left-radius:10px;
@@ -155,16 +161,16 @@
                     }
                     #docPane .jstree li{
                         border: thin solid #999999;
-                        border-radius: 10px 0 0 10px;
+                        border-radius: 5px;
                         margin-bottom: 5px;
                         margin-right:10px;
-
+                        line-height:24px;
                     }
                     .jstree a{
                         font-size:1.2em;
-                        height:28px;
                         padding:5px;
                         width:95%;
+                        position:relative;
                     }
                     #xfMount{
                         background:#666666;
@@ -224,9 +230,15 @@
 
                     .buttonWrapper{
                         display:none;
+                        position:absolute;
+                        top:0;
+                        right:0;
                     }
-                    .bf #mainWindow .jstree a:hover .buttonWrapper{
+
+                    .bf #mainWindow .jstree .jstree-clicked .buttonWrapper
+                    {
                         display:inline;
+
                     }
                     .jstree-default.jstree-focused {
                         background:white;
@@ -238,7 +250,7 @@
                         color:#444444;
                         border-color:limegreen;
                         border:2px solid limegreen;
-                        border-radius:10px 0;
+                        border-radius:10px;
                     }
                     .bf #mainWindow .jstree-hovered{
                         width:95%;
@@ -380,9 +392,13 @@
                         margin:10px;
                     }
                     .textNode{display:inline;}
+
+                    .bf #rightPane .dijitTitlePaneTitle {
+                        color:#777777;
+                    }
                 </style>
             </head>
-            <body>
+            <body class="bf">
 
                 <div style="display:none">
                     <xf:model id="model-1">
@@ -424,10 +440,29 @@
                             <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
                        </xf:submission>
 
+                        <xf:submission id="s-preview"
+                                       method="put"
+                                       replace="none">
+                            <xf:resource value="concat(bf:appContext('webapp.realpath'),'forms/tmp/', bf:appContext('fileName'))"/>
+                            <xf:action ev:event="xforms-submit-done">
+                                <xf:setvalue ref="instance('i-controller')/preview-path" value="concat(bf:appContext('contextroot'),'/forms/tmp/', bf:appContext('fileName'))"/>
+                                <xf:load ref="instance('i-controller')/preview-path" show="new"/>
+                            </xf:action>
+                            <xf:action ev:event="xforms-submit-error">
+<!--
+                                <xf:setvalue ref="instance('i-controller')/preview-msg"
+                                             value="concat('preview failed for path: ',bf:appContext('webapp.realpath'),'forms/tmp/', bf:appContext('fileName'))"/>
+-->
+                                <xf:message ref="instance('i-controller')/preview-msg"/>
+                            </xf:action>
+                       </xf:submission>
+
                        <xf:instance id="i-controller">
                            <data xmlns="">
                                <originalDoc/>
                                <save-msg></save-msg>
+                               <preview-msp>Error previewing file</preview-msp>
+                               <preview-path/>
                            </data>
                        </xf:instance>
                     </xf:model>
@@ -438,7 +473,10 @@
                         <xf:label>this is hidden</xf:label>
                         <xf:send submission="s-dom2xforms"/>
                     </xf:trigger>
-
+                    <xf:trigger id="preview">
+                        <xf:label>this is hidden</xf:label>
+                        <xf:send submission="s-preview"/>
+                    </xf:trigger>
                 </div>
                 <div id="mainWindow" style="width:100%;">
                     <div dojoType="dojo.data.ItemFileReadStore" data-dojo-id="stateStore" url="/betterform/forms/incubator/editor/xfDatatype.json" />
@@ -452,6 +490,10 @@
                                         New
                                     </div>
 -->
+                                    <div dojoType="dijit.MenuItem"
+                                         onClick="dijit.byId('fluxProcessor').dispatchEvent('preview');">
+                                        Preview Strg+p
+                                    </div>
                                     <div dojoType="dijit.MenuItem"
                                          onClick="serializeTree();">
                                         Save
@@ -606,8 +648,17 @@
                         var serializedTree = new XMLSerializer().serializeToString( document.getElementById("xfDoc") );
                         console.log(serializedTree);
                         dijit.byId("fluxProcessor").setControlValue("save",serializedTree);
-                        dijit.byId("fluxProcessor").dispatchEvent("transform2xf",serializedTree);
+                        dijit.byId("fluxProcessor").dispatchEvent("transform2xf");
 
+                    }
+
+                    function displayAddMenu(event,targetId,xfType){
+                        console.log("displayMenu ",targetId, xfType);
+                        console.log("event ",event);
+
+                        event.stopPropagation();
+                        event.cancelBubble=true;
+                        return false;
                     }
                     /* ]]> */
                 </script>
@@ -685,6 +736,9 @@
 
                                         "Alt+down" : function (event) {
                                             attrEditor.moveNodeDown(this);
+                                        },
+                                        "ctrl+p" : function (event) {
+                                            alert("preview");
                                         }
                                     },
 
@@ -794,6 +848,7 @@
                         </div>
                     </div>
                 </div>
+
             </body>
         </html>
     </xsl:template>
@@ -844,7 +899,17 @@
                     </span>
                 </xsl:if>
                 <xsl:value-of select="@id"/>
-                <button class="deleteBtn" name="deleteItem" onclick="alert('deleting');">x</button></a>
+                <span class="buttonWrapper">
+                    <img src="/betterform/forms/incubator/editor/images/flag-red.png" width="24" height="24" alt="add event"/>
+                    <button id="{$id}-addMenu" type="button" style="padding:0;margin:0;background:transparent;border:none;" onclick="displayAddMenu(event,'{generate-id()}','{local-name()}');">
+                        <img  src="/betterform/forms/incubator/editor/images/list-add.png" width="24" height="24" alt="+"/>
+                    </button>
+                    <!--<button class="deleteBtn" name="deleteItem" onclick="alert('deleting');">x</button>-->
+                    <button type="button" onclick="if(confirm('Really delete?')) alert('deleting');return false;" style="padding:0;margin:0;background:transparent;border:none;">
+                        <img src="/betterform/forms/incubator/editor/images/list-remove.png" width="24" height="24" alt="x"/>
+                    </button>
+                </span>
+            </a>
 
             <xsl:if test="count(xf:*) != 0">
                 <ul>

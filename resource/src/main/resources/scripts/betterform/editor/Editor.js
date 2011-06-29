@@ -13,12 +13,13 @@ dojo.declare("betterform.Editor", null,
     constructor:function() {
         dojo.subscribe("nodeSelected", function(args){
             console.log("nodeSelected: arg:", args);
+            console.log("nodeSelected: id:", args.id);
             console.log("nodeSelected: xfType:", args.xfType);
             console.log("nodeSelected: ", args.jsTreeData);
             attrEditor.currentjsTreeData = args.jsTreeData;
 
             var xfType = args.xfType;
-            console.debug("blas balsd xfTyep:", xfType);
+            console.debug("Editor.nodeSelected: xfTyep:", xfType);
             if(xfType =="document"){
                 //jump back to root
                 dijit.byId("xfMount").set("href", "/betterform/forms/incubator/editor/document.html");
@@ -36,6 +37,29 @@ dojo.declare("betterform.Editor", null,
 
                 return;
             }
+
+
+/*
+            var pMenu = new dijit.Menu({
+                        targetNodeIds: [args.id+"-addMenu"] ,
+                        leftClickToOpen: true
+                    });
+
+
+            var childElements = eval(xfType+"Childs");
+            dojo.forEach(childElements, function(itemName){
+                console.debug("Add Target: ",itemName);
+                pMenu.addChild(new dijit.MenuItem({
+                            label: itemName
+                        }));
+
+            });
+            pMenu.startup();
+*/
+            console.debug("creating menu ....", xfType + "Menu('" + args.id + "')") ;
+
+            var funcCall = xfType + "Menu('" + args.id + "-addMenu');";
+            eval(funcCall);
 
             dojo.query("#childList li").forEach(
                   function(item, index, array){

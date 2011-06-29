@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- This is a manually maintained association of events with potential target elements. This list is needed
-for generating a select1 control for the event. -->
+for generating a select1 control for the event during genertion of XForms. -->
 <data>
     <target match="model">
         <event name="xforms-model-construct"/>
