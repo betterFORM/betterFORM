@@ -21,7 +21,8 @@ dojo.declare(
     postMixInProperties:function() {
         this.inherited(arguments);
         this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);
-        if(dojo.attr(this.srcNodeRef, "incremental") == undefined || dojo.attr(this.srcNodeRef, "incremental") == "" || dojo.attr(this.srcNodeRef, "incremental") == "true"){
+        var incremental = (this.srcNodeRef, "incremental");
+        if(dojo.attrincremental == undefined || incremental == "" || incremental == "true"){
             this.incremental = true;
         }else {
             this.incremental = false;

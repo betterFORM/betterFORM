@@ -837,7 +837,7 @@
                     </span>
                 </xsl:if>
                 <xsl:value-of select="@id"/>
-                <button class="deleteBtn" name="deleteItem" onclick="alert('deleting');">x</button></a>
+                <button class="deleteBtn" name="deleteItem" onclick="attrEditor.showEventListener();">x</button></a>
 
             <xsl:if test="count(xf:*) != 0">
                 <ul>
