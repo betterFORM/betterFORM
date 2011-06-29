@@ -60,7 +60,7 @@ dojo.declare(
     onDaysChanged:function(evt) {
         console.debug("DropDownDate.onDaysChanged.");
         var selectedItem = dijit.byId(this.daysFacet.id).get('item');
-        if (selectedItem != undefined) {
+        if (selectedItem != undefined && selectedItem.value != "") {
             this.days = selectedItem.value;
         } else {
             this.days = dijit.byId(this.daysFacet.id).getValue();
@@ -97,12 +97,15 @@ dojo.declare(
 
     onYearsChanged:function(evt) {
         console.debug("DropDownDate.onYearsChanged.");
+        console.debug("DropDownDate.onYearsChanged oldYear: " , this.years);
         var selectedItem = dijit.byId(this.yearsFacet.id).get('item');
-        if (selectedItem != undefined) {
+        if (selectedItem != undefined && selectedItem.value != "") {
             this.years = selectedItem.value;
         } else {
+            console.debug("DropDownDate.onYearsChanged dijit.byId(this.yearsFacet.id).getValue(): " , dijit.byId(this.yearsFacet.id).getValue());
             this.years = dijit.byId(this.yearsFacet.id).getValue();
         }
+        console.debug("DropDownDate.onYearsChanged newYear: " , this.years);
         this.setCurrentDate();
     },
 
