@@ -13,13 +13,20 @@ dojo.declare("betterform.Editor", null,
     constructor:function() {
         dojo.subscribe("nodeSelected", function(args){
             console.log("nodeSelected: arg:", args);
-            console.log("nodeSelected: id:", args.id);
-            console.log("nodeSelected: xfType:", args.xfType);
-            console.log("nodeSelected: ", args.jsTreeData);
-            attrEditor.currentjsTreeData = args.jsTreeData;
+
+            var selectedNode = args.jsTreeData;
+            var selectedNodeId = selectedNode ? selectedNode.rslt.obj.attr("id"):null;
+            var currentNodeId = this.currentjsTreeData ? this.currentjsTreeData.rslt.obj.attr("id"):null;
+
+            console.debug("compare currentNodeId: " + currentNodeId + " with selctedNode: ",selectedNodeId);
+
+            if(currentNodeId == selectedNodeId){
+                return;
+            }
+            this.currentjsTreeData = selectedNode;
 
             var xfType = args.xfType;
-            console.debug("Editor.nodeSelected: xfTyep:", xfType);
+            console.debug("Editor.subscription.nodeSelected: xfType:", xfType);
             if(xfType =="document"){
                 //jump back to root
                 dijit.byId("xfMount").set("href", "/betterform/forms/incubator/editor/document.html");
@@ -268,7 +275,7 @@ dojo.declare("betterform.Editor", null,
             // console.debug("parentNode does not exist: return");
             return;
         }
-        var isMovingAllowed = attrEditor.moveAllowed(selectedNode, parentNode);
+        var isMovingAllowed = this.moveAllowed(selectedNode, parentNode);
         // console.debug("isMovingAllowed: ",isMovingAllowed);
         if (isMovingAllowed) {
             jsTreeObject.move_node(selectedNode, nextNode, "after", false, false, isMovingAllowed);
@@ -277,8 +284,11 @@ dojo.declare("betterform.Editor", null,
         else {
             //  console.debug("Moving Node not allowed");
         }
-    }
+    },
 
+    showEventListener:function() {
+        console.debug("showEventListener arguments:",arguments);
+    }
 
 });
 

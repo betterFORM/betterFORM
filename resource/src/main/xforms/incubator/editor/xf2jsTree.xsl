@@ -16,12 +16,13 @@
         <html>
             <head>
                 <title>betterFORM Editor</title>
-                <script type="text/javascript" src="/betterform/bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.js"></script>
-                <script type="text/javascript" src="/betterform/bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.cookie.js"></script>
-                <script type="text/javascript" src="/betterform/bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.hotkeys.js"></script>
-                <script type="text/javascript" src="/betterform/bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
-                <script type="text/javascript" src="/betterform/bfResources/scripts/betterform/xfEditorUtil.js"></script>
-                <script type="text/javascript" src="/betterform/bfResources/scripts/betterform/editor/addMenu.js"></script>
+                <script type="text/javascript" src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.js"></script>
+                <script type="text/javascript" src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.cookie.js"></script>
+                <script type="text/javascript" src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.hotkeys.js"></script>
+                <script type="text/javascript" src="../../../bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
+                <script type="text/javascript" src="../../../bfResources/scripts/betterform/xfEditorUtil.js"></script>
+                <script type="text/javascript" src="../../../bfResources/scripts/betterform/betterform-XFormsEditor.js"> </script>
+                <script type="text/javascript" src="../../../bfResources/scripts/betterform/editor/addMenu.js"></script>
                 <script type="text/javascript">
                     dojo.require("dijit.layout.ContentPane");
                     dojo.require("dijit.Menu");
@@ -39,9 +40,8 @@
                     dojo.require("dojo.data.ItemFileReadStore");
                     dojo.require("dojox.layout.FloatingPane");
                     dojo.require("dijit.TitlePane");
-
                     var attrEditor = new betterform.Editor();
-                    console.debug("attrEditor.: ",attrEditor);
+                    //console.debug("attrEditor.: ",attrEditor);
 
                     function checkKeyboardInput(pEvent){
                             var activeElem = document.activeElement.localName;
@@ -238,7 +238,6 @@
                     .bf #mainWindow .jstree .jstree-clicked .buttonWrapper
                     {
                         display:inline;
-
                     }
                     .jstree-default.jstree-focused {
                         background:white;
@@ -848,7 +847,21 @@
                         </div>
                     </div>
                 </div>
+                <script type="text/javascript">
 
+                    dojo.hitch(window, $("#xfDoc ul").delegate("li", "dblclick", function(){
+                            $("#xfDoc").jstree("toggle_node", this);
+                    }));
+
+
+                    function addElement(type){
+                        console.log("addElement type:",type);
+                        var elem = $("#xfDoc").jstree("create",null,"last",type,false,true);
+                        elem.attr("data-xf-type",type);
+                        $("#xfDoc").jstree("select_node",elem,false,null);
+                        $("#id").focus();
+                    }
+                </script>
             </body>
         </html>
     </xsl:template>
