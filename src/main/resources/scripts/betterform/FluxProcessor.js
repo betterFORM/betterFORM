@@ -755,6 +755,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
             // finally dynamically load the CSS (if some) form the embedded form
             var cssToLoad = xmlEvent.contextInfo.inlineCSS;
             if(cssToLoad != undefined && cssToLoad != ""){
+                //console.debug("adding Style: ", cssToLoad);
                 var stylesheet1 = document.createElement('style');
                 stylesheet1.setAttribute("type", "text/css");
                 stylesheet1.setAttribute("name", xlinkTarget);
@@ -772,54 +773,43 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
 
             if (externalCssToLoad != undefined && externalCssToLoad != "") {
                 var styles = externalCssToLoad.split('#');
-                var headID = document.getElementsByTagName("head")[0];
+                var head2 = document.getElementsByTagName('head')[0];
                 for (var i = 0; i <= styles.length; i = i+1) {
                     if (styles[i] != undefined && styles[i] != "") {
-                        var newScript = undefined;
-                        if(dojo.doc.createElementNS) {
-                            newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","link");
-                        }else {
-                            newScript = dojo.doc.createElement("link");
-                        }
-                        dojo.attr(newScript,"name",xlinkTarget);
-                        dojo.attr(newScript,"href",styles[i]);
-                        dojo.attr(newScript,"type","text/css");
-                        dojo.attr(newScript,"rel","stylesheet");
-                        newScript.appendChild(dojo.doc.createTextNode(''));
-                        headID.appendChild(newScript);
-                        console.debug("new Style: ", newScript);
+                        //console.debug("adding Style: ", styles[i]);
+                        var stylesheet2 = document.createElement('link');
+                        stylesheet2.setAttribute("rel","stylesheet");
+                        stylesheet2.setAttribute("type","text/css");
+                        stylesheet2.setAttribute("href",styles[i]);
+                        stylesheet2.setAttribute("name",xlinkTarget);
+                        head2.appendChild(stylesheet2);
                     }
                 }
             }
 
             var inlineJavaScriptToLoad = xmlEvent.contextInfo.inlineJavascript;
             if (inlineJavaScriptToLoad != undefined && inlineJavaScriptToLoad != "") {
+                //console.debug("adding script: ", inlineJavaScriptToLoad);
                 var javascript1 = document.createElement('script');
                 javascript1.setAttribute("type", "text/javascript");
                 javascript1.setAttribute("name", xlinkTarget);
-                var head2 = document.getElementsByTagName('head')[0];
-                head2.appendChild(javascript1);
+                var head3 = document.getElementsByTagName('head')[0];
+                head3.appendChild(javascript1);
                 javascript1.text = inlineJavaScriptToLoad;
             }
 
             var externalJavaScriptToLoad = xmlEvent.contextInfo.externalJavascript;
             if (externalJavaScriptToLoad != undefined && externalJavaScriptToLoad != "") {
                 var scripts = externalJavaScriptToLoad.split('#');
-                var headID = document.getElementsByTagName("head")[0];
+                var head4 = document.getElementsByTagName("head")[0];
                 for (var i = 0; i <= scripts.length; i = i+1) {
                     if (scripts[i] != undefined && scripts[i] != "") {
-                        var newScript = undefined;
-                        if(dojo.doc.createElementNS) {
-                            newScript = dojo.doc.createElementNS("http://www.w3.org/1999/xhtml","script");
-                        }else {
-                            newScript = dojo.doc.createElement("script");
-                        }
-                        dojo.attr(newScript,"name",xlinkTarget);
-                        dojo.attr(newScript,"src",scripts[i]);
-                        dojo.attr(newScript,"type","text/javascript");
-                        newScript.appendChild(dojo.doc.createTextNode(''));
-                        headID.appendChild(newScript);
-                        console.debug("new Script: ", newScript);
+                        //console.debug("adding script: ", scripts[i]);
+                        var javascript2 = document.createElement('script');
+                        javascript2.setAttribute("type","text/javascript");
+                        javascript2.setAttribute("src",scripts[i]);
+                        javascript2.setAttribute("name",xlinkTarget);
+                        head4.appendChild(javascript2);
                     }
                 }
             }
