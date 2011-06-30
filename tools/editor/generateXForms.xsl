@@ -8,14 +8,20 @@
     <xsl:output method="xml" indent="yes"/>
     <xsl:output method="xhtml" indent="yes" name="xhtml" exclude-result-prefixes="xf"/>
     <!-- author: Joern Turner -->
+    <!-- author: Lars Windauer -->
 
     <xsl:param name="webxml.path" select="''"/>
-
     <xsl:variable name="inputDoc" select="/"/>
+
+    <xsl:variable name="dictionary" select="document('resources/dictionary.xml')"/>
+    <xsl:variable name="lang" select="'en'" as="xs:string"/>
+
     <xsl:template match="/xsd:schema">
+        <xsl:message>DICTIONARY: <xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name='resource']/desc"/></xsl:message>
         <div>
             <xsl:variable name="unique-list" select="//xsd:element[@name][not(@name = preceding::xsd:element/@name)]" />
             <xsl:for-each select="$unique-list">
+
                 <xsl:variable name="current" select="."/>
                     <!--<xsl:message>create document <xsl:value-of select="@name"/></xsl:message>-->
                     <xsl:result-document href="./target/xforms/{@name}.xhtml" format="xhtml" >
@@ -25,46 +31,78 @@
                         </head>
                         <body>
                             <div id="xforms">
-                                <div style="display:none;">
-                                    <!-- put model(s) here -->
-                                    <xf:model id="formdef">
-                                        <xf:instance xmlns="">
-                                            <data>
-                                                <xfElement>
-                                                    <xsl:attribute name="type"><xsl:value-of select="@name"/></xsl:attribute>
-                                                    <xsl:apply-templates select="$current//xsd:attributeGroup" mode="instance"/>
-                                                    <xsl:apply-templates select="$current//xsd:attribute" mode="instance"/>
-                                                    <xsl:if test="exists(.//xsd:attributeGroup[@ref='xforms:XML.Events'])">
-                                                        <xml-event>
-                                                            <xsl:apply-templates select="$current//xsd:attributeGroup" mode="event-instance"/>
-                                                        </xml-event>
-                                                    </xsl:if>
-                                                    <xsl:apply-templates select="$current//xsd:complexType[@mixed='true']" mode="instance"/>
-                                                </xfElement>
-                                            </data>
-                                        </xf:instance>
-                                        <xsl:apply-templates select="$current//xsd:attributeGroup" mode="bind"/>
-                                        <xsl:apply-templates select="$current//xsd:attribute" mode="bind"/>
-                                        <xsl:apply-templates select="$current//xsd:complexType[@mixed='true']" mode="bind"/>
-                                        <xsl:if test="exists(.//xsd:attributeGroup[@ref='xforms:XML.Events'])">
-                                            <xf:bind nodeset="xml-event">
-                                                <xsl:apply-templates select="$current//xsd:attributeGroup" mode="event-bind"/>
-                                            </xf:bind>
+                                <xsl:choose>
+                                    <xsl:when test="@type = 'xforms:ValueTemplate'">
+                                        <xsl:if test="@type = 'xforms:ValueTemplate'">
+                                            <xsl:message>Type is 'xforms:ValueTemplate' <xsl:value-of select="@name"/> </xsl:message>
                                         </xsl:if>
-                                    </xf:model>
-                                </div>
-                                <xf:group ref="xfElement" id="properties" appearance="bf:verticalTable">
-                                    <xsl:apply-templates select="$current//xsd:attributeGroup" mode="ui"/>
-                                    <xsl:apply-templates select="$current//xsd:attribute" mode="ui"/>
-                                    <xsl:apply-templates select="$current//xsd:complexType[@mixed='true']" mode="ui"/>
-                                </xf:group>
-                                <xsl:if test="exists(.//xsd:attributeGroup[@ref='xforms:XML.Events'])">
-                                    <xf:group id="event-properties" appearance="bf:verticalTable" ref="xfElement/xml-events">
-                                        <xsl:apply-templates select="$current//xsd:attributeGroup" mode="event-ui">
-                                            <xsl:with-param name="current" select="$current"/>
-                                        </xsl:apply-templates>
-                                    </xf:group>
-                                </xsl:if>
+                                        <div style="display:none;">
+                                            <!-- put model(s) here -->
+                                            <xf:model id="formdef">
+                                                <xf:instance xmlns="">
+                                                   <data>
+                                                      <xfElement type="{@name}" value="">
+                                                         <textcontent/>
+                                                      </xfElement>
+                                                   </data>
+                                                </xf:instance>
+                                                <xf:bind nodeset="@value" type="xforms:XPathExpression"/>
+                                                <xf:bind nodeset="textcontent" type=""/>
+                                             </xf:model>
+                                          </div>
+                                          <xf:group xmlns:xf="http://www.w3.org/2002/xforms" ref="xfElement" id="properties"
+                                                    appearance="bf:verticalTable">
+                                             <xf:input ref="@value">
+                                                <xf:label>XPath Value</xf:label>
+                                             </xf:input>
+                                             <xf:input ref="@textcontent">
+                                                <xf:label>Text Value</xf:label>
+                                             </xf:input>
+                                          </xf:group>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <div style="display:none;">
+                                            <!-- put model(s) here -->
+                                            <xf:model id="formdef">
+                                                <xf:instance xmlns="">
+                                                    <data>
+                                                        <xfElement>
+                                                            <xsl:attribute name="type"><xsl:value-of select="@name"/></xsl:attribute>
+                                                            <xsl:apply-templates select="$current//xsd:attributeGroup" mode="instance"/>
+                                                            <xsl:apply-templates select="$current//xsd:attribute" mode="instance"/>
+                                                            <xsl:if test="exists(.//xsd:attributeGroup[@ref='xforms:XML.Events'])">
+                                                                <xml-event>
+                                                                    <xsl:apply-templates select="$current//xsd:attributeGroup" mode="event-instance"/>
+                                                                </xml-event>
+                                                            </xsl:if>
+                                                            <xsl:apply-templates select="$current//xsd:complexType[@mixed='true']" mode="instance"/>
+                                                        </xfElement>
+                                                    </data>
+                                                </xf:instance>
+                                                <xsl:apply-templates select="$current//xsd:attributeGroup" mode="bind"/>
+                                                <xsl:apply-templates select="$current//xsd:attribute" mode="bind"/>
+                                                <xsl:apply-templates select="$current//xsd:complexType[@mixed='true']" mode="bind"/>
+                                                <xsl:if test="exists(.//xsd:attributeGroup[@ref='xforms:XML.Events'])">
+                                                    <xf:bind nodeset="xml-event">
+                                                        <xsl:apply-templates select="$current//xsd:attributeGroup" mode="event-bind"/>
+                                                    </xf:bind>
+                                                </xsl:if>
+                                            </xf:model>
+                                            <xf:group ref="xfElement" id="properties" appearance="bf:verticalTable">
+                                                <xsl:apply-templates select="$current//xsd:attributeGroup" mode="ui"/>
+                                                <xsl:apply-templates select="$current//xsd:attribute" mode="ui"/>
+                                                <xsl:apply-templates select="$current//xsd:complexType[@mixed='true']" mode="ui"/>
+                                            </xf:group>
+                                            <xsl:if test="exists(.//xsd:attributeGroup[@ref='xforms:XML.Events'])">
+                                                <xf:group id="event-properties" appearance="bf:verticalTable" ref="xfElement/xml-events">
+                                                    <xsl:apply-templates select="$current//xsd:attributeGroup" mode="event-ui">
+                                                        <xsl:with-param name="current" select="$current"/>
+                                                    </xsl:apply-templates>
+                                                </xf:group>
+                                            </xsl:if>
+                                        </div>
+                                    </xsl:otherwise>
+                                </xsl:choose>
                             </div>
                         </body>
                     </html>
@@ -101,7 +139,7 @@
     </xsl:template>
 
     <xsl:template match="xsd:complexType[@mixed='true']" mode="instance">
-        <mixedContent/>
+        <textcontent/>
 
     </xsl:template>
 
@@ -198,13 +236,13 @@
     </xsl:template>
 
     <xsl:template match="xsd:attribute[substring-before(@ref ,':') = 'ev']" mode="event-ui" priority="10">
-        <xsl:message>other:<xsl:value-of select="./@ref"/></xsl:message>
+        <!--<xsl:message>other:<xsl:value-of select="./@ref"/></xsl:message>-->
         <xsl:variable name="eventXSD" select="document('xml-events-attribs-1.xsd')/xsd:schema"/>
 
         <!--<xsl:message><xsl:value-of select="$eventXSD//xsd:attribute[@name = substring-after(@ref,'ev:')]/@name"/></xsl:message>-->
         <!--<xsl:message><xsl:value-of select="substring-after(@ref,'ev:')"/></xsl:message>-->
         <xsl:variable name="targetAttribute" select="$eventXSD//xsd:attribute[@name = substring-after(@ref,'ev:')]"/>
-        <xsl:message>targetAttribute: <xsl:value-of select="$targetAttribute"/></xsl:message>
+        <!--<xsl:message>targetAttribute: <xsl:value-of select="$targetAttribute"/></xsl:message>-->
 
         <!--<xsl:apply-templates select="$eventXSD/xs:schema/xs:attribute[@name = substring-after(@ref,'ev:')]" mode="event-ui"/>-->
         <xf:input ref="@{@ref}">
@@ -237,10 +275,10 @@
     </xsl:template>
 
     <xsl:template match="xsd:complexType[@mixed='true']" mode="bind">
-        <xf:bind nodeset="mixedContent" type=""/>
+        <xf:bind nodeset="textcontent" type=""/>
 <!--
-        <xf:input ref="@mixedContent">
-            <xf:label>mixedContent</xf:label>
+        <xf:input ref="@textcontent">
+            <xf:label>textcontent</xf:label>
         </xf:input>
 -->
     </xsl:template>
@@ -274,8 +312,8 @@
     </xsl:template>
 
     <xsl:template match="xsd:complexType[@mixed='true']" mode="ui">
-        <xf:input ref="@mixedContent">
-            <xf:label>mixedContent</xf:label>
+        <xf:input ref="@textcontent">
+            <xf:label>textcontent</xf:label>
         </xf:input>
     </xsl:template>
 </xsl:stylesheet>

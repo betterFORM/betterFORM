@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
    <div class="propertyTitle">Property Sheet value</div>
+   <div class="propertyDesc">Author-optional attribute containing an XPath expression to evaluate using the in-scope evaluation
+               context. To obtain the event delay, the result of the expression is processed as if by call to the XPath
+               string function. If the result does not conform lexically to xsd:nonNegativeInteger, then the result of
+               empty string is used. An empty string is used if the XPath evaluation fails.
+           </div>
    <form method="post" action="#" enctype="application/x-www-form-urlencoded">
       <ul style="list-style-type:none;">
          <li>
@@ -8,7 +13,7 @@
                <h4>
                   <label for="id">id</label>
                </h4>
-               <p>hint text here</p>
+               <p/>
                <input dojoType="dijit.form.TextBox" id="id" name="id" type="text" value=""
                       placeholder=""
                       class="xfid dojoInput"
@@ -22,7 +27,7 @@
                <h4>
                   <label for="model">model</label>
                </h4>
-               <p>hint text here</p>
+               <p/>
                <input dojoType="dijit.form.TextBox" id="model" name="model" type="text" value=""
                       placeholder=""
                       class="xfmodel dojoInput"
@@ -36,7 +41,7 @@
                <h4>
                   <label for="ref">ref</label>
                </h4>
-               <p>hint text here</p>
+               <p/>
                <input dojoType="dijit.form.TextBox" id="ref" name="ref" type="text" value=""
                       placeholder=""
                       class="xfref dojoInput"
@@ -50,7 +55,7 @@
                <h4>
                   <label for="bind">bind</label>
                </h4>
-               <p>hint text here</p>
+               <p/>
                <input dojoType="dijit.form.TextBox" id="bind" name="bind" type="text" value=""
                       placeholder=""
                       class="xfbind dojoInput"
@@ -64,21 +69,15 @@
                <h4>
                   <label for="value">value</label>
                </h4>
-               <p>hint text here</p>
+               <p>Author-optional attribute containing an XPath expression to evaluate using the in-scope evaluation
+               context. To obtain the event delay, the result of the expression is processed as if by call to the XPath
+               string function. If the result does not conform lexically to xsd:nonNegativeInteger, then the result of
+               empty string is used. An empty string is used if the XPath evaluation fails.
+           </p>
                <input dojoType="dijit.form.TextBox" id="value" name="value" type="text" value=""
                       placeholder=""
                       class="xfvalue dojoInput"
                       onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'value')"/>
-            </div>
-         </li>
-      </ul>
-      <ul style="list-style-type:none;">
-         <li>
-            <div class="attrEditor">
-               <h4>
-                  <label for="xml-event">xml-event</label>
-               </h4>
-               <p>hint text here</p>
             </div>
          </li>
       </ul>

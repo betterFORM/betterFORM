@@ -1,19 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dictionary>
-    <lang id="de">
-        <key name="id">
-            <label>Name</label>
-            <hint>Bitte wählen Sie einen eindeutigen Namen</hint>
-            <help></help>
-            <alert></alert>
-        </key>
-    </lang>
-    <lang id="en">
-        <key name="id">
-            <label>Id</label>
-            <hint>Please choose a unique name for this item</hint>
-            <help></help>
-            <alert></alert>
-        </key>
-    </lang>
+   <lang id="de">
+       <key name="id">
+           <label>Name</label>
+           <hint>Bitte wählen Sie einen eindeutigen Namen</hint>
+           <help></help>
+           <alert></alert>
+       </key>
+   </lang>
+   <lang id="en">
+       <key name="id">
+           <label>Id</label>
+           <hint>Please choose a unique name for this item</hint>
+           <help></help>
+           <alert></alert>
+       </key>
+   </lang>
+   <lang id="en">
+       <key name="id">
+           <desc>The event delay of the dispatch action is given by the delay attribute or the delay element. If both
+               are given, the element takes precedence. The delay element can provide the delay with either its string
+               content or the value attribute. If both are given, then the value attribute takes precedence.
+           </desc>
+       </key>
+       <key name="resource">
+           <desc>The event delay of the dispatch action is given by the delay attribute or the delay element. If both
+               are given, the element takes precedence. The delay element can provide the delay with either its string
+               content or the value attribute. If both are given, then the value attribute takes precedence.
+           </desc>
+       </key>
+       <key name="value">
+           <desc>Author-optional attribute containing an XPath expression to evaluate using the in-scope evaluation
+               context. To obtain the event delay, the result of the expression is processed as if by call to the XPath
+               string function. If the result does not conform lexically to xsd:nonNegativeInteger, then the result of
+               empty string is used. An empty string is used if the XPath evaluation fails.
+           </desc>
+       </key>
+       <key name="textcontent">
+           <synonym>content</synonym>
+           <synonym>PCDATA</synonym>
+           <desc>String (PCDATA)</desc>
+       </key>
+   </lang>
 </dictionary>

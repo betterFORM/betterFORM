@@ -9,22 +9,26 @@ dojo.provide("betterform.Editor");
 dojo.declare("betterform.Editor", null,
 {
     currentjsTreeData:null,
+    currentNodeId:null,
 
     constructor:function() {
         dojo.subscribe("nodeSelected", function(args){
             console.log("nodeSelected: arg:", args);
+            console.log("nodeSelected: arg.event:", args.event);
 
             var selectedNode = args.jsTreeData;
             var selectedNodeId = selectedNode ? selectedNode.rslt.obj.attr("id"):null;
-            var currentNodeId = this.currentjsTreeData ? this.currentjsTreeData.rslt.obj.attr("id"):null;
+            currentNodeId = this.currentjsTreeData ? this.currentjsTreeData.rslt.obj.attr("id"):null;
 
             console.debug("compare currentNodeId: " + currentNodeId + " with selctedNode: ",selectedNodeId);
 
-            if(currentNodeId == selectedNodeId){
+            if(currentNodeId =! null && currentNodeId == selectedNodeId){
+                args.event.stopPropagation();
+                args.event.cancelBubble=true;
                 return;
             }
             this.currentjsTreeData = selectedNode;
-
+            this.currentNodeId = selectedNodeId;
             var xfType = args.xfType;
             console.debug("Editor.subscription.nodeSelected: xfType:", xfType);
             if(xfType =="document"){
@@ -71,7 +75,7 @@ dojo.declare("betterform.Editor", null,
             dojo.query("#childList li").forEach(
                   function(item, index, array){
                         var currentClass = dojo.attr(item,"class");
-                        var cutted = currentClass.substring(0,currentClass.indexOf("-",4))
+                        var cutted = currentClass.substring(0,currentClass.indexOf("-",4));
 
                         var childArray=eval(xfType+"Childs");
                         if(childArray == undefined){
@@ -145,12 +149,12 @@ dojo.declare("betterform.Editor", null,
             nodeValue.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
             //var nodeValue =  valueNode.innerHTML.replace(/</g, "lt;").replace(/>/g, "gt;").replace(/\&/g, "amp;").replace(/\"/g, "quot;");
             console.debug("editProperties: node value: ", nodeValue);
-            var mixedContentNode =  dojo.byId("mixedContent");
-            var mixedContentDijit = dijit.byId(dojo.attr(mixedContentNode,"id"));
-            if (mixedContentDijit) {
-                mixedContentDijit.set("value",nodeValue);
+            var textContentNode =  dojo.byId("textcontent");
+            var textContentDijit = dijit.byId(dojo.attr(textContentNode,"id"));
+            if (textContentDijit) {
+                textContentDijit.set("value",nodeValue);
             }else {
-                dojo.attr(mixedContentNode, "value", nodeValue);
+                dojo.attr(textContentNode, "value", nodeValue);
             }
 
         }
@@ -288,6 +292,15 @@ dojo.declare("betterform.Editor", null,
 
     showEventListener:function() {
         console.debug("showEventListener arguments:",arguments);
+    },
+    nodeIsLoaded:function(xfid) {
+        console.debug("Editor.nodeIsLoaded" , xfid);
+        console.debug("Editor.nodeIsLoaded: this.currentNodeId:",this.currentNodeId);
+        if(this.currentNodeId != undefined && this.currentNodeId == xfid) {
+            return true;
+        }
+        this.currentNodeId = xfid;
+        return false;
     }
 
 });

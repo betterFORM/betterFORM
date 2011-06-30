@@ -8,12 +8,19 @@
     <xsl:output method="xml" indent="yes"/>
     <xsl:output method="xhtml" indent="yes" name="xhtml" exclude-result-prefixes="xf"/>
     <!-- author: Joern Turner -->
+    <!-- author: Lars Windauer -->
+    <xsl:variable name="dictionary" select="document('resources/dictionary.xml')"/>
+    <xsl:variable name="lang" select="'en'"/>
+
 
     <xsl:template match="/">
         <div>
-            <xsl:variable name="title"><xsl:value-of select="concat('Property Sheet ',//html:title)"/></xsl:variable>
-            <xsl:message><xsl:value-of select="$title"/></xsl:message>
-            <div class="propertyTitle"><xsl:value-of select="$title"/></div>
+            <xsl:variable name="title"><xsl:value-of select="//html:title"/></xsl:variable>
+            <xsl:variable name="propertyTitle"><xsl:value-of select="concat('Property Sheet ',$title)"/></xsl:variable>
+            <xsl:message><xsl:value-of select="$propertyTitle"/></xsl:message>
+            <div class="propertyTitle"><xsl:value-of select="$propertyTitle"/></div>
+            <div class="propertyDesc"><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$title]/desc"/></div>
+
             <form method="post" action="#" enctype="application/x-www-form-urlencoded">
             <xsl:for-each select="//xf:model/xf:bind">
                 <xsl:variable name="attrName">
@@ -32,7 +39,7 @@
                                  <xsl:when test="$attrName='xml-event'"></xsl:when>
                                  <xsl:when test="$attrName='event'">
                                      <h4><label for="{$attrName}"><xsl:value-of select="$attrName"/></label></h4>
-                                     <p>hint text here</p>
+                                     <p><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$attrName]/desc"/></p>
                                      <select dojoType="dijit.form.FilteringSelect" selection="open" searchAttr="name" name="type" id="{$attrName}" value="" placeholder="" class="xf{$attrName} dojoSelect" >
                                          <xsl:attribute name="onblur">attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'<xsl:value-of select="$attrName"/>')</xsl:attribute>
                                          <xsl:for-each select="//xf:select1[@ref='@event']/xf:item">
@@ -42,14 +49,14 @@
                                  </xsl:when>
                                 <xsl:when test="$attrName='type'">
                                     <h4><label for="{$attrName}"><xsl:value-of select="$attrName"/></label></h4>
-                                    <p>hint text here</p>
+                                    <p><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$attrName]/desc"/></p>
                                     <input dojoType="dijit.form.FilteringSelect" store="stateStore" selection="open" searchAttr="name" name="type" id="{$attrName}" value="" placeholder="" class="xf{$attrName} dojoSelect">
                                         <xsl:attribute name="onblur">attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'<xsl:value-of select="$attrName"/>')</xsl:attribute>
                                     </input>
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <h4><label for="{$attrName}"><xsl:value-of select="$attrName"/></label></h4>
-                                    <p>hint text here</p>
+                                    <p><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$attrName]/desc"/></p>
                                     <input dojoType="dijit.form.TextBox" id="{$attrName}" name="{$attrName}" type="text" value="" placeholder="" class="xf{$attrName} dojoInput">
                                         <xsl:attribute name="onblur">attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'<xsl:value-of select="$attrName"/>')</xsl:attribute>
                                     </input>
@@ -69,7 +76,7 @@
                             <li>
                                 <div class="attrEditor">
                                     <h4><label for="{$attrName}"><xsl:value-of select="$attrName"/></label></h4>
-                                    <p>hint text here</p>
+                                    <p><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$attrName]/desc"/></p>
                                     <xsl:choose>
                                          <xsl:when test="$attrName='event'">
                                              <select dojoType="dijit.form.FilteringSelect" selection="open" searchAttr="name" name="type" id="{$attrName}" value="" placeholder="" class="xf{$attrName} dojoSelect" >

@@ -45,6 +45,7 @@
 
                     function checkKeyboardInput(pEvent){
                             var activeElem = document.activeElement.localName;
+                            console.debug("activeElem: ",activeElem);
                             if(activeElem=="input") {
                                 return;
                             }
@@ -627,6 +628,25 @@
                             <div id="xfMount" dojotype="dijit.layout.ContentPane"
                                  href="/betterform/forms/incubator/editor/document.html"
                                  preload="false">
+<!--
+                                <script type="dojo/connect" event="onDownloadStart">
+
+                                    var xfId = dojo.attr(dojo.byId("xfMount"),"xfId");
+                                    if(xfId == undefined) { return;}
+                                    console.log("1. xfid: ",xfId);
+                                    console.log("2.: ",attrEditor.nodeIsLoaded(xfId));
+                                    console.debug("2.1: this:",this);
+                                    console.log("3. xfid: ",xfId);
+                                    if(attrEditor.nodeIsLoaded(xfId)){
+                                        console.debug("node already loaded, prevent loading");
+                                        this.cancel();
+                                        return null;
+                                    }else {
+                                        console.debug("node not loaded yet, go on..");
+                                    }
+
+                                </script>
+-->
                                 <script type="dojo/connect" event="onDownloadEnd">
                                     var xfId = dojo.attr(dojo.byId("xfMount"),"xfId");
                                     if(xfId == undefined) { return;}
@@ -729,11 +749,23 @@
 
                                     },
                                     hotkeys: {
+                                        "up":function(event) {
+                                            // console.debug("up key pressed");
+                                            // console.debug("this: ",this);
+                                            // console.debug("1");
+                                            var o = this.data.ui.hovered || this.data.ui.last_selected || -1;
+                                            // console.debug("2 o",o);
+				                            this.hover_node(this._get_prev(o));
+                                            // console.debug("3");
+				                            return false;
+                                        },
                                         "Alt+up"   : function (event) {
+                                            console.debug("Alt+up: event:",event);
                                             attrEditor.moveNodeUp(this)
                                         },
 
                                         "Alt+down" : function (event) {
+                                            console.debug("Alt+down: event:",event);
                                             attrEditor.moveNodeDown(this);
                                         },
                                         "ctrl+p" : function (event) {
@@ -746,17 +778,24 @@
                                 })
                                 .bind("select_node.jstree", function (event, data) {
                                     // `data.rslt.obj` is the jquery extended node that was clicked
-                                    console.log(data);
                                     // alert( data.rslt.obj.attr("data-xf-type"));
-                                    var xfType = data.rslt.obj.attr("data-xf-type");
-                                    var id=data.rslt.obj.attr("id");
-                                    dojo.attr(dojo.byId("xfMount"),"xfId", id);
+                                    var tmpId=data.rslt.obj.attr("id");
+                                    var nodeIsLoaded = attrEditor.nodeIsLoaded(tmpId);
+                                    // console.debug("nodeIsLoaded:", nodeIsLoaded);
+                                    if(nodeIsLoaded){
+                                        console.debug("PREVENTED LOADING OF PROPERTY EDITOR");
+                                        return;
+                                    }else {
+                                        console.log(data);
+                                        var xfType = data.rslt.obj.attr("data-xf-type");
+                                        dojo.attr(dojo.byId("xfMount"),"xfId", tmpId);
 
-                                    dijit.byId("xfMount").set("href", "/betterform/forms/incubator/editor/" + xfType + ".html");
-                                    //console.debug("publish: nodeSelected: data", data);
-                                    dojo.publish("nodeSelected", [
-                                        {xfType:xfType,id:id,jsTreeData:data}
-                                    ]);
+                                        dijit.byId("xfMount").set("href", "/betterform/forms/incubator/editor/" + xfType + ".html");
+                                        //console.debug("publish: nodeSelected: data", data);
+                                        dojo.publish("nodeSelected", [
+                                            {event:event,xfType:xfType,id:tmpId,jsTreeData:data}
+                                        ]);
+                                    }
                                 })
                             // EVENTS
                             // each instance triggers its own events - to process those listen on the container

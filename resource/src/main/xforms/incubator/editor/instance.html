@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
    <div class="propertyTitle">Property Sheet instance</div>
+   <div class="propertyDesc"/>
    <form method="post" action="#" enctype="application/x-www-form-urlencoded">
       <ul style="list-style-type:none;">
          <li>
@@ -8,7 +9,7 @@
                <h4>
                   <label for="id">id</label>
                </h4>
-               <p>hint text here</p>
+               <p/>
                <input dojoType="dijit.form.TextBox" id="id" name="id" type="text" value=""
                       placeholder=""
                       class="xfid dojoInput"
@@ -22,7 +23,7 @@
                <h4>
                   <label for="src">src</label>
                </h4>
-               <p>hint text here</p>
+               <p/>
                <input dojoType="dijit.form.TextBox" id="src" name="src" type="text" value=""
                       placeholder=""
                       class="xfsrc dojoInput"
@@ -36,22 +37,15 @@
                <h4>
                   <label for="resource">resource</label>
                </h4>
-               <p>hint text here</p>
+               <p>The event delay of the dispatch action is given by the delay attribute or the delay element. If both
+               are given, the element takes precedence. The delay element can provide the delay with either its string
+               content or the value attribute. If both are given, then the value attribute takes precedence.
+           </p>
                <input dojoType="dijit.form.TextBox" id="resource" name="resource" type="text"
                       value=""
                       placeholder=""
                       class="xfresource dojoInput"
                       onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'resource')"/>
-            </div>
-         </li>
-      </ul>
-      <ul style="list-style-type:none;">
-         <li>
-            <div class="attrEditor">
-               <h4>
-                  <label for="xml-event">xml-event</label>
-               </h4>
-               <p>hint text here</p>
             </div>
          </li>
       </ul>

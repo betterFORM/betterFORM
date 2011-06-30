@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
    <div class="propertyTitle">Property Sheet case</div>
+   <div class="propertyDesc"/>
    <form method="post" action="#" enctype="application/x-www-form-urlencoded">
       <ul style="list-style-type:none;">
          <li>
@@ -8,7 +9,7 @@
                <h4>
                   <label for="id">id</label>
                </h4>
-               <p>hint text here</p>
+               <p/>
                <input dojoType="dijit.form.TextBox" id="id" name="id" type="text" value=""
                       placeholder=""
                       class="xfid dojoInput"
@@ -22,22 +23,12 @@
                <h4>
                   <label for="selected">selected</label>
                </h4>
-               <p>hint text here</p>
+               <p/>
                <input dojoType="dijit.form.TextBox" id="selected" name="selected" type="text"
                       value=""
                       placeholder=""
                       class="xfselected dojoInput"
                       onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'selected')"/>
-            </div>
-         </li>
-      </ul>
-      <ul style="list-style-type:none;">
-         <li>
-            <div class="attrEditor">
-               <h4>
-                  <label for="xml-event">xml-event</label>
-               </h4>
-               <p>hint text here</p>
             </div>
          </li>
       </ul>

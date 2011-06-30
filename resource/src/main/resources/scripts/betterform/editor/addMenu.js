@@ -2550,10 +2550,15 @@
                 var pMenu = new dijit.Menu({
                         targetNodeIds: [targetId] ,
                         leftClickToOpen: true
+/*
+                        onContainerKeypress: function(evt) {
+                            console.debug("connectKeyNavHandlers");
+                        }
+*/
                 });
-                
+
                     var pCommonMenu = new dijit.Menu();
-                    
+
                         pCommonMenu.addChild(new dijit.MenuItem({
                             label: "label" ,
                             onClick:function() {
