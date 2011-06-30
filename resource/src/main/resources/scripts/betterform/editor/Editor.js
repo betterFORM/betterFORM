@@ -13,8 +13,8 @@ dojo.declare("betterform.Editor", null,
 
     constructor:function() {
         dojo.subscribe("nodeSelected", function(args){
-            console.log("nodeSelected: arg:", args);
-            console.log("nodeSelected: arg.event:", args.event);
+            // console.log("nodeSelected: arg:", args);
+            // console.log("nodeSelected: arg.event:", args.event);
 
             var selectedNode = args.jsTreeData;
             var selectedNodeId = selectedNode ? selectedNode.rslt.obj.attr("id"):null;
@@ -106,7 +106,7 @@ dojo.declare("betterform.Editor", null,
 
 
     editProperties : function(targetId) {
-        console.log("attrEditor.editProperties: id of property sheet: ", targetId);
+        // console.log("attrEditor.editProperties: id of property sheet: ", targetId);
         var  currentNode =  dojo.byId(targetId);
         var dataXfAttrs = dojo.attr(currentNode, "data-xf-attrs");
         var dataXfType = dojo.attr(currentNode, "data-xf-type");
@@ -120,20 +120,20 @@ dojo.declare("betterform.Editor", null,
                 var xfAttrValue = xfAttrObj[attributeName];
                 if (!xfAttrValue)xfAttrValue = "";
                 var currentDijitNode =  dojo.query("xf" + attributeName)[0];
-                console.log("editProperties: currentDijitNode: ", currentDijitNode);
+                // console.log("editProperties: currentDijitNode: ", currentDijitNode);
                 if (currentDijitNode) {
                     var currentDijit = dijit.byId(dojo.attr(currentDijitNode, "id"));
                     if (currentDijit) {
-                        console.log("editProperties: currentDijit: ", currentDijit, " - xfAttrValue:",xfAttrValue);
+                        // console.log("editProperties: currentDijit: ", currentDijit, " - xfAttrValue:",xfAttrValue);
                         currentDijit.set("value", xfAttrValue);
                     }
                     else {
-                        console.log("editProperties: currentNode: ", currentDijitNode, " - xfAttrValue:",xfAttrValue);
+                        // console.log("editProperties: currentNode: ", currentDijitNode, " - xfAttrValue:",xfAttrValue);
                         dojo.attr(currentDijitNode, "value", xfAttrValue);
                     }
                 }
                 else {
-                    console.log("editProperties: currentNode: ", dojo.byId(attributeName), " - xfAttrValue:",xfAttrValue);
+                    // console.log("editProperties: currentNode: ", dojo.byId(attributeName), " - xfAttrValue:",xfAttrValue);
                     dojo.attr(dojo.byId(attributeName), "value", xfAttrValue);
 
                 }
@@ -143,12 +143,12 @@ dojo.declare("betterform.Editor", null,
             console.warn("editProperties: Missing xfAttrObj for Element [id='",targetId,"']");
         }
         var valueNode = dojo.query(".textNode",currentNode)[0];
-        console.log("editProperties: valueNode: ", valueNode);
+        // console.log("editProperties: valueNode: ", valueNode);
         if(valueNode) {
             var nodeValue =  valueNode.innerHTML;
             nodeValue.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
             //var nodeValue =  valueNode.innerHTML.replace(/</g, "lt;").replace(/>/g, "gt;").replace(/\&/g, "amp;").replace(/\"/g, "quot;");
-            console.debug("editProperties: node value: ", nodeValue);
+            // console.debug("editProperties: node value: ", nodeValue);
             var textContentNode =  dojo.byId("textcontent");
             var textContentDijit = dijit.byId(dojo.attr(textContentNode,"id"));
             if (textContentDijit) {
@@ -165,7 +165,7 @@ dojo.declare("betterform.Editor", null,
 
   
     saveProperty:function(targetId, propertyId) {
-        console.log("attrEditor.saveProperty: id", targetId, " propertyId:", propertyId);
+        // console.log("attrEditor.saveProperty: id", targetId, " propertyId:", propertyId);
         // get the former attribute values
         var dataXfAttrs = dojo.attr(dojo.byId(targetId), "data-xf-attrs");
         // console.log("dataXfAttrs orig: ", dataXfAttrs);
@@ -189,7 +189,7 @@ dojo.declare("betterform.Editor", null,
 
         result += "}";
         // var xfAttrString = dojox.json.ref.toJson(xfAttrObj);
-        console.debug("xfAttr new:", result);
+        // console.debug("xfAttr new:", result);
         dojo.attr(dojo.byId(targetId), "data-xf-attrs", result);
     },
     
@@ -294,8 +294,8 @@ dojo.declare("betterform.Editor", null,
         console.debug("showEventListener arguments:",arguments);
     },
     nodeIsLoaded:function(xfid) {
-        console.debug("Editor.nodeIsLoaded" , xfid);
-        console.debug("Editor.nodeIsLoaded: this.currentNodeId:",this.currentNodeId);
+        // console.debug("Editor.nodeIsLoaded" , xfid);
+        // console.debug("Editor.nodeIsLoaded: this.currentNodeId:",this.currentNodeId);
         if(this.currentNodeId != undefined && this.currentNodeId == xfid) {
             return true;
         }
