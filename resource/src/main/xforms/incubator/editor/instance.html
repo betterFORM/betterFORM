@@ -37,10 +37,7 @@
                <h4>
                   <label for="resource">resource</label>
                </h4>
-               <p>The event delay of the dispatch action is given by the delay attribute or the delay element. If both
-               are given, the element takes precedence. The delay element can provide the delay with either its string
-               content or the value attribute. If both are given, then the value attribute takes precedence.
-           </p>
+               <p>Attribute indicating the destination URI for submitting instance data. This attribute is not author-optional unless the destination URI is provided by the resource element, which can dynamically specify the URI based on instance data, or the action attribute. This attribute should be used in place of the action attribute. Behavior of relative URIs in links is determined by the host language, although [XML Base] processing is strongly recommended.</p>
                <input dojoType="dijit.form.TextBox" id="resource" name="resource" type="text"
                       value=""
                       placeholder=""
