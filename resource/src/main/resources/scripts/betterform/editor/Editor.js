@@ -51,28 +51,19 @@ dojo.declare("betterform.Editor", null,
                 return;
             }
 
-
 /*
-            var pMenu = new dijit.Menu({
-                        targetNodeIds: [args.id+"-addMenu"] ,
-                        leftClickToOpen: true
-                    });
-
-
-            var childElements = eval(xfType+"Childs");
-            dojo.forEach(childElements, function(itemName){
-                console.debug("Add Target: ",itemName);
-                pMenu.addChild(new dijit.MenuItem({
-                            label: itemName
-                        }));
-
-            });
-            pMenu.startup();
-*/
             console.debug("creating menu ....", xfType + "Menu('" + args.id + "')") ;
+            if(xfType != undefined && xfType != ""){
 
-            var funcCall = xfType + "Menu('" + args.id + "-addMenu');";
-            eval(funcCall);
+                var funcCall = undefined;
+                if (args.id != undefined && args.id != "") {
+                    funcCall = xfType + "Menu('" + args.id + "-addMenu');";
+                }else {
+                    funcCall = xfType + "Menu();";
+                }
+                eval(funcCall);
+            }
+*/
 
 
             //hide previously displayed top-level nodes
