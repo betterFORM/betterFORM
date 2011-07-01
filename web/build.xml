@@ -113,6 +113,10 @@
             <fileset dir="${resource.src.dir}/main/resources" includes="**/*" excludes="scripts/**" />
         </copy>
 
+        <copy todir="${target}/classes/META-INF/resources/scripts/betterform/editor/">
+            <fileset file="${resource.src.dir}/main/resources/scripts/betterform/editor/addMenu.js"/>
+        </copy>
+
         <!--delete the script folder - did not find a solution to exclude these in the copy above -->
         <!--<delete dir="${basedir}/target/classes/META-INF/resources/scripts"/>-->
 

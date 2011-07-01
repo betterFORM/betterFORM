@@ -6,9 +6,22 @@
                 xmlns:ev="http://www.w3.org/2001/xml-events"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="html"
-        xml:base="/betterform/forms/incubator/editor/">
+                xml:base="/betterform/forms/incubator/editor/">
+    <xsl:variable name="bfEditorPath" select="'/forms/incubator/editor/'"/>
 
     <xsl:output method="xml" indent="yes"/>
+    <!-- XRX -->
+    <!--
+        xml:base="/betterform/rest/db/betterform/apps/editor/">
+        <xsl:variable name="bfEditorPath" select="'/rest/db/betterform/apps/editor/'"/>
+    -->
+    <!-- Standalone -->
+    <!--
+                xml:base="/betterform/forms/incubator/editor/">
+    <xsl:variable name="bfEditorPath" select="'/forms/incubator/editor/'"/>
+    -->
+    <xsl:variable name="bfContext" select="'/betterform'"/>
+
     <!-- author: Joern Turner -->
     <xsl:strip-space elements="*"/>
 
@@ -403,11 +416,11 @@
                 <div style="display:none">
                     <xf:model id="model-1">
                         <!--todo: we need to use the baseURI of the editor here instead of the one we load -->
-                        <xf:instance id="i-default" xmlns="" src="{{$contextroot}}/forms/incubator/editor/cdata-instance.xml"/>
+                        <xf:instance id="i-default" xmlns="" src="{{$contextroot}}{$bfEditorPath}cdata-instance.xml"/>
 
                         <xf:submission id="s-dom2xforms"
                                        method="get"
-                                       resource="xslt:/betterform/forms/incubator/editor/dom2xf.xsl?parseString=true"
+                                       resource="xslt:{$bfContext}$bfEditorPath}dom2xf.xsl?parseString=true"
                                        replace="instance"
                                 >
                             <xf:action ev:event="xforms-submit-done">
@@ -419,7 +432,7 @@
 
                         <xf:submission id="s-replaceContent"
                                        method="get"
-                                       action="xslt:/betterform/forms/incubator/editor/updateOriginal.xsl?originDoc={{$contextroot}}{{$pathInfo}}"
+                                       action="xslt:{$bfContext}{$bfEditorPath}updateOriginal.xsl?originDoc={{$contextroot}}{{$pathInfo}}"
                                        replace="instance">
                             <xf:action ev:event="xforms-submit-done">
                                 <!--<xf:message level="ephemeral">Data mounted back to original document</xf:message>-->
@@ -479,7 +492,7 @@
                     </xf:trigger>
                 </div>
                 <div id="mainWindow" style="width:100%;">
-                    <div dojoType="dojo.data.ItemFileReadStore" data-dojo-id="stateStore" url="/betterform/forms/incubator/editor/xfDatatype.json" />
+                    <div dojoType="dojo.data.ItemFileReadStore" data-dojo-id="stateStore" url="{$bfContext}{$bfEditorPath}xfDatatype.json" />
                     <div id="topPane">
                         <div dojoType="dijit.MenuBar" id="mainMenu">
                             <div dojoType="dijit.PopupMenuBarItem" label="File">
@@ -539,7 +552,7 @@
                             </div>
 -->
                         </div>
-                        <img src="/betterform/bfResources/images/betterform_icon16x16.png" alt=""/>
+                        <img src="{$bfContext}/bfResources/images/betterform_icon16x16.png" alt=""/>
                         <div id="addToolbar">
                             <span class="title">Add...</span>
                             <ul id="childList">
@@ -626,7 +639,7 @@
                         </div>
                         <div id="rightPane" tabindex="-1">
                             <div id="xfMount" dojotype="dijit.layout.ContentPane"
-                                 href="/betterform/forms/incubator/editor/document.html"
+                                 href="{$bfContext}{$bfEditorPath}document.html"
                                  preload="false">
 <!--
                                 <script type="dojo/connect" event="onDownloadStart">
@@ -647,12 +660,14 @@
 
                                 </script>
 -->
+
                                 <script type="dojo/connect" event="onDownloadEnd">
                                     var xfId = dojo.attr(dojo.byId("xfMount"),"xfId");
                                     if(xfId == undefined) { return;}
                                     console.log("xfid: ",xfId);
                                     attrEditor.editProperties(xfId);
                                 </script>
+
                              </div>
                         </div>
                     </div>
@@ -681,8 +696,10 @@
                     }
                     /* ]]> */
                 </script>
+                <xsl:variable name="bfFullPath2"><xsl:text>'</xsl:text><xsl:value-of select="concat($bfContext,$bfEditorPath)"/><xsl:text>'</xsl:text></xsl:variable>
 
                 <script type="text/javascript" class="source below">
+                    var tmpBfPath = <xsl:value-of select="$bfFullPath2"/>;
                 /* <![CDATA[ */
                     $(function () {
                         // TO CREATE AN INSTANCE
@@ -789,12 +806,15 @@
                                         console.log(data);
                                         var xfType = data.rslt.obj.attr("data-xf-type");
                                         dojo.attr(dojo.byId("xfMount"),"xfId", tmpId);
+                                        //console.debug("tmpBfPath:",tmpBfPath);
+                                        var getContentPane = dojo.xhr(dijit.byId("xfMount").set("href", tmpBfPath + xfType + ".html"));
 
-                                        dijit.byId("xfMount").set("href", "/betterform/forms/incubator/editor/" + xfType + ".html");
-                                        //console.debug("publish: nodeSelected: data", data);
-                                        dojo.publish("nodeSelected", [
-                                            {event:event,xfType:xfType,id:tmpId,jsTreeData:data}
-                                        ]);
+                                        getContentPane.then(
+                                            //console.debug("publish: nodeSelected: data", data);
+                                            dojo.publish("nodeSelected", [
+                                                {event:event,xfType:xfType,id:tmpId,jsTreeData:data,bfPath:tmpBfPath}
+                                            ])
+                                        );
                                     }
                                 })
                             // EVENTS
@@ -952,13 +972,13 @@
                 </xsl:if>
                 <xsl:value-of select="@id"/>
                 <span class="buttonWrapper">
-                    <img src="/betterform/forms/incubator/editor/images/flag-red.png" width="24" height="24" alt="add event"/>
+                    <img src="{$bfContext}{$bfEditorPath}images/flag-red.png" width="24" height="24" alt="add event"/>
                     <button id="{$id}-addMenu" type="button" style="padding:0;margin:0;background:transparent;border:none;" onclick="displayAddMenu(event,'{generate-id()}','{local-name()}');">
-                        <img  src="/betterform/forms/incubator/editor/images/list-add.png" width="24" height="24" alt="+"/>
+                        <img  src="{$bfContext}{$bfEditorPath}images/list-add.png" width="24" height="24" alt="+"/>
                     </button>
                     <!--<button class="deleteBtn" name="deleteItem" onclick="alert('deleting');">x</button>-->
                     <button type="button" onclick="if(confirm('Really delete?')) alert('deleting');return false;" style="padding:0;margin:0;background:transparent;border:none;">
-                        <img src="/betterform/forms/incubator/editor/images/list-remove.png" width="24" height="24" alt="x"/>
+                        <img src="{$bfContext}{$bfEditorPath}images/list-remove.png" width="24" height="24" alt="x"/>
                     </button>
                 </span>
             </a>

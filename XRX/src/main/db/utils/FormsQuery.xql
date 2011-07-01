@@ -241,7 +241,7 @@ declare function local:handleFile($uri as xs:string, $contextPath as xs:string, 
 		</a>
 		<a class="textLink" title="{$fileName}" href="{fn:concat($filePath, 'db/', $path, '/', $fileLink)}" target="_blank">{$shortendFileName}</a>
 		<a class="sourceLink" title="view" href="{fn:concat($filePath, 'db/', $path, '/', $fileLink, '?source=true')}" target="_blank">source</a>
-		<!-- <a class="editorLink" title="editor" href="{fn:concat($filePath, 'db/', $path, '/', $fileLink, '?_xsl=', '/betterform/apps/editor/xf2jsTree.xsl')}" target="_blank">editor</a> -->
+		<a class="editorLink" title="editor" href="{fn:concat($filePath, 'db/', $path, '/', $fileLink, '?_xsl=', '/betterform/apps/editor/xf2jsTree.xsl')}" target="_blank">editor</a>
 	</div>
 };
 

@@ -10,10 +10,11 @@ dojo.declare("betterform.Editor", null,
 {
     currentjsTreeData:null,
     currentNodeId:null,
+    bfPath:null,
 
     constructor:function() {
         dojo.subscribe("nodeSelected", function(args){
-            // console.log("nodeSelected: arg:", args);
+            console.log("nodeSelected: arg:", args);
             // console.log("nodeSelected: arg.event:", args.event);
 
             var selectedNode = args.jsTreeData;
@@ -33,7 +34,8 @@ dojo.declare("betterform.Editor", null,
             console.debug("Editor.subscription.nodeSelected: xfType:", xfType);
             if(xfType =="document"){
                 //jump back to root
-                dijit.byId("xfMount").set("href", "/betterform/forms/incubator/editor/document.html");
+                console.debug("bfpath: ", args.bfPath);
+                //dijit.byId("xfMount").set("href", args.bfPath + "document.html");
                 //hide addToolbars
                 dojo.query("#actionlist li").forEach(
                     function(item,index,array){
@@ -106,7 +108,7 @@ dojo.declare("betterform.Editor", null,
 
 
     editProperties : function(targetId) {
-        // console.log("attrEditor.editProperties: id of property sheet: ", targetId);
+        console.log("attrEditor.editProperties: id of property sheet: ", targetId);
         var  currentNode =  dojo.byId(targetId);
         var dataXfAttrs = dojo.attr(currentNode, "data-xf-attrs");
         var dataXfType = dojo.attr(currentNode, "data-xf-type");
@@ -165,7 +167,7 @@ dojo.declare("betterform.Editor", null,
 
   
     saveProperty:function(targetId, propertyId) {
-        // console.log("attrEditor.saveProperty: id", targetId, " propertyId:", propertyId);
+        console.log("attrEditor.saveProperty: id", targetId, " propertyId:", propertyId);
         // get the former attribute values
         var dataXfAttrs = dojo.attr(dojo.byId(targetId), "data-xf-attrs");
         // console.log("dataXfAttrs orig: ", dataXfAttrs);
@@ -294,8 +296,8 @@ dojo.declare("betterform.Editor", null,
         console.debug("showEventListener arguments:",arguments);
     },
     nodeIsLoaded:function(xfid) {
-        // console.debug("Editor.nodeIsLoaded" , xfid);
-        // console.debug("Editor.nodeIsLoaded: this.currentNodeId:",this.currentNodeId);
+         console.debug("Editor.nodeIsLoaded" , xfid);
+         console.debug("Editor.nodeIsLoaded: this.currentNodeId:",this.currentNodeId);
         if(this.currentNodeId != undefined && this.currentNodeId == xfid) {
             return true;
         }
