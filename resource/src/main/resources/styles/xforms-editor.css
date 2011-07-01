@@ -8,7 +8,7 @@ html, body,#mainWindow {
 }
 #mainWindow #docWrapper{
     position:relative;
-    margin: 75px 265px 30px 265px;
+    margin: 33px 265px 30px 165px;
 }
 #docPane{
     background: transparent;
@@ -34,7 +34,7 @@ html, body,#mainWindow {
     background:red;
 }
 #topPane{
-    height: 90px;
+    height: 42px;
     background: #E6E6E7;
     width: 100%;
     position:fixed;
@@ -63,14 +63,18 @@ html, body,#mainWindow {
 #leftPane{
     position:absolute;
     left:0;
-    top:95px;
+    top:40px;
     width:160px;
-    height:300px;
+    min-height:300px;
+}
+#leftPane #addLabel{
+    height: 50px;
+    font-size:1.1em;
 }
 #rightPane {
     position:absolute;
     right:0;
-    top:95px;
+    top:40px;
     background: #666666;
     color:#e9e9e9;
     min-height: 200px;
@@ -119,7 +123,10 @@ html, body,#mainWindow {
 }
 .tundra .dijitMenu, .tundra .dijitMenuBar{
     padding:7px;
+    background: #555555;
+    color:#eeeeee;
 }
+/*
 #addToolbar{
     padding-top:5px;
     padding-left:5px;
@@ -146,6 +153,7 @@ html, body,#mainWindow {
     display:none;
     padding-right:20px;
 }
+*/
 #docPane #xfDoc .model,
 #docPane #xfDoc .group{
     border-radius: 10px 0 0 10px;
@@ -170,7 +178,7 @@ html, body,#mainWindow {
     background:white;
 }
 .bf #mainWindow  .jstree-clicked {
-    padding:10px 5px;
+    padding:3px 0px 3px 5px;
     width:95%;
     background:transparent;
     color:#444444;
@@ -180,8 +188,10 @@ html, body,#mainWindow {
 }
 .bf #mainWindow .jstree-hovered{
     width:95%;
-    background:#eeeeee;
+    background:#555555;
+    color:#eeeeee;
     border-color:limegreen;
+    border-radius: 5px;
 }
 .bf #mainWindow .dijitMenu, .bf #mainWindow .dijitMenuBar {
     background:#444444;
@@ -327,10 +337,12 @@ dl.keyboard-mapping dd {
 }
 .bf #leftPane #componentTree{
     width:100%;
+    background: #666666;
+    margin:0;
+    padding: 0;
 }
 .bf #leftPane #componentTree li{
     background:#666666;
-    padding:10px;
     display: none;
 }
 /*
@@ -342,15 +354,45 @@ dl.keyboard-mapping dd {
     padding: 0;
 }
 
-.bf #leftPane #componentTree .category > li
+.bf #leftPane #componentTree > ul > li
 {
-    text-align:right;
+    text-align:left;
+    background: #555555;
 }
-.bf #leftPane #componentTree .category .category > li{
+.bf #leftPane #componentTree ul .element{
+    text-align: right;
+}
+.bf #leftPane #componentTree ul > li > ul > li{
     text-align:left;
 }
+.bf #leftPane #componentTree ul > li > ul > li > ul > li{
+    text-align:right;
+    padding-left: 20px;
+}
+
 
 .bf #leftPane #componentTree a{
     color:#dedede;
+}
+.bf #leftPane #componentTree ins{
+    display: none;
+}
+
+.bf #leftPane #componentTree .category .action{
+    background: orange;
+    color:#333333;
+}
+.bf #leftPane #componentTree .category .controls{
+    background: #4682b4;
+    color:#333333;
+
+}
+.bf #leftPane #componentTree .category .container{
+    background: #b0c4de;
+    color:#333333;
+}
+.bf #leftPane #componentTree .category .common{
+    background: #daa520;
+    color:#333333;
 }
 

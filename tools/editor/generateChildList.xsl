@@ -72,6 +72,7 @@
                 <xsl:value-of select="substring-after(@ref,':')"/>
             </li>
         </xsl:for-each>
+        <xsl:apply-templates select=".//xsd:group"/>
     </xsl:template>
 
     <xsl:template match="xsd:group[@name='Container.Form.Controls']">

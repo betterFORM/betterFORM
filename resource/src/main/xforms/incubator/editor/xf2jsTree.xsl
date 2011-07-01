@@ -229,74 +229,15 @@
 -->
                         </div>
                         <img src="{$bfContext}/bfResources/images/betterform_icon16x16.png" alt=""/>
-                        <div id="addToolbar">
-                            <span class="title">Add...</span>
-                            <ul id="childList">
-                                <li class="instance-lnk"><a href="javascript:addElement('instance');">instance</a></li>
-                                <li class="schema-lnk"><a href="javascript:addElement('schema');">schema</a></li>
-                                <li class="submission-lnk"><a href="javascript:addElement('submission');">submission</a></li>
-                                <li class="bind-lnk"><a href="javascript:addElement('bind');">bind</a></li>
-
-                                <li class="group-lnk"><a href="javascript:addElement('group');">group</a></li>
-                                <li class="switch-lnk"><a href="javascript:addElement('switch');">switch</a></li>
-                                <li class="case-lnk"><a href="javascript:addElement('case');">case</a></li>
-                                <li class="repeat-lnk"><a href="javascript:addElement('repeat');">repeat</a></li>
-
-                                <li class="label-lnk"><a href="javascript:addElement('label');">label</a></li>
-                                <li class="hint-lnk"><a href="javascript:addElement('hint');">hint</a></li>
-                                <li class="help-lnk"><a href="javascript:addElement('help');">help</a></li>
-                                <li class="alert-lnk"><a href="javascript:addElement('alert');">alert</a></li>
-
-                                <li class="input-lnk"><a href="javascript:addElement('input');">input</a></li>
-                                <li class="secret-lnk"><a href="javascript:addElement('secret');">secret</a></li>
-                                <li class="textarea-lnk"><a href="javascript:addElement('textarea');">textarea</a></li>
-                                <li class="output-lnk"><a href="javascript:addElement('output');">output</a></li>
-                                <li class="upload-lnk"><a href="javascript:addElement('upload');">upload</a></li>
-                                <li class="filename-lnk"><a href="javascript:addElement('filename');">filename</a></li>
-                                <li class="mediatype-lnk"><a href="javascript:addElement('mediatype');">mediatype"</a></li>
-
-                                <li class="select1-lnk"><a href="javascript:addElement('select1');">select1</a></li>
-                                <li class="select-lnk"><a href="javascript:addElement('select');">select</a></li>
-
-
-                                <li class="item-lnk"><a href="javascript:addElement('item');">item</a></li>
-                                <li class="itemset-lnk"><a href="javascript:addElement('itemset');">itemset</a></li>
-                                <li class="choices-lnk"><a href="javascript:addElement('choices');">choices</a></li>
-                                <li class="value-lnk"><a href="javascript:addElement('value');">value</a></li>
-                                <li class="copy-lnk"><a href="javascript:addElement('copy');">copy</a></li>
-
-
-                                <li class="range-lnk"><a href="javascript:addElement('range');">range</a></li>
-                                <li class="submit-lnk"><a href="javascript:addElement('submit');">submit</a></li>
-                                <li class="trigger-lnk"><a href="javascript:addElement('trigger');">trigger</a></li>
-                            </ul>
-                            <ul id="actionlist" class="actions">
-                                 <li><a href="javascript:addElement('action');">action</a></li>
-                                <li><a href="javascript:addElement('insert');">insert</a></li>
-                                <li><a href="javascript:addElement('delete');">delete</a></li>
-                                <li><a href="javascript:addElement('setvalue');">setvalue</a></li>
-                                <li><a href="javascript:addElement('send');">send</a></li>
-                                <li><a href="javascript:addElement('dispatch');">dispatch</a></li>
-                                <li><a href="javascript:addElement('message');">message</a></li>
-                                <li><a href="javascript:addElement('load');">load</a></li>
-                                <li><a href="javascript:addElement('rebuild');">rebuild</a></li>
-                                <li><a href="javascript:addElement('recalculate');">recalculate</a></li>
-                                <li><a href="javascript:addElement('revalidate');">revalidate</a></li>
-                                <li><a href="javascript:addElement('refresh');">refresh</a></li>
-                                <li><a href="javascript:addElement('setfocus');">setfocus</a></li>
-                                <li><a href="javascript:addElement('setindex');">setindex</a></li>
-                                <li><a href="javascript:addElement('toggle');">toggle</a></li>
-                                <li><a href="javascript:addElement('reset');">reset</a></li>
-                            </ul>
-
-                        </div>
                     </div>
                 <div id="mainWindow" style="width:100%;">
 
                 <div id="docWrapper" tabindex="-1">
+<!--
                     <xf:output value="bf:appContext('pathInfo')">
-                        <xf:label>PathInfo</xf:label>
+                        <xf:label>PathInfo: </xf:label>
                     </xf:output>
+-->
                     <div id="docPane" tabindex="-1">
                         <xsl:variable name="elements" select="//xf:model[not(ancestor::xf:*)]|//xf:group[not(ancestor::xf:*)]"/>
                         <!--<xsl:variable name="uiElements" select="//*[name()='xf:group']"/>-->
@@ -316,6 +257,7 @@
                     </div>
                 </div>
                 <div id="leftPane" tabindex="-1">
+                    <div id="addLabel">Add...</div>
                     <div id="componentTree">
 <!--
                         <ul>
@@ -510,6 +452,9 @@
 
                     $(function () {
                         $("#componentTree").jstree({
+                            "core" : {
+                                "initially_open" : [ "model-tmpl","group-tmpl","bind-tmpl","label-tmpl","hint-tmpl","help.tmpl" ]
+                            },
                             "html_data":{
                                 "ajax":{
                                     url:"/betterform/forms/incubator/editor/components.html"
@@ -521,7 +466,7 @@
                                 "icons" : false
                             },
 
-                            "plugins" : [ "themes", "html_data" ]
+                            "plugins" : [ "themes", "hotkeys", "ui", "html_data" ]
                         });
                     });
 
@@ -530,6 +475,9 @@
 
                 <script type="text/javascript">
                     $("#xfDoc ul").delegate("li", "dblclick", function(){
+                            $("#xfDoc").jstree("toggle_node", this);
+                    });
+                    $("#componentTree ul").delegate("li", "click", function(){
                             $("#xfDoc").jstree("toggle_node", this);
                     });
                     function addElement(type){
@@ -672,11 +620,6 @@
                 </xsl:if>
                 <xsl:value-of select="@id"/>
                 <span class="buttonWrapper">
-                    <img src="{$bfContext}{$bfEditorPath}images/flag-red.png" width="24" height="24" alt="add event"/>
-                    <button id="{$id}-addMenu" type="button" style="padding:0;margin:0;background:transparent;border:none;" onclick="displayAddMenu(event,'{generate-id()}','{local-name()}');">
-                        <img  src="{$bfContext}{$bfEditorPath}images/list-add.png" width="24" height="24" alt="+"/>
-                    </button>
-                    <!--<button class="deleteBtn" name="deleteItem" onclick="alert('deleting');">x</button>-->
                     <button type="button" onclick="if(confirm('Really delete?')) alert('deleting');return false;" style="padding:0;margin:0;background:transparent;border:none;">
                         <img src="{$bfContext}{$bfEditorPath}images/list-remove.png" width="24" height="24" alt="x"/>
                     </button>

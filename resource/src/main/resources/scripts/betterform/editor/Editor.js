@@ -69,10 +69,12 @@ dojo.declare("betterform.Editor", null,
             });
             pMenu.startup();
 */
+/*
             console.debug("creating menu ....", xfType + "Menu('" + args.id + "')") ;
 
             var funcCall = xfType + "Menu('" + args.id + "-addMenu');";
             eval(funcCall);
+*/
 
 
             //hide previously displayed top-level nodes

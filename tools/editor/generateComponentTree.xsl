@@ -27,7 +27,7 @@
                                     <xsl:for-each select="li[@class='element']">
                                         <xsl:sort select="."/>
                                         <xsl:variable name="name"><xsl:value-of select="."/></xsl:variable>
-                                        <li>
+                                        <li class="element">
                                             <xsl:copy-of select="@*"/>
                                             <a href="javascript:addElement('{$name}');"><xsl:value-of select="$name"/></a>
                                         </li>
@@ -36,7 +36,7 @@
                         </xsl:if>
                         <xsl:if test="li[@class='common']">
                             <ul class="category">
-                                <li class="{@class}">
+                                <li class="common">
                                     <a href="#">Common</a>
                                     <ul>
                                         <!--<li class="common"><a href="javascript:addElement('label');">label</a></li>-->
@@ -49,7 +49,7 @@
                         </xsl:if>
                         <xsl:if test="li[@class='controls']">
                             <ul class="category">
-                                <li class="{@class}">
+                                <li class="controls">
                                     <a href="#">Controls</a>
                                     <ul>
                                         <xsl:call-template name="makeEntry">
