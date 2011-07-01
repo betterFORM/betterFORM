@@ -92,7 +92,7 @@
     thing is generated to ul/li structures and should be used as a base for further transforms. -->
     <target name="generateChildList" depends="prepare" description="generate list of possible child elements">
         <xslt in="${basedir}/XForms-11-Schema.xsd"
-              out="/tools/editor/target/childlist.xml"
+              out="${basedir}/target/childlist.xml"
               style="${basedir}/generateChildList.xsl"
               force="true"
               classpathref="transform.class.path">
@@ -120,6 +120,16 @@
               classpathref="transform.class.path">
         </xslt>
     </target>
+
+    <target name="generate-Component Tree" depends="generateChildList" description="generates the markup for the componentTree ">
+        <xslt in="${basedir}/target/childlist.xml"
+              out="${basedir}/target/componentTree.html"
+              style="${basedir}/generateComponentTree.xsl"
+              force="true"
+              classpathref="transform.class.path">
+        </xslt>
+    </target>
+
 
     <target  name="deployEditor" depends="generate-HTML-Forms" description="generates HTML forms and deploys them to xforms/incubator/editor">
         <copy todir="${basedir}/../../resource/src/main/xforms/incubator/editor" flatten="true" overwrite="true">

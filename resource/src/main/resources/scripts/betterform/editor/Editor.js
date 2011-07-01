@@ -74,6 +74,24 @@ dojo.declare("betterform.Editor", null,
             var funcCall = xfType + "Menu('" + args.id + "-addMenu');";
             eval(funcCall);
 
+
+            //hide previously displayed top-level nodes
+            dojo.query("#componentTree > ul > li").forEach(
+                  function(item, index, array){
+                      var displays = dojo.style(item,"display");
+                      if(diplays="block") dojo.style(item,"display","none");
+                  }
+             );
+
+            //show the tree node (first level of tree) for the given xfType - we look for xfType + "-tmpl"
+            var rootForType = dojo.style(dojo.byId(xfType+'-tmpl'),"display","block");
+
+            dojo.query("#"+xfType+"-tmpl li").forEach(
+                  function(item, index, array){
+                        dojo.style(item,"display","block");
+                  }
+             );
+
             dojo.query("#childList li").forEach(
                   function(item, index, array){
                         var currentClass = dojo.attr(item,"class");
