@@ -310,15 +310,6 @@
                         dijit.byId("fluxProcessor").dispatchEvent("transform2xf");
 
                     }
-
-                    function displayAddMenu(event,targetId,xfType){
-                        console.log("displayMenu ",targetId, xfType);
-                        console.log("event ",event);
-
-                        event.stopPropagation();
-                        event.cancelBubble=true;
-                        return false;
-                    }
                     /* ]]> */
                 </script>
                 <xsl:variable name="bfFullPath2"><xsl:text>'</xsl:text><xsl:value-of select="concat($bfContext,$bfEditorPath)"/><xsl:text>'</xsl:text></xsl:variable>
@@ -466,7 +457,7 @@
                                 "icons" : false
                             },
 
-                            "plugins" : [ "themes", "hotkeys", "ui", "html_data" ]
+                            "plugins" : [ "themes", "hotkeys", "ui", "html_data","dnd" ]
                         });
                     });
 
@@ -474,11 +465,17 @@
                 </script>
 
                 <script type="text/javascript">
-                    $("#xfDoc ul").delegate("li", "dblclick", function(){
+                    $("#xfDoc").delegate("a", "click", function(){
                             $("#xfDoc").jstree("toggle_node", this);
                     });
-                    $("#componentTree li").delegate("li", "click", function(){
-                            $("#xfDoc").jstree("toggle_node", this);
+
+
+                    $("#componentTree").delegate("a", "click", function(){
+                        if(dojo.hasClass(this.parentNode,"jstree-leaf")){
+                            addElement(this.parentNode.getAttribute("data-xf-type"));
+                        }
+
+                        $("#componentTree").jstree("toggle_node", this);
                     });
                     function addElement(type){
                         console.log("addElement type:",type);
@@ -489,13 +486,18 @@
                         var ahref = dojo.query("a",elem[0])[0];
                         var span = dojo.create("span", null, ahref);
                         dojo.addClass(span,"buttonWrapper");
-                        var btnDelete = dojo.create("button", { type:"button", style: "padding: 0pt; margin: 0pt; background: none repeat scroll 0% 0% transparent; border: medium none;", onclick: "if(confirm('Really delete?')) alert('deleting');return false;" },
+                        var btnDelete = dojo.create("button", { type:"button", style: "padding: 0pt; margin: 0pt; background: none repeat scroll 0% 0% transparent; border: medium none;", onclick: "if(confirm('Really delete?')) deleteNode(this);return false;" },
                                      span);
                         dojo.create("img", { width:"24", height: "24",src: "/betterform/forms/incubator/editor/images/list-remove.png" },
                                      btnDelete);
 
                         $("#xfDoc").jstree("select_node",elem,true,null);
-                        $("#id").focus();
+                        elem.focus();
+                        elem.hide();
+                        $(elem).fadeIn("slow");
+                    }
+                    function deleteNode(elem){
+                        $("#xfDoc").jstree("remove",null);
                     }
                 </script>
                 <div id="bfEditorHelp" dojoType="dojox.layout.FloatingPane" title="betterFORM Editor Help" resizable="true" dockable="false" style="position:absolute;margin:10px;top:200px;left:200px;width:600px;height:350px;visibility:hidden;">
@@ -615,12 +617,7 @@
                 </xsl:if>
                 <xsl:value-of select="@id"/>
                 <span class="buttonWrapper">
-                    <img src="{$bfContext}{$bfEditorPath}images/flag-red.png" width="24" height="24" alt="add event"/>
-                    <button id="{$id}-addMenu" type="button" style="padding:0;margin:0;background:transparent;border:none;" onclick="displayAddMenu(event,'{generate-id()}','{local-name()}');">
-                        <img  src="{$bfContext}{$bfEditorPath}images/list-add.png" width="24" height="24" alt="+"/>
-                    </button>
-                    <!--<button class="deleteBtn" name="deleteItem" onclick="alert('deleting');">x</button>-->
-                    <button type="button" onclick="if(confirm('Really delete?')) alert('deleting');return false;" style="padding:0;margin:0;background:transparent;border:none;">
+                    <button type="button" onclick="if(confirm('Really delete?')) deleteNode(this);return false;" style="padding:0;margin:0;background:transparent;border:none;">
                         <img src="{$bfContext}{$bfEditorPath}images/list-remove.png" width="24" height="24" alt="x"/>
                     </button>
                 </span>

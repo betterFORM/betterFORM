@@ -36,35 +36,8 @@ dojo.declare("betterform.Editor", null,
                 //jump back to root
                 console.debug("bfpath: ", args.bfPath);
                 //dijit.byId("xfMount").set("href", args.bfPath + "document.html");
-                //hide addToolbars
-                dojo.query("#actionlist li").forEach(
-                    function(item,index,array){
-                        dojo.attr(item,"style","display:none;");
-                    }
-                );
-                dojo.query("#childList li").forEach(
-                    function(item,index,array){
-                        dojo.attr(item,"style","display:none;");
-                    }
-                );
-
                 return;
             }
-
-/*
-            console.debug("creating menu ....", xfType + "Menu('" + args.id + "')") ;
-            if(xfType != undefined && xfType != ""){
-
-                var funcCall = undefined;
-                if (args.id != undefined && args.id != "") {
-                    funcCall = xfType + "Menu('" + args.id + "-addMenu');";
-                }else {
-                    funcCall = xfType + "Menu();";
-                }
-                eval(funcCall);
-            }
-*/
-
 
             //hide previously displayed top-level nodes
             dojo.query("#componentTree > ul > li").forEach(
@@ -83,35 +56,6 @@ dojo.declare("betterform.Editor", null,
                   }
              );
 
-            dojo.query("#childList li").forEach(
-                  function(item, index, array){
-                        var currentClass = dojo.attr(item,"class");
-                        var cutted = currentClass.substring(0,currentClass.indexOf("-",4));
-
-                        var childArray=eval(xfType+"Childs");
-                        if(childArray == undefined){
-                            return;
-                        }
-                        if(dojo.indexOf(childArray,cutted) != -1){
-                            dojo.attr(item,"style","display:inline;");
-                        }else{
-                            dojo.attr(item,"style","display:none;");
-                        }
-
-                        //check if actions should be there by looking for 'action' element in the relevant array
-                        var hasActions = dojo.indexOf(childArray,"action") != -1;
-                        dojo.query("#actionlist li").forEach(
-                            function(item,index,array){
-                                if(hasActions){
-                                    dojo.attr(item,"style","display:inline;");
-                                }else{
-                                    dojo.attr(item,"style","display:none;");
-                                }
-                            }
-                        );
-
-                  }
-             );
          });
     },
 
