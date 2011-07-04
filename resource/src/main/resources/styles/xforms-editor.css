@@ -368,7 +368,7 @@ dl.keyboard-mapping dd {
 .bf #leftPane #componentTree ul > li > ul > li > ul > li{
     text-align:right;
     padding-left: 20px;
-}
+    }
 
 
 .bf #leftPane #componentTree a{
@@ -381,18 +381,27 @@ dl.keyboard-mapping dd {
 .bf #leftPane #componentTree .category .action{
     background: orange;
     color:#333333;
+    border-top-left-radius: 10px;
 }
 .bf #leftPane #componentTree .category .controls{
     background: #4682b4;
     color:#333333;
+    border-top-left-radius: 10px;
 
 }
 .bf #leftPane #componentTree .category .container{
     background: #b0c4de;
     color:#333333;
+    border-top-left-radius: 10px;
 }
 .bf #leftPane #componentTree .category .common{
     background: #daa520;
     color:#333333;
+    border-top-left-radius: 10px;
 }
 
+.bf #leftPane #componentTree .jstree-clicked{
+    background: #32cd32;
+    margin-right: -15px;
+
+}

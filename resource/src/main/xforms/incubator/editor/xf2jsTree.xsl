@@ -477,14 +477,24 @@
                     $("#xfDoc ul").delegate("li", "dblclick", function(){
                             $("#xfDoc").jstree("toggle_node", this);
                     });
-                    $("#componentTree ul").delegate("li", "click", function(){
+                    $("#componentTree li").delegate("li", "click", function(){
                             $("#xfDoc").jstree("toggle_node", this);
                     });
                     function addElement(type){
                         console.log("addElement type:",type);
                         var elem = $("#xfDoc").jstree("create",null,"last",type,false,true);
                         elem.attr("data-xf-type",type);
-                        $("#xfDoc").jstree("select_node",elem,false,null);
+                        elem.attr("id",new Date().getTime());
+                        elem.attr("data-xf-attrs","");
+                        var ahref = dojo.query("a",elem[0])[0];
+                        var span = dojo.create("span", null, ahref);
+                        dojo.addClass(span,"buttonWrapper");
+                        var btnDelete = dojo.create("button", { type:"button", style: "padding: 0pt; margin: 0pt; background: none repeat scroll 0% 0% transparent; border: medium none;", onclick: "if(confirm('Really delete?')) alert('deleting');return false;" },
+                                     span);
+                        dojo.create("img", { width:"24", height: "24",src: "/betterform/forms/incubator/editor/images/list-remove.png" },
+                                     btnDelete);
+
+                        $("#xfDoc").jstree("select_node",elem,true,null);
                         $("#id").focus();
                     }
                 </script>
@@ -554,21 +564,6 @@
                         </div>
                     </div>
                 </div>
-                <script type="text/javascript">
-
-                    dojo.hitch(window, $("#xfDoc ul").delegate("li", "dblclick", function(){
-                            $("#xfDoc").jstree("toggle_node", this);
-                    }));
-
-
-                    function addElement(type){
-                        console.log("addElement type:",type);
-                        var elem = $("#xfDoc").jstree("create",null,"last",type,false,true);
-                        elem.attr("data-xf-type",type);
-                        $("#xfDoc").jstree("select_node",elem,false,null);
-                        $("#id").focus();
-                    }
-                </script>
             </body>
         </html>
     </xsl:template>
@@ -620,6 +615,11 @@
                 </xsl:if>
                 <xsl:value-of select="@id"/>
                 <span class="buttonWrapper">
+                    <img src="{$bfContext}{$bfEditorPath}images/flag-red.png" width="24" height="24" alt="add event"/>
+                    <button id="{$id}-addMenu" type="button" style="padding:0;margin:0;background:transparent;border:none;" onclick="displayAddMenu(event,'{generate-id()}','{local-name()}');">
+                        <img  src="{$bfContext}{$bfEditorPath}images/list-add.png" width="24" height="24" alt="+"/>
+                    </button>
+                    <!--<button class="deleteBtn" name="deleteItem" onclick="alert('deleting');">x</button>-->
                     <button type="button" onclick="if(confirm('Really delete?')) alert('deleting');return false;" style="padding:0;margin:0;background:transparent;border:none;">
                         <img src="{$bfContext}{$bfEditorPath}images/list-remove.png" width="24" height="24" alt="x"/>
                     </button>
