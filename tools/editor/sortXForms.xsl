@@ -11,8 +11,7 @@
 
 
     <xsl:variable name="propertyOrder" select="document('resources/propertyOrder.xml')"/>
-    <xsl:variable name="lang" select="'en'" as="xs:string"/>
-
+    
     <xsl:template match="*|@*|text()|comment()" priority="1">
         <xsl:copy>
             <xsl:copy-of select="@*"/>
@@ -22,12 +21,22 @@
     
     <xsl:template match="xf:group[@id='properties']" priority="10">
         <xf:group ref="xfElement" id="properties" appearance="bf:verticalTable">
-            <xsl:apply-templates select="$propertyOrder/order/property" mode="sortProperties">
+            <xsl:apply-templates select="$propertyOrder/order/*" mode="sortProperties">
                 <xsl:with-param name="group" select="."/>
             </xsl:apply-templates>
         </xf:group>        
     </xsl:template>
     
+    <xsl:template match="property[exists(property)]" mode="sortProperties" priority="10">        
+        <xsl:param name="group"/>
+        <xsl:message>found group <xsl:value-of select="@name"/></xsl:message>
+        <xf:group id="{@name}">
+            <xsl:apply-templates mode="sortProperties">
+                <xsl:with-param name="group" select="$group"/>
+            </xsl:apply-templates>
+        </xf:group>
+    </xsl:template>
+
     <xsl:template match="property" mode="sortProperties">        
         <xsl:param name="group"/>
         <!-- <xsl:message>search for properties on group <xsl:value-of select="$group/@id"/></xsl:message> -->        
@@ -38,5 +47,8 @@
         </xsl:if>
             
     </xsl:template>
+
     
+
+
 </xsl:stylesheet>

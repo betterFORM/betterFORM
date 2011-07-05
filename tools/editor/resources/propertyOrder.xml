@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <order>
     <!-- action -->
-    <property name="while"/>
-    <property name="id"/>
-    <property name="if"/>
+    <property name="testGroup">
+        <property name="id"/>
+        <property name="while"/>
+        <property name="if"/>
+    </property>
     
     <property name="xml-event">
         <property name="event"/>
-        <property name="oberserver"/>
-        <property name="target"/>
-        <property name="handler"/>
-        <property name="phase"/>
-        <property name="propagate"/>
-        <property name="defaultAction"/>
+        <property name="ev:observer"/>        
+        <property name="ev:target"/>
+        <property name="ev:handler"/>
+        <property name="ev:phase"/>
+        <property name="ev:propagate"/>
+        <property name="ev:defaultAction"/>
     </property>
     <!-- alert -->
     <property name="model"/>
