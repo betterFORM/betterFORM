@@ -34,8 +34,8 @@
         <xsl:variable name="uppercasedName" select="bfFunction:start-uppercase(@name)"/>
         <key name="{concat(@name,'Attribute')}">
             <label><xsl:value-of select="$uppercasedName"/></label>
-            <hint><xsl:value-of select="$uppercasedName"/>  hint.</hint>
-            <help><xsl:value-of select="$uppercasedName"/>  help</help>
+            <hint><xsl:value-of select="$uppercasedName"/> hint.</hint>
+            <help><xsl:value-of select="$uppercasedName"/> help</help>
             <alert><xsl:value-of select="$uppercasedName"/> alert</alert>
         </key>
 

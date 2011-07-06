@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dictionary>
    <lang id="en">
-    <!-- action -->
-    
         <key name="idAttribute">
          <label>Id</label>
          <hint>Id  hint.</hint>
@@ -21,9 +19,9 @@
          <help>If  help</help>
          <alert>If alert</alert>
       </key>
-    
-    
-    
+
+
+
         <key name="eventAttribute">
          <label>Event</label>
          <hint>Event  hint.</hint>
@@ -35,7 +33,7 @@
          <hint>Ev:observer  hint.</hint>
          <help>Ev:observer  help</help>
          <alert>Ev:observer alert</alert>
-      </key>        
+      </key>
         <key name="ev:targetAttribute">
          <label>Ev:target</label>
          <hint>Ev:target  hint.</hint>
@@ -66,7 +64,7 @@
          <help>Ev:defaultAction  help</help>
          <alert>Ev:defaultAction alert</alert>
       </key>
-    
+
       <!-- alert -->
     <key name="modelAttribute">
          <label>Model</label>
@@ -87,10 +85,10 @@
          <alert>Bind alert</alert>
       </key>
       <key name="textcontentAttribute">
-          <label>Node Value</label>
-          <hint>String (PCDATA)</hint>
-          <help>textcontent help</help>
-          <alert>textcontent alert</alert>
+         <label>Node Value</label>
+         <hint>>Node Value as PCDATA</hint>
+         <help>Node Value help</help>
+         <alert>Node Value alert</alert>
       </key>
       <!-- bind -->
     <key name="nodesetAttribute">
@@ -156,7 +154,7 @@
             string function. If the result does not conform lexically to xsd:nonNegativeInteger, then the result of
             empty string is used. An empty string is used if the XPath evaluation fails.
         </hint>
-         <help>Value  help</help>
+         <help>Value help</help>
          <alert>Value alert</alert>
       </key>
       <!-- delete -->
