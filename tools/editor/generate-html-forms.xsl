@@ -25,10 +25,15 @@
             <xsl:variable name="propertyTitle"><xsl:value-of select="concat('Property Sheet ',$title)"/></xsl:variable>
             <xsl:message><xsl:value-of select="$propertyTitle"/></xsl:message>
             <div class="propertyTitle"><xsl:value-of select="$propertyTitle"/></div>
-            <div class="propertyHint"><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$title]/hint"/></div>
-            <div class="propertyHelp" style="display:none"><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$title]/help"/></div>
-            <div class="propertyAlert" style="display:none"><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$title]/alert"/></div>
-
+            <xsl:if test="exists($dictionary//lang[@id=$lang]/key[@name=$title]/hint)">
+                <div class="propertyHint"><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$title]/hint"/></div>
+            </xsl:if>
+            <xsl:if test="exists($dictionary//lang[@id=$lang]/key[@name=$title]/help)">
+                <div class="propertyHelp" style="display:none"><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$title]/help"/></div>
+            </xsl:if>
+            <xsl:if test="exists($dictionary//lang[@id=$lang]/key[@name=$title]/alert)">
+                <div class="propertyAlert" style="display:none"><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$title]/alert"/></div>
+            </xsl:if>
             <form method="post" action="#" enctype="application/x-www-form-urlencoded">
             <xsl:for-each select="//xf:model/xf:bind">
                 <xsl:variable name="attrName">
