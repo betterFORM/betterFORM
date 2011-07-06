@@ -56,13 +56,23 @@
                 <ul style="list-style-type:none;">
                     <li>
                         <div class="attrEditor">
+                            <h4><label for="{$attrName}"><xsl:value-of select="$title"/></label></h4>
+
+                            <xsl:if test="exists($dictionary//lang[@id=$lang]/key[@name=$dictKey]/hint)">
+                                <p><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$dictKey]/hint"/></p>
+                            </xsl:if>
+                            <xsl:if test="exists($dictionary//lang[@id=$lang]/key[@name=$dictKey]/help)">
+                                <span class="attrHelp" style="display:none"><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$dictKey]/help"/></span>
+                            </xsl:if>
+                            <xsl:if test="exists($dictionary//lang[@id=$lang]/key[@name=$dictKey]/alert)">
+                                <span class="attrAlert" style="display:none"><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$dictKey]/alert"/></span>
+                            </xsl:if>
+
                             <xsl:choose>
-                                 <xsl:when test="$attrName='xml-event'"></xsl:when>
+                                 <xsl:when test="$attrName='xml-event'">
+                                     <!-- do nothing -->
+                                 </xsl:when>
                                  <xsl:when test="$attrName='event'">
-                                     <h4><label for="{$attrName}"><xsl:value-of select="$title"/></label></h4>
-                                     <p><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$dictKey]/hint"/></p>
-                                     <span class="attrHelp" style="display:none"><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$dictKey]/help"/></span>
-                                     <span class="attrAlert" style="display:none"><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$dictKey]/alert"/></span>
                                      <select dojoType="dijit.form.FilteringSelect" selection="open" searchAttr="name" name="type" id="{$attrName}" value="" placeholder="" class="xf{$attrName} dojoSelect" >
                                          <xsl:attribute name="onblur">attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'<xsl:value-of select="$attrName"/>')</xsl:attribute>
                                          <xsl:for-each select="//xf:select1[@ref='@event']/xf:item">
@@ -71,21 +81,11 @@
                                      </select>
                                  </xsl:when>
                                 <xsl:when test="$attrName='type'">
-                                    <h4><label for="{$attrName}"><xsl:value-of select="$title"/></label></h4>
-                                    <p><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$dictKey]/hint"/></p>
-                                    <span class="attrHelp" style="display:none"><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$dictKey]/help"/></span>
-                                    <span class="attrAlert" style="display:none"><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$dictKey]/alert"/></span>
-
                                     <input dojoType="dijit.form.FilteringSelect" store="stateStore" selection="open" searchAttr="name" name="type" id="{$attrName}" value="" placeholder="" class="xf{$attrName} dojoSelect">
                                         <xsl:attribute name="onblur">attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'<xsl:value-of select="$attrName"/>')</xsl:attribute>
                                     </input>
                                 </xsl:when>
                                 <xsl:otherwise>
-                                    <h4><label for="{$attrName}"><xsl:value-of select="$title"/></label></h4>
-                                    <p><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$dictKey]/hint"/></p>
-                                    <span class="attrHelp" style="display:none"><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$dictKey]/help"/></span>
-                                    <span class="attrAlert" style="display:none"><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$dictKey]/alert"/></span>
-
                                     <input dojoType="dijit.form.TextBox" id="{$attrName}" name="{$attrName}" type="text" value="" placeholder="" class="xf{$attrName} dojoInput">
                                         <xsl:attribute name="onblur">attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'<xsl:value-of select="$attrName"/>')</xsl:attribute>
                                     </input>
@@ -113,9 +113,15 @@
                             <li>
                                 <div class="attrEditor">
                                     <h4><label for="{$attrName}"><xsl:value-of select="$title"/></label></h4>
-                                    <p><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$dictKey]/hint"/></p>
-                                    <span class="attrHelp" style="display:none"><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$dictKey]/help"/></span>
-                                    <span class="attrAlert" style="display:none"><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$dictKey]/alert"/></span>
+                                    <xsl:if test="exists($dictionary//lang[@id=$lang]/key[@name=$dictKey]/hint)">
+                                       <p><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$dictKey]/hint"/></p>
+                                    </xsl:if>
+                                    <xsl:if test="exists($dictionary//lang[@id=$lang]/key[@name=$dictKey]/help)">
+                                       <span class="attrHelp" style="display:none"><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$dictKey]/help"/></span>
+                                    </xsl:if>
+                                    <xsl:if test="exists($dictionary//lang[@id=$lang]/key[@name=$dictKey]/alert)">
+                                       <span class="attrAlert" style="display:none"><xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name=$dictKey]/alert"/></span>
+                                    </xsl:if>
                                     <xsl:choose>
                                          <xsl:when test="$attrName='event'">
                                              <select dojoType="dijit.form.FilteringSelect" selection="open" searchAttr="name" name="type" id="{$attrName}" value="" placeholder="" class="xf{$attrName} dojoSelect" >
