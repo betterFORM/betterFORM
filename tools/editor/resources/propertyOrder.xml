@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <order>
     <!-- action -->
-    <property name="testGroup">
-        <property name="id"/>
-        <property name="while"/>
+    <property name="id"/>
+    <!-- sample grouping -->
+    <property name="conditional">
         <property name="if"/>
+        <property name="while"/>
     </property>
-    
+
     <property name="xml-event">
         <property name="event"/>
-        <property name="ev:observer"/>        
-        <property name="ev:target"/>
-        <property name="ev:handler"/>
-        <property name="ev:phase"/>
-        <property name="ev:propagate"/>
-        <property name="ev:defaultAction"/>
+        <property name="observer"/>
+        <property name="target"/>
+        <property name="handler"/>
+        <property name="phase"/>
+        <property name="propagate"/>
+        <property name="defaultAction"/>
     </property>
     <!-- alert -->
     <property name="model"/>
@@ -40,7 +41,8 @@
     <!-- dispatch -->
     <property name="name"/>
     <property name="targetid"/>
-    <property name="target"/>
+    <!-- TODO: target is present in xml-event too, clearify what that means-->
+    <!-- <property name="target"/> -->
     <property name="delay"/>
     <property name="bubbles"/>
     <property name="cancelable"/>

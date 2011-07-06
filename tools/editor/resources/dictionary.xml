@@ -25,41 +25,41 @@
             <help>Event help</help>
             <alert>Event alert</alert>
         </key>
-        <key name="ev:observerAttribute">
-            <label>Ev:observer</label>
-            <hint>Ev:observer hint.</hint>
-            <help>Ev:observer help</help>
-            <alert>Ev:observer alert</alert>
+        <key name="observerAttribute">
+            <label>Observer</label>
+            <hint>observer hint.</hint>
+            <help>observer help</help>
+            <alert>observer alert</alert>
         </key>
-        <key name="ev:targetAttribute">
-            <label>Ev:target</label>
-            <hint>Ev:target hint.</hint>
-            <help>Ev:target help</help>
-            <alert>Ev:target alert</alert>
+        <key name="targetAttribute">
+            <label>Target</label>
+            <hint>get hint.</hint>
+            <help>get help</help>
+            <alert>target alert</alert>
         </key>
-        <key name="ev:handlerAttribute">
-            <label>Ev:handler</label>
-            <hint>Ev:handler hint.</hint>
-            <help>Ev:handler help</help>
-            <alert>Ev:handler alert</alert>
+        <key name="handlerAttribute">
+            <label>Handler</label>
+            <hint>handler hint.</hint>
+            <help>handler help</help>
+            <alert>handler alert</alert>
         </key>
-        <key name="ev:phaseAttribute">
-            <label>Ev:phase</label>
-            <hint>Ev:phase hint.</hint>
-            <help>Ev:phase help</help>
-            <alert>Ev:phase alert</alert>
+        <key name="phaseAttribute">
+            <label>Phase</label>
+            <hint>phase hint.</hint>
+            <help>phase help</help>
+            <alert>phase alert</alert>
         </key>
-        <key name="ev:propagateAttribute">
-            <label>Ev:propagate</label>
-            <hint>Ev:propagate hint.</hint>
-            <help>Ev:propagate help</help>
-            <alert>Ev:propagate alert</alert>
+        <key name="propagateAttribute">
+            <label>Propagate</label>
+            <hint>propagate hint.</hint>
+            <help>propagate help</help>
+            <alert>propagate alert</alert>
         </key>
-        <key name="ev:defaultActionAttribute">
-            <label>Ev:defaultAction</label>
-            <hint>Ev:defaultAction hint.</hint>
-            <help>Ev:defaultAction help</help>
-            <alert>Ev:defaultAction alert</alert>
+        <key name="defaultActionAttribute">
+            <label>DefaultAction</label>
+            <hint>defaultAction hint.</hint>
+            <help>defaultAction help</help>
+            <alert>defaultAction alert</alert>
         </key>
         <!-- alert -->
         <key name="modelAttribute">

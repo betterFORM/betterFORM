@@ -87,6 +87,23 @@
          <li>
             <div class="attrEditor">
                <h4>
+                  <label for="incremental">Incremental</label>
+               </h4>
+               <p>Incremental hint.</p>
+               <span class="attrHelp" style="display:none">Incremental help</span>
+               <span class="attrAlert" style="display:none">Incremental alert</span>
+               <input dojoType="dijit.form.TextBox" id="incremental" name="incremental" type="text"
+                      value=""
+                      placeholder=""
+                      class="xfincremental dojoInput"
+                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'incremental')"/>
+            </div>
+         </li>
+      </ul>
+      <ul style="list-style-type:none;">
+         <li>
+            <div class="attrEditor">
+               <h4>
                   <label for="start">Start</label>
                </h4>
                <p>Start hint.</p>
@@ -128,23 +145,6 @@
                       placeholder=""
                       class="xfstep dojoInput"
                       onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'step')"/>
-            </div>
-         </li>
-      </ul>
-      <ul style="list-style-type:none;">
-         <li>
-            <div class="attrEditor">
-               <h4>
-                  <label for="incremental">Incremental</label>
-               </h4>
-               <p>Incremental hint.</p>
-               <span class="attrHelp" style="display:none">Incremental help</span>
-               <span class="attrAlert" style="display:none">Incremental alert</span>
-               <input dojoType="dijit.form.TextBox" id="incremental" name="incremental" type="text"
-                      value=""
-                      placeholder=""
-                      class="xfincremental dojoInput"
-                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'incremental')"/>
             </div>
          </li>
       </ul>

@@ -70,23 +70,6 @@
          <li>
             <div class="attrEditor">
                <h4>
-                  <label for="appearance">Appearance</label>
-               </h4>
-               <p>Appearance hint.</p>
-               <span class="attrHelp" style="display:none">Appearance help</span>
-               <span class="attrAlert" style="display:none">Appearance alert</span>
-               <input dojoType="dijit.form.TextBox" id="appearance" name="appearance" type="text"
-                      value=""
-                      placeholder=""
-                      class="xfappearance dojoInput"
-                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'appearance')"/>
-            </div>
-         </li>
-      </ul>
-      <ul style="list-style-type:none;">
-         <li>
-            <div class="attrEditor">
-               <h4>
                   <label for="value">Value</label>
                </h4>
                <p>Author-optional attribute containing an XPath expression to evaluate using the in-scope evaluation
@@ -100,6 +83,23 @@
                       placeholder=""
                       class="xfvalue dojoInput"
                       onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'value')"/>
+            </div>
+         </li>
+      </ul>
+      <ul style="list-style-type:none;">
+         <li>
+            <div class="attrEditor">
+               <h4>
+                  <label for="appearance">Appearance</label>
+               </h4>
+               <p>Appearance hint.</p>
+               <span class="attrHelp" style="display:none">Appearance help</span>
+               <span class="attrAlert" style="display:none">Appearance alert</span>
+               <input dojoType="dijit.form.TextBox" id="appearance" name="appearance" type="text"
+                      value=""
+                      placeholder=""
+                      class="xfappearance dojoInput"
+                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'appearance')"/>
             </div>
          </li>
       </ul>

@@ -46,6 +46,7 @@
     </target>
     
     <target name="generate-HTML-Forms" depends="generate-xf-datatype-list"  description="generates HTML forms from XForms">
+        <antcall target="sort-XForms"/>
         <xslt basedir="${basedir}/target/sortedxforms"
               destdir="${basedir}/target/html/"
               style="${basedir}/generate-html-forms.xsl"
