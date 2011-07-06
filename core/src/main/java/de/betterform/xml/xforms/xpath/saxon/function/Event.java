@@ -5,36 +5,25 @@
 
 package de.betterform.xml.xforms.xpath.saxon.function;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
+import de.betterform.xml.events.BetterFormEventNames;
+import de.betterform.xml.events.XFormsEventNames;
+import de.betterform.xml.xforms.Container;
+import de.betterform.xml.xforms.XFormsConstants;
+import de.betterform.xml.xforms.XFormsElement;
+import de.betterform.xml.xforms.action.XFormsAction;
+import de.betterform.xml.xforms.ui.Output;
 import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.ExpressionVisitor;
-import net.sf.saxon.expr.StaticProperty;
 import net.sf.saxon.expr.XPathContext;
-import net.sf.saxon.om.ArrayIterator;
-import net.sf.saxon.om.EmptyIterator;
-import net.sf.saxon.om.Item;
-import net.sf.saxon.om.SequenceIterator;
-import net.sf.saxon.om.SingletonIterator;
+import net.sf.saxon.om.*;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.BooleanValue;
 import net.sf.saxon.value.DoubleValue;
 import net.sf.saxon.value.StringValue;
 
-import de.betterform.xml.events.XFormsEventNames;
-import de.betterform.xml.events.BetterFormEventNames;
-import de.betterform.xml.xforms.Container;
-import de.betterform.xml.xforms.XFormsConstants;
-import de.betterform.xml.xforms.XFormsElement;
-import de.betterform.xml.xforms.action.XFormsAction;
-import de.betterform.xml.xforms.exception.XFormsException;
-import de.betterform.xml.xforms.ui.BindingElement;
-import org.w3c.dom.Element;
-import org.w3c.dom.events.EventTarget;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Implementation of the 7.10.2 The current() Function
@@ -80,7 +69,7 @@ public class Event extends XFormsFunction {
 		XPathFunctionContext functionContext = getFunctionContext(xpathContext);
 		XFormsElement xformsElement = functionContext.getXFormsElement();
 
-		if (!(xformsElement instanceof XFormsAction)) {
+		if (!(xformsElement instanceof XFormsAction || xformsElement instanceof Output)) {
 			return SingletonIterator.makeIterator(StringValue.EMPTY_STRING);
 		}
 		
@@ -176,7 +165,9 @@ public class Event extends XFormsFunction {
                     return SingletonIterator.makeIterator(new StringValue(((String)((Map)eventInfo.getInfo()).get(XFormsConstants.VARIABLE_VALUE))));
                 }
             }else{
-                return SingletonIterator.makeIterator(new StringValue(((String)((Map)eventInfo.getInfo()).get(argAsString))));
+                if (eventInfo.getInfo() != null) {
+                    return SingletonIterator.makeIterator(new StringValue(((String)((Map)eventInfo.getInfo()).get(argAsString))));
+                }
             }
 		}
 		
