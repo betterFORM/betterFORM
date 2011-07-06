@@ -12,38 +12,42 @@
        <key name="id">
            <label>Id</label>
            <hint>Please choose a unique name for this item</hint>
-           <help></help>
-           <alert></alert>
-       </key>
-   </lang>
-   <lang id="en">
-       <key name="id">
-           <desc>The event delay of the dispatch action is given by the delay attribute or the delay element. If both
-               are given, the element takes precedence. The delay element can provide the delay with either its string
-               content or the value attribute. If both are given, then the value attribute takes precedence.
-           </desc>
+           <help>id attribute help</help>
+           <alert>id attribute alert</alert>
        </key>
        <key name="resource">
-           <desc>The resource element provides the URI of the link, overriding the resource attribute of its parent control (load / submission).
+           <label>Resource</label>
+           <hint>The resource element provides the URI of the link, overriding the resource attribute of its parent control (load / submission).
                The URI to be used by the parent control can be specified with either the value attribute or the string content of the resource element.
                If both are specified, then the value attribute takes precedence.
-           </desc>
+           </hint>
+           <help>resource help</help>
+           <alert>resource alert</alert>
        </key>
        <key name="resourceAttribute">
-           <desc>Resource attribute description.</desc>
+           <label>Resource</label>
+           <hint>Resource attribute description.</hint>
+           <help>resource attribute help</help>
+           <alert>resource attribute alert</alert>
        </key>
 
        <key name="valueAttribute">
-           <desc>Author-optional attribute containing an XPath expression to evaluate using the in-scope evaluation
+           <label>Value</label>
+           <hint>Author-optional attribute containing an XPath expression to evaluate using the in-scope evaluation
                context. To obtain the event delay, the result of the expression is processed as if by call to the XPath
                string function. If the result does not conform lexically to xsd:nonNegativeInteger, then the result of
                empty string is used. An empty string is used if the XPath evaluation fails.
-           </desc>
+           </hint>
+           <help>value attribute help</help>
+           <alert>value attribute alert</alert>
        </key>
        <key name="textcontentAttribute">
+           <label>Node Value</label>
            <synonym>content</synonym>
            <synonym>PCDATA</synonym>
-           <desc>String (PCDATA)</desc>
+           <hint>String (PCDATA)</hint>
+           <help>textcontent help</help>
+           <alert>textcontent alert</alert>
        </key>
    </lang>
 </dictionary>

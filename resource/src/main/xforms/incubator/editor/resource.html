@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
-   <div class="propertyTitle">Property Sheet resource</div>
-   <div class="propertyDesc">The resource element provides the URI of the link, overriding the resource attribute of its parent control (load / submission).
-               The URI to be used by the parent control can be specified with either the value attribute or the string content of the resource element.
-               If both are specified, then the value attribute takes precedence.
-           </div>
+   <div class="propertyTitle">Property Sheet Resource</div>
+   <div class="propertyHint"/>
+   <div class="propertyHelp" style="display:none"/>
+   <div class="propertyAlert" style="display:none"/>
    <form method="post" action="#" enctype="application/x-www-form-urlencoded">
       <ul style="list-style-type:none;">
          <li>
             <div class="attrEditor">
                <h4>
-                  <label for="value">value</label>
+                  <label for="value">Value</label>
                </h4>
                <p>Author-optional attribute containing an XPath expression to evaluate using the in-scope evaluation
                context. To obtain the event delay, the result of the expression is processed as if by call to the XPath
                string function. If the result does not conform lexically to xsd:nonNegativeInteger, then the result of
                empty string is used. An empty string is used if the XPath evaluation fails.
            </p>
+               <span class="attrHelp" style="display:none">value attribute help</span>
+               <span class="attrAlert" style="display:none">value attribute alert</span>
                <input dojoType="dijit.form.TextBox" id="value" name="value" type="text" value=""
                       placeholder=""
                       class="xfvalue dojoInput"
@@ -28,9 +29,11 @@
          <li>
             <div class="attrEditor">
                <h4>
-                  <label for="textcontent">textcontent</label>
+                  <label for="textcontent">Node Value</label>
                </h4>
                <p>String (PCDATA)</p>
+               <span class="attrHelp" style="display:none">textcontent help</span>
+               <span class="attrAlert" style="display:none">textcontent alert</span>
                <input dojoType="dijit.form.TextBox" id="textcontent" name="textcontent" type="text"
                       value=""
                       placeholder=""

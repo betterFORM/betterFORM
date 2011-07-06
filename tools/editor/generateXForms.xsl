@@ -17,11 +17,9 @@
     <xsl:param name="webxml.path" select="''"/>
     <xsl:variable name="inputDoc" select="/"/>
 
-    <xsl:variable name="dictionary" select="document('resources/dictionary.xml')"/>
     <xsl:variable name="lang" select="'en'" as="xs:string"/>
 
     <xsl:template match="/xsd:schema">
-        <xsl:message>DICTIONARY: <xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name='resource']/desc"/></xsl:message>
         <div>
             <xsl:variable name="unique-list" select="//xsd:element[@name][not(@name = preceding::xsd:element/@name)]" />
             <xsl:for-each select="$unique-list">

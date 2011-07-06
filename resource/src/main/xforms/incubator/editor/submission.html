@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
    <div class="propertyTitle">Property Sheet submission</div>
-   <div class="propertyDesc"/>
+   <div class="propertyHint"/>
+   <div class="propertyHelp" style="display:none"/>
+   <div class="propertyAlert" style="display:none"/>
    <form method="post" action="#" enctype="application/x-www-form-urlencoded">
       <ul style="list-style-type:none;">
          <li>
@@ -10,6 +12,8 @@
                   <label for="id">id</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="id" name="id" type="text" value=""
                       placeholder=""
                       class="xfid dojoInput"
@@ -24,6 +28,8 @@
                   <label for="combine">combine</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="combine" name="combine" type="text" value=""
                       placeholder=""
                       class="xfcombine dojoInput"
@@ -38,6 +44,8 @@
                   <label for="ref">ref</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="ref" name="ref" type="text" value=""
                       placeholder=""
                       class="xfref dojoInput"
@@ -52,6 +60,8 @@
                   <label for="bind">bind</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="bind" name="bind" type="text" value=""
                       placeholder=""
                       class="xfbind dojoInput"
@@ -63,9 +73,11 @@
          <li>
             <div class="attrEditor">
                <h4>
-                  <label for="resource">resource</label>
+                  <label for="resource">Resource</label>
                </h4>
                <p>Resource attribute description.</p>
+               <span class="attrHelp" style="display:none">resource attribute help</span>
+               <span class="attrAlert" style="display:none">resource attribute alert</span>
                <input dojoType="dijit.form.TextBox" id="resource" name="resource" type="text"
                       value=""
                       placeholder=""
@@ -81,6 +93,8 @@
                   <label for="action">action</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="action" name="action" type="text" value=""
                       placeholder=""
                       class="xfaction dojoInput"
@@ -95,6 +109,8 @@
                   <label for="mode">mode</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="mode" name="mode" type="text" value=""
                       placeholder=""
                       class="xfmode dojoInput"
@@ -109,6 +125,8 @@
                   <label for="method">method</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="method" name="method" type="text" value=""
                       placeholder=""
                       class="xfmethod dojoInput"
@@ -123,6 +141,8 @@
                   <label for="validate">validate</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="validate" name="validate" type="text"
                       value=""
                       placeholder=""
@@ -138,6 +158,8 @@
                   <label for="relevant">relevant</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="relevant" name="relevant" type="text"
                       value=""
                       placeholder=""
@@ -153,6 +175,8 @@
                   <label for="serialization">serialization</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="serialization" name="serialization"
                       type="text"
                       value=""
@@ -169,6 +193,8 @@
                   <label for="version">version</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="version" name="version" type="text" value=""
                       placeholder=""
                       class="xfversion dojoInput"
@@ -183,6 +209,8 @@
                   <label for="indent">indent</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="indent" name="indent" type="text" value=""
                       placeholder=""
                       class="xfindent dojoInput"
@@ -197,6 +225,8 @@
                   <label for="mediatype">mediatype</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="mediatype" name="mediatype" type="text"
                       value=""
                       placeholder=""
@@ -212,6 +242,8 @@
                   <label for="encoding">encoding</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="encoding" name="encoding" type="text"
                       value=""
                       placeholder=""
@@ -227,6 +259,8 @@
                   <label for="omit-xml-declaration">omit-xml-declaration</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="omit-xml-declaration"
                       name="omit-xml-declaration"
                       type="text"
@@ -244,6 +278,8 @@
                   <label for="standalone">standalone</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="standalone" name="standalone" type="text"
                       value=""
                       placeholder=""
@@ -259,6 +295,8 @@
                   <label for="cdata-section-elements">cdata-section-elements</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="cdata-section-elements"
                       name="cdata-section-elements"
                       type="text"
@@ -276,6 +314,8 @@
                   <label for="replace">replace</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="replace" name="replace" type="text" value=""
                       placeholder=""
                       class="xfreplace dojoInput"
@@ -290,6 +330,8 @@
                   <label for="instance">instance</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="instance" name="instance" type="text"
                       value=""
                       placeholder=""
@@ -305,6 +347,8 @@
                   <label for="separator">separator</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="separator" name="separator" type="text"
                       value=""
                       placeholder=""
@@ -320,6 +364,8 @@
                   <label for="targetref">targetref</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="targetref" name="targetref" type="text"
                       value=""
                       placeholder=""
@@ -335,6 +381,8 @@
                   <label for="target">target</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="target" name="target" type="text" value=""
                       placeholder=""
                       class="xftarget dojoInput"
@@ -349,6 +397,8 @@
                   <label for="includenamespaceprefixes">includenamespaceprefixes</label>
                </h4>
                <p/>
+               <span class="attrHelp" style="display:none"/>
+               <span class="attrAlert" style="display:none"/>
                <input dojoType="dijit.form.TextBox" id="includenamespaceprefixes"
                       name="includenamespaceprefixes"
                       type="text"
