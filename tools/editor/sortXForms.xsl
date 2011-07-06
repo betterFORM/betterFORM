@@ -53,7 +53,13 @@
     <xsl:template match="property" mode="sortProperties">
         <xsl:param name="model"/>
         <!--<xsl:message>search for properties on model <xsl:value-of select="$model/@id"/></xsl:message>-->
-        <xsl:variable name="propertyName" select="concat('@',@name)"/>        
+
+        <xsl:variable name="propertyName">
+            <xsl:choose>
+                <xsl:when test="@name = 'textcontent'"><xsl:value-of select="@name"/></xsl:when>
+                <xsl:otherwise><xsl:value-of select="concat('@',@name)"/></xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
         <!--<xsl:message>search for property <xsl:value-of select="$propertyName"/></xsl:message>-->
         <xsl:choose>
             <xsl:when test="exists($model//*[@nodeset=$propertyName])">

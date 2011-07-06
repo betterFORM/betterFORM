@@ -82,7 +82,7 @@
         </key>
         <key name="textcontentAttribute">
             <label>Node Value</label>
-            <hint>>Node Value as PCDATA</hint>
+            <hint>Node Value as PCDATA</hint>
             <help>Node Value help</help>
             <alert>Node Value alert</alert>
         </key>

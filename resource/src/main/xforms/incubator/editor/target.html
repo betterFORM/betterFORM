@@ -6,6 +6,23 @@
          <li>
             <div class="attrEditor">
                <h4>
+                  <label for="textcontent">Node Value</label>
+               </h4>
+               <p>Node Value as PCDATA</p>
+               <span class="attrHelp" style="display:none">Node Value help</span>
+               <span class="attrAlert" style="display:none">Node Value alert</span>
+               <input dojoType="dijit.form.TextBox" id="textcontent" name="textcontent" type="text"
+                      value=""
+                      placeholder=""
+                      class="xftextcontent dojoInput"
+                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'textcontent')"/>
+            </div>
+         </li>
+      </ul>
+      <ul style="list-style-type:none;">
+         <li>
+            <div class="attrEditor">
+               <h4>
                   <label for="value">Value</label>
                </h4>
                <p>Author-optional attribute containing an XPath expression to evaluate using the in-scope evaluation
