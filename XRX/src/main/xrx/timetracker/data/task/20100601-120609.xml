@@ -1,1 +1,17 @@
-<data><task><id/><date>2010-05-25</date><project>relaxation</project><start/><end/><duration hours="2" minutes="0"/><who>Homer Bart Lisa Marge Maggie Itchy Mr. Burns Ned</who><what>other</what><note>celebrate towel day</note><billable>false</billable><billed date="">false</billed><status>completed</status><created>20100601-120609</created></task></data>
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+   <task client="1" project="1" milestone="1">
+      <date>2010-05-25</date>
+      <start/>
+      <end/>
+      <duration hours="2" minutes="0"/>
+      <who>Homer Bart Lisa Marge Maggie Itchy Mr. Burns Ned</who>
+      <what>other</what>
+      <note>celebrate towel day</note>
+      <billable>false</billable>
+      <billed date="">false</billed>
+      <status>completed</status>
+      <created>20100601-120609</created>
+      <tag/>
+   </task>
+</data>
