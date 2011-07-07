@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
    <div class="propertyTitle">Property Sheet case</div>
-   <div class="propertyDesc"/>
    <form method="post" action="#" enctype="application/x-www-form-urlencoded">
       <ul style="list-style-type:none;">
          <li>
             <div class="attrEditor">
                <h4>
-                  <label for="id">id</label>
+                  <label for="id">Id</label>
                </h4>
-               <p/>
+               <p>Id hint.</p>
+               <span class="attrHelp" style="display:none">Id help</span>
+               <span class="attrAlert" style="display:none">Id alert</span>
                <input dojoType="dijit.form.TextBox" id="id" name="id" type="text" value=""
                       placeholder=""
                       class="xfid dojoInput"
@@ -21,9 +22,11 @@
          <li>
             <div class="attrEditor">
                <h4>
-                  <label for="selected">selected</label>
+                  <label for="selected">Selected</label>
                </h4>
-               <p/>
+               <p>Selected hint.</p>
+               <span class="attrHelp" style="display:none">Selected help</span>
+               <span class="attrAlert" style="display:none">Selected alert</span>
                <input dojoType="dijit.form.TextBox" id="selected" name="selected" type="text"
                       value=""
                       placeholder=""

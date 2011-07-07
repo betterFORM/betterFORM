@@ -34,8 +34,20 @@
         </xslt>
     </target>
 
-    <target name="generate-HTML-Forms" depends="generate-xf-datatype-list"  description="generates HTML forms from XForms">
+    <!--<target name="sort-XForms" depends="generate-XForms" description="sort properties">-->
+    <target name="sort-XForms" description="sort properties">
         <xslt basedir="${basedir}/target/xforms"
+            destdir="${basedir}/target/sortedxforms/"
+            style="${basedir}/sortXForms.xsl"
+            extension=".xhtml"
+            force="true">
+            <classpath refid="transform.class.path"/>            
+        </xslt>
+    </target>
+    
+    <target name="generate-HTML-Forms" depends="generate-xf-datatype-list"  description="generates HTML forms from XForms">
+        <antcall target="sort-XForms"/>
+        <xslt basedir="${basedir}/target/sortedxforms"
               destdir="${basedir}/target/html/"
               style="${basedir}/generate-html-forms.xsl"
               extension=".html"

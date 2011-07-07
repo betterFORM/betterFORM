@@ -91,6 +91,7 @@ dojo.declare(
                 newInputDateWidget = new betterform.ui.input.Date({
                     name:controlId + "-value",
                     value:xfValue,
+                    required:false,
                     "class":classValue,
                     title:dojo.attr(sourceNode, "title"),
                     constraints:{

@@ -6,6 +6,10 @@
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 exclude-result-prefixes="xf ev xsd" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:output method="xml" indent="yes"/>
+<!--
+    <xsl:output method="xhtml" indent="yes" name="xhtml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+        doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" />
+-->
     <xsl:output method="xhtml" indent="yes" name="xhtml" exclude-result-prefixes="xf"/>
     <!-- author: Joern Turner -->
     <!-- author: Lars Windauer -->
@@ -13,11 +17,9 @@
     <xsl:param name="webxml.path" select="''"/>
     <xsl:variable name="inputDoc" select="/"/>
 
-    <xsl:variable name="dictionary" select="document('resources/dictionary.xml')"/>
     <xsl:variable name="lang" select="'en'" as="xs:string"/>
 
     <xsl:template match="/xsd:schema">
-        <xsl:message>DICTIONARY: <xsl:value-of select="$dictionary//lang[@id=$lang]/key[@name='resource']/desc"/></xsl:message>
         <div>
             <xsl:variable name="unique-list" select="//xsd:element[@name][not(@name = preceding::xsd:element/@name)]" />
             <xsl:for-each select="$unique-list">
@@ -92,14 +94,14 @@
                                                 <xsl:apply-templates select="$current//xsd:attributeGroup" mode="ui"/>
                                                 <xsl:apply-templates select="$current//xsd:attribute" mode="ui"/>
                                                 <xsl:apply-templates select="$current//xsd:complexType[@mixed='true']" mode="ui"/>
+                                                <xsl:if test="exists(.//xsd:attributeGroup[@ref='xforms:XML.Events'])">
+                                                    <xf:group id="event-properties" appearance="bf:verticalTable" ref="xfElement/xml-events">
+                                                        <xsl:apply-templates select="$current//xsd:attributeGroup" mode="event-ui">
+                                                            <xsl:with-param name="current" select="$current"/>
+                                                        </xsl:apply-templates>
+                                                    </xf:group>
+                                                </xsl:if>
                                             </xf:group>
-                                            <xsl:if test="exists(.//xsd:attributeGroup[@ref='xforms:XML.Events'])">
-                                                <xf:group id="event-properties" appearance="bf:verticalTable" ref="xfElement/xml-events">
-                                                    <xsl:apply-templates select="$current//xsd:attributeGroup" mode="event-ui">
-                                                        <xsl:with-param name="current" select="$current"/>
-                                                    </xsl:apply-templates>
-                                                </xf:group>
-                                            </xsl:if>
                                         </div>
                                     </xsl:otherwise>
                                 </xsl:choose>
@@ -224,7 +226,7 @@
             <xf:label>Event</xf:label>
             <xf:hint>The type of event to listen for</xf:hint>
             <!-- build item list from external eventTargets.xml file. -->
-            <xsl:variable name="eventTargets" select="document('eventTargets.xml')"/>
+            <xsl:variable name="eventTargets" select="document('resources/eventTargets.xml')"/>
             <xsl:for-each select="$eventTargets/data/target[contains(@match,$current/@name)]/event">
                 <xf:item>
                     <xf:label><xsl:value-of select="./@name"/></xf:label>

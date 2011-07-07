@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <div xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
    <div class="propertyTitle">Property Sheet submission</div>
-   <div class="propertyDesc"/>
    <form method="post" action="#" enctype="application/x-www-form-urlencoded">
       <ul style="list-style-type:none;">
          <li>
             <div class="attrEditor">
                <h4>
-                  <label for="id">id</label>
+                  <label for="id">Id</label>
                </h4>
-               <p/>
+               <p>Id hint.</p>
+               <span class="attrHelp" style="display:none">Id help</span>
+               <span class="attrAlert" style="display:none">Id alert</span>
                <input dojoType="dijit.form.TextBox" id="id" name="id" type="text" value=""
                       placeholder=""
                       class="xfid dojoInput"
@@ -17,27 +18,39 @@
             </div>
          </li>
       </ul>
+      <div dojotype="dijit.TitlePane" open="false" title="xml-event">
+        
+        
+                  <ul style="list-style-type:none;">
+            <li>
+               <div class="attrEditor">
+                  <h4>
+                     <label for="target">Target Target</label>
+                  </h4>
+                  <p>get hint. Target hint.</p>
+                  <span class="attrHelp" style="display:none">get help Target help</span>
+                  <span class="attrAlert" style="display:none">target alert Target alert</span>
+                  <input dojoType="dijit.form.TextBox" id="target" name="target" type="text" value=""
+                         placeholder=""
+                         class="xftarget dojoInput"
+                         onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'target')"/>
+               </div>
+            </li>
+         </ul>
+        
+        
+        
+        
+               </div>
       <ul style="list-style-type:none;">
          <li>
             <div class="attrEditor">
                <h4>
-                  <label for="combine">combine</label>
+                  <label for="ref">Ref</label>
                </h4>
-               <p/>
-               <input dojoType="dijit.form.TextBox" id="combine" name="combine" type="text" value=""
-                      placeholder=""
-                      class="xfcombine dojoInput"
-                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'combine')"/>
-            </div>
-         </li>
-      </ul>
-      <ul style="list-style-type:none;">
-         <li>
-            <div class="attrEditor">
-               <h4>
-                  <label for="ref">ref</label>
-               </h4>
-               <p/>
+               <p>Ref hint.</p>
+               <span class="attrHelp" style="display:none">Ref help</span>
+               <span class="attrAlert" style="display:none">Ref alert</span>
                <input dojoType="dijit.form.TextBox" id="ref" name="ref" type="text" value=""
                       placeholder=""
                       class="xfref dojoInput"
@@ -49,9 +62,11 @@
          <li>
             <div class="attrEditor">
                <h4>
-                  <label for="bind">bind</label>
+                  <label for="bind">Bind</label>
                </h4>
-               <p/>
+               <p>Bind hint.</p>
+               <span class="attrHelp" style="display:none">Bind help</span>
+               <span class="attrAlert" style="display:none">Bind alert</span>
                <input dojoType="dijit.form.TextBox" id="bind" name="bind" type="text" value=""
                       placeholder=""
                       class="xfbind dojoInput"
@@ -63,81 +78,11 @@
          <li>
             <div class="attrEditor">
                <h4>
-                  <label for="resource">resource</label>
+                  <label for="relevant">Relevant Relevant</label>
                </h4>
-               <p>Resource attribute description.</p>
-               <input dojoType="dijit.form.TextBox" id="resource" name="resource" type="text"
-                      value=""
-                      placeholder=""
-                      class="xfresource dojoInput"
-                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'resource')"/>
-            </div>
-         </li>
-      </ul>
-      <ul style="list-style-type:none;">
-         <li>
-            <div class="attrEditor">
-               <h4>
-                  <label for="action">action</label>
-               </h4>
-               <p/>
-               <input dojoType="dijit.form.TextBox" id="action" name="action" type="text" value=""
-                      placeholder=""
-                      class="xfaction dojoInput"
-                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'action')"/>
-            </div>
-         </li>
-      </ul>
-      <ul style="list-style-type:none;">
-         <li>
-            <div class="attrEditor">
-               <h4>
-                  <label for="mode">mode</label>
-               </h4>
-               <p/>
-               <input dojoType="dijit.form.TextBox" id="mode" name="mode" type="text" value=""
-                      placeholder=""
-                      class="xfmode dojoInput"
-                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'mode')"/>
-            </div>
-         </li>
-      </ul>
-      <ul style="list-style-type:none;">
-         <li>
-            <div class="attrEditor">
-               <h4>
-                  <label for="method">method</label>
-               </h4>
-               <p/>
-               <input dojoType="dijit.form.TextBox" id="method" name="method" type="text" value=""
-                      placeholder=""
-                      class="xfmethod dojoInput"
-                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'method')"/>
-            </div>
-         </li>
-      </ul>
-      <ul style="list-style-type:none;">
-         <li>
-            <div class="attrEditor">
-               <h4>
-                  <label for="validate">validate</label>
-               </h4>
-               <p/>
-               <input dojoType="dijit.form.TextBox" id="validate" name="validate" type="text"
-                      value=""
-                      placeholder=""
-                      class="xfvalidate dojoInput"
-                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'validate')"/>
-            </div>
-         </li>
-      </ul>
-      <ul style="list-style-type:none;">
-         <li>
-            <div class="attrEditor">
-               <h4>
-                  <label for="relevant">relevant</label>
-               </h4>
-               <p/>
+               <p>Relevant hint. Relevant hint.</p>
+               <span class="attrHelp" style="display:none">Relevant help Relevant help</span>
+               <span class="attrAlert" style="display:none">Relevant alert Relevant alert</span>
                <input dojoType="dijit.form.TextBox" id="relevant" name="relevant" type="text"
                       value=""
                       placeholder=""
@@ -150,9 +95,159 @@
          <li>
             <div class="attrEditor">
                <h4>
-                  <label for="serialization">serialization</label>
+                  <label for="combine">Combine</label>
                </h4>
-               <p/>
+               <p>Combine hint.</p>
+               <span class="attrHelp" style="display:none">Combine help</span>
+               <span class="attrAlert" style="display:none">Combine alert</span>
+               <input dojoType="dijit.form.TextBox" id="combine" name="combine" type="text" value=""
+                      placeholder=""
+                      class="xfcombine dojoInput"
+                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'combine')"/>
+            </div>
+         </li>
+      </ul>
+      <ul style="list-style-type:none;">
+         <li>
+            <div class="attrEditor">
+               <h4>
+                  <label for="resource">Resource</label>
+               </h4>
+               <p>Resource hint.</p>
+               <span class="attrHelp" style="display:none">Resource help</span>
+               <span class="attrAlert" style="display:none">Resource alert</span>
+               <input dojoType="dijit.form.TextBox" id="resource" name="resource" type="text"
+                      value=""
+                      placeholder=""
+                      class="xfresource dojoInput"
+                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'resource')"/>
+            </div>
+         </li>
+      </ul>
+      <ul style="list-style-type:none;">
+         <li>
+            <div class="attrEditor">
+               <h4>
+                  <label for="version">Version</label>
+               </h4>
+               <p>Version hint.</p>
+               <span class="attrHelp" style="display:none">Version help</span>
+               <span class="attrAlert" style="display:none">Version alert</span>
+               <input dojoType="dijit.form.TextBox" id="version" name="version" type="text" value=""
+                      placeholder=""
+                      class="xfversion dojoInput"
+                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'version')"/>
+            </div>
+         </li>
+      </ul>
+      <ul style="list-style-type:none;">
+         <li>
+            <div class="attrEditor">
+               <h4>
+                  <label for="mediatype">Mediatype</label>
+               </h4>
+               <p>Mediatype hint.</p>
+               <span class="attrHelp" style="display:none">Mediatype help</span>
+               <span class="attrAlert" style="display:none">Mediatype alert</span>
+               <input dojoType="dijit.form.TextBox" id="mediatype" name="mediatype" type="text"
+                      value=""
+                      placeholder=""
+                      class="xfmediatype dojoInput"
+                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'mediatype')"/>
+            </div>
+         </li>
+      </ul>
+      <ul style="list-style-type:none;">
+         <li>
+            <div class="attrEditor">
+               <h4>
+                  <label for="action">Action</label>
+               </h4>
+               <p>Action hint.</p>
+               <span class="attrHelp" style="display:none">Action help</span>
+               <span class="attrAlert" style="display:none">Action alert</span>
+               <input dojoType="dijit.form.TextBox" id="action" name="action" type="text" value=""
+                      placeholder=""
+                      class="xfaction dojoInput"
+                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'action')"/>
+            </div>
+         </li>
+      </ul>
+      <ul style="list-style-type:none;">
+         <li>
+            <div class="attrEditor">
+               <h4>
+                  <label for="mode">Mode</label>
+               </h4>
+               <p>Mode hint.</p>
+               <span class="attrHelp" style="display:none">Mode help</span>
+               <span class="attrAlert" style="display:none">Mode alert</span>
+               <input dojoType="dijit.form.TextBox" id="mode" name="mode" type="text" value=""
+                      placeholder=""
+                      class="xfmode dojoInput"
+                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'mode')"/>
+            </div>
+         </li>
+      </ul>
+      <ul style="list-style-type:none;">
+         <li>
+            <div class="attrEditor">
+               <h4>
+                  <label for="method">Method</label>
+               </h4>
+               <p>Method hint.</p>
+               <span class="attrHelp" style="display:none">Method help</span>
+               <span class="attrAlert" style="display:none">Method alert</span>
+               <input dojoType="dijit.form.TextBox" id="method" name="method" type="text" value=""
+                      placeholder=""
+                      class="xfmethod dojoInput"
+                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'method')"/>
+            </div>
+         </li>
+      </ul>
+      <ul style="list-style-type:none;">
+         <li>
+            <div class="attrEditor">
+               <h4>
+                  <label for="validate">Validate</label>
+               </h4>
+               <p>Validate hint.</p>
+               <span class="attrHelp" style="display:none">Validate help</span>
+               <span class="attrAlert" style="display:none">Validate alert</span>
+               <input dojoType="dijit.form.TextBox" id="validate" name="validate" type="text"
+                      value=""
+                      placeholder=""
+                      class="xfvalidate dojoInput"
+                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'validate')"/>
+            </div>
+         </li>
+      </ul>
+      <ul style="list-style-type:none;">
+         <li>
+            <div class="attrEditor">
+               <h4>
+                  <label for="relevant">Relevant Relevant</label>
+               </h4>
+               <p>Relevant hint. Relevant hint.</p>
+               <span class="attrHelp" style="display:none">Relevant help Relevant help</span>
+               <span class="attrAlert" style="display:none">Relevant alert Relevant alert</span>
+               <input dojoType="dijit.form.TextBox" id="relevant" name="relevant" type="text"
+                      value=""
+                      placeholder=""
+                      class="xfrelevant dojoInput"
+                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'relevant')"/>
+            </div>
+         </li>
+      </ul>
+      <ul style="list-style-type:none;">
+         <li>
+            <div class="attrEditor">
+               <h4>
+                  <label for="serialization">Serialization</label>
+               </h4>
+               <p>Serialization hint.</p>
+               <span class="attrHelp" style="display:none">Serialization help</span>
+               <span class="attrAlert" style="display:none">Serialization alert</span>
                <input dojoType="dijit.form.TextBox" id="serialization" name="serialization"
                       type="text"
                       value=""
@@ -166,23 +261,11 @@
          <li>
             <div class="attrEditor">
                <h4>
-                  <label for="version">version</label>
+                  <label for="indent">Indent</label>
                </h4>
-               <p/>
-               <input dojoType="dijit.form.TextBox" id="version" name="version" type="text" value=""
-                      placeholder=""
-                      class="xfversion dojoInput"
-                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'version')"/>
-            </div>
-         </li>
-      </ul>
-      <ul style="list-style-type:none;">
-         <li>
-            <div class="attrEditor">
-               <h4>
-                  <label for="indent">indent</label>
-               </h4>
-               <p/>
+               <p>Indent hint.</p>
+               <span class="attrHelp" style="display:none">Indent help</span>
+               <span class="attrAlert" style="display:none">Indent alert</span>
                <input dojoType="dijit.form.TextBox" id="indent" name="indent" type="text" value=""
                       placeholder=""
                       class="xfindent dojoInput"
@@ -194,24 +277,11 @@
          <li>
             <div class="attrEditor">
                <h4>
-                  <label for="mediatype">mediatype</label>
+                  <label for="encoding">Encoding</label>
                </h4>
-               <p/>
-               <input dojoType="dijit.form.TextBox" id="mediatype" name="mediatype" type="text"
-                      value=""
-                      placeholder=""
-                      class="xfmediatype dojoInput"
-                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'mediatype')"/>
-            </div>
-         </li>
-      </ul>
-      <ul style="list-style-type:none;">
-         <li>
-            <div class="attrEditor">
-               <h4>
-                  <label for="encoding">encoding</label>
-               </h4>
-               <p/>
+               <p>Encoding hint.</p>
+               <span class="attrHelp" style="display:none">Encoding help</span>
+               <span class="attrAlert" style="display:none">Encoding alert</span>
                <input dojoType="dijit.form.TextBox" id="encoding" name="encoding" type="text"
                       value=""
                       placeholder=""
@@ -224,9 +294,11 @@
          <li>
             <div class="attrEditor">
                <h4>
-                  <label for="omit-xml-declaration">omit-xml-declaration</label>
+                  <label for="omit-xml-declaration">Omit-xml-declaration</label>
                </h4>
-               <p/>
+               <p>Omit-xml-declaration hint.</p>
+               <span class="attrHelp" style="display:none">Omit-xml-declaration help</span>
+               <span class="attrAlert" style="display:none">Omit-xml-declaration alert</span>
                <input dojoType="dijit.form.TextBox" id="omit-xml-declaration"
                       name="omit-xml-declaration"
                       type="text"
@@ -241,9 +313,11 @@
          <li>
             <div class="attrEditor">
                <h4>
-                  <label for="standalone">standalone</label>
+                  <label for="standalone">Standalone</label>
                </h4>
-               <p/>
+               <p>Standalone hint.</p>
+               <span class="attrHelp" style="display:none">Standalone help</span>
+               <span class="attrAlert" style="display:none">Standalone alert</span>
                <input dojoType="dijit.form.TextBox" id="standalone" name="standalone" type="text"
                       value=""
                       placeholder=""
@@ -256,9 +330,11 @@
          <li>
             <div class="attrEditor">
                <h4>
-                  <label for="cdata-section-elements">cdata-section-elements</label>
+                  <label for="cdata-section-elements">Cdata-section-elements</label>
                </h4>
-               <p/>
+               <p>Cdata-section-elements hint.</p>
+               <span class="attrHelp" style="display:none">Cdata-section-elements help</span>
+               <span class="attrAlert" style="display:none">Cdata-section-elements alert</span>
                <input dojoType="dijit.form.TextBox" id="cdata-section-elements"
                       name="cdata-section-elements"
                       type="text"
@@ -273,9 +349,11 @@
          <li>
             <div class="attrEditor">
                <h4>
-                  <label for="replace">replace</label>
+                  <label for="replace">Replace</label>
                </h4>
-               <p/>
+               <p>Replace hint.</p>
+               <span class="attrHelp" style="display:none">Replace help</span>
+               <span class="attrAlert" style="display:none">Replace alert</span>
                <input dojoType="dijit.form.TextBox" id="replace" name="replace" type="text" value=""
                       placeholder=""
                       class="xfreplace dojoInput"
@@ -287,9 +365,11 @@
          <li>
             <div class="attrEditor">
                <h4>
-                  <label for="instance">instance</label>
+                  <label for="instance">Instance</label>
                </h4>
-               <p/>
+               <p>Instance hint.</p>
+               <span class="attrHelp" style="display:none">Instance help</span>
+               <span class="attrAlert" style="display:none">Instance alert</span>
                <input dojoType="dijit.form.TextBox" id="instance" name="instance" type="text"
                       value=""
                       placeholder=""
@@ -302,9 +382,11 @@
          <li>
             <div class="attrEditor">
                <h4>
-                  <label for="separator">separator</label>
+                  <label for="separator">Separator</label>
                </h4>
-               <p/>
+               <p>Separator hint.</p>
+               <span class="attrHelp" style="display:none">Separator help</span>
+               <span class="attrAlert" style="display:none">Separator alert</span>
                <input dojoType="dijit.form.TextBox" id="separator" name="separator" type="text"
                       value=""
                       placeholder=""
@@ -317,9 +399,11 @@
          <li>
             <div class="attrEditor">
                <h4>
-                  <label for="targetref">targetref</label>
+                  <label for="targetref">Targetref</label>
                </h4>
-               <p/>
+               <p>Targetref hint.</p>
+               <span class="attrHelp" style="display:none">Targetref help</span>
+               <span class="attrAlert" style="display:none">Targetref alert</span>
                <input dojoType="dijit.form.TextBox" id="targetref" name="targetref" type="text"
                       value=""
                       placeholder=""
@@ -332,23 +416,11 @@
          <li>
             <div class="attrEditor">
                <h4>
-                  <label for="target">target</label>
+                  <label for="includenamespaceprefixes">Includenamespaceprefixes</label>
                </h4>
-               <p/>
-               <input dojoType="dijit.form.TextBox" id="target" name="target" type="text" value=""
-                      placeholder=""
-                      class="xftarget dojoInput"
-                      onblur="attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'target')"/>
-            </div>
-         </li>
-      </ul>
-      <ul style="list-style-type:none;">
-         <li>
-            <div class="attrEditor">
-               <h4>
-                  <label for="includenamespaceprefixes">includenamespaceprefixes</label>
-               </h4>
-               <p/>
+               <p>Includenamespaceprefixes hint.</p>
+               <span class="attrHelp" style="display:none">Includenamespaceprefixes help</span>
+               <span class="attrAlert" style="display:none">Includenamespaceprefixes alert</span>
                <input dojoType="dijit.form.TextBox" id="includenamespaceprefixes"
                       name="includenamespaceprefixes"
                       type="text"
