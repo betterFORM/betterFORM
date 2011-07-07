@@ -53,7 +53,8 @@
                     dojo.require("dojo.data.ItemFileReadStore");
                     dojo.require("dojox.layout.FloatingPane");
                     dojo.require("dijit.TitlePane");
-                    var attrEditor = new betterform.Editor();
+
+                    attrEditor = new betterform.Editor();
                     //console.debug("attrEditor.: ",attrEditor);
 
                     function checkKeyboardInput(pEvent){
@@ -257,7 +258,21 @@
                     </div>
                 </div>
                 <div id="leftPane" tabindex="-1">
-                    <div id="addLabel">Add...</div>
+                    <div id="addLabel">Add ...
+                        <div id="addModeDiv">
+                            <button id="btnChildMode" type="button" class="modeSelector selected" onclick="updateComponentTree(this,true);">Child</button>
+                            <button id="btnSiblingMode" type="button" class="modeSelector" onclick="updateComponentTree(this,false);">Sibling</button>
+
+
+
+<!--
+                            <input type="radio" dojoType="dijit.form.RadioButton" name="addMode" id="radioOne" checked="checked" value="child" />
+                            <label for="radioOne">as Child</label>
+                            <input type="radio" dojoType="dijit.form.RadioButton" name="addMode" id="radioTwo" value="sibling" />
+                            <label for="radioTwo">as Sibling</label>
+-->
+                        </div>
+                    </div>
                     <div id="componentTree">
 <!--
                         <ul>
@@ -477,6 +492,27 @@
 
                         $("#componentTree").jstree("toggle_node", this);
                     });
+
+
+                    function updateComponentTree(aNode,inChildMode){
+                        console.log("event: ",aNode, " id: ",aNode.id);
+
+
+                        //switch state of buttons regardless of an existing selection
+                        if(aNode.id == "btnChildMode"){
+                            if(dojo.hasClass("btnSiblingMode","selected")){
+                                dojo.removeClass("btnSiblingMode","selected");
+                            }
+                            dojo.addClass("btnChildMode","selected");
+                        }else{
+                            dojo.removeClass("btnChildMode","selected");
+                            dojo.addClass("btnSiblingMode","selected");
+                        }
+
+
+
+                    }
+
                     function addElement(type){
                         console.log("addElement type:",type);
                         var elem = $("#xfDoc").jstree("create",null,"last",type,false,true);
@@ -500,6 +536,23 @@
                         $("#xfDoc").jstree("remove",null);
                     }
                 </script>
+
+<!--
+                //fetch the currently selected item from xdoc tree
+                var currentItem =  attrEditor.currentNodeId;
+                if(!currentItem) return;
+                console.log("current: ",currentItem);
+
+                var currentType = dojo.attr(dojo.byId(currentItem),"data-xf-type");
+                if (!currentType) {
+                    console.error("no xfType defined");
+                    return;
+                }
+                console.log("current xfType: ",currentType);
+
+                //display tree with argument 'xfType' or parent xfType
+-->
+
                 <div id="bfEditorHelp" dojoType="dojox.layout.FloatingPane" title="betterFORM Editor Help" resizable="true" dockable="false" style="position:absolute;margin:10px;top:200px;left:200px;width:600px;height:350px;visibility:hidden;">
 <!--
                     <div class="bfEditorHelpTitle">betterFORM Editor</div>

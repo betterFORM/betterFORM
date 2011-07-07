@@ -66,10 +66,12 @@ html, body,#mainWindow {
     top:40px;
     width:160px;
     min-height:300px;
+    overflow: hidden;
 }
 #leftPane #addLabel{
-    height: 50px;
-    font-size:1.1em;
+    font-size:1.5em;
+    padding: 10px;
+    color:#eeeeee;
 }
 #rightPane {
     position:absolute;
@@ -368,7 +370,8 @@ dl.keyboard-mapping dd {
 .bf #leftPane #componentTree ul > li > ul > li > ul > li{
     text-align:right;
     padding-left: 20px;
-    }
+    padding-right: 5px;
+}
 
 
 .bf #leftPane #componentTree a{
@@ -379,20 +382,20 @@ dl.keyboard-mapping dd {
 }
 
 .bf #leftPane #componentTree .category .action{
-    background: orange;
+    /*background: #91b0c4;*/
     color:#333333;
 }
 .bf #leftPane #componentTree .category .controls{
-    background: #4682b4;
+    /*background: #245c86;*/
     color:#333333;
 
 }
 .bf #leftPane #componentTree .category .container{
-    background: #b0c4de;
+    /*background: #7AA7DC;*/
     color:#333333;
 }
 .bf #leftPane #componentTree .category .common{
-    background: #daa520;
+    /*background: #3d637c;*/
     color:#333333;
 }
 
@@ -401,3 +404,22 @@ dl.keyboard-mapping dd {
     margin-right: -15px;
 
 }
+.bf #addModeDiv{
+    display:inline-block;
+    width:100%;
+}
+.bf .modeSelector{
+    height: 22px;
+    background: url('../images/switch.gif') repeat-x scroll 0 0 #eeeeee;
+    border: none;
+    color:#999999;
+    width: 50%;
+}
+.bf .modeSelector.selected{
+    background-position: 0 -60px;
+    color:#efefef;
+}
+.bf .modeSelector.selected span{
+    background-position: left -150px;
+}
+
