@@ -3,4 +3,11 @@
     <error hasError="false"><![CDATA[]]></error>
     <dbPath>/betterform/rest/db/betterform/apps/timetracker</dbPath>
     <timestamp/>
+    <devices>
+        <device id="officeMail">Office Email</device>
+        <device id="officeTel">Office Telephone</device>
+        <device id="officeMobile">Office Mobile</device>
+        <device id="skype">Skype</device>
+        <device id="jabber">Jabber</device>        
+    </devices>
 </data>

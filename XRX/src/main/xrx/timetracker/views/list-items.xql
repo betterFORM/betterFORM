@@ -4,7 +4,28 @@ import module namespace request="http://exist-db.org/xquery/request";
 import module namespace session="http://exist-db.org/xquery/session";
 import module namespace util="http://exist-db.org/xquery/util";
 
-declare option exist:serialize "method=xhtml media-type=text/xml";
+declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
+
+declare function local:getClientName($id as xs:string) as xs:string {
+    let $client := collection('betterform/apps/timetracker/data/client/')/client[@id=$id]
+    return
+        $client/name/text()
+        
+};
+
+declare function local:getProjectName($clientId as xs:string, $projectId as xs:string) as xs:string {
+    let $project := collection('betterform/apps/timetracker/data/client/')/client[@id=$clientId]/projects/project[@id=$projectId]
+    return
+        $project/name/text()
+        
+};
+
+declare function local:getIterationName($clientId as xs:string, $projectId as xs:string, $iterationId as xs:string) as xs:string {
+    let $iteration := collection('betterform/apps/timetracker/data/client/')/client[@id=$clientId]/projects/project[@id=$projectId]/iterations/iteration[@id=$iterationId]
+    return
+        $iteration/text()
+        
+};
 
 (: creates the output for all tasks matching the query :)
 declare function local:main() as node() * {
@@ -13,7 +34,9 @@ declare function local:main() as node() * {
             <tr>
                 <td class="selectorCol"><input type="checkbox" dojotype="dijit.form.CheckBox" value="{$task/created}" /></td>
                 <td class="dateCol">{$task/date}</td>
-                <td>{$task/project}</td>
+                <td>{local:getClientName(data($task/@client))}</td>
+                <td>{local:getProjectName(data($task/@client), data($task/@project))}</td>
+                <td>{local:getIterationName(data($task/@client), data($task/@project),data($task/@iteration))}</td>
                 <td>{$task/who}</td>
                 <td>{data($task/duration/@hours)}:{data($task/duration/@minutes)}</td>
                 <td>{$task/what}</td>
@@ -103,7 +126,9 @@ return
 			 <tr>
 				<th></th>
 				<th>Date</th>
+				<th>Client</th>
 				<th>Project</th>
+				<th>Iteration</th>
 				<th>Who</th>
 				<th>Duration</th>
 				<th>What</th>

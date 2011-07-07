@@ -1,4 +1,9 @@
 xquery version "1.0";
+
+declare namespace exist = "http://exist.sourceforge.net/NS/exist";
+
+import module namespace request="http://exist-db.org/xquery/request";
+
 declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
 
 let $contextPath := request:get-context-path()
@@ -156,8 +161,6 @@ return
                             <xf:message level="ephemeral">Entry has been removed</xf:message>
                         </xf:action>
                     </xf:submission>
-
-                    <xf:instance id="i-project" src="{$contextPath}/rest/db/betterform/apps/timetracker/data/project.xml" />
 
                     <xf:instance id="i-vars">
                         <data xmlns="">

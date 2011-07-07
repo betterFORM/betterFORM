@@ -1,10 +1,10 @@
 <data>
-    <task>
+    <task client="" project="" iteration="">
         <id/>
-        <date/>
-        <project/>
+        <date/>        
         <start/>
         <end/>
+        <project/>
         <duration hours="0" minutes="0"/>
         <who/>
         <what/>
@@ -13,5 +13,6 @@
         <billed date="">false</billed>
         <status/>
         <created/>
+        <tag/>
     </task>
 </data>
