@@ -46,7 +46,12 @@ dojo.declare(
 
 
     createRangeSliderWidget:function(controlId, sourceNode, classValue) {
-        var xfValue = parseInt(dojo.attr(sourceNode,"value"), "10");
+        var xfValue = dojo.attr(sourceNode,"value")
+        if (xfValue == "") {
+            xfValue = 0;
+        } else {
+            xfValue = parseInt(xfValue, "10");
+        }
         var start = 0;
         var end = 10;
         var step = 1;
@@ -101,7 +106,7 @@ dojo.declare(
             showButtons:"true",
             "class":classValue,
             xfControlId:controlId,
-            style:"width:200px;"
+            style: "width:200px;"
         },sourceNode);
         // and start them both
         newRangeSliderWidget.startup();

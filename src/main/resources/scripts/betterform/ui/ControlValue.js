@@ -29,9 +29,10 @@ dojo.declare(
 
     applyProperties:function(xfControl, node) {
         this.xfControl = xfControl;
-        // console.debug("ControlValue.applyProperties: xfControl:",xfControl, " template node:",node);
-        if (dojo.attr(node, "incremental") != undefined && dojo.attr(node, "incremental") != "") {
-            this.incremental = eval(dojo.attr(node, "incremental"));
+        //console.debug("ControlValue.applyProperties: xfControl:",xfControl, " template node:",node);
+        var isIncremental = dojo.attr(node, "incremental");
+        if (isIncremental != undefined && isIncremental != "") {
+            this.incremental = eval(isIncremental);
         }else {
             this.incremental = false;
         }
@@ -40,7 +41,7 @@ dojo.declare(
         }
     },
     setCurrentValue:function(value) {
-        // console.debug("ControlValue.setCurrentValue value:",value);
+        //console.debug("ControlValue.setCurrentValue value:",value);
         if (value != undefined) {
             this.currentValue = value;
         } else {
