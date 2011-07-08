@@ -259,45 +259,16 @@
                 </div>
                 <div id="leftPane" tabindex="-1">
                     <div id="addLabel">Add ...
-                        <div id="addModeDiv">
-                            <button id="btnChildMode" type="button" class="modeSelector selected" onclick="updateComponentTree(this,true);">Child</button>
-                            <button id="btnSiblingMode" type="button" class="modeSelector" onclick="updateComponentTree(this,false);">Sibling</button>
-
-
-
-<!--
-                            <input type="radio" dojoType="dijit.form.RadioButton" name="addMode" id="radioOne" checked="checked" value="child" />
-                            <label for="radioOne">as Child</label>
-                            <input type="radio" dojoType="dijit.form.RadioButton" name="addMode" id="radioTwo" value="sibling" />
-                            <label for="radioTwo">as Sibling</label>
--->
+                        <div id="addModeDiv" >
+                            <button id="btnChildMode" type="button" class="modeSelector selected" onclick="attrEditor.updateComponentTree(this);">Child</button>
+                            <button id="btnSiblingMode" type="button" class="modeSelector" onclick="attrEditor.updateComponentTree(this);">Sibling</button>
                         </div>
                     </div>
-                    <div id="componentTree">
-<!--
-                        <ul>
-                            <li>
-                                <a href="#">Common</a>
-                            </li>
-                            <li>
-                                <a href="#">Elements</a>
-
-                            </li>
-                            <li>
-                                <a href="#">Controls</a>
-
-                            </li>
-                            <li>
-                                <a href="#">Container</a>
-
-                            </li>
-                            <li>
-                                <a href="#">Actions</a>
-
-                            </li>
-                        </ul>
--->
-                   </div>
+                    <!--
+                    the 'mode' attribute is used to switch between 'children' and 'siblings' mode which
+                    determines the list of possible elements displayed in the component tree.
+                    -->
+                    <div id="componentTree" data-bf-addmode="child"></div>
                 </div>
                 <div id="rightPane" tabindex="-1">
                     <div id="xfMount" dojotype="dijit.layout.ContentPane"
@@ -459,7 +430,7 @@
                     $(function () {
                         $("#componentTree").jstree({
                             "core" : {
-                                "initially_open" : [ "model-tmpl","group-tmpl","bind-tmpl","label-tmpl","hint-tmpl","help.tmpl" ]
+                                "initially_open" : [ "document-tmpl","model-tmpl","group-tmpl","repeat-tmpl","switch-tmpl","bind-tmpl","submission-tmp","input-tmpl","output-tmpl","range-tmpl","secret-tmpl","select-tmpl","select1-tmpl","submit-tmpl","textarea-tmpl","trigger-tmpl","upload-tmpl" ]
                             },
                             "html_data":{
                                 "ajax":{
@@ -486,32 +457,20 @@
 
 
                     $("#componentTree").delegate("a", "click", function(){
-                        if(dojo.hasClass(this.parentNode,"jstree-leaf")){
-                            addElement(this.parentNode.getAttribute("data-xf-type"));
+                        var currentItem = this.parentNode;
+
+                        if(dojo.hasClass(currentItem,"jstree-leaf")){
+                            if($("#componentTree").attr("data-bf-addmode") == "child"){
+                                addElement(currentItem.getAttribute("data-xf-type"));
+                            }else{
+                                //get parent
+                                var parentLI = currentItem.parentNode.parentNode;
+                                console.log("parent add: ",parentLI);
+                            }
                         }
 
                         $("#componentTree").jstree("toggle_node", this);
                     });
-
-
-                    function updateComponentTree(aNode,inChildMode){
-                        console.log("event: ",aNode, " id: ",aNode.id);
-
-
-                        //switch state of buttons regardless of an existing selection
-                        if(aNode.id == "btnChildMode"){
-                            if(dojo.hasClass("btnSiblingMode","selected")){
-                                dojo.removeClass("btnSiblingMode","selected");
-                            }
-                            dojo.addClass("btnChildMode","selected");
-                        }else{
-                            dojo.removeClass("btnChildMode","selected");
-                            dojo.addClass("btnSiblingMode","selected");
-                        }
-
-
-
-                    }
 
                     function addElement(type){
                         console.log("addElement type:",type);

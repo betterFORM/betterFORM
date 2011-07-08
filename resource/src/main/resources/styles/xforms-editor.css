@@ -34,7 +34,6 @@ html, body,#mainWindow {
     background:red;
 }
 #topPane{
-    height: 42px;
     background: #E6E6E7;
     width: 100%;
     position:fixed;
@@ -45,8 +44,8 @@ html, body,#mainWindow {
     height:32px;
     margin:9px;
     position:absolute;
-    top:-9px;
-    right:-9px;
+    top:-6px;
+    right:-6px;
 }
 #topPane a:link{
     color:#cccccc;
