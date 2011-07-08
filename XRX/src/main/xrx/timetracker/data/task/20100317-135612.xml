@@ -1,1 +1,17 @@
-<data xmlns:xf="http://www.w3.org/2002/xforms" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:bf="http://betterform.sourceforge.net/xforms"><task><date>2010-03-17</date><project>Project 2</project><start/><end/><duration hours="3" minutes="0"/><who>User1</who><what>bugfix</what><note>implemented betterFORM feature XYZ</note><billable>true</billable><billed date=""/><status>completed</status><created>20100317-135612</created></task></data>
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+   <task client="6" project="1" iteration="1">
+      <date>2010-03-17</date>
+      <start/>
+      <end/>
+      <duration hours="3" minutes="0"/>
+      <who>User1</who>
+      <what>bugfix</what>
+      <note>implemented betterFORM feature XYZ</note>
+      <billable>true</billable>
+      <billed date=""/>
+      <status>completed</status>
+      <created>20100317-135612</created>
+      <tag/>
+   </task>
+</data>

@@ -1,0 +1,27 @@
+<!--
+    ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+-->
+
+<project name="betterFORM Timetracker XSLT Tasks" default="build" basedir=".">
+    <xmlproperty file="../build.properties.xml"
+                 semanticAttributes="true" keepRoot="false"/>
+
+    <target name="prepare">
+        <mkdir dir="${basedir}/target/task"/>
+        <copy todir="${basedir}/target/task">
+            <fileset dir="${basedir}/src/main/xrx/timetracker/data/task" includes="*/**"/>
+        </copy>
+    </target>
+
+    <target name="build" depends="prepare" description="generates the betterFORM site">
+        <xslt basedir="${basedir}/target/task"
+            destdir="${basedir}/src/main/xrx/timetracker/data/task"
+            style="${basedir}/restructureTasks.xsl"
+            force="true"
+            includes="**/*.xml"
+            extension=".xml"
+            classpathref="transform.class.path">
+        </xslt>
+    </target>
+</project>

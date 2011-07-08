@@ -1,1 +1,17 @@
-<data><task><id/><date>2010-04-05</date><project>beNaughty</project><start/><end/><duration hours="0" minutes="15"/><who>Maggie</who><what>other</what><note/><billable>false</billable><billed date="">false</billed><status>completed</status><created>20100601-101708</created></task></data>
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+   <task client="4" project="1" iteration="1">
+      <date>2010-04-05</date>
+      <start/>
+      <end/>
+      <duration hours="0" minutes="15"/>
+      <who>Maggie</who>
+      <what>other</what>
+      <note/>
+      <billable>false</billable>
+      <billed date="">false</billed>
+      <status>completed</status>
+      <created>20100601-101708</created>
+      <tag/>
+   </task>
+</data>

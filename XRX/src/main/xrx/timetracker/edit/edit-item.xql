@@ -1,10 +1,21 @@
 xquery version "1.0";
 
+declare namespace exist = "http://exist.sourceforge.net/NS/exist";
+
 import module namespace request="http://exist-db.org/xquery/request";
 import module namespace session="http://exist-db.org/xquery/session";
 import module namespace util="http://exist-db.org/xquery/util";
+
 declare option exist:serialize "method=xhtml media-type=text/xml";
 
+declare function local:getClients() {
+    for $clients in collection('betterform/apps/timetracker/data/client/')/client
+    order by fn:upper-case($clients)
+    return
+        <client id="{$clients/@id}">
+            {$clients/name/text()}
+        </client>
+};
 
 declare function local:timestamp() as xs:string{
       let $timestamp := request:get-parameter("timestamp", "")
@@ -46,8 +57,11 @@ return
                     <xf:instance id="i-task" src="{$contextPath}/rest/db/betterform/apps/timetracker/data/task.xml"/>
 
                   <xf:bind nodeset="task">
+                      <xf:bind nodeset="@client" required="true()" />
+                      <xf:bind nodeset="@project" required="true()" />
+                      <xf:bind nodeset="@iteration" required="true()" />
                       <xf:bind nodeset="date" type="xf:date" required="true()" />
-                      <xf:bind nodeset="project" required="true()" />
+                      
                       <xf:bind nodeset="duration/@hours" type="integer" />
                       <xf:bind nodeset="duration/@minutes" type="integer" constraint=". != 0 or ../@hours != 0"/>
                       <xf:bind nodeset="who" required="true()"/>
@@ -56,6 +70,11 @@ return
                       <xf:bind nodeset="created" required="true()"/>
                   </xf:bind>
 
+                   <xf:instance id="i-client">
+                <data xmlns="">
+                    {local:getClients()}
+                </data>
+            </xf:instance>
 
                   <xf:submission id="s-get-task"
                                  method="get"
@@ -68,7 +87,10 @@ return
                  </xf:submission>
 
 
-                 <xf:instance id="i-project"     src="{$contextPath}/rest/db/betterform/apps/timetracker/data/project.xml"/>
+                 <xf:instance id="i-project" xmlns="">
+                    <data/>
+                 </xf:instance>
+                 
                  <xf:instance id="i-worker"  	 src="{$contextPath}/rest/db/betterform/apps/timetracker/data/worker.xml"/>
                  <xf:instance id="i-tasktype"  	 src="{$contextPath}/rest/db/betterform/apps/timetracker/data/tasktype.xml"/>
                  <xf:instance id="i-controller"  src="{$contextPath}/rest/db/betterform/apps/timetracker/data/controller.xml"/>
@@ -139,6 +161,16 @@ return
                                replace="instance"
                                instance="i-task">
                 </xf:submission>
+                
+                
+                <xf:submission id="s-getProjects"
+                               ref="instance('i-project')"
+                               method="get"
+                               replace="instance"
+                               instance="i-project"
+                               validate="false">
+                               <xf:resource value="concat('{$contextPath}/rest/db/betterform/apps/timetracker/edit/utils/project.xql?id=', instance()/task/@client)"/>
+                </xf:submission>
             <xf:action ev:event="xforms-ready" >
                 <xf:send submission="s-get-task" if="'{local:mode()}' = 'edit'"/>
                 <xf:setfocus control="date"/>
@@ -155,13 +187,34 @@ return
                     <xf:hint>pick the date to report</xf:hint>
                 </xf:input>
 
-                <xf:select1 id="project" ref="project" appearance="minimal">
-                    <xf:label>Project</xf:label>
-					<xf:alert>a project must be selected</xf:alert>
-                    <xf:hint>select the project</xf:hint>
-                    <xf:itemset nodeset="instance('i-project')/project">
+                <xf:select1 id="client" ref="@client" appearance="minimal">
+                    <xf:label>Client</xf:label>
+					<xf:alert>a client must be selected</xf:alert>
+                    <xf:hint>select the client</xf:hint>
+                     <xf:itemset nodeset="instance('i-client')/client">
                         <xf:label ref="."/>
-                        <xf:value ref="."/>
+                        <xf:value ref="./@id"/>
+                    </xf:itemset>
+                    <xf:action ev:event="xforms-select">
+                        <xf:rebuild/>
+                        <xf:recalculate/>
+                        <xf:refresh/>
+                        <xf:send submission="s-getProjects"/>
+                    </xf:action>
+                </xf:select1>
+
+                <xf:trigger>
+                    <xf:label>Pro</xf:label>
+                    <xf:send submission="s-getProjects"/>
+                </xf:trigger>
+                
+                <xf:select1 id="project" ref="@project" appearance="minimal">
+                    <xf:label>Project</xf:label>
+					<xf:alert>a client must be selected</xf:alert>
+                    <xf:hint>select the client</xf:hint>
+                     <xf:itemset nodeset="instance('i-project')/project">
+                        <xf:label ref="."/>
+                        <xf:value ref="./@id"/>
                     </xf:itemset>
                 </xf:select1>
 

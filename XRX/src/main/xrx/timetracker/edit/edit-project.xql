@@ -40,7 +40,7 @@ return
         <xf:submission id="s-add"
                        method="put"
                        replace="none">
-		    <xf:resource value="concat('{$contextPath}/rest/db/betterform/apps/timetracker/data/project.xml')"/>
+		    <xf:resource value="'{$contextPath}/rest/db/betterform/apps/timetracker/data/project.xml'"/>
 
             <xf:header>
                 <xf:name>username</xf:name>
