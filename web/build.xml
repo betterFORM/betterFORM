@@ -568,7 +568,7 @@
             <arg value="symbol=short"/>
             <arg value="layerOptimize=shrinksafe"/>
 
-            <arg value="version=1.5"/>
+            <arg value="version=1.6"/>
         </java>
         <!-- cleanup JS/CSS resources of betterform dojo release -->
         <antcall target="cleanup-js-release"/>
@@ -613,6 +613,7 @@
             <srcfiles dir="${basedir}" includes="build.xml" />
             <srcfiles dir="${src.dir}/main/lib" includes="${properties.dojo}.tar.gz" />
         </uptodate>
+
     </target>
     
     <!-- **************************************** FORM AGGREGATION TARGETS **************************************** -->
