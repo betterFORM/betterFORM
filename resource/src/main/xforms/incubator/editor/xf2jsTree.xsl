@@ -258,7 +258,8 @@
                     </div>
                 </div>
                 <div id="leftPane" tabindex="-1">
-                    <div id="addLabel">Add ...
+                    <div id="addLabel">
+                        <div class="caption">Add ...</div>
                         <div id="addModeDiv" >
                             <button id="btnChildMode" type="button" class="modeSelector selected" onclick="attrEditor.updateComponentTree(this);">Child</button>
                             <button id="btnSiblingMode" type="button" class="modeSelector" onclick="attrEditor.updateComponentTree(this);">Sibling</button>
@@ -461,20 +462,21 @@
 
                         if(dojo.hasClass(currentItem,"jstree-leaf")){
                             if($("#componentTree").attr("data-bf-addmode") == "child"){
-                                addElement(currentItem.getAttribute("data-xf-type"));
+                                addElement(currentItem.getAttribute("data-xf-type"),"last");
                             }else{
                                 //get parent
                                 var parentLI = currentItem.parentNode.parentNode;
                                 console.log("parent add: ",parentLI);
+                                addElement(currentItem.getAttribute("data-xf-type"),"after");
                             }
                         }
 
                         $("#componentTree").jstree("toggle_node", this);
                     });
 
-                    function addElement(type){
+                    function addElement(type,position){
                         console.log("addElement type:",type);
-                        var elem = $("#xfDoc").jstree("create",null,"last",type,false,true);
+                        var elem = $("#xfDoc").jstree("create",null,position,type,false,true);
                         elem.attr("data-xf-type",type);
                         elem.attr("id",new Date().getTime());
                         elem.attr("data-xf-attrs","");

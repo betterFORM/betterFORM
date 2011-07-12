@@ -69,9 +69,14 @@ html, body,#mainWindow {
 }
 #leftPane #addLabel{
     font-size:1.5em;
-    padding: 10px;
     color:#eeeeee;
+    background: #555555;
 }
+#leftPane #addLabel .caption{
+    padding: 10px;
+    font-size: 14pt;
+}
+
 #rightPane {
     position:absolute;
     right:0;
@@ -97,6 +102,7 @@ html, body,#mainWindow {
     border-radius: 5px;
     margin-bottom: 5px;
     line-height:24px;
+    width: 95%;
 }
 .jstree a{
     font-size:1.2em;
@@ -179,19 +185,18 @@ html, body,#mainWindow {
     background:white;
 }
 .bf #mainWindow  .jstree-clicked {
-    padding:3px 0px 3px 5px;
+    padding:6px 0px 6px 5px;
     width:95%;
-    background:transparent;
+    background:#efefef;
     color:#444444;
-    border-color:limegreen;
-    border:2px solid limegreen;
-    border-radius:10px;
+    border:2px solid #777777;
 }
 .bf #mainWindow .jstree-hovered{
     width:95%;
-    background:#555555;
-    color:#eeeeee;
+    background:#efefef;
+    /*color:#eeeeee;*/
     border-color:limegreen;
+    border-width: 2px;
     border-radius: 5px;
 }
 .bf #mainWindow .dijitMenu, .bf #mainWindow .dijitMenuBar {
@@ -341,6 +346,7 @@ dl.keyboard-mapping dd {
     background: #666666;
     margin:0;
     padding: 0;
+    border-top: green;
 }
 .bf #leftPane #componentTree li{
     background:#666666;
@@ -403,7 +409,7 @@ dl.keyboard-mapping dd {
     margin-right: -15px;
 
 }
-.bf #addModeDiv{
+.bf #leftPane #addModeDiv{
     display:inline-block;
     width:100%;
 }
@@ -421,4 +427,9 @@ dl.keyboard-mapping dd {
 .bf .modeSelector.selected span{
     background-position: left -150px;
 }
-
+.bf .dijitMenuBar{
+    border: #efefef;
+}
+.bf #docWrapper #leftPane #componentTree > ul > li > a{
+    color: transparent;
+}
