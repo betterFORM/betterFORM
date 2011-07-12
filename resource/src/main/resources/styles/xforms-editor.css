@@ -12,7 +12,6 @@ html, body,#mainWindow {
 }
 #docPane{
     background: transparent;
-    border-radius: 10px;
     width:100%;
     float:left;
 }
@@ -21,13 +20,15 @@ html, body,#mainWindow {
     background:transparent;
     border:none;
 }
+#docPane #xfDoc > ul > li{
+    width: 100%;
+}
 #root{
     background:white;
 }
 #xfDoc .jstree-hovered{
     width:100%;
     background:green;
-    border-radius:10px;
 }
 #xfDoc .jstree-clicked{
     width:100%;
@@ -57,7 +58,6 @@ html, body,#mainWindow {
     padding:3px;
     background:white;
     color:#555555;
-    border-radius:10px 10px 10px 10px
 }
 #leftPane{
     position:absolute;
@@ -99,16 +99,15 @@ html, body,#mainWindow {
 }
 #docPane .jstree li{
     border: thin solid #999999;
-    border-radius: 5px;
     margin-bottom: 5px;
     line-height:24px;
-    width: 95%;
 }
 .jstree a{
     font-size:1.2em;
     padding:5px;
     width:95%;
     position:relative;
+    color: #111111;
 }
 #xfMount{
     background:#666666;
@@ -163,7 +162,6 @@ html, body,#mainWindow {
 */
 #docPane #xfDoc .model,
 #docPane #xfDoc .group{
-    border-radius: 10px 0 0 10px;
     border: 2px solid #cecece;
     margin-bottom: 5px;
     padding:0 10px;
@@ -197,7 +195,6 @@ html, body,#mainWindow {
     /*color:#eeeeee;*/
     border-color:limegreen;
     border-width: 2px;
-    border-radius: 5px;
 }
 .bf #mainWindow .dijitMenu, .bf #mainWindow .dijitMenuBar {
     background:#444444;
@@ -341,7 +338,7 @@ dl.keyboard-mapping dd {
 .bf #leftPane{
     background:#666666;
 }
-.bf #leftPane #componentTree{
+.bf #mainWindow #leftPane #componentTree{
     width:100%;
     background: #666666;
     margin:0;
@@ -357,9 +354,6 @@ dl.keyboard-mapping dd {
     text-align: left;
 }
 */
-.bf #leftPane #componentTree jstree-default{
-    padding: 0;
-}
 
 .bf #leftPane #componentTree > ul > li
 {
@@ -378,6 +372,13 @@ dl.keyboard-mapping dd {
     padding-right: 5px;
 }
 
+.bf #mainWindow #leftPane #componentTree .jstree-default,
+.bf #mainWindow #leftPane #componentTree .jstree-clicked{
+    padding: 0;
+}
+.bf #mainWindow #leftPane #componentTree .jstree-default{
+    background: transparent;
+}
 
 .bf #leftPane #componentTree a{
     color:#dedede;
@@ -405,10 +406,15 @@ dl.keyboard-mapping dd {
 }
 
 .bf #leftPane #componentTree .jstree-clicked{
-    background: #32cd32;
+    background: #555555;
     margin-right: -15px;
 
 }
+.bf #leftPane #componentTree .jstree-hovered{
+    background: url('../images/switch.gif') repeat-x scroll 0 -60px #eeeeee;
+    border: none;
+}
+
 .bf #leftPane #addModeDiv{
     display:inline-block;
     width:100%;
@@ -430,6 +436,6 @@ dl.keyboard-mapping dd {
 .bf .dijitMenuBar{
     border: #efefef;
 }
-.bf #docWrapper #leftPane #componentTree > ul > li > a{
-    color: transparent;
+.bf #formWrapper #fluxProcessor #mainWindow #leftPane #componentTree > ul > li > a{
+    color:transparent;
 }
