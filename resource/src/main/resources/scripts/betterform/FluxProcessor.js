@@ -1240,7 +1240,8 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
                 //  special handling for Select controls, check if parent node is selector item
                 else if (dojo.hasClass(parentControlNode, "xfSelectorItem")) {
                     // console.debug("FluxProcessor.handleStateChanged Target Node does not exist, Parent Control is SelectorItem (ParentSelector:" , parentControlNode , ")");
-                    dijit.byId(dojo.attr(parentControlNode.parentNode, "id")).handleStateChanged(xmlEvent.contextInfo);
+                    var selectParentId = dojo.attr(parentControlNode.parentNode, "id");
+                    dijit.byId(selectParentId).handleStateChanged(xmlEvent.contextInfo);
                 }
                 else {
                     console.warn("FluxProcessor betterform-state-changed: No handleStateChanged implementation availabled for contextinfo: ", xmlEvent.contextInfo);
