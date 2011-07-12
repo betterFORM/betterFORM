@@ -9,6 +9,11 @@
     builds a unique list of ul elements. There will be one ul element for each xforms element name.
     Possible children are listed as li elements. This styleheets is used as a base for other transforms and
     should be changed only with caution!
+
+    Important Note: see the for-each loop in root matcher - this does not create a completely unique selection
+     as some elments occur in different levels and are handled by their parents. These elements will be picked up
+     again in the outer for-each. For the purpose of this transform this is considered good enough - following
+     transforms should filter those duplicates out.
      -->
     <!--todo: prototypes -->
     <xsl:param name="webxml.path" select="''"/>
@@ -66,6 +71,33 @@
         </xsl:for-each>
     </xsl:template>
 
+    <xsl:template match="xsd:element[@type]" priority="50">
+        <li data-xf-type="{@name}" class="element">
+            <xsl:value-of select="@name"/>
+        </li>
+    </xsl:template>
+
+
+<!--
+    <xsl:template match="xsd:element[@name='dispatch']" priority="20">
+        <xsl:for-each select="./*/*/*/xsd:element">
+            <xsl:apply-templates select="."/>
+        </xsl:for-each>
+    </xsl:template>
+-->
+
+<!--
+    <xsl:template match="xsd:element[@name='load']" priority="20">
+        <li data-xf-type="resource" class="element">resource</li>
+    </xsl:template>
+-->
+
+<!--
+    <xsl:template match="xsd:element[@name='toggle']" priority="20">
+        <li data-xf-type="case" class="element">case</li>
+    </xsl:template>
+-->
+
     <xsl:template match="xsd:group[@name='UI.Common']">
         <xsl:for-each select="./*/*/xsd:element">
             <li data-xf-type="{substring-after(@ref,':')}" class="common">
@@ -85,7 +117,16 @@
 
     <xsl:template match="xsd:element[@name='submission']" priority="20">
         <xsl:for-each select="./*/*/*/xsd:element">
-            <li data-xf-type="{@name}" class="submission">
+            <li data-xf-type="{@name}" class="element">
+                <xsl:value-of select="@name"/>
+            </li>
+        </xsl:for-each>
+        <xsl:apply-templates select="./*/*/xsd:group"/>
+    </xsl:template>
+
+    <xsl:template match="xsd:element[@name='header']" priority="20">
+        <xsl:for-each select="./*/*/xsd:sequence[1]/xsd:element">
+            <li data-xf-type="{@name}" class="element">
                 <xsl:value-of select="@name"/>
             </li>
         </xsl:for-each>
@@ -103,13 +144,15 @@
         </li>
     </xsl:template>
 
-    <xsl:template match="xsd:element[@name='load']">
+<!--
+    <xsl:template match="xsd:element[@name='load']" priority="20">
         <xsl:for-each select="./*/*/xsd:element">
             <li data-xf-type="{@name}">
                 <xsl:value-of select="@name"/>
             </li>
         </xsl:for-each>
     </xsl:template>
+-->
 
     <xsl:template match="text()"/>
 

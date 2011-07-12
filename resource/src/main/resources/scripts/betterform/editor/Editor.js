@@ -254,7 +254,7 @@ dojo.declare("betterform.Editor", null,
         var xfType = origin.attr("data-xf-type");
         // console.log("xfType ",xfType);
         var targetType = target.attr("data-xf-type");
-        // console.log("check target:",targetType);
+         console.log("check target:",targetType);
 
         //check rules look for match in drop target elements list of allowed children
         //if found 'true' 'false' otherwise

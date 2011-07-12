@@ -10,11 +10,9 @@
     <xsl:template match="/">
         <xsl:for-each select="data/ul">
             var <xsl:value-of select="@id"/>Childs = <xsl:text>[</xsl:text>
-
-                    <xsl:if test="*"><xsl:for-each select="li">
+                    <xsl:for-each select="li">
                         "<xsl:value-of select="text()"/>"<xsl:if test="position() != last()">,</xsl:if>
                     </xsl:for-each>
-                </xsl:if>
             <xsl:text>];</xsl:text>
         </xsl:for-each>
     </xsl:template>

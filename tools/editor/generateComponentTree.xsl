@@ -15,9 +15,9 @@
 
     <xsl:template match="/data">
         <ul>
-            <xsl:for-each select="ul">
+            <xsl:for-each select="ul[@data-xf-type != li/@data-xf-type] | ul[@data-xf-type='bind']">
 
-                <xsl:if test="exists(./li)">
+                <!--<xsl:if test="exists(./li)">-->
 
                     <li id="{@id}-tmpl" class="{@id}">
                         <a href="#"><xsl:value-of select="@id"/></a>
@@ -86,7 +86,7 @@
                     </li>
 
 
-                </xsl:if>
+                <!--</xsl:if>-->
             </xsl:for-each>
         </ul>
     </xsl:template>
@@ -102,5 +102,6 @@
                 </li>
             </xsl:for-each>
     </xsl:template>
+
 
 </xsl:stylesheet>

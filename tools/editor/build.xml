@@ -116,7 +116,7 @@
             Attention: this target re-generates the list of childs from schema. The add menu js is created from
             an hand-edited version of this file in 'resources' dir.
         </echo>
-        <xslt in="/tools/editor/target/childlist.xml"
+        <xslt in="${basedir}/target/childlist.xml"
               out="${basedir}/target/xfUtil.js"
               style="${basedir}/generateJSforChildElementCheck.xsl"
               force="true"
