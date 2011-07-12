@@ -25,6 +25,10 @@
     <property name="rootcollection.name" value="betterform"/>
     <property name="server.port" value="8080"/>
     <property name="server.name" value="localhost"/>
+    <!-- Set this porperties so they match your environment:
+        "exist" for an exist installation
+        "betterform" for an betterFORM XRX installation
+    -->
     <property name="webapp.context" value="betterform"/>
     <property name="db.user" value="admin"/>
     <property name="db.pwd" value=""/>
@@ -83,14 +87,14 @@
     </target>
 
     <target name="exist-not-installed" unless="exist.installed">
-        <echo>
+        <fail>
             !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             Error:
                 eXist is not installed in ${eXist.home}.
             Please make sure eXist is installed and check the "eXist.home-property" in this
             buildfile.
             !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        </echo>
+        </fail>
     </target>
 
     <!-- *********************************************************************************************************** -->
@@ -165,10 +169,11 @@
             __== Installing Stylesheets ==__
         </echo>
 
-        <copy file="${etc.dir}/MergeWebXML-1.4.xsl" tofile="${eXist.home}/MergeWebXML.xsl"/>
-        <copy file="${etc.dir}/MergeBetterformConfig.xsl" tofile="${eXist.home}/MergeBetterformConfig.xsl"/>
+        <copy file="${etc.dir}/MergeWebXML-1.4.xsl" tofile="${eXist.home}/MergeWebXML.xsl" failonerror="true"/>
+        <copy file="${etc.dir}/MergeBetterformConfig.xsl" tofile="${eXist.home}/MergeBetterformConfig.xsl" failonerror="true"/>
 
         <antcall target="patch-web-xml"/>
+        <antcall target="patch-betterFORM-config"/>
 
         <touch file="${betterFORM.install.marker}"/>
     </target>
@@ -274,20 +279,6 @@
            <param name="file-source" value="${resource.dir}/src/main/xforms/FeatureExplorer.xhtml"/>
            <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}"/>
         </antcall>
-
-        <antcall target="db.install-file-into-eXist-DB">
-           <param name="db-user" value="${db.user}"/>
-           <param name="db-passwd" value="${db.pwd}"/>
-           <param name="file-source" value="${resource.dir}/src/main/xforms/Status.xhtml"/>
-           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}"/>
-        </antcall>
-
-         <antcall target="db.install-file-into-eXist-DB">
-           <param name="db-user" value="${db.user}"/>
-           <param name="db-passwd" value="${db.pwd}"/>
-           <param name="file-source" value="${resource.dir}/src/main/xforms/TimeTracker.xhtml"/>
-           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}"/>
-        </antcall>
     </target>
 
     <target name="install-demo-forms" description="install demo Forms into db" depends="exist-installed" if="betterFORM.base.installed">
@@ -300,9 +291,16 @@
            <param name="file-source-dir" value="${resource.dir}/src/main/xforms/demo"/>
            <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}/forms/demo"/>
         </antcall>
+
+        <antcall target="db.install-file-into-eXist-DB">
+           <param name="db-user" value="${db.user}"/>
+           <param name="db-passwd" value="${db.pwd}"/>
+           <param name="file-source" value="${resource.dir}/src/main/xforms/Status.xhtml"/>
+           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}"/>
+        </antcall>
     </target>
 
-    <target name="install-demo-xrx" description="install demo Forms into db" depends="exist-installed" if="betterFORM.base.installed">
+    <target name="install-demo-xrx" description="install XRX demo app into db" depends="exist-installed" if="betterFORM.base.installed">
         <echo>
             __== Installing demo app ==__
         </echo>
@@ -311,6 +309,13 @@
            <param name="db-passwd" value="${db.pwd}"/>
            <param name="file-source-dir" value="${main.dir}/xrx/timetracker"/>
            <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}/apps/timetracker"/>
+        </antcall>
+
+        <antcall target="db.install-file-into-eXist-DB">
+           <param name="db-user" value="${db.user}"/>
+           <param name="db-passwd" value="${db.pwd}"/>
+           <param name="file-source" value="${resource.dir}/src/main/xforms/TimeTracker.xhtml"/>
+           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}"/>
         </antcall>
     </target>
 
@@ -359,8 +364,10 @@
         <antcall target="uninstall-betterFORM-single-jar-mode"/>
         <antcall target="install-betterFORM-base"/>
         <antcall target="deploy-resources-exploded"/>
-        <antcall target="patch-betterFORM-config"/>
+
+	<antcall target="db.start-eXist"/>
         <antcall target="install-dashboard"/>
+	<antcall target="db.stop-eXist"/>
     </target>
 
     <target name="uninstall-betterFORM-single-jar-mode" if="betterFORM.single.jar.mode" description="removes betterFORM from eXist if installed in single jar mode">
@@ -412,7 +419,7 @@
         </echo>
 
         <antcall target="uninstall-betterFORM-exploded-mode"/>
-        <antcall target="update-resources"/>
+        <antcall target="deploy-resources"/>
         <touch file="${betterFORM.install.marker}"/>
     </target>
 
@@ -424,8 +431,9 @@
         <antcall target="install-betterFORM-base"/>
         <antcall target="uninstall-betterFORM-exploded-mode"/>
         <antcall target="deploy-resources"/>
-        <antcall target="patch-betterFORM-config"/>
+	<antcall target="db.start-eXist"/>
         <antcall target="install-dashboard"/>
+	<antcall target="db.stop-eXist"/>
     </target>
 
 
@@ -440,17 +448,6 @@
     </target>
 
     <target name="deploy-resources" if="exist.installed">
-        <echo>
-            __== Deploying betterFORM resources in single JAR Mode ==__
-        </echo>
-        <ant antfile="${web.dir}/build.xml" target="clean" usenativebasedir="true" inheritall="false"/>
-        <ant antfile="${web.dir}/build.xml" target="deploy" usenativebasedir="true" inheritall="false">
-            <property name="webapp.dir" value="${eXist.home}/webapp"/>
-            <property name="should.not.copy.libs" value="YES MA´AM"/>
-        </ant>
-    </target>
-
-    <target name="update-resources" if="exist.installed">
         <echo>
             __== Deploying betterFORM resources in single JAR Mode ==__
         </echo>

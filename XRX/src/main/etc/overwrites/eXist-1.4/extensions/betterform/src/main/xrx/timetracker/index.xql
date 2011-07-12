@@ -156,8 +156,6 @@ return
                         </xf:action>
                     </xf:submission>
 
-                    <xf:instance id="i-project" src="{$contextPath}/rest/db/betterform/apps/timetracker/data/project.xml" />
-
                     <xf:instance id="i-vars">
                         <data xmlns="">
                             <default-duration>120</default-duration>

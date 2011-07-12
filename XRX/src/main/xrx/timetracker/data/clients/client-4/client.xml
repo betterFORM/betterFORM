@@ -1,0 +1,26 @@
+<client id="4" shortName="beNaughty">
+    <name>be naughty</name>
+    <addresses>
+        <address id="">
+            <street/>
+            <number/>
+            <zipcode/>
+            <city/>
+            <country/>
+        </address>
+    </addresses>
+    <contacts>
+        <contact id="1">
+            <position></position>
+            <name>Max</name>
+            <surname>Mustermann</surname>
+            <device type="skype">maxmustermann</device>               
+        </contact>
+        <contact id="2">
+            <position></position>
+            <name>Maxi</name>
+            <surname>Musterfrau</surname>
+            <device type="skype">maximusterfrau</device>               
+        </contact>        
+    </contacts>
+</client>
