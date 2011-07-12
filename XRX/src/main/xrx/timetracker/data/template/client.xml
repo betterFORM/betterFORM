@@ -1,0 +1,29 @@
+<client id="" shortName="">
+    <name/>
+    <addresses>
+        <address id="">
+            <street/>
+            <number/>
+            <zipcode/>
+            <city/>
+            <country/>
+        </address>
+    </addresses>
+    <contacts>
+        <contact id="">
+            <name></name>
+            <surname></surname>
+            <device type=""></device>               
+        </contact>
+    </contacts>
+    <projects>
+        <project id="" shortName="">
+            <name/>
+            <iterations>
+                <iteration id=""/>
+            </iterations>
+        </project>
+    </projects>
+</client>
+    
+

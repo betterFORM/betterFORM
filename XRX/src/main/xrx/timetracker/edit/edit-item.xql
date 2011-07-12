@@ -71,10 +71,10 @@ return
                   </xf:bind>
 
                    <xf:instance id="i-client">
-                <data xmlns="">
-                    {local:getClients()}
-                </data>
-            </xf:instance>
+                    <data xmlns="">
+                        {local:getClients()}
+                    </data>
+                   </xf:instance>
 
                   <xf:submission id="s-get-task"
                                  method="get"
@@ -88,6 +88,10 @@ return
 
 
                  <xf:instance id="i-project" xmlns="">
+                    <data/>
+                 </xf:instance>
+                 
+                 <xf:instance id="i-iteration" xmlns="">
                     <data/>
                  </xf:instance>
                  
@@ -152,6 +156,8 @@ return
                     <xf:action ev:event="xforms-submit-error" if="instance('i-controller')/error/@hasError='false'">
                         <xf:message>The form has not been filled in correctly</xf:message>
                     </xf:action>
+                    
+                    
                 </xf:submission>
 
                 <xf:submission id="s-clean"
@@ -162,25 +168,43 @@ return
                                instance="i-task">
                 </xf:submission>
                 
-                
                 <xf:submission id="s-getProjects"
                                ref="instance('i-project')"
                                method="get"
                                replace="instance"
                                instance="i-project"
                                validate="false">
-                               <xf:resource value="concat('{$contextPath}/rest/db/betterform/apps/timetracker/edit/utils/project.xql?id=', instance()/task/@client)"/>
+                               <xf:resource value="concat('{$contextPath}/rest/db/betterform/apps/timetracker/edit/utils/project.xql?mode=project&amp;clientId=', instance()/task/@client)"/>
+                </xf:submission>
+                
+                <xf:submission id="s-getIteration"
+                               ref="instance('i-iteration')"
+                               method="get"
+                               replace="instance"
+                               instance="i-iteration"
+                               validate="false">
+                               <xf:resource value="concat('{$contextPath}/rest/db/betterform/apps/timetracker/edit/utils/project.xql?mode=iteration&amp;clientId=', instance()/task/@client, '&amp;projectId=', instance()/task/@project)"/>
                 </xf:submission>
             <xf:action ev:event="xforms-ready" >
                 <xf:send submission="s-get-task" if="'{local:mode()}' = 'edit'"/>
+                <xf:send submission="s-getProjects"/>
+                <xf:send submission="s-getIteration"/>
                 <xf:setfocus control="date"/>
             </xf:action>
-
+            
+            <xf:action ev:event="xforms-value-changed" ev:observer="add-task-table" ev:target="client">
+                <xf:send submission="s-getProjects"/>
+            </xf:action>
+            
+            <xf:action ev:event="xforms-value-changed" ev:observer="add-task-table" ev:target="project">
+                <xf:send submission="s-getIteration"/>
+            </xf:action>
+            
             </xf:model>
         </div>
         <xf:group ref="task" class="{if(local:mode()='edit') then 'suppressInfo' else ''}">
+            
             <xf:group id="add-task-table" appearance="bf:verticalTable">
-
                 <xf:input id="date" ref="date">
                     <xf:label>Date</xf:label>
                     <xf:alert>a valid Date is required</xf:alert>
@@ -189,30 +213,30 @@ return
 
                 <xf:select1 id="client" ref="@client" appearance="minimal">
                     <xf:label>Client</xf:label>
-					<xf:alert>a client must be selected</xf:alert>
+    				<xf:alert>a client must be selected</xf:alert>
                     <xf:hint>select the client</xf:hint>
                      <xf:itemset nodeset="instance('i-client')/client">
                         <xf:label ref="."/>
                         <xf:value ref="./@id"/>
                     </xf:itemset>
-                    <xf:action ev:event="xforms-select">
-                        <xf:rebuild/>
-                        <xf:recalculate/>
-                        <xf:refresh/>
-                        <xf:send submission="s-getProjects"/>
-                    </xf:action>
                 </xf:select1>
-
-                <xf:trigger>
-                    <xf:label>Pro</xf:label>
-                    <xf:send submission="s-getProjects"/>
-                </xf:trigger>
-                
-                <xf:select1 id="project" ref="@project" appearance="minimal">
+                             
+               
+               <xf:select1 id="project" ref="@project" appearance="minimal">
                     <xf:label>Project</xf:label>
 					<xf:alert>a client must be selected</xf:alert>
                     <xf:hint>select the client</xf:hint>
                      <xf:itemset nodeset="instance('i-project')/project">
+                        <xf:label ref="."/>
+                        <xf:value ref="./@id"/>
+                    </xf:itemset>
+                </xf:select1>
+                
+                <xf:select1 id="iteration" ref="@iteration" appearance="minimal">
+                    <xf:label>Iteration</xf:label>
+					<xf:alert>an iteration must be selected</xf:alert>
+                    <xf:hint>select the iteration</xf:hint>
+                     <xf:itemset nodeset="instance('i-iteration')/iteration">
                         <xf:label ref="."/>
                         <xf:value ref="./@id"/>
                     </xf:itemset>
@@ -367,8 +391,9 @@ return
             </xf:group>
 
 			<xf:output mediatype="text/html" ref="instance('i-controller')/error" id="errorReport"/>
-
+            
         </xf:group>
+        
         </div>
     </body>
 </html>

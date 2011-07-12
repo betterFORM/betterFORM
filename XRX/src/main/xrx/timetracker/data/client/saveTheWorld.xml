@@ -1,0 +1,36 @@
+<client id="5" shortName="saveTheWorld">
+    <name>Save the world</name>
+    <addresses>
+        <address id="">
+            <street/>
+            <number/>
+            <zipcode/>
+            <city/>
+            <country/>
+        </address>
+    </addresses>
+    <contacts>
+        <contact id="1">
+            <position></position>
+            <name>Max</name>
+            <surname>Mustermann</surname>
+            <device type="skype">maxmustermann</device>               
+        </contact>
+        <contact id="2">
+            <position></position>
+            <name>Maxi</name>
+            <surname>Musterfrau</surname>
+            <device type="skype">maximusterfrau</device>               
+        </contact>        
+    </contacts>
+    <projects>
+        <project id="1" shortName="application1">
+            <name>An Application</name>
+            <iterations>
+                <iteration id="1">Milestone 1</iteration>
+                <iteration id="2">Milestone 2</iteration>
+                <iteration id="3">Milestone 3</iteration>
+            </iterations>
+        </project>
+    </projects>
+</client>
