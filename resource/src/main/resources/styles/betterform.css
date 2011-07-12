@@ -498,6 +498,7 @@ alert + hints should always be aligned with the control.
 }
 
 .bfVerticalTable {
+    position:relative;
 }
 
 .bfVerticalTable td {
