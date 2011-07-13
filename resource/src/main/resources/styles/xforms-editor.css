@@ -112,6 +112,11 @@ html, body,#mainWindow {
 #xfMount{
     background:#666666;
     color:#dedede;
+    padding: 10px;
+}
+.bf #rightPane #xfMount ul{
+    margin: 5px auto;
+    padding: 0 15px;
 }
 #xfMount .attrEditor p{
     margin:0;
@@ -119,7 +124,7 @@ html, body,#mainWindow {
     font-style:italic;
 }
 #xfMount .attrEditor .dojoInput{
-    width:200px;
+    width:100%;
 }
 #xfMount .propertyTitle{
     font-size:12pt;
@@ -438,4 +443,7 @@ dl.keyboard-mapping dd {
 }
 .bf #formWrapper #fluxProcessor #mainWindow #leftPane #componentTree > ul > li > a{
     color:transparent;
+}
+.bf .dijitTitlePaneContentInner{
+    background: #666666;
 }
