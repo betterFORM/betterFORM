@@ -48,6 +48,8 @@
     <!-- betterFORM installation directories -->
     <property name="betterFORM.extension" value="${eXist.home}/extensions/betterform/"/>
     <property name="betterFORM.libs" value="${betterFORM.extension}/src/main/lib"/>
+    <property name="betterFORM.jar.1" value="${betterFORM.extension}/src/main/lib/betterform.jar"/>
+    <property name="betterFORM.jar.2" value="${eXist.home}/webapp/WEB-INF/lib/betterform.jar"/>
     <property name="betterFORM.utils" value="${eXist.home}/betterform-utils"/>
 
     <!-- classpaths -->
@@ -68,7 +70,19 @@
     <!-- Exploded mode -->
     <available file="${eXist.home}/webapp/WEB-INF/classes/de/betterform/agent/web/WebFactory.class" property="betterFORM.exploded.mode"/>
     <!-- Single JAR mode -->
-    <available file="${betterFORM.libs}/betterform.jar" property="betterFORM.single.jar.mode"/>
+    <available file="${eXist.home}/webapp/WEB-INF/classes/de/betterform/agent/web/WebFactory.class" property="betterFORM.exploded.mode"/>
+
+    <condition property="betterFORM.single.jar.mode">
+        <or>
+        <resourceexists>
+            <file file="${betterFORM.jar.1}"/>
+        </resourceexists>
+        <resourceexists>
+            <file file="${betterFORM.jar.2}"/>
+        </resourceexists>
+        </or>
+    </condition>
+
 
     <!--
         Helper Targets
@@ -374,7 +388,8 @@
         <echo>
             __== betterFORM in single jar mode found! It will be uninstalled now. ==__
         </echo>
-        <delete file="${betterFORM.libs}/betterform.jar"/>
+        <delete file="${betterFORM.jar.1}"/>
+        <delete file="${betterFORM.jar.2}"/>
     </target>
 
     <target name="deploy-resources-exploded" if="exist.installed">

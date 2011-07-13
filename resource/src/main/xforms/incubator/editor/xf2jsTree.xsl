@@ -8,6 +8,11 @@
                 exclude-result-prefixes="html"
                 xml:base="/betterform/forms/incubator/editor/">
     <xsl:variable name="bfEditorPath" select="'/forms/incubator/editor/'"/>
+    <!-- eXist version -->
+    <!--
+        xml:base="/betterform/rest/db/betterform/apps/editor/">
+        <xsl:variable name="bfEditorPath" select="'/rest/db/betterform/apps/editor/'"/>
+    -->
 
     <xsl:output method="xml" indent="yes"/>
     <!-- XRX -->
@@ -44,8 +49,6 @@
                     dojo.require("dijit.MenuItem");
                     dojo.require("dijit.PopupMenuItem");
 
-                    dojo.require("betterform.editor.Editor");
-                    dojo.require("betterform.Editor");
                     dojo.require("dijit.layout.TabContainer");
                     dojo.require("dijit.form.TextBox");
                     dojo.require("dijit.form.Select");
@@ -54,7 +57,7 @@
                     dojo.require("dojox.layout.FloatingPane");
                     dojo.require("dijit.TitlePane");
 
-                    attrEditor = new betterform.Editor();
+                    attrEditor = new betterform.Editor({},"editor");
                     //console.debug("attrEditor.: ",attrEditor);
 
                     function checkKeyboardInput(pEvent){
@@ -89,7 +92,7 @@
                 <link rel="stylesheet" type="text/css" href="../../../bfResources/styles/xforms-editor.css" />
 
             </head>
-            <body class="bf">
+            <body id="editor" class="bf" jsId="attrEditor">
 
                 <div style="display:none">
                     <xf:model id="model-1">
@@ -273,7 +276,7 @@
                 </div>
                 <div id="rightPane" tabindex="-1">
                     <div id="xfMount" dojotype="dijit.layout.ContentPane"
-                         href="/betterform/forms/incubator/editor/document.html"
+                         href="{$bfContext}{$bfEditorPath}document.html"
                          preload="false">
                         <script type="dojo/connect" event="onDownloadEnd">
                             var xfId = dojo.attr(dojo.byId("xfMount"),"xfId");
@@ -301,7 +304,7 @@
                 </script>
                 <xsl:variable name="bfFullPath2"><xsl:text>'</xsl:text><xsl:value-of select="concat($bfContext,$bfEditorPath)"/><xsl:text>'</xsl:text></xsl:variable>
 
-                <script type="text/javascript" class="source below">
+                <script type="text/javascript" class="source below" >
                     var tmpBfPath = <xsl:value-of select="$bfFullPath2"/>;
                 /* <![CDATA[ */
                     $(function () {
@@ -435,7 +438,7 @@
                             },
                             "html_data":{
                                 "ajax":{
-                                    url:"/betterform/forms/incubator/editor/components.html"
+                                    url:tmpBfPath + "components.html"
                                 }
                             },
                             "themes" : {
@@ -485,7 +488,7 @@
                         dojo.addClass(span,"buttonWrapper");
                         var btnDelete = dojo.create("button", { type:"button", style: "padding: 0pt; margin: 0pt; background: none repeat scroll 0% 0% transparent; border: medium none;", onclick: "if(confirm('Really delete?')) deleteNode(this);return false;" },
                                      span);
-                        dojo.create("img", { width:"24", height: "24",src: "/betterform/forms/incubator/editor/images/list-remove.png" },
+                        dojo.create("img", { width:"24", height: "24",src: "{$bfContext}{$bfEditorPath}images/list-remove.png" },
                                      btnDelete);
 
                         $("#xfDoc").jstree("select_node",elem,true,null);
