@@ -386,7 +386,36 @@
 
             <xsl:if test="$debug-enabled='true'">
                 <!-- z-index of 1000 so it is also in front of shim for modal dialogs -->
-                <div id="debug-pane" context="{concat($contextroot,'/inspector/',$sessionKey,'/')}">
+                <script type="text/javascript">
+                    function toggleDebug(){
+                        var debugpane = dojo.byId("debug-pane");
+                        if(dojo.hasClass(debugpane,"open")){
+                            dojo.animateProperty({
+                              node:debugpane,
+                              properties: {
+                                  width:{start:100,end:0,unit:"%"},
+                                  opacity:{start:1.0, end:0}
+                              }
+                            }).play();
+                            dojo.removeClass(debugpane,"open");
+                            dojo.addClass(debugpane,"closed");
+                        }else{
+                            dojo.animateProperty({
+                              node:debugpane,
+                              properties: {
+                                  width:{start:0,end:100,units:"%"},
+                                  opacity:{start:0, end:1.0}
+                              }
+                            }).play();
+                            dojo.removeClass(debugpane,"closed");
+                            dojo.addClass(debugpane,"open");
+                        }
+                    }
+                </script>
+                <div id="openclose">
+                    <a href="javascript:toggleDebug();" alt="x"><img class="debug-icon" src="{concat($contextroot,'/bfResources/images/collapse.png')}" alt="-"/></a>
+                </div>
+                <div id="debug-pane" class="open" context="{concat($contextroot,'/inspector/',$sessionKey,'/')}">
                     <div style="float:right;margin-right:20px;text-align:right;" id="copyright">
                         <a href="http://www.betterform.de">
                             <img style="vertical-align:text-bottom; margin-right:5px;"
