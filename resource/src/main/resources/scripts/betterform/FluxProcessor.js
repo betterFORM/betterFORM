@@ -1203,7 +1203,9 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
          * **/
         else if (dijit.byId(xfControlId) != undefined) {
             // console.debug("FluxProcessor.handleStateChanged on existing Dijit [id: " + xfControlId + ", / object:",dijit.byId(xfControlId),+"]");
-            dijit.byId(xfControlId).handleStateChanged(xmlEvent.contextInfo);
+            var xfControlDijit = dijit.byId(xfControlId);
+            // console.debug("_handleBetterFormStateChanged: ", xfControlDijit, " xmlEvent.contextInfo:",xmlEvent.contextInfo);
+            xfControlDijit.handleStateChanged(xmlEvent.contextInfo);
         }
         /**
          *
