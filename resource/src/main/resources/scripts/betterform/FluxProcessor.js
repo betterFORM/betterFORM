@@ -363,6 +363,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     dispatchEventType:function(targetId, eventType, contextInfo) {
+        // console.debug("FluxProcessor.dispatchEventType(",targetId,") this: ", this, " eventType:",eventType, " contextInfo:",contextInfo);
         var newClientServerEvent = new betterform.ClientServerEvent();
         newClientServerEvent.setTargetId(targetId);
         newClientServerEvent.setEventType(eventType);
@@ -372,6 +373,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     _dispatchEventType:function(targetId, eventType, contextInfo) {
+        // console.debug("FluxProcessor._dispatchEventType(",targetId,") this: ", this, " eventType:",eventType, " contextInfo:",contextInfo);
         try {
             dwr.engine.setErrorHandler(this._handleExceptions);
             dwr.engine.setOrdered(true);
@@ -1240,7 +1242,8 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
                 //  special handling for Select controls, check if parent node is selector item
                 else if (dojo.hasClass(parentControlNode, "xfSelectorItem")) {
                     // console.debug("FluxProcessor.handleStateChanged Target Node does not exist, Parent Control is SelectorItem (ParentSelector:" , parentControlNode , ")");
-                    dijit.byId(dojo.attr(parentControlNode.parentNode, "id")).handleStateChanged(xmlEvent.contextInfo);
+                    var selectParentId = dojo.attr(parentControlNode.parentNode, "id");
+                    dijit.byId(selectParentId).handleStateChanged(xmlEvent.contextInfo);
                 }
                 else {
                     console.warn("FluxProcessor betterform-state-changed: No handleStateChanged implementation availabled for contextinfo: ", xmlEvent.contextInfo);
