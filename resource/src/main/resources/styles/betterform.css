@@ -381,6 +381,25 @@ alert + hints should always be aligned with the control.
     float: left;
 }
 
+.xfDropDownDateControl {
+    display:inline;
+}
+
+.xfDropDownDateControl > xfLabel {
+    float: left;
+}
+
+.xfDropDownDate .xfDropDownDateDays{
+    width: 45px;
+}
+
+.xfDropDownDate .xfDropDownDateYears {
+   width: 60px;
+}
+
+.xfDropDownDate .xfDropDownDateMonths {
+    width: 100px;
+}
 /* ***************************************************************************** */
 /* ***************************************************************************** */
 /* ***************************************************************************** */

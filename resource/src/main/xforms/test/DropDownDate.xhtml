@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:j2ee="http://java.sun.com/xml/ns/j2ee"
+
+        >
+    <head>
+
+
+        <title>Custom Drop Down Date Control</title>
+		<script type="text/javascript">
+			  var initLoad = dojo.subscribe("/xf/ready", function() {
+				dojo.unsubscribe(initLoad);
+        	});
+		</script>
+    </head>
+    <body>
+
+
+
+        <div style="display:none;">
+            <xf:model>
+                <xf:instance xmlns="">
+                    <data>
+						<input readonly="true">
+                            <value>2011-02-03</value>
+                        </input>
+					</data>
+                </xf:instance>
+				<xf:bind nodeset="input"> readonly="boolean-from-string(@readonly)">
+                    <xf:bind nodeset="value" type="date" readonly="boolean-from-string(../@readonly)"/>
+                    <xf:bind nodeset="@readonly" type="boolean"/>
+                </xf:bind>
+            </xf:model>
+        </div>
+
+
+        <xf:group id="main" appearance="minimal">
+            <xf:label>Custom Time Control</xf:label>
+<!--
+			<xf:input ref="input[1]">
+				<xf:label>Date: </xf:label>
+			</xf:input>
+			<xf:input ref="input[2]">
+				<xf:label>DateTime: </xf:label>
+			</xf:input>
+-->
+			<xf:input ref="input/value" appearance="bf:dropdowndate=1910">
+				<xf:label>Date 1910:</xf:label>
+                <xf:hint>Enter you Date of birth</xf:hint>
+                <xf:alert>Not valid</xf:alert>
+			</xf:input>
+
+            <xf:input ref="input/value" appearance="bf:dropdowndate=-50:+50">
+				<xf:label>Date: -50:+50</xf:label>
+                <xf:hint>Enter you Date of birth</xf:hint>
+                <xf:alert>Not valid</xf:alert>
+			</xf:input>
+
+            <xf:input ref="input/value" appearance="bf:dropdowndate=1900:1920">
+				<xf:label>Date 1900:1920:</xf:label>
+                <xf:hint>Enter you Date of birth</xf:hint>
+                <xf:alert>Not valid</xf:alert>
+			</xf:input>
+
+            <xf:input ref="input/value" appearance="bf:dropdowndate=-50:-20">
+				<xf:label>Date -50:-20:</xf:label>
+                <xf:hint>Enter you Date of birth</xf:hint>
+                <xf:alert>Not valid</xf:alert>
+			</xf:input>
+
+            <xf:input id="input1-readonly" ref="input/@readonly" incremental="true">
+                  <xf:label>readonly</xf:label>
+           </xf:input>
+        </xf:group>
+    </body>
+</html>

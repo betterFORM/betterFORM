@@ -22,12 +22,12 @@ dojo.declare(
     },
 
     createRangeRatingWidget:function(controlId, sourceNode, classValue) {
-        var xfValue = parseInt(dojo.attr(sourceNode,"value"));
+        var xfValue = parseInt(dojo.attr(sourceNode,"value"), "10");
         var end = 10;
         if(dojo.attr(sourceNode,"end")!= ""){
-            end = parseInt(dojo.attr(sourceNode, "end"));
+            end = parseInt(dojo.attr(sourceNode, "end"), "10");
         } else if (dojo.attr(sourceNode,"end")== "" && dojo.attr(sourceNode,"start") != "") {
-            end = parseInt(dojo.attr(sourceNode,"start")) + end;
+            end = parseInt(dojo.attr(sourceNode,"start"), "10") + end;
         }
         if(xfValue > end) {
             xfValue = end;
@@ -46,7 +46,12 @@ dojo.declare(
 
 
     createRangeSliderWidget:function(controlId, sourceNode, classValue) {
-        var xfValue = parseInt(dojo.attr(sourceNode,"value"));
+        var xfValue = dojo.attr(sourceNode,"value")
+        if (xfValue == "") {
+            xfValue = 0;
+        } else {
+            xfValue = parseInt(xfValue, "10");
+        }
         var start = 0;
         var end = 10;
         var step = 1;
@@ -55,12 +60,12 @@ dojo.declare(
             start = eval(dojo.attr(sourceNode,"start"));
         }
         if(dojo.attr(sourceNode,"end")!= ""){
-            end = parseInt(dojo.attr(sourceNode,"end"));
+            end = parseInt(dojo.attr(sourceNode,"end") , "10");
         } else if (dojo.attr(sourceNode,"end")== "" && dojo.attr(sourceNode,"start") != "") {
-            end = parseInt(dojo.attr(sourceNode,"start")) + end;
+            end = parseInt(dojo.attr(sourceNode,"start"), "10") + end;
         }
         if(dojo.attr(sourceNode,"step") != ""){
-            step = parseInt(dojo.attr(sourceNode,"step"));
+            step = parseInt(dojo.attr(sourceNode,"step"), "10");
         }
         if(xfValue > end) {
             xfValue = end;
@@ -101,7 +106,7 @@ dojo.declare(
             showButtons:"true",
             "class":classValue,
             xfControlId:controlId,
-            style:"width:200px;"
+            style: "width:200px;"
         },sourceNode);
         // and start them both
         newRangeSliderWidget.startup();
