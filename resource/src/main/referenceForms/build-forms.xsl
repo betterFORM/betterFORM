@@ -15,7 +15,7 @@
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 xpath-default-namespace="http://www.w3.org/1999/xhtml"
-        >
+                exclude-result-prefixes="#all">
 
     <xsl:param name="webContext" select="'/betterform'"/>
 

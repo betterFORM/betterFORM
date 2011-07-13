@@ -6,7 +6,7 @@
 <project name="betterFORM reference page generator" default="deploy-forms" basedir=".">
     <!--<xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>-->
     <property name="core.dir" value="${basedir}/../core"/>
-    <xmlproperty file="../../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
+    <xmlproperty file="../build.properties.xml"  semanticAttributes="true" keepRoot="false"/>
     <property name="web.dir" value="${basedir}/../web"/>
     <property name="form.src" value="${basedir}/src/main/referenceForms"/>
 
