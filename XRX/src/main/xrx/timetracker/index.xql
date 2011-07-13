@@ -227,6 +227,18 @@ return
                     </xf:action>
                 </xf:trigger>
 
+                <xf:trigger id="addClient">
+                    <xf:label>new Client</xf:label>
+                    <xf:action>
+                        <xf:load show="embed" targetid="embedDialog">
+                            <xf:resource
+                                    value="'{$contextPath}/rest/db/betterform/apps/timetracker/edit/edit-client.xql#xforms'"/>
+                        </xf:load>
+                    </xf:action>
+                </xf:trigger>
+
+
+
                 <xf:trigger id="editTask">
                     <xf:label>new</xf:label>
                     <xf:action>
@@ -346,6 +358,11 @@ return
                          onclick="embed('addTask','embedDialog');">
                         <span>New Task</span>
                     </div>
+                    <div id="addBtnClient" dojoType="dijit.form.Button" showLabel="true"
+                         onclick="embed('addClient','embedDialog');">
+                        <span>New Client</span>
+                    </div>
+
                     <div id="searchBtn" dojoType="dijit.form.Button" showLabel="true" onclick="alert('todo');">
                         <span>Search</span>
                     </div>

@@ -400,3 +400,9 @@ tr.xfRepeatItem  td {
 #date-value{
 	width:248px;
 }
+
+
+/* Styling of Create Client / Project / Iteration */
+#embedDialog #createClient .xfControl {
+    width:250px !important;
+}

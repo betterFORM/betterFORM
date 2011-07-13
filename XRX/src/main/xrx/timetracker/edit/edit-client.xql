@@ -6,14 +6,14 @@ import module namespace request="http://exist-db.org/xquery/request";
 import module namespace session="http://exist-db.org/xquery/session";
 import module namespace util="http://exist-db.org/xquery/util";
 
-declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
+declare option exist:serialize "method=xhtml media-type=text/xml";
 
 
 declare function local:getClients() {
     for $clients in collection('betterform/apps/timetracker/data/client/')/client
     order by fn:upper-case($clients)
     return
-        <client id="'{$clients/@id}'">
+        <client id="'{$clients/@id}'" shortName="{$clients/@shortName}">
             {$clients/name/text()}
         </client>
 };
@@ -57,12 +57,14 @@ return
                             <project id=""/>
                             <iteration id=""/>
                             <trigger>
-                                <saveProjectNew>false</saveProjectNew>
-                                <saveProjectSelected>false</saveProjectSelected>
+                                <saveClientNew/>
+                                <saveProjectNew/>
+                                <saveProjectSelected/>
                             </trigger>
                         </data>
                     </xf:instance>
                     <xf:bind nodeset="instance('i-temp')/trigger">
+                        <xf:bind nodeset="saveClientNew"      readonly="string-length(instance('i-client-template')/name) = 0 or string-length(instance('i-client-template')/@shortName) = 0"/>
                         <xf:bind nodeset="saveProjectNew"      readonly="string-length(instance('i-client-template')/projects/project/name) = 0"/>
                         <xf:bind nodeset="saveProjectSelected" readonly="string-length(instance('i-temp')/project/@id) = 0 or string-length(instance('i-client-template')/projects/project[1]/iterations/iteration[1]) = 0"/>
                     </xf:bind>
@@ -91,15 +93,19 @@ return
                             <xf:value></xf:value>
                         </xf:header>
 
-                        <xf:action ev:event="xforms-submit" if="'{local:mode()}' = 'new'">
-                            <xf:message level="ephemeral">Creating id</xf:message>
+                        <xf:action ev:event="xforms-submit" >
+                            <!-- <xf:message level="ephemeral">Creating id</xf:message> -->
                             <xf:setvalue ref="instance('i-client-template')/@id" value="'{util:uuid()}'" />
                             <xf:setvalue ref="instance('i-client-template')/projects/project[position()=last()]/@id" value="'{util:uuid()}'" />
                             <xf:setvalue ref="instance('i-client-template')/projects/project[position()=last()]/iterations/iteration[position()=last()]/@id" value="'{util:uuid()}'" />
                         </xf:action>
 
-                        <xf:message level="ephemeral" ev:event="xforms-submit-done">Saved changes</xf:message>
         			    <xf:message level="modal" ev:event="xforms-submit-error">Failure saving changes. Please check required fields (project name and shortname)</xf:message>
+
+                       <xf:action ev:event="xforms-submit-done">
+                            <xf:send submission="s-clean"/>
+                       </xf:action>
+
                     </xf:submission>
 
 
@@ -128,10 +134,32 @@ return
                             <xf:setvalue ref="instance('i-client')/client/projects/project[@id = instance('i-temp')/project/@id]/iterations/iteration[position() = last()]/@id" value="'{util:uuid()}'" />
                         </xf:action>
 
-                        <xf:message level="ephemeral" ev:event="xforms-submit-done">Saved changes</xf:message>
         			    <xf:message level="modal" ev:event="xforms-submit-error">Failure saving changes. Please check required fields (project name and shortname)</xf:message>
+
+                       <xf:action ev:event="xforms-submit-done">
+                            <xf:send submission="s-clean"/>
+                       </xf:action>
+
+
                     </xf:submission>
 
+
+
+                    <xf:submission id="s-clean"
+                                   method="get"
+                                   replace="instance"
+                                   instance="i-client"
+                                   resource="echo:test"
+                                   validate="false">
+
+                                   <xf:action ev:event="xforms-submit-done">
+                                        <xf:message level="ephemeral">Data stored</xf:message>
+                                        <script type="text/javascript">
+                                            dijit.byId("taskDialog").hide();
+                                            dojo.publish("/task/refresh");
+                                        </script>
+                                    </xf:action>
+                    </xf:submission>
                     <xf:submission id="s-get-initial-client"
                                    method="get"
         						   resource="{local:getInitialClient()}"
@@ -140,12 +168,6 @@ return
         						   instance="i-client">
         		    </xf:submission>
 
-
-          		    <xf:action ev:event="xforms-ready" >
-          			   <xf:message if="'{local:mode()}' = 'edit'">EDIT</xf:message>
-          			   <xf:send submission="s-get-initial-client" if="'{local:mode()}' = 'edit'"/>
-          		    </xf:action>
-
                     <xf:submission id="s-get-selected-client"
                                    ref="instance('i-client')"
                                    method="get"
@@ -153,9 +175,11 @@ return
                                    instance="i-client"
                                    validate="false">
                                    <xf:resource value="concat('{$contextPath}/rest/db/betterform/apps/timetracker/data/client?_query=/client',encode-for-uri('['), '@id=' ,instance('i-temp')/client/@id, encode-for-uri(']'))"/>
-                                   <xf:toggle ev:event="xforms-submit-done" case="project-select"/>
+                                   <xf:toggle ev:event="xforms-submit-done" case="project-new"/>
                                    <xf:message ev:event="xforms-submit-error">Error loading client data</xf:message>
                     </xf:submission>
+
+
 
                     <xf:action ev:event="xforms-value-changed" ev:observer="clientSelect" ev:target="clients">
                         <xf:send submission="s-get-selected-client" if="string-length(normalize-space(instance('i-temp')/client/@id)) &gt; 0"/>
@@ -164,19 +188,15 @@ return
 
                 </xf:model>
             </div>
-            <xf:group id="client-table" appearance="full" >
-                <xf:trigger>
-                    <xf:label>New Client</xf:label>
-            		<xf:toggle case="client-new"/>
-            		<xf:toggle case="project-empty"/>
-            	</xf:trigger>
-                <xf:trigger>
-                    <xf:label>Select Client</xf:label>
-            		<xf:toggle case="client-select"/>             		
-            	</xf:trigger>
-
+            <xf:group id="createClient" appearance="full" >
+                <xf:label/>
                 <xf:switch>
                     <xf:case id="client-new" selected="true">
+                        <xf:trigger>
+                            <xf:label>Select Client</xf:label>
+                            <xf:toggle case="client-select"/>
+                        </xf:trigger>
+
                         <xf:input ref="name">
                             <xf:label>Client:</xf:label>
                         </xf:input>
@@ -190,18 +210,28 @@ return
                             <xf:label>Iteration:</xf:label>
                         </xf:input>                        
 
-                        <xf:trigger style="padding-right:0;">
+                        <xf:trigger style="padding-right:0;" ref="instance('i-temp')/trigger/saveClientNew">
                             <xf:label>Save</xf:label>
-                            <!-- <xf:toggle case="doIt"/> -->
-                            <xf:send submission="s-add" />
+                            <xf:message if="exists(instance('i-clients')/client[.=instance('i-client-template')/name])">Name already exists</xf:message>
+                            <xf:message if="exists(instance('i-clients')/client[@shortName=instance('i-client-template')/@shortName])">Short name already exists</xf:message>
+                            <xf:send submission="s-add" if="not(exists(instance('i-clients')/client[.=instance('i-client-template')/name])) and not(exists(instance('i-clients')/client[@shortName=instance('i-client-template')/@shortName]))" />
+                        </xf:trigger>
+
+                        <xf:trigger style="padding-right:0;">
+                            <xf:label>Test</xf:label>
                         </xf:trigger>
 
                     </xf:case>
                     
                     <xf:case id="client-select">
+                        <xf:trigger>
+                            <xf:label>New Client</xf:label>
+                            <xf:toggle case="client-new"/>
+                            <xf:toggle case="project-empty"/>
+                        </xf:trigger>
                         <xf:group id="clientSelect" appearance="full">
                             <xf:select1 id="clients" ref="instance('i-temp')/client/@id" appearance="minimal">
-                                <xf:label>Client</xf:label>
+                                <xf:label>Select Client</xf:label>
                                 <xf:alert>a client must be selected</xf:alert>
                                 <xf:hint>select the client</xf:hint>
                                  <xf:itemset nodeset="instance('i-clients')/client">
@@ -214,19 +244,19 @@ return
                             <xf:case id="project-empty">
                             </xf:case>
                             <xf:case id="project-new">
+                                <xf:trigger>
+                                    <xf:label>Select Project</xf:label>
+                                    <xf:toggle case="project-select"/>
+                                </xf:trigger>
                                     <xf:input ref="instance()/projects/project[1]/name">
                                         <xf:label>Project:</xf:label>
                                     </xf:input>
                                     <xf:input ref="instance()/projects/project[1]/iterations/iteration[1]">
                                         <xf:label>Iteration:</xf:label>
                                     </xf:input>
-                                <xf:trigger>
-                                    <xf:label>-</xf:label>
-                                    <xf:toggle case="project-select"/>
-                                </xf:trigger>
 
                                 <xf:trigger style="padding-right:0;" ref="instance('i-temp')/trigger/saveProjectNew">
-                                    <xf:label>Save Project New</xf:label>
+                                    <xf:label>Save</xf:label>
                                     <xf:insert  nodeset="instance('i-client')/client/projects/project"
                                                 origin="instance('i-client-template')/projects/project"
                                                 at="last()"
@@ -236,9 +266,13 @@ return
                                 </xf:trigger>
                             </xf:case>
                             <xf:case id="project-select">
-                                <xf:group id="projectSelect">
+                                <xf:group id="projectSelect" appearance="full">
+                                    <xf:trigger>
+                                        <xf:label>New Project</xf:label>
+                                        <xf:toggle case="project-new"/>
+                                    </xf:trigger>
                                     <xf:select1 id="projects" ref="instance('i-temp')/project/@id" appearance="minimal">
-                                        <xf:label>Project:</xf:label>
+                                        <xf:label>Select Project:</xf:label>
                                         <xf:alert>a client must be selected</xf:alert>
                                         <xf:hint>select the client</xf:hint>
                                          <xf:itemset nodeset="instance('i-client')/client/projects/project">
@@ -247,15 +281,11 @@ return
                                         </xf:itemset>
                                     </xf:select1>
                                     <xf:input ref="instance()/projects/project[1]/iterations/iteration[1]">
-                                        <xf:label>Iteration:</xf:label>
+                                        <xf:label>Iteration Name:</xf:label>
                                     </xf:input>
 
-                                    <xf:trigger>
-                                        <xf:label>+</xf:label>
-                                        <xf:toggle case="project-new"/>
-                                    </xf:trigger>
                                    <xf:trigger style="padding-right:0;" ref="instance('i-temp')/trigger/saveProjectSelected">
-                                        <xf:label>Save Project Selected</xf:label>
+                                        <xf:label>Save</xf:label>
                                         <xf:insert  nodeset="instance('i-client')/client/projects/project[@id = instance('i-temp')/project/@id]/iterations/iteration"
                                                     origin="instance('i-client-template')/projects/project/iterations/iteration"
                                                     at="last()"

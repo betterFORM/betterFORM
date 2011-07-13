@@ -363,6 +363,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     dispatchEventType:function(targetId, eventType, contextInfo) {
+        // console.debug("FluxProcessor.dispatchEventType(",targetId,") this: ", this, " eventType:",eventType, " contextInfo:",contextInfo);
         var newClientServerEvent = new betterform.ClientServerEvent();
         newClientServerEvent.setTargetId(targetId);
         newClientServerEvent.setEventType(eventType);
@@ -372,6 +373,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     _dispatchEventType:function(targetId, eventType, contextInfo) {
+        // console.debug("FluxProcessor._dispatchEventType(",targetId,") this: ", this, " eventType:",eventType, " contextInfo:",contextInfo);
         try {
             dwr.engine.setErrorHandler(this._handleExceptions);
             dwr.engine.setOrdered(true);
