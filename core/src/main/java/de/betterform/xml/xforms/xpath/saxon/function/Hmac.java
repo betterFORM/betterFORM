@@ -5,29 +5,27 @@
 
 package de.betterform.xml.xforms.xpath.saxon.function;
 
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.HashSet;
-
-import javax.crypto.Mac;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-
+import de.betterform.xml.xforms.XFormsElement;
+import de.betterform.xml.xforms.exception.XFormsComputeException;
 import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.ExpressionVisitor;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.StringValue;
-
 import org.apache.commons.codec.BinaryEncoder;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
-import de.betterform.xml.xforms.XFormsElement;
-import de.betterform.xml.xforms.exception.XFormsComputeException;
+
+import javax.crypto.Mac;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  * Implementation of 7.8.4 The hmac() Function
@@ -98,9 +96,9 @@ public class Hmac extends XFormsFunction {
 
 	    final BinaryEncoder encoder;
 	    if ("base64".equals(encoding)) {
-		encoder = new Base64();
+		    encoder = new Base64(digest.length, "".getBytes(), false);
 	    } else {
-		encoder = new Hex();
+		    encoder = new Hex();
 	    }
 	    
 	    return new StringValue(new String(encoder.encode(digest), "ASCII"));
