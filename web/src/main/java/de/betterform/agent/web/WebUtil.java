@@ -293,7 +293,7 @@ public class WebUtil {
 	            plainPath = requestPath.substring(contextRoot.length()+1,requestPath.length() - fileName.length());
 	            processor.setContextParam(PLAIN_PATH, plainPath);
             }
-            else{//case2: contextRoot is not a part of the URL
+            else{//case2: contextRoot is not a part of the URL take the part previous the filename.
             	String[] urlParts=requestURL.split("/");
             	plainPath=urlParts[urlParts.length-2];
             }
