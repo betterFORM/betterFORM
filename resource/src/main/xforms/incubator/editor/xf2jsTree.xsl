@@ -8,14 +8,11 @@
                 exclude-result-prefixes="html"
                 xml:base="/betterform/forms/incubator/editor/">
     <xsl:variable name="bfEditorPath" select="'/forms/incubator/editor/'"/>
-    <!-- eXist version -->
-    <!--
-        xml:base="/betterform/rest/db/betterform/apps/editor/">
-        <xsl:variable name="bfEditorPath" select="'/rest/db/betterform/apps/editor/'"/>
-    -->
+    <!-- author: Joern Turner -->
+    <!-- author: Tobias Krebs -->
+    <!-- author: Lars Windauer -->
 
-    <xsl:output method="xml" indent="yes"/>
-    <!-- XRX -->
+    <!-- eXist version -->
     <!--
         xml:base="/betterform/rest/db/betterform/apps/editor/">
         <xsl:variable name="bfEditorPath" select="'/rest/db/betterform/apps/editor/'"/>
@@ -25,22 +22,25 @@
                 xml:base="/betterform/forms/incubator/editor/">
     <xsl:variable name="bfEditorPath" select="'/forms/incubator/editor/'"/>
     -->
+    <xsl:output method="xml" indent="yes"/>
+
+
     <xsl:variable name="bfContext" select="'/betterform'"/>
 
-    <!-- author: Joern Turner -->
+
     <xsl:strip-space elements="*"/>
 
     <xsl:template match="/">
         <html>
             <head>
                 <title>betterFORM Editor</title>
-                <script type="text/javascript" src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.js"></script>
-                <script type="text/javascript" src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.cookie.js"></script>
-                <script type="text/javascript" src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.hotkeys.js"></script>
-                <script type="text/javascript" src="../../../bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
-                <script type="text/javascript" src="../../../bfResources/scripts/betterform/xfEditorUtil.js"></script>
+                <script type="text/javascript" src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.js"> </script>
+                <script type="text/javascript" src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.cookie.js"> </script>
+                <script type="text/javascript" src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.hotkeys.js"> </script>
+                <script type="text/javascript" src="../../../bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"> </script>
+                <script type="text/javascript" src="../../../bfResources/scripts/betterform/xfEditorUtil.js"> </script>
                 <script type="text/javascript" src="../../../bfResources/scripts/betterform/betterform-XFormsEditor.js"> </script>
-                <script type="text/javascript" src="../../../bfResources/scripts/betterform/editor/addMenu.js"></script>
+                <script type="text/javascript" src="../../../bfResources/scripts/betterform/editor/addMenu.js"> </script>
                 <script type="text/javascript">
                     dojo.require("dijit.layout.ContentPane");
                     dojo.require("dijit.Menu");
@@ -411,8 +411,15 @@
                                     }else {
                                         console.log(data);
                                         var xfType = data.rslt.obj.attr("data-xf-type");
-                                        dojo.attr(dojo.byId("xfMount"),"xfId", tmpId);
-                                        console.debug("tmpBfPath:",tmpBfPath);
+                                        var mountNode = dojo.byId("xfMount");
+                                        var nodesToDestroy = dojo.query("*[widgetId]",mountNode);
+                                        // console.debug("nodesToDestroy: ",nodesToDestroy);
+                                        dojo.forEach(nodesToDestroy, function(item) {
+                                            var tmpDijit = dijit.byId(dojo.attr(item,"widgetId"));
+                                            tmpDijit.destroy();
+                                        });
+                                        // console.debug("destroyed existing nodes");
+                                        // console.debug("tmpBfPath:",tmpBfPath);
                                         dijit.byId("xfMount").set("href", tmpBfPath + xfType + ".html");
 
                                         //console.debug("publish: nodeSelected: data", data);

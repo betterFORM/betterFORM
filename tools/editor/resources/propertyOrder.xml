@@ -90,7 +90,6 @@
     <property name="mode"/>
     <property name="method"/>
     <property name="validate"/>
-    <property name="relevant"/>
     <property name="serialization"/>
     <property name="indent"/>
     <property name="encoding"/>

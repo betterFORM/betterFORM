@@ -24,7 +24,7 @@ dojo.declare(
             console.debug("Custom Input Type: appearance=" + appearance)
         }
 
-        console.debug("inputType.toLowerCase" + inputType.toLowerCase);
+        // console.debug("inputType.toLowerCase: " + inputType.toLowerCase());
         switch (inputType.toLowerCase()) {
             case "casimiletimeline":
                 newInputWidget = this.createInputTimelineWidgetALPHA(controlId, sourceNode, classValue);
