@@ -13,6 +13,7 @@ dojo.declare("betterform.Editor", null,
     bfPath:null,
 
     constructor:function() {
+        var self = this;
         dojo.subscribe("nodeSelected", function(args){
             console.log("nodeSelected: arg:", args);
             // console.log("nodeSelected: arg.event:", args.event);
@@ -39,50 +40,32 @@ dojo.declare("betterform.Editor", null,
                 return;
             }
 
-            //hide previously displayed top-level nodes
-            dojo.query("#componentTree > ul > li").forEach(
-                  function(item, index, array){
-                      var displays = dojo.style(item,"display");
-                      if(diplays="block") dojo.style(item,"display","none");
-                  }
-             );
-
-
-            //show the tree node (first level of tree) for the given xfType - we look for xfType + "-tmpl"
-            var rootForType = dojo.style(dojo.byId(xfType+'-tmpl'),"display","block");
-
-            dojo.query("#"+xfType+"-tmpl li").forEach(
-                  function(item, index, array){
-                        dojo.style(item,"display","block");
-                  }
-             );
-
-
-
+            self.updateComponentTree(dojo.byId(selectedNodeId));
          });
     },
 
-    updateComponentTree:function(aNode){
+    updateComponentTree : function(aNode){
         console.log("event: ",aNode, " id: ",aNode.id);
-        var isChildMode=true;
+
         if(aNode.id == "btnChildMode"){
             dojo.removeClass("btnSiblingMode","selected");
             dojo.addClass("btnChildMode","selected");
             dojo.attr(dojo.byId('componentTree'),"data-bf-addmode","child");
-        }else{
-            isChildMode = false;
+        }
+        if(aNode.id == "btnSiblingMode"){
             dojo.removeClass("btnChildMode","selected");
             dojo.addClass("btnSiblingMode","selected");
             dojo.attr(dojo.byId('componentTree'),"data-bf-addmode","sibling");
         }
 
+        var currentMode = dojo.attr("componentTree","data-bf-addMode");
 
         //get selected item from xfDoc tree
         var currentItem = dojo.byId(attrEditor.currentNodeId);
         if(currentItem == undefined) return;
 
         //switch state of buttons regardless of an existing selection
-        if(isChildMode){
+        if(currentMode == "child"){
             //get xfType from current item selected in xfDoc tree
             var currXfType = dojo.attr(dojo.byId(currentItem),"data-xf-type");
             console.log("current xfType: ", currXfType);
@@ -106,6 +89,7 @@ dojo.declare("betterform.Editor", null,
 
         }
     },
+
     _renderComponentTree:function(xfType){
         //hide previously displayed top-level nodes
         dojo.query("#componentTree > ul > li").forEach(
