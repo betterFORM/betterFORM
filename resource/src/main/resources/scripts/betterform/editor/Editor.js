@@ -49,16 +49,15 @@ dojo.declare("betterform.Editor", null,
 
 
             //show the tree node (first level of tree) for the given xfType - we look for xfType + "-tmpl"
-            var rootForType = dojo.style(dojo.byId(xfType+'-tmpl'),"display","block");
-
+            var tmpNode =dojo.byId(xfType+'-tmpl');
+            if(tmpNode != undefined) {
+                dojo.style(tmpNode,"display","block");
+            }
             dojo.query("#"+xfType+"-tmpl li").forEach(
                   function(item, index, array){
                         dojo.style(item,"display","block");
                   }
              );
-
-
-
          });
     },
 
