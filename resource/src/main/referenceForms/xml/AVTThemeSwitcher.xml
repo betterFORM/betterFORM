@@ -39,6 +39,11 @@
                 AVTs can be used to dynamically style a page dependent on some instance data. The example below switches
                 between the main Dojo themes available.
             </p>
+            <p>
+                AVTs in betterFORM are operating on the host document, this means that classes added in XSLt or JavaScript
+                will be lost if the AVT changes during runtime (due to the host document does not know about CSS classes
+                added later on)
+            </p>
         </div>
         <!-- [
             this is the region to put sample xforms code. Everything that is surrounded by <code> tags
