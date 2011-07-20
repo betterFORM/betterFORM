@@ -272,8 +272,10 @@ public class WebUtil {
         }
 
         String requestPath = "";
+        URL url=null;
+        String plainPath ="";
         try {
-            URL url = new URL(requestURL);
+            url = new URL(requestURL);
             requestPath = url.getPath();
         } catch (MalformedURLException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
@@ -283,17 +285,23 @@ public class WebUtil {
             processor.setContextParam(WebProcessor.REQUEST_PATH, requestPath);
 
             //adding filename of requested doc to context
-            String fileName = requestPath.substring(requestPath.lastIndexOf('/')+1,requestPath.length());
+            String fileName = requestPath.substring(requestPath.lastIndexOf('/')+1,requestPath.length());//FILENAME xforms
             processor.setContextParam(FILENAME, fileName);
 
-            //adding plainPath which is the part between contextroot and filename e.g. '/forms' for a requestPath of '/betterform/forms/Status.xhtml'
-            String plainPath = requestPath.substring(contextRoot.length()+1,requestPath.length() - fileName.length());
-            processor.setContextParam(PLAIN_PATH, plainPath);
+            if(requestURL.contains(contextRoot)){ //case1: contextRoot is a part of the URL
+	            //adding plainPath which is the part between contextroot and filename e.g. '/forms' for a requestPath of '/betterform/forms/Status.xhtml'
+	            plainPath = requestPath.substring(contextRoot.length()+1,requestPath.length() - fileName.length());
+	            processor.setContextParam(PLAIN_PATH, plainPath);
+            }
+            else{//case2: contextRoot is not a part of the URL take the part previous the filename.
+            	String[] urlParts=requestURL.split("/");
+            	plainPath=urlParts[urlParts.length-2];
+            }
 
             //adding contextPath - requestPath without the filename
             processor.setContextParam(CONTEXT_PATH,contextRoot+"/"+plainPath);
+         }
 
-        }
 
         //adding session id to context
         processor.setContextParam(HTTP_SESSION_ID, httpSession.getId());
