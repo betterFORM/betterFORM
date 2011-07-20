@@ -456,7 +456,7 @@
             <xsl:call-template name="assemble-label-classes"/>
         </xsl:variable>
 
-        <div id="{$id}" dojoType="betterform.ui.Control" class="{$control-classes}">
+        <span id="{$id}" dojoType="betterform.ui.Control" class="{$control-classes}">
 
             <xsl:call-template name="copy-style-attribute"/>
             <xsl:if test="@bf:incremental-delay">
@@ -475,7 +475,7 @@
             <!--<xsl:apply-templates select="xf:help"/>-->
 
             <xsl:copy-of select="script"/>
-        </div>
+        </span>
     </xsl:template>
 
     <!-- cause outputs can be inline they should not use a block element wrapper -->
@@ -677,7 +677,7 @@
                             $lname='textarea' or
                             $lname='upload'">
 
-                <div id="{concat($id,'-value')}"
+                <span id="{concat($id,'-value')}"
                      class="xfValue"
                      dataType="{$datatype}"
                      controlType="{$lname}"
@@ -744,7 +744,7 @@
                         </xsl:otherwise>
                     </xsl:choose>
 
-                </div>
+                </span>
                 <!--<div style="display:none;" id="{concat($id,'-hint')}"><xsl:value-of select="xf:hint"/></div>-->
             </xsl:when>
 
