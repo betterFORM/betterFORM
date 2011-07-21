@@ -323,11 +323,7 @@ public class UIElementStateUtil {
                     NumberFormat formatter = NumberFormat.getNumberInstance(locale);
                     if(formatter instanceof DecimalFormat){
                         //get original number format
-                        NumberFormat original = NumberFormat.getNumberInstance();
-                        DecimalFormatSymbols symbols = ((DecimalFormat)original).getDecimalFormatSymbols();
-                        char decimalSeparator = symbols.getDecimalSeparator();
-
-                        int separatorPos = value.indexOf(decimalSeparator);
+                        int separatorPos = value.indexOf(".");
                         if(separatorPos == -1){
                             formatter.setMaximumFractionDigits(0);
                         }else{
