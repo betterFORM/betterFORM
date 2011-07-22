@@ -5,17 +5,13 @@
 
 package de.betterform.connector.http;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.connector.URIResolver;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.exception.XFormsException;
-import de.betterform.xml.xpath.impl.saxon.XPathUtil;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -86,7 +82,7 @@ public class HTTPURIResolver extends AbstractHTTPConnector implements URIResolve
                 throw new XFormsException(e);
             }
         }else{
-            LOGGER.warn("URI: " + uri + " couldn't be resolved");
+            LOGGER.warn("WARN: Contenttype of response can not be handled. contentype:" + contentType);
             return null;
         }
     }
