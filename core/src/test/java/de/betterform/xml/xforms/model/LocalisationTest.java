@@ -165,8 +165,9 @@ public class LocalisationTest extends TestCase {
             assertEquals("20007", XPathCache.getInstance().evaluateAsString(inst.getRootContext(), "/data/item[3]"));
             DOMUtil.prettyPrintDOM(this.xformsProcesssorImpl.getContainer().getDefaultModel().getDefaultInstance().getInstanceDocument());
 
-            this.xformsProcesssorImpl.setControlValue("foo", "20007.12");
-            assertEquals("20007.12", XPathCache.getInstance().evaluateAsString(inst.getRootContext(), "/data/item[3]"));
+            //Test that invalid value will not be alter during delocalisation.
+            this.xformsProcesssorImpl.setControlValue("foo", "20007.abcde");
+            assertEquals("20007.abcde", XPathCache.getInstance().evaluateAsString(inst.getRootContext(), "/data/item[3]"));
             DOMUtil.prettyPrintDOM(this.xformsProcesssorImpl.getContainer().getDefaultModel().getDefaultInstance().getInstanceDocument());
 
         }
