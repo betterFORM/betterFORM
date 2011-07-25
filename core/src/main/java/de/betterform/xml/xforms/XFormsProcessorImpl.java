@@ -719,6 +719,7 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setNamespaceAware(true);
             factory.setValidating(false);
+            factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
             // factory.setAttribute("http://apache.org/xml/properties/dom/document-class-name", "org.apache.xerces.dom.DocumentImpl");
 
             DocumentBuilder db = factory.newDocumentBuilder();
