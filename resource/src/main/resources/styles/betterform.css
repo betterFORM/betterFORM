@@ -231,6 +231,9 @@ a.active {
 	-webkit-border-radius:5px;
 }
 
+.xfRequiredEmpty:after{
+    content:'Please fill in a value';
+}
 /*
 special handling for alerts and hints in compact groups as the label is above control and changes the situation.
 alert + hints should always be aligned with the control.
