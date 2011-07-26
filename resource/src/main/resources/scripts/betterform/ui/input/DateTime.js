@@ -106,7 +106,7 @@ dojo.declare(
 
     getControlValue:function(){
         var currentDate;
-        var notISODate = this.dateDijit.attr('value');
+        var notISODate = this.dateDijit.get('value');
         if(notISODate == undefined){
            // console.debug("Empty (undefined) Date: this.dateDijit: " , this.dateDijit);
            currentDate = this.dateDijit.focusNode.value;
@@ -161,7 +161,7 @@ dojo.declare(
      */
     applyState:function() {
         this.dateDijit.set("readOnly",this.xfControl.isReadonly());
-        this.timeDijit.attr("readOnly",this.xfControl.isReadonly());
+        this.timeDijit.set("readOnly",this.xfControl.isReadonly());
     }
 
 });
