@@ -2,7 +2,7 @@
 <html xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>group with appearance 'compact'</title>
+        <title>repeat with appearance 'compact'</title>
     </head>
     <body>
         <div class="description">
@@ -130,12 +130,12 @@
                 </tr>
                 <tr>
                     <td>bfTableCol-2</td>
-                    <td>matches the first column
+                    <td>matches the second column
                     </td>
                 </tr>
                 <tr>
                     <td>bfTableCol-3</td>
-                    <td>matches the first column
+                    <td>matches the third column
                     </td>
                 </tr>
 
