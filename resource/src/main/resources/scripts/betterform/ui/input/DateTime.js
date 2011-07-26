@@ -47,7 +47,7 @@ dojo.declare(
     },
 
     applyValues:function(value) {
-        // console.debug("DateTime.applyValues value",value);
+        console.debug("DateTime.applyValues value",value);
         if(value.indexOf("+") !=-1){
             this.timezone = value.substring(value.indexOf("+"),value.length);
             value = value.substring(0,value.indexOf("+"));
@@ -56,7 +56,7 @@ dojo.declare(
             this.timezone = "Z"
             value = value.substring(0,value.indexOf("Z"));
         }
-        // console.debug("this.timezone:",this.timezone, " value: ",value);
+        console.debug("this.timezone:",this.timezone, " value: ",value);
         var dateValue;
         var timeValue;
         if(value != undefined && value != ""){
@@ -67,7 +67,7 @@ dojo.declare(
             dateValue = "";
             timeValue = "";
         }
-        // console.debug("Date:", dateValue, " Time:",timeValue);
+         console.debug("Date:", dateValue, " Time:",timeValue);
 
         // handle date part
         if(this.dateDijit == undefined) {
@@ -83,7 +83,8 @@ dojo.declare(
             }
             this.dateDijit.constraints.selector = "date";
         }
-        this.dateDijit._setValueAttr(dateValue);
+        dojo.attr(this.dateDijit.textbox, "value", dateValue);
+        //this.dateDijit._setValueAttr(dateValue);
 
         // handle time part
         if(this.timeDijit == undefined) {
@@ -106,7 +107,7 @@ dojo.declare(
 
     getControlValue:function(){
         var currentDate;
-        var notISODate = this.dateDijit.attr('value');
+        var notISODate = this.dateDijit.get('value');
         if(notISODate == undefined){
            // console.debug("Empty (undefined) Date: this.dateDijit: " , this.dateDijit);
            currentDate = this.dateDijit.focusNode.value;
@@ -161,7 +162,7 @@ dojo.declare(
      */
     applyState:function() {
         this.dateDijit.set("readOnly",this.xfControl.isReadonly());
-        this.timeDijit.attr("readOnly",this.xfControl.isReadonly());
+        this.timeDijit.set("readOnly",this.xfControl.isReadonly());
     }
 
 });

@@ -176,6 +176,7 @@ dojo.declare(
 
     createTextareaWidget:function(sourceNode, controlId, mediatype, appearance, classValue) {
         // todo: fixme: textarea mediatype="dojo" makes no sense - should be an appearance instead
+        // console.debug("sourceNode: ",sourceNode," controlId:",controlId," mediatype:",mediatype," appearance:",appearance," classValue:",classValue);
         if(appearance=="minimal" && mediatype != 'text/html' && mediatype !=  'dojo') {
 
             return  new betterform.ui.textarea. MinimalTextarea({
