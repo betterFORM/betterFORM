@@ -13,6 +13,8 @@ dojo.declare(
         [betterform.ui.ControlValue, dijit.Editor],
 {
 
+   height:"100%;",
+
    buildRendering:function() {
         this.domNode = this.srcNodeRef;
         this.setCurrentValue(this.srcNodeRef.innerHTML);
