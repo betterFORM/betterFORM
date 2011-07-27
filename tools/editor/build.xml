@@ -151,4 +151,14 @@
         <ant antfile="../../web/build.xml" inheritall="false" target="deploy-forms"/>
     </target>
 
+    <target name="update-originDoc" description="generates the markup for the componentTree ">
+        <xslt in="${basedir}/target/dump-xforms.xhtml"
+              out="${basedir}/target/merged.xhtml"
+              style="${basedir}/updateOriginal.xsl"
+              force="true"
+              classpathref="transform.class.path">
+            <param name="originDoc" expression="testinput/registration.xhtml"/>
+        </xslt>
+    </target>
+
 </project>
