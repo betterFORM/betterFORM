@@ -189,7 +189,7 @@
 
                         <!-- saves form to preview and opens it -->
                         <xf:submission id="s-preview" method="put" replace="none">
-                            <xf:resource value="concat(bf:appContext('contextroot'), '/rest/db/betterform/forms/tmp/tmpEditor.xhtml')"/>
+                            <xf:resource value=" concat(bf:appContext('contextroot'), '/rest', substring-before(instance('i-controller')/filename,'.xhtml'),'-prev.xhtml')"/>
                             <xf:header>
                                 <xf:name>username</xf:name>
                                 <xf:value value="instance('i-controller')/username"/>
@@ -198,11 +198,11 @@
                                 <xf:name>password</xf:name>
                                 <xf:value value="instance('i-controller')/password"/>
                             </xf:header>
-                            <xf:action ev:event="xforms-submit-done">                                
-                                <xf:load show="new" >
-                                    <xf:resource value="concat(bf:appContext('contextroot'), '/rest/db/betterform/forms/tmp/tmpEditor.xhtml')"/>
-                                </xf:load>                                                                                                    
-                            </xf:action>
+
+                            <xf:load show="new" ev:event="xforms-submit-done">
+                                <xf:resource value="concat(bf:appContext('contextroot'), '/rest', substring-before(instance('i-controller')/filename,'.xhtml'),'-prev.xhtml')"/>
+                            </xf:load>
+
                             <xf:message ev:event="xforms-submit-error">Preview failed</xf:message>
                         </xf:submission>
 
