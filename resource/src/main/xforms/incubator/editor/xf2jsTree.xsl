@@ -121,7 +121,7 @@
 
                           <!-- merge original XForms host document with Editor XForms markup -->
                         <xf:submission id="s-replaceContent" method="get"
-                                       action="xslt:{$bfContext}{$bfEditorPath}updateOriginal.xsl?originDoc={{$requestURL}}"
+                                       action="xslt:{$bfContext}{$bfEditorPath}updateOriginal.xsl?originDoc={$bfContext}/rest{$filename}"
                                        replace="instance" validate="false">
 <!--                            <xf:action ev:event="xforms-submit">
                                     <xf:setvalue ref="instance('i-controller')/mode" value="bf:appContext('mode')"/>
@@ -150,7 +150,7 @@
                             <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
                         </xf:submission>
                         
-                        <xf:submission id="s-save"
+                        <xf:submission id="s-save" method="put" replace="none">
                             <xf:resource value="IF(substring(bf:appContext('pathInfo'),2) eq '', concat(bf:appContext('contextroot'), '/rest', instance('i-controller')/filename) , concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2)) )"/>
                             <xf:header>
                                 <xf:name>username</xf:name>
