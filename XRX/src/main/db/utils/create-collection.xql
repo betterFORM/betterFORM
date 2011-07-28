@@ -1,3 +1,5 @@
+xquery version "1.0";
+
 let $name as xs:string := request:get-parameter('name', 'noname')
 let $path := request:get-parameter('path', '')
 let $collection := concat('/db/',$path)

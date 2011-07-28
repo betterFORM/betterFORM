@@ -1,3 +1,5 @@
+xquery version "1.0";
+
 let $filename := request:get-uploaded-file-name('file')
 let $path := request:get-parameter('path', '')
 let $collection := concat('/db/',$path)

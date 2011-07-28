@@ -181,7 +181,7 @@ a:hover {
 	margin-left:-20px;
 }
 .bfFormBrowser .formBrowserHeader .pathName{
-	background:url(../images/arrow-right.png) left no-repeat;
+	background:url(/betterform/bfResources/images/arrow-right.png) left no-repeat;
 	padding:3px 3px 3px 20px;
 	float:left;
 	color:#333333;
