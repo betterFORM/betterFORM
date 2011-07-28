@@ -245,15 +245,14 @@ declare function fileListing:handleFile($uri as xs:string, $contextPath as xs:st
 		    </a>
 		    <a class="textLink" title="{$fileName}" href="{fn:concat($filePath, 'db/', $path, '/', $fileLink)}" target="_blank">{$shortendFileName}</a>
 		    <a class="sourceLink" title="view" href="{fn:concat($filePath, 'db/', $path, '/', $fileLink, '?source=true')}" target="_blank">source</a>
-		    <a class="editorLink" title="editor" href="{fn:concat($filePath, 'db/', $path, '/', $fileLink, '?_xsl=', '/betterform/apps/editor/xf2jsTree.xsl')}" target="_blank">editor</a>
-		    <a title="Login" href="{fn:concat($filePath, 'db/betterform/utils/LoginForm.xql?filename=', $filePath, 'db/', $path, '/', $fileLink)}" target="_blank">Login</a>
+		    <a class="editorLink" title="editor" href="{fn:concat($filePath, 'db/betterform/utils/LoginForm.xql?filename=', '/db/', $path, '/', $fileLink)}" target="_blank">editor</a>
         </div>
 		) else (
 		<div class="file">
 		    <a class="bfIconFile" href="{fn:concat($filePath, 'db/', $path, '/', $fileLink)}" target="_blank">
 			    <img src="{fn:concat($contextPath, '/bfResources/images/', $icon)}" border="0" />
 		    </a>
-		    <a class="textLink" title="{$fileName}" href="{fn:concat($filePath, 'db/', $path, '/', $fileLink)}" target="_blank">{$shortendFileName}</a>
+		    {$shortendFileName}
 		</div>
 		)
 };

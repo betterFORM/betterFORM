@@ -26,6 +26,10 @@
 
     <xsl:variable name="bfContext" select="'/betterform'"/>
 
+    <xsl:param name="username" select="''"/>
+    <xsl:param name="password" select="''"/>
+    <xsl:param name="filename" select="''"/>
+
     <xsl:strip-space elements="*"/>
 
     <xsl:template match="/">
@@ -147,27 +151,25 @@
                         </xf:submission>
                         
                         <xf:submission id="s-save"
-                                       method="put"
-                                       replace="none">
-                            <xf:resource
-                                    value="IF(substring(bf:appContext('pathInfo'),2) eq '',bf:appContext('fileName'), concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2)) )"/>
+                            <xf:resource value="IF(substring(bf:appContext('pathInfo'),2) eq '', concat(bf:appContext('contextroot'), '/rest', instance('i-controller')/filename) , concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2)) )"/>
                             <xf:header>
                                 <xf:name>username</xf:name>
-                                <xf:value>admin</xf:value>
+                                <xf:value value="instance('i-controller')/username"/>
                             </xf:header>
                             <xf:header>
                                 <xf:name>password</xf:name>
-                                <xf:value>zusel.1</xf:value>
+                                <xf:value value="instance('i-controller')/password"/>
                             </xf:header>
+
                             <xf:action ev:event="xforms-submit-done">
-                                <xf:setvalue ref="instance('i-controller')/save-msg"
-                                             value="concat('Data stored to ',IF(substring(bf:appContext('pathInfo'),2) eq '',bf:appContext('fileName'), concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2)) ))"/>
+                                <xf:setvalue ref="instance('i-controller')/save-msg" value="concat('Data stored to ',IF(substring(bf:appContext('pathInfo'),2) eq '', concat(bf:appContext('contextroot'), '/rest', instance('i-controller')/filename) , concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2))))"/>
                                 <xf:message level="ephemeral" ref="instance('i-controller')/save-msg"/>
                             </xf:action>
                             <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
                         </xf:submission>
+
                         <xf:submission id="s-save-as" method="put" replace="none">
-                            <xf:resource value="concat(bf:appContext('filePath') ,'/', bf:appContext('filename'))"/>
+                            <xf:resource value="concat(bf:appContext('sl-filePath') ,'/', bf:appContext('sl-filename'))"/>
                             <!-- Set username and password for submission -->
                             <xf:header>
                                 <xf:name>username</xf:name>
@@ -178,17 +180,8 @@
                                 <xf:value value="instance('i-controller')/password"/>
                             </xf:header>
 
-                            <!-- Store username and password for later submissions -->
-                            <!-- But only if the changed or havent been set yet -->
-                            <xf:action ev:event="xforms-submit">
-                                <xf:setvalue ref="instance('i-controller')/username" value="bf:appContext('username')"
-                                             if="( bf:appContext('username') !=  instance('i-controller')/username and string-length(bf:appContext('username') ) &gt; 0) or instance('i-controller')/username eq ''"/>
-                                <xf:setvalue ref="instance('i-controller')/password" value="bf:appContext('password')"
-                                             if="( bf:appContext('password') !=  instance('i-controller')/password and string-length(bf:appContext('password') ) &gt; 0) or instance('i-controller')/password eq ''"/>
-                            </xf:action>
                             <xf:action ev:event="xforms-submit-done">
-                                <xf:setvalue ref="instance('i-controller')/save-msg"
-                                             value="concat('Data stored to ', bf:appContext('filePath') ,'/', bf:appContext('filename'))"/>
+                                <xf:setvalue ref="instance('i-controller')/save-msg" value="concat('Data stored to ', bf:appContext('sl-filePath') ,'/', bf:appContext('sl-filename'))"/>
                                 <xf:message level="ephemeral" ref="instance('i-controller')/save-msg"/>
                             </xf:action>
                             <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
@@ -197,13 +190,13 @@
                         <!-- saves form to preview and opens it -->
                         <xf:submission id="s-preview" method="put" replace="none">
                             <xf:resource value="concat(bf:appContext('contextroot'), '/rest/db/betterform/forms/tmp/tmpEditor.xhtml')"/>
-                              <xf:header>
+                            <xf:header>
                                 <xf:name>username</xf:name>
-                                <xf:value>admin</xf:value>
+                                <xf:value value="instance('i-controller')/username"/>
                             </xf:header>
                             <xf:header>
                                 <xf:name>password</xf:name>
-                                <xf:value></xf:value>
+                                <xf:value value="instance('i-controller')/password"/>
                             </xf:header>
                             <xf:action ev:event="xforms-submit-done">                                
                                 <xf:load show="new" >
@@ -219,8 +212,9 @@
                                 <save-msg/>
                                 <preview-msp>Error previewing file</preview-msp>
                                 <preview-path/>
-                                <username/>
-                                <password/>
+                                <username><xsl:value-of select="$username"/></username>
+                                <password><xsl:value-of select="$password"/></password>
+                                <filename><xsl:value-of select="$filename"/></filename>
                                 <mode/>
                             </data>
                         </xf:instance>
@@ -743,16 +737,6 @@
                      style="width:820px;height:540px;overflow:auto;">
                     <div id="embedDialog"/>
                 </div>
-                <!--
-                <div>
-                    <xf:group>
-                        <xf:label>Debug</xf:label>
-                        <xf:output value="(bf:appContext('username') !=  instance('i-controller')/username and string-length(bf:appContext('username') ) > 0) or instance('i-controller')/username eq ''"/>
-                        <xf:output value="concat('Username: ', bf:appContext('username'))"/>
-                        <xf:output value="concat('Password: ',bf:appContext('password'))"/>
-                    </xf:group>
-                </div>
-                -->
             </body>
         </html>
     </xsl:template>

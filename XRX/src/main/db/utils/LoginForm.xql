@@ -60,7 +60,6 @@ return
 						<xf:resource value="concat('{$contextPath}/rest/db/betterform/utils/Login.xql?username=', instance('i-login')/username, '&amp;password=', instance('i-login')/password)"/>
 
 						<xf:action ev:event="xforms-submit-done" if="boolean-from-string(instance('i-login')/login)">
-							<xf:message>Session-Id: <xf:output value="instance('i-login')/session-id"/></xf:message>
 							<xf:setvariable name="session-id" select="instance('i-login')/session-id"/>
 							<xf:setvariable name="username" select="instance('i-login')/username"/>
 							<xf:setvariable name="password" select="instance('i-login')/password"/>
@@ -77,13 +76,11 @@ return
 				    <xf:dispatch name="load-editor" targetid="loginGroup" if="boolean-from-string(instance('i-login')/login)"/>
 				    <xf:toggle case="c-login" if="not(boolean-from-string(instance('i-login')/login))"/>
 			    </xf:trigger>
-			    
-			    
 			</div>
 
 			<xf:group appearance="bf:verticalTable" id="loginGroup">
 			    <xf:load ev:event="load-editor" show="replace">
-			        <xf:resource value="concat('{$filename}?_xsl=/betterform/apps/editor/xf2jsTree.xsl&amp;_session=', instance('i-login')/session-id)"/>
+			        <xf:resource value="concat('{$contextPath}/rest/db/betterform/utils/EditorWrapper.xql?filename={$filename}&amp;username=',instance('i-login')/username,'&amp;password=',instance('i-login')/password)" />
 			    </xf:load>
 				<xf:switch>
 					<xf:case id="c-default" selected="true"/>
