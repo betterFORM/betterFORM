@@ -7,7 +7,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="html"
                 xml:base="/betterform/forms/incubator/editor/">
-    <xsl:variable name="bfEditorPath" select="'/forms/incubator/editor/'"/>
+    <xsl:variable name="bfEditorPath" select="'/rest/db/betterform/apps/editor/'"/>
     <!-- author: Joern Turner -->
     <!-- author: Tobias Krebs -->
     <!-- author: Lars Windauer -->
@@ -24,9 +24,7 @@
     -->
     <xsl:output method="xml" indent="yes"/>
 
-
     <xsl:variable name="bfContext" select="'/betterform'"/>
-
 
     <xsl:strip-space elements="*"/>
 
@@ -104,7 +102,7 @@
                     <xf:model id="model-1">
                         <!--todo: we need to use the baseURI of the editor here instead of the one we load -->
                         <xf:instance xmlns="" id="i-default" src="{{$contextroot}}{$bfEditorPath}cdata-instance.xml"/>
-
+                        <!-- Submission transforms the editor DOM to XForms-->
                         <xf:submission id="s-dom2xforms"
                                        method="get"
                                        resource="xslt:{$bfContext}{$bfEditorPath}dom2xf.xsl?parseString=true"
@@ -116,27 +114,38 @@
                             </xf:action>
                             <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
                         </xf:submission>
+
+                          <!-- merge original XForms host document with Editor XForms markup -->
                         <xf:submission id="s-replaceContent" method="get"
                                        action="xslt:{$bfContext}{$bfEditorPath}updateOriginal.xsl?originDoc={{$requestURL}}"
                                        replace="instance" validate="false">
-                            <xf:action ev:event="xforms-submit">
-                                <xf:setvalue ref="instance('i-controller')/mode" value="bf:appContext('mode')"/>
-                            </xf:action>
+<!--                            <xf:action ev:event="xforms-submit">
+                                    <xf:setvalue ref="instance('i-controller')/mode" value="bf:appContext('mode')"/>
+                                 </xf:action>
+-->                            
+                            <!-- MODE: SAVE AS -->                            
                             <xf:action ev:event="xforms-submit-done" if="instance('i-controller')/mode eq 'save-as'">
                                 <!--<xf:message level="ephemeral">Data mounted back to original document</xf:message>-->
                                 <script type="text/javascript">
                                     dijit.byId("saveDialog").hide();
                                 </script>
-                                <xf:send submission="s-save-as" if="instance('i-controller')/mode eq 'save-as'"/>
+                                <xf:send submission="s-save-as" />
                             </xf:action>
-                            <xf:action ev:event="xforms-submit-done"
-                                       if="not(instance('i-controller')/mode eq 'save-as')">
+                            <!-- MODE: SAVE -->
+                            <xf:action ev:event="xforms-submit-done" if="instance('i-controller')/mode eq 'save'">
                                 <!--<xf:message level="ephemeral">Data mounted back to original document</xf:message>-->
                                 <xf:send submission="s-save"/>
                             </xf:action>
+                            <!-- MODE: PREVIEW -->
+                            <xf:action ev:event="xforms-submit-done" if="instance('i-controller')/mode eq 'preview'">
+                                <xf:message level="ephemeral">Data ready to be saved at tmp directory and to be loaded</xf:message>
+                                <xf:send submission="s-preview"/>
+                            </xf:action>
+
+
                             <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
                         </xf:submission>
-
+                        
                         <xf:submission id="s-save"
                                        method="put"
                                        replace="none">
@@ -184,27 +193,30 @@
                             </xf:action>
                             <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
                         </xf:submission>
+
+                        <!-- saves form to preview and opens it -->
                         <xf:submission id="s-preview" method="put" replace="none">
-                            <xf:resource
-                                    value="concat(bf:appContext('webapp.realpath'),'forms/tmp/', bf:appContext('filename'))"/>
-                            <xf:action ev:event="xforms-submit-done">
-                                <xf:setvalue ref="instance('i-controller')/preview-path"
-                                             value="concat(bf:appContext('contextroot'),'/forms/tmp/', bf:appContext('filename'))"/>
-                                <xf:load ref="instance('i-controller')/preview-path" show="new"/>
+                            <xf:resource value="concat(bf:appContext('contextroot'), '/rest/db/betterform/forms/tmp/tmpEditor.xhtml')"/>
+                              <xf:header>
+                                <xf:name>username</xf:name>
+                                <xf:value>admin</xf:value>
+                            </xf:header>
+                            <xf:header>
+                                <xf:name>password</xf:name>
+                                <xf:value></xf:value>
+                            </xf:header>
+                            <xf:action ev:event="xforms-submit-done">                                
+                                <xf:load show="new" >
+                                    <xf:resource value="concat(bf:appContext('contextroot'), '/rest/db/betterform/forms/tmp/tmpEditor.xhtml')"/>
+                                </xf:load>                                                                                                    
                             </xf:action>
-                            <xf:action ev:event="xforms-submit-error">
-                                <!--
-                                                                <xf:setvalue ref="instance('i-controller')/preview-msg"
-                                                                             value="concat('preview failed for path: ',bf:appContext('webapp.realpath'),'forms/tmp/', bf:appContext('fileName'))"/>
-                                -->
-                                <xf:message ref="instance('i-controller')/preview-msg"/>
-                            </xf:action>
+                            <xf:message ev:event="xforms-submit-error">Preview failed</xf:message>
                         </xf:submission>
 
                         <xf:instance id="i-controller">
                             <data xmlns="">
                                 <originalDoc/>
-                                <save-msg></save-msg>
+                                <save-msg/>
                                 <preview-msp>Error previewing file</preview-msp>
                                 <preview-path/>
                                 <username/>
@@ -220,23 +232,40 @@
                         <xf:label>this is hidden</xf:label>
                         <xf:send submission="s-dom2xforms"/>
                     </xf:trigger>
-                    <xf:trigger id="preview">
+                    
+                    <xf:trigger id="t-save">
                         <xf:label>this is hidden</xf:label>
-                        <xf:send submission="s-preview"/>
+                        <xf:action>
+                            <xf:setvalue ref="instance('i-controller')/mode" value="'save'"/>
+                            <script type="text/javascript">
+                                serializeTree();
+                            </script>
+                        </xf:action>
                     </xf:trigger>
+
+                    <xf:trigger id="t-preview">
+                        <xf:label>this is hidden</xf:label>
+                        <xf:action>
+                            <xf:message level="ephemeral">Preview Start</xf:message>
+                            <xf:setvalue ref="instance('i-controller')/mode" value="'preview'"/>
+                            <script type="text/javascript">
+                                serializeTree();
+                            </script>
+                        </xf:action>
+                    </xf:trigger>
+                
                     <xf:trigger id="t-save-as">
                         <xf:label>saveas</xf:label>
                         <xf:action>
+                            <xf:setvalue ref="instance('i-controller')/mode" value="'save-as'"/>
                             <xf:load show="embed" targetid="embedDialog">
-                                <xf:resource
-                                        value="concat(bf:appContext('contextroot'), '/rest/db/betterform/utils/SaveListing.xql#xforms')"/>
+                                <xf:resource value="concat(bf:appContext('contextroot'), '/rest/db/betterform/utils/SaveListing.xql#xforms')"/>
                                 <xf:extension includeCSS="true" includeScript="true"/>
                             </xf:load>
                         </xf:action>
                     </xf:trigger>
                 </div>
-                <div dojoType="dojo.data.ItemFileReadStore" data-dojo-id="stateStore"
-                     url="{$bfContext}{$bfEditorPath}xfDatatype.json"/>
+                <div dojoType="dojo.data.ItemFileReadStore" data-dojo-id="stateStore" url="{$bfContext}{$bfEditorPath}xfDatatype.json"/>
                 <div id="topPane">
                     <div dojoType="dijit.MenuBar" id="mainMenu">
                         <div dojoType="dijit.PopupMenuBarItem" label="File">
@@ -248,11 +277,11 @@
                                                                 </div>
                                 -->
                                 <div dojoType="dijit.MenuItem"
-                                     onClick="dijit.byId('fluxProcessor').dispatchEvent('preview');">
+                                     onClick="dijit.byId('fluxProcessor').dispatchEvent('t-preview');">
                                     Preview Strg+p
                                 </div>
                                 <div dojoType="dijit.MenuItem"
-                                     onClick="serializeTree();">
+                                     onClick="dijit.byId('fluxProcessor').dispatchEvent('t-save');">
                                     Save
                                 </div>
                                 <div dojoType="dijit.MenuItem" onClick="showSaveDialog();">
@@ -340,7 +369,7 @@
                         the 'mode' attribute is used to switch between 'children' and 'siblings' mode which
                         determines the list of possible elements displayed in the component tree.
                         -->
-                        <div id="componentTree" data-bf-addmode="child"></div>
+                        <div id="componentTree" data-bf-addmode="child"> </div>
                     </div>
                     <div id="rightPane" tabindex="-1">
                         <div id="xfMount" dojotype="dijit.layout.ContentPane"
@@ -356,9 +385,7 @@
                             </script>
                         </div>
                     </div>
-
                 </div>
-
                 <script type="text/javascript">
                     /* <![CDATA[ */
                     // do not do anything but logging yet but shows the right call. Should work on FF and webkit which
@@ -562,7 +589,6 @@
 
                     /* ]]> */
                 </script>
-
                 <script type="text/javascript">
                     $("#xfDoc").delegate("a", "click", function() {
                         $("#xfDoc").jstree("toggle_node", this);
@@ -730,7 +756,6 @@
             </body>
         </html>
     </xsl:template>
-
     <xsl:template match="xf:*">
         <xsl:variable name="this" select="."/>
         <!--
@@ -775,7 +800,6 @@
                     <xsl:value-of select="$this/@id"/>
                 </xsl:attribute>
             </xsl:if>
-
             <a href="#">
                 <xsl:value-of select="local-name()"/>:
                 <xsl:if test="text()">
@@ -791,7 +815,6 @@
                     </button>
                 </span>
             </a>
-
             <xsl:if test="count(xf:*) != 0">
                 <ul>
                     <xsl:for-each select="*">
@@ -801,7 +824,6 @@
             </xsl:if>
         </li>
     </xsl:template>
-
     <xsl:template match="*|text()">
         <xsl:copy>
             <xsl:copy-of select="@*"/>
