@@ -31,7 +31,9 @@
                         <xsl:value-of select="substring($quotedValue,2,string-length($quotedValue)-2)"/>
                     </xsl:variable>
                     <!--<xsl:message>unquoted: <xsl:value-of select="$unquoted"/></xsl:message>-->
-                    <xsl:attribute name="{substring-before($thisAttr,':')}"><xsl:value-of select="$unquoted"/></xsl:attribute>
+                    <xsl:if test="string-length($unquoted) != 0">
+                        <xsl:attribute name="{substring-before($thisAttr,':')}"><xsl:value-of select="$unquoted"/></xsl:attribute>
+                    </xsl:if>
                 </xsl:for-each>
             </xsl:if>
             <xsl:if test="*/*[@class='textNode']">

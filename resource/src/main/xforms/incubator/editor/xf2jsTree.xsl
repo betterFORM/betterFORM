@@ -535,6 +535,7 @@
                                         console.log(data);
                                         var xfType = data.rslt.obj.attr("data-xf-type");
                                         var mountNode = dojo.byId("xfMount");
+                                        dojo.attr(mountNode ,"xfId", tmpId);
                                         var nodesToDestroy = dojo.query("*[widgetId]",mountNode);
                                         // console.debug("nodesToDestroy: ",nodesToDestroy);
                                         dojo.forEach(nodesToDestroy, function(item) {

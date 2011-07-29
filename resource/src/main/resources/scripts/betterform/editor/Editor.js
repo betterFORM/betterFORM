@@ -15,7 +15,7 @@ dojo.declare("betterform.Editor", null,
     constructor:function() {
         var self = this;
         dojo.subscribe("nodeSelected", function(args){
-            console.log("nodeSelected: arg:", args);
+            // console.log("nodeSelected: arg:", args);
             // console.log("nodeSelected: arg.event:", args.event);
 
             var selectedNode = args.jsTreeData;
@@ -168,34 +168,32 @@ dojo.declare("betterform.Editor", null,
 
     },
 
-  
     saveProperty:function(targetId, propertyId) {
-        console.log("attrEditor.saveProperty: id", targetId, " propertyId:", propertyId);
-        // get the former attribute values
-        var dataXfAttrs = dojo.attr(dojo.byId(targetId), "data-xf-attrs");
-        // console.log("dataXfAttrs orig: ", dataXfAttrs);
-        var xfAttrObj = dojox.json.ref.fromJson(dataXfAttrs);
-        // console.log("xfAttrObj:", xfAttrObj);
+        // console.log("attrEditor.saveProperty: id", targetId, " propertyId:", propertyId);
 
-        // get the dijit holding the attribute value to save
+        // get the current value to save
         var propertyNode = dojo.byId(propertyId);
         // console.log("propertyNode:", propertyNode);
         var newValue = dojo.attr(propertyNode, "value");
-        // console.log("newValue:", newValue);
         if (!newValue)newValue = "";
-        xfAttrObj[propertyId] = newValue;
-        var result = "{";
-        for(attrValue in xfAttrObj){
-            result += attrValue + ":'" + xfAttrObj[attrValue] +"',";
-        }
-        if(result.charAt(2) != undefined) {
-            result = result.substring(0,result.lastIndexOf(","));
-        }
+        // console.debug("saveProperty: newValue: ",newValue);
+        if(propertyId == "textcontent"){
+            // get the dijit holding the attribute value to save
+            var textcontentNode = dojo.query(".textNode",dojo.byId(targetId))[0];
+            // console.debug("saveProperty: textcontent: ",textcontentNode);
+            dojo.html.set(textcontentNode, newValue);
+        }else {
+            // get the former attribute values
+            var dataXfAttrs = dojo.attr(dojo.byId(targetId), "data-xf-attrs");
+            // console.log("dataXfAttrs orig: ", dataXfAttrs);
+            var xfAttrObj = dojox.json.ref.fromJson(dataXfAttrs);
+            // console.log("xfAttrObj:", xfAttrObj);
 
-        result += "}";
-        // var xfAttrString = dojox.json.ref.toJson(xfAttrObj);
-        // console.debug("xfAttr new:", result);
-        dojo.attr(dojo.byId(targetId), "data-xf-attrs", result);
+            xfAttrObj[propertyId] = newValue;
+            var xfAttrString = dojox.json.ref.toJson(xfAttrObj);
+            // console.debug("xfAttr new:", xfAttrString);
+            dojo.attr(dojo.byId(targetId), "data-xf-attrs", xfAttrString);
+        }
     },
     
 
