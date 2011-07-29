@@ -1,12 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="2.0"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:html="http://www.w3.org/1999/xhtml"
-                xmlns:xf="http://www.w3.org/2002/xforms"
-                xmlns:ev="http://www.w3.org/2001/xml-events"
-                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="html"
-                xml:base="/betterform/forms/incubator/editor/">
+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:bf="http://betterform.sourceforge.net/xforms" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms" version="2.0" exclude-result-prefixes="html" xml:base="/betterform/forms/incubator/editor/">
     <xsl:variable name="bfEditorPath" select="'/rest/db/betterform/apps/editor/'"/>
     <!-- author: Joern Turner -->
     <!-- author: Tobias Krebs -->
@@ -23,15 +15,8 @@
     <xsl:variable name="bfEditorPath" select="'/forms/incubator/editor/'"/>
     -->
     <xsl:output method="xml" indent="yes"/>
-
     <xsl:variable name="bfContext" select="'/betterform'"/>
-
-    <xsl:param name="username" select="''"/>
-    <xsl:param name="password" select="''"/>
-    <xsl:param name="filename" select="''"/>
-
     <xsl:strip-space elements="*"/>
-
     <xsl:template match="/">
         <html>
             <head>
@@ -98,20 +83,17 @@
 
                 </script>
                 <link rel="stylesheet" type="text/css" href="../../../bfResources/styles/xforms-editor.css"/>
-
             </head>
             <body id="editor" class="bf" jsId="attrEditor">
-
                 <div style="display:none">
                     <xf:model id="model-1">
                         <!--todo: we need to use the baseURI of the editor here instead of the one we load -->
+                        <!--  i-default hold the editor DOM transformed to XForms -->
                         <xf:instance xmlns="" id="i-default" src="{{$contextroot}}{$bfEditorPath}cdata-instance.xml"/>
+                        
                         <!-- Submission transforms the editor DOM to XForms-->
-                        <xf:submission id="s-dom2xforms"
-                                       method="get"
-                                       resource="xslt:{$bfContext}{$bfEditorPath}dom2xf.xsl?parseString=true"
-                                       replace="instance"
-                                >
+                        <xf:submission id="s-dom2xforms" method="get"
+                                       resource="xslt:{$bfContext}{$bfEditorPath}dom2xf.xsl?parseString=true" replace="instance">
                             <xf:action ev:event="xforms-submit-done">
                                 <!--<xf:message level="ephemeral">Data transformed to xforms</xf:message>-->
                                 <xf:send submission="s-replaceContent"/>
@@ -121,19 +103,15 @@
 
                           <!-- merge original XForms host document with Editor XForms markup -->
                         <xf:submission id="s-replaceContent" method="get"
-                                       action="xslt:{$bfContext}{$bfEditorPath}updateOriginal.xsl?originDoc={$bfContext}/rest{$filename}"
+                                       action="xslt:{$bfContext}{$bfEditorPath}updateOriginal.xsl?originDoc={{$contextPath}}{{$fileName}}"
                                        replace="instance" validate="false">
-<!--                            <xf:action ev:event="xforms-submit">
-                                    <xf:setvalue ref="instance('i-controller')/mode" value="bf:appContext('mode')"/>
-                                 </xf:action>
--->                            
-                            <!-- MODE: SAVE AS -->                            
+                            <!-- MODE: SAVE AS -->
                             <xf:action ev:event="xforms-submit-done" if="instance('i-controller')/mode eq 'save-as'">
                                 <!--<xf:message level="ephemeral">Data mounted back to original document</xf:message>-->
                                 <script type="text/javascript">
                                     dijit.byId("saveDialog").hide();
                                 </script>
-                                <xf:send submission="s-save-as" />
+                                <xf:send submission="s-save-as"/>
                             </xf:action>
                             <!-- MODE: SAVE -->
                             <xf:action ev:event="xforms-submit-done" if="instance('i-controller')/mode eq 'save'">
@@ -146,40 +124,39 @@
                                 <xf:send submission="s-preview"/>
                             </xf:action>
 
-
                             <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
                         </xf:submission>
-                        
+
+                        <!-- Overwrites the current form loaded within the editor  -->
                         <xf:submission id="s-save" method="put" replace="none">
-                            <xf:resource value="IF(substring(bf:appContext('pathInfo'),2) eq '', concat(bf:appContext('contextroot'), '/rest', instance('i-controller')/filename) , concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2)) )"/>
+                            <xf:resource value="IF(substring(bf:appContext('pathInfo'),2) eq '', bf:appContext('requestURL'), concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2)) )"/>
                             <xf:header>
                                 <xf:name>username</xf:name>
-                                <xf:value value="instance('i-controller')/username"/>
+                                <xf:value value="instance('i-login')/username"/>
                             </xf:header>
                             <xf:header>
                                 <xf:name>password</xf:name>
-                                <xf:value value="instance('i-controller')/password"/>
+                                <xf:value value="instance('i-login')/password"/>
                             </xf:header>
-
                             <xf:action ev:event="xforms-submit-done">
-                                <xf:setvalue ref="instance('i-controller')/save-msg" value="concat('Data stored to ',IF(substring(bf:appContext('pathInfo'),2) eq '', concat(bf:appContext('contextroot'), '/rest', instance('i-controller')/filename) , concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2))))"/>
+                                <xf:setvalue ref="instance('i-controller')/save-msg" value="concat('Data stored to ',IF(substring(bf:appContext('pathInfo'),2) eq '', bf:appContext('requestURL'), concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2))))"/>
                                 <xf:message level="ephemeral" ref="instance('i-controller')/save-msg"/>
                             </xf:action>
                             <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
                         </xf:submission>
-
+                        
+                        <!-- Saves the form to a location specified by the user with  a custom name (given by the user too) -->
                         <xf:submission id="s-save-as" method="put" replace="none">
                             <xf:resource value="concat(bf:appContext('sl-filePath') ,'/', bf:appContext('sl-filename'))"/>
                             <!-- Set username and password for submission -->
                             <xf:header>
                                 <xf:name>username</xf:name>
-                                <xf:value value="instance('i-controller')/username"/>
+                                <xf:value value="instance('i-login')/username"/>
                             </xf:header>
                             <xf:header>
                                 <xf:name>password</xf:name>
-                                <xf:value value="instance('i-controller')/password"/>
+                                <xf:value value="instance('i-login')/password"/>
                             </xf:header>
-
                             <xf:action ev:event="xforms-submit-done">
                                 <xf:setvalue ref="instance('i-controller')/save-msg" value="concat('Data stored to ', bf:appContext('sl-filePath') ,'/', bf:appContext('sl-filename'))"/>
                                 <xf:message level="ephemeral" ref="instance('i-controller')/save-msg"/>
@@ -189,36 +166,77 @@
 
                         <!-- saves form to preview and opens it -->
                         <xf:submission id="s-preview" method="put" replace="none">
-                            <xf:resource value=" concat(bf:appContext('contextroot'), '/rest', substring-before(instance('i-controller')/filename,'.xhtml'),'-prev.xhtml')"/>
+                            <xf:resource value=" concat(substring-before(bf:appContext('requestURI'),'.xhtml'),'-prev.xhtml')"/>
                             <xf:header>
                                 <xf:name>username</xf:name>
-                                <xf:value value="instance('i-controller')/username"/>
+                                <xf:value value="instance('i-login')/username"/>
                             </xf:header>
                             <xf:header>
                                 <xf:name>password</xf:name>
-                                <xf:value value="instance('i-controller')/password"/>
+                                <xf:value value="instance('i-login')/password"/>
                             </xf:header>
-
                             <xf:load show="new" ev:event="xforms-submit-done">
-                                <xf:resource value="concat(bf:appContext('contextroot'), '/rest', substring-before(instance('i-controller')/filename,'.xhtml'),'-prev.xhtml')"/>
+                                <xf:resource value="concat(substring-before(bf:appContext('requestURI'),'.xhtml'),'-prev.xhtml')"/>
                             </xf:load>
-
                             <xf:message ev:event="xforms-submit-error">Preview failed</xf:message>
                         </xf:submission>
-
+                        
+                        <!-- internal controller instance -->
                         <xf:instance id="i-controller">
                             <data xmlns="">
                                 <originalDoc/>
                                 <save-msg/>
                                 <preview-msp>Error previewing file</preview-msp>
                                 <preview-path/>
-                                <username><xsl:value-of select="$username"/></username>
-                                <password><xsl:value-of select="$password"/></password>
-                                <filename><xsl:value-of select="$filename"/></filename>
                                 <mode/>
                             </data>
                         </xf:instance>
+                        
+                        <!-- Instance holding the login data of the user -->
+                        <xf:instance id="i-login" xmlns="" >
+                            <data/>
+                        </xf:instance>
+                        
+                        <xf:submission  id="s-get-login-credentials" 
+                                        method="get" 
+                                        replace="instance" 
+                                        instance="i-login">
+                            <xf:resource value=" concat(bf:appContext('contextroot'), '/rest/db/betterform/utils/Login.xql')"/>
+                            
+                            <xf:action ev:event="xforms-submit-done">
+                                <xf:toggle case="c-login" if="not(boolean-from-string(instance('i-login')/login))"/>
+                                <xf:toggle case="c-editor" if="boolean-from-string(instance('i-login')/login)"/>
+                            </xf:action>
+                        </xf:submission>
+
+                        <xf:submission id="s-login"
+                                        method="get"
+                                        replace="instance"
+                                        instance="i-login"
+                                        serialization="none"
+                                        validate="false"
+                                        relevant="false">
+                            
+                            <xf:resource value="concat(bf:appContext('contextroot'), '/rest/db/betterform/utils/Login.xql?username=', instance('i-login')/username, '&amp;password=', instance('i-login')/password)"/>
+                            
+                            <xf:action ev:event="xforms-submit-done" if="boolean-from-string(instance('i-login')/login)">
+                                <xf:toggle case="c-editor"/>
+                            </xf:action>                    
+                            
+                            <xf:message ev:event="xforms-submit-done" level="modal" if="not(boolean-from-string(instance('i-login')/login))">Login failed.</xf:message>
+                            <xf:message ev:event="xforms-submit-error" level="modal">Login failed.</xf:message>
+                        </xf:submission>
+                                               
+                        <xf:action ev:event="xforms-ready">
+                            <xf:send submission="s-get-login-credentials"/>
+                        </xf:action>
                     </xf:model>
+
+                    
+<!-- UI MARKUP -->
+<!-- UI MARKUP -->
+<!-- UI MARKUP -->
+                    <!-- HIDDEN CONTROLS -->
                     <xf:input id="save" ref="instance()">
                         <xf:label>this is a hidden control set from JS when saving is executed</xf:label>
                     </xf:input>
@@ -226,7 +244,6 @@
                         <xf:label>this is hidden</xf:label>
                         <xf:send submission="s-dom2xforms"/>
                     </xf:trigger>
-                    
                     <xf:trigger id="t-save">
                         <xf:label>this is hidden</xf:label>
                         <xf:action>
@@ -236,7 +253,6 @@
                             </script>
                         </xf:action>
                     </xf:trigger>
-
                     <xf:trigger id="t-preview">
                         <xf:label>this is hidden</xf:label>
                         <xf:action>
@@ -247,7 +263,6 @@
                             </script>
                         </xf:action>
                     </xf:trigger>
-                
                     <xf:trigger id="t-save-as">
                         <xf:label>saveas</xf:label>
                         <xf:action>
@@ -259,127 +274,139 @@
                         </xf:action>
                     </xf:trigger>
                 </div>
+                <!-- DOJO Store holding XForms Datatypes -->
                 <div dojoType="dojo.data.ItemFileReadStore" data-dojo-id="stateStore" url="{$bfContext}{$bfEditorPath}xfDatatype.json"/>
-                <div id="topPane">
-                    <div dojoType="dijit.MenuBar" id="mainMenu">
-                        <div dojoType="dijit.PopupMenuBarItem" label="File">
-                            <div dojoType="dijit.Menu" id="File">
-                                <!--
-                                                                <div dojoType="dijit.MenuItem"
-                                                                     onClick="this.window.href='bfEditor/forms/incubator/editor/standardTemplate.xhtml');">
-                                                                    New
-                                                                </div>
-                                -->
-                                <div dojoType="dijit.MenuItem"
-                                     onClick="dijit.byId('fluxProcessor').dispatchEvent('t-preview');">
-                                    Preview Strg+p
-                                </div>
-                                <div dojoType="dijit.MenuItem"
-                                     onClick="dijit.byId('fluxProcessor').dispatchEvent('t-save');">
-                                    Save
-                                </div>
-                                <div dojoType="dijit.MenuItem" onClick="showSaveDialog();">
-                                    Save as...
-                                </div>
-                                <!--
-                                <div dojotype="dijit.PopupMenuItem" label="input">
-                                    <div dojotype="dijit.Menu">
-                                        <div dojoType="dijit.MenuItem"
-                                             onClick="fluxProcessor.dispatchEvent('inputTextTrigger');hideStatic();"
-                                             label="Text"/>
+                <xf:switch>
+                <!-- intially loaded case to prevent showing not initialized markup to the user -->
+                    <xf:case id="c-empty" selected="true"/>
+                <!-- login view if user is not logged in yet-->
+                    <xf:case id="c-login">
+                        <xf:group id="g-login" appearance="full" style="padding:20px;">
+                            <xf:label>betterFORM XForms Editor</xf:label>
+                            <div id="notice">In order to use the XForms Editor please login.</div>
+                            <xf:input ref="instance('i-login')/username">
+                                <xf:label>Username:</xf:label>
+                            </xf:input>
+                            <xf:secret ref="instance('i-login')/password">
+                                <xf:label>Password:</xf:label>
+                            </xf:secret>
+                            <xf:trigger>
+                                <xf:label>Login</xf:label>
+                                <xf:send submission="s-login"/>
+                            </xf:trigger>                    
+                        </xf:group>
+                    </xf:case>
+                <!-- betterFORM XForms Editor -->
+                    <xf:case id="c-editor">
+                        <div id="topPane">
+                            <div dojoType="dijit.MenuBar" id="mainMenu">
+                                <div dojoType="dijit.PopupMenuBarItem" label="File">
+                                    <div dojoType="dijit.Menu" id="File">
+                                        <!--
+                                                                        <div dojoType="dijit.MenuItem"
+                                                                             onClick="this.window.href='bfEditor/forms/incubator/editor/standardTemplate.xhtml');">
+                                                                            New
+                                                                        </div>
+                                        -->
+                                        <div dojoType="dijit.MenuItem" onClick="dijit.byId('fluxProcessor').dispatchEvent('t-preview');">
+                                            Preview Strg+p
+                                        </div>
+                                        <div dojoType="dijit.MenuItem" onClick="dijit.byId('fluxProcessor').dispatchEvent('t-save');">
+                                            Save
+                                        </div>
+                                        <div dojoType="dijit.MenuItem" onClick="showSaveDialog();">
+                                            Save as...
+                                        </div>
+                                        <!--
+                                        <div dojotype="dijit.PopupMenuItem" label="input">
+                                            <div dojotype="dijit.Menu">
+                                                <div dojoType="dijit.MenuItem"
+                                                     onClick="fluxProcessor.dispatchEvent('inputTextTrigger');hideStatic();"
+                                                     label="Text"/>
+                                            </div>
+                                        </div>
+                                        -->
                                     </div>
                                 </div>
+                                <div dojoType="dijit.PopupMenuBarItem" label="Edit">
+                                    <div dojoType="dijit.Menu" id="Edit">
+                                        <div dojoType="dijit.MenuItem" onClick="alert('cut');">
+                                            Cut
+                                        </div>
+                                        <div dojoType="dijit.MenuItem" onClick="alert('copy');">
+                                            Copy
+                                        </div>
+                                        <div dojoType="dijit.MenuItem" onClick="alert('paste');">
+                                            Paste
+                                        </div>
+                                    </div>
+                                </div>
+                                <div dojoType="dijit.MenuBarItem" onClick="dijit.byId('bfEditorHelp').show();">
+                                    Help
+                                </div>
+
+                                <!--
+                                                            <div dojoType="dijit.PopupMenuBarItem" label="Add" id="addMenu">
+                                                            </div>
                                 -->
                             </div>
+                            <img src="{$bfContext}/bfResources/images/betterform_icon16x16.png" alt=""/>
                         </div>
-                        <div dojoType="dijit.PopupMenuBarItem" label="Edit">
-                            <div dojoType="dijit.Menu" id="Edit">
-                                <div dojoType="dijit.MenuItem"
-                                     onClick="alert('cut');">
-                                    Cut
-                                </div>
-                                <div dojoType="dijit.MenuItem"
-                                     onClick="alert('copy');">
-                                    Copy
-                                </div>
-                                <div dojoType="dijit.MenuItem"
-                                     onClick="alert('paste');">
-                                    Paste
-                                </div>
-                            </div>
-                        </div>
-                        <div dojoType="dijit.MenuBarItem"
-                             onClick="dijit.byId('bfEditorHelp').show();">
-                            Help
-                        </div>
-
-                        <!--
-                                                    <div dojoType="dijit.PopupMenuBarItem" label="Add" id="addMenu">
-                                                    </div>
-                        -->
-                    </div>
-                    <img src="{$bfContext}/bfResources/images/betterform_icon16x16.png" alt=""/>
-                </div>
-                <div id="mainWindow" style="width:100%;">
-
-                    <div id="docWrapper" tabindex="-1">
-                        <!--
-                                            <xf:output value="bf:appContext('pathInfo')">
-                                                <xf:label>PathInfo: </xf:label>
-                                            </xf:output>
-                        -->
-                        <div id="docPane" tabindex="-1">
-                            <xsl:variable name="elements"
-                                          select="//xf:model[not(ancestor::xf:*)]|//xf:group[not(ancestor::xf:*)]"/>
-                            <!--<xsl:variable name="uiElements" select="//*[name()='xf:group']"/>-->
-
-                            <div id="xfDoc" class="xfDoc" tabindex="-1">
-                                <ul>
-                                    <li id="root" data-xf-type="document" tabindex="0">
-                                        <a href="#">Document</a>
+                        <div id="mainWindow" style="width:100%;">
+                            <div id="docWrapper" tabindex="-1">
+                                <!--
+                                                    <xf:output value="bf:appContext('pathInfo')">
+                                                        <xf:label>PathInfo: </xf:label>
+                                                    </xf:output>
+                                -->
+                                <div id="docPane" tabindex="-1">
+                                    <xsl:variable name="elements" select="//xf:model[not(ancestor::xf:*)]|//xf:group[not(ancestor::xf:*)]"/>
+                                    <!--<xsl:variable name="uiElements" select="//*[name()='xf:group']"/>-->
+                                    <div id="xfDoc" class="xfDoc" tabindex="-1">
                                         <ul>
-                                            <!--<xsl:for-each select="$elements">-->
-                                            <xsl:apply-templates select="$elements"/>
-                                            <!--</xsl:for-each>-->
+                                            <li id="root" data-xf-type="document" tabindex="0">
+                                                <a href="#">Document</a>
+                                                <ul>
+                                                    <!--<xsl:for-each select="$elements">-->
+                                                    <xsl:apply-templates select="$elements"/>
+                                                    <!--</xsl:for-each>-->
+                                                </ul>
+                                            </li>
                                         </ul>
-                                    </li>
-                                </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="leftPane" tabindex="-1">
+                                <div id="addLabel">
+                                    <div class="caption">Add ...</div>
+                                    <div id="addModeDiv">
+                                        <button id="btnChildMode" type="button" class="modeSelector selected" onclick="attrEditor.updateComponentTree(this);">Child
+                                        </button>
+                                        <button id="btnSiblingMode" type="button" class="modeSelector" onclick="attrEditor.updateComponentTree(this);">Sibling
+                                        </button>
+                                    </div>
+                                </div>
+                                <!--
+                                the 'mode' attribute is used to switch between 'children' and 'siblings' mode which
+                                determines the list of possible elements displayed in the component tree.
+                                -->
+                                <div id="componentTree" data-bf-addmode="child"/>
+                            </div>
+                            <div id="rightPane" tabindex="-1">
+                                <div id="xfMount" dojotype="dijit.layout.ContentPane" href="{$bfContext}{$bfEditorPath}document.html" preload="false">
+                                    <script type="dojo/connect" event="onDownloadEnd">
+                                        var xfId = dojo.attr(dojo.byId("xfMount"), "xfId");
+                                        if (xfId == undefined) {
+                                            return;
+                                        }
+                                        console.log("xfid: ", xfId);
+                                        attrEditor.editProperties(xfId);
+                                    </script>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="leftPane" tabindex="-1">
-                        <div id="addLabel">
-                            <div class="caption">Add ...</div>
-                            <div id="addModeDiv">
-                                <button id="btnChildMode" type="button" class="modeSelector selected"
-                                        onclick="attrEditor.updateComponentTree(this);">Child
-                                </button>
-                                <button id="btnSiblingMode" type="button" class="modeSelector"
-                                        onclick="attrEditor.updateComponentTree(this);">Sibling
-                                </button>
-                            </div>
-                        </div>
-                        <!--
-                        the 'mode' attribute is used to switch between 'children' and 'siblings' mode which
-                        determines the list of possible elements displayed in the component tree.
-                        -->
-                        <div id="componentTree" data-bf-addmode="child"> </div>
-                    </div>
-                    <div id="rightPane" tabindex="-1">
-                        <div id="xfMount" dojotype="dijit.layout.ContentPane"
-                             href="{$bfContext}{$bfEditorPath}document.html"
-                             preload="false">
-                            <script type="dojo/connect" event="onDownloadEnd">
-                                var xfId = dojo.attr(dojo.byId("xfMount"), "xfId");
-                                if (xfId == undefined) {
-                                    return;
-                                }
-                                console.log("xfid: ", xfId);
-                                attrEditor.editProperties(xfId);
-                            </script>
-                        </div>
-                    </div>
-                </div>
+                    </xf:case>
+                </xf:switch>
                 <script type="text/javascript">
                     /* <![CDATA[ */
                     // do not do anything but logging yet but shows the right call. Should work on FF and webkit which
@@ -424,9 +451,10 @@
                     /* ]]> */
                 </script>
                 <xsl:variable name="bfFullPath2">
-                    <xsl:text>'</xsl:text><xsl:value-of select="concat($bfContext,$bfEditorPath)"/><xsl:text>'</xsl:text>
+                    <xsl:text>'</xsl:text>
+                    <xsl:value-of select="concat($bfContext,$bfEditorPath)"/>
+                    <xsl:text>'</xsl:text>
                 </xsl:variable>
-
                 <script type="text/javascript" class="source below">
                     var tmpBfPath = <xsl:value-of select="$bfFullPath2"/>;
                     /* <![CDATA[ */
@@ -647,10 +675,7 @@
 
                                 //display tree with argument 'xfType' or parent xfType
                 -->
-
-                <div id="bfEditorHelp" dojoType="dojox.layout.FloatingPane" title="betterFORM Editor Help"
-                     resizable="true" dockable="false"
-                     style="position:absolute;margin:10px;top:200px;left:200px;width:600px;height:350px;visibility:hidden;">
+                <div id="bfEditorHelp" dojoType="dojox.layout.FloatingPane" title="betterFORM Editor Help" resizable="true" dockable="false" style="position:absolute;margin:10px;top:200px;left:200px;width:600px;height:350px;visibility:hidden;">
                     <!--
                                         <div class="bfEditorHelpTitle">betterFORM Editor</div>
                     -->
@@ -670,7 +695,6 @@
                             <dd>Focus the XForms tree</dd>
                         </dl>
                     </div>
-
                     <div>
                         <h3>Tree Shortcuts</h3>
                         <div class="table">
@@ -693,7 +717,6 @@
                                     </dt>
                                     <dd>Select Node</dd>
                                 </dl>
-
                                 <dl class="keyboard-mapping">
                                     <dt class="shortcutDesc">
                                         <span class="shortcut">←</span>
@@ -728,14 +751,11 @@
                                     </dt>
                                     <dd>Move Node down</dd>
                                 </dl>
-
                             </div>
-
                         </div>
                     </div>
                 </div>
-                <div id="saveDialog" dojotype="dijit.Dialog" title="save as ..." autofocus="false"
-                     style="width:820px;height:540px;overflow:auto;">
+                <div id="saveDialog" dojotype="dijit.Dialog" title="save as ..." autofocus="false" style="width:820px;height:540px;overflow:auto;">
                     <div id="embedDialog"/>
                 </div>
             </body>
@@ -771,9 +791,7 @@
             </xsl:for-each>
             }
         </xsl:variable>
-
-        <li id="{$id}" data-xf-type="{local-name()}" data-xf-attrs="{$props}" class="{local-name()}"
-            rel="{local-name()}">
+        <li id="{$id}" data-xf-type="{local-name()}" data-xf-attrs="{$props}" class="{local-name()}" rel="{local-name()}">
             <!--
             ####################################################################################################
             the outermost xforms elements found get the id of their parent node written to a 'xpath' attribute.
@@ -794,8 +812,7 @@
                 </xsl:if>
                 <xsl:value-of select="@id"/>
                 <span class="buttonWrapper">
-                    <button type="button" onclick="if(confirm('Really delete?')) deleteNode(this);return false;"
-                            style="padding:0;margin:0;background:transparent;border:none;">
+                    <button type="button" onclick="if(confirm('Really delete?')) deleteNode(this);return false;" style="padding:0;margin:0;background:transparent;border:none;">
                         <img src="{$bfContext}{$bfEditorPath}images/list-remove.png" width="24" height="24" alt="x"/>
                     </button>
                 </span>

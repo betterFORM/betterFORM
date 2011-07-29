@@ -447,3 +447,9 @@ dl.keyboard-mapping dd {
 .bf .dijitTitlePaneContentInner{
     background: #666666;
 }
+
+.bf #g-login .xfGroupLabel{
+    font-variant: small-caps;
+    font-size: large;
+    margin-bottom: 20px;
+}
