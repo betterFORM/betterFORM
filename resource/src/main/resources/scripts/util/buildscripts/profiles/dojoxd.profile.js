@@ -61,7 +61,6 @@ dependencies = {
 
                 "betterform.ui.textarea.DojoEditor",
                 "betterform.ui.textarea.HtmlEditor",
-                "betterform.ui.textarea.MinimalTextarea",
                 "betterform.ui.textarea.SimpleTextarea",
 
                 "betterform.ui.trigger.Button",
