@@ -339,6 +339,8 @@ public class AbstractHTTPConnector extends AbstractConnector {
             this.handleHttpMethod(httpMethod);
         }
         catch (Exception e) {
+            LOGGER.trace("AbstractHTTPConnector: Exception:");
+            LOGGER.trace(e.getStackTrace());
             try {
                 throw new XFormsInternalSubmitException(httpMethod.getStatusCode(), httpMethod.getStatusText(), httpMethod.getResponseBodyAsString(), XFormsConstants.RESOURCE_ERROR);
             } catch (IOException e1) {
