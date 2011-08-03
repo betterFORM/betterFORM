@@ -54,7 +54,7 @@ return
     	<div id="xforms">
             <div style="display:none">
                 <xf:model>
-                    <xf:instance id="i-task" src="{$contextPath}/rest/db/betterform/apps/timetracker/data/task.xml"/>
+                    <xf:instance id="i-task" src="{$contextPath}/rest/db/betterform/apps/timetracker/data/template/task.xml"/>
 
                   <xf:bind nodeset="task">
                       <xf:bind nodeset="@client" required="true()" />
@@ -162,7 +162,7 @@ return
 
                 <xf:submission id="s-clean"
                                ref="instance('i-task')"
-                               resource="{$contextPath}/rest/db/betterform/apps/timetracker/data/task.xml"
+                               resource="{$contextPath}/rest/db/betterform/apps/timetracker/data/template/task.xml"
                                method="get"
                                replace="instance"
                                instance="i-task">
@@ -174,7 +174,7 @@ return
                                replace="instance"
                                instance="i-project"
                                validate="false">
-                               <xf:resource value="concat('{$contextPath}/rest/db/betterform/apps/timetracker/edit/utils/project.xql?mode=project&amp;clientId=', instance()/task/@client)"/>
+                               <xf:resource value="concat('{$contextPath}/rest/db/betterform/apps/timetracker/edit/utils/utils.xql?mode=project&amp;clientId=', instance()/task/@client)"/>
                 </xf:submission>
                 
                 <xf:submission id="s-getIteration"
@@ -183,7 +183,7 @@ return
                                replace="instance"
                                instance="i-iteration"
                                validate="false">
-                               <xf:resource value="concat('{$contextPath}/rest/db/betterform/apps/timetracker/edit/utils/project.xql?mode=iteration&amp;clientId=', instance()/task/@client, '&amp;projectId=', instance()/task/@project)"/>
+                               <xf:resource value="concat('{$contextPath}/rest/db/betterform/apps/timetracker/edit/utils/utils.xql?mode=iteration&amp;clientId=', instance()/task/@client, '&amp;projectId=', instance()/task/@project)"/>
                 </xf:submission>
             <xf:action ev:event="xforms-ready" >
                 <xf:send submission="s-get-task" if="'{local:mode()}' = 'edit'"/>
