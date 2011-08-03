@@ -246,20 +246,25 @@
         </exist>
         <compile>
             <classpath pathid="installer.class.path" description="classpath for compiling installer classes">
+                <!-- Use libs provided by eXist Installer -->
+                <!--
                 <pathelement location="${installer.dir}/src/main/lib/exist-1.4.jar" groupid="org.exist" version="1.4"
                              artifactId="exist"/>
                 <pathelement location="${installer.dir}/src/main/lib/xmldb.jar" groupid="org.xmldb" version="11112001"
                              artifactId="xmldb"/>
+                -->
+                <pathelement location="${installer.dir}/target/bf-XRX/exist.jar" groupid="org.exist" version="1.4" artifactId="exist"/>
+                <pathelement location="${installer.dir}/target/bf-XRX/lib/core/xmldb.jar" groupid="org.xmldb" version="11112001" artifactId="xmldb"/>
             </classpath>
         </compile>
     </installer>
     <exist>
         <betterform>
             <xrx>
-                <installed>/Appications/betterFORM</installed>
+                <installed>/home/zwobit/development/test/betterFORM-rc2-ssl</installed>
             </xrx>
         </betterform>
-        <installed>/Applications/eXist</installed>
+        <installed>/home/zwobit/development/test/betterFORM-rc2-ssl</installed>
         <passwd>betterform</passwd>
     </exist>
 </root>

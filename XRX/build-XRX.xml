@@ -17,7 +17,7 @@
     <property name="eXist.admin.passwd" value="YOUR-EXIST-ADMIN-PASSWD"/>
     -->
     <property name="eXist.home" value="${exist.installed}"/>
-    <property name="eXist.admin.passwd" value=""/>
+    <property name="eXist.admin.passwd" value="zusel.1"/>
 
     <property name="betterFORM.src" value="${basedir}/../"/>
 
@@ -31,7 +31,7 @@
     -->
     <property name="webapp.context" value="betterform"/>
     <property name="db.user" value="admin"/>
-    <property name="db.pwd" value=""/>
+    <property name="db.pwd" value="zusel.1"/>
 
     <!-- betterFORM module directories -->
     <property name="root.dir" value="${betterFORM.src}"/>
@@ -43,7 +43,7 @@
     <!-- eXist-module sub-dirs -->
     <property name="main.dir" value="${XRX.dir}/src/main"/>
     <property name="etc.dir" value="${XRX.dir}/src/main/etc"/>
-    <property name="overwrites.dir" value="${etc.dir}/overwrites/eXist-1.4"/>
+    <property name="overwrites.dir" value="${etc.dir}/overwrites/betterFORM-context"/>
 
     <!-- betterFORM installation directories -->
     <property name="betterFORM.extension" value="${eXist.home}/extensions/betterform/"/>
@@ -67,6 +67,10 @@
     <!-- betterFORM installed -->
     <property name="betterFORM.install.marker" value="${eXist.home}/webapp/WEB-INF/betterFORM.installed"/>
     <available file="${betterFORM.install.marker}" property="betterFORM.base.installed"/>
+
+    <property name="betterFORM.config.patch.marker" value="${eXist.home}/webapp/WEB-INF/betterFORM.config.patched"/>
+    <available file="${betterFORM.config.patch.marker}" property="betterFORM.config.patched"/>
+
     <!-- Exploded mode -->
     <available file="${eXist.home}/webapp/WEB-INF/classes/de/betterform/agent/web/WebFactory.class" property="betterFORM.exploded.mode"/>
     <!-- Single JAR mode -->
@@ -170,12 +174,14 @@
         <echo>
             __== Setting up start.config ==__
         </echo>
+
         <unzip src="${eXist.home}/start.jar" dest="${eXist.home}">
             <patternset>
                 <include name="**/*.config"/>
             </patternset>
             <cutdirsmapper dirs="3"/>
         </unzip>
+
         <echo message="lib/optional/* always${line.separator}" append="true" file="${eXist.home}/start.config"/>
         <echo message="extensions/betterform/src/main/lib/* always" append="true" file="${eXist.home}/start.config"/>
 
@@ -187,7 +193,6 @@
         <copy file="${etc.dir}/MergeBetterformConfig.xsl" tofile="${eXist.home}/MergeBetterformConfig.xsl" failonerror="true"/>
 
         <antcall target="patch-web-xml"/>
-        <antcall target="patch-betterFORM-config"/>
 
         <touch file="${betterFORM.install.marker}"/>
     </target>
@@ -229,7 +234,7 @@
         <delete file="${eXist.home}/MergeWebXML.xsl"/>
     </target>
 
-    <target name="patch-betterFORM-config">
+    <target name="patch-betterFORM-config" unless="betterFORM.config.patched">
         <echo>
             __== Patching betterFORM-config.xml ==__
         </echo>
@@ -242,6 +247,7 @@
 
 
         <move file="${eXist.home}/webapp/WEB-INF/betterform-config.xml.out" tofile="${eXist.home}/webapp/WEB-INF/betterform-config.xml"/>
+        <touch file="${betterFORM.config.patch.marker}"/>
     </target>
 
     <!-- *********************************************************************************************************** -->
@@ -254,14 +260,14 @@
             __== Installing dashboard ==__
         </echo>
 
-        <antcall target="db.start-eXist"/>
+    <!--   <antcall target="db.start-eXist"/> -->
         <antcall target="db.install-files-into-eXist-DB">
            <param name="db-user" value="${db.user}"/>
            <param name="db-passwd" value="${db.pwd}"/>
            <param name="file-source-dir" value="${main.dir}/db/"/>
            <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}"/>
         </antcall>
-        <antcall target="db.stop-eXist"/>
+  <!--        <antcall target="db.stop-eXist"/> -->
 
         <copy file="${overwrites.dir}/webapp/dashboard.html" tofile="${eXist.home}/webapp/dashboard.html" overwrite="true"/>
     </target>
@@ -338,20 +344,13 @@
         <echo>
             __== Installing editor ==__
         </echo>
-        <!-- <antcall target="db.start-eXist"/> -->
+
         <antcall target="db.install-files-into-eXist-DB">
            <param name="db-user" value="${db.user}"/>
            <param name="db-passwd" value="${db.pwd}"/>
            <param name="file-source-dir" value="${resource.dir}/src/main/xforms/incubator/editor"/>
            <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}/apps/editor"/>
         </antcall>
-
-        <!--
-        <copy todir="${eXist.home}/webapp/forms/incubator/editor">
-            <fileset dir="${resource.dir}/src/main/xforms/incubator/editor"/>
-        </copy>
-        -->
-        <!-- <antcall target="db.stop-eXist"/> -->
     </target>
 
 
@@ -378,10 +377,11 @@
         <antcall target="uninstall-betterFORM-single-jar-mode"/>
         <antcall target="install-betterFORM-base"/>
         <antcall target="deploy-resources-exploded"/>
+        <antcall target="patch-betterFORM-config"/>
 
-	<antcall target="db.start-eXist"/>
+	    <antcall target="db.start-eXist"/>
         <antcall target="install-dashboard"/>
-	<antcall target="db.stop-eXist"/>
+	    <antcall target="db.stop-eXist"/>
     </target>
 
     <target name="uninstall-betterFORM-single-jar-mode" if="betterFORM.single.jar.mode" description="removes betterFORM from eXist if installed in single jar mode">
@@ -413,13 +413,19 @@
             <property name="should.not.copy.libs" value="YES MA´AM"/>
         </ant>
 
-        <move todir="${eXist.home}/webapp/WEB-INF/classes">
+        <move todir="${eXist.home}/webapp/WEB-INF/classes" overwrite="true">
             <fileset dir="${betterFORM.extension}/target/WEB-INF/classes"/>
         </move>
 
-        <!--
-            <delete dir="${betterFORM.extension}/target"" includeemptydirs="true"/>
-        -->
+        <echo>
+            _== Moving needed files from betterFROM WEB-INF directory to eXist WEB-INF directory ==_
+        </echo>
+        <move file="${betterFORM.extension}/target/WEB-INF/betterform-config.xml" tofile="${eXist.home}/webapp/WEB-INF/betterform-config.xml" overwrite="true"/>
+        <move file="${betterFORM.extension}/target/WEB-INF/betterform-version.info" tofile="${eXist.home}/webapp/WEB-INF/betterform-version.info" overwrite="true"/>
+        <move file="${betterFORM.extension}/target/WEB-INF/dwr.xml" tofile="${eXist.home}/webapp/WEB-INF/dwr.xml" overwrite="true"/>
+        <move file="${betterFORM.extension}/target/WEB-INF/dwr20.dtd" tofile="${eXist.home}/webapp/WEB-INF/dwr20.dtd" overwrite="true"/>
+
+        <delete dir="${betterFORM.extension}/target" includeemptydirs="true"/>
     </target>
 
 
@@ -446,9 +452,11 @@
         <antcall target="install-betterFORM-base"/>
         <antcall target="uninstall-betterFORM-exploded-mode"/>
         <antcall target="deploy-resources"/>
-	<antcall target="db.start-eXist"/>
+        <antcall target="patch-betterFORM-config"/>
+
+        <antcall target="db.start-eXist"/>
         <antcall target="install-dashboard"/>
-	<antcall target="db.stop-eXist"/>
+	    <antcall target="db.stop-eXist"/>
     </target>
 
 
@@ -474,6 +482,14 @@
         </ant>
 
         <move file="${betterFORM.extension}/target/WEB-INF/lib/betterform.jar" tofile="${betterFORM.libs}/betterform.jar"/>
+
+        <echo>
+            _== Moving needed files from betterFROM WEB-INF directory to eXist WEB-INF directory ==_
+        </echo>
+        <move file="${betterFORM.extension}/target/WEB-INF/betterform-config.xml" tofile="${eXist.home}/webapp/WEB-INF/betterform-config.xml"/>
+        <move file="${betterFORM.extension}/target/WEB-INF/betterform-version.info" tofile="${eXist.home}/webapp/WEB-INF/betterform-version.info"/>
+        <move file="${betterFORM.extension}/target/WEB-INF/dwr.xml" tofile="${eXist.home}/webapp/WEB-INF/dwr.xml"/>
+        <move file="${betterFORM.extension}/target/WEB-INF/dwr20.dtd" tofile="${eXist.home}/webapp/WEB-INF/dwr20.dtd"/>
 
         <delete dir="${betterFORM.extension}/target" includeemptydirs="true"/>
     </target>
