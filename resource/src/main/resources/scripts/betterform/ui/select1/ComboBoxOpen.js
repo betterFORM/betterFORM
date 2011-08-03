@@ -54,8 +54,9 @@ dojo.declare(
             this.setCurrentValue(value);
             this.focusNode.value= label;
         }else {
-            this.setCurrentValue("");
-            this.focusNode.value= "";
+            var valueLabel = dojo.attr(this.srcNodeRef, "schemavalue");
+            this.setCurrentValue(valueLabel);
+            this.focusNode.value= valueLabel;
         }
     },
 
