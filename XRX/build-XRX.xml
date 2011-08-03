@@ -190,7 +190,6 @@
         </echo>
 
         <copy file="${etc.dir}/MergeWebXML-1.4.xsl" tofile="${eXist.home}/MergeWebXML.xsl" failonerror="true"/>
-        <copy file="${etc.dir}/MergeBetterformConfig.xsl" tofile="${eXist.home}/MergeBetterformConfig.xsl" failonerror="true"/>
 
         <antcall target="patch-web-xml"/>
 
@@ -238,6 +237,7 @@
         <echo>
             __== Patching betterFORM-config.xml ==__
         </echo>
+        <copy file="${etc.dir}/MergeBetterformConfig.xsl" tofile="${eXist.home}/MergeBetterformConfig.xsl" failonerror="true"/>
         <xslt in="${eXist.home}/webapp/WEB-INF/betterform-config.xml" out="${eXist.home}/webapp/WEB-INF/betterform-config.xml.out" force="true"
               style="${eXist.home}/MergeBetterformConfig.xsl">
             <classpath refid="generator.libs"/>
@@ -426,6 +426,7 @@
         <move file="${betterFORM.extension}/target/WEB-INF/dwr20.dtd" tofile="${eXist.home}/webapp/WEB-INF/dwr20.dtd" overwrite="true"/>
 
         <delete dir="${betterFORM.extension}/target" includeemptydirs="true"/>
+        <antcall target="patch-betterFORM-config"/>
     </target>
 
 
@@ -490,7 +491,7 @@
         <move file="${betterFORM.extension}/target/WEB-INF/betterform-version.info" tofile="${eXist.home}/webapp/WEB-INF/betterform-version.info"/>
         <move file="${betterFORM.extension}/target/WEB-INF/dwr.xml" tofile="${eXist.home}/webapp/WEB-INF/dwr.xml"/>
         <move file="${betterFORM.extension}/target/WEB-INF/dwr20.dtd" tofile="${eXist.home}/webapp/WEB-INF/dwr20.dtd"/>
-
         <delete dir="${betterFORM.extension}/target" includeemptydirs="true"/>
+        <antcall target="patch-betterFORM-config"/>
     </target>
 </project>
