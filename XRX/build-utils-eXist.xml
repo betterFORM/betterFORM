@@ -40,7 +40,8 @@
         <classpath refid="classpath.exist"/>
     </typedef>
 
-    <target name="install-files-into-eXist-DB" description="Generic xdb:store target. Set properties as needed when you call it.">
+    <!-- Generic xdb:store target. Set properties as needed when you call it. -->
+    <target name="install-files-into-eXist-DB" >
         <property name="file-source-dir" value="${basedir}/db-resources"/>
         <property name="db-uri" value="xmldb:exist://localhost:8080/betterform/xmlrpc/db/betterform/resources"/>
         <property name="db-user" value="betterform"/>
@@ -61,7 +62,8 @@
         </xdb:store>
     </target>
 
-     <target name="install-file-into-eXist-DB" description="Generic xdb:store target. Set properties as needed when you call it.">
+    <!-- Generic xdb:store target. Set properties as needed when you call it -->
+     <target name="install-file-into-eXist-DB" >
         <property name="file-source-dir" value="${basedir}/db-resources"/>
         <property name="db-uri" value="xmldb:exist://localhost:8080/betterform/xmlrpc/db/betterform/resources"/>
         <property name="db-user" value="betterform"/>

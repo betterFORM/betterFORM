@@ -119,9 +119,9 @@
 
     <!--
         Base install Targets
+        Installs a betterFORM base installation to eXist
     -->
-
-    <target name="install-betterFORM-base" unless="betterFORM.base.installed" description="Installs a betterFORM base installation to eXist">
+    <target name="install-betterFORM-base" unless="betterFORM.base.installed" >
         <echo>
             __== Setting up betterFORM-base ==__
         </echo>
@@ -255,7 +255,7 @@
     <!--
         Install various stuff to database
     -->
-    <target name="install-dashboard" description="install XQuery Dashboard to eXist" depends="exist-installed" if="betterFORM.base.installed">
+    <target name="install-dashboard" description="install XQuery Dashboard to eXist, , eXist must(!) run" depends="exist-installed" if="betterFORM.base.installed">
         <echo>
             __== Installing dashboard ==__
         </echo>
@@ -272,17 +272,15 @@
         <copy file="${overwrites.dir}/webapp/dashboard.html" tofile="${eXist.home}/webapp/dashboard.html" overwrite="true"/>
     </target>
 
-    <target name="install-forms" description="install reference and demo forms into db" depends="exist-installed" if="betterFORM.base.installed">
+    <target name="install-forms" description="install reference and demo forms into db, eXist must(!) run" depends="exist-installed" if="betterFORM.base.installed">
         <echo>
             __== Installing reference and demo forms ==__
         </echo>
-        <antcall target="db.start-eXist"/>
         <antcall target="install-reference-forms"/>
         <antcall target="install-demo-forms"/>
-        <antcall target="db.stop-eXist"/>
     </target>
 
-    <target name="install-reference-forms" description="install reference forms into db" depends="exist-installed" if="betterFORM.base.installed">
+    <target name="install-reference-forms" description="install reference forms into db, eXist must(!) run" depends="exist-installed" if="betterFORM.base.installed">
         <echo>
             __== Installing reference forms ==__
         </echo>
@@ -301,7 +299,7 @@
         </antcall>
     </target>
 
-    <target name="install-demo-forms" description="install demo Forms into db" depends="exist-installed" if="betterFORM.base.installed">
+    <target name="install-demo-forms" description="install demo Forms into db, eXist must(!) run" depends="exist-installed" if="betterFORM.base.installed">
         <echo>
             __== Installing demo forms ==__
         </echo>
@@ -320,7 +318,7 @@
         </antcall>
     </target>
 
-    <target name="install-demo-xrx" description="install XRX demo app into db" depends="exist-installed" if="betterFORM.base.installed">
+    <target name="install-demo-xrx" description="install XRX demo app into db,eXist must(!) run" depends="exist-installed" if="betterFORM.base.installed">
         <echo>
             __== Installing demo app ==__
         </echo>
@@ -340,7 +338,7 @@
     </target>
 
 
-    <target name="install-editor" description="install editor into db" depends="exist-installed" if="betterFORM.base.installed">
+    <target name="install-editor" description="install editor into db, eXist must(!) run" depends="exist-installed" if="betterFORM.base.installed">
         <echo>
             __== Installing editor ==__
         </echo>
@@ -359,7 +357,7 @@
     <!--
         Exploded Mode
     -->
-    <target name="update-betterFORM-exploded" depends="ant.check-ant-version, check-if-eXist-installed" description="updates betterFORM in exploded mode into eXist">
+    <target name="update-betterFORM-exploded" depends="ant.check-ant-version, check-if-eXist-installed" description="update betterFORM in exploded mode into eXist, eXist must not(!) run">
         <echo>
             __== Updating betterFORM-extension in exlopded Mode ==__
         </echo>
@@ -369,7 +367,7 @@
         <touch file="${betterFORM.install.marker}"/>
     </target>
 
-    <target name="install-betterFORM-exploded" depends="ant.check-ant-version, check-if-eXist-installed" description="Installs betterFORM in exploded mode">
+    <target name="install-betterFORM-exploded" depends="ant.check-ant-version, check-if-eXist-installed" description="install betterFORM in exploded mode, eXist must not(!) run">
         <echo>
             __== Installing betterFORM to eXist in exlopded Mode ==__
         </echo>
@@ -384,7 +382,8 @@
 	    <antcall target="db.stop-eXist"/>
     </target>
 
-    <target name="uninstall-betterFORM-single-jar-mode" if="betterFORM.single.jar.mode" description="removes betterFORM from eXist if installed in single jar mode">
+    <!-- removes betterFORM from eXist if installed in single jar mode -->
+    <target name="uninstall-betterFORM-single-jar-mode" if="betterFORM.single.jar.mode" >
         <echo>
             __== betterFORM in single jar mode found! It will be uninstalled now. ==__
         </echo>
@@ -435,7 +434,7 @@
     <!--
         Single JAR Mode
     -->
-    <target name="update-betterFORM" depends="ant.check-ant-version, check-if-eXist-installed" description="Updates betterFORM in single jar mode">
+    <target name="update-betterFORM" depends="ant.check-ant-version, check-if-eXist-installed" description="update betterFORM in single jar mode, eXist must not(!) run">
         <echo>
             __== Updating betterFORM-extension in single JAR Mode ==__
         </echo>
@@ -445,7 +444,7 @@
         <touch file="${betterFORM.install.marker}"/>
     </target>
 
-    <target name="install-betterFORM" depends="ant.check-ant-version, check-if-eXist-installed" description="Installs betterFORM in single jar mode into eXist">
+    <target name="install-betterFORM" depends="ant.check-ant-version, check-if-eXist-installed" description="install betterFORM in single jar mode into eXist, eXist must not(!) run">
         <echo>
             __== Installing betterFORM to eXist in single JAR Mode ==__
         </echo>
@@ -460,8 +459,8 @@
 	    <antcall target="db.stop-eXist"/>
     </target>
 
-
-    <target name="uninstall-betterFORM-exploded-mode" if="betterFORM.exploded.mode" description="removes betterFORM from eXist if installed in exploded mode">
+    <!-- removes betterFORM from eXist if installed in exploded mode -->
+    <target name="uninstall-betterFORM-exploded-mode" if="betterFORM.exploded.mode">
         <echo>
             __== betterFORM in exploded mode found! It will be uninstalled now. ==__
         </echo>
