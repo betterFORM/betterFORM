@@ -389,6 +389,10 @@ public class AbstractHTTPConnector extends AbstractConnector {
             }
         }
 
+        if(httpRequestBase.getURI().isAbsolute()){
+            httpRequestBase.setHeader("host", httpRequestBase.getURI().getHost());
+        }
+
         HttpResponse httpResponse = client.execute(httpRequestBase);
         try {
             if (httpResponse.getStatusLine().getStatusCode() >= 300) {
