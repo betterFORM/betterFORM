@@ -47,6 +47,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.*;
+import java.util.zip.GZIPInputStream;
 
 /**
  * A simple base class for convenient HTTP connector interface implementation.
@@ -425,7 +426,11 @@ public class AbstractHTTPConnector extends AbstractConnector {
             responseHeader.put(responseHeaders[index].getName(), responseHeaders[index].getValue());
         }
 
-        this.responseBody = httpResponse.getEntity().getContent();
+        if (responseHeader.containsKey("Content-Encoding") && ((String) responseHeader.get("Content-Encoding")).equalsIgnoreCase("gzip") ) {
+            this.responseBody =  new GZIPInputStream(httpResponse.getEntity().getContent());
+        } else {
+            this.responseBody = httpResponse.getEntity().getContent();
+        }
 
     }
 
