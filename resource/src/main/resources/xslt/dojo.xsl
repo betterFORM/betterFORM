@@ -255,11 +255,11 @@
         </script>
         <xsl:choose>
             <xsl:when test="$useCDN='true'">
-                <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js"> </script><xsl:text>
+                <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js" defer="defer"> </script><xsl:text>
 </xsl:text>
             </xsl:when>
             <xsl:otherwise>
-                <script type="text/javascript" src="{concat($contextroot,$scriptPath,'dojo/dojo.js')}"> </script><xsl:text>
+                <script type="text/javascript" src="{concat($contextroot,$scriptPath,'dojo/dojo.js')}" defer="defer"> </script><xsl:text>
 </xsl:text>
             </xsl:otherwise>
         </xsl:choose>
@@ -277,7 +277,7 @@
             </xsl:when>
 -->
             <xsl:otherwise>
-                <script type="text/javascript" src="{concat($contextroot,$scriptPath,'betterform/betterform-Full.js')}">&#160;</script>
+                <script type="text/javascript" src="{concat($contextroot,$scriptPath,'betterform/betterform-Full.js')}" defer="defer">&#160;</script>
             </xsl:otherwise>
         </xsl:choose>
         <xsl:text>
