@@ -387,12 +387,6 @@
             <help>Validate help</help>
             <alert>Validate alert</alert>
         </key>
-        <key name="relevantAttribute">
-            <label>Relevant</label>
-            <hint>Relevant hint.</hint>
-            <help>Relevant help</help>
-            <alert>Relevant alert</alert>
-        </key>
         <key name="serializationAttribute">
             <label>Serialization</label>
             <hint>Serialization hint.</hint>
