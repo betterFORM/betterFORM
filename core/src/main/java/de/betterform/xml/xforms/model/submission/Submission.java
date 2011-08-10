@@ -918,10 +918,13 @@ public class Submission extends BindingElement implements DefaultAction {
 
         Document result = getResponseAsDocument(response);
         Node embedElement = result.getDocumentElement();
-        
         if(resource.indexOf("#") != -1){
             // detected a fragment so extract that from our result Document
+
             String fragmentid = resource.substring(resource.indexOf("#")+1);
+            if (fragmentid.indexOf("?") != -1) {
+                fragmentid = fragmentid.substring(0, fragmentid.indexOf("?"));
+            }
             embedElement = DOMUtil.getById(result,fragmentid);
         }
 
