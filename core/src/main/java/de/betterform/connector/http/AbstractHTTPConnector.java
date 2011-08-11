@@ -5,41 +5,38 @@
 
 package de.betterform.connector.http;
 
-import de.betterform.connector.ConnectorFactory;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.connector.AbstractConnector;
+import de.betterform.connector.ConnectorFactory;
+import de.betterform.connector.http.ssl.KeyStoreSSLContext;
+import de.betterform.xml.config.Config;
 import de.betterform.xml.xforms.XFormsConstants;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.exception.XFormsInternalSubmitException;
 import de.betterform.xml.xforms.model.submission.RequestHeader;
 import de.betterform.xml.xforms.model.submission.RequestHeaders;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.Header;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
-
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.Credentials;
+import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.AuthCache;
-
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.*;
 import org.apache.http.client.params.ClientPNames;
 import org.apache.http.client.params.CookiePolicy;
 import org.apache.http.client.protocol.ClientContext;
-import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.cookie.MalformedCookieException;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.auth.Credentials;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.auth.AuthScope;
 import org.apache.http.impl.cookie.BrowserCompatSpec;
-import org.apache.http.message.BasicHeader;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.BasicHttpContext;
@@ -50,6 +47,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.*;
+import java.util.zip.GZIPInputStream;
 
 /**
  * A simple base class for convenient HTTP connector interface implementation.
@@ -66,14 +64,14 @@ public class AbstractHTTPConnector extends AbstractConnector {
      * Custom-SSL:
      * Key for storing custom SSL-protocol
      */
-    public static final String SSL_CUSTOM_PROTOCOL = "ssl-protocol";
+    public static final String SSL_CUSTOM_SCHEME = "ssl_custom_scheme";
 
     /*
      * Custom-SSL:
      * SSL-factory properties, see betterform-config.xml for description.
      */
-    public static final String HTTPCLIENT_SSL_FACTORY= "httpclient.ssl.factory";
-    public static final String HTTPCLIENT_SSL_FACTORY_DEFAULTPORT= "httpclient.ssl.factory.defaultPort";
+    public static final String HTTPCLIENT_SSL_CONTEXT= "httpclient.ssl.context";
+    public static final String HTTPCLIENT_SSL_CONTEXT_CUSTOMPORT= "httpclient.ssl.context.customPort";
     public static final String HTTPCLIENT_SSL_KEYSTORE_PATH= "httpclient.ssl.keystore.path";
     public static final String HTTPCLIENT_SSL_KEYSTORE_PASSWD= "httpclient.ssl.keystore.passwd";
 
@@ -244,14 +242,16 @@ public class AbstractHTTPConnector extends AbstractConnector {
             DefaultHttpClient client = ConnectorFactory.getFactory().getHttpClient(httpParams);
 
 
-/*
-        if (! getContext().containsKey(AbstractHTTPConnector.SSL_CUSTOM_PROTOCOL)) {
-            String factoryPath = Config.getInstance().getProperty(AbstractHTTPConnector.HTTPCLIENT_SSL_FACTORY);
-            if (factoryPath != null) {
-                initSSLProtocol(factoryPath);
+
+        if (! getContext().containsKey(AbstractHTTPConnector.SSL_CUSTOM_SCHEME)) {
+            LOGGER.debug("SSL_CUSTOM_SCHEME");
+            LOGGER.debug("SSL_CUSTOM_SCHEME: Factory: " + Config.getInstance().getProperty(AbstractHTTPConnector.HTTPCLIENT_SSL_CONTEXT));
+            String contextPath = Config.getInstance().getProperty(AbstractHTTPConnector.HTTPCLIENT_SSL_CONTEXT);
+            if (contextPath != null) {
+                initSSLScheme(contextPath);
             }
         }
-*/
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("context params>>>");
             Map map = getContext();
@@ -380,20 +380,22 @@ public class AbstractHTTPConnector extends AbstractConnector {
                 throw new MalformedCookieException("Cookies must be passed as org.apache.commons.httpclient.Cookie objects.");
             }
         }
+
+        if (getContext().containsKey(AbstractHTTPConnector.SSL_CUSTOM_SCHEME)) {
+            LOGGER.debug("Using customSSL-Protocol-Handler");
+            Iterator<Scheme> schemes = ((Vector<Scheme>) getContext().get(AbstractHTTPConnector.SSL_CUSTOM_SCHEME)).iterator();
+
+            while (schemes.hasNext()) {
+                client.getConnectionManager().getSchemeRegistry().register(schemes.next());
+            }
+        }
+
+        if(httpRequestBase.getURI().isAbsolute()){
+            httpRequestBase.setHeader("host", httpRequestBase.getURI().getHost());
+        }
+
         HttpResponse httpResponse = client.execute(httpRequestBase);
-
         try {
-            /* TODO
-            if (getContext().containsKey(AbstractHTTPConnector.SSL_CUSTOM_PROTOCOL)) {
-                LOGGER.debug("Using customSSL-Protocol-Handler");
-
-                HostConfiguration hc = new HostConfiguration();
-                hc.setHost(httpMethod.getURI().getHost(), httpMethod.getURI().getPort(), (Protocol) getContext().get(AbstractHTTPConnector.SSL_CUSTOM_PROTOCOL));
-                client.executeMethod(hc, httpMethod);
-            } else {
-                client.executeMethod(httpMethod);
-            }      */
-
             if (httpResponse.getStatusLine().getStatusCode() >= 300) {
                 // Allow 302 only
                 if (httpResponse.getStatusLine().getStatusCode() != 302) {
@@ -403,6 +405,7 @@ public class AbstractHTTPConnector extends AbstractConnector {
             this.handleHttpMethod(httpResponse);
         }
         catch (Exception e) {
+            LOGGER.trace("AbstractHTTPConnector Exception: ", e);
             try {
                 throw new XFormsInternalSubmitException(httpResponse.getStatusLine().getStatusCode(), httpResponse.getStatusLine().getReasonPhrase(), EntityUtils.toString(httpResponse.getEntity()), XFormsConstants.RESOURCE_ERROR);
             } catch (IOException e1) {
@@ -423,7 +426,11 @@ public class AbstractHTTPConnector extends AbstractConnector {
             responseHeader.put(responseHeaders[index].getName(), responseHeaders[index].getValue());
         }
 
-        this.responseBody = httpResponse.getEntity().getContent();
+        if (responseHeader.containsKey("Content-Encoding") && ((String) responseHeader.get("Content-Encoding")).equalsIgnoreCase("gzip") ) {
+            this.responseBody =  new GZIPInputStream(httpResponse.getEntity().getContent());
+        } else {
+            this.responseBody = httpResponse.getEntity().getContent();
+        }
 
     }
 
@@ -433,35 +440,37 @@ public class AbstractHTTPConnector extends AbstractConnector {
         //httpMethod.setHeader(new BasicHeader("Content-Length", String.valueOf(body.getBytes(encoding).length)));
     }
 
-    /*
-    private void initSSLProtocol(String factoryPath) throws Exception {
-        Protocol sslProtocol;
-            LOGGER.debug("creating sslProtocol ...");
-            LOGGER.debug("ProtocolPath: " + factoryPath);
-            Class sslClass = Class.forName(factoryPath);
-            Object sslFactory = sslClass.newInstance();
-            if (sslFactory instanceof SecureProtocolSocketFactory) {
-                int defaultPort;
-                if (Config.getInstance().getProperty(AbstractHTTPConnector.HTTPCLIENT_SSL_FACTORY_DEFAULTPORT) != null) {
-                    try {
-                        defaultPort = Integer.parseInt(Config.getInstance().getProperty(AbstractHTTPConnector.HTTPCLIENT_SSL_FACTORY_DEFAULTPORT));
-                    } catch (NumberFormatException nfe) {
-                        LOGGER.warn(AbstractHTTPConnector.HTTPCLIENT_SSL_FACTORY_DEFAULTPORT + " is not parsable as a number. Check your settings in betterform-config.xml!", nfe);
-                        LOGGER.warn("Setting sslPort to 443");
-                        defaultPort = 443;
-                    }
-                } else {
-                    defaultPort = 443;
-                }
-                LOGGER.trace("DefaultPort: " + defaultPort);
-                sslProtocol = new Protocol("https", (ProtocolSocketFactory) sslFactory, defaultPort);
-                Protocol.registerProtocol("https", sslProtocol);
 
-                getContext().put(AbstractHTTPConnector.SSL_CUSTOM_PROTOCOL, sslProtocol);
+    private void initSSLScheme(String contextPath) throws Exception {
+            LOGGER.debug("creating sslScheme ...");
+            LOGGER.debug("KeyStoreSSLContext: " + contextPath);
+            Class contextClass = Class.forName(contextPath);
+            Object context = contextClass.newInstance();
+            Vector<Scheme> schemes = new Vector<Scheme>();
+
+            if (context instanceof KeyStoreSSLContext) {
+                int httpSSLPort = 443;
+                int tomcatSSLPort = 8443;
+
+                SSLSocketFactory socketFactory = new SSLSocketFactory(((KeyStoreSSLContext)context).getSSLContext());
+                if (Config.getInstance().getProperty(AbstractHTTPConnector.HTTPCLIENT_SSL_CONTEXT_CUSTOMPORT) != null) {
+                    try {
+                        int customPort = Integer.parseInt(Config.getInstance().getProperty(AbstractHTTPConnector.HTTPCLIENT_SSL_CONTEXT_CUSTOMPORT));
+                        LOGGER.trace("CustomPort: " + customPort);
+                        Scheme sslScheme = new Scheme("https", customPort, socketFactory);
+                        schemes.add(sslScheme);
+                    } catch (NumberFormatException nfe) {
+                        LOGGER.warn(AbstractHTTPConnector.HTTPCLIENT_SSL_CONTEXT_CUSTOMPORT + " is not parsable as a number. Check your settings in betterform-config.xml!", nfe);
+                    }
+                }
+                Scheme sslScheme1 = new Scheme("https", httpSSLPort, socketFactory);
+                schemes.add(sslScheme1);
+                Scheme sslScheme2 = new Scheme("https", tomcatSSLPort, socketFactory);
+                schemes.add(sslScheme2);
+
+                getContext().put(AbstractHTTPConnector.SSL_CUSTOM_SCHEME, schemes);
             }
     }
-
-    */
 }
 
 //end of class

@@ -61,5 +61,3 @@ dojo.declare(
         this._setValueAttr(value);
     }
 });
-
-

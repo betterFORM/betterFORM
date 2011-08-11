@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shortcuts>
+    <programGroup defaultName="betterFORM" location="applications"/>
+
+    <shortcut
+            name="betterFORM XRX"
+            type="Application"
+            encoding="UTF-8"
+            target="$INSTALL_PATH/start.sh"
+            workingDirectory="$INSTALL_PATH"
+            description="betterFORM limegreen prerelease"
+            programGroup="yes"
+            desktop="yes"
+            terminal="true"
+            iconFile="$INSTALL_PATH/webapp/images/betterform_icon16x16.png">
+        <createForPack name="betterForm_XRX"/>
+    </shortcut>
+</shortcuts>

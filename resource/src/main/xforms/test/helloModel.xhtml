@@ -1,28 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xf="http://www.w3.org/2002/xforms"
     xmlns:ev="http://www.w3.org/2001/xml-events"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:bf="http://betterform.sourceforge.net/xforms">
+    xmlns:bf="http://betterform.sourceforge.net/xforms"
+    xmlns:u="http://www.webrender.de/user">
     <head>
         <title>hello</title>
 
     </head>
     <body>
-        <div style="display:none">
-            <xforms:model id="model-1">
-                <xforms:instance>
-                    <data xmlns="">
-                        <hello>Hello World!</hello>
-                    </data>
-                </xforms:instance>
-            </xforms:model>
-
-        </div>
-
-        <xforms:output id="ui" ref="hello">
-            <xforms:label>Hello from XForms: </xforms:label>
-        </xforms:output>
+        <xf:model>
+                         <xf:instance id="user">
+                                         <User xmlns="http://www.webrender.de/user">
+                                 <Email></Email>
+                                 <Password></Password>
+                             </User>
+                         </xf:instance>
+                         <xf:bind nodeset="u:User/u:Email" type="email" required="true()"></xf:bind>
+                         <xf:bind nodeset="u:User/u:Password" required="false()"></xf:bind>
+                         <xf:submission id="s-login" replace="instance"
+                             resource="/betterform/rest/keymate/xforms/userdata.xq?action=login"
+                             method="post">
+                             <xf:action ev:event="xforms-submit-error">
+                                 <xf:message>Benutzername oder Password falsch.</xf:message>
+                             </xf:action>
+                             <xf:action ev:event="xforms-submit-done">
+                                 <xf:message>Login erfolgreich.</xf:message>
+                             </xf:action>
+                         </xf:submission>
+                         <xf:submission id="s-lost-pw" replace="instance"
+                             resource="/betterform/rest/keymate/xforms/userdata.xq?action=lostpw"
+                             method="post">
+                            <xf:action ev:event="xforms-submit-error">
+                                 <xf:message>Ihre E-Mail Adresse ist nicht in unserer Datenbank gespeichert.</xf:message>
+                             </xf:action>
+                             <xf:action ev:event="xforms-submit-done">
+                                 <xf:message>Bitte überprüfen Sie Ihre E-Mails.</xf:message>
+                             </xf:action>
+                         </xf:submission>
+                     </xf:model>
+ <xf:input ref="u:Email">
+                         <xf:label>E-Mail Adresse:</xf:label>
+                         <xf:hint>Bitte geben Sie Ihre E-Mail Adresse ein</xf:hint>
+                     </xf:input>
     </body>
 </html>

@@ -6,6 +6,15 @@ import module namespace request="http://exist-db.org/xquery/request";
 
 declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
 
+declare function local:getClients() {
+    for $clients in collection('betterform/apps/timetracker/data/client/')/client
+    order by fn:upper-case($clients)
+    return
+        <client id="{$clients/@id}" shortName="{$clients/@shortName}">
+            {$clients/name/text()}
+        </client>
+};
+
 let $contextPath := request:get-context-path()
 return
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -132,7 +141,7 @@ return
                                     ref="instance()"
                                     validate="false">
                         <xf:action ev:event="xforms-submit-error">
-                            <xf:message>Submission failed</xf:message>
+                            <xf:message>Submission 'Query Tasks' failed</xf:message>
                         </xf:action>
                     </xf:submission>
 
@@ -187,29 +196,11 @@ return
                         <xf:setvalue ref="from" value="days-to-date(number(days-from-date(instance()/to) - instance('i-vars')/default-duration))"/>
                     </xf:action>
 
-                     <!-- ***************************
-                    Commented out but might still be useful as reference - shows REST-style access
-
-                    <xf:instance id="i-query">
+                    <xf:instance id="i-clients">
                         <data xmlns="">
-                            <_query>//task</_query>
-                            <_howmany/>
-                            <_xsl>/db/betterform/apps/timetracker/views/list-items.xsl</_xsl>
+                            {local:getClients()}
                         </data>
-                    </xf:instance>
-
-                    <xf:submission id="s-query-tasks-rest"
-                                    resource="{$contextPath}/rest/db/betterform/apps/timetracker/data/task"
-                                    method="get"
-                                    replace="embedHTML"
-                                    targetid="embedInline"
-                                    ref="instance('i-query')"
-                                    validate="false">
-                        <xf:action ev:event="xforms-submit-done">
-                            <xf:refresh/>
-                        </xf:action>
-                    </xf:submission>
-                    ****************************** -->
+                    </xf:instance>     
                 </xf:model>
 
                 <xf:trigger id="overviewTrigger">
@@ -299,13 +290,13 @@ return
                                     </td>
                                     <td>
                                         <xf:select1 ref="project" appearance="minimal" incremental="true">
-                                            <xf:label>Project</xf:label>
+                                            <xf:label>Client</xf:label>
                                             <xf:action ev:event="xforms-value-changed">
                                                 <xf:dispatch  name="DOMActivate" targetid="overviewTrigger"/>
                                             </xf:action>
-                                            <xf:itemset nodeset="instance('i-project')/*">
+                                            <xf:itemset nodeset="instance('i-clients')/client">
                                                 <xf:label ref="."/>
-                                                <xf:value ref="."/>
+                                                <xf:value ref="@id"/>
                                             </xf:itemset>
                                         </xf:select1>
                                     </td>

@@ -22,11 +22,15 @@
         <task>
             <xsl:variable name="currentProject" select="project"/>
             <xsl:variable name="projectId" select="$projects/data/project[.=$currentProject]/@id"/>
-            <xsl:message>Project <xsl:value-of select="$currentProject"/> </xsl:message>
-            <xsl:message>Project Id: <xsl:value-of select="$projectId"/> </xsl:message>
             <xsl:attribute name="client" select="$projectId"/>
             <xsl:attribute name="project" select="'1'"/>
-            <xsl:attribute name="milestone" select="'1'"/>
+            <xsl:attribute name="iteration" select="'1'"/>
+
+            <xsl:message>Project <xsl:value-of select="$currentProject"/> </xsl:message>
+            <xsl:message>Project Id: <xsl:value-of select="$projectId"/> </xsl:message>
+            <xsl:if test="string-length($projectId) = 0">
+                <xsl:message terminate="yes">ERROR: Project Id missing</xsl:message>
+            </xsl:if>
             <date><xsl:value-of select="date"/></date>
             <start><xsl:value-of select="start"/></start>
             <end><xsl:value-of select="end"/></end>
