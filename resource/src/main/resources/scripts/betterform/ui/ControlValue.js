@@ -24,7 +24,7 @@ dojo.declare(
     xfControl:null,
     incremental:false,
     currentValue:"",    
-    focused:false,
+    bfFocus:false,
 
 
     applyProperties:function(xfControl, node) {
@@ -51,7 +51,7 @@ dojo.declare(
 
     _handleDOMFocusIn:function() {
         // console.debug("ControlValue._handleDOMFocusIn()");
-        this.focused = true;
+        this.bfFocus = true;
         this.domNode.focus();
     },
 
@@ -62,11 +62,11 @@ dojo.declare(
 
         fluxProcessor.currentControlId = this.xfControl.id;
 
-        if(!this.focused){
+        if(!this.bfFocus){
             fluxProcessor.dispatchEventType(this.xfControl.id,"DOMFocusIn");
         }
 
-        this.focused = true;
+        this.bfFocus = true;
         if(this.xfControl.isValid()){
             dojo.publish("/xf/valid",[this.xfControl.id,"onFocus"]);
         }else {
@@ -82,7 +82,7 @@ dojo.declare(
 
     handleOnBlur:function() {
         // console.debug("ControlValue.handleOnBlur");
-        this.focused = false;
+        this.bfFocus = false;
         if(this.xfControl.isValid()){
             dojo.publish("/xf/valid",[this.xfControl.id,"onBlur"]);
         }else {

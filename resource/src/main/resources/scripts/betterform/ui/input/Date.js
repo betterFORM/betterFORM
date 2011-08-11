@@ -80,7 +80,7 @@ dojo.declare(
 
     _handleDOMFocusIn:function() {
         //console.debug("Date._handleDOMFocusIn()");
-        this.focused = true;
+        this.bfFocus = true;
         var control = dijit.byId(this.id);
 
         if (control != undefined ) {

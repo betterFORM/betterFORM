@@ -972,6 +972,17 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
                 if (exception != undefined) {
                     console.warn("An Exception occured in Facade: ", exception);
                 } else {
+                    alert(message);
+                    // the following code had to be disabled because of focusing problems:
+                    // when dialog is opened by a DOMFocusIn event the behavior of Dialog cause an endless loop
+                    // of focusIn events as the Dialog will send the focus back to the control that had focus before
+                    // opening the Dialog. This effectively causes the page to 'hang'. Focusing can be disabled in
+                    // Dialog but then the original focus will be lost. The standard alert does not have these
+                    // problems.
+
+/*
+
+
                     var messageNode = dojo.create("div",  null, dojo.body());
                     dojo.attr(messageNode, "title", "Message");
                     dojo.require("dijit.Dialog");
@@ -1000,6 +1011,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
                                                 },
                                                 closeBtnNode);
                     messageDialog.show();
+*/
                 }
             }
         } else {
@@ -1398,7 +1410,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
         	// console.debug("dom-focus-in-dijit control: ",xfControlId);
             dijit.byId(xfControlId)._handleDOMFocusIn();
         } else if (dojo.byId(xfControlId) != undefined) {
-        	// console.debug("dom-focus-in-dojo control: ",xfControlId);
+        	console.debug("dom-focus-in-dojo control: ",xfControlId);
             var domControlValue = dojo.byId(xfControlId)
             domControlValue.focus();
         } else {
