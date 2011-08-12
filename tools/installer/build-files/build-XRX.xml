@@ -123,7 +123,7 @@
         </ant>
 
 
-         <ant antfile="${xrx.dir}/build-XRX.xml" target="install-demo-xrx" inheritall="false" usenativebasedir="true">
+        <ant antfile="${xrx.dir}/build-XRX.xml" target="install-demo-xrx-betterFORM-user" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
             <property name="db.user" value="betterFORM"/>
             <property name="db.pwd" value="Tha0xeiC8a"/>
