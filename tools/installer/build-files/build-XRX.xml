@@ -108,30 +108,30 @@
 
         <ant antfile="${xrx.dir}/build-XRX.xml" target="install-betterFORM" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
-            <property name="db-user" value="betterFORM"/>
-            <property name="db-passwd" value="Tha0xeiC8a"/>
+            <property name="db.user" value="betterFORM"/>
+            <property name="db.pwd" value="Tha0xeiC8a"/>
         </ant>
 
         <ant antfile="${xrx.dir}/build-XRX.xml" target="install-forms" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
-            <property name="db-user" value="betterFORM"/>
-            <property name="db-passwd" value="Tha0xeiC8a"/>
+            <property name="db.user" value="betterFORM"/>
+            <property name="db.pwd" value="Tha0xeiC8a"/>
         </ant>
 
         <ant antfile="${xrx.dir}/build-utils-eXist.xml" target="start-eXist">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
         </ant>
 
-         <ant antfile="${xrx.dir}/build-XRX.xml" target="install-demo-xrx" inheritall="false" usenativebasedir="true">
+         <ant antfile="${xrx.dir}/build-XRX.xml" target="install-demo-xrx-betterFORM-user" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
-            <property name="db-user" value="betterFORM"/>
-            <property name="db-passwd" value="Tha0xeiC8a"/>
+            <property name="db.user" value="betterFORM"/>
+            <property name="db.pwd" value="Tha0xeiC8a"/>
         </ant>
 
          <ant antfile="${xrx.dir}/build-XRX.xml" target="install-editor" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
-            <property name="db-user" value="betterFORM"/>
-            <property name="db-passwd" value="Tha0xeiC8a"/>
+            <property name="db.user" value="betterFORM"/>
+            <property name="db.pwd" value="Tha0xeiC8a"/>
         </ant>
 
         <ant antfile="${xrx.dir}/build-utils-eXist.xml" target="stop-eXist">
