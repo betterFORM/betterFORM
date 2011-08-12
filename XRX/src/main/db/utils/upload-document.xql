@@ -19,13 +19,9 @@ return
       xmlns:ev="http://www.w3.org/2001/xml-events"
       xml:lang="en">
     <head>
-        <title>betterFORM Upload Demonstration</title>
+        <title>none</title>
     </head>
-
-    <body id="timetracker">
-		<div id="content">
-			<h1>Upload successful</h1>
-   			<div style="font-size:large">File {$filename} has been stored within collection={$collection}.</div>
-        </div>
+    <body>
+        <textarea>File {$filename} has been stored within collection={$collection}.</textarea>
     </body>
 </html>
