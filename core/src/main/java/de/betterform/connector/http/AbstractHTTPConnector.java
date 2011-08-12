@@ -405,6 +405,7 @@ public class AbstractHTTPConnector extends AbstractConnector {
             this.handleHttpMethod(httpResponse);
         }
         catch (Exception e) {
+
             LOGGER.trace("AbstractHTTPConnector Exception: ", e);
             try {
                 throw new XFormsInternalSubmitException(httpResponse.getStatusLine().getStatusCode(), httpResponse.getStatusLine().getReasonPhrase(), EntityUtils.toString(httpResponse.getEntity()), XFormsConstants.RESOURCE_ERROR);
