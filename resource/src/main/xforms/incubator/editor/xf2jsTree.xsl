@@ -30,58 +30,7 @@
                 <script type="text/javascript"
                         src="../../../bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
                 <script type="text/javascript" src="../../../bfResources/scripts/betterform/xfEditorUtil.js"></script>
-                <script type="text/javascript"
-                        src="../../../bfResources/scripts/betterform/betterform-XFormsEditor.js"></script>
-                <script type="text/javascript" src="../../../bfResources/scripts/betterform/editor/addMenu.js"></script>
-                <script type="text/javascript">
-                    dojo.require("dijit.layout.ContentPane");
-                    dojo.require("dijit.Menu");
-                    dojo.require("dijit.MenuBar");
-                    dojo.require("dijit.PopupMenuBarItem");
-                    dojo.require("dijit.MenuItem");
-                    dojo.require("dijit.PopupMenuItem");
 
-                    dojo.require("dijit.layout.TabContainer");
-                    dojo.require("dijit.form.TextBox");
-                    dojo.require("dijit.form.Select");
-                    dojo.require("dijit.form.FilteringSelect");
-                    dojo.require("dojo.data.ItemFileReadStore");
-                    dojo.require("dojox.layout.FloatingPane");
-                    dojo.require("dijit.TitlePane");
-
-                    attrEditor = new betterform.Editor({}, "editor");
-                    //console.debug("attrEditor.: ",attrEditor);
-
-                    function checkKeyboardInput(pEvent) {
-                        var activeElem = document.activeElement.localName;
-                        console.debug("activeElem: ", activeElem);
-                        if (activeElem == "input") {
-                            return;
-                        }
-                        console.debug("activeElem: ", activeElem);
-                        switch (pEvent.charOrCode) {
-                            case '?': //Process the Help key event
-                                dijit.byId("bfEditorHelp").show();
-                                break;
-                            case 't':
-                            case 'T':
-                                dojo.byId("root").focus();
-                                break;
-
-                            default:
-                                //no defaults at this time
-                                break;
-
-                        }
-                    }
-
-                    dojo.addOnLoad(
-                            function() {
-                                dojo.connect(dojo.body(), "onkeypress", checkKeyboardInput);
-                            }
-                    );
-
-                </script>
                 <link rel="stylesheet" type="text/css" href="../../../bfResources/styles/xforms-editor.css"/>
             </head>
             <body id="editor" class="bf" jsId="attrEditor">
@@ -758,6 +707,44 @@
                 <div id="saveDialog" dojotype="dijit.Dialog" title="save as ..." autofocus="false" style="width:820px;height:540px;overflow:auto;">
                     <div id="embedDialog"/>
                 </div>
+
+                <script type="text/javascript" defer="defer"
+                        src="../../../bfResources/scripts/betterform/betterform-XFormsEditor.js"></script>
+                <script type="text/javascript" defer="defer" src="../../../bfResources/scripts/betterform/editor/addMenu.js"></script>
+                <script type="text/javascript" defer="defer">
+                    attrEditor = new betterform.Editor({}, "editor");
+                    //console.debug("attrEditor.: ",attrEditor);
+
+                    function checkKeyboardInput(pEvent) {
+                        var activeElem = document.activeElement.localName;
+                        console.debug("activeElem: ", activeElem);
+                        if (activeElem == "input") {
+                            return;
+                        }
+                        console.debug("activeElem: ", activeElem);
+                        switch (pEvent.charOrCode) {
+                            case '?': //Process the Help key event
+                                dijit.byId("bfEditorHelp").show();
+                                break;
+                            case 't':
+                            case 'T':
+                                dojo.byId("root").focus();
+                                break;
+
+                            default:
+                                //no defaults at this time
+                                break;
+
+                        }
+                    }
+
+                    dojo.addOnLoad(
+                            function() {
+                                dojo.connect(dojo.body(), "onkeypress", checkKeyboardInput);
+                            }
+                    );
+
+                </script>
             </body>
         </html>
     </xsl:template>

@@ -29,9 +29,9 @@
         "exist" for an exist installation
         "betterform" for an betterFORM XRX installation
     -->
-    <property name="webapp.context" value="betterform"/>
+    <property name="webapp.context" value="exist"/>
     <property name="db.user" value="admin"/>
-    <property name="db.pwd" value="zusel.1"/>
+    <property name="db.pwd" value=""/>
 
     <!-- betterFORM module directories -->
     <property name="root.dir" value="${betterFORM.src}"/>
@@ -334,25 +334,6 @@
            <param name="db-passwd" value="${db.pwd}"/>
            <param name="file-source" value="${resource.dir}/src/main/xforms/TimeTracker.xhtml"/>
            <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}"/>
-        </antcall>
-    </target>
-
-    <target name="install-demo-xrx-betterFORM-user" description="install demo Forms into db" depends="exist-installed" if="betterFORM.base.installed">
-        <echo>
-            __== Installing XRX demo app (betterform User) ==__
-        </echo>
-        <echo message="DB-User: ${db.user} DB-Passwd: ${db.pwd}"/>
-
-        <antcall target="install-demo-xrx">
-            <param name="db-user" value="${db.user}"/>
-            <param name="db-passwd" value="${db.pwd}"/>
-        </antcall>
-
-        <antcall target="db.install-files-into-eXist-DB">
-           <param name="db-user" value="${db.user}"/>
-           <param name="db-passwd" value="${db.pwd}"/>
-           <param name="file-source-dir" value="${overwrites.dir}/extensions/betterform/src/main/xrx/timetracker"/>
-           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}/apps/timetracker"/>
         </antcall>
     </target>
 

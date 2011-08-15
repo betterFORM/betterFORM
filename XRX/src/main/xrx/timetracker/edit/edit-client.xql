@@ -175,7 +175,7 @@ return
                                    instance="i-client"
                                    validate="false">
                                    <xf:resource value="concat('{$contextPath}/rest/db/betterform/apps/timetracker/data/client?_query=/client',encode-for-uri('['), '@id=' ,instance('i-temp')/client/@id, encode-for-uri(']'))"/>
-                                   <xf:toggle ev:event="xforms-submit-done" case="project-new"/>
+                                   <xf:toggle ev:event="xforms-submit-done" case="select-or-create-project"/>
                                    <xf:message ev:event="xforms-submit-error">Error loading client data</xf:message>
                     </xf:submission>
 
@@ -191,10 +191,23 @@ return
             <xf:group id="createClient" appearance="full" >
                 <xf:label/>
                 <xf:switch>
-                    <xf:case id="client-new" selected="true">
+                    <xf:case id="client-select-or-new" selected="true">
                         <xf:trigger>
                             <xf:label>Select Client</xf:label>
                             <xf:toggle case="client-select"/>
+                        </xf:trigger>
+                        <div> or create </div>
+                        <xf:trigger>
+                            <xf:label>New Client</xf:label>
+                            <xf:toggle case="client-new"/>
+                            <xf:toggle case="project-empty"/>
+                        </xf:trigger>
+                    </xf:case>
+
+                    <xf:case id="client-new" selected="true">
+                        <xf:trigger>
+                            <xf:label>Back</xf:label>
+                            <xf:toggle case="client-select-or-new"/>
                         </xf:trigger>
 
                         <xf:input ref="name">
@@ -217,17 +230,12 @@ return
                             <xf:send submission="s-add" if="not(exists(instance('i-clients')/client[.=instance('i-client-template')/name])) and not(exists(instance('i-clients')/client[@shortName=instance('i-client-template')/@shortName]))" />
                         </xf:trigger>
 
-                        <xf:trigger style="padding-right:0;">
-                            <xf:label>Test</xf:label>
-                        </xf:trigger>
-
                     </xf:case>
                     
                     <xf:case id="client-select">
                         <xf:trigger>
-                            <xf:label>New Client</xf:label>
-                            <xf:toggle case="client-new"/>
-                            <xf:toggle case="project-empty"/>
+                            <xf:label>Back</xf:label>
+                            <xf:toggle case="client-select-or-new"/>
                         </xf:trigger>
                         <xf:group id="clientSelect" appearance="full">
                             <xf:select1 id="clients" ref="instance('i-temp')/client/@id" appearance="minimal">
@@ -243,11 +251,24 @@ return
                         <xf:switch>
                             <xf:case id="project-empty">
                             </xf:case>
-                            <xf:case id="project-new">
+                            <xf:case id="select-or-create-project">
                                 <xf:trigger>
                                     <xf:label>Select Project</xf:label>
                                     <xf:toggle case="project-select"/>
                                 </xf:trigger>
+                                <div> or create </div>
+                                <xf:trigger>
+                                    <xf:label>New Project</xf:label>
+                                    <xf:toggle case="project-new"/>
+                                </xf:trigger>
+
+                            </xf:case>
+                            <xf:case id="project-new">
+                                    <xf:trigger>
+                                        <xf:label>Back</xf:label>
+                                        <xf:toggle case="select-or-create-project"/>
+                                    </xf:trigger>
+
                                     <xf:input ref="instance()/projects/project[1]/name">
                                         <xf:label>Project:</xf:label>
                                     </xf:input>
@@ -268,8 +289,8 @@ return
                             <xf:case id="project-select">
                                 <xf:group id="projectSelect" appearance="full">
                                     <xf:trigger>
-                                        <xf:label>New Project</xf:label>
-                                        <xf:toggle case="project-new"/>
+                                        <xf:label>Back</xf:label>
+                                        <xf:toggle case="select-or-create-project"/>
                                     </xf:trigger>
                                     <xf:select1 id="projects" ref="instance('i-temp')/project/@id" appearance="minimal">
                                         <xf:label>Select Project:</xf:label>

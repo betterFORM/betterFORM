@@ -131,18 +131,7 @@
             <xsl:call-template name="getLinkAndStyle"/>
 
             <!-- include needed javascript files -->
-            <xsl:call-template name="addDojoConfig"/>
-            <xsl:call-template name="addDojoImport"/>
-            <xsl:call-template name="addDWRImports"/>
-
-            <!-- Optional Simile Timeline Javascript Imports -->
-            <xsl:if test="exists(//xf:input[@appearance='caSimileTimeline'])">
-                <xsl:call-template name="addSimileTimelineImports" />
-            </xsl:if>
-
-            <xsl:call-template name="addLocalScript"/>
             <xsl:call-template name="copyInlineScript"/>
-
         </head>
     </xsl:template>
 
@@ -154,43 +143,42 @@
 
     <xsl:template name="addLocalScript">
         <script type="text/javascript" defer="defer">
-            <xsl:if test="$debug-enabled">function getXFormsDOM(){
-                Flux.getXFormsDOM(document.getElementById("bfSessionKey").value,
-                function(data){
-                console.dirxml(data);
-                }
-                );
+            <xsl:if test="$debug-enabled">
+                function getXFormsDOM(){
+                    Flux.getXFormsDOM(document.getElementById("bfSessionKey").value,
+                                    function(data){console.dirxml(data);}
+                    );
                 }
 
                 function getInstanceDocument(instanceId){
-                var model = dojo.query(".xfModel", dojo.doc)[0];
-                dijit.byId(dojo.attr(model, "id")).getInstanceDocument(instanceId,
-                function(data){
-                console.dirxml(data);
-                });
+                    var model = dojo.query(".xfModel", dojo.doc)[0];
+                    dijit.byId(dojo.attr(model, "id")).getInstanceDocument(instanceId,
+                    function(data){
+                        console.dirxml(data);
+                    });
                 }
             </xsl:if>
 
             <!--
-                            function loadBetterFORMJs(pathToRelease, developmentJsClass){
-                                if (isBetterFORMRelease) {
-                                    var scriptElement = document.createElement('script');
-                                    scriptElement.type = 'text/javascript';
-                                    scriptElement.src = pathToRelease;
-                                    document.getElementsByTagName('head')[0].appendChild(scriptElement);
-                                } else {
-                                    dojo.require(developmentJsClass);
-                                }
-                            }
+            function loadBetterFORMJs(pathToRelease, developmentJsClass){
+                if (isBetterFORMRelease) {
+                    var scriptElement = document.createElement('script');
+                    scriptElement.type = 'text/javascript';
+                    scriptElement.src = pathToRelease;
+                    document.getElementsByTagName('head')[0].appendChild(scriptElement);
+                } else {
+                    dojo.require(developmentJsClass);
+                }
+            }
             -->
 
             dojo.addOnLoad(function(){
-            dojo.addOnLoad(function(){
-            dojo.parser.parse();
-            Flux._path = dojo.attr(dojo.byId("fluxProcessor"), "contextroot") + "/Flux";
-            Flux.init( dojo.attr(dojo.byId("fluxProcessor"),"sessionkey"),
-            dojo.hitch(fluxProcessor,fluxProcessor.applyChanges));
-            });
+                dojo.addOnLoad(function(){
+                    dojo.parser.parse();
+                    Flux._path = dojo.attr(dojo.byId("fluxProcessor"), "contextroot") + "/Flux";
+                    Flux.init( dojo.attr(dojo.byId("fluxProcessor"),"sessionkey"),
+                    dojo.hitch(fluxProcessor,fluxProcessor.applyChanges));
+                });
             });
         </script><xsl:text>
 </xsl:text>
@@ -219,67 +207,29 @@
 </xsl:text>
     </xsl:template>
 
-    <xsl:template name="addDojoConfig">
-        <xsl:choose>
-            <xsl:when test="$useCDN='true'">
-                <script type="text/javascript">
-                    var djConfig = {
-                    debugAtAllCosts:false,
-                    locale:'<xsl:value-of select="$locale"/>',
-                    isDebug:false,
-                    baseUrl:"<xsl:value-of select="concat($contextroot,$scriptPath)"/>",
-                    modulePaths:{"betterform":"betterform"},
-                    xWaitSeconds:10,
-                    parseOnLoad:false
-                    };
-                </script><xsl:text>
-</xsl:text>
-            </xsl:when>
-            <xsl:otherwise>
-                <script type="text/javascript">
-                    var djConfig = {
-                        debugAtAllCosts:<xsl:value-of select="$debug-enabled"/>,
-                        locale:'<xsl:value-of select="$locale"/>',
-                        isDebug:<xsl:value-of select="$debug-enabled"/>,
-                        parseOnLoad:false
-                    };
-                </script><xsl:text>
-</xsl:text>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
-
     <xsl:template name="addDojoImport">
-        <script type="text/javascript">
-            var isBetterFORMRelease = true;
-        </script>
+        <xsl:variable name="dojoConfig">
+            debugAtAllCosts:<xsl:value-of select="$debug-enabled"/>,
+            locale:'<xsl:value-of select="$locale"/>',
+            isDebug:<xsl:value-of select="$debug-enabled"/>,
+            parseOnLoad:false
+        </xsl:variable>
+
         <xsl:choose>
             <xsl:when test="$useCDN='true'">
                 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js"> </script><xsl:text>
 </xsl:text>
             </xsl:when>
             <xsl:otherwise>
-                <script type="text/javascript" src="{concat($contextroot,$scriptPath,'dojo/dojo.js')}"> </script><xsl:text>
+                <script type="text/javascript" src="{concat($contextroot,$scriptPath,'dojo/dojo.js')}">
+                    <xsl:attribute name="data-dojo-config"><xsl:value-of select="normalize-space($dojoConfig)"/></xsl:attribute>
+                </script><xsl:text>
 </xsl:text>
             </xsl:otherwise>
         </xsl:choose>
 
-        <xsl:choose>
-            <xsl:when test="exists(//script[@id='betterformJs'])">
-                <!-- do nothin if id 'betterformJs' is available (means betterform.js is allready importet -->
-            </xsl:when>
-<!--
-            <xsl:when test="not(exists(//xf:select)) and not(exists(//xf:select1)) and not(exists(//xf:upload)) and not(exists(//xf:repeat)) and not(exists(//xf:switch)) and not(exists(//xf:range))  and not(exists(//xf:textarea))">
-                <script type="text/javascript" src="{concat($contextroot,$scriptPath,'betterform/betterform-Minimal.js')}">&#160;</script>
-            </xsl:when>
-            <xsl:when test="not(exists(//xf:range)) and not(exists(//xf:textarea))">
-                <script type="text/javascript" src="{concat($contextroot,$scriptPath,'betterform/betterform-Compact.js')}">&#160;</script>
-            </xsl:when>
--->
-            <xsl:otherwise>
-                <script type="text/javascript" src="{concat($contextroot,$scriptPath,'betterform/betterform-Full.js')}">&#160;</script>
-            </xsl:otherwise>
-        </xsl:choose>
+
+        <script type="text/javascript" src="{concat($contextroot,$scriptPath,'betterform/betterform-Full.js')}">&#160;</script>
         <xsl:text>
 </xsl:text>
     </xsl:template>
@@ -375,6 +325,18 @@
                 </div>
             </div>
 
+            <xsl:call-template name="addDojoImport"/>
+            <xsl:call-template name="addDWRImports"/>
+
+            <!-- Optional Simile Timeline Javascript Imports -->
+            <xsl:if test="exists(//xf:input[@appearance='caSimileTimeline'])">
+                <xsl:call-template name="addSimileTimelineImports" />
+            </xsl:if>
+
+            <xsl:call-template name="addLocalScript"/>
+            <xsl:call-template name="copyInlineScript"/>
+
+
             <div id="bfMessageDialog" dojotype="dijit.Dialog" style="text-align:center;display:none;">
                 <div id="messageContent"></div>
                 <button dojotype="dijit.form.Button" type="button" style="margin:10px;">OK
@@ -428,6 +390,7 @@
                     </div>
                 </div>
             </xsl:if>
+
         </body>
     </xsl:template>
 

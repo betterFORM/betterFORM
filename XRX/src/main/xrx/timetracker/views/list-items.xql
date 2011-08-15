@@ -59,7 +59,7 @@ declare function local:getMatchingTasks() as node() * {
 
     for $task in collection('/db/betterform/apps/timetracker/data/task')//task
         let $task-date := $task/date
-        let $task-project := $task/project
+        let $task-project := $task/@client
         let $task-billable := $task/billable
         let $task-billed := $task/billed
         let $task-created := $task/created

@@ -8,9 +8,10 @@
 
 dojo.provide("betterform.BfRequiredXFormsEditor");
 
-dojo.require("betterform.BfRequiredFull");
 dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.Menu");
 dojo.require("dijit.MenuBar");
+dojo.require("dijit.PopupMenuItem");
 dojo.require("dijit.PopupMenuBarItem");
 dojo.require("dijit.MenuItem");
 
@@ -22,3 +23,4 @@ dojo.require("dijit.form.Select");
 dojo.require("dijit.form.FilteringSelect");
 dojo.require("dojo.data.ItemFileReadStore");
 dojo.require("dojox.layout.FloatingPane");
+dojo.require("dijit.TitlePane");
