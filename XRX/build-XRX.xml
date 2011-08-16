@@ -17,7 +17,7 @@
     <property name="eXist.admin.passwd" value="YOUR-EXIST-ADMIN-PASSWD"/>
     -->
     <property name="eXist.home" value="${exist.installed}"/>
-    <property name="eXist.admin.passwd" value="zusel.1"/>
+    <property name="eXist.admin.passwd" value=" "/>
 
     <property name="betterFORM.src" value="${basedir}/../"/>
 
@@ -512,4 +512,5 @@
         <delete dir="${betterFORM.extension}/target" includeemptydirs="true"/>
         <antcall target="patch-betterFORM-config"/>
     </target>
+
 </project>
