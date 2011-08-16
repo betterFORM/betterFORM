@@ -1,48 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:xforms="http://www.w3.org/2002/xforms"
+<h:html xmlns:h="http://www.w3.org/1999/xhtml"
+      xmlns="http://www.w3.org/2002/xforms"
       xmlns:ev="http://www.w3.org/2001/xml-events"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:xsd="http://www.w3.org/2001/XMLSchema"
       xmlns:bf="http://betterform.sourceforge.net/xforms">
-    <head>
-        <title>hello</title>
+    <h:head>
+        <h:title>hello</h:title>
 
-    </head>
+    <h:style type="text/css">
 
-    <body>
-        <script type="text/javascript">
-            <!--
-            var items = document.getElementsByTagNameNS("http://www.w3.org/2002/xforms", "*");
-            var i = 0;
-            var l = items.length;
-            var item;
-            while (i < l) {
-                item = items[i];
-                console.debug(item);
-                i++;
+    @namespace xf url('http://www.w3.org/2002/xforms');
+
+    xf|model {
+    display: none;
+    }
+
+    xf|output, xf|input {
+    display:inline-block;
+    width: 250px;
+    left: 160px;
+    position: relative;
+    height: 17px;
+    clear:left;
+    }
+
+/*
+    xf|input {
+    border-color: #E8E9EA;
+    border-style: inset;
+    }
+*/
+
+    xf|input xf|label, xf|output xf|label {
+        width: 160px;
+    left: -160px;
+    position: relative;
+    display: inline-block;
+    }
+
+    </h:style>
+
+    <h:script src="sizzle.js" type="text/javascript" />
+
+        <h:script type="text/javascript">
+          <![CDATA[
+      window.onload=function() {
+              var NSXF = "http://www.w3.org/2002/xforms";
+          var NSHTML = "http://www.w3.org/1999/xhtml"
+          var items = document.body.getElementsByTagNameNS(NSXF, "*");
+              //var items = document.body.getElementsByTagNameNS(NSHTML, "*");
+          console.info("Items found: " ,items.length);
+              var i = 0;
+              var l = items.length;
+              var item;
+          var prefix;
+              while (i < l) {
+                  item = items[i];
+          prefix = item.prefix;
+          var element;
+          var elementFQN;
+
+                  console.debug(item.localName, " ", item.prefix);
+          if (item.localName == 'input') {
+            console.debug(item.localName);
+            elementFQN = "input";
+            if (prefix == null) { // xforms is default namespace, so add a prefix
+              elementFQN = "h:" + elementFQN;
             }
+                element = document.createElementNS(NSHTML, elementFQN);
+            insertAfter(element, item);
+          }
 
-            // -->
-        </script>
+                  i++;
+              }
+          }
 
-        <div style="display:none">
-            <xforms:model id="model-1">
-                <xforms:instance>
+//create function, it expects 2 values.
+function insertAfter(newElement,targetElement) {
+    //target is what you want it to go after. Look for this elements parent.
+    var parent = targetElement.parentNode;
+   
+    //if the parents lastchild is the targetElement...
+    if(parent.lastchild == targetElement) {
+        //add the newElement after the target element.
+        parent.appendChild(newElement);
+        } else {
+        // else the target has siblings, insert the new element between the target and it's next sibling.
+        parent.insertBefore(newElement, targetElement.nextSibling);
+        }
+}
+      
+
+      ]]>
+        </h:script>
+
+    </h:head>
+
+    <h:body>
+
+            <model id="model-1">
+                <instance>
                     <data xmlns="">
                         <hello>Hello World!</hello>
                     </data>
-                </xforms:instance>
-            </xforms:model>
-
-        </div>
-
-        <xforms:output id="ui" ref="hello">
-            <xforms:label>Hello from XForms:</xforms:label>
-        </xforms:output>
-    </body>
-</html>
+                </instance>
+            </model>
 
 
+        <input id="ui1" ref="hello">
+            <label>Who should I say hello to?</label>
+        </input>
 
-        
+        <output id="ui2" ref="hello">
+            <label>Hello from XForms:</label>
+        </output>
+
+    </h:body>
+</h:html>
