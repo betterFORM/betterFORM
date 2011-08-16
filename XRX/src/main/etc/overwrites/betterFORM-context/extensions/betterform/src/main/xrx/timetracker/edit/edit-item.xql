@@ -34,7 +34,6 @@ return
         xmlns:ev="http://www.w3.org/2001/xml-events">
    <head>
       <title>Edit Task</title>
-       <link rel="stylesheet" type="text/css" href="{$contextPath}/rest/db/betterform/forms/css/bf.css"/>
        <link rel="stylesheet" type="text/css" href="{$contextPath}/rest/db/betterform/forms/demo/styles/demo.css"/>
        <link rel="stylesheet" type="text/css"
              href="{$contextPath}/rest/db/betterform/apps/timetracker/resources/timetracker.css"/>

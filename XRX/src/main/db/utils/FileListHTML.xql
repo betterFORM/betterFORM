@@ -251,7 +251,7 @@ return
         	padding:1px;
         	background:#d3d3d3;
         	color:transparent;
-        	background:transparent url(/betterform/bfResources/images/greyled.png) no-repeat center center;
+        	background:transparent url(../../bfResources/images/greyled.png) no-repeat center center;
         	width:18px;
         	height:18px;
         }
@@ -262,7 +262,7 @@ return
         	height:22px;
         	color:transparent;
         	z-index:100;
-        	background:transparent url(/betterform/bfResources/images/wrench.png) no-repeat center center;
+        	background:transparent url(../../bfResources/images/wrench.png) no-repeat center center;
         
         }
         
@@ -290,7 +290,7 @@ return
         	padding:1px;
         	background:#d3d3d3;
         	color:transparent;
-        	background:transparent url(/betterform/bfResources/images/greyled.png) no-repeat center center;
+        	background:transparent url(../../bfResources/images/greyled.png) no-repeat center center;
         	width:18px;
         	height:18px;
         }
@@ -301,7 +301,7 @@ return
         	height:22px;
         	color:transparent;
         	z-index:100;
-        	background:transparent url(/betterform/bfResources/images/eye-grey.png) no-repeat center center;
+        	background:transparent url(../../bfResources/images/eye-grey.png) no-repeat center center;
         
         }
         .bfFormBrowser #bfListView .directory img{
