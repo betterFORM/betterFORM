@@ -83,7 +83,7 @@ dojo.declare(
             }
             this.dateDijit.constraints.selector = "date";
         }
-        this.dateDijit._setValueAttr(dateValue);
+        dojo.attr(this.dateDijit.textbox, "value", dateValue);
 
         // handle time part
         if(this.timeDijit == undefined) {
