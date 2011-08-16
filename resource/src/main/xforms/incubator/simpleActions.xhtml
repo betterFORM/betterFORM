@@ -22,14 +22,10 @@
             <!-- prepend Element Copy - http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#data-mutation-patterns -->
             <xf:insert context="people" origin="instance('prototypes')/person"/>
             <bf:appendAsFirst parent="people" copy="instance('prototypes')/person"/>
-            <bf:append select="people"/>
-
 
             <!-- append element copy -->
             <xf:insert context="people" nodeset="person" origin="instance('prototypes')/person"/>
             <bf:appendAsLast parent="people" appendTo="person" copy="instance('prototypes')/person"/>
-            <bf:append select="people/person" copy="instance('prototypes')/person"/>
-
 
             <!--duplicate-->
             <xf:insert nodeset="paragraph[2]"/>
