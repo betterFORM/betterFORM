@@ -194,7 +194,7 @@ dojo.declare(
         var xfValue = dojo.attr(sourceNode, "schemaValue");
         if(xfValue != undefined && xfValue != ""){
             xfValue = dojo.date.stamp.fromISOString(xfValue);
-        }else { xfValue = ""; }
+        }else { xfValue = undefined; }
         var datePattern;
 
         if (appearance.indexOf("iso8601:") != -1) {

@@ -54,7 +54,7 @@ dojo.declare(
     getControlValue:function(){
         // console.debug("betterform.ui.input.Date.getControlValue for Control "+ this.id +": ",this.getValue() + " attr: ",this.attr('value'));
         var currentDate;
-        var notISODate = this.attr('value');
+        var notISODate = this.get('value');
         if(notISODate == undefined){
            // console.debug("Empty (undefined) date: this: " , this);
            currentDate = this.focusNode.value;
@@ -70,7 +70,7 @@ dojo.declare(
     _handleSetControlValue:function(date) {
         // console.debug("Date._handleSetControlValue date:",date);
         if(date == undefined || date == ""){
-            this._setValueAttr("");    
+            dojo.attr(this.textbox, "value","");
         }
         else {
             this._setValueAttr(dojo.date.stamp.fromISOString(date,this.constraint));
