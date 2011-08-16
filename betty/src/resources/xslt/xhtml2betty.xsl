@@ -26,7 +26,8 @@
     <xsl:template match="head">
         <xsl:variable name="head" select="."/>
         <xsl:copy>
-            <xsl:copy-of select="title"/>
+            <!--<xsl:copy-of select="title"/>-->
+            <title></title>
             <xsl:text>
 </xsl:text>
             <link rel="stylesheet" type="text/css" href="../resources/scripts/dojo/dojo.css"/><xsl:text>
