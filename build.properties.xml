@@ -261,11 +261,11 @@
     <exist>
         <betterform>
             <xrx>
-                <installed>/home/zwobit/development/test/betterFORM-rc2-ssl</installed>
+                <installed>/Users/tobi/project/eXist-1.4.x</installed>
             </xrx>
         </betterform>
-        <installed>/home/zwobit/development/test/betterFORM-rc2-ssl</installed>
-        <passwd>betterform</passwd>
+        <installed>/Users/tobi/project/eXist-1.4.x</installed>
+        <passwd/>
     </exist>
 </root>
 

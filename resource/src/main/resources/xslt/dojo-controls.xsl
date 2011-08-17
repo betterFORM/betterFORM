@@ -166,7 +166,7 @@
                       name="{$name}"
                       class="xfValue bfCheckBoxGroup"
                       selection="{$selection}"
-                      controlType="selectCheckBox"
+                      controlType="selectCheckBoxGroup"
                       dataType="{$datatype}"
                       title="{normalize-space(xforms:hint)}"
                       schemaValue="{bf:data/@bf:schema-value}"
@@ -504,10 +504,10 @@
                    class="xfCheckBoxValue"
                    type="checkbox"
                    tabindex="0"
-
+                   controlType="checkBoxEntry"
                    selectWidgetId="{$parent/@id}-value"
-                   name="{$name}"
-                   dojotype="betterform.ui.select.CheckBox">
+                   name="{$name}">
+                   <!--dojotype="betterform.ui.select.CheckBox">-->
                 <xsl:if test="@selected='true'">
                     <xsl:attribute name="checked">checked</xsl:attribute>
                 </xsl:if>

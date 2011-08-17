@@ -1231,7 +1231,11 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
         else if (dojo.byId(xfControlId) != undefined) {
             // console.debug("FluxProcessor.handleStateChanged on existing DOM  [id: " + xfControlId + ", / xmlEvent:",xmlEvent,+"]");
             var controlNodeCreated = new betterform.ui.Control({contextInfo:xmlEvent.contextInfo}, dojo.byId(xfControlId));
-            controlNodeCreated.handleStateChanged(xmlEvent.contextInfo);
+            if(controlNodeCreated.handleStateChanged) {
+                controlNodeCreated.handleStateChanged(xmlEvent.contextInfo);
+            }else  {
+                console.warn("controlNodeCreated.handleStateChanged does not exist for widget ", controlNodeCreated);
+            }
 
         }
         /**

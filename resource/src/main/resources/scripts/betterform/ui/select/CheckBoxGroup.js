@@ -37,6 +37,11 @@ dojo.declare(
         var incrementalValue = dojo.attr(this.srcNodeRef, "incremental");
         // set incremental to true if not explicitly set to false
         this.incremental =  incrementalValue || incrementalValue == undefined || incrementalValue == "" || incrementalValue == "true" ;
+        var checkBoxChilds = dojo.query(".xfSelectorItem .xfCheckBoxValue",this.srcNodeRef);
+        dojo.forEach(checkBoxChilds, function(item,index,array){
+            var itemId = dojo.attr(item,"id");
+            fluxProcessor.factory.createWidget(item, itemId.split("-value")[0]);
+        })
         
     },
 
@@ -69,14 +74,14 @@ dojo.declare(
         // console.debug("CheckBoxGroup._handleSetControlValue values: ", values);
         var valueArray = new Array();
         valueArray = values.split(' ');
-
+        // console.debug("dojo.query('.dijitCheckBox', this.domNode):",  dojo.query(".dijitCheckBoxInput", this.domNode));
         dojo.query(".dijitCheckBoxInput", this.domNode).forEach(
             function(entry) {
 				//console.debug("CheckBoxGroup._handleSetControlValue entry: ", entry, " entry.value", entry.value , " values: ", valueArray, " indexOf: ", dojo.indexOf(valueArray, dijit.byId(entry.id).currentValue));
                 if (dojo.indexOf(valueArray, dijit.byId(entry.id).currentValue) != -1) {
-                    dijit.byId(entry.id).setChecked(true);
+                    dijit.byId(entry.id).set("checked", true);
                 } else {
-                    dijit.byId(entry.id).setChecked(false);
+                    dijit.byId(entry.id).set("checked", false);
                 }
             }
         );
@@ -127,7 +132,7 @@ dojo.declare(
                 var selectorId  =dojo.attr(entry, "id");
                 var checkBoxChild = dijit.byId(selectorId +"-value");
                 if(checkBoxChild != undefined) {
-                    checkBoxChild.attr('disabled',disabled);
+                    checkBoxChild.set('disabled',disabled);
                 } else {
                     // initially the CheckBox child is not initialized and the DOM is manipulated directly
                     checkBoxChild = dojo.byId(selectorId +"-value");

@@ -106,13 +106,19 @@
         <echo message="* Stopping eXist-DB                                                           *"/>
         <echo message="*******************************************************************************"/>
 
-        <exec executable="${eXist.home}/bin/shutdown.sh" osfamily="unix">
-            <arg value="-p ${admin.passwd}"/>
+        <exec executable="${eXist.home}/bin/shutdown.sh" osfamily="unix"/>
+<!--
+            <arg value="-p ${eXist.admin.passwd}"/>
         </exec>
+-->
         <exec executable="cmd" osfamily="windows">
             <arg value="/c"/>
-            <arg value="${eXist.home}/bin/shutdown.bat -p ${admin.passwd}"/>
+            <arg value="${eXist.home}/bin/shutdown.bat"/>
         </exec>
+<!--
+            -p ${eXist.admin.passwd}"/>
+        </exec>
+-->
 
         <!-- wait for db shutdown -->
         <sleep seconds="20"/>

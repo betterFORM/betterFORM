@@ -16,19 +16,21 @@ dojo.declare(
 {
 
     postMixInProperties:function() {
-        // console.debug("CheckBox.postMixInProperties");
+        //console.debug("CheckBox.postMixInProperties");
+        if(this.srcNodeRef != undefined) {
+            this.currentValue = dojo.attr(this.srcNodeRef,"value");
+            // console.debug("CheckBox srcNodeRef",this.srcNodeRef, " currentValue:",this.currentValue);
+        }
+        // console.debug("dojo.attr(this.srcNodeRef,'checked'):",dojo.attr(this.srcNodeRef,"checked"));
+        this.checked = dojo.attr(this.srcNodeRef,"checked");
         this.inherited(arguments);
         if(this.selectWidgetId==undefined){
             this.selectWidgetId = dojo.attr(this.srcNodeRef, "selectWidgetId");
         }
         this.selectWidget = dijit.byId(this.selectWidgetId);
         // console.debug("CheckBox.postMixInProperties this.selectWidgetId:", this.selectWidgetId, " this.selectWidget:",this.selectWidget, " this.srcNodeRef:",this.srcNodeRef);
-        if(this.srcNodeRef != undefined) {
-            this.currentValue = dojo.attr(this.srcNodeRef,"value");
-            // console.debug("CheckBox srcNodeRef",this.srcNodeRef, " currentValue:",this.currentValue);
-        }
 
-        
+
     },
 
     _onClick: function(/*Event*/ e){
@@ -36,7 +38,11 @@ dojo.declare(
         this.inherited(arguments);
 
         if(this.selectWidget == undefined) {
-            this.selectWidget = dijit.byId(this.selectWidgetId);
+            var selectWidgetNode = this.domNode.parentNode;
+            while(!dojo.hasClass(selectWidgetNode,"bfCheckBoxGroup")){
+                selectWidgetNode = selectWidgetNode.parentNode;
+            }
+            this.selectWidget = dijit.byId(dojo.attr(selectWidgetNode,"id"));
         }
         if(this.selectWidget == undefined) {
             console.error("CheckBox.onClick: Select (CheckBoxGroup) " + this.selectWidgetId + " could not be found");
