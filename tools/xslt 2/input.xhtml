@@ -1,0 +1,63 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:bf="http://betterform.sourceforge.net/xforms"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <head>
+        <title>[PUT YOUR TITLE HERE]</title>
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model id="model-1">
+                <xf:instance id="i-default">
+                    <data xmlns="">
+                        <input1>value1</input1>
+                        <input2>value2</input2>
+                        <input3>value3</input3>
+                    </data>
+                </xf:instance>
+                <xf:bind id="C1" nodeset="instance()">
+                    <xf:bind id="C2" nodeset="input1"/>
+                    <xf:bind id="C3" nodeset="input2" type="xf:boolean"/>
+                    <xf:bind id="C4" nodeset="input3" type="xf:date"/>
+                </xf:bind>
+
+                <xf:submission id="s-debug" method="get" replace="instance" resource="echo:foo"/>
+            </xf:model>
+        </div>
+		    <xf:group appearance="compact" id="C5">
+            <!--<xf:label>inputs</xf:label>-->
+
+            <xf:input id="C6" ref="input1">
+                <xf:label id="C7">plain input</xf:label>
+                <!--<xf:hint>plain input hint</xf:hint>-->
+                <!--<xf:alert>plain input alert</xf:alert>-->
+                <!--<xf:help>plain input help</xf:help>-->
+            <bf:data bf:enabled="true" bf:readonly="false" bf:required="false" bf:schema-value=""
+                     bf:type="xsd:string"
+                     bf:valid="true">value1</bf:data>
+         </xf:input>
+            <xf:input id="C8" ref="input2">
+                <xf:label id="C9">boolean input</xf:label>
+                <!--<xf:alert>boolean input alert</xf:alert>-->
+                <!--<xf:hint>boolean input hint</xf:hint>-->
+                <!--<xf:help>boolean input help</xf:help>-->
+            <bf:data bf:enabled="true" bf:readonly="false" bf:required="false" bf:schema-value=""
+                     bf:type="xf:boolean"
+                     bf:valid="true">value2</bf:data>
+         </xf:input>
+            <xf:input id="C10" ref="input3">
+                <xf:label id="C11">date input</xf:label>
+                <!--<xf:alert>date input alert</xf:alert>-->
+                <!--<xf:hint>date input hint</xf:hint>-->
+            <bf:data bf:enabled="true" bf:readonly="false" bf:required="false" bf:schema-value=""
+                     bf:type="xf:date"
+                     bf:valid="true">value3</bf:data>
+         </xf:input>
+		    </xf:group>
+        <xf:trigger id="C12">
+            <xf:label id="C13">test</xf:label>
+            <xf:send id="C14" submission="s-debug"/>
+        </xf:trigger>
+    </body>
+</html>
