@@ -62,8 +62,9 @@ dojo.declare(
                 break;
 
             /* Select Cases */
-            case "selectCheckBox":
+            case "selectCheckBoxGroup":
             case "selectList":
+            case "checkBoxEntry":
                 return this.selectFactory.createSelectMultipleWidget(controlType, sourceNode, controlId, classValue);
                 break;
 
