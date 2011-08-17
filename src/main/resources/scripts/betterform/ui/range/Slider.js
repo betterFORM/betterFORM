@@ -40,23 +40,25 @@ dojo.declare(
         return dojo.attr(this.valueNode, "value");
     },
 
-    _setValueAttr: function(value, priorityChange) {
-        var tmpValue = dojo.attr(this.valueNode, "value");
-        // console.debug("Slider._setValueAttr value: " + value + " valueNode.value:", tmpValue);
-        if (this.incremental && tmpValue != value && tmpValue != "" && tmpValue != "NaN") {
-            this.setControlValue(value);
+    _setValueAttr: function(value, priorityChange,isServerUpdate) {
+        if(!isServerUpdate){
+            var tmpValue = dojo.attr(this.valueNode, "value");
+            // console.debug("Slider._setValueAttr value: " + value + " valueNode.value:", tmpValue);
+            if (this.incremental && tmpValue != value && tmpValue != "" && tmpValue != "NaN") {
+                this.setControlValue(value);
+            }
         }
         this.inherited(arguments);
     },
 
-    _handleSetControlValue:function(value) {
+    _handleSetControlValue:function(value, isServerUpdate) {
         var newValue  = parseInt(value, "10");
         if(newValue == undefined || newValue == "" || newValue == "NaN" || newValue < this.minimum){
             newValue = this.minimum;
         }else if(value > this.maximum){
             newValue = this.maximum;
         }
-        this._setValueAttr(newValue);
+        this._setValueAttr(newValue,null,isServerUpdate);
     }
 });
 
