@@ -141,17 +141,8 @@ Error: eXist is not installed in ${eXist.home}.
             <fileset dir="${core.dir}/src/main/lib/" includes="commons-lang-*.jar ehcache-*.jar" />
         </copy>
 
-        <echo>
-            __== Setting up betterFORM context and fixing files ==__
-        </echo>
 
-        <copy todir="${eXist.home}" overwrite="true">
-            <fileset dir="${overwrites.dir}">
-                <include name="tools/**/*"/>
-                <include name="webapp/**/*"/>
-                <include name="client.properties"/>
-            </fileset>
-        </copy>
+        <antcall target="setup-betterFORM-context"/>
 
         <copy tofile="${eXist.home}/webapp/xquery/xferror.xql" file="${main.dir}/webapp/xquery/xferror.xql"/>
 
@@ -178,6 +169,20 @@ Error: eXist is not installed in ${eXist.home}.
         <antcall target="patch-web-xml"/>
 
         <touch file="${betterFORM.install.marker}"/>
+    </target>
+
+    <target name="setup-betterFORM-context">
+        <echo>
+            __== Setting up betterFORM context and fixing files ==__
+        </echo>
+
+        <copy todir="${eXist.home}" overwrite="true">
+            <fileset dir="${overwrites.dir}">
+                <include name="tools/**/*"/>
+                <include name="webapp/**/*"/>
+                <include name="client.properties"/>
+            </fileset>
+        </copy>
     </target>
 
     <target name="create-uninstall-directory">
@@ -232,6 +237,22 @@ Error: eXist is not installed in ${eXist.home}.
 
         <move file="${eXist.home}/webapp/WEB-INF/betterform-config.xml.out" tofile="${eXist.home}/webapp/WEB-INF/betterform-config.xml"/>
         <touch file="${betterFORM.config.patch.marker}"/>
+    </target>
+
+    <target name="patch-eXist-config" unless="eXist.conf.patched">
+        <echo>
+            __== Patching conf.xml ==__
+        </echo>
+        <copy file="${etc.dir}/MergeExistConf.xsl" tofile="${eXist.home}/MergeExistConf.xsl" failonerror="true"/>
+        <xslt in="${eXist.home}/conf.xml" out="${eXist.home}/conf.xml.out" force="true"
+              style="${eXist.home}/MergeExistConf.xsl">
+            <classpath refid="generator.libs"/>
+        </xslt>
+        <delete file="${eXist.home}/MergeBetterformConfig.xsl"/>
+
+
+        <move file="${eXist.home}/conf.xml.out" tofile="${eXist.home}/conf.xml"/>
+        <touch file="${eXist.conf.patch.marker}"/>
     </target>
 
     <!-- *********************************************************************************************************** -->
@@ -352,6 +373,8 @@ Error: eXist is not installed in ${eXist.home}.
            <param name="file-source-dir" value="${resource.dir}/src/main/xforms/incubator/editor"/>
            <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}/apps/editor"/>
         </antcall>
+
+        <antcall target="patch-eXist-config"/>
     </target>
 
 

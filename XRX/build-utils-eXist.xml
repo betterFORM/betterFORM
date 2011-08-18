@@ -27,6 +27,10 @@
     <property name="target" value="${basedir}/target-utils"/>
     <property name="dojo.release.dir" value="${target}/dojo-release"/>
 
+    <condition property="password.notset">
+        <equals arg1="${eXist.admin.passwd}" arg2=""/>
+    </condition>
+
     <!-- eXist ant-tasks -->
     <path id="classpath.exist">
         <fileset dir="${eXist.home}/lib/core">
@@ -101,24 +105,38 @@
         <sleep seconds="20"/>
     </target>
 
-    <target name="stop-eXist">
-        <echo message="*******************************************************************************"/>
+    <target name="stop-eXist" unless="password.notset">
+        <echo message="******************************************************************************"/>
         <echo message="* Stopping eXist-DB                                                           *"/>
         <echo message="*******************************************************************************"/>
+        <antcall target="stop-eXist-with-password"/>
+        <antcall target="stop-eXist-without-password"/>
 
-        <exec executable="${eXist.home}/bin/shutdown.sh" osfamily="unix"/>
-<!--
+    </target>
+
+    <target name="stop-eXist-with-password" unless="password.notset">
+        <exec executable="${eXist.home}/bin/shutdown.sh" osfamily="unix">
             <arg value="-p ${eXist.admin.passwd}"/>
         </exec>
--->
+
+        <exec executable="cmd" osfamily="windows">
+            <arg value="/c"/>
+            <arg value="${eXist.home}/bin/shutdown.bat -p ${eXist.admin.passwd}"/>
+        </exec>
+
+
+        <!-- wait for db shutdown -->
+        <sleep seconds="20"/>
+    </target>
+
+    <target name="stop-eXist-without-password" if="password.notset">
+        <exec executable="${eXist.home}/bin/shutdown.sh" osfamily="unix"/>
+
         <exec executable="cmd" osfamily="windows">
             <arg value="/c"/>
             <arg value="${eXist.home}/bin/shutdown.bat"/>
         </exec>
-<!--
-            -p ${eXist.admin.passwd}"/>
-        </exec>
--->
+
 
         <!-- wait for db shutdown -->
         <sleep seconds="20"/>

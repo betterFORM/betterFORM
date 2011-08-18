@@ -6,7 +6,7 @@ import module namespace request="http://exist-db.org/xquery/request";
 
 declare option exist:serialize "method=xhtml media-type=text/xml";
 
-declare function local:getProjectName($clientId as xs:string) as node() {
+declare function local:getProjectName($clientId as xs:string) {
     for $project in collection('betterform/apps/timetracker/data/client/')/client[@id=$clientId]/projects/project
     return
         <project id="{$project/@id}">{$project/name/text()}</project>
