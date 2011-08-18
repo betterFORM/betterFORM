@@ -25,6 +25,7 @@ dojo.require("betterform.ui.select.CheckBoxItemset");
 
 dojo.require("betterform.ui.select1.ComboBox");
 dojo.require("betterform.ui.select1.ComboBoxOpen");
+dojo.require("betterform.ui.select1._ComboBoxMenu");
 dojo.require("betterform.ui.select1.Plain");
 dojo.require("betterform.ui.select1.RadioButton");
 dojo.require("betterform.ui.select1.RadioGroup");

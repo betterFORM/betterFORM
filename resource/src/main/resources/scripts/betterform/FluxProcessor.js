@@ -1263,7 +1263,24 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
                 else if (dojo.hasClass(parentControlNode, "xfSelectorItem")) {
                     // console.debug("FluxProcessor.handleStateChanged Target Node does not exist, Parent Control is SelectorItem (ParentSelector:" , parentControlNode , ")");
                     var selectParentId = dojo.attr(parentControlNode.parentNode, "id");
-                    dijit.byId(selectParentId).handleStateChanged(xmlEvent.contextInfo);
+                    if(dijit.byId(selectParentId)) {
+                        dijit.byId(selectParentId).handleStateChanged(xmlEvent.contextInfo);
+                    }else if (parentControlNode){
+                        // DIJIT COULD NOT BE FOUND - SEARCH FOR PROTOTYPE SELECT OPTIONS
+                        // console.debug("found Selector Item Node: ",parentControlNode);
+                        if(xmlEvent.contextInfo.targetName == "label") {
+                            // console.debug("Update label of option - value: ",xmlEvent.contextInfo.value);
+                            parentControlNode.innerHTML = xmlEvent.contextInfo.value;
+                        }
+                        else if(xmlEvent.contextInfo.targetName == "value") {
+                            // console.debug("Update value of option - value: ",xmlEvent.contextInfo.value);
+                            dojo.attr(parentControlNode,"value",xmlEvent.contextInfo.value);
+                        }else {
+                            console.warn("FluxProcessor betterform-state-changed: : error updating xfSelector item ",xmlEvent.contextInfo);
+                        }
+                    }else {
+                        console.warn("FluxProcessor betterform-state-changed: : can't find xfSelectorItem ", selectParentId);
+                    }
                 }
                 else {
                     console.warn("FluxProcessor betterform-state-changed: No handleStateChanged implementation availabled for contextinfo: ", xmlEvent.contextInfo);
@@ -1332,29 +1349,38 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
         } else {
             var itemsetDOM = dojo.byId(xmlEvent.contextInfo.targetId);
             // console.debug("betterform-insert-itemset [id: '", xmlEvent.contextInfo.targetId, " / dom:'",dojo.byId(xmlEvent.contextInfo.targetId),"']");
-            var itemsetDijit;
             var itemsetType = dojo.attr(itemsetDOM, "dojoType");
+            // Prototypes don't have a dojoType, search for controlType instead
+            if(itemsetType == undefined) {
+                var controlType = dojo.attr(itemsetDOM, "controlType");
+                if(controlType == "optGroup") {
+                    itemsetType = "betterform.ui.select.OptGroup";
+                }
+            }
 
+            var itemsetDijit;
+            if(itemsetType != undefined) {
+                if (itemsetType == "betterform.ui.select.OptGroup") {
+                    itemsetDijit = new betterform.ui.select.OptGroup({contextInfo:xmlEvent.contextInfo}, itemsetDOM);
+                }
+                else if (itemsetType == "betterform.ui.select1.RadioItemset") {
+                    itemsetDijit = new betterform.ui.select1.RadioItemset({contextInfo:xmlEvent.contextInfo}, itemsetDOM);
+                }
+                else if (itemsetType == "betterform.ui.select.CheckBoxItemset") {
+                    itemsetDijit = new betterform.ui.select.CheckBoxItemset({contextInfo:xmlEvent.contextInfo}, itemsetDOM);
+                }
+                else {
+                    console.warn("FluxProcessor apply betterform-insert-itemset: Itemset Type " + itemsetType + " not supported yet");
+                }
+            } else {
+                console.warn("FluxProcessor apply betterform-insert-itemset: ItemSet Type is null");
+                return;
+            }
             // console.debug("betterform-insert-itemset [id: '", xmlEvent.contextInfo.targetId, " / dojotype:'",itemsetType,"']");
-            if (itemsetType != undefined && itemsetType == "betterform.ui.select.OptGroup") {
-                dojo.require("betterform.ui.select.OptGroup");
-                itemsetDijit = new betterform.ui.select.OptGroup({contextInfo:xmlEvent.contextInfo}, itemsetDOM);
-            }
-            else if (itemsetType != undefined && itemsetType == "betterform.ui.select1.RadioItemset") {
-                dojo.require("betterform.ui.select1.RadioItemset");
-                itemsetDijit = new betterform.ui.select1.RadioItemset({contextInfo:xmlEvent.contextInfo}, itemsetDOM);
-            }
-            else if (itemsetType != undefined && itemsetType == "betterform.ui.select.CheckBoxItemset") {
-                dojo.require("betterform.ui.select1.RadioItemset");
-                itemsetDijit = new betterform.ui.select.CheckBoxItemset({contextInfo:xmlEvent.contextInfo}, itemsetDOM);
-            }
-            else {
-                console.warn("FluxProcessor apply betterform-insert-itemset: Itemset Type " + itemsetType + " not supported yet");
-            }
             if (itemsetDijit != undefined) {
                 itemsetDijit.handleInsert(xmlEvent.contextInfo);
             } else {
-                console.warn("FluxProcessor apply betterform-insert-itemset: Error during itemset creation: ItemsetId" + xmlEvent.contextInfo.targetId + " itemsetType: " + itemsetType + " not supported yet");
+                console.warn("FluxProcessor apply betterform-insert-itemset: Error during itemset creation: ItemsetId " + xmlEvent.contextInfo.targetId + " itemsetType: " + itemsetType + " not supported yet");
             }
         }
 

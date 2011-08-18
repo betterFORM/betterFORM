@@ -8,6 +8,7 @@ dojo.provide("betterform.ui.select1.ComboBoxOpen");
 
 
 dojo.require("dijit.form.ComboBox");
+dojo.require("betterform.ui.select1._ComboBoxMenu");
 
 
 dojo.declare(
@@ -32,6 +33,12 @@ dojo.declare(
 
         }
         this.options = dojo.query("*[value]",this.srcNodeRef);
+        var selectOpenPrototype = dojo.clone(this.srcNodeRef);
+        // console.debug("cloned selectOpenPrototype: ",selectOpenPrototype);
+        dojo.attr(selectOpenPrototype, "id", this.id + "-proto");
+        dojo.style(selectOpenPrototype, "display","none");
+        // console.debug("changed id to ", dojo.attr(selectOpenPrototype,"id"));
+        dojo.place(selectOpenPrototype, dojo.body(),"last");
         // console.dirxml(this.srcNodeRef);
         this.inherited(arguments);
         this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);
@@ -72,6 +79,7 @@ dojo.declare(
     },
 
     getControlValue:function() {
+        // console.debug("ComboBoxOpen.getControlValue");
         var selectedValue;
         var displayedValue = this.focusNode.value;
         dojo.forEach(this.options,
@@ -90,7 +98,6 @@ dojo.declare(
         }else {
             return "";
         }
-
     },
 
 
@@ -117,6 +124,7 @@ dojo.declare(
     },
 
     applyState:function(){
+        // console.debug("ComboBoxOpen.applyState START");
         if(this.xfControl.isReadonly()){
             dojo.attr(this.domNode,"disabled","disabled");
         }else{
@@ -125,11 +133,11 @@ dojo.declare(
     },
 
     _handleSetControlValue:function(value){
-        // console.debug("_handleSetControlValue value",value);
+        // console.debug("ComboBoxOpen._handleSetControlValue value",value);
         var labelForValue;
         dojo.forEach(this.options,
                 function(entry) {
-                    // console.debug("Option: ",entry, " value: ",dojo.attr(entry,"value"), " label:",entry.innerHTML, " value: ",value);
+                    // console.debug("ComboBoxOpen: Option: ",entry, " value: ",dojo.attr(entry,"value"), " label:",entry.innerHTML, " value: ",value);
                     if(dojo.attr(entry, "value") == value){
                         labelForValue = entry.innerHTML;
                     }
@@ -142,7 +150,6 @@ dojo.declare(
         }else {
             this.focusNode.value = "";
         }
-
     }
 });
 
