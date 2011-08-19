@@ -14,6 +14,7 @@
                 <xf:instance id="i-default">
                     <data xmlns="">
                         <input>Hello from input!</input>
+                        <inputDate>2011-08-19</inputDate>
                         <target></target>
                     </data>
                 </xf:instance>
@@ -37,7 +38,9 @@
             </xf:model>
         </div>
 		<xf:group>
-            <xf:group>
+            <xf:group appearance="full">
+                <xf:label>Input</xf:label>
+
                 <xf:input id="input1" ref="input">
                     <xf:label>Input with DomFocusIn action:</xf:label>
                     <xf:action ev:event="DOMFocusIn">
@@ -46,15 +49,23 @@
                 </xf:input>
 
 
-                <xf:input id="input2" ref="input">
-                    <xf:label>Input:</xf:label>
+                <xf:input id="inputText" ref="input">
+                    <xf:label>inputText:</xf:label>
+                </xf:input>
+
+                <xf:input id="inputDate" ref="inputDate">
+                    <xf:label>inputDate:</xf:label>
                 </xf:input>
 
                 <xf:trigger>
-                    <xf:label>Set Focus to input</xf:label>
+                    <xf:label>Set Focus to inputText</xf:label>
                     <xf:action>
-                        <xf:setfocus control="input2"/>
+                        <xf:setfocus control="inputText"/>
                     </xf:action>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Set Focus to inputDate</xf:label>
+                    <xf:setfocus control="inputDate"/>
                 </xf:trigger>
             </xf:group>
 
