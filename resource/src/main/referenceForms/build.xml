@@ -17,7 +17,7 @@
               includes="*.xml"
               extension=".xhtml">
             <classpath refid="transform.class.path"/>
-            <param name="webContext" expression="${app.name}"/>
+            <param name="webContext" expression="../.."/>
         </xslt>
     </target>
 

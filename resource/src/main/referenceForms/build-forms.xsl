@@ -17,7 +17,7 @@
                 xpath-default-namespace="http://www.w3.org/1999/xhtml"
                 exclude-result-prefixes="#all">
 
-    <xsl:param name="webContext" select="'/betterform'"/>
+    <xsl:param name="webContext" select="'../..'"/>
 
     <xsl:output method="xhtml" version="1.0" encoding="UTF-8" media-type="text/xml"/>
 
