@@ -15,7 +15,8 @@
     <xsl:variable name="bfEditorPath" select="'/forms/incubator/editor/'"/>
     -->
     <xsl:output method="xml" indent="yes"/>
-    <xsl:variable name="bfContext" select="'/exist'"/>
+    <xsl:param name="bfContext" select="''"/>
+    <!-- <xsl:variable name="bfContext" select="'/exist'"/> -->
     <xsl:strip-space elements="*"/>
     <xsl:template match="/">
         <html>

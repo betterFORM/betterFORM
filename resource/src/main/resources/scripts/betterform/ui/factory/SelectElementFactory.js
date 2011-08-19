@@ -57,12 +57,15 @@ dojo.declare(
 
             case "select1ComboBoxOpen":
                 return new betterform.ui.select1.ComboBoxOpen({
+                   autoComplete: true,
+                   selectOnClick: true,
                     name:controlId + "-value",
                     size:dojo.attr(sourceNode, "size"),
                     multiple:true,
                     "class":classValue,
                     title:dojo.attr(sourceNode, "title"),
-                    xfControlId:controlId
+                    xfControlId:controlId,
+                    dropDownClass:"betterform.ui.select1._ComboBoxMenu"
                 }, sourceNode);
                 break;
 

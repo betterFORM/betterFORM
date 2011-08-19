@@ -58,6 +58,17 @@
         <pathelement location="${betterFORM.libs}/saxon-9.2.1.5.jar"/>
     </path>
 
+    <!-- check if eXist is available (command must be placed before includes(!) -->
+    <available property="exist.available" file="${eXist.home}/exist.jar" />
+    <fail unless="exist.available">Error: Can't detect eXist installation
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Error: eXist is not installed in ${eXist.home}.
+    Please make sure eXist is installed and check the 'eXist.home-property'
+    in this build.properties.xml.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    </fail>
+
+
     <!-- Include helper buildfiles -->
     <include file="build-utils-eXist.xml" as="db"/>
 
@@ -87,33 +98,6 @@
         </or>
     </condition>
 
-
-    <!--
-        Helper Targets
-    -->
-    <available file="${eXist.home}/exist.jar" property="exist.installed"/>
-
-    <target name="check-if-eXist-installed">
-        <antcall target="exist-installed"/>
-        <antcall target="exist-not-installed"/>
-    </target>
-
-    <target name="exist-installed" if="exist.installed">
-        <echo>
-            Fine. eXist seems to be installed in ${eXist.home}. Proceeding.
-        </echo>
-    </target>
-
-    <target name="exist-not-installed" unless="exist.installed">
-        <fail>
-            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            Error:
-                eXist is not installed in ${eXist.home}.
-            Please make sure eXist is installed and check the "eXist.home-property" in this
-            buildfile.
-            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        </fail>
-    </target>
 
     <!-- *********************************************************************************************************** -->
 
@@ -157,17 +141,8 @@
             <fileset dir="${core.dir}/src/main/lib/" includes="commons-lang-*.jar ehcache-*.jar" />
         </copy>
 
-        <echo>
-            __== Setting up betterFORM context and fixing files ==__
-        </echo>
 
-        <copy todir="${eXist.home}" overwrite="true">
-            <fileset dir="${overwrites.dir}">
-                <include name="tools/**/*"/>
-                <include name="webapp/**/*"/>
-                <include name="client.properties"/>
-            </fileset>
-        </copy>
+        <antcall target="setup-betterFORM-context"/>
 
         <copy tofile="${eXist.home}/webapp/xquery/xferror.xql" file="${main.dir}/webapp/xquery/xferror.xql"/>
 
@@ -194,6 +169,20 @@
         <antcall target="patch-web-xml"/>
 
         <touch file="${betterFORM.install.marker}"/>
+    </target>
+
+    <target name="setup-betterFORM-context">
+        <echo>
+            __== Setting up betterFORM context and fixing files ==__
+        </echo>
+
+        <copy todir="${eXist.home}" overwrite="true">
+            <fileset dir="${overwrites.dir}">
+                <include name="tools/**/*"/>
+                <include name="webapp/**/*"/>
+                <include name="client.properties"/>
+            </fileset>
+        </copy>
     </target>
 
     <target name="create-uninstall-directory">
@@ -250,12 +239,28 @@
         <touch file="${betterFORM.config.patch.marker}"/>
     </target>
 
+    <target name="patch-eXist-config" unless="eXist.conf.patched">
+        <echo>
+            __== Patching conf.xml ==__
+        </echo>
+        <copy file="${etc.dir}/MergeExistConf.xsl" tofile="${eXist.home}/MergeExistConf.xsl" failonerror="true"/>
+        <xslt in="${eXist.home}/conf.xml" out="${eXist.home}/conf.xml.out" force="true"
+              style="${eXist.home}/MergeExistConf.xsl">
+            <classpath refid="generator.libs"/>
+        </xslt>
+        <delete file="${eXist.home}/MergeBetterformConfig.xsl"/>
+
+
+        <move file="${eXist.home}/conf.xml.out" tofile="${eXist.home}/conf.xml"/>
+        <touch file="${eXist.conf.patch.marker}"/>
+    </target>
+
     <!-- *********************************************************************************************************** -->
 
     <!--
         Install various stuff to database
     -->
-    <target name="install-dashboard" description="install XQuery Dashboard to eXist, , eXist must(!) run" depends="exist-installed" if="betterFORM.base.installed">
+    <target name="install-dashboard" description="install XQuery Dashboard to eXist, , eXist must(!) run"  if="betterFORM.base.installed">
         <echo>
             __== Installing dashboard ==__
         </echo>
@@ -272,7 +277,7 @@
         <copy file="${overwrites.dir}/webapp/dashboard.html" tofile="${eXist.home}/webapp/dashboard.html" overwrite="true"/>
     </target>
 
-    <target name="install-forms" description="install reference and demo forms into db, eXist must(!) run" depends="exist-installed" if="betterFORM.base.installed">
+    <target name="install-forms" description="install reference and demo forms into db, eXist must(!) run" if="betterFORM.base.installed">
         <echo>
             __== Installing reference and demo forms ==__
         </echo>
@@ -280,7 +285,7 @@
         <antcall target="install-demo-forms"/>
     </target>
 
-    <target name="install-reference-forms" description="install reference forms into db, eXist must(!) run" depends="exist-installed" if="betterFORM.base.installed">
+    <target name="install-reference-forms" description="install reference forms into db, eXist must(!) run"  if="betterFORM.base.installed">
         <echo>
             __== Installing reference forms ==__
         </echo>
@@ -299,7 +304,7 @@
         </antcall>
     </target>
 
-    <target name="install-demo-forms" description="install demo Forms into db, eXist must(!) run" depends="exist-installed" if="betterFORM.base.installed">
+    <target name="install-demo-forms" description="install demo Forms into db, eXist must(!) run"  if="betterFORM.base.installed">
         <echo>
             __== Installing demo forms ==__
         </echo>
@@ -318,7 +323,7 @@
         </antcall>
     </target>
 
-    <target name="install-demo-xrx" description="install XRX demo app into db,eXist must(!) run" depends="exist-installed" if="betterFORM.base.installed">
+    <target name="install-demo-xrx" description="install XRX demo app into db,eXist must(!) run"  if="betterFORM.base.installed">
         <echo>
             __== Installing demo app ==__
         </echo>
@@ -337,7 +342,7 @@
         </antcall>
     </target>
 
-    <target name="install-demo-xrx-betterFORM-user" description="install demo Forms into db" depends="exist-installed" if="betterFORM.base.installed">
+    <target name="install-demo-xrx-betterFORM-user" description="install demo Forms into db"  if="betterFORM.base.installed">
         <echo>
             __== Installing XRX demo app (betterform User) ==__
         </echo>
@@ -357,7 +362,7 @@
     </target>
 
 
-    <target name="install-editor" description="install editor into db, eXist must(!) run" depends="exist-installed" if="betterFORM.base.installed">
+    <target name="install-editor" description="install editor into db, eXist must(!) run"  if="betterFORM.base.installed">
         <echo>
             __== Installing editor ==__
         </echo>
@@ -368,6 +373,8 @@
            <param name="file-source-dir" value="${resource.dir}/src/main/xforms/incubator/editor"/>
            <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}/apps/editor"/>
         </antcall>
+
+        <antcall target="patch-eXist-config"/>
     </target>
 
 
@@ -376,7 +383,7 @@
     <!--
         Exploded Mode
     -->
-    <target name="update-betterFORM-exploded" depends="ant.check-ant-version, check-if-eXist-installed" description="update betterFORM in exploded mode into eXist, eXist must not(!) run">
+    <target name="update-betterFORM-exploded" depends="ant.check-ant-version" description="update betterFORM in exploded mode into eXist, eXist must not(!) run">
         <echo>
             __== Updating betterFORM-extension in exlopded Mode ==__
         </echo>
@@ -386,7 +393,7 @@
         <touch file="${betterFORM.install.marker}"/>
     </target>
 
-    <target name="install-betterFORM-exploded" depends="ant.check-ant-version, check-if-eXist-installed" description="install betterFORM in exploded mode, eXist must not(!) run">
+    <target name="install-betterFORM-exploded" depends="ant.check-ant-version" description="install betterFORM in exploded mode, eXist must not(!) run">
         <echo>
             __== Installing betterFORM to eXist in exlopded Mode ==__
         </echo>
@@ -453,7 +460,7 @@
     <!--
         Single JAR Mode
     -->
-    <target name="update-betterFORM" depends="ant.check-ant-version, check-if-eXist-installed" description="update betterFORM in single jar mode, eXist must not(!) run">
+    <target name="update-betterFORM" depends="ant.check-ant-version" description="update betterFORM in single jar mode, eXist must not(!) run">
         <echo>
             __== Updating betterFORM-extension in single JAR Mode ==__
         </echo>
@@ -463,7 +470,7 @@
         <touch file="${betterFORM.install.marker}"/>
     </target>
 
-    <target name="install-betterFORM" depends="ant.check-ant-version, check-if-eXist-installed" description="install betterFORM in single jar mode into eXist, eXist must not(!) run">
+    <target name="install-betterFORM" depends="ant.check-ant-version" description="install betterFORM in single jar mode into eXist, eXist must not(!) run">
         <echo>
             __== Installing betterFORM to eXist in single JAR Mode ==__
         </echo>

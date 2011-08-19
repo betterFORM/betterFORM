@@ -255,11 +255,16 @@ alert + hints should always be aligned with the control.
 }
 
 .xfHint {
+    height:15px;
 	border-color:#DBDBDB;
 	background:#F2F2F2 url(../images/hint.png) 5px 50% no-repeat;
 	z-index:100;
 	color:#666666;
 }
+.xfCompactGroup .xfHint {
+    top:12px;
+}
+
 
 .bfHelpWrapper{
 	display:inline-block;
