@@ -38,7 +38,7 @@ dojo.declare(
         // console.debug("RadioButton.buildRendering: parentId: "+ this.parentId + " value: " + this.currentValue + " selected:" + this.selected);
         this.inherited(arguments);
         if(selected != undefined && selected == "true"){
-            this.attr('checked', true);
+            this.set('checked', true);
         }
     },
     postMixInProperties:function() {
@@ -78,7 +78,7 @@ dojo.declare(
         this.currentValue = value;
         dojo.attr(this.focusNode, "value",value);
         if(this.select1Dijit != undefined && this.select1Dijit.currentValue == value) {
-            this.attr("checked", true);
+            this.set("checked", true);
         }
     }
 });

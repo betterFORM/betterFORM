@@ -92,9 +92,10 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
         this.root.addEventListener(XFormsEventNames.ENABLED, this, true);
          */
 
-        if (isEventUsed(XFormsEventNames.FOCUS)) {
+        /* Commented out because there is no explicit event for the setFocus Action */
+       //if (isEventUsed(XFormsEventNames.FOCUS)) {
             this.root.addEventListener(XFormsEventNames.FOCUS, this, false);
-        }
+       //}
         if (isEventUsed(DOMEventNames.FOCUS_IN)) {
             this.root.addEventListener(DOMEventNames.FOCUS_IN, this, true);
         }

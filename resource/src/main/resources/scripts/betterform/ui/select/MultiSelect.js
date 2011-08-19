@@ -85,9 +85,13 @@ dojo.declare(
         }
 
     },
-    
+
+    focus:function() {
+        this.inherited(arguments);
+    },
+
      _onFocus:function() {
-        // console.debug("MultiSelect._onFocus() this: ",this);
+        console.debug("MultiSelect._onFocus() this: ",this);
         this.inherited(arguments);
         this.handleOnFocus();
     },

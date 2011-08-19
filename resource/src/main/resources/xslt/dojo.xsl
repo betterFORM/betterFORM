@@ -8,6 +8,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xf="http://www.w3.org/2002/xforms"
                 xmlns:bf="http://betterform.sourceforge.net/xforms"
+                xmlns:ev="http://www.w3.org/2001/xml-events"
                 exclude-result-prefixes="xf bf"
                 xpath-default-namespace= "http://www.w3.org/1999/xhtml">
 
@@ -69,6 +70,7 @@
     <!-- ############################################ VARIABLES ################################################ -->
     <!-- ### checks, whether this form uses uploads. Used to set form enctype attribute ### -->
     <xsl:variable name="uses-upload" select="exists(//*/xf:upload)"/>
+    <xsl:variable name="uses-DOMFocusIn" select="exists(//*[@ev:event='DOMFocusIn'])"/>
 
     <!-- ### checks, whether this form makes use of <textarea xf:mediatype='text/html'/> ### -->
     <!--<xsl:variable name="uses-html-textarea" select="boolean(//xf:textarea[@mediatype='text/html'])"/>-->
@@ -284,7 +286,7 @@
                 </div>
             </noscript>
             <div id="formWrapper">
-                <div dojotype="betterform.FluxProcessor" jsId="fluxProcessor" id="fluxProcessor" sessionkey="{$sessionKey}" contextroot="{$contextroot}">
+                <div dojotype="betterform.FluxProcessor" jsId="fluxProcessor" id="fluxProcessor" sessionkey="{$sessionKey}" contextroot="{$contextroot}" usesDOMFocusIN="{$uses-DOMFocusIn}">
 
                     <xsl:for-each select="//xf:model">
                         <div class="xfModel" style="display:none" id="{@id}" jsId="{@id}" dojoType="betterform.XFormsModelElement"/>

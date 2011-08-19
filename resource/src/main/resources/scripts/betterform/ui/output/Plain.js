@@ -29,6 +29,13 @@ dojo.declare(
         this.setCurrentValue();
     },
 
+    focus:function() {
+        if(dojo.attr(this.containerNode,"tabindex") == undefined) {
+            dojo.attr(this.containerNode,"tabindex",0);
+        }
+        this.containerNode.focus();
+    },
+
     _onFocus:function() {
         // console.debug("Plain._onFocus (id:"+this.id+")");
         this.inherited(arguments);

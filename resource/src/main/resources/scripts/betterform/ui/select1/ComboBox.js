@@ -36,6 +36,10 @@ dojo.declare(
         this.setCurrentValue();
     },
 
+    focus:function() {
+        this.domNode.focus();
+    },
+
     _onFocus:function() {
         this.inherited(arguments);
         this.handleOnFocus();

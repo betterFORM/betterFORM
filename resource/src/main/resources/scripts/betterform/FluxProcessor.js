@@ -34,6 +34,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     lastServerClientFocusEvent:null,
     _earlyTemplatedStartup:true,
     widgetsInTemplate:true,
+    usesDOMFocusIN:false,
 
 
     /*
@@ -1422,10 +1423,15 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
         try {
             var targetName = xmlEvent.contextInfo.targetName;
             if (targetName != "group" && targetName != "repeat" && targetName != "switch" && targetName != "case") {
-                xfControlId = xmlEvent.contextInfo.targetId + "-value";
-                // dojo.byId(xfControlId).focus();
-        		// console.debug("xforms-focus control: ",xfControlId);
-                dijit.byId(xfControlId).handleOnFocus();
+                var controlToFocus = dijit.byId(xmlEvent.contextInfo.targetId + "-value");
+                if(controlToFocus && controlToFocus.focus){
+                   controlToFocus.focus();
+                }else if(dojo.byId(xmlEvent.contextInfo.targetId)){
+                    console.warn("Control is no dijit, focusing domNode: " + xmlEvent.contextInfo.targetId );
+                    controlToFocus.domNode.focus();
+                }else {
+                    console.warn("Control " + xmlEvent.contextInfo.targetId + " does not exist");
+                }
             }
         }
         catch(ex) {
@@ -1441,7 +1447,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
             dijit.byId(xfControlId)._handleDOMFocusIn();
         } else if (dojo.byId(xfControlId) != undefined) {
         	console.debug("dom-focus-in-dojo control: ",xfControlId);
-            var domControlValue = dojo.byId(xfControlId)
+            var domControlValue = dojo.byId(xfControlId);
             domControlValue.focus();
         } else {
             console.warn("FluxProcessor._handleDOMFocusIn no Element found for id:", xfControlId, " might have been destroyed");

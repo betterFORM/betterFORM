@@ -73,7 +73,7 @@ dojo.declare(
     _handleSetControlValue:function(value) {
         this.focusNode.value = value;
         //this.setDisplayedValue(value);
-        this.attr('displayedValue',value);
+        this.set('displayedValue',value);
     },
 
 
