@@ -51,6 +51,15 @@ dojo.declare(
         this.handleOnFocus();
     },
 
+    focus:function() {
+        var itemIsFocused = dojo.query(".dijitCheckBoxChecked",this.domNode);
+        if(itemIsFocused.length > 0){
+            dojo.query(".xfCheckBoxLabel", itemIsFocused[0].parentNode)[0].focus();
+        }else {
+            dojo.query(".xfSelectorItem .xfCheckBoxLabel",this.domNode)[0].focus();
+        }
+    },
+
     _onBlur:function() {
         // console.debug("CheckBoxGroup._onBlur()");
     	this.inherited(arguments);
