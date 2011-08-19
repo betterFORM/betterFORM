@@ -136,7 +136,7 @@ dojo.declare(
         // console.debug("ControlValue.setControlValue: [id", this.id, " / value: ",value,"] currentValue: ",this.currentValue, " getControlValue", this.getControlValue());
         if (value != undefined && this.currentValue != value) {
             this.currentValue = value;
-            this._handleSetControlValue(value);
+            this._handleSetControlValue(value,false);
         }
         var valueNew = this.getControlValue();
         // console.debug("betterform.ui.ControlValue.setControlValue ControlId: "+ this.xfControl.id +" valueOld:'" + this.currentValue + "' valueNew:'" + valueNew + "' [update processor:'" + eval(this.currentValue != valueNew) + "']");
