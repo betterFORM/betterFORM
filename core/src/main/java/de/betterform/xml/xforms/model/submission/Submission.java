@@ -714,10 +714,20 @@ public class Submission extends BindingElement implements DefaultAction {
             httpRequestHeader = new RequestHeaders();
         }
 
-
+        // remove all existing headers with same name as xforms:header
+        // must be done before headers are added again, don't(!) merge with following for loop
         for (Header submissionHeader : submissionHeaders) {
             RequestHeaders requestHeaders = submissionHeader.getHeaders();
+            for(RequestHeader header : requestHeaders.getAllHeaders()){
+                if (httpRequestHeader.containes(header.getName())) {
+                    httpRequestHeader.removeHeader(header.getName());
+                }
+            }
+        }
 
+        // add headers to HTTPRequestHeader
+        for (Header submissionHeader : submissionHeaders) {
+            RequestHeaders requestHeaders = submissionHeader.getHeaders();
             for(RequestHeader header : requestHeaders.getAllHeaders()){
                 httpRequestHeader.addHeader(header);
             }
