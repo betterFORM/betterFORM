@@ -18,6 +18,7 @@ dojo.provide("betterform.FluxProcessor");
 dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
 {
     sessionKey:"",
+    dataPrefix:"",
     skipshutdown:false,
     isDirty:false,
     factory:null,

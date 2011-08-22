@@ -286,7 +286,7 @@
                 </div>
             </noscript>
             <div id="formWrapper">
-                <div dojotype="betterform.FluxProcessor" jsId="fluxProcessor" id="fluxProcessor" sessionkey="{$sessionKey}" contextroot="{$contextroot}" usesDOMFocusIN="{$uses-DOMFocusIn}">
+                <div dojotype="betterform.FluxProcessor" jsId="fluxProcessor" id="fluxProcessor" sessionkey="{$sessionKey}" contextroot="{$contextroot}" usesDOMFocusIN="{$uses-DOMFocusIn}" dataPrefix="{$data-prefix}">
 
                     <xsl:for-each select="//xf:model">
                         <div class="xfModel" style="display:none" id="{@id}" jsId="{@id}" dojoType="betterform.XFormsModelElement"/>
