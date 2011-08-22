@@ -463,7 +463,7 @@
             <xsl:call-template name="assemble-label-classes"/>
         </xsl:variable>
 
-        <div id="{$id}" dojoType="betterform.ui.Control" class="{$control-classes}">
+        <span id="{$id}" dojoType="betterform.ui.Control" class="{$control-classes}">
 
             <xsl:call-template name="copy-style-attribute"/>
             <xsl:if test="@bf:incremental-delay">
@@ -482,7 +482,7 @@
             <!--<xsl:apply-templates select="xf:help"/>-->
 
             <xsl:copy-of select="script"/>
-        </div>
+        </span>
     </xsl:template>
 
     <!-- cause outputs can be inline they should not use a block element wrapper -->
@@ -596,9 +596,9 @@
     <xsl:template match="xf:help">
         <!--<span id="{../@id}-help" class="xfHelp" style="display:none;">-->
             <!--<div id="{../@id}-help" class="xfHelp">-->
-        <div id="{../@id}-help-text" class="bfHelpText" style="display:none;">
+        <span id="{../@id}-help-text" class="bfHelpText" style="display:none;">
             <xsl:apply-templates/>
-        </div>
+        </span>
         <!--</div>-->
         <!--</span>-->
     </xsl:template>
@@ -619,7 +619,7 @@
     <xsl:template match="xf:hint">
         <xsl:variable name="parentId" select="../@id"/>
         <!--<xsl:message terminate="no">parentId: <xsl:value-of select="../@id"/>  id: <xsl:value-of select="@id"/> </xsl:message>-->
-        <div id="{../@id}-hint" class="xfHint" style="display:none">
+        <span id="{../@id}-hint" class="xfHint" style="display:none">
             <xsl:apply-templates/>
 
             <!-- if help exists we output the linking icon here -->
@@ -635,7 +635,7 @@
             </xsl:if>
             <xsl:apply-templates select="../xf:help"/>
 
-        </div>
+        </span>
     </xsl:template>
 
 
@@ -684,7 +684,7 @@
                             $lname='textarea' or
                             $lname='upload'">
 
-                <div id="{concat($id,'-value')}"
+                <span id="{concat($id,'-value')}"
                      class="xfValue"
                      dataType="{$datatype}"
                      controlType="{$lname}"
@@ -751,7 +751,7 @@
                         </xsl:otherwise>
                     </xsl:choose>
 
-                </div>
+                </span>
                 <!--<div style="display:none;" id="{concat($id,'-hint')}"><xsl:value-of select="xf:hint"/></div>-->
             </xsl:when>
 
@@ -791,7 +791,7 @@
                 <xsl:variable name="step" select="bf:data/@bf:step"/>
                 <xsl:variable name="appearance" select="@appearance"/>
 
-                <div id="{concat(@id,'-value')}"
+                <span id="{concat(@id,'-value')}"
                      class="xfValue"
                      dataType="{$datatype}"
                      controlType="{local-name()}"
@@ -818,7 +818,7 @@
                             <li><xsl:value-of select="$end"/></li>
                         </xsl:if>
                     </ol>-->
-                </div>
+                </span>
             </xsl:when>
             <xsl:when test="local-name()='select'">
                 <xsl:call-template name="select"/>
