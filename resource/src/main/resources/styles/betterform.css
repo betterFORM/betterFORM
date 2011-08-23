@@ -616,7 +616,7 @@ alert + hints should always be aligned with the control.
     display: block;
 }
 
-.xfFullRepeat label {
+.xfFullRepeat .xfLabel {
     display: block;
     float: left;
     width: 100px;

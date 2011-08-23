@@ -79,7 +79,7 @@ dojo.declare(
                 value:contextInfo.value,
                 selectWidgetId:myParentNode.id,
                 dojoType:"betterform.ui.select.CheckBox"
-            }
+            },document.createElement("div")
         );
 
          console.debug("CheckBoxItemset.handleInsert [id: ",this.id, " / checkBoxDijit:",valueNode,"]");
