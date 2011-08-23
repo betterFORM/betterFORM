@@ -40,9 +40,11 @@ dojo.declare(
         var checkBoxChilds = dojo.query(".xfSelectorItem .xfCheckBoxValue",this.srcNodeRef);
         dojo.forEach(checkBoxChilds, function(item,index,array){
             var itemId = dojo.attr(item,"id");
-            fluxProcessor.factory.createWidget(item, itemId.split("-value")[0]);
+            if(itemId != undefined && (dojo.attr(item,"widgetId") == undefined || dojo.attr(item,"widgetId") == "")){
+                fluxProcessor.factory.createWidget(item, itemId.split("-value")[0]);
+            }
         })
-        
+
     },
 
     _onFocus:function() {
