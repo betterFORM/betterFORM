@@ -8,11 +8,8 @@
             dojo.require("dijit.Tooltip");
         </script>
       <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
-      <link rel="stylesheet" type="text/css" href="reference.css" /><script type="text/javascript">
-                dojo.subscribe("/xf/ready", function(){
-                    fluxProcessor.skipshutdown=true;
-                });
-            </script></head>
+      <link rel="stylesheet" type="text/css" href="reference.css" />
+   </head>
    
    <body class="soria InlineAlert" style="margin:30px">
       <div id="xforms" class="InlineAlert">
@@ -111,8 +108,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d39e182" onmouseover="showClass('xfMinimalSelect');" onmouseout="hideClass('xfMinimalSelect');">xfMinimalSelect
-                     <div dojoType="dijit.Tooltip" connectId="d39e182">matches an Element that represents a XForms
+                  <td id="d40e182" onmouseover="showClass('xfMinimalSelect');" onmouseout="hideClass('xfMinimalSelect');">xfMinimalSelect
+                     <div dojoType="dijit.Tooltip" connectId="d40e182">matches an Element that represents a XForms
                         select
                         element
                         
@@ -120,8 +117,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d39e194" onmouseover="showClass('xfSelectorItem');" onmouseout="hideClass('xfSelectorItem');">xfSelectorItem
-                     <div dojoType="dijit.Tooltip" connectId="d39e194">matches all list entries of the Element that represents a XForms
+                  <td id="d40e194" onmouseover="showClass('xfSelectorItem');" onmouseout="hideClass('xfSelectorItem');">xfSelectorItem
+                     <div dojoType="dijit.Tooltip" connectId="d40e194">matches all list entries of the Element that represents a XForms
                         select
                         element
                         
@@ -376,7 +373,10 @@
                             dojo.removeClass(item,'showClass');
                         });
                     }                    
-                </script></div>
-   </body>
+                </script></div><script type="text/javascript">
+                dojo.subscribe("/xf/ready", function(){
+                    fluxProcessor.skipshutdown=true;
+                });
+            </script></body>
    
 </html>
