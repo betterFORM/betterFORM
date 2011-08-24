@@ -64,6 +64,7 @@
                 <pathelement location="${core.dir}/src/main/lib/xmlrpc-client-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-client"/>
                 <pathelement location="${core.dir}/src/main/lib/xmlrpc-server-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-server"/>
                 <pathelement location="${core.dir}/src/main/lib/ehcache-1.6.2.jar" groupid="net.sf.ehcache" version="1.6.2" artifactId="ehcache"/>
+                <pathelement location="${core.dir}/src/main/lib/ant-1.8.2.jar" groupid="org.apache.ant" version="1.8.2" artifactId="ant"/>
 
                 <!--
                 <pathelement location="${core.dir}/../tools/AppEngine/GAE.jar"
@@ -261,10 +262,10 @@
     <exist>
         <betterform>
             <xrx>
-                <installed>/Users/tobi/project/eXist-1.4.x</installed>
+                <installed>/home/zwobit/exist-1.4.1</installed>
             </xrx>
         </betterform>
-        <installed>/Users/tobi/project/eXist-1.4.x</installed>
+        <installed>/home/zwobit/exist-1.4.1</installed>
         <passwd/>
     </exist>
 </root>

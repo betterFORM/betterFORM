@@ -67,21 +67,6 @@
         <rename src="${project.dir}/betty/pom.new.xml" dest="${project.dir}/betty/pom.xml"/>
     </target>
 
-
-     <target name="update-xApp-pom"
-            description="update the xApp pom.xml file with dependencies from build.properties.xml">
-        <xslt in="${project.dir}/xApp/pom.xml"
-              out="${project.dir}/xApp/pom.new.xml"
-              style="${project.dir}/tools/maven/updatePOM.xsl"
-              force="true">
-            <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
-            <param name="module" expression="${xapp.app.name}"/>
-        </xslt>
-        <rename src="${project.dir}/xApp/pom.xml" dest="${project.dir}/xApp/pom.xml.old"/>
-        <rename src="${project.dir}/xApp/pom.new.xml" dest="${project.dir}/xApp/pom.xml"/>
-    </target>
-
-
     <target name="create-core-install" depends="update-core-pom">
         <xslt in="${project.dir}/core/build.xml"
               out="${project.dir}/core/install-files.xml"
