@@ -82,6 +82,9 @@ Error: eXist is not installed in ${eXist.home}.
     <property name="betterFORM.config.patch.marker" value="${eXist.home}/webapp/WEB-INF/betterFORM.config.patched"/>
     <available file="${betterFORM.config.patch.marker}" property="betterFORM.config.patched"/>
 
+     <property name="eXist.conf.patch.marker" value="${eXist.home}/webapp/WEB-INF/eXist.conf.patched"/>
+    <available file="${eXist.conf.patch.marker}" property="eXist.conf.patched"/>
+
     <!-- Exploded mode -->
     <available file="${eXist.home}/webapp/WEB-INF/classes/de/betterform/agent/web/WebFactory.class" property="betterFORM.exploded.mode"/>
     <!-- Single JAR mode -->
