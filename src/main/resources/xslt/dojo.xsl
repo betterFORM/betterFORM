@@ -686,7 +686,7 @@
                      incremental="{$incremental}"
                      delay="{$incrementaldelay}"
                      tabindex="{$navindex}"
-                     title="{normalize-space(xf:hint)}">
+                     title="">
 
                     <xsl:if test="$accesskey != 'none'">
                         <xsl:attribute name="accessKey"><xsl:value-of select="$accesskey"/></xsl:attribute>
@@ -767,7 +767,7 @@
                      name="{$name}"
                      tabindex="{$navindex}"
                      value="{$value}"
-                     title="{normalize-space(xf:hint)}"
+                     title=""
                      type="button">
                     <xsl:if test="$accesskey != ' none'">
                         <xsl:attribute name="accessKey"><xsl:value-of select="$accesskey"/></xsl:attribute>
@@ -796,7 +796,7 @@
                      end="{$end}"
                      step="{$step}"
                      value="{$value}"
-                     title="{normalize-space(xf:hint)}">
+                     title="">
                     <xsl:if test="$accesskey != ' none'">
                         <xsl:attribute name="accessKey"><xsl:value-of select="$accesskey"/></xsl:attribute>
                     </xsl:if>
