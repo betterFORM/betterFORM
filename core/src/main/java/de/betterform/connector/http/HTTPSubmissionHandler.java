@@ -64,7 +64,7 @@ public class HTTPSubmissionHandler extends AbstractHTTPConnector implements Subm
             /*
              * Some extension mechanism here could be handy 
              */
-            boolean streamNotEmpty = !("".equals(stream.toString()));
+             boolean streamNotEmpty = !("".equals(stream.toString()));
             // HTTP POST
             if (method.equals("post")) {
                 if(streamNotEmpty){
