@@ -17,7 +17,6 @@
     <property name="eXist.admin.passwd" value="YOUR-EXIST-ADMIN-PASSWD"/>
     -->
     <property name="eXist.home" value="${exist.installed}"/>
-    <property name="eXist.admin.passwd" value=" "/>
 
     <property name="betterFORM.src" value="${basedir}/../"/>
 
@@ -30,8 +29,10 @@
         "betterform" for an betterFORM XRX installation
     -->
     <property name="webapp.context" value="exist"/>
+
     <property name="db.user" value="admin"/>
-    <property name="db.pwd" value=""/>
+    <property name="db.pwd" value="secret"/>
+    <property name="eXist.admin.passwd" value="${db.pwd}"/>
 
     <!-- betterFORM module directories -->
     <property name="root.dir" value="${betterFORM.src}"/>
@@ -68,6 +69,9 @@ Error: eXist is not installed in ${eXist.home}.
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
     </fail>
 
+    <condition property="password.notset">
+        <equals arg1="${db.pwd}" arg2=""/>
+    </condition>
 
     <!-- Include helper buildfiles -->
     <include file="build-utils-eXist.xml" as="db"/>
@@ -521,6 +525,16 @@ Error: eXist is not installed in ${eXist.home}.
         <move file="${betterFORM.extension}/target/WEB-INF/dwr20.dtd" tofile="${eXist.home}/webapp/WEB-INF/dwr20.dtd"/>
         <delete dir="${betterFORM.extension}/target" includeemptydirs="true"/>
         <antcall target="patch-betterFORM-config"/>
+    </target>
+
+    <target name="update-betterFORM-content" if="betterFORM.base.installed">
+        <antcall target="db.start-eXist"/>
+        <antcall target="install-editor"/>
+        <antcall target="install-dashboard"/>
+        <antcall target="install-demo-xrx"/>
+        <antcall target="install-forms"/>
+        <antcall target="db.stop-eXist-with-password"/>
+        <antcall target="db.stop-eXist-without-password"/>
     </target>
 
 </project>
