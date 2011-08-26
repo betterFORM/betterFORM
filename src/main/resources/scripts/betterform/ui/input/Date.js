@@ -14,13 +14,10 @@ dojo.declare(
         "betterform.ui.input.Date",
         [betterform.ui.ControlValue, dijit.form.DateTextBox],
 {   
-    constructor:function() {
-       this.incremental = true;
-    },
-
     postMixInProperties:function() {
         this.inherited(arguments);
         this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);
+        this.incremental = false;
         /* incremental date does not make sense, if wanted anyway comment in the following line of code and implement _valueChange */
         // dojo.connect(this,"_onKeyPress", this,"_valueChanged");
     },
