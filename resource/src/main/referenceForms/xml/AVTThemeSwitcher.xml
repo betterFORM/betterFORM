@@ -6,9 +6,9 @@
     <head>
         <title>AVT Theme Switcher</title>
         <style type="text/css">
-            @import "/betterform/bfResources/scripts/dijit/themes/tundra/tundra.css";
-            @import "/betterform/bfResources/scripts/dijit/themes/soria/soria.css";
-            @import "/betterform/bfResources/scripts/dijit/themes/claro/claro.css";
+            @import "../../bfResources/scripts/dijit/themes/tundra/tundra.css";
+            @import "../../bfResources/scripts/dijit/themes/soria/soria.css";
+            @import "../../bfResources/scripts/dijit/themes/claro/claro.css";
 
             .tundra h1, .soria h1, .claro h1 {
                 font-size: 20pt;
