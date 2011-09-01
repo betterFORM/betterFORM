@@ -567,9 +567,11 @@ public class Submission extends BindingElement implements DefaultAction {
         Map response;
         try {
             // todo: should be supported by serializers
+/*
             if (this.includenamespaceprefixes != null) {
                 getLogger().warn(this + " submit: the 'includenamespaceprefixes' attribute is not supported yet");
             }
+*/
 
             processSubmissionOptions();
 

@@ -40,11 +40,6 @@
                               href="../../resources/scripts/dojox/highlight/resources/pygments/borland.css"/>
             -->
             <link rel="stylesheet" type="text/css" href="reference.css"/>
-            <script type="text/javascript">
-                dojo.subscribe("/xf/ready", function(){
-                    fluxProcessor.skipshutdown=true;
-                });
-            </script>
         </xsl:copy>
     </xsl:template>
 
@@ -131,6 +126,12 @@
                     }                    
                 </script>
             </div>
+            <script type="text/javascript">
+                dojo.subscribe("/xf/ready", function(){
+                    fluxProcessor.skipshutdown=true;
+                });
+            </script>
+
         </xsl:copy>
     </xsl:template>
 

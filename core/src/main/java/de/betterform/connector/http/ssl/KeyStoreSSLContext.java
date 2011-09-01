@@ -63,31 +63,23 @@ import de.betterform.connector.http.AbstractHTTPConnector;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
 import org.apache.commons.httpclient.contrib.ssl.AuthSSLInitializationError;
-import org.apache.commons.httpclient.contrib.ssl.AuthSSLX509TrustManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
-import javax.net.ssl.X509TrustManager;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
-import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-import java.util.Enumeration;
 
 /**
  * @author <a href="mailto:tobias.krebs@betterform.de">tobi</a>
- * @version $Id: KeyStoreSSLContext 08.10.2010 tobi $
+ * @version $Id: KeyStoreSSLContext 03.08.2011 tobi $
  */
 public class KeyStoreSSLContext {
     private static String keyStorePath = null;
@@ -95,6 +87,8 @@ public class KeyStoreSSLContext {
     private SSLContext sslcontext = null;
 
     private static Log LOGGER = LogFactory.getLog(KeyStoreSSLContext.class);
+
+
 
     public KeyStoreSSLContext() {
         try {
@@ -134,70 +128,20 @@ public class KeyStoreSSLContext {
         throw new AuthSSLInitializationError("You must configure "+ AbstractHTTPConnector.HTTPCLIENT_SSL_KEYSTORE_PASSWD + " in betterform-config.xml!");
     }
 
-    private KeyStore createKeyStore(final URL url, final String password)
-        throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException
-    {
-        if (url == null) {
-            throw new IllegalArgumentException("Keystore url may not be null");
-        }
-
-        LOGGER.debug("Initializing key store");
-        KeyStore keystore  = KeyStore.getInstance(KeyStore.getDefaultType());
-        InputStream is = null;
-        try {
-        	is = url.openStream();
-            keystore.load(is, password != null ? password.toCharArray(): null);
-        } finally {
-        	if (is != null) is.close();
-        }
-        return keystore;
-    }
-
-    private static TrustManager[] createTrustManagers(final KeyStore keystore)
-        throws KeyStoreException, NoSuchAlgorithmException
-    {
-        if (keystore == null) {
-            throw new IllegalArgumentException("Keystore may not be null");
-        }
-        LOGGER.debug("Initializing trust manager");
-        TrustManagerFactory tmfactory = TrustManagerFactory.getInstance(
-            TrustManagerFactory.getDefaultAlgorithm());
-        tmfactory.init(keystore);
-        TrustManager[] trustmanagers = tmfactory.getTrustManagers();
-        for (int i = 0; i < trustmanagers.length; i++) {
-            if (trustmanagers[i] instanceof X509TrustManager) {
-                trustmanagers[i] = new AuthSSLX509TrustManager(
-                    (X509TrustManager)trustmanagers[i]);
-            }
-        }
-        return trustmanagers;
-    }
-
     private SSLContext createSSLContext() {
         try {
             TrustManager[] trustmanagers = null;
+            KeyManager[] keyManagers = null;
             if (getKeyStoreURL() != null) {
-                KeyStore keystore = createKeyStore(getKeyStoreURL(), getKeyStorePasswd());
-                if (LOGGER.isTraceEnabled()) {
-                    Enumeration aliases = keystore.aliases();
-                    while (aliases.hasMoreElements()) {
-                        String alias = (String)aliases.nextElement();
-                        LOGGER.trace("Trusted certificate '" + alias + "':");
-                        Certificate trustedcert = keystore.getCertificate(alias);
-                        if (trustedcert != null && trustedcert instanceof X509Certificate) {
-                            X509Certificate cert = (X509Certificate)trustedcert;
-                            LOGGER.trace("  Subject DN: " + cert.getSubjectDN());
-                            LOGGER.trace("  Signature Algorithm: " + cert.getSigAlgName());
-                            LOGGER.trace("  Valid from: " + cert.getNotBefore() );
-                            LOGGER.trace("  Valid until: " + cert.getNotAfter());
-                            LOGGER.trace("  Issuer: " + cert.getIssuerDN());
-                        }
-                    }
-                }
-                trustmanagers = createTrustManagers(keystore);
+                BetterFORMKeyStoreManager bfkm = new BetterFORMKeyStoreManager();
+                bfkm.addCustomX509KeyManager(getKeyStoreURL(), getKeyStorePasswd());
+                keyManagers = new KeyManager[]{bfkm};
+                BetterFORMTrustManager trustManagers = new BetterFORMTrustManager();
+                trustManagers.addCustomX509TrustManager(getKeyStoreURL(), getKeyStorePasswd());
+                trustmanagers = trustManagers.getTrustManagers();
             }
             SSLContext sslcontext = SSLContext.getInstance("SSL");
-            sslcontext.init(null, trustmanagers, null);
+            sslcontext.init( keyManagers, trustmanagers, null);
             return sslcontext;
         } catch (NoSuchAlgorithmException e) {
             LOGGER.error(e.getMessage(), e);

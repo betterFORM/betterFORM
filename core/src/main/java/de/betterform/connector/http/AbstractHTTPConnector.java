@@ -239,7 +239,7 @@ public class AbstractHTTPConnector extends AbstractConnector {
          HttpParams httpParams = new BasicHttpParams();
 
 
-            DefaultHttpClient client = ConnectorFactory.getFactory().getHttpClient(httpParams);
+         DefaultHttpClient client = ConnectorFactory.getFactory().getHttpClient(httpParams);
 
 
 

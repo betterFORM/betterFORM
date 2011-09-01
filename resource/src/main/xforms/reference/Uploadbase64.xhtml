@@ -6,11 +6,8 @@
       <title>Text input control</title>
       
       <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
-      <link rel="stylesheet" type="text/css" href="reference.css" /><script type="text/javascript">
-                dojo.subscribe("/xf/ready", function(){
-                    fluxProcessor.skipshutdown=true;
-                });
-            </script></head>
+      <link rel="stylesheet" type="text/css" href="reference.css" />
+   </head>
    
    <body class="soria InlineAlert" style="margin:30px">
       <div id="xforms" class="InlineAlert">
@@ -58,13 +55,13 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d51e120" onmouseover="showClass('xfUpload');" onmouseout="hideClass('xfUpload');">xfUpload
-                     <div dojoType="dijit.Tooltip" connectId="d51e120">matches an Element that represents a XForms input element</div>
+                  <td id="d52e120" onmouseover="showClass('xfUpload');" onmouseout="hideClass('xfUpload');">xfUpload
+                     <div dojoType="dijit.Tooltip" connectId="d52e120">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d51e129" onmouseover="showClass('xsdAnyURI');" onmouseout="hideClass('xsdAnyURI');">xsdAnyURI
-                     <div dojoType="dijit.Tooltip" connectId="d51e129">matches an Element that is bound to a node with datatype
+                  <td id="d52e129" onmouseover="showClass('xsdAnyURI');" onmouseout="hideClass('xsdAnyURI');">xsdAnyURI
+                     <div dojoType="dijit.Tooltip" connectId="d52e129">matches an Element that is bound to a node with datatype
                         anyURI
                         
                      </div>
@@ -290,7 +287,10 @@
                             dojo.removeClass(item,'showClass');
                         });
                     }                    
-                </script></div>
-   </body>
+                </script></div><script type="text/javascript">
+                dojo.subscribe("/xf/ready", function(){
+                    fluxProcessor.skipshutdown=true;
+                });
+            </script></body>
    
 </html>

@@ -11,11 +11,8 @@
 			}
         </style>
       <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
-      <link rel="stylesheet" type="text/css" href="reference.css" /><script type="text/javascript">
-                dojo.subscribe("/xf/ready", function(){
-                    fluxProcessor.skipshutdown=true;
-                });
-            </script></head>
+      <link rel="stylesheet" type="text/css" href="reference.css" />
+   </head>
    
    <body class="soria InlineAlert" style="margin:30px">
       <div id="xforms" class="InlineAlert">
@@ -63,8 +60,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d42e123" onmouseover="showClass('xfTextarea');" onmouseout="hideClass('xfTextarea');">xfTextarea
-                     <div dojoType="dijit.Tooltip" connectId="d42e123">matches an Element that represents a XForms input element</div>
+                  <td id="d43e123" onmouseover="showClass('xfTextarea');" onmouseout="hideClass('xfTextarea');">xfTextarea
+                     <div dojoType="dijit.Tooltip" connectId="d43e123">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
@@ -281,7 +278,10 @@
                             dojo.removeClass(item,'showClass');
                         });
                     }                    
-                </script></div>
-   </body>
+                </script></div><script type="text/javascript">
+                dojo.subscribe("/xf/ready", function(){
+                    fluxProcessor.skipshutdown=true;
+                });
+            </script></body>
    
 </html>

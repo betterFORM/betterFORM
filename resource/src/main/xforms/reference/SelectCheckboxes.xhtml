@@ -9,11 +9,8 @@
         </script>
       
       <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
-      <link rel="stylesheet" type="text/css" href="reference.css" /><script type="text/javascript">
-                dojo.subscribe("/xf/ready", function(){
-                    fluxProcessor.skipshutdown=true;
-                });
-            </script></head>
+      <link rel="stylesheet" type="text/css" href="reference.css" />
+   </head>
    
    <body class="soria InlineAlert" style="margin:30px">
       <div id="xforms" class="InlineAlert">
@@ -106,8 +103,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d37e180" onmouseover="showClass('xfSelect');" onmouseout="hideClass('xfSelect');">xfSelect
-                     <div dojoType="dijit.Tooltip" connectId="d37e180">matches an Element that represents a XForms
+                  <td id="d38e180" onmouseover="showClass('xfSelect');" onmouseout="hideClass('xfSelect');">xfSelect
+                     <div dojoType="dijit.Tooltip" connectId="d38e180">matches an Element that represents a XForms
                         select
                         element
                         
@@ -115,8 +112,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d37e192" onmouseover="showClass('xfCheckBoxLabel');" onmouseout="hideClass('xfCheckBoxLabel');">xfCheckBoxLabel
-                     <div dojoType="dijit.Tooltip" connectId="d37e192">matches all checkbox labels of the element that represents a XForms
+                  <td id="d38e192" onmouseover="showClass('xfCheckBoxLabel');" onmouseout="hideClass('xfCheckBoxLabel');">xfCheckBoxLabel
+                     <div dojoType="dijit.Tooltip" connectId="d38e192">matches all checkbox labels of the element that represents a XForms
                         select
                         element
                         
@@ -124,8 +121,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d37e204" onmouseover="showClass('xfCheckBoxValue');" onmouseout="hideClass('xfCheckBoxValue');">xfCheckBoxValue
-                     <div dojoType="dijit.Tooltip" connectId="d37e204">matches all checkbox values of the element that represents a XForms
+                  <td id="d38e204" onmouseover="showClass('xfCheckBoxValue');" onmouseout="hideClass('xfCheckBoxValue');">xfCheckBoxValue
+                     <div dojoType="dijit.Tooltip" connectId="d38e204">matches all checkbox values of the element that represents a XForms
                         select
                         element
                         
@@ -392,7 +389,10 @@
                             dojo.removeClass(item,'showClass');
                         });
                     }                    
-                </script></div>
-   </body>
+                </script></div><script type="text/javascript">
+                dojo.subscribe("/xf/ready", function(){
+                    fluxProcessor.skipshutdown=true;
+                });
+            </script></body>
    
 </html>

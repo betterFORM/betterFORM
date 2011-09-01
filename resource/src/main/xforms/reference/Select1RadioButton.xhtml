@@ -3,7 +3,7 @@
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       
-      <title>Default Alert Handler - inline alerts</title>
+      <title>select control rendered as list control</title>
       
       <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
       <link rel="stylesheet" type="text/css" href="reference.css" />
@@ -14,47 +14,85 @@
          <div style="display:none">
             <xf:model>
                
-               <xf:instance xmlns="">
+               <xf:instance id="instance-1">
                   
-                  <data>
+                  <data xmlns="" constraint="true" readonly="false" required="false" relevant="true">
                      
-                     <grouped-data>
+                     <select1 constraint="true" readonly="false" required="true" relevant="true">
                         
-                        <group>
-                           
-                           <a></a>
-                           
-                           <b></b>
-                           
-                           <c></c>
-                           
-                           <d></d>
-                           
-                        </group>
+                        <value>AX</value>
                         
-                     </grouped-data>
+                     </select1>
                      
                   </data>
                   
                </xf:instance>
                
-               
-               <xf:bind nodeset="grouped-data">
+               <xf:bind nodeset="select1">
                   
-                  <xf:bind nodeset="group">
-                     
-                     <xf:bind nodeset="a" constraint="string-length(.) &gt; 3"></xf:bind>
-                     
-                     <xf:bind nodeset="b" type="xf:date"></xf:bind>
-                     
-                     <xf:bind nodeset="c" type="xf:integer"></xf:bind>
-                     
-                     <xf:bind nodeset="d"></xf:bind>
-                     
-                  </xf:bind>
+                  <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
+                  
+                  <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
+                  
+                  <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
+                  
+                  <xf:bind nodeset="@required" type="boolean"></xf:bind>
+                  
+                  <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
                   
                </xf:bind>
                
+               <xf:instance id="codes">
+                  
+                  <countrylist xmlns="" lang="en" constraint="true" readonly="false" required="true" relevant="true">
+                     
+                     <country constraint="true" readonly="false" required="true" relevant="true">
+                        
+                        <country-name constraint="true" readonly="false" required="true" relevant="true">
+                           AFGHANISTAN
+                           
+                        </country-name>
+                        
+                        <code constraint="true" readonly="false" required="true" relevant="true">AF</code>
+                        
+                     </country>
+                     
+                     <country constraint="true" readonly="false" required="true" relevant="true">
+                        
+                        <country-name constraint="true" readonly="false" required="true" relevant="true">LAND
+                           ISLANDS
+                           
+                        </country-name>
+                        
+                        <code constraint="true" readonly="false" required="true" relevant="true">AX</code>
+                        
+                     </country>
+                     
+                     <country constraint="true" readonly="false" required="true" relevant="true">
+                        
+                        <country-name constraint="true" readonly="false" required="true" relevant="true">
+                           ALBANIA
+                           
+                        </country-name>
+                        
+                        <code constraint="true" readonly="false" required="true" relevant="true">AL</code>
+                        
+                     </country>
+                     
+                     <country constraint="true" readonly="false" required="true" relevant="true">
+                        
+                        <country-name constraint="true" readonly="false" required="true" relevant="true">
+                           ALGERIA
+                           
+                        </country-name>
+                        
+                        <code constraint="true" readonly="false" required="true" relevant="true">DZ</code>
+                        
+                     </country>
+                     
+                  </countrylist>
+                  
+               </xf:instance>
                
             </xf:model>
          </div>
@@ -68,18 +106,21 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d3e180" onmouseover="showClass('InlineAlert');" onmouseout="hideClass('InlineAlert');">InlineAlert
-                     <div dojoType="dijit.Tooltip" connectId="d3e180">matches a body that uses inline alerts</div>
+                  <td id="d37e170" onmouseover="showClass('xfSelect1');" onmouseout="hideClass('xfSelect1');">xfSelect1
+                     <div dojoType="dijit.Tooltip" connectId="d37e170">matches an Element that represents a XForms
+                        select
+                        element
+                        
+                     </div>
                   </td>
                </tr>
                <tr>
-                  <td id="d3e189" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
-                     <div dojoType="dijit.Tooltip" connectId="d3e189">matches an Element that represents a XForms input element</div>
-                  </td>
-               </tr>
-               <tr>
-                  <td id="d3e198" onmouseover="showClass('xfAlert');" onmouseout="hideClass('xfAlert');">xfAlert
-                     <div dojoType="dijit.Tooltip" connectId="d3e198">matches an Element that represents a XForms alert element</div>
+                  <td id="d37e182" onmouseover="showClass('xfSelectorItem');" onmouseout="hideClass('xfSelectorItem');">xfSelectorItem
+                     <div dojoType="dijit.Tooltip" connectId="d37e182">matches an item of a XForms
+                        select1
+                        element
+                        
+                     </div>
                   </td>
                </tr>
                <tr>
@@ -192,20 +233,22 @@
             </table>
          </div>
          <div class="pageintro">
-            <h1>Default Alert Handler - inline alerts</h1>
+            <h1>select control rendered as list control</h1>
             <div class="description">
                
                <p>
-                  This form shows the default alert handling which is choosen when you do not specify
-                  via some custom class (see other examples). This will show alert messages inline with their controls.
+                  This form control allows the user to make multiple selections from a set of choices.
+                  
                   
                </p>
                
                <p>
-                  By default alerts are displayed to the right of the widget but this can be influenced by overwriting
-                  the xfAlert styles.
-                  It is the most common rendering of an input which is bound to a string value in the
-                  Instance.
+                  A
+                  <span class="keyword">select1</span>
+                  with
+                  <span class="keyword">appearance</span>
+                  'compact' will be
+                  rendered as a list conrol.
                   
                </p>
                
@@ -216,12 +259,12 @@
                   <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
                </tr>
                <tr>
-                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#" target="_blank">
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-selectOne" target="_blank">
                         Recommendation
                         </a></td>
                </tr>
                <tr>
-                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html#" target="_blank">
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html#elems-form-controls" target="_blank">
                         Quick Reference
                         </a></td>
                </tr>
@@ -229,74 +272,25 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:bind nodeset="grouped-data">
+            <xf:select1 id="select1" ref="select1/value" appearance="full" incremental="true">
                
-               <xf:bind nodeset="group">
-                  
-                  <xf:bind nodeset="a" constraint="string-length(.) &gt; 3"></xf:bind>
-                  
-                  <xf:bind nodeset="b" type="xf:date"></xf:bind>
-                  
-                  <xf:bind nodeset="c" type="xf:integer"></xf:bind>
-                  
-                  <xf:bind nodeset="d"></xf:bind>
-                  
-               </xf:bind>
+               <xf:label>a select1 list</xf:label>
                
-            </xf:bind>
-            <xf:group ref="grouped-data/group" appearance="compact" class="InlineAlert">
+               <xf:hint>a Hint for this control</xf:hint>
                
-               <xf:label>a compact group with inline inputs - no initial data</xf:label>
+               <xf:help>help for select1</xf:help>
                
-               <xf:input ref="a">
-                  
-                  <xf:label>A-label</xf:label>
-                  
-                  <xf:alert>Your input is not long enough</xf:alert>
-                  
-                  <xf:hint>The input must be longer than 5 characters</xf:hint>
-                  
-                  <xf:help>Help für Control A</xf:help>
-                  
-               </xf:input>
+               <xf:alert>invalid</xf:alert>
                
-               <xf:input ref="b">
+               <xf:itemset nodeset="instance('codes')/country">
                   
-                  <xf:label>Bb-label</xf:label>
+                  <xf:label ref="country-name"></xf:label>
                   
-                  <xf:alert>Alert für Control B</xf:alert>
+                  <xf:value ref="code"></xf:value>
                   
-                  <xf:hint>Type a valid date or pick one from the drowdown</xf:hint>
-                  
-                  <xf:help>Help für Control B</xf:help>
-                  
-               </xf:input>
+               </xf:itemset>
                
-               <xf:input ref="c">
-                  
-                  <xf:label>Ccc-label</xf:label>
-                  
-                  <xf:alert>The input must be an integer number</xf:alert>
-                  
-                  <xf:hint>Please input a number</xf:hint>
-                  
-                  <xf:help>Help für Control C</xf:help>
-                  
-               </xf:input>
-               
-               <xf:input ref="d">
-                  
-                  <xf:label>Dddd-label</xf:label>
-                  
-                  <xf:alert>Alert für Control D</xf:alert>
-                  
-                  <xf:hint>Hint für Control D</xf:hint>
-                  
-                  <xf:help>Help für Control D</xf:help>
-                  
-               </xf:input>
-               
-            </xf:group>
+            </xf:select1>
          </div>
          <div class="MIPS">
             
@@ -304,25 +298,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="input1-readonly" ref="input1/@readonly" incremental="true">
+               <xf:input id="select1-readonly" ref="select1/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="input1-required" ref="input1/@required" incremental="true">
+               <xf:input id="select1-required" ref="select1/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="input1-relevant" ref="input1/@relevant" incremental="true">
+               <xf:input id="select1-relevant" ref="select1/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="input1-valid" ref="input1/@constraint" incremental="true">
+               <xf:input id="select1-valid" ref="select1/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   
@@ -332,42 +326,16 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:bind nodeset="grouped-data"&gt;
-    &lt;xf:bind nodeset="group"&gt;
-        &lt;xf:bind nodeset="a" constraint="string-length(.) &gt; 3"&gt;&lt;/xf:bind&gt;
-        &lt;xf:bind nodeset="b" type="xf:date"&gt;&lt;/xf:bind&gt;
-        &lt;xf:bind nodeset="c" type="xf:integer"&gt;&lt;/xf:bind&gt;
-        &lt;xf:bind nodeset="d"&gt;&lt;/xf:bind&gt;
-    &lt;/xf:bind&gt;
-&lt;/xf:bind&gt;
-
-&lt;xf:group ref="grouped-data/group" appearance="compact" class="InlineAlert"&gt;
-    &lt;xf:label&gt;a compact group with inline inputs - no initial data&lt;/xf:label&gt;
-    &lt;xf:input ref="a"&gt;
-        &lt;xf:label&gt;A-label&lt;/xf:label&gt;
-        &lt;xf:alert&gt;Your input is not long enough&lt;/xf:alert&gt;
-        &lt;xf:hint&gt;The input must be longer than 5 characters&lt;/xf:hint&gt;
-        &lt;xf:help&gt;Help für Control A&lt;/xf:help&gt;
-    &lt;/xf:input&gt;
-    &lt;xf:input ref="b"&gt;
-        &lt;xf:label&gt;Bb-label&lt;/xf:label&gt;
-        &lt;xf:alert&gt;Alert für Control B&lt;/xf:alert&gt;
-        &lt;xf:hint&gt;Type a valid date or pick one from the drowdown&lt;/xf:hint&gt;
-        &lt;xf:help&gt;Help für Control B&lt;/xf:help&gt;
-    &lt;/xf:input&gt;
-    &lt;xf:input ref="c"&gt;
-        &lt;xf:label&gt;Ccc-label&lt;/xf:label&gt;
-        &lt;xf:alert&gt;The input must be an integer number&lt;/xf:alert&gt;
-        &lt;xf:hint&gt;Please input a number&lt;/xf:hint&gt;
-        &lt;xf:help&gt;Help für Control C&lt;/xf:help&gt;
-    &lt;/xf:input&gt;
-    &lt;xf:input ref="d"&gt;
-        &lt;xf:label&gt;Dddd-label&lt;/xf:label&gt;
-        &lt;xf:alert&gt;Alert für Control D&lt;/xf:alert&gt;
-        &lt;xf:hint&gt;Hint für Control D&lt;/xf:hint&gt;
-        &lt;xf:help&gt;Help für Control D&lt;/xf:help&gt;
-    &lt;/xf:input&gt;
-&lt;/xf:group&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:select1 id="select1" ref="select1/value" appearance="full" incremental="true"&gt;
+    &lt;xf:label&gt;a select1 list&lt;/xf:label&gt;
+    &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
+    &lt;xf:help&gt;help for select1&lt;/xf:help&gt;
+    &lt;xf:alert&gt;invalid&lt;/xf:alert&gt;
+    &lt;xf:itemset nodeset="instance('codes')/country"&gt;
+        &lt;xf:label ref="country-name"&gt;&lt;/xf:label&gt;
+        &lt;xf:value ref="code"&gt;&lt;/xf:value&gt;
+    &lt;/xf:itemset&gt;
+&lt;/xf:select1&gt;
 </code></pre></div><script type="text/javascript">
                     function showClass(cssClass){
                         dojo.query('.sample .'+ cssClass).forEach(function(item){
