@@ -8,7 +8,7 @@
   Update Target work on stable-svn, trunk-svn and stable-release
 -->
 
-<project name="betterFORM extension installer" default="install-betterFORM-exploded" basedir=".">
+<project name="betterFORM extension installer" default="update-betterFORM" basedir=".">
 
     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
     <!-- Set this porperties so they match your environment -->
@@ -48,10 +48,9 @@
 
     <!-- betterFORM installation directories -->
     <property name="betterFORM.extension" value="${eXist.home}/extensions/betterform/"/>
-    <property name="betterFORM.libs" value="${betterFORM.extension}/src/main/lib"/>
-    <property name="betterFORM.jar.1" value="${betterFORM.extension}/src/main/lib/betterform.jar"/>
-    <property name="betterFORM.jar.2" value="${eXist.home}/webapp/WEB-INF/lib/betterform.jar"/>
-    <property name="betterFORM.utils" value="${eXist.home}/betterform-utils"/>
+    <property name="betterFORM.libs" value="${betterFORM.extension}/main/lib"/>
+    <property name="betterFORM.jar.1" value="${betterFORM.extension}/main/lib/betterform.jar"/>
+    <property name="betterFORM.jar.2" value="${betterFORM.extension}/src/main/lib/betterform.jar"/>
 
     <!-- classpaths -->
     <!-- Saxon for xslt-transformation -->
@@ -81,19 +80,16 @@ Error: eXist is not installed in ${eXist.home}.
     <!-- Available properties -->
     <!-- betterFORM installed -->
     <property name="betterFORM.install.marker" value="${eXist.home}/webapp/WEB-INF/betterFORM.installed"/>
-    <available file="${betterFORM.install.marker}" property="betterFORM.base.installed"/>
 
     <property name="betterFORM.config.patch.marker" value="${eXist.home}/webapp/WEB-INF/betterFORM.config.patched"/>
     <available file="${betterFORM.config.patch.marker}" property="betterFORM.config.patched"/>
 
-     <property name="eXist.conf.patch.marker" value="${eXist.home}/webapp/WEB-INF/eXist.conf.patched"/>
+    <property name="eXist.conf.patch.marker" value="${eXist.home}/webapp/WEB-INF/eXist.conf.patched"/>
     <available file="${eXist.conf.patch.marker}" property="eXist.conf.patched"/>
 
     <!-- Exploded mode -->
     <available file="${eXist.home}/webapp/WEB-INF/classes/de/betterform/agent/web/WebFactory.class" property="betterFORM.exploded.mode"/>
     <!-- Single JAR mode -->
-    <available file="${eXist.home}/webapp/WEB-INF/classes/de/betterform/agent/web/WebFactory.class" property="betterFORM.exploded.mode"/>
-
     <condition property="betterFORM.single.jar.mode">
         <or>
         <resourceexists>
@@ -108,75 +104,6 @@ Error: eXist is not installed in ${eXist.home}.
 
     <!-- *********************************************************************************************************** -->
 
-    <!--
-        Base install Targets
-        Installs a betterFORM base installation to eXist
-    -->
-    <target name="install-betterFORM-base" unless="betterFORM.base.installed" >
-        <echo>
-            __== Setting up betterFORM-base ==__
-        </echo>
-
-        <antcall target="create-uninstall-directory"/>
-
-        <echo>
-            __== Installing libs ==__
-        </echo>
-        <mkdir dir="${betterFORM.libs}"/>
-
-        <delete failonerror="false">
-            <fileset dir="${betterFORM.libs}">
-                <include name="saxon*"/>
-                <include name="dwr-*.jar"/>
-            </fileset>
-        </delete>
-
-        <copy todir="${betterFORM.libs}" overwrite="true">
-            <fileset dir="${core.dir}/src/main/lib/" includes="saxon*" />
-            <fileset dir="${core.dir}/src/main/lib/" includes="http*.jar" />
-            <fileset dir="${web.dir}/src/main/lib/" includes="dwr-*.jar" />
-        </copy>
-
-        <delete failonerror="false">
-            <fileset dir="${eXist.home}/lib/optional">
-                <include name="commons-lang-*.jar"/>
-                <include name="ehcache-*.jar"/>
-            </fileset>
-        </delete>
-
-        <copy todir="${eXist.home}/lib/optional">
-            <fileset dir="${core.dir}/src/main/lib/" includes="commons-lang-*.jar ehcache-*.jar" />
-        </copy>
-
-
-        <antcall target="setup-betterFORM-context"/>
-
-        <copy tofile="${eXist.home}/webapp/xquery/xferror.xql" file="${main.dir}/webapp/xquery/xferror.xql"/>
-
-        <echo>
-            __== Setting up start.config ==__
-        </echo>
-
-        <unzip src="${eXist.home}/start.jar" dest="${eXist.home}">
-            <patternset>
-                <include name="**/*.config"/>
-            </patternset>
-            <cutdirsmapper dirs="3"/>
-        </unzip>
-
-        <echo message="lib/optional/* always${line.separator}" append="true" file="${eXist.home}/start.config"/>
-        <echo message="extensions/betterform/src/main/lib/* always" append="true" file="${eXist.home}/start.config"/>
-
-        <echo>
-            __== Installing Stylesheets ==__
-        </echo>
-
-        <copy file="${etc.dir}/MergeWebXML-1.4.xsl" tofile="${eXist.home}/MergeWebXML.xsl" failonerror="true"/>
-
-        <antcall target="patch-web-xml"/>
-
-        <touch file="${betterFORM.install.marker}"/>
-    </target>
 
     <target name="setup-betterFORM-context">
         <echo>
@@ -192,43 +119,11 @@ Error: eXist is not installed in ${eXist.home}.
         </copy>
     </target>
 
-    <target name="create-uninstall-directory">
-        <echo>
-            __== Creating uninstall directory ==__
-        </echo>
-        <mkdir dir="${eXist.home}/uninstall-betterform/tools/jetty/etc"/>
-        <mkdir dir="${eXist.home}/uninstall-betterform/webapp/admin"/>
-        <mkdir dir="${eXist.home}/uninstall-betterform/webapp/WEB-INF"/>
-        <mkdir dir="${eXist.home}/uninstall-betterform/lib/cocoon"/>
-
-        <copy tofile="${eXist.home}/uninstall-betterform/tools/jetty/etc/jetty.xml" file="${eXist.home}/tools/jetty/etc/jetty.xml"/>
-        <copy tofile="${eXist.home}/uninstall-betterform/webapp/controller.xql" file="${eXist.home}/webapp/controller.xql"/>
-        <copy tofile="${eXist.home}/uninstall-betterform/webapp/admin/admin.xql" file="${eXist.home}/webapp/admin/admin.xql"/>
-        <copy tofile="${eXist.home}/uninstall-betterform/webapp/WEB-INF/web.xml" file="${eXist.home}/webapp/WEB-INF/web.xml"/>
-        <copy tofile="${eXist.home}/uninstall-betterform/client.properties" file="${eXist.home}/client.properties"/>
-        <copy tofile="${eXist.home}/uninstall-betterform/start.config" file="${eXist.home}/start.config" failonerror="false"/>
-        <move tofile="${eXist.home}/uninstall-betterform/lib/cocoon/ehcache-1.1.jar" file="${eXist.home}/lib/cocoon/ehcache-1.1.jar" failonerror="false"/>
-        <move tofile="${eXist.home}/uninstall-betterform/lib/cocoon/commons-lang-2.0-20041007T2305.jar" file="${eXist.home}/lib/cocoon/commons-lang-2.0-20041007T2305.jar" failonerror="false"/>
-    </target>
-
     <!-- *********************************************************************************************************** -->
 
     <!--
         Patch configuration files.
     -->
-
-    <target name="patch-web-xml">
-        <echo>
-            __== Patching web.xml ==__
-        </echo>
-        <xslt in="${eXist.home}/webapp/WEB-INF/web.xml" out="${eXist.home}/webapp/WEB-INF/web.xml.out" force="true"
-              style="${eXist.home}/MergeWebXML.xsl">
-            <classpath refid="generator.libs"/>
-        </xslt>
-        <move file="${eXist.home}/webapp/WEB-INF/web.xml.out" tofile="${eXist.home}/webapp/WEB-INF/web.xml"/>
-        <delete file="${eXist.home}/MergeWebXML.xsl"/>
-    </target>
-
     <target name="patch-betterFORM-config" unless="betterFORM.config.patched">
         <echo>
             __== Patching betterFORM-config.xml ==__
@@ -267,7 +162,7 @@ Error: eXist is not installed in ${eXist.home}.
     <!--
         Install various stuff to database
     -->
-    <target name="install-dashboard" description="install XQuery Dashboard to eXist, , eXist must(!) run"  if="betterFORM.base.installed">
+    <target name="install-dashboard" description="install XQuery Dashboard to eXist, , eXist must(!) run">
         <echo>
             __== Installing dashboard ==__
         </echo>
@@ -284,7 +179,7 @@ Error: eXist is not installed in ${eXist.home}.
         <copy file="${overwrites.dir}/webapp/dashboard.html" tofile="${eXist.home}/webapp/dashboard.html" overwrite="true"/>
     </target>
 
-    <target name="install-forms" description="install reference and demo forms into db, eXist must(!) run" if="betterFORM.base.installed">
+    <target name="install-forms" description="install reference and demo forms into db, eXist must(!) run">
         <echo>
             __== Installing reference and demo forms ==__
         </echo>
@@ -292,7 +187,7 @@ Error: eXist is not installed in ${eXist.home}.
         <antcall target="install-demo-forms"/>
     </target>
 
-    <target name="install-reference-forms" description="install reference forms into db, eXist must(!) run"  if="betterFORM.base.installed">
+    <target name="install-reference-forms" description="install reference forms into db, eXist must(!) run">
         <echo>
             __== Installing reference forms ==__
         </echo>
@@ -311,7 +206,7 @@ Error: eXist is not installed in ${eXist.home}.
         </antcall>
     </target>
 
-    <target name="install-demo-forms" description="install demo Forms into db, eXist must(!) run"  if="betterFORM.base.installed">
+    <target name="install-demo-forms" description="install demo Forms into db, eXist must(!) run">
         <echo>
             __== Installing demo forms ==__
         </echo>
@@ -330,7 +225,7 @@ Error: eXist is not installed in ${eXist.home}.
         </antcall>
     </target>
 
-    <target name="install-demo-xrx" description="install XRX demo app into db,eXist must(!) run"  if="betterFORM.base.installed">
+    <target name="install-demo-xrx" description="install XRX demo app into db,eXist must(!) run">
         <echo>
             __== Installing demo app ==__
         </echo>
@@ -349,7 +244,7 @@ Error: eXist is not installed in ${eXist.home}.
         </antcall>
     </target>
 
-    <target name="install-demo-xrx-betterFORM-user" description="install demo Forms into db"  if="betterFORM.base.installed">
+    <target name="install-demo-xrx-betterFORM-user" description="install demo Forms into db">
         <echo>
             __== Installing XRX demo app (betterform User) ==__
         </echo>
@@ -369,7 +264,7 @@ Error: eXist is not installed in ${eXist.home}.
     </target>
 
 
-    <target name="install-editor" description="install editor into db, eXist must(!) run"  if="betterFORM.base.installed">
+    <target name="install-editor" description="install editor into db, eXist must(!) run">
         <echo>
             __== Installing editor ==__
         </echo>
@@ -398,21 +293,6 @@ Error: eXist is not installed in ${eXist.home}.
         <antcall target="uninstall-betterFORM-single-jar-mode"/>
         <antcall target="update-resources-exploded"/>
         <touch file="${betterFORM.install.marker}"/>
-    </target>
-
-    <target name="install-betterFORM-exploded" depends="ant.check-ant-version" description="install betterFORM in exploded mode, eXist must not(!) run">
-        <echo>
-            __== Installing betterFORM to eXist in exlopded Mode ==__
-        </echo>
-
-        <antcall target="uninstall-betterFORM-single-jar-mode"/>
-        <antcall target="install-betterFORM-base"/>
-        <antcall target="deploy-resources-exploded"/>
-        <antcall target="patch-betterFORM-config"/>
-
-	    <antcall target="db.start-eXist"/>
-        <antcall target="install-dashboard"/>
-	    <antcall target="db.stop-eXist"/>
     </target>
 
     <!-- removes betterFORM from eXist if installed in single jar mode -->
@@ -477,21 +357,6 @@ Error: eXist is not installed in ${eXist.home}.
         <touch file="${betterFORM.install.marker}"/>
     </target>
 
-    <target name="install-betterFORM" depends="ant.check-ant-version" description="install betterFORM in single jar mode into eXist, eXist must not(!) run">
-        <echo>
-            __== Installing betterFORM to eXist in single JAR Mode ==__
-        </echo>
-
-        <antcall target="install-betterFORM-base"/>
-        <antcall target="uninstall-betterFORM-exploded-mode"/>
-        <antcall target="deploy-resources"/>
-        <antcall target="patch-betterFORM-config"/>
-
-        <antcall target="db.start-eXist"/>
-        <antcall target="install-dashboard"/>
-	    <antcall target="db.stop-eXist"/>
-    </target>
-
     <!-- removes betterFORM from eXist if installed in exploded mode -->
     <target name="uninstall-betterFORM-exploded-mode" if="betterFORM.exploded.mode">
         <echo>
@@ -527,7 +392,7 @@ Error: eXist is not installed in ${eXist.home}.
         <antcall target="patch-betterFORM-config"/>
     </target>
 
-    <target name="update-betterFORM-content" if="betterFORM.base.installed">
+    <target name="update-betterFORM-content">
         <antcall target="db.start-eXist"/>
         <antcall target="install-editor"/>
         <antcall target="install-dashboard"/>

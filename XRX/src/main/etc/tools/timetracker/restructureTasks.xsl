@@ -9,7 +9,7 @@
     version="2.0">
     <xsl:output indent="yes" method="xml"/>
 
-    <xsl:variable name="projects" select="document('src/main/xrx/timetracker/data/project.xml')"/>
+    <xsl:variable name="projects" select="document('main/xrx/timetracker/data/project.xml')"/>
 
 
     <xsl:template match="data">
