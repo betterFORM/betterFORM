@@ -230,8 +230,10 @@ alert + hints should always be aligned with the control.
     color: #333333;
 	vertical-align:middle;
 	background:#FFCFCF url(../images/error.png) 5px 50% no-repeat;
-	z-index:200;
 }
+.xfAlert, .bfToolTipAlert {
+    z-index:200;
+ }
 .xfAlert .closeAlertIcon{
 	background:#F2F2F2 url(../images/tabClose.gif) right center no-repeat;
 }
@@ -239,7 +241,7 @@ alert + hints should always be aligned with the control.
 .xfHint {
 	border-color:#DBDBDB;
 	background:#F2F2F2 url(../images/hint.png) 5px 50% no-repeat;
-	z-index:100;
+	z-index:300;
 	color:#666666;
 }
 
