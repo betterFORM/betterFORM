@@ -281,8 +281,7 @@
             </div>
             <noscript>
                 <div id="noScript">
-                    Sorry, you don't have Javascript enabled in your browser. Click here for a non-scripted version
-                    of this form.
+                    Sorry, this page relies on JavaScript which is not enabled in your browser.
                 </div>
             </noscript>
             <div id="formWrapper">
