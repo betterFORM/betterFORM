@@ -337,7 +337,7 @@
     <!-- ### DEFAULT REPEAT ### -->
     <xsl:template match="xforms:repeat" name="repeat">
         <!-- compact appearance as default -->
-        <xsl:call-template name="compact-repeat"/>
+        <xsl:call-template name="full-repeat"/>
     </xsl:template>
 
     <!-- ### FOREIGN NAMESPACE REPEAT ### -->
