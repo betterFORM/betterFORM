@@ -68,10 +68,10 @@ public class HTTPSubmissionHandler extends AbstractHTTPConnector implements Subm
             // HTTP POST
             if (method.equals("post")) {
                 if(streamNotEmpty){
-                    post(getURI(), stream.toString(encoding), mediatype + "; charset="+encoding, encoding);
+                    post(getURI(), stream.toString(encoding), mediatype, encoding);
                 }
                 else {
-                    post(getURI(), mediatype + "; charset="+encoding, encoding);
+                     post(getURI(), mediatype, encoding);
                 }
             }
 
@@ -88,10 +88,10 @@ public class HTTPSubmissionHandler extends AbstractHTTPConnector implements Subm
             // HTTP PUT
             else if (method.equals("put")) {
                 if(streamNotEmpty){
-                    put(getURI(), stream.toString(encoding), mediatype + "; charset="+encoding, encoding);
+                    put(getURI(), stream.toString(encoding), mediatype, encoding);
                 }
                 else {
-                    put(getURI(), mediatype + "; charset="+encoding, encoding);                    
+                    put(getURI(), mediatype, encoding);
                 }
             }
             // HTTP  MULTIPART-POST
@@ -136,22 +136,22 @@ public class HTTPSubmissionHandler extends AbstractHTTPConnector implements Subm
             // HTTP  FORM-DATA-POST            
             else if (method.equals("form-data-post")) {
                 if(streamNotEmpty){
-                    String type = "multipart/form-data; charset=" + encoding;
+                    String type = "multipart/form-data";
                     String boundary = wrapper.getHeader("internal-boundary-mark");
                     if (! "".equals(boundary)) {
                         type = type + "; boundary=" + boundary;
                     }
                     post(getURI(), stream.toString(encoding), type, encoding);
                 }else {
-                    post(getURI(), "multipart/form-data; charset="+encoding, encoding);
+                    post(getURI(), "multipart/form-data", encoding);
                 }
             }
             // HTTP URLENCODED-POST
             else if (method.equals("urlencoded-post")) {
                 if(streamNotEmpty){
-                    post(getURI(), stream.toString(encoding), "application/x-www-form-urlencoded; charset="+encoding, encoding);
+                    post(getURI(), stream.toString(encoding), "application/x-www-form-urlencoded", encoding);
                 }else {
-                    post(getURI(), "application/x-www-form-urlencoded; charset="+encoding, encoding);
+                    post(getURI(), "application/x-www-form-urlencoded", encoding);
                 }
             }
             // HTTP DELETE            
@@ -168,9 +168,9 @@ public class HTTPSubmissionHandler extends AbstractHTTPConnector implements Subm
                 // Note: user has to provide mediatype in submission element otherwise this will
                 // be probably wrong type (application/xml) ...
                 if(streamNotEmpty){
-                    post(getURI(), stream.toString(encoding), mediatype + "; charset="+encoding, encoding);
-                }else {
-                    post(getURI(), mediatype + "; charset="+encoding, encoding);
+                    post(getURI(), stream.toString(encoding), mediatype, encoding);
+                } else {
+                    post(getURI(), mediatype, encoding);
                 }
 
             }
