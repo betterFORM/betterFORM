@@ -60,6 +60,7 @@
 				margin:6px;
 				padding:10px;
 				border-bottom:thin solid #999999;
+                width: 760px;
 			}
 			.formBrowserHead #commands{
 				position:absolute;
@@ -160,7 +161,7 @@
             </noscript>
 			 <div class="pageMarginBox">
 				<div id="loaderImage" style="text-align:center;">
-					<img id="bfLogo" src="bfResources/images/betterform_icon_118x118.png" width="200" height="200" style="margin-top:140px;"/>
+					<img id="bfLogo" src="bfResources/images/betterform_icon_118x118.png" width="200" height="200" style="margin-top:140px;" alt="betterFORM Logo"/>
 
 				</div>
 				 <div id="browser" class="browser">
@@ -173,13 +174,13 @@
 
          </div>
       </div>
-	  <script type="text/javascript">
+<!--	  <script type="text/javascript">
 		  var djConfig = {
 		  debugAtAllCosts: false,
 		  parseOnLoad:true,
 		  dojoBlankHtmlUrl:"/blank.html",
 		  isDebug: false };
-	  </script>
+	  </script>-->
 
 
 
@@ -195,7 +196,6 @@
 	  <script type="text/javascript">
 		 	dojo.config.dojoBlankHtmlUrl = '/blank.html';
 
-//			dojo.require("dijit.layout.ContentPane");
 
             function animateOne() {
 				var easing1 = dojo.fx.easing["linear"];
@@ -225,7 +225,7 @@
 						dojo.style("mountPoint","display","none");
 					},
 					onPlay:function(){
-						console.debug("onPlay");
+						// console.debug("onPlay");
 						var uri = "rest/db/betterform/utils/FormsQuery.xql?fragment=true&ajax=load";
 						load(uri);
 					},
@@ -245,13 +245,6 @@
 							end:800,
 							unit:"px"
 						},
-/*
-						height:{
-							start:0,
-							end:100,
-							unit:"%"
-						},
-*/
 						opacity:{
 							start:0,
 							end:0.7
@@ -264,10 +257,10 @@
 						},
 						easing:easing1,
 						onEnd:function() {
-							dojo.style(dojo.byId("mountPoint"),"opacity","1");
+							dojo.style(dojo.byId("mountPoint"),"opacity",1);
 						},
 						onBeforeBegin:function(){
-							dojo.style(dojo.byId("mountPoint"),"opacity","0");
+							dojo.style(dojo.byId("mountPoint"),"opacity",0);
 						}
 					}
 				});
@@ -303,7 +296,7 @@
 
 			function load(url,show) {
 				//Look up the node we'll stick the text under.
-				// console.debug("DropDownDialog");
+				//console.debug("load(url"+ url + " ,show:"+show+")");
 				var popups = dojo.query(".dijitPopup .dijitTooltipDialog");
 				popups.forEach(function(item) {
 					// console.debug("Dijit Popup item: ", item);
@@ -319,15 +312,17 @@
 					handleAs: "text",
 					load: function(data) {
 						// console.debug("load", data);
-						dojo.style(targetNode,"opacity","0");
+						dojo.style(targetNode,"opacity",0);
 						targetNode.innerHTML = data;
 						dojo.parser.parse(targetNode);
 						if(show){
-							dojo.style(targetNode,"opacity","1");
+							dojo.style(targetNode,"opacity",1);
 						}
 						// console.debug("inserted Node: ",targetNode);
 						var currentPath=dojo.byId("current");
+                        if(!dojo.isIE){
 						dojox.fx.highlight({node:currentPath, color:'#ffffff', duration:400}).play();
+                        }
 					},
 					error: function(error) {
 						targetNode.innerHTML = "An unexpected error occurred: " + error;
@@ -341,8 +336,19 @@
 			}
 
 			dojo.addOnLoad(function() {
+                // console.debug("dojo.addOnLoad");
+
 				var uri = "rest/db/betterform/utils/FormsQuery.xql?fragment=true&ajax=load";
-				animateOne(uri);
+				if(dojo.isIE){
+                    // console.debug("is IE: load Forms");
+                    load(uri,true);
+                    var mountPoint = dojo.byId("mountPoint");
+                    dojo.style(mountPoint,"opacity",1);
+                    dojo.style(mountPoint,"dipslay","block");
+                    dojo.style("bfLogo", "display", "none");
+                }else {
+                    animateOne(uri);
+                }
 			});
 
 			// -->
@@ -357,6 +363,7 @@
 					noFileDialog.show();
 
 				} else {
+                    // console.debug("sendFile.dojo.io.iframe.send");
 					dojo.io.iframe.send({
 						url:  "rest/db/betterform/utils/upload-document.xql",
 						method: "post",
@@ -370,7 +377,7 @@
 							return response;
 						},
 						error: function(response, ioArgs) {
-							console.log("Upload FAILED!!!", response, ioArgs);
+							// console.log("Upload FAILED!!!", response, ioArgs);
 							return response;
 						}
 					});
@@ -389,20 +396,21 @@
 					});
 					emptyCollectionNameDialog.show();
 				} else {
+                    // console.debug("createCollection");
 					dojo.io.iframe.send({
 						url: "rest/db/betterform/utils/create-collection.xql",
 						method: "post",
 						handleAs: "text",
 						form: dojo.query(".createCollection")[0],
 						load: function(response, ioArgs) {
-							console.log("Collection created ", response, ioArgs);
+							// console.log("Collection created ", response, ioArgs);
 							var link = dojo.byId("current").childNodes[1];
 							// console.debug("link: ", link);
 							link.onclick();
 							return response;
 						},
 						error: function(response, ioArgs) {
-							console.log("Creating Collection FAILED!!!", response, ioArgs);
+							// console.log("Creating Collection FAILED!!!", response, ioArgs);
 							return response;
 						}
 					});
