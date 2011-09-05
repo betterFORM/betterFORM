@@ -35,6 +35,7 @@ dojo.declare("betterform.ui.common.ToolTipAlert",
 
             dojo.style(alertTooltip.domNode, "opacity", "1");
             dojo.style(alertTooltip.domNode, "cursor", "pointer");
+            dojo.addClass(alertTooltip.domNode, "bfToolTipAlert");
             dojo.addClass(controlValue.domNode, "bfInvalidControl");
 
 /*        if (action == "applyChanges" && (!controlValueIsEmpty || dojo.hasClass(controlValue.domNode, "xsdBoolean"))) {

@@ -8,7 +8,7 @@ dojo.declare("betterform.ui.common.Alert",
     hint:"hint",
     info:"info",
     none:"none",
-
+    alwaysShowHint:  dojo.query(".bfAlwaysShowHint", dojo.doc)[0],
 
     handleValid:function(id,action){
         // TODO: applyChanges must remove an existing alert
@@ -30,7 +30,7 @@ dojo.declare("betterform.ui.common.Alert",
         else if(action == "xfDisabled"|| action == "changeAlertType" || ((action =="applyChanges" || action=="onBlur") && controlValueIsEmpty)) {
             this._displayNone(id,action);
         }
-        if(action =="onFocus" && controlValueIsEmpty){
+        if(action =="onFocus" && (controlValueIsEmpty || this.alwaysShowHint != undefined)){
             this._displayHint(id,action);
         }
         else if((action =="applyChanges" || action=="onBlur") && !controlValueIsEmpty) {
@@ -66,7 +66,7 @@ dojo.declare("betterform.ui.common.Alert",
         }
 */
 
-        else if(action == "onFocus" && controlValueIsEmpty ) {
+        else if(action == "onFocus" && (controlValueIsEmpty || this.alwaysShowHint != undefined) ) {
             this._displayHint(id,action);
             return;
         }
