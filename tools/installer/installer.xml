@@ -62,15 +62,17 @@
         <res id="TargetPanel.dir.macosx"    src="../resource/targetdir-mac.txt" />
     </resources>
 
-    <native name="ShellLink.dll" type="izpack"/>
-    <native name="ShellLink_x64.dll" type="izpack"/>
+    <!--
+        <native name="ShellLink.dll" type="izpack"/>
+        <native name="ShellLink_x64.dll" type="izpack"/>
 
-    <native type="3rdparty" name="COIOSHelper.dll" stage="both">
-        <os family="windows"/>
-    </native>
-    <native type="3rdparty" name="COIOSHelper_x64.dll" stage="both">
-        <os family="windows"/>
-    </native>
+        <native type="3rdparty" name="COIOSHelper.dll" stage="both">
+            <os family="windows"/>
+        </native>
+        <native type="3rdparty" name="COIOSHelper_x64.dll" stage="both">
+            <os family="windows"/>
+        </native>
+    -->
 
     <variables>
         <variable name="JETTY_HOME" value="$EXIST_HOME/tools/jetty"/>

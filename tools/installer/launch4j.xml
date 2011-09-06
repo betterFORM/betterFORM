@@ -1,0 +1,40 @@
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>betterFORM-install.jar</jar>
+  <outfile>betterFORM-install.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir></chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <customProcName>false</customProcName>
+  <stayAlive>false</stayAlive>
+  <icon>resource/betterform.ico</icon>
+  <jre>
+    <path></path>
+    <minVersion>1.6.0</minVersion>
+    <maxVersion></maxVersion>
+    <initialHeapSize>0</initialHeapSize>
+    <maxHeapSize>0</maxHeapSize>
+	<jdkPreference>preferJdk</jdkPreference>
+  </jre>
+  <splash>
+    <file>resource/bf_logo_145x59.bmp</file>
+    <waitForWindow>true</waitForWindow>
+    <timeout>60</timeout>
+    <timeoutErr>true</timeoutErr>
+  </splash>
+  <versionInfo>
+	<fileVersion>3.2.0.0</fileVersion>
+	<txtFileVersion>3.2.0-RC2</txtFileVersion>
+	<fileDescription>betterFORM Installer</fileDescription>
+	<copyright>betterFORM Project</copyright>
+	<productVersion>3.2.0.0</productVersion>
+	<txtProductVersion>3.2.0-RC2</txtProductVersion>
+	<productName>betterFORM</productName>
+	<internalName>betterFORM</internalName>
+	<originalFilename>betterFORM-install.exe</originalFilename>
+  </versionInfo>
+</launch4jConfig>

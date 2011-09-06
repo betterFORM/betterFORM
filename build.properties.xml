@@ -258,6 +258,12 @@
                 <pathelement location="${installer.dir}/target/bf-XRX/lib/core/xmldb.jar" groupid="org.xmldb" version="11112001" artifactId="xmldb"/>
             </classpath>
         </compile>
+        <izPack>
+            <dir>/home/zwobit/development/bin/izPack-4.3.4</dir>
+        </izPack>
+        <launch4j>
+            <dir>/home/zwobit/development/bin/launch4j</dir>
+        </launch4j>
     </installer>
     <exist>
         <betterform>
