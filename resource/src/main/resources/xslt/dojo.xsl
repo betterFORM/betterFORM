@@ -353,43 +353,55 @@
                     function toggleDebug(){
                         var debugpane = dojo.byId("debug-pane");
                         if(dojo.hasClass(debugpane,"open")){
-                            dojo.animateProperty({
+                            var closeAnim = dojo.animateProperty({
                               node:debugpane,
                               properties: {
                                   width:{start:100,end:0,unit:"%"},
                                   opacity:{start:1.0, end:0}
                               }
-                            }).play();
+                            });
+                            dojo.connect(closeAnim, "onEnd", function(node){
+                                dojo.style(node,"opacity", 0);
+                                dojo.style(node,"display", "none");
+                            });
+                            closeAnim.play();
                             dojo.removeClass(debugpane,"open");
                             dojo.addClass(debugpane,"closed");
+
                         }else{
-                            dojo.animateProperty({
+                            dojo.style(debugpane,"display", "block");
+                            var openAnim = dojo.animateProperty({
                               node:debugpane,
                               properties: {
                                   width:{start:0,end:100,units:"%"},
                                   opacity:{start:0, end:1.0}
                               }
-                            }).play();
+                            });
+                            dojo.connect(openAnim, "onEnd", function(node){
+                                dojo.style(node,"opacity", 1.0);
+
+                            });
+                            openAnim.play();
                             dojo.removeClass(debugpane,"closed");
                             dojo.addClass(debugpane,"open");
                         }
                     }
                 </script>
                 <div id="openclose">
-                    <a href="javascript:toggleDebug();" alt="x"><img class="debug-icon" src="{concat($contextroot,'/bfResources/images/collapse.png')}" alt="-"/></a>
+                    <a href="javascript:toggleDebug();" ><img class="debug-icon" src="{concat($contextroot,'/bfResources/images/collapse.png')}" alt=""/></a>
                 </div>
-                <div id="debug-pane" class="open" context="{concat($contextroot,'/inspector/',$sessionKey,'/')}">
-                    <div style="float:right;margin-right:20px;text-align:right;" id="copyright">
-                        <a href="http://www.betterform.de">
-                            <img style="vertical-align:text-bottom; margin-right:5px;"
-                                 src="{concat($contextroot,'/bfResources/images/betterform_icon16x16.png')}" alt="betterFORM project"/>
-                        </a>
-                        <span>&#xA9; 2011 betterFORM</span>
+                    <div id="debug-pane" class="open" context="{concat($contextroot,'/inspector/',$sessionKey,'/')}">
+                        <div style="float:right;margin-right:20px;text-align:right;" id="copyright">
+                            <a href="http://www.betterform.de">
+                                <img style="vertical-align:text-bottom; margin-right:5px;"
+                                     src="{concat($contextroot,'/bfResources/images/betterform_icon16x16.png')}" alt="betterFORM project"/>
+                            </a>
+                            <span>&#xA9; 2011 betterFORM</span>
+                        </div>
+                        <div id="debug-pane-links">
+                            <a href="{concat($contextroot,'/inspector/',$sessionKey,'/','hostDOM')}" target="_blank">Host Document</a>
+                        </div>
                     </div>
-                    <div id="debug-pane-links">
-                        <a href="{concat($contextroot,'/inspector/',$sessionKey,'/','hostDOM')}" target="_blank">Host Document</a>
-                    </div>
-                </div>
             </xsl:if>
 
         </body>
