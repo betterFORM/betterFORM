@@ -57,6 +57,12 @@ dojo.declare(
     _handleSetControlValue:function(value) {
         // console.debug("betterform.ui.textarea.SimpleTextarea._handleSetControlValue: Value: ", value);
         this.setValue(value);
+    },
+
+       applyState:function() {
+        console.debug("HTMLEditor.applyState (id:" + this.id +") isReadonly1: ",this.xfControl.isReadonly());
+        this.set("readOnly",this.xfControl.isReadonly());
+        this.set("disabled",this.xfControl.isReadonly());
     }
 
 
