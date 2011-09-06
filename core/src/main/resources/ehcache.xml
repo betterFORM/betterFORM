@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ehcache> 
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<ehcache>
     <diskStore path="java.io.tmpdir"/>
     <cacheManagerEventListenerFactory class="" properties=""/>
     <cache name="xfFileCache"

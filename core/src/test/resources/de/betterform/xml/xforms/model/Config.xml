@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id: Config.xml 3508 2008-08-31 10:03:03Z lars $ -->
-<!-- Copyright 2010 betterForm -->
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
 <betterform-config>
     <!-- PLEASE COMMENT YOUR ENTRIES -->
     <properties>
