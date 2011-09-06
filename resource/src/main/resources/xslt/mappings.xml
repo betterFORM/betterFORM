@@ -1,3 +1,8 @@
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
 <mappings>
     <!--This is a draft for a mapping from XForms control to concrete controls. It's intended to be used
      in the XSLT transformation responsible for rendering the UI and at the same time for generating

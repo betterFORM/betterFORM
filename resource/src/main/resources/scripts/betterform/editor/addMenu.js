@@ -1,5 +1,10 @@
 
-            function documentMenu(targetId){
+            /*
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
+function documentMenu(targetId){
                 var pMenu = new dijit.Menu({
                         targetNodeIds: [targetId] ,
                         leftClickToOpen: true

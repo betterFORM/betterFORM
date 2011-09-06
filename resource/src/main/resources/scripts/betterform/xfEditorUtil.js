@@ -1,4 +1,9 @@
 
+/*
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
 var documentChilds = [
             "model",
             "group",
