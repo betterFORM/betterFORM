@@ -54,6 +54,10 @@
             __== Creating Installer ==__
         </echo>
 
+        <!-- Allows us to use the IzPack Ant task -->
+
+        <!-- Use whole izPack Distribution -->
+        <!--
         <path id="izpackdeps">
 			<fileset dir="${installer.izPack.dir}/lib/">
 				<include name="*.jar"/>
@@ -63,17 +67,16 @@
         <taskdef name="izpack" classname="com.izforge.izpack.ant.IzPackTask">
 			<classpath refid="izpackdeps" />
 		</taskdef>
+        -->
 
-
-        <sleep seconds="30" description="wait for fs to settle"/>
-
-        <!-- Allows us to use the IzPack Ant task -->
-        <!--
+        <!-- Use standalone compiler -->
         <taskdef name="izpack"
                  classpath="${basedir}/lib/standalone-compiler-4.3.4.jar"
                  classname="com.izforge.izpack.ant.IzPackTask"/>
-        -->
 
+
+
+        <sleep seconds="30" description="wait for fs to settle"/>
         <!-- We call IzPack -->
         <echo>
            __== Makes the installer using IzPack ==__

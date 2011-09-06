@@ -118,7 +118,7 @@ return
                         <data xmlns="">
                             {local:getClients()}
                         </data>
-                    </xf:instance>     
+                    </xf:instance>
                 </xf:model>
 
                 <xf:trigger id="overviewTrigger">

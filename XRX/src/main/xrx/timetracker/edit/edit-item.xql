@@ -61,7 +61,6 @@ return
                       <xf:bind nodeset="@project" required="true()" />
                       <xf:bind nodeset="@iteration" required="true()" />
                       <xf:bind nodeset="date" type="xf:date" required="true()" />
-                      
                       <xf:bind nodeset="duration/@hours" type="integer" />
                       <xf:bind nodeset="duration/@minutes" type="integer" constraint=". != 0 or ../@hours != 0"/>
                       <xf:bind nodeset="who" required="true()"/>
@@ -90,11 +89,9 @@ return
                  <xf:instance id="i-project" xmlns="">
                     <data/>
                  </xf:instance>
-                 
                  <xf:instance id="i-iteration" xmlns="">
                     <data/>
                  </xf:instance>
-                 
                  <xf:instance id="i-worker"  	 src="{$contextPath}/rest/db/betterform/apps/timetracker/data/worker.xml"/>
                  <xf:instance id="i-tasktype"  	 src="{$contextPath}/rest/db/betterform/apps/timetracker/data/tasktype.xml"/>
                  <xf:instance id="i-controller"  src="{$contextPath}/rest/db/betterform/apps/timetracker/data/controller.xml"/>
@@ -156,8 +153,6 @@ return
                     <xf:action ev:event="xforms-submit-error" if="instance('i-controller')/error/@hasError='false'">
                         <xf:message>The form has not been filled in correctly</xf:message>
                     </xf:action>
-                    
-                    
                 </xf:submission>
 
                 <xf:submission id="s-clean"
@@ -203,7 +198,7 @@ return
             </xf:model>
         </div>
         <xf:group ref="task" class="{if(local:mode()='edit') then 'suppressInfo' else ''}">
-            
+
             <xf:group id="add-task-table" appearance="bf:verticalTable">
                 <xf:input id="date" ref="date">
                     <xf:label>Date</xf:label>
@@ -220,8 +215,7 @@ return
                         <xf:value ref="./@id"/>
                     </xf:itemset>
                 </xf:select1>
-                             
-               
+
                <xf:select1 id="project" ref="@project" appearance="minimal">
                     <xf:label>Project</xf:label>
 					<xf:alert>a client must be selected</xf:alert>
@@ -391,9 +385,9 @@ return
             </xf:group>
 
 			<xf:output mediatype="text/html" ref="instance('i-controller')/error" id="errorReport"/>
-            
+
         </xf:group>
-        
+
         </div>
     </body>
 </html>

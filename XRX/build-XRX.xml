@@ -1,11 +1,8 @@
-<!-- ONLY FOR EXIST 1.4 -->
 <!--
   ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
-
-  WARNING: Installation Target work only for eXist-1.4 stable!
-  Update Target work on stable-svn, trunk-svn and stable-release
-  -->
+  ~ Author: betterFORM Team (info AT betterform.de)
+-->
 
 <project name="betterFORM extension installer" default="update-betterFORM" basedir=".">
 
