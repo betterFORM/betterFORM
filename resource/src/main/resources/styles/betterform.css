@@ -612,6 +612,9 @@ alert + hints should always be aligned with the control.
 .bf .xsdBoolean .xfValue {
 	background-color:#FFFFFF;
 }
+.bf .xfReadOnly .dijitCheckBoxReadOnly {
+    background: #F3F3F3 !important;
+}
 
 .xfMinimalRepeat {
     display: block;
