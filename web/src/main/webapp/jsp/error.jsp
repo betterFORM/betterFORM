@@ -2,7 +2,7 @@
 <%@ page import="java.net.URLEncoder" %>
 <%@ page contentType="text/html; ISO-8859-1" session="true" %>
 <%--
-  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   --%>
 

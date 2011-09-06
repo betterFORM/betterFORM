@@ -1,4 +1,8 @@
-/* Copyright 2008 - Joern Turner, Lars Windauer */
+/*
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
 /* Licensed under the terms of BSD and Apache 2 Licenses */
 package de.betterform.agent.web.servlet;
 
