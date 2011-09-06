@@ -1,4 +1,9 @@
-<xsl:stylesheet version="2.0"                
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<xsl:stylesheet version="2.0"
                 xmlns:xf="http://www.w3.org/2002/xforms"
                 xmlns:ev="http://www.w3.org/2001/xml-events"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
