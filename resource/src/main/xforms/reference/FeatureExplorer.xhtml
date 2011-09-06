@@ -735,7 +735,14 @@
     </div>
 
     <div id="contentBody">
-        <div id="static" dojotype="dijit.layout.ContentPane" href="intro.html"></div>
+        <div id="static" dojotype="dijit.layout.ContentPane" href="intro.html">
+            <script type="dojo/connect" event="onDownloadEnd">
+                    var anim1 = dojo.fadeIn({ node: "menuHint",delay:500,duration:1500 });
+                    var anim2 = dojo.fadeOut({ node:"menuHint",delay:5000,duration:2000 });
+                    dojo.fx.chain([anim1, anim2]).play();
+            </script>
+
+        </div>
         <div id="xforms" class="InlineAlert"></div>
     </div>
 
