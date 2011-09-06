@@ -1,4 +1,9 @@
 <!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<!--
   ++ Base configuration for eXist's URL rewriting. This file defines
   ++ all basic path mappings. A path can be mapped to a servlet or
   ++ the root of a directory or collection hierarchy.

@@ -1,4 +1,9 @@
 <!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<!--
     Status: Work in progress.
     Purpose of file: minimal-repeating database releated targets to be called by other build-files
     Used by:
@@ -12,11 +17,7 @@
     - classpath.exist: 1st: check for exist.installed 2nd. Check for exist.betterform.xrx.installed
     - refactor exist.installed to exist.homem, admin.passwd to exist.admin.passwd
 -->
-<!--
-  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
-  ~ Licensed under the terms of BSD License
-  ~ Author: betterFORM Team (info AT betterform.de)
-  -->
+
 
 <project name="eXist DB helper targets" default="install-files-into-eXist-DB" basedir=".">
     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
