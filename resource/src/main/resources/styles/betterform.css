@@ -264,8 +264,9 @@ alert + hints should always be aligned with the control.
 	z-index:300;
 	color:#666666;
 }
-.xfCompactGroup .xfHint {
-    top:12px;
+.xfCompactGroup .xfHint,
+.xfCompactGroup .xfAlert{
+    top:19px;
 }
 
 
