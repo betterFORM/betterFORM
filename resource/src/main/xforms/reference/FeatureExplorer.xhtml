@@ -1,12 +1,4 @@
-<!--
-  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
-  ~ Licensed under the terms of BSD License
-  -->
-
-<!--
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://localhost:8080/betterform/resources/dtd/xhtml1-transitional.dtd">
--->
+<?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns:ev="http://www.w3.org/2001/xml-events"
@@ -14,9 +6,12 @@
       xml:lang="en" lang="en"
 	  xmlns:bf="http://betterform.sourceforge.net/xforms" bf:evalAVTs="src">
 <head>
-	<title>betterFORM XForms Feature Explorer</title>
-	<meta http-equiv="X-UA-Compatible" content="IE9 IE8"/>
-	<base href="http://localhost:8080/betterform/forms/reference"/>
+    <title>betterFORM XForms Feature Explorer</title>
+    <!--
+      ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+      ~ Licensed under the terms of BSD License
+      -->
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="Author" content="Joern Turner"/>
     <meta name="Author" content="Lars Windauer"/>
@@ -53,8 +48,11 @@
         }
 
 		.contentBody {
-			margin: 35px 20px 20px 20px;
-		}
+            margin-top: 35px;
+            margin-right: 20px;
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
 
         #menuHint{
 			opacity:0;
@@ -737,9 +735,15 @@
     <div id="contentBody">
         <div id="static" dojotype="dijit.layout.ContentPane" href="intro.html">
             <script type="dojo/connect" event="onDownloadEnd">
-                    var anim1 = dojo.fadeIn({ node: "menuHint",delay:500,duration:1500 });
-                    var anim2 = dojo.fadeOut({ node:"menuHint",delay:5000,duration:2000 });
-                    dojo.fx.chain([anim1, anim2]).play();
+                dojo.connect(dojo.byId("menuHint"), "onclick", function(n) {
+                    dojo.style(dojo.byId("menuHint"), "display","none");
+                });
+                var anim1 = dojo.fadeIn({ node: "menuHint",delay:500,duration:1500 });
+                var anim2 = dojo.fadeOut({ node:"menuHint",delay:5000,duration:2000 });
+                 dojo.connect(anim2, "onEnd", function(node){
+                     dojo.style(node, "display","none");
+                 });
+                dojo.fx.chain([anim1, anim2]).play();
             </script>
 
         </div>
