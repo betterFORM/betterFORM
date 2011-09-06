@@ -1,5 +1,7 @@
-/* Copyright 2008 - Joern Turner, Lars Windauer */
-/* Licensed under the terms of BSD License */
+/*
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
 package de.betterform.agent.betty;
 
 import de.betterform.xml.events.BetterFormEventNames;
