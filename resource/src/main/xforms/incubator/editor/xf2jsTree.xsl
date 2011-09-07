@@ -117,7 +117,7 @@
 
                         <!-- saves form to preview and opens it -->
                         <xf:submission id="s-preview" method="put" replace="none">
-                            <xf:resource value=" concat(substring-before(bf:appContext('requestURI'),'.xhtml'),'-prev.xhtml')"/>
+                            <xf:resource value="concat(substring-before( IF(substring(bf:appContext('pathInfo'),2) eq '', concat(bf:appContext('contextroot'), '/rest', instance('i-controller')/filename) , concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2)) ),'.xhtml'),'-prev.xhtml')"/>
                             <xf:header>
                                 <xf:name>username</xf:name>
                                 <xf:value value="instance('i-login')/username"/>
@@ -127,7 +127,7 @@
                                 <xf:value value="instance('i-login')/password"/>
                             </xf:header>
                             <xf:load show="new" ev:event="xforms-submit-done">
-                                <xf:resource value="concat(substring-before(bf:appContext('requestURI'),'.xhtml'),'-prev.xhtml')"/>
+                                <xf:resource value="concat(substring-before( IF(substring(bf:appContext('pathInfo'),2) eq '', concat(bf:appContext('contextroot'), '/rest', instance('i-controller')/filename) , concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2)) ),'.xhtml'),'-prev.xhtml')"/>
                             </xf:load>
                             <xf:message ev:event="xforms-submit-error">Preview failed</xf:message>
                         </xf:submission>
