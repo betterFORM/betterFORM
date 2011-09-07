@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <title>Repeat Select Test</title>
+        <xf:model>
+			<xf:instance id="i-1" xmlns="">
+				<data>
+					<trigger/>
+					<repeated>
+						<item>
+							<select1 selected="uk"/>
+						</item>
+						<item>
+							<select1 selected="fr"/>
+						</item>
+						<item>
+							<select1 selected="dk"/>
+						</item>
+					</repeated>
+				</data>
+			</xf:instance>
+
+           <xf:instance id="i-countries" xmlns="">
+               <countries/>
+           </xf:instance>
+
+            <xf:bind nodeset="instance('i-1')">
+                <xf:bind nodeset="trigger" readonly="count(../repeated/item) = 1"/>
+            </xf:bind>
+
+            <xf:instance xmlns="" id="i-controller">
+                <data>
+                    <visible>false</visible>
+                    <showRepeat>false</showRepeat>
+                    <relevance/>
+                    <countries>
+                        <country value="uk">England</country>
+                        <country value="fr">France</country>
+                        <country value="dk">Denmark</country>
+                    </countries>
+                </data>
+            </xf:instance>
+
+            <xf:bind nodeset="instance('i-controller')/relevance" relevant="boolean-from-string(../visible)"/>
+
+            <xf:insert ev:event="xforms-ready"
+                       nodeset="instance('i-countries')"
+                       at="last()"
+                       position="after"
+                       origin="instance('i-controller')/countries"/>
+
+        </xf:model>
+    </head>
+    <body class="tundra"  style="overflow:hidden;" >
+    <xf:group>
+        <xf:group appearance="minimal">
+            <label>Actions</label>
+            <xf:trigger>
+                <xf:label>insert last</xf:label>
+                <xf:action>
+                    <xf:insert nodeset="repeated/item" at="last()" position="after"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>delete last</xf:label>
+                <xf:action if="count(instance('i-1')/repeated/item) &gt; 1">
+                    <xf:delete nodeset="repeated/item" at="(last()-1)"/>
+                </xf:action>
+            </xf:trigger>
+            <!--xf:trigger>
+                <xf:label>toggle relevance</xf:label>
+                <xf:setvalue ref="instance('i-controller')/visible" value="not(boolean-from-string(.))"/>
+            </xf:trigger-->
+            <xf:select1 ref="instance('i-controller')/visible" appearance="full">
+            	<xf:label>Toggle visible</xf:label>
+            	<xf:item>
+            		<xf:label>Show</xf:label>
+            		<xf:value>true</xf:value>
+            	</xf:item>
+            	<xf:item>
+					<xf:label>Hide</xf:label>
+            		<xf:value>false</xf:value>
+            	</xf:item>
+            </xf:select1>
+        </xf:group>
+
+        <xf:group ref="instance('i-controller')[visible='true']" appearance="full">
+            <xf:label>Repeated Select[1] Controls</xf:label>
+
+			<xf:repeat id="r-reapeated" nodeset="instance()/repeated/item[position() != last()]" >
+				<xf:select1 class="select1Min" ref="select1/@selected">
+					<xf:label/>
+					<xf:itemset nodeset="instance('i-countries')/country">
+						<xf:label ref="."/>
+						<xf:value ref="@value"/>
+					</xf:itemset>
+                    <xf:hint>
+                    <span class="help-title">Disqualification</span>
+                    <span class="help-body">What length of driving ban was associated with this conviction (if any) in months?</span>
+                </xf:hint>
+				</xf:select1>
+                <xf:output ref="select1/@selected"/>
+			</xf:repeat>
+        </xf:group>
+    </xf:group>
+    </body>
+</html>

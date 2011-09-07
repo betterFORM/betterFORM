@@ -53,7 +53,7 @@ dojo.declare(
             // console.debug("OptGroup.handleInsert parent: " ,parentNode , " parent value: " + dojo.attr(parent, "value"));
             // make sure that the associated select displays the correct value
 
-            if(dojo.hasClass(this.domNode.parentNode.localName == "select")){
+            if(this.domNode.parentNode.localName.toLowerCase() == "select"){
                 var selectDijit = dijit.byId(dojo.attr(this.domNode.parentNode,"id"));
 /*
                 console.debug("found selectDijit: " + selectDijit);
