@@ -10,7 +10,7 @@
     <body>
         <div class="description">
             <p>
-                This form control allows the user to make multiple selections from a set of choices.
+                This form control allows the user to make a selection from a set of choices.
 
             </p>
             <p>
@@ -37,7 +37,7 @@
                     <xf:instance id="instance-1">
                         <data xmlns="" constraint="true" readonly="false" required="false" relevant="true">
                             <select1 constraint="true" readonly="false" required="true" relevant="true">
-                                <value>AX DZ</value>
+                                <value>AX</value>
                             </select1>
                         </data>
                     </xf:instance>

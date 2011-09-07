@@ -2,12 +2,12 @@
 <html xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>select control rendered as list control</title>
+        <title>select1 control rendered as radiobox control</title>
     </head>
     <body>
         <div class="description">
             <p>
-                This form control allows the user to make multiple selections from a set of choices.
+                This form control allows the user to make a selection from a set of choices.
 
             </p>
             <p>
