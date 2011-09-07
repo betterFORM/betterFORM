@@ -3,9 +3,6 @@
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>select1 control rendered as combobox control</title>
-        <script type="text/javascript">
-            dojo.require("dijit.form.Button");
-        </script>
     </head>
     <body>
         <div class="description">

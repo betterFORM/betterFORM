@@ -3,10 +3,6 @@
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>select control rendered as a group of checkboxes</title>
-        <script type="text/javascript">
-            dojo.require("dijit.form.Button");
-        </script>
-        
     </head>
     <body>
         <div class="description">
@@ -130,18 +126,5 @@
                 </tr>
             </table>
         </div>
-        <div class="Other" title="XForms Instance">
-            <button id="printInstance" dojotype="dijit.form.Button"
-                onclick="fluxProcessor.getInstanceDocument('model-1','instance-1');"
-                type="button">
-                <label>print instance on console</label>
-            </button>
-
-            <div dojotype="dijit.Tooltip" connectid="printInstance" position="above">
-                This button prints the current instance data to the console. Works with Firebug in FF or Chrome and Safari
-                with developer tools activated.
-            </div>
-        </div>
-
     </body>
 </html>

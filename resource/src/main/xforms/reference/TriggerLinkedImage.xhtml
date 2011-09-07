@@ -38,11 +38,11 @@
                   
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="string"></xf:bind>
                   
-                  <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@constraint" type="boolean" readonly="true()"></xf:bind>
                   
                   <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
                   
-                  <xf:bind nodeset="@required" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@required" type="boolean" readonly="true()"></xf:bind>
                   
                   <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
                   
