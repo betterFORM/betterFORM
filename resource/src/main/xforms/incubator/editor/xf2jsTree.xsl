@@ -16,6 +16,7 @@
     -->
     <xsl:output method="xml" indent="yes"/>
     <xsl:param name="bfContext" select="''"/>
+    <xsl:param name="filename" select="''"/>
     <!-- <xsl:variable name="bfContext" select="'/exist'"/> -->
     <xsl:strip-space elements="*"/>
     <xsl:template match="/">
@@ -53,7 +54,7 @@
 
                           <!-- merge original XForms host document with Editor XForms markup -->
                         <xf:submission id="s-replaceContent" method="get"
-                                       action="xslt:{$bfContext}{$bfEditorPath}updateOriginal.xsl?originDoc={{$contextPath}}{{$fileName}}"
+                                       action="xslt:{$bfContext}{$bfEditorPath}updateOriginal.xsl?originDoc={$bfContext}/rest{$filename}"
                                        replace="instance" validate="false">
                             <!-- MODE: SAVE AS -->
                             <xf:action ev:event="xforms-submit-done" if="instance('i-controller')/mode eq 'save-as'">
@@ -79,7 +80,7 @@
 
                         <!-- Overwrites the current form loaded within the editor  -->
                         <xf:submission id="s-save" method="put" replace="none">
-                            <xf:resource value="IF(substring(bf:appContext('pathInfo'),2) eq '', bf:appContext('requestURL'), concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2)) )"/>
+                            <xf:resource value="IF(substring(bf:appContext('pathInfo'),2) eq '', concat(bf:appContext('contextroot'), '/rest', instance('i-controller')/filename) , concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2)) )"/>
                             <xf:header>
                                 <xf:name>username</xf:name>
                                 <xf:value value="instance('i-login')/username"/>
@@ -89,7 +90,7 @@
                                 <xf:value value="instance('i-login')/password"/>
                             </xf:header>
                             <xf:action ev:event="xforms-submit-done">
-                                <xf:setvalue ref="instance('i-controller')/save-msg" value="concat('Data stored to ',IF(substring(bf:appContext('pathInfo'),2) eq '', bf:appContext('requestURL'), concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2))))"/>
+                                <xf:setvalue ref="instance('i-controller')/save-msg" value="concat('Data stored to ',IF(substring(bf:appContext('pathInfo'),2) eq '', concat(bf:appContext('contextroot'), '/rest', instance('i-controller')/filename) , concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2)) ) )"/>
                                 <xf:message level="ephemeral" ref="instance('i-controller')/save-msg"/>
                             </xf:action>
                             <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
@@ -139,6 +140,7 @@
                                 <preview-msp>Error previewing file</preview-msp>
                                 <preview-path/>
                                 <mode/>
+                                <filename><xsl:value-of select="$filename"/></filename>
                             </data>
                         </xf:instance>
                         
