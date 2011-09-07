@@ -21,7 +21,7 @@
                     </xf:instance>
                 </xf:model>
 
-<code class="ui">
+                <code class="ui">
 <xf:group>
     <xf:trigger>
         <xf:label>Load this Page in a new window</xf:label>
