@@ -385,7 +385,9 @@ alert + hints should always be aligned with the control.
 }
 
 .xfLabel {
-    display: inline;
+    display: inline-block;
+    float:left;
+    padding-top: 2px;
 	vertical-align:top;
 }
 
@@ -551,6 +553,9 @@ alert + hints should always be aligned with the control.
 .bfVerticalTable {
     position:relative;
 }
+.bfVerticalTable  .bfVerticalTableLabel .xfLabel {
+    padding-top: 7px;
+}
 
 .bfVerticalTable td {
 }
@@ -576,9 +581,13 @@ alert + hints should always be aligned with the control.
 .bfHorizontalTableValue {
 
 }
+.bf .bfHorizontalTable .bfHorizontalTableValue .xfControl {
+    padding:0;
+    margin: 0;
+}
 
-.bfHorizontalTableLabel {
-
+.bf .bfHorizontalTableLabel .bfTableLabel {
+    padding-left: 2px;
 }
 
 .bfHorizontalTableValue .bfHorizontalTableHeader {
@@ -782,6 +791,15 @@ table .xfContainer{
     width: 900px;
     height: 750px;
     overflow: hidden
+}
+.bf .xfOutput {
+    display: block;
+}
+
+
+.xfOutput .xfValue {
+    padding-top: 2px;
+    display:block;
 }
 
 .xfTextareaHTML .xfValue {

@@ -24,7 +24,7 @@
                 <xf:model>
                     <xf:instance>
                         <data xmlns="">
-                            <repeat>
+                            <repeat readonly="false" relevant="true">
                                 <items>
                                     <item>text 1</item>
                                     <item>2009-01-20</item>
@@ -51,13 +51,15 @@
                             </repeat>
                         </data>
                     </xf:instance>
-
-                    <xf:bind nodeset="repeat/items">
-                        <xf:bind nodeset="item[1]" type="xf:string"/>
-                        <xf:bind nodeset="item[2]" type="xf:date"/>
-                        <xf:bind nodeset="item[3]" type="xf:boolean"/>
+                    <xf:bind nodeset="repeat">
+                        <xf:bind nodeset="@readonly" type="boolean"/>
+                        <xf:bind nodeset="@relevant" type="boolean"/>
+                        <xf:bind nodeset="items" readonly="boolean-from-string(../@readonly)" relevant="boolean-from-string(../@relevant)">
+                            <xf:bind nodeset="item[1]" type="xf:string"/>
+                            <xf:bind nodeset="item[2]" type="xf:date"/>
+                            <xf:bind nodeset="item[3]" type="xf:boolean"/>
+                        </xf:bind>
                     </xf:bind>
-
                 </xf:model>
                 <code class="ui">
 <xf:repeat id="repeat1" nodeset="repeat/items" appearance="full">
@@ -75,6 +77,18 @@
 </xf:repeat>
                 </code>
             </div>
+            <div class="MIPS">
+                <xf:group appearance="full">
+                    <xf:label></xf:label>
+                    <xf:input id="repeat2-readonly" ref="repeat/@readonly" incremental="true">
+                        <xf:label>readonly</xf:label>
+                    </xf:input>
+                    <xf:input id="repeat2-relevant" ref="repeat/@relevant" incremental="true">
+                        <xf:label>relevant</xf:label>
+                    </xf:input>
+                </xf:group>
+            </div>
+
         </div>
         <div class="CSS">
 

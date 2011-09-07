@@ -59,7 +59,8 @@
 .xfRequired .xfLabel {
 }
 
-.xfRequired .xfLabel:after {
+.xfRequired .xfLabel:after,
+.xfRequired .bfTableLabel:after {
     content: '*';
     color: #8b0000;
 }
