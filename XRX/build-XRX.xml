@@ -24,7 +24,7 @@
         "exist" for an exist installation
         "betterform" for an betterFORM XRX installation
     -->
-    <property name="webapp.context" value="exist"/>
+    <property name="webapp.context" value="/exist"/>
 
     <property name="db.user" value="admin"/>
     <property name="db.pwd" value="secret"/>
@@ -168,7 +168,7 @@ Error: eXist is not installed in ${eXist.home}.
            <param name="db-user" value="${db.user}"/>
            <param name="db-passwd" value="${db.pwd}"/>
            <param name="file-source-dir" value="${main.dir}/db/"/>
-           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}"/>
+           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}${webapp.context}/xmlrpc/db/${rootcollection.name}"/>
         </antcall>
   <!--        <antcall target="db.stop-eXist"/> -->
 
@@ -191,14 +191,14 @@ Error: eXist is not installed in ${eXist.home}.
            <param name="db-user" value="${db.user}"/>
            <param name="db-passwd" value="${db.pwd}"/>
            <param name="file-source-dir" value="${resource.dir}/src/main/xforms/reference"/>
-           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}/forms/reference"/>
+           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}${webapp.context}/xmlrpc/db/${rootcollection.name}/forms/reference"/>
         </antcall>
 
         <antcall target="db.install-file-into-eXist-DB">
            <param name="db-user" value="${db.user}"/>
            <param name="db-passwd" value="${db.pwd}"/>
            <param name="file-source" value="${resource.dir}/src/main/xforms/FeatureExplorer.xhtml"/>
-           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}"/>
+           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}${webapp.context}/xmlrpc/db/${rootcollection.name}"/>
         </antcall>
     </target>
 
@@ -210,14 +210,14 @@ Error: eXist is not installed in ${eXist.home}.
            <param name="db-user" value="${db.user}"/>
            <param name="db-passwd" value="${db.pwd}"/>
            <param name="file-source-dir" value="${resource.dir}/src/main/xforms/demo"/>
-           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}/forms/demo"/>
+           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}${webapp.context}/xmlrpc/db/${rootcollection.name}/forms/demo"/>
         </antcall>
 
         <antcall target="db.install-file-into-eXist-DB">
            <param name="db-user" value="${db.user}"/>
            <param name="db-passwd" value="${db.pwd}"/>
            <param name="file-source" value="${resource.dir}/src/main/xforms/Status.xhtml"/>
-           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}"/>
+           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}${webapp.context}/xmlrpc/db/${rootcollection.name}"/>
         </antcall>
     </target>
 
@@ -229,14 +229,14 @@ Error: eXist is not installed in ${eXist.home}.
            <param name="db-user" value="${db.user}"/>
            <param name="db-passwd" value="${db.pwd}"/>
            <param name="file-source-dir" value="${main.dir}/xrx/timetracker"/>
-           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}/apps/timetracker"/>
+           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}${webapp.context}/xmlrpc/db/${rootcollection.name}/apps/timetracker"/>
         </antcall>
 
         <antcall target="db.install-file-into-eXist-DB">
            <param name="db-user" value="${db.user}"/>
            <param name="db-passwd" value="${db.pwd}"/>
            <param name="file-source" value="${resource.dir}/src/main/xforms/TimeTracker.xhtml"/>
-           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}"/>
+           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}${webapp.context}/xmlrpc/db/${rootcollection.name}"/>
         </antcall>
     </target>
 
@@ -255,7 +255,7 @@ Error: eXist is not installed in ${eXist.home}.
            <param name="db-user" value="${db.user}"/>
            <param name="db-passwd" value="${db.pwd}"/>
            <param name="file-source-dir" value="${overwrites.dir}/extensions/betterform/src/main/xrx/timetracker"/>
-           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}/apps/timetracker"/>
+           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}${webapp.context}/xmlrpc/db/${rootcollection.name}/apps/timetracker"/>
         </antcall>
     </target>
 
@@ -269,7 +269,7 @@ Error: eXist is not installed in ${eXist.home}.
            <param name="db-user" value="${db.user}"/>
            <param name="db-passwd" value="${db.pwd}"/>
            <param name="file-source-dir" value="${resource.dir}/src/main/xforms/incubator/editor"/>
-           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}/apps/editor"/>
+           <param name="db-uri" value="xmldb:exist://${server.name}:${server.port}${webapp.context}/xmlrpc/db/${rootcollection.name}/apps/editor"/>
         </antcall>
 
         <antcall target="patch-eXist-config"/>
