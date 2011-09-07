@@ -34,7 +34,7 @@
 <xf:instance xmlns="">
     <data>
         <output1 constraint="true" readonly="false" required="false" relevant="true">
-            <value>../../images/bf_logo_482x195.png</value>
+            <value>images/bf_logo_482x195.png</value>
         </output1>
     </data>
 </xf:instance>
