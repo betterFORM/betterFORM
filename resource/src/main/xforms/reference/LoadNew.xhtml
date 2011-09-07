@@ -40,25 +40,31 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:trigger>
+            <xf:group>
                
-               <xf:label>Load this Page in a new window</xf:label>
-               
-               <xf:action>
+               <xf:trigger>
                   
-                  <xf:load resource="LoadNew.xhtml" show="new"></xf:load>
+                  <xf:label>Load this Page in a new window</xf:label>
                   
-               </xf:action>
+                  <xf:action>
+                     
+                     <xf:load resource="LoadNew.xhtml" show="new"></xf:load>
+                     
+                  </xf:action>
+                  
+               </xf:trigger>
                
-            </xf:trigger>
+            </xf:group>
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:trigger&gt;
-    &lt;xf:label&gt;Load this Page in a new window&lt;/xf:label&gt;
-    &lt;xf:action&gt;
-        &lt;xf:load resource="LoadNew.xhtml" show="new"&gt;&lt;/xf:load&gt;
-    &lt;/xf:action&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:group&gt;
+    &lt;xf:trigger&gt;
+        &lt;xf:label&gt;Load this Page in a new window&lt;/xf:label&gt;
+        &lt;xf:action&gt;
+            &lt;xf:load resource="LoadNew.xhtml" show="new"&gt;&lt;/xf:load&gt;
+        &lt;/xf:action&gt;
 &lt;/xf:trigger&gt;
+&lt;/xf:group&gt;
 </code></pre></div><script type="text/javascript">
                     function showClass(cssClass){
                         dojo.query('.sample .'+ cssClass).forEach(function(item){
