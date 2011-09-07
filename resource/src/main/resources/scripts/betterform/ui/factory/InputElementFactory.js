@@ -285,7 +285,7 @@ dojo.declare(
                         value:xfValue,
                         miliseconds:miliseconds,
                         constraints:{
-                            datePattern:'dd.MM.yyyy',
+                            datePattern:'M/d/yyyy',
                             timePattern:'HH:mm:ss'
 
                         },
