@@ -186,7 +186,9 @@ dojo.declare(
                 name:controlId + "-value",
                 "class":classValue,
                 title:dojo.attr(sourceNode,"title"),
-                xfControlId:controlId
+                xfControlId:controlId,
+                height:'100%',
+                extraPlugins:[]
                 }, sourceNode);
         }
         else if(appearance && appearance.toLowerCase() == "growing"){

@@ -25,10 +25,7 @@ dojo.declare(
         this.inherited(arguments);
         this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);
     },
-    postCreate:function() {
-        this.inherited(arguments);
-    },
-    
+
     _onFocus:function() {
         this.inherited(arguments);
         this.handleOnFocus();
