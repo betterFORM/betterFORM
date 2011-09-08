@@ -1,3 +1,4 @@
+dojo.provide("betterform.xfEditorUtil");
 
 /*
  * Copyright (c) 2011. betterForm Project - http://www.betterform.de

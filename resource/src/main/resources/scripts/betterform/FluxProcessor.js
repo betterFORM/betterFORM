@@ -1447,7 +1447,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
         	// console.debug("dom-focus-in-dijit control: ",xfControlId);
             dijit.byId(xfControlId)._handleDOMFocusIn();
         } else if (dojo.byId(xfControlId) != undefined) {
-        	console.debug("dom-focus-in-dojo control: ",xfControlId);
+        	// console.debug("dom-focus-in-dojo control: ",xfControlId);
             var domControlValue = dojo.byId(xfControlId);
             domControlValue.focus();
         } else {

@@ -351,7 +351,7 @@
                                         if (xfId == undefined) {
                                             return;
                                         }
-                                        console.log("xfid: ", xfId);
+                                        // console.log("xfid: ", xfId);
                                         attrEditor.editProperties(xfId);
                                     </script>
                                 </div>
@@ -367,7 +367,7 @@
 
                     function serializeTree() {
                         var serializedTree = new XMLSerializer().serializeToString(document.getElementById("xfDoc"));
-                        console.log(serializedTree);
+                        // console.log(serializedTree);
                         dijit.byId("fluxProcessor").setControlValue("save", serializedTree);
                         dijit.byId("fluxProcessor").dispatchEvent("transform2xf");
 
@@ -421,17 +421,17 @@
                                     "crrm" : {
                                         "move" : {
                                             "check_move" : function (m) {
-                                                console.log("check move:",m);
-                                                console.log("check move:",m.o);
+                                                // console.log("check move:",m);
+                                                // console.log("check move:",m.o);
                                                 var origin = m.o;
 
                                                 //the the xf type
                                                 var xfType = origin.attr("data-xf-type");
-                                                console.log("xfType ",xfType);
+                                                // console.log("xfType ",xfType);
 
                                                 var target = m.r;
                                                 var targetType = target.attr("data-xf-type");
-                                                console.log("check target:",targetType);
+                                                // console.log("check target:",targetType);
 
 
                                                 //check rules
@@ -486,12 +486,12 @@
 				                            return false;
                                         },
                                         "Alt+up"   : function (event) {
-                                            console.debug("Alt+up: event:",event);
+                                            // console.debug("Alt+up: event:",event);
                                             attrEditor.moveNodeUp(this)
                                         },
 
                                         "Alt+down" : function (event) {
-                                            console.debug("Alt+down: event:",event);
+                                            // console.debug("Alt+down: event:",event);
                                             attrEditor.moveNodeDown(this);
                                         },
                                         "ctrl+p" : function (event) {
@@ -507,12 +507,12 @@
                                     // alert( data.rslt.obj.attr("data-xf-type"));
                                     var tmpId=data.rslt.obj.attr("id");
                                     var nodeIsLoaded = attrEditor.nodeIsLoaded(tmpId);
-                                    console.debug("nodeIsLoaded:", nodeIsLoaded);
+                                    // console.debug("nodeIsLoaded:", nodeIsLoaded);
                                     if(nodeIsLoaded){
-                                        console.debug("PREVENTED LOADING OF PROPERTY EDITOR");
+                                        // console.debug("PREVENTED LOADING OF PROPERTY EDITOR");
                                         return;
                                     }else {
-                                        console.log(data);
+                                        // console.log(data);
                                         var xfType = data.rslt.obj.attr("data-xf-type");
                                         var mountNode = dojo.byId("xfMount");
                                         dojo.attr(mountNode ,"xfId", tmpId);
@@ -579,7 +579,7 @@
                             } else {
                                 //get parent
                                 var parentLI = currentItem.parentNode.parentNode;
-                                console.log("parent add: ", parentLI);
+                                // console.log("parent add: ", parentLI);
                                 addElement(currentItem.getAttribute("data-xf-type"), "after");
                             }
                         }
@@ -588,7 +588,7 @@
                     });
 
                     function addElement(type, position) {
-                        console.log("addElement type:", type);
+                        // console.log("addElement type:", type);
                         var elem = $("#xfDoc").jstree("create", null, position, type, false, true);
                         elem.attr("data-xf-type", type);
                         elem.attr("id", new Date().getTime());
@@ -720,11 +720,11 @@
 
                     function checkKeyboardInput(pEvent) {
                         var activeElem = document.activeElement.localName;
-                        console.debug("activeElem: ", activeElem);
+                        // console.debug("activeElem: ", activeElem);
                         if (activeElem == "input") {
                             return;
                         }
-                        console.debug("activeElem: ", activeElem);
+                        // console.debug("activeElem: ", activeElem);
                         switch (pEvent.charOrCode) {
                             case '?': //Process the Help key event
                                 dijit.byId("bfEditorHelp").show();
