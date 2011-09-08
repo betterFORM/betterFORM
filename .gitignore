@@ -25,9 +25,10 @@ resource/target/*
 target/*
 betty/target/*
 core/target/*
-eXist/target-utils/*
-eXist/target/*
+XRX/target-utils/*
+XRX/target/*
 tools/installer/target/*
+tools/installer/target-utils/*
 tools/editor/target/*
 web/target/*
 xApp/target/*
@@ -35,4 +36,4 @@ zaphod/target/*
 
 ## files to ignore
 tools/installer/betterform-install*
-tools/installer/target-utils/*
+
