@@ -12,10 +12,6 @@
         This build-file uses the eXist-ant-task.
         You need eXist installed or have to provide exist.jar and exist-optional.jar.
         See the "classpath.exist"-path.
-
-    TODO:
-    - classpath.exist: 1st: check for exist.installed 2nd. Check for exist.betterform.xrx.installed
-    - refactor exist.installed to exist.homem, admin.passwd to exist.admin.passwd
 -->
 
 
@@ -29,7 +25,7 @@
     <property name="dojo.release.dir" value="${target}/dojo-release"/>
 
     <condition property="password.notset">
-        <equals arg1="${eXist.admin.passwd}" arg2=""/>
+        <equals arg1="${eXist.db.passwd}" arg2=""/>
     </condition>
 
     <!-- eXist ant-tasks -->
@@ -48,9 +44,9 @@
     <!-- Generic xdb:store target. Set properties as needed when you call it. -->
     <target name="install-files-into-eXist-DB" >
         <property name="file-source-dir" value="${basedir}/db-resources"/>
-        <property name="db-uri" value="xmldb:exist://localhost:8080/betterform/xmlrpc/db/betterform/resources"/>
-        <property name="db-user" value="betterform"/>
-        <property name="db-passwd" value="betterform"/>
+        <property name="db.uri" value="xmldb:exist://localhost:8080/betterform/xmlrpc/db/betterform/resources"/>
+        <property name="db.user" value="betterform"/>
+        <property name="db.passwd" value="betterform"/>
 
         <echo message="------------------------------------------------------------------------------------"/>
         <echo message="  install all files from  ${file-source-dir} into db"/>
@@ -58,11 +54,11 @@
 
 
         <xdb:store xmlns:xdb="http://exist-db.org/ant"
-                   uri="${db-uri}"
+                   uri="${db.uri}"
                    createsubcollections="true"
                    createcollection="true"
-                   user="${db-user}"
-                   password="${db-passwd}">
+                   user="${db.user}"
+                   password="${db.passwd}">
             <fileset dir="${file-source-dir}" excludes="**/.svn **/.svn/**"/>
         </xdb:store>
     </target>
@@ -70,9 +66,9 @@
     <!-- Generic xdb:store target. Set properties as needed when you call it -->
      <target name="install-file-into-eXist-DB" >
         <property name="file-source-dir" value="${basedir}/db-resources"/>
-        <property name="db-uri" value="xmldb:exist://localhost:8080/betterform/xmlrpc/db/betterform/resources"/>
-        <property name="db-user" value="betterform"/>
-        <property name="db-passwd" value="betterform"/>
+        <property name="db.uri" value="xmldb:exist://localhost:8080/betterform/xmlrpc/db/betterform/resources"/>
+        <property name="db.user" value="betterform"/>
+        <property name="db.passwd" value="betterform"/>
 
         <echo message="------------------------------------------------------------------------------------"/>
         <echo message="  install all files from  ${file-source-dir} into db"/>
@@ -80,11 +76,11 @@
 
 
         <xdb:store xmlns:xdb="http://exist-db.org/ant"
-                   uri="${db-uri}"
+                   uri="${db.uri}"
                    createsubcollections="true"
                    createcollection="true"
-                   user="${db-user}"
-                   password="${db-passwd}">
+                   user="${db.user}"
+                   password="${db.passwd}">
             <fileset file="${file-source}"/>
         </xdb:store>
     </target>

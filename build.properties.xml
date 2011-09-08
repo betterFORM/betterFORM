@@ -243,11 +243,7 @@
         <!-- ### installerType must be either 'standard' or 'web'. Default value is 'web' ### -->
         <installerType>standard</installerType>
         <exist>
-            <jar>/Users/windauer/Downloads/betterFORM/binaries/eXist-setup-1.4.0-rev10440.jar</jar>
             <version>1.4</version>
-            <user>admin</user>
-            <passwd>betterform</passwd>
-            <betterform>true</betterform>
         </exist>
         <compile>
             <classpath pathid="installer.class.path" description="classpath for compiling installer classes">
@@ -269,14 +265,26 @@
             <dir>/home/zwobit/development/bin/launch4j</dir>
         </launch4j>
     </installer>
-    <exist>
-        <betterform>
-            <xrx>
-                <installed>/home/zwobit/exist-1.4.1</installed>
-            </xrx>
-        </betterform>
-        <installed>/home/zwobit/eXist-1.4.1</installed>
-        <passwd/>
-    </exist>
+    <eXist>
+        <!-- point this to the place where you installed exist -->
+        <home>/home/zwobit/eXist-1.4.1</home>
+        <!-- Leave this empty if you run eXist in root context -->
+        <!-- If you use the betterform XRX bundle this is 'betterform' -->
+        <context>/exist</context>
+        <!-- user name and password for the file storing tasks -->
+        <db>
+            <user>admin</user>
+            <passwd>secret</passwd>
+            <!-- The name of the collection where the betterFORM content should be stored -->
+            <rootcollection>
+                <name>betterform</name>
+            </rootcollection>
+        </db>
+        <!-- Name and port of the eXist server you want to use for the file storing tasks -->
+        <server>
+            <name>localhost</name>
+            <port>8080</port>
+        </server>
+    </eXist>
 </root>
 

@@ -12,6 +12,9 @@
     <property name="installer.target" value="${basedir}/target"/>
     <property name="installer.utils" value="${basedir}/target-utils"/>
 
+    <property name="eXist.db.user" value="betterFORM"/>
+    <property name="eXist.db.passwd" value="Tha0xeiC8a"/>
+
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
     <target name="clean">

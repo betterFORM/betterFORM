@@ -7,6 +7,9 @@
     <property name="eXist.1.4.src" value="http://downloads.sourceforge.net/project/exist/Stable/1.4.1/eXist-setup-1.4.1-rev15155.jar"/>
     <property name="eXist.1.5.src" value="http://downloads.sourceforge.net/project/exist/Stable/1.4.1/eXist-setup-1.4.1-rev15155.jar"/>
 
+    <property name="eXist.db.user" value="betterFORM"/>
+    <property name="eXist.db.passwd" value="Tha0xeiC8a"/>
+
     <available property="eXist-1.4-available" file="${installer.utils}/exist-install-1.4.jar"/>
     <available property="eXist-1.5-available" file="${installer-utils}/exist-install-1.5.jar"/>
 
@@ -121,8 +124,8 @@
 
         <ant antfile="${xrx.dir}/build-XRX.xml" target="update-betterFORM" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
-            <property name="db.user" value="betterFORM"/>
-            <property name="db.pwd" value="Tha0xeiC8a"/>
+            <property name="eXist.db.user" value="${eXist.db.user}"/>
+            <property name="eXist.db.passwd" value="${eXist.db.passwd}"/>
         </ant>
 
         <ant antfile="${xrx.dir}/build-utils-eXist.xml" target="start-eXist">
@@ -131,27 +134,27 @@
 
         <ant antfile="${xrx.dir}/build-XRX.xml" target="install-forms" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
-            <property name="db.user" value="betterFORM"/>
-            <property name="db.pwd" value="Tha0xeiC8a"/>
+            <property name="eXist.db.user" value="${eXist.db.user}"/>
+            <property name="eXist.db.passwd" value="${eXist.db.passwd}"/>
         </ant>
 
 
         <ant antfile="${xrx.dir}/build-XRX.xml" target="install-demo-xrx-betterFORM-user" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
-            <property name="db.user" value="betterFORM"/>
-            <property name="db.pwd" value="Tha0xeiC8a"/>
+            <property name="eXist.db.user" value="${eXist.db.user}"/>
+            <property name="eXist.db.passwd" value="${eXist.db.passwd}"/>
         </ant>
 
         <ant antfile="${xrx.dir}/build-XRX.xml" target="install-dashboard" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
-            <property name="db.user" value="betterFORM"/>
-            <property name="db.pwd" value="Tha0xeiC8a"/>
+            <property name="eXist.db.user" value="${eXist.db.user}"/>
+            <property name="eXist.db.passwd" value="${eXist.db.passwd}"/>
         </ant>
 
         <ant antfile="${xrx.dir}/build-XRX.xml" target="install-editor" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
-            <property name="db.user" value="betterFORM"/>
-            <property name="db.pwd" value="Tha0xeiC8a"/>
+            <property name="eXist.db.user" value="${eXist.db.user}"/>
+            <property name="eXist.db.passwd" value="${eXist.db.passwd}"/>
         </ant>
 
         <ant antfile="${xrx.dir}/build-utils-eXist.xml" target="stop-eXist">

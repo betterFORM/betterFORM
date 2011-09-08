@@ -5,11 +5,8 @@
 
 <!--
     Status: Work in progress.
-    Purpose of file: minimal-repeating targeta to be called by other build-files
+    Purpose of file: minimal-repeating targets to be called by other build-files
     Used by:
-
-    TODO:
-    - classpath.exist: 1st: check for exist.installed 2nd. Check for exist.betterform.xrx.installed
 -->
 
 
