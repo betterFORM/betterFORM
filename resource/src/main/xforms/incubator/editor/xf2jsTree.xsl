@@ -233,6 +233,9 @@
                     <xf:case id="c-empty" selected="true"/>
                 <!-- login view if user is not logged in yet-->
                     <xf:case id="c-login">
+                         <div style="font-style: italic;color: orangered;text-align: center;width: 100%; font-size: 18px; border: #ff4500 solid thick;">
+                            Caution: This Editor is only a preview.
+                        </div>
                         <xf:group id="g-login" appearance="full" style="padding:20px;">
                             <xf:label>betterFORM XForms Editor</xf:label>
                             <div id="notice">In order to use the XForms Editor please login.</div>
