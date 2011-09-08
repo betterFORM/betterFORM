@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -13,6 +13,8 @@ dojo.declare(
         [betterform.ui.ControlValue, dijit.Editor],
 {
 
+   height:"100%;",
+
    buildRendering:function() {
         this.domNode = this.srcNodeRef;
         this.setCurrentValue(this.srcNodeRef.innerHTML);
@@ -23,10 +25,7 @@ dojo.declare(
         this.inherited(arguments);
         this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);
     },
-    postCreate:function() {
-        this.inherited(arguments);
-    },
-    
+
     _onFocus:function() {
         this.inherited(arguments);
         this.handleOnFocus();
@@ -55,10 +54,13 @@ dojo.declare(
     _handleSetControlValue:function(value) {
         // console.debug("betterform.ui.textarea.SimpleTextarea._handleSetControlValue: Value: ", value);
         this.setValue(value);
+    },
+
+   applyState:function() {
+        console.debug("HTMLEditor.applyState (id:" + this.id +") isReadonly1: ",this.xfControl.isReadonly());
+        this.set("readOnly",this.xfControl.isReadonly());
+        this.set("disabled",this.xfControl.isReadonly());
     }
-
-
-
 });
 
 

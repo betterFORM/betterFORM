@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
 <abc:my-root xmlns:abc="http://some-url"
     xmlns:cde="http://some-other-url"
     abc:id="aaaa"

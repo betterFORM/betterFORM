@@ -1,0 +1,17 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:bf="http://betterform.sourceforge.net/xforms" xmlns:xf="http://www.w3.org/2002/xforms" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <head>
+        <title>Load instance data</title>
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model id="model-1">
+                <xf:instance xmlns="" id="i-default" src="{$contextPath}LoadInstanceData.xml"/>
+            </xf:model>
+        </div>
+        <xf:group>
+            <xf:output ref="hello">
+                <xf:label>Hello From:</xf:label>
+            </xf:output>
+        </xf:group>
+    </body>
+</html>

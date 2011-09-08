@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -79,7 +79,7 @@ dojo.declare(
                 value:contextInfo.value,
                 selectWidgetId:myParentNode.id,
                 dojoType:"betterform.ui.select.CheckBox"
-            }
+            },document.createElement("div")
         );
 
          console.debug("CheckBoxItemset.handleInsert [id: ",this.id, " / checkBoxDijit:",valueNode,"]");

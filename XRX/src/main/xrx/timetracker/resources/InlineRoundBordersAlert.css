@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -107,11 +107,11 @@
     color: #801B1B;
     -moz-border-radius-topleft: 0px;
 	-moz-border-radius-bottomleft: 0px;
-	-moz-border-radius-topright: 8px;
+    -moz-border-radius-topright: 8px;
     -moz-border-radius-bottomright: 8px;
     -webkit-border-top-left-radius: 0px;
 	-webkit-border-bottom-left-radius: 0px;
-	-webkit-border-top-right-radius: 8px;
+    -webkit-border-top-right-radius: 8px;
     -webkit-border-bottom-right-radius: 8px;
     background: #FFCFCF url(images/error.png) no-repeat scroll 2% 5px;
     margin: 0 1px 0 0;
@@ -127,11 +127,11 @@
     color: #666666;
     -moz-border-radius-topleft: 0px;
 	-moz-border-radius-bottomleft: 0px;
-	-moz-border-radius-topright: 8px;
+    -moz-border-radius-topright: 8px;
     -moz-border-radius-bottomright: 8px;
     -webkit-border-top-left-radius: 0px;
 	-webkit-border-bottom-left-radius: 0px;
-	-webkit-border-top-right-radius: 8px;
+    -webkit-border-top-right-radius: 8px;
     -webkit-border-bottom-right-radius: 8px;
     margin: 0;
     /*overflow: hidden;*/

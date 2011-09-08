@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
 <!-- $Id: sort-instance.xsl 559 2006-12-11 09:59:13Z joern $ -->
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 

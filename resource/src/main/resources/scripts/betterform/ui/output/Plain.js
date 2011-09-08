@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -27,6 +27,13 @@ dojo.declare(
     postCreate:function() {
         this.inherited(arguments);
         this.setCurrentValue();
+    },
+
+    focus:function() {
+        if(dojo.attr(this.containerNode,"tabindex") == undefined) {
+            dojo.attr(this.containerNode,"tabindex",0);
+        }
+        this.containerNode.focus();
     },
 
     _onFocus:function() {

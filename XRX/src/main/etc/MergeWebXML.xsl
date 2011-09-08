@@ -1,3 +1,8 @@
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
 <xsl:stylesheet version="2.0"
                 xmlns:webxml="http://java.sun.com/xml/ns/j2ee"
                 xmlns="http://java.sun.com/xml/ns/j2ee"

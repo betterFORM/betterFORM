@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -719,6 +719,7 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setNamespaceAware(true);
             factory.setValidating(false);
+            factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
             // factory.setAttribute("http://apache.org/xml/properties/dom/document-class-name", "org.apache.xerces.dom.DocumentImpl");
 
             DocumentBuilder db = factory.newDocumentBuilder();

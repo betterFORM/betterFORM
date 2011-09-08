@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -334,7 +334,7 @@ dojo.declare(
         // console.debug("handleSetControlValue: " + this.controlValue.currentValue + " value: " + value);
         if(this.controlValue.currentValue != value) {
             this.controlValue.currentValue = value;
-            this.controlValue._handleSetControlValue(value);
+            this.controlValue._handleSetControlValue(value, true);
             this._handleRequiredEmpty();
         }
         // dojo.publish("/xf/valueChanged",[this,value])

@@ -1,1 +1,17 @@
-<data><task><id/><date>2010-05-30</date><project>relaxation</project><start/><end/><duration hours="4" minutes="0"/><who>Homer</who><what>watch TV</what><note/><billable>false</billable><billed date="">false</billed><status>inprogress</status><created>20100601-102143</created></task></data>
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+   <task client="1" project="1" iteration="1">
+      <date>2011-05-30</date>
+      <start/>
+      <end/>
+      <duration hours="4" minutes="0"/>
+      <who>Homer</who>
+      <what>watch TV</what>
+      <note/>
+      <billable>false</billable>
+      <billed date="">false</billed>
+      <status>inprogress</status>
+      <created>20100601-102143</created>
+      <tag/>
+   </task>
+</data>

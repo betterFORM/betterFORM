@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -16,6 +16,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class Header extends  BindingElement {
     private static final Log LOGGER = LogFactory.getLog(Header.class);
     private String combine = APPEND;
@@ -24,7 +28,9 @@ public class Header extends  BindingElement {
     public static final String PREPEND = "prepend";
     
     private final ValueChild name;
-    private final ValueChild value;
+    // Header might have multiple values
+    private List<ValueChild> values;
+
 
 
     /**
@@ -35,9 +41,17 @@ public class Header extends  BindingElement {
      */
     public Header(Element element, Model model) {
         super(element, model);
-        
         name = new ValueChild((Element) DOMUtil.getFirstChildByTagNameNS(this.element, NamespaceConstants.XFORMS_NS, NAME), this.model);
-        value = new ValueChild((Element) DOMUtil.getFirstChildByTagNameNS(this.element, NamespaceConstants.XFORMS_NS, VALUE), this.model);
+
+        List<Element> headerChilds = DOMUtil.getChildElements(this.element);
+        values = new ArrayList();
+
+        for(Element childElement : headerChilds){
+            if(VALUE.equals(childElement.getLocalName())){
+                values.add(new ValueChild(childElement,this.model));
+            }
+
+        }
     }
 
     public void init() throws XFormsException {
@@ -48,7 +62,9 @@ public class Header extends  BindingElement {
         
         
         name.init();
-        value.init();
+        for(ValueChild value : values){
+            value.init();
+        }
     }
     
     @Override
@@ -60,31 +76,49 @@ public class Header extends  BindingElement {
         return this.name.getValue();
     }
     public String getValue() throws XFormsException {
-        return this.value.getValue();    
+        StringBuilder result = new StringBuilder();
+
+        Iterator<ValueChild> valueIterator = values.iterator();
+        while(valueIterator.hasNext()) {
+            result.append(valueIterator.next().getValue());
+            if(valueIterator.hasNext()) {
+                result.append("," );
+            }
+        }
+        return result.toString();
     }
 
     public RequestHeaders getHeaders() throws XFormsException {
     	RequestHeaders requestHeaders = new RequestHeaders(); 
         
     	updateXPathContext();
-    	
+
     	for (int i = 0; i < this.nodeset.size(); i++) {
     		this.name.setPosition(i + 1);
-    		this.value.setPosition(i + 1);
+
+            for(ValueChild value : values){
+                value.setPosition(i + 1);
+            }
+    		// this.value.setPosition(i + 1);
     		
     		final String headerName = this.name.getValue();
+            if(headerName == null || "".equals(headerName)) {
+                continue;
+            }
     		final RequestHeader requestHeader = requestHeaders.getRequestHeader(headerName);
+
+            String value = this.getValue();
     		if (requestHeader == null) {
-    			requestHeaders.addHeader(headerName, this.value.getValue());
+    			requestHeaders.addHeader(headerName, value);
     		}
     		else if (APPEND.equals(this.combine)) {
-    			requestHeader.appendValue(this.value.getValue());
+    			requestHeader.appendValue(value);
     		}
     		else if (REPLACE.equals(this.combine)) {
-    			requestHeader.setValue(this.value.getValue());
+    			requestHeader.setValue(value);
     		}
     		else if (PREPEND.equals(this.combine)) {
-    			requestHeader.prependValue(this.value.getValue());
+    			requestHeader.prependValue(value);
     		}
 		}
         return requestHeaders;

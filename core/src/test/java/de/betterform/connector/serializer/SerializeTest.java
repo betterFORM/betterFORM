@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
 package de.betterform.connector.serializer;
 
 import de.betterform.xml.xforms.XFormsProcessorImpl;

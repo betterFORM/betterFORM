@@ -1,13 +1,16 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xforms.ui;
 
+import de.betterform.xml.dom.DOMUtil;
+import de.betterform.xml.xforms.XFormsElement;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.ui.state.HelperElementState;
+import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
@@ -46,8 +49,17 @@ public class Value extends BindingElement {
 
         initializeDefaultAction();
         updateXPathContext();
-        initializeElementState();
+        if(hasBindingExpression()){
+            initializeElementState();
+        }else if(getXFormsAttribute(VALUE_ATTRIBUTE) != null){
+            if (getLogger().isTraceEnabled()) {
+                getLogger().trace(this + " xf:value has a value attribute");
+            }
+            evalValueAttribute();
+        }
+
     }
+
 
     /**
      * Performs element update.
@@ -58,8 +70,13 @@ public class Value extends BindingElement {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug(this + " update");
         }
-        updateXPathContext();        
-        updateElementState();
+        updateXPathContext();
+        if(hasBindingExpression()){
+            updateElementState();
+        }else if(getXFormsAttribute("value") != null){
+            evalValueAttribute();
+        }
+
     }
 
     /**
@@ -99,6 +116,15 @@ public class Value extends BindingElement {
         return LOGGER;
     }
 
+    /**
+     * Evaluates value attribute on value element and writes the result as text child to the node
+     * @throws XFormsException
+     */
+    private void evalValueAttribute() throws XFormsException {
+        String valueExpr = getXFormsAttribute(VALUE_ATTRIBUTE);
+        String itemValue = XPathCache.getInstance().evaluateAsString(this.getNodeset(), getPosition(), valueExpr , getPrefixMapping(), xpathFunctionContext);
+        DOMUtil.setElementValue(this.element,itemValue);
+    }
 }
 
 // end of class

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -45,6 +45,7 @@ dojo.declare(
         this.inherited(arguments);
         this.setCurrentValue();
         if(this.openSelection) {
+            // console.debug("openSelection: this.srcNodeRef: ",this.srcNodeRef);
             dojo.addClass(this.xfControl.domNode, "xfSelectOpen");
             var freeTextNodeWrapper = dojo.doc.createElement("div");           
             dojo.addClass(freeTextNodeWrapper,"xfSelectFreeText");
@@ -54,6 +55,22 @@ dojo.declare(
 
             dojo.place(freeTextNodeWrapper,this.xfControl.domNode,1);
             this.freeTextDijit = new dijit.form.TextBox({},freeTextNode);
+            var initialValue = dojo.attr(this.srcNodeRef, "schemavalue");
+            // console.debug("initialValue:",initialValue);
+            if(initialValue && initialValue != "" ) {
+                var splitResult = initialValue.split(" ");
+                var currentValue = this.get('value').join(" ");
+                // console.debug("currentValue:",currentValue);
+                var freeTextTmpValue = new Array();
+                for(i = 0; i < splitResult.length; i++){
+                    if(currentValue.indexOf(splitResult[i]) == -1){
+                        // console.debug("splitResult: ", i ," :", splitResult[i]);
+                        freeTextTmpValue.push(splitResult[i]);
+                    }
+                }
+                // console.debug("freeTextTmpValue: ",freeTextTmpValue, " freeTextTmpValue.join():",freeTextTmpValue.join(" "));
+                this.freeTextDijit.set("value",freeTextTmpValue.join(" "));
+            }
             dojo.connect(this.freeTextDijit, "_handleOnChange", this,"_textFieldValueChanged");
         }
     },
@@ -68,9 +85,13 @@ dojo.declare(
         }
 
     },
-    
+
+    focus:function() {
+        this.inherited(arguments);
+    },
+
      _onFocus:function() {
-        // console.debug("MultiSelect._onFocus() this: ",this);
+        console.debug("MultiSelect._onFocus() this: ",this);
         this.inherited(arguments);
         this.handleOnFocus();
     },
@@ -83,12 +104,12 @@ dojo.declare(
 
     applyState:function() {
         if (this.xfControl.isReadonly()) {
-            this.attr('disabled', true);
+            this.set('disabled', true);
             if(this.openSelection) {
                 dojo.attr(this.freeTextDijit.domNode,"disabled",true);
             }
         } else {
-            this.attr('disabled', false);
+            this.set('disabled', false);
             if(this.openSelection) {
                 dojo.attr(this.freeTextDijit.domNode,"disabled",false);
             }
@@ -97,7 +118,7 @@ dojo.declare(
 
     getControlValue:function() {
         // console.debug("MultiSelect.getControlValue() this.getValue():",this.getValue());
-        var returnvalue = this.attr('value').join(" ");
+        var returnvalue = this.get('value').join(" ");
         if(this.openSelection) {
             if(this.freeTextValue == "" && returnvalue == undefined){
                 returnvalue = "";
@@ -135,7 +156,7 @@ dojo.declare(
     },
 
     _handleSetControlValue:function(values) {
-        // console.debug("MultiSelect._handleSetControlValue values: ", values);
+        console.debug("MultiSelect._handleSetControlValue values: ", values);
         var valueArray = new Array();
         valueArray = values.split(' ');
         if(this.openSelection) {
@@ -143,11 +164,11 @@ dojo.declare(
             var textFieldValue = "";
             dojo.forEach(valueArray,
                 function(valueEntry, index, array) {
-                    // console.debug("MulitSelect.handleSetControlValue Iterate Value index:",index, " array: ",array, " entry: ", valueEntry);
+                    console.debug("MulitSelect.handleSetControlValue Iterate Value index:",index, " array: ",array, " entry: ", valueEntry);
                     var isOptionValue = false;
                     dojo.forEach(selectOptions,
                             function(selectEntry, indexSelect, arraySelect) {
-                                // console.debug("MulitSelect.handleSetControlValue Iterate Selections index:",indexSelect, " array: ",arraySelect, " entry: ", selectEntry , " value: ", valueEntry);
+                                console.debug("MulitSelect.handleSetControlValue Iterate Selections index:",indexSelect, " array: ",arraySelect, " entry: ", selectEntry , " value: ", valueEntry);
                                 if(dojo.attr(selectEntry,"value")== valueEntry) {  isOptionValue = true; }
                             }
                     );

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -53,7 +53,8 @@ dojo.declare(
             // console.debug("OptGroup.handleInsert parent: " ,parentNode , " parent value: " + dojo.attr(parent, "value"));
             // make sure that the associated select displays the correct value
 
-            if(dojo.hasClass(this.domNode.parentNode.localName == "select")){
+            //console.debug("OptGroup.handleStateChagend this.domNode.parentNode.localName:",this.domNode.parentNode.localName);
+            if(this.domNode.parentNode.localName.toLowerCase() == "select"){
                 var selectDijit = dijit.byId(dojo.attr(this.domNode.parentNode,"id"));
 /*
                 console.debug("found selectDijit: " + selectDijit);

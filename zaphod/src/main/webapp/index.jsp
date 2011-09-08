@@ -1,4 +1,9 @@
-<%-- 
+<%--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  --%>
+
+<%--
     Document   : index
     Created on : Nov 12, 2009, 11:40:51 AM
     Author     : Fabian Otto

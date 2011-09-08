@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
 <!-- $Id: build.xml,v 1.90 2006/11/16 23:55:43 joernt Exp $ -->
 <project name="Maven Tools" default="info" basedir=".">
 
@@ -66,21 +71,6 @@
         <rename src="${project.dir}/betty/pom.xml" dest="${project.dir}/betty/pom.xml.old"/>
         <rename src="${project.dir}/betty/pom.new.xml" dest="${project.dir}/betty/pom.xml"/>
     </target>
-
-
-     <target name="update-xApp-pom"
-            description="update the xApp pom.xml file with dependencies from build.properties.xml">
-        <xslt in="${project.dir}/xApp/pom.xml"
-              out="${project.dir}/xApp/pom.new.xml"
-              style="${project.dir}/tools/maven/updatePOM.xsl"
-              force="true">
-            <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
-            <param name="module" expression="${xapp.app.name}"/>
-        </xslt>
-        <rename src="${project.dir}/xApp/pom.xml" dest="${project.dir}/xApp/pom.xml.old"/>
-        <rename src="${project.dir}/xApp/pom.new.xml" dest="${project.dir}/xApp/pom.xml"/>
-    </target>
-
 
     <target name="create-core-install" depends="update-core-pom">
         <xslt in="${project.dir}/core/build.xml"

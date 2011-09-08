@@ -1,10 +1,11 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xforms.xpath.saxon.function;
 
+import de.betterform.xml.dom.DOMUtil;
 import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.ExpressionVisitor;
 import net.sf.saxon.expr.StaticProperty;
@@ -19,8 +20,10 @@ import de.betterform.xml.xforms.ui.AbstractUIElement;
 import de.betterform.xml.xforms.ui.BindingElement;
 import de.betterform.xml.xforms.ui.RepeatItem;
 
+import java.util.List;
+
 /**
- * Implementation of the 7.10.2 The current() Function <p/> Returns the context
+ * Implementation of the 7.10.2 The context() Function <p/> Returns the context
  * node used to initialize the evaluation of the containing XPath expression.
  *
  * @author Nick Van den Bleeken
@@ -64,6 +67,9 @@ public class Context extends XFormsFunction {
     public Item evaluateItem(XPathContext xpathContext) throws XPathException {
         XPathFunctionContext functionContext = getFunctionContext(xpathContext);
         XFormsElement xformsElement = functionContext.getXFormsElement();
+
+        DOMUtil.prettyPrintDOM(xformsElement.getElement());
+
         int pos = 1;
         if (xformsElement instanceof BindingElement) {
             BindingElement bindingElement = ((BindingElement) xformsElement);
@@ -97,7 +103,12 @@ public class Context extends XFormsFunction {
         }
 
         try {
-            return (Item) xformsElement.evalInScopeContext().get(pos-1);
+            List items =  xformsElement.evalInScopeContext();
+            if(items.size() == 1){
+                return (Item) xformsElement.evalInScopeContext().get(0);
+            }else{
+                return (Item) xformsElement.evalInScopeContext().get(pos-1);
+            }
         } catch (XFormsException e) {
             throw new XPathException(e);
         }

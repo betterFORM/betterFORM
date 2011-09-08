@@ -17,7 +17,7 @@
                 </data>
             </xf:instance>
             <xf:bind id="b-visible" nodeset="visible" type="boolean"/>
-            <xf:bind id="b1" nodeset="grouped-data" required="true()">
+            <xf:bind id="b1" nodeset="grouped-data" required="true()" relevant="boolean-from-string(/data/visible)">
                 <xf:bind id="b2" nodeset="a" required="true()"/>
                 <xf:bind id="b3" nodeset="b" required="true()" relevant="boolean-from-string(/data/visible)"/>
                 <xf:bind id="b4" nodeset="c" required="true()"/>

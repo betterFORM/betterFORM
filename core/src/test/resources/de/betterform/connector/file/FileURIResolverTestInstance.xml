@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
 <buglet>
     <category>linux</category>
     <reference>self-reference</reference>

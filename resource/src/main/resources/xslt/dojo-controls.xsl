@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
@@ -60,7 +60,7 @@
                         dataType="{$datatype}"
                         controlType="select1List"
                         class="xfValue"
-                        title="{normalize-space(xforms:hint)}"
+                        title=""
                         tabindex="{$navindex}"
                         schemaValue="{bf:data/@bf:schema-value}"
                         incremental="{$incremental}">
@@ -117,7 +117,7 @@
                                 size="1"
                                 dataType="{$datatype}"
                                 controlType="select1ComboBoxOpen"
-                                title="{normalize-space(xforms:hint)}"
+                                title=""
                                 tabindex="{$navindex}"
                                 schemaValue="{bf:data/@bf:schema-value}"
                                 autocomplete="true"
@@ -134,7 +134,7 @@
                                 class="xfValue"
                                 dataType="{$datatype}"
                                 controlType="select1ComboBox"
-                                title="{normalize-space(xforms:hint)}"
+                                title=""
                                 tabindex="{$navindex}"
                                 schemaValue="{bf:data/@bf:schema-value}"
                                 incremental="{$incremental}">
@@ -166,9 +166,9 @@
                       name="{$name}"
                       class="xfValue bfCheckBoxGroup"
                       selection="{$selection}"
-                      controlType="selectCheckBox"
+                      controlType="selectCheckBoxGroup"
                       dataType="{$datatype}"
-                      title="{normalize-space(xforms:hint)}"
+                      title=""
                       schemaValue="{bf:data/@bf:schema-value}"
                       incremental="{$incremental}">
                     <xsl:for-each select="$parent/xforms:item|$parent/xforms:choices|$parent/xforms:itemset">
@@ -198,7 +198,7 @@
                         controlType="selectList"
                         dataType="{$datatype}"
                         class="xfValue"
-                        title="{normalize-space(xforms:hint)}"
+                        title=""
                         tabindex="{$navindex}"
                         schemaValue="{bf:data/@bf:schema-value}"
                         selection="{$selection}"
@@ -225,9 +225,7 @@
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="appearance" select="@appearance"/>
         <xsl:variable name="name" select="concat($data-prefix,$id)"/>
-        <xsl:variable name="hint" select="if(exists(xforms-hint) and exists(@accesskey)) then concat(normalize-space(xforms:hint),'- KEY: [ALT]+ ',@accesskey) else normalize-space(xforms:hint)"/>
         <xsl:variable name="src" select="@src" />
-        <xsl:variable name="incremental" />
         <xsl:variable name="control-classes">
             <xsl:call-template name="assemble-control-classes">
                 <!--<xsl:with-param name="appearance" select="$appearance"/>-->
@@ -247,7 +245,7 @@
                               controlType="minimalTrigger"
                               name="{$name}"
                               class="xfValue {@class}"
-                              title="{$hint}"
+                              title=""
                               navindex="{$navindex}"
                               accesskey="{@accesskey}"
                               label="{$label}"
@@ -263,7 +261,7 @@
                             name="{$name}"
                             type="button"
                             class="xfValue"
-                            title="{$hint}"
+                            title=""
                             navindex="{$navindex}"
                             accesskey="{@accesskey}"
                             source="{$src}">
@@ -289,7 +287,7 @@
                             name="{$name}"
                             type="button"
                             class="xfValue"
-                            title="{$hint}"
+                            title=""
                             navindex="{$navindex}"
                             accesskey="{@accesskey}"
                             labelmediatype="{$labelmediatype}">
@@ -311,7 +309,7 @@
                             name="{$name}"
                             type="button"
                             class="xfValue"
-                            title="{$hint}"
+                            title=""
                             navindex="{$navindex}"
                             accesskey="{@accesskey}"
                             source="{$source}"/>
@@ -394,7 +392,7 @@
 	</xsl:template>
 
     <xsl:template name="build-items-itemset">
-		<optgroup id="{@id}" class="xfOptGroup" dojoType="betterform.ui.select.OptGroup" label="">
+		<optgroup id="{@id}" class="xfOptGroup" controlType="optGroup" label="">
 			<xsl:for-each select="xforms:item">
 				<xsl:call-template name="build-items-item"/>
             </xsl:for-each>
@@ -408,7 +406,7 @@
                 <xsl:otherwise><xsl:value-of select="xforms:value"/></xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <option id="{@id}" value="{$itemValue}" title="{normalize-space(xforms:hint)}" class="xfSelectorItem">
+        <option id="{@id}" value="{$itemValue}" title="" class="xfSelectorItem">
             <xsl:if test="@selected='true'">
                 <xsl:attribute name="selected">selected</xsl:attribute>
             </xsl:if>
@@ -427,11 +425,11 @@
 	           	<xsl:choose>
     	       		<xsl:when test="xforms:copy">
 	    	   			<xsl:attribute name="value" select="xforms:copy/@id"/>
-	              		<xsl:attribute name="title" select="xforms:copy/@id"/>
+	              		<xsl:attribute name="title" select="''"/>
     	          	</xsl:when>
         	      	<xsl:otherwise>
             	   		<xsl:attribute name="value" select="normalize-space(xforms:value)"/>
-              			<xsl:attribute name="title" select="normalize-space(xforms:hint)"/>
+              			<xsl:attribute name="title" select="''"/>
                 	</xsl:otherwise>
 				</xsl:choose>
                 <xsl:if test="@selected='true'">
@@ -504,10 +502,10 @@
                    class="xfCheckBoxValue"
                    type="checkbox"
                    tabindex="0"
-
+                   controlType="checkBoxEntry"
                    selectWidgetId="{$parent/@id}-value"
-                   name="{$name}"
-                   dojotype="betterform.ui.select.CheckBox">
+                   name="{$name}">
+                   <!--dojotype="betterform.ui.select.CheckBox">-->
                 <xsl:if test="@selected='true'">
                     <xsl:attribute name="checked">checked</xsl:attribute>
                 </xsl:if>
@@ -520,12 +518,7 @@
 	    	    		<xsl:attribute name="value" select="xforms:value"/>
     	    		</xsl:otherwise>
         	    </xsl:choose>
-                <xsl:attribute name="title">
-                    <xsl:choose>
-                        <xsl:when test="xforms:hint"><xsl:value-of select="normalize-space(xforms:hint)"/></xsl:when>
-                        <xsl:otherwise><xsl:value-of select="normalize-space($parent/xforms:hint)"/></xsl:otherwise>
-                    </xsl:choose>
-                </xsl:attribute>
+                <xsl:attribute name="title"/>
                 <xsl:text> </xsl:text>
 
             </input>
@@ -557,16 +550,7 @@
       	 	    		<xsl:attribute name="value"><xsl:value-of select="xforms:value"/></xsl:attribute>
             		</xsl:otherwise>
            	    </xsl:choose>
-                <xsl:attribute name="title">
-                    <xsl:choose>
-                        <xsl:when test="xforms:hint">
-                            <xsl:value-of select="normalize-space(xforms:hint)"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="normalize-space($parent/xforms:hint)"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:attribute>
+                <xsl:attribute name="title"/>
                 <xsl:if test="$parent/bf:data/@bf:readonly='true'">
                     <xsl:attribute name="disabled">disabled</xsl:attribute>
                 </xsl:if>
@@ -686,11 +670,7 @@
                         <xsl:otherwise><xsl:value-of select="normalize-space(xforms:value)"/></xsl:otherwise>
                     </xsl:choose>
                 </xsl:attribute>
-                <xsl:attribute name="title">
-                    <xsl:choose>
-                        <xsl:when test="xforms:hint"><xsl:value-of select="normalize-space(xforms:hint)"/></xsl:when>
-                        <xsl:otherwise><xsl:value-of select="normalize-space($parent/xforms:hint)"/></xsl:otherwise></xsl:choose>
-                </xsl:attribute>
+                <xsl:attribute name="title"/>
             </input>
             <label id="{@id}-label" for="{@id}-value" class="xfRadioLabel">
                 <xsl:if test="$parent/bf:data/@bf:readonly='true'">
@@ -722,11 +702,8 @@
                         <xsl:otherwise><xsl:value-of select="normalize-space(xforms:value)"/></xsl:otherwise>
                     </xsl:choose>
                 </xsl:attribute>
-                <xsl:attribute name="title">
-                    <xsl:choose>
-                        <xsl:when test="xforms:hint"><xsl:value-of select="normalize-space(xforms:hint)"/></xsl:when>
-                        <xsl:otherwise><xsl:value-of select="normalize-space($parent/xforms:hint)"/></xsl:otherwise></xsl:choose>
-                </xsl:attribute>
+                <xsl:attribute name="title"/>
+
 
               <xsl:if test="$parent/bf:data/@bf:readonly='true'">
                     <xsl:attribute name="disabled">disabled</xsl:attribute>

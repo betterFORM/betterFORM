@@ -1,4 +1,8 @@
 <root>
+    <!--
+      ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+      ~ Licensed under the terms of BSD License
+      -->
     <properties>
         <!-- path to forms for modules (actual: src/main/xforms src/main/html)-->
         <rootDir>..</rootDir>
@@ -15,12 +19,12 @@
     </properties>
     <app>
         <name>betterform</name>
-        <version>3.2.0-RC2</version>
+        <version>3.2.0-RC3</version>
     </app>
     <core>
         <app>
             <name>betterform-core</name>
-            <version>3.2.0-RC2</version>
+            <version>3.2.0-RC3</version>
         </app>
         <transform>
             <classpath pathid="transform.class.path" description="classpath for saxon XPath and XSLT engine">
@@ -64,6 +68,7 @@
                 <pathelement location="${core.dir}/src/main/lib/xmlrpc-client-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-client"/>
                 <pathelement location="${core.dir}/src/main/lib/xmlrpc-server-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-server"/>
                 <pathelement location="${core.dir}/src/main/lib/ehcache-1.6.2.jar" groupid="net.sf.ehcache" version="1.6.2" artifactId="ehcache"/>
+                <pathelement location="${core.dir}/src/main/lib/ant-1.8.2.jar" groupid="org.apache.ant" version="1.8.2" artifactId="ant"/>
 
                 <!--
                 <pathelement location="${core.dir}/../tools/AppEngine/GAE.jar"
@@ -86,7 +91,7 @@
     <web>
         <app>
             <name>betterform</name>
-            <version>3.2.0-RC2</version>
+            <version>3.2.0-RC3</version>
         </app>
         <transform>
             <classpath pathid="transform2.class.path" description="classpath for saxon XPath and XSLT engine">
@@ -238,29 +243,48 @@
         <!-- ### installerType must be either 'standard' or 'web'. Default value is 'web' ### -->
         <installerType>standard</installerType>
         <exist>
-            <jar>/Users/windauer/Downloads/betterFORM/binaries/eXist-setup-1.4.0-rev10440.jar</jar>
             <version>1.4</version>
-            <user>admin</user>
-            <passwd>betterform</passwd>
-            <betterform>true</betterform>
         </exist>
         <compile>
             <classpath pathid="installer.class.path" description="classpath for compiling installer classes">
+                <!-- Use libs provided by eXist Installer -->
+                <!--
                 <pathelement location="${installer.dir}/src/main/lib/exist-1.4.jar" groupid="org.exist" version="1.4"
                              artifactId="exist"/>
                 <pathelement location="${installer.dir}/src/main/lib/xmldb.jar" groupid="org.xmldb" version="11112001"
                              artifactId="xmldb"/>
+                -->
+                <pathelement location="${installer.dir}/target/bf-XRX/exist.jar" groupid="org.exist" version="1.4" artifactId="exist"/>
+                <pathelement location="${installer.dir}/target/bf-XRX/lib/core/xmldb.jar" groupid="org.xmldb" version="11112001" artifactId="xmldb"/>
             </classpath>
         </compile>
+        <izPack>
+            <dir>/home/zwobit/development/bin/izPack-4.3.4</dir>
+        </izPack>
+        <launch4j>
+            <dir>/home/zwobit/development/bin/launch4j</dir>
+        </launch4j>
     </installer>
-    <exist>
-        <betterform>
-            <xrx>
-                <installed>/Appications/betterFORM</installed>
-            </xrx>
-        </betterform>
-        <installed>/Applications/eXist</installed>
-        <passwd>betterform</passwd>
-    </exist>
+    <eXist>
+        <!-- point this to the place where you installed exist -->
+        <home>/home/zwobit/eXist-1.4.1</home>
+        <!-- Leave this empty if you run eXist in root context -->
+        <!-- If you use the betterform XRX bundle this is 'betterform' -->
+        <context>/exist</context>
+        <!-- user name and password for the file storing tasks -->
+        <db>
+            <user>admin</user>
+            <passwd>secret</passwd>
+            <!-- The name of the collection where the betterFORM content should be stored -->
+            <rootcollection>
+                <name>betterform</name>
+            </rootcollection>
+        </db>
+        <!-- Name and port of the eXist server you want to use for the file storing tasks -->
+        <server>
+            <name>localhost</name>
+            <port>8080</port>
+        </server>
+    </eXist>
 </root>
 

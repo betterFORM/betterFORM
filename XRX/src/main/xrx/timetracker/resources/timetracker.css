@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
 body{
     margin:0;
     padding:0;
@@ -17,7 +22,7 @@ body{
     float:right;
     color:#b0c4de;
     font-size:20pt;
-    margin-right:10px;                                                                                        
+    margin-right:10px;
     margin-top:55px;
 }
 #bfLoading {
@@ -76,7 +81,7 @@ select{
 }
 
 #closeFilter-value{
-    background-image:url(/betterform/rest/db/betterform/apps/timetracker/resources/images/search.gif);
+    background-image:url(images/search.gif);
     width:24px;
     height:24px;
 }
@@ -142,7 +147,7 @@ tr.xfRepeatHeader  td {
 	height:600px;
 }
 #taskDialog{
-    height:550px !important;
+    height:580px !important;
 }
 #taskDialog select{
     padding:5px 0;
@@ -399,4 +404,10 @@ tr.xfRepeatItem  td {
 
 #date-value{
 	width:248px;
+}
+
+
+/* Styling of Create Client / Project / Iteration */
+#embedDialog #createClient .xfControl {
+    width:250px !important;
 }

@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
 dojo.provide("betterform.ui.common.InlineAlert");
 
 
@@ -9,7 +14,7 @@ dojo.declare("betterform.ui.common.InlineAlert",
 
     // @Override
     _show:function(id, commonChild) {
-        console.debug("InlineAlert._show [id:'",id,"' commonChild:'", commonChild,"']");
+        // console.debug("InlineAlert._show [id:'",id,"' commonChild:'", commonChild,"']");
         var commonChildNode = dojo.byId(id + '-' + commonChild);
         if(commonChildNode == undefined || commonChild == this.info) {
             return;
@@ -20,7 +25,7 @@ dojo.declare("betterform.ui.common.InlineAlert",
 
     // @Override
     _hide:function(id, commonChild) {
-        console.debug("InlineAlert._hide [id:'",id,"' commonChild:'", commonChild,"']");
+        // console.debug("InlineAlert._hide [id:'",id,"' commonChild:'", commonChild,"']");
         var commonChildNode = dojo.byId(id + '-' + commonChild);
         if(commonChildNode == undefined || commonChild == this.info) {
             return;
@@ -30,7 +35,7 @@ dojo.declare("betterform.ui.common.InlineAlert",
     },
 
     _render:function(id, commonChild, show) {
-        console.debug("InlineAlert._render [id:'",id,"' commonChild:'", commonChild," ' show:'",show, "']");
+        // console.debug("InlineAlert._render [id:'",id,"' commonChild:'", commonChild," ' show:'",show, "']");
         var mip = dojo.byId(id + "-" + commonChild);
         if (mip != undefined && mip.innerHTML != '') {
             // add onclick handler to alerts to close them by mouse click

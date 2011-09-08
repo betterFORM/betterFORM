@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
@@ -549,7 +549,7 @@
             <xsl:call-template name="copy-style-attribute"/>
 
             <xsl:choose>
-                <xsl:when test="'output' = local-name() and exists(@mediatype)">
+                <xsl:when test="exists(@mediatype)">
                     <xsl:attribute name="mediatype" select="@mediatype"/>
                 </xsl:when>
                 <xsl:when test="'select' = local-name()">
@@ -699,7 +699,7 @@
             <xsl:attribute name="title" select="normalize-space(xforms:hint)"/>
             <xsl:attribute name="dojoAttachEvent">onfocus:_onFocus</xsl:attribute>
 
-            <xsl:if test="'output' = local-name() and exists(@mediatype)">
+            <xsl:if test="exists(@mediatype)">
                 <xsl:attribute name="mediatype" select="@mediatype"/>
             </xsl:if>
             <label class="xfLabel">

@@ -1,388 +1,50 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="2.0"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:html="http://www.w3.org/1999/xhtml"
-                xmlns:xf="http://www.w3.org/2002/xforms"
-                xmlns:ev="http://www.w3.org/2001/xml-events"
-                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="html"
-        xml:base="/betterform/forms/incubator/editor/">
-
-    <xsl:output method="xml" indent="yes"/>
+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:bf="http://betterform.sourceforge.net/xforms" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms" version="2.0" exclude-result-prefixes="html" xml:base="/exist/rest/db/betterform/apps/editor/">
+    <xsl:variable name="bfEditorPath" select="'/rest/db/betterform/apps/editor/'"/>
     <!-- author: Joern Turner -->
-    <xsl:strip-space elements="*"/>
+    <!-- author: Tobias Krebs -->
+    <!-- author: Lars Windauer -->
 
+    <!-- eXist version -->
+    <!--
+        xml:base="/betterform/rest/db/betterform/apps/editor/">
+        <xsl:variable name="bfEditorPath" select="'/rest/db/betterform/apps/editor/'"/>
+    -->
+    <!-- Standalone -->
+    <!--
+                xml:base="/betterform/forms/incubator/editor/">
+    <xsl:variable name="bfEditorPath" select="'/forms/incubator/editor/'"/>
+    -->
+    <xsl:output method="xml" indent="yes"/>
+    <xsl:param name="bfContext" select="''"/>
+    <xsl:param name="filename" select="''"/>
+    <!-- <xsl:variable name="bfContext" select="'/exist'"/> -->
+    <xsl:strip-space elements="*"/>
     <xsl:template match="/">
         <html>
             <head>
                 <title>betterFORM Editor</title>
-                <script type="text/javascript" src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.js"></script>
-                <script type="text/javascript" src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.cookie.js"></script>
-                <script type="text/javascript" src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.hotkeys.js"></script>
-                <script type="text/javascript" src="../../../bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
+                <script type="text/javascript"
+                        src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.js"></script>
+                <script type="text/javascript"
+                        src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.cookie.js"></script>
+                <script type="text/javascript"
+                        src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.hotkeys.js"></script>
+                <script type="text/javascript"
+                        src="../../../bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
                 <script type="text/javascript" src="../../../bfResources/scripts/betterform/xfEditorUtil.js"></script>
-                <script type="text/javascript" src="../../../bfResources/scripts/betterform/betterform-XFormsEditor.js"> </script>
 
-                <script type="text/javascript" defer="defer">
-                    var attrEditor = new betterform.Editor();
-                    //console.debug("attrEditor.: ",attrEditor);
-
-                    function checkKeyboardInput(pEvent){
-                            var activeElem = document.activeElement.localName;
-                            if(activeElem=="input") {
-                                return;
-                            }
-                            console.debug("activeElem: ",activeElem);
-                           switch(pEvent.charOrCode){
-                             case '?': //Process the Help key event
-                                dijit.byId("bfEditorHelp").show();
-                                break;
-                           case 't':
-                           case 'T':
-                              dojo.byId("root").focus();
-                              break;
-
-                             default:
-                               //no defaults at this time
-                                break;
-
-                           }
-                        }
-                    dojo.addOnLoad(
-                        function(){
-                             dojo.connect(dojo.body(),"onkeypress",checkKeyboardInput);
-                        }
-                    );
-
-                </script>
-                <style type="text/css">
-                    html, body,#mainWindow {
-                        height: 100%;
-                        width: 100%;
-                        margin: 0;
-                        padding: 0;
-                        background: #F3F3F3;
-                        overflow:auto;
-                    }
-                    #mainWindow #docWrapper{
-                        width:100%;
-                        overflow:auto;
-                        position:relative;
-                        margin-bottom:30px;
-                    }
-                    #docPane{
-                        background: transparent;
-                        border-radius: 10px 0 0 10px;
-                        width:70%;
-                        float:left;
-                        margin-top:90px;
-                    }
-                    #xfDoc{
-                        overflow-x:hidden;
-                        background:transparent;
-                        border:none;
-                    }
-                    #root{
-                        background:white;
-                    }
-                    #xfDoc .jstree-hovered{
-                        width:100%;
-                        background:green;
-                    }
-                    #xfDoc .jstree-clicked{
-                        width:100%;
-                        background:red;
-                    }
-                    #topPane{
-                        height: 90px;
-                        background: #E6E6E7;
-                        width: 100%;
-                        position:fixed;
-                        z-index:100;
-                    }
-                    #topPane img{
-                        width:32px;
-                        height:32px;
-                        margin:9px;
-                        position:absolute;
-                        top:-9px;
-                        right:-9px;
-                    }
-                    #topPane a:link{
-                        color:#cccccc;
-                        text-decoration:none;
-                    }
-                    #topPane a:hover{
-                        border:thin solid limegreen;
-                        font-size:1.2em;
-                        padding:3px;
-                        background:white;
-                        color:#555555;
-                        border-radius:10px 10px 10px 10px
-                    }
-                    #rightPane {
-                        background: #666666;
-                        color:#e9e9e9;
-                        display: block;
-                        float: right;
-                        min-height: 200px;
-                        overflow: auto;
-                        width: 280px;
-                        margin-top:90px;
-                        border-left:thin solid #cecece;
-                        border-bottom:thin solid #cecece;
-                        border-bottom-left-radius:10px;
-                    }
-                    .jstree-default,.jstree-default{
-                        margin: 5px;
-                        border: thin solid #bbbbbb;
-                        padding: 10px;
-
-                    }
-                    .jstree > ul > li{
-                        font-size: 14pt;
-                    }
-                    #docPane .jstree li{
-                        border: thin solid #999999;
-                        border-radius: 10px 0 0 10px;
-                        margin-bottom: 5px;
-                        margin-right:10px;
-
-                    }
-                    .jstree a{
-                        font-size:1.2em;
-                        height:28px;
-                        padding:5px;
-                        width:95%;
-                    }
-                    #xfMount{
-                        background:#666666;
-                        color:#dedede;
-                    }
-                    #xfMount .attrEditor p{
-                        margin:0;
-                        line-height:1;
-                        font-style:italic;
-                    }
-                    #xfMount .attrEditor .dojoInput{
-                        width:200px;
-                    }
-                    #xfMount .propertyTitle{
-                        font-size:12pt;
-                        padding:15px;
-                        font-size:1.2em;
-                        color:white;
-                    }
-                    .tundra .dijitMenu, .tundra .dijitMenuBar{
-                        padding:7px;
-                    }
-                    #addToolbar{
-                        padding-top:5px;
-                        padding-left:5px;
-                        background:#555555;
-                        padding:10px;
-                        color:#e9e9e9;
-                    }
-                    #addToolbar ul{
-                        display:block;
-                        list-style-type:none;
-                        padding:0;
-                        margin:0;
-                        margin-left:60px;
-                        height:18px;
-                    }
-                    #addToolbar .title{
-                        display:inline;
-                        padding-right:10px;
-                        font-size:1.2em;
-                        float:left;
-                        margin:1px 1px 1px 10px;
-                    }
-                    #addToolbar ul li{
-                        display:none;
-                        padding-right:20px;
-                    }
-                    #docPane #xfDoc .model,
-                    #docPane #xfDoc .group{
-                        border-radius: 10px 0 0 10px;
-                        border: 2px solid #cecece;
-                        margin-bottom: 5px;
-                        padding:0 10px;
-                        margin-right:10px;
-                    }
-
-                    .buttonWrapper{
-                        display:none;
-                    }
-                    .bf #mainWindow .jstree a:hover .buttonWrapper{
-                        display:inline;
-                    }
-                    .jstree-default.jstree-focused {
-                        background:white;
-                    }
-                    .bf #mainWindow  .jstree-clicked {
-                        padding:10px 5px;
-                        width:95%;
-                        background:transparent;
-                        color:#444444;
-                        border-color:limegreen;
-                        border:2px solid limegreen;
-                        border-radius:10px 0;
-                    }
-                    .bf #mainWindow .jstree-hovered{
-                        width:95%;
-                        background:#eeeeee;
-                        border-color:limegreen;
-                    }
-                    .bf #mainWindow .dijitMenu, .bf #mainWindow .dijitMenuBar {
-                        background:#444444;
-                        border:none;
-                        border-top:1px solid limegreen;
-                    }
-                    .bf #mainWindow .dijitMenuItem{
-                        color:#e9e9e9;
-                    }
-                    .bf #mainWindow .dijitTextBox {
-                        color:#333333;
-                    }
-                    .bf #mainWindow .deleteBtn{
-                        display:none;
-                    }
-                    .bf #mainWindow .jstree-clicked .deleteBtn{
-                        display:inline;
-                        float:right;
-                        margin-top:-18px;
-                    }
-
-                    .bf #mainWindow .group,
-                    .bf #mainWindow .switch,
-                    .bf #mainWindow .repeat
-                    {
-                        background-color:#aaaaaa;
-                    }
-
-                    .bf #mainWindow .input,
-                    .bf #mainWindow .ouput,
-                    .bf #mainWindow .secret,
-                    .bf #mainWindow .range,
-                    .bf #mainWindow .select,
-                    .bf #mainWindow .select1,
-                    .bf #mainWindow .textarea,
-                    .bf #mainWindow .trigger,
-                    .bf #mainWindow .submit,
-                    .bf #mainWindow .upload{
-                        background-color:#bbbbbb;
-                    }
-                    .bf #mainWindow .label,
-                    .bf #mainWindow .hint,
-                    .bf #mainWindow .help,
-                    .bf #mainWindow .alert{
-                        background-color:#cccccc;
-                    }
-
-                    .bf #mainWindow .model{
-                        background-color:#777777;
-                        color:#eeeeee;
-                    }
-
-                    .bf #mainWindow .instance,
-                    .bf #mainWindow .submission,
-                    .bf #mainWindow .bind{
-                        background-color:#999999;
-                        color:#eeeeee;
-                    }
-                    .bf #mainWindow .action{
-                        background-color:orangered;
-                    }
-                    .bf #mainWindow .insert,
-                    .bf #mainWindow .delete,
-                    .bf #mainWindow .setvalue,
-                    .bf #mainWindow .send,
-                    .bf #mainWindow .dispatch,
-                    .bf #mainWindow .message,
-                    .bf #mainWindow .load,
-                    .bf #mainWindow .rebuild,
-                    .bf #mainWindow .recalculate,
-                    .bf #mainWindow .revalidate,
-                    .bf #mainWindow .refresh,
-                    .bf #mainWindow .setfocus,
-                    .bf #mainWindow .setindex,
-                    .bf #mainWindow .toggle,
-                    .bf #mainWindow .reset{
-                        background-color:orange;
-                    }
-
-
-                    dl.keyboard-mapping {
-                        font-size: 12px;
-                        margin: 5px 0;
-                    }
-                    dl.keyboard-mapping dt {
-                        -moz-border-radius: 2px 2px 2px 2px;
-                        background: none repeat scroll 0 0 #333333;
-                        color: #EEEEEE;
-                        display: inline-block;
-                        font-family: Monaco,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace;
-                        margin: 0;
-                        min-width: 10px;
-                        padding: 3px 6px;
-                        text-align: center;
-                        text-shadow: 1px 1px 0 #000000;
-                    }
-
-                    dl.keyboard-mapping dt em {
-                        color: #999999;
-                        font-family: Helvetica, Arial, freesans, sans-serif;
-                        font-size: 10px;
-                        font-style: normal;
-                        font-weight: normal;
-                        padding: 0 4px;
-                        text-shadow: none;
-                    }
-
-                    .shortcut {
-                        font-family: sans-serif;
-                        font-weight: bold;
-                    }
-
-                    dl.keyboard-mapping dd {
-                        color: #666666;
-                        display: inline;
-                        margin: 0 0 0 5px;
-                    }
-
-                    .bfEditorHelpTitle {
-                        border-bottom: 1px solid #DDDDDD !important;
-                        font-size: 16px;
-                        margin: 0 0 10px -10px;
-                        padding: 0 10px 10px;
-                        width: 100%;
-                    }
-                    #bfEditorHelp .column1 {
-                        float:left;
-                        display:block;
-                        width:250px;
-                        position:relative;
-                    }
-
-                    .dojoxFloatingPaneCanvas {
-                        margin:10px;
-                    }
-                    .textNode{display:inline;}
-                </style>
+                <link rel="stylesheet" type="text/css" href="../../../bfResources/styles/xforms-editor.css"/>
             </head>
-            <body>
-
+            <body id="editor" class="bf" jsId="attrEditor">
                 <div style="display:none">
                     <xf:model id="model-1">
                         <!--todo: we need to use the baseURI of the editor here instead of the one we load -->
-                        <xf:instance id="i-default" xmlns="" src="{{$contextroot}}/forms/incubator/editor/cdata-instance.xml"/>
-
-                        <xf:submission id="s-dom2xforms"
-                                       method="get"
-                                       resource="xslt:/betterform/forms/incubator/editor/dom2xf.xsl?parseString=true"
-                                       replace="instance"
-                                >
+                        <!--  i-default hold the editor DOM transformed to XForms -->
+                        <xf:instance xmlns="" id="i-default" src="{{$contextroot}}{$bfEditorPath}cdata-instance.xml"/>
+                        
+                        <!-- Submission transforms the editor DOM to XForms-->
+                        <xf:submission id="s-dom2xforms" method="get"
+                                       resource="xslt:{$bfContext}{$bfEditorPath}dom2xf.xsl?parseString=true" replace="instance">
                             <xf:action ev:event="xforms-submit-done">
                                 <!--<xf:message level="ephemeral">Data transformed to xforms</xf:message>-->
                                 <xf:send submission="s-replaceContent"/>
@@ -390,36 +52,143 @@
                             <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
                         </xf:submission>
 
-                        <xf:submission id="s-replaceContent"
-                                       method="get"
-                                       action="xslt:/betterform/forms/incubator/editor/updateOriginal.xsl?originDoc={{$contextroot}}{{$pathInfo}}"
-                                       replace="instance">
-                            <xf:action ev:event="xforms-submit-done">
+                          <!-- merge original XForms host document with Editor XForms markup -->
+                        <xf:submission id="s-replaceContent" method="get"
+                                       action="xslt:{$bfContext}{$bfEditorPath}updateOriginal.xsl?originDoc={$bfContext}/rest{$filename}"
+                                       replace="instance" validate="false">
+                            <!-- MODE: SAVE AS -->
+                            <xf:action ev:event="xforms-submit-done" if="instance('i-controller')/mode eq 'save-as'">
                                 <!--<xf:message level="ephemeral">Data mounted back to original document</xf:message>-->
-                                <xf:send submission="s-save"/>;
+                                <script type="text/javascript">
+                                    dijit.byId("saveDialog").hide();
+                                </script>
+                                <xf:send submission="s-save-as"/>
+                            </xf:action>
+                            <!-- MODE: SAVE -->
+                            <xf:action ev:event="xforms-submit-done" if="instance('i-controller')/mode eq 'save'">
+                                <!--<xf:message level="ephemeral">Data mounted back to original document</xf:message>-->
+                                <xf:send submission="s-save"/>
+                            </xf:action>
+                            <!-- MODE: PREVIEW -->
+                            <xf:action ev:event="xforms-submit-done" if="instance('i-controller')/mode eq 'preview'">
+                                <xf:message level="ephemeral">Data ready to be saved at tmp directory and to be loaded</xf:message>
+                                <xf:send submission="s-preview"/>
+                            </xf:action>
+
+                            <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
+                        </xf:submission>
+
+                        <!-- Overwrites the current form loaded within the editor  -->
+                        <xf:submission id="s-save" method="put" replace="none">
+                            <xf:resource value="IF(substring(bf:appContext('pathInfo'),2) eq '', concat(bf:appContext('contextroot'), '/rest', instance('i-controller')/filename) , concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2)) )"/>
+                            <xf:header>
+                                <xf:name>username</xf:name>
+                                <xf:value value="instance('i-login')/username"/>
+                            </xf:header>
+                            <xf:header>
+                                <xf:name>password</xf:name>
+                                <xf:value value="instance('i-login')/password"/>
+                            </xf:header>
+                            <xf:action ev:event="xforms-submit-done">
+                                <xf:setvalue ref="instance('i-controller')/save-msg" value="concat('Data stored to ',IF(substring(bf:appContext('pathInfo'),2) eq '', concat(bf:appContext('contextroot'), '/rest', instance('i-controller')/filename) , concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2)) ) )"/>
+                                <xf:message level="ephemeral" ref="instance('i-controller')/save-msg"/>
+                            </xf:action>
+                            <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
+                        </xf:submission>
+                        
+                        <!-- Saves the form to a location specified by the user with  a custom name (given by the user too) -->
+                        <xf:submission id="s-save-as" method="put" replace="none">
+                            <xf:resource value="concat(bf:appContext('sl-filePath') ,'/', bf:appContext('sl-filename'))"/>
+                            <!-- Set username and password for submission -->
+                            <xf:header>
+                                <xf:name>username</xf:name>
+                                <xf:value value="instance('i-login')/username"/>
+                            </xf:header>
+                            <xf:header>
+                                <xf:name>password</xf:name>
+                                <xf:value value="instance('i-login')/password"/>
+                            </xf:header>
+                            <xf:action ev:event="xforms-submit-done">
+                                <xf:setvalue ref="instance('i-controller')/save-msg" value="concat('Data stored to ', bf:appContext('sl-filePath') ,'/', bf:appContext('sl-filename'))"/>
+                                <xf:message level="ephemeral" ref="instance('i-controller')/save-msg"/>
                             </xf:action>
                             <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
                         </xf:submission>
 
-                        <xf:submission id="s-save"
-                                       method="put"
-                                       replace="none">
-                            <xf:resource value="concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2))"/>
+                        <!-- saves form to preview and opens it -->
+                        <xf:submission id="s-preview" method="put" replace="none">
+                            <xf:resource value="concat(substring-before( IF(substring(bf:appContext('pathInfo'),2) eq '', concat(bf:appContext('contextroot'), '/rest', instance('i-controller')/filename) , concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2)) ),'.xhtml'),'-prev.xhtml')"/>
+                            <xf:header>
+                                <xf:name>username</xf:name>
+                                <xf:value value="instance('i-login')/username"/>
+                            </xf:header>
+                            <xf:header>
+                                <xf:name>password</xf:name>
+                                <xf:value value="instance('i-login')/password"/>
+                            </xf:header>
+                            <xf:load show="new" ev:event="xforms-submit-done">
+                                <xf:resource value="concat(substring-before( IF(substring(bf:appContext('pathInfo'),2) eq '', concat(bf:appContext('contextroot'), '/rest', instance('i-controller')/filename) , concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2)) ),'.xhtml'),'-prev.xhtml')"/>
+                            </xf:load>
+                            <xf:message ev:event="xforms-submit-error">Preview failed</xf:message>
+                        </xf:submission>
+                        
+                        <!-- internal controller instance -->
+                        <xf:instance id="i-controller">
+                            <data xmlns="">
+                                <originalDoc/>
+                                <save-msg/>
+                                <preview-msp>Error previewing file</preview-msp>
+                                <preview-path/>
+                                <mode/>
+                                <filename><xsl:value-of select="$filename"/></filename>
+                            </data>
+                        </xf:instance>
+                        
+                        <!-- Instance holding the login data of the user -->
+                        <xf:instance id="i-login" xmlns="" >
+                            <data/>
+                        </xf:instance>
+                        
+                        <xf:submission  id="s-get-login-credentials" 
+                                        method="get" 
+                                        replace="instance" 
+                                        instance="i-login">
+                            <xf:resource value=" concat(bf:appContext('contextroot'), '/rest/db/betterform/utils/Login.xql')"/>
+                            
                             <xf:action ev:event="xforms-submit-done">
-                                <xf:setvalue ref="instance('i-controller')/save-msg"
-                                             value="concat('Data stored to ',bf:appContext('webapp.realpath'),bf:appContext('pathInfo'))"/>
-                                <xf:message level="ephemeral" ref="instance('i-controller')/save-msg"/>
+                                <xf:toggle case="c-login" if="not(boolean-from-string(instance('i-login')/login))"/>
+                                <xf:toggle case="c-editor" if="boolean-from-string(instance('i-login')/login)"/>
                             </xf:action>
-                            <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
-                       </xf:submission>
+                        </xf:submission>
 
-                       <xf:instance id="i-controller">
-                           <data xmlns="">
-                               <originalDoc/>
-                               <save-msg></save-msg>
-                           </data>
-                       </xf:instance>
+                        <xf:submission id="s-login"
+                                        method="get"
+                                        replace="instance"
+                                        instance="i-login"
+                                        serialization="none"
+                                        validate="false"
+                                        relevant="false">
+                            
+                            <xf:resource value="concat(bf:appContext('contextroot'), '/rest/db/betterform/utils/Login.xql?username=', instance('i-login')/username, '&amp;password=', instance('i-login')/password)"/>
+                            
+                            <xf:action ev:event="xforms-submit-done" if="boolean-from-string(instance('i-login')/login)">
+                                <xf:toggle case="c-editor"/>
+                            </xf:action>                    
+                            
+                            <xf:message ev:event="xforms-submit-done" level="modal" if="not(boolean-from-string(instance('i-login')/login))">Login failed.</xf:message>
+                            <xf:message ev:event="xforms-submit-error" level="modal">Login failed.</xf:message>
+                        </xf:submission>
+                                               
+                        <xf:action ev:event="xforms-ready">
+                            <xf:send submission="s-get-login-credentials"/>
+                        </xf:action>
                     </xf:model>
+
+                    
+<!-- UI MARKUP -->
+<!-- UI MARKUP -->
+<!-- UI MARKUP -->
+                    <!-- HIDDEN CONTROLS -->
                     <xf:input id="save" ref="instance()">
                         <xf:label>this is a hidden control set from JS when saving is executed</xf:label>
                     </xf:input>
@@ -427,182 +196,223 @@
                         <xf:label>this is hidden</xf:label>
                         <xf:send submission="s-dom2xforms"/>
                     </xf:trigger>
-
+                    <xf:trigger id="t-save">
+                        <xf:label>this is hidden</xf:label>
+                        <xf:action>
+                            <xf:setvalue ref="instance('i-controller')/mode" value="'save'"/>
+                            <script type="text/javascript">
+                                serializeTree();
+                            </script>
+                        </xf:action>
+                    </xf:trigger>
+                    <xf:trigger id="t-preview">
+                        <xf:label>this is hidden</xf:label>
+                        <xf:action>
+                            <xf:message level="ephemeral">Preview Start</xf:message>
+                            <xf:setvalue ref="instance('i-controller')/mode" value="'preview'"/>
+                            <script type="text/javascript">
+                                serializeTree();
+                            </script>
+                        </xf:action>
+                    </xf:trigger>
+                    <xf:trigger id="t-save-as">
+                        <xf:label>saveas</xf:label>
+                        <xf:action>
+                            <xf:setvalue ref="instance('i-controller')/mode" value="'save-as'"/>
+                            <xf:load show="embed" targetid="embedDialog">
+                                <xf:resource value="concat(bf:appContext('contextroot'), '/rest/db/betterform/utils/SaveListing.xql#xforms')"/>
+                                <xf:extension includeCSS="true" includeScript="true"/>
+                            </xf:load>
+                        </xf:action>
+                    </xf:trigger>
                 </div>
-                <div id="mainWindow" style="width:100%;">
-                    <div dojoType="dojo.data.ItemFileReadStore" data-dojo-id="stateStore" url="/betterform/forms/incubator/editor/xfDatatype.json" />
-                    <div id="topPane">
-                        <div dojoType="dijit.MenuBar" id="mainMenu">
-                            <div dojoType="dijit.PopupMenuBarItem" label="File">
-                                <div dojoType="dijit.Menu" id="File">
-<!--
-                                    <div dojoType="dijit.MenuItem"
-                                         onClick="this.window.href='bfEditor/forms/incubator/editor/standardTemplate.xhtml');">
-                                        New
+                <!-- DOJO Store holding XForms Datatypes -->
+                <div dojoType="dojo.data.ItemFileReadStore" data-dojo-id="stateStore" url="{$bfContext}{$bfEditorPath}xfDatatype.json"/>
+                <xf:switch>
+                <!-- intially loaded case to prevent showing not initialized markup to the user -->
+                    <xf:case id="c-empty" selected="true"/>
+                <!-- login view if user is not logged in yet-->
+                    <xf:case id="c-login">
+                         <div style="font-style: italic;color: orangered;text-align: center;width: 100%; font-size: 18px; border: #ff4500 solid thick;">
+                            Caution: This Editor is only a preview.
+                        </div>
+                        <xf:group id="g-login" appearance="full" style="padding:20px;">
+                            <xf:label>betterFORM XForms Editor</xf:label>
+                            <div id="notice">In order to use the XForms Editor please login.</div>
+                            <xf:input ref="instance('i-login')/username">
+                                <xf:label>Username:</xf:label>
+                            </xf:input>
+                            <xf:secret ref="instance('i-login')/password">
+                                <xf:label>Password:</xf:label>
+                            </xf:secret>
+                            <xf:trigger>
+                                <xf:label>Login</xf:label>
+                                <xf:send submission="s-login"/>
+                            </xf:trigger>                    
+                        </xf:group>
+                    </xf:case>
+                <!-- betterFORM XForms Editor -->
+                    <xf:case id="c-editor">
+                        <div id="topPane">
+                            <div dojoType="dijit.MenuBar" id="mainMenu">
+                                <div dojoType="dijit.PopupMenuBarItem" label="File">
+                                    <div dojoType="dijit.Menu" id="File">
+                                        <!--
+                                                                        <div dojoType="dijit.MenuItem"
+                                                                             onClick="this.window.href='bfEditor/forms/incubator/editor/standardTemplate.xhtml');">
+                                                                            New
+                                                                        </div>
+                                        -->
+                                        <div dojoType="dijit.MenuItem" onClick="dijit.byId('fluxProcessor').dispatchEvent('t-preview');">
+                                            Preview Strg+p
+                                        </div>
+                                        <div dojoType="dijit.MenuItem" onClick="dijit.byId('fluxProcessor').dispatchEvent('t-save');">
+                                            Save
+                                        </div>
+                                        <div dojoType="dijit.MenuItem" onClick="showSaveDialog();">
+                                            Save as...
+                                        </div>
+                                        <!--
+                                        <div dojotype="dijit.PopupMenuItem" label="input">
+                                            <div dojotype="dijit.Menu">
+                                                <div dojoType="dijit.MenuItem"
+                                                     onClick="fluxProcessor.dispatchEvent('inputTextTrigger');hideStatic();"
+                                                     label="Text"/>
+                                            </div>
+                                        </div>
+                                        -->
                                     </div>
--->
-                                    <div dojoType="dijit.MenuItem"
-                                         onClick="serializeTree();">
-                                        Save
-                                    </div>
-                                    <div dojoType="dijit.MenuItem"
-                                         onClick="alert('save as');">
-                                        Save as...
-                                    </div>
-                                    <!--
-                                    <div dojotype="dijit.PopupMenuItem" label="input">
-                                        <div dojotype="dijit.Menu">
-                                            <div dojoType="dijit.MenuItem"
-                                                 onClick="fluxProcessor.dispatchEvent('inputTextTrigger');hideStatic();"
-                                                 label="Text"/>
+                                </div>
+                                <div dojoType="dijit.PopupMenuBarItem" label="Edit">
+                                    <div dojoType="dijit.Menu" id="Edit">
+                                        <div dojoType="dijit.MenuItem" onClick="alert('cut');">
+                                            Cut
+                                        </div>
+                                        <div dojoType="dijit.MenuItem" onClick="alert('copy');">
+                                            Copy
+                                        </div>
+                                        <div dojoType="dijit.MenuItem" onClick="alert('paste');">
+                                            Paste
                                         </div>
                                     </div>
-                                    -->
                                 </div>
-                            </div>
-                            <div dojoType="dijit.PopupMenuBarItem" label="Edit">
-                                <div dojoType="dijit.Menu" id="Edit">
-                                    <div dojoType="dijit.MenuItem"
-                                         onClick="alert('cut');">
-                                        Cut
-                                    </div>
-                                    <div dojoType="dijit.MenuItem"
-                                         onClick="alert('copy');">
-                                        Copy
-                                    </div>
-                                    <div dojoType="dijit.MenuItem"
-                                         onClick="alert('paste');">
-                                        Paste
-                                    </div>
+                                <div dojoType="dijit.MenuBarItem" onClick="dijit.byId('bfEditorHelp').show();">
+                                    Help
                                 </div>
-                            </div>
-                            <div dojoType="dijit.MenuBarItem"
-                                 onClick="dijit.byId('bfEditorHelp').show();">
-                                Help
-                            </div>
 
-<!--
-                            <div dojoType="dijit.PopupMenuBarItem" label="Add" id="addMenu">
+                                <!--
+                                                            <div dojoType="dijit.PopupMenuBarItem" label="Add" id="addMenu">
+                                                            </div>
+                                -->
                             </div>
--->
+                            <img src="{$bfContext}/bfResources/images/betterform_icon16x16.png" alt=""/>
                         </div>
-                        <img src="/betterform/bfResources/images/betterform_icon16x16.png" alt=""/>
-                        <div id="addToolbar">
-                            <span class="title">Add...</span>
-                            <ul id="childList">
-                                <li class="instance-lnk"><a href="javascript:addElement('instance');">instance</a></li>
-                                <li class="schema-lnk"><a href="javascript:addElement('schema');">schema</a></li>
-                                <li class="submission-lnk"><a href="javascript:addElement('submission');">submission</a></li>
-                                <li class="bind-lnk"><a href="javascript:addElement('bind');">bind</a></li>
-
-                                <li class="group-lnk"><a href="javascript:addElement('group');">group</a></li>
-                                <li class="switch-lnk"><a href="javascript:addElement('switch');">switch</a></li>
-                                <li class="case-lnk"><a href="javascript:addElement('case');">case</a></li>
-                                <li class="repeat-lnk"><a href="javascript:addElement('repeat');">repeat</a></li>
-
-                                <li class="label-lnk"><a href="javascript:addElement('label');">label</a></li>
-                                <li class="hint-lnk"><a href="javascript:addElement('hint');">hint</a></li>
-                                <li class="help-lnk"><a href="javascript:addElement('help');">help</a></li>
-                                <li class="alert-lnk"><a href="javascript:addElement('alert');">alert</a></li>
-
-                                <li class="input-lnk"><a href="javascript:addElement('input');">input</a></li>
-                                <li class="secret-lnk"><a href="javascript:addElement('secret');">secret</a></li>
-                                <li class="textarea-lnk"><a href="javascript:addElement('textarea');">textarea</a></li>
-                                <li class="output-lnk"><a href="javascript:addElement('output');">output</a></li>
-                                <li class="upload-lnk"><a href="javascript:addElement('upload');">upload</a></li>
-                                <li class="filename-lnk"><a href="javascript:addElement('filename');">filename</a></li>
-                                <li class="mediatype-lnk"><a href="javascript:addElement('mediatype');">mediatype"</a></li>
-
-                                <li class="select1-lnk"><a href="javascript:addElement('select1');">select1</a></li>
-                                <li class="select-lnk"><a href="javascript:addElement('select');">select</a></li>
-
-
-                                <li class="item-lnk"><a href="javascript:addElement('item');">item</a></li>
-                                <li class="itemset-lnk"><a href="javascript:addElement('itemset');">itemset</a></li>
-                                <li class="choices-lnk"><a href="javascript:addElement('choices');">choices</a></li>
-                                <li class="value-lnk"><a href="javascript:addElement('value');">value</a></li>
-                                <li class="copy-lnk"><a href="javascript:addElement('copy');">copy</a></li>
-
-
-                                <li class="range-lnk"><a href="javascript:addElement('range');">range</a></li>
-                                <li class="submit-lnk"><a href="javascript:addElement('submit');">submit</a></li>
-                                <li class="trigger-lnk"><a href="javascript:addElement('trigger');">trigger</a></li>
-                            </ul>
-                            <ul id="actionlist" class="actions">
-                                 <li><a href="javascript:addElement('action');">action</a></li>
-                                <li><a href="javascript:addElement('insert');">insert</a></li>
-                                <li><a href="javascript:addElement('delete');">delete</a></li>
-                                <li><a href="javascript:addElement('setvalue');">setvalue</a></li>
-                                <li><a href="javascript:addElement('send');">send</a></li>
-                                <li><a href="javascript:addElement('dispatch');">dispatch</a></li>
-                                <li><a href="javascript:addElement('message');">message</a></li>
-                                <li><a href="javascript:addElement('load');">load</a></li>
-                                <li><a href="javascript:addElement('rebuild');">rebuild</a></li>
-                                <li><a href="javascript:addElement('recalculate');">recalculate</a></li>
-                                <li><a href="javascript:addElement('revalidate');">revalidate</a></li>
-                                <li><a href="javascript:addElement('refresh');">refresh</a></li>
-                                <li><a href="javascript:addElement('setfocus');">setfocus</a></li>
-                                <li><a href="javascript:addElement('setindex');">setindex</a></li>
-                                <li><a href="javascript:addElement('toggle');">toggle</a></li>
-                                <li><a href="javascript:addElement('reset');">reset</a></li>
-                            </ul>
-
-                        </div>
-                    </div>
-
-                    <div id="docWrapper" tabindex="-1">
-                        <xf:output value="bf:appContext('pathInfo')">
-                            <xf:label>PathInfo</xf:label>
-                        </xf:output>
-                        <div id="docPane" tabindex="-1">
-                            <xsl:variable name="elements" select="//xf:model[not(ancestor::xf:*)]|//xf:group[not(ancestor::xf:*)]"/>
-                            <!--<xsl:variable name="uiElements" select="//*[name()='xf:group']"/>-->
-
-                            <div id="xfDoc" class="xfDoc" tabindex="-1">
-                                <ul>
-                                    <li id="root" data-xf-type="document" tabindex="0">
-                                        <a href="#">Document</a>
+                        <div id="mainWindow" style="width:100%;">
+                            <div id="docWrapper" tabindex="-1">
+                                <!--
+                                                    <xf:output value="bf:appContext('pathInfo')">
+                                                        <xf:label>PathInfo: </xf:label>
+                                                    </xf:output>
+                                -->
+                                <div id="docPane" tabindex="-1">
+                                    <xsl:variable name="elements" select="//xf:model[not(ancestor::xf:*)]|//xf:group[not(ancestor::xf:*)]"/>
+                                    <!--<xsl:variable name="uiElements" select="//*[name()='xf:group']"/>-->
+                                    <div id="xfDoc" class="xfDoc" tabindex="-1">
                                         <ul>
-                                            <!--<xsl:for-each select="$elements">-->
-                                                <xsl:apply-templates select="$elements" />
-                                            <!--</xsl:for-each>-->
+                                            <li id="root" data-xf-type="document" tabindex="0">
+                                                <a href="#">Document</a>
+                                                <ul>
+                                                    <!--<xsl:for-each select="$elements">-->
+                                                    <xsl:apply-templates select="$elements"/>
+                                                    <!--</xsl:for-each>-->
+                                                </ul>
+                                            </li>
                                         </ul>
-                                    </li>
-                                </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="leftPane" tabindex="-1">
+                                <div id="addLabel">
+                                    <div class="caption">Add ...</div>
+                                    <div id="addModeDiv">
+                                        <button id="btnChildMode" type="button" class="modeSelector selected" onclick="attrEditor.updateComponentTree(this);">Child
+                                        </button>
+                                        <button id="btnSiblingMode" type="button" class="modeSelector" onclick="attrEditor.updateComponentTree(this);">Sibling
+                                        </button>
+                                    </div>
+                                </div>
+                                <!--
+                                the 'mode' attribute is used to switch between 'children' and 'siblings' mode which
+                                determines the list of possible elements displayed in the component tree.
+                                -->
+                                <div id="componentTree" data-bf-addmode="child"/>
+                            </div>
+                            <div id="rightPane" tabindex="-1">
+                                <div id="xfMount" dojotype="dijit.layout.ContentPane" href="{$bfContext}{$bfEditorPath}document.html" preload="false">
+                                    <script type="dojo/connect" event="onDownloadEnd">
+                                        var xfId = dojo.attr(dojo.byId("xfMount"), "xfId");
+                                        if (xfId == undefined) {
+                                            return;
+                                        }
+                                        // console.log("xfid: ", xfId);
+                                        attrEditor.editProperties(xfId);
+                                    </script>
+                                </div>
                             </div>
                         </div>
-                        <div id="rightPane" tabindex="-1">
-                            <div id="xfMount" dojotype="dijit.layout.ContentPane"
-                                 href="/betterform/forms/incubator/editor/document.html"
-                                 preload="false">
-                                <script type="dojo/connect" event="onDownloadEnd">
-                                    var xfId = dojo.attr(dojo.byId("xfMount"),"xfId");
-                                    if(xfId == undefined) { return;}
-                                    console.log("xfid: ",xfId);
-                                    attrEditor.editProperties(xfId);
-                                </script>
-                             </div>
-                        </div>
-                    </div>
-
-                </div>
-
+                    </xf:case>
+                </xf:switch>
                 <script type="text/javascript">
-                /* <![CDATA[ */
+                    /* <![CDATA[ */
                     // do not do anything but logging yet but shows the right call. Should work on FF and webkit which
                     // is sufficient for the editor.
-                    function serializeTree(){
-                        var serializedTree = new XMLSerializer().serializeToString( document.getElementById("xfDoc") );
-                        console.log(serializedTree);
-                        dijit.byId("fluxProcessor").setControlValue("save",serializedTree);
-                        dijit.byId("fluxProcessor").dispatchEvent("transform2xf",serializedTree);
+                    var xfReadySubscribers;
+
+                    function serializeTree() {
+                        var serializedTree = new XMLSerializer().serializeToString(document.getElementById("xfDoc"));
+                        // console.log(serializedTree);
+                        dijit.byId("fluxProcessor").setControlValue("save", serializedTree);
+                        dijit.byId("fluxProcessor").dispatchEvent("transform2xf");
 
                     }
+
+                    function showSaveDialog() {
+                        dijit.byId("saveDialog").show();
+                        var embedDialog = dojo.byId("embedDialog");
+
+
+                        if (xfReadySubscribers != undefined) {
+                            dojo.unsubscribe(xfReadySubscribers);
+                            xfReadySubscribers = null;
+                        }
+
+                        var xfReadySubscribers = dojo.subscribe("/xf/ready", function(data) {
+                            dojo.fadeIn({
+                                node: embedDialog,
+                                duration:100
+                            }).play();
+                        });
+
+                        dojo.fadeOut({
+                            node: embedDialog,
+                            duration:100,
+                            onBegin: function() {
+                                fluxProcessor.dispatchEvent("t-save-as");
+                            }
+                        }).play();
+
+                    }
+
                     /* ]]> */
                 </script>
-
+                <xsl:variable name="bfFullPath2">
+                    <xsl:text>'</xsl:text>
+                    <xsl:value-of select="concat($bfContext,$bfEditorPath)"/>
+                    <xsl:text>'</xsl:text>
+                </xsl:variable>
                 <script type="text/javascript" class="source below">
-                /* <![CDATA[ */
+                    var tmpBfPath = <xsl:value-of select="$bfFullPath2"/>;
+                    /* <![CDATA[ */
                     $(function () {
                         // TO CREATE AN INSTANCE
                         // select the tree container using jQuery
@@ -614,17 +424,17 @@
                                     "crrm" : {
                                         "move" : {
                                             "check_move" : function (m) {
-                                                console.log("check move:",m);
-                                                console.log("check move:",m.o);
+                                                // console.log("check move:",m);
+                                                // console.log("check move:",m.o);
                                                 var origin = m.o;
 
                                                 //the the xf type
                                                 var xfType = origin.attr("data-xf-type");
-                                                console.log("xfType ",xfType);
+                                                // console.log("xfType ",xfType);
 
                                                 var target = m.r;
                                                 var targetType = target.attr("data-xf-type");
-                                                console.log("check target:",targetType);
+                                                // console.log("check target:",targetType);
 
 
                                                 //check rules
@@ -668,12 +478,27 @@
 
                                     },
                                     hotkeys: {
+                                        "up":function(event) {
+                                            // console.debug("up key pressed");
+                                            // console.debug("this: ",this);
+                                            // console.debug("1");
+                                            var o = this.data.ui.hovered || this.data.ui.last_selected || -1;
+                                            // console.debug("2 o",o);
+				                            this.hover_node(this._get_prev(o));
+                                            // console.debug("3");
+				                            return false;
+                                        },
                                         "Alt+up"   : function (event) {
+                                            // console.debug("Alt+up: event:",event);
                                             attrEditor.moveNodeUp(this)
                                         },
 
                                         "Alt+down" : function (event) {
+                                            // console.debug("Alt+down: event:",event);
                                             attrEditor.moveNodeDown(this);
+                                        },
+                                        "ctrl+p" : function (event) {
+                                            alert("preview");
                                         }
                                     },
 
@@ -682,17 +507,34 @@
                                 })
                                 .bind("select_node.jstree", function (event, data) {
                                     // `data.rslt.obj` is the jquery extended node that was clicked
-                                    console.log(data);
                                     // alert( data.rslt.obj.attr("data-xf-type"));
-                                    var xfType = data.rslt.obj.attr("data-xf-type");
-                                    var id=data.rslt.obj.attr("id");
-                                    dojo.attr(dojo.byId("xfMount"),"xfId", id);
+                                    var tmpId=data.rslt.obj.attr("id");
+                                    var nodeIsLoaded = attrEditor.nodeIsLoaded(tmpId);
+                                    // console.debug("nodeIsLoaded:", nodeIsLoaded);
+                                    if(nodeIsLoaded){
+                                        // console.debug("PREVENTED LOADING OF PROPERTY EDITOR");
+                                        return;
+                                    }else {
+                                        // console.log(data);
+                                        var xfType = data.rslt.obj.attr("data-xf-type");
+                                        var mountNode = dojo.byId("xfMount");
+                                        dojo.attr(mountNode ,"xfId", tmpId);
+                                        var nodesToDestroy = dojo.query("*[widgetId]",mountNode);
+                                        // console.debug("nodesToDestroy: ",nodesToDestroy);
+                                        dojo.forEach(nodesToDestroy, function(item) {
+                                            var tmpDijit = dijit.byId(dojo.attr(item,"widgetId"));
+                                            tmpDijit.destroy();
+                                        });
+                                        // console.debug("destroyed existing nodes");
+                                        // console.debug("tmpBfPath:",tmpBfPath);
+                                        dijit.byId("xfMount").set("href", tmpBfPath + xfType + ".html");
 
-                                    dijit.byId("xfMount").set("href", "/betterform/forms/incubator/editor/" + xfType + ".html");
-                                    //console.debug("publish: nodeSelected: data", data);
-                                    dojo.publish("nodeSelected", [
-                                        {xfType:xfType,id:id,jsTreeData:data}
-                                    ]);
+                                        //console.debug("publish: nodeSelected: data", data);
+                                        dojo.publish("nodeSelected", [
+                                            {event:event,xfType:xfType,id:tmpId,jsTreeData:data,bfPath:tmpBfPath}
+                                        ]);
+
+                                    }
                                 })
                             // EVENTS
                             // each instance triggers its own events - to process those listen on the container
@@ -702,95 +544,216 @@
                                 // you get two params - event & data - check the core docs for a detailed description
                             });
                     });
+
+                    $(function () {
+                        $("#componentTree").jstree({
+                            "core" : {
+                                "initially_open" : [ "document-tmpl","model-tmpl","group-tmpl","repeat-tmpl","switch-tmpl","bind-tmpl","submission-tmpl","input-tmpl","output-tmpl","range-tmpl","secret-tmpl","select-tmpl","select1-tmpl","submit-tmpl","textarea-tmpl","trigger-tmpl","upload-tmpl","label-tmpl" ]
+                            },
+                            "html_data":{
+                                "ajax":{
+                                    url:tmpBfPath + "components.html"
+                                }
+                            },
+                            "themes" : {
+                                "theme" : "default",
+                                "dots" : false,
+                                "icons" : false
+                            },
+
+                            "plugins" : [ "themes", "hotkeys", "ui", "html_data","dnd" ]
+                        });
+                    });
+
                     /* ]]> */
                 </script>
+                <script type="text/javascript">
+                    $("#xfDoc").delegate("a", "click", function() {
+                        $("#xfDoc").jstree("toggle_node", this);
+                    });
 
 
+                    $("#componentTree").delegate("a", "click", function() {
+                        var currentItem = this.parentNode;
+
+                        if (dojo.hasClass(currentItem, "jstree-leaf")) {
+                            if ($("#componentTree").attr("data-bf-addmode") == "child") {
+                                addElement(currentItem.getAttribute("data-xf-type"), "last");
+                            } else {
+                                //get parent
+                                var parentLI = currentItem.parentNode.parentNode;
+                                // console.log("parent add: ", parentLI);
+                                addElement(currentItem.getAttribute("data-xf-type"), "after");
+                            }
+                        }
+
+                        $("#componentTree").jstree("toggle_node", this);
+                    });
+
+                    function addElement(type, position) {
+                        // console.log("addElement type:", type);
+                        var elem = $("#xfDoc").jstree("create", null, position, type, false, true);
+                        elem.attr("data-xf-type", type);
+                        elem.attr("id", new Date().getTime());
+                        elem.attr("data-xf-attrs", "");
+                        var ahref = dojo.query("a", elem[0])[0];
+                        var span = dojo.create("span", null, ahref);
+                        dojo.addClass(span, "buttonWrapper");
+                        var btnDelete = dojo.create("button", { type:"button", style: "padding: 0pt; margin: 0pt; background: none repeat scroll 0% 0% transparent; border: medium none;", onclick: "if(confirm('Really delete?')) deleteNode(this);return false;" },
+                                span);
+                        dojo.create("img", { width:"24", height: "24",src: "{$bfContext}{$bfEditorPath}images/list-remove.png" },
+                                btnDelete);
+
+                        $("#xfDoc").jstree("select_node", elem, true, null);
+                        elem.focus();
+                        elem.hide();
+                        $(elem).fadeIn("slow");
+                    }
+
+                    function deleteNode(elem) {
+                        $("#xfDoc").jstree("remove", null);
+                    }
+                </script>
+
+                <!--
+                                //fetch the currently selected item from xdoc tree
+                                var currentItem =  attrEditor.currentNodeId;
+                                if(!currentItem) return;
+                                console.log("current: ",currentItem);
+
+                                var currentType = dojo.attr(dojo.byId(currentItem),"data-xf-type");
+                                if (!currentType) {
+                                    console.error("no xfType defined");
+                                    return;
+                                }
+                                console.log("current xfType: ",currentType);
+
+                                //display tree with argument 'xfType' or parent xfType
+                -->
                 <div id="bfEditorHelp" dojoType="dojox.layout.FloatingPane" title="betterFORM Editor Help" resizable="true" dockable="false" style="position:absolute;margin:10px;top:200px;left:200px;width:600px;height:350px;visibility:hidden;">
-<!--
-                    <div class="bfEditorHelpTitle">betterFORM Editor</div>
--->
+                    <!--
+                                        <div class="bfEditorHelpTitle">betterFORM Editor</div>
+                    -->
                     <div>The editor is fully accessible via the keyboard</div>
                     <div>
                         <h3>Editor Shortcuts</h3>
                         <dl class="keyboard-mapping">
-                          <dt class="shortcutDesc">?</dt>
-                          <dd>Open Help</dd>
+                            <dt class="shortcutDesc">?</dt>
+                            <dd>Open Help</dd>
                         </dl>
                         <dl class="keyboard-mapping">
-                          <dt class="shortcutDesc">ESC</dt>
-                          <dd>Close Help</dd>
+                            <dt class="shortcutDesc">ESC</dt>
+                            <dd>Close Help</dd>
                         </dl>
                         <dl class="keyboard-mapping">
-                          <dt class="shortcutDesc">t</dt>
-                          <dd>Focus the XForms tree</dd>
+                            <dt class="shortcutDesc">t</dt>
+                            <dd>Focus the XForms tree</dd>
                         </dl>
                     </div>
-
                     <div>
                         <h3>Tree Shortcuts</h3>
                         <div class="table">
                             <div class="column1">
                                 <dl class="keyboard-mapping">
-                                  <dt class="shortcutDesc"><span class="shortcut">↑</span></dt>
-                                  <dd>Go to previous Node</dd>
+                                    <dt class="shortcutDesc">
+                                        <span class="shortcut">↑</span>
+                                    </dt>
+                                    <dd>Go to previous Node</dd>
                                 </dl>
                                 <dl class="keyboard-mapping">
-                                  <dt class="shortcutDesc"><span class="shortcut">↓</span></dt>
-                                  <dd>Go to next Node</dd>
+                                    <dt class="shortcutDesc">
+                                        <span class="shortcut">↓</span>
+                                    </dt>
+                                    <dd>Go to next Node</dd>
                                 </dl>
                                 <dl class="keyboard-mapping">
-                                  <dt class="shortcutDesc"><span class="shortcut">SPACE</span></dt>
-                                  <dd>Select Node</dd>
-                                </dl>
-
-                                <dl class="keyboard-mapping">
-                                  <dt class="shortcutDesc"><span class="shortcut">←</span></dt>
-                                  <dd>Open Node</dd>
+                                    <dt class="shortcutDesc">
+                                        <span class="shortcut">SPACE</span>
+                                    </dt>
+                                    <dd>Select Node</dd>
                                 </dl>
                                 <dl class="keyboard-mapping">
-                                  <dt class="shortcutDesc"><span class="shortcut">→</span></dt>
-                                  <dd>Close Node</dd>
+                                    <dt class="shortcutDesc">
+                                        <span class="shortcut">←</span>
+                                    </dt>
+                                    <dd>Open Node</dd>
+                                </dl>
+                                <dl class="keyboard-mapping">
+                                    <dt class="shortcutDesc">
+                                        <span class="shortcut">→</span>
+                                    </dt>
+                                    <dd>Close Node</dd>
                                 </dl>
                             </div>
                             <div class="column2">
                                 <dl class="keyboard-mapping">
-                                  <dt class="shortcutDesc"><span class="shortcut">DEL</span></dt>
-                                  <dd>Delete Node</dd>
+                                    <dt class="shortcutDesc">
+                                        <span class="shortcut">DEL</span>
+                                    </dt>
+                                    <dd>Delete Node</dd>
                                 </dl>
                                 <dl class="keyboard-mapping">
-                                  <dt class="shortcutDesc">ALT <em>and</em> <span class="shortcut">↑</span></dt>
-                                  <dd>Move Node up</dd>
+                                    <dt class="shortcutDesc">ALT
+                                        <em>and</em>
+                                        <span class="shortcut">↑</span>
+                                    </dt>
+                                    <dd>Move Node up</dd>
                                 </dl>
                                 <dl class="keyboard-mapping">
-                                  <dt class="shortcutDesc">ALT <em>and</em> <span class="shortcut">↓</span></dt>
-                                  <dd>Move Node down</dd>
+                                    <dt class="shortcutDesc">ALT
+                                        <em>and</em>
+                                        <span class="shortcut">↓</span>
+                                    </dt>
+                                    <dd>Move Node down</dd>
                                 </dl>
-
                             </div>
-
                         </div>
                     </div>
                 </div>
-                <script type="text/javascript">
+                <div id="saveDialog" dojotype="dijit.Dialog" title="save as ..." autofocus="false" style="width:820px;height:540px;overflow:auto;">
+                    <div id="embedDialog"/>
+                </div>
 
-                    dojo.hitch(window, $("#xfDoc ul").delegate("li", "dblclick", function(){
-                            $("#xfDoc").jstree("toggle_node", this);
-                    }));
+                <script type="text/javascript" defer="defer"
+                        src="../../../bfResources/scripts/betterform/betterform-XFormsEditor.js"></script>
+                <script type="text/javascript" defer="defer" src="../../../bfResources/scripts/betterform/editor/addMenu.js"></script>
+                <script type="text/javascript" defer="defer">
+                    attrEditor = new betterform.Editor({}, "editor");
+                    //console.debug("attrEditor.: ",attrEditor);
 
+                    function checkKeyboardInput(pEvent) {
+                        var activeElem = document.activeElement.localName;
+                        // console.debug("activeElem: ", activeElem);
+                        if (activeElem == "input") {
+                            return;
+                        }
+                        // console.debug("activeElem: ", activeElem);
+                        switch (pEvent.charOrCode) {
+                            case '?': //Process the Help key event
+                                dijit.byId("bfEditorHelp").show();
+                                break;
+                            case 't':
+                            case 'T':
+                                dojo.byId("root").focus();
+                                break;
 
-                    function addElement(type){
-                        console.log("addElement type:",type);
-                        var elem = $("#xfDoc").jstree("create",null,"last",type,false,true);
-                        elem.attr("data-xf-type",type);
-                        $("#xfDoc").jstree("select_node",elem,false,null);
-                        $("#id").focus();
+                            default:
+                                //no defaults at this time
+                                break;
+
+                        }
                     }
+
+                    dojo.addOnLoad(
+                            function() {
+                                dojo.connect(dojo.body(), "onkeypress", checkKeyboardInput);
+                            }
+                    );
+
                 </script>
             </body>
         </html>
     </xsl:template>
-
     <xsl:template match="xf:*">
         <xsl:variable name="this" select="."/>
         <!--
@@ -814,10 +777,13 @@
         all attributes of the current xforms element are transferred into a 'data-xf-props' attribute
         ####################################################################################################
         -->
-        <xsl:variable name="props">{<xsl:for-each select="@*">
-            <xsl:value-of select="local-name()"/>:'<xsl:value-of select="."/>'<xsl:if test="position()!=last()">,</xsl:if>
-        </xsl:for-each>}</xsl:variable>
-
+        <xsl:variable name="props">{
+            <xsl:for-each select="@*">
+                <xsl:value-of select="local-name()"/>:'<xsl:value-of select="."/>'
+                <xsl:if test="position()!=last()">,</xsl:if>
+            </xsl:for-each>
+            }
+        </xsl:variable>
         <li id="{$id}" data-xf-type="{local-name()}" data-xf-attrs="{$props}" class="{local-name()}" rel="{local-name()}">
             <!--
             ####################################################################################################
@@ -826,9 +792,10 @@
             ####################################################################################################
             -->
             <xsl:if test="count(ancestor::xf:*) = number(0)">
-                <xsl:attribute name="oid"><xsl:value-of select="$this/@id"/></xsl:attribute>
+                <xsl:attribute name="oid">
+                    <xsl:value-of select="$this/@id"/>
+                </xsl:attribute>
             </xsl:if>
-
             <a href="#">
                 <xsl:value-of select="local-name()"/>:
                 <xsl:if test="text()">
@@ -837,18 +804,21 @@
                     </span>
                 </xsl:if>
                 <xsl:value-of select="@id"/>
-                <button class="deleteBtn" name="deleteItem" onclick="alert('deleting');">x</button></a>
-
+                <span class="buttonWrapper">
+                    <button type="button" onclick="if(confirm('Really delete?')) deleteNode(this);return false;" style="padding:0;margin:0;background:transparent;border:none;">
+                        <img src="{$bfContext}{$bfEditorPath}images/list-remove.png" width="24" height="24" alt="x"/>
+                    </button>
+                </span>
+            </a>
             <xsl:if test="count(xf:*) != 0">
                 <ul>
                     <xsl:for-each select="*">
-                        <xsl:apply-templates select="." />
+                        <xsl:apply-templates select="."/>
                     </xsl:for-each>
                 </ul>
             </xsl:if>
         </li>
-     </xsl:template>
-
+    </xsl:template>
     <xsl:template match="*|text()">
         <xsl:copy>
             <xsl:copy-of select="@*"/>

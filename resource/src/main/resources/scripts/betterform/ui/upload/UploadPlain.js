@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -30,12 +30,20 @@ dojo.declare(
     },
 
     postCreate:function() {
-      // console.debug("Upload.postMixInProperties: START this",this);
-      this.inherited(arguments);
-      dojo.attr(this.inputNode,"name", dojo.attr(this.srcNodeRef,"name"));
-      dojo.attr(this.fileName,"id", dojo.attr(this.srcNodeRef,"fileId"));
-      dojo.attr(this.fileName,"value", dojo.attr(this.srcNodeRef,"fileValue"));
-      dojo.removeClass(this.domNode, "xfValue");
+        // console.debug("Upload.postMixInProperties: START this", this);
+        this.inherited(arguments);
+        var uploadName = dojo.attr(this.srcNodeRef, "name");
+        var uploadFileId = dojo.attr(this.srcNodeRef, "fileId");
+        var uploadFileValue = dojo.attr(this.srcNodeRef, "fileValue");
+        if(uploadFileId == undefined || uploadFileId == ""){
+            //console.debug("fluxProcessor.dataPrefix:",fluxProcessor.dataPrefix);
+            uploadName = fluxProcessor.dataPrefix + this.xfControlId;
+        }
+        //console.debug("uploadName: ",uploadName, " uploadFileId:",uploadFileId, " uploadFileValue:",uploadFileValue);
+        dojo.attr(this.inputNode, "name", uploadName);
+        dojo.attr(this.fileName, "id", uploadFileId);
+        dojo.attr(this.fileName, "value", uploadFileValue);
+        dojo.removeClass(this.domNode, "xfValue");
 
     },
 
@@ -49,8 +57,8 @@ dojo.declare(
         //this.handleOnBlur();
     },
 
+    // not needed for Upload???
     getControlValue:function() {
-        console.warn("betterform.ui.upload.Upload.getControlValue");
     },
 
     _handleSetControlValue:function(value) {
@@ -114,6 +122,7 @@ dojo.declare(
         this.progress.style.opacity="1";
         var path = this.inputNode.value;
         var filename = path.substring(path.lastIndexOf("/") + 1);
+        // console.debug("Upload: npath: ", path, " filename:", filename);
         //polling betterForm for update information and submit the form
         this.progressUpdate = setInterval("fluxProcessor.fetchProgress('" + this.xfControlId + "','" + filename + "')", 500);
 

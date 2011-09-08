@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 <!-- TODO:
@@ -15,9 +15,9 @@
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 xpath-default-namespace="http://www.w3.org/1999/xhtml"
-        >
+                exclude-result-prefixes="#all">
 
-    <xsl:param name="webContext" select="'/betterform'"/>
+    <xsl:param name="webContext" select="'../..'"/>
 
     <xsl:output method="xhtml" version="1.0" encoding="UTF-8" media-type="text/xml"/>
 
@@ -40,11 +40,6 @@
                               href="../../resources/scripts/dojox/highlight/resources/pygments/borland.css"/>
             -->
             <link rel="stylesheet" type="text/css" href="reference.css"/>
-            <script type="text/javascript">
-                dojo.subscribe("/xf/ready", function(){
-                    fluxProcessor.skipshutdown=true;
-                });
-            </script>
         </xsl:copy>
     </xsl:template>
 
@@ -131,6 +126,12 @@
                     }                    
                 </script>
             </div>
+            <script type="text/javascript">
+                dojo.subscribe("/xf/ready", function(){
+                    fluxProcessor.skipshutdown=true;
+                });
+            </script>
+
         </xsl:copy>
     </xsl:template>
 

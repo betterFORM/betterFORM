@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -13,8 +13,8 @@ dojo.require("dijit._Widget");
 	@author Joern Turner
 	@author Lars Windauer
 
-    CheckBoxGroup "Value Diit" represents a Select with appearance="full"
-        Controller class for checkboxes (betterform.util.select.CheckBox) within Select Control
+    RadioGroup "Value Dijit" represents a Select1 with appearance="full"
+        Controller class for RadioButtons (betterform.util.select1.RadioButton) within Select1 Control
 
 **/
 
@@ -22,7 +22,6 @@ dojo.declare(
         "betterform.ui.select1.RadioGroup",
          betterform.ui.ControlValue,
 {
-    radioItems:null,
     
     buildRendering:function() {
         this.domNode = this.srcNodeRef;
@@ -64,6 +63,15 @@ dojo.declare(
     _onFocus:function() {
         this.inherited(arguments);
         this.handleOnFocus();
+    },
+
+    focus:function() {
+        var itemIsFocused = dojo.query(".dijitRadioChecked",this.domNode);
+        if(itemIsFocused.length > 0){
+            dojo.query(".xfRadioLabel", itemIsFocused[0].parentNode)[0].focus();
+        }else {
+            dojo.query(".xfEnabled .xfRadioLabel",this.domNode)[0].focus();
+        }
     },
 
     _onBlur:function() {

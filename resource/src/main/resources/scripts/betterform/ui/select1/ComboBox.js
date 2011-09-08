@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -21,7 +21,8 @@ dojo.declare(
     postMixInProperties:function() {
         this.inherited(arguments);
         this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);
-        if(dojo.attr(this.srcNodeRef, "incremental") == undefined || dojo.attr(this.srcNodeRef, "incremental") == "" || dojo.attr(this.srcNodeRef, "incremental") == "true"){
+        var incremental = (this.srcNodeRef, "incremental");
+        if(dojo.attrincremental == undefined || incremental == "" || incremental == "true"){
             this.incremental = true;
         }else {
             this.incremental = false;
@@ -33,6 +34,10 @@ dojo.declare(
         // console.debug("ComboBox.postCreate");
         dojo.connect(this.domNode,"onchange", this,"_onChange");
         this.setCurrentValue();
+    },
+
+    focus:function() {
+        this.domNode.focus();
     },
 
     _onFocus:function() {

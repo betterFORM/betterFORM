@@ -1,7 +1,7 @@
 /*
-* Copyright (c) 2010. betterForm Project - http://www.betterform.de
-* Licensed under the terms of BSD License
-*/
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
 
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
 	background: transparent;
@@ -181,7 +181,7 @@ a:hover {
 	margin-left:-20px;
 }
 .bfFormBrowser .formBrowserHeader .pathName{
-	background:url(../images/arrow-right.png) left no-repeat;
+	background:url(../../bfResources/images/arrow-right.png) left no-repeat;
 	padding:3px 3px 3px 20px;
 	float:left;
 	color:#333333;
@@ -244,7 +244,7 @@ a:hover {
 	padding:1px;
 	background:#d3d3d3;
 	color:transparent;
-	background:transparent url(/betterform/bfResources/images/greyled.png) no-repeat center center;
+	background:transparent url(../../bfResources/images/greyled.png) no-repeat center center;
 	width:18px;
 	height:18px;
 }
@@ -255,7 +255,7 @@ a:hover {
 	height:22px;
 	color:transparent;
 	z-index:100;
-	background:transparent url(/betterform/bfResources/images/wrench.png) no-repeat center center;
+	background:transparent url(../../bfResources/images/wrench.png) no-repeat center center;
 
 }
 
@@ -283,7 +283,7 @@ a:hover {
 	padding:1px;
 	background:#d3d3d3;
 	color:transparent;
-	background:transparent url(/betterform/bfResources/images/greyled.png) no-repeat center center;
+	background:transparent url(../../bfResources/images/greyled.png) no-repeat center center;
 	width:18px;
 	height:18px;
 }
@@ -294,7 +294,7 @@ a:hover {
 	height:22px;
 	color:transparent;
 	z-index:100;
-	background:transparent url(/betterform/bfResources/images/eye-grey.png) no-repeat center center;
+	background:transparent url(../../bfResources/images/eye-grey.png) no-repeat center center;
 
 }
 .bfFormBrowser #bfListView .directory img{

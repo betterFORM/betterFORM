@@ -1,10 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>    
+    <!--
+        ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+    -->
+    <modelVersion>4.0.0</modelVersion>
     <groupId>de.betterform</groupId>
     <artifactId>betterform-project</artifactId>
-    <version>3.2.0-prerelease</version>
+    <version>3.2.0-RC3</version>
     <packaging>pom</packaging>
 
     <name>betterForm Project</name>
@@ -15,8 +19,7 @@
     <modules>
         <module>core</module>
         <module>betty</module>
-        <module>web</module>       
-        <module>xApp</module>
+        <module>web</module>
         <module>zaphod</module>
     </modules>
 

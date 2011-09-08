@@ -1,10 +1,11 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xforms.model.constraints;
 
+import de.betterform.xml.xforms.exception.XFormsComputeException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.xforms.exception.XFormsException;
@@ -52,16 +53,21 @@ public class CalculateVertex extends Vertex {
      * (relativeContext).
      * @throws XFormsException 
      */
-    public void compute() throws XFormsException {
-        if (this.xpathExpression != null) {
-            String result = XPathCache.getInstance().evaluateAsString(relativeContext, "string(" + this.xpathExpression + ")");
-            ModelItem modelItem = (ModelItem) this.instanceNode.getUserData("");
-            modelItem.setValue(result);
+    public void compute() throws XFormsComputeException {
 
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("evaluated expression '" + this.xpathExpression + "' to '" + result + "'");
+            if (this.xpathExpression != null) {
+                    ModelItem modelItem = (ModelItem) this.instanceNode.getUserData("");
+                try {
+                    String result = XPathCache.getInstance().evaluateAsString(relativeContext, "string(" + this.xpathExpression + ")");
+                    modelItem.setValue(result);
+
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("evaluated expression '" + this.xpathExpression + "' to '" + result + "'");
+                    }
+                } catch (XFormsException xfe) {
+                       throw new XFormsComputeException(xfe.getMessage(), (Exception) xfe.getCause(), modelItem.getModel().getTarget(), xfe.getMessage());
+                }
             }
-        }
     }
 
     /**

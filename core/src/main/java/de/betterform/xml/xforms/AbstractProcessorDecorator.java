@@ -1,6 +1,6 @@
 
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 package de.betterform.xml.xforms;
@@ -92,9 +92,10 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
         this.root.addEventListener(XFormsEventNames.ENABLED, this, true);
          */
 
-        if (isEventUsed(XFormsEventNames.FOCUS)) {
+        /* Commented out because there is no explicit event for the setFocus Action */
+       //if (isEventUsed(XFormsEventNames.FOCUS)) {
             this.root.addEventListener(XFormsEventNames.FOCUS, this, false);
-        }
+       //}
         if (isEventUsed(DOMEventNames.FOCUS_IN)) {
             this.root.addEventListener(DOMEventNames.FOCUS_IN, this, true);
         }

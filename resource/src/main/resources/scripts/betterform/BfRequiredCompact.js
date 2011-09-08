@@ -1,8 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
- * All Rights Reserved.
- * @author Joern Turner
- * @author Lars Windauer
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -25,6 +22,7 @@ dojo.require("betterform.ui.select.CheckBoxItemset");
 
 dojo.require("betterform.ui.select1.ComboBox");
 dojo.require("betterform.ui.select1.ComboBoxOpen");
+dojo.require("betterform.ui.select1._ComboBoxMenu");
 dojo.require("betterform.ui.select1.Plain");
 dojo.require("betterform.ui.select1.RadioButton");
 dojo.require("betterform.ui.select1.RadioGroup");

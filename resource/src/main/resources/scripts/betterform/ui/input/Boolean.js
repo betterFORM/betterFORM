@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -41,13 +41,13 @@ dojo.declare(
     _handleSetControlValue:function(checked) {
 //        console.debug("betterform.ui.input.Boolean._handleSetControlValue() : value: ", checked);
         if(checked == 'true' || checked == 'false') {
-            this.attr('checked', eval(checked));
+            this.set('checked', eval(checked));
         }
     },
 
     getControlValue:function() {
         //console.debug("betterform.ui.input.Boolean.getControlValue for Control "+ this.id +": ",this.attr('checked') );
-        var checkedValue = this.attr('checked');
+        var checkedValue = this.get('checked');
         //console.debug("betterform.ui.input.Boolean.getControlValue: ",checkedValue );
          var checked;
 
@@ -61,7 +61,7 @@ dojo.declare(
 
 
         if(checked == undefined) {
-            var value = this.attr('value');
+            var value = this.get('value');
             //console.debug("betterform.ui.input.Boolean value: ",value );
              if(value == 'true' || value == true) {
             //console.debug("betterform.ui.input.Boolean.getControlValue: checked", true);

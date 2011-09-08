@@ -1,53 +1,3 @@
-<!DOCTYPE html [
-        <!ELEMENT html (head|body)*>
-        <!ATTLIST html
-                xmlns CDATA #REQUIRED
-                xml:lang CDATA #REQUIRED
-                lang CDATA #REQUIRED>
-        <!ELEMENT head (title|meta)*>
-        <!ELEMENT title (#PCDATA)>
-        <!ELEMENT meta (#PCDATA)>
-        <!ATTLIST meta
-                name CDATA #REQUIRED
-                content CDATA #REQUIRED>
-        <!ELEMENT body (div)*>
-        <!ATTLIST body
-                id CDATA #REQUIRED
-                class CDATA #REQUIRED>
-        <!ELEMENT div (a|div|p|ul|table)*>
-        <!ATTLIST div
-                class CDATA #IMPLIED
-                id CDATA #IMPLIED>
-        <!ELEMENT a (img)*>
-        <!ATTLIST a
-                class CDATA #IMPLIED
-                href CDATA #REQUIRED
-                id CDATA #IMPLIED
-                style CDATA #IMPLIED
-                target CDATA #IMPLIED>
-        <!ELEMENT p (strong)*>
-        <!ATTLIST p
-                class CDATA #REQUIRED>
-        <!ELEMENT strong (#PCDATA)>
-        <!ELEMENT ul (li)*>
-        <!ATTLIST ul
-                id CDATA #REQUIRED>
-        <!ELEMENT li (div)*>
-        <!ATTLIST li
-                class CDATA #REQUIRED>
-        <!ELEMENT table (tr)*>
-        <!ATTLIST table
-                style CDATA #REQUIRED>
-        <!ELEMENT tr (td)*>
-        <!ELEMENT td (a|h3|blockquote|h4|img)*>
-        <!ELEMENT img (#PCDATA)>
-        <!ATTLIST img
-                alt CDATA #REQUIRED
-                src CDATA #REQUIRED>
-        <!ELEMENT h3 (#PCDATA)>
-        <!ELEMENT blockquote (#PCDATA)>
-        <!ELEMENT h4 (#PCDATA)>
-        ]>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
     <head>
         <!--
@@ -106,6 +56,23 @@
 
 				<div id="rightCol" class="col">
                 <ul id="slider2">
+                    <li class="panel1">
+                        <div class="textSlide">
+                            <table style="width:555px;height:180px;">
+                                <tr>
+                                    <td>
+                                        <a href="http://www.berlin.de/projektzukunft/wettbewerbe/berlins-zukunft-ist-offen/" target="_blank"><img src="../images/berlinfuture-logo.gif" alt="eXist db"/></a>
+                                        <h3>Berlins Zukunft ist "offen"</h3>
+                                        <blockquote>
+                                            betterFORM ist Preisträger in der Kategorie "Best Practice in Open Source/Open Standards" im Wettbewerb
+                                            "Berlins Zukunft ist 'offen'
+                                            Ideen- und Best-Practice-Wettbewerb zu Open Source/Open Standards"
+                                        </blockquote>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
                     <li class="panel1">
                         <div class="textSlide">
                             <table style="width:555px;height:180px;">

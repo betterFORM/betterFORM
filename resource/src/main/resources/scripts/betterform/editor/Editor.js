@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
 dojo.provide("betterform.editor.Editor");
 
 
@@ -9,66 +14,106 @@ dojo.provide("betterform.Editor");
 dojo.declare("betterform.Editor", null,
 {
     currentjsTreeData:null,
+    currentNodeId:null,
+    bfPath:null,
 
     constructor:function() {
+        var self = this;
         dojo.subscribe("nodeSelected", function(args){
-            console.log("nodeSelected: arg:", args);
-            console.log("nodeSelected: xfType:", args.xfType);
-            console.log("nodeSelected: ", args.jsTreeData);
-            attrEditor.currentjsTreeData = args.jsTreeData;
+            // console.log("nodeSelected: arg:", args);
+            // console.log("nodeSelected: arg.event:", args.event);
 
+            var selectedNode = args.jsTreeData;
+            var selectedNodeId = selectedNode ? selectedNode.rslt.obj.attr("id"):null;
+            currentNodeId = this.currentjsTreeData ? this.currentjsTreeData.rslt.obj.attr("id"):null;
+
+            console.debug("compare currentNodeId: " + currentNodeId + " with selctedNode: ",selectedNodeId);
+
+            if(currentNodeId =! null && currentNodeId == selectedNodeId){
+                args.event.stopPropagation();
+                args.event.cancelBubble=true;
+                return;
+            }
+            this.currentjsTreeData = selectedNode;
+            this.currentNodeId = selectedNodeId;
             var xfType = args.xfType;
-            console.debug("blas balsd xfTyep:", xfType);
+            console.debug("Editor.subscription.nodeSelected: xfType:", xfType);
             if(xfType =="document"){
                 //jump back to root
-                dijit.byId("xfMount").set("href", "/betterform/forms/incubator/editor/document.html");
-                //hide addToolbars
-                dojo.query("#actionlist li").forEach(
-                    function(item,index,array){
-                        dojo.attr(item,"style","display:none;");
-                    }
-                );
-                dojo.query("#childList li").forEach(
-                    function(item,index,array){
-                        dojo.attr(item,"style","display:none;");
-                    }
-                );
-
+                console.debug("bfpath: ", args.bfPath);
+                //dijit.byId("xfMount").set("href", args.bfPath + "document.html");
                 return;
             }
 
-            dojo.query("#childList li").forEach(
-                  function(item, index, array){
-                        var currentClass = dojo.attr(item,"class");
-                        var cutted = currentClass.substring(0,currentClass.indexOf("-",4))
-
-                        var childArray=eval(xfType+"Childs");
-                        if(childArray == undefined){
-                            return;
-                        }
-                        if(dojo.indexOf(childArray,cutted) != -1){
-                            dojo.attr(item,"style","display:inline;");
-                        }else{
-                            dojo.attr(item,"style","display:none;");
-                        }
-
-                        //check if actions should be there by looking for 'action' element in the relevant array
-                        var hasActions = dojo.indexOf(childArray,"action") != -1;
-                        dojo.query("#actionlist li").forEach(
-                            function(item,index,array){
-                                if(hasActions){
-                                    dojo.attr(item,"style","display:inline;");
-                                }else{
-                                    dojo.attr(item,"style","display:none;");
-                                }
-                            }
-                        );
-
-                  }
-             );
+            self.updateComponentTree(dojo.byId(selectedNodeId));
          });
     },
 
+    updateComponentTree : function(aNode){
+        console.log("event: ",aNode, " id: ",aNode.id);
+
+        if(aNode.id == "btnChildMode"){
+            dojo.removeClass("btnSiblingMode","selected");
+            dojo.addClass("btnChildMode","selected");
+            dojo.attr(dojo.byId('componentTree'),"data-bf-addmode","child");
+        }
+        if(aNode.id == "btnSiblingMode"){
+            dojo.removeClass("btnChildMode","selected");
+            dojo.addClass("btnSiblingMode","selected");
+            dojo.attr(dojo.byId('componentTree'),"data-bf-addmode","sibling");
+        }
+
+        var currentMode = dojo.attr("componentTree","data-bf-addMode");
+
+        //get selected item from xfDoc tree
+        var currentItem = dojo.byId(attrEditor.currentNodeId);
+        if(currentItem == undefined) return;
+
+        //switch state of buttons regardless of an existing selection
+        if(currentMode == "child"){
+            //get xfType from current item selected in xfDoc tree
+            var currXfType = dojo.attr(dojo.byId(currentItem),"data-xf-type");
+            console.log("current xfType: ", currXfType);
+
+            this._renderComponentTree(currXfType);
+        }else{
+            //get parent item (not element!) of current item
+            var parentUL = currentItem.parentNode;
+            if(parentUL == undefined) return;
+            console.log("parent: ", parentUL);
+
+            var parentLI = parentUL.parentNode;
+            if(parentLI == undefined) return;
+            console.log("parentLI: ", parentLI);
+
+            var parentXfType = dojo.attr(parentLI,"data-xf-type");
+            if(parentXfType == undefined) return;
+            console.log("parentXfType: ", parentXfType);
+
+            this._renderComponentTree(parentXfType);
+
+        }
+    },
+
+    _renderComponentTree:function(xfType){
+        //hide previously displayed top-level nodes
+        dojo.query("#componentTree > ul > li").forEach(
+              function(item, index, array){
+                  var displays = dojo.style(item,"display");
+                  if(diplays="block") dojo.style(item,"display","none");
+              }
+         );
+
+
+        //show the tree node (first level of tree) for the given xfType - we look for xfType + "-tmpl"
+        var rootForType = dojo.style(dojo.byId(xfType+'-tmpl'),"display","block");
+
+        dojo.query("#"+xfType+"-tmpl li").forEach(
+              function(item, index, array){
+                    dojo.style(item,"display","block");
+              }
+         );
+    },
 
     editProperties : function(targetId) {
         console.log("attrEditor.editProperties: id of property sheet: ", targetId);
@@ -85,20 +130,20 @@ dojo.declare("betterform.Editor", null,
                 var xfAttrValue = xfAttrObj[attributeName];
                 if (!xfAttrValue)xfAttrValue = "";
                 var currentDijitNode =  dojo.query("xf" + attributeName)[0];
-                console.log("editProperties: currentDijitNode: ", currentDijitNode);
+                // console.log("editProperties: currentDijitNode: ", currentDijitNode);
                 if (currentDijitNode) {
                     var currentDijit = dijit.byId(dojo.attr(currentDijitNode, "id"));
                     if (currentDijit) {
-                        console.log("editProperties: currentDijit: ", currentDijit, " - xfAttrValue:",xfAttrValue);
+                        // console.log("editProperties: currentDijit: ", currentDijit, " - xfAttrValue:",xfAttrValue);
                         currentDijit.set("value", xfAttrValue);
                     }
                     else {
-                        console.log("editProperties: currentNode: ", currentDijitNode, " - xfAttrValue:",xfAttrValue);
+                        // console.log("editProperties: currentNode: ", currentDijitNode, " - xfAttrValue:",xfAttrValue);
                         dojo.attr(currentDijitNode, "value", xfAttrValue);
                     }
                 }
                 else {
-                    console.log("editProperties: currentNode: ", dojo.byId(attributeName), " - xfAttrValue:",xfAttrValue);
+                    // console.log("editProperties: currentNode: ", dojo.byId(attributeName), " - xfAttrValue:",xfAttrValue);
                     dojo.attr(dojo.byId(attributeName), "value", xfAttrValue);
 
                 }
@@ -108,18 +153,18 @@ dojo.declare("betterform.Editor", null,
             console.warn("editProperties: Missing xfAttrObj for Element [id='",targetId,"']");
         }
         var valueNode = dojo.query(".textNode",currentNode)[0];
-        console.log("editProperties: valueNode: ", valueNode);
+        // console.log("editProperties: valueNode: ", valueNode);
         if(valueNode) {
             var nodeValue =  valueNode.innerHTML;
             nodeValue.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
             //var nodeValue =  valueNode.innerHTML.replace(/</g, "lt;").replace(/>/g, "gt;").replace(/\&/g, "amp;").replace(/\"/g, "quot;");
-            console.debug("editProperties: node value: ", nodeValue);
-            var mixedContentNode =  dojo.byId("mixedContent");
-            var mixedContentDijit = dijit.byId(dojo.attr(mixedContentNode,"id"));
-            if (mixedContentDijit) {
-                mixedContentDijit.set("value",nodeValue);
+            // console.debug("editProperties: node value: ", nodeValue);
+            var textContentNode =  dojo.byId("textcontent");
+            var textContentDijit = dijit.byId(dojo.attr(textContentNode,"id"));
+            if (textContentDijit) {
+                textContentDijit.set("value",nodeValue);
             }else {
-                dojo.attr(mixedContentNode, "value", nodeValue);
+                dojo.attr(textContentNode, "value", nodeValue);
             }
 
         }
@@ -128,34 +173,32 @@ dojo.declare("betterform.Editor", null,
 
     },
 
-  
     saveProperty:function(targetId, propertyId) {
-        console.log("attrEditor.saveProperty: id", targetId, " propertyId:", propertyId);
-        // get the former attribute values
-        var dataXfAttrs = dojo.attr(dojo.byId(targetId), "data-xf-attrs");
-        // console.log("dataXfAttrs orig: ", dataXfAttrs);
-        var xfAttrObj = dojox.json.ref.fromJson(dataXfAttrs);
-        // console.log("xfAttrObj:", xfAttrObj);
+        // console.log("attrEditor.saveProperty: id", targetId, " propertyId:", propertyId);
 
-        // get the dijit holding the attribute value to save
+        // get the current value to save
         var propertyNode = dojo.byId(propertyId);
         // console.log("propertyNode:", propertyNode);
         var newValue = dojo.attr(propertyNode, "value");
-        // console.log("newValue:", newValue);
         if (!newValue)newValue = "";
-        xfAttrObj[propertyId] = newValue;
-        var result = "{";
-        for(attrValue in xfAttrObj){
-            result += attrValue + ":'" + xfAttrObj[attrValue] +"',";
-        }
-        if(result.charAt(2) != undefined) {
-            result = result.substring(0,result.lastIndexOf(","));
-        }
+        // console.debug("saveProperty: newValue: ",newValue);
+        if(propertyId == "textcontent"){
+            // get the dijit holding the attribute value to save
+            var textcontentNode = dojo.query(".textNode",dojo.byId(targetId))[0];
+            // console.debug("saveProperty: textcontent: ",textcontentNode);
+            dojo.html.set(textcontentNode, newValue);
+        }else {
+            // get the former attribute values
+            var dataXfAttrs = dojo.attr(dojo.byId(targetId), "data-xf-attrs");
+            // console.log("dataXfAttrs orig: ", dataXfAttrs);
+            var xfAttrObj = dojox.json.ref.fromJson(dataXfAttrs);
+            // console.log("xfAttrObj:", xfAttrObj);
 
-        result += "}";
-        // var xfAttrString = dojox.json.ref.toJson(xfAttrObj);
-        console.debug("xfAttr new:", result);
-        dojo.attr(dojo.byId(targetId), "data-xf-attrs", result);
+            xfAttrObj[propertyId] = newValue;
+            var xfAttrString = dojox.json.ref.toJson(xfAttrObj);
+            // console.debug("xfAttr new:", xfAttrString);
+            dojo.attr(dojo.byId(targetId), "data-xf-attrs", xfAttrString);
+        }
     },
     
 
@@ -198,7 +241,7 @@ dojo.declare("betterform.Editor", null,
         var xfType = origin.attr("data-xf-type");
         // console.log("xfType ",xfType);
         var targetType = target.attr("data-xf-type");
-        // console.log("check target:",targetType);
+         console.log("check target:",targetType);
 
         //check rules look for match in drop target elements list of allowed children
         //if found 'true' 'false' otherwise
@@ -244,7 +287,7 @@ dojo.declare("betterform.Editor", null,
             // console.debug("parentNode does not exist: return");
             return;
         }
-        var isMovingAllowed = attrEditor.moveAllowed(selectedNode, parentNode);
+        var isMovingAllowed = this.moveAllowed(selectedNode, parentNode);
         // console.debug("isMovingAllowed: ",isMovingAllowed);
         if (isMovingAllowed) {
             jsTreeObject.move_node(selectedNode, nextNode, "after", false, false, isMovingAllowed);
@@ -253,8 +296,20 @@ dojo.declare("betterform.Editor", null,
         else {
             //  console.debug("Moving Node not allowed");
         }
-    }
+    },
 
+    showEventListener:function() {
+        console.debug("showEventListener arguments:",arguments);
+    },
+    nodeIsLoaded:function(xfid) {
+         console.debug("Editor.nodeIsLoaded" , xfid);
+         console.debug("Editor.nodeIsLoaded: this.currentNodeId:",this.currentNodeId);
+        if(this.currentNodeId != undefined && this.currentNodeId == xfid) {
+            return true;
+        }
+        this.currentNodeId = xfid;
+        return false;
+    }
 
 });
 

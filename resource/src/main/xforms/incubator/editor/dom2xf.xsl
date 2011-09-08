@@ -7,6 +7,7 @@
 
     <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="no"/>
     <!-- author: Joern Turner -->
+    <!-- author: Lars Windauer -->
 
 
     <xsl:template match="/*">
@@ -17,21 +18,22 @@
 
     <xsl:template match="*[@data-xf-type]"  priority="10">
         <xsl:variable name="curr" select="."/>
-        <xsl:variable name="attrs" select="substring(@data-xf-attrs,2,string-length(@data-xf-attrs) - 2)"/>
-        <xsl:message>attrs: <xsl:value-of select="$attrs"/></xsl:message>
         <xsl:element name="{concat('xf:',@data-xf-type)}" namespace="http://www.w3.org/2002/xforms">
             <xsl:if test="exists(@oid)">
                 <xsl:attribute name="oid"><xsl:value-of select="@oid"/></xsl:attribute>
             </xsl:if>
+            <xsl:variable name="attrs" select="normalize-space(substring-after(substring-before(@data-xf-attrs,'}'),'{'))"/>
             <xsl:if test="string-length($attrs) != 0">
                 <xsl:for-each select="tokenize($attrs,',')">
-                    <xsl:variable name="thisAttr"><xsl:value-of select="."/></xsl:variable>
-
+                    <xsl:variable name="thisAttr"><xsl:value-of select="normalize-space(.)"/></xsl:variable>                    
                     <xsl:variable name="quotedValue" select="substring-after($thisAttr,':')"/>
-                    <xsl:variable name="unquoted">
+                    <xsl:variable name="unquoted">                        
                         <xsl:value-of select="substring($quotedValue,2,string-length($quotedValue)-2)"/>
                     </xsl:variable>
-                    <xsl:attribute name="{substring-before($thisAttr,':')}"><xsl:value-of select="$unquoted"/></xsl:attribute>
+                    <!--<xsl:message>unquoted: <xsl:value-of select="$unquoted"/></xsl:message>-->
+                    <xsl:if test="string-length($unquoted) != 0">
+                        <xsl:attribute name="{substring-before($thisAttr,':')}"><xsl:value-of select="$unquoted"/></xsl:attribute>
+                    </xsl:if>
                 </xsl:for-each>
             </xsl:if>
             <xsl:if test="*/*[@class='textNode']">

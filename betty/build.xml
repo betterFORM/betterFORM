@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
 <!-- $Id: build.xml 3351 2008-07-19 19:54:12Z joern $ -->
 <project id="betty" name="betterForm Betty" basedir="." default="deploy">
 
@@ -11,13 +16,13 @@
             ATTENTION - the properties below must be set before build.properties.xml
             is called - DO NOT MOVE
      ###  -->
-    <property name="core.dir" value="../core"/>
-    <property name="web.dir" value="../web"/>
-    <property name="betty.dir" value="."/>
     <property name="project.dir" value=".."/>
-    <property name="src.dir" value="../src"/>
+    <property name="core.dir" value="${project.dir}/../core"/>
+    <property name="web.dir" value="${project.dir}/../web"/>
+    <property name="betty.dir" value="."/>
+    <property name="src.dir" value="${project.dir}/resource"/>
 
-    <xmlproperty file="../build.properties.xml"
+    <xmlproperty file="${basedir}/../build.properties.xml"
              semanticAttributes="true" keepRoot="false" />
 
     <!-- local Betty properties -->
@@ -77,6 +82,7 @@
     </target>
 
 
+<!--
     <target name="prepare-js" depends="check.dojo" if="dojo.not.available">
         <ant  antfile="build.xml" target="prepare-js" dir=".." inheritall="false"/>
         <copy  description="copy javascript resources from global directory"
@@ -87,6 +93,7 @@
             </fileset>
         </copy>
     </target>
+-->
 
 
     <target name="compile" depends="prepare" description="compiling Betty classes">
@@ -155,7 +162,7 @@
         </copy>
 
          <copy todir="${targetname}/resources">
-            <fileset dir="${basedir}/${properties.rootDir}/src/main/resources"  />
+            <fileset dir="${basedir}/${properties.rootDir}/resource/src/main/resources"  />
         </copy>
 
         <echo/>
@@ -164,7 +171,7 @@
         <echo message="************************************************************************************"/>
         <echo/>
 
-        <antcall target="prepare-js"/>
+        <!--<antcall target="prepare-js"/>-->
 
 <!--
         <copy todir="${targetname}/resources">
@@ -184,7 +191,7 @@
         <echo message="copying forms..."/>
         <echo message="************************************************************************************"/>
         <echo/>
-        <xslt basedir="${src.dir}/main/xforms"
+        <xslt basedir="${src.dir}/src/main/xforms"
               destdir="${basedir}/target/${betty.app.name}-${betty.app.version}"
               style="${basedir}/src/resources/xslt/xhtml2betty.xsl"
               force="true"

@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
 <!-- $Id: betterform-config.xml 3274 2008-07-16 17:01:30Z lasse $ -->
 <betterform-config>
 
@@ -20,7 +25,7 @@
 
         <property name="error.page" value="jsp/error.jsp"
                   description="location of error-page relative to context"/>
-        
+
 		<!-- DEPRECATED -->
 <!--
         <property name="defaultProcessorBase" value="remote"
@@ -106,30 +111,32 @@
 
         <!--
              Full classpath of SSLProtocolSocketFactory which should be used by httpclient.
-             For now there is only one implementing Class in betterFORM, which allows verification of a server cert (KeyStoreSSLProtocolSocketFactory).
+             For now there is only one implementing Class in betterFORM, which allows verification of a server cert (KeyStoreSSLContext).
              SSLProtocolSocketFactory-Handling will be activated if the property is specified.
+             ! You have to uncomment this if you would like to use betterFORM with custom SSL-Certificates. !
         -->
 <!--
-        <property name="httpclient.ssl.factory" value="de.betterform.connector.http.ssl.KeyStoreSSLProtocolSocketFactory" description="Full classpath of SSLProtocolSocketFactory which should be used by httpclient."/>
+        <property name="httpclient.ssl.context" value="de.betterform.connector.http.ssl.KeyStoreSSLContext" description="Full classpath of SSLProtocolSocketFactory which should be used by httpclient."/>
 -->
         <!--
-            Specify defaultPort for SSLProtocolSocketFactory for httpclient.
-            If not specified 443 will be used.
+            Specify a customPort for SSLProtocolSocketFactory for httpclient.
+            Port 443,8443 are the default ports.
             See: http://hc.apache.org/httpclient-3.x/apidocs/org/apache/commons/httpclient/protocol/Protocol.html
         -->
-        <property name="httpclient.ssl.factory.defaultPort" value="DEFAULT-SSL-PORT" description="Specify defaultPort for SSLProtocolSocketFactory for httpclient. 443 if not specified."/>
-
+<!--
+        <property name="httpclient.ssl.context.customPort" value="CUSTOM-SSL-PORT" description="Specify custom Port for SSLProtocolSocketFactory for httpclient. 443,8443 if not specified."/>
+-->
         <!--
            Location of JAVA keystore used by httpclient to verify trusted ssl-certs.
-           If / is omitted in the value "user.home" will be used a relative path.
+           If / (root-dir) is omitted in the value "user.home" will be used as relative path.
            Otherwise an absolute path is expected.
-           Used by: KeyStoreSSLProtocolSocketFactory
+           Used by: KeyStoreSSLContext
         -->
         <property name="httpclient.ssl.keystore.path" value="PATH-TO-KEYSTORE" description="Location of the keystore to be used by httpclient."/>
 
         <!--
             Password to unlock JAVA keystore.
-            Used by: KeyStoreSSLProtocolSocketFactory
+            Used by: KeyStoreSSLContext
         -->
         <property name="httpclient.ssl.keystore.passwd" value="KEYSTORE-PASSWD" description="Password to unlock keystore."/>
 
@@ -194,6 +201,7 @@
         <submission-handler scheme="file" class="de.betterform.connector.file.FileSubmissionHandler"/>
         <submission-handler scheme="http" class="de.betterform.connector.http.HTTPSubmissionHandler"/>
         <submission-handler scheme="https" class="de.betterform.connector.http.HTTPSubmissionHandler"/>
+        <submission-handler scheme="ant" class="de.betterform.connector.ant.AntSubmissionHandler"/>
         <!-- HTTPSubmissionHandlerXI evaluates any bf:include within the data to load -->
 <!--
         <submission-handler scheme="http" class="de.betterform.connector.http.HTTPSubmissionHandlerXI"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 <xsl:stylesheet version="2.0"
@@ -8,6 +8,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xf="http://www.w3.org/2002/xforms"
                 xmlns:bf="http://betterform.sourceforge.net/xforms"
+                xmlns:ev="http://www.w3.org/2001/xml-events"
                 exclude-result-prefixes="xf bf"
                 xpath-default-namespace= "http://www.w3.org/1999/xhtml">
 
@@ -69,6 +70,7 @@
     <!-- ############################################ VARIABLES ################################################ -->
     <!-- ### checks, whether this form uses uploads. Used to set form enctype attribute ### -->
     <xsl:variable name="uses-upload" select="exists(//*/xf:upload)"/>
+    <xsl:variable name="uses-DOMFocusIn" select="exists(//*[@ev:event='DOMFocusIn'])"/>
 
     <!-- ### checks, whether this form makes use of <textarea xf:mediatype='text/html'/> ### -->
     <!--<xsl:variable name="uses-html-textarea" select="boolean(//xf:textarea[@mediatype='text/html'])"/>-->
@@ -131,18 +133,7 @@
             <xsl:call-template name="getLinkAndStyle"/>
 
             <!-- include needed javascript files -->
-            <xsl:call-template name="addDojoConfig"/>
-            <xsl:call-template name="addDojoImport"/>
-            <xsl:call-template name="addDWRImports"/>
-
-            <!-- Optional Simile Timeline Javascript Imports -->
-            <xsl:if test="exists(//xf:input[@appearance='caSimileTimeline'])">
-                <xsl:call-template name="addSimileTimelineImports" />
-            </xsl:if>
-
-            <xsl:call-template name="addLocalScript"/>
             <xsl:call-template name="copyInlineScript"/>
-
         </head>
     </xsl:template>
 
@@ -154,43 +145,42 @@
 
     <xsl:template name="addLocalScript">
         <script type="text/javascript" defer="defer">
-            <xsl:if test="$debug-enabled">function getXFormsDOM(){
-                Flux.getXFormsDOM(document.getElementById("bfSessionKey").value,
-                function(data){
-                console.dirxml(data);
-                }
-                );
+            <xsl:if test="$debug-enabled">
+                function getXFormsDOM(){
+                    Flux.getXFormsDOM(document.getElementById("bfSessionKey").value,
+                                    function(data){console.dirxml(data);}
+                    );
                 }
 
                 function getInstanceDocument(instanceId){
-                var model = dojo.query(".xfModel", dojo.doc)[0];
-                dijit.byId(dojo.attr(model, "id")).getInstanceDocument(instanceId,
-                function(data){
-                console.dirxml(data);
-                });
+                    var model = dojo.query(".xfModel", dojo.doc)[0];
+                    dijit.byId(dojo.attr(model, "id")).getInstanceDocument(instanceId,
+                    function(data){
+                        console.dirxml(data);
+                    });
                 }
             </xsl:if>
 
             <!--
-                            function loadBetterFORMJs(pathToRelease, developmentJsClass){
-                                if (isBetterFORMRelease) {
-                                    var scriptElement = document.createElement('script');
-                                    scriptElement.type = 'text/javascript';
-                                    scriptElement.src = pathToRelease;
-                                    document.getElementsByTagName('head')[0].appendChild(scriptElement);
-                                } else {
-                                    dojo.require(developmentJsClass);
-                                }
-                            }
+            function loadBetterFORMJs(pathToRelease, developmentJsClass){
+                if (isBetterFORMRelease) {
+                    var scriptElement = document.createElement('script');
+                    scriptElement.type = 'text/javascript';
+                    scriptElement.src = pathToRelease;
+                    document.getElementsByTagName('head')[0].appendChild(scriptElement);
+                } else {
+                    dojo.require(developmentJsClass);
+                }
+            }
             -->
 
             dojo.addOnLoad(function(){
-            dojo.addOnLoad(function(){
-            dojo.parser.parse();
-            Flux._path = dojo.attr(dojo.byId("fluxProcessor"), "contextroot") + "/Flux";
-            Flux.init( dojo.attr(dojo.byId("fluxProcessor"),"sessionkey"),
-            dojo.hitch(fluxProcessor,fluxProcessor.applyChanges));
-            });
+                dojo.addOnLoad(function(){
+                    dojo.parser.parse();
+                    Flux._path = dojo.attr(dojo.byId("fluxProcessor"), "contextroot") + "/Flux";
+                    Flux.init( dojo.attr(dojo.byId("fluxProcessor"),"sessionkey"),
+                    dojo.hitch(fluxProcessor,fluxProcessor.applyChanges));
+                });
             });
         </script><xsl:text>
 </xsl:text>
@@ -219,67 +209,29 @@
 </xsl:text>
     </xsl:template>
 
-    <xsl:template name="addDojoConfig">
-        <xsl:choose>
-            <xsl:when test="$useCDN='true'">
-                <script type="text/javascript">
-                    var djConfig = {
-                    debugAtAllCosts:false,
-                    locale:'<xsl:value-of select="$locale"/>',
-                    isDebug:false,
-                    baseUrl:"<xsl:value-of select="concat($contextroot,$scriptPath)"/>",
-                    modulePaths:{"betterform":"betterform"},
-                    xWaitSeconds:10,
-                    parseOnLoad:false
-                    };
-                </script><xsl:text>
-</xsl:text>
-            </xsl:when>
-            <xsl:otherwise>
-                <script type="text/javascript">
-                    var djConfig = {
-                        debugAtAllCosts:<xsl:value-of select="$debug-enabled"/>,
-                        locale:'<xsl:value-of select="$locale"/>',
-                        isDebug:<xsl:value-of select="$debug-enabled"/>,
-                        parseOnLoad:false
-                    };
-                </script><xsl:text>
-</xsl:text>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
-
     <xsl:template name="addDojoImport">
-        <script type="text/javascript">
-            var isBetterFORMRelease = true;
-        </script>
+        <xsl:variable name="dojoConfig">
+            debugAtAllCosts:<xsl:value-of select="$debug-enabled"/>,
+            locale:'<xsl:value-of select="$locale"/>',
+            isDebug:<xsl:value-of select="$debug-enabled"/>,
+            parseOnLoad:false
+        </xsl:variable>
+
         <xsl:choose>
             <xsl:when test="$useCDN='true'">
                 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js"> </script><xsl:text>
 </xsl:text>
             </xsl:when>
             <xsl:otherwise>
-                <script type="text/javascript" src="{concat($contextroot,$scriptPath,'dojo/dojo.js')}"> </script><xsl:text>
+                <script type="text/javascript" src="{concat($contextroot,$scriptPath,'dojo/dojo.js')}">
+                    <xsl:attribute name="data-dojo-config"><xsl:value-of select="normalize-space($dojoConfig)"/></xsl:attribute>
+                </script><xsl:text>
 </xsl:text>
             </xsl:otherwise>
         </xsl:choose>
 
-        <xsl:choose>
-            <xsl:when test="exists(//script[@id='betterformJs'])">
-                <!-- do nothin if id 'betterformJs' is available (means betterform.js is allready importet -->
-            </xsl:when>
-<!--
-            <xsl:when test="not(exists(//xf:select)) and not(exists(//xf:select1)) and not(exists(//xf:upload)) and not(exists(//xf:repeat)) and not(exists(//xf:switch)) and not(exists(//xf:range))  and not(exists(//xf:textarea))">
-                <script type="text/javascript" src="{concat($contextroot,$scriptPath,'betterform/betterform-Minimal.js')}">&#160;</script>
-            </xsl:when>
-            <xsl:when test="not(exists(//xf:range)) and not(exists(//xf:textarea))">
-                <script type="text/javascript" src="{concat($contextroot,$scriptPath,'betterform/betterform-Compact.js')}">&#160;</script>
-            </xsl:when>
--->
-            <xsl:otherwise>
-                <script type="text/javascript" src="{concat($contextroot,$scriptPath,'betterform/betterform-Full.js')}">&#160;</script>
-            </xsl:otherwise>
-        </xsl:choose>
+
+        <script type="text/javascript" src="{concat($contextroot,$scriptPath,'betterform/betterform-Full.js')}">&#160;</script>
         <xsl:text>
 </xsl:text>
     </xsl:template>
@@ -329,19 +281,18 @@
             </div>
             <noscript>
                 <div id="noScript">
-                    Sorry, you don't have Javascript enabled in your browser. Click here for a non-scripted version
-                    of this form.
+                    Sorry, this page relies on JavaScript which is not enabled in your browser.
                 </div>
             </noscript>
             <div id="formWrapper">
-                <div dojotype="betterform.FluxProcessor" jsId="fluxProcessor" id="fluxProcessor" sessionkey="{$sessionKey}" contextroot="{$contextroot}">
+                <div dojotype="betterform.FluxProcessor" jsId="fluxProcessor" id="fluxProcessor" sessionkey="{$sessionKey}" contextroot="{$contextroot}" usesDOMFocusIN="{$uses-DOMFocusIn}" dataPrefix="{$data-prefix}">
 
                     <xsl:for-each select="//xf:model">
                         <div class="xfModel" style="display:none" id="{@id}" jsId="{@id}" dojoType="betterform.XFormsModelElement"/>
                      </xsl:for-each>
 
                      <xsl:variable name="outermostNodeset"
-                                  select=".//xf:*[not(xf:model)][not(ancestor::xf:*)]"/>
+                                  select=".//xf:*[not(ancestor::*[namespace-uri()='http://www.w3.org/2002/xforms'])][not(namespace-uri()='http://www.w3.org/2002/xforms' and local-name()='model')]"/>
 
                     <!-- detect how many outermost XForms elements we have in the body -->
                     <xsl:choose>
@@ -375,6 +326,18 @@
                 </div>
             </div>
 
+            <xsl:call-template name="addDojoImport"/>
+            <xsl:call-template name="addDWRImports"/>
+
+            <!-- Optional Simile Timeline Javascript Imports -->
+            <xsl:if test="exists(//xf:input[@appearance='caSimileTimeline'])">
+                <xsl:call-template name="addSimileTimelineImports" />
+            </xsl:if>
+
+            <xsl:call-template name="addLocalScript"/>
+            <xsl:call-template name="copyInlineScript"/>
+
+
             <div id="bfMessageDialog" dojotype="dijit.Dialog" style="text-align:center;display:none;">
                 <div id="messageContent"></div>
                 <button dojotype="dijit.form.Button" type="button" style="margin:10px;">OK
@@ -386,19 +349,61 @@
 
             <xsl:if test="$debug-enabled='true'">
                 <!-- z-index of 1000 so it is also in front of shim for modal dialogs -->
-                <div id="debug-pane" context="{concat($contextroot,'/inspector/',$sessionKey,'/')}">
-                    <div style="float:right;margin-right:20px;text-align:right;" id="copyright">
-                        <a href="http://www.betterform.de">
-                            <img style="vertical-align:text-bottom; margin-right:5px;"
-                                 src="{concat($contextroot,'/bfResources/images/betterform_icon16x16.png')}" alt="betterFORM project"/>
-                        </a>
-                        <span>&#xA9; 2011 betterFORM</span>
-                    </div>
-                    <span id="debug-pane-links" style="float:left;width:80%;">
-                        <a href="{concat($contextroot,'/inspector/',$sessionKey,'/','hostDOM')}" target="_blank">Host Document</a>
-                    </span>
+                <script type="text/javascript">
+                    function toggleDebug(){
+                        var debugpane = dojo.byId("debug-pane");
+                        if(dojo.hasClass(debugpane,"open")){
+                            var closeAnim = dojo.animateProperty({
+                              node:debugpane,
+                              properties: {
+                                  width:{start:100,end:0,unit:"%"},
+                                  opacity:{start:1.0, end:0}
+                              }
+                            });
+                            dojo.connect(closeAnim, "onEnd", function(node){
+                                dojo.style(node,"opacity", 0);
+                                dojo.style(node,"display", "none");
+                            });
+                            closeAnim.play();
+                            dojo.removeClass(debugpane,"open");
+                            dojo.addClass(debugpane,"closed");
+
+                        }else{
+                            dojo.style(debugpane,"display", "block");
+                            var openAnim = dojo.animateProperty({
+                              node:debugpane,
+                              properties: {
+                                  width:{start:0,end:100,units:"%"},
+                                  opacity:{start:0, end:1.0}
+                              }
+                            });
+                            dojo.connect(openAnim, "onEnd", function(node){
+                                dojo.style(node,"opacity", 1.0);
+
+                            });
+                            openAnim.play();
+                            dojo.removeClass(debugpane,"closed");
+                            dojo.addClass(debugpane,"open");
+                        }
+                    }
+                </script>
+                <div id="openclose">
+                    <a href="javascript:toggleDebug();" ><img class="debug-icon" src="{concat($contextroot,'/bfResources/images/collapse.png')}" alt=""/></a>
                 </div>
+                    <div id="debug-pane" class="open" context="{concat($contextroot,'/inspector/',$sessionKey,'/')}">
+                        <div style="float:right;margin-right:20px;text-align:right;" id="copyright">
+                            <a href="http://www.betterform.de">
+                                <img style="vertical-align:text-bottom; margin-right:5px;"
+                                     src="{concat($contextroot,'/bfResources/images/betterform_icon16x16.png')}" alt="betterFORM project"/>
+                            </a>
+                            <span>&#xA9; 2011 betterFORM</span>
+                        </div>
+                        <div id="debug-pane-links">
+                            <a href="{concat($contextroot,'/inspector/',$sessionKey,'/','hostDOM')}" target="_blank">Host Document</a>
+                        </div>
+                    </div>
             </xsl:if>
+
         </body>
     </xsl:template>
 
@@ -469,7 +474,7 @@
             <xsl:call-template name="assemble-label-classes"/>
         </xsl:variable>
 
-        <div id="{$id}" dojoType="betterform.ui.Control" class="{$control-classes}">
+        <span id="{$id}" dojoType="betterform.ui.Control" class="{$control-classes}">
 
             <xsl:call-template name="copy-style-attribute"/>
             <xsl:if test="@bf:incremental-delay">
@@ -488,7 +493,7 @@
             <!--<xsl:apply-templates select="xf:help"/>-->
 
             <xsl:copy-of select="script"/>
-        </div>
+        </span>
     </xsl:template>
 
     <!-- cause outputs can be inline they should not use a block element wrapper -->
@@ -602,9 +607,9 @@
     <xsl:template match="xf:help">
         <!--<span id="{../@id}-help" class="xfHelp" style="display:none;">-->
             <!--<div id="{../@id}-help" class="xfHelp">-->
-        <div id="{../@id}-help-text" class="bfHelpText" style="display:none;">
+        <span id="{../@id}-help-text" class="bfHelpText" style="display:none;">
             <xsl:apply-templates/>
-        </div>
+        </span>
         <!--</div>-->
         <!--</span>-->
     </xsl:template>
@@ -625,7 +630,7 @@
     <xsl:template match="xf:hint">
         <xsl:variable name="parentId" select="../@id"/>
         <!--<xsl:message terminate="no">parentId: <xsl:value-of select="../@id"/>  id: <xsl:value-of select="@id"/> </xsl:message>-->
-        <div id="{../@id}-hint" class="xfHint" style="display:none">
+        <span id="{../@id}-hint" class="xfHint" style="display:none">
             <xsl:apply-templates/>
 
             <!-- if help exists we output the linking icon here -->
@@ -641,7 +646,7 @@
             </xsl:if>
             <xsl:apply-templates select="../xf:help"/>
 
-        </div>
+        </span>
     </xsl:template>
 
 
@@ -690,7 +695,7 @@
                             $lname='textarea' or
                             $lname='upload'">
 
-                <div id="{concat($id,'-value')}"
+                <span id="{concat($id,'-value')}"
                      class="xfValue"
                      dataType="{$datatype}"
                      controlType="{$lname}"
@@ -699,7 +704,7 @@
                      incremental="{$incremental}"
                      delay="{$incrementaldelay}"
                      tabindex="{$navindex}"
-                     title="{normalize-space(xf:hint)}">
+                     title="">
 
                     <xsl:if test="$accesskey != 'none'">
                         <xsl:attribute name="accessKey"><xsl:value-of select="$accesskey"/></xsl:attribute>
@@ -757,7 +762,7 @@
                         </xsl:otherwise>
                     </xsl:choose>
 
-                </div>
+                </span>
                 <!--<div style="display:none;" id="{concat($id,'-hint')}"><xsl:value-of select="xf:hint"/></div>-->
             </xsl:when>
 
@@ -780,7 +785,7 @@
                      name="{$name}"
                      tabindex="{$navindex}"
                      value="{$value}"
-                     title="{normalize-space(xf:hint)}"
+                     title=""
                      type="button">
                     <xsl:if test="$accesskey != ' none'">
                         <xsl:attribute name="accessKey"><xsl:value-of select="$accesskey"/></xsl:attribute>
@@ -797,7 +802,7 @@
                 <xsl:variable name="step" select="bf:data/@bf:step"/>
                 <xsl:variable name="appearance" select="@appearance"/>
 
-                <div id="{concat(@id,'-value')}"
+                <span id="{concat(@id,'-value')}"
                      class="xfValue"
                      dataType="{$datatype}"
                      controlType="{local-name()}"
@@ -809,7 +814,7 @@
                      end="{$end}"
                      step="{$step}"
                      value="{$value}"
-                     title="{normalize-space(xf:hint)}">
+                     title="">
                     <xsl:if test="$accesskey != ' none'">
                         <xsl:attribute name="accessKey"><xsl:value-of select="$accesskey"/></xsl:attribute>
                     </xsl:if>
@@ -824,7 +829,7 @@
                             <li><xsl:value-of select="$end"/></li>
                         </xsl:if>
                     </ol>-->
-                </div>
+                </span>
             </xsl:when>
             <xsl:when test="local-name()='select'">
                 <xsl:call-template name="select"/>

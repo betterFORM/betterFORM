@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -91,8 +91,7 @@ public class UIElementStateUtil {
         if(currentValue instanceof Element && newValue instanceof Element){
             DOMComparator comparator = new DOMComparator();
             comparator.setIgnoreNamespaceDeclarations(true);
-            boolean result = !comparator.compare(((Element)currentValue), ((Element)newValue));
-            return result;
+            return !comparator.compare(((Element)currentValue), ((Element)newValue));
         }else if(newValue instanceof Element || currentValue instanceof Element) {
             return false;
         }else {
@@ -323,11 +322,7 @@ public class UIElementStateUtil {
                     NumberFormat formatter = NumberFormat.getNumberInstance(locale);
                     if(formatter instanceof DecimalFormat){
                         //get original number format
-                        NumberFormat original = NumberFormat.getNumberInstance();
-                        DecimalFormatSymbols symbols = ((DecimalFormat)original).getDecimalFormatSymbols();
-                        char decimalSeparator = symbols.getDecimalSeparator();
-
-                        int separatorPos = value.indexOf(decimalSeparator);
+                        int separatorPos = value.indexOf(".");
                         if(separatorPos == -1){
                             formatter.setMaximumFractionDigits(0);
                         }else{
@@ -358,15 +353,15 @@ public class UIElementStateUtil {
                 //hackery due to lacking pattern for ISO 8601 Timezone representation in SimpleDateFormat
                 String timezone = "";
                 String dateTime = null;
-                if (value.indexOf("GMT") != -1) {
+                if (value.contains("GMT")) {
                     timezone = " GMT" + value.substring(value.lastIndexOf(":") - 3, value.length());
                     int devider = value.lastIndexOf(":");
                     dateTime = value.substring(0, devider) + value.substring(devider + 1, value.length());
-                } else if (value.indexOf("Z") != -1) {
+                } else if (value.contains("Z")) {
                     timezone = "";
                     dateTime = value.substring(0, value.indexOf("Z"));
 
-                }else if (value.indexOf("+") != -1) {
+                }else if (value.contains("+")) {
                     timezone = value.substring(value.indexOf("+"),value.length());
                     dateTime = value.substring(0, value.indexOf("+"));
 
@@ -385,8 +380,8 @@ public class UIElementStateUtil {
 
             } else {
                 //not logging for type 'string'
-                if(LOGGER.isWarnEnabled() && !(tmpType.equals("string"))) {
-                    LOGGER.warn("Type " + tmpType + " cannot be localized");        
+                if(LOGGER.isTraceEnabled() && !(tmpType.equals("string"))) {
+                    LOGGER.trace("Type " + tmpType + " cannot be localized");
                 }
             }
         }

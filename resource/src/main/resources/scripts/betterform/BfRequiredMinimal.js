@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
 /**
  All Rights Reserved.
  @author Joern Turner
@@ -30,6 +35,8 @@ dojo.require("betterform.ui.common.ToolTipAlert");
 dojo.require("betterform.ui.input.Boolean");
 dojo.require("betterform.ui.input.TextField");
 dojo.require("betterform.ui.input.Date");
+dojo.require("betterform.ui.input.Time");
+dojo.require("betterform.ui.input.DropDownDate");
 dojo.require("betterform.ui.input.DateTime");
 dojo.require("betterform.ui.output.Link");
 dojo.require("betterform.ui.output.Image");

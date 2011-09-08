@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -73,7 +73,7 @@ dojo.declare(
     _handleSetControlValue:function(value) {
         this.focusNode.value = value;
         //this.setDisplayedValue(value);
-        this.attr('displayedValue',value);
+        this.set('displayedValue',value);
     },
 
 

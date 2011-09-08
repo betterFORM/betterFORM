@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package de.betterform.agent.web.resources;
 
 import de.betterform.agent.web.resources.stream.DefaultResourceStreamer;
@@ -34,7 +35,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 
 /**
  * ResourceServlet is responsible for streaming resources like css, script, images and etc to the client.
@@ -46,6 +46,7 @@ public class ResourceServlet extends HttpServlet {
     private static Map<String, String> mimeTypes;
     private List<ResourceStreamer> resourceStreamers;
     private boolean caching;
+    private boolean exploded = false;
     /**
      * RESOURCE_FOLDER refers to the location in the classpath where resources are found.
      */
@@ -77,6 +78,11 @@ public class ResourceServlet extends HttpServlet {
                 LOG.trace("Caching of Resources is enabled - resources are loaded from classpath");
             }
         }
+
+        if (new File(config.getServletContext().getRealPath("WEB-INF/classes/META-INF/resources")).exists()) {
+            exploded = true;
+        }
+
         initMimeTypes();
         initResourceStreamers();
     }
@@ -141,7 +147,7 @@ public class ResourceServlet extends HttpServlet {
         InputStream inputStream = null;
 
         try {
-            if(!caching){
+            if(exploded){
                 String path = ResourceServlet.class.getResource(resourcePath).getPath();
                 inputStream = new FileInputStream(new File(path));
                 if(LOG.isTraceEnabled()){

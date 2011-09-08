@@ -37,7 +37,7 @@
                     <xf:instance xmlns="">
                         <data>
                             <input1 constraint="true" readonly="false" required="true" relevant="true">
-                                <value></value>
+                                <value>2011-09-07</value>
                             </input1>
                         </data>
                     </xf:instance>

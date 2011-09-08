@@ -1,0 +1,23 @@
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<data>
+    <task client="" project="" iteration="">
+        <id/>
+        <date/>        
+        <start/>
+        <end/>
+        <project/>
+        <duration hours="0" minutes="0"/>
+        <who/>
+        <what/>
+        <note/>
+        <billable>false</billable>
+        <billed date="">false</billed>
+        <status/>
+        <created/>
+        <tag/>
+    </task>
+</data>

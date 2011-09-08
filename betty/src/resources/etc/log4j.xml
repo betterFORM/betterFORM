@@ -61,7 +61,7 @@
 -->
 
     <category name="de.betterform">
-        <priority value="DEBUG"/>
+        <priority value="ERROR"/>
     </category>
 
     <logger name="net.sf.ehcache">
@@ -69,7 +69,7 @@
     </logger>
 
     <root>
-        <priority value="DEBUG"/>
+        <priority value="ERROR"/>
         <appender-ref ref="SHELL"/>
     </root>
 

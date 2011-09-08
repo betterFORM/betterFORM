@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
 <!-- $Id: build.xml,v 1.90 2006/11/16 23:55:43 joernt Exp $ -->
 <project name="Editor generator tools" default="deployEditor" basedir=".">
 
@@ -34,8 +39,20 @@
         </xslt>
     </target>
 
-    <target name="generate-HTML-Forms" depends="generate-xf-datatype-list"  description="generates HTML forms from XForms">
+    <!--<target name="sort-XForms" depends="generate-XForms" description="sort properties">-->
+    <target name="sort-XForms" description="sort properties">
         <xslt basedir="${basedir}/target/xforms"
+            destdir="${basedir}/target/sortedxforms/"
+            style="${basedir}/sortXForms.xsl"
+            extension=".xhtml"
+            force="true">
+            <classpath refid="transform.class.path"/>            
+        </xslt>
+    </target>
+    
+    <target name="generate-HTML-Forms" depends="generate-xf-datatype-list"  description="generates HTML forms from XForms">
+        <antcall target="sort-XForms"/>
+        <xslt basedir="${basedir}/target/sortedxforms"
               destdir="${basedir}/target/html/"
               style="${basedir}/generate-html-forms.xsl"
               extension=".html"
@@ -100,6 +117,10 @@
     </target>
 
     <target name="generateJSforChildElementCheck" depends="generateChildList" description="generate list of possible child elements">
+        <echo>
+            Attention: this target re-generates the list of childs from schema. The add menu js is created from
+            an hand-edited version of this file in 'resources' dir.
+        </echo>
         <xslt in="${basedir}/target/childlist.xml"
               out="${basedir}/target/xfUtil.js"
               style="${basedir}/generateJSforChildElementCheck.xsl"
@@ -108,12 +129,41 @@
         </xslt>
     </target>
 
+    <target name="generateJSforAddMenus" description="generate list of possible child elements">
+        <xslt in="${basedir}/resources/childlist.xml"
+              out="${basedir}/target/addMenu.js"
+              style="${basedir}/generateJSforAddMenus.xsl"
+              force="true"
+              classpathref="transform.class.path">
+        </xslt>
+    </target>
+
+    <target name="generate-Component Tree" depends="generateChildList" description="generates the markup for the componentTree ">
+        <xslt in="${basedir}/target/childlist.xml"
+              out="${basedir}/target/componentTree.html"
+              style="${basedir}/generateComponentTree.xsl"
+              force="true"
+              classpathref="transform.class.path">
+        </xslt>
+    </target>
+
+
     <target  name="deployEditor" depends="generate-HTML-Forms" description="generates HTML forms and deploys them to xforms/incubator/editor">
         <copy todir="${basedir}/../../resource/src/main/xforms/incubator/editor" flatten="true" overwrite="true">
             <fileset dir="${basedir}" includes="target/html/*.html"/>
             <fileset dir="${basedir}" includes="target/html/*.json"/>
         </copy>
         <ant antfile="../../web/build.xml" inheritall="false" target="deploy-forms"/>
+    </target>
+
+    <target name="update-originDoc" description="generates the markup for the componentTree ">
+        <xslt in="${basedir}/target/dump-xforms.xhtml"
+              out="${basedir}/target/merged.xhtml"
+              style="${basedir}/updateOriginal.xsl"
+              force="true"
+              classpathref="transform.class.path">
+            <param name="originDoc" expression="testinput/registration.xhtml"/>
+        </xslt>
     </target>
 
 </project>

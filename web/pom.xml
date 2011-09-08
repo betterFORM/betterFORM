@@ -1,14 +1,18 @@
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <groupId>de.betterform</groupId>
         <artifactId>betterform-project</artifactId>
-        <version>3.2.0-prerelease</version>
+        <version>3.2.0-RC3</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.betterform</groupId>
     <artifactId>betterform</artifactId>
-    <version>3.2.0-RC2</version>
+    <version>3.2.0-RC3</version>
     
     
 
@@ -94,7 +98,7 @@
 <dependency>
 <groupId>de.betterform</groupId>
 <artifactId>betterform-core</artifactId>
-<version>3.2.0-prerelease</version>
+<version>3.2.0-RC3</version>
 </dependency>
 <dependency>
 <groupId>org.directwebremoting.dwr</groupId>
@@ -214,6 +218,11 @@
 <version>1.6.2</version>
 </dependency>
 <dependency>
+<groupId>org.apache.ant</groupId>
+<artifactId>ant</artifactId>
+<version>1.8.2</version>
+</dependency>
+<dependency>
 <groupId>junit</groupId>
 <artifactId>junit</artifactId>
 <version>3.8.2</version>
@@ -270,6 +279,12 @@
         </contributor>
         <contributor>
             <name>Brian Dueck</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Daniele Ippoliti</name>
             <roles>
                 <role>Developer</role>
             </roles>

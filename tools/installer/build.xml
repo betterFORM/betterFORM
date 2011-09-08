@@ -1,4 +1,9 @@
-<project name="Installer" default="create-betterFormInstaller" basedir=".">
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<project name="Installer" default="create-betterFORMInstaller" basedir=".">
     <property name="installer.dir" value="."/>
 
     <property name="buildfiles.dir" value="${basedir}/build-files"/>
@@ -7,6 +12,9 @@
     <property name="installer.target" value="${basedir}/target"/>
     <property name="installer.utils" value="${basedir}/target-utils"/>
 
+    <property name="eXist.db.user" value="betterFORM"/>
+    <property name="eXist.db.passwd" value="Tha0xeiC8a"/>
+
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
     <target name="clean">
@@ -14,7 +22,7 @@
     </target>
 
     <tstamp>
-        <format property="build.date" pattern="yyyyMMddHHmmss"/>
+        <format property="build.date" pattern="yyyyMMdd-HHmmss"/>
     </tstamp>
 
 
@@ -43,18 +51,35 @@
 
     </target>
 
-    <target name="create-betterFormInstaller" description="Builds a betterForm Installer providing WAR, jetty-standalone and XRX-Bundle" depends="prepare">
+
+    <target name="create-betterFORMInstaller-jar" description="Builds a betterForm Installer providing WAR, jetty-standalone and XRX-Bundle" depends="prepare">
          <echo>
             __== Creating Installer ==__
         </echo>
 
-        <sleep seconds="30" description="wait for fs to settle"/>
-
         <!-- Allows us to use the IzPack Ant task -->
+
+        <!-- Use whole izPack Distribution -->
+        <!--
+        <path id="izpackdeps">
+			<fileset dir="${installer.izPack.dir}/lib/">
+				<include name="*.jar"/>
+			</fileset>
+		</path>
+
+        <taskdef name="izpack" classname="com.izforge.izpack.ant.IzPackTask">
+			<classpath refid="izpackdeps" />
+		</taskdef>
+        -->
+
+        <!-- Use standalone compiler -->
         <taskdef name="izpack"
                  classpath="${basedir}/lib/standalone-compiler-4.3.4.jar"
                  classname="com.izforge.izpack.ant.IzPackTask"/>
 
+
+
+        <sleep seconds="30" description="wait for fs to settle"/>
         <!-- We call IzPack -->
         <echo>
            __== Makes the installer using IzPack ==__
@@ -71,11 +96,27 @@
                 installerType="${installer.installerType}"
                 basedir="${basedir}/target"/>
 
-        <chmod file="${basedir}/target/betterform-install.jar" perm="775"/>
 
 
-        <echo message="\n__== Moving Installer to ${basedir}/betterform-install-${build.date}.jar\n"/>
-        <move file="${basedir}/target/betterform-install.jar" tofile="${basedir}/betterform-install-${build.date}.jar"/>
+
+
+
     </target>
+
+    <target name="create-betterFORMInstaller" depends="create-betterFORMInstaller-jar"  description="Create .exe from installer">
+		<taskdef name="launch4j"
+			classname="net.sf.launch4j.ant.Launch4jTask"
+			classpath="${installer.launch4j.dir}/launch4j.jar:${launch4j.dir}/lib/xstream.jar" />
+
+        <property name="inst-jar" value="${basedir}/target/betterform-install.jar"/>
+		<property name="inst-exe" value="${basedir}/target/betterform-install.exe"/>
+
+        <launch4j configFile="${basedir}/launch4j.xml" jar="${inst-jar}" outfile="${inst-exe}"/>
+
+        <chmod file="${basedir}/target/betterform-install.jar" perm="775"/>
+        <move file="${basedir}/target/betterform-install.jar" tofile="${basedir}/betterform-install-${build.date}.jar"/>
+        <chmod file="${basedir}/target/betterform-install.exe" perm="775"/>
+        <move file="${basedir}/target/betterform-install.exe" tofile="${basedir}/betterform-install-${build.date}.exe"/>
+	</target>
 
 </project>

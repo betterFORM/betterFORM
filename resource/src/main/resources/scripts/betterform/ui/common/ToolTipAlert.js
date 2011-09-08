@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
 dojo.provide("betterform.ui.common.ToolTipAlert");
 
 dojo.require("dojo.NodeList-fx");
@@ -35,6 +40,7 @@ dojo.declare("betterform.ui.common.ToolTipAlert",
 
             dojo.style(alertTooltip.domNode, "opacity", "1");
             dojo.style(alertTooltip.domNode, "cursor", "pointer");
+            dojo.addClass(alertTooltip.domNode, "bfToolTipAlert");
             dojo.addClass(controlValue.domNode, "bfInvalidControl");
 
 /*        if (action == "applyChanges" && (!controlValueIsEmpty || dojo.hasClass(controlValue.domNode, "xsdBoolean"))) {

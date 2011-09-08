@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
@@ -74,8 +74,10 @@
     <!-- ### elements. Other Elements are just copied with their original namespaces.                       ### -->
     <xsl:template match="*|@*|text()|comment()" name="handle-foreign-elements">
         <xsl:choose>
+            <!-- script nodes directly under body are copied in dojo.xsl to place them after dojo.js -->
+            <xsl:when test="local-name(.) = 'script' and local-name(..) = 'body'"/>
             <xsl:when test="namespace-uri(.)='http://www.w3.org/1999/xhtml'">
-                <xsl:element name="{local-name(.)}" namespace="">
+                <xsl:element name="{local-name(.)}" namespace="http://www.w3.org/1999/xhtml">
                     <xsl:apply-templates select="*|@*|text()|comment()"/>
                 </xsl:element>
             </xsl:when>
@@ -89,8 +91,10 @@
 
     <xsl:template match="*|@*|text()|comment()" mode="inline">
         <xsl:choose>
+            <!-- script nodes directly under body are copied in dojo.xsl to place them after dojo.js -->
+            <xsl:when test="local-name(.) = 'script' and local-name(..) = 'body'"/>
             <xsl:when test="namespace-uri(.)='http://www.w3.org/1999/xhtml'">
-                <xsl:element name="{local-name(.)}" namespace="">
+                <xsl:element name="{local-name(.)}" namespace="http://www.w3.org/1999/xhtml">
                     <xsl:apply-templates select="*|@*|text()|comment()" mode="inline"/>
                 </xsl:element>
             </xsl:when>
@@ -152,7 +156,7 @@
     <xsl:template name="copyInlineScript">
         <!-- copy inline javascript -->
         <xsl:for-each select="script">
-            <script>
+            <script xmlns="http://www.w3.org/1999/xhtml">
                 <xsl:attribute name="type">
                     <xsl:value-of select="@type"/>
                 </xsl:attribute>

@@ -1,18 +1,11 @@
-dojo.provide("betterform.BfRequiredTimeTracker");
+/*
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
 
-dojo.require("betterform.BfRequiredFull");
+dojo.provide("betterform.BfRequiredTimeTracker");
 
 dojo.require("dijit.Declaration");
 dojo.require("dijit.Toolbar");
 dojo.require("dijit.ToolbarSeparator");
 dojo.require("dijit.TitlePane");
-
-/*
-dojo.require("dojo.parser");
-dojo.require("dijit.dijit");
-dojo.require("dijit.Dialog");
-dojo.require("betterform.ui.container.Group");
-dojo.require('dijit.layout.ContentPane');
-dojo.require("dijit.form.Button");
-dojo.require("dijit.form.CheckBox");
-*/

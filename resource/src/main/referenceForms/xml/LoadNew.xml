@@ -21,14 +21,17 @@
                     </xf:instance>
                 </xf:model>
 
-<code class="ui">
-<xf:trigger>
-    <xf:label>Load this Page in a new window</xf:label>
-    <xf:action>
-        <xf:load resource="LoadNew.xhtml" show="new"/>
-    </xf:action>
+                <code class="ui">
+<xf:group>
+    <xf:trigger>
+        <xf:label>Load this Page in a new window</xf:label>
+        <xf:action>
+            <xf:load resource="LoadNew.xhtml" show="new"/>
+        </xf:action>
 </xf:trigger>
+</xf:group>
 </code>
+
 
 
 

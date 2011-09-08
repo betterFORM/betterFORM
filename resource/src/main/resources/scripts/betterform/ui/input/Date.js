@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -13,15 +13,13 @@ dojo.require("dijit.form.DateTextBox");
 dojo.declare(
         "betterform.ui.input.Date",
         [betterform.ui.ControlValue, dijit.form.DateTextBox],
-{   
-    constructor:function() {
-       this.incremental = true;
-    },
+{
 
     postMixInProperties:function() {
         this.inherited(arguments);
         this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);
-        /* incremental date does not make sense, if wanted anyway comment in the following line of code and implement _valueChange */
+        this.incremental = false;
+               /* incremental date does not make sense, if wanted anyway comment in the following line of code and implement _valueChange */
         // dojo.connect(this,"_onKeyPress", this,"_valueChanged");
     },
     postCreate:function() {
@@ -54,7 +52,7 @@ dojo.declare(
     getControlValue:function(){
         // console.debug("betterform.ui.input.Date.getControlValue for Control "+ this.id +": ",this.getValue() + " attr: ",this.attr('value'));
         var currentDate;
-        var notISODate = this.attr('value');
+        var notISODate = this.get('value');
         if(notISODate == undefined){
            // console.debug("Empty (undefined) date: this: " , this);
            currentDate = this.focusNode.value;
@@ -70,7 +68,7 @@ dojo.declare(
     _handleSetControlValue:function(date) {
         // console.debug("Date._handleSetControlValue date:",date);
         if(date == undefined || date == ""){
-            this._setValueAttr("");    
+            dojo.attr(this.textbox, "value","");
         }
         else {
             this._setValueAttr(dojo.date.stamp.fromISOString(date,this.constraint));
@@ -80,7 +78,7 @@ dojo.declare(
 
     _handleDOMFocusIn:function() {
         //console.debug("Date._handleDOMFocusIn()");
-        this.focused = true;
+        this.bfFocus = true;
         var control = dijit.byId(this.id);
 
         if (control != undefined ) {

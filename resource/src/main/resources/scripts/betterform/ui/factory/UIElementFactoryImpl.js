@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -62,8 +62,9 @@ dojo.declare(
                 break;
 
             /* Select Cases */
-            case "selectCheckBox":
+            case "selectCheckBoxGroup":
             case "selectList":
+            case "checkBoxEntry":
                 return this.selectFactory.createSelectMultipleWidget(controlType, sourceNode, controlId, classValue);
                 break;
 
@@ -176,26 +177,25 @@ dojo.declare(
 
     createTextareaWidget:function(sourceNode, controlId, mediatype, appearance, classValue) {
         // todo: fixme: textarea mediatype="dojo" makes no sense - should be an appearance instead
-        if(appearance=="minimal" && mediatype != 'text/html' && mediatype !=  'dojo') {
-
-            return  new betterform.ui.textarea. MinimalTextarea({
-                name:controlId + "-value",
-                rows:5,
-                cols:40,
-                "class":classValue,
-                title:dojo.attr(sourceNode,"title"),
-                xfControlId:controlId
-            }, sourceNode);
-        }
-        else if(mediatype == 'text/html') {
+        console.debug("sourceNode: ",sourceNode," controlId:",controlId," mediatype:",mediatype," appearance:",appearance," classValue:",classValue);
+        if(mediatype && mediatype.toLowerCase() == "text/html") {
+            if(!dojo.hasClass(sourceNode,"xfTextareaHTMLValue")){
+                dojo.addClass(sourceNode,"")
+            }
             return new betterform.ui.textarea.HtmlEditor({
                 name:controlId + "-value",
                 "class":classValue,
                 title:dojo.attr(sourceNode,"title"),
-                xfControlId:controlId
+                xfControlId:controlId,
+                height:'100%',
+                extraPlugins:[]
                 }, sourceNode);
         }
-        else if(mediatype == 'dojo') {
+        else if(appearance && appearance.toLowerCase() == "growing"){
+            if(!dojo.hasClass(sourceNode,"xfTextareaGrowingValue")){
+                dojo.addClass(sourceNode,"")
+            }
+
             return new betterform.ui.textarea.DojoEditor({
                 name:controlId + "-value",
                 "class":classValue,
@@ -204,8 +204,12 @@ dojo.declare(
                 title:dojo.attr(sourceNode,"title"),
                 xfControlId:controlId
             }, sourceNode);
+
         }
         else {
+            if(!dojo.hasClass(sourceNode,"xfTextareaValue")){
+                dojo.addClass(sourceNode,"")
+            }
             return new betterform.ui.textarea.SimpleTextarea({
                 name:controlId + "-value",
                 "class":classValue,

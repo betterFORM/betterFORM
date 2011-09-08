@@ -29,7 +29,7 @@
                 <xf:model>
                     <xf:instance>
                         <data xmlns="">
-                            <trigger1 constraint="true" readonly="false" required="true" relevant="true">
+                            <trigger1 constraint="true" readonly="false" required="false" relevant="true">
                                 <value/>
                             </trigger1>
                         </data>

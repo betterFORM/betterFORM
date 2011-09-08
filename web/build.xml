@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<!--
     author: Joern Turner
     author: Lars Windauer
  -->
@@ -113,6 +118,10 @@
             <fileset dir="${resource.src.dir}/main/resources" includes="**/*" excludes="scripts/**" />
         </copy>
 
+        <copy todir="${target}/classes/META-INF/resources/scripts/betterform/editor/">
+            <fileset file="${resource.src.dir}/main/resources/scripts/betterform/editor/addMenu.js"/>
+        </copy>
+
         <!--delete the script folder - did not find a solution to exclude these in the copy above -->
         <!--<delete dir="${basedir}/target/classes/META-INF/resources/scripts"/>-->
 
@@ -207,6 +216,10 @@
               todir="${webapp.dir}"
               filtering="true"
               file="${basedir}/src/main/webapp/dashboard.html"/>
+        <copy description="copy logo page"
+              todir="${webapp.dir}"
+              filtering="true"
+              file="${basedir}/src/main/webapp/logo.html"/>
         <copy description="copy dashboard xforms"
               todir="${webapp.dir}"
               filtering="true"

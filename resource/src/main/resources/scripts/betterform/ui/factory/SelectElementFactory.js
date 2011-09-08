@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -13,14 +13,24 @@ dojo.declare(
 
 
     createSelectMultipleWidget:function(controlType, sourceNode, controlId, classValue){
-        if(controlType == "selectCheckBox") {
+        // console.debug("createSelectMultipleWidget: controlType:",controlType, " sourceNode:", sourceNode, " controlId: ",controlId, " classValue:" ,classValue);
+        if(controlType == "selectCheckBoxGroup") {
             return new betterform.ui.select.CheckBoxGroup({
                                 name:controlId + "-value",
                                 "class":classValue,
                                 title:dojo.attr(sourceNode,"title"),
                                 xfControlId:controlId
                             }, sourceNode);
-        }else {
+        }
+        else if(controlType == "checkBoxEntry") {
+            return new betterform.ui.select.CheckBox({
+                                name:controlId + "-value",
+                                "class":classValue,
+                                title:dojo.attr(sourceNode,"title"),
+                                xfControlId:controlId
+                            }, sourceNode);
+        }
+        else {
             return new betterform.ui.select.MultiSelect({
                 name:controlId + "-value",
                 size:dojo.attr(sourceNode, "size"),
@@ -47,12 +57,15 @@ dojo.declare(
 
             case "select1ComboBoxOpen":
                 return new betterform.ui.select1.ComboBoxOpen({
+                   autoComplete: true,
+                   selectOnClick: true,
                     name:controlId + "-value",
                     size:dojo.attr(sourceNode, "size"),
                     multiple:true,
                     "class":classValue,
                     title:dojo.attr(sourceNode, "title"),
-                    xfControlId:controlId
+                    xfControlId:controlId,
+                    dropDownClass:"betterform.ui.select1._ComboBoxMenu"
                 }, sourceNode);
                 break;
 

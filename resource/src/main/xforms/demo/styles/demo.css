@@ -229,8 +229,8 @@
 }
 
 .contactsSubTrigger {
-    display: inline;
-    text-align: center;
+    display: block;
+    text-align: left;
     width: 210px;
     padding-right: 15px;
 }
@@ -251,6 +251,7 @@
     text-align: center;
     width: 210px;
     padding-right: 15px;
+    margin-left: 10px;
 }
 
 .contactsUpdateMasterTrigger .dijitButtonContents {

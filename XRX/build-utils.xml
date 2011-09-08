@@ -1,16 +1,14 @@
 <!--
-    Status: Work in progress.
-    Purpose of file: minimal-repeating targeta to be called by other build-files
-    Used by:
-
-    TODO:
-    - classpath.exist: 1st: check for exist.installed 2nd. Check for exist.betterform.xrx.installed
--->
-<!--
-  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
-  ~ Author: betterFORM Team (info AT betterform.de)
   -->
+
+<!--
+    Status: Work in progress.
+    Purpose of file: minimal-repeating targets to be called by other build-files
+    Used by:
+-->
+
 
 <project name="betterFORM eXist integration helper targets" default="deploy-all-into-exist" basedir=".">
     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>

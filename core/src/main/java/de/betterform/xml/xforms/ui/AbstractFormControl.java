@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -24,14 +24,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.events.Event;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.text.*;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Locale;
-import java.util.Scanner;
 
 /**
  * Base class for all form controls.
@@ -273,25 +269,11 @@ public abstract class AbstractFormControl extends BindingElement implements Defa
 
                 NumberFormat formatter = NumberFormat.getNumberInstance(locale);
                 formatter.setMaximumFractionDigits(Double.SIZE);
-                Number num = null;
+                BigDecimal number;
 
                 try {
-                   Scanner scanner = new Scanner(value);
-                   scanner.useLocale(locale);
-                   BigDecimal tmpNumber = scanner.nextBigDecimal();
-
-                   num = formatter.parse(value);
-                   //test if value is really a number
-
+                    number = strictParse(value,locale);
                 } catch (ParseException e) {
-                    //try the default locale - else fail with ParseException
-/*
-                    locale = Locale.US;
-                    formatter = NumberFormat.getNumberInstance(locale);
-                    formatter.setMaximumFractionDigits(Double.SIZE);
-                    num = null;
-                    num = formatter.parse(value);
-*/
                     LOGGER.warn("value: '" + value + "' could not be parsed for locale: " + locale);
                     return value;
                 } catch (NumberFormatException nfe) {
@@ -301,7 +283,7 @@ public abstract class AbstractFormControl extends BindingElement implements Defa
                     LOGGER.warn("value: '" + value + "' could not be parsed for locale: " + locale);
                     return value;
                 }
-                return num.toString();
+                return number.toPlainString();
             }
             else if (processor.hasControlType(this.id, NamespaceConstants.XMLSCHEMA_PREFIX + ":date")) {
                 DateFormat df = DateFormat.getDateInstance(DateFormat.DEFAULT, locale);
@@ -310,8 +292,8 @@ public abstract class AbstractFormControl extends BindingElement implements Defa
                     d = df.parse(value);
                 } catch (ParseException e) {
                     //try the default locale - else fail with ParseException
-                    locale = Locale.US;
-                    df = new SimpleDateFormat("yyyy-MM-dd",locale);
+                    df = new SimpleDateFormat("yyyy-MM-dd");
+                    df.setLenient(false);
                     d = df.parse(value);
                 }
                 df = new SimpleDateFormat("yyyy-MM-dd");
@@ -348,6 +330,19 @@ public abstract class AbstractFormControl extends BindingElement implements Defa
         }
         return value;
     }
+
+    private BigDecimal strictParse(String value,Locale locale) throws ParseException {
+        DecimalFormat format = (DecimalFormat) NumberFormat.getInstance(locale);
+        format.setParseBigDecimal(true);
+        value = value.trim();
+        ParsePosition pos = new ParsePosition(0);
+        BigDecimal number = (BigDecimal) format.parse(value, pos);
+        boolean okay = pos.getIndex() == value.length() && pos.getErrorIndex() == -1;
+        if (!okay)
+            throw new ParseException("Could not parse '" + value + "' as a number",pos.getErrorIndex());
+        return number;
+    }
+
                 }
 
 // end of class

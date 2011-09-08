@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -24,14 +24,15 @@ dojo.declare(
     xfControl:null,
     incremental:false,
     currentValue:"",    
-    focused:false,
+    bfFocus:false,
 
 
     applyProperties:function(xfControl, node) {
         this.xfControl = xfControl;
-        // console.debug("ControlValue.applyProperties: xfControl:",xfControl, " template node:",node);
-        if (dojo.attr(node, "incremental") != undefined && dojo.attr(node, "incremental") != "") {
-            this.incremental = eval(dojo.attr(node, "incremental"));
+        //console.debug("ControlValue.applyProperties: xfControl:",xfControl, " template node:",node);
+        var isIncremental = dojo.attr(node, "incremental");
+        if (isIncremental != undefined && isIncremental != "") {
+            this.incremental = eval(isIncremental);
         }else {
             this.incremental = false;
         }
@@ -40,7 +41,7 @@ dojo.declare(
         }
     },
     setCurrentValue:function(value) {
-        // console.debug("ControlValue.setCurrentValue value:",value);
+        //console.debug("ControlValue.setCurrentValue value:",value);
         if (value != undefined) {
             this.currentValue = value;
         } else {
@@ -50,7 +51,7 @@ dojo.declare(
 
     _handleDOMFocusIn:function() {
         // console.debug("ControlValue._handleDOMFocusIn()");
-        this.focused = true;
+        this.bfFocus = true;
         this.domNode.focus();
     },
 
@@ -61,11 +62,11 @@ dojo.declare(
 
         fluxProcessor.currentControlId = this.xfControl.id;
 
-        if(!this.focused){
-            fluxProcessor.dispatchEventType(this.xfControl.id,"DOMFocusIn");
-        }
-
-        this.focused = true;
+            if (!this.bfFocus && fluxProcessor.usesDOMFocusIN) {
+                // console.debug("ControlValue: dispatch DOMFocusIn to ",this.xfControl.id);
+                fluxProcessor.dispatchEventType(this.xfControl.id,"DOMFocusIn");
+            }
+        this.bfFocus = true;
         if(this.xfControl.isValid()){
             dojo.publish("/xf/valid",[this.xfControl.id,"onFocus"]);
         }else {
@@ -81,7 +82,7 @@ dojo.declare(
 
     handleOnBlur:function() {
         // console.debug("ControlValue.handleOnBlur");
-        this.focused = false;
+        this.bfFocus = false;
         if(this.xfControl.isValid()){
             dojo.publish("/xf/valid",[this.xfControl.id,"onBlur"]);
         }else {
@@ -135,7 +136,7 @@ dojo.declare(
         // console.debug("ControlValue.setControlValue: [id", this.id, " / value: ",value,"] currentValue: ",this.currentValue, " getControlValue", this.getControlValue());
         if (value != undefined && this.currentValue != value) {
             this.currentValue = value;
-            this._handleSetControlValue(value);
+            this._handleSetControlValue(value,false);
         }
         var valueNew = this.getControlValue();
         // console.debug("betterform.ui.ControlValue.setControlValue ControlId: "+ this.xfControl.id +" valueOld:'" + this.currentValue + "' valueNew:'" + valueNew + "' [update processor:'" + eval(this.currentValue != valueNew) + "']");

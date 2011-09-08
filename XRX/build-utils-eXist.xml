@@ -1,4 +1,9 @@
 <!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<!--
     Status: Work in progress.
     Purpose of file: minimal-repeating database releated targets to be called by other build-files
     Used by:
@@ -7,16 +12,8 @@
         This build-file uses the eXist-ant-task.
         You need eXist installed or have to provide exist.jar and exist-optional.jar.
         See the "classpath.exist"-path.
-
-    TODO:
-    - classpath.exist: 1st: check for exist.installed 2nd. Check for exist.betterform.xrx.installed
-    - refactor exist.installed to exist.homem, admin.passwd to exist.admin.passwd
 -->
-<!--
-  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
-  ~ Licensed under the terms of BSD License
-  ~ Author: betterFORM Team (info AT betterform.de)
-  -->
+
 
 <project name="eXist DB helper targets" default="install-files-into-eXist-DB" basedir=".">
     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
@@ -26,6 +23,10 @@
 
     <property name="target" value="${basedir}/target-utils"/>
     <property name="dojo.release.dir" value="${target}/dojo-release"/>
+
+    <condition property="password.notset">
+        <equals arg1="${eXist.db.passwd}" arg2=""/>
+    </condition>
 
     <!-- eXist ant-tasks -->
     <path id="classpath.exist">
@@ -40,11 +41,12 @@
         <classpath refid="classpath.exist"/>
     </typedef>
 
-    <target name="install-files-into-eXist-DB" description="Generic xdb:store target. Set properties as needed when you call it.">
+    <!-- Generic xdb:store target. Set properties as needed when you call it. -->
+    <target name="install-files-into-eXist-DB" >
         <property name="file-source-dir" value="${basedir}/db-resources"/>
-        <property name="db-uri" value="xmldb:exist://localhost:8080/betterform/xmlrpc/db/betterform/resources"/>
-        <property name="db-user" value="betterform"/>
-        <property name="db-passwd" value="betterform"/>
+        <property name="db.uri" value="xmldb:exist://localhost:8080/betterform/xmlrpc/db/betterform/resources"/>
+        <property name="db.user" value="betterform"/>
+        <property name="db.passwd" value="betterform"/>
 
         <echo message="------------------------------------------------------------------------------------"/>
         <echo message="  install all files from  ${file-source-dir} into db"/>
@@ -52,20 +54,21 @@
 
 
         <xdb:store xmlns:xdb="http://exist-db.org/ant"
-                   uri="${db-uri}"
+                   uri="${db.uri}"
                    createsubcollections="true"
                    createcollection="true"
-                   user="${db-user}"
-                   password="${db-passwd}">
+                   user="${db.user}"
+                   password="${db.passwd}">
             <fileset dir="${file-source-dir}" excludes="**/.svn **/.svn/**"/>
         </xdb:store>
     </target>
 
-     <target name="install-file-into-eXist-DB" description="Generic xdb:store target. Set properties as needed when you call it.">
+    <!-- Generic xdb:store target. Set properties as needed when you call it -->
+     <target name="install-file-into-eXist-DB" >
         <property name="file-source-dir" value="${basedir}/db-resources"/>
-        <property name="db-uri" value="xmldb:exist://localhost:8080/betterform/xmlrpc/db/betterform/resources"/>
-        <property name="db-user" value="betterform"/>
-        <property name="db-passwd" value="betterform"/>
+        <property name="db.uri" value="xmldb:exist://localhost:8080/betterform/xmlrpc/db/betterform/resources"/>
+        <property name="db.user" value="betterform"/>
+        <property name="db.passwd" value="betterform"/>
 
         <echo message="------------------------------------------------------------------------------------"/>
         <echo message="  install all files from  ${file-source-dir} into db"/>
@@ -73,11 +76,11 @@
 
 
         <xdb:store xmlns:xdb="http://exist-db.org/ant"
-                   uri="${db-uri}"
+                   uri="${db.uri}"
                    createsubcollections="true"
                    createcollection="true"
-                   user="${db-user}"
-                   password="${db-passwd}">
+                   user="${db.user}"
+                   password="${db.passwd}">
             <fileset file="${file-source}"/>
         </xdb:store>
     </target>
@@ -99,18 +102,38 @@
         <sleep seconds="20"/>
     </target>
 
-    <target name="stop-eXist">
-        <echo message="*******************************************************************************"/>
+    <target name="stop-eXist" unless="password.notset">
+        <echo message="******************************************************************************"/>
         <echo message="* Stopping eXist-DB                                                           *"/>
         <echo message="*******************************************************************************"/>
+        <antcall target="stop-eXist-with-password"/>
+        <antcall target="stop-eXist-without-password"/>
 
+    </target>
+
+    <target name="stop-eXist-with-password" unless="password.notset">
         <exec executable="${eXist.home}/bin/shutdown.sh" osfamily="unix">
-            <arg value="-p ${admin.passwd}"/>
+            <arg value="-p ${eXist.db.passwd}"/>
         </exec>
+
         <exec executable="cmd" osfamily="windows">
             <arg value="/c"/>
-            <arg value="${eXist.home}/bin/shutdown.bat -p ${admin.passwd}"/>
+            <arg value="${eXist.home}/bin/shutdown.bat -p ${eXist.db.passwd}"/>
         </exec>
+
+
+        <!-- wait for db shutdown -->
+        <sleep seconds="20"/>
+    </target>
+
+    <target name="stop-eXist-without-password" if="password.notset">
+        <exec executable="${eXist.home}/bin/shutdown.sh" osfamily="unix"/>
+
+        <exec executable="cmd" osfamily="windows">
+            <arg value="/c"/>
+            <arg value="${eXist.home}/bin/shutdown.bat"/>
+        </exec>
+
 
         <!-- wait for db shutdown -->
         <sleep seconds="20"/>

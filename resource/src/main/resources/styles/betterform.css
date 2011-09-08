@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
 /* ***************************************************************************** */
 /* ************** CSS STYLESHEET FOR STYLING XFORMS INSIDE OF HTML ************* */
 /* this stylesheet should be used to overwrite styles in xforms.css **************/
@@ -57,11 +62,11 @@ body {
 }
 
 #debug-pane{
-	opacity:0.7;
+    opacity:0.7;
 	position:fixed;
-	bottom:0;
-	left:0;
-	display:block;
+    bottom: 0;
+    left: 0;
+    display:block;
 	background:#999999;
 	width:100%;
 	padding:5px;
@@ -74,8 +79,24 @@ body {
 	display:inline-block;
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
-}
 
+}
+#openclose{
+    position: fixed;
+    width:30px;
+    height: 30px;
+    z-index: 200;
+    bottom:-6px;
+    left:5px;
+    float:left;
+}
+#openclose img{
+    width: 50%;
+    height: 50%;
+}
+#debug-pane-links{
+    padding-left: 30px;
+}
 
 a.link {
     color: #444444;
@@ -216,6 +237,9 @@ a.active {
 	-webkit-border-radius:5px;
 }
 
+.xfRequiredEmpty:after{
+    content:'Please fill in a value';
+}
 /*
 special handling for alerts and hints in compact groups as the label is above control and changes the situation.
 alert + hints should always be aligned with the control.
@@ -230,18 +254,26 @@ alert + hints should always be aligned with the control.
     color: #333333;
 	vertical-align:middle;
 	background:#FFCFCF url(../images/error.png) 5px 50% no-repeat;
-	z-index:200;
+}
+.xfAlert, .bfToolTipAlert {
+    z-index:200;
 }
 .xfAlert .closeAlertIcon{
 	background:#F2F2F2 url(../images/tabClose.gif) right center no-repeat;
 }
 
 .xfHint {
+    height:15px;
 	border-color:#DBDBDB;
 	background:#F2F2F2 url(../images/hint.png) 5px 50% no-repeat;
-	z-index:100;
+	z-index:300;
 	color:#666666;
 }
+.xfCompactGroup .xfHint,
+.xfCompactGroup .xfAlert{
+    top:19px;
+}
+
 
 .bfHelpWrapper{
 	display:inline-block;
@@ -353,7 +385,9 @@ alert + hints should always be aligned with the control.
 }
 
 .xfLabel {
-    display: inline;
+    display: inline-block;
+    float:left;
+    padding-top: 2px;
 	vertical-align:top;
 }
 
@@ -365,6 +399,25 @@ alert + hints should always be aligned with the control.
     float: left;
 }
 
+.xfDropDownDateControl {
+    display:inline;
+}
+
+.xfDropDownDateControl > xfLabel {
+    float: left;
+}
+
+.xfDropDownDate .xfDropDownDateDays{
+    width: 45px;
+}
+
+.xfDropDownDate .xfDropDownDateYears {
+   width: 60px;
+}
+
+.xfDropDownDate .xfDropDownDateMonths {
+    width: 100px;
+}
 /* ***************************************************************************** */
 /* ***************************************************************************** */
 /* ***************************************************************************** */
@@ -498,6 +551,10 @@ alert + hints should always be aligned with the control.
 }
 
 .bfVerticalTable {
+    position:relative;
+}
+.bfVerticalTable  .bfVerticalTableLabel .xfLabel {
+    padding-top: 7px;
 }
 
 .bfVerticalTable td {
@@ -524,9 +581,13 @@ alert + hints should always be aligned with the control.
 .bfHorizontalTableValue {
 
 }
+.bf .bfHorizontalTable .bfHorizontalTableValue .xfControl {
+    padding:0;
+    margin: 0;
+}
 
-.bfHorizontalTableLabel {
-
+.bf .bfHorizontalTableLabel .bfTableLabel {
+    padding-left: 2px;
 }
 
 .bfHorizontalTableValue .bfHorizontalTableHeader {
@@ -557,8 +618,13 @@ alert + hints should always be aligned with the control.
 .xfRepeatIndex {
     background-color:#DFDFDF;
 }
-.bf .xsdBoolean .xfValue {
+.bf .xsdBoolean .xfValue,
+.bf .bfCheckBoxGroup .xfValue {
 	background-color:#FFFFFF;
+}
+.bf .bfCheckBoxGroup .dijitDisabled,
+.bf .xfReadOnly .dijitCheckBoxReadOnly {
+    background-color: #F3F3F3 !important;
 }
 
 .xfMinimalRepeat {
@@ -573,7 +639,7 @@ alert + hints should always be aligned with the control.
     display: block;
 }
 
-.xfFullRepeat label {
+.xfFullRepeat .xfLabel {
     display: block;
     float: left;
     width: 100px;
@@ -725,6 +791,15 @@ table .xfContainer{
     width: 900px;
     height: 750px;
     overflow: hidden
+}
+.bf .xfOutput {
+    display: block;
+}
+
+
+.xfOutput .xfValue {
+    padding-top: 2px;
+    display:block;
 }
 
 .xfTextareaHTML .xfValue {

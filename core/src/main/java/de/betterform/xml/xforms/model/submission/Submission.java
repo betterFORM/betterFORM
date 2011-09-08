@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -567,9 +567,11 @@ public class Submission extends BindingElement implements DefaultAction {
         Map response;
         try {
             // todo: should be supported by serializers
+/*
             if (this.includenamespaceprefixes != null) {
                 getLogger().warn(this + " submit: the 'includenamespaceprefixes' attribute is not supported yet");
             }
+*/
 
             processSubmissionOptions();
 
@@ -714,10 +716,20 @@ public class Submission extends BindingElement implements DefaultAction {
             httpRequestHeader = new RequestHeaders();
         }
 
-
+        // remove all existing headers with same name as xforms:header
+        // must be done before headers are added again, don't(!) merge with following for loop
         for (Header submissionHeader : submissionHeaders) {
             RequestHeaders requestHeaders = submissionHeader.getHeaders();
+            for(RequestHeader header : requestHeaders.getAllHeaders()){
+                if (httpRequestHeader.containes(header.getName())) {
+                    httpRequestHeader.removeHeader(header.getName());
+                }
+            }
+        }
 
+        // add headers to HTTPRequestHeader
+        for (Header submissionHeader : submissionHeaders) {
+            RequestHeaders requestHeaders = submissionHeader.getHeaders();
             for(RequestHeader header : requestHeaders.getAllHeaders()){
                 httpRequestHeader.addHeader(header);
             }
@@ -918,10 +930,13 @@ public class Submission extends BindingElement implements DefaultAction {
 
         Document result = getResponseAsDocument(response);
         Node embedElement = result.getDocumentElement();
-        
         if(resource.indexOf("#") != -1){
             // detected a fragment so extract that from our result Document
+
             String fragmentid = resource.substring(resource.indexOf("#")+1);
+            if (fragmentid.indexOf("?") != -1) {
+                fragmentid = fragmentid.substring(0, fragmentid.indexOf("?"));
+            }
             embedElement = DOMUtil.getById(result,fragmentid);
         }
 

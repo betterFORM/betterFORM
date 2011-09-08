@@ -1,6 +1,14 @@
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
 <project name="Installer-eXist" default="create-XRX" basedir=".">
-    <property name="eXist.1.4.src" value="http://netcologne.dl.sourceforge.net/project/exist/Stable/1.4/eXist-setup-1.4.0-rev10440.jar"/>
-    <property name="eXist.1.5.src" value="http://netcologne.dl.sourceforge.net/project/exist/Stable/1.4/eXist-setup-1.4.0-rev10440.jar"/>
+    <property name="eXist.1.4.src" value="http://downloads.sourceforge.net/project/exist/Stable/1.4.1/eXist-setup-1.4.1-rev15155.jar"/>
+    <property name="eXist.1.5.src" value="http://downloads.sourceforge.net/project/exist/Stable/1.4.1/eXist-setup-1.4.1-rev15155.jar"/>
+
+    <property name="eXist.db.user" value="betterFORM"/>
+    <property name="eXist.db.passwd" value="Tha0xeiC8a"/>
 
     <available property="eXist-1.4-available" file="${installer.utils}/exist-install-1.4.jar"/>
     <available property="eXist-1.5-available" file="${installer-utils}/exist-install-1.5.jar"/>
@@ -44,9 +52,12 @@
         <antcall target="build-SetupBetterFORMUserJar" inheritrefs="true"/>
         <copy file="${installer.target}/betterFORM-Setup.jar" todir="${installer.target}/bf-XRX/" overwrite="true"/>
 
+
         <ant antfile="${xrx.dir}/build-utils-eXist.xml" target="start-eXist">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
         </ant>
+
+
 
         <java jar="${installer.target}/bf-XRX/betterFORM-Setup.jar"
               fork="true"
@@ -55,6 +66,7 @@
               failonerror="true"/>
 
         <delete file="${installer.target}/bf-XRX/betterFORM-Setup.jar"/>
+
 
         <!-- Wait for db-shutdown -->
         <sleep seconds="20"/>
@@ -82,6 +94,10 @@
              manifest="${basedir}/src/main/resources/MANIFEST.MF"/>
     </target>
 
+    <target name="setupBetterFORMContext">
+
+    </target>
+
     <target name="create-XRX" depends="get-eXist">
         <echo>
             __== Creating XRX-environment for Installer ==__
@@ -99,46 +115,57 @@
             <arg line="-p ${installer.target}/bf-XRX/"/>
         </java>
 
-        <delete file="${installer.target}/bf-XRX/Install_V1.4.0*.log"/>
+        <delete file="${installer.target}/bf-XRX/Install_V1.4.1*.log"/>
 
         <!-- Create an 'betterFORM'-DB-User for storing stuff -->
         <!-- See eXist-build-file for password -->
+
         <antcall target="setupBetterFORMUser" inheritrefs="true"/>
 
-
-        <ant antfile="${xrx.dir}/build-XRX.xml" target="install-betterFORM" inheritall="false" usenativebasedir="true">
+        <ant antfile="${xrx.dir}/build-XRX.xml" target="update-betterFORM" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
-            <property name="db.user" value="betterFORM"/>
-            <property name="db.pwd" value="Tha0xeiC8a"/>
-        </ant>
-
-        <ant antfile="${xrx.dir}/build-XRX.xml" target="install-forms" inheritall="false" usenativebasedir="true">
-            <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
-            <property name="db.user" value="betterFORM"/>
-            <property name="db.pwd" value="Tha0xeiC8a"/>
+            <property name="eXist.db.user" value="${eXist.db.user}"/>
+            <property name="eXist.db.passwd" value="${eXist.db.passwd}"/>
         </ant>
 
         <ant antfile="${xrx.dir}/build-utils-eXist.xml" target="start-eXist">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
         </ant>
 
-         <ant antfile="${xrx.dir}/build-XRX.xml" target="install-demo-xrx-betterFORM-user" inheritall="false" usenativebasedir="true">
+        <ant antfile="${xrx.dir}/build-XRX.xml" target="install-forms" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
-            <property name="db.user" value="betterFORM"/>
-            <property name="db.pwd" value="Tha0xeiC8a"/>
+            <property name="eXist.db.user" value="${eXist.db.user}"/>
+            <property name="eXist.db.passwd" value="${eXist.db.passwd}"/>
         </ant>
 
-         <ant antfile="${xrx.dir}/build-XRX.xml" target="install-editor" inheritall="false" usenativebasedir="true">
+
+        <ant antfile="${xrx.dir}/build-XRX.xml" target="install-demo-xrx-betterFORM-user" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
-            <property name="db.user" value="betterFORM"/>
-            <property name="db.pwd" value="Tha0xeiC8a"/>
+            <property name="eXist.db.user" value="${eXist.db.user}"/>
+            <property name="eXist.db.passwd" value="${eXist.db.passwd}"/>
+        </ant>
+
+        <ant antfile="${xrx.dir}/build-XRX.xml" target="install-dashboard" inheritall="false" usenativebasedir="true">
+            <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
+            <property name="eXist.db.user" value="${eXist.db.user}"/>
+            <property name="eXist.db.passwd" value="${eXist.db.passwd}"/>
+        </ant>
+
+        <ant antfile="${xrx.dir}/build-XRX.xml" target="install-editor" inheritall="false" usenativebasedir="true">
+            <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
+            <property name="eXist.db.user" value="${eXist.db.user}"/>
+            <property name="eXist.db.passwd" value="${eXist.db.passwd}"/>
         </ant>
 
         <ant antfile="${xrx.dir}/build-utils-eXist.xml" target="stop-eXist">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
         </ant>
-        <!-- Copy template-files which will be modified by the Installer-->
 
+        <ant antfile="${xrx.dir}/build-XRX.xml" target="setup-betterFORM-context" inheritall="false" usenativebasedir="true">
+            <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
+        </ant>
+
+        <!-- Copy template-files which will be modified by the Installer-->
 
         <copy todir="${installer.target}/bf-XRX/bin" overwrite="true">
             <fileset dir="${installer.target}/bf-XRX/installer/scripts" includes="*.sh *.bat" excludes="build.*"/>
@@ -148,8 +175,8 @@
             <fileset dir="${installer.target}/bf-XRX/installer/scripts" includes="build.sh build.bat"/>
         </copy>
 
-	    <unzip src="${basedir}/lib/betterFORM-Launcher-1.3-xrx-distribution.zip" dest="${installer.target}/bf-XRX"/>
-        <move file="${installer.target}/bf-XRX/betterFORM-Launcher-1.3.jar" tofile="${installer.target}/bf-XRX/betterFORM.jar"/>
+	    <unzip src="${basedir}/lib/betterFORM-Launcher-1.4-xrx-distribution.zip" dest="${installer.target}/bf-XRX"/>
+        <move file="${installer.target}/bf-XRX/betterFORM-Launcher-1.4.jar" tofile="${installer.target}/bf-XRX/betterFORM.jar"/>
 
     </target>
 </project>
