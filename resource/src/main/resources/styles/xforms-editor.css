@@ -435,6 +435,7 @@ dl.keyboard-mapping dd {
     border: none;
     color:#999999;
     width: 50%;
+    float: left;
 }
 .bf .modeSelector.selected{
     background-position: 0 -60px;

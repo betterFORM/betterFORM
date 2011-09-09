@@ -30,17 +30,7 @@
 
 
     <xsl:template match="property[@name='error.page']/@value" priority="10">
-        <xsl:choose>
-            <xsl:when test="$context = 'betterform'">
-                <xsl:attribute name="value">xquery/xferror.xql</xsl:attribute>
-            </xsl:when>
-            <xsl:when test="$context = 'extension'">
-                <xsl:attribute name="value">betterfrom/xquery/xferror.xql</xsl:attribute>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:message terminate="yes">No context specified!</xsl:message>
-            </xsl:otherwise>
-        </xsl:choose>
+        <xsl:attribute name="value">betterform/xquery/xferror.xql</xsl:attribute>
     </xsl:template>
 
 </xsl:stylesheet>
