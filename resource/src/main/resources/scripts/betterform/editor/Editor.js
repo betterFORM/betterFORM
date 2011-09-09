@@ -1,17 +1,13 @@
+dojo.provide("betterform.editor.Editor");
+
 /*
  * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
-
-dojo.provide("betterform.editor.Editor");
-
-
 dojo.require("dijit.layout.ContentPane");
 dojo.require("dojox.json.ref");
 
-dojo.provide("betterform.Editor");
-
-dojo.declare("betterform.Editor", null,
+dojo.declare("betterform.editor.Editor", null,
 {
     currentjsTreeData:null,
     currentNodeId:null,
