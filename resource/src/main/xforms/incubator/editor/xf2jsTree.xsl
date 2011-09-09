@@ -31,7 +31,6 @@
                         src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.hotkeys.js"></script>
                 <script type="text/javascript"
                         src="../../../bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
-                <script type="text/javascript" src="../../../bfResources/scripts/betterform/xfEditorUtil.js"></script>
 
                 <link rel="stylesheet" type="text/css" href="../../../bfResources/styles/xforms-editor.css"/>
             </head>
@@ -718,7 +717,7 @@
                         src="../../../bfResources/scripts/betterform/betterform-XFormsEditor.js"></script>
                 <script type="text/javascript" defer="defer" src="../../../bfResources/scripts/betterform/editor/addMenu.js"></script>
                 <script type="text/javascript" defer="defer">
-                    attrEditor = new betterform.Editor({}, "editor");
+                    attrEditor = new betterform.editor.Editor({}, "editor");
                     //console.debug("attrEditor.: ",attrEditor);
 
                     function checkKeyboardInput(pEvent) {
