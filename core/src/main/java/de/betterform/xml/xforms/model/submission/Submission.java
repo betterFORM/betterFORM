@@ -1128,7 +1128,8 @@ public class Submission extends BindingElement implements DefaultAction {
 		for (Iterator<Map.Entry<String, String>> it = response.entrySet().iterator(); it.hasNext();) {
 			Map.Entry<String, String> entry =  it.next();
 			if (!XFormsProcessor.SUBMISSION_RESPONSE_STREAM.equals(entry.getKey()) &&
-                !XFormsProcessor.SUBMISSION_RESPONSE_DOCUMENT.equals(entry.getKey()))
+                !XFormsProcessor.SUBMISSION_RESPONSE_DOCUMENT.equals(entry.getKey()) &&
+                ! "StatusCode".equals(entry.getKey()) && ! "ReasonPhrase".equals(entry.getKey()) )
             {
 				
 				Element headerEl = ownerDocument.createElement("header");
@@ -1145,9 +1146,9 @@ public class Submission extends BindingElement implements DefaultAction {
 			}
 		}
 		result.put(RESOURCE_URI, getResourceURI());
-		result.put(RESPONSE_STATUS_CODE, Double.valueOf(200d)); //TODO get real response code
+        result.put(RESPONSE_STATUS_CODE, (response.containsKey("StatusCode") ? Double.parseDouble((String)response.get("StatusCode")) : Double.valueOf(200d))); //TODO get real response code
 		result.put(RESPONSE_HEADERS, headerItems);
-		result.put(RESPONSE_REASON_PHRASE, ""); //TODO get real response reason phrase
+		result.put(RESPONSE_REASON_PHRASE, (response.containsKey("ReasonPhrase") ? (String) response.get("ReasonPhrase") : "")); //TODO get real response reason phrase
 		
 		return result;
 	}

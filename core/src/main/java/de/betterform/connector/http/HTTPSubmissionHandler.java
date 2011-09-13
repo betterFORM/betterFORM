@@ -178,6 +178,9 @@ public class HTTPSubmissionHandler extends AbstractHTTPConnector implements Subm
             Map response = getResponseHeader();
             response.put(XFormsProcessor.SUBMISSION_RESPONSE_STREAM, getResponseBody());
 
+            response.put("StatusCode", String.valueOf(statusCode));
+            response.put("ReasonPhrase", reasonPhrase);
+
             return response;
         } catch (Exception e) {
             throw new XFormsException(e);
