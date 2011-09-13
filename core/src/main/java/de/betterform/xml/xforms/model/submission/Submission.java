@@ -630,7 +630,10 @@ public class Submission extends BindingElement implements DefaultAction {
 
             //todo: hacky - event context info construction must be reviewed - using exception cause as response-reason-phrase for now
             if (e.getCause() != null && e.getCause().getMessage() != null) {
-                info.put("response-reason-phrase",e.getCause().getMessage());
+                info.put(RESPONSE_REASON_PHRASE,e.getCause().getMessage());
+                if(e.getCause() instanceof XFormsInternalSubmitException){
+                    info.put(RESPONSE_STATUS_CODE,((XFormsInternalSubmitException)e.getCause()).getStatusCode());
+                }
             }
             throw new XFormsSubmitError("instance submission failed at: " + DOMUtil.getCanonicalPath(this.getElement()), e, this.getTarget(), info);
             //throw new XFormsSubmitError("instance submission failed", e, this.getTarget(), this.action);
@@ -718,22 +721,27 @@ public class Submission extends BindingElement implements DefaultAction {
 
         // remove all existing headers with same name as xforms:header
         // must be done before headers are added again, don't(!) merge with following for loop
-        for (Header submissionHeader : submissionHeaders) {
-            RequestHeaders requestHeaders = submissionHeader.getHeaders();
-            for(RequestHeader header : requestHeaders.getAllHeaders()){
-                if (httpRequestHeader.containes(header.getName())) {
-                    httpRequestHeader.removeHeader(header.getName());
+
+        for (int z=0; z < submissionHeaders.size();z++) {
+            RequestHeaders requestHeaders = submissionHeaders.get(z).getHeaders();
+            List<RequestHeader> allRequestHeaderList = requestHeaders.getAllHeaders();
+            for(int i= 0;i < allRequestHeaderList.size();i++ ){
+                RequestHeader header = allRequestHeaderList.get(i);
+                String headerName = header.getName();
+                if (httpRequestHeader.containes(headerName)) {
+                    httpRequestHeader.removeHeader(headerName);
                 }
             }
         }
 
         // add headers to HTTPRequestHeader
-        for (Header submissionHeader : submissionHeaders) {
-            RequestHeaders requestHeaders = submissionHeader.getHeaders();
-            for(RequestHeader header : requestHeaders.getAllHeaders()){
+        for (int i= 0; i < submissionHeaders.size();i++) {
+            RequestHeaders requestHeadersTmp = submissionHeaders.get(i).getHeaders();
+            List<RequestHeader> requestHeadersTmpList = requestHeadersTmp.getAllHeaders();
+            for(int z = 0; z < requestHeadersTmpList.size();z++ ){
+                RequestHeader header =requestHeadersTmpList.get(z);
                 httpRequestHeader.addHeader(header);
             }
-
         }
         contextMap.put(AbstractHTTPConnector.HTTP_REQUEST_HEADERS, httpRequestHeader);
     }
