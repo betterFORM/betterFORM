@@ -431,11 +431,12 @@ public class AbstractHTTPConnector extends AbstractConnector {
             }
             responseHeader.put(responseHeaders[index].getName(), responseHeaders[index].getValue());
         }
-
-        if (responseHeader.containsKey("Content-Encoding") && ((String) responseHeader.get("Content-Encoding")).equalsIgnoreCase("gzip") ) {
-            this.responseBody =  new GZIPInputStream(httpResponse.getEntity().getContent());
-        } else {
-            this.responseBody = httpResponse.getEntity().getContent();
+        if(httpResponse.getEntity() != null) {
+            if (responseHeader.containsKey("Content-Encoding") && ((String) responseHeader.get("Content-Encoding")).equalsIgnoreCase("gzip") ) {
+                this.responseBody =  new GZIPInputStream(httpResponse.getEntity().getContent());
+            } else {
+                this.responseBody = httpResponse.getEntity().getContent();
+            }
         }
 
     }
