@@ -453,7 +453,7 @@ public class Submission extends BindingElement implements DefaultAction {
             }
             // either resource or action must be set
             if (!this.resource.isAvailable() && this.action == null) {
-                // complain
+                //todo: this should be corrected as resouce may be empty due to spec see the xforms-submit event and 'validation-error'
                 throw new XFormsLinkException("no action or resource specified for submission", this.target, null);
             } else if (this.resource == null) {
                 getLogger().warn(toString() + " relying on deprecated action attribute");
@@ -562,6 +562,7 @@ public class Submission extends BindingElement implements DefaultAction {
         submitValidate(instanceObject, pathExpression, getPrefixMapping(), this.xpathFunctionContext);
 
         // select relevant items
+        //todo: this should happen before submitValidate above according to spec - see the xforms-submit event
         Node instanceNode = submitSelectRelevant(instanceObject, pathExpression);
 
         Map response;
@@ -606,6 +607,7 @@ public class Submission extends BindingElement implements DefaultAction {
     		this.container.dispatch(this.id, XFormsEventNames.SUBMIT_SERIALIZE, info);
 			submissionBodyEl.normalize();
 
+
             // serialize and transmit instance items
             SubmissionHandler sh = this.container.getConnectorFactory().createSubmissionHandler(this.action, this.element);
             if (submissionBodyEl.getFirstChild() == null) {
@@ -639,6 +641,7 @@ public class Submission extends BindingElement implements DefaultAction {
             //throw new XFormsSubmitError("instance submission failed", e, this.getTarget(), this.action);
         }
 
+        //todo: for async submits processing should stop here!!!
         // handle replace mode
         if (this.replace.equals("all")) {
             submitReplaceAll(response);
@@ -785,6 +788,7 @@ public class Submission extends BindingElement implements DefaultAction {
         try {
             // XForms 1.1 support, section 4.3.2
             // select relevant instance items only if the relevant attribute is true
+            //todo: should throw xforms-submit-error if no data are relevant - see spec the xforms-submit-event
             return (Node) (Boolean.TRUE.equals(this.relevant)
                     ? RelevanceSelector.selectRelevant(instanceObject, path)
                     : XPathCache.getInstance().evaluateAsSingleNode(instanceObject.getRootContext(), path));
