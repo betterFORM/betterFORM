@@ -32,7 +32,16 @@
                     </xsl:variable>
                     <!--<xsl:message>unquoted: <xsl:value-of select="$unquoted"/></xsl:message>-->
                     <xsl:if test="string-length($unquoted) != 0">
-                        <xsl:attribute name="{substring-before($thisAttr,':')}"><xsl:value-of select="$unquoted"/></xsl:attribute>
+                        <xsl:variable name="xfAttrName" select="substring-before($thisAttr,':')"/>
+                        <xsl:choose>
+                            <xsl:when test="$xfAttrName = 'event'">
+                                <xsl:attribute name="{concat('ev:',$xfAttrName)}"><xsl:value-of select="$unquoted"/></xsl:attribute>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:attribute name="{$xfAttrName}"><xsl:value-of select="$unquoted"/></xsl:attribute>
+                            </xsl:otherwise>
+                        </xsl:choose>
+
                     </xsl:if>
                 </xsl:for-each>
             </xsl:if>
