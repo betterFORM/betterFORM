@@ -353,7 +353,7 @@
                                         if (xfId == undefined) {
                                             return;
                                         }
-                                        // console.log("xfid: ", xfId);
+                                        // console.debug("xfid: ", xfId);
                                         attrEditor.editProperties(xfId);
                                     </script>
                                 </div>
@@ -369,7 +369,7 @@
 
                     function serializeTree() {
                         var serializedTree = new XMLSerializer().serializeToString(document.getElementById("xfDoc"));
-                        // console.log(serializedTree);
+                        // console.debug(serializedTree);
                         dijit.byId("fluxProcessor").setControlValue("save", serializedTree);
                         dijit.byId("fluxProcessor").dispatchEvent("transform2xf");
 
@@ -423,17 +423,17 @@
                                     "crrm" : {
                                         "move" : {
                                             "check_move" : function (m) {
-                                                // console.log("check move:",m);
-                                                // console.log("check move:",m.o);
+                                                // console.debug("check move:",m);
+                                                // console.debug("check move:",m.o);
                                                 var origin = m.o;
 
                                                 //the the xf type
                                                 var xfType = origin.attr("data-xf-type");
-                                                // console.log("xfType ",xfType);
+                                                // console.debug("xfType ",xfType);
 
                                                 var target = m.r;
                                                 var targetType = target.attr("data-xf-type");
-                                                // console.log("check target:",targetType);
+                                                // console.debug("check target:",targetType);
 
 
                                                 //check rules
@@ -514,7 +514,7 @@
                                         // console.debug("PREVENTED LOADING OF PROPERTY EDITOR");
                                         return;
                                     }else {
-                                        // console.log(data);
+                                        // console.debug(data);
                                         var xfType = data.rslt.obj.attr("data-xf-type");
                                         var mountNode = dojo.byId("xfMount");
                                         dojo.attr(mountNode ,"xfId", tmpId);
@@ -581,7 +581,7 @@
                             } else {
                                 //get parent
                                 var parentLI = currentItem.parentNode.parentNode;
-                                // console.log("parent add: ", parentLI);
+                                // console.debug("parent add: ", parentLI);
                                 addElement(currentItem.getAttribute("data-xf-type"), "after");
                             }
                         }
@@ -590,11 +590,12 @@
                     });
 
                     function addElement(type, position) {
-                        // console.log("addElement type:", type);
+                        // console.debug("addElement type:", type);
                         var elem = $("#xfDoc").jstree("create", null, position, type, false, true);
                         elem.attr("data-xf-type", type);
+                        elem.attr("rel", type);
                         elem.attr("id", new Date().getTime());
-                        elem.attr("data-xf-attrs", "");
+                        elem.attr("data-xf-attrs", "{ }");
                         var ahref = dojo.query("a", elem[0])[0];
                         var span = dojo.create("span", null, ahref);
                         dojo.addClass(span, "buttonWrapper");
@@ -602,7 +603,10 @@
                                 span);
                         dojo.create("img", { width:"24", height: "24",src: "{$bfContext}{$bfEditorPath}images/list-remove.png" },
                                 btnDelete);
-
+                        if(type.toLowerCase()=="label" || type.toLowerCase() == "alert" || type.toLowerCase() == "hint" || type.toLowerCase() == "help"){
+                            var textNode = dojo.create("span", textNode ,ahref);
+                            dojo.addClass(textNode, "textNode");
+                        }
                         $("#xfDoc").jstree("select_node", elem, true, null);
                         elem.focus();
                         elem.hide();
@@ -618,14 +622,14 @@
                                 //fetch the currently selected item from xdoc tree
                                 var currentItem =  attrEditor.currentNodeId;
                                 if(!currentItem) return;
-                                console.log("current: ",currentItem);
+                                console.debug("current: ",currentItem);
 
                                 var currentType = dojo.attr(dojo.byId(currentItem),"data-xf-type");
                                 if (!currentType) {
                                     console.error("no xfType defined");
                                     return;
                                 }
-                                console.log("current xfType: ",currentType);
+                                console.debug("current xfType: ",currentType);
 
                                 //display tree with argument 'xfType' or parent xfType
                 -->
