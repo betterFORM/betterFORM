@@ -591,6 +591,9 @@
 
                     function addElement(type, position) {
                         // console.debug("addElement type:", type);
+                        var betterFORMContextPath = "{$bfContext}";
+                        var editorContextPath = "{$bfEditorPath}";
+
                         var elem = $("#xfDoc").jstree("create", null, position, type, false, true);
                         elem.attr("data-xf-type", type);
                         elem.attr("rel", type);
@@ -601,7 +604,7 @@
                         dojo.addClass(span, "buttonWrapper");
                         var btnDelete = dojo.create("button", { type:"button", style: "padding: 0pt; margin: 0pt; background: none repeat scroll 0% 0% transparent; border: medium none;", onclick: "if(confirm('Really delete?')) deleteNode(this);return false;" },
                                 span);
-                        dojo.create("img", { width:"24", height: "24",src: "{$bfContext}{$bfEditorPath}images/list-remove.png" },
+                        dojo.create("img", { width:"24", height: "24",src: betterFORMContextPath +  editorContextPath + "images/list-remove.png" },
                                 btnDelete);
                         if(type.toLowerCase()=="label" || type.toLowerCase() == "alert" || type.toLowerCase() == "hint" || type.toLowerCase() == "help"){
                             var textNode = dojo.create("span", textNode ,ahref);
@@ -628,7 +631,7 @@
                                 if (!currentType) {
                                     console.error("no xfType defined");
                                     return;
-                                }
+                                 }
                                 console.debug("current xfType: ",currentType);
 
                                 //display tree with argument 'xfType' or parent xfType
