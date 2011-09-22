@@ -267,14 +267,14 @@
     </installer>
     <eXist>
         <!-- point this to the place where you installed exist -->
-        <home>/home/zwobit/eXist-1.4.1</home>
+        <home>/Applications/betterFORM-RC4</home>
         <!-- Leave this empty if you run eXist in root context -->
         <!-- If you use the betterform XRX bundle this is 'betterform' -->
-        <context>/exist</context>
+        <context>/betterform</context>
         <!-- user name and password for the file storing tasks -->
         <db>
             <user>admin</user>
-            <passwd>secret</passwd>
+            <passwd/>
             <!-- The name of the collection where the betterFORM content should be stored -->
             <rootcollection>
                 <name>betterform</name>
