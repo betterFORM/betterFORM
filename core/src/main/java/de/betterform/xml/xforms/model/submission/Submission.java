@@ -453,7 +453,7 @@ public class Submission extends BindingElement implements DefaultAction {
             }
             // either resource or action must be set
             if (!this.resource.isAvailable() && this.action == null) {
-                // complain
+                //todo: this should be corrected as resouce may be empty due to spec see the xforms-submit event and 'validation-error'
                 throw new XFormsLinkException("no action or resource specified for submission", this.target, null);
             } else if (this.resource == null) {
                 getLogger().warn(toString() + " relying on deprecated action attribute");
@@ -562,6 +562,7 @@ public class Submission extends BindingElement implements DefaultAction {
         submitValidate(instanceObject, pathExpression, getPrefixMapping(), this.xpathFunctionContext);
 
         // select relevant items
+        //todo: this should happen before submitValidate above according to spec - see the xforms-submit event
         Node instanceNode = submitSelectRelevant(instanceObject, pathExpression);
 
         Map response;
@@ -606,6 +607,7 @@ public class Submission extends BindingElement implements DefaultAction {
     		this.container.dispatch(this.id, XFormsEventNames.SUBMIT_SERIALIZE, info);
 			submissionBodyEl.normalize();
 
+
             // serialize and transmit instance items
             SubmissionHandler sh = this.container.getConnectorFactory().createSubmissionHandler(this.action, this.element);
             if (submissionBodyEl.getFirstChild() == null) {
@@ -630,12 +632,16 @@ public class Submission extends BindingElement implements DefaultAction {
 
             //todo: hacky - event context info construction must be reviewed - using exception cause as response-reason-phrase for now
             if (e.getCause() != null && e.getCause().getMessage() != null) {
-                info.put("response-reason-phrase",e.getCause().getMessage());
+                info.put(RESPONSE_REASON_PHRASE,e.getCause().getMessage());
+                if(e.getCause() instanceof XFormsInternalSubmitException){
+                    info.put(RESPONSE_STATUS_CODE, new Integer(((XFormsInternalSubmitException)e.getCause()).getStatusCode()).doubleValue());
+                }
             }
             throw new XFormsSubmitError("instance submission failed at: " + DOMUtil.getCanonicalPath(this.getElement()), e, this.getTarget(), info);
             //throw new XFormsSubmitError("instance submission failed", e, this.getTarget(), this.action);
         }
 
+        //todo: for async submits processing should stop here!!!
         // handle replace mode
         if (this.replace.equals("all")) {
             submitReplaceAll(response);
@@ -718,22 +724,27 @@ public class Submission extends BindingElement implements DefaultAction {
 
         // remove all existing headers with same name as xforms:header
         // must be done before headers are added again, don't(!) merge with following for loop
-        for (Header submissionHeader : submissionHeaders) {
-            RequestHeaders requestHeaders = submissionHeader.getHeaders();
-            for(RequestHeader header : requestHeaders.getAllHeaders()){
-                if (httpRequestHeader.containes(header.getName())) {
-                    httpRequestHeader.removeHeader(header.getName());
+
+        for (int z=0; z < submissionHeaders.size();z++) {
+            RequestHeaders requestHeaders = submissionHeaders.get(z).getHeaders();
+            List<RequestHeader> allRequestHeaderList = requestHeaders.getAllHeaders();
+            for(int i= 0;i < allRequestHeaderList.size();i++ ){
+                RequestHeader header = allRequestHeaderList.get(i);
+                String headerName = header.getName();
+                if (httpRequestHeader.containes(headerName)) {
+                    httpRequestHeader.removeHeader(headerName);
                 }
             }
         }
 
         // add headers to HTTPRequestHeader
-        for (Header submissionHeader : submissionHeaders) {
-            RequestHeaders requestHeaders = submissionHeader.getHeaders();
-            for(RequestHeader header : requestHeaders.getAllHeaders()){
+        for (int i= 0; i < submissionHeaders.size();i++) {
+            RequestHeaders requestHeadersTmp = submissionHeaders.get(i).getHeaders();
+            List<RequestHeader> requestHeadersTmpList = requestHeadersTmp.getAllHeaders();
+            for(int z = 0; z < requestHeadersTmpList.size();z++ ){
+                RequestHeader header =requestHeadersTmpList.get(z);
                 httpRequestHeader.addHeader(header);
             }
-
         }
         contextMap.put(AbstractHTTPConnector.HTTP_REQUEST_HEADERS, httpRequestHeader);
     }
@@ -777,6 +788,7 @@ public class Submission extends BindingElement implements DefaultAction {
         try {
             // XForms 1.1 support, section 4.3.2
             // select relevant instance items only if the relevant attribute is true
+            //todo: should throw xforms-submit-error if no data are relevant - see spec the xforms-submit-event
             return (Node) (Boolean.TRUE.equals(this.relevant)
                     ? RelevanceSelector.selectRelevant(instanceObject, path)
                     : XPathCache.getInstance().evaluateAsSingleNode(instanceObject.getRootContext(), path));
@@ -1128,7 +1140,8 @@ public class Submission extends BindingElement implements DefaultAction {
 		for (Iterator<Map.Entry<String, String>> it = response.entrySet().iterator(); it.hasNext();) {
 			Map.Entry<String, String> entry =  it.next();
 			if (!XFormsProcessor.SUBMISSION_RESPONSE_STREAM.equals(entry.getKey()) &&
-                !XFormsProcessor.SUBMISSION_RESPONSE_DOCUMENT.equals(entry.getKey()))
+                !XFormsProcessor.SUBMISSION_RESPONSE_DOCUMENT.equals(entry.getKey()) &&
+                ! RESPONSE_STATUS_CODE.equals(entry.getKey()) && ! RESPONSE_REASON_PHRASE.equals(entry.getKey()) )
             {
 				
 				Element headerEl = ownerDocument.createElement("header");
@@ -1145,9 +1158,9 @@ public class Submission extends BindingElement implements DefaultAction {
 			}
 		}
 		result.put(RESOURCE_URI, getResourceURI());
-		result.put(RESPONSE_STATUS_CODE, Double.valueOf(200d)); //TODO get real response code
+        result.put(RESPONSE_STATUS_CODE, (response.containsKey(RESPONSE_STATUS_CODE) ? Double.parseDouble((String)response.get(RESPONSE_STATUS_CODE)) : Double.valueOf(200d))); //TODO get real response code
 		result.put(RESPONSE_HEADERS, headerItems);
-		result.put(RESPONSE_REASON_PHRASE, ""); //TODO get real response reason phrase
+		result.put(RESPONSE_REASON_PHRASE, (response.containsKey(RESPONSE_REASON_PHRASE) ? (String) response.get(RESPONSE_REASON_PHRASE) : "")); //TODO get real response reason phrase
 		
 		return result;
 	}

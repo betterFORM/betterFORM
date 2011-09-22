@@ -23,7 +23,7 @@ dojo.declare("betterform.ConvexProcessor",
     convex:null,
 
     constructor:function() {
-        console.log("hurrah - convexProcessor is running");
+        console.debug("hurrah - convexProcessor is running");
         this.factory = new betterform.ui.UIElementFactory();
         this.convex = document.getElementById("convex");
         dojo.subscribe("xforms-invalid",function(value){
@@ -38,12 +38,12 @@ dojo.declare("betterform.ConvexProcessor",
 
 
     dispatchEventType: function (targetId,event) {
-        console.log("Convex.dispatch");
+        console.debug("Convex.dispatch");
         convex.dispatch(targetId,event);
     },
 
     setControlValue: function (id, value) {
-        console.log("Convex.setControlValue");
+        console.debug("Convex.setControlValue");
         convex.setValue(id,value);
     },
 

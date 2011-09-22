@@ -60,6 +60,9 @@ public class AbstractHTTPConnector extends AbstractConnector {
     public static final String REQUEST_COOKIE = "request-cookie";
     public static final String ACCEPT_LANGUAGE = "Accept-Language";
 
+    protected int statusCode = 0;
+    protected String reasonPhrase = "";
+
     /*
      * Custom-SSL:
      * Key for storing custom SSL-protocol
@@ -395,11 +398,13 @@ public class AbstractHTTPConnector extends AbstractConnector {
         }
 
         HttpResponse httpResponse = client.execute(httpRequestBase);
+        statusCode = httpResponse.getStatusLine().getStatusCode();
+        reasonPhrase = httpResponse.getStatusLine().getReasonPhrase();
         try {
-            if (httpResponse.getStatusLine().getStatusCode() >= 300) {
+            if ( statusCode >= 300) {
                 // Allow 302 only
-                if (httpResponse.getStatusLine().getStatusCode() != 302) {
-                    throw new XFormsInternalSubmitException(httpResponse.getStatusLine().getStatusCode(), httpResponse.getStatusLine().getReasonPhrase(), EntityUtils.toString(httpResponse.getEntity()), XFormsConstants.RESOURCE_ERROR);
+                if (statusCode != 302) {
+                    throw new XFormsInternalSubmitException(statusCode, reasonPhrase, EntityUtils.toString(httpResponse.getEntity()), XFormsConstants.RESOURCE_ERROR);
                 }
             }
             this.handleHttpMethod(httpResponse);
@@ -426,11 +431,12 @@ public class AbstractHTTPConnector extends AbstractConnector {
             }
             responseHeader.put(responseHeaders[index].getName(), responseHeaders[index].getValue());
         }
-
-        if (responseHeader.containsKey("Content-Encoding") && ((String) responseHeader.get("Content-Encoding")).equalsIgnoreCase("gzip") ) {
-            this.responseBody =  new GZIPInputStream(httpResponse.getEntity().getContent());
-        } else {
-            this.responseBody = httpResponse.getEntity().getContent();
+        if(httpResponse.getEntity() != null) {
+            if (responseHeader.containsKey("Content-Encoding") && ((String) responseHeader.get("Content-Encoding")).equalsIgnoreCase("gzip") ) {
+                this.responseBody =  new GZIPInputStream(httpResponse.getEntity().getContent());
+            } else {
+                this.responseBody = httpResponse.getEntity().getContent();
+            }
         }
 
     }

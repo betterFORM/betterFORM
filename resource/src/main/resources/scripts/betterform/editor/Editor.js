@@ -16,8 +16,8 @@ dojo.declare("betterform.editor.Editor", null,
     constructor:function() {
         var self = this;
         dojo.subscribe("nodeSelected", function(args){
-            // console.log("nodeSelected: arg:", args);
-            // console.log("nodeSelected: arg.event:", args.event);
+            // console.debug("nodeSelected: arg:", args);
+            // console.debug("nodeSelected: arg.event:", args.event);
 
             var selectedNode = args.jsTreeData;
             var selectedNodeId = selectedNode ? selectedNode.rslt.obj.attr("id"):null;
@@ -46,7 +46,7 @@ dojo.declare("betterform.editor.Editor", null,
     },
 
     updateComponentTree : function(aNode){
-        console.log("event: ",aNode, " id: ",aNode.id);
+        // console.debug("updateComponentTree: event: ",aNode, " id: ",aNode.id);
 
         if(aNode.id == "btnChildMode"){
             dojo.removeClass("btnSiblingMode","selected");
@@ -67,24 +67,25 @@ dojo.declare("betterform.editor.Editor", null,
 
         //switch state of buttons regardless of an existing selection
         if(currentMode == "child"){
+            // console.debug("currentMode == child");
             //get xfType from current item selected in xfDoc tree
             var currXfType = dojo.attr(dojo.byId(currentItem),"data-xf-type");
-            console.log("current xfType: ", currXfType);
+            // console.debug("current xfType: ", currXfType);
 
             this._renderComponentTree(currXfType);
         }else{
             //get parent item (not element!) of current item
             var parentUL = currentItem.parentNode;
             if(parentUL == undefined) return;
-            console.log("parent: ", parentUL);
+            // console.debug("parent: ", parentUL);
 
             var parentLI = parentUL.parentNode;
             if(parentLI == undefined) return;
-            console.log("parentLI: ", parentLI);
+            // console.debug("parentLI: ", parentLI);
 
             var parentXfType = dojo.attr(parentLI,"data-xf-type");
             if(parentXfType == undefined) return;
-            console.log("parentXfType: ", parentXfType);
+            // console.debug("parentXfType: ", parentXfType);
 
             this._renderComponentTree(parentXfType);
 
@@ -92,6 +93,7 @@ dojo.declare("betterform.editor.Editor", null,
     },
 
     _renderComponentTree:function(xfType){
+        // console.debug("_renderComponentTree: xfType:",xfType);
         //hide previously displayed top-level nodes
         dojo.query("#componentTree > ul > li").forEach(
               function(item, index, array){
@@ -112,34 +114,34 @@ dojo.declare("betterform.editor.Editor", null,
     },
 
     editProperties : function(targetId) {
-        console.log("attrEditor.editProperties: id of property sheet: ", targetId);
+        // console.debug("attrEditor.editProperties: id of property sheet: ", targetId);
         var  currentNode =  dojo.byId(targetId);
         var dataXfAttrs = dojo.attr(currentNode, "data-xf-attrs");
         var dataXfType = dojo.attr(currentNode, "data-xf-type");
 
-        // console.log("editProperties: dataXfAttrs: ", dataXfAttrs, " dataXfType", dataXfType);
+        // console.debug("editProperties: dataXfAttrs: ", dataXfAttrs, " dataXfType", dataXfType);
 
         var xfAttrObj = dojox.json.ref.fromJson(dataXfAttrs);
-        // console.log("editProperties xfAttrObj:", xfAttrObj);
+        // console.debug("editProperties xfAttrObj:", xfAttrObj);
         if (xfAttrObj) {
             for (attributeName in xfAttrObj) {
                 var xfAttrValue = xfAttrObj[attributeName];
                 if (!xfAttrValue)xfAttrValue = "";
                 var currentDijitNode =  dojo.query("xf" + attributeName)[0];
-                // console.log("editProperties: currentDijitNode: ", currentDijitNode);
+                // console.debug("editProperties: currentDijitNode: ", currentDijitNode);
                 if (currentDijitNode) {
                     var currentDijit = dijit.byId(dojo.attr(currentDijitNode, "id"));
                     if (currentDijit) {
-                        // console.log("editProperties: currentDijit: ", currentDijit, " - xfAttrValue:",xfAttrValue);
+                        // console.debug("editProperties: currentDijit: ", currentDijit, " - xfAttrValue:",xfAttrValue);
                         currentDijit.set("value", xfAttrValue);
                     }
                     else {
-                        // console.log("editProperties: currentNode: ", currentDijitNode, " - xfAttrValue:",xfAttrValue);
+                        // console.debug("editProperties: currentNode: ", currentDijitNode, " - xfAttrValue:",xfAttrValue);
                         dojo.attr(currentDijitNode, "value", xfAttrValue);
                     }
                 }
                 else {
-                    // console.log("editProperties: currentNode: ", dojo.byId(attributeName), " - xfAttrValue:",xfAttrValue);
+                    // console.debug("editProperties: currentNode: ", dojo.byId(attributeName), " - xfAttrValue:",xfAttrValue);
                     dojo.attr(dojo.byId(attributeName), "value", xfAttrValue);
 
                 }
@@ -149,7 +151,7 @@ dojo.declare("betterform.editor.Editor", null,
             console.warn("editProperties: Missing xfAttrObj for Element [id='",targetId,"']");
         }
         var valueNode = dojo.query(".textNode",currentNode)[0];
-        // console.log("editProperties: valueNode: ", valueNode);
+        // console.debug("editProperties: valueNode: ", valueNode);
         if(valueNode) {
             var nodeValue =  valueNode.innerHTML;
             nodeValue.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -162,19 +164,15 @@ dojo.declare("betterform.editor.Editor", null,
             }else {
                 dojo.attr(textContentNode, "value", nodeValue);
             }
-
         }
-
-
-
     },
 
     saveProperty:function(targetId, propertyId) {
-        // console.log("attrEditor.saveProperty: id", targetId, " propertyId:", propertyId);
+        // console.debug("attrEditor.saveProperty: id", targetId, " propertyId:", propertyId);
 
         // get the current value to save
         var propertyNode = dojo.byId(propertyId);
-        // console.log("propertyNode:", propertyNode);
+        // console.debug("propertyNode:", propertyNode);
         var newValue = dojo.attr(propertyNode, "value");
         if (!newValue)newValue = "";
         // console.debug("saveProperty: newValue: ",newValue);
@@ -186,9 +184,9 @@ dojo.declare("betterform.editor.Editor", null,
         }else {
             // get the former attribute values
             var dataXfAttrs = dojo.attr(dojo.byId(targetId), "data-xf-attrs");
-            // console.log("dataXfAttrs orig: ", dataXfAttrs);
+            // console.debug("dataXfAttrs orig: ", dataXfAttrs);
             var xfAttrObj = dojox.json.ref.fromJson(dataXfAttrs);
-            // console.log("xfAttrObj:", xfAttrObj);
+            // console.debug("xfAttrObj:", xfAttrObj);
 
             xfAttrObj[propertyId] = newValue;
             var xfAttrString = dojox.json.ref.toJson(xfAttrObj);
@@ -199,14 +197,14 @@ dojo.declare("betterform.editor.Editor", null,
     
 
     moveItemUp : function(event) {
-        console.debug("moveItemUp:  currentjsTreeData:",this.currentjsTreeData);
-        console.debug("moveItemUp: data.rslt.obj.attr('id'): ",jsTreeObject.currentjsTreeData.rslt.obj.attr("id"));
+        // console.debug("moveItemUp:  currentjsTreeData:",this.currentjsTreeData);
+        // console.debug("moveItemUp: data.rslt.obj.attr('id'): ",jsTreeObject.currentjsTreeData.rslt.obj.attr("id"));
 
-        console.debug("move item down next:",$("#xfDoc"));
-        console.debug("move item down next:",$("#xfDoc").jstree);
+        // console.debug("move item down next:",$("#xfDoc"));
+        // console.debug("move item down next:",$("#xfDoc").jstree);
 
         // console.debug("move item down tree index:",$("#xfDoc").jstree("get_next",this.currentjsTreeData.rslt.obj));
-        console.debug("move item down tree index:",$.jstree._reference("#xfDoc").get_index());
+        // console.debug("move item down tree index:",$.jstree._reference("#xfDoc").get_index());
 
 
         // console.debug("moveItemUp: data.inst._get_parent(this).attr('id'): ",this.currentjsTreeData.inst._get_parent(this).attr("id"));
@@ -215,16 +213,15 @@ dojo.declare("betterform.editor.Editor", null,
     },
 
     moveItemDown : function(event) {
+        /*
         console.debug("move item down event:",event, "currentjsTreeData:",this.currentjsTreeData);
         console.debug("moveItemUp: data.rslt.obj.attr('id'): ",this.currentjsTreeData.rslt.obj.attr("id"));
         console.debug("move item down next:",$("#xfDoc"));
         console.debug("move item down next:",$("#xfDoc").jstree);
-
-        var data = this.currentjsTreeData.rslt.obj;
-
-
+        */
+        // var data = this.currentjsTreeData.rslt.obj;
         // console.debug("move item down tree index:",$("#xfDoc").jstree("get_next",data.ui.selected,false));
-        console.debug("move item down tree index:",$.jstree._reference("#xfDoc").get_index());
+        // console.debug("move item down tree index:",$.jstree._reference("#xfDoc").get_index());
 
         //console.debug("move item down next:",$.tree_reference('xfDoc').get_next());
         // console.debug("moveItemUp: data.inst._get_parent(this).attr('id'): ",this.currentjsTreeData.inst._get_parent(this).attr("id"));
@@ -235,9 +232,9 @@ dojo.declare("betterform.editor.Editor", null,
     moveAllowed:function(origin, target) {
         // console.debug("moveAllowed origin:", origin, " target:",target);
         var xfType = origin.attr("data-xf-type");
-        // console.log("xfType ",xfType);
+        // console.debug("xfType ",xfType);
         var targetType = target.attr("data-xf-type");
-         console.log("check target:",targetType);
+        // console.debug("check target:",targetType);
 
         //check rules look for match in drop target elements list of allowed children
         //if found 'true' 'false' otherwise
