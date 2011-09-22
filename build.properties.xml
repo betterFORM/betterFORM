@@ -19,12 +19,12 @@
     </properties>
     <app>
         <name>betterform</name>
-        <version>3.2.0-RC3</version>
+        <version>3.2.0-RC4</version>
     </app>
     <core>
         <app>
             <name>betterform-core</name>
-            <version>3.2.0-RC3</version>
+            <version>3.2.0-RC4</version>
         </app>
         <transform>
             <classpath pathid="transform.class.path" description="classpath for saxon XPath and XSLT engine">
@@ -91,7 +91,7 @@
     <web>
         <app>
             <name>betterform</name>
-            <version>3.2.0-RC3</version>
+            <version>3.2.0-RC4</version>
         </app>
         <transform>
             <classpath pathid="transform2.class.path" description="classpath for saxon XPath and XSLT engine">
@@ -259,10 +259,10 @@
             </classpath>
         </compile>
         <izPack>
-            <dir>/home/zwobit/development/bin/izPack-4.3.4</dir>
+            <dir>/home/zwobit/Development/bin/izPack-4.3.4</dir>
         </izPack>
         <launch4j>
-            <dir>/home/zwobit/development/bin/launch4j</dir>
+            <dir>/home/zwobit/Development/bin/launch4j-3.0.2</dir>
         </launch4j>
     </installer>
     <eXist>
