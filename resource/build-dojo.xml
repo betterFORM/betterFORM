@@ -137,7 +137,7 @@
             <arg value="symbol=short"/>
             <arg value="layerOptimize=shrinksafe"/>
 
-            <arg value="version=1.5"/>
+            <arg value="version=1.6"/>
         </java>
         <!-- cleanup JS/CSS resources of betterform dojo release -->
         <antcall target="cleanup-js-release"/>
