@@ -54,7 +54,9 @@ dojo.declare(
             // make sure that the associated select displays the correct value
 
             //console.debug("OptGroup.handleStateChagend this.domNode.parentNode.localName:",this.domNode.parentNode.localName);
-            if(this.domNode.parentNode.localName.toLowerCase() == "select"){
+            if( this.domNode != undefined &&
+                this.domNode.parentNode != undefined &&
+                this.domNode.parentNode.localName.toLowerCase() == "select") {
                 var selectDijit = dijit.byId(dojo.attr(this.domNode.parentNode,"id"));
 /*
                 console.debug("found selectDijit: " + selectDijit);
