@@ -26,7 +26,7 @@ dojo.declare(
     handleStateChanged:function(contextInfo) {
 
 /*
-       console.debug("OptGroup.handleStateChanged this:", this,
+        console.debug("OptGroup.handleStateChanged this:", this,
                                              "\n\tcontextInfo: ",contextInfo,
                                              "\n\toriginalId: ",contextInfo.originalId,
                                              "\n\tposition: ",contextInfo.position,
@@ -53,7 +53,9 @@ dojo.declare(
             // console.debug("OptGroup.handleInsert parent: " ,parentNode , " parent value: " + dojo.attr(parent, "value"));
             // make sure that the associated select displays the correct value
 
-            if(this.domNode.parentNode.localName.toLowerCase() == "select"){
+        if( this.domNode != undefined &&
+            this.domNode.parentNode != undefined &&
+            this.domNode.parentNode.localName.toLowerCase() == "select") {
                 var selectDijit = dijit.byId(dojo.attr(this.domNode.parentNode,"id"));
 /*
                 console.debug("found selectDijit: " + selectDijit);
