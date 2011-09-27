@@ -18,8 +18,8 @@ dojo.declare(
         this.inherited(arguments);
         var imageSource = dojo.attr(this.srcNodeRef,"source");
         var labelHasImageOutput = dojo.attr(this.srcNodeRef,"labelmediatype");
-        if(imageSource == undefined || imageSource == "" && labelHasImageOutput != undefined && labelHasImageOutput.indexOf("image") != -1){
-            console.debug("labelmedia ;-)")
+        if((imageSource == undefined || imageSource == "") && labelHasImageOutput != undefined && labelHasImageOutput.indexOf("image") != -1){
+            // console.debug("labelmedia ;-)");
             imageSource = dojo.attr(this.srcNodeRef,"label");
         }
         // console.debug("imageSource: ",imageSource);
