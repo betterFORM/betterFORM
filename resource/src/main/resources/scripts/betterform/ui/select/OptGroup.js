@@ -56,7 +56,8 @@ dojo.declare(
             //console.debug("OptGroup.handleStateChagend this.domNode.parentNode.localName:",this.domNode.parentNode.localName);
             if( this.domNode != undefined &&
                 this.domNode.parentNode != undefined &&
-                this.domNode.parentNode.localName.toLowerCase() == "select") {
+                this.domNode.parentNode.nodeName != undefined &&
+                this.domNode.parentNode.nodeName.toLowerCase() == "select") {
                 var selectDijit = dijit.byId(dojo.attr(this.domNode.parentNode,"id"));
 /*
                 console.debug("found selectDijit: " + selectDijit);
