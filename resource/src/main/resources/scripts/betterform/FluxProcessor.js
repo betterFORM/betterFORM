@@ -173,7 +173,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
         // console.debug("FluxProcessor.handleUnload Event: ", evt);
         if (this.isDirty && !this.skipshutdown) {
             dojo.stopEvent(evt);
-            // console.log(this.unloadMsg);
+            // console.debug(this.unloadMsg);
             // For IE
             evt.returnValue = this.unloadMsg;
             // For all others

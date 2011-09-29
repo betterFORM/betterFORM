@@ -634,7 +634,7 @@ public class Submission extends BindingElement implements DefaultAction {
             if (e.getCause() != null && e.getCause().getMessage() != null) {
                 info.put(RESPONSE_REASON_PHRASE,e.getCause().getMessage());
                 if(e.getCause() instanceof XFormsInternalSubmitException){
-                    info.put(RESPONSE_STATUS_CODE,((XFormsInternalSubmitException)e.getCause()).getStatusCode());
+                    info.put(RESPONSE_STATUS_CODE, new Integer(((XFormsInternalSubmitException)e.getCause()).getStatusCode()).doubleValue());
                 }
             }
             throw new XFormsSubmitError("instance submission failed at: " + DOMUtil.getCanonicalPath(this.getElement()), e, this.getTarget(), info);
@@ -1141,7 +1141,7 @@ public class Submission extends BindingElement implements DefaultAction {
 			Map.Entry<String, String> entry =  it.next();
 			if (!XFormsProcessor.SUBMISSION_RESPONSE_STREAM.equals(entry.getKey()) &&
                 !XFormsProcessor.SUBMISSION_RESPONSE_DOCUMENT.equals(entry.getKey()) &&
-                ! "StatusCode".equals(entry.getKey()) && ! "ReasonPhrase".equals(entry.getKey()) )
+                ! RESPONSE_STATUS_CODE.equals(entry.getKey()) && ! RESPONSE_REASON_PHRASE.equals(entry.getKey()) )
             {
 				
 				Element headerEl = ownerDocument.createElement("header");
@@ -1158,9 +1158,9 @@ public class Submission extends BindingElement implements DefaultAction {
 			}
 		}
 		result.put(RESOURCE_URI, getResourceURI());
-        result.put(RESPONSE_STATUS_CODE, (response.containsKey("StatusCode") ? Double.parseDouble((String)response.get("StatusCode")) : Double.valueOf(200d))); //TODO get real response code
+        result.put(RESPONSE_STATUS_CODE, (response.containsKey(RESPONSE_STATUS_CODE) ? Double.parseDouble((String)response.get(RESPONSE_STATUS_CODE)) : Double.valueOf(200d))); //TODO get real response code
 		result.put(RESPONSE_HEADERS, headerItems);
-		result.put(RESPONSE_REASON_PHRASE, (response.containsKey("ReasonPhrase") ? (String) response.get("ReasonPhrase") : "")); //TODO get real response reason phrase
+		result.put(RESPONSE_REASON_PHRASE, (response.containsKey(RESPONSE_REASON_PHRASE) ? (String) response.get(RESPONSE_REASON_PHRASE) : "")); //TODO get real response reason phrase
 		
 		return result;
 	}

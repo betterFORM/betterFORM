@@ -91,7 +91,7 @@
                 _setSelf:function(data) {
                     var out = "";
                     dojo.forEach(data, function(d) {
-                        console.log(d);
+                        console.debug(d);
                         if (d.name) {
                             out += "<h2>" + d.name + " <span class='itemType'>" + d.type + "</span></h2>";
                         }
@@ -205,7 +205,7 @@
                 //record the selection from tree 1
                 dojo.subscribe("myTree", null, function(message) {
                     if (message.event == "execute") {
-                        console.log("Tree1 Select: ", dijit.byId("myTree").store.getLabel(message.item));
+                        console.debug("Tree1 Select: ", dijit.byId("myTree").store.getLabel(message.item));
                         lastSelected = selected["myTree"] = message.item;
                     }
                 });
@@ -213,7 +213,7 @@
                 //record the selection from tree 2
                 dojo.subscribe("myTree2", null, function(message) {
                     if (message.event == "execute") {
-                        console.log("Tree2 Select: ", dijit.byId("myTree2").store.getLabel(message.item));
+                        console.debug("Tree2 Select: ", dijit.byId("myTree2").store.getLabel(message.item));
                         lastSelected = selected["myTree2"] = message.item;
                     }
                 });

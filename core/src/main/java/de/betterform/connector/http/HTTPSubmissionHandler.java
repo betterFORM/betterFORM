@@ -7,9 +7,11 @@ package de.betterform.connector.http;
 
 import de.betterform.connector.SubmissionHandler;
 import de.betterform.connector.serializer.SerializerRequestWrapper;
+import de.betterform.xml.xforms.XFormsConstants;
 import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.submission.Submission;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Node;
@@ -178,8 +180,8 @@ public class HTTPSubmissionHandler extends AbstractHTTPConnector implements Subm
             Map response = getResponseHeader();
             response.put(XFormsProcessor.SUBMISSION_RESPONSE_STREAM, getResponseBody());
 
-            response.put("StatusCode", String.valueOf(statusCode));
-            response.put("ReasonPhrase", reasonPhrase);
+            response.put(XFormsConstants.RESPONSE_STATUS_CODE, String.valueOf(statusCode));
+            response.put(XFormsConstants.RESPONSE_REASON_PHRASE, reasonPhrase);
 
             return response;
         } catch (Exception e) {
