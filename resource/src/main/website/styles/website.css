@@ -18,7 +18,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 
 
 body, a {
-	font-size: 11pt;
+	/*font-size: 11pt;*/
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -26,7 +26,8 @@ body {
 	background-image: none;
 	padding: 0;
 	color: #363636;
-	overflow: auto;
+	overflow-y: auto;
+	overflow-x: hidden;
 	background: #efefef;
 	text-align: center; /*height:100%;*/
 }
@@ -96,11 +97,12 @@ ul {
 	border-bottom: thin dotted;
 */
 	padding-top: 2px;
-	float: left;
+	/*float: left;*/
 }
 
 #index .page #header {
-	padding-top: 0;
+	padding-top: 20px;
+    /*float: left;*/
 }
 
 .pageMarginBox {
@@ -116,7 +118,7 @@ ul {
 #footer {
 	/* width:760px; */
 	width: 100%;
-	float: left;
+	/*float: left;*/
 	margin-left:auto;
 	margin-right:auto;
 }
@@ -140,8 +142,8 @@ ul {
 }
 
 #logoBar {
-	height: 90px;
-	margin-top: 29px;
+	height: 80px;
+	/*margin-top: 29px;*/
 }
 
 #logo{
@@ -218,7 +220,7 @@ a:hover {
 #bottomMenu a:hover,
 #bottomMenu a:visited,
 #bottomMenu a:active {
-	color: white
+	color: white;
 }
 
 #sub-header .h2Link,
@@ -243,7 +245,7 @@ a:hover {
 */
 
 #sub-header {
-	background: #d3d3d3;
+	background: #16191E;
 /*
 	text-align: center;
 	display: block;
@@ -254,6 +256,7 @@ a:hover {
 #sub-header .contentBody {
 	text-align: left; /*padding-top:35px;*/
 	position: relative;
+    /*margin-left: -10px;*/
 }
 
 #sub-header .contentBody div {
@@ -292,8 +295,9 @@ a:hover {
 }
 #sub-header {
 	/*float: none;*/
-	padding-top: 30px;
-	height: 130px;
+	padding-top: 0;
+    padding-bottom: 10px;
+    margin-top:-20px;
 
 }
 
@@ -380,7 +384,7 @@ a:hover {
 	margin: 0;
 	padding: 0;
 	padding-bottom: 50px;
-	float: left;
+	/*float: left;*/
 }
 
 #shadowBottom {
@@ -460,21 +464,23 @@ h3 {
 }*/
 
 #index{
-    overflow:hidden;
     background:#D3D3D3;
 }
 
 #index #content-area{
     background:#999999;
+    /*float: left;*/
+    /*clear: both;*/
 }
 
 #index .box {
-    margin-top: 10px;
+    /*margin-top: 10px;*/
     width: 100%;
-    top: 110px;
-    position: absolute;
+    top: 88px;
+    /*position: absolute;*/
     border: 1px solid #BABABA;
     overflow: hidden;
+    background: white;
 }
 
 #index #altContent{
@@ -483,9 +489,9 @@ h3 {
     margin-top:20px;
 }
 #index  #footer{
-    position: absolute;
+    /*position: absolute;*/
     top: 545px;
-    height:800px;
+    height:100px;
 }
 
 
@@ -536,41 +542,43 @@ h3 {
 }
 
 #index #main-content {
-    height: 264px;
+    /*height: 264px;*/
     background: white;
     display: block; /*float:left;*/
     color: #999;
 }
 
 #index #main-content .col {
-    width: 260px;
-    height: 250px;
+    width: 30%;
+    /*height: 250px;*/
     float: left;
     margin-top: 23px;
+    margin-right: 15px;
     padding: 0 5px 0 5px;
     line-height: 1.6;
     font-size: 10pt;
 }
 
+/*
 #index #main-content #leftCol {
-    /*width: 565px;*/
     width: 280px;
     padding:0;
 }
+*/
 #index #main-content #leftCol strong{
     font-weight:bold;
 }
 
 
-#index #main-content #rightCol {
+/*#index #main-content #rightCol {
     margin-right: 0;
     margin-left: 16px;
     color: #888888;
-    text-align: center;
     font-size: 1.6em;
-}
+}*/
 #index .page #bottomMenu {
     float: left;
+    font-size: smaller;
 }
 
 #index .languages {
@@ -1048,3 +1056,63 @@ h3 {
     margin:0;
 }
 
+#index .panel1 .slide1{
+    position:relative;
+    /*background: url(../images/banner/slide1.jpg) no-repeat;*/
+    width: 870px;
+    height: 600px;
+}
+#index .panel1 .slide1 img{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#index .panel1 .slide1 .text1{
+    position: absolute;
+    font-size:36pt;
+    color:#dddddd;
+    z-index: 900;
+    top:10px;
+    left: 20px;
+}
+#index .panel1 .slide1 .text2{
+    color:#32cd32;
+    position: absolute;
+    font-size:36pt;
+    color:#32cd32;
+    z-index: 900;
+    bottom: 120px;
+    right: 10px;
+
+}
+
+#index .anythingSlider .anythingControls{
+    display: none !important;
+}
+
+#index .page #box div.anythingSlider .arrow a {
+    background: url("../images/arrow_right.png") no-repeat scroll right center transparent;
+}
+
+#bottomContainer{
+    width: 100%;
+    padding-bottom: 10px;
+}
+#bottomContainer .linkList .listTitle{
+    color: #999999;
+    font-weight: bold;
+    padding-top: 20px;
+    padding-bottom: 5px;
+}
+#bottomContainer .linkList{
+    float:left;
+    width:25%;
+}
+
+#bottomContainer .linkList li{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    color:#dddddd;
+    font-size: smaller;
+}

@@ -8,12 +8,13 @@
 /******* SET DEFAULT DIMENSIONS HERE ********/
 div.anythingSlider {
 	display: block;
-	width: 550px;
-	height: 320px;
+	width: 900px;
+	height: 500px;
 	margin: 0 auto;
 	overflow: hidden; /* needed for Opera and Safari */
     text-align:left;
     cursor:wait;
+    /*border: thin solid #999999;*/
 }
 div.anythingSlider h3{
     font-size:11pt;
@@ -31,8 +32,8 @@ div.anythingSlider .thumbNav a.cur, div.anythingSlider .thumbNav a {
 }
 div.anythingSlider .anythingWindow {
 	/*border-top: 3px solid #777;*/
-	border-bottom: 1px solid #777;
-    padding-bottom:5px;
+	/*border-bottom: 1px solid #777;*/
+    /*padding-bottom:5px;*/
 }
 div.anythingSlider .start-stop {
 	background-color: #040;
@@ -74,7 +75,7 @@ div.anythingSlider .anythingWindow {
 /* wrapper: 45px right & left padding for the arrows, 28px @ bottom for navigation */
 div.anythingSlider {
 	position: relative;
-	padding: 0 5px 36px 5px;
+	/*padding: 0 5px 36px 5px;*/
 }
 /* anythingSlider base UL */
 ul.anythingBase {
@@ -108,7 +109,7 @@ div.anythingSlider .arrow a {
 	width: 45px;
 	text-align: center;
 	outline: 0;
-	background: url(../images/arrows-default.png) no-repeat;
+	background: url(../images/arrow_right.png) no-repeat;
 }
 div.anythingSlider .arrow a span { display: block; text-indent: -9999px; }
 div.anythingSlider .forward { right: 0; }

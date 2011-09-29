@@ -75,16 +75,18 @@
                         $(document).ready(function(){
                              $('#slider2')
                               .anythingSlider({
-                               width               : 580,
-                               height              : 300,
+                               width               : 900,
+                               height              : 500,
                                startStopped        : false,
-                               resizeContents      : false,
-                               animationTime       : 300,
-                               delay               : 4000,
+                               resizeContents      : true ,
+                               animationTime       : 500,
+                               pauseOnHover        : true,
+                               delay               : 6000,
+                               buildArrows         : true,
                                buildNavigation     : false,
-                               navigationFormatter : function(i, panel){
-                                return ['Recipe', 'Quote', 'Image', 'Quote #2', 'Image #2', 'Test'][i - 1];
-                               }
+                               navigationFormatter : null,
+
+                        startStopped        : true
                               });
                             });
                     </script>
@@ -98,6 +100,18 @@
                     <div id="header">
                         <div class="pageMarginBox">
                             <div id="logoBar">
+                                <div class="languages">
+                                    <a href="{$calcRoot}/en/{//html:meta[@name='name']/@content}.html">
+                                    <img src="{$calcRoot}/images/en.png" class="langSelector" alt="english version"
+                                         title="english version"/>
+                                    </a>
+
+                                    <a href="{$calcRoot}/de/{//html:meta[@name='name']/@content}.html">
+                                        <img src="{$calcRoot}/images/de.png" class="langSelector" alt="deutsch"
+                                             title="deutsche Version"/>
+                                    </a>
+                                </div>
+
                                 <a href="index.html" class="link" id="linkLogo">
                                     <img id="logo" src="{$calcRoot}/images/logo.png" alt="betterFORM project"/>
                                 </a>
@@ -107,10 +121,11 @@
                                 <xsl:variable name="links">
                                     <a href="index.html">home</a><span class="menuDevider"> | </span>
                                     <!--<a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>-->
+                                    <a href="demo.html">demo</a><span class="menuDevider"> | </span>
                                     <a href="download.html">download</a><span class="menuDevider"> | </span>
-                                    <a href="product.html">product</a><span class="menuDevider"> | </span>
+                                    <a href="product.html">solutions</a><span class="menuDevider"> | </span>
                                     <a href="support.html">support</a><span class="menuDevider"> | </span>
-                                    <a href="whoweare.html">who we are</a>
+                                    <a href="whoweare.html">contact</a>
                                 </xsl:variable>
 
                                 <div id="topnav">
@@ -133,7 +148,7 @@
                     </div>
 
                     <div id="content-area">
-                        <img id="shadowTop" src="{$calcRoot}/images/shad_top.jpg" alt=""/>
+                        <!--<img id="shadowTop" src="{$calcRoot}/images/shad_top.jpg" alt=""/>-->
                         <noscript>
                             <div style="border: thin solid ; width: 100%; color: darkred;position:absolute;top:120px;z-index:999;padding:5px;background:orange">Sorry - this site was optimized for use with JavaScript. You won't be able to access all content until you activate JavaScript</div>
                         </noscript>
@@ -158,29 +173,61 @@
                     <!--<img id="shadowBottom" src="{$calcRoot}/images/shad_bottom.jpg" alt=""/>-->
                     <div id="footer">
                         <div class="pageMarginBox">
-                            <div class="languages">
-                                <a href="{$calcRoot}/en/{//html:meta[@name='name']/@content}.html">
-                                <img src="{$calcRoot}/images/en.png" class="langSelector" alt="english version"
-                                     title="english version"/>
-                                </a>
 
-                                <a href="{$calcRoot}/de/{//html:meta[@name='name']/@content}.html">
-                                    <img src="{$calcRoot}/images/de.png" class="langSelector" alt="deutsch"
-                                         title="deutsche Version"/>
-                                </a>
+                            <div id="bottomContainer">
+                                <div class="linkList">
+                                    <div class="listTitle">Demo</div>
+                                    <ul>
+                                        <li>XForms Feature Explorer</li>
+                                        <li>Registration</li>
+                                        <li>OrderList</li>
+                                    </ul>
+                                </div>
+                                <div class="linkList">
+                                    <div class="listTitle">Solutions</div>
+                                    <ul>
+                                        <li>Rich Internet Applications</li>
+                                        <li>eForms</li>
+                                        <li>XML Web Applications</li>
+                                        <li>References</li>
+                                    </ul>
+                                </div>
+                                <div class="linkList">
+                                    <div class="listTitle">Technologies</div>
+                                    <ul>
+                                        <li>Java / J2EE</li>
+                                        <li>XML</li>
+                                        <li>XForms</li>
+                                        <li>XSLT</li>
+                                        <li>XQuery</li>
+                                    </ul>
+                                </div>
+                                <div class="linkList">
+                                    <div class="listTitle">Links</div>
+                                    <ul>
+                                        <li>Blog</li>
+                                        <li>Sources</li>
+                                        <li>Download</li>
+                                        <li>XForms Wikibook</li>
+                                        <li>XRX Wikibook</li>
+                                    </ul>
+                                </div>
                             </div>
 
-                            <span id="bottomMenu">
+
+                            <div id="bottomMenu">
                                 &#169; 2011 betterFORM&#160;&#160; | &#160;&#160;
-                                <a href="contact.html">contact / impressum</a>&#160; | &#160;&#160;
-                            </span>
+                                <a href="contact.html">impressum</a>&#160; | &#160;&#160;
+                            </div>
                         </div>
                     </div>
+<!--
                     <div style="display:none">
                         <img src="{$calcRoot}/images/b_tryit_hover.png" alt=""/>
                         <img src="{$calcRoot}/images/b_getit_hover.png" alt=""/>
                         <img src="{$calcRoot}/images/b_exploreit_hover.png" alt=""/>
                     </div>
+-->
                 </div>
 
                 <xsl:copy-of select="//*[@id='import']"/>
