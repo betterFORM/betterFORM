@@ -196,7 +196,7 @@
                                     </ul>
                                 </div>
                                 <div class="linkList">
-                                    <div class="listTitle"><a href="services.html">Services</a></div>
+                                    <div class="listTitle">Services</div>
                                     <ul>
                                         <li><a href="services.html#consulting">Consulting</a></li>
                                         <li><a href="services.html#development">Development</a></li>
