@@ -196,14 +196,12 @@
                                     </ul>
                                 </div>
                                 <div class="linkList">
-                                    <div class="listTitle">Technologies</div>
+                                    <div class="listTitle"><a href="services.html">Services</a></div>
                                     <ul>
-                                        <li>Java / J2EE</li>
-                                        <li>JavaScript</li>
-                                        <li>XML</li>
-                                        <li>XForms</li>
-                                        <li>XSLT</li>
-                                        <li>XQuery</li>
+                                        <li><a href="services.html#consulting">Consulting</a></li>
+                                        <li><a href="services.html#development">Development</a></li>
+                                        <li><a href="services.html#training">Training</a></li>
+                                        <li><a href="services.html#support">Support</a></li>
                                     </ul>
                                 </div>
                                 <div class="linkList">
