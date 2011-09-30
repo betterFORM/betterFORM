@@ -19,7 +19,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 
 body, a {
 	/*font-size: 11pt;*/
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Istok Web', sans-serif;
 }
 
 body {
@@ -90,19 +90,7 @@ ul {
 
 .page #header {
 	background: white;
-	/*
-	position:inherit;
-	top:0;
-	z-index:999;
-	border-bottom: thin dotted;
-*/
-	padding-top: 2px;
-	/*float: left;*/
-}
-
-#index .page #header {
 	padding-top: 20px;
-    /*float: left;*/
 }
 
 .pageMarginBox {
@@ -133,8 +121,8 @@ ul {
 	font-size: 11pt;
 	text-align: right;
 	margin-top: 40px;
-    padding-right:20px;
-	float:right;
+	position: absolute;
+    right: 0;
 }
 
 #topnav .menuDevider {
@@ -185,7 +173,7 @@ ul {
 a,
 a:visited {
 	font-family: Helvetica, Arial, sans-serif;
-	color: #488AA6;
+	color: #DDDDDD;
 	text-decoration: none;
 	background-color: transparent;
 }
@@ -193,7 +181,8 @@ a:visited {
 a:active,
 a:focus,
 a:hover {
-	text-decoration: underline;
+	/*color:#999999;*/
+	color:white;
 }
 
 #topnav a,
@@ -399,7 +388,7 @@ a:hover {
 	float: left;
 	font-size: 10pt;
 	color: white;
-	margin-top: 10px;
+	margin-top: 20px;
 
 }
 
@@ -467,7 +456,7 @@ h3 {
     background:#D3D3D3;
 }
 
-#index #content-area{
+content-area{
     background:#999999;
     /*float: left;*/
     /*clear: both;*/
@@ -488,11 +477,14 @@ h3 {
     margin-right:auto;
     margin-top:20px;
 }
+/*
 #index  #footer{
-    /*position: absolute;*/
+    */
+/*position: absolute;*//*
+
     top: 545px;
-    height:100px;
 }
+*/
 
 
 #index .languages img {
@@ -507,41 +499,19 @@ h3 {
 	display: block;
 }
 
-#index #demoButton {
-	background: url(../images/b_tryit.png) no-repeat;
-}
 
-#index #demoButton:hover {
-	background: url(../images/b_tryit_hover.png) no-repeat;
-}
-
-#index #getitButton {
-	background: url(../images/b_getit.png) no-repeat;
-}
-
-#index #getitButton:hover {
-	background: url(../images/b_getit_hover.png) no-repeat;
-}
-
-#index #productButton {
-	background: url(../images/b_exploreit.png) no-repeat;
-}
-
-#index #productButton:hover {
-	background: url(../images/b_exploreit_hover.png) no-repeat;
-}
 #index #sub-header .contentBody a {
     width: 290px;
     height: 100px;
     display: block;
     float: left;
 }
-#index .pageMarginBox {
-    width: 890px;
+.pageMarginBox {
+    width: 900px;
     position:relative;
 }
 
-#index #main-content {
+#main-content {
     /*height: 264px;*/
     background: white;
     display: block; /*float:left;*/
@@ -565,7 +535,7 @@ h3 {
     padding:0;
 }
 */
-#index #main-content #leftCol strong{
+#main-content #leftCol strong{
     font-weight:bold;
 }
 
@@ -576,22 +546,16 @@ h3 {
     color: #888888;
     font-size: 1.6em;
 }*/
-#index .page #bottomMenu {
+.page #bottomMenu {
     float: left;
     font-size: smaller;
 }
 
-#index .languages {
+.languages {
     display: block;
-    padding-right:20px;
 }
 #index #browseLink{
     font-size:1em;
-}
-#index #shadowBottom {
-    position:absolute;
-    top:545px;
-    z-index:300;
 }
 #index .bfFormBrowser .formBrowserHeader{
     margin-left:0;
@@ -1065,12 +1029,13 @@ h3 {
 #index .panel1 .slide1 img{
     margin-left: auto;
     margin-right: auto;
+    opacity: 0.5;
 }
 
 #index .panel1 .slide1 .text1{
     position: absolute;
     font-size:36pt;
-    color:#dddddd;
+    color:white;
     z-index: 900;
     top:10px;
     left: 20px;
@@ -1090,9 +1055,6 @@ h3 {
     display: none !important;
 }
 
-#index .page #box div.anythingSlider .arrow a {
-    background: url("../images/arrow_right.png") no-repeat scroll right center transparent;
-}
 
 #bottomContainer{
     width: 100%;
@@ -1115,4 +1077,39 @@ h3 {
     padding: 0;
     color:#dddddd;
     font-size: smaller;
+}
+#index .anythingSlider #imagine-text{
+    color: white;
+    font-size:30pt;
+    position: absolute;
+    top:270px;
+    left:584px;
+}
+#index .anythingSlider #imagine-text .smalltext{
+    font-size:16pt;
+    float:left;
+}
+#index .anythingSlider #imagine-text .bigtext{
+    font-size:30pt;
+    text-align: right;
+}
+
+#index .anythingSlider #imagine-text #sustaintext{
+}
+
+#index .anythingSlider .apptypes{
+    clear: both;
+    color: #CCCCCC;
+    display: block;
+    font-size: 14pt;
+    padding-left: 31px;
+    padding-top: 10px;
+}
+
+.industries{
+    font-size: 10pt;
+}
+.whatitis{
+    color: #488AA6;
+    font-size: 13pt;
 }

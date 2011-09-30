@@ -74,7 +74,7 @@ div.anythingSlider .anythingWindow {
 }
 /* wrapper: 45px right & left padding for the arrows, 28px @ bottom for navigation */
 div.anythingSlider {
-	position: relative;
+	/*position: relative;*/
 	/*padding: 0 5px 36px 5px;*/
 }
 /* anythingSlider base UL */
@@ -101,23 +101,31 @@ div.anythingSlider .arrow {
 	top: 50%;
 	position: absolute;
 	display: block;
+    z-index: 999;
 }
 div.anythingSlider .arrow a {
 	display: block;
 	height: 120px;
-	margin: -60px 0 0 0; /* half height of image */
+	margin: -60px 0 0 0;
 	width: 45px;
 	text-align: center;
 	outline: 0;
-	background: url(../images/arrow_right.png) no-repeat;
 }
 div.anythingSlider .arrow a span { display: block; text-indent: -9999px; }
-div.anythingSlider .forward { right: 0; }
-div.anythingSlider .back { left: 0; }
-div.anythingSlider .forward a { background-position: 0 -40px; }
-div.anythingSlider .back a { background-position: -88px -40px; }
+div.anythingSlider .forward { right: -260px; }
+div.anythingSlider .back { left: -90px; }
+div.anythingSlider .forward a {
+    background-position: 0 -40px;
+	background: url(../images/arrow_right_v2.png) no-repeat;
+}
+div.anythingSlider .back a {
+    background-position: -88px -40px;
+	background: url(../images/arrow_left_v2.png) no-repeat;
+}
+/*
 div.anythingSlider .forward a:hover, div.anythingSlider .forward a.hover { background-position: 0 -240px; }
 div.anythingSlider .back a:hover, div.anythingSlider .back a.hover { background-position: -88px -240px; }
+*/
 div.anythingSlider .forward.disabled { display: none; } /* disabled arrows, hide or reduce opacity: opacity: .5; filter: alpha(opacity=50); */
 div.anythingSlider .back.disabled { display: none; }
 

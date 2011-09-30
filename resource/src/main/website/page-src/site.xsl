@@ -50,6 +50,7 @@
                 <link rel="SHORTCUT ICON" href="{$calcRoot}/images/betterform.ico"/>
                 <link rel="ICON" href="{$calcRoot}/images/betterform.ico" type="image/x-icon"/>
                 <link rel="stylesheet" type="text/css" href="{$calcRoot}/styles/website.css"/>
+                <link href='http://fonts.googleapis.com/css?family=Istok+Web:400,700&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'/>
                 <xsl:copy-of select="//html:head/html:style"/><xsl:text>
 </xsl:text>
 
@@ -77,16 +78,14 @@
                               .anythingSlider({
                                width               : 900,
                                height              : 500,
-                               startStopped        : false,
                                resizeContents      : true ,
                                animationTime       : 500,
-                               pauseOnHover        : true,
-                               delay               : 6000,
+                               pauseOnHover        : false,
+                               delay               : 5000,
                                buildArrows         : true,
                                buildNavigation     : false,
                                navigationFormatter : null,
-
-                        startStopped        : true
+                               startStopped        : false
                               });
                             });
                     </script>
@@ -178,17 +177,21 @@
                                 <div class="linkList">
                                     <div class="listTitle">Demo</div>
                                     <ul>
+                                        <li>Dashboard</li>
                                         <li>XForms Feature Explorer</li>
                                         <li>Registration</li>
                                         <li>OrderList</li>
+                                        <li>Contacts</li>
                                     </ul>
                                 </div>
                                 <div class="linkList">
                                     <div class="listTitle">Solutions</div>
                                     <ul>
                                         <li>Rich Internet Applications</li>
-                                        <li>eForms</li>
-                                        <li>XML Web Applications</li>
+                                        <li>eForms / XForms</li>
+                                        <li>XML Applications</li>
+                                        <li>Data Mangement</li>
+                                        <li>EAI / SOA</li>
                                         <li>References</li>
                                     </ul>
                                 </div>
@@ -196,6 +199,7 @@
                                     <div class="listTitle">Technologies</div>
                                     <ul>
                                         <li>Java / J2EE</li>
+                                        <li>JavaScript</li>
                                         <li>XML</li>
                                         <li>XForms</li>
                                         <li>XSLT</li>
@@ -205,11 +209,12 @@
                                 <div class="linkList">
                                     <div class="listTitle">Links</div>
                                     <ul>
-                                        <li>Blog</li>
-                                        <li>Sources</li>
-                                        <li>Download</li>
-                                        <li>XForms Wikibook</li>
-                                        <li>XRX Wikibook</li>
+                                        <li><a href="http://betterform.wordpress.com" target="_blank">Blog</a></li>
+                                        <li><a href="http://betterform.wordpress.com/documentation/" target="_blank">Documenation</a></li>
+                                        <li><a href="https://github.com/betterFORM/betterFORM" target="_blank">Sourcecode</a></li>
+                                        <li><a href="download.html">Download</a></li>
+                                        <li><a href="http://en.wikibooks.org/wiki/XForms" target="_blank">XForms Wikibook</a></li>
+                                        <li><a href="http://en.wikibooks.org/wiki/XRX" target="_blank">XRX Wikibook</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -217,7 +222,7 @@
 
                             <div id="bottomMenu">
                                 &#169; 2011 betterFORM&#160;&#160; | &#160;&#160;
-                                <a href="contact.html">impressum</a>&#160; | &#160;&#160;
+                                <a href="contact.html">impressum</a>
                             </div>
                         </div>
                     </div>
