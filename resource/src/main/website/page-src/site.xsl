@@ -64,6 +64,11 @@
                 <xsl:if test="//html:body/@id='index'">
                     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script><xsl:text>
 </xsl:text>
+                    <!-- JQuery Twitter resources -->
+                    <script type="text/javascript" src="../js/jquery.twitter.js"></script><xsl:text>
+</xsl:text>
+                    <link type="text/css" href="../js/jquery.twitter.css"/><xsl:text>
+</xsl:text>
 
                      <!-- Anything Slider optional plugins -->
                      <script src="../js/jquery.easing.1.2.js" type="text/javascript"></script><xsl:text>
@@ -95,7 +100,18 @@
                                navigationFormatter : null,
                                startStopped        : false
                               });
+
+                            $("#twitter").getTwitter({
+                                userName: "betterFORM2010",
+                                numTweets: 5,
+                                loaderText: "Loading tweets...",
+                                slideIn: true,
+                                showHeading: true,
+                                headingText: "Latest News",
+                                showProfileLink: true
                             });
+                        });
+
                     </script>
 
                 </xsl:if>
