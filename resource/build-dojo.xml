@@ -5,7 +5,7 @@
   -->
 
 <!-- $Id: build.xml,v 1.90 2006/11/16 23:55:43 joernt Exp $ -->
-<project id="build Dojo" name="Dojo Build" default="build-dojo" basedir="">
+<project id="buildDojo" name="Util: Dojo Build" default="build-dojo" basedir="">
 
     <xmlproperty file="../build.properties.xml"
                  semanticAttributes="true" keepRoot="false"/>

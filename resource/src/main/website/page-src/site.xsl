@@ -53,10 +53,14 @@
 
                 <link rel="stylesheet" type="text/css" href="{$calcRoot}/styles/website.css"/>
                 <link href='http://fonts.googleapis.com/css?family=Istok+Web:400,700&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'/>
-                <xsl:copy-of select="//html:head/html:style"/><xsl:text>
-</xsl:text>
+
 
                 <xsl:copy-of select="//html:head/html:script"/>
+                <xsl:copy-of select="//html:head/html:link"/><xsl:text>
+</xsl:text>
+                <xsl:copy-of select="//html:head/html:link"/><xsl:text>
+</xsl:text>
+
                 <xsl:if test="//html:body/@id='index'">
                     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script><xsl:text>
 </xsl:text>
@@ -126,7 +130,9 @@
                                     <!--<a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>-->
                                     <a href="demo.html">demo</a><span class="menuDevider"> | </span>
                                     <a href="download.html">download</a><span class="menuDevider"> | </span>
-                                    <a href="product.html">solutions</a><span class="menuDevider"> | </span>
+                                    <a href="product.html">product</a><span class="menuDevider"> | </span>
+                                    <a href="services.html">services</a><span class="menuDevider"> | </span>
+                                    <a href="solutions.html">solutions</a><span class="menuDevider"> | </span>
                                     <a href="support.html">support</a><span class="menuDevider"> | </span>
                                     <a href="whoweare.html">contact</a>
                                 </xsl:variable>
@@ -191,12 +197,12 @@
                                 <div class="linkList">
                                     <div class="listTitle">Solutions</div>
                                     <ul>
-                                        <li>Rich Internet Applications</li>
-                                        <li>eForms / XForms</li>
-                                        <li>XML Applications</li>
-                                        <li>Data Mangement</li>
-                                        <li>EAI / SOA</li>
-                                        <li>References</li>
+                                        <li><a href="solutions.html#references">References</a></li>
+                                        <li><a href="solutions.html#ria">Rich Internet Applications</a></li>
+                                        <li><a href="solutions.html#eforms">eForms / XForms</a></li>
+                                        <li><a href="solutions.html#xml-applications">XML Applications</a></li>
+                                        <li><a href="solutions.html#data-management">Data Mangement</a></li>
+                                        <li><a href="solutions.html#eai">EAI / SOA</a></li>
                                     </ul>
                                 </div>
                                 <div class="linkList">
@@ -239,6 +245,7 @@
 
                 <xsl:copy-of select="//*[@id='import']"/>
 
+<!--
                 <script type="text/javascript">
                     var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
                     document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -250,6 +257,7 @@
                     } catch(err) {
                     }
                 </script>
+-->
 
             </body>
         </html>
