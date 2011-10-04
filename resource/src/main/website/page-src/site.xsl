@@ -130,7 +130,7 @@
                                     <!--<a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>-->
                                     <a href="demo.html">demo</a><span class="menuDevider"> | </span>
                                     <a href="download.html">download</a><span class="menuDevider"> | </span>
-                                    <a href="product.html">product</a><span class="menuDevider"> | </span>
+                                    <a href="software.html">software</a><span class="menuDevider"> | </span>
                                     <a href="services.html">services</a><span class="menuDevider"> | </span>
                                     <a href="solutions.html">solutions</a><span class="menuDevider"> | </span>
                                     <a href="support.html">support</a><span class="menuDevider"> | </span>
