@@ -49,6 +49,8 @@
                 <link rev="made" href="mailto:info@betterform.de"/>
                 <link rel="SHORTCUT ICON" href="{$calcRoot}/images/betterform.ico"/>
                 <link rel="ICON" href="{$calcRoot}/images/betterform.ico" type="image/x-icon"/>
+                <link href="jquery.bubblepopup.v2.3.1.css" rel="stylesheet" type="text/css" />
+
                 <link rel="stylesheet" type="text/css" href="{$calcRoot}/styles/website.css"/>
                 <link href='http://fonts.googleapis.com/css?family=Istok+Web:400,700&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'/>
                 <xsl:copy-of select="//html:head/html:style"/><xsl:text>
@@ -68,6 +70,8 @@
 </xsl:text>
 
                      <script src="../js/jquery.anythingslider.min.js" type="text/javascript"></script><xsl:text>
+</xsl:text>
+                    <script src="jquery.bubblepopup.v2.3.1.min.js" type="text/javascript"></script><xsl:text>
 </xsl:text>
 
                      <!-- Anything Slider optional FX extension -->

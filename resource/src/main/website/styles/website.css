@@ -14,8 +14,8 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	outline-width: 0;
 	padding: 0;
 	vertical-align: baseline;
-}
 
+}
 
 body, a {
 	/*font-size: 11pt;*/
@@ -156,15 +156,6 @@ ul {
 */
 
 /*
-.box {
-	margin-top: -24px;
-	width: 100%;
-	border: 1px solid #BABABA;
-	overflow: hidden;
-}
-*/
-
-/*
 	##################################################
 	############  LINK STYLING    ####################
 	##################################################
@@ -172,8 +163,7 @@ ul {
 
 a,
 a:visited {
-	font-family: Helvetica, Arial, sans-serif;
-	color: #DDDDDD;
+	color: #dddddd;
 	text-decoration: none;
 	background-color: transparent;
 }
@@ -182,7 +172,7 @@ a:active,
 a:focus,
 a:hover {
 	/*color:#999999;*/
-	color:white;
+	color:#488aa6;
 }
 
 #topnav a,
@@ -233,7 +223,7 @@ a:hover {
 	##################################################
 */
 
-#sub-header {
+#index #sub-header {
 	background: #16191E;
 /*
 	text-align: center;
@@ -283,10 +273,14 @@ a:hover {
     float:left;
 }
 #sub-header {
-	/*float: none;*/
-	padding-top: 0;
-    padding-bottom: 10px;
+    position: relative;
     margin-top:-20px;
+    padding: 16px 0;
+    background:-moz-linear-gradient(top, #488AA6, #488AdF); /* Firefox */
+    background:-webkit-gradient(linear, left top, left bottom, from(#488AA6), to(#488AdF)); /* Safari, Chrome */
+    background:-webkit-linear-gradient(top, #488AA6, #488AdF); /* Safari, Chrome - neue Syntax! */
+    background:-o-linear-gradient(top, #488AA6, #488AdF); /* Opera */
+    background:-ms-linear-gradient(top, #488AA6, #488AdF); /* IE */
 
 }
 
@@ -301,10 +295,11 @@ a:hover {
 */
 .box {
 	margin-top: -1px;
-/*  width: 100%;
-	top: 110px;
-	position: absolute; */
-	border: 1px solid #BABABA;
+    width: 100%;
+    top: 88px;
+    border: 1px solid #BABABA;
+    overflow: hidden;
+    background: white;
 }
 
 #columnLeft {
@@ -398,20 +393,18 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: Helvetica, Arial, sans-serif;
 	font-weight: bold;
 }
 
 #sub-header h1 {
-	color: #333333;
+	color: #EFEFFF;
 	font-size: 2.2em;
 	font-variant: small-caps;
-	letter-spacing: 0.05em;
-	line-height: 1.19em; /*margin-bottom: 15px;*/
+	line-height: 1.4em;
 	display: block;
 	font-weight: bold;
 	clear: both;
-	margin-top: -10px;
+    text-shadow: 4px 4px 7px #333363;
 }
 
 h2 {
@@ -462,17 +455,7 @@ content-area{
     /*clear: both;*/
 }
 
-#index .box {
-    /*margin-top: 10px;*/
-    width: 100%;
-    top: 88px;
-    /*position: absolute;*/
-    border: 1px solid #BABABA;
-    overflow: hidden;
-    background: white;
-}
-
-#index #altContent{
+#altContent{
     margin-left:auto;
     margin-right:auto;
     margin-top:20px;
@@ -610,7 +593,17 @@ content-area{
 	margin-bottom: 20px;
 
 }
+#download .downloadBox{
+    position: relative;
+    background: #488AdF;
+    border: thin solid white;
+    background:-moz-linear-gradient(top, #488AdF,#488Ab6); /* Firefox */
+    background:-webkit-gradient(linear, left top, left bottom, from(#488AdF), to(#488AA6)); /* Safari, Chrome */
+    background:-webkit-linear-gradient(top, #488AdF,#488AA6); /* Safari, Chrome - neue Syntax! */
+    background:-o-linear-gradient(top, #488AdF,#488AA6); /* Opera */
+    background:-ms-linear-gradient(top, #488AdF,#488AA6F); /* IE */
 
+}
 #product #boxright,
 #download #boxright {
 	text-align: left;
@@ -618,6 +611,11 @@ content-area{
 	width: 200px;
 
 }
+#downloadIcon{
+    position: absolute;
+    right: 12px;
+    top: 6px;
+    width: 23%;}
 
 #product #boxright .menuRightImage {
 	display: block;
@@ -693,11 +691,13 @@ content-area{
 /* download page */
 
 #download .downloadBox {
-    background: transparent url(../images/downloadButton.png) no-repeat scroll 0 0;
-    width: 378px;
-    height: 78px;
-    float:left;
-    margin-left:-5px;
+border-radius: 10px 10px 10px 10px;
+    height: 66px;
+    margin-left: -5px;
+    position: absolute;
+    right: 0;
+    top: 17px;
+    width: 215px;
 }
 #download #boxleft {
     width: 100%;
@@ -716,8 +716,7 @@ content-area{
     float: left;
     clear:left;
 }
-
-#download .downloadBox #downloadText {
+.downloadBox #downloadText {
     font-size: 14pt;
     color: white;
     font-size: 14pt;
@@ -1111,5 +1110,5 @@ content-area{
 }
 .whatitis{
     color: #488AA6;
-    font-size: 13pt;
+    font-size: 17pt;
 }
