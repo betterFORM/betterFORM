@@ -53,6 +53,7 @@ p {
 	padding: 0;
 	margin-top: 0.3em;
 	margin-bottom: 20px;
+    color: #323232;
 }
 
 /*
@@ -224,7 +225,9 @@ a:hover {
 */
 
 #index #sub-header {
+/*##sub-header {*/
 	background: #16191E;
+	/*background: #D3D3D3;*/
 /*
 	text-align: center;
 	display: block;
@@ -264,7 +267,7 @@ a:hover {
 	margin-right: auto;
 	margin-bottom: 35px;
 	position: absolute;
-	top: 120px;
+	top: 99px;
 	z-index: 100;
 	left: 260px;
 	height: 10px;
@@ -275,12 +278,15 @@ a:hover {
 #sub-header {
     position: relative;
     margin-top:-20px;
-    padding: 16px 0;
-    background:-moz-linear-gradient(top, #488AA6, #488AdF); /* Firefox */
-    background:-webkit-gradient(linear, left top, left bottom, from(#488AA6), to(#488AdF)); /* Safari, Chrome */
-    background:-webkit-linear-gradient(top, #488AA6, #488AdF); /* Safari, Chrome - neue Syntax! */
-    background:-o-linear-gradient(top, #488AA6, #488AdF); /* Opera */
-    background:-ms-linear-gradient(top, #488AA6, #488AdF); /* IE */
+    padding: 23px 0;
+    background: #D3D3D3;
+/*
+    background:-moz-linear-gradient(top, #488AA6, #488AdF);
+    background:-webkit-gradient(linear, left top, left bottom, from(#488AA6), to(#488AdF));
+    background:-webkit-linear-gradient(top, #488AA6, #488AdF);
+    background:-o-linear-gradient(top, #488AA6, #488AdF);
+    background:-ms-linear-gradient(top, #488AA6, #488AdF);
+*/
 
 }
 
@@ -506,10 +512,17 @@ content-area{
     /*height: 250px;*/
     float: left;
     margin-top: 23px;
-    margin-right: 15px;
-    padding: 0 5px 0 5px;
+    padding: 0 15px;
     line-height: 1.6;
     font-size: 10pt;
+}
+
+#main-content .col a{
+    color: #525252;
+    font-weight: bold;
+}
+#main-content .col a:hover{
+    color: #488aa6;
 }
 
 /*
@@ -1011,9 +1024,11 @@ border-radius: 10px 10px 10px 10px;
 .wordcloud{
 
 }
+/*
 #index .statement{
     font-size:13pt;
 }
+*/
 #index .statement-list{
     padding:0;
     margin:0;
@@ -1067,7 +1082,7 @@ border-radius: 10px 10px 10px 10px;
 }
 #bottomContainer .linkList{
     float:left;
-    width:25%;
+    padding: 0 29px;
 }
 
 #bottomContainer .linkList li{
@@ -1108,7 +1123,59 @@ border-radius: 10px 10px 10px 10px;
 .industries{
     font-size: 10pt;
 }
-.whatitis{
-    color: #488AA6;
-    font-size: 17pt;
+/*.whatitis{
+    color: #525252;
+    font-size: 12pt;
+
+}*/
+#leftCol{
+    color:#488aa6;
+}
+#centerCol{
+    color:#488aa6;
+}
+
+#rightCol .statement{
+    font-size: 12pt;
+}
+.smaller{
+    font-size:10pt;
+}
+.bigger{
+    font-size:14pt;
+}
+#main-content #juitterContainer{
+    border: thin dotted #444444;
+    margin-bottom: 10px;
+}
+
+#main-content  #juitterContainer li{
+    border-bottom: thin solid #999999;
+    margin-bottom: 3px;
+    padding: 9px;
+}
+#main-content  #juitterContainer a{
+    color:#488aa6;
+}
+#main-content  #juitterContainer .profileLink{
+    color:#488aa6;
+    margin: 0;
+}
+#main-content  #juitterContainer .profileLink a{
+    color:white;
+}
+#main-content  #juitterContainer .profileLink a:hover{
+    color:#525252;
+}
+
+#main-content  #juitterContainer li span{
+    color:#777777;
+}
+#main-content .col .twitterUsername,
+#main-content .col .twitterReadMore {
+    display:none;
+}
+
+#main-content .twitterLink {
+    padding-left: 10px;
 }

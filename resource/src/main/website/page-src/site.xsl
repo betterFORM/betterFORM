@@ -62,12 +62,22 @@
 </xsl:text>
 
                 <xsl:if test="//html:body/@id='index'">
+                    <link href="../js/jquery.bubblepopup.v2.3.1.css" rel="stylesheet" type="text/css" /><xsl:text>
+</xsl:text>
                     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script><xsl:text>
 </xsl:text>
                     <!-- JQuery Twitter resources -->
-                    <script type="text/javascript" src="../js/jquery.twitter.js"></script><xsl:text>
+                    <script type="text/javascript" src="../js/jquery.juitter.js"></script><xsl:text>
 </xsl:text>
-                    <link type="text/css" href="../js/jquery.twitter.css"/><xsl:text>
+<!--
+                    <script type="text/javascript" src="../js/juitter/js/system.js"></script><xsl:text>
+</xsl:text>
+-->
+<!--
+                    <link type="text/css" href="../js/juitter/css/main.css"/><xsl:text>
+</xsl:text>
+-->
+                    <script src="../js/jquery.bubblepopup.v2.3.1.min.js" type="text/javascript"></script><xsl:text>
 </xsl:text>
 
                      <!-- Anything Slider optional plugins -->
@@ -101,16 +111,45 @@
                                startStopped        : false
                               });
 
+                        $.Juitter.start({
+                            searchType:"fromUser",
+                            searchObject:"betterFORM2010",
+                            placeHolder:"juitterContainer",
+                            loadMSG: "Loading messages...",
+                            imgName: "loader.gif", // Loading image, to enable it, go to the loadMSG var above and change it to "image/gif"
+                            total: 3, // number of tweets to be show - max 100
+                            readMore: "blablb",
+                            nameUser:"none",
+                            openExternalLinks:"newWindow"
+                        });
+
+<!--
                             $("#twitter").getTwitter({
                                 userName: "betterFORM2010",
                                 numTweets: 5,
                                 loaderText: "Loading tweets...",
                                 slideIn: true,
-                                showHeading: true,
-                                headingText: "Latest News",
+                                showHeading: false,
+                                headingText: "",
                                 showProfileLink: true
                             });
-                        });
+
+-->
+                            //create a bubble popup for each DOM element with class attribute as "text", "button" or "link" and LI, P, IMG elements.
+                            $('#xformsToolkit').CreateBubblePopup({
+
+                                position : 'top',
+                                align	 : 'center',
+
+                                innerHtml: 'Take a look to the HTML source of this page <br /> \
+                                            to learn how the plugin works!',
+
+                                innerHtmlStyle: {
+                                    'text-align':'center'
+                                },
+
+                            });
+              });
 
                     </script>
 
@@ -173,7 +212,9 @@
                     </div>
 
                     <div id="content-area">
-                        <!--<img id="shadowTop" src="{$calcRoot}/images/shad_top.jpg" alt=""/>-->
+                        <xsl:if test="not(exists(//html:body/@id[.='index']))">
+                            <img id="shadowTop" src="{$calcRoot}/images/shad_top.jpg" alt=""/>
+                        </xsl:if>
                         <noscript>
                             <div style="border: thin solid ; width: 100%; color: darkred;position:absolute;top:120px;z-index:999;padding:5px;background:orange">Sorry - this site was optimized for use with JavaScript. You won't be able to access all content until you activate JavaScript</div>
                         </noscript>
@@ -203,22 +244,22 @@
                                 <div class="linkList">
                                     <div class="listTitle">Demo</div>
                                     <ul>
-                                        <li>Dashboard</li>
-                                        <li>XForms Feature Explorer</li>
-                                        <li>Registration</li>
-                                        <li>OrderList</li>
-                                        <li>Contacts</li>
+                                        <li><a href="../dashboard.html" target="_blank">Dashboard</a></li>
+                                        <li><a href="../FeatureExplorer.xhtml" target="_blank">XForms Feature Explorer</a></li>
+                                        <li><a href="../demo/registration.xhtml" target="_blank">Registration</a></li>
+                                        <li><a href="../demo/orderlist.xhtml" target="_blank">OrderList</a></li>
+                                        <li><a href="../demo/contacts.xhtml" target="_blank">Contacts</a></li>
                                     </ul>
                                 </div>
                                 <div class="linkList">
                                     <div class="listTitle">Solutions</div>
                                     <ul>
-                                        <li><a href="solutions.html#references">References</a></li>
                                         <li><a href="solutions.html#ria">Rich Internet Applications</a></li>
                                         <li><a href="solutions.html#eforms">eForms / XForms</a></li>
                                         <li><a href="solutions.html#xml-applications">XML Applications</a></li>
                                         <li><a href="solutions.html#data-management">Data Mangement</a></li>
                                         <li><a href="solutions.html#eai">EAI / SOA</a></li>
+                                        <li><a href="solutions.html#references">References</a></li>
                                     </ul>
                                 </div>
                                 <div class="linkList">
@@ -228,6 +269,14 @@
                                         <li><a href="services.html#development">Development</a></li>
                                         <li><a href="services.html#training">Training</a></li>
                                         <li><a href="services.html#support">Support</a></li>
+                                    </ul>
+                                </div>
+                                <div class="linkList">
+                                    <div class="listTitle">Software</div>
+                                    <ul>
+                                        <li><a href="xforms-toolkit.html">XForms Toolkit</a></li>
+                                        <li><a href="xml-suite.html">betterFORM XML Suite</a></li>
+                                        <li><a href="services.html#development">Custom Solutions</a></li>
                                     </ul>
                                 </div>
                                 <div class="linkList">
