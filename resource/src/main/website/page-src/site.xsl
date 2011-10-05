@@ -58,7 +58,7 @@
                 <xsl:copy-of select="//html:head/html:script"/>
                 <xsl:copy-of select="//html:head/html:link"/><xsl:text>
 </xsl:text>
-                <xsl:copy-of select="//html:head/html:link"/><xsl:text>
+                <xsl:copy-of select="//html:head/html:style"/><xsl:text>
 </xsl:text>
 
                 <xsl:if test="//html:body/@id='index'">
