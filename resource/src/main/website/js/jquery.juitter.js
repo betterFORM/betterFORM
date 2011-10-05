@@ -111,7 +111,7 @@ The Juitter developer shall have no responsability for data loss or damage of an
 						if(e==1 || (i<numMSG && item.id>ultID)){
 							if(i==0){
 								tultID = item.id;
-                                var userLink="<a class='twitterLink' target='_blank' href='http://www.twitter.com/betterFORM2010'>@betterFORM2010</a>";
+                                var userLink="<a class='twitterLink' target='_blank' href='http://www.twitter.com/betterFORM2010'><img class='twitterLogo' src='../images/logo_twitter.png' height='24' width='24' alt='follow betterform @ twitter'/><span class='twitterBetterform'>@betterFORM2010</a>";
                                 $("<div></div>")
                                     .html(userLink)
                                     .attr('class','twittFooter')
@@ -167,11 +167,11 @@ The Juitter developer shall have no responsability for data loss or damage of an
 		textFormat: function(texto){
 			//make links
 			var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-			texto = texto.replace(exp,"<a href='$1' class='extLink' "+openLink+">$1</a>"); 
+			texto = texto.replace(exp,"<a href='$1' target='_blank' class='extLink' "+openLink+">$1</a>");
 			var exp = /[\@]+([A-Za-z0-9-_]+)/ig;
-			texto = texto.replace(exp,"<a href='http://twitter.com/$1' class='profileLink'>@$1</a>"); 
+			texto = texto.replace(exp,"<a href='http://twitter.com/$1' target='_blank' class='profileLink'>@$1</a>");
 			var exp = /[\#]+([A-Za-z0-9-_]+)/ig;
-			texto = texto.replace(exp,"<a href='http://juitter.com/#$1' onclick='$.Juitter.start({searchType:\"searchWord\",searchObject:\"$1\"});return false;' class='hashLink'>#$1</a>"); 
+			texto = texto.replace(exp,"<a href='http://twitter.com/#!/search?q=%23$1' target='_blank' class='hashLink'>#$1</a>");
 			// make it bold
 			if(mode=="searchWord"){
 				tempParam = param.replace(/&ors=/,"");
