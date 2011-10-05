@@ -17,10 +17,17 @@
 
     <!--<xsl:param name="rootDir" select="'../..'"/>-->
     <xsl:param name="currentFile" select="''"/>
+    <xsl:param name="lang" select="'en'"/>
 
     <xsl:variable name="calcRoot" select="if ($currentFile='dashboard.xhtml')
                                             then '.'
                                             else '..'"/>
+
+    <xsl:variable name="langFile" select="concat('lang/properties_',$lang,'.xml')"/>
+    <xsl:variable name="language" select="document($langFile)"/>
+
+
+
     <xsl:template match="/">
         <html xml:lang="en" lang="en">
             <head>
@@ -123,18 +130,6 @@
                             openExternalLinks:"newWindow"
                         });
 
-<!--
-                            $("#twitter").getTwitter({
-                                userName: "betterFORM2010",
-                                numTweets: 5,
-                                loaderText: "Loading tweets...",
-                                slideIn: true,
-                                showHeading: false,
-                                headingText: "",
-                                showProfileLink: true
-                            });
-
--->
                             //create a bubble popup for each DOM element with class attribute as "text", "button" or "link" and LI, P, IMG elements.
                             $('#xformsToolkit').CreateBubblePopup({
 
@@ -153,6 +148,39 @@
 
                     </script>
 
+                </xsl:if>
+                <xsl:if test="//html:body/@id='solutions'">
+                    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"> </script><xsl:text>
+</xsl:text>
+                     <!-- Anything Slider optional plugins -->
+                     <script src="../js/jquery.easing.1.2.js" type="text/javascript"> </script><xsl:text>
+</xsl:text>
+
+                     <!-- Anything Slider -->
+                     <link href="../styles/anythingslider.css" type="text/css" rel="stylesheet" /><xsl:text>
+</xsl:text>
+
+                     <script src="../js/jquery.anythingslider.min.js" type="text/javascript"> </script><xsl:text>
+</xsl:text>
+                     <!-- Anything Slider optional FX extension -->
+                     <!--<script src="js/jquery.anythingslider.fx.min.js" type="text/javascript"></script>-->
+                    <script type="text/javascript">
+                        $(document).ready(function(){
+                             $('#referenceSlide')
+                              .anythingSlider({
+                               width               : 580,
+                               height              : 300,
+                               resizeContents      : false,
+                               animationTime       : 300,
+                               delay               : 4000,
+                               buildNavigation     : false,
+                               pauseOnHover        : true,
+                               buildArrows         : true,
+                               navigationFormatter : null,
+                               startStopped        : false
+                              });
+                            });
+                    </script>
                 </xsl:if>
             </head>
             <body id="{//html:body/@id}">
@@ -187,9 +215,9 @@
                                     <a href="download.html">download</a><span class="menuDevider"> | </span>
                                     <a href="software.html">software</a><span class="menuDevider"> | </span>
                                     <a href="services.html">services</a><span class="menuDevider"> | </span>
-                                    <a href="solutions.html">solutions</a><span class="menuDevider"> | </span>
+                                    <a href="solutions.html"><xsl:value-of select="$language/data/solutions"/></a><span class="menuDevider"> | </span>
                                     <a href="support.html">support</a><span class="menuDevider"> | </span>
-                                    <a href="whoweare.html">contact</a>
+                                    <a href="whoweare.html"><xsl:value-of select="$language/data/contact"/></a>
                                 </xsl:variable>
 
                                 <div id="topnav">
@@ -252,22 +280,22 @@
                                     </ul>
                                 </div>
                                 <div class="linkList">
-                                    <div class="listTitle">Solutions</div>
+                                    <div class="listTitle"><xsl:value-of select="$language/data/Solutions"/></div>
                                     <ul>
                                         <li><a href="solutions.html#ria">Rich Internet Applications</a></li>
                                         <li><a href="solutions.html#eforms">eForms / XForms</a></li>
-                                        <li><a href="solutions.html#xml-applications">XML Applications</a></li>
-                                        <li><a href="solutions.html#data-management">Data Mangement</a></li>
+                                        <li><a href="solutions.html#xml-applications"><xsl:value-of select="$language/data/xmlApplications"/></a></li>
+                                        <li><a href="solutions.html#data-management"><xsl:value-of select="$language/data/dataManagement"/></a></li>
                                         <li><a href="solutions.html#eai">EAI / SOA</a></li>
-                                        <li><a href="solutions.html#references">References</a></li>
+                                        <li><a href="solutions.html#references"><xsl:value-of select="$language/data/references"/></a></li>
                                     </ul>
                                 </div>
                                 <div class="linkList">
                                     <div class="listTitle">Services</div>
                                     <ul>
                                         <li><a href="services.html#consulting">Consulting</a></li>
-                                        <li><a href="services.html#development">Development</a></li>
-                                        <li><a href="services.html#training">Training</a></li>
+                                        <li><a href="services.html#development"><xsl:value-of select="$language/data/development"/></a></li>
+                                        <li><a href="services.html#training"><xsl:value-of select="$language/data/training"/></a></li>
                                         <li><a href="services.html#support">Support</a></li>
                                     </ul>
                                 </div>
@@ -276,14 +304,14 @@
                                     <ul>
                                         <li><a href="xforms-toolkit.html">XForms Toolkit</a></li>
                                         <li><a href="xml-suite.html">betterFORM XML Suite</a></li>
-                                        <li><a href="services.html#development">Custom Solutions</a></li>
+                                        <li><a href="services.html#development"><xsl:value-of select="$language/data/customSolutions"/></a></li>
                                     </ul>
                                 </div>
                                 <div class="linkList">
                                     <div class="listTitle">Links</div>
                                     <ul>
                                         <li><a href="http://betterform.wordpress.com" target="_blank">Blog</a></li>
-                                        <li><a href="http://betterform.wordpress.com/documentation/" target="_blank">Documenation</a></li>
+                                        <li><a href="http://betterform.wordpress.com/documentation/" target="_blank"><xsl:value-of select="$language/data/documentation"/></a></li>
                                         <li><a href="https://github.com/betterFORM/betterFORM" target="_blank">Sourcecode</a></li>
                                         <li><a href="download.html">Download</a></li>
                                         <li><a href="http://en.wikibooks.org/wiki/XForms" target="_blank">XForms Wikibook</a></li>

@@ -20,14 +20,26 @@
     </target>
 
     <target name="build" depends="prepare" description="generates the betterFORM site">
-        <xslt basedir="${basedir}/src/main/website/page-src"
-              destdir="${basedir}/target"
+        <mkdir dir="${basedir}/target"/>
+        <xslt basedir="${basedir}/src/main/website/page-src/en"
+              destdir="${basedir}/target/en"
               style="${basedir}/src/main/website/page-src/site.xsl"
               force="true"
               includes="**/*.xhtml"
               extension=".html"
               filenameparameter="currentFile"
               classpathref="transform.class.path">
+            <param name="lang" expression="en" />
+        </xslt>
+        <xslt basedir="${basedir}/src/main/website/page-src/de"
+              destdir="${basedir}/target/de"
+              style="${basedir}/src/main/website/page-src/site.xsl"
+              force="true"
+              includes="**/*.xhtml"
+              extension=".html"
+              filenameparameter="currentFile"
+              classpathref="transform.class.path">
+            <param name="lang" expression="de" />
         </xslt>
     </target>
 
