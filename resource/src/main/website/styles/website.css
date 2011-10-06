@@ -49,11 +49,11 @@ ol > li{
     margin-left:20px;
 }
 
-p {
+p,ul {
 	padding: 0;
 	margin-top: 0.3em;
 	margin-bottom: 20px;
-    color: #323232;
+    color: #999999;
 }
 
 /*
@@ -145,6 +145,9 @@ ul {
 
 #main-content {
 	color: #999999;
+}
+#main-content a,#main-content a:visited{
+    color:#333333;
 }
 
 /*
@@ -981,7 +984,7 @@ border-radius: 10px 10px 10px 10px;
 #support .contentBody p{
     margin-right:134px;
 }
-#support ul{
+#services #main-content ul{
     list-style-image:url(../images/menu_pfeil.png);
     list-style-position:inside;
 }
@@ -1009,10 +1012,6 @@ border-radius: 10px 10px 10px 10px;
     border:none;
 }
 
-#support #sub-header p,
-#whoweare #sub-header p{
-	line-height:1.8;
-}
 #whoweare .tableContent p {
 	line-height: 1em;
 	text-align: left;
@@ -1092,7 +1091,7 @@ border-radius: 10px 10px 10px 10px;
 }
 #bottomContainer .linkList{
     float:left;
-    padding: 0 29px;
+    padding: 0 58px 0 0;
 }
 
 #bottomContainer .linkList li{
@@ -1221,6 +1220,7 @@ border-radius: 10px 10px 10px 10px;
 #toolkitList > div{
     padding: 10px;
     width:400px;
+    box-shadow: 5px 3px 12px;
 }
 
 #toolkitList div img{
@@ -1230,17 +1230,16 @@ border-radius: 10px 10px 10px 10px;
 
 #toolkitList #productivityItem{
     background: none repeat scroll 0 0 white;
-    box-shadow: 10px 10px 10px;
     right: 0;
-    /*position: absolute;*/
-    top: 40px;
+    position: absolute;
+    top: 20px;
 }
 
 
 #toolkitList #processorItem{
     background: none repeat scroll 0 0 white;
-    box-shadow: 10px 10px 10px;
-    /*position: absolute;*/
+    /*box-shadow: 10px 10px 10px;*/
+    position: absolute;
     left: 0;
     top: 90px;
 }
@@ -1251,38 +1250,54 @@ border-radius: 10px 10px 10px 10px;
 
 #toolkitList #openItem{
    background: none repeat scroll 0 0 white;
-    box-shadow: 10px 10px 10px;
+    /*box-shadow: 10px 10px 10px;*/
     left: 0;
-    /*position: absolute;*/
-    top: 560px;
+    position: absolute;
+    top: 620px;
 }
 #toolkitList #integrateItem{
     background: none repeat scroll 0 0 white;
-    box-shadow: 10px 10px 10px;
+    /*box-shadow: 10px 10px 10px;*/
     left: 1px;
-    /*position: absolute;*/
+    position: absolute;
 
     top: 340px;
 }
 
 #toolkitList #browserItem {
     background: none repeat scroll 0 0 white;
-    box-shadow: 10px 10px 10px;
-    /*position: absolute;*/
+    /*box-shadow: 10px 10px 10px;*/
+    position: absolute;
     right: 0;
     top: 265px;
 }
 
 #toolkitList #xmlItem{
     right: 0;
-    /*position: absolute;*/
+    position: absolute;
     top: 600px;
-    box-shadow: 10px 10px 10px;
+    /*box-shadow: 10px 10px 10px;*/
 
 }
+#sub-header p{
+    color:#343434;
+    font-size: 1em;
+    margin-bottom: 0;
+    padding-right: 400px;
+}
 
+#support #sub-header p {
+    padding-right:200px;
+}
 
+#services #bfGeneralPrices td {
+    padding-left: 20px;
+}
+#services #bfGeneralPrices {
+    padding-bottom: 20px;
+}
 
-
-
+#services .contactus {
+    font-size: 0.9em;
+}
 
