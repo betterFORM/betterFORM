@@ -1046,6 +1046,14 @@ public class DOMUtil {
         transformer.transform(new DOMSource(node), new StreamResult(stream));
     }
 
+    public static void prettyPrintDOMAsHTML(Node node, OutputStream stream) throws TransformerException {
+        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty(OutputKeys.METHOD, "html");
+        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+        transformer.transform(new DOMSource(node), new StreamResult(stream));
+    }
+
     private static DocumentBuilder createDocumentBuilder(boolean namespaces, boolean validating)
             throws ParserConfigurationException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
