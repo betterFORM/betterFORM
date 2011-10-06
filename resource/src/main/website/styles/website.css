@@ -1282,6 +1282,84 @@ border-radius: 10px 10px 10px 10px;
 }
 
 
+#solutionsList {
+    position: relative;
+    min-height: 900px;
+}
+#solutionsList > div{
+    padding: 10px;
+    width:400px;
+}
+
+#solutionsList div img{
+    float: right;
+    margin-right: 23px;
+}
+
+#solutionsList #productivityItem{
+    background: none repeat scroll 0 0 white;
+    box-shadow: 10px 10px 10px;
+    right: 0;
+    /*position: absolute;*/
+    top: 40px;
+}
+
+
+#solutionsList #processorItem{
+    background: none repeat scroll 0 0 white;
+    box-shadow: 10px 10px 10px;
+    /*position: absolute;*/
+    left: 0;
+    top: 90px;
+}
+#solutionsList #processorItem img{
+    padding-left: 23px;
+
+}
+
+#solutionsList #riaItem{
+   background: none repeat scroll 0 0 white;
+    box-shadow: 10px 10px 10px;
+    left: 0;
+    /*position: absolute;*/
+    top: 560px;
+}
+#solutionsList #eformsItem{
+    background: none repeat scroll 0 0 white;
+    box-shadow: 10px 10px 10px;
+    left: 1px;
+    /*position: absolute;*/
+
+    top: 340px;
+}
+
+#solutionsList #xmlapplicationItem {
+    background: none repeat scroll 0 0 white;
+    box-shadow: 10px 10px 10px;
+    /*position: absolute;*/
+    right: 0;
+    top: 265px;
+}
+
+#solutionsList #datamanagementItem{
+    right: 0;
+    /*position: absolute;*/
+    top: 600px;
+    box-shadow: 10px 10px 10px;
+
+}
+
+#solutionsList #eaiItem{
+    right: 0;
+    /*position: absolute;*/
+    top: 600px;
+    box-shadow: 10px 10px 10px;
+
+}
+
+eaiItem
+
+
 
 
 
