@@ -69,8 +69,10 @@
 </xsl:text>
 
                 <xsl:if test="//html:body/@id='index'">
+<!--
                     <link href="../js/jquery.bubblepopup.v2.3.1.css" rel="stylesheet" type="text/css" /><xsl:text>
 </xsl:text>
+-->
                     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script><xsl:text>
 </xsl:text>
                     <!-- JQuery Twitter resources -->
@@ -84,8 +86,10 @@
                     <link type="text/css" href="../js/juitter/css/main.css"/><xsl:text>
 </xsl:text>
 -->
+<!--
                     <script src="../js/jquery.bubblepopup.v2.3.1.min.js" type="text/javascript"></script><xsl:text>
 </xsl:text>
+-->
 
                      <!-- Anything Slider optional plugins -->
                      <script src="../js/jquery.easing.1.2.js" type="text/javascript"></script><xsl:text>
