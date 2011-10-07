@@ -1086,7 +1086,7 @@ content-area{
     color: white;
     font-size:30pt;
     position: absolute;
-    top:270px;
+    top:350px;
     left:584px;
 }
 
@@ -1111,7 +1111,7 @@ content-area{
 }
 
 #index .panel1 .slide2 .footer-text {
-    font-size:24pt;
+    font-size:30pt;
     color:#a3c229;
 }
 #index .panel1 .slide2 .sub-text{
@@ -1119,7 +1119,6 @@ content-area{
     top: 200px;
     left: 20px;
     font-size: 24pt;
-    text-shadow: 1px 1px 1px #ABABAB;
 }
 
 #index .panel1 .slide2 .sub-text .text1{
