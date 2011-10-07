@@ -41,17 +41,14 @@
                 <meta name="Author" content="Joern Turner"/>
                 <meta name="Author" content="Lars Windauer"/>
                 <meta name="publisher" content="betterFORM Project"/>
-                <meta name="description"
-                      content=" betterFORM allows easy creation of highly dynamic Web 2.0 user interfaces with attractive controls. Add validations, calculations, actions and events to build webapplications."/>
-                <meta name="keywords"
-                      content="betterFORM, xforms, forms, form, xhtml, xpath, xslt, xslt2.0, dojo, dojotoolkit, java, javascript, xml, schema, web, web2.0, web2, web3.0, web3, semantic, semantic web, joern turner, turner, lars windauer, ajax, xforms processor, processor"/>
+                <meta name="description" content=" betterFORM allows easy creation of highly dynamic Web 2.0 user interfaces with attractive controls. Add validations, calculations, actions and events to build webapplications."/>
                 <meta name="copyright" content="betterForm Project"/>
-                <meta name="content-language" content="en"/>
+                <meta name="content-language" content="{$lang}"/>
                 <meta name="robots" content="all"/>
                 <meta http-equiv="expires" content="Wed, 9 Feb 2011 12:21:57 GMT"/>
                 <meta name="revisit-after" content="2 days"/>
                 <meta name="google-site-verification" content="L5gmOYcZv-vwF2q0e-qSIXx8ecpKUN8A7lrW4ia9YR0"/>
-
+                <xsl:copy-of select="//html:head/html:meta"/>
 
                 <link rev="made" href="mailto:info@betterform.de"/>
                 <link rel="SHORTCUT ICON" href="{$calcRoot}/images/betterform.ico"/>
@@ -60,6 +57,7 @@
 
                 <link rel="stylesheet" type="text/css" href="{$calcRoot}/styles/website.css"/>
                 <link href='http://fonts.googleapis.com/css?family=Istok+Web:400,700&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'/>
+
 
 
                 <xsl:copy-of select="//html:head/html:script"/>
@@ -135,6 +133,7 @@
                         });
 
                             //create a bubble popup for each DOM element with class attribute as "text", "button" or "link" and LI, P, IMG elements.
+                        /*
                             $('#xformsToolkit').CreateBubblePopup({
 
                                 position : 'top',
@@ -148,6 +147,7 @@
                                 },
 
                             });
+                        */
               });
 
                     </script>
@@ -186,6 +186,16 @@
                             });
                     </script>
                 </xsl:if>
+
+                <script type="text/javascript">
+                    var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-15044944-1']); _gaq.push(['_trackPageview']);
+                    (function() {
+                        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                    })();
+                </script>
+
             </head>
             <body id="{//html:body/@id}">
                 <xsl:copy-of select="//html:body/@style"/>
@@ -342,19 +352,8 @@
 
                 <xsl:copy-of select="//*[@id='import']"/>
 
-<!--
-                <script type="text/javascript">
-                    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-                    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-                </script>
-                <script type="text/javascript">
-                    try {
-                        var pageTracker = _gat._getTracker("UA-15044944-1");
-                        pageTracker._trackPageview();
-                    } catch(err) {
-                    }
-                </script>
--->
+
+
 
             </body>
         </html>
