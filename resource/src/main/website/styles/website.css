@@ -1043,26 +1043,181 @@ border-radius: 10px 10px 10px 10px;
     margin:0;
 }
 
-#index .panel1 .slide1{
+/* Slides */
+#index .panel1 .slide1,
+#index .panel1 .slide2,
+#index .panel1 .slide3{
     position:relative;
     /*background: url(../images/banner/slide1.jpg) no-repeat;*/
-    width: 870px;
-    height: 600px;
+    width: 900px;
+    height: 500px;
 }
-#index .panel1 .slide1 img{
+
+#index .panel1 .slide1 img,
+#index .panel1 .slide2 img {
     margin-left: auto;
     margin-right: auto;
     opacity: 0.5;
 }
 
-#index .panel1 .slide1 .text1{
+.header-text {
     position: absolute;
     font-size:36pt;
     color:white;
-    z-index: 900;
+    z-index: 1000;
     top:10px;
     left: 20px;
 }
+
+#index .panel1 .slide2 .footer-text,
+#index .panel1 .slide3 .footer-text {
+    z-index: 1000;
+    left: 315px;
+    position: absolute;
+    text-align: right;
+    top: 450px;
+    width: 560px;
+}
+
+/* liliethal */
+#index .panel1 .slide1 .sub-text {
+    color: white;
+    font-size:30pt;
+    position: absolute;
+    top:270px;
+    left:584px;
+}
+
+#index .panel1 .slide1 .sub-text .text{
+    font-size:16pt;
+    float:left;
+}
+#index .panel1 .slide1 .sub-text .footer-text{
+    font-size:30pt;
+    text-align: right;
+}
+
+/* jungle */
+#index .panel1 .slide2 {
+
+    /*text-shadow: 1px 3px 1px #AEAEAE;*/
+}
+#index .panel1 .slide2 .header-text {
+    color:#a3c229;
+    font-size:36pt;
+    text-align: left;
+}
+
+#index .panel1 .slide2 .footer-text {
+    font-size:24pt;
+    color:#a3c229;
+}
+#index .panel1 .slide2 .sub-text{
+    position: absolute;
+    top: 200px;
+    left: 20px;
+    font-size: 24pt;
+    text-shadow: 1px 1px 1px #ABABAB;
+}
+
+#index .panel1 .slide2 .sub-text .text1{
+    position: absolute;
+    top: 10px;
+    left: 20px;
+}
+
+#index .panel1 .slide2 .sub-text .text2{
+    position: absolute;
+    top: 18px;
+    left: 112px;
+}
+
+#index .panel1 .slide2 .sub-text .text3{
+    position: absolute;
+    top: 50px;
+    left: 111px;
+}
+
+#index .panel1 .slide2 .sub-text .text4{
+    position: absolute;
+    top: 60px;
+    left: 223px;
+}
+
+#index .panel1 .slide2 .sub-text .text5{
+    position: absolute;
+    top: 75px;
+    left: 38px;
+}
+
+#index .panel1 .slide2 .sub-text .text6{
+    position: absolute;
+    top: 100px;
+    left: 115px;
+}
+
+#index .panel1 .slide2 .sub-text .text7{
+    position: absolute;
+    top: 185px;
+    left: 173px;
+}
+
+#index .panel1 .slide2 .sub-text .text8{
+    position: absolute;
+    top: 148px;
+    left: 120px;
+}
+
+#index .panel1 .slide2 .sub-text .text9{
+    position: absolute;
+    top: 200px;
+    left: 20px;
+}
+
+#index .panel1 .slide2 .sub-text .text10{
+    position: absolute;
+    top: 222px;
+    left: 77px;
+}
+
+#index .panel1 .slide2 .sub-text .text11{
+    position: absolute;
+    top: 144px;
+    left: 7px;
+}
+
+/* Road, Ipad, XML */
+#index .panel1 .slide3 {
+    text-shadow: 1px 1px 1px #ABABAB;
+}
+
+#index .panel1 .slide3 .header-text {
+    font-size:36pt;
+}
+
+#index .panel1 .slide3 .footer-text {
+    color: white;
+    font-size: 30pt;
+}
+
+#index .panel1 .slide3 .header-shadow,
+#index .panel1 .slide3 .footer-shadow {
+    background-color: #343434;
+    height: 65px;
+    opacity: 0.7;
+    position: absolute;
+    width: 100%;
+}
+
+#index .panel1 .slide3 .header-shadow {
+    top: 0px;
+}
+
+#index .panel1 .slide3 .footer-shadow {
+    top: 446px;
+}
+
+/*
 #index .panel1 .slide1 .text2{
     color:#32cd32;
     position: absolute;
@@ -1073,6 +1228,7 @@ border-radius: 10px 10px 10px 10px;
     right: 10px;
 
 }
+*/
 
 #index .anythingSlider .anythingControls{
     display: none !important;
@@ -1101,42 +1257,7 @@ border-radius: 10px 10px 10px 10px;
     color:#dddddd;
     font-size: smaller;
 }
-#index .anythingSlider #imagine-text{
-    color: white;
-    font-size:30pt;
-    position: absolute;
-    top:270px;
-    left:584px;
-}
-#index .anythingSlider #imagine-text .smalltext{
-    font-size:16pt;
-    float:left;
-}
-#index .anythingSlider #imagine-text .bigtext{
-    font-size:30pt;
-    text-align: right;
-}
 
-#index .anythingSlider #imagine-text #sustaintext{
-}
-
-#index .anythingSlider .apptypes{
-    clear: both;
-    color: #CCCCCC;
-    display: block;
-    font-size: 14pt;
-    padding-left: 31px;
-    padding-top: 10px;
-}
-
-.industries{
-    font-size: 10pt;
-}
-/*.whatitis{
-    color: #525252;
-    font-size: 12pt;
-
-}*/
 #leftCol{
     color:#488aa6;
 }
