@@ -413,7 +413,7 @@ h1, h2, h3, h4, h5, h6 {
 	display: block;
 	font-weight: bold;
 	clear: both;
-    text-shadow: 4px 4px 7px #333363;
+    text-shadow: 4px 4px 7px #333333;
 }
 
 h2 {
@@ -424,7 +424,6 @@ h2 {
 	display: block;
 	letter-spacing: 0.05em;
 	clear: both;
-	margin-top: 20px;
 	margin-bottom: 14px;
 
 
@@ -517,6 +516,7 @@ content-area{
     background: white;
     display: block; /*float:left;*/
     color: #999;
+    margin-top:15px;
 }
 
 #index #main-content .col {
@@ -579,7 +579,7 @@ content-area{
     /*background:white;*/
 }
 
-#bf #main-content #rightCol a:hover {
+ #main-content a:hover {
     text-decoration: underline;
 }
 
@@ -716,16 +716,19 @@ content-area{
 /* download page */
 
 #download .downloadBox {
-border-radius: 10px 10px 10px 10px;
     height: 66px;
-    margin-left: -5px;
     position: absolute;
     right: 0;
-    top: 17px;
+    top: -10px;
     width: 215px;
+    border: none;
 }
 #download #boxleft {
     width: 100%;
+}
+
+#download .downloadBox a:hover{
+    color:#488AA6;
 }
 
 #downloadNote{
@@ -742,12 +745,11 @@ border-radius: 10px 10px 10px 10px;
     clear:left;
 }
 .downloadBox #downloadText {
-    font-size: 14pt;
     color: white;
+    display: inline-block;
     font-size: 14pt;
-    padding: 20px 0 0 22px;
     margin: 0;
-}
+    padding: 18px;}
 
 #download .downloadBox #downloadSubtext {
     color: lightsteelblue;
@@ -984,7 +986,7 @@ border-radius: 10px 10px 10px 10px;
 #support .contentBody p{
     margin-right:134px;
 }
-#services #main-content ul{
+#software #main-content ul,#services #main-content ul{
     list-style-image:url(../images/menu_pfeil.png);
     list-style-position:inside;
 }
@@ -1301,5 +1303,16 @@ border-radius: 10px 10px 10px 10px;
     font-size: 0.9em;
 }
 
-
+.downloadLink{
+    float: right;
+    margin: -4px 10px 35px 0;
+    width:300px;
+}
+.downloadLink img{
+    float: right;
+}
+.escalator{
+    float: left;
+    margin: 0 20px 10px 0;
+}
 
