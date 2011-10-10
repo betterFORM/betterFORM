@@ -56,14 +56,6 @@ p,ul {
     color: #999999;
 }
 
-/*
-ul, ol {
-	margin: 0;
-	padding-left: 16px;
-	list-style:none;
-}
-*/
-
 table {
 	color: #666666;
 }
@@ -424,7 +416,7 @@ h2 {
 	display: block;
 	letter-spacing: 0.05em;
 	clear: both;
-	margin-bottom: 14px;
+	margin: 14px 0;
 
 
 background: #f5f6f6; /* Old browsers */
@@ -599,18 +591,9 @@ content-area{
 }
 
 /* ############################  page specific ############################## */
-#product #featureTable tr{
-	height:20px;
-}
+/*
 
-#product #featureTable td{
-	padding:5px 30px 5px 0;
-	vertical-align: top;
-	font-size: 0.9em;
-	color: #666666;
-
-}
-#product #boxleft,
+*/
 #download #boxleft {
 	float: left;
 	width: 480px;
@@ -629,7 +612,6 @@ content-area{
     background:-ms-linear-gradient(top, #488AdF,#488AA6F); /* IE */
 
 }
-#product #boxright,
 #download #boxright {
 	text-align: left;
 	float: left;
@@ -642,15 +624,6 @@ content-area{
     top: 6px;
     width: 23%;}
 
-#product #boxright .menuRightImage {
-	display: block;
-	padding-top: 4px;
-	text-align: left;
-	width: 99%;
-	overflow: hidden;
-}
-
-
 /*
 #download .header1 {
 	color: #488AA6;
@@ -662,52 +635,14 @@ content-area{
 }
 */
 
-#product .boxRightEntryHeading,
 #download .boxRightEntryHeading {
 	font-variant: small-caps;
 	color: #488AA6;
 }
 
-#product .downloadRightBar,
 #download .downloadRightBar {
 	float: left;
 
-}
-
-
-#product .downloadRightBar {
-	padding-top: 10px;
-}
-
-#product .downloadRightBar .boxRightEntryHeadingLink a {
-	text-decoration: underline;
-
-}
-
-#product .features {
-    font-size: 1.8em;
-    padding-right: 60px;
-    color: #525252;
-}
-
-#product .feature {
-    float: left;
-    width: 250px;
-    margin-right: 20px;
-}
-
-#product #boxleft {
-    width: 100%;
-}
-
-#product #chart {
-    margin-right: 330px;
-    height: 150px;
-    width: 150px;
-}
-#product .supporter{
-    float:left;
-    padding-right:20px;
 }
 
 
@@ -798,25 +733,6 @@ content-area{
 	color: white;
 }
 
-#product .downloadButton {
-	width: 170px;
-	padding-left: 10px;
-
-}
-
-#product .exploreButton {
-	background: transparent url(../images/b_exploreit_170.png) no-repeat scroll 0 0;
-	font-size: 9pt;
-	font-weight: bold;
-	height: 40px;
-	padding: 10px;
-	width: 168px;
-	padding-left: 10px;
-	display: block;
-	padding-top: 12px;
-
-}
-
 #conformanceTable {
 	width: 100%;
 }
@@ -872,49 +788,12 @@ content-area{
 	color: white;
 }
 
-#product #sub-header .linkbox {
-	background: #488aa6;
-	color: white;
-	display: block;
-	padding: 10px;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	margin: 0 0 25px;
-}
-
 #sourceforge {
 	margin-top: 20px;
 	margin-bottom: 20px;
 	float: right;
 }
 
-#prodcut #sourceforge a {
-	color: black;
-}
-
-#product #sourceforge a img {
-	vertical-align: top;
-}
-
-#product #otherlogos {
-	position: relative;
-	width: 100%;
-	text-align: center;
-}
-
-#product #otherlogos #jetbrains {
-	width: 33%;
-	float: left;
-}
-
-#product #otherlogos #osi {
-	width: 33%;
-}
-
-#product #otherlogos #sourceforge {
-	width: 33%;
-	float: right;
-}
 #support h2{
     margin-top:35px;
 }
@@ -1083,12 +962,11 @@ content-area{
 
 /* liliethal */
 #index .panel1 .slide1 .sub-text {
+    bottom: 10px;
     color: white;
-    font-size:30pt;
+    font-size: 30pt;
     position: absolute;
-    top:350px;
-    left:584px;
-}
+    right: 30px;}
 
 #index .panel1 .slide1 .sub-text .text{
     font-size:16pt;
@@ -1105,14 +983,15 @@ content-area{
     /*text-shadow: 1px 3px 1px #AEAEAE;*/
 }
 #index .panel1 .slide2 .header-text {
-    color:#a3c229;
-    font-size:36pt;
+    /*color:#a3c229;*/
+    color:white;
+    font-size:30pt;
     text-align: left;
 }
 
 #index .panel1 .slide2 .footer-text {
     font-size:30pt;
-    color:#a3c229;
+    color:white;
 }
 #index .panel1 .slide2 .sub-text{
     position: absolute;
@@ -1363,7 +1242,7 @@ content-area{
     /*box-shadow: 10px 10px 10px;*/
     position: absolute;
     left: 0;
-    top: 90px;
+    top: 60px;
 }
 #toolkitList #processorItem img{
     padding-left: 23px;
@@ -1375,7 +1254,7 @@ content-area{
     /*box-shadow: 10px 10px 10px;*/
     left: 0;
     position: absolute;
-    top: 620px;
+    top: 653px;
 }
 #toolkitList #integrateItem{
     background: none repeat scroll 0 0 white;
@@ -1391,13 +1270,13 @@ content-area{
     /*box-shadow: 10px 10px 10px;*/
     position: absolute;
     right: 0;
-    top: 265px;
+    top: 318px;
 }
 
 #toolkitList #xmlItem{
     right: 0;
     position: absolute;
-    top: 600px;
+    top: 623px;
     /*box-shadow: 10px 10px 10px;*/
 
 }
@@ -1436,3 +1315,22 @@ content-area{
     margin: 0 20px 10px 0;
 }
 
+.starred{
+    font-size: 0.8em;
+    font-style: italic;
+    padding: 0 20px;
+    display: inline-block;
+    margin: 10px 0;
+}
+#openItem-de{
+    background: none repeat scroll 0 0 white;
+     /*box-shadow: 10px 10px 10px;*/
+     left: 0;
+     position: absolute;
+    top:623px;
+}
+#xmlItem-de{
+    right: 0;
+    position: absolute;
+    top:600px;
+}
