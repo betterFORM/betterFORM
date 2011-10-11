@@ -918,10 +918,6 @@ content-area{
     background:#e6e6e6;
     font-weight:bold;
 }
-#support #packages{
-    margin-top:-40px;
-}
-
 #support .contentBody p{
     margin-right:134px;
 }
@@ -1257,7 +1253,7 @@ content-area{
     /*box-shadow: 10px 10px 10px;*/
     left: 0;
     position: absolute;
-    top: 680px;
+    top: 654px;
 }
 #toolkitList #integrateItem{
     background: none repeat scroll 0 0 white;
@@ -1273,13 +1269,13 @@ content-area{
     /*box-shadow: 10px 10px 10px;*/
     position: absolute;
     right: 0;
-    top: 318px;
+    top: 320px;
 }
 
 #toolkitList #xmlItem{
     right: 0;
     position: absolute;
-    top: 710px;
+    top: 603px;
     /*box-shadow: 10px 10px 10px;*/
 
 }
