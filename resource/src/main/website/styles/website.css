@@ -53,7 +53,7 @@ p,ul {
 	padding: 0;
 	margin-top: 0.3em;
 	margin-bottom: 20px;
-    color: #999999;
+    color: #666666;
 }
 
 table {
@@ -135,12 +135,8 @@ ul {
 	border: none; /*display:none;*/
 }
 
-#main-content {
-	color: #999999;
-}
-#main-content a,#main-content a:visited{
-    color:#333333;
-}
+
+
 
 /*
 .logoBar{
@@ -173,7 +169,7 @@ a:hover {
 
 #topnav a,
 #topnav a:visited {
-	color: #999;
+	color: #666666;
 	font-size: 11pt;
 }
 
@@ -252,9 +248,7 @@ a:hover {
 	height:100%;
 }
 
-#main-content {
-	background: white;
-}
+
 
 #shadowTop {
 	width: 760px;
@@ -507,8 +501,12 @@ content-area{
     /*height: 264px;*/
     background: white;
     display: block; /*float:left;*/
-    color: #999;
+    color: #666666;
     margin-top:15px;
+}
+
+#main-content a,#main-content a:visited{
+    color:#333333;
 }
 
 #index #main-content .col {
@@ -537,6 +535,70 @@ content-area{
 */
 #main-content #leftCol strong{
     font-weight:bold;
+}
+
+#main-content a:hover {
+    text-decoration: underline;
+}
+
+#main-content #juitterContainer{
+    border: thin dotted #444444;
+    margin-bottom: 10px;
+}
+
+#main-content #juitterContainer li{
+    border-bottom: thin solid #999999;
+    padding: 9px;
+    color:#323232;
+}
+
+#main-content #juitterContainer li .time {
+    color:#999999;
+}
+#main-content  #juitterContainer a{
+    color:#488aa6;
+}
+#main-content  #juitterContainer .profileLink{
+    color:#488aa6;
+    margin: 0;
+}
+
+#main-content .col .twitterUsername,
+#main-content .col .twitterReadMore {
+    display:none;
+}
+
+#main-content #juitterContainer .twittFooter a {
+    padding-left: 10px;
+    color:#DDDDDD;
+}
+
+#main-content #juitterContainer .twittFooter a:active,
+#main-content #juitterContainer .twittFooter a:focus,
+#main-content #juitterContainer .twittFooter a:hover  {
+	color:#488aa6;
+}
+
+#main-content .twitterBetterform {
+    padding-top:0px;
+    position:relative;
+    top:-8px;
+}
+#main-content .twitterLogo {
+    padding-top:5px;
+}
+
+#main-content .twittFooter {
+    background-color: #565656;
+}
+
+#main-content .listTitle{
+    font-size:14pt;
+    color:#525252;
+}
+#main-content .itemDescription{
+    font-size: 10pt;
+    padding: 10px;
 }
 
 
@@ -571,9 +633,7 @@ content-area{
     /*background:white;*/
 }
 
- #main-content a:hover {
-    text-decoration: underline;
-}
+
 
 
 .sub-header {
@@ -1154,65 +1214,8 @@ content-area{
 .bigger{
     font-size:14pt;
 }
-#main-content #juitterContainer{
-    border: thin dotted #444444;
-    margin-bottom: 10px;
-}
 
-#main-content #juitterContainer li{
-    border-bottom: thin solid #999999;
-    padding: 9px;
-    color:#323232;
-}
 
-#main-content #juitterContainer li .time {
-    color:#999999;
-}
-#main-content  #juitterContainer a{
-    color:#488aa6;
-}
-#main-content  #juitterContainer .profileLink{
-    color:#488aa6;
-    margin: 0;
-}
-
-#main-content .col .twitterUsername,
-#main-content .col .twitterReadMore {
-    display:none;
-}
-
-#main-content #juitterContainer .twittFooter a {
-    padding-left: 10px;
-    color:#DDDDDD;
-}
-
-#main-content #juitterContainer .twittFooter a:active,
-#main-content #juitterContainer .twittFooter a:focus,
-#main-content #juitterContainer .twittFooter a:hover  {
-	color:#488aa6;
-}
-
-#main-content .twitterBetterform {
-    padding-top:0px;
-    position:relative;
-    top:-8px;
-}
-#main-content .twitterLogo {
-    padding-top:5px;
-}
-
-#main-content .twittFooter {
-    background-color: #565656;
-}
-
-#main-content .listTitle{
-    font-size:14pt;
-    color:#525252;
-}
-#main-content .itemDescription{
-    font-size: 10pt;
-    padding: 10px;
-}
 
 #toolkitList {
     position: relative;
