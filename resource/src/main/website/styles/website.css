@@ -1153,18 +1153,6 @@ content-area{
     top: 446px;
 }
 
-/*
-#index .panel1 .slide1 .text2{
-    color:#32cd32;
-    position: absolute;
-    font-size:36pt;
-    color:#32cd32;
-    z-index: 900;
-    bottom: 120px;
-    right: 10px;
-
-}
-*/
 
 #index .anythingSlider .anythingControls{
     display: none !important;
@@ -1211,16 +1199,15 @@ content-area{
     font-size:14pt;
 }
 
-
-
-#toolkitList {
-    position: relative;
-    min-height: 1020px;
-}
 #toolkitList > div{
     padding: 10px;
     width:400px;
-    box-shadow: 5px 3px 12px;
+    /*box-shadow: 5px 3px 12px;*/
+    float: left;
+    margin: 12px;
+}
+#toolkitList > div > div{
+    margin-bottom:20px;
 }
 
 #toolkitList div img{
@@ -1228,57 +1215,11 @@ content-area{
     margin-right: 23px;
 }
 
-#toolkitList #productivityItem{
-    background: none repeat scroll 0 0 white;
-    right: 0;
-    position: absolute;
-    top: 20px;
-}
-
-
-#toolkitList #processorItem{
-    background: none repeat scroll 0 0 white;
-    /*box-shadow: 10px 10px 10px;*/
-    position: absolute;
-    left: 0;
-    top: 60px;
-}
 #toolkitList #processorItem img{
     padding-left: 23px;
 
 }
 
-#toolkitList #openItem{
-   background: none repeat scroll 0 0 white;
-    /*box-shadow: 10px 10px 10px;*/
-    left: 0;
-    position: absolute;
-    top: 654px;
-}
-#toolkitList #integrateItem{
-    background: none repeat scroll 0 0 white;
-    /*box-shadow: 10px 10px 10px;*/
-    left: 1px;
-    position: absolute;
-
-    top: 340px;
-}
-
-#toolkitList #browserItem {
-    background: none repeat scroll 0 0 white;
-    /*box-shadow: 10px 10px 10px;*/
-    position: absolute;
-    right: 0;
-    top: 320px;
-}
-
-#toolkitList #xmlItem{
-    right: 0;
-    position: absolute;
-    top: 603px;
-    /*box-shadow: 10px 10px 10px;*/
-
-}
 #sub-header p{
     color:#343434;
     font-size: 1em;
@@ -1320,16 +1261,4 @@ content-area{
     padding: 0 20px;
     display: inline-block;
     margin: 10px 0;
-}
-#openItem-de{
-    background: none repeat scroll 0 0 white;
-     /*box-shadow: 10px 10px 10px;*/
-     left: 0;
-     position: absolute;
-    top:623px;
-}
-#xmlItem-de{
-    right: 0;
-    position: absolute;
-    top:600px;
 }
