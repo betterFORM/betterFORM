@@ -1,4 +1,4 @@
-/*
+G/*
  * Copyright (c) 2011. betterForm Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
@@ -1219,7 +1219,7 @@ content-area{
 
 #toolkitList {
     position: relative;
-    min-height: 900px;
+    min-height: 1020px;
 }
 #toolkitList > div{
     padding: 10px;
@@ -1279,7 +1279,7 @@ content-area{
 #toolkitList #xmlItem{
     right: 0;
     position: absolute;
-    top: 623px;
+    top: 710px;
     /*box-shadow: 10px 10px 10px;*/
 
 }
