@@ -225,7 +225,7 @@
                                 <xsl:variable name="links">
                                     <a href="index.html">home</a><span class="menuDevider"> | </span>
                                     <!--<a href="demo.xhtml">demo</a><span class="menuDevider"> | </span>-->
-                                    <a href="demo.html">demo</a><span class="menuDevider"> | </span>
+                                    <a href="../dashboard.html" target="_blank">demo</a><span class="menuDevider"> | </span>
                                     <a href="download.html">download</a><span class="menuDevider"> | </span>
                                     <a href="software.html">software</a><span class="menuDevider"> | </span>
                                     <a href="services.html">services</a><span class="menuDevider"> | </span>
@@ -287,10 +287,10 @@
                                     <div class="listTitle">Demo</div>
                                     <ul>
                                         <li><a href="../dashboard.html" target="_blank">Dashboard</a></li>
-                                        <li><a href="../FeatureExplorer.xhtml" target="_blank">XForms Feature Explorer</a></li>
-                                        <li><a href="../demo/registration.xhtml" target="_blank">Registration</a></li>
-                                        <li><a href="../demo/orderlist.xhtml" target="_blank">OrderList</a></li>
-                                        <li><a href="../demo/contacts.xhtml" target="_blank">Contacts</a></li>
+                                        <li><a href="../forms/reference/FeatureExplorer.xhtml" target="_blank">XForms Feature Explorer</a></li>
+                                        <li><a href="../forms/demo/registration.xhtml" target="_blank">Registration</a></li>
+                                        <li><a href="../forms/demo/orderlist.xhtml" target="_blank">OrderList</a></li>
+                                        <li><a href="../forms/demo/contacts.xhtml" target="_blank">Contacts</a></li>
                                     </ul>
                                 </div>
                                 <div class="linkList">
