@@ -46,7 +46,7 @@
     <target name="prepare" depends="clean" >
 
         <copy todir="${target.dir}/xhtml/XFormsTestSuite1.1E1/Edition1">
-            <fileset dir="../../src/test/resources/XFormsTestSuite1.1E1/Edition1" includes="**/*.xhtml"/>
+            <fileset dir="../../resource/src/test/seleniumIDE/conformance/x11edition1" includes="**/*.xhtml"/>
         </copy>
         <delete dir="${target.dir}/xhtml/XFormsTestSuite1.1E1/Edition1/driverPages"/>
 
@@ -110,7 +110,7 @@
 
 
         <copy todir="${target.dir}/seleniumIDE/conformance/x11edition" overwrite="true">
-            <fileset dir="${basedir}/../../src/test/seleniumIDE/conformance/x11edition1"/>
+            <fileset dir="${basedir}/../../resource/src/test/seleniumIDE/conformance/x11edition1"/>
         </copy>
     </target>
 

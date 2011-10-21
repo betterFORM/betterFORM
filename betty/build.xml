@@ -16,11 +16,11 @@
             ATTENTION - the properties below must be set before build.properties.xml
             is called - DO NOT MOVE
      ###  -->
-    <property name="project.dir" value=".."/>
+    <property name="project.dir" value="."/>
     <property name="core.dir" value="${project.dir}/../core"/>
     <property name="web.dir" value="${project.dir}/../web"/>
     <property name="betty.dir" value="."/>
-    <property name="src.dir" value="${project.dir}/resource"/>
+    <property name="src.dir" value="${project.dir}/../resource"/>
 
     <xmlproperty file="${basedir}/../build.properties.xml"
              semanticAttributes="true" keepRoot="false" />
@@ -192,7 +192,7 @@
         <echo message="************************************************************************************"/>
         <echo/>
         <xslt basedir="${src.dir}/src/main/xforms"
-              destdir="${basedir}/target/${betty.app.name}-${betty.app.version}"
+              destdir="${basedir}/target/${betty.app    .name}-${betty.app.version}"
               style="${basedir}/src/resources/xslt/xhtml2betty.xsl"
               force="true"
               includes="**/*.xhtml"
