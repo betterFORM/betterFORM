@@ -207,11 +207,6 @@
         </echo>
         <!--todo: webapp dir should be urgently be cleaned up from betterform site resources. Therefore this
         copy only copies positively -->
-        <copy description="copy webapp/jsp dir"
-              todir="${webapp.dir}/jsp"
-              filtering="true">
-            <fileset dir="${basedir}/src/main/webapp/jsp"/>
-        </copy>
         <copy description="copy dashboard"
               todir="${webapp.dir}"
               filtering="true"
