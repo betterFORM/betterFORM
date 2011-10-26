@@ -180,12 +180,12 @@
         <servlet-name>bfEditor</servlet-name>
         <servlet-class>de.betterform.agent.web.servlet.XSLTServlet</servlet-class>
         <init-param>
-            <param-name>xsltHome</param-name>
+            <param-name>editorHome</param-name>
             <param-value>/forms/incubator/editor/</param-value>
         </init-param>
         <init-param>
             <param-name>xsltFile</param-name>
-            <param-value>xf2jsTree.xsl</param-value>
+            <param-value>xf2jsTree-v2.xsl</param-value>
         </init-param>
     </servlet>
     

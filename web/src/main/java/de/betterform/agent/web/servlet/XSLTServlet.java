@@ -7,17 +7,9 @@
 package de.betterform.agent.web.servlet;
 
 import de.betterform.agent.web.WebFactory;
-import de.betterform.agent.web.WebProcessor;
-import de.betterform.agent.web.WebUtil;
-import de.betterform.agent.web.filter.CharResponseWrapper;
-import de.betterform.generator.UIGenerator;
-import de.betterform.generator.XSLTGenerator;
 import de.betterform.xml.dom.DOMUtil;
-import de.betterform.xml.xforms.XFormsProcessor;
-import de.betterform.xml.xforms.exception.XFormsException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.w3c.dom.Document;
 
 import javax.servlet.ServletConfig;
@@ -26,14 +18,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMResult;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 
 /**
@@ -48,7 +36,7 @@ import java.util.HashMap;
  */
 public class XSLTServlet extends HttpServlet /* extends AbstractXFormsServlet */ {
     private static final Log LOGGER = LogFactory.getLog(XSLTServlet.class);
-    private String xsltPath;
+    private String editorHome;
     private String xslFile;
     public static final String defContentType = "text/html; charset=UTF-8";
     public static final String contentTypeHTML = defContentType;
@@ -68,8 +56,9 @@ public class XSLTServlet extends HttpServlet /* extends AbstractXFormsServlet */
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        this.xsltPath = config.getInitParameter("xsltHome");
+        this.editorHome = config.getInitParameter("editorHome");
         this.xslFile = config.getInitParameter("xsltFile");
+
 
     }
 
@@ -98,7 +87,7 @@ public class XSLTServlet extends HttpServlet /* extends AbstractXFormsServlet */
             throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
 
-        String stylePath = servletContext.getRealPath(xsltPath);
+        String stylePath = servletContext.getRealPath(editorHome);
         File styleFile = new File(stylePath,xslFile);
         if(styleFile == null){
             throw new ServletException("XSL stylesheet cannot be found: " + styleFile);
@@ -141,6 +130,11 @@ public class XSLTServlet extends HttpServlet /* extends AbstractXFormsServlet */
                 TransformerFactory tFactory = TransformerFactory.newInstance();
                 Source xslSource = new StreamSource(new FileInputStream(styleFile));
                 t = tFactory.newTransformer(xslSource);
+                String contextName=request.getContextPath();
+
+                t.setParameter("appContext",contextName);
+                t.setParameter("EDITOR_HOME", stylePath);
+
 //                cache.put(xsl, t);
 //            }
 

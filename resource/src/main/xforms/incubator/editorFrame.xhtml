@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8"/>
+    <title>betterFORM limeGreen: XForms Dojo Framework - dashboard.xhtml</title>
+    <meta name="Author" content="Joern Turner"/>
+    <meta name="publisher" content="betterFORM Project"/>
+    <meta name="description"
+          content=" betterFORM allows easy creation of highly dynamic Web 2.0 user interfaces with attractive controls. Add validations, calculations, actions and events to build webapplications."/>
+    <meta name="copyright" content="betterForm Project"/>
+    <meta name="content-language" content="en"/>
+    <meta http-equiv="expires" content="60"/>
+    <style type="text/css">
+        @import "/betterform/bfResources/scripts/dojox/layout/resources/ExpandoPane.css";
+    </style>
+    <style type="text/css">
+        html, body,#docPane {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            overflow: hidden;
+            padding: 0;
+            background: white;
+        }
+
+        .bfTableCol-1{
+            width: 100%;
+        }
+        #docPane{
+            margin: 0;
+            padding: 10px;
+            background: #ffffff;
+        }
+
+        #rightPane {
+            width: 250px;
+            padding: 5px;
+            background: #E6E6E7;
+        }
+
+        .dojoxExpandoPane .dojoxExpandoWrapper{
+            border: thin solid #769DC0;
+        }
+        .dojoxExpandoClosed .dojoxExpandoWrapper .dojoxExpandoContent{
+            background: #E6E6E7;
+        }
+        .properties td{
+            height: 26px;
+            border: thin solid #aaaaff;
+            color: #494949;
+        }
+        .properties .propName{
+            text-align: right;
+        }
+        #menu-logo{
+            position: absolute;
+            right: 5px;
+            top:5px;
+            width: 64px;
+            height: 64px;
+            opacity: .5;
+        }
+        #mainMenu{
+            position: absolute;
+            right: 36px;
+            top:36px;
+        }
+        .tundra .dijitMenu{
+            border-color: #777777;
+            opacity: .7;
+        }
+        .tundra .dijitMenu .dijitMenuItemHover, .tundra .dijitMenu .dijitMenuItemSelected{
+            background: #777777;
+        }
+    </style>
+</head>
+<body class="tundra">
+<!--
+    <div id="mainWindow" dojotype="dijit.layout.BorderContainer" design="sidebar" gutters="true"
+            style="width:100%;" liveSplitters="true">
+-->
+        <img src="../../bfResources/images/target.png" id="menu-logo"/>
+        <div dojoType="dijit.Menu" id="mainMenu">
+            <div dojoType="dijit.MenuItem" iconClass="dijitEditorIcon dijitEditorIconCut"
+            onClick="alert('drama!')">
+                Drama
+            </div>
+            <div dojoType="dijit.MenuItem" iconClass="dijitEditorIcon dijitEditorIconCopy"
+            onClick="alert('comedy!')">
+                Comedy
+            </div>
+            <div dojoType="dijit.MenuItem" iconClass="dijitEditorIcon dijitEditorIconPaste"
+            onClick="alert('romance!')">
+                Romance
+            </div>
+            <div dojoType="dijit.MenuSeparator">
+            </div>
+            <div dojoType="dijit.PopupMenuItem">
+                <span>
+                    Action
+                </span>
+                <div dojoType="dijit.Menu" id="submenu2">
+                    <div dojoType="dijit.MenuItem" onClick="alert('diehard!')">
+                        Diehard
+                    </div>
+                    <div dojoType="dijit.MenuItem" onClick="alert('indiana!')">
+                        Indiana Jones
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="docPane"
+             dojotype="dijit.layout.ContentPane"
+             region="center">
+
+            <xf:model id="m-editor">
+                <xf:instance id="i-structure">
+                    <data xmlns="">
+                        <element name="group" level="1">
+
+                        </element>
+                    </data>
+                </xf:instance>
+                <xf:instance id="i-helper">
+                    <data xmlns="">
+                        <selected/>
+                    </data>
+                </xf:instance>
+                <xf:instance id="i-uielements">
+                    <data xmlns="">
+                        <element name="group"/>
+                        <element name="switch"/>
+                        <element name="repeat"/>
+                        <element name="input"/>
+                        <element name="output"/>
+                        <element name="select"/>
+                        <element name="select1"/>
+                        <element name="range"/>
+                        <element name="upload"/>
+                    </data>
+                </xf:instance>
+            </xf:model>
+            <xf:group appearance="minimal">
+                <xf:select1 ref="instance('i-helper')/selected">
+                    <xf:label>add</xf:label>
+                    <xf:item>
+                        <xf:label>input</xf:label>
+                        <xf:value>input</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>output</xf:label>
+                        <xf:value>output</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>secret</xf:label>
+                        <xf:value>secret</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>select1</xf:label>
+                        <xf:value>select1</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>select</xf:label>
+                        <xf:value>select</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>textarea</xf:label>
+                        <xf:value>textarea</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>upload</xf:label>
+                        <xf:value>upload</xf:value>
+                    </xf:item>
+                </xf:select1>
+                <xf:repeat nodeset="element" appearance="compact">
+                    <xf:output ref="@level">
+                        <xf:label/>
+                    </xf:output>
+                </xf:repeat>
+            </xf:group>
+        </div>
+<!--
+        <div id="rightPane"
+             dojotype="dojox.layout.ExpandoPane"
+            region="trailing"
+            startexpanded="false"
+                >
+            <table class="properties">
+                <tr>
+                    <td class="propName">Name</td>
+                    <td class="propValue"></td>
+                </tr>
+                <tr>
+                    <td class="propName">ref</td>
+                    <td class="propName"></td>
+                </tr>
+                <tr>
+                    <td class="propName">appearance</td>
+                    <td class="propName"></td>
+                </tr>
+                <tr>
+                    <td class="propName">Label</td>
+                    <td class="propName"></td>
+                </tr>
+                <tr>
+                    <td class="propName">Hint</td>
+                    <td class="propName"></td>
+                </tr>
+                <tr>
+                    <td class="propName">Alert</td>
+                    <td class="propName"></td>
+                </tr>
+                <tr>
+                    <td class="propName">Help</td>
+                    <td class="propName"></td>
+                </tr>
+            </table>
+        </div>
+-->
+    <!--</div>-->
+    <script type="text/javascript">
+        dojo.config.dojoBlankHtmlUrl = '/blank.html';
+        dojo.require("dijit.layout.BorderContainer");
+        dojo.require("dijit.layout.ContentPane");
+        dojo.require("dojox.layout.ExpandoPane");
+        dojo.require("dijit.Menu");
+
+        dijit.byId("rightPane").toggle();
+
+        //			dojo.require("dijit.layout.ContentPane");
+
+        dojo.addOnLoad(function() {
+        });
+    </script>
+
+</body>
+</html>
