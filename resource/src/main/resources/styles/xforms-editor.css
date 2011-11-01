@@ -481,3 +481,7 @@ dl.keyboard-mapping dd {
     right: 0;
     top:2px;
 }
+
+.bf #mainWindow .instancedata {
+    background-color: #32cd32;
+}

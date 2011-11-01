@@ -226,10 +226,10 @@
             <xsl:for-each select="@*">
                 <xsl:value-of select="local-name()"/>:'<xsl:value-of select="."/>'
                 <xsl:if test="position()!=last()">,</xsl:if>
-            </xsl:for-each>
+            </xsl:for-each>}
         </xsl:variable>
 
-        <li tabindex="0" id="{$id}" data-xf-type="{local-name()}" data-xf-attrs="{$props}" class="{local-name()}" rel="{local-name()}">
+        <li tabindex="0" id="{$id}" data-xf-type="{local-name()}" data-xf-attrs="{ $props }" class="{local-name()}" rel="{local-name()}">
             <!--
             ####################################################################################################
             the outermost xforms elements found get the id of their parent node written to a 'xpath' attribute.
@@ -258,11 +258,11 @@
                 </span>
             </a>
             <xsl:if test="count(xf:*) != 0">
-                <ul>
-                    <xsl:for-each select="*">
-                        <xsl:apply-templates select="."/>
-                    </xsl:for-each>
-                </ul>
+                        <ul>
+                            <xsl:for-each select="*">
+                                <xsl:apply-templates select="."/>
+                            </xsl:for-each>
+                        </ul>
             </xsl:if>
         </li>
     </xsl:template>

@@ -121,20 +121,20 @@ dojo.declare("betterform.editor.Editor", null,
         var dataXfAttrs = dojo.attr(currentNode, "data-xf-attrs");
         var dataXfType = dojo.attr(currentNode, "data-xf-type");
 
-        // console.debug("editProperties: dataXfAttrs: ", dataXfAttrs, " dataXfType", dataXfType);
+         console.debug("editProperties: dataXfAttrs: ", dataXfAttrs, " dataXfType", dataXfType);
 
         var xfAttrObj = dojox.json.ref.fromJson(dataXfAttrs);
-        // console.debug("editProperties xfAttrObj:", xfAttrObj);
+         console.debug("editProperties xfAttrObj:", xfAttrObj);
         if (xfAttrObj) {
             for (attributeName in xfAttrObj) {
                 var xfAttrValue = xfAttrObj[attributeName];
                 if (!xfAttrValue)xfAttrValue = "";
                 var currentDijitNode =  dojo.query("xf" + attributeName)[0];
-                // console.debug("editProperties: currentDijitNode: ", currentDijitNode);
+                 console.debug("editProperties: currentDijitNode: ", currentDijitNode);
                 if (currentDijitNode) {
                     var currentDijit = dijit.byId(dojo.attr(currentDijitNode, "id"));
                     if (currentDijit) {
-                        // console.debug("editProperties: currentDijit: ", currentDijit, " - xfAttrValue:",xfAttrValue);
+                         console.debug("editProperties: currentDijit: ", currentDijit, " - xfAttrValue:",xfAttrValue);
                         currentDijit.set("value", xfAttrValue);
                     }
                     else {
