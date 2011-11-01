@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      <title>alert</title>
+   </head>
+   <body>
+      <div id="xforms">
+         <div style="display:none;">
+            <xf:model xmlns:xf="http://www.w3.org/2002/xforms" id="formdef">
+               <xf:instance xmlns="">
+                  <data>
+                     <xfElement type="alert" id="" model="" ref="" bind="">
+                        <textcontent xmlns="http://www.w3.org/1999/xhtml"/>
+                     </xfElement>
+                  </data>
+               </xf:instance>
+               <xf:bind nodeset="@id" type="xsd:ID"/>
+               <xf:bind nodeset="@model" type="xsd:IDREF"/>
+               <xf:bind nodeset="@ref" type="xforms:XPathExpression"/>
+               <xf:bind nodeset="@bind" type="xsd:IDREF"/>
+               <xf:bind nodeset="textcontent" type=""/>
+            </xf:model>
+         </div>
+         <xf:group xmlns:xf="http://www.w3.org/2002/xforms" ref="xfElement" id="properties"
+                   appearance="compact">
+            <xf:input ref="@id">
+               <xf:label>id</xf:label>
+            </xf:input>
+            <xf:input ref="@model">
+               <xf:label>model</xf:label>
+            </xf:input>
+            <xf:input ref="@ref">
+               <xf:label>ref</xf:label>
+            </xf:input>
+            <xf:input ref="@bind">
+               <xf:label>bind</xf:label>
+            </xf:input>
+            <xf:input ref="@textcontent">
+               <xf:label>textcontent</xf:label>
+            </xf:input>
+         </xf:group>
+      </div>
+   </body>
+</html>

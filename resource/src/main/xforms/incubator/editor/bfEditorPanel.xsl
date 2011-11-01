@@ -10,6 +10,7 @@
             <img src="{$APP_CONTEXT}/bfResources/images/betterform_icon16x16.png" alt=""/>
         </div>
         <div id="mainWindow" style="width:100%;">
+
             <div id="docWrapper" tabindex="-1">
                 <!--
                                     <xf:output value="bf:appContext('pathInfo')">
@@ -33,6 +34,7 @@
                     </div>
                 </div>
             </div>
+<!--
             <div id="leftPane" tabindex="-1">
                 <div id="addLabel">
                     <div class="caption">Add ...</div>
@@ -43,18 +45,27 @@
                         </button>
                     </div>
                 </div>
-                <!--
+                &lt;!&ndash;
                 the 'mode' attribute is used to switch between 'children' and 'siblings' mode which
                 determines the list of possible elements displayed in the component tree.
-                -->
+                &ndash;&gt;
                 <div id="componentTree" data-bf-addmode="child"/>
             </div>
+-->
             <div id="rightPane" tabindex="-1">
+
+                <!-- ################### MOUNTPOINT FOR PROPERTYFORM ################### -->
+                <div id="xfMount">
+                </div>
+<!--
+                version using a ContentPane with href below. Embeds standard HTML forms.
+
                 <div id="xfMount" dojotype="dijit.layout.ContentPane" href="{$APP_CONTEXT}{$EDITOR_HOME}document.html" preload="false">
                     <script type="dojo/connect" event="onDownloadEnd">
                         var xfId = dojo.attr(dojo.byId("xfMount"), "xfId"); if (xfId == undefined) { return; } // console.debug("xfid: ", xfId); attrEditor.editProperties(xfId);
                     </script>
                 </div>
+-->
             </div>
         </div>
     </xsl:template>

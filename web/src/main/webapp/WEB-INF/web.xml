@@ -185,7 +185,7 @@
         </init-param>
         <init-param>
             <param-name>xsltFile</param-name>
-            <param-value>xf2jsTree-v2.xsl</param-value>
+            <param-value>bfEditor.xsl</param-value>
         </init-param>
     </servlet>
     

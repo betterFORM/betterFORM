@@ -3,7 +3,7 @@
   ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
-
+<!--todo:refactor property elements that have children to 'propGroup' or something -> easier to process -->
 <order>
     <!-- action -->
     <property name="id"/>
@@ -36,6 +36,7 @@
     <property name="relevant"/>
     <property name="readonly"/>
     <property name="p3ptype"/>
+
     <!-- case -->
     <property name="selected"/>
     <!-- control -->

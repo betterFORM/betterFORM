@@ -101,4 +101,47 @@
 
     </xsl:template>
 
+    <xsl:template name="contextMenuBar">
+        <div id="contextBar" dojoType="dijit.Toolbar">
+<!--
+            <div dojoType="dijit.form.Button" id="contextBar.edit" iconClass="dijitEditorIcon dijitEditorIconCut" showLabel="true">
+                edit
+                <script type="dojo/method" event="onClick" args="evt">
+                    // Do something:
+                    console.debug("Thank you!: ",evt);
+                    // embed the property form
+                    fluxProcessor.dispatchEvent("t-loadProperties");
+                </script>
+            </div>
+-->
+            <div dojoType="dijit.form.Button" id="toolbar1.copy" iconClass="dijitEditorIcon dijitEditorIconCopy"
+            showLabel="true">
+                add child
+                <script type="dojo/method" event="onClick" args="evt">
+                    // remember to stop the event as it would otherwise trigger the handlers on the surrounding element too
+                    evt.stopPropagation();
+                    evt.cancelBubble=true;
+                    return;
+                </script>
+            </div>
+            <div dojoType="dijit.form.Button" id="toolbar1.paste" iconClass="dijitEditorIcon dijitEditorIconPaste"
+            showLabel="true">
+
+                add sibling
+            </div>
+<!--
+            <div dojoType="dijit.form.DropDownButton">
+                <span>edit</span>
+                <div dojotype="dijit.TooltipDialog" layoutAlign="right">
+                    <div id="xfMount"/>
+                </div>
+            </div>
+-->
+            <div dojoType="dijit.form.ToggleButton" id="toolbar1.bold" iconClass="dijitEditorIcon dijitEditorIconDelete"
+            showLabel="false">
+                delete
+
+            </div>
+        </div>
+</xsl:template>
 </xsl:stylesheet>

@@ -11,6 +11,7 @@ dojo.declare("betterform.editor.Editor", null,
 {
     currentjsTreeData:null,
     currentNodeId:null,
+    currentXfType:null,
     bfPath:null,
 
     constructor:function() {
@@ -33,15 +34,16 @@ dojo.declare("betterform.editor.Editor", null,
             this.currentjsTreeData = selectedNode;
             this.currentNodeId = selectedNodeId;
             var xfType = args.xfType;
+            this.currentXfType = xfType;
+
             console.debug("Editor.subscription.nodeSelected: xfType:", xfType);
             if(xfType =="document"){
                 //jump back to root
-                console.debug("bfpath: ", args.bfPath);
+//                console.debug("bfpath: ", args.bfPath);
                 //dijit.byId("xfMount").set("href", args.bfPath + "document.html");
                 return;
             }
-
-            self.updateComponentTree(dojo.byId(selectedNodeId));
+//            self.updateComponentTree(dojo.byId(selectedNodeId));
          });
     },
 

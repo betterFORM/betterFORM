@@ -87,8 +87,8 @@ $(function () {
                 "ctrl+p" : function (event) {
                     alert("preview");
                 }
-            },
-
+            }
+,
             // the `plugins` array allows you to configure the active plugins on this instance
             "plugins" : ["themes","html_data","ui","crrm","hotkeys","dnd"]
         })
@@ -98,12 +98,17 @@ $(function () {
             var tmpId = data.rslt.obj.attr("id");
             var nodeIsLoaded = attrEditor.nodeIsLoaded(tmpId);
             // console.debug("nodeIsLoaded:", nodeIsLoaded);
+//            console.debug("event: " , event);
+//            console.debug("data: " , data);
+
             if (nodeIsLoaded) {
                 // console.debug("PREVENTED LOADING OF PROPERTY EDITOR");
                 return;
             } else {
                 // console.debug(data);
                 var xfType = data.rslt.obj.attr("data-xf-type");
+                console.debug("xfType:",xfType);
+
                 var mountNode = dojo.byId("xfMount");
                 dojo.attr(mountNode, "xfId", tmpId);
                 var nodesToDestroy = dojo.query("*[widgetId]", mountNode);
@@ -114,13 +119,24 @@ $(function () {
                 });
                 // console.debug("destroyed existing nodes");
                 // console.debug("tmpBfPath:",tmpBfPath);
-                dijit.byId("xfMount").set("href", tmpBfPath + xfType + ".html");
+//                dijit.byId("xfMount").set("href", EDITOR_HOME + xfType + ".html");
+                fluxProcessor.setControlValue("currentId",tmpId);
+                fluxProcessor.setControlValue("currentType",xfType);
+
+                /*
+                the following event triggers automatic update of embedded propertyform. If that's not performant
+                or to expensive the explicit updating via a contextmenu trigger can be used instead. The relevant
+                code is commented in place.
+                */
+                fluxProcessor.dispatchEvent("t-loadProperties");
 
                 //console.debug("publish: nodeSelected: data", data);
                 dojo.publish("nodeSelected", [
-                    {event:event,xfType:xfType,id:tmpId,jsTreeData:data,bfPath:tmpBfPath}
+                    {event:event,xfType:xfType,id:tmpId,jsTreeData:data,bfPath:EDITOR_HOME}
                 ]);
 
+                dojo.place(dojo.byId("contextBar"), dojo.query("#"+tmpId + " .buttonWrapper")[0], "last");
+                dojo.byId(tmpId).focus();
             }
         })
         // EVENTS
@@ -129,6 +145,7 @@ $(function () {
         // so listen for `function_name`.`jstree` - you can function names from the docs
         .bind("loaded.jstree", function (event, data) {
             // you get two params - event & data - check the core docs for a detailed description
+            $("#xfDoc").set_focus();
         });
 });
 

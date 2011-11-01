@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      <title>control</title>
+   </head>
+   <body>
+      <div id="xforms">
+         <div style="display:none;">
+            <xf:model xmlns:xf="http://www.w3.org/2002/xforms" id="formdef">
+               <xf:instance xmlns="">
+                  <data>
+                     <xfElement type="control" value="">
+                        <textcontent/>
+                     </xfElement>
+                  </data>
+               </xf:instance>
+               <xf:bind nodeset="textcontent" type=""/>
+               <xf:bind nodeset="@value" type="xforms:XPathExpression"/>
+            </xf:model>
+         </div>
+         <xf:group xmlns:xf="http://www.w3.org/2002/xforms" ref="xfElement" id="properties"
+                   appearance="compact">
+            <xf:input ref="@value">
+               <xf:label>XPath Value</xf:label>
+            </xf:input>
+            <xf:input ref="@textcontent">
+               <xf:label>Text Value</xf:label>
+            </xf:input>
+         </xf:group>
+      </div>
+   </body>
+</html>

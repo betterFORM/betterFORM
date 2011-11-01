@@ -47,7 +47,7 @@
         <!--<xsl:message>childOfGroupAvailable: <xsl:value-of select="$childOfGroupAvailable"/></xsl:message>-->
 
         <xsl:if test="starts-with($childOfGroupAvailable,'true')">
-            <xf:bind id="{@name}" type="group">
+            <xf:bind id="{@name}">
                 <xsl:apply-templates mode="sortProperties">
                     <xsl:with-param name="model" select="$model"/>
                 </xsl:apply-templates>

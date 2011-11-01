@@ -132,7 +132,7 @@ public class XSLTServlet extends HttpServlet /* extends AbstractXFormsServlet */
                 t = tFactory.newTransformer(xslSource);
                 String contextName=request.getContextPath();
 
-                t.setParameter("appContext",contextName);
+                t.setParameter("APP_CONTEXT",contextName);
                 t.setParameter("EDITOR_HOME", stylePath);
 
 //                cache.put(xsl, t);

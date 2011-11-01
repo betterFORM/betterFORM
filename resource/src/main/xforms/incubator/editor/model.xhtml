@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      <title>model</title>
+   </head>
+   <body>
+      <div id="xforms">
+         <div style="display:none;">
+            <xf:model xmlns:xf="http://www.w3.org/2002/xforms" id="formdef">
+               <xf:instance xmlns="">
+                  <data>
+                     <xfElement type="model" id="" functions="" schema="" version="">
+                        <xml-event event="" observer="" target="" handler="" phase="default" propagate="continue"
+                                   defaultAction="perform"/>
+                     </xfElement>
+                  </data>
+               </xf:instance>
+               <xf:bind nodeset="@id" type="xsd:ID"/>
+               <xf:bind id="xml-event">
+                  <xf:bind nodeset="@event" type="xs:NMTOKEN"/>
+                  <xf:bind nodeset="@observer" type="xs:IDREF"/>
+                  <xf:bind nodeset="@target" type="xs:IDREF"/>
+                  <xf:bind nodeset="@handler" type="xs:anyURI"/>
+                  <xf:bind nodeset="@phase" type="string"/>
+                  <xf:bind nodeset="@propagate" type="string"/>
+                  <xf:bind nodeset="@defaultAction" type="string"/>
+               </xf:bind>
+               <xf:bind nodeset="@functions" type="xforms:QNameList"/>
+               <xf:bind nodeset="@schema" type="xforms:anyURIList"/>
+               <xf:bind nodeset="@version" type="xforms:versionList"/>
+            </xf:model>
+         </div>
+         <xf:group xmlns:xf="http://www.w3.org/2002/xforms" ref="xfElement" id="properties"
+                   appearance="compact">
+            <xf:input ref="@id">
+               <xf:label>id</xf:label>
+            </xf:input>
+            <xf:input ref="@functions">
+               <xf:label>functions</xf:label>
+            </xf:input>
+            <xf:input ref="@schema">
+               <xf:label>schema</xf:label>
+            </xf:input>
+            <xf:input ref="@version">
+               <xf:label>version</xf:label>
+            </xf:input>
+            <xf:group id="event-properties" appearance="compact" ref="xml-event">
+               <xf:select1 ref="@event" appearance="minimal">
+                  <xf:label>Event</xf:label>
+                  <xf:hint>The type of event to listen for</xf:hint>
+                  <xf:item>
+                     <xf:label>xforms-model-construct</xf:label>
+                     <xf:value>xforms-model-construct</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-model-construct-done</xf:label>
+                     <xf:value>xforms-model-construct-done</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-model-ready</xf:label>
+                     <xf:value>xforms-model-ready</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-model-destruct</xf:label>
+                     <xf:value>xforms-model-destruct</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-rebuild</xf:label>
+                     <xf:value>xforms-rebuild</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-recalculate</xf:label>
+                     <xf:value>xforms-recalculate</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-revalidate</xf:label>
+                     <xf:value>xforms-revalidate</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-refresh</xf:label>
+                     <xf:value>xforms-refresh</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-link-exception</xf:label>
+                     <xf:value>xforms-link-exception</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-compute-exception</xf:label>
+                     <xf:value>xforms-compute-exception</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-version-exception</xf:label>
+                     <xf:value>xforms-version-exception</xf:value>
+                  </xf:item>
+               </xf:select1>
+               <xf:input ref="@ev:observer">
+                  <xf:label>ev:observer</xf:label>
+               </xf:input>
+               <xf:input ref="@ev:target">
+                  <xf:label>ev:target</xf:label>
+               </xf:input>
+               <xf:input ref="@ev:handler">
+                  <xf:label>ev:handler</xf:label>
+               </xf:input>
+               <xf:input ref="@ev:phase">
+                  <xf:label>ev:phase</xf:label>
+               </xf:input>
+               <xf:input ref="@ev:propagate">
+                  <xf:label>ev:propagate</xf:label>
+               </xf:input>
+               <xf:input ref="@ev:defaultAction">
+                  <xf:label>ev:defaultAction</xf:label>
+               </xf:input>
+            </xf:group>
+         </xf:group>
+      </div>
+   </body>
+</html>

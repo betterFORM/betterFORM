@@ -39,8 +39,15 @@
         </xslt>
     </target>
 
-    <!--<target name="sort-XForms" depends="generate-XForms" description="sort properties">-->
-    <target name="sort-XForms" description="sort properties">
+    <target name="sort-XForms" depends="generate-XForms" description="sort properties">
+    <!--<target name="sort-XForms" description="sort properties">-->
+
+        <echo>
+        ************************************************************************************
+        generate xforms documents using the order defined by propertyOrder.xml
+        ************************************************************************************
+        </echo>
+
         <xslt basedir="${basedir}/target/xforms"
             destdir="${basedir}/target/sortedxforms/"
             style="${basedir}/sortXForms.xsl"
@@ -48,6 +55,21 @@
             force="true">
             <classpath refid="transform.class.path"/>            
         </xslt>
+    </target>
+
+    <target name="deploy-xforms" depends="sort-XForms" description="deploy sorted xforms to web module">
+        <echo>
+        ************************************************************************************
+                              deploy sorted xforms documents to web module
+        ************************************************************************************
+        </echo>
+
+
+        <copy todir="${basedir}/../../resource/src/main/xforms/incubator/editor" flatten="true" overwrite="true">
+            <fileset dir="${basedir}" includes="target/sortedxforms/*.xhtml"/>
+            <fileset dir="${basedir}" includes="resources/xfDatatype.json"/>
+        </copy>
+        <ant antfile="../../web/build.xml" inheritall="false" target="deploy-forms"/>
     </target>
     
     <target name="generate-HTML-Forms" depends="generate-xf-datatype-list"  description="generates HTML forms from XForms">
@@ -66,7 +88,7 @@
 
     <target name="generate-xf-datatype-list"  description="generates HTML forms from XForms">
         <xslt in="${basedir}/XForms-11-Schema.xsd"
-              out="${basedir}/target/html/xfDatatype.json"
+              out="${basedir}/target/xfDatatype.json"
               style="${basedir}/generateXFDatatypeList.xsl"
               extension=".json"
               force="true"
@@ -76,6 +98,7 @@
     </target>
 
 
+<!--
     <target name="generate-Prototypes" depends="prepare" description="generate Prototypes for XForms element structure">
         <xslt in="${basedir}/XForms-11-Schema.xsd"
               out="${basedir}/target/prototypes.xml"
@@ -84,6 +107,7 @@
               classpathref="transform.class.path">
         </xslt>
     </target>
+-->
 
     <target name="generate-test-form-nested-divs" depends="prepare" description="generate test form for editor">
         <xslt in="${basedir}/testinput/registration.xhtml"
@@ -165,5 +189,24 @@
             <param name="originDoc" expression="testinput/registration.xhtml"/>
         </xslt>
     </target>
+
+    <target name="generate-piemenus" description="generates the markup for the piemenus">
+        <xslt in="${basedir}/resources/childlist.xml"
+              out="${basedir}/target/circleMenues-generated.js"
+              style="${basedir}/generateCircleMenues.xsl"
+              force="true"
+              classpathref="transform.class.path">
+        </xslt>
+    </target>
+
+    <target name="generate-property-form" description="generates the xforms markup for the 'all properties in one form' approach">
+        <xslt in="${basedir}/resources/propertyOrder.xml"
+              out="${basedir}/target/propertyForm.xhtml"
+              style="${basedir}/generatePropertyForm.xsl"
+              force="true"
+              classpathref="transform.class.path">
+        </xslt>
+    </target>
+
 
 </project>

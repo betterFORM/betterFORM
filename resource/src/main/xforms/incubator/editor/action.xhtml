@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      <title>action</title>
+   </head>
+   <body>
+      <div id="xforms">
+         <div style="display:none;">
+            <xf:model xmlns:xf="http://www.w3.org/2002/xforms" id="formdef">
+               <xf:instance xmlns="">
+                  <data>
+                     <xfElement type="action" id="" if="" while="">
+                        <xml-event event="" observer="" target="" handler="" phase="default" propagate="continue"
+                                   defaultAction="perform"/>
+                     </xfElement>
+                  </data>
+               </xf:instance>
+               <xf:bind nodeset="@id" type="xsd:ID"/>
+               <xf:bind id="conditional">
+                  <xf:bind nodeset="@if" type="xforms:XPathExpression"/>
+                  <xf:bind nodeset="@while" type="xforms:XPathExpression"/>
+               </xf:bind>
+               <xf:bind id="xml-event">
+                  <xf:bind nodeset="@event" type="xs:NMTOKEN"/>
+                  <xf:bind nodeset="@observer" type="xs:IDREF"/>
+                  <xf:bind nodeset="@target" type="xs:IDREF"/>
+                  <xf:bind nodeset="@handler" type="xs:anyURI"/>
+                  <xf:bind nodeset="@phase" type="string"/>
+                  <xf:bind nodeset="@propagate" type="string"/>
+                  <xf:bind nodeset="@defaultAction" type="string"/>
+               </xf:bind>
+            </xf:model>
+         </div>
+         <xf:group xmlns:xf="http://www.w3.org/2002/xforms" ref="xfElement" id="properties"
+                   appearance="compact">
+            <xf:input ref="@id">
+               <xf:label>id</xf:label>
+            </xf:input>
+            <xf:input ref="@if">
+               <xf:label>if</xf:label>
+            </xf:input>
+            <xf:input ref="@while">
+               <xf:label>while</xf:label>
+            </xf:input>
+            <xf:group id="event-properties" appearance="compact" ref="xml-event">
+               <xf:select1 ref="@event" appearance="minimal">
+                  <xf:label>Event</xf:label>
+                  <xf:hint>The type of event to listen for</xf:hint>
+                  <xf:item>
+                     <xf:label>DOMActivate</xf:label>
+                     <xf:value>DOMActivate</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>DOMFocusIn</xf:label>
+                     <xf:value>DOMFocusIn</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>DOMFocusOut</xf:label>
+                     <xf:value>DOMFocusOut</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-value-changed</xf:label>
+                     <xf:value>xforms-value-changed</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-valid</xf:label>
+                     <xf:value>xforms-valid</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-invalid</xf:label>
+                     <xf:value>xforms-invalid</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-in-range</xf:label>
+                     <xf:value>xforms-in-range</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-out-of-range</xf:label>
+                     <xf:value>xforms-out-of-range</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-readonly</xf:label>
+                     <xf:value>xforms-readonly</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-readwrite</xf:label>
+                     <xf:value>xforms-readwrite</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-readwrite</xf:label>
+                     <xf:value>xforms-readwrite</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-required</xf:label>
+                     <xf:value>xforms-required</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-optional</xf:label>
+                     <xf:value>xforms-optional</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-enabled</xf:label>
+                     <xf:value>xforms-enabled</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-disabled</xf:label>
+                     <xf:value>xforms-disabled</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-previous</xf:label>
+                     <xf:value>xforms-previous</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-next</xf:label>
+                     <xf:value>xforms-next</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-focus</xf:label>
+                     <xf:value>xforms-focus</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-help</xf:label>
+                     <xf:value>xforms-help</xf:value>
+                  </xf:item>
+                  <xf:item>
+                     <xf:label>xforms-hint</xf:label>
+                     <xf:value>xforms-hint</xf:value>
+                  </xf:item>
+               </xf:select1>
+               <xf:input ref="@ev:observer">
+                  <xf:label>ev:observer</xf:label>
+               </xf:input>
+               <xf:input ref="@ev:target">
+                  <xf:label>ev:target</xf:label>
+               </xf:input>
+               <xf:input ref="@ev:handler">
+                  <xf:label>ev:handler</xf:label>
+               </xf:input>
+               <xf:input ref="@ev:phase">
+                  <xf:label>ev:phase</xf:label>
+               </xf:input>
+               <xf:input ref="@ev:propagate">
+                  <xf:label>ev:propagate</xf:label>
+               </xf:input>
+               <xf:input ref="@ev:defaultAction">
+                  <xf:label>ev:defaultAction</xf:label>
+               </xf:input>
+            </xf:group>
+         </xf:group>
+      </div>
+   </body>
+</html>

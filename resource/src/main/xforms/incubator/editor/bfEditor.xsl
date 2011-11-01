@@ -34,10 +34,8 @@
 
     <xsl:variable name="EDITOR_HOME" select="'/betterform/forms/incubator/editor/'" />
 
-
     <xsl:include href="bfEditorMenu.xsl"/>
     <xsl:include href="bfEditorHelp.xsl"/>
-
 
     <xsl:strip-space elements="*"/>
     <xsl:template match="/">
@@ -47,6 +45,9 @@
             <head>
                 <title>betterFORM Editor</title>
                 <link rel="stylesheet" type="text/css" href="../../../bfResources/styles/xforms-editor.css"/>
+                <link rel="stylesheet" media="screen" href="../../../bfResources/scripts/piemenu/css/jquery.ui.ppmenu.css" type="text/css" />
+                <link rel="stylesheet" media="screen" href="../../../bfResources/scripts/piemenu/css/jquery-ui-1.8.5.custom.css" type="text/css" />
+
             </head>
             <body id="editor" class="bf" jsId="attrEditor">
 
@@ -66,6 +67,12 @@
                 <!-- ################### MAIN UI WITH COMPONENT TREE ################### -->
                 <xsl:call-template name="main-ui" />
 
+                <!-- ###########
+                    this menu is created only once and placed by JS at the position of the currently
+                    selected item.
+                 ######### -->
+                <xsl:call-template name="contextMenuBar"/>
+
                 <!-- ################### HELP DIALOG FOR KEYBOARD SHORTCUTS ################### -->
                 <!-- ################### HELP DIALOG FOR KEYBOARD SHORTCUTS ################### -->
                 <!-- ################### HELP DIALOG FOR KEYBOARD SHORTCUTS ################### -->
@@ -76,17 +83,13 @@
                     <div id="embedDialog"/>
                 </div>
 
-                <!-- ################### SCRIPTS ################### -->
-                <!-- ################### SCRIPTS ################### -->
-                <!-- ################### SCRIPTS ################### -->
-                <!-- ################### SCRIPTS ################### -->
-                <!-- ################### SCRIPTS ################### -->
+                <span id="circleMenu" class="circleMenu"></span>
 
-                <xsl:variable name="bfFullPath2">
-                    <xsl:text>'</xsl:text>
-                    <xsl:value-of select="concat($APP_CONTEXT,$EDITOR_HOME)"/>
-                    <xsl:text>'</xsl:text>
-                </xsl:variable>
+                <!-- ################### SCRIPTS ################### -->
+                <!-- ################### SCRIPTS ################### -->
+                <!-- ################### SCRIPTS ################### -->
+                <!-- ################### SCRIPTS ################### -->
+                <!-- ################### SCRIPTS ################### -->
 
                 <script type="text/javascript"
                         src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.js"></script>
@@ -97,11 +100,19 @@
                 <script type="text/javascript"
                         src="../../../bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
 
+<!--
+                <script type="text/javascript" src="../../../bfResources/scripts/piemenu/ppmenu/jquery-ui-1.8.8.custom.min.js"></script>
+                <script type="text/javascript" src="../../../bfResources/scripts/piemenu/ppmenu/jquery.ui.prettypiemenu.js"></script>
+-->
+
 
                 <script type="text/javascript" class="source below">
-                    var tmpBfPath = <xsl:value-of select="$bfFullPath2"/>;
+                    EDITOR_HOME = "<xsl:value-of select="$EDITOR_HOME"/>";
                 </script>
 
+                <!--<script type="text/javascript" src="../../../bfResources/scripts/betterform/editor/mainTree.js"></script>-->
+                <!--<script type="text/javascript" defer="defer" src="../../../bfResources/scripts/betterform/editor/circleMenuCommon.js"></script>-->
+                <!--<script type="text/javascript" defer="defer" src="../../../bfResources/scripts/betterform/editor/circleMenus.js"></script>-->
                 <script type="text/javascript" src="../../../bfResources/scripts/betterform/editor/mainTree.js"></script>
                 <script type="text/javascript" src="../../../bfResources/scripts/betterform/editor/componentTree.js"></script>
                 <script type="text/javascript" defer="defer"
@@ -110,6 +121,11 @@
                 <script type="text/javascript" defer="defer">
                     // do not do anything but logging yet but shows the right call. Should work on FF and webkit which
                     // is sufficient for the editor.
+                     dojo.require("dijit.Toolbar");
+                    dojo.require("dijit.form.DropDownButton");
+                    dojo.require("dijit.form.Button");
+                    dojo.require("dijit.TooltipDialog");
+
                     var xfReadySubscribers;
 
 
@@ -172,7 +188,6 @@
                                 dojo.connect(dojo.body(), "onkeypress", checkKeyboardInput);
                             }
                     );
-
                 </script>
             </body>
         </html>
@@ -214,7 +229,7 @@
             </xsl:for-each>
         </xsl:variable>
 
-        <li id="{$id}" data-xf-type="{local-name()}" data-xf-attrs="{$props}" class="{local-name()}" rel="{local-name()}">
+        <li tabindex="0" id="{$id}" data-xf-type="{local-name()}" data-xf-attrs="{$props}" class="{local-name()}" rel="{local-name()}">
             <!--
             ####################################################################################################
             the outermost xforms elements found get the id of their parent node written to a 'xpath' attribute.
@@ -235,9 +250,11 @@
                 </xsl:if>
                 <xsl:value-of select="@id"/>
                 <span class="buttonWrapper">
-                    <button type="button" onclick="if(confirm('Really delete?')) deleteNode(this);return false;" style="padding:0;margin:0;background:transparent;border:none;">
-                        <img src="{$APP_CONTEXT}{$EDITOR_HOME}images/list-remove.png" width="24" height="24" alt="x"/>
+<!--
+                    <button tabindex="0" type="button" onclick="showCircleMenu(event);return false;" style="padding:0;margin:0;background:transparent;border:none;">
+                        <img class="targetBtn" src="{$APP_CONTEXT}/bfResources/images/target.png" width="24" height="24" alt="x"/>
                     </button>
+-->
                 </span>
             </a>
             <xsl:if test="count(xf:*) != 0">

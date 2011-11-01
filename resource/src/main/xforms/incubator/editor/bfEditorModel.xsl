@@ -80,6 +80,8 @@
                 <!-- internal controller instance -->
                 <xf:instance id="i-controller">
                     <data xmlns="">
+                        <currentNodeId description="the id of the currently selected element in mainTree"/>
+                        <currentXfType description="name of the currently selected xforms element"/>
                         <originalDoc/>
                         <save-msg/>
                         <preview-msp>Error previewing file</preview-msp>
@@ -89,6 +91,33 @@
                     </data>
                 </xf:instance>
             </xf:model>
+
+            <xf:input ref="instance('i-controller')/currentNodeId" id="currentId">
+                <xf:action ev:event="xforms-value-changed">
+                    <!-- ####### (re)load whenever the current node changes ########### -->
+                    <xf:load show="embed" targetid="xfMount">
+                        <xf:resource value="'betterform/forms/incubator/editor/model.xhtml#xforms'"/>
+                        <xf:extension includeCSS="true" includeScript="true"/>
+                    </xf:load>
+                </xf:action>
+                <xf:label>hidden</xf:label>
+            </xf:input>
+            <xf:input ref="instance('i-controller')/currentXfType" id="currentType">
+                <xf:label>hidden</xf:label>
+            </xf:input>
+
+            <xf:trigger id="t-loadProperties">
+                <xf:label>hidden load trigger</xf:label>
+                <xf:action>
+
+                        <xf:load show="embed" targetid="xfMount">
+                            <xf:resource value="concat('/betterform/forms/incubator/editor/',instance('i-controller')/currentXfType,'.xhtml#xforms')"/>
+                            <xf:extension includeCSS="true" includeScript="true"/>
+                        </xf:load>
+                        //<!--fluxProcessor.setControlValue("currentId",attrEditor.currentNodeId);-->
+                        //<!--fluxProcessor.setControlValue("currentType",attrEditor.currentXfType);-->
+                </xf:action>
+            </xf:trigger>
 
         </div>
     </xsl:template>
