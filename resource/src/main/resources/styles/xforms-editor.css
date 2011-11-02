@@ -181,7 +181,6 @@ html, body,#mainWindow {
     top:0;
     right:0;
     height: 28px;
-    width:160px;
     background: #dedede;
 }
 .buttonWrapper button{
@@ -481,7 +480,22 @@ dl.keyboard-mapping dd {
     right: 0;
     top:2px;
 }
-
 .bf #mainWindow .instancedata {
     background-color: #32cd32;
 }
+
+/*
+.bf #formWrapper .buttonWrapper .bfaddChild{
+    background: url(../images/add-child2.png);
+}
+.bf #formWrapper .buttonWrapper .bfaddSibling{
+    background: url(../images/add-sibling2.png);
+}
+.linkButton{
+    border: none;
+    background: transparent;
+    text-decoration: underline;
+}
+.tundra #formWrapper .buttonWrapper  #toolbar1.delete .dijitArrowButtonInner {
+    display: none;
+}*/

@@ -114,33 +114,68 @@
                 </script>
             </div>
 -->
-            <div dojoType="dijit.form.Button" id="toolbar1.copy" iconClass="dijitEditorIcon dijitEditorIconCopy"
-            showLabel="true">
-                add child
+            <div dojoType="dijit.form.DropDownButton" id="contextmenu.addchild" class="bfaddChild"
+            showLabel="false">
+                <span>add child</span>
                 <script type="dojo/method" event="onClick" args="evt">
+                    /* <![CDATA[ */
+
+                    console.debug("addchild evt:",evt);
+
+                    modelMenu(evt.target.id);
+
                     // remember to stop the event as it would otherwise trigger the handlers on the surrounding element too
                     evt.stopPropagation();
                     evt.cancelBubble=true;
-                    return;
+                    evt.preventDefault();
+                    return false;
+                    /* ]]> */
                 </script>
             </div>
-            <div dojoType="dijit.form.Button" id="toolbar1.paste" iconClass="dijitEditorIcon dijitEditorIconPaste"
-            showLabel="true">
+            <div dojoType="dijit.form.DropDownButton" id="contextmenu.addsibling" class="bfaddSibling" iconClass="dijitEditorIcon"
+            showLabel="false">
 
                 add sibling
             </div>
-<!--
-            <div dojoType="dijit.form.DropDownButton">
-                <span>edit</span>
-                <div dojotype="dijit.TooltipDialog" layoutAlign="right">
-                    <div id="xfMount"/>
-                </div>
-            </div>
--->
-            <div dojoType="dijit.form.ToggleButton" id="toolbar1.bold" iconClass="dijitEditorIcon dijitEditorIconDelete"
+            <div dojoType="dijit.form.DropDownButton" id="contextmenu.delete" iconClass="dijitEditorIcon dijitEditorIconDelete"
             showLabel="false">
-                delete
+                <span>delete</span>
 
+                <div dojotype="dijit.TooltipDialog" autofocus="true">
+                    Really delete?
+                    <div dojotype="dijit.form.Button" type="submit">
+                        Ok
+                        <script type="dojo/method" event="onClick" args="evt">
+                            /* <![CDATA[ */
+
+                            console.debug("OK evt:",evt);
+                            console.debug("OK target:",evt.target);
+                            console.debug("OK target id:",evt.target.id);
+                            // remember to stop the event as it would otherwise trigger the handlers on the surrounding element too
+                            evt.stopPropagation();
+                            evt.cancelBubble=true;
+                            return;
+                            /* ]]> */
+                        </script>
+
+                    </div>
+                    <div dojotype="dijit.form.Button" type="submit" class="linkButton">
+                        Cancel
+                        <script type="dojo/method" event="onClick" args="evt">
+                            /* <![CDATA[ */
+
+                            console.debug("Cancel evt:",evt);
+                            // remember to stop the event as it would otherwise trigger the handlers on the surrounding element too
+                            evt.stopPropagation();
+                            evt.cancelBubble=true;
+                            return;
+                            /* ]]> */
+                        </script>
+
+                    </div>
+
+                    <!--<a tabindex="0" href="javascript:alert('cancel');">cancel</a>-->
+                </div>
             </div>
         </div>
 </xsl:template>

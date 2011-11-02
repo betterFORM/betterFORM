@@ -49,7 +49,7 @@
                 <link rel="stylesheet" media="screen" href="../../../bfResources/scripts/piemenu/css/jquery-ui-1.8.5.custom.css" type="text/css" />
 
             </head>
-            <body id="editor" class="bf" jsId="attrEditor">
+            <body id="editor" jsId="attrEditor">
 
                 <!--################### editor model ################### -->
                 <!--################### editor model ################### -->
