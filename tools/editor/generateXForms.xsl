@@ -46,7 +46,7 @@
                                         <div style="display:none;">
                                             <!-- put model(s) here -->
                                             <xf:model id="formdef">
-                                                <xf:instance xmlns="">
+                                                <xf:instance id="i-props" xmlns="">
                                                    <data>
                                                       <xfElement type="{@name}" value="">
                                                          <textcontent/>
@@ -60,6 +60,7 @@
                                                 <xf:instance id="i-data">
                                                     <data xmlns="">
                                                         <dataAttributes></dataAttributes>
+                                                        <updateProperties></updateProperties>
                                                     </data>
                                                 </xf:instance>
 
@@ -78,9 +79,21 @@
                                                    <xf:insert origin="bf:props2xml(string(instance('i-data')/dataAttributes/text()))" context="instance()"  model="formdef"/>
                                                 </xf:action>
                                             </xf:input>
+
                                           </div>
+                                        <xf:output ref="instance('i-data')/updateProperties" id="properties-output">
+                                            <xf:label>props:</xf:label>
+                                            <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="betterform-state-changed">
+                                                <script>
+                                                    dojo.publish('/properties/changed',[]);
+                                                </script>
+                                            </xf:action>
+                                        </xf:output>
                                           <xf:group xmlns:xf="http://www.w3.org/2002/xforms" ref="xfElement" id="properties"
                                                     appearance="compact">
+                                              <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="DOMFocusOut" ev:observer="properties" ev:phase="capture" propagate="stop">
+                                                    <xf:setvalue ref="instance('i-data')/updateProperties" value="string(bf:xml2props(instance('i-props')/xfElement[1]))"/>
+                                             </xf:action>
                                              <xf:input ref="@value">
                                                 <xf:label>XPath Value</xf:label>
                                              </xf:input>
@@ -93,7 +106,7 @@
                                         <div style="display:none;">
                                             <!-- put model(s) here -->
                                             <xf:model id="formdef">
-                                                <xf:instance xmlns="">
+                                                <xf:instance id="i-props" xmlns="">
                                                     <data>
                                                         <xfElement>
                                                             <xsl:attribute name="type"><xsl:value-of select="@name"/></xsl:attribute>
@@ -120,6 +133,7 @@
                                                 <xf:instance id="i-data">
                                                     <data xmlns="">
                                                         <dataAttributes></dataAttributes>
+                                                        <updateProperties></updateProperties>
                                                     </data>
                                                 </xf:instance>
 
@@ -136,8 +150,20 @@
                                                    <xf:insert origin="bf:props2xml(string(instance('i-data')/dataAttributes/text()))" context="instance()"  model="formdef"/>
                                                 </xf:action>
                                             </xf:input>
+
                                         </div>
+                                        <xf:output ref="instance('i-data')/updateProperties" id="properties-output">
+                                            <xf:label>props:</xf:label>
+                                            <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="betterform-state-changed">
+                                                <script>
+                                                    dojo.publish('/properties/changed',[]);
+                                                </script>
+                                            </xf:action>
+                                        </xf:output>
                                         <xf:group ref="xfElement" id="properties" appearance="compact">
+                                            <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="DOMFocusOut" ev:observer="properties" ev:phase="capture" propagate="stop">
+                                                <xf:setvalue ref="instance('i-data')/updateProperties" value="string(bf:xml2props(instance('i-props')/xfElement[1]))"/>
+                                            </xf:action>
                                             <xsl:apply-templates select="$current//xsd:attributeGroup" mode="ui"/>
                                             <xsl:apply-templates select="$current//xsd:attribute" mode="ui"/>
                                             <xsl:apply-templates select="$current//xsd:complexType[@mixed='true']" mode="ui"/>

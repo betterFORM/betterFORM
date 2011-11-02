@@ -67,5 +67,8 @@ public class BetterFormFunctionLibrary extends XPathFunctionLibrary {
 
         e = register("{" + NamespaceConstants.BETTERFORM_NS + "}props2xml", Props2XML.class, 0, 0, 1, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+
+        e = register("{" + NamespaceConstants.BETTERFORM_NS + "}xml2props", XML2Props.class, 0, 0, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        arg(e, 0, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
     }
 }

@@ -1,3 +1,8 @@
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:ev="http://www.w3.org/2001/xml-events"
@@ -44,10 +49,7 @@
         <html>
             <head>
                 <title>betterFORM Editor</title>
-                <link rel="stylesheet" type="text/css" href="../../../bfResources/styles/xforms-editor.css"/>
-                <link rel="stylesheet" media="screen" href="../../../bfResources/scripts/piemenu/css/jquery.ui.ppmenu.css" type="text/css" />
-                <link rel="stylesheet" media="screen" href="../../../bfResources/scripts/piemenu/css/jquery-ui-1.8.5.custom.css" type="text/css" />
-
+                <link rel="stylesheet" type="text/css" href="{$EDITOR_HOME}xforms-editor.css"/>
             </head>
             <body id="editor" jsId="attrEditor">
 
@@ -59,7 +61,7 @@
                 <!-- ################### DOJO Store holding XForms Datatypes ################### -->
                 <!-- ################### DOJO Store holding XForms Datatypes ################### -->
                 <!-- ################### DOJO Store holding XForms Datatypes ################### -->
-                <div dojoType="dojo.data.ItemFileReadStore" data-dojo-id="stateStore" url="{$APP_CONTEXT}{$EDITOR_HOME}xfDatatype.json"/>
+                <div dojoType="dojo.data.ItemFileReadStore" data-dojo-id="stateStore" url="{$EDITOR_HOME}xfDatatype.json"/>
 
 
                 <!-- ################### MAIN UI WITH COMPONENT TREE ################### -->
@@ -100,32 +102,32 @@
                 <script type="text/javascript"
                         src="../../../bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
 
-<!--
-                <script type="text/javascript" src="../../../bfResources/scripts/piemenu/ppmenu/jquery-ui-1.8.8.custom.min.js"></script>
-                <script type="text/javascript" src="../../../bfResources/scripts/piemenu/ppmenu/jquery.ui.prettypiemenu.js"></script>
--->
-
-
                 <script type="text/javascript" class="source below">
                     EDITOR_HOME = "<xsl:value-of select="$EDITOR_HOME"/>";
                 </script>
 
-                <!--<script type="text/javascript" src="../../../bfResources/scripts/betterform/editor/mainTree.js"></script>-->
-                <!--<script type="text/javascript" defer="defer" src="../../../bfResources/scripts/betterform/editor/circleMenuCommon.js"></script>-->
-                <!--<script type="text/javascript" defer="defer" src="../../../bfResources/scripts/betterform/editor/circleMenus.js"></script>-->
-                <script type="text/javascript" src="../../../bfResources/scripts/betterform/editor/mainTree.js"></script>
-                <script type="text/javascript" src="../../../bfResources/scripts/betterform/editor/componentTree.js"></script>
+                <!--##### using direct import here instead of dojo.require - see comment below! ##### -->
+                <script type="text/javascript" src="{$EDITOR_HOME}/scripts/betterform/editor/Editor.js"></script>
+                <script type="text/javascript" src="{$EDITOR_HOME}/scripts/betterform/editor/mainTree.js"></script>
+                <!--<script type="text/javascript" src="../../../bfResources/scripts/betterform/editor/componentTree.js"></script>-->
+
                 <script type="text/javascript" defer="defer"
                         src="../../../bfResources/scripts/betterform/betterform-XFormsEditor.js"></script>
-                <script type="text/javascript" defer="defer" src="../../../bfResources/scripts/betterform/editor/addMenu.js"></script>
+                <!-- ##### USING DIRECT IMPORT INSTEAD OF DOJO REQUIRE.
+                The source of the editor should be kept separate from the core resources and deployed separately.
+                They should NOT be made part of the betterform default distribution but be available as a separate
+                package.
+                -->
+                <script type="text/javascript" defer="defer" src="{$EDITOR_HOME}/scripts/betterform/editor/addMenu.js"></script>
+                <script type="text/javascript" defer="defer" src="{$EDITOR_HOME}/scripts/betterform/editor/xfEditorUtil.js"></script>
                 <script type="text/javascript" defer="defer">
                     // do not do anything but logging yet but shows the right call. Should work on FF and webkit which
                     // is sufficient for the editor.
-                     dojo.require("dijit.Toolbar");
+                    dojo.require("dijit.Toolbar");
                     dojo.require("dijit.form.DropDownButton");
                     dojo.require("dijit.form.Button");
                     dojo.require("dijit.TooltipDialog");
-
+                    dojo.require("dojo.data.ItemFileReadStore");
                     var xfReadySubscribers;
 
 

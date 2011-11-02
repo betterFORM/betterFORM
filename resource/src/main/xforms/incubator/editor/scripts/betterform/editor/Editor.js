@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
 dojo.provide("betterform.editor.Editor");
 
 /*
@@ -45,6 +50,17 @@ dojo.declare("betterform.editor.Editor", null,
             }
 //            self.updateComponentTree(dojo.byId(selectedNodeId));
          });
+
+        dojo.subscribe("/properties/changed", function(args){
+            console.debug('subscribe properties callback');
+//            console.debug(args);
+
+            var newProps = dijit.byId('properties-output').getControlValue();
+            console.debug("newProps: ",newProps);
+
+            var currentid = dojo.attr(dojo.byId("xfDoc"),"data-bf-currentid");
+            dojo.attr(dojo.byId(currentid),"data-xf-attrs", newProps);
+        });
     },
 
     updateComponentTree : function(aNode){
@@ -296,6 +312,11 @@ dojo.declare("betterform.editor.Editor", null,
         else {
             //  console.debug("Moving Node not allowed");
         }
+    },
+
+    removeNode:function(jsTreeObject){
+        var selectedNode = jsTreeObject.data.ui.selected;
+        jsTreeObject.remove(selectedNode);
     },
 
     showEventListener:function() {

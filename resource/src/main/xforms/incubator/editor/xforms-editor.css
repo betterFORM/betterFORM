@@ -424,7 +424,7 @@ dl.keyboard-mapping dd {
 
 }
 .bf #leftPane #componentTree .jstree-hovered{
-    background: url('../images/switch.gif') repeat-x scroll 0 -60px #eeeeee;
+    background: url('../../../resources/images/switch.gif') repeat-x scroll 0 -60px #eeeeee;
     border: none;
 }
 
@@ -434,7 +434,7 @@ dl.keyboard-mapping dd {
 }
 .bf .modeSelector{
     height: 22px;
-    background: url('../images/switch.gif') repeat-x scroll 0 0 #eeeeee;
+    background: url('../../../resources/images/switch.gif') repeat-x scroll 0 0 #eeeeee;
     border: none;
     color:#999999;
     width: 50%;
@@ -499,3 +499,13 @@ dl.keyboard-mapping dd {
 .tundra #formWrapper .buttonWrapper  #toolbar1.delete .dijitArrowButtonInner {
     display: none;
 }*/
+.tundra .dijitToolbar .dijitButton{
+    min-width: 24px;
+    min-height: 24px;
+}
+.tundra .dijitToolbar .bfaddChild{
+    background: url('images/add-child2.png') no-repeat left center;
+}
+.jstree-default .jstree-leaf ins {
+    display: none;
+}

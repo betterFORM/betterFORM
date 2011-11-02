@@ -8,7 +8,7 @@
       <div id="xforms">
          <div style="display:none;">
             <xf:model xmlns:xf="http://www.w3.org/2002/xforms" id="formdef">
-               <xf:instance xmlns="">
+               <xf:instance xmlns="" id="i-props">
                   <data>
                      <xfElement type="setvalue" id="" model="" ref="" bind="" if="" while="" value="">
                         <xml-event event="" observer="" target="" handler="" phase="default" propagate="continue"
@@ -19,6 +19,7 @@
                <xf:instance id="i-data">
                   <data xmlns="">
                      <dataAttributes/>
+                     <updateProperties/>
                   </data>
                </xf:instance>
                <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="xforms-ready">
@@ -55,8 +56,25 @@
                </xf:action>
             </xf:input>
          </div>
+         <xf:output xmlns:xf="http://www.w3.org/2002/xforms"
+                    ref="instance('i-data')/updateProperties"
+                    id="properties-output">
+            <xf:label>props:</xf:label>
+            <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="betterform-state-changed">
+               <script>
+                                                    dojo.publish('/properties/changed',[]);
+                                                </script>
+            </xf:action>
+         </xf:output>
          <xf:group xmlns:xf="http://www.w3.org/2002/xforms" ref="xfElement" id="properties"
                    appearance="compact">
+            <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="DOMFocusOut"
+                       ev:observer="properties"
+                       ev:phase="capture"
+                       propagate="stop">
+               <xf:setvalue ref="instance('i-data')/updateProperties"
+                            value="string(bf:xml2props(instance('i-props')/xfElement[1]))"/>
+            </xf:action>
             <xf:input ref="@id">
                <xf:label>id</xf:label>
             </xf:input>

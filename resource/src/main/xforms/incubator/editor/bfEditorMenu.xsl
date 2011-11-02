@@ -1,3 +1,8 @@
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:ev="http://www.w3.org/2001/xml-events"
@@ -116,7 +121,6 @@
 -->
             <div dojoType="dijit.form.DropDownButton" id="contextmenu.addchild" class="bfaddChild"
             showLabel="false">
-                <span>add child</span>
                 <script type="dojo/method" event="onClick" args="evt">
                     /* <![CDATA[ */
 
@@ -135,14 +139,27 @@
                     return false;
                     /* ]]> */
                 </script>
+                <span>add child</span>
             </div>
+<!--
             <div dojoType="dijit.form.DropDownButton" id="contextmenu.addsibling" class="bfaddSibling" iconClass="dijitEditorIcon"
             showLabel="false">
 
                 add sibling
             </div>
+-->
             <div dojoType="dijit.form.DropDownButton" id="contextmenu.delete" iconClass="dijitEditorIcon dijitEditorIconDelete"
             showLabel="false">
+                <script type="dojo/method" event="onClick" args="evt">
+                    /* <![CDATA[ */
+                    console.debug("delete clicked:",evt);
+                    // remember to stop the event as it would otherwise trigger the handlers on the surrounding element too
+                    evt.stopPropagation();
+                    evt.cancelBubble=true;
+                    return false;
+                    /* ]]> */
+                </script>
+
                 <span>delete</span>
 
                 <div dojotype="dijit.TooltipDialog" autofocus="true">
@@ -155,7 +172,9 @@
                             console.debug("OK evt:",evt);
                             console.debug("OK target:",evt.target);
                             console.debug("OK target id:",evt.target.id);
-                            // remember to stop the event as it would otherwise trigger the handlers on the surrounding element too
+
+                            $("#"+evt.target.id).
+
                             evt.stopPropagation();
                             evt.cancelBubble=true;
                             return;
@@ -163,6 +182,7 @@
                         </script>
 
                     </div>
+<!--
                     <div dojotype="dijit.form.Button" type="submit" class="linkButton">
                         Cancel
                         <script type="dojo/method" event="onClick" args="evt">
@@ -172,11 +192,12 @@
                             // remember to stop the event as it would otherwise trigger the handlers on the surrounding element too
                             evt.stopPropagation();
                             evt.cancelBubble=true;
-                            return;
+                            return false;
                             /* ]]> */
                         </script>
 
                     </div>
+-->
 
                     <!--<a tabindex="0" href="javascript:alert('cancel');">cancel</a>-->
                 </div>
