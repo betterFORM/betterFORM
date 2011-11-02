@@ -120,9 +120,13 @@
                 <script type="dojo/method" event="onClick" args="evt">
                     /* <![CDATA[ */
 
+                    console.debug("addchild this:",this);
                     console.debug("addchild evt:",evt);
 
-                    modelMenu(evt.target.id);
+                    var xfType =  dojo.attr(dojo.byId("xfDoc"),"data-bf-xftype");
+                     console.debug("xfType: ". xfType);
+
+                    showAddMenu( evt.target.id, xfType);
 
                     // remember to stop the event as it would otherwise trigger the handlers on the surrounding element too
                     evt.stopPropagation();

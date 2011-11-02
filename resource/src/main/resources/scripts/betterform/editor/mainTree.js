@@ -111,7 +111,8 @@ $(function () {
 
                 var mountNode = dojo.byId("xfMount");
                 //Save id of current selected Tree-Leaf on root-node of tree
-                dojo.attr( dojo.byId("xfDoc"), "xfId", tmpId);
+                dojo.attr( dojo.byId("xfDoc"), "data-bf-currentid", tmpId);
+                dojo.attr( dojo.byId("xfDoc"), "data-bf-xftype", xfType);
 
                 var nodesToDestroy = dojo.query("*[widgetId]", mountNode);
                 // console.debug("nodesToDestroy: ",nodesToDestroy);

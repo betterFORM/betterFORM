@@ -94,7 +94,7 @@
                          </xsl:when>
                          <xsl:when test="$attrName='event'">
                              <select dojoType="dijit.form.FilteringSelect" selection="open" searchAttr="name" name="type" id="{$attrName}" value="" placeholder="" class="xf{$attrName} dojoSelect" >
-                                 <xsl:attribute name="onblur">attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'<xsl:value-of select="$attrName"/>')</xsl:attribute>
+                                 <xsl:attribute name="onblur">attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'data-bf-currentid'),'<xsl:value-of select="$attrName"/>')</xsl:attribute>
                                  <xsl:for-each select="//xf:select1[@ref='@event']/xf:item">
                                     <option value="{xf:value}"><xsl:value-of select="xf:label"/></option>
                                  </xsl:for-each>
@@ -102,12 +102,12 @@
                          </xsl:when>
                         <xsl:when test="$attrName='type'">
                             <input dojoType="dijit.form.FilteringSelect" store="stateStore" selection="open" searchAttr="name" name="type" id="{$attrName}" value="" placeholder="" class="xf{$attrName} dojoSelect">
-                                <xsl:attribute name="onblur">attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'<xsl:value-of select="$attrName"/>')</xsl:attribute>
+                                <xsl:attribute name="onblur">attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'data-bf-currentid'),'<xsl:value-of select="$attrName"/>')</xsl:attribute>
                             </input>
                         </xsl:when>
                         <xsl:otherwise>
                             <input dojoType="dijit.form.TextBox" id="{$attrName}" name="{$attrName}" type="text" value="" placeholder="" class="xf{$attrName} dojoInput">
-                                <xsl:attribute name="onblur">attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'xfId'),'<xsl:value-of select="$attrName"/>')</xsl:attribute>
+                                <xsl:attribute name="onblur">attrEditor.saveProperty(dojo.attr(dojo.byId('xfMount'),'data-bf-currentid'),'<xsl:value-of select="$attrName"/>')</xsl:attribute>
                             </input>
                         </xsl:otherwise>
                     </xsl:choose>
