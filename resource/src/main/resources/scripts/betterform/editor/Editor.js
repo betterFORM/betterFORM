@@ -123,6 +123,10 @@ dojo.declare("betterform.editor.Editor", null,
 
          console.debug("editProperties: dataXfAttrs: ", dataXfAttrs, " dataXfType", dataXfType);
 
+        //Send Tree-Data to "properties"-subform
+        fluxProcessor.setControlValue("dataAttributes", dataXfAttrs);
+
+        /*
         var xfAttrObj = dojox.json.ref.fromJson(dataXfAttrs);
          console.debug("editProperties xfAttrObj:", xfAttrObj);
         if (xfAttrObj) {
@@ -167,6 +171,7 @@ dojo.declare("betterform.editor.Editor", null,
                 dojo.attr(textContentNode, "value", nodeValue);
             }
         }
+        */
     },
 
     saveProperty:function(targetId, propertyId) {

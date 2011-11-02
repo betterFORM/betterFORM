@@ -2,6 +2,7 @@
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:html="http://www.w3.org/1999/xhtml"
         xmlns:xf="http://www.w3.org/2002/xforms"
+         xmlns:ev="http://www.w3.org/2001/xml-events"
         version="2.0" exclude-result-prefixes="html">
 
     <xsl:import href="bfEditor.xsl" />

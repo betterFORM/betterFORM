@@ -55,7 +55,29 @@
                                                 </xf:instance>
                                                 <xf:bind nodeset="@value" type="xforms:XPathExpression"/>
                                                 <xf:bind nodeset="textcontent" type=""/>
+
+
+                                                <xf:instance id="i-data">
+                                                    <data xmlns="">
+                                                        <dataAttributes></dataAttributes>
+                                                    </data>
+                                                </xf:instance>
+
+                                                <xf:action ev:event="xforms-ready">
+                                                    <script>
+                                                        <!-- Trigger JavaScript to get properties -->
+                                                        attrEditor.editProperties(dojo.attr(dojo.byId("xfDoc"), "xfId"));
+                                                    </script>
+                                                </xf:action>
                                              </xf:model>
+
+                                            <xf:input ref="instance('i-data')/dataAttributes" id="dataAttributes">
+                                                <xf:label>hidden</xf:label>
+                                                <!-- Trigger insert action when properties are sent from JavaScript -->
+                                                <xf:action ev:event="xforms-value-changed">
+                                                   <xf:insert origin="bf:props2xml(string(instance('i-data')/dataAttributes/text()))" context="instance()"  model="formdef"/>
+                                                </xf:action>
+                                            </xf:input>
                                           </div>
                                           <xf:group xmlns:xf="http://www.w3.org/2002/xforms" ref="xfElement" id="properties"
                                                     appearance="compact">
@@ -94,7 +116,26 @@
                                                         <xsl:apply-templates select="$current//xsd:attributeGroup" mode="event-bind"/>
                                                     </xf:bind>
                                                 </xsl:if>
+
+                                                <xf:instance id="i-data">
+                                                    <data xmlns="">
+                                                        <dataAttributes></dataAttributes>
+                                                    </data>
+                                                </xf:instance>
+
+                                                <xf:action ev:event="xforms-ready">
+                                                    <script>
+                                                        attrEditor.editProperties(dojo.attr(dojo.byId("xfDoc"), "xfId"));
+                                                    </script>
+                                                </xf:action>
                                             </xf:model>
+
+                                            <xf:input ref="instance('i-data')/dataAttributes" id="dataAttributes">
+                                                <xf:label>hidden</xf:label>
+                                                <xf:action ev:event="xforms-value-changed">
+                                                   <xf:insert origin="bf:props2xml(string(instance('i-data')/dataAttributes/text()))" context="instance()"  model="formdef"/>
+                                                </xf:action>
+                                            </xf:input>
                                         </div>
                                         <xf:group ref="xfElement" id="properties" appearance="compact">
                                             <xsl:apply-templates select="$current//xsd:attributeGroup" mode="ui"/>

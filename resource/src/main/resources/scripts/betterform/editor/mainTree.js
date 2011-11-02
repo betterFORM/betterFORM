@@ -110,7 +110,9 @@ $(function () {
                 console.debug("xfType:",xfType);
 
                 var mountNode = dojo.byId("xfMount");
-                dojo.attr(mountNode, "xfId", tmpId);
+                //Save id of current selected Tree-Leaf on root-node of tree
+                dojo.attr( dojo.byId("xfDoc"), "xfId", tmpId);
+
                 var nodesToDestroy = dojo.query("*[widgetId]", mountNode);
                 // console.debug("nodesToDestroy: ",nodesToDestroy);
                 dojo.forEach(nodesToDestroy, function(item) {

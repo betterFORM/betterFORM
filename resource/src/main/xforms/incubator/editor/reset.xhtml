@@ -16,6 +16,16 @@
                      </xfElement>
                   </data>
                </xf:instance>
+               <xf:instance id="i-data">
+                  <data xmlns="">
+                     <dataAttributes/>
+                  </data>
+               </xf:instance>
+               <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="xforms-ready">
+                  <script>
+                                                        attrEditor.editProperties(dojo.attr(dojo.byId("xfDoc"), "xfId"));
+                                                    </script>
+               </xf:action>
                <xf:bind nodeset="@id" type="xsd:ID"/>
                <xf:bind id="conditional">
                   <xf:bind nodeset="@if" type="xforms:XPathExpression"/>
@@ -32,6 +42,15 @@
                </xf:bind>
                <xf:bind nodeset="@model" type="xsd:IDREF"/>
             </xf:model>
+            <xf:input xmlns:xf="http://www.w3.org/2002/xforms" ref="instance('i-data')/dataAttributes"
+                      id="dataAttributes">
+               <xf:label>hidden</xf:label>
+               <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="xforms-value-changed">
+                  <xf:insert origin="bf:props2xml(string(instance('i-data')/dataAttributes/text()))"
+                             context="instance()"
+                             model="formdef"/>
+               </xf:action>
+            </xf:input>
          </div>
          <xf:group xmlns:xf="http://www.w3.org/2002/xforms" ref="xfElement" id="properties"
                    appearance="compact">
