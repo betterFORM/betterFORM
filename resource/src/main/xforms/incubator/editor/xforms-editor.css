@@ -104,7 +104,6 @@ html, body,#mainWindow {
     line-height:24px;
 }
 .jstree a{
-    font-size:1.2em;
     padding:5px;
     width:95%;
     position:relative;
@@ -522,15 +521,28 @@ dl.keyboard-mapping dd {
 .tundra .dijitToolbar  .bfaddSibling{
     background: url('images/add-sibling2.png');
 }
+/*
 .jstree-default .jstree-leaf ins {
     display: none;
 }
+*/
 #componentTree{
     position: absolute;
     z-index: 500;
     display: none;
+    width: 160px;
+}
+.bf #componentTree a,
+.bf #componentTree a:hover,
+.bf #componentTree .jstree-clicked{
+    width: 133px;
+}
+
+#componentTree li{
+    margin-left: 0;
 }
 
 #componentTree .rootCategory > ins,#componentTree .rootCategory > a{
     display: none;
 }
+
