@@ -138,7 +138,7 @@
                 add child
             </div>
             <div dojoType="dijit.form.Button" id="contextmenu.addsibling" class="bfaddSibling" iconClass="dijitEditorIcon"
-            showLabel="false" onclick="attrEditor.showAddMenu(this);">
+            showLabel="false">
                <script type="dojo/method" event="onClick" args="evt">
                     /* <![CDATA[ */
                     console.debug("add sibling:",evt);

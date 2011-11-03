@@ -118,7 +118,6 @@
                 They should NOT be made part of the betterform default distribution but be available as a separate
                 package.
                 -->
-                <script type="text/javascript" defer="defer" src="{$EDITOR_HOME}/scripts/betterform/editor/addMenu.js"></script>
                 <script type="text/javascript" defer="defer" src="{$EDITOR_HOME}/scripts/betterform/editor/xfEditorUtil.js"></script>
                 <script type="text/javascript" defer="defer">
                     // do not do anything but logging yet but shows the right call. Should work on FF and webkit which
