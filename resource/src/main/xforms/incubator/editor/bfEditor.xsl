@@ -109,7 +109,7 @@
                 <!--##### using direct import here instead of dojo.require - see comment below! ##### -->
                 <script type="text/javascript" src="{$EDITOR_HOME}/scripts/betterform/editor/Editor.js"></script>
                 <script type="text/javascript" src="{$EDITOR_HOME}/scripts/betterform/editor/mainTree.js"></script>
-                <!--<script type="text/javascript" src="../../../bfResources/scripts/betterform/editor/componentTree.js"></script>-->
+                <script type="text/javascript" src="{$EDITOR_HOME}/scripts/componentTree.js"></script>
 
                 <script type="text/javascript" defer="defer"
                         src="../../../bfResources/scripts/betterform/betterform-XFormsEditor.js"></script>

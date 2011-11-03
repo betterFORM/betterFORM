@@ -138,13 +138,15 @@ $(function () {
                 */
                 fluxProcessor.dispatchEvent("t-loadProperties");
 
+                dojo.place(dojo.byId("contextBar"), dojo.query("#"+tmpId + " .buttonWrapper")[0], "last");
+//                dojo.place(dojo.byId("componentTree"), dojo.query("#"+tmpId + " .buttonWrapper")[0], "last");
+//                dojo.byId('componentTree').style("right:300px;top:200px;");
+
                 //console.debug("publish: nodeSelected: data", data);
                 dojo.publish("nodeSelected", [
                     {event:event,xfType:xfType,id:tmpId,jsTreeData:data,bfPath:EDITOR_HOME}
                 ]);
 
-                dojo.place(dojo.byId("contextBar"), dojo.query("#"+tmpId + " .buttonWrapper")[0], "last");
-                dojo.byId(tmpId).focus();
             }
         })
         // EVENTS
@@ -162,6 +164,8 @@ $("#xfDoc").delegate("a", "click", function() {
 });
 
 function addElement(type, position) {
+    //hide component menu
+    dojo.style("componentTree","display", "none");
     // console.debug("addElement type:", type);
     var betterFORMContextPath = "{$APP_CONTEXT}";
     var editorContextPath = "{$EDITOR_HOME}";
@@ -186,6 +190,8 @@ function addElement(type, position) {
     elem.focus();
     elem.hide();
     $(elem).fadeIn("slow");
+
+
 }
 
 function deleteNode(elem) {

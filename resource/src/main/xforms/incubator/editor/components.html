@@ -1,943 +1,753 @@
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
 <ul>
-<li id="document-tmpl" class="document"><a href="#">document</a>
-    <ul class="category">
-        <li class="element" data-xf-type="model"><a href="javascript:addElement('model');">model</a></li>
-    </ul>
-    <ul class="category">
-        <li class="container">
-            <a href="#">Container</a>
-            <ul>
-                <li data-xf-type="group" class="container"><a href="javascript:addElement('group');">group</a></li>
-                <li data-xf-type="repeat" class="container"><a href="javascript:addElement('repeat');">repeat</a></li>
-                <li data-xf-type="switch" class="container"><a href="javascript:addElement('switch');">switch</a></li>
+   <li id="document-tmpl" class="document rootCategory"><a href="#">document</a><ul class="category">
+         <li class="element" data-xf-type="model"><a href="javascript:addElement('model');">model</a></li>
+      </ul>
+      <ul class="category">
+         <li class="container"><a href="#">Container</a><ul>
+               <li data-xf-type="group" class="container"><a href="javascript:addElement('group');">group</a></li>
+               <li data-xf-type="repeat" class="container"><a href="javascript:addElement('repeat');">repeat</a></li>
+               <li data-xf-type="switch" class="container"><a href="javascript:addElement('switch');">switch</a></li>
             </ul>
-        </li>
-    </ul>
-</li>
-<li id="model-tmpl" class="model"><a href="#">model</a>
-    <ul class="category">
-        <li class="element" data-xf-type="bind"><a href="javascript:addElement('bind');">bind</a></li>
-        <li class="element" data-xf-type="instance"><a href="javascript:addElement('instance');">instance</a></li>
-        <li class="element" data-xf-type="schema"><a href="javascript:addElement('schema');">schema</a></li>
-        <li class="element" data-xf-type="submission"><a href="javascript:addElement('submission');">submission</a></li>
-    </ul>
-    <ul class="category">
-        <li class="action" style="text-align:left;"><a href="#">Actions</a>
-            <ul>
-                <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
-                <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
-                <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a>
-                </li>
-                <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
-                <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
-                <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
-                <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
-                <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a>
-                </li>
-                <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
-                <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
-                <li data-xf-type="revalidate" class="action"><a
-                        href="javascript:addElement('revalidate');">revalidate</a></li>
-                <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
-                <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a>
-                </li>
-                <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a>
-                </li>
-                <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a>
-                </li>
-                <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
+         </li>
+      </ul>
+   </li>
+   <li id="model-tmpl" class="model rootCategory"><a href="#">model</a><ul class="category">
+         <li class="element" data-xf-type="bind"><a href="javascript:addElement('bind');">bind</a></li>
+         <li class="element" data-xf-type="instance"><a href="javascript:addElement('instance');">instance</a></li>
+         <li class="element" data-xf-type="schema"><a href="javascript:addElement('schema');">schema</a></li>
+         <li class="element" data-xf-type="submission"><a href="javascript:addElement('submission');">submission</a></li>
+      </ul>
+      <ul class="category">
+         <li class="action" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
+               <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="javascript:addElement('revalidate');">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
             </ul>
-        </li>
-    </ul>
-</li>
-<li id="bind-tmpl" class="bind"><a href="#">bind</a>
-    <ul class="category">
-        <li class="element" data-xf-type="bind"><a href="javascript:addElement('bind');">bind</a></li>
-    </ul>
-</li>
-<li id="label-tmpl" class="label"><a href="#">label</a>
-    <ul class="category">
-        <li class="element" data-xf-type="output"><a href="javascript:addElement('output');">output</a></li>
-    </ul>
-</li>
-<li id="hint-tmpl" class="hint"><a href="#">hint</a>
-    <ul class="category">
-        <li class="element" data-xf-type="output"><a href="javascript:addElement('output');">output</a></li>
-    </ul>
-</li>
-<li id="help-tmpl" class="help"><a href="#">help</a>
-    <ul class="category">
-        <li class="element" data-xf-type="output"><a href="javascript:addElement('output');">output</a></li>
-    </ul>
-</li>
-<li id="alert-tmpl" class="alert"><a href="#">alert</a>
-    <ul class="category">
-        <li class="element" data-xf-type="output"><a href="javascript:addElement('output');">output</a></li>
-    </ul>
-</li>
-<li id="item-tmpl" class="item"><a href="#">item</a>
-    <ul class="category">
-        <li class="element" data-xf-type="value"><a href="javascript:addElement('value');">value</a></li>
-    </ul>
-    <ul class="category">
-        <li class="common"><a href="#">Common</a>
-            <ul>
-                <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
-                <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
-                <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
-                <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
+         </li>
+      </ul>
+   </li>
+   <li id="bind-tmpl" class="bind rootCategory"><a href="#">bind</a><ul class="category">
+         <li class="element" data-xf-type="bind"><a href="javascript:addElement('bind');">bind</a></li>
+      </ul>
+   </li>
+   <li id="label-tmpl" class="label rootCategory"><a href="#">label</a><ul class="category">
+         <li class="element" data-xf-type="output"><a href="javascript:addElement('output');">output</a></li>
+      </ul>
+   </li>
+   <li id="hint-tmpl" class="hint rootCategory"><a href="#">hint</a><ul class="category">
+         <li class="element" data-xf-type="output"><a href="javascript:addElement('output');">output</a></li>
+      </ul>
+   </li>
+   <li id="help-tmpl" class="help rootCategory"><a href="#">help</a><ul class="category">
+         <li class="element" data-xf-type="output"><a href="javascript:addElement('output');">output</a></li>
+      </ul>
+   </li>
+   <li id="alert-tmpl" class="alert rootCategory"><a href="#">alert</a><ul class="category">
+         <li class="element" data-xf-type="output"><a href="javascript:addElement('output');">output</a></li>
+      </ul>
+   </li>
+   <li id="item-tmpl" class="item rootCategory"><a href="#">item</a><ul class="category">
+         <li class="element" data-xf-type="value"><a href="javascript:addElement('value');">value</a></li>
+      </ul>
+      <ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="action" style="text-align:left;"><a href="#">Actions</a>
-            <ul>
-                <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
-                <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
-                <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a>
-                </li>
-                <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
-                <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
-                <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
-                <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
-                <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a>
-                </li>
-                <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
-                <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
-                <li data-xf-type="revalidate" class="action"><a
-                        href="javascript:addElement('revalidate');">revalidate</a></li>
-                <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
-                <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a>
-                </li>
-                <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a>
-                </li>
-                <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a>
-                </li>
-                <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="action" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
+               <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="javascript:addElement('revalidate');">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
             </ul>
-        </li>
-    </ul>
-</li>
-<li id="itemset-tmpl" class="itemset"><a href="#">itemset</a>
-    <ul class="category">
-        <li class="element" data-xf-type="copy"><a href="javascript:addElement('copy');">copy</a></li>
-        <li class="element" data-xf-type="value"><a href="javascript:addElement('value');">value</a></li>
-    </ul>
-    <ul class="category">
-        <li class="common"><a href="#">Common</a>
-            <ul>
-                <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
-                <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
-                <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
-                <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
+         </li>
+      </ul>
+   </li>
+   <li id="itemset-tmpl" class="itemset rootCategory"><a href="#">itemset</a><ul class="category">
+         <li class="element" data-xf-type="copy"><a href="javascript:addElement('copy');">copy</a></li>
+         <li class="element" data-xf-type="value"><a href="javascript:addElement('value');">value</a></li>
+      </ul>
+      <ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="action" style="text-align:left;"><a href="#">Actions</a>
-            <ul>
-                <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
-                <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
-                <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a>
-                </li>
-                <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
-                <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
-                <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
-                <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
-                <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a>
-                </li>
-                <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
-                <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
-                <li data-xf-type="revalidate" class="action"><a
-                        href="javascript:addElement('revalidate');">revalidate</a></li>
-                <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
-                <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a>
-                </li>
-                <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a>
-                </li>
-                <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a>
-                </li>
-                <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="action" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
+               <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="javascript:addElement('revalidate');">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
             </ul>
-        </li>
-    </ul>
-</li>
-<li id="choices-tmpl" class="choices"><a href="#">choices</a>
-    <ul class="category">
-        <li class="element" data-xf-type="choices"><a href="javascript:addElement('choices');">choices</a></li>
-        <li class="element" data-xf-type="item"><a href="javascript:addElement('item');">item</a></li>
-        <li class="element" data-xf-type="itemset"><a href="javascript:addElement('itemset');">itemset</a></li>
-    </ul>
-    <ul class="category">
-        <li class="common"><a href="#">Common</a>
-            <ul>
-                <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
+         </li>
+      </ul>
+   </li>
+   <li id="choices-tmpl" class="choices rootCategory"><a href="#">choices</a><ul class="category">
+         <li class="element" data-xf-type="choices"><a href="javascript:addElement('choices');">choices</a></li>
+         <li class="element" data-xf-type="item"><a href="javascript:addElement('item');">item</a></li>
+         <li class="element" data-xf-type="itemset"><a href="javascript:addElement('itemset');">itemset</a></li>
+      </ul>
+      <ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
             </ul>
-        </li>
-    </ul>
-</li>
-<li id="input-tmpl" class="input"><a href="#">input</a>
-    <ul class="category">
-        <li class="common"><a href="#">Common</a>
-            <ul>
-                <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
-                <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
-                <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
-                <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
+         </li>
+      </ul>
+   </li>
+   <li id="input-tmpl" class="input rootCategory"><a href="#">input</a><ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="action" style="text-align:left;"><a href="#">Actions</a>
-            <ul>
-                <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
-                <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
-                <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a>
-                </li>
-                <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
-                <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
-                <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
-                <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
-                <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a>
-                </li>
-                <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
-                <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
-                <li data-xf-type="revalidate" class="action"><a
-                        href="javascript:addElement('revalidate');">revalidate</a></li>
-                <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
-                <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a>
-                </li>
-                <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a>
-                </li>
-                <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a>
-                </li>
-                <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="action" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
+               <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="javascript:addElement('revalidate');">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
             </ul>
-        </li>
-    </ul>
-</li>
-<li id="secret-tmpl" class="secret"><a href="#">secret</a>
-    <ul class="category">
-        <li class="common"><a href="#">Common</a>
-            <ul>
-                <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
-                <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
-                <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
-                <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
+         </li>
+      </ul>
+   </li>
+   <li id="secret-tmpl" class="secret rootCategory"><a href="#">secret</a><ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="action" style="text-align:left;"><a href="#">Actions</a>
-            <ul>
-                <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
-                <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
-                <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a>
-                </li>
-                <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
-                <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
-                <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
-                <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
-                <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a>
-                </li>
-                <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
-                <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
-                <li data-xf-type="revalidate" class="action"><a
-                        href="javascript:addElement('revalidate');">revalidate</a></li>
-                <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
-                <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a>
-                </li>
-                <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a>
-                </li>
-                <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a>
-                </li>
-                <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="action" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
+               <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="javascript:addElement('revalidate');">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
             </ul>
-        </li>
-    </ul>
-</li>
-<li id="textarea-tmpl" class="textarea"><a href="#">textarea</a>
-    <ul class="category">
-        <li class="common"><a href="#">Common</a>
-            <ul>
-                <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
-                <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
-                <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
-                <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
+         </li>
+      </ul>
+   </li>
+   <li id="textarea-tmpl" class="textarea rootCategory"><a href="#">textarea</a><ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="action" style="text-align:left;"><a href="#">Actions</a>
-            <ul>
-                <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
-                <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
-                <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a>
-                </li>
-                <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
-                <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
-                <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
-                <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
-                <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a>
-                </li>
-                <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
-                <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
-                <li data-xf-type="revalidate" class="action"><a
-                        href="javascript:addElement('revalidate');">revalidate</a></li>
-                <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
-                <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a>
-                </li>
-                <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a>
-                </li>
-                <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a>
-                </li>
-                <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="action" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
+               <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="javascript:addElement('revalidate');">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
             </ul>
-        </li>
-    </ul>
-</li>
-<li id="upload-tmpl" class="upload"><a href="#">upload</a>
-    <ul class="category">
-        <li class="element" data-xf-type="filename"><a href="javascript:addElement('filename');">filename</a></li>
-        <li class="element" data-xf-type="mediatype"><a href="javascript:addElement('mediatype');">mediatype</a></li>
-    </ul>
-    <ul class="category">
-        <li class="common"><a href="#">Common</a>
-            <ul>
-                <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
-                <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
-                <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
-                <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
+         </li>
+      </ul>
+   </li>
+   <li id="upload-tmpl" class="upload rootCategory"><a href="#">upload</a><ul class="category">
+         <li class="element" data-xf-type="filename"><a href="javascript:addElement('filename');">filename</a></li>
+         <li class="element" data-xf-type="mediatype"><a href="javascript:addElement('mediatype');">mediatype</a></li>
+      </ul>
+      <ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="action" style="text-align:left;"><a href="#">Actions</a>
-            <ul>
-                <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
-                <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
-                <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a>
-                </li>
-                <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
-                <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
-                <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
-                <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
-                <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a>
-                </li>
-                <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
-                <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
-                <li data-xf-type="revalidate" class="action"><a
-                        href="javascript:addElement('revalidate');">revalidate</a></li>
-                <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
-                <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a>
-                </li>
-                <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a>
-                </li>
-                <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a>
-                </li>
-                <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="action" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
+               <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="javascript:addElement('revalidate');">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
             </ul>
-        </li>
-    </ul>
-</li>
-<li id="select1-tmpl" class="select1"><a href="#">select1</a>
-    <ul class="category">
-        <li class="element" data-xf-type="choices"><a href="javascript:addElement('choices');">choices</a></li>
-        <li class="element" data-xf-type="item"><a href="javascript:addElement('item');">item</a></li>
-        <li class="element" data-xf-type="itemset"><a href="javascript:addElement('itemset');">itemset</a></li>
-    </ul>
-    <ul class="category">
-        <li class="common"><a href="#">Common</a>
-            <ul>
-                <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
-                <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
-                <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
-                <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
+         </li>
+      </ul>
+   </li>
+   <li id="select1-tmpl" class="select1 rootCategory"><a href="#">select1</a><ul class="category">
+         <li class="element" data-xf-type="choices"><a href="javascript:addElement('choices');">choices</a></li>
+         <li class="element" data-xf-type="item"><a href="javascript:addElement('item');">item</a></li>
+         <li class="element" data-xf-type="itemset"><a href="javascript:addElement('itemset');">itemset</a></li>
+      </ul>
+      <ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="action" style="text-align:left;"><a href="#">Actions</a>
-            <ul>
-                <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
-                <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
-                <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a>
-                </li>
-                <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
-                <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
-                <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
-                <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
-                <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a>
-                </li>
-                <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
-                <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
-                <li data-xf-type="revalidate" class="action"><a
-                        href="javascript:addElement('revalidate');">revalidate</a></li>
-                <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
-                <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a>
-                </li>
-                <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a>
-                </li>
-                <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a>
-                </li>
-                <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="action" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
+               <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="javascript:addElement('revalidate');">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
             </ul>
-        </li>
-    </ul>
-</li>
-<li id="select-tmpl" class="select"><a href="#">select</a>
-    <ul class="category">
-        <li class="element" data-xf-type="choices"><a href="javascript:addElement('choices');">choices</a></li>
-        <li class="element" data-xf-type="item"><a href="javascript:addElement('item');">item</a></li>
-        <li class="element" data-xf-type="itemset"><a href="javascript:addElement('itemset');">itemset</a></li>
-    </ul>
-    <ul class="category">
-        <li class="common"><a href="#">Common</a>
-            <ul>
-                <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
-                <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
-                <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
-                <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
+         </li>
+      </ul>
+   </li>
+   <li id="select-tmpl" class="select rootCategory"><a href="#">select</a><ul class="category">
+         <li class="element" data-xf-type="choices"><a href="javascript:addElement('choices');">choices</a></li>
+         <li class="element" data-xf-type="item"><a href="javascript:addElement('item');">item</a></li>
+         <li class="element" data-xf-type="itemset"><a href="javascript:addElement('itemset');">itemset</a></li>
+      </ul>
+      <ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="action" style="text-align:left;"><a href="#">Actions</a>
-            <ul>
-                <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
-                <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
-                <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a>
-                </li>
-                <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
-                <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
-                <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
-                <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
-                <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a>
-                </li>
-                <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
-                <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
-                <li data-xf-type="revalidate" class="action"><a
-                        href="javascript:addElement('revalidate');">revalidate</a></li>
-                <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
-                <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a>
-                </li>
-                <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a>
-                </li>
-                <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a>
-                </li>
-                <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="action" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
+               <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="javascript:addElement('revalidate');">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
             </ul>
-        </li>
-    </ul>
-</li>
-<li id="range-tmpl" class="range"><a href="#">range</a>
-    <ul class="category">
-        <li class="common"><a href="#">Common</a>
-            <ul>
-                <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
-                <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
-                <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
-                <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
+         </li>
+      </ul>
+   </li>
+   <li id="range-tmpl" class="range rootCategory"><a href="#">range</a><ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="action" style="text-align:left;"><a href="#">Actions</a>
-            <ul>
-                <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
-                <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
-                <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a>
-                </li>
-                <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
-                <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
-                <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
-                <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
-                <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a>
-                </li>
-                <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
-                <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
-                <li data-xf-type="revalidate" class="action"><a
-                        href="javascript:addElement('revalidate');">revalidate</a></li>
-                <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
-                <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a>
-                </li>
-                <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a>
-                </li>
-                <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a>
-                </li>
-                <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="action" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
+               <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="javascript:addElement('revalidate');">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
             </ul>
-        </li>
-    </ul>
-</li>
-<li id="trigger-tmpl" class="trigger"><a href="#">trigger</a>
-    <ul class="category">
-        <li class="common"><a href="#">Common</a>
-            <ul>
-                <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
-                <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
-                <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
-                <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
+         </li>
+      </ul>
+   </li>
+   <li id="trigger-tmpl" class="trigger rootCategory"><a href="#">trigger</a><ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="action" style="text-align:left;"><a href="#">Actions</a>
-            <ul>
-                <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
-                <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
-                <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a>
-                </li>
-                <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
-                <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
-                <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
-                <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
-                <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a>
-                </li>
-                <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
-                <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
-                <li data-xf-type="revalidate" class="action"><a
-                        href="javascript:addElement('revalidate');">revalidate</a></li>
-                <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
-                <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a>
-                </li>
-                <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a>
-                </li>
-                <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a>
-                </li>
-                <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="action" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
+               <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="javascript:addElement('revalidate');">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
             </ul>
-        </li>
-    </ul>
-</li>
-<li id="output-tmpl" class="output"><a href="#">output</a>
-    <ul class="category">
-        <li class="element" data-xf-type="mediatype"><a href="javascript:addElement('mediatype');">mediatype</a></li>
-    </ul>
-    <ul class="category">
-        <li class="common"><a href="#">Common</a>
-            <ul>
-                <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
-                <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
-                <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
-                <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
+         </li>
+      </ul>
+   </li>
+   <li id="output-tmpl" class="output rootCategory"><a href="#">output</a><ul class="category">
+         <li class="element" data-xf-type="mediatype"><a href="javascript:addElement('mediatype');">mediatype</a></li>
+      </ul>
+      <ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="action" style="text-align:left;"><a href="#">Actions</a>
-            <ul>
-                <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
-                <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
-                <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a>
-                </li>
-                <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
-                <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
-                <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
-                <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
-                <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a>
-                </li>
-                <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
-                <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
-                <li data-xf-type="revalidate" class="action"><a
-                        href="javascript:addElement('revalidate');">revalidate</a></li>
-                <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
-                <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a>
-                </li>
-                <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a>
-                </li>
-                <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a>
-                </li>
-                <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="action" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
+               <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="javascript:addElement('revalidate');">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
             </ul>
-        </li>
-    </ul>
-</li>
-<li id="submit-tmpl" class="submit"><a href="#">submit</a>
-    <ul class="category">
-        <li class="common"><a href="#">Common</a>
-            <ul>
-                <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
-                <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
-                <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
-                <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
+         </li>
+      </ul>
+   </li>
+   <li id="submit-tmpl" class="submit rootCategory"><a href="#">submit</a><ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="action" style="text-align:left;"><a href="#">Actions</a>
-            <ul>
-                <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
-                <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
-                <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a>
-                </li>
-                <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
-                <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
-                <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
-                <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
-                <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a>
-                </li>
-                <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
-                <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
-                <li data-xf-type="revalidate" class="action"><a
-                        href="javascript:addElement('revalidate');">revalidate</a></li>
-                <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
-                <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a>
-                </li>
-                <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a>
-                </li>
-                <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a>
-                </li>
-                <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="action" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
+               <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="javascript:addElement('revalidate');">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
             </ul>
-        </li>
-    </ul>
-</li>
-<li id="repeat-tmpl" class="repeat"><a href="#">repeat</a>
-    <ul class="category">
-        <li class="controls"><a href="#">Controls</a>
-            <ul>
-                <li data-xf-type="input" class="controls"><a href="javascript:addElement('input');">input</a></li>
-                <li data-xf-type="output" class="controls"><a href="javascript:addElement('output');">output</a></li>
-                <li data-xf-type="range" class="controls"><a href="javascript:addElement('range');">range</a></li>
-                <li data-xf-type="secret" class="controls"><a href="javascript:addElement('secret');">secret</a></li>
-                <li data-xf-type="select" class="controls"><a href="javascript:addElement('select');">select</a></li>
-                <li data-xf-type="select1" class="controls"><a href="javascript:addElement('select1');">select1</a></li>
-                <li data-xf-type="submit" class="controls"><a href="javascript:addElement('submit');">submit</a></li>
-                <li data-xf-type="textarea" class="controls"><a href="javascript:addElement('textarea');">textarea</a>
-                </li>
-                <li data-xf-type="trigger" class="controls"><a href="javascript:addElement('trigger');">trigger</a></li>
-                <li data-xf-type="upload" class="controls"><a href="javascript:addElement('upload');">upload</a></li>
+         </li>
+      </ul>
+   </li>
+   <li id="repeat-tmpl" class="repeat rootCategory"><a href="#">repeat</a><ul class="category">
+         <li class="controls"><a href="#">Controls</a><ul>
+               <li data-xf-type="input" class="controls"><a href="javascript:addElement('input');">input</a></li>
+               <li data-xf-type="output" class="controls"><a href="javascript:addElement('output');">output</a></li>
+               <li data-xf-type="range" class="controls"><a href="javascript:addElement('range');">range</a></li>
+               <li data-xf-type="secret" class="controls"><a href="javascript:addElement('secret');">secret</a></li>
+               <li data-xf-type="select" class="controls"><a href="javascript:addElement('select');">select</a></li>
+               <li data-xf-type="select1" class="controls"><a href="javascript:addElement('select1');">select1</a></li>
+               <li data-xf-type="submit" class="controls"><a href="javascript:addElement('submit');">submit</a></li>
+               <li data-xf-type="textarea" class="controls"><a href="javascript:addElement('textarea');">textarea</a></li>
+               <li data-xf-type="trigger" class="controls"><a href="javascript:addElement('trigger');">trigger</a></li>
+               <li data-xf-type="upload" class="controls"><a href="javascript:addElement('upload');">upload</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="container"><a href="#">Container</a>
-            <ul>
-                <li data-xf-type="group" class="container"><a href="javascript:addElement('group');">group</a></li>
-                <li data-xf-type="repeat" class="container"><a href="javascript:addElement('repeat');">repeat</a></li>
-                <li data-xf-type="switch" class="container"><a href="javascript:addElement('switch');">switch</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="container"><a href="#">Container</a><ul>
+               <li data-xf-type="group" class="container"><a href="javascript:addElement('group');">group</a></li>
+               <li data-xf-type="repeat" class="container"><a href="javascript:addElement('repeat');">repeat</a></li>
+               <li data-xf-type="switch" class="container"><a href="javascript:addElement('switch');">switch</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="action" style="text-align:left;"><a href="#">Actions</a>
-            <ul>
-                <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
-                <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
-                <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a>
-                </li>
-                <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
-                <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
-                <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
-                <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
-                <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a>
-                </li>
-                <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
-                <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
-                <li data-xf-type="revalidate" class="action"><a
-                        href="javascript:addElement('revalidate');">revalidate</a></li>
-                <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
-                <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a>
-                </li>
-                <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a>
-                </li>
-                <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a>
-                </li>
-                <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="action" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
+               <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="javascript:addElement('revalidate');">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
             </ul>
-        </li>
-    </ul>
-</li>
-<li id="group-tmpl" class="group"><a href="#">group</a>
-    <ul class="category">
-        <li class="common"><a href="#">Common</a>
-            <ul>
-                <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
-                <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
-                <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
-                <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
+         </li>
+      </ul>
+   </li>
+   <li id="group-tmpl" class="group rootCategory"><a href="#">group</a><ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="javascript:addElement('alert');">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="javascript:addElement('help');">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="javascript:addElement('hint');">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="controls"><a href="#">Controls</a>
-            <ul>
-                <li data-xf-type="input" class="controls"><a href="javascript:addElement('input');">input</a></li>
-                <li data-xf-type="output" class="controls"><a href="javascript:addElement('output');">output</a></li>
-                <li data-xf-type="range" class="controls"><a href="javascript:addElement('range');">range</a></li>
-                <li data-xf-type="secret" class="controls"><a href="javascript:addElement('secret');">secret</a></li>
-                <li data-xf-type="select" class="controls"><a href="javascript:addElement('select');">select</a></li>
-                <li data-xf-type="select1" class="controls"><a href="javascript:addElement('select1');">select1</a></li>
-                <li data-xf-type="submit" class="controls"><a href="javascript:addElement('submit');">submit</a></li>
-                <li data-xf-type="textarea" class="controls"><a href="javascript:addElement('textarea');">textarea</a>
-                </li>
-                <li data-xf-type="trigger" class="controls"><a href="javascript:addElement('trigger');">trigger</a></li>
-                <li data-xf-type="upload" class="controls"><a href="javascript:addElement('upload');">upload</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="controls"><a href="#">Controls</a><ul>
+               <li data-xf-type="input" class="controls"><a href="javascript:addElement('input');">input</a></li>
+               <li data-xf-type="output" class="controls"><a href="javascript:addElement('output');">output</a></li>
+               <li data-xf-type="range" class="controls"><a href="javascript:addElement('range');">range</a></li>
+               <li data-xf-type="secret" class="controls"><a href="javascript:addElement('secret');">secret</a></li>
+               <li data-xf-type="select" class="controls"><a href="javascript:addElement('select');">select</a></li>
+               <li data-xf-type="select1" class="controls"><a href="javascript:addElement('select1');">select1</a></li>
+               <li data-xf-type="submit" class="controls"><a href="javascript:addElement('submit');">submit</a></li>
+               <li data-xf-type="textarea" class="controls"><a href="javascript:addElement('textarea');">textarea</a></li>
+               <li data-xf-type="trigger" class="controls"><a href="javascript:addElement('trigger');">trigger</a></li>
+               <li data-xf-type="upload" class="controls"><a href="javascript:addElement('upload');">upload</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="container"><a href="#">Container</a>
-            <ul>
-                <li data-xf-type="group" class="container"><a href="javascript:addElement('group');">group</a></li>
-                <li data-xf-type="repeat" class="container"><a href="javascript:addElement('repeat');">repeat</a></li>
-                <li data-xf-type="switch" class="container"><a href="javascript:addElement('switch');">switch</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="container"><a href="#">Container</a><ul>
+               <li data-xf-type="group" class="container"><a href="javascript:addElement('group');">group</a></li>
+               <li data-xf-type="repeat" class="container"><a href="javascript:addElement('repeat');">repeat</a></li>
+               <li data-xf-type="switch" class="container"><a href="javascript:addElement('switch');">switch</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="action" style="text-align:left;"><a href="#">Actions</a>
-            <ul>
-                <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
-                <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
-                <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a>
-                </li>
-                <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
-                <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
-                <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
-                <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
-                <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a>
-                </li>
-                <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
-                <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
-                <li data-xf-type="revalidate" class="action"><a
-                        href="javascript:addElement('revalidate');">revalidate</a></li>
-                <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
-                <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a>
-                </li>
-                <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a>
-                </li>
-                <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a>
-                </li>
-                <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="action" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
+               <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="javascript:addElement('revalidate');">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
             </ul>
-        </li>
-    </ul>
-</li>
-<li id="switch-tmpl" class="switch"><a href="#">switch</a>
-    <ul class="category">
-        <li class="common"><a href="#">Common</a>
-            <ul>
-                <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
+         </li>
+      </ul>
+   </li>
+   <li id="switch-tmpl" class="switch rootCategory"><a href="#">switch</a><ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="controls"><a href="#">Controls</a>
-            <ul>
-                <li data-xf-type="input" class="controls"><a href="javascript:addElement('input');">input</a></li>
-                <li data-xf-type="output" class="controls"><a href="javascript:addElement('output');">output</a></li>
-                <li data-xf-type="range" class="controls"><a href="javascript:addElement('range');">range</a></li>
-                <li data-xf-type="secret" class="controls"><a href="javascript:addElement('secret');">secret</a></li>
-                <li data-xf-type="select" class="controls"><a href="javascript:addElement('select');">select</a></li>
-                <li data-xf-type="select1" class="controls"><a href="javascript:addElement('select1');">select1</a></li>
-                <li data-xf-type="submit" class="controls"><a href="javascript:addElement('submit');">submit</a></li>
-                <li data-xf-type="textarea" class="controls"><a href="javascript:addElement('textarea');">textarea</a>
-                </li>
-                <li data-xf-type="trigger" class="controls"><a href="javascript:addElement('trigger');">trigger</a></li>
-                <li data-xf-type="upload" class="controls"><a href="javascript:addElement('upload');">upload</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="controls"><a href="#">Controls</a><ul>
+               <li data-xf-type="input" class="controls"><a href="javascript:addElement('input');">input</a></li>
+               <li data-xf-type="output" class="controls"><a href="javascript:addElement('output');">output</a></li>
+               <li data-xf-type="range" class="controls"><a href="javascript:addElement('range');">range</a></li>
+               <li data-xf-type="secret" class="controls"><a href="javascript:addElement('secret');">secret</a></li>
+               <li data-xf-type="select" class="controls"><a href="javascript:addElement('select');">select</a></li>
+               <li data-xf-type="select1" class="controls"><a href="javascript:addElement('select1');">select1</a></li>
+               <li data-xf-type="submit" class="controls"><a href="javascript:addElement('submit');">submit</a></li>
+               <li data-xf-type="textarea" class="controls"><a href="javascript:addElement('textarea');">textarea</a></li>
+               <li data-xf-type="trigger" class="controls"><a href="javascript:addElement('trigger');">trigger</a></li>
+               <li data-xf-type="upload" class="controls"><a href="javascript:addElement('upload');">upload</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="container"><a href="#">Container</a>
-            <ul>
-                <li data-xf-type="group" class="container"><a href="javascript:addElement('group');">group</a></li>
-                <li data-xf-type="repeat" class="container"><a href="javascript:addElement('repeat');">repeat</a></li>
-                <li data-xf-type="switch" class="container"><a href="javascript:addElement('switch');">switch</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="container"><a href="#">Container</a><ul>
+               <li data-xf-type="group" class="container"><a href="javascript:addElement('group');">group</a></li>
+               <li data-xf-type="repeat" class="container"><a href="javascript:addElement('repeat');">repeat</a></li>
+               <li data-xf-type="switch" class="container"><a href="javascript:addElement('switch');">switch</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="action" style="text-align:left;"><a href="#">Actions</a>
-            <ul>
-                <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
-                <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
-                <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a>
-                </li>
-                <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
-                <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
-                <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
-                <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
-                <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a>
-                </li>
-                <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
-                <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
-                <li data-xf-type="revalidate" class="action"><a
-                        href="javascript:addElement('revalidate');">revalidate</a></li>
-                <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
-                <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a>
-                </li>
-                <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a>
-                </li>
-                <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a>
-                </li>
-                <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="action" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
+               <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="javascript:addElement('revalidate');">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
             </ul>
-        </li>
-    </ul>
-</li>
-<li id="case-tmpl" class="case"><a href="#">case</a>
-    <ul class="category">
-        <li class="common"><a href="#">Common</a>
-            <ul>
-                <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
+         </li>
+      </ul>
+   </li>
+   <li id="case-tmpl" class="case rootCategory"><a href="#">case</a><ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="label" class="common"><a href="javascript:addElement('label');">label</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="controls"><a href="#">Controls</a>
-            <ul>
-                <li data-xf-type="input" class="controls"><a href="javascript:addElement('input');">input</a></li>
-                <li data-xf-type="output" class="controls"><a href="javascript:addElement('output');">output</a></li>
-                <li data-xf-type="range" class="controls"><a href="javascript:addElement('range');">range</a></li>
-                <li data-xf-type="secret" class="controls"><a href="javascript:addElement('secret');">secret</a></li>
-                <li data-xf-type="select" class="controls"><a href="javascript:addElement('select');">select</a></li>
-                <li data-xf-type="select1" class="controls"><a href="javascript:addElement('select1');">select1</a></li>
-                <li data-xf-type="submit" class="controls"><a href="javascript:addElement('submit');">submit</a></li>
-                <li data-xf-type="textarea" class="controls"><a href="javascript:addElement('textarea');">textarea</a>
-                </li>
-                <li data-xf-type="trigger" class="controls"><a href="javascript:addElement('trigger');">trigger</a></li>
-                <li data-xf-type="upload" class="controls"><a href="javascript:addElement('upload');">upload</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="controls"><a href="#">Controls</a><ul>
+               <li data-xf-type="input" class="controls"><a href="javascript:addElement('input');">input</a></li>
+               <li data-xf-type="output" class="controls"><a href="javascript:addElement('output');">output</a></li>
+               <li data-xf-type="range" class="controls"><a href="javascript:addElement('range');">range</a></li>
+               <li data-xf-type="secret" class="controls"><a href="javascript:addElement('secret');">secret</a></li>
+               <li data-xf-type="select" class="controls"><a href="javascript:addElement('select');">select</a></li>
+               <li data-xf-type="select1" class="controls"><a href="javascript:addElement('select1');">select1</a></li>
+               <li data-xf-type="submit" class="controls"><a href="javascript:addElement('submit');">submit</a></li>
+               <li data-xf-type="textarea" class="controls"><a href="javascript:addElement('textarea');">textarea</a></li>
+               <li data-xf-type="trigger" class="controls"><a href="javascript:addElement('trigger');">trigger</a></li>
+               <li data-xf-type="upload" class="controls"><a href="javascript:addElement('upload');">upload</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="container"><a href="#">Container</a>
-            <ul>
-                <li data-xf-type="group" class="container"><a href="javascript:addElement('group');">group</a></li>
-                <li data-xf-type="repeat" class="container"><a href="javascript:addElement('repeat');">repeat</a></li>
-                <li data-xf-type="switch" class="container"><a href="javascript:addElement('switch');">switch</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="container"><a href="#">Container</a><ul>
+               <li data-xf-type="group" class="container"><a href="javascript:addElement('group');">group</a></li>
+               <li data-xf-type="repeat" class="container"><a href="javascript:addElement('repeat');">repeat</a></li>
+               <li data-xf-type="switch" class="container"><a href="javascript:addElement('switch');">switch</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul class="category">
-        <li class="action" style="text-align:left;"><a href="#">Actions</a>
-            <ul>
-                <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
-                <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
-                <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a>
-                </li>
-                <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
-                <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
-                <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
-                <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
-                <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a>
-                </li>
-                <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
-                <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
-                <li data-xf-type="revalidate" class="action"><a
-                        href="javascript:addElement('revalidate');">revalidate</a></li>
-                <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
-                <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a>
-                </li>
-                <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a>
-                </li>
-                <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a>
-                </li>
-                <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="action" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
+               <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="javascript:addElement('revalidate');">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
             </ul>
-        </li>
-    </ul>
-</li>
-<li id="action-tmpl" class="action"><a href="#">action</a>
-    <ul class="category">
-        <li class="action" style="text-align:left;"><a href="#">Actions</a>
-            <ul>
-                <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
-                <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
-                <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a>
-                </li>
-                <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
-                <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
-                <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
-                <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
-                <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a>
-                </li>
-                <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
-                <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
-                <li data-xf-type="revalidate" class="action"><a
-                        href="javascript:addElement('revalidate');">revalidate</a></li>
-                <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
-                <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a>
-                </li>
-                <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a>
-                </li>
-                <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a>
-                </li>
-                <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
+         </li>
+      </ul>
+   </li>
+   <li id="action-tmpl" class="action rootCategory"><a href="#">action</a><ul class="category">
+         <li class="action" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
+               <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="javascript:addElement('revalidate');">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
             </ul>
-        </li>
-    </ul>
-</li>
-<li id="toggle-tmpl" class="toggle"><a href="#">toggle</a>
-    <ul class="category">
-        <li class="element" data-xf-type="case"><a href="javascript:addElement('case');">case</a></li>
-    </ul>
-</li>
-<li id="setfocus-tmpl" class="setfocus"><a href="#">setfocus</a>
-    <ul class="category">
-        <li class="element" data-xf-type="control"><a href="javascript:addElement('control');">control</a></li>
-    </ul>
-</li>
-<li id="dispatch-tmpl" class="dispatch"><a href="#">dispatch</a>
-    <ul class="category">
-        <li class="element" data-xf-type="delay"><a href="javascript:addElement('delay');">delay</a></li>
-        <li class="element" data-xf-type="name"><a href="javascript:addElement('name');">name</a></li>
-        <li class="element" data-xf-type="target"><a href="javascript:addElement('target');">target</a></li>
-        <li class="element" data-xf-type="targetid"><a href="javascript:addElement('targetid');">targetid</a></li>
-    </ul>
-</li>
-<li id="load-tmpl" class="load"><a href="#">load</a>
-    <ul class="category">
-        <li class="element" data-xf-type="resource"><a href="javascript:addElement('resource');">resource</a></li>
-    </ul>
-</li>
-<li id="message-tmpl" class="message"><a href="#">message</a>
-    <ul class="category">
-        <li class="element" data-xf-type="output"><a href="javascript:addElement('output');">output</a></li>
-    </ul>
-</li>
-<li id="submission-tmpl" class="submission"><a href="#">submission</a>
-    <ul class="category">
-        <li class="element" data-xf-type="header"><a href="javascript:addElement('header');">header</a></li>
-        <li class="element" data-xf-type="method"><a href="javascript:addElement('method');">method</a></li>
-        <li class="element" data-xf-type="resource"><a href="javascript:addElement('resource');">resource</a></li>
-    </ul>
-    <ul class="category">
-        <li class="action" style="text-align:left;"><a href="#">Actions</a>
-            <ul>
-                <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
-                <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
-                <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a>
-                </li>
-                <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
-                <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
-                <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
-                <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
-                <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a>
-                </li>
-                <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
-                <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
-                <li data-xf-type="revalidate" class="action"><a
-                        href="javascript:addElement('revalidate');">revalidate</a></li>
-                <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
-                <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a>
-                </li>
-                <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a>
-                </li>
-                <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a>
-                </li>
-                <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
+         </li>
+      </ul>
+   </li>
+   <li id="toggle-tmpl" class="toggle rootCategory"><a href="#">toggle</a><ul class="category">
+         <li class="element" data-xf-type="case"><a href="javascript:addElement('case');">case</a></li>
+      </ul>
+   </li>
+   <li id="setfocus-tmpl" class="setfocus rootCategory"><a href="#">setfocus</a><ul class="category">
+         <li class="element" data-xf-type="control"><a href="javascript:addElement('control');">control</a></li>
+      </ul>
+   </li>
+   <li id="dispatch-tmpl" class="dispatch rootCategory"><a href="#">dispatch</a><ul class="category">
+         <li class="element" data-xf-type="delay"><a href="javascript:addElement('delay');">delay</a></li>
+         <li class="element" data-xf-type="name"><a href="javascript:addElement('name');">name</a></li>
+         <li class="element" data-xf-type="target"><a href="javascript:addElement('target');">target</a></li>
+         <li class="element" data-xf-type="targetid"><a href="javascript:addElement('targetid');">targetid</a></li>
+      </ul>
+   </li>
+   <li id="load-tmpl" class="load rootCategory"><a href="#">load</a><ul class="category">
+         <li class="element" data-xf-type="resource"><a href="javascript:addElement('resource');">resource</a></li>
+      </ul>
+   </li>
+   <li id="message-tmpl" class="message rootCategory"><a href="#">message</a><ul class="category">
+         <li class="element" data-xf-type="output"><a href="javascript:addElement('output');">output</a></li>
+      </ul>
+   </li>
+   <li id="submission-tmpl" class="submission rootCategory"><a href="#">submission</a><ul class="category">
+         <li class="element" data-xf-type="header"><a href="javascript:addElement('header');">header</a></li>
+         <li class="element" data-xf-type="method"><a href="javascript:addElement('method');">method</a></li>
+         <li class="element" data-xf-type="resource"><a href="javascript:addElement('resource');">resource</a></li>
+      </ul>
+      <ul class="category">
+         <li class="action" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="javascript:addElement('action');">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="javascript:addElement('delete');">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="javascript:addElement('dispatch');">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="javascript:addElement('insert');">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="javascript:addElement('load');">load</a></li>
+               <li data-xf-type="message" class="action"><a href="javascript:addElement('message');">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="javascript:addElement('rebuild');">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="javascript:addElement('recalculate');">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="javascript:addElement('refresh');">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="javascript:addElement('reset');">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="javascript:addElement('revalidate');">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="javascript:addElement('send');">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="javascript:addElement('setfocus');">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="javascript:addElement('setindex');">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="javascript:addElement('setvalue');">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="javascript:addElement('toggle');">toggle</a></li>
             </ul>
-        </li>
-    </ul>
-</li>
-<li id="header-tmpl" class="header"><a href="#">header</a>
-    <ul class="category">
-        <li class="element" data-xf-type="name"><a href="javascript:addElement('name');">name</a></li>
-        <li class="element" data-xf-type="value"><a href="javascript:addElement('value');">value</a></li>
-    </ul>
-</li>
+         </li>
+      </ul>
+   </li>
+   <li id="header-tmpl" class="header rootCategory"><a href="#">header</a><ul class="category">
+         <li class="element" data-xf-type="name"><a href="javascript:addElement('name');">name</a></li>
+         <li class="element" data-xf-type="value"><a href="javascript:addElement('value');">value</a></li>
+      </ul>
+   </li>
 </ul>

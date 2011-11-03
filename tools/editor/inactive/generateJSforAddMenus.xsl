@@ -14,7 +14,7 @@
     <xsl:template match="/">
     function showAddMenu(targetId,xfType){
         switch (xfType){<xsl:for-each select="data/ul">
-            case "<xsl:value-of select="@id"/>": <xsl:value-of select="@id"/>Menu(targetId);break;</xsl:for-each>
+            case "<xsl:value-of select="@id"/>": return <xsl:value-of select="@id"/>Menu(targetId);break;</xsl:for-each>
             default:alert(xfType + " unknown.");
         }
     }
@@ -99,6 +99,7 @@
 
             </xsl:if>
             pMenu.startup();
+            return pMenu;
         <xsl:text>}</xsl:text>
 
     </xsl:for-each>

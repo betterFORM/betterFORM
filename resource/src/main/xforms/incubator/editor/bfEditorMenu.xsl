@@ -119,35 +119,43 @@
                 </script>
             </div>
 -->
-            <div dojoType="dijit.form.DropDownButton" id="contextmenu.addchild" class="bfaddChild"
+            <div dojoType="dijit.form.Button" id="contextmenu.addchild" class="bfaddChild" iconClass="dijitEditorIcon"
             showLabel="false">
                 <script type="dojo/method" event="onClick" args="evt">
                     /* <![CDATA[ */
-
-                    console.debug("addchild this:",this);
-                    console.debug("addchild evt:",evt);
-
-                    var xfType =  dojo.attr(dojo.byId("xfDoc"),"data-bf-xftype");
-                     console.debug("xfType: ". xfType);
-
-                    showAddMenu( evt.target.id, xfType);
-
-                    // remember to stop the event as it would otherwise trigger the handlers on the surrounding element too
+                    console.debug("add child:",evt);
                     evt.stopPropagation();
                     evt.cancelBubble=true;
-                    evt.preventDefault();
+
+                    // remember to stop the event as it would otherwise trigger the handlers on the surrounding element too
+                    dojo.style("componentTree","display", "inline-block");
+                    dojo.style("componentTree","left", evt.pageX + "px");
+                    dojo.style("componentTree","top", (evt.pageY + 15) + "px");
+                    attrEditor.updateComponentTree('child');
                     return false;
                     /* ]]> */
                 </script>
-                <span>add child</span>
+                add child
             </div>
-<!--
-            <div dojoType="dijit.form.DropDownButton" id="contextmenu.addsibling" class="bfaddSibling" iconClass="dijitEditorIcon"
-            showLabel="false">
+            <div dojoType="dijit.form.Button" id="contextmenu.addsibling" class="bfaddSibling" iconClass="dijitEditorIcon"
+            showLabel="false" onclick="attrEditor.showAddMenu(this);">
+               <script type="dojo/method" event="onClick" args="evt">
+                    /* <![CDATA[ */
+                    console.debug("add sibling:",evt);
+                    evt.stopPropagation();
+                    evt.cancelBubble=true;
 
+                    // remember to stop the event as it would otherwise trigger the handlers on the surrounding element too
+                    dojo.style("componentTree","display", "inline-block");
+                    dojo.style("componentTree","left", evt.pageX + "px");
+                    dojo.style("componentTree","top", (evt.pageY + 15) + "px");
+                    attrEditor.updateComponentTree('sibling');
+                    return false;
+                    /* ]]> */
+                </script>
                 add sibling
             </div>
--->
+
             <div dojoType="dijit.form.DropDownButton" id="contextmenu.delete" iconClass="dijitEditorIcon dijitEditorIconDelete"
             showLabel="false">
                 <script type="dojo/method" event="onClick" args="evt">
@@ -156,6 +164,7 @@
                     // remember to stop the event as it would otherwise trigger the handlers on the surrounding element too
                     evt.stopPropagation();
                     evt.cancelBubble=true;
+
                     return false;
                     /* ]]> */
                 </script>
@@ -173,10 +182,12 @@
                             console.debug("OK target:",evt.target);
                             console.debug("OK target id:",evt.target.id);
 
-                            $("#"+evt.target.id).
+
 
                             evt.stopPropagation();
                             evt.cancelBubble=true;
+                            dojo.place(dojo.byId("contextBar"), dojo.byId("parkToolbar"), "last");
+                            $("#xfDoc").jstree("remove", null);
                             return;
                             /* ]]> */
                         </script>

@@ -19,6 +19,7 @@ html, body,#mainWindow {
     background: transparent;
     width:100%;
     float:left;
+    position: relative;
 }
 #xfDoc{
     overflow-x:hidden;
@@ -66,9 +67,6 @@ html, body,#mainWindow {
     color:#555555;
 }
 #leftPane{
-    position:absolute;
-    left:0;
-    top:40px;
     width:160px;
     min-height:300px;
     overflow: hidden;
@@ -208,6 +206,7 @@ html, body,#mainWindow {
     /*color:#eeeeee;*/
     border-color:limegreen;
     border-width: 2px;
+    z-index: 200;
 }
 .bf #mainWindow .dijitMenu, .bf #mainWindow .dijitMenuBar {
     background:#444444;
@@ -351,6 +350,7 @@ dl.keyboard-mapping dd {
 .bf #leftPane{
     background:#666666;
 }
+/*
 .bf #mainWindow #leftPane #componentTree{
     width:100%;
     background: #666666;
@@ -362,12 +362,14 @@ dl.keyboard-mapping dd {
     background:#666666;
     display: none;
 }
+*/
 /*
 .bf #leftPane #componentTree li > ul > li{
     text-align: left;
 }
 */
 
+/*
 .bf #leftPane #componentTree > ul > li
 {
     text-align:left;
@@ -401,20 +403,28 @@ dl.keyboard-mapping dd {
 }
 
 .bf #leftPane #componentTree .category .action{
-    /*background: #91b0c4;*/
+    */
+/*background: #91b0c4;*//*
+
     color:#333333;
 }
 .bf #leftPane #componentTree .category .controls{
-    /*background: #245c86;*/
+    */
+/*background: #245c86;*//*
+
     color:#333333;
 
 }
 .bf #leftPane #componentTree .category .container{
-    /*background: #7AA7DC;*/
+    */
+/*background: #7AA7DC;*//*
+
     color:#333333;
 }
 .bf #leftPane #componentTree .category .common{
-    /*background: #3d637c;*/
+    */
+/*background: #3d637c;*//*
+
     color:#333333;
 }
 
@@ -427,6 +437,7 @@ dl.keyboard-mapping dd {
     background: url('../../../resources/images/switch.gif') repeat-x scroll 0 -60px #eeeeee;
     border: none;
 }
+*/
 
 .bf #leftPane #addModeDiv{
     display:inline-block;
@@ -450,9 +461,11 @@ dl.keyboard-mapping dd {
 .bf .dijitMenuBar{
     border: #efefef;
 }
+/*
 .bf #formWrapper #fluxProcessor #mainWindow #leftPane #componentTree > ul > li > a{
     color:transparent;
 }
+*/
 .bf .dijitTitlePaneContentInner{
     background: #666666;
 }
@@ -472,7 +485,7 @@ dl.keyboard-mapping dd {
 .ui-ppmenu-iconBg{
 }
 .ui-state-hover{
-   z-index: 999;
+   z-index: 100;
 }
 #contextBar{
     position: absolute;
@@ -506,6 +519,18 @@ dl.keyboard-mapping dd {
 .tundra .dijitToolbar .bfaddChild{
     background: url('images/add-child2.png') no-repeat left center;
 }
+.tundra .dijitToolbar  .bfaddSibling{
+    background: url('images/add-sibling2.png');
+}
 .jstree-default .jstree-leaf ins {
+    display: none;
+}
+#componentTree{
+    position: absolute;
+    z-index: 500;
+    display: none;
+}
+
+#componentTree .rootCategory > ins,#componentTree .rootCategory > a{
     display: none;
 }

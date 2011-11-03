@@ -48,7 +48,7 @@ dojo.declare("betterform.editor.Editor", null,
                 //dijit.byId("xfMount").set("href", args.bfPath + "document.html");
                 return;
             }
-//            self.updateComponentTree(dojo.byId(selectedNodeId));
+            //self.updateComponentTree(dojo.byId(selectedNodeId));
          });
 
         dojo.subscribe("/properties/changed", function(args){
@@ -63,28 +63,29 @@ dojo.declare("betterform.editor.Editor", null,
         });
     },
 
-    updateComponentTree : function(aNode){
+    updateComponentTree : function(mode){
         // console.debug("updateComponentTree: event: ",aNode, " id: ",aNode.id);
-
+                   /*
         if(aNode.id == "btnChildMode"){
             dojo.removeClass("btnSiblingMode","selected");
             dojo.addClass("btnChildMode","selected");
-            dojo.attr(dojo.byId('componentTree'),"data-bf-addmode","child");
+
         }
         if(aNode.id == "btnSiblingMode"){
             dojo.removeClass("btnChildMode","selected");
             dojo.addClass("btnSiblingMode","selected");
             dojo.attr(dojo.byId('componentTree'),"data-bf-addmode","sibling");
-        }
+        }        */
 
-        var currentMode = dojo.attr("componentTree","data-bf-addMode");
+//        var currentMode = dojo.attr("componentTree","data-bf-addMode");
+        dojo.attr(dojo.byId('componentTree'),"data-bf-addmode",mode);
 
         //get selected item from xfDoc tree
         var currentItem = dojo.byId(attrEditor.currentNodeId);
         if(currentItem == undefined) return;
 
         //switch state of buttons regardless of an existing selection
-        if(currentMode == "child"){
+        if(mode == "child"){
             // console.debug("currentMode == child");
             //get xfType from current item selected in xfDoc tree
             var currXfType = dojo.attr(dojo.byId(currentItem),"data-xf-type");
@@ -111,7 +112,7 @@ dojo.declare("betterform.editor.Editor", null,
     },
 
     _renderComponentTree:function(xfType){
-        // console.debug("_renderComponentTree: xfType:",xfType);
+        console.debug("_renderComponentTree: xfType:",xfType);
         //hide previously displayed top-level nodes
         dojo.query("#componentTree > ul > li").forEach(
               function(item, index, array){
@@ -123,6 +124,7 @@ dojo.declare("betterform.editor.Editor", null,
 
         //show the tree node (first level of tree) for the given xfType - we look for xfType + "-tmpl"
         var rootForType = dojo.style(dojo.byId(xfType+'-tmpl'),"display","block");
+
 
         dojo.query("#"+xfType+"-tmpl li").forEach(
               function(item, index, array){

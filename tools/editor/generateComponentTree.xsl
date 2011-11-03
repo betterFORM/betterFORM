@@ -24,7 +24,7 @@
 
                 <!--<xsl:if test="exists(./li)">-->
 
-                    <li id="{@id}-tmpl" class="{@id}">
+                    <li id="{@id}-tmpl" class="{@id} rootCategory">
                         <a href="#"><xsl:value-of select="@id"/></a>
 
                         <xsl:if test="li[@class='element']">
