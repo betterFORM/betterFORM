@@ -13,7 +13,7 @@ $(function () {
         // call `.jstree` with the options object
         .jstree({
             // each plugin you have included can have its own config object
-            "core" : { "initially_open" : [ "root",".group",".switch",".repeat" ] },
+                "core" : { "initially_open" : [ "document","root","group","switch","repeat" ] },
             "crrm" : {
                 "move" : {
                     "check_move" : function (m) {
@@ -29,7 +29,6 @@ $(function () {
                         var targetType = target.attr("data-xf-type");
                         // console.debug("check target:",targetType);
 
-
                         //check rules
                         //look for match in drop target elements list of allowed children
                         //if found 'true' 'false' otherwise
@@ -42,8 +41,6 @@ $(function () {
                         } else {
                             return false;
                         }
-
-
                     }
                 }
             },
@@ -51,10 +48,6 @@ $(function () {
                 "theme" : "default",
                 "dots" : false,
                 "icons" : false
-            },
-            "dnd" : {
-                "drop_target" : false,
-                "drag_target" : false
             },
             types : {
                 // the default type
@@ -67,7 +60,6 @@ $(function () {
                 "bind": {
                     "valid_children": ["bind"]
                 }
-
             },
             hotkeys: {
                 "up":function(event) {
@@ -82,12 +74,12 @@ $(function () {
                 },
                 "Alt+up"   : function (event) {
                     // console.debug("Alt+up: event:",event);
-                    attrEditor.moveNodeUp(this)
+                    xformsEditor.moveNodeUp(this)
                 },
 
                 "Alt+down" : function (event) {
                     // console.debug("Alt+down: event:",event);
-                    attrEditor.moveNodeDown(this);
+                    xformsEditor.moveNodeDown(this);
                 },
                 "ctrl+p" : function (event) {
                     alert("preview");
@@ -101,7 +93,7 @@ $(function () {
             // `data.rslt.obj` is the jquery extended node that was clicked
             // alert( data.rslt.obj.attr("data-xf-type"));
             var tmpId = data.rslt.obj.attr("id");
-            var nodeIsLoaded = attrEditor.nodeIsLoaded(tmpId);
+            var nodeIsLoaded = xformsEditor.nodeIsLoaded(tmpId);
             // console.debug("nodeIsLoaded:", nodeIsLoaded);
 //            console.debug("event: " , event);
 //            console.debug("data: " , data);
@@ -155,7 +147,9 @@ $(function () {
         // so listen for `function_name`.`jstree` - you can function names from the docs
         .bind("loaded.jstree", function (event, data) {
             // you get two params - event & data - check the core docs for a detailed description
-            $("#xfDoc").set_focus();
+            var overlay=dojo.byId("overlay");
+            dojo.fadeOut({ node: overlay,duration:600 }).play();
+            dojo.destroy("overlay");
         });
 });
 

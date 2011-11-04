@@ -67,7 +67,7 @@
                                                 <xf:action ev:event="xforms-ready">
                                                     <script>
                                                         <!-- Trigger JavaScript to get properties -->
-                                                        attrEditor.editProperties(dojo.attr(dojo.byId("xfDoc"), "data-bf-currentid"));
+                                                        xformsEditor.editProperties(dojo.attr(dojo.byId("xfDoc"), "data-bf-currentid"));
                                                     </script>
                                                 </xf:action>
                                              </xf:model>
@@ -139,7 +139,7 @@
 
                                                 <xf:action ev:event="xforms-ready">
                                                     <script>
-                                                        attrEditor.editProperties(dojo.attr(dojo.byId("xfDoc"), "data-bf-currentid"));
+                                                        xformsEditor.editProperties(dojo.attr(dojo.byId("xfDoc"), "data-bf-currentid"));
                                                     </script>
                                                 </xf:action>
                                             </xf:model>

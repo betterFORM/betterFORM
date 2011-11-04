@@ -81,7 +81,7 @@ dojo.declare("betterform.editor.Editor", null,
         dojo.attr(dojo.byId('componentTree'),"data-bf-addmode",mode);
 
         //get selected item from xfDoc tree
-        var currentItem = dojo.byId(attrEditor.currentNodeId);
+        var currentItem = dojo.byId(xformsEditor.currentNodeId);
         if(currentItem == undefined) return;
 
         //switch state of buttons regardless of an existing selection
@@ -282,7 +282,7 @@ dojo.declare("betterform.editor.Editor", null,
         // console.debug("move item up: nextNode", prevNode);
 
         var parentNode = jsTreeObject._get_parent(prevNode);
-        var isMovingAllowed = attrEditor.moveAllowed(selectedNode, parentNode);
+        var isMovingAllowed = xformsEditor.moveAllowed(selectedNode, parentNode);
 
         if (isMovingAllowed) {
             jsTreeObject.move_node(selectedNode, prevNode, "before", false, false, isMovingAllowed);

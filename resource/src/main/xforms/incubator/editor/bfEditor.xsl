@@ -51,8 +51,10 @@
                 <title>betterFORM Editor</title>
                 <link rel="stylesheet" type="text/css" href="{$EDITOR_HOME}xforms-editor.css"/>
             </head>
-            <body id="editor" jsId="attrEditor">
-
+            <body id="editor" jsId="xformsEditor">
+                <div id="overlay">
+                    <img src="{$EDITOR_HOME}images/loader.gif" style="margin-top:50px;" alt="loading..."/>
+                </div>
                 <!--################### editor model ################### -->
                 <!--################### editor model ################### -->
                 <!--################### editor model ################### -->
@@ -85,8 +87,6 @@
                     <div id="embedDialog"/>
                 </div>
 
-                <span id="circleMenu" class="circleMenu"></span>
-
                 <!-- ################### SCRIPTS ################### -->
                 <!-- ################### SCRIPTS ################### -->
                 <!-- ################### SCRIPTS ################### -->
@@ -102,7 +102,8 @@
                 <script type="text/javascript"
                         src="../../../bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
 
-                <script type="text/javascript" class="source below">
+                <!-- ##### set a global var that contains the path to the editor ##### -->
+                <script type="text/javascript">
                     EDITOR_HOME = "<xsl:value-of select="$EDITOR_HOME"/>";
                 </script>
 
@@ -120,13 +121,13 @@
                 -->
                 <script type="text/javascript" defer="defer" src="{$EDITOR_HOME}/scripts/betterform/editor/xfEditorUtil.js"></script>
                 <script type="text/javascript" defer="defer">
-                    // do not do anything but logging yet but shows the right call. Should work on FF and webkit which
-                    // is sufficient for the editor.
                     dojo.require("dijit.Toolbar");
                     dojo.require("dijit.form.DropDownButton");
                     dojo.require("dijit.form.Button");
                     dojo.require("dijit.TooltipDialog");
                     dojo.require("dojo.data.ItemFileReadStore");
+                    dojo.require("dojo.fx");
+
                     var xfReadySubscribers;
 
 
@@ -158,8 +159,8 @@
                     }
 
 
-                    attrEditor = new betterform.editor.Editor({}, "editor");
-                    //console.debug("attrEditor.: ",attrEditor);
+                    xformsEditor = new betterform.editor.Editor({}, "editor");
+                    //console.debug("xformsEditor.: ",xformsEditor);
 
                     function checkKeyboardInput(pEvent) {
                         var activeElem = document.activeElement.localName;
@@ -185,10 +186,17 @@
                     }
 
                     dojo.addOnLoad(
-                            function() {
-                                dojo.connect(dojo.body(), "onkeypress", checkKeyboardInput);
-                            }
+                        function() {
+                            dojo.connect(dojo.body(), "onkeypress", checkKeyboardInput);
+                        },
+
+                        function() {
+                            dojo.connect(dojo.body(), "onclick", function(){
+                                dojo.style("componentTree","display", "none");
+                            });
+                        }
                     );
+
                 </script>
             </body>
         </html>
@@ -230,7 +238,7 @@
             </xsl:for-each>}
         </xsl:variable>
 
-        <li tabindex="0" id="{$id}" data-xf-type="{local-name()}" data-xf-attrs="{ $props }" class="{local-name()}" rel="{local-name()}">
+        <li tabindex="0" id="{$id}" data-xf-type="{local-name()}" data-xf-attrs="{ $props }" class="{local-name()} jstree-drop" rel="{local-name()}">
             <!--
             ####################################################################################################
             the outermost xforms elements found get the id of their parent node written to a 'xpath' attribute.
@@ -259,11 +267,11 @@
                 </span>
             </a>
             <xsl:if test="count(xf:*) != 0">
-                        <ul>
-                            <xsl:for-each select="*">
-                                <xsl:apply-templates select="."/>
-                            </xsl:for-each>
-                        </ul>
+                <ul>
+                    <xsl:for-each select="*">
+                        <xsl:apply-templates select="."/>
+                    </xsl:for-each>
+                </ul>
             </xsl:if>
         </li>
     </xsl:template>

@@ -108,14 +108,13 @@
 
             <xf:trigger id="t-loadProperties">
                 <xf:label>hidden load trigger</xf:label>
+                <xf:hint>this will load the properties encoded on the data-xf-props into the respective subform.</xf:hint>
                 <xf:action>
 
                         <xf:load show="embed" targetid="xfMount">
                             <xf:resource value="concat('/betterform/forms/incubator/editor/',instance('i-controller')/currentXfType,'.xhtml#xforms')"/>
                             <xf:extension includeCSS="true" includeScript="true"/>
                         </xf:load>
-                        //<!--fluxProcessor.setControlValue("currentId",attrEditor.currentNodeId);-->
-                        //<!--fluxProcessor.setControlValue("currentType",attrEditor.currentXfType);-->
                 </xf:action>
             </xf:trigger>
 
