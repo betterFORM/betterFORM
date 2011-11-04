@@ -94,7 +94,7 @@ html, body,#mainWindow {
     position:relative;
 }
 .bf .jstree a{
-    padding:6px 0px 6px 5px;
+    padding:6px 0px 6px 0px;
     width: 100%;
 }
 
