@@ -60,7 +60,7 @@
 
                 <!-- Saves the form to a location specified by the user with  a custom name (given by the user too) -->
                 <xf:submission id="s-save-as" method="put" replace="none">
-                    <xf:resource value="concat(bf:appContext('sl-filePath') ,'/', bf:appContext('sl-filename'))"/>
+                    <xf:resource value="concat('file://', bf:appContext('sl-filePath') ,'/', bf:appContext('sl-filename'))"/>
                     <!-- Set username and password for submission -->
                     <xf:action ev:event="xforms-submit-done">
                         <xf:setvalue ref="instance('i-controller')/save-msg" value="concat('Data stored to ', bf:appContext('sl-filePath') ,'/', bf:appContext('sl-filename'))"/>
