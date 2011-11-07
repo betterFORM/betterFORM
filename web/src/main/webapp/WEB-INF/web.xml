@@ -327,6 +327,16 @@
         <servlet-name>FormsServlet</servlet-name>
         <url-pattern>/FormBrowser</url-pattern>
     </servlet-mapping>
+
+      <servlet>
+        <servlet-name>FileStoreServlet</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.FileStoreServlet</servlet-class>
+    </servlet>
+
+     <servlet-mapping>
+        <servlet-name>FileStoreServlet</servlet-name>
+        <url-pattern>/FileStore</url-pattern>
+    </servlet-mapping>
 <!--
     <security-constraint>
         <web-resource-collection>

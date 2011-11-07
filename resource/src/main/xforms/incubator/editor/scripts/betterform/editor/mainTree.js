@@ -120,9 +120,7 @@ $(function () {
                 // console.debug("destroyed existing nodes");
                 // console.debug("tmpBfPath:",tmpBfPath);
 //                dijit.byId("xfMount").set("href", EDITOR_HOME + xfType + ".html");
-                fluxProcessor.setControlValue("currentId",tmpId);
                 fluxProcessor.setControlValue("currentType",xfType);
-
                 /*
                 the following event triggers automatic update of embedded propertyform. If that's not performant
                 or to expensive the explicit updating via a contextmenu trigger can be used instead. The relevant

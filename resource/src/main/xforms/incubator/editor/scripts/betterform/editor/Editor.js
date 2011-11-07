@@ -11,6 +11,9 @@ dojo.provide("betterform.editor.Editor");
  */
 dojo.require("dijit.layout.ContentPane");
 dojo.require("dojox.json.ref");
+dojo.require("dojox.data.FileStore");
+dojo.require("dojox.form.FilePickerTextBox");
+dojo.require("dijit.Tree")
 
 dojo.declare("betterform.editor.Editor", null,
 {

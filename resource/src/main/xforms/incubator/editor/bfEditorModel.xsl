@@ -13,21 +13,21 @@
 
                 <!-- Submission transforms the editor DOM to XForms-->
                 <xf:submission id="s-dom2xforms" method="get"
-                               resource="xslt:{$APP_CONTEXT}{$EDITOR_HOME}dom2xf.xsl?parseString=true" replace="instance">
+                               resource="xslt:{$EDITOR_HOME}dom2xf.xsl?parseString=true" replace="instance">
                     <xf:action ev:event="xforms-submit-done">
-                        <!--<xf:message level="ephemeral">Data transformed to xforms</xf:message>-->
+                        <xf:message level="ephemeral">Data transformed to xforms</xf:message>
                         <xf:send submission="s-replaceContent"/>
                     </xf:action>
-                    <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
+                    <xf:message ev:event="xforms-submit-error">?!?!Storing failed</xf:message>
                 </xf:submission>
 
                   <!-- merge original XForms host document with Editor XForms markup -->
                 <xf:submission id="s-replaceContent" method="get"
-                               action="xslt:{$APP_CONTEXT}{$EDITOR_HOME}updateOriginal.xsl?originDoc={$APP_CONTEXT}/rest{$filename}"
+                               action="xslt:{$EDITOR_HOME}updateOriginal.xsl?originDoc={$filename}"
                                replace="instance" validate="false">
                     <!-- MODE: SAVE AS -->
                     <xf:action ev:event="xforms-submit-done" if="instance('i-controller')/mode eq 'save-as'">
-                        <!--<xf:message level="ephemeral">Data mounted back to original document</xf:message>-->
+                        <xf:message level="ephemeral">Data mounted back to original document</xf:message>
                         <script type="text/javascript">
                             dijit.byId("saveDialog").hide();
                         </script>
@@ -35,7 +35,7 @@
                     </xf:action>
                     <!-- MODE: SAVE -->
                     <xf:action ev:event="xforms-submit-done" if="instance('i-controller')/mode eq 'save'">
-                        <!--<xf:message level="ephemeral">Data mounted back to original document</xf:message>-->
+                        <xf:message level="ephemeral">Data mounted back to original document</xf:message>
                         <xf:send submission="s-save"/>
                     </xf:action>
                     <!-- MODE: PREVIEW -->
@@ -48,8 +48,9 @@
                 </xf:submission>
 
                 <!-- Overwrites the current form loaded within the editor  -->
-                <xf:submission id="s-save" method="put" replace="none">
-                    <xf:resource value="IF(substring(bf:appContext('pathInfo'),2) eq '', concat(bf:appContext('contextroot'), '/rest', instance('i-controller')/filename) , concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2)) )"/>
+                <xf:submission id="s-save" method="put" replace="none" action="{$filename}">
+                    <!-- <xf:resource value="IF(substring(bf:appContext('pathInfo'),2) eq '', concat(bf:appContext('contextroot'), '/rest', instance('i-controller')/filename) , concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2)) )"/> -->
+
                     <xf:action ev:event="xforms-submit-done">
                         <xf:setvalue ref="instance('i-controller')/save-msg" value="concat('Data stored to ',IF(substring(bf:appContext('pathInfo'),2) eq '', concat(bf:appContext('contextroot'), '/rest', instance('i-controller')/filename) , concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2)) ) )"/>
                         <xf:message level="ephemeral" ref="instance('i-controller')/save-msg"/>
@@ -80,7 +81,6 @@
                 <!-- internal controller instance -->
                 <xf:instance id="i-controller">
                     <data xmlns="">
-                        <currentNodeId description="the id of the currently selected element in mainTree"/>
                         <currentXfType description="name of the currently selected xforms element"/>
                         <originalDoc/>
                         <save-msg/>
@@ -92,16 +92,6 @@
                 </xf:instance>
             </xf:model>
 
-            <xf:input ref="instance('i-controller')/currentNodeId" id="currentId">
-                <xf:action ev:event="xforms-value-changed">
-                    <!-- ####### (re)load whenever the current node changes ########### -->
-                    <xf:load show="embed" targetid="xfMount">
-                        <xf:resource value="'betterform/forms/incubator/editor/model.xhtml#xforms'"/>
-                        <xf:extension includeCSS="true" includeScript="true"/>
-                    </xf:load>
-                </xf:action>
-                <xf:label>hidden</xf:label>
-            </xf:input>
             <xf:input ref="instance('i-controller')/currentXfType" id="currentType">
                 <xf:label>hidden</xf:label>
             </xf:input>

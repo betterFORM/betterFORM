@@ -45,7 +45,7 @@
                 <xf:action>
                     <xf:setvalue ref="instance('i-controller')/mode" value="'save-as'"/>
                     <xf:load show="embed" targetid="embedDialog">
-                        <xf:resource value="concat(bf:appContext('contextroot'), '/rest/db/betterform/utils/SaveListing.xql#xforms')"/>
+                        <xf:resource value="concat('{$EDITOR_HOME}', 'SaveAsDialog.xhtml#xforms')"/>
                         <xf:extension includeCSS="true" includeScript="true"/>
                     </xf:load>
                 </xf:action>

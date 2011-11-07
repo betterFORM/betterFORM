@@ -134,6 +134,7 @@ public class XSLTServlet extends HttpServlet /* extends AbstractXFormsServlet */
 
                 t.setParameter("APP_CONTEXT",contextName);
                 t.setParameter("EDITOR_HOME", stylePath);
+                t.setParameter("filename", "file://" + inputFile);
 
 //                cache.put(xsl, t);
 //            }

@@ -716,7 +716,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="saveDialog" dojotype="dijit.Dialog" title="save as ..." autofocus="false" style="width:820px;height:540px;overflow:auto;">
+                <div id="saveDialog" dojotype="dijit.Dialog" title="Save as ..." autofocus="false" style="width:820px;height:540px;overflow:auto;">
                     <div id="embedDialog"/>
                 </div>
 

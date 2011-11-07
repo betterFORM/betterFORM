@@ -20,16 +20,19 @@ import java.util.*;
  * @version $Id: FormsServlet 23.11.10 tobi $
  */
 public class FormsServlet extends HttpServlet {
-    private List ignores;
-    private static final String ROOTCOLLECTION = "forms";
+    protected List ignores;
+    protected static final String ROOTCOLLECTION = "forms";
     public static final String RESOURCE_PATH = "/bfResources";
 
     @Override
     public void init() throws ServletException {
         super.init();
         String ignoreString= getInitParameter("ignores");
-        ignores = Arrays.asList(ignoreString.split(" "));
-
+        if (ignoreString != null) {
+            ignores = Arrays.asList(ignoreString.split(" "));
+        } else {
+            ignores = Collections.EMPTY_LIST;
+        }
     }
 
     /**
