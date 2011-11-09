@@ -191,8 +191,12 @@
                         },
 
                         function() {
-                            dojo.connect(dojo.body(), "onclick", function(){
-                                dojo.style("componentTree","display", "none");
+                            // hide the componentTree if a click outside a 'category' happens
+                            dojo.connect(dojo.body(), "onclick", function(evt){
+                                var ancestorClass = evt.target.parentNode.parentNode.className;
+                                if(ancestorClass != "category") {
+                                    dojo.style("componentTree","display", "none");
+                                }
                             });
                         }
                     );

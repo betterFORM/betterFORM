@@ -103,9 +103,6 @@ html, body,#mainWindow {
     opacity: .7;
     width: 100%;
 }
-#xfDoc .jstree-clicked{
-    background:red;
-}
 
 .bf #mainWindow .jstree .jstree-clicked .buttonWrapper
 {
@@ -115,13 +112,21 @@ html, body,#mainWindow {
     background:white;
 }
 .bf #mainWindow  .jstree-clicked {
-    background:#efefef;
+    /*background:#efefef;*/
     color:#444444;
     border:none;
 }
 
+.bf #mainWindow #xfDoc ul{
+    margin: 10px 10px 10px -5px;
+}
 
-
+.bf #mainWindow #xfDoc > ul{
+    margin: 0;
+}
+.bf #mainWindow #xfDoc .jstree-default li{
+    margin-top: 5px;
+}
 
 
 
@@ -382,14 +387,14 @@ dl.keyboard-mapping dd {
 .ui-state-hover{
    z-index: 100;
 }
+.bf #mainWindow .instancedata {
+    background-color: #32cd32;
+}
 #contextBar{
     position: absolute;
     height: 25px;
     right: 0;
-    top:2px;
-}
-.bf #mainWindow .instancedata {
-    background-color: #32cd32;
+    top:1px;
 }
 
 .bf #contextBar .bfDelete .dijitArrowButtonInner {
@@ -410,13 +415,27 @@ dl.keyboard-mapping dd {
     background: url('images/add-child2.png') no-repeat left center;
 }
 .tundra .dijitToolbar  .bfaddSibling{
-    background: url('images/add-sibling2.png');
+    background: url('images/add-sibling2.png') no-repeat left center;
 }
+/* ######### componentTree styles ########## */
+/* ######### componentTree styles ########## */
+/* ######### componentTree styles ########## */
+
 #componentTree{
     position: absolute;
     z-index: 500;
     display: none;
     width: 160px;
+}
+#componentTree li{
+    background: #f5f5f5;
+}
+#componentTree li a{
+    font-size: 8pt;
+    padding: 2px 1px;
+}
+#componentTree .jstree-hovered{
+    background: #dedede;
 }
 .bf #componentTree a,
 .bf #componentTree a:hover,
