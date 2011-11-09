@@ -49,8 +49,6 @@
 
                 <!-- Overwrites the current form loaded within the editor  -->
                 <xf:submission id="s-save" method="put" replace="none" action="{$filename}">
-                    <!-- <xf:resource value="IF(substring(bf:appContext('pathInfo'),2) eq '', concat(bf:appContext('contextroot'), '/rest', instance('i-controller')/filename) , concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2)) )"/> -->
-
                     <xf:action ev:event="xforms-submit-done">
                         <xf:setvalue ref="instance('i-controller')/save-msg" value="concat('Data stored to ',IF(substring(bf:appContext('pathInfo'),2) eq '', concat(bf:appContext('contextroot'), '/rest', instance('i-controller')/filename) , concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2)) ) )"/>
                         <xf:message level="ephemeral" ref="instance('i-controller')/save-msg"/>
@@ -71,9 +69,9 @@
 
                 <!-- saves form to preview and opens it -->
                 <xf:submission id="s-preview" method="put" replace="none">
-                    <xf:resource value="concat(substring-before( IF(substring(bf:appContext('pathInfo'),2) eq '', concat(bf:appContext('contextroot'), '/rest', instance('i-controller')/filename) , concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2)) ),'.xhtml'),'-prev.xhtml')"/>
+                    <xf:resource value="concat(substring-before({$filename}, '.xhtml'),'-prev.xhtml')"/>
                     <xf:load show="new" ev:event="xforms-submit-done">
-                        <xf:resource value="concat(substring-before( IF(substring(bf:appContext('pathInfo'),2) eq '', concat(bf:appContext('contextroot'), '/rest', instance('i-controller')/filename) , concat(bf:appContext('webapp.realpath'),substring(bf:appContext('pathInfo'),2)) ),'.xhtml'),'-prev.xhtml')"/>
+                        <xf:resource value="concat(substring-before({$filename}, '.xhtml'),'-prev.xhtml')"/>
                     </xf:load>
                     <xf:message ev:event="xforms-submit-error">Preview failed</xf:message>
                 </xf:submission>
