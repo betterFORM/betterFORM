@@ -286,7 +286,7 @@
                             <ul>
                                 <xsl:for-each select="*">
                                     <xsl:apply-templates select="." mode="instance">
-                                        <xsl:with-param name="position" select="position()"/>
+                                        <xsl:with-param name="position" select="string(position())"/>
                                     </xsl:apply-templates>
                                 </xsl:for-each>
                             </ul>
@@ -319,8 +319,27 @@
 
      <xsl:template match="*|text()" mode="instance" priority="50">
          <xsl:param name="position"/>
+
+         <xsl:variable name="type">
+             <xsl:choose>
+                 <xsl:when test="$position eq '1'">
+                      instance-root
+                 </xsl:when>
+                 <xsl:otherwise>
+                       instance-data
+                 </xsl:otherwise>
+             </xsl:choose>
+         </xsl:variable>
+
+         <xsl:variable name="props">{
+            <xsl:for-each select="@*">
+                <xsl:value-of select="local-name()"/>:'<xsl:value-of select="."/>'
+                <xsl:if test="position()!=last()"> </xsl:if>
+            </xsl:for-each>}
+        </xsl:variable>
+
          <xsl:variable name="id" select="concat('ins-', local-name() , '-', $position)"></xsl:variable>
-         <li id="{$id}">
+         <li id="{$id}" data-xf-type="{$type}" data-xf-attrs="{ $props }" class="{local-name()} jstree-drop" rel="{local-name()}">
             <a href="#"><xsl:value-of select="local-name()"/>
                 <span class="buttonWrapper"/>
             </a>
