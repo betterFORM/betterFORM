@@ -285,7 +285,9 @@
                         <xsl:otherwise>
                             <ul>
                                 <xsl:for-each select="*">
-                                    <xsl:apply-templates select="." mode="instance"/>
+                                    <xsl:apply-templates select="." mode="instance">
+                                        <xsl:with-param name="position" select="position()"/>
+                                    </xsl:apply-templates>
                                 </xsl:for-each>
                             </ul>
                         </xsl:otherwise>
@@ -303,6 +305,7 @@
 
 
     </xsl:template>
+
     <xsl:template match="*|text()" mode="external-instance" priority="50">
         <li>
             <a href="#"><xsl:value-of select="local-name()"/></a>
@@ -315,14 +318,17 @@
     </xsl:template>
 
      <xsl:template match="*|text()" mode="instance" priority="50">
-        <li>
+         <xsl:param name="position"/>
+         <xsl:variable name="id" select="concat('ins-', local-name() , '-', $position)"></xsl:variable>
+         <li id="{$id}">
             <a href="#"><xsl:value-of select="local-name()"/>
                 <span class="buttonWrapper"/>
             </a>
             <xsl:for-each select="*">
                 <ul>
-                    <xsl:apply-templates select="." mode="instance"/>
-
+                    <xsl:apply-templates select="." mode="instance">
+                        <xsl:with-param name="position" select="concat($position, '-', position())"/>
+                    </xsl:apply-templates>
                 </ul>
             </xsl:for-each>
 
