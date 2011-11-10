@@ -266,13 +266,66 @@
 -->
                 </span>
             </a>
-            <xsl:if test="count(xf:*) != 0">
+            <xsl:choose>
+                <xsl:when test="local-name() eq 'instance'">
+                    <xsl:choose>
+                        <xsl:when test="@src">
+                            <xsl:variable name="external-instance">
+                                <xsl:value-of select="concat(substring($filename,1,index-of(string-to-codepoints($filename),string-to-codepoints('/'))[last()] -1), '/', @src)"/>
+                            </xsl:variable>
+                            <ul>
+                                <li>
+                                    <a href="#" class="external-instance-notifier">External Instance. Not editable</a>
+                                    <ul>
+                                        <xsl:apply-templates select="document($external-instance)" mode="external-instance"/>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <ul>
+                                <xsl:for-each select="*">
+                                    <xsl:apply-templates select="." mode="instance"/>
+                                </xsl:for-each>
+                            </ul>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:when>
+                <xsl:when test="count(xf:*) != 0">
+                    <ul>
+                        <xsl:for-each select="*">
+                            <xsl:apply-templates select="."/>
+                        </xsl:for-each>
+                    </ul>
+                </xsl:when>
+            </xsl:choose>
+        </li>
+
+
+    </xsl:template>
+    <xsl:template match="*|text()" mode="external-instance" priority="50">
+        <li>
+            <a href="#"><xsl:value-of select="local-name()"/></a>
+            <xsl:for-each select="*">
                 <ul>
-                    <xsl:for-each select="*">
-                        <xsl:apply-templates select="."/>
-                    </xsl:for-each>
+                    <xsl:apply-templates select="." mode="external-instance"/>
                 </ul>
-            </xsl:if>
+            </xsl:for-each>
+        </li>
+    </xsl:template>
+
+     <xsl:template match="*|text()" mode="instance" priority="50">
+        <li>
+            <a href="#"><xsl:value-of select="local-name()"/>
+                <span class="buttonWrapper"/>
+            </a>
+            <xsl:for-each select="*">
+                <ul>
+                    <xsl:apply-templates select="." mode="instance"/>
+
+                </ul>
+            </xsl:for-each>
+
         </li>
     </xsl:template>
 
