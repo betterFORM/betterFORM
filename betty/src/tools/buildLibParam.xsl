@@ -17,7 +17,6 @@
     <xsl:param name="buildprops"/>
 
     <xsl:output method="text"/>
-    <!-- todo: cut last comma -->
     <xsl:template match="/">runtime.libs=<xsl:for-each select="/root/core/compile//pathelement[@artifactId]">
         <xsl:choose>
             <xsl:when test="position() != last()"><xsl:value-of select="concat(substring-after(@location,'lib/'),',')"/></xsl:when>

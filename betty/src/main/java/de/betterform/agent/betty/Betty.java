@@ -113,7 +113,7 @@ public class Betty extends Applet {
 
             // set splash screen
 
-            javascriptCall("setSplash", getSplashScreen(XFormsProcessorImpl.getAppInfo(), ""));
+//            javascriptCall("setSplash", getSplashScreen(XFormsProcessorImpl.getAppInfo(), ""));
 
             // get code and document bases
             URL codeBaseUrl = getCodeBase();
@@ -125,7 +125,7 @@ public class Betty extends Applet {
             this.documentName = documentPath.substring(documentPath.lastIndexOf('/') + 1);
 
             // update splash screen
-            javascriptCall("setSplash", getSplashScreen("configuring", this.documentName));
+//            javascriptCall("setSplash", getSplashScreen("configuring", this.documentName));
 
             // init logging
             URI log4jUrl = resolveParameter(codeBaseUrl, LOG4J_PARAMETER, LOG4J_DEFAULT);
@@ -164,7 +164,7 @@ public class Betty extends Applet {
 
         try {
             // update splash screen
-            javascriptCall("setSplash", getSplashScreen("rendering", this.documentName));
+//            javascriptCall("setSplash", getSplashScreen("rendering", this.documentName));
 
             // render initial view
             if (this.appletProcessor != null) {
@@ -175,7 +175,7 @@ public class Betty extends Applet {
 
             // set initial view
             javascriptCall("setView", form);
-            javascriptCall("setSplash", getSplashScreen(this.documentName, " ready"));
+//            javascriptCall("setSplash", getSplashScreen(this.documentName, " ready"));
 
 //            JSObject.getWindow(this).eval("setView('" + form + "')");
 //            JSObject win = JSObject.getWindow(this);

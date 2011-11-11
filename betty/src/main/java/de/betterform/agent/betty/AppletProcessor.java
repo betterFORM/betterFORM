@@ -4,6 +4,7 @@
  */
 package de.betterform.agent.betty;
 
+import de.betterform.xml.config.Config;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.XMLEvent;
 import de.betterform.xml.xforms.AbstractProcessorDecorator;
@@ -104,6 +105,8 @@ public class AppletProcessor extends AbstractProcessorDecorator {
             this.root.addEventListener(BetterFormEventNames.SWITCH_TOGGLED, this, true);
             this.root.addEventListener(BetterFormEventNames.SCRIPT_ACTION, this, true);
             this.root.addEventListener(BetterFormEventNames.AVT_CHANGED, this, true);
+
+            this.configuration = Config.getInstance();
 
             this.xformsProcessor.init();
 //            this.root = (EventTarget) this.xformsProcessor.getXForms();
@@ -428,7 +431,11 @@ public class AppletProcessor extends AbstractProcessorDecorator {
         }
     }
 
-    // helper
+    @Override
+    protected boolean eventOptimizationIsDisabeld() {
+        return true;
+    }
+// helper
 
     private void ensureContextClassLoader() {
         AccessController.doPrivileged(new PrivilegedAction() {

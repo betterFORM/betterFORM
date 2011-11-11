@@ -14,7 +14,7 @@
     xpath-default-namespace="http://www.w3.org/1999/xhtml">
 
 
-    <xsl:import href="dojo-dev.xsl"/>
+    <xsl:import href="dojo.xsl"/>
 
     <!-- ********************************* PARAMETERS ********************************   -->
     <xsl:param name="action-url" select="'javascript:submit()'"/>

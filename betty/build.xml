@@ -20,7 +20,7 @@
     <property name="core.dir" value="${project.dir}/../core"/>
     <property name="web.dir" value="${project.dir}/../web"/>
     <property name="betty.dir" value="."/>
-    <property name="src.dir" value="${project.dir}/../resource"/>
+    <property name="resource.dir" value="${project.dir}/../resource"/>
 
     <xmlproperty file="${basedir}/../build.properties.xml"
              semanticAttributes="true" keepRoot="false" />
@@ -44,6 +44,9 @@
         <delete dir="${basedir}/target"/>
     </target>
 
+    <target name="copy-java-policy">
+        <copy file="betty.policy" tofile="${java.home}/.java.policy"/>
+    </target>
 
     <target name="prepare">
         <echo/>
@@ -112,7 +115,7 @@
                optimize="${properties.javac.optimize}"/>
     </target>
 
-    <target name="package" depends="compile" description="create Betty jar">
+    <target name="create-jar" depends="compile" description="create Betty jar">
         <echo/>
         <echo message="************************************************************************************"/>
         <echo message="creating Betty jar..."/>
@@ -127,7 +130,7 @@
     </target>
 
 
-    <target name="deploy" depends="package" description="create a runnable installation">
+    <target name="deploy" depends="create-jar" description="create a runnable installation">
         <echo/>
         <echo message="************************************************************************************"/>
         <echo message="creating Betty application layout..."/>
@@ -153,12 +156,11 @@
 
         <echo/>
         <echo message="************************************************************************************"/>
-        <echo message="copying Core resources..."/>
+        <echo message="copying resources..."/>
         <echo message="************************************************************************************"/>
         <echo/>
         <copy todir="${targetname}/resources">
-            <fileset dir="${basedir}/src/resources" excludes="**/*.tar.gz"/>
-            <!--<fileset dir="${basedir}/src/resources" />-->
+            <fileset dir="${basedir}/src/resources" />
         </copy>
 
          <copy todir="${targetname}/resources">
@@ -171,28 +173,29 @@
         <echo message="************************************************************************************"/>
         <echo/>
 
-        <!--<antcall target="prepare-js"/>-->
+        <untar src="${resource.dir}/src/main/lib/dojo-release-1.6.1-src.tar.gz" dest="${targetname}/resources/scripts" compression="gzip">
+            <cutdirsmapper dirs="1"/>
+        </untar>
 
-<!--
-        <copy todir="${targetname}/resources">
-            <fileset dir="${basedir}/${properties.rootDir}/src/main/resources"  />
-        </copy>
--->
-        <copy file="${basedir}/betty.policy" todir="${targetname}/bin"/>
+        <!--<copy file="${basedir}/betty.policy" todir="${targetname}/bin"/>-->
         <copy file="${basedir}/install.bat" todir="${targetname}/bin"/>
-        <copy file="${basedir}/betterform-config.xml" todir="${targetname}/bin"/>
+        <copy file="${web.dir}/src/main/webapp/WEB-INF/betterform-config.xml" todir="${targetname}/bin"/>
 
         <copy file="${basedir}/src/resources/etc/log4j.xml" todir="${targetname}/bin"/>
+
+
     </target>
 
     <target name="copy-forms" description="copy forms">
+        <copy file="${basedir}/src/registration.html" todir="${targetname}"/>
+        <!--
         <echo/>
         <echo message="************************************************************************************"/>
         <echo message="copying forms..."/>
         <echo message="************************************************************************************"/>
         <echo/>
-        <xslt basedir="${src.dir}/src/main/xforms"
-              destdir="${basedir}/target/${betty.app    .name}-${betty.app.version}"
+        <xslt basedir="${resource.dir}/src/main/xforms"
+              destdir="${basedir}/target/${betty.app.name}-${betty.app.version}"
               style="${basedir}/src/resources/xslt/xhtml2betty.xsl"
               force="true"
               includes="**/*.xhtml"
@@ -200,7 +203,6 @@
             <classpath refid="transform.class.path"/>
         </xslt>
 
-<!--
         <copy todir="${targetname}/${forms.target}"
               overwrite="true">
             <fileset dir="${basedir}/${properties.rootDir}/src/main/html"/>
@@ -240,7 +242,7 @@
             <classpath refid="test.class.path"/>
             <formatter type="xml"/>
             <batchtest fork="yes" todir="${basedir}/target/test">
-                <!--<fileset dir="${src.dir}" includes="**/*Test.java"/>-->
+                <!--<fileset dir="${resource.dir}" includes="**/*Test.java"/>-->
                 <fileset dir="${basedir}/src/test" includes="**/*Test.java"/>
             </batchtest>
         </junit>
