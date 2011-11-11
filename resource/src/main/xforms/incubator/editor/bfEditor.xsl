@@ -309,11 +309,13 @@
     <xsl:template match="*|text()" mode="external-instance" priority="50">
         <li>
             <a href="#"><xsl:value-of select="local-name()"/></a>
-            <xsl:for-each select="*">
+             <xsl:if test="count(*) != 0">
                 <ul>
-                    <xsl:apply-templates select="." mode="external-instance"/>
+                    <xsl:for-each select="*">
+                        <xsl:apply-templates select="." mode="external-instance"/>
+                    </xsl:for-each>
                 </ul>
-            </xsl:for-each>
+            </xsl:if>
         </li>
     </xsl:template>
 
@@ -322,12 +324,8 @@
 
          <xsl:variable name="type">
              <xsl:choose>
-                 <xsl:when test="$position eq '1'">
-                      instance-root
-                 </xsl:when>
-                 <xsl:otherwise>
-                       instance-data
-                 </xsl:otherwise>
+                 <xsl:when test="$position eq '1'">instance-root</xsl:when>
+                 <xsl:otherwise>instance-data</xsl:otherwise>
              </xsl:choose>
          </xsl:variable>
 
@@ -339,18 +337,20 @@
         </xsl:variable>
 
          <xsl:variable name="id" select="concat('ins-', local-name() , '-', $position)"></xsl:variable>
-         <li id="{$id}" data-xf-type="{$type}" data-xf-attrs="{ $props }" class="{local-name()} jstree-drop" rel="{local-name()}">
+         <li tabindex="0" id="{$id}" data-xf-type="{$type}" data-xf-attrs="{ $props }" class="{local-name()} jstree-drop" rel="{local-name()}">
             <a href="#"><xsl:value-of select="local-name()"/>
                 <span class="buttonWrapper"/>
             </a>
-            <xsl:for-each select="*">
+            <xsl:if test="count(*) != 0">
                 <ul>
-                    <xsl:apply-templates select="." mode="instance">
-                        <xsl:with-param name="position" select="concat($position, '-', position())"/>
-                    </xsl:apply-templates>
+                    <xsl:for-each select="*">
+                        <xsl:message>Instance-mode *: <xsl:value-of select="local-name()"/></xsl:message>
+                        <xsl:apply-templates select="." mode="instance">
+                            <xsl:with-param name="position" select="concat($position, '-', position())"/>
+                        </xsl:apply-templates>
+                    </xsl:for-each>
                 </ul>
-            </xsl:for-each>
-
+            </xsl:if>
         </li>
     </xsl:template>
 

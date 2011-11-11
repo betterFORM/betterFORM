@@ -44,7 +44,15 @@
          </li>
       </ul>
    </li>
-   <li id="bind-tmpl" class="bind rootCategory"><a href="#">bind</a><ul class="category">
+   <li id="instance-tmpl" class="instance rootCategory"><a href="#">instance</a>
+      <ul class="category">
+         <li data-xf-type="instance-root" class="element">
+             <a href="javascript:addElement('instance-root');">Instance root</a>
+         </li>
+      </ul>
+   </li>
+   <li id="bind-tmpl" class="bind rootCategory"><a href="#">bind</a>
+       <ul class="category">
          <li class="element" data-xf-type="bind"><a href="javascript:addElement('bind');">bind</a></li>
       </ul>
    </li>
@@ -748,6 +756,14 @@
    <li id="header-tmpl" class="header rootCategory"><a href="#">header</a><ul class="category">
          <li class="element" data-xf-type="name"><a href="javascript:addElement('name');">name</a></li>
          <li class="element" data-xf-type="value"><a href="javascript:addElement('value');">value</a></li>
+      </ul>
+   </li>
+   <li id="instance-root-tmpl" class="instance-root rootCategory"><a href="#">instance-root</a><ul class="category">
+         <li data-xf-type="instance-data" class="element"><a href="javascript:addElement('instance-data');">Instance data</a></li>
+      </ul>
+   </li>
+   <li id="instance-data-tmpl" class="instance-data rootCategory"><a href="#">instance-data</a><ul class="category">
+         <li data-xf-type="instance-data" class="element"><a href="javascript:addElement('instance-data');">Instance data</a></li>
       </ul>
    </li>
 </ul>
