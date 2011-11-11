@@ -799,7 +799,7 @@ table .xfContainer{
 
 .xfOutput .xfValue {
     padding-top: 2px;
-    display:block;
+    display:inline-block;
 }
 
 .xfTextareaHTML .xfValue {
