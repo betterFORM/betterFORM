@@ -108,6 +108,9 @@ $(function () {
 
                 var mountNode = dojo.byId("xfMount");
                 //Save id of current selected Tree-Leaf on root-node of tree
+                var oldXfType = dojo.attr(dojo.byId("xfDoc"),"data-bf-xftype");
+                var oldId = dojo.attr(dojo.byId("xfDoc"), "data-bf-currentid");
+
                 dojo.attr( dojo.byId("xfDoc"), "data-bf-currentid", tmpId);
                 dojo.attr( dojo.byId("xfDoc"), "data-bf-xftype", xfType);
 
@@ -120,22 +123,33 @@ $(function () {
                 // console.debug("destroyed existing nodes");
                 // console.debug("tmpBfPath:",tmpBfPath);
 //                dijit.byId("xfMount").set("href", EDITOR_HOME + xfType + ".html");
-                fluxProcessor.setControlValue("currentType",xfType);
-                /*
-                the following event triggers automatic update of embedded propertyform. If that's not performant
-                or to expensive the explicit updating via a contextmenu trigger can be used instead. The relevant
-                code is commented in place.
-                */
-                fluxProcessor.dispatchEvent("t-loadProperties");
+                if (xfType != undefined) {
+                    fluxProcessor.setControlValue("currentType",xfType);
+                    /*
+                    the following event triggers automatic update of embedded propertyform. If that's not performant
+                    or to expensive the explicit updating via a contextmenu trigger can be used instead. The relevant
+                    code is commented in place.
+                    */
+                    fluxProcessor.dispatchEvent("t-loadProperties");
+                    console.debug("mainTree.js: oldXfType " + oldXfType);
+                    console.debug("mainTree.js: oldId " + oldId);
+                    if (oldXfType == "instance-data") {
+                        console.debug("mainTree.js: hide instance-data");
+                         xformsEditor.hideNodeNameInput(oldId);
+                    }
+                    if (xfType == "instance-data") {
+                        console.debug("mainTree.js: show instance-data")
+                        xformsEditor.placeNodeNameInput(tmpId);
+                    }
+                    dojo.place(dojo.byId("contextBar"), dojo.query("#"+tmpId + " .buttonWrapper")[0], "last");
+    //                dojo.place(dojo.byId("componentTree"), dojo.query("#"+tmpId + " .buttonWrapper")[0], "last");
+    //                dojo.byId('componentTree').style("right:300px;top:200px;");
 
-                dojo.place(dojo.byId("contextBar"), dojo.query("#"+tmpId + " .buttonWrapper")[0], "last");
-//                dojo.place(dojo.byId("componentTree"), dojo.query("#"+tmpId + " .buttonWrapper")[0], "last");
-//                dojo.byId('componentTree').style("right:300px;top:200px;");
-
-                //console.debug("publish: nodeSelected: data", data);
-                dojo.publish("nodeSelected", [
-                    {event:event,xfType:xfType,id:tmpId,jsTreeData:data,bfPath:EDITOR_HOME}
-                ]);
+                    //console.debug("publish: nodeSelected: data", data);
+                    dojo.publish("nodeSelected", [
+                        {event:event,xfType:xfType,id:tmpId,jsTreeData:data,bfPath:EDITOR_HOME}
+                    ]);
+                }
 
             }
         })

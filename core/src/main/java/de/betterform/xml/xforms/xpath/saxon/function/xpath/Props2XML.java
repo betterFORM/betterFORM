@@ -6,7 +6,6 @@
 package de.betterform.xml.xforms.xpath.saxon.function.xpath;
 
 import de.betterform.xml.dom.DOMUtil;
-import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.xpath.saxon.function.XFormsFunction;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
@@ -16,10 +15,8 @@ import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.ListIterator;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.trans.XPathException;
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
 
 import java.util.Collections;
 
@@ -67,11 +64,12 @@ public class Props2XML extends XFormsFunction {
                 document.appendChild(xfElement);
 
                 for(int i = 0; i < propArray.length; i++) {
-
+                    if(propArray[i].contains(":\'")) {
                     String aName = propArray[i].substring(0,propArray[i].indexOf(":\'")).trim();
                     String aValue = propArray[i].substring(propArray[i].indexOf(":\'")+2).trim();
                     aValue = aValue.substring(0, aValue.length()-1);
                     xfElement.setAttribute(aName, aValue);
+                }
                 }
 
 

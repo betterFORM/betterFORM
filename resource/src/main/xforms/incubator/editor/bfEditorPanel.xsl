@@ -39,6 +39,10 @@
                     </div>
                 </div>
             </div>
+
+
+
+
 <!--
             <div id="leftPane" tabindex="-1">
                 <div id="addLabel">
@@ -68,6 +72,9 @@
 -->
             </div>
             <div id="parkToolbar" style="display: none">
+            </div>
+            <div id="parkNodeInput" style="display: none">
+                <input id="nodeNameInput" dojoType="dijit.form.TextBox"></input>
             </div>
             <div id="componentTree" data-bf-addmode="child"/>
         </div>

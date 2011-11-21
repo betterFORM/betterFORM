@@ -65,10 +65,18 @@ public class BetterFormFunctionLibrary extends XPathFunctionLibrary {
         arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
 
 
-        e = register("{" + NamespaceConstants.BETTERFORM_NS + "}props2xml", Props2XML.class, 0, 0, 1, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
+        e = register("{" + NamespaceConstants.BETTERFORM_NS + "}props2xml", Props2XML.class, 0, 1, 1, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
 
-        e = register("{" + NamespaceConstants.BETTERFORM_NS + "}xml2props", XML2Props.class, 0, 0, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        e = register("{" + NamespaceConstants.BETTERFORM_NS + "}xml2props", XML2Props.class, 0, 1, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
         arg(e, 0, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
+
+        e = register("{" + NamespaceConstants.BETTERFORM_NS + "}instanceOfModel", InstanceOfModel.class, 0, 2, 2, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
+        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+
+        e = register("{" + NamespaceConstants.BETTERFORM_NS + "}createAttributeNode", CreateAttributeNode.class, 0, 2, 2, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
+        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
     }
 }

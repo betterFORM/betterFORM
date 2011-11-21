@@ -198,6 +198,8 @@
                     );
 
                 </script>
+
+
             </body>
         </html>
     </xsl:template>
@@ -321,6 +323,9 @@
 
      <xsl:template match="*|text()" mode="instance" priority="50">
          <xsl:param name="position"/>
+         <xsl:variable name="nodeValue">
+                 <xsl:value-of select="."/>
+         </xsl:variable>
 
          <xsl:variable name="type">
              <xsl:choose>
@@ -333,18 +338,20 @@
             <xsl:for-each select="@*">
                 <xsl:value-of select="local-name()"/>:'<xsl:value-of select="."/>'
                 <xsl:if test="position()!=last()"> </xsl:if>
-            </xsl:for-each>}
+            </xsl:for-each>
+             <xsl:if test="$type eq 'instance-data'"> instancenodevalue:'<xsl:value-of select="."/>'</xsl:if>
+           }
         </xsl:variable>
 
          <xsl:variable name="id" select="concat('ins-', local-name() , '-', $position)"></xsl:variable>
-         <li tabindex="0" id="{$id}" data-xf-type="{$type}" data-xf-attrs="{ $props }" class="{local-name()} jstree-drop" rel="{local-name()}">
-            <a href="#"><xsl:value-of select="local-name()"/>
+         <li tabindex="0" id="{$id}" data-xf-type="{$type}" nodename="{local-name()}" data-xf-attrs="{ $props }" class="{local-name()} jstree-drop" rel="{local-name()}">
+             <a href="#">
+                <span class="nodeNameWrapper"><xsl:value-of select="local-name()"/></span>
                 <span class="buttonWrapper"/>
             </a>
             <xsl:if test="count(*) != 0">
                 <ul>
                     <xsl:for-each select="*">
-                        <xsl:message>Instance-mode *: <xsl:value-of select="local-name()"/></xsl:message>
                         <xsl:apply-templates select="." mode="instance">
                             <xsl:with-param name="position" select="concat($position, '-', position())"/>
                         </xsl:apply-templates>

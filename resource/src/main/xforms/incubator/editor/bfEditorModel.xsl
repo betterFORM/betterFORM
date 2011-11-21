@@ -40,7 +40,7 @@
                     </xf:action>
                     <!-- MODE: PREVIEW -->
                     <xf:action ev:event="xforms-submit-done" if="instance('i-controller')/mode eq 'preview'">
-                        <xf:message level="ephemeral">Data ready to be saved at tmp directory and to be loaded</xf:message>
+                        <xf:message level="ephemeral">Data ready to be saved.</xf:message>
                         <xf:send submission="s-preview"/>
                     </xf:action>
 
@@ -69,10 +69,12 @@
 
                 <!-- saves form to preview and opens it -->
                 <xf:submission id="s-preview" method="put" replace="none">
-                    <xf:resource value="concat(substring-before({$filename}, '.xhtml'),'-prev.xhtml')"/>
-                    <xf:load show="new" ev:event="xforms-submit-done">
-                        <xf:resource value="concat(substring-before({$filename}, '.xhtml'),'-prev.xhtml')"/>
-                    </xf:load>
+                    <xf:resource value="concat(substring-before('{$filename}', '.xhtml'),'-prev.xhtml')"/>
+                    <xf:action ev:event="xforms-submit-done">
+                        <xf:load show="new" >
+                            <xf:resource value="concat(replace(bf:appContext('contextPath'), 'bfEditor/', ''), substring-before(bf:appContext('fileName'), '.xhtml'),'-prev.xhtml')"/>
+                        </xf:load>
+                    </xf:action>
                     <xf:message ev:event="xforms-submit-error">Preview failed</xf:message>
                 </xf:submission>
 
@@ -86,11 +88,16 @@
                         <preview-path/>
                         <mode/>
                         <filename><xsl:value-of select="$filename"/></filename>
+                        <instanceNodeName></instanceNodeName>
                     </data>
                 </xf:instance>
             </xf:model>
 
             <xf:input ref="instance('i-controller')/currentXfType" id="currentType">
+                <xf:label>hidden</xf:label>
+            </xf:input>
+
+            <xf:input ref="instance('i-controller')/instanceNodeName" id="instanceNodeName">
                 <xf:label>hidden</xf:label>
             </xf:input>
 

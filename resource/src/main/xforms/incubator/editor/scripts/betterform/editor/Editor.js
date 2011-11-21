@@ -13,7 +13,9 @@ dojo.require("dijit.layout.ContentPane");
 dojo.require("dojox.json.ref");
 dojo.require("dojox.data.FileStore");
 dojo.require("dojox.form.FilePickerTextBox");
-dojo.require("dijit.Tree")
+dojo.require("dijit.Tree");
+dojo.require("dijit.form.TextBox");
+dojo.require("dojo.NodeList-manipulate");
 
 dojo.declare("betterform.editor.Editor", null,
 {
@@ -39,13 +41,14 @@ dojo.declare("betterform.editor.Editor", null,
                 args.event.cancelBubble=true;
                 return;
             }
+
             this.currentjsTreeData = selectedNode;
             this.currentNodeId = selectedNodeId;
             var xfType = args.xfType;
             this.currentXfType = xfType;
 
             console.debug("Editor.subscription.nodeSelected: xfType:", xfType);
-            if(xfType =="document"){
+            if( (xfType == undefined) || (xfType =="document") ){
                 //jump back to root
 //                console.debug("bfpath: ", args.bfPath);
                 //dijit.byId("xfMount").set("href", args.bfPath + "document.html");
@@ -335,8 +338,32 @@ dojo.declare("betterform.editor.Editor", null,
         }
         this.currentNodeId = xfid;
         return false;
-    }
+    },
+    hideNodeNameInput:function(tmpId) {
+        console.debug("hideNodeNameInput: " + xformsEditor.tmpId)
+        //Get current value
+        var value= dojo.query("#nodeNameInput").val();
+        console.debug("hideNodeNameInput: value" + value)
+        //Reset it
+        dojo.query("#nodeNameInput").val("");
+        //Move Input away.
+        dojo.place(dojo.byId("nodeNameInput"), dojo.byId("parkNodeInput"), "last");
+        //Update listElement
+        dojo.query("#" + tmpId + " .nodeNameWrapper").text(value);
+    },
+    placeNodeNameInput:function(tmpId) {
+        console.debug("placeNodeNameInput: tmpId:" + tmpId);
+        //Get current textValue
+        var value = dojo.query("#" + tmpId + " .nodeNameWrapper")[0].textContent;
+        console.debug("placeNodeNameInput: value:" + value);
+        //Empty current textValue
+        dojo.query("#" + tmpId + " .nodeNameWrapper").text("");
 
+        //Set input-value
+        dojo.query("#nodeNameInput").val(value);
+        //Place input
+        dojo.place(dojo.byId("nodeNameInput"), dojo.query("#"+tmpId + " .nodeNameWrapper")[0], "last");
+    }
 });
 
 
