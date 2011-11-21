@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:bf="http://betterform.sourceforge.net/xforms">
+    <head>
+        <title>[PUT YOUR TITLE HERE]</title>
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model id="model-1">
+                <xf:instance>
+                    <data xmlns="">
+                        <values>g</values>
+                    </data>
+                </xf:instance>
+            </xf:model>
+        </div>
+        <xf:group>
+            <xf:select ref="/data/values" appearance="minimal">
+                <xf:label>Colors</xf:label>
+                <xf:choices>
+                    <xf:label>Green colors</xf:label>
+                    <xf:item>
+                        <xf:label>Pale green</xf:label>
+                        <xf:value>pg</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>Green</xf:label>
+                        <xf:value>g</xf:value>
+                    </xf:item>
+                </xf:choices>
+                <xf:choices>
+                    <xf:label>Red colors</xf:label>
+                    <xf:item>
+                        <xf:label>Red</xf:label>
+                        <xf:value>r</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>Magenta</xf:label>
+                        <xf:value>m</xf:value>
+                    </xf:item>
+                </xf:choices>
+            </xf:select>
+        </xf:group>
+    </body>
+</html>
