@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:bf="http://betterform.sourceforge.net/xforms">
+    <head>
+        <title>[PUT YOUR TITLE HERE]</title>
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model id="model-1">
+                <xf:instance id="i-default">
+                    <data xmlns="">
+                        <foo/>
+                    </data>
+                </xf:instance>
+            </xf:model>
+        </div>
+		<xf:group>
+            <xf:input ref="foo">
+                <xf:label>
+                    <xf:output value="'bar'"/>
+                    <xf:output value="'baz'"/>
+                </xf:label>
+            </xf:input>
+		</xf:group>
+    </body>
+</html>
