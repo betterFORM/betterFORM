@@ -11,15 +11,73 @@ for generating a select1 control for the event. -->
         <event name="xforms-recalculate"/>
         <event name="xforms-revalidate"/>
         <event name="xforms-refresh"/>
+        <event name="xforms-reset"/>
         <event name="xforms-link-exception"/>
         <event name="xforms-compute-exception"/>
         <event name="xforms-version-exception"/>
     </target>
+    <target match="instance">
+        <event name="xforms-insert"/>
+        <event name="xforms-delete"/>
+    </target>
     <target match="bind">
         <event name="xforms-binding-exception"/>
     </target>
-    <target match="input output range secret select select1 submit textarea trigger upload">
+    <target match="input secret textarea upload range trigger submit select select1">
+        <event name="xforms-previous"/>
+        <event name="xforms-next"/>
+        <event name="xforms-focus"/>
+        <event name="xforms-help"/>
+        <event name="xforms-hint"/>
+        <event name="xforms-value-changed"/>
+        <event name="xforms-valid"/>
+        <event name="xforms-invalid"/>
+        <event name="xforms-readonly"/>
+        <event name="xforms-readwrite"/>
+        <event name="xforms-required"/>
+        <event name="xforms-optional"/>
+        <event name="xforms-enabled"/>
+        <event name="xforms-disabled"/>
+        <event name="DOMActivate"/>
+        <event name="DOMFocusIn"/>
+        <event name="DOMFocusOut"/>
+        <event name="xforms-in-range"/>
+        <event name="xforms-out-of-range"/>
         <event name="xforms-binding-exception"/>
+    </target>
+    <target match="output">
+        <event name="xforms-output-error"/>
+        <event name="xforms-previous"/>
+        <event name="xforms-next"/>
+        <event name="xforms-focus"/>
+        <event name="xforms-help"/>
+        <event name="xforms-hint"/>
+        <event name="xforms-value-changed"/>
+        <event name="xforms-valid"/>
+        <event name="xforms-invalid"/>
+        <event name="xforms-readonly"/>
+        <event name="xforms-readwrite"/>
+        <event name="xforms-required"/>
+        <event name="xforms-optional"/>
+        <event name="xforms-enabled"/>
+        <event name="xforms-disabled"/>
+        <event name="DOMActivate"/>
+        <event name="DOMFocusIn"/>
+        <event name="DOMFocusOut"/>
+        <event name="xforms-in-range"/>
+        <event name="xforms-out-of-range"/>
+    </target>
+    <target match="group switch">
+        <event name="xforms-valid"/>
+        <event name="xforms-invalid"/>
+        <event name="xforms-readonly"/>
+        <event name="xforms-readwrite"/>
+        <event name="xforms-required"/>
+        <event name="xforms-optional"/>
+        <event name="xforms-enabled"/>
+        <event name="xforms-disabled"/>
+        <event name="DOMFocusIn"/>
+        <event name="DOMFocusOut"/>
     </target>
     <target match="action insert delete setvalue send dispatch message load rebuild recalculate revalidate refresh setfocus setindex toggle reset">
         <event name="DOMActivate"/>
@@ -32,7 +90,6 @@ for generating a select1 control for the event. -->
         <event name="xforms-out-of-range"/>
         <event name="xforms-readonly"/>
         <event name="xforms-readwrite"/>
-        <event name="xforms-readwrite"/>
         <event name="xforms-required"/>
         <event name="xforms-optional"/>
         <event name="xforms-enabled"/>
@@ -43,9 +100,6 @@ for generating a select1 control for the event. -->
         <event name="xforms-help"/>
         <event name="xforms-hint"/>
     </target>
-    <target match="output">
-        <event name="xforms-output-error"/>
-    </target>
     <target match="submission">
         <event name="xforms-submit"/>
         <event name="xforms-submit-error"/>
@@ -53,7 +107,7 @@ for generating a select1 control for the event. -->
         <event name="xforms-submit-done"/>
         <event name="xforms-binding-exception"/>
     </target>
-    <target match="item itemset case">
+    <target match="item case">
         <event name="xforms-select"/>
         <event name="xforms-deselect"/>
     </target>
