@@ -19,8 +19,10 @@
                   <data xmlns="">
                      <dataAttributes/>
                      <updateProperties/>
+                     <parentElement/>
                   </data>
                </xf:instance>
+               <xf:instance xmlns="" id="i-eventTargets" src="./eventTargets.xml"/>
                <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="xforms-ready">
                   <script>
                                                         
@@ -38,6 +40,10 @@
                              context="instance()"
                              model="formdef"/>
                </xf:action>
+            </xf:input>
+            <xf:input xmlns:xf="http://www.w3.org/2002/xforms" id="parentElement"
+                      ref="instance('i-data')/parentElement">
+               <xf:label/>
             </xf:input>
          </div>
          <xf:output xmlns:xf="http://www.w3.org/2002/xforms"

@@ -123,7 +123,9 @@ structural elements
 				</xsd:choice>
 			</xsd:sequence>
 			<xsd:attributeGroup ref="xforms:Common.Attributes"/>
-			<xsd:attributeGroup ref="xforms:XML.Events"/>
+            <!-- this is inconsistent with the Spec which correctly does not mention xml event attributes for the model element
+            Instead the model may have actions as childs .-->
+			<!-- <xsd:attributeGroup ref="xforms:XML.Events"/> -->
 			<xsd:attribute name="functions" type="xforms:QNameList" use="optional"/>
 			<xsd:attribute name="schema" type="xforms:anyURIList" use="optional"/>
 			<xsd:attribute name="version" type="xforms:versionList" use="optional"/>

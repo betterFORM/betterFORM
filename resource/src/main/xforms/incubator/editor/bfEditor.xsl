@@ -12,7 +12,6 @@
         version="2.0"
         exclude-result-prefixes="html"
         xml:base="http://localhost:8080/betterform/forms/incubator/editor/">
-
     <!-- author: Joern Turner -->
     <!-- author: Tobias Krebs -->
     <!-- author: Lars Windauer -->
@@ -44,6 +43,7 @@
 
     <xsl:strip-space elements="*"/>
     <xsl:template match="/">
+
         <xsl:message>WebApplication Context: <xsl:value-of select="$APP_CONTEXT"/></xsl:message>
         <xsl:message>Editor home directory: <xsl:value-of select="$EDITOR_HOME"/></xsl:message>
         <html>
@@ -52,6 +52,7 @@
                 <link rel="stylesheet" type="text/css" href="{$EDITOR_HOME}xforms-editor.css"/>
             </head>
             <body id="editor" jsId="xformsEditor">
+
                 <div id="overlay">
                     <img src="{$EDITOR_HOME}images/loader.gif" style="margin-top:50px;" alt="loading..."/>
                 </div>

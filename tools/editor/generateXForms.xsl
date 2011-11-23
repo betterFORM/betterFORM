@@ -35,7 +35,7 @@
                         <html xmlns:xf="http://www.w3.org/2002/xforms">
                             <head>
                                 <title><xsl:value-of select="@name"/></title>
-                        </head>
+                            </head>
                         <body>
                             <div id="xforms">
                                 <xsl:choose>
@@ -61,8 +61,11 @@
                                                     <data xmlns="">
                                                         <dataAttributes></dataAttributes>
                                                         <updateProperties></updateProperties>
+                                                        <parentElement></parentElement>
                                                     </data>
                                                 </xf:instance>
+
+                                                <xf:instance id="i-eventTargets" src="./eventTargets.xml" xmlns=""/>
 
                                                 <xf:action ev:event="xforms-ready">
                                                     <script>
@@ -80,6 +83,9 @@
                                                 </xf:action>
                                             </xf:input>
 
+                                            <xf:input id="parentElement" ref="instance('i-data')/parentElement">
+                                                <xf:label/>
+                                            </xf:input>
                                           </div>
                                         <xf:output ref="instance('i-data')/updateProperties" id="properties-output">
                                             <xf:label>props:</xf:label>
@@ -134,8 +140,10 @@
                                                     <data xmlns="">
                                                         <dataAttributes></dataAttributes>
                                                         <updateProperties></updateProperties>
+                                                        <parentElement></parentElement>
                                                     </data>
                                                 </xf:instance>
+                                                <xf:instance id="i-eventTargets" src="/betterform/forms/incubator/editor/eventTargets.xml" xmlns=""/>
 
                                                 <xf:action ev:event="xforms-ready">
                                                     <script>
@@ -147,24 +155,32 @@
                                             <xf:input ref="instance('i-data')/dataAttributes" id="dataAttributes">
                                                 <xf:label>hidden</xf:label>
                                                 <xf:action ev:event="xforms-value-changed">
-                                                   <xf:insert origin="bf:props2xml(string(instance('i-data')/dataAttributes/text()))" context="instance()"  model="formdef"/>
+                                                    <!-- todo: when element has no properties the attribute form will not show !!! fix needed -->
+                                                    <xf:insert origin="bf:props2xml(string(instance('i-data')/dataAttributes/text()))" context="instance()" model="formdef" xmlns:ev="http://www.w3.org/2001/xml-events"/>
+                                                    <xf:insert context="instance()/xfElement[2]" origin="../xfElement[1]/@*" model="formdef" xmlns:ev="http://www.w3.org/2001/xml-events"/>
                                                 </xf:action>
+                                            </xf:input>
+                                            <xf:input id="parentElement" ref="instance('i-data')/parentElement">
+                                                <xf:label/>
                                             </xf:input>
 
                                         </div>
-                                        <xf:output ref="instance('i-data')/updateProperties" id="properties-output">
-                                            <xf:label>props:</xf:label>
-                                            <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="betterform-state-changed">
-                                                <script>
-                                                    dojo.publish('/properties/changed',[]);
-                                                </script>
-                                            </xf:action>
-                                        </xf:output>
-                                        <xf:group ref="xfElement" id="properties" appearance="compact">
+                                        <xf:group ref="xfElement[2]" id="properties" appearance="compact">
                                             <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="DOMFocusOut" ev:observer="properties" ev:phase="capture" propagate="stop">
-                                                <xf:setvalue ref="instance('i-data')/updateProperties" value="string(bf:xml2props(instance('i-props')/xfElement[1]))"/>
+                                                <xf:setvalue ref="instance('i-data')/updateProperties" value="string(bf:xml2props(instance('i-props')/xfElement[2]))"/>
                                             </xf:action>
+                                            <xf:label class="elementProps"><xsl:value-of select="$current/@name"/> attributes</xf:label>
+
                                             <xsl:apply-templates select="$current//xsd:attributeGroup" mode="ui"/>
+                                            <xf:output ref="instance('i-data')/updateProperties" id="properties-output">
+                                                <xf:label>props:</xf:label>
+                                                <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="betterform-state-changed" if="string-length(.) != 0">
+                                                    <script>
+                                                        dojo.publish('/properties/changed',[]);
+                                                    </script>
+                                                </xf:action>
+                                            </xf:output>
+
                                             <xsl:apply-templates select="$current//xsd:attribute" mode="ui"/>
                                             <xsl:apply-templates select="$current//xsd:complexType[@mixed='true']" mode="ui"/>
                                             <xsl:if test="exists(.//xsd:attributeGroup[@ref='xforms:XML.Events'])">
@@ -305,13 +321,19 @@
             <xf:label>Event</xf:label>
             <xf:hint>The type of event to listen for</xf:hint>
             <!-- build item list from external eventTargets.xml file. -->
+<!--
             <xsl:variable name="eventTargets" select="document('resources/eventTargets.xml')"/>
-            <xsl:for-each select="$eventTargets/data/target[contains(@match,$current/@name)]/event">
+            <xsl:for-each select="$eventTargets/data/target[contains(@match,instance('i-'))]/event">
                 <xf:item>
                     <xf:label><xsl:value-of select="./@name"/></xf:label>
                     <xf:value><xsl:value-of select="./@name"/></xf:value>
                 </xf:item>
             </xsl:for-each>
+-->
+            <xf:itemset nodeset="instance('i-eventTargets')/target[contains(@match,instance('i-data')/parentElement)]/event">
+                <xf:label ref="@name"/>
+                <xf:value ref="@name"/>
+            </xf:itemset>
         </xf:select1>
 
     </xsl:template>

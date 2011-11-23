@@ -34,7 +34,7 @@ dojo.declare("betterform.editor.Editor", null,
             var selectedNodeId = selectedNode ? selectedNode.rslt.obj.attr("id"):null;
             currentNodeId = this.currentjsTreeData ? this.currentjsTreeData.rslt.obj.attr("id"):null;
 
-            console.debug("compare currentNodeId: " + currentNodeId + " with selctedNode: ",selectedNodeId);
+            console.debug("compare currentNodeId: " + currentNodeId + " with selectedNode: ",selectedNodeId);
 
             if(currentNodeId =! null && currentNodeId == selectedNodeId){
                 args.event.stopPropagation();
@@ -140,7 +140,7 @@ dojo.declare("betterform.editor.Editor", null,
     },
 
     editProperties : function(targetId) {
-        // console.debug("attrEditor.editProperties: id of property sheet: ", targetId);
+        console.debug("attrEditor.editProperties: id of property sheet: ", targetId);
         var  currentNode =  dojo.byId(targetId);
         var dataXfAttrs = dojo.attr(currentNode, "data-xf-attrs");
         var dataXfType = dojo.attr(currentNode, "data-xf-type");
@@ -149,6 +149,9 @@ dojo.declare("betterform.editor.Editor", null,
 
         //Send Tree-Data to "properties"-subform
         fluxProcessor.setControlValue("dataAttributes", dataXfAttrs);
+        var parent = dojo.attr(currentNode.parentNode.parentNode, "data-xf-type");
+        console.debug("ParentNode type: ", parent);
+        fluxProcessor.setControlValue("parentElement", parent);
 
         /*
         var xfAttrObj = dojox.json.ref.fromJson(dataXfAttrs);

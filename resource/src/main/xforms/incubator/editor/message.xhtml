@@ -21,8 +21,11 @@
                   <data xmlns="">
                      <dataAttributes/>
                      <updateProperties/>
+                     <parentElement/>
                   </data>
                </xf:instance>
+               <xf:instance xmlns="" id="i-eventTargets"
+                            src="/betterform/forms/incubator/editor/eventTargets.xml"/>
                <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="xforms-ready">
                   <script>
                                                         xformsEditor.editProperties(dojo.attr(dojo.byId("xfDoc"), "data-bf-currentid"));
@@ -55,28 +58,24 @@
                   <xf:insert origin="bf:props2xml(string(instance('i-data')/dataAttributes/text()))"
                              context="instance()"
                              model="formdef"/>
+                  <xf:insert context="instance()/xfElement[2]" origin="../xfElement[1]/@*" model="formdef"/>
                </xf:action>
             </xf:input>
+            <xf:input xmlns:xf="http://www.w3.org/2002/xforms" id="parentElement"
+                      ref="instance('i-data')/parentElement">
+               <xf:label/>
+            </xf:input>
          </div>
-         <xf:output xmlns:xf="http://www.w3.org/2002/xforms"
-                    ref="instance('i-data')/updateProperties"
-                    id="properties-output">
-            <xf:label>props:</xf:label>
-            <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="betterform-state-changed">
-               <script>
-                                                    dojo.publish('/properties/changed',[]);
-                                                </script>
-            </xf:action>
-         </xf:output>
-         <xf:group xmlns:xf="http://www.w3.org/2002/xforms" ref="xfElement" id="properties"
+         <xf:group xmlns:xf="http://www.w3.org/2002/xforms" ref="xfElement[2]" id="properties"
                    appearance="compact">
             <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="DOMFocusOut"
                        ev:observer="properties"
                        ev:phase="capture"
                        propagate="stop">
                <xf:setvalue ref="instance('i-data')/updateProperties"
-                            value="string(bf:xml2props(instance('i-props')/xfElement[1]))"/>
+                            value="string(bf:xml2props(instance('i-props')/xfElement[2]))"/>
             </xf:action>
+            <xf:label class="elementProps">message attributes</xf:label>
             <xf:input ref="@id">
                <xf:label>id</xf:label>
             </xf:input>
@@ -95,6 +94,15 @@
             <xf:input ref="@while">
                <xf:label>while</xf:label>
             </xf:input>
+            <xf:output ref="instance('i-data')/updateProperties" id="properties-output">
+               <xf:label>props:</xf:label>
+               <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="betterform-state-changed"
+                          if="string-length(.) != 0">
+                  <script>
+                                                        dojo.publish('/properties/changed',[]);
+                                                    </script>
+               </xf:action>
+            </xf:output>
             <xf:input ref="@level">
                <xf:label>level</xf:label>
             </xf:input>
@@ -105,86 +113,10 @@
                <xf:select1 ref="@event" appearance="minimal">
                   <xf:label>Event</xf:label>
                   <xf:hint>The type of event to listen for</xf:hint>
-                  <xf:item>
-                     <xf:label>DOMActivate</xf:label>
-                     <xf:value>DOMActivate</xf:value>
-                  </xf:item>
-                  <xf:item>
-                     <xf:label>DOMFocusIn</xf:label>
-                     <xf:value>DOMFocusIn</xf:value>
-                  </xf:item>
-                  <xf:item>
-                     <xf:label>DOMFocusOut</xf:label>
-                     <xf:value>DOMFocusOut</xf:value>
-                  </xf:item>
-                  <xf:item>
-                     <xf:label>xforms-value-changed</xf:label>
-                     <xf:value>xforms-value-changed</xf:value>
-                  </xf:item>
-                  <xf:item>
-                     <xf:label>xforms-valid</xf:label>
-                     <xf:value>xforms-valid</xf:value>
-                  </xf:item>
-                  <xf:item>
-                     <xf:label>xforms-invalid</xf:label>
-                     <xf:value>xforms-invalid</xf:value>
-                  </xf:item>
-                  <xf:item>
-                     <xf:label>xforms-in-range</xf:label>
-                     <xf:value>xforms-in-range</xf:value>
-                  </xf:item>
-                  <xf:item>
-                     <xf:label>xforms-out-of-range</xf:label>
-                     <xf:value>xforms-out-of-range</xf:value>
-                  </xf:item>
-                  <xf:item>
-                     <xf:label>xforms-readonly</xf:label>
-                     <xf:value>xforms-readonly</xf:value>
-                  </xf:item>
-                  <xf:item>
-                     <xf:label>xforms-readwrite</xf:label>
-                     <xf:value>xforms-readwrite</xf:value>
-                  </xf:item>
-                  <xf:item>
-                     <xf:label>xforms-readwrite</xf:label>
-                     <xf:value>xforms-readwrite</xf:value>
-                  </xf:item>
-                  <xf:item>
-                     <xf:label>xforms-required</xf:label>
-                     <xf:value>xforms-required</xf:value>
-                  </xf:item>
-                  <xf:item>
-                     <xf:label>xforms-optional</xf:label>
-                     <xf:value>xforms-optional</xf:value>
-                  </xf:item>
-                  <xf:item>
-                     <xf:label>xforms-enabled</xf:label>
-                     <xf:value>xforms-enabled</xf:value>
-                  </xf:item>
-                  <xf:item>
-                     <xf:label>xforms-disabled</xf:label>
-                     <xf:value>xforms-disabled</xf:value>
-                  </xf:item>
-                  <xf:item>
-                     <xf:label>xforms-previous</xf:label>
-                     <xf:value>xforms-previous</xf:value>
-                  </xf:item>
-                  <xf:item>
-                     <xf:label>xforms-next</xf:label>
-                     <xf:value>xforms-next</xf:value>
-                  </xf:item>
-                  <xf:item>
-                     <xf:label>xforms-focus</xf:label>
-                     <xf:value>xforms-focus</xf:value>
-                  </xf:item>
-                  <xf:item>
-                     <xf:label>xforms-help</xf:label>
-                     <xf:value>xforms-help</xf:value>
-                  </xf:item>
-                  <xf:item>
-                     <xf:label>xforms-hint</xf:label>
-                     <xf:value>xforms-hint</xf:value>
-                  </xf:item>
+                  <xf:itemset nodeset="instance('i-eventTargets')/target[contains(@match,instance('i-data')/parentElement)]/event">
+                     <xf:label ref="@name"/>
+                     <xf:value ref="@name"/>
+                  </xf:itemset>
                </xf:select1>
                <xf:input ref="@ev:observer">
                   <xf:label>ev:observer</xf:label>
