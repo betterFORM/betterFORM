@@ -10,7 +10,7 @@ $(function () {
         },
         "html_data":{
             "ajax":{
-                url:EDITOR_HOME + "components.html"
+                url:EDITOR_HOME + "component-menu.html"
             }
         },
         "themes" : {
@@ -19,7 +19,7 @@ $(function () {
             "icons" : false
         },
 
-        "plugins" : [ "themes", "hotkeys", "ui", "html_data","dnd" ]
+        "plugins" : [ "themes", "ui", "html_data","dnd" ]
     });
 });
 

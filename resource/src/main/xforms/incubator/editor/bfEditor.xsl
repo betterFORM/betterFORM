@@ -36,8 +36,10 @@
     <xsl:param name="APP_CONTEXT" select="''"/>
     <xsl:param name="filename" select="''"/>
 
+    <xsl:param name="EDITOR_HOME" select="'/betterform/forms/incubator/editor/'" />
+<!--
     <xsl:variable name="EDITOR_HOME" select="'/betterform/forms/incubator/editor/'" />
-
+-->
     <xsl:include href="bfEditorMenu.xsl"/>
     <xsl:include href="bfEditorHelp.xsl"/>
 
@@ -88,6 +90,11 @@
                     <div id="embedDialog"/>
                 </div>
 
+                <div style="display: none">
+                    <xsl:copy-of select="document(concat($EDITOR_HOME, 'templates.html'))/div"/>
+                    <xsl:copy-of select="document(concat($EDITOR_HOME, 'display.html'))"/>
+
+                </div>
                 <!-- ################### SCRIPTS ################### -->
                 <!-- ################### SCRIPTS ################### -->
                 <!-- ################### SCRIPTS ################### -->
@@ -95,13 +102,13 @@
                 <!-- ################### SCRIPTS ################### -->
 
                 <script type="text/javascript"
-                        src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.js"></script>
+                        src="{$APP_CONTEXT}/bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.js"></script>
                 <script type="text/javascript"
-                        src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.cookie.js"></script>
+                        src="{$APP_CONTEXT}/bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.cookie.js"></script>
                 <script type="text/javascript"
-                        src="../../../bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.hotkeys.js"></script>
+                        src="{$APP_CONTEXT}/bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.hotkeys.js"></script>
                 <script type="text/javascript"
-                        src="../../../bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
+                        src="{$APP_CONTEXT}/bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
 
                 <!-- ##### set a global var that contains the path to the editor ##### -->
                 <script type="text/javascript">
@@ -114,14 +121,18 @@
                 <script type="text/javascript" src="{$EDITOR_HOME}/scripts/componentTree.js"></script>
 
                 <script type="text/javascript" defer="defer"
-                        src="../../../bfResources/scripts/betterform/betterform-XFormsEditor.js"></script>
+                        src="{$APP_CONTEXT}/bfResources/scripts/betterform/betterform-XFormsEditor.js"></script>
                 <!-- ##### USING DIRECT IMPORT INSTEAD OF DOJO REQUIRE.
                 The source of the editor should be kept separate from the core resources and deployed separately.
                 They should NOT be made part of the betterform default distribution but be available as a separate
                 package.
                 -->
                 <script type="text/javascript" defer="defer" src="{$EDITOR_HOME}/scripts/betterform/editor/xfEditorUtil.js"></script>
+                <script type="text/javascript" defer="defer" src="{$EDITOR_HOME}/scripts/betterform/editor/bfEditor.js"></script>
+
+                <!--
                 <script type="text/javascript" defer="defer">
+                    // <![CDATA[
                     dojo.require("dijit.Toolbar");
                     dojo.require("dijit.form.DropDownButton");
                     dojo.require("dijit.form.Button");
@@ -130,7 +141,7 @@
                     dojo.require("dojo.fx");
 
                     var xfReadySubscribers;
-
+                    var displayPropertyMap = new Array();
 
                     function showSaveDialog() {
                         dijit.byId("saveDialog").show();
@@ -186,24 +197,97 @@
                         }
                     }
 
-                    dojo.addOnLoad(
-                        function() {
-                            dojo.connect(dojo.body(), "onkeypress", checkKeyboardInput);
-                        },
+                    function generateCSSLocator(start, attribute_xpath) {
+                        var reference_locator = "";
 
-                        function() {
-                            // hide the componentTree if a click outside a 'category' happens
-                            dojo.connect(dojo.body(), "onclick", function(evt){
-                                var ancestorClass = evt.target.parentNode.parentNode.className;
-                                if(ancestorClass != "category") {
-                                    dojo.style("componentTree","display", "none");
-                                }
-                            });
+                        //TODO: < !!
+                        for (var i = 1; i != attribute_xpath.length; i++) {
+                            reference_locator += " ." + attribute_xpath[i];
                         }
+
+                        return reference_locator;
+                    }
+
+                    function setDisplayProps(node) {
+                        //console.debug("Node:", node);
+                        //console.debug("data-xf-attrs:", dojo.attr(node, 'data-xf-attrs'));
+
+                        var propertyName = displayPropertyMap[dojo.attr(node, 'data-xf-type')];
+
+                        var xfattrs = dojox.json.ref.fromJson(dojo.attr(node, 'data-xf-attrs'));
+
+                        if (xfattrs[propertyName] != undefined) {
+                            var span = dojo.query("a .displayProps", node)[0];
+                            span.innerHTML = propertyName + " : " + xfattrs[propertyName];
+                        }
+                        //check ref, bind, model, idrefs
+
+                        if (xfattrs['ref'] != undefined && xfattrs['ref'] != '' ) {
+                            var reference = xfattrs['ref'];
+                            var instance_locator = ".instance";
+                            var reference_locator = "";
+
+                            if (reference.indexOf('instance(\'') != -1) {
+                                instance_locator = "#" + reference.substring(reference.indexOf('instance(\'') + 'instance(\''.length, reference.indexOf('\')'));
+                                var reference_xpath = reference.split('/');
+                                reference_locator = generateCSSLocator(1, reference_xpath);
+                            } else if (reference.indexOf('instance()') != -1) {
+                                instance_locator = ".model .instance:first-child"
+
+                                var reference_xpath = reference.split('/');
+                                reference_locator = generateCSSLocator(1, reference_xpath);
+                            } else {
+                                var reference_xpath = reference.split('/');
+                                reference_locator = generateCSSLocator(0, reference_xpath);
+                            }
+
+                            console.debug(instance_locator + reference_locator);
+                            if (dojo.query(instance_locator + reference_locator).length == 0) {
+                                dojo.style(span, 'color', 'red');
+                            } else {
+                               dojo.style(span, 'color', 'green');
+                            }
+                        }
+                    }
+
+                    dojo.addOnLoad(
+                            function() {
+                                dojo.connect(dojo.body(), "onkeypress", checkKeyboardInput);
+                            },
+
+                            function() {
+                                // hide the componentTree if a click outside a 'category' happens
+                                dojo.connect(dojo.body(), "onclick", function(evt) {
+                                    var ancestorClass = evt.target.parentNode.parentNode.className;
+                                    if (ancestorClass != "category") {
+                                        dojo.style("componentTree", "display", "none");
+                                    }
+                                });
+                            },
+
+
+                            dojo.behavior.add({
+                                '.input, .output, .range, .secret, .select, .select1, .submit, .textarea, .trigger, .upload': function(n) {
+                                    displayPropertyMap[dojo.attr(n, 'data-xf-type')] = 'ref';
+                                    setDisplayProps(n);
+
+                                },
+                                '.bind': function(n) {
+                                    displayPropertyMap[dojo.attr(n, 'data-xf-type')] = 'nodeset';
+                                    setDisplayProps(n);
+                                },
+                                '.model, .instance, .group, .switch, .repeat, .submission': function(n) {
+                                    displayPropertyMap[dojo.attr(n, 'data-xf-type')] = 'id';
+                                    setDisplayProps(n);
+                                }
+                            }),
+
+                            dojo.behavior.apply()
                     );
 
+                    //]]>
                 </script>
-
+                -->
 
             </body>
         </html>
@@ -240,7 +324,7 @@
         -->
         <xsl:variable name="props">{
             <xsl:for-each select="@*">
-                <xsl:value-of select="local-name()"/>:'<xsl:value-of select="."/>'
+                "<xsl:value-of select="local-name()"/>":"<xsl:value-of select="."/>"
                 <xsl:if test="position()!=last()">,</xsl:if>
             </xsl:for-each>}
         </xsl:variable>
@@ -258,13 +342,14 @@
                 </xsl:attribute>
             </xsl:if>
             <a href="#">
-                <xsl:value-of select="local-name()"/>:
+                <span class="elementName"><xsl:value-of select="local-name()"/> </span>
                 <xsl:if test="text()">
                     <span class="textNode">
                         <xsl:apply-templates select="*|text()"/>
                     </span>
                 </xsl:if>
-                <xsl:value-of select="@id"/>
+
+                <span class="displayProps"/>
                 <span class="buttonWrapper">
 <!--
                     <button tabindex="0" type="button" onclick="showCircleMenu(event);return false;" style="padding:0;margin:0;background:transparent;border:none;">
@@ -351,7 +436,9 @@
          <xsl:variable name="id" select="concat('ins-', local-name() , '-', $position)"></xsl:variable>
          <li tabindex="0" id="{$id}" data-xf-type="{$type}" nodename="{local-name()}" data-xf-attrs="{ $props }" class="{local-name()} jstree-drop" rel="{local-name()}">
              <a href="#">
-                <span class="nodeNameWrapper"><xsl:value-of select="local-name()"/></span>
+
+                <span class="elementName"><xsl:value-of select="local-name()"/> </span>
+                <span class="displayProps"/>
                 <span class="buttonWrapper"/>
             </a>
             <xsl:if test="count(*) != 0">

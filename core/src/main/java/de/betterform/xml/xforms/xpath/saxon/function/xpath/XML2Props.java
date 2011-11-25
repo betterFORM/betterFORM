@@ -61,9 +61,9 @@ public class XML2Props extends XFormsFunction {
 
                 for (int i = 0;i <namedNodeMap.getLength(); i++) {
                     Attr attributeNode = (Attr) namedNodeMap.item(i);
-                    props.append(attributeNode.getName());
+                    props.append("\"" + attributeNode.getName() + "\"");
                     props.append(":");
-                    props.append("'" + attributeNode.getValue() + "'");
+                    props.append("\"" + attributeNode.getValue() + "\"");
                     props.append(',');
                 }
 

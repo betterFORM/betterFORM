@@ -462,4 +462,13 @@ dl.keyboard-mapping dd {
     display: none;
 }
 
+.elementName{
+    font-weight:bold;
+    padding:0 5px;;
+}
+.displayProps{
+    font-style: italic;
+    opacity: .6;
+    padding: 0 4px;
+}
 

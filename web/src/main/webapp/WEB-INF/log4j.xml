@@ -56,7 +56,11 @@
         <priority value="ERROR"/>
     </category>
 
-    <category name="de.betterform">
+    <category name="de.betterform.xml.xforms.action">
+        <priority value="DEBUG"/>
+    </category>
+
+    <category name="de.betterform.xml.xforms.model">
         <priority value="DEBUG"/>
     </category>
 

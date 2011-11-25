@@ -22,6 +22,7 @@
                      <dataAttributes/>
                      <updateProperties/>
                      <parentElement/>
+                     <textnodecontent/>
                   </data>
                </xf:instance>
                <xf:instance xmlns="" id="i-eventTargets"
@@ -65,6 +66,21 @@
                       ref="instance('i-data')/parentElement">
                <xf:label/>
             </xf:input>
+            <xf:input xmlns:xf="http://www.w3.org/2002/xforms" id="textnodecontent"
+                      ref="instance('i-data')/textnodecontent">
+               <xf:label/>
+            </xf:input>
+            <xf:output xmlns:xf="http://www.w3.org/2002/xforms"
+                       ref="instance('i-data')/updateProperties"
+                       id="properties-output">
+               <xf:label>props:</xf:label>
+               <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="betterform-state-changed"
+                          if="string-length(.) != 0">
+                  <script>
+                                                        dojo.publish('/properties/changed',[]);
+                                                    </script>
+               </xf:action>
+            </xf:output>
          </div>
          <xf:group xmlns:xf="http://www.w3.org/2002/xforms" ref="xfElement[2]" id="properties"
                    appearance="compact">
@@ -94,21 +110,15 @@
             <xf:input ref="@while">
                <xf:label>while</xf:label>
             </xf:input>
-            <xf:output ref="instance('i-data')/updateProperties" id="properties-output">
-               <xf:label>props:</xf:label>
-               <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="betterform-state-changed"
-                          if="string-length(.) != 0">
-                  <script>
-                                                        dojo.publish('/properties/changed',[]);
-                                                    </script>
-               </xf:action>
-            </xf:output>
             <xf:input ref="@level">
                <xf:label>level</xf:label>
             </xf:input>
             <xf:input ref="@textcontent">
                <xf:label>textcontent</xf:label>
             </xf:input>
+            <xf:textarea ref="instance('i-data')/textnodecontent">
+               <xf:label>textcontent</xf:label>
+            </xf:textarea>
             <xf:group id="event-properties" appearance="compact" ref="xml-event">
                <xf:select1 ref="@event" appearance="minimal">
                   <xf:label>Event</xf:label>

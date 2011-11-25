@@ -22,7 +22,7 @@
     <div id="registration" class="InlineRoundBordersAlert">
     <div style="display:none" id="xf1">
         <xf:model id="m-registration">
-            <xf:instance xmlns="">
+            <xf:instance xmlns="" id="inline">
                 <data>
                     <firstname/>
                     <lastname/>
@@ -64,11 +64,11 @@
     </div>
     <xf:group id="registration-ui" appearance="bf:verticalTable">
 			<xf:label>Join the group<span id="subtitle">Enjoy being a part of it!</span></xf:label>
-			<xf:input id="first" ref="firstname">
+			<xf:input id="first" ref="instance('inline')/firstname">
 				<xf:label>Firstname:</xf:label>
 				<xf:hint>enter your firstname</xf:hint>
 			</xf:input>
-			<xf:input ref="lastname">
+			<xf:input ref="instance()/lastname">
 				<xf:label>Lastname:</xf:label>
 				<xf:hint>enter your lastname</xf:hint>
 			</xf:input>

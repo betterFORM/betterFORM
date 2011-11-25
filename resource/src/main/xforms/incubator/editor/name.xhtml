@@ -45,17 +45,17 @@
                       ref="instance('i-data')/parentElement">
                <xf:label/>
             </xf:input>
+            <xf:output xmlns:xf="http://www.w3.org/2002/xforms"
+                       ref="instance('i-data')/updateProperties"
+                       id="properties-output">
+               <xf:label>props:</xf:label>
+               <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="betterform-state-changed">
+                  <script>
+                                                        dojo.publish('/properties/changed',[]);
+                                                    </script>
+               </xf:action>
+            </xf:output>
          </div>
-         <xf:output xmlns:xf="http://www.w3.org/2002/xforms"
-                    ref="instance('i-data')/updateProperties"
-                    id="properties-output">
-            <xf:label>props:</xf:label>
-            <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="betterform-state-changed">
-               <script>
-                                                    dojo.publish('/properties/changed',[]);
-                                                </script>
-            </xf:action>
-         </xf:output>
          <xf:group xmlns:xf="http://www.w3.org/2002/xforms" ref="xfElement" id="properties"
                    appearance="compact">
             <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="DOMFocusOut"

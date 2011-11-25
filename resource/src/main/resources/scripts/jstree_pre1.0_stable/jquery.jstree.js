@@ -805,8 +805,9 @@
 					return obj.html();
 				}
 				else {
+                    //TODO: FIX ME HERE!!
 					obj = obj.contents().filter(function() { return this.nodeType == 3; })[0];
-					return obj.nodeValue;
+                    return obj.nodeValue;
 				}
 			},
 			set_text	: function (obj, val) {

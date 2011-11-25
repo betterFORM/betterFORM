@@ -133,7 +133,7 @@ public class XSLTServlet extends HttpServlet /* extends AbstractXFormsServlet */
                 String contextName=request.getContextPath();
 
                 t.setParameter("APP_CONTEXT",contextName);
-                t.setParameter("EDITOR_HOME", stylePath);
+                t.setParameter("EDITOR_HOME", stylePath.substring(stylePath.indexOf("/betterform/")) + "/");
                 t.setParameter("filename", "file://" + inputFile);
 
 //                cache.put(xsl, t);

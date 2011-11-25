@@ -10,6 +10,7 @@ dojo.provide("betterform.editor.Editor");
  * Licensed under the terms of BSD License
  */
 dojo.require("dijit.layout.ContentPane");
+dojo.require("dojo.behavior");
 dojo.require("dojox.json.ref");
 dojo.require("dojox.data.FileStore");
 dojo.require("dojox.form.FilePickerTextBox");
@@ -65,7 +66,17 @@ dojo.declare("betterform.editor.Editor", null,
             console.debug("newProps: ",newProps);
 
             var currentid = dojo.attr(dojo.byId("xfDoc"),"data-bf-currentid");
-            dojo.attr(dojo.byId(currentid),"data-xf-attrs", newProps);
+            var currentNode = dojo.byId(currentid);
+            dojo.attr(currentNode,"data-xf-attrs", newProps);
+
+            var children = dojo.query('.textNode', currentNode);
+            console.debug('children: ' + children.length);
+            if (children.length > 0 && children != undefined && children != '') {
+                children[0].innerHTML = dijit.byId('textnodecontent').getControlValue();
+            }
+            //register new controls ....
+            dojo.behavior.apply();
+            setDisplayProps(currentNode);
         });
     },
 
@@ -153,6 +164,11 @@ dojo.declare("betterform.editor.Editor", null,
         console.debug("ParentNode type: ", parent);
         fluxProcessor.setControlValue("parentElement", parent);
 
+        var children = dojo.query('.textNode', currentNode);
+        if (children.length > 0) {
+            fluxProcessor.setControlValue("textnodecontent", children[0].innerHTML);
+        }
+
         /*
         var xfAttrObj = dojox.json.ref.fromJson(dataXfAttrs);
          console.debug("editProperties xfAttrObj:", xfAttrObj);
@@ -201,6 +217,7 @@ dojo.declare("betterform.editor.Editor", null,
         */
     },
 
+    /*
     saveProperty:function(targetId, propertyId) {
         // console.debug("attrEditor.saveProperty: id", targetId, " propertyId:", propertyId);
 
@@ -226,8 +243,10 @@ dojo.declare("betterform.editor.Editor", null,
             var xfAttrString = dojox.json.ref.toJson(xfAttrObj);
             // console.debug("xfAttr new:", xfAttrString);
             dojo.attr(dojo.byId(targetId), "data-xf-attrs", xfAttrString);
+
         }
     },
+    */
     
 
     moveItemUp : function(event) {
@@ -343,7 +362,7 @@ dojo.declare("betterform.editor.Editor", null,
         return false;
     },
     hideNodeNameInput:function(tmpId) {
-        console.debug("hideNodeNameInput: " + xformsEditor.tmpId)
+        console.debug("hideNodeNameInput: tmpId: " + tmpId)
         //Get current value
         var value= dojo.query("#nodeNameInput").val();
         console.debug("hideNodeNameInput: value" + value)
@@ -352,20 +371,26 @@ dojo.declare("betterform.editor.Editor", null,
         //Move Input away.
         dojo.place(dojo.byId("nodeNameInput"), dojo.byId("parkNodeInput"), "last");
         //Update listElement
-        dojo.query("#" + tmpId + " .nodeNameWrapper").text(value);
+        dojo.query("#" + tmpId + " .elementName").text(value);
+        dojo.query("#" + tmpId + " .elementName").text(value);
+        var node = dojo.byId(tmpId);
+        dojo.toggleClass(node, dojo.attr(node, 'nodename'));
+        dojo.attr(node, 'nodename', value);
+        dojo.toggleClass(node, dojo.attr(node, 'nodename'));
+
     },
     placeNodeNameInput:function(tmpId) {
         console.debug("placeNodeNameInput: tmpId:" + tmpId);
         //Get current textValue
-        var value = dojo.query("#" + tmpId + " .nodeNameWrapper")[0].textContent;
+        var value = dojo.query("#" + tmpId + " .elementName")[0].textContent;
         console.debug("placeNodeNameInput: value:" + value);
         //Empty current textValue
-        dojo.query("#" + tmpId + " .nodeNameWrapper").text("");
+        dojo.query("#" + tmpId + " .elementName").text("");
 
         //Set input-value
         dojo.query("#nodeNameInput").val(value);
         //Place input
-        dojo.place(dojo.byId("nodeNameInput"), dojo.query("#"+tmpId + " .nodeNameWrapper")[0], "last");
+        dojo.place(dojo.byId("nodeNameInput"), dojo.query("#"+tmpId + " .elementName")[0], "last");
     }
 });
 

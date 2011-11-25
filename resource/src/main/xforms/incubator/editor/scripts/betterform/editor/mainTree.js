@@ -63,7 +63,7 @@ $(function () {
             },
             hotkeys: {
                 "up":function(event) {
-                    // console.debug("up key pressed");
+                     console.debug("up key pressed");
                     // console.debug("this: ",this);
                     // console.debug("1");
                     var o = this.data.ui.hovered || this.data.ui.last_selected || -1;
@@ -96,7 +96,9 @@ $(function () {
             var nodeIsLoaded = xformsEditor.nodeIsLoaded(tmpId);
             // console.debug("nodeIsLoaded:", nodeIsLoaded);
 //            console.debug("event: " , event);
-//            console.debug("data: " , data);
+            console.debug("data: " , data);
+            console.debug("tmpId: " , tmpId);
+
 
             if (nodeIsLoaded) {
                 // console.debug("PREVENTED LOADING OF PROPERTY EDITOR");
@@ -139,8 +141,10 @@ $(function () {
                     }
                     if (xfType == "instance-data") {
                         console.debug("mainTree.js: show instance-data")
+                        //$("#xfDoc").jstree("rename", null);
                         xformsEditor.placeNodeNameInput(tmpId);
                     }
+
                     dojo.place(dojo.byId("contextBar"), dojo.query("#"+tmpId + " .buttonWrapper")[0], "last");
     //                dojo.place(dojo.byId("componentTree"), dojo.query("#"+tmpId + " .buttonWrapper")[0], "last");
     //                dojo.byId('componentTree').style("right:300px;top:200px;");
@@ -181,23 +185,108 @@ function addElement(type, position) {
     elem.attr("rel", type);
     elem.attr("id", new Date().getTime());
     elem.attr("data-xf-attrs", "{ }");
-    var ahref = dojo.query("a", elem[0])[0];
-    var span = dojo.create("span", null, ahref);
-    dojo.addClass(span, "buttonWrapper");
+    elem.addClass(type);
+    //$(elem).children('a').add('<span>' + type + '</span>').addClass('elementName');
+
+    /*
     var btnDelete = dojo.create("button", { type:"button", style: "padding: 0pt; margin: 0pt; background: none repeat scroll 0% 0% transparent; border: medium none;", onclick: "if(confirm('Really delete?')) deleteNode(this);return false;" },
         span);
     dojo.create("img", { width:"24", height: "24",src: betterFORMContextPath + editorContextPath + "images/list-remove.png" },
         btnDelete);
+    */
     if (type.toLowerCase() == "label" || type.toLowerCase() == "alert" || type.toLowerCase() == "hint" || type.toLowerCase() == "help") {
         var textNode = dojo.create("span", textNode, ahref);
         dojo.addClass(textNode, "textNode");
     }
+    //TODO: ??? wieso denn nicht ???
+    if ($('#' + type + '-template') != undefined) {
+        var template = $('#' + type + '-template');
+        //Ensure we have the right type
+        if ($('#' + type + '-template').attr('data-xf-type') == type) {
+             //Select parent
+            //$('#xfDoc').jstree("select_node", $(elem), true, null);
+
+            //Copy all attributes except 'id'
+            $.each($('#' + type + '-template')[0].attributes, function() {  if (this.name != 'id') { elem.attr(this.name, this.value); }});
+
+            //Select parent
+            //$('#xfDoc').jstree("select_node", $(elem), true, null);
+
+            //Handle children
+
+            //$.each($('#' + type + '-template span'), function()
+            console.debug("NOBODY THINKS OF THE CHILDREN: ", $(template).children('span'));
+            $.each($(template).children('span'), function()
+                {
+                    console.debug("this: ", this)
+                    buildElementFromTemplate(elem, this)
+                }
+            );
+        }
+
+        //$('#' + type + '-template ul').clone().appendTo('#' + elem.attr('id'));
+        //$.each($('#' + elem.attr('id') + ' li'), function() { $(this).attr('id', new Date().getTime());});
+        //elementName.text(elem.attr(''+ $("#displayLookup").children('' + type).attr('display')));
+    }
+
+    var ahref = dojo.query("a", elem[0])[0];
+    var text = ahref.lastChild.textContent
+    ahref.textContent = "";
+
+    var elementName = dojo.create("span", {innerHTML:text}, ahref);
+    dojo.addClass(elementName, "elementName");
+    var displayProps = dojo.create("span", null, ahref);
+    dojo.addClass(displayProps, "displayProps");
+    var buttonWrapper = dojo.create("span", null, ahref);
+    dojo.addClass(buttonWrapper, "buttonWrapper");
+
     $("#xfDoc").jstree("select_node", elem, true, null);
     elem.focus();
     elem.hide();
     $(elem).fadeIn("slow");
 
 
+}
+
+function buildElementFromTemplate(parent , elementDOM) {
+    console.debug('buildElementFormTemplate element:', elementDOM);
+    var type = $(elementDOM).attr('data-xf-type');
+    console.debug('buildElementFormTemplate type:', type);
+    var child = $("#xfDoc").jstree("create", parent, "inside", type, false, true);
+    $.each($(elementDOM)[0].attributes, function()
+        {
+            child.attr(this.name, this.value);
+        }
+    );
+
+    child.attr("data-xf-type", type);
+    child.attr("rel", type);
+    child.attr("id", new Date().getTime());
+    if (child.attr("data-xf-attrs") == undefined) {
+        child.attr("data-xf-attrs", "{ }");
+    }
+    child.addClass(type);
+
+    var ahref = dojo.query("a", child[0])[0];
+    var text = ahref.lastChild.textContent
+    ahref.textContent = "";
+
+    var elementName = dojo.create("span", {innerHTML:text}, ahref);
+    dojo.addClass(elementName, "elementName");
+    var displayProps = dojo.create("span", null, ahref);
+    dojo.addClass(displayProps, "displayProps");
+    var buttonWrapper = dojo.create("span", null, ahref);
+    dojo.addClass(buttonWrapper, "buttonWrapper")
+
+    //console.debug("NOBODY THINKS OF THE CHILDREN: ", $(elementDOM).children('span'));
+    //All the way down to the basement
+    if ($(elementDOM).children('span') != undefined)
+    {
+        $.each($(elementDOM).children('span'), function()
+        {
+           buildElementFromTemplate(child, this)
+        });
+    }
 }
 
 function deleteNode(elem) {

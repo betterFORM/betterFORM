@@ -21,7 +21,7 @@
     <xsl:template match="/data">
         <ul>
             <xsl:for-each select="ul[@data-xf-type != li/@data-xf-type] | ul[@data-xf-type='bind'] | ul[@data-xf-type='instance']">
-                    <li id="{@id}-tmpl" class="{@id} rootCategory">
+                    <li id="{@id}-tmpl" class="rootCategory">
                         <a href="#"><xsl:value-of select="@id"/></a>
                         <xsl:if test="exists(./li)">
                             <xsl:if test="li[@class='element']">
@@ -31,7 +31,8 @@
                                             <xsl:variable name="name"><xsl:value-of select="."/></xsl:variable>
                                             <li class="element">
                                                 <xsl:copy-of select="@*"/>
-                                                <a href="javascript:addElement('{$name}');"><xsl:value-of select="$name"/></a>
+                                                <!--<a href="javascript:addElement('{$name}');"><xsl:value-of select="$name"/></a>-->
+                                                <a href="#"><xsl:value-of select="$name"/></a>
                                             </li>
                                         </xsl:for-each>
                                 </ul>
@@ -75,7 +76,7 @@
                             </xsl:if>
                             <xsl:if test="li[@class='action']">
                                 <ul class="category">
-                                    <li class="action" style="text-align:left;">
+                                    <li class="actions" style="text-align:left;">
                                         <a href="#">Actions</a>
                                         <ul>
                                             <xsl:call-template name="makeEntry">
@@ -89,25 +90,25 @@
                         <xsl:if test="@data-xf-type='instance'">
                             <ul class="category">
                                 <li data-xf-type="instance-root" class="element">
-                                    <a href="javascript:addElement('instance-root');">Instance root</a>
+                                    <a href="#">Instance root</a>
                                 </li>
                             </ul>
                         </xsl:if>
                     </li>
             </xsl:for-each>
-            <li id="instance-root-tmpl" class="instance-root rootCategory">
+            <li id="instance-root-tmpl" class="rootCategory">
                 <a href="#">instance-root</a>
                 <ul class="category">
                     <li data-xf-type="instance-data" class="element">
-                        <a href="javascript:addElement('instance-data');">Instance data</a>
+                        <a href="#">Instance data</a>
                     </li>
                 </ul>
             </li>
-            <li id="instance-data-tmpl" class="instance-data rootCategory">
+            <li id="instance-data-tmpl" class="rootCategory">
                 <a href="#">instance-data</a>
                 <ul class="category">
                     <li data-xf-type="instance-data" class="element">
-                        <a href="javascript:addElement('instance-data');">Instance data</a>
+                        <a href="#">Instance data</a>
                     </li>
                 </ul>
             </li>
@@ -121,7 +122,7 @@
                 <xsl:variable name="name"><xsl:value-of select="."/></xsl:variable>
                 <li>
                     <xsl:copy-of select="@*"/>
-                    <a href="javascript:addElement('{$name}');"><xsl:value-of select="$name"/></a>
+                    <a href="#"><xsl:value-of select="$name"/></a>
                 </li>
             </xsl:for-each>
     </xsl:template>

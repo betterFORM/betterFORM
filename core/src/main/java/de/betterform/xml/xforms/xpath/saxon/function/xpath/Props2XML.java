@@ -64,11 +64,12 @@ public class Props2XML extends XFormsFunction {
                 document.appendChild(xfElement);
 
                 for(int i = 0; i < propArray.length; i++) {
-                    if(propArray[i].contains(":\'")) {
-                    String aName = propArray[i].substring(0,propArray[i].indexOf(":\'")).trim();
-                    String aValue = propArray[i].substring(propArray[i].indexOf(":\'")+2).trim();
-                    aValue = aValue.substring(0, aValue.length()-1);
-                    xfElement.setAttribute(aName, aValue);
+                    if(propArray[i].contains("\":\"")) {
+                        String tmp = propArray[i].trim();
+                        String aName = tmp.substring(1,tmp.indexOf("\":\"")).trim();
+                        String aValue = tmp.substring(tmp.indexOf("\":\"")+3).trim();
+                        aValue = aValue.substring(0, aValue.length()-1);
+                        xfElement.setAttribute(aName, aValue);
                 }
                 }
 

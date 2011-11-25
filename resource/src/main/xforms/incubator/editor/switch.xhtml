@@ -49,6 +49,17 @@
                       ref="instance('i-data')/parentElement">
                <xf:label/>
             </xf:input>
+            <xf:output xmlns:xf="http://www.w3.org/2002/xforms"
+                       ref="instance('i-data')/updateProperties"
+                       id="properties-output">
+               <xf:label>props:</xf:label>
+               <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="betterform-state-changed"
+                          if="string-length(.) != 0">
+                  <script>
+                                                        dojo.publish('/properties/changed',[]);
+                                                    </script>
+               </xf:action>
+            </xf:output>
          </div>
          <xf:group xmlns:xf="http://www.w3.org/2002/xforms" ref="xfElement[2]" id="properties"
                    appearance="compact">
@@ -78,15 +89,6 @@
             <xf:input ref="@appearance">
                <xf:label>appearance</xf:label>
             </xf:input>
-            <xf:output ref="instance('i-data')/updateProperties" id="properties-output">
-               <xf:label>props:</xf:label>
-               <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="betterform-state-changed"
-                          if="string-length(.) != 0">
-                  <script>
-                                                        dojo.publish('/properties/changed',[]);
-                                                    </script>
-               </xf:action>
-            </xf:output>
             <xf:input ref="@selected">
                <xf:label>selected</xf:label>
             </xf:input>

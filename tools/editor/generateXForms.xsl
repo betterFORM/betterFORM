@@ -21,6 +21,7 @@
 
     <xsl:param name="webxml.path" select="''"/>
     <xsl:variable name="inputDoc" select="/"/>
+    <xsl:variable name="textnode-controls" select="tokenize('output label hint alert help message', '\s+')" />
 
     <xsl:variable name="lang" select="'en'" as="xs:string"/>
 
@@ -86,15 +87,15 @@
                                             <xf:input id="parentElement" ref="instance('i-data')/parentElement">
                                                 <xf:label/>
                                             </xf:input>
+                                            <xf:output ref="instance('i-data')/updateProperties" id="properties-output">
+                                                <xf:label>props:</xf:label>
+                                                <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="betterform-state-changed">
+                                                    <script>
+                                                        dojo.publish('/properties/changed',[]);
+                                                    </script>
+                                                </xf:action>
+                                            </xf:output>
                                           </div>
-                                        <xf:output ref="instance('i-data')/updateProperties" id="properties-output">
-                                            <xf:label>props:</xf:label>
-                                            <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="betterform-state-changed">
-                                                <script>
-                                                    dojo.publish('/properties/changed',[]);
-                                                </script>
-                                            </xf:action>
-                                        </xf:output>
                                           <xf:group xmlns:xf="http://www.w3.org/2002/xforms" ref="xfElement" id="properties"
                                                     appearance="compact">
                                               <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="DOMFocusOut" ev:observer="properties" ev:phase="capture" propagate="stop">
@@ -141,6 +142,9 @@
                                                         <dataAttributes></dataAttributes>
                                                         <updateProperties></updateProperties>
                                                         <parentElement></parentElement>
+                                                        <xsl:if test="index-of($textnode-controls, $current/@name)">
+                                                            <textnodecontent></textnodecontent>
+                                                        </xsl:if>
                                                     </data>
                                                 </xf:instance>
                                                 <xf:instance id="i-eventTargets" src="/betterform/forms/incubator/editor/eventTargets.xml" xmlns=""/>
@@ -163,15 +167,12 @@
                                             <xf:input id="parentElement" ref="instance('i-data')/parentElement">
                                                 <xf:label/>
                                             </xf:input>
+                                            <xsl:if test="index-of($textnode-controls, $current/@name)">
+                                                <xf:input id="textnodecontent" ref="instance('i-data')/textnodecontent">
+                                                    <xf:label/>
+                                                </xf:input>
+                                            </xsl:if>
 
-                                        </div>
-                                        <xf:group ref="xfElement[2]" id="properties" appearance="compact">
-                                            <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="DOMFocusOut" ev:observer="properties" ev:phase="capture" propagate="stop">
-                                                <xf:setvalue ref="instance('i-data')/updateProperties" value="string(bf:xml2props(instance('i-props')/xfElement[2]))"/>
-                                            </xf:action>
-                                            <xf:label class="elementProps"><xsl:value-of select="$current/@name"/> attributes</xf:label>
-
-                                            <xsl:apply-templates select="$current//xsd:attributeGroup" mode="ui"/>
                                             <xf:output ref="instance('i-data')/updateProperties" id="properties-output">
                                                 <xf:label>props:</xf:label>
                                                 <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="betterform-state-changed" if="string-length(.) != 0">
@@ -180,9 +181,23 @@
                                                     </script>
                                                 </xf:action>
                                             </xf:output>
+                                        </div>
+                                        <xf:group ref="xfElement[2]" id="properties" appearance="compact">
+                                            <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="DOMFocusOut" ev:observer="properties" ev:phase="capture" propagate="stop">
+                                                <xf:setvalue ref="instance('i-data')/updateProperties" value="string(bf:xml2props(instance('i-props')/xfElement[2]))"/>
+                                            </xf:action>
+                                            <xf:label class="elementProps"><xsl:value-of select="$current/@name"/> attributes</xf:label>
+
+                                            <xsl:apply-templates select="$current//xsd:attributeGroup" mode="ui"/>
 
                                             <xsl:apply-templates select="$current//xsd:attribute" mode="ui"/>
                                             <xsl:apply-templates select="$current//xsd:complexType[@mixed='true']" mode="ui"/>
+
+                                            <xsl:if test="index-of($textnode-controls, $current/@name)">
+                                                <xf:textarea ref="instance('i-data')/textnodecontent">
+                                                    <xf:label>textcontent</xf:label>
+                                                </xf:textarea>
+                                            </xsl:if>
                                             <xsl:if test="exists(.//xsd:attributeGroup[@ref='xforms:XML.Events'])">
                                                 <xf:group id="event-properties" appearance="compact" ref="xml-event">
                                                     <xsl:apply-templates select="$current//xsd:attributeGroup" mode="event-ui">
