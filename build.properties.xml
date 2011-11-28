@@ -259,10 +259,10 @@
             </classpath>
         </compile>
         <izPack>
-            <dir>/home/zwobit/Development/bin/izPack-4.3.4</dir>
+            <dir>/opt/izPack-4.3.4</dir>
         </izPack>
         <launch4j>
-            <dir>/home/zwobit/Development/bin/launch4j-3.0.2</dir>
+            <dir>/opt/launch4j-3.0.2</dir>
         </launch4j>
     </installer>
     <eXist>
