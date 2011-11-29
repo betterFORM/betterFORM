@@ -11,6 +11,7 @@
         <link rel="stylesheet" type="text/css" href="resources/scripts/dijit/themes/tundra/tundra.css"/>
         <link rel="stylesheet" type="text/css" href="resources/styles/xforms.css"/>
         <link rel="stylesheet" type="text/css" href="resources/styles/betterform.css"/>
+        <link rel="stylesheet" type="text/css" href="resources/styles/registration.css"/>
         <style type="text/css">
             .hide {
                 display: none;
@@ -68,12 +69,14 @@
             };
         </script>
         <script type="text/javascript" src="resources/scripts/dojo/dojo.js"></script>
+        <script type="text/javascript" src="resources/scripts/betterform/ui/input/Textfield.js"></script>
         <script type="text/javascript">
             dojo.require("dojo.parser");
             dojo.require("betterform.Betty");
             dojo.require("betterform.ui.Control");
             dojo.require("betterform.ui.container.Group");
             dojo.require("betterform.ui.util");
+            dojo.require("betterform.ui.input");
             var insertPoint;
             dojo.addOnLoad(function() {
                 console.log("document ready");

@@ -171,6 +171,7 @@ public class Betty extends Applet {
                 System.out.println("appletProcessor not null");
             }
             String form = renderForm((Document) this.appletProcessor.getXForms());
+            System.out.println(form);
             this.view = form;
 
             // set initial view
