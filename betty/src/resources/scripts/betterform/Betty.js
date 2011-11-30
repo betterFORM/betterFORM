@@ -39,6 +39,11 @@ dojo.declare("betterform.Betty",
         this.topicRenderMessage = dojo.subscribe("betterform-render-message",this,"_handleBetterFormRenderMessage");
     },
 
+    startup: function() {
+        //console.log("Betty: startup()");
+        this.bettyProcessor.setReady();
+    },
+
     applyChanges:function(event, object){
         console.log(event, object);
         dojo.publish(event,[object]);
@@ -62,17 +67,7 @@ dojo.declare("betterform.Betty",
     setRange: function (id, value) {
     },
 
-
     setRepeatIndex:function (targetRepeatElement){
-    },
-
-    setView: function (html) {
-        alert("Betty.setView");
-        var xformsui = document.getElementById("xformsui");
-        xformsui.innerHTML = html;
-        xformsui.className = "enabled";
-        dojo.parser.parse(xformsui);
-        return true;
     },
 
     _handleBetterFormRenderMessage:function(event) {

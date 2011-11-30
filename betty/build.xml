@@ -188,11 +188,11 @@
 
     <target name="copy-forms" description="copy forms">
         <copy file="${basedir}/src/registration.html" todir="${targetname}"/>
-        <echo/>
-        <echo message="************************************************************************************"/>
-        <echo message="copying forms..."/>
-        <echo message="************************************************************************************"/>
-        <echo/>
+        <echo>
+        ************************************************************************************
+        preparing forms for betty ...
+        ************************************************************************************
+        </echo>
         <xslt basedir="${resource.dir}/src/main/xforms"
               destdir="${basedir}/target/forms/"
               style="${basedir}/src/resources/xslt/xhtml2betty.xsl"
@@ -203,10 +203,26 @@
             <classpath refid="transform.class.path"/>
         </xslt>
 
-        <copy todir="${basedir}/target/forms/" overwrite="true">
+        <echo>
+        ************************************************************************************
+        copying forms ...
+        ************************************************************************************
+        </echo>
+        <copy todir="${basedir}/target/${betty.app.name}" flatten="true">
+            <fileset dir="${basedir}/target/forms" includes="**/*.html"/>
+        </copy>
+
+
+        <echo>
+        ************************************************************************************
+        copying resources ...
+        ************************************************************************************
+        </echo>
+        <copy todir="${basedir}/target/${betty.app.name}" overwrite="true">
             <fileset dir="${resource.dir}/src/main/xforms" excludes="**/*.xhtml"/>
         </copy>
 
+        <!--<delete dir="${basedir}/target/forms"/>   -->
 <!--
         <copy todir="${targetname}/${forms.target}"
               overwrite="true">
@@ -276,22 +292,24 @@
         <echo/>
 
 
+<!--
         <genkey alias="${signjar.alias}" storepass="${signjar.storepass}" keystore="${basedir}/target/keystore">
             <dname>
-                <!--CommonName-->
+                &lt;!&ndash;CommonName&ndash;&gt;
                 <param name="CN" value="betterform.de"/>
-                <!-- OrganizationalUnit -->
+                &lt;!&ndash; OrganizationalUnit &ndash;&gt;
                 <param name="OU" value="betterFORM project"/>
-                <!-- Organization -->
+                &lt;!&ndash; Organization &ndash;&gt;
                 <param name="O" value="betterFORM"/>
-                <!-- CountryCode -->
+                &lt;!&ndash; CountryCode &ndash;&gt;
                 <param name="C" value="DE"/>
-                <!-- Location -->
+                &lt;!&ndash; Location &ndash;&gt;
                 <param name="L" value="Berlin"/>
-                <!-- State -->
+                &lt;!&ndash; State &ndash;&gt;
                 <param name="ST" value="Berlin"/>
             </dname>
         </genkey>
+-->
 
         <!-- sign jar -->
         <!-- todo: existence of keystore must be checked -->

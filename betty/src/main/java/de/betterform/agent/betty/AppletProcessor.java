@@ -49,6 +49,8 @@ public class AppletProcessor extends AbstractProcessorDecorator {
     private String uploadDir;
     private List responseSequence = new ArrayList();
     private List deferredSelectors = new ArrayList();
+    private StringBuffer initialEventBuffer=new StringBuffer();
+    private boolean isReady=false;
 //    private XFormsProcessor xformsProcessor;
 
     /**
@@ -58,6 +60,11 @@ public class AppletProcessor extends AbstractProcessorDecorator {
         super();
     }
 
+    public void setReady(){
+        this.isReady=true;
+        this.betty.javascriptEval(initialEventBuffer.toString());
+        this.initialEventBuffer=null;
+    }
     /**
      * Sets the context class loader.
      * <p/>
@@ -86,6 +93,11 @@ public class AppletProcessor extends AbstractProcessorDecorator {
      */
     public void setUploadDir(String uploadDir) {
         this.uploadDir = uploadDir;
+    }
+
+    @Override
+    protected boolean isEventUsed(String eventName) {
+        return true;
     }
 
     public void init() throws XFormsException {
@@ -184,41 +196,30 @@ public class AppletProcessor extends AbstractProcessorDecorator {
         ensureContextClassLoader();
 
         if (event instanceof XMLEvent) {
-
             try {
-                Object contextInfo = ((XMLEvent) event).getContextInfo();
-                String eventType = event.getType();
+//                Object contextInfo = ((XMLEvent) event).getContextInfo();
+//                String eventType = event.getType();
                 Element targetElement = (Element) event.getTarget();
                 String targetId = targetElement.getAttribute("id");
 
-
                 XMLEvent xmlEvent = (XMLEvent) event;
-
                 LOG.debug("AppletProcessor handling " + event.getType().toString());
-
                 StringBuffer eventToEvaluate = new StringBuffer("fluxProcessor.applyChanges('");
-                eventToEvaluate.append(event.getType());
-                eventToEvaluate.append("',[{");
-                eventToEvaluate.append("targetid:'");
+                //eventToEvaluate.append(event.getType());
                 eventToEvaluate.append(targetId);
+                eventToEvaluate.append("',[{");
+                eventToEvaluate.append("eventType:'");
+                eventToEvaluate.append(event.getType());
                 eventToEvaluate.append("'");
 
-
                 Map defaultInfo = (Map) xmlEvent.getContextInfo();
-//                if (xmlEvent.getContextInfo().size() != 0) {
                 if (defaultInfo != null && defaultInfo.size() != 0) {
                     LOG.info("adding contextInfo");
                     LOG.info("defaultInfo " + defaultInfo);
 
                     eventToEvaluate.append(",");
-
-                    //create substructure for contextInfo
-//                    eventToEvaluate.append(", contextInfo:{");
-
                     // build the list of contextInfo properties
-//                    Map infoMap = xmlEvent.getContextInfo();
                     Iterator it = defaultInfo.keySet().iterator();
-//                    String key, value;
                     while (it.hasNext()) {
                         String key = (String) it.next();
                         String value = "" + defaultInfo.get(key);
@@ -234,18 +235,17 @@ public class AppletProcessor extends AbstractProcessorDecorator {
                         }
 
                     }
-
-                    //close contextInfo
-//                    eventToEvaluate.append("}");
-
                 }
 
                 eventToEvaluate.append("}]);");
                 LOG.debug("string to eval: " + eventToEvaluate.toString());
 
-                //pass for execution
-                this.betty.javascriptEval(eventToEvaluate.toString());
-
+                if(isReady){
+                    //pass for execution
+                    this.betty.javascriptEval(eventToEvaluate.toString());
+                }else{
+                    this.initialEventBuffer.append(eventToEvaluate);
+                }
             }
             catch (Exception
                     e) {

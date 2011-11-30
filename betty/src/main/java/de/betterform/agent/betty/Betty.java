@@ -249,6 +249,9 @@ public class Betty extends Applet {
 
     // api for javascript to update the processor
 
+    public void setReady() {
+        this.appletProcessor.setReady();
+    }
     /**
      * Called by Javascript to add a message to the debug log.
      *

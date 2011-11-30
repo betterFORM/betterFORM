@@ -102,9 +102,57 @@ dojo.declare(
         }
         // console.debug("\nControl.postCreate; DOM Node:",this.domNode,"\n");
 
-        this.topicInvalid = dojo.subscribe("xforms-invalid",function(message){
-            console.log("params - ", message);
-        });
+        this.topicInvalid = dojo.subscribe(this.id,this, "applyStateChange");
+    },
+
+    applyStateChange:function(state){
+        console.log("params - ", state);
+        var eventType = state.eventType;
+        var defautInfo = state.defaultInfo;
+
+        switch (eventType) {
+            case 'xforms-previous' :
+                break;
+            case 'xforms-next' :
+                break;
+            case 'xforms-focus' :
+                break;
+            case 'xforms-help' :
+                break;
+            case 'xforms-hint' :
+                break;
+            case 'xforms-value-changed' :
+                break;
+            case 'xforms-valid' :
+            case 'xforms-invalid' :
+                break;
+            case 'xforms-readonly' :
+                break;
+            case 'xforms-readwrite' :
+                break;
+            case 'xforms-required' :
+                break;
+            case 'xforms-optional' :
+                break;
+            case 'xforms-enabled' :
+                break;
+            case 'xforms-disabled' :
+                break;
+            case 'DOMActivate' :
+                break;
+            case 'DOMFocusIn' :
+                break;
+            case 'DOMFocusOut' :
+                break;
+            case 'xforms-in-range' :
+                break;
+            case 'xforms-out-of-range' :
+                break;
+            case 'xforms-binding-exception' :
+                break;
+            default :
+                console.error('Event: ', eventType, ' unknown for this control.');
+        }
     },
 
     /**

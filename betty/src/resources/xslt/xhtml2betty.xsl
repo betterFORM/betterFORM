@@ -20,41 +20,25 @@
     <xsl:template match="/html">
         <xsl:element name="html">
             <xsl:copy-of select="@*"/>
-            <xsl:message>dir:<xsl:value-of select="$filedir"/></xsl:message>
-
-
-            <xsl:variable name="relPath">
-                <xsl:choose>
-                    <xsl:when test="contains($filedir,'/')">
-                        <xsl:for-each select="tokenize($filedir,'/')">../</xsl:for-each>../betty/
-                    </xsl:when>
-                    <xsl:when test="$filedir eq '.'">../betty/</xsl:when>
-                    <xsl:when test="not(contains($filedir,'/'))">../../betty/</xsl:when>
-                </xsl:choose>
-            </xsl:variable>
-            <xsl:message>relPath:<xsl:value-of select="$relPath"/></xsl:message>
-            <xsl:apply-templates>
-                <xsl:with-param name="relPath" select="$relPath"/>
-            </xsl:apply-templates>
+            <xsl:apply-templates/>
         </xsl:element>
     </xsl:template>
 
 
     <xsl:template match="head">
-        <xsl:param name="relPath"/>
         <xsl:variable name="head" select="."/>
         <xsl:copy>
             <!--<xsl:copy-of select="title"/>-->
             <title></title>
             <xsl:text>
 </xsl:text>
-            <link rel="stylesheet" type="text/css" href="{$relPath}resources/scripts/dojo/dojo.css"/><xsl:text>
+            <link rel="stylesheet" type="text/css" href="resources/scripts/dojo/dojo.css"/><xsl:text>
 </xsl:text>
-            <link rel="stylesheet" type="text/css" href="{$relPath}resources/scripts/dijit/themes/tundra/tundra.css"/><xsl:text>
+            <link rel="stylesheet" type="text/css" href="resources/scripts/dijit/themes/tundra/tundra.css"/><xsl:text>
 </xsl:text>
-            <link rel="stylesheet" type="text/css" href="{$relPath}resources/styles/xforms.css"/><xsl:text>
+            <link rel="stylesheet" type="text/css" href="resources/styles/xforms.css"/><xsl:text>
 </xsl:text>
-            <link rel="stylesheet" type="text/css" href="{$relPath}resources/styles/betterform.css"/><xsl:text>
+            <link rel="stylesheet" type="text/css" href="resources/styles/betterform.css"/><xsl:text>
 </xsl:text>
 
             <style type="text/css">
@@ -115,27 +99,71 @@
             </script><xsl:text>
 </xsl:text>
 
-            <script type="text/javascript" src="{$relPath}resources/scripts/dojo/dojo.xd.js"></script><xsl:text>
+            <script type="text/javascript" src="resources/scripts/dojo/dojo.js"></script><xsl:text>
 </xsl:text>
-            <!--
-                        <script type="text/javascript" src="../resources/scripts/betterform/betterform.js"></script><xsl:text>
-            </xsl:text>
-            -->
-            <!--
-                        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js"></script><xsl:text>
-            </xsl:text>
-
-            -->
             <script type="text/javascript">
                 dojo.require("dojo.parser");
                 dojo.require("betterform.Betty");
                 dojo.require("betterform.ui.Control");
                 dojo.require("betterform.ui.ControlValue");
-                dojo.require("betterform.ui.container.Group");
                 dojo.require("betterform.ui.util");
+
+                //common
+                dojo.require("betterform.ui.common.Alert");
+                dojo.require("betterform.ui.common.InlineAlert");
+                dojo.require("betterform.ui.common.InlineRoundBordersAlert");
+                dojo.require("betterform.ui.common.ToolTipAlert");
+
+                //container
+                dojo.require("betterform.ui.container.Group");
+                dojo.require("betterform.ui.container.Repeat");
+                dojo.require("betterform.ui.container.RepeatItem");
+                dojo.require("betterform.ui.container.Switch");
+                dojo.require("betterform.ui.container.TabSwitch");
+
+                //input
+                dojo.require("betterform.ui.input.Boolean");
+                dojo.require("betterform.ui.input.Date");
+                dojo.require("betterform.ui.input.DateTime");
+                dojo.require("betterform.ui.input.DropDownDate");
                 dojo.require("betterform.ui.input.TextField");
+                dojo.require("betterform.ui.input.Time");
+
+                //output
+                dojo.require("betterform.ui.output.Html");
+                dojo.require("betterform.ui.output.Image");
+                dojo.require("betterform.ui.output.Link");
+                dojo.require("betterform.ui.output.Plain");
+
+                //range
+                dojo.require("betterform.ui.range.Slider");
+
+                //secret
                 dojo.require("betterform.ui.secret.Secret");
+
+                //select
+                dojo.require("betterform.ui.select.CheckBox");
+
+                //select1
+                dojo.require("betterform.ui.select1.ComboBox");
+                dojo.require("betterform.ui.select1.ComboBoxOpen");
+                dojo.require("betterform.ui.select1.Plain");
+                dojo.require("betterform.ui.select1.RadioButton");
+
+                //textarea
+                dojo.require("betterform.ui.textarea.DojoEditor");
+                dojo.require("betterform.ui.textarea.HtmlEditor");
+                dojo.require("betterform.ui.textarea.SimpleTextarea");
+
+                //trigger
                 dojo.require("betterform.ui.trigger.Button");
+                dojo.require("betterform.ui.trigger.ImageButton");
+                dojo.require("betterform.ui.trigger.LinkButton");
+
+                //upload
+                dojo.require("betterform.ui.upload.Upload");
+                dojo.require("betterform.ui.upload.UploadPlain");
+
                 var insertPoint;
                 dojo.addOnLoad(function() {
                     console.log("document ready");
@@ -198,7 +226,6 @@
     </xsl:template>
 
     <xsl:template match="body">
-        <xsl:param name="relPath"/>
         <xsl:copy>
             <xsl:copy-of select="@*"/>
             <xsl:attribute name="class">tundra</xsl:attribute>
@@ -210,7 +237,7 @@
             <applet id="bettyProcessor"
                     name="bettyProcessor"
                     code="de.betterform.agent.betty.Betty"
-                    codebase="{$relPath}bin"
+                    codebase="bin"
                     documentbase="."
                     archive="betty.jar,commons-codec-1.3.jar,commons-fileupload-1.2.1.jar,httpcore-4.1.jar,httpclient-4.1.1.jar,httpmime-4.1.1.jar,commons-io-1.4.jar,commons-lang-2.4.jar,commons-logging-1.1.1.jar,activation-1.1.1.jar,mail-1.4.2.jar,log4j-1.2.15.jar,saxon-9.2.1.5.jar,xercesImpl-2.9.1.jar,xml-apis-1.3.04.jar,xmlrpc-common-3.1.2.jar,xmlrpc-client-3.1.2.jar,xmlrpc-server-3.1.2.jar,ehcache-1.6.2.jar"
                     width="17"
