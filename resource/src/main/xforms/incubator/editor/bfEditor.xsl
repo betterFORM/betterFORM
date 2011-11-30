@@ -108,7 +108,7 @@
                 <script type="text/javascript"
                         src="{$APP_CONTEXT}/bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.hotkeys.js"></script>
                 <script type="text/javascript"
-                        src="{$APP_CONTEXT}/bfResources/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
+                        src="{$EDITOR_HOME}/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
 
                 <!-- ##### set a global var that contains the path to the editor ##### -->
                 <script type="text/javascript">

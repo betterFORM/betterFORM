@@ -61,6 +61,10 @@ $(function () {
                     "valid_children": ["bind"]
                 }
             },
+            ui:{
+                selected_parent_close:false,
+                selected_parent_open:false
+            },
             hotkeys: {
                 "up":function(event) {
                      console.debug("up key pressed");

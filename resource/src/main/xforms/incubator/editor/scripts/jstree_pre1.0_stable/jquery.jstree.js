@@ -806,8 +806,14 @@
 				}
 				else {
                     //TODO: FIX ME HERE!!
-					obj = obj.contents().filter(function() { return this.nodeType == 3; })[0];
+                    console.debug("obj: ", obj);
+                    var tmp = obj.children("span").eq(0);
+                    console.debug("first span: ", tmp);
+
+					obj = tmp.contents().filter(function() { return this.nodeType == 3; })[0];
                     return obj.nodeValue;
+//					obj = obj.contents().filter(function() { return this.nodeType == 3; })[0];
+//                    return obj.nodeValue;
 				}
 			},
 			set_text	: function (obj, val) {
@@ -2481,7 +2487,10 @@
 			if(s.drag_target) {
 				$(document)
 					.delegate(s.drag_target, "mousedown.jstree-" + this.get_index(), $.proxy(function (e) {
-						o = e.target;
+//						o = e.target;
+                        // modedown event might have been started on a child of the intended drag_target
+                        o = $(e.target).closest('.' + s.drag_target)[0];
+
 						$.vakata.dnd.drag_start(e, { jstree : true, obj : e.target }, "<ins class='jstree-icon'></ins>" + $(e.target).text() );
 						if(this.data.themes) { 
 							if(m) { m.attr("class", "jstree-" + this.data.themes.theme); }
@@ -2599,8 +2608,8 @@
 				return r;
 			},
 			dnd_open : function () {
-				this.data.dnd.to2 = false;
-				this.open_node(r, $.proxy(this.dnd_prepare,this), true);
+//				this.data.dnd.to2 = false;
+//				this.open_node(r, $.proxy(this.dnd_prepare,this), true);
 			},
 			dnd_finish : function (e) {
 				if(this.data.dnd.foreign) {
