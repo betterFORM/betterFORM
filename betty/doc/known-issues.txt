@@ -25,3 +25,16 @@ Instead always a submission replace="none" and a following 'load' action will do
 </xf:trigger>
 
 
+2. Deployment on file system
+When running forms directly from the file system, the forms must be higher in the directory tree than the
+dir 'resources'. The reason for this is that Dojo cannot load files that are higher in the hierarchy. It uses xhr
+to load files that are pulled in with dojo.require and the browser security model does not allow that. This can
+potentially circumvented by using a dojo build as this already has all resources inlined and therefore does not
+need to use dojo.require. But once a not-included resource will be needed this has to be included into the build AND
+there might be some areas where dojo still uses dynamic loading.
+
+However these restrictions does not apply to a deployment on the server (applet loaded via http).
+
+The current default deployment is to put the files into a directory above the resources to avoid the problem though is
+is not ideal from an directory layout point of view. Later on we may have an option to explicitly open a file from
+the applet which may take away the problem.

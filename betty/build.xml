@@ -29,7 +29,7 @@
     <property file="build.properties"/>
     <property file="signjar.properties"/>
     <property name="target" value="${basedir}/target"/>
-    <property name="targetname" value="${target}/${betty.app.name}-${betty.app.version}"/>
+    <property name="targetname" value="${target}/${betty.app.name}"/>
     <property name="forms.target" value="."/>
     <!--<property name="dojo.name" value="dojo-release-1.1.1"/>-->
 
@@ -188,21 +188,26 @@
 
     <target name="copy-forms" description="copy forms">
         <copy file="${basedir}/src/registration.html" todir="${targetname}"/>
-        <!--
         <echo/>
         <echo message="************************************************************************************"/>
         <echo message="copying forms..."/>
         <echo message="************************************************************************************"/>
         <echo/>
         <xslt basedir="${resource.dir}/src/main/xforms"
-              destdir="${basedir}/target/${betty.app.name}-${betty.app.version}"
+              destdir="${basedir}/target/forms/"
               style="${basedir}/src/resources/xslt/xhtml2betty.xsl"
               force="true"
               includes="**/*.xhtml"
-              extension=".html">
+              extension=".html"
+              filedirparameter="filedir">
             <classpath refid="transform.class.path"/>
         </xslt>
 
+        <copy todir="${basedir}/target/forms/" overwrite="true">
+            <fileset dir="${resource.dir}/src/main/xforms" excludes="**/*.xhtml"/>
+        </copy>
+
+<!--
         <copy todir="${targetname}/${forms.target}"
               overwrite="true">
             <fileset dir="${basedir}/${properties.rootDir}/src/main/html"/>
@@ -270,9 +275,27 @@
         <echo message="************************************************************************************"/>
         <echo/>
 
+
+        <genkey alias="${signjar.alias}" storepass="${signjar.storepass}" keystore="${basedir}/target/keystore">
+            <dname>
+                <!--CommonName-->
+                <param name="CN" value="betterform.de"/>
+                <!-- OrganizationalUnit -->
+                <param name="OU" value="betterFORM project"/>
+                <!-- Organization -->
+                <param name="O" value="betterFORM"/>
+                <!-- CountryCode -->
+                <param name="C" value="DE"/>
+                <!-- Location -->
+                <param name="L" value="Berlin"/>
+                <!-- State -->
+                <param name="ST" value="Berlin"/>
+            </dname>
+        </genkey>
+
         <!-- sign jar -->
         <!-- todo: existence of keystore must be checked -->
-        <signjar alias="${signjar.alias}" storepass="${signjar.storepass}">
+        <signjar alias="${signjar.alias}" storepass="${signjar.storepass}" keystore="${basedir}/target/keystore">
             <!--<fileset dir="${deploy.dir}/${app.name}-${app.version}/bin" includes="*.jar"/>  -->
             <fileset dir="${targetname}/bin" includes="*.jar"/>
         </signjar>
