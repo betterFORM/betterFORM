@@ -810,10 +810,15 @@
                     var tmp = obj.children("span").eq(0);
                     console.debug("first span: ", tmp);
 
-					obj = tmp.contents().filter(function() { return this.nodeType == 3; })[0];
+                    //Standard Behavior
+                    if (tmp.length == 0) {
+                        obj = obj.contents().filter(function() { return this.nodeType == 3; })[0];
+                        return obj.nodeValue;
+                    }
+
+                    obj = tmp.contents().filter(function() { return this.nodeType == 3; })[0];
                     return obj.nodeValue;
-//					obj = obj.contents().filter(function() { return this.nodeType == 3; })[0];
-//                    return obj.nodeValue;
+
 				}
 			},
 			set_text	: function (obj, val) {

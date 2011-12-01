@@ -180,7 +180,7 @@ $("#xfDoc").delegate("a", "click", function() {
 function addElement(type, position) {
     //hide component menu
     dojo.style("componentTree","display", "none");
-    // console.debug("addElement type:", type);
+    console.debug("addElement type:", type);
     var betterFORMContextPath = "{$APP_CONTEXT}";
     var editorContextPath = "{$EDITOR_HOME}";
 
@@ -190,6 +190,10 @@ function addElement(type, position) {
     elem.attr("id", new Date().getTime());
     elem.attr("data-xf-attrs", "{ }");
     elem.addClass(type);
+
+    if (type == "instance-data") {
+       elem.attr("nodename", type);
+    }
     //$(elem).children('a').add('<span>' + type + '</span>').addClass('elementName');
 
     /*
@@ -198,10 +202,7 @@ function addElement(type, position) {
     dojo.create("img", { width:"24", height: "24",src: betterFORMContextPath + editorContextPath + "images/list-remove.png" },
         btnDelete);
     */
-    if (type.toLowerCase() == "label" || type.toLowerCase() == "alert" || type.toLowerCase() == "hint" || type.toLowerCase() == "help") {
-        var textNode = dojo.create("span", textNode, ahref);
-        dojo.addClass(textNode, "textNode");
-    }
+
     //TODO: ??? wieso denn nicht ???
     if ($('#' + type + '-template') != undefined) {
         var template = $('#' + type + '-template');
@@ -234,11 +235,19 @@ function addElement(type, position) {
     }
 
     var ahref = dojo.query("a", elem[0])[0];
+
+
+
     var text = ahref.lastChild.textContent
     ahref.textContent = "";
 
     var elementName = dojo.create("span", {innerHTML:text}, ahref);
     dojo.addClass(elementName, "elementName");
+    if (type.toLowerCase() == "label" || type.toLowerCase() == "alert" || type.toLowerCase() == "hint" || type.toLowerCase() == "help") {
+        console.debug("addElement: creating textnode")
+        var textNode = dojo.create("span", textNode, ahref);
+        dojo.addClass(textNode, "textNode");
+    }
     var displayProps = dojo.create("span", null, ahref);
     dojo.addClass(displayProps, "displayProps");
     var buttonWrapper = dojo.create("span", null, ahref);
@@ -282,6 +291,9 @@ function buildElementFromTemplate(parent , elementDOM) {
     var buttonWrapper = dojo.create("span", null, ahref);
     dojo.addClass(buttonWrapper, "buttonWrapper")
 
+    if (type == "instance-data") {
+       child.attr("nodename", type);
+    }
     //console.debug("NOBODY THINKS OF THE CHILDREN: ", $(elementDOM).children('span'));
     //All the way down to the basement
     if ($(elementDOM).children('span') != undefined)
