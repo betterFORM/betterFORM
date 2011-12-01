@@ -102,11 +102,11 @@
                 <!-- ################### SCRIPTS ################### -->
 
                 <script type="text/javascript"
-                        src="{$APP_CONTEXT}/bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.js"></script>
+                        src="{$EDITOR_HOME}/scripts/jstree_pre1.0_stable/_lib/jquery.js"></script>
                 <script type="text/javascript"
-                        src="{$APP_CONTEXT}/bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.cookie.js"></script>
+                        src="{$EDITOR_HOME}/scripts/jstree_pre1.0_stable/_lib/jquery.cookie.js"></script>
                 <script type="text/javascript"
-                        src="{$APP_CONTEXT}/bfResources/scripts/jstree_pre1.0_stable/_lib/jquery.hotkeys.js"></script>
+                        src="{$EDITOR_HOME}/scripts/jstree_pre1.0_stable/_lib/jquery.hotkeys.js"></script>
                 <script type="text/javascript"
                         src="{$EDITOR_HOME}/scripts/jstree_pre1.0_stable/jquery.jstree.js"></script>
 
