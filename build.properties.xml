@@ -270,7 +270,7 @@
         <home>/Applications/betterFORM-RC4</home>
         <!-- Leave this empty if you run eXist in root context -->
         <!-- If you use the betterform XRX bundle this is 'betterform' -->
-        <context>/betterform</context>
+        <context>/exist</context>
         <!-- user name and password for the file storing tasks -->
         <db>
             <user>admin</user>
