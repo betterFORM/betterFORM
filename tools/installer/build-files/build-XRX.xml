@@ -151,11 +151,13 @@
             <property name="eXist.db.passwd" value="${eXist.db.passwd}"/>
         </ant>
 
+	<!--
         <ant antfile="${xrx.dir}/build-XRX.xml" target="install-editor" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
             <property name="eXist.db.user" value="${eXist.db.user}"/>
             <property name="eXist.db.passwd" value="${eXist.db.passwd}"/>
         </ant>
+	-->
 
         <ant antfile="${xrx.dir}/build-utils-eXist.xml" target="stop-eXist">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
