@@ -121,6 +121,7 @@
         </xsl:for-each>
     </xsl:template>
 
+
     <xsl:template name="getLinkAndStyle"><xsl:text>
 </xsl:text><xsl:for-each select="link|style">
             <xsl:element name="{local-name()}">
@@ -181,10 +182,10 @@
     <xsl:template name="addDojoRequires"/>
 
     <xsl:template name="assemble-control-classes">
-        <!--<xsl:param name="appearance"/>-->
 
         <xsl:variable name="name-classes">
             <xsl:call-template name="get-name-classes">
+                <!--todo: check this-->
                 <!--<xsl:with-param name="appearance" select="$appearance"/>-->
             </xsl:call-template>
         </xsl:variable>
@@ -220,7 +221,6 @@
                 <xsl:otherwise/>
             </xsl:choose>
         </xsl:variable>
-        <!--<xsl:value-of select="normalize-space(concat('xf-control ',$name-classes, ' ', 'xs-',$type ,' ',$mip-classes, ' ', $author-classes,' ',$incremental,' ',$repeatClasses))"/>-->
         <xsl:value-of select="normalize-space(concat('xfControl ',$name-classes, ' ', $type ,' ',$mip-classes, ' ', $author-classes,' ',$incremental,' ',$repeatClasses))"/>
     </xsl:template>
 
@@ -248,7 +248,6 @@
     <xsl:template name="get-name-classes">
         <xsl:param name="name" select="local-name()" />
         <xsl:param name="appearance"/>
-
 
         <xsl:variable name="fullName"><xsl:call-template name="toUpperCaseFirstLetter"><xsl:with-param name="name" select="$name"/></xsl:call-template></xsl:variable>
         <xsl:variable name="displayAppearance"><xsl:call-template name="toUpperCaseFirstLetter"><xsl:with-param name="name" select="$appearance"/></xsl:call-template></xsl:variable>
@@ -364,15 +363,9 @@
 
     <!-- ### CSS CLASS ASSEMBLY HELPERS ### -->
     <xsl:template name="get-author-classes">
-        <xsl:choose>
-            <xsl:when test="@class">
-                <xsl:value-of select="@class"/>
-            </xsl:when>
-            <!-- this is bullshit -->
-            <xsl:when test="@class">
-                <xsl:value-of select="@class"/>
-            </xsl:when>
-        </xsl:choose>
+        <xsl:if test="@class">
+            <xsl:value-of select="@class"/>
+        </xsl:if>
     </xsl:template>
 
 
