@@ -314,6 +314,11 @@ function buildElementFromTemplate(parent, elementDOM) {
 
     var elementName = dojo.create("span", {innerHTML:text}, ahref);
     dojo.addClass(elementName, "elementName");
+    if (type.toLowerCase() == "label" || type.toLowerCase() == "alert" || type.toLowerCase() == "hint" || type.toLowerCase() == "help") {
+        //console.debug("addElement: creating textnode")
+        var textNode = dojo.create("span", textNode, ahref);
+        dojo.addClass(textNode, "textNode");
+    }
     var displayProps = dojo.create("span", null, ahref);
     dojo.addClass(displayProps, "displayProps");
     var buttonWrapper = dojo.create("span", null, ahref);
