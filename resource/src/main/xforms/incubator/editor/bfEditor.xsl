@@ -426,10 +426,10 @@
 
          <xsl:variable name="props">{
             <xsl:for-each select="@*">
-                <xsl:value-of select="local-name()"/>:'<xsl:value-of select="."/>'
+                "<xsl:value-of select="local-name()"/>":"<xsl:value-of select="."/>"
                 <xsl:if test="position()!=last()"> </xsl:if>
             </xsl:for-each>
-             <xsl:if test="$type eq 'instance-data'"> instancenodevalue:'<xsl:value-of select="."/>'</xsl:if>
+             <xsl:if test="$type eq 'instance-data'"> "instancenodevalue":"<xsl:value-of select="."/>"</xsl:if>
            }
         </xsl:variable>
 

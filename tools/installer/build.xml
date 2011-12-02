@@ -85,7 +85,7 @@
            __== Makes the installer using IzPack ==__
         </echo>
 
-        <!--
+        <!--                                                                                      set
                 <izpack input="${basedir}/installer.xml"
                         output="${basedir}/target/betterform-install.jar"
                         installerType="web"

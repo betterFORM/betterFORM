@@ -4,7 +4,7 @@
  */
 
 /*
-  Implementation of main tree that holds the edited markup
+ Implementation of main tree that holds the edited markup
  */
 $(function () {
     // TO CREATE AN INSTANCE
@@ -13,32 +13,45 @@ $(function () {
         // call `.jstree` with the options object
         .jstree({
             // each plugin you have included can have its own config object
-                "core" : { "initially_open" : [ "document","root","group","switch","repeat" ] },
+            "core" : { "initially_open" : [ "document","root","group","switch","repeat" ] },
             "crrm" : {
                 "move" : {
                     "check_move" : function (m) {
-                        // console.debug("check move:",m);
-                        // console.debug("check move:",m.o);
+                        //console.debug("mainTree.js: check_move: m:", m);
+                        //console.debug("mainTree.js: check_move: origin", m.o);
                         var origin = m.o;
 
                         //the the xf type
                         var xfType = origin.attr("data-xf-type");
-                        // console.debug("xfType ",xfType);
+
+                        //console.debug("mainTree.js: check_move: xfType ", xfType);
 
                         var target = m.r;
+                        //console.debug("mainTree.js: check_move: target:", target);
+
                         var targetType = target.attr("data-xf-type");
-                        // console.debug("check target:",targetType);
+
+                        //Fixe names.
+                        if (targetType == 'instance-root') {
+                            targetType = 'instanceroot';
+                        } else if (targetType == 'instance-data') {
+                            targetType = 'instancedata';
+                        }
+                        //console.debug("mainTree.js: check_move: targetType:", targetType);
 
                         //check rules
                         //look for match in drop target elements list of allowed children
                         //if found 'true' 'false' otherwise
                         var childArray = eval(targetType + "Childs");
                         if (childArray == undefined) {
+                            //console.debug("mainTree.js: check_move: not allowed.");
                             return false;
                         }
                         if (dojo.indexOf(childArray, xfType) != -1) {
+                            //console.debug("mainTree.js: check_move: allowed.");
                             return true;
                         } else {
+                            //console.debug("mainTree.js: check_move: not allowed.");
                             return false;
                         }
                     }
@@ -49,7 +62,7 @@ $(function () {
                 "dots" : false,
                 "icons" : false
             },
-            types : {
+            "types" : {
                 // the default type
                 "default":{
                     "valid_children": "all"
@@ -61,13 +74,13 @@ $(function () {
                     "valid_children": ["bind"]
                 }
             },
-            ui:{
+            "ui":{
                 selected_parent_close:false,
                 selected_parent_open:false
             },
-            hotkeys: {
+            "hotkeys": {
                 "up":function(event) {
-                     console.debug("up key pressed");
+                    console.debug("up key pressed");
                     // console.debug("this: ",this);
                     // console.debug("1");
                     var o = this.data.ui.hovered || this.data.ui.last_selected || -1;
@@ -100,8 +113,8 @@ $(function () {
             var nodeIsLoaded = xformsEditor.nodeIsLoaded(tmpId);
             // console.debug("nodeIsLoaded:", nodeIsLoaded);
 //            console.debug("event: " , event);
-            console.debug("data: " , data);
-            console.debug("tmpId: " , tmpId);
+            console.debug("data: ", data);
+            console.debug("tmpId: ", tmpId);
 
 
             if (nodeIsLoaded) {
@@ -110,15 +123,15 @@ $(function () {
             } else {
                 // console.debug(data);
                 var xfType = data.rslt.obj.attr("data-xf-type");
-                console.debug("xfType:",xfType);
+                console.debug("xfType:", xfType);
 
                 var mountNode = dojo.byId("xfMount");
                 //Save id of current selected Tree-Leaf on root-node of tree
-                var oldXfType = dojo.attr(dojo.byId("xfDoc"),"data-bf-xftype");
+                var oldXfType = dojo.attr(dojo.byId("xfDoc"), "data-bf-xftype");
                 var oldId = dojo.attr(dojo.byId("xfDoc"), "data-bf-currentid");
 
-                dojo.attr( dojo.byId("xfDoc"), "data-bf-currentid", tmpId);
-                dojo.attr( dojo.byId("xfDoc"), "data-bf-xftype", xfType);
+                dojo.attr(dojo.byId("xfDoc"), "data-bf-currentid", tmpId);
+                dojo.attr(dojo.byId("xfDoc"), "data-bf-xftype", xfType);
 
                 var nodesToDestroy = dojo.query("*[widgetId]", mountNode);
                 // console.debug("nodesToDestroy: ",nodesToDestroy);
@@ -130,18 +143,18 @@ $(function () {
                 // console.debug("tmpBfPath:",tmpBfPath);
 //                dijit.byId("xfMount").set("href", EDITOR_HOME + xfType + ".html");
                 if (xfType != undefined) {
-                    fluxProcessor.setControlValue("currentType",xfType);
+                    fluxProcessor.setControlValue("currentType", xfType);
                     /*
-                    the following event triggers automatic update of embedded propertyform. If that's not performant
-                    or to expensive the explicit updating via a contextmenu trigger can be used instead. The relevant
-                    code is commented in place.
-                    */
+                     the following event triggers automatic update of embedded propertyform. If that's not performant
+                     or to expensive the explicit updating via a contextmenu trigger can be used instead. The relevant
+                     code is commented in place.
+                     */
                     fluxProcessor.dispatchEvent("t-loadProperties");
                     console.debug("mainTree.js: oldXfType " + oldXfType);
                     console.debug("mainTree.js: oldId " + oldId);
                     if (oldXfType == "instance-data") {
                         console.debug("mainTree.js: hide instance-data");
-                         xformsEditor.hideNodeNameInput(oldId);
+                        xformsEditor.hideNodeNameInput(oldId);
                     }
                     if (xfType == "instance-data") {
                         console.debug("mainTree.js: show instance-data")
@@ -149,9 +162,9 @@ $(function () {
                         xformsEditor.placeNodeNameInput(tmpId);
                     }
 
-                    dojo.place(dojo.byId("contextBar"), dojo.query("#"+tmpId + " .buttonWrapper")[0], "last");
-    //                dojo.place(dojo.byId("componentTree"), dojo.query("#"+tmpId + " .buttonWrapper")[0], "last");
-    //                dojo.byId('componentTree').style("right:300px;top:200px;");
+                    dojo.place(dojo.byId("contextBar"), dojo.query("#" + tmpId + " .buttonWrapper")[0], "last");
+                    //                dojo.place(dojo.byId("componentTree"), dojo.query("#"+tmpId + " .buttonWrapper")[0], "last");
+                    //                dojo.byId('componentTree').style("right:300px;top:200px;");
 
                     //console.debug("publish: nodeSelected: data", data);
                     dojo.publish("nodeSelected", [
@@ -167,7 +180,7 @@ $(function () {
         // so listen for `function_name`.`jstree` - you can function names from the docs
         .bind("loaded.jstree", function (event, data) {
             // you get two params - event & data - check the core docs for a detailed description
-            var overlay=dojo.byId("overlay");
+            var overlay = dojo.byId("overlay");
             dojo.fadeOut({ node: overlay,duration:600 }).play();
             dojo.destroy("overlay");
         });
@@ -179,7 +192,7 @@ $("#xfDoc").delegate("a", "click", function() {
 
 function addElement(type, position) {
     //hide component menu
-    dojo.style("componentTree","display", "none");
+    dojo.style("componentTree", "display", "none");
     console.debug("addElement type:", type);
     var betterFORMContextPath = "{$APP_CONTEXT}";
     var editorContextPath = "{$EDITOR_HOME}";
@@ -188,31 +201,39 @@ function addElement(type, position) {
     elem.attr("data-xf-type", type);
     elem.attr("rel", type);
     elem.attr("id", new Date().getTime());
-    elem.attr("data-xf-attrs", "{ }");
+    if (type == "instance-data") {
+        elem.attr('data-xf-attrs', '{ "instancenodevalue":"" }' );
+    } else {
+        elem.attr("data-xf-attrs", "{ }");
+    }
     elem.addClass(type);
 
     if (type == "instance-data") {
-       elem.attr("nodename", type);
+        elem.attr("nodename", type);
     }
     //$(elem).children('a').add('<span>' + type + '</span>').addClass('elementName');
 
     /*
-    var btnDelete = dojo.create("button", { type:"button", style: "padding: 0pt; margin: 0pt; background: none repeat scroll 0% 0% transparent; border: medium none;", onclick: "if(confirm('Really delete?')) deleteNode(this);return false;" },
-        span);
-    dojo.create("img", { width:"24", height: "24",src: betterFORMContextPath + editorContextPath + "images/list-remove.png" },
-        btnDelete);
-    */
+     var btnDelete = dojo.create("button", { type:"button", style: "padding: 0pt; margin: 0pt; background: none repeat scroll 0% 0% transparent; border: medium none;", onclick: "if(confirm('Really delete?')) deleteNode(this);return false;" },
+     span);
+     dojo.create("img", { width:"24", height: "24",src: betterFORMContextPath + editorContextPath + "images/list-remove.png" },
+     btnDelete);
+     */
 
     //TODO: ??? wieso denn nicht ???
     if ($('#' + type + '-template') != undefined) {
         var template = $('#' + type + '-template');
         //Ensure we have the right type
         if ($('#' + type + '-template').attr('data-xf-type') == type) {
-             //Select parent
+            //Select parent
             //$('#xfDoc').jstree("select_node", $(elem), true, null);
 
             //Copy all attributes except 'id'
-            $.each($('#' + type + '-template')[0].attributes, function() {  if (this.name != 'id') { elem.attr(this.name, this.value); }});
+            $.each($('#' + type + '-template')[0].attributes, function() {
+                if (this.name != 'id') {
+                    elem.attr(this.name, this.value);
+                }
+            });
 
             //Select parent
             //$('#xfDoc').jstree("select_node", $(elem), true, null);
@@ -221,8 +242,7 @@ function addElement(type, position) {
 
             //$.each($('#' + type + '-template span'), function()
             console.debug("NOBODY THINKS OF THE CHILDREN: ", $(template).children('span'));
-            $.each($(template).children('span'), function()
-                {
+            $.each($(template).children('span'), function() {
                     console.debug("this: ", this)
                     buildElementFromTemplate(elem, this)
                 }
@@ -235,7 +255,6 @@ function addElement(type, position) {
     }
 
     var ahref = dojo.query("a", elem[0])[0];
-
 
 
     var text = ahref.lastChild.textContent
@@ -261,13 +280,12 @@ function addElement(type, position) {
 
 }
 
-function buildElementFromTemplate(parent , elementDOM) {
+function buildElementFromTemplate(parent, elementDOM) {
     console.debug('buildElementFormTemplate element:', elementDOM);
     var type = $(elementDOM).attr('data-xf-type');
     console.debug('buildElementFormTemplate type:', type);
     var child = $("#xfDoc").jstree("create", parent, "inside", type, false, true);
-    $.each($(elementDOM)[0].attributes, function()
-        {
+    $.each($(elementDOM)[0].attributes, function() {
             child.attr(this.name, this.value);
         }
     );
@@ -292,15 +310,13 @@ function buildElementFromTemplate(parent , elementDOM) {
     dojo.addClass(buttonWrapper, "buttonWrapper")
 
     if (type == "instance-data") {
-       child.attr("nodename", type);
+        child.attr("nodename", type);
     }
     //console.debug("NOBODY THINKS OF THE CHILDREN: ", $(elementDOM).children('span'));
     //All the way down to the basement
-    if ($(elementDOM).children('span') != undefined)
-    {
-        $.each($(elementDOM).children('span'), function()
-        {
-           buildElementFromTemplate(child, this)
+    if ($(elementDOM).children('span') != undefined) {
+        $.each($(elementDOM).children('span'), function() {
+            buildElementFromTemplate(child, this)
         });
     }
 }

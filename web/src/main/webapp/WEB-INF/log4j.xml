@@ -60,7 +60,7 @@
         <priority value="DEBUG"/>
     </category>
 
-    <category name="de.betterform.xml.xforms.model">
+    <category name="de.betterform">
         <priority value="DEBUG"/>
     </category>
 

@@ -30,6 +30,7 @@
                         </data>
                     </xf:instance>
                     <xf:bind nodeset="instance('i-data')/edit" relevant="string-length(instance('i-data')/edit/oldAttributeName) > 0"/>
+                    <xf:bind nodeset="instance('i-data')/edit/newAttributeName" relevant="not(. eq 'instancenodevalue')"/>
 
                     <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="xforms-ready">
                         <script>
@@ -55,46 +56,48 @@
                 </xf:output>
             </div>
 
-            <xf:group id="properties" appearance="compact" ref="xfElement">
-                <xf:group>
-                    <xf:label>Attributes:</xf:label>
-                    <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="DOMFocusOut"
+            <xf:group id="properties" appearance="full" ref="xfElement">
+                <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="DOMFocusOut"
                            ev:observer="properties"
                            ev:phase="capture"
                            propagate="stop">
-                        <xf:message>Group</xf:message>
                         <xf:setvalue ref="instance('i-data')/updateProperties" value="string(bf:xml2props(instance('i-props')/xfElement))"/>
-                   </xf:action>
-                   <xf:repeat id="existing" nodeset="attribute::*">
-                        <xf:output value="name(.)">
-                            <xf:label>name</xf:label>
-                        </xf:output>
+               </xf:action>
+               <xf:group>
+                    <xf:label>Attributes:</xf:label>
+
+                   <xf:repeat id="existing" nodeset="attribute::*" apperance="">
+                        <xf:output value="IF ( name(.) eq 'instancenodevalue', 'Node value', concat('Name: ', name(.)) ) "/>
                         <xf:output ref=".">
-                            <xf:label>value</xf:label>
+                            <xf:label>Value:</xf:label>
                         </xf:output>
                         <xf:trigger>
-                            <xf:label>edit</xf:label>
+                            <xf:label>Edit</xf:label>
                             <xf:setvalue ref="instance('i-data')/edit/oldAttributeName" value="context()/name(.)"/>
                             <xf:setvalue ref="instance('i-data')/edit/oldAttributeValue" value="context()/."/>
                             <xf:setvalue ref="instance('i-data')/edit/newAttributeName" value="context()/name(.)"/>
                             <xf:setvalue ref="instance('i-data')/edit/newAttributeValue" value="context()/."/>
+
                         </xf:trigger>
                     </xf:repeat>
                 </xf:group>
 
                 <xf:group ref="instance('i-data')/edit">
                     <xf:label>Edit attribute</xf:label>
+
+                    <xf:output value="IF ( instance('i-data')/edit/newAttributeName eq 'instancenodevalue', 'Node value', '' ) "/>
                     <xf:input ref="instance('i-data')/edit/newAttributeName">
-                        <xf:label>name</xf:label>
+                        <xf:label>Name:</xf:label>
                     </xf:input>
                     <xf:input ref="instance('i-data')/edit/newAttributeValue">
-                        <xf:label>value</xf:label>
+                        <xf:label>Value:</xf:label>
                     </xf:input>
                     <xf:trigger>
                             <xf:label>apply</xf:label>
                             <xf:delete model="formdef" nodeset="instance('i-props')/xfElement/@*[name() = name(bf:createAttributeNode(instance('i-data')/edit/oldAttributeName,instance('i-data')/edit/oldAttributeValue)/attribute::*)]"/>
                             <xf:insert model="formdef" context="instance('i-props')/xfElement"  origin="bf:createAttributeNode(instance('i-data')/edit/newAttributeName,instance('i-data')/edit/newAttributeValue)/attribute::*"/>
                             <xf:setvalue ref="instance('i-data')/edit/oldAttributeName" value="''"/>
+                        <xf:setvalue ref="instance('i-data')/updateProperties" value="string(bf:xml2props(instance('i-props')/xfElement))"/>
                     </xf:trigger>
                 </xf:group>
 

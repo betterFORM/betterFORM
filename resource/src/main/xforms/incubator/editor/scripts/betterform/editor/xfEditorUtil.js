@@ -36,7 +36,9 @@ var modelChilds = [
             "load",
             "send",
             "message"];
-var instanceChilds = [];
+var instanceChilds = ["instance-root"];
+var instancerootChilds = ["instance-data"];
+var instancedataChilds = ["instance-data"];
 var bindChilds = [
             "bind"];
 var extensionChilds = [];
