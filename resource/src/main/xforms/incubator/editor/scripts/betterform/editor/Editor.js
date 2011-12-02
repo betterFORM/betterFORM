@@ -69,8 +69,8 @@ dojo.declare("betterform.editor.Editor", null,
             var currentNode = dojo.byId(currentid);
             dojo.attr(currentNode,"data-xf-attrs", newProps);
 
-            var children = dojo.query('.textNode', currentNode);
-            console.debug('children: ' + children.length);
+            var children = dojo.query('#'+ currentid + ' > a > .textNode');
+            //console.debug('children: ' + children.length);
             if (children.length > 0 && children != undefined && children != '') {
                 children[0].innerHTML = dijit.byId('textnodecontent').getControlValue();
             }
@@ -291,6 +291,12 @@ dojo.declare("betterform.editor.Editor", null,
 
         //check rules look for match in drop target elements list of allowed children
         //if found 'true' 'false' otherwise
+        //Fix names.
+        if (targetType == 'instance-root') {
+            targetType = 'instanceroot';
+        } else if (targetType == 'instance-data') {
+            targetType = 'instancedata';
+        }
         var childArray=eval(targetType+"Childs");
         // console.debug("childArray: ",childArray);
         if(childArray == undefined){
@@ -364,35 +370,33 @@ dojo.declare("betterform.editor.Editor", null,
     hideNodeNameInput:function(tmpId) {
         console.debug("hideNodeNameInput: tmpId: " + tmpId)
         //Get current value
-        var value= dojo.query("#nodeNameInput").val();
-        console.debug("hideNodeNameInput: value" + value)
-        //Reset it
-        dojo.query("#nodeNameInput").val("");
-        //Move Input away.
-        dojo.place(dojo.byId("nodeNameInput"), dojo.byId("parkNodeInput"), "last");
-        //Update listElement
-        dojo.query("#" + tmpId + " .elementName").text(value);
-        dojo.query("#" + tmpId + " .elementName").text(value);
-        var node = dojo.byId(tmpId);
-        dojo.toggleClass(node, dojo.attr(node, 'nodename'));
-        dojo.attr(node, 'nodename', value);
-        dojo.toggleClass(node, dojo.attr(node, 'nodename'));
-
+        if (dojo.query('#' + tmpId + ' > a > .elementName > #nodeNameInput').length > 0) {
+            var value= dojo.query('#' + tmpId + ' > a > .elementName > #nodeNameInput').val();
+            console.debug("hideNodeNameInput: value" + value)
+            //Reset it
+            dojo.query("#nodeNameInput").val("");
+            //Move Input away.
+            dojo.place(dojo.byId("nodeNameInput"), dojo.byId("parkNodeInput"), "last");
+            //Update listElement
+            dojo.query('#' + tmpId + ' > a > .elementName').text(value);
+            var node = dojo.byId(tmpId);
+            dojo.toggleClass(node, dojo.attr(node, 'nodename'));
+            dojo.attr(node, 'nodename', value);
+            dojo.toggleClass(node, dojo.attr(node, 'nodename'));
+        }
     },
     placeNodeNameInput:function(tmpId) {
         console.debug("placeNodeNameInput: tmpId:" + tmpId);
         //Get current textValue
-        var value = dojo.query("#" + tmpId + " .elementName")[0].textContent;
+        var value = dojo.query('#' + tmpId + ' > a > .elementName')[0].textContent;
         console.debug("placeNodeNameInput: value:" + value);
         //Empty current textValue
-        dojo.query("#" + tmpId + " .elementName").text("");
+        dojo.query('#' + tmpId + ' > a > .elementName').text("");
 
         //Set input-value
         dojo.query("#nodeNameInput").val(value);
         //Place input
-        dojo.place(dojo.byId("nodeNameInput"), dojo.query("#"+tmpId + " .elementName")[0], "last");
+        dojo.place(dojo.byId("nodeNameInput"), dojo.query('#' + tmpId + ' > a > .elementName')[0], "last");
+        dojo.byId("nodeNameInput").focus();
     }
 });
-
-
-

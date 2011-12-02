@@ -187,6 +187,7 @@
                             evt.stopPropagation();
                             evt.cancelBubble=true;
                             dojo.place(dojo.byId("contextBar"), dojo.byId("parkToolbar"), "last");
+                            dojo.place(dojo.byId("nodeNameInput"), dojo.byId("parkNodeInput"), "last");
                             $("#xfDoc").jstree("remove", null);
                             return;
                             /* ]]> */

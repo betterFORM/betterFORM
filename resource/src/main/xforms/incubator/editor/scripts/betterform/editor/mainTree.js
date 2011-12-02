@@ -100,9 +100,18 @@ $(function () {
                 },
                 "ctrl+p" : function (event) {
                     alert("preview");
+                },
+                "del" : function(event) {
+                    console.debug('del:', this.data.ui.selected.attr('id'));
+                    if (this.data.ui.selected.attr('data-xf-type') == 'instance-data') {
+                       dojo.place(dojo.byId("nodeNameInput"), dojo.byId("parkNodeInput"), "last");
+                    }
+                    dojo.place(dojo.byId("contextBar"), dojo.byId("parkToolbar"), "last");
+
+                    this.remove();
                 }
-            }
-,
+            },
+
             // the `plugins` array allows you to configure the active plugins on this instance
             "plugins" : ["themes","html_data","ui","crrm","hotkeys","dnd"]
         })
@@ -152,6 +161,7 @@ $(function () {
                     fluxProcessor.dispatchEvent("t-loadProperties");
                     console.debug("mainTree.js: oldXfType " + oldXfType);
                     console.debug("mainTree.js: oldId " + oldId);
+                    // && dojo.query('#' + tmpId + ' #nodeNameInput').lenght < 1
                     if (oldXfType == "instance-data") {
                         console.debug("mainTree.js: hide instance-data");
                         xformsEditor.hideNodeNameInput(oldId);
@@ -193,6 +203,8 @@ $("#xfDoc").delegate("a", "click", function() {
 function addElement(type, position) {
     //hide component menu
     dojo.style("componentTree", "display", "none");
+    //hide Input
+
     console.debug("addElement type:", type);
     var betterFORMContextPath = "{$APP_CONTEXT}";
     var editorContextPath = "{$EDITOR_HOME}";
@@ -221,7 +233,7 @@ function addElement(type, position) {
      */
 
     //TODO: ??? wieso denn nicht ???
-    if ($('#' + type + '-template') != undefined) {
+    if ($('#' + type + '-template').length > 0) {
         var template = $('#' + type + '-template');
         //Ensure we have the right type
         if ($('#' + type + '-template').attr('data-xf-type') == type) {
@@ -241,9 +253,9 @@ function addElement(type, position) {
             //Handle children
 
             //$.each($('#' + type + '-template span'), function()
-            console.debug("NOBODY THINKS OF THE CHILDREN: ", $(template).children('span'));
+            //console.debug("NOBODY THINKS OF THE CHILDREN: ", $(template).children('span'));
             $.each($(template).children('span'), function() {
-                    console.debug("this: ", this)
+                    //console.debug("this: ", this)
                     buildElementFromTemplate(elem, this)
                 }
             );
@@ -263,7 +275,7 @@ function addElement(type, position) {
     var elementName = dojo.create("span", {innerHTML:text}, ahref);
     dojo.addClass(elementName, "elementName");
     if (type.toLowerCase() == "label" || type.toLowerCase() == "alert" || type.toLowerCase() == "hint" || type.toLowerCase() == "help") {
-        console.debug("addElement: creating textnode")
+        //console.debug("addElement: creating textnode")
         var textNode = dojo.create("span", textNode, ahref);
         dojo.addClass(textNode, "textNode");
     }
@@ -276,14 +288,12 @@ function addElement(type, position) {
     elem.focus();
     elem.hide();
     $(elem).fadeIn("slow");
-
-
 }
 
 function buildElementFromTemplate(parent, elementDOM) {
-    console.debug('buildElementFormTemplate element:', elementDOM);
+    //console.debug('buildElementFormTemplate element:', elementDOM);
     var type = $(elementDOM).attr('data-xf-type');
-    console.debug('buildElementFormTemplate type:', type);
+    //console.debug('buildElementFormTemplate type:', type);
     var child = $("#xfDoc").jstree("create", parent, "inside", type, false, true);
     $.each($(elementDOM)[0].attributes, function() {
             child.attr(this.name, this.value);

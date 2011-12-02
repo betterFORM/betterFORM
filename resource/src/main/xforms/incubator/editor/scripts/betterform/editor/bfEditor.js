@@ -70,7 +70,7 @@ function generateCSSLocator(start, attribute_xpath) {
     var reference_locator = "";
 
     //TODO: < !!
-    for (var i = 1; i != attribute_xpath.length; i++) {
+    for (var i = start; i != attribute_xpath.length; i++) {
         reference_locator += " ." + attribute_xpath[i];
     }
 
@@ -110,7 +110,7 @@ function setDisplayProps(node) {
             reference_locator = generateCSSLocator(0, reference_xpath);
         }
 
-        console.debug(instance_locator + reference_locator);
+        //console.debug('Thingy: ' + instance_locator + reference_locator);
         if (dojo.query(instance_locator + reference_locator).length == 0) {
             dojo.style(span, 'color', 'red');
         } else {
