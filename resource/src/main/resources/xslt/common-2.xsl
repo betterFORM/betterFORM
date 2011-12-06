@@ -256,11 +256,11 @@
             <xsl:when test="$appearance">
                 <!--<xsl:value-of select="concat($xf,$name, ' ', $appearance, '-',$name)"/>-->
                 <!--<xsl:value-of select="concat($xf,$fullName, ' ', $xf,$displayAppearance,$fullName)"/>-->
-                <xsl:value-of select="concat($xf,$displayAppearance,$fullName)"/>
+                <xsl:value-of select="concat($xf,$displayAppearance,$fullName, ' app',$displayAppearance,$fullName)"/>
                 <!--<xsl:message>computedClassAppearance : <xsl:value-of select="concat($xf,$fullName, ' ', $xf,$displayAppearance,$fullName)"/></xsl:message>-->
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="concat($xf,$fullName)"/>
+                <xsl:value-of select="concat($xf,$fullName, ' app',$fullName)"/>
                 <!--<xsl:message>computedClass : <xsl:value-of select="concat($xf,$fullName)"/></xsl:message>-->
             </xsl:otherwise>
         </xsl:choose>

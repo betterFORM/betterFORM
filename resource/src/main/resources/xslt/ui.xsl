@@ -207,9 +207,7 @@
             <xsl:call-template name="get-mip-classes"/>
         </xsl:variable>
 
-
-        <xsl:variable name="bfGroupLabelLeft"> </xsl:variable>
-        <table cellspacing="0" cellpadding="0" class="xfContainer bfVerticalTable {$mip-classes}" id="{$group-id}"
+        <table cellspacing="0" cellpadding="0" class="xfContainer appBfVerticalTable bfVerticalTable {$mip-classes}" id="{$group-id}"
                dojoType="betterform.ui.container.Group">
             <xsl:if test="exists(xforms:label)">
                 <caption class="xfGroupLabel">
@@ -222,7 +220,7 @@
                         <!-- if we got a group with appearance bf:GroupLabelLeft we put the label
                 of the first control into the lefthand column -->
                         <xsl:when test="local-name()='group' and ./@appearance='bf:GroupLabelLeft'">
-                            <tr class="bfGroupLabelLeft">
+                            <tr class="appBfGroupLabelLeft bfGroupLabelLeft">
                                 <td>
                                     <!-- use the label of the nested group for the left column -->
                                     <xsl:value-of select="xforms:label"/>
@@ -331,7 +329,7 @@
         </xsl:variable>
 
 
-        <table id="{@id}" class="xfContainer bfHorizontalTable {$mip-classes}" dojoType="betterform.ui.container.Group">
+        <table id="{@id}" class="xfContainer appBfHorizontalTable bfHorizontalTable {$mip-classes}" dojoType="betterform.ui.container.Group">
             <tr>
                 <td colspan="{count(*[position() &gt; 1])}" class="xfGroupLabel">
                     <xsl:if test="exists(xforms:label) and @appearance !='bf:GroupLabelLeft'">
@@ -341,9 +339,9 @@
             </tr>
             <tr>
                 <xsl:for-each select="*[position() &gt; 1]">
-                    <td class="bfHorizontalTableLabel  bfTableCol{position()}">
+                    <td class="appBfHorizontalTableLabel bfHorizontalTableLabel  appBfTableCol{position()} bfTableCol{position()}">
                         <xsl:if test="local-name(.) != 'trigger'">
-                            <label id="{@id}-label" for="{@id}-value" class="bfTableLabel">
+                            <label id="{@id}-label" for="{@id}-value" class="appBfTableLabel bfTableLabel">
                                 <xsl:apply-templates select="xforms:label"/>
                             </label>
                         </xsl:if>
@@ -352,7 +350,7 @@
             </tr>
             <tr>
                 <xsl:for-each select="*[position() &gt; 1 and *[position() != last()]]">
-                    <td class="bfHorizontalTableValue">
+                    <td class="appBfHorizontalTableValue bfHorizontalTableValue">
                         <xsl:apply-templates select="."/>
                     </td>
                 </xsl:for-each>
@@ -394,7 +392,7 @@
                jsId="{$repeat-id}"
                class="{$repeat-classes}"
                dojoType="betterform.ui.container.Repeat"
-               appearance="compact"
+               appearance="appCompact compact"
                border="0"
                cellpadding="0"
                cellspacing="0"
@@ -420,7 +418,7 @@
                 <tr repeatItemId="{$id}"
                     class="{$repeat-item-classes}"
                     dojoType="betterform.ui.container.RepeatItem"
-                    appearance="compact">
+                    appearance="appCompact compact">
                     <xsl:call-template name="processCompactChildren"/>
                 </tr>
             </xsl:for-each>
@@ -433,10 +431,10 @@
             <xsl:variable name="col-classes">
                 <xsl:choose>
                     <xsl:when test="./bf:data/@bf:enabled='false'">
-                        <xsl:value-of select="concat('bfTableCol-',position(),' ','xfDisabled')"/>
+                        <xsl:value-of select="concat('appBfTableCol-', position(),' bfTableCol-',position(),' ','xfDisabled')"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="concat('bfTableCol-',position())"/>
+                        <xsl:value-of select="concat('appBfTableCol-',position(),' bfTableCol-',position())"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
@@ -498,10 +496,10 @@
                     <xsl:variable name="col-classes">
                         <xsl:choose>
                             <xsl:when test="./bf:data/@bf:enabled='false'">
-                                <xsl:value-of select="concat('bfTableCol-',position(),' ','xfDisabled')"/>
+                                <xsl:value-of select="concat('appBfTableCol-', position(), ' bfTableCol-',position(),' ','xfDisabled')"/>
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:value-of select="concat('bfTableCol-',position())"/>
+                                <xsl:value-of select="concat('appBfTableCol-',position(),' bfTableCol-',position())"/>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
@@ -866,10 +864,10 @@
             <xsl:variable name="col-classes">
                 <xsl:choose>
                     <xsl:when test="./bf:data/@bf:enabled='false'">
-                        <xsl:value-of select="concat('bfTableCol-',position(),' ','xfDisabled')"/>
+                        <xsl:value-of select="concat('appBfTableCol-', position(), ' bfTableCol-',position(),' ','xfDisabled')"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="concat('bfTableCol-',position())"/>
+                        <xsl:value-of select="concat('appBfTableCol-', position(), ' bfTableCol-',position())"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
@@ -977,7 +975,7 @@
                 <div repeatItemId="{$repeat-item-id}"
                      class="{$repeat-item-classes}"
                      dojoType="betterform.ui.container.RepeatItem"
-                     appearance="full"
+                     appearance="appFull full"
                      tabindex="0">
                     <div class="legend">
                         <xsl:choose>
@@ -1038,7 +1036,7 @@
                         <div repeatItemId="{$repeat-item-id}"
                              class="{$repeat-item-classes}"
                              title="{.//xforms:output[1]/bf:data}"
-                             appearance="full">
+                             appearance="appFull full">
                             <div class="legend">
                                 <xsl:choose>
                                     <xsl:when test="$group-label and xforms:label">
@@ -1128,7 +1126,7 @@
                     <tr repeatItemId="{$id}"
                         class="{$repeat-item-classes}"
                         dojoType="betterform.ui.container.RepeatItem"
-                        appearance="compact">
+                        appearance="appCompact compact">
                         <xsl:apply-templates select="*" mode="compact-repeat"/>
                     </tr>
                 </xsl:for-each>
@@ -1141,10 +1139,10 @@
         <xsl:variable name="col-classes">
             <xsl:choose>
                 <xsl:when test="./bf:data/@bf:enabled='false'">
-                    <xsl:value-of select="concat('bfTableCol-',position(),' ','xfDisabled')"/>
+                    <xsl:value-of select="concat('appBfTableCol-', position(), ' bfTableCol-',position(),' ','xfDisabled')"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="concat('bfTableCol-',position())"/>
+                    <xsl:value-of select="concat('appBfTableCol-', position(), ' bfTableCol-',position())"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
