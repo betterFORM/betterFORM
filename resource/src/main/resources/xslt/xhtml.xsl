@@ -10,7 +10,7 @@
                 xmlns:bf="http://betterform.sourceforge.net/xforms"
                 xmlns:ev="http://www.w3.org/2001/xml-events"
                 exclude-result-prefixes="xf bf"
-                xpath-default-namespace= "http://www.w3.org/1999/xhtml">
+                xpath-default-namespace="http://www.w3.org/1999/xhtml">
 
     <xsl:import href="common.xsl"/>
     <xsl:include href="html-form-controls.xsl"/>
@@ -63,7 +63,7 @@
 
     <xsl:param name="form-id" select="'betterform'"/>
     <xsl:param name="form-name" select="//title"/>
-    <xsl:param name="debug-enabled" select="'false'"/>
+    <xsl:param name="debug-enabled" select="'true'"/>
 
     <!-- ### specifies the parameter prefix for repeat selectors ### -->
     <xsl:param name="selector-prefix" select="'s_'"/>
@@ -422,6 +422,16 @@
                     </div>
             </xsl:if>
 
+            <span id="templates" style="display:none;">
+                <!--
+                >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                todo todo todo: section for all templates (formely 'prototypes') needed
+                the idea is to keep them all in one place and have a mode 'template'
+                to render them all in this place.
+                >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                -->
+            </span>
+
             <!--
             >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             start section for script imports
@@ -512,21 +522,21 @@
     <!-- ######################################################################################################## -->
 
     <xsl:template match="xf:input|xf:range|xf:secret|xf:select|xf:select1|xf:textarea|xf:upload">
-        <xsl:variable name="id" select="@id"/>
         <xsl:variable name="control-classes"><xsl:call-template name="assemble-control-classes"/></xsl:variable>
         <xsl:variable name="label-classes"><xsl:call-template name="assemble-label-classes"/></xsl:variable>
 
         <!--
         todo: attributes from xf controls should probably be 'tunneled' to widget e.g. 'placeholder' of html5
+        todo: remove dojotype here and add with behavior?
         -->
-        <span id="{$id}" dojoType="betterform.ui.Control" class="{$control-classes}">
+        <span id="{@id}" dojoType="betterform.ui.Control" class="{$control-classes}">
 
             <xsl:call-template name="copy-style-attribute"/>
             <xsl:if test="@bf:incremental-delay">
             	<xsl:attribute name="bf:incremental-delay" select="@bf:incremental-delay"/>
             </xsl:if>
 
-            <label for="{$id}-value" id="{$id}-label" class="{$label-classes}">
+            <label for="{@id}-value" id="{@id}-label" class="{$label-classes}">
                 <xsl:call-template name="create-label">
                     <xsl:with-param name="label-elements" select="xf:label"/>
                 </xsl:call-template>
@@ -547,6 +557,7 @@
 
         <!--
         todo: attributes from xf controls should probably be 'tunneled' to widget e.g. 'placeholder' of html5
+        todo: remove dojotype here and add with behavior?
         -->
         <span id="{$id}" class="{$control-classes}" dojoType="betterform.ui.Control">
             <xsl:call-template name="copy-style-attribute"/>
@@ -598,14 +609,12 @@
     <!-- ##### TRIGGER / SUBMIT ##### -->
     <xsl:template match="xf:trigger|xf:submit">
         <xsl:variable name="control-classes">
-            <xsl:call-template name="assemble-control-classes">
-                <!--<xsl:with-param name="appearance" select="@appearance"/>-->
-            </xsl:call-template>
+            <xsl:call-template name="assemble-control-classes"/>
         </xsl:variable>
 
-        <xsl:call-template name="trigger">
-            <xsl:with-param name="classes" select="$control-classes"/>
-        </xsl:call-template>
+        <span id="{@id}" class="{$control-classes}" dojoType="betterform.ui.Control">
+            <xsl:call-template name="trigger"/>
+        </span>
     </xsl:template>
 
     <!-- ######################################################################################################## -->
@@ -665,8 +674,7 @@
     <!-- ############################## HINT ############################## -->
     <xsl:template match="xf:hint">
         <xsl:variable name="parentId" select="../@id"/>
-        <!--<xsl:message terminate="no">parentId: <xsl:value-of select="../@id"/>  id: <xsl:value-of select="@id"/> </xsl:message>-->
-        <span id="{../@id}-hint" class="xfHint" style="display:none">
+        <span id="{$parentId}-hint" class="xfHint" style="display:none">
             <xsl:apply-templates/>
 
             <!-- if help exists we output the linking icon here -->
@@ -876,6 +884,9 @@
 
 
         <script type="text/javascript" src="{concat($contextroot,$scriptPath,'betterform/betterform-Full.js')}">&#160;</script>
+        <xsl:text>
+</xsl:text>
+        <script type="text/javascript" src="{concat($contextroot,$scriptPath,'betterform/Components.js')}">&#160;</script>
         <xsl:text>
 </xsl:text>
     </xsl:template>
