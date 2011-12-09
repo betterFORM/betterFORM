@@ -328,7 +328,7 @@
                      </xsl:for-each>
 
                      <xsl:variable name="outermostNodeset"
-                                  select=".//xf:*[not(xf:model)][not(ancestor::xf:*)]"/>
+                                  select=".//xf:*[not(ancestor::*[namespace-uri()='http://www.w3.org/2002/xforms'])][not(namespace-uri()='http://www.w3.org/2002/xforms' and local-name()='model')]"/>
 
                     <!-- detect how many outermost XForms elements we have in the body -->
                     <xsl:choose>
