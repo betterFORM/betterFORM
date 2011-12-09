@@ -46,7 +46,7 @@ dojo.declare(
     },
    
     getControlValue:function() {
-        return this.attr('value');
+        return this.get('value');
     },
     
     onStarClick:function(/* Event */evt){
@@ -61,7 +61,7 @@ dojo.declare(
 
     _handleSetControlValue:function(value) {
         // console.debug("betterform.ui.range.Rating._handleSetControlValue: Value: ", value);
-        this.setAttribute("value",value);
+        this.set("value",value);
     }
 
 });
