@@ -165,22 +165,12 @@
                    processor="de.betterform.agent.web.flux.FluxProcessor"
                    description="AJAX-enabled useragent with packed resources for production environments">
         </useragent>
-        <useragent name="dojodev"
-                   processor="de.betterform.agent.web.flux.FluxProcessor"
-                   description="AJAX-enabled useragent with development resources and debug support">
-        </useragent>
-        <useragent name="bfEditor"
-                   processor="de.betterform.agent.web.flux.FluxProcessor"
-                   description="useragent that requests editing of a form">
-        </useragent>
 
     </useragents>
 
     <ui-generators>
-        <ui-generator useragent="dojo" stylesheet="dojo.xsl"/>
-        <ui-generator useragent="dojodev" stylesheet="dojo-dev.xsl"/>
+        <ui-generator useragent="dojo" stylesheet="xhtml.xsl"/>
         <ui-generator useragent="html" stylesheet="html4.xsl"/>
-        <ui-generator useragent="bfEditor" stylesheet="bfEditor.xsl"/>
     </ui-generators>
 
     <connectors>

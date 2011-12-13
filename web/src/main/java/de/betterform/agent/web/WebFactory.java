@@ -91,7 +91,6 @@ public class WebFactory {
             //passed as http header
             useragent = request.getHeader(WebFactory.USER_AGENT);
         } else if (request.getAttribute(WebFactory.USER_AGENT) != null) {
-            //passed from config in web.xml
             useragent = (String) request.getAttribute(WebFactory.USER_AGENT);
         } else {
             throw new XFormsConfigException("Useragent has not been set.");
