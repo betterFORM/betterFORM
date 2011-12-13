@@ -14,7 +14,7 @@
                 xpath-default-namespace="http://www.w3.org/1999/xhtml">
 
     <!-- ####################################################################################################### -->
-    <!-- This stylesheet handles the XForms UI constructs [XForms 1.0, Chapter 9]'group', 'repeat' and           -->
+    <!-- This stylesheet handles the XForms UI constructs 'group', 'repeat' and                                  -->
     <!-- 'switch' and offers some standard interpretations for the appearance attribute.                         -->
     <!-- author: joern turner                                                                                    -->
     <!-- author: lars windauer                                                                                   -->
@@ -22,16 +22,17 @@
 
     <xsl:param name="betterform-pseudo-item" select="'betterform-pseudo-item'"/>
     <!-- ############################################ PARAMS ################################################### -->
-    <!-- ##### should be declared in dojo.xsl ###### -->
     <!-- ############################################ VARIABLES ################################################ -->
 
 
     <xsl:preserve-space elements="*"/>
+    <!-- ####################################################################################################### -->
+    <!-- ##################################### TEMPLATES ####################################################### -->
+    <!-- ####################################################################################################### -->
 
     <!-- ####################################################################################################### -->
     <!-- #################################### DIALOG ########################################################### -->
     <!-- ####################################################################################################### -->
-
     <xsl:template match="bfc:dialog" name="dialog" priority="10">
         <xsl:variable name="dialog-id" select="@id"/>
         <xsl:variable name="dialog-classes">
@@ -283,9 +284,12 @@
             </xsl:call-template>
         </xsl:variable>
 
-        <xsl:call-template name="trigger">
+        <span id="{@id}"
+             class="{$control-classes}">
+            <xsl:call-template name="trigger">
             <!--<xsl:with-param name="classes" select="$control-classes"/>-->
-        </xsl:call-template>
+            </xsl:call-template>
+        </span>
     </xsl:template>
 
 
@@ -299,13 +303,12 @@
             </xsl:call-template>
         </xsl:variable>
 
-        <div id="{$id}"
-             dojoType="betterform.ui.Control"
+        <span id="{$id}"
              class="{$control-classes}">
             <xsl:call-template name="copy-style-attribute"/>
             <xsl:call-template name="buildControl"/>
             <xsl:copy-of select="xhtml:script"/>
-        </div>
+        </span>
     </xsl:template>
     <!--<xsl:template match="bf:data" mode="table" priority="10"/>-->
 
@@ -358,11 +361,19 @@
         </table>
     </xsl:template>
 
+    <!-- ############################## BF:DATA ############################## -->
+    <!-- ############################## BF:DATA ############################## -->
+    <!-- ############################## BF:DATA ############################## -->
+    <!--
+    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    bf:data elements are suppressed in the output
+    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    -->
     <xsl:template match="bf:data" priority="10"/>
+
     <!-- ######################################################################################################## -->
     <!-- ####################################### REPEAT ######################################################### -->
     <!-- ######################################################################################################## -->
-    <!-- ### COMPACT REPEAT ### -->
     <xsl:template match="xforms:repeat[@appearance='compact']" name="compact-repeat">
         <xsl:variable name="repeat-id" select="@id"/>
         <xsl:variable name="repeat-index" select="bf:data/@bf:index"/>

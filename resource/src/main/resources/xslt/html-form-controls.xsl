@@ -228,8 +228,8 @@
                 class="xfValue"
                 tabindex="{$navindex}"
                 type="password"
-                value="bf:data/text()"
-                title="xf:hint/text()">
+                value="{bf:data/text()}"
+                title="{xf:hint/text()}">
             <xsl:if test="$maxlength">
                 <xsl:attribute name="maxlength"><xsl:value-of select="$maxlength"/></xsl:attribute>
             </xsl:if>
@@ -271,7 +271,7 @@
                         class="xfValue"
                         tabindex="{$navindex}"
                         size="{$size}"
-                        title="xf:hint/text()"
+                        title="{xf:hint/text()}"
                         >
                     <xsl:if test="bf:data/@bf:readonly='true'"><xsl:attribute name="readonly">readonly</xsl:attribute></xsl:if>
                     <xsl:apply-templates select="xf:hint"/>
@@ -304,7 +304,7 @@
                         class="xfValue"
                         tabindex="{$navindex}"
                         size="1"
-                        title="xf:hint/text()">
+                        title="{xf:hint/text()}">
                     <xsl:if test="bf:data/@bf:readonly='true'">
                         <xsl:attribute name="readonly">readonly</xsl:attribute>
                     </xsl:if>
@@ -364,7 +364,7 @@
                         tabindex="{$navindex}"
                         size="{$size}"
                         multiple="multiple"
-                        title="xf:hint/text()">
+                        title="{xf:hint/text()}">
                     <xsl:if test="bf:data/@bf:readonly='true'">
                         <xsl:attribute name="disabled">disabled</xsl:attribute>
                     </xsl:if>

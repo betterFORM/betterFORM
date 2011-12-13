@@ -159,6 +159,10 @@
     <!-- ####################################################################################################### -->
     <!-- ##################################### TEMPLATES ####################################################### -->
     <!-- ####################################################################################################### -->
+
+    <!-- ############################## HEAD ############################## -->
+    <!-- ############################## HEAD ############################## -->
+    <!-- ############################## HEAD ############################## -->
     <xsl:template match="head">
 
         <xsl:comment> *** powered by betterFORM, &amp;copy; 2011 *** </xsl:comment>
@@ -227,6 +231,9 @@
         </head>
     </xsl:template>
 
+    <!-- ############################## BODY ############################## -->
+    <!-- ############################## BODY ############################## -->
+    <!-- ############################## BODY ############################## -->
     <xsl:template match="body">
         <!-- todo: add 'overflow:hidden' to @style here -->
 
@@ -300,7 +307,7 @@
                 -->
                 <div    id="fluxProcessor"
                         jsId="fluxProcessor"
-                        dojotype="betterform.FluxProcessor"
+                        dojotype="betterform.XFProcessor"
                         sessionkey="{$sessionKey}"
                         contextroot="{$contextroot}"
                         usesDOMFocusIN="{$uses-DOMFocusIn}"
@@ -529,7 +536,7 @@
         todo: attributes from xf controls should probably be 'tunneled' to widget e.g. 'placeholder' of html5
         todo: remove dojotype here and add with behavior?
         -->
-        <span id="{@id}" dojoType="betterform.ui.Control" class="{$control-classes}">
+        <span id="{@id}" class="{$control-classes}">
 
             <xsl:call-template name="copy-style-attribute"/>
             <xsl:if test="@bf:incremental-delay">
@@ -550,6 +557,10 @@
         </span>
     </xsl:template>
 
+
+    <!-- ############################## OUTPUT ############################## -->
+    <!-- ############################## OUTPUT ############################## -->
+    <!-- ############################## OUTPUT ############################## -->
     <xsl:template match="xf:output">
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="control-classes"><xsl:call-template name="assemble-control-classes"/></xsl:variable>
@@ -559,7 +570,7 @@
         todo: attributes from xf controls should probably be 'tunneled' to widget e.g. 'placeholder' of html5
         todo: remove dojotype here and add with behavior?
         -->
-        <span id="{$id}" class="{$control-classes}" dojoType="betterform.ui.Control">
+        <span id="{$id}" class="{$control-classes}">
             <xsl:call-template name="copy-style-attribute"/>
             <label for="{$id}-value" id="{$id}-label" class="{$label-classes}">
                 <xsl:call-template name="create-label">
@@ -587,7 +598,7 @@
             <xsl:call-template name="assemble-label-classes"/>
         </xsl:variable>
 
-        <span id="{$id}" class="{$control-classes}" controlType="{local-name()}-control">
+        <span id="{$id}" class="{$control-classes}">
             <xsl:call-template name="copy-style-attribute"/>
                 <label for="{$id}-value" id="{$id}-label" class="{$label-classes}">
                 <xsl:call-template name="create-label">
@@ -603,16 +614,15 @@
         </span>
     </xsl:template>
 
-    <!-- ##### TRIGGER / SUBMIT ##### -->
-    <!-- ##### TRIGGER / SUBMIT ##### -->
-    <!-- ##### TRIGGER / SUBMIT ##### -->
-    <!-- ##### TRIGGER / SUBMIT ##### -->
+    <!-- ############################## TRIGGER / SUBMIT ############################## -->
+    <!-- ############################## TRIGGER / SUBMIT ############################## -->
+    <!-- ############################## TRIGGER / SUBMIT ############################## -->
     <xsl:template match="xf:trigger|xf:submit">
         <xsl:variable name="control-classes">
             <xsl:call-template name="assemble-control-classes"/>
         </xsl:variable>
 
-        <span id="{@id}" class="{$control-classes}" dojoType="betterform.ui.Control">
+        <span id="{@id}" class="{$control-classes}">
             <xsl:call-template name="trigger"/>
         </span>
     </xsl:template>
@@ -849,10 +859,12 @@
             }
             -->
 
-            dojo.addOnLoad(function(){
-                dojo.addOnLoad(function(){
+            dojo.ready(function(){
+                dojo.ready(function(){
+                    console.debug("ready");
                     dojo.parser.parse();
                     Flux._path = dojo.attr(dojo.byId("fluxProcessor"), "contextroot") + "/Flux";
+                    console.debug("calling init");
                     Flux.init( dojo.attr(dojo.byId("fluxProcessor"),"sessionkey"),
                     dojo.hitch(fluxProcessor,fluxProcessor.applyChanges));
                 });
@@ -884,9 +896,6 @@
 
 
         <script type="text/javascript" src="{concat($contextroot,$scriptPath,'betterform/betterform-Full.js')}">&#160;</script>
-        <xsl:text>
-</xsl:text>
-        <script type="text/javascript" src="{concat($contextroot,$scriptPath,'betterform/Components.js')}">&#160;</script>
         <xsl:text>
 </xsl:text>
     </xsl:template>

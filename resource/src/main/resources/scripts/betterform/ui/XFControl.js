@@ -3,19 +3,16 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("betterform.ui.Control");
+dojo.provide("betterform.ui.XFControl");
 
 dojo.require("dijit._Widget");
-
-/* dojo.Dialog and Button are needed to render helps  */
-dojo.require("dijit.Dialog");
-dojo.require("dijit.form.Button");
+dojo.require("dijit._Templated");
 
 
 /**
  * All Rights Reserved.
  * @author Joern Turner
- * @author Lars Windauer
+ *
  *
  * Control is a generic wrapper for all XForms elements that have MiPs to maintain. One Component at runtime is a
  * one-to-one match to an XForms control in the XFormsProcessor. It has the same id as the original XForms control
@@ -23,160 +20,33 @@ dojo.require("dijit.form.Button");
  **/
 
 dojo.declare(
-        "betterform.ui.Control",
+        "betterform.ui.XFControl",
         [dijit._Widget, dijit._Templated],
 {
     id:"",
-    target: null,
     controlType:"",
     controlValue:null,
-    contextInfo:null,
-    tabindex:0,
-    appearance:"",
+    currentValue:null,
 
     buildRendering: function() {
-        // we already have the srcNodeRef, so lets just
-        // keep it and use it as the domNode
         this.domNode = this.srcNodeRef;
-        // console.debug("\nControl.buildRendering; DOM Node:",this.domNode,"\n");
-        if (dojo.attr(this.domNode, "tabindex")) {
-            this.tabindex = eval(dojo.attr(this.domNode, "tabindex"));
-        }
     },
 
     postCreate:function() {
-        // ensure all needed classes for Control are in place
-        // console.debug("\nControl.postCreate; DOM Node:",this.domNode,"\n");
+        console.debug("\nControl.postCreate; DOM Node:",this.domNode,"\n");
         // TODO: examine if this can be done in handleStateChanged
+        // ensure all needed classes for Control are in place in case we have a dynamically created control
         betterform.ui.util.setDefaultClasses(this.domNode);
 
-        if (this.controlValue == undefined) {
-            // console.debug("Control.postCreate this.domNode:",this.domNode);
-            // verify if controlValue node allready exist, if not create it
-            var controlValueTemplate = dojo.query("*[id ='" + this.id + "-value']", this.domNode)[0];
-            if (controlValueTemplate == undefined) {
-                controlValueTemplate = dojo.query(".xfValue", this.domNode)[0];
-            }
-            // Child node CntrolValue does not exist, ControlValueTemplate is created dynamicly
-            if (controlValueTemplate == undefined) {
-                controlValueTemplate = this._createControlValueTemplate();
-            }
-            // ControlValue node exists and a dijit is created
-            else {
-                this.dataType = betterform.ui.util.removeNamespace(dojo.attr(controlValueTemplate, "datatype"));
-                this.controlType = dojo.attr(controlValueTemplate, "controltype");
-            }
-
-            this.controlValue = fluxProcessor.factory.createWidget(controlValueTemplate, this.id);
-
-            if (this.controlValue != undefined) {
-                // apply MIP states
-                this.controlValue.applyState();
-            } else {
-                console.error("ControlValue for Control " + this.id + " could not be created");
-            }
-        }
+        /*
+        Controls publish their validity state to the processor which will pass it to the selected alertHandler
+         */
         if (this.isValid()) {
             dojo.publish("/xf/valid", [this.id,"init"]);
         } else {
             dojo.publish("/xf/invalid", [this.id,"init"]);
         }
-        // console.debug("\nControl.postCreate; DOM Node:",this.domNode,"\n");
-
     },
-
-    /**
-     * Create a ControlValue template of properties taken from Control
-     */
-    _createControlValueTemplate:function() {
-        // console.debug("Control.createControlValueTemplate XFControl " + this.id + " has no value node! Value node is created based on ContextInfo: ", this.contextInfo, " domNode:",this.domNode);
-
-        // prepare Control Node
-        if (this.contextInfo.type != undefined && this.contextInfo.type != "") {
-            var cssDataType = betterform.ui.util.removeNamespace(this.contextInfo.type);
-            cssDataType = "xsd" + cssDataType.replace(/^[a-z]/, cssDataType.substring(0, 1).toUpperCase());
-            if (dojo.hasClass(this.domNode, "xsd")) {
-                betterform.ui.util.replaceClass(this.domNode, "xsd", cssDataType);
-            } else {
-                dojo.addClass(this.domNode, cssDataType);
-            }
-        } else if (dojo.hasClass(this.domNode, "xsd")) {
-            console.warn("Control.postCreate Control " + this.id + " has no type but xsd on it's prototype");
-        }
-        this._updateMIPClasses();
-        // verify that span is ok
-        // var controlValueTemplate = document.createElement("div");
-        var controlValueTemplate = document.createElement("span");
-
-        this.dataType = betterform.ui.util.removeNamespace(this.contextInfo.type);
-        this.controlType = this.contextInfo.targetName;
-
-        // add attributes
-        dojo.attr(controlValueTemplate, "dataType", this.dataType);
-        dojo.attr(controlValueTemplate, "controlType", this.controlType);
-        if (this.contextInfo.value != undefined && this.dataType == "date") {
-            this.controlType = dojo.attr(controlValueTemplate, "schemaValue", this.contextInfo.schemaValue);
-        }
-        if (this.contextInfo.targetId != undefined) {
-            this.controlType = dojo.attr(controlValueTemplate, "id", this.contextInfo.targetId + "-value");
-        }
-        if (dojo.attr(this.domNode, "appearance") != undefined) {
-            this.appearance = dojo.attr(this.domNode, "appearance");
-            dojo.attr(controlValueTemplate, "appearance", this.appearance);
-        }
-        if (dojo.attr(this.domNode, "mediatype") != undefined) {
-            this.appearance = dojo.attr(this.domNode, "mediatype");
-            dojo.attr(controlValueTemplate, "mediatype", this.appearance);
-        }
-
-        // place value as child of valueNode
-        if (this.contextInfo.targetName != "trigger") {
-            controlValueTemplate.innerHTML = this.contextInfo.value;
-        } else {
-            // console.debug("this.contextInfo.targetName == trigger contextinfo: ", this.contextInfo, " controlValueTemplate: ",controlValueTemplate);
-            dojo.attr(controlValueTemplate, "label", this.srcNodeRef.innerHTML);
-            this.domNode.innerHTML = "";
-        }
-
-        // add classes
-        dojo.addClass(controlValueTemplate, "xfValue");
-        // insert ControlValue node
-        dojo.place(controlValueTemplate, this.domNode);
-
-        // incremental handling
-        if (dojo.hasClass(this.domNode, "xfIncremental")) {
-            dojo.attr(controlValueTemplate, "incremental", "true");
-        }
-        // incremental delay handling
-        if (dojo.hasAttr(this.domNode, "delay")) {
-            dojo.attr(controlValueTemplate, "delay", dojo.attr(this.domNode, "delay"));
-        }
-        return controlValueTemplate;
-    },
-
-
-
-    /*    is called initially when controls initialize to read their state from
-     the CSS class attribute of the XForms shadow control (div wrapper element)
-
-     This approach is at least questionable as it leaves open the question who is
-     controlling the state actually. If the CSS classes serve the initial state but
-     this is maintained later in JS classes this opens two roads to state handling.
-     At least the master (and direction of updating) should be defined more clearly.
-
-     If classes are considered the master (being initially set by processor and updated by
-     XMLEvents from the processor) they should be seen as readonly. The implementation
-     of the scripts should never assume correctness of
-
-     initFromClasses:function(){
-     console.debug("initFormClasses id: ", this.id);
-
-     var targetNode = this._getControlWrapper();
-
-     if(dojo.hasClass(targetNode,"readonly")){
-     console.debug(this, " is readonly");
-     }
-     },*/
 
     isRequired:function() {
         // console.debug("Control.isRequired",this.domNode);
@@ -221,7 +91,9 @@ dojo.declare(
         }
     },
 
-
+    /*
+    handles state changes send by the server and applies them to the control
+     */
     handleStateChanged:function(contextInfo) {
         // console.debug("Control.handleStateChanged: ",contextInfo);
 
@@ -267,10 +139,21 @@ dojo.declare(
         }
     },
 
+    /*
+    fetches the value from the widget
+     */
     getControlValue:function() {
         if (this.controlValue != undefined) {
             return this.controlValue.getControlValue();
         }
+    },
+
+    /*
+    sends updated value of a widget to the server
+     */
+    setControlValue:function(/* String */ value) {
+        fluxProcessor.setControlValue(this.id, value);
+        this._handleRequiredEmpty();
     },
 
 
@@ -325,8 +208,6 @@ dojo.declare(
         }
         // dojo.publish("/xf/valueChanged",[this,value])
     },
-
-
 
     _handleSetValidProperty:function(validity) {
         // console.debug("Control._handleSetValidProperty [id:"+this.id+ " valid: ",validity, "]");
@@ -456,15 +337,6 @@ dojo.declare(
             }
         }
 
-    },
-
-    updateProgress:function(value) {
-        this.controlValue.updateProgress(value);
-    },
-
-    setControlValue:function(/* String */ value) {
-        fluxProcessor.setControlValue(this.id, value);
-        this._handleRequiredEmpty();
     },
 
     _setHelp:function(value) {
