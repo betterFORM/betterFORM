@@ -79,13 +79,13 @@ dojo.declare(
     },
 
     getControlValue:function() {
-        console.debug("ComboBoxOpen.getControlValue");
+        // console.debug("ComboBoxOpen.getControlValue");
         var selectedValue;
         var displayedValue = dojo.attr(this.focusNode,"value");
         var tmpFocusNodeForIE = this.focusNode;
         dojo.forEach(this.options,
                 function(entry) {
-                    console.debug("Option: ",entry, " value: ",dojo.attr(entry,"value"), " label:",entry.innerHTML, " displayed: ",displayedValue);
+                    // console.debug("Option: ",entry, " value: ",dojo.attr(entry,"value"), " label:",entry.innerHTML, " displayed: ",displayedValue);
                     if(!dojo.isIE <= 8 && entry.innerHTML == displayedValue){
                         // console.debug("found value: ",dojo.attr(entry,"value"), "for option:",entry);
                         selectedValue = dojo.attr(entry,"value");
