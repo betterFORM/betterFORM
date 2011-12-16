@@ -432,7 +432,7 @@ public class AppletProcessor extends AbstractProcessorDecorator {
     }
 
     @Override
-    protected boolean eventOptimizationIsDisabeld() {
+    protected boolean eventOptimizationIsDisabled() {
         return true;
     }
 // helper

@@ -63,7 +63,7 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
      */
     protected boolean isEventUsed(String eventName) {
         List eventsUsed = ((XFormsProcessorImpl) xformsProcessor).getEventList();
-        if (eventOptimizationIsDisabeld() || eventsUsed.contains(eventName)) {
+        if (eventOptimizationIsDisabled() || eventsUsed.contains(eventName)) {
             return true;
         }
         return false;
@@ -333,7 +333,7 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
     }
 
 
-    protected boolean eventOptimizationIsDisabeld() {
+    protected boolean eventOptimizationIsDisabled() {
         return configuration.getProperty("betterform.event-optimization-enabled").equals("false");
     }
 
