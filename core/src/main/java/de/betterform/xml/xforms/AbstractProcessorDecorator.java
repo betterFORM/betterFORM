@@ -149,9 +149,9 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
         this.root.addEventListener(XFormsEventNames.SUBMIT_DONE, this, true);
         this.root.addEventListener(XFormsEventNames.SUBMIT_ERROR, this, true);
 
-        if (isEventUsed(XFormsEventNames.VERSION_EXCEPTION)) {
+        //if (isEventUsed(XFormsEventNames.VERSION_EXCEPTION)) {
             this.root.addEventListener(XFormsEventNames.VERSION_EXCEPTION, this, true);
-        }
+        //}
         if (isEventUsed(XFormsEventNames.VALUE_CHANGED)) {
             this.root.addEventListener(XFormsEventNames.VALUE_CHANGED, this, true);
         }

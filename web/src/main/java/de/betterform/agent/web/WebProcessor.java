@@ -573,7 +573,13 @@ public class WebProcessor extends AbstractProcessorDecorator {
         generator.setParameter("trigger-prefix", triggerPrefix);
 
         if (LOGGER.isDebugEnabled()) {
-            DOMUtil.prettyPrintDOM(((XFormsProcessorImpl)  this.xformsProcessor).getContainer().getDefaultModel().getDefaultInstance().getInstanceDocument());
+            if ( ((XFormsProcessorImpl)  this.xformsProcessor).getContainer() != null) {
+                if ( ((XFormsProcessorImpl)  this.xformsProcessor).getContainer().getDefaultModel() != null) {
+                    if ( ((XFormsProcessorImpl)  this.xformsProcessor).getContainer().getDefaultModel().getDefaultInstance() != null) {
+                        DOMUtil.prettyPrintDOM(((XFormsProcessorImpl)  this.xformsProcessor).getContainer().getDefaultModel().getDefaultInstance().getInstanceDocument());
+                    }
+                }
+            }
         }
         generator.setParameter("locale", locale);
 //        if(useragent.equals("bfEditor")){

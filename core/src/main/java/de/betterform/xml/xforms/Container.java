@@ -5,28 +5,29 @@
 
 package de.betterform.xml.xforms;
 
-import de.betterform.xml.events.DOMEventNames;
-import de.betterform.xml.xforms.ui.AbstractFormControl;
-import de.betterform.xml.xforms.ui.Group;
-import de.betterform.xml.xforms.ui.Repeat;
-import de.betterform.xml.xforms.ui.Switch;
-import net.sf.saxon.Configuration;
-import net.sf.saxon.dom.DocumentWrapper;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.connector.ConnectorFactory;
 import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.dom.DOMUtil;
+import de.betterform.xml.events.DOMEventNames;
 import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.events.XMLEventService;
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.ns.NamespaceResolver;
 import de.betterform.xml.xforms.exception.XFormsErrorIndication;
 import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xforms.exception.XFormsVersionException;
 import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.model.bind.BindingResolver;
+import de.betterform.xml.xforms.ui.AbstractFormControl;
+import de.betterform.xml.xforms.ui.Group;
+import de.betterform.xml.xforms.ui.Repeat;
+import de.betterform.xml.xforms.ui.Switch;
 import de.betterform.xml.xpath.impl.saxon.BetterFormXPathContext;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
+import net.sf.saxon.Configuration;
+import net.sf.saxon.dom.DocumentWrapper;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -659,14 +660,14 @@ public class Container {
         }
 
         for (int i = 0; i < nrOfModels; i++) {
-        	boolean isCompatible=true;
+        	String isCompatible= "";
         	if (i == 0) {
 	            isCompatible = checkVersionCompatibility();
         	}
         	model = (Model) this.models.get(i);
         	model.init();
-            if(!(isCompatible)){
-                return;
+            if(!("".equals(isCompatible))){
+                throw new XFormsVersionException(isCompatible, null, null);
             }
             Initializer.initializeModelConstructActionElements(model, model.getElement());
 	        dispatch(model.getTarget(), XFormsEventNames.MODEL_CONSTRUCT, null);
@@ -708,14 +709,14 @@ public class Container {
         }
 
         for (int i = 0; i < nrOfModels; i++) {
-        	boolean isCompatible=true;
+        	String isCompatible= "";
         	if (i == 0) {
 	            isCompatible = checkVersionCompatibility();
         	}
         	Model model = embeddedModels.get(i);
         	model.init();
-            if(!(isCompatible)){
-                return;
+            if(!("".equals(isCompatible))){
+                throw  new XFormsVersionException(isCompatible, null, null);
             }
 	        dispatch(model.getTarget(), XFormsEventNames.MODEL_CONSTRUCT, null);
         }
@@ -823,39 +824,62 @@ public class Container {
      * @return
      * @throws XFormsException
      */
-    private boolean checkVersionCompatibility() throws XFormsException {
+    private String checkVersionCompatibility() throws XFormsException {
         String versionString = null;
         final Element defaultModelElement = models.get(0).getElement();
 
         for (int i = 0; i < models.size(); i++) {
             Element modelElement = models.get(i).getElement();
             versionString = XFormsElement.getXFormsAttribute(modelElement, "version");
+
+
             if (i == 0) {
-                //default modelElement
-                if (versionString == null || versionString.equals("")) {
-                    this.version = XFORMS_1_1;//default setting for betterForm currently
-                } else if (versionString.indexOf(XFORMS_1_1) != -1) {
-                    this.version = XFORMS_1_1;
-                } else if (versionString.indexOf(XFORMS_1_0) != -1) {
-                    this.version = XFORMS_1_0;
-                } else {
+                //Default Model
+                this.version = checkForValidVersion(versionString);
+                
+                if (this.version == null) {
                     HashMap contextInfo = new HashMap();
-                    contextInfo.put("error-information", "version setting of default model not supported: '" + this.version + "'");
+                    contextInfo.put("error-information", "version setting of default model not supported: '" + versionString + "'");
                     dispatch((EventTarget)defaultModelElement,XFormsEventNames.VERSION_EXCEPTION,contextInfo);
-                    return false;
+                    return "version setting of default model not supported: '" + versionString + "'";
                 }
             } else {
-                if (versionString != null && versionString.indexOf(this.version) == -1) {
+                String versionTmp = checkForValidVersion(versionString);
+
+                if (versionTmp == null || versionTmp.compareTo(this.version) > 0) {
                     HashMap contextInfo = new HashMap();
                     contextInfo.put("error-information", "Incompatible version setting: " + versionString + " on model: " + DOMUtil.getCanonicalPath(modelElement));
 
-					dispatch((EventTarget)defaultModelElement,XFormsEventNames.VERSION_EXCEPTION,contextInfo);
-                    return false;
+                    dispatch((EventTarget)defaultModelElement,XFormsEventNames.VERSION_EXCEPTION,contextInfo);
+                    return "Incompatible version setting: " + versionString + " on model: " + DOMUtil.getCanonicalPath(modelElement);
                 }
             }
         }
         LOGGER.info("running XForms version" + this.version);
-        return true;
+        return "";
+    }
+    
+    protected String checkForValidVersion(String versionAttribute) {
+        String versionTmp = null;
+
+        //default setting for betterForm currently
+        if (versionAttribute == null || versionAttribute.equals("")) {
+            return XFORMS_1_1;
+
+        } else {
+            String[] versionArray = versionAttribute.trim().split(" ");
+
+            for (int j = 0; j < versionArray.length; j++) {
+                if (XFORMS_1_1.equals(versionArray[j])) {
+                    return XFORMS_1_1;
+                } else if(XFORMS_1_0.equals(versionArray[j])) {
+                    versionTmp = XFORMS_1_0;
+                    //be nice an search further on for 1.1
+                }
+            }
+        }
+
+        return versionTmp;
     }
 
     /**
