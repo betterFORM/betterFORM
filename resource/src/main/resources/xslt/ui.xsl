@@ -46,8 +46,7 @@
             </xsl:call-template>
         </xsl:variable>
 
-        <span id="{$dialog-id}" class="{$dialog-classes}" dojoType="betterform.ui.container.Dialog"
-              title="{$dialog-label}">
+        <span id="{$dialog-id}" class="{$dialog-classes}" title="{$dialog-label}">
 
             <xsl:call-template name="copy-style-attribute"/>
 
@@ -69,13 +68,9 @@
             </xsl:call-template>
         </xsl:variable>
 
-        <span id="{$dialog-id}" class="{$dialog-classes}" dojoType="betterform.ui.container.Dialog"
-              title="{$dialog-label}">
-
+        <span id="{$dialog-id}" class="{$dialog-classes}" title="{$dialog-label}">
             <xsl:call-template name="copy-style-attribute"/>
-
             <xsl:apply-templates select="*[not(self::xforms:label)] | text()" mode="#current"/>
-
         </span>
     </xsl:template>
 
@@ -92,7 +87,7 @@
             </xsl:call-template>
         </xsl:variable>
 
-        <button dojoType="dijit.form.Button" id="{$dialog-id}-button" type="button" iconClass="dijitIconSearch"
+        <button id="{$dialog-id}-button" type="button" iconClass="dijitIconSearch"
                 showLabel="false" onCLick="show{$dialog-id}Dialog()">
             <script type="dojo/method" event="onClick">alert("Ronald");</script>
 
@@ -104,7 +99,7 @@
             </xsl:choose>
         </button>
 
-        <span id="{$dialog-id}" dojoType="betterform.ui.container.Dialog" title="{$dialog-label}">
+        <span id="{$dialog-id}" title="{$dialog-label}">
             <xsl:attribute name="class" select="concat($dialog-classes,' xfRepeated')"/>
             <xsl:attribute name="controlType" select="local-name()"/>
             <xsl:attribute name="appearance" select="@appearance"/>
@@ -140,7 +135,7 @@
         <xsl:param name="group-label" select="true()"/>
 
 
-        <span id="{$group-id}" class="{$group-classes}" dojoType="betterform.ui.container.Group">
+        <span id="{$group-id}" class="{$group-classes}">
 
             <xsl:call-template name="copy-style-attribute"/>
 
@@ -208,8 +203,7 @@
             <xsl:call-template name="get-mip-classes"/>
         </xsl:variable>
 
-        <table cellspacing="0" cellpadding="0" class="xfContainer appBfVerticalTable bfVerticalTable {$mip-classes}" id="{$group-id}"
-               dojoType="betterform.ui.container.Group">
+        <table cellspacing="0" cellpadding="0" class="xfContainer appBfVerticalTable bfVerticalTable {$mip-classes}" id="{$group-id}">
             <xsl:if test="exists(xforms:label)">
                 <caption class="xfGroupLabel">
                     <xsl:apply-templates select="./xforms:label"/>
@@ -332,7 +326,7 @@
         </xsl:variable>
 
 
-        <table id="{@id}" class="xfContainer appBfHorizontalTable bfHorizontalTable {$mip-classes}" dojoType="betterform.ui.container.Group">
+        <table id="{@id}" class="xfContainer appBfHorizontalTable bfHorizontalTable {$mip-classes}">
             <tr>
                 <td colspan="{count(*[position() &gt; 1])}" class="xfGroupLabel">
                     <xsl:if test="exists(xforms:label) and @appearance !='bf:GroupLabelLeft'">
@@ -402,7 +396,6 @@
         <table repeatId="{$repeat-id}"
                jsId="{$repeat-id}"
                class="{$repeat-classes}"
-               dojoType="betterform.ui.container.Repeat"
                appearance="appCompact compact"
                border="0"
                cellpadding="0"
@@ -428,7 +421,6 @@
 
                 <tr repeatItemId="{$id}"
                     class="{$repeat-item-classes}"
-                    dojoType="betterform.ui.container.RepeatItem"
                     appearance="appCompact compact">
                     <xsl:call-template name="processCompactChildren"/>
                 </tr>
@@ -611,7 +603,7 @@
                 <xsl:with-param name="appearance" select="@appearance"/>
             </xsl:call-template>
         </xsl:variable>
-        <div id="{$switch-id}" class="{$switch-classes}" dojoType="betterform.ui.container.Switch">
+        <div id="{$switch-id}" class="{$switch-classes}">
             <xsl:apply-templates mode="repeated-compact-prototype"/>
         </div>
     </xsl:template>
@@ -784,7 +776,7 @@
                 <xsl:with-param name="appearance" select="@appearance"/>
             </xsl:call-template>
         </xsl:variable>
-        <div id="{$switch-id}" class="{$switch-classes}" dojoType="betterform.ui.container.Switch">
+        <div id="{$switch-id}" class="{$switch-classes}">
             <xsl:apply-templates mode="repeated-full-prototype"/>
         </div>
     </xsl:template>
@@ -898,7 +890,7 @@
             <xsl:call-template name="assemble-control-classes"/>
         </xsl:variable>
 
-        <div id="{$id}" class="{$control-classes} xfRepeated" dojoType="betterform.ui.Control"
+        <div id="{$id}" class="{$control-classes} xfRepeated"
              dojoAttachEvent='onfocus:_onFocus'>
             <xsl:call-template name="copy-style-attribute"/>
             <label for="{$id}-value" id="{$id}-label" style="display:none">
@@ -971,7 +963,7 @@
         </xsl:if>
 
 
-        <div repeatId="{$repeat-id}" class="{$repeat-classes}" dojoType="betterform.ui.container.Repeat">
+        <div repeatId="{$repeat-id}" class="{$repeat-classes}">
             <!-- loop repeat entries -->
             <xsl:for-each select="xforms:group[@appearance='repeated']">
                 <xsl:variable name="repeat-item-id" select="@id"/>
@@ -985,7 +977,6 @@
 
                 <div repeatItemId="{$repeat-item-id}"
                      class="{$repeat-item-classes}"
-                     dojoType="betterform.ui.container.RepeatItem"
                      appearance="appFull full"
                      tabindex="0">
                     <div class="legend">
@@ -1104,7 +1095,6 @@
         <xsl:element name="{local-name(.)}" namespace="">
             <xsl:attribute name="repeatId"><xsl:value-of select="$repeat-id"/></xsl:attribute>
             <xsl:attribute name="jsId"><xsl:value-of select="@id"/></xsl:attribute>
-            <xsl:attribute name="dojoType">betterform.ui.container.Repeat</xsl:attribute>
             <xsl:attribute name="class"><xsl:value-of select="$repeat-classes"/></xsl:attribute>
             <xsl:copy-of select="@*"/>
 
@@ -1136,7 +1126,6 @@
 
                     <tr repeatItemId="{$id}"
                         class="{$repeat-item-classes}"
-                        dojoType="betterform.ui.container.RepeatItem"
                         appearance="appCompact compact">
                         <xsl:apply-templates select="*" mode="compact-repeat"/>
                     </tr>
@@ -1271,7 +1260,7 @@
         </xsl:variable>
 
 
-        <div id="{$switch-id}" class="{$switch-classes}" dojoType="betterform.ui.container.Switch">
+        <div id="{$switch-id}" class="{$switch-classes}">
             <xsl:call-template name="copy-style-attribute"/>
             <xsl:apply-templates/>
         </div>
@@ -1308,7 +1297,7 @@
         </xsl:variable>
 
 
-        <div id="{$switch-id}" class="{$switch-classes} xfSwitch" dojoType="dijit.layout.AccordionContainer"
+        <div id="{$switch-id}" class="{$switch-classes} xfSwitch"
              duration="200"
              style="float: left; margin-right: 30px; width: 400px; height: 300px; overflow: hidden">
             <xsl:for-each select="xforms:case[.//xforms:label]">
@@ -1317,7 +1306,7 @@
                         <xsl:with-param name="label-elements" select=".//xforms:label"/>
                     </xsl:call-template>
                 </xsl:variable>
-                <div dojoType="dijit.layout.AccordionPane" selected="{@selected}" title="{$label}">
+                <div selected="{@selected}" title="{$label}">
                     <xsl:apply-templates select="*[not(self::xforms:label)]"/>
                 </div>
             </xsl:for-each>
@@ -1337,8 +1326,7 @@
             </xsl:for-each>
         </div>
 
-        <div id="{$switch-id}" class="{$switch-classes} xfAccordion" dojoType="betterform.ui.container.AccordionSwitch"
-             duration="200">
+        <div id="{$switch-id}" class="{$switch-classes} xfAccordion" duration="200">
             <!--
                     <div id="{$switch-id}" class="{$switch-classes}" dojoType="betterform.ui.container.TabSwitch"
                             style="width: 900px; height: 400px;">
@@ -1356,7 +1344,7 @@
                         <xsl:with-param name="label-elements" select="xforms:label"/>
                     </xsl:call-template>
                 </xsl:variable>
-                <div dojoType="betterform.ui.container.AccordionSwitchPane" class="xfCase" caseId="{@id}"
+                <div class="xfCase" caseId="{@id}"
                      selected="{$selected}" title="{$label}">
                     <xsl:apply-templates select="*[not(self::xforms:label)]"/>
                 </div>
@@ -1379,7 +1367,7 @@
                 <xsl:call-template name="trigger"/>
             </xsl:for-each>
         </div>
-        <div id="{$switch-id}" class="xfSwitch bfTabContainer" dojoType="betterform.ui.container.TabSwitch">
+        <div id="{$switch-id}" class="xfSwitch bfTabContainer">
             <xsl:call-template name="copy-style-attribute"/>
             <xsl:for-each select="xforms:case[./xforms:label]">
                 <xsl:variable name="selected">
@@ -1389,13 +1377,12 @@
                     </xsl:choose>
                 </xsl:variable>
 
-                <!--<div dojoType="dijit.layout.ContentPane" style="width:100%;height:100%;" class="xfCase" caseId="{@id}" selected="{$selected}" title="{xforms:label}" onscroll="betterform.ui.util.closeSelect1(this);">-->
                 <xsl:variable name="label">
                     <xsl:call-template name="create-label">
                         <xsl:with-param name="label-elements" select="xforms:label"/>
                     </xsl:call-template>
                 </xsl:variable>
-                <div dojoType="dijit.layout.ContentPane" style="width:100%;height:100%;" class="xfCase" caseId="{@id}"
+                <div style="width:100%;height:100%;" class="xfCase" caseId="{@id}"
                      selected="{$selected}" title="{$label}">
                     <xsl:apply-templates select="*[not(self::xforms:label)]"/>
                 </div>
@@ -1414,7 +1401,7 @@
         <div id="{$switch-id}" class="{$switch-classes}"
              style="width: 600px; height: 300px;">
             <xsl:for-each select="xforms:case[.//xforms:label]">
-                <div dojoType="betterform.ui.container.TitlePaneGroup" title="{.//xforms:label[1]}">
+                <div title="{.//xforms:label[1]}">
                     <xsl:apply-templates select="*[not(self::xforms:label)]"/>
                 </div>
             </xsl:for-each>
