@@ -1262,3 +1262,34 @@ content-area{
     display: inline-block;
     margin: 10px 0;
 }
+
+#support #devLicense table {
+    margin-top:20px;
+    width: 500px;
+    margin-bottom: 5px;
+}
+#support #devLicense .subTableHeading {
+    background: none repeat scroll 0 0 #E6E6E6;
+    font-weight: bold;
+    border: 1px solid #565656;
+    text-align: left;
+    vertical-align:middle;
+}
+
+#support #devLicense .col-1 {
+    border: 1px solid #565656;
+    text-align: left;
+    vertical-align:middle;
+    padding-left: 30px;
+
+}
+
+#support #devLicense .col-2 {
+    text-align: right;
+    border: 1px solid #565656;
+    vertical-align:middle;
+
+}
+#support #devLicense #subscription .bold {
+    font-weight: bold;
+}
