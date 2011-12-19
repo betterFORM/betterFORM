@@ -1315,5 +1315,11 @@ content-area{
     padding-top:5px;
     padding-left:20px;
     display: block;
-    text-align: center;
+}
+#index #sub-header #newssectionlink {
+    display: inline;
+    float: none;
+    height: 0;
+    width: 0;
+
 }
