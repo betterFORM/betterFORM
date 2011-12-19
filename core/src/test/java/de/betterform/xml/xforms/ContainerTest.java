@@ -110,7 +110,7 @@ public class ContainerTest extends TestCase {
         }
 
         assertNotNull(exception);
-        assertEquals("xforms-version-exception: version setting of default model not supported: '2011.12'::", exception.getMessage());
+        assertEquals("xforms-version-exception: version exception: version setting of default model not supported: '2011.12'::/envelope[1]/xforms:model[1]", exception.getMessage());
     }
 
     public void testDefaulModelHasLowerVersion()throws Exception{
@@ -139,7 +139,7 @@ public class ContainerTest extends TestCase {
         }
 
         assertNotNull(exception);
-        assertEquals("xforms-version-exception: Incompatible version setting: 1.1 on model: /envelope[1]/xforms:model[2]::", exception.getMessage());
+        assertEquals("xforms-version-exception: version exception: Incompatible version setting: 1.1 on model: /envelope[1]/xforms:model[2]::/envelope[1]/xforms:model[1]", exception.getMessage());
     }
 
     public void testGetVersion10_11()throws Exception{
@@ -171,7 +171,7 @@ public class ContainerTest extends TestCase {
         }
 
         assertNotNull(exception);
-        assertEquals("xforms-version-exception: version setting of default model not supported: '1.2'::", exception.getMessage());
+        assertEquals("xforms-version-exception: version exception: version setting of default model not supported: '1.2'::/envelope[1]/xforms:model[1]", exception.getMessage());
     }
 
     public void testInitNoModel() throws Exception{
