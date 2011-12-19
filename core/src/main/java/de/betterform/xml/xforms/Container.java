@@ -659,17 +659,19 @@ public class Container {
         }
 
         for (int i = 0; i < nrOfModels; i++) {
-        	boolean isCompatible= false;
+        	boolean isCompatible= true;
             model = (Model) this.models.get(i);
             model.init();
 
             if (i == 0) {
 	            isCompatible = checkVersionCompatibility();
+
         	}
 
             if(!(isCompatible)){
                 return;
             }
+
             Initializer.initializeModelConstructActionElements(model, model.getElement());
 	        dispatch(model.getTarget(), XFormsEventNames.MODEL_CONSTRUCT, null);
         }
