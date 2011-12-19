@@ -1323,3 +1323,24 @@ content-area{
     width: 0;
 
 }
+
+#devLicenseBadge{
+    vertical-align: top;
+    float: left;
+}
+#newLicense{
+    border:thin solid #dedede;
+    padding: 10px;
+    float: left;
+    box-shadow: 5px 5px 5px #d3d3d3;
+    margin-bottom: 20px;
+}
+#newLicense .subheading{
+    font-size:16pt;
+    margin-bottom: 5px;
+}
+
+#newLicense p{
+    display: block;
+
+}
