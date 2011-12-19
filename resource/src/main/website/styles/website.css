@@ -1293,3 +1293,27 @@ content-area{
 #support #devLicense #subscription .bold {
     font-weight: bold;
 }
+
+#newssection {
+    background-image: url("../images/circle-comm.png");
+    position: absolute;
+    bottom: 0;
+    width: 164px;
+    height: 171px;
+    z-index: 9999;
+    color:white;
+    font-weight: bold;
+}
+
+#newssection .header {
+    font-size: 30pt;
+    display: block;
+    padding-top:30px;
+    padding-left:20px;
+}
+#newssection .text {
+    padding-top:5px;
+    padding-left:20px;
+    display: block;
+    text-align: center;
+}
