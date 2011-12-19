@@ -22,6 +22,7 @@ import de.betterform.xml.xforms.action.UpdateSequencer;
 import de.betterform.xml.xforms.exception.XFormsComputeException;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.exception.XFormsLinkException;
+import de.betterform.xml.xforms.exception.XFormsVersionException;
 import de.betterform.xml.xforms.model.bind.Bind;
 import de.betterform.xml.xforms.model.bind.RefreshView;
 import de.betterform.xml.xforms.model.constraints.MainDependencyGraph;
@@ -442,7 +443,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
                 String namespaceURI = NamespaceResolver.getNamespaceURI(this.element, prefix);
                 if (namespaceURI == null) namespaceURI = "";
                 FunctionLibrary functionLibrary = XPathCache.getFgXFormsFunctionLibrary();
-                if ((functionLibrary.getFunctionSignature(new StructuredQName(prefix, namespaceURI, localName), -1)) != null) {
+                if ((functionLibrary.getFunctionSignature(new StructuredQName(prefix, namespaceURI, localName), -1)) == null) {
                     throw new XFormsComputeException("Function '" + localName + "' cannot be found in Namespace: '" + namespaceURI + "'", this.target, null);
 //                    Map<String, String> errorMsg = new HashMap<String, String>();
 //                    errorMsg.put("error-message","XFormsComputeException: Function '" + localName + "' cannot be found in Namespace: '" + namespaceURI + "'");
@@ -776,7 +777,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
             if (event.getType().equals(XFormsEventNames.VERSION_EXCEPTION)) {
                 getLogger().error(this + " version exception: " + ((XMLEvent) event).getContextInfo());
                 this.container.shutdown();
-                return;
+                throw new XFormsVersionException( "version exception: " + ((XMLEvent) event).getContextInfo().get("error-information"), event.getTarget(), ((XMLEvent) event).getContextInfo());
             }
         }
         catch (Exception e) {

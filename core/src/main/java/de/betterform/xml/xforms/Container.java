@@ -15,7 +15,6 @@ import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.ns.NamespaceResolver;
 import de.betterform.xml.xforms.exception.XFormsErrorIndication;
 import de.betterform.xml.xforms.exception.XFormsException;
-import de.betterform.xml.xforms.exception.XFormsVersionException;
 import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.model.bind.BindingResolver;
 import de.betterform.xml.xforms.ui.AbstractFormControl;
@@ -660,14 +659,16 @@ public class Container {
         }
 
         for (int i = 0; i < nrOfModels; i++) {
-        	String isCompatible= "";
-        	if (i == 0) {
+        	boolean isCompatible= false;
+            model = (Model) this.models.get(i);
+            model.init();
+
+            if (i == 0) {
 	            isCompatible = checkVersionCompatibility();
         	}
-        	model = (Model) this.models.get(i);
-        	model.init();
-            if(!("".equals(isCompatible))){
-                throw new XFormsVersionException(isCompatible, null, null);
+
+            if(!(isCompatible)){
+                return;
             }
             Initializer.initializeModelConstructActionElements(model, model.getElement());
 	        dispatch(model.getTarget(), XFormsEventNames.MODEL_CONSTRUCT, null);
@@ -709,14 +710,14 @@ public class Container {
         }
 
         for (int i = 0; i < nrOfModels; i++) {
-        	String isCompatible= "";
+        	boolean isCompatible= false;
         	if (i == 0) {
 	            isCompatible = checkVersionCompatibility();
         	}
         	Model model = embeddedModels.get(i);
         	model.init();
-            if(!("".equals(isCompatible))){
-                throw  new XFormsVersionException(isCompatible, null, null);
+            if(!(isCompatible)){
+                return;
             }
 	        dispatch(model.getTarget(), XFormsEventNames.MODEL_CONSTRUCT, null);
         }
@@ -824,7 +825,7 @@ public class Container {
      * @return
      * @throws XFormsException
      */
-    private String checkVersionCompatibility() throws XFormsException {
+    private boolean checkVersionCompatibility() throws XFormsException {
         String versionString = null;
         final Element defaultModelElement = models.get(0).getElement();
 
@@ -841,7 +842,7 @@ public class Container {
                     HashMap contextInfo = new HashMap();
                     contextInfo.put("error-information", "version setting of default model not supported: '" + versionString + "'");
                     dispatch((EventTarget)defaultModelElement,XFormsEventNames.VERSION_EXCEPTION,contextInfo);
-                    return "version setting of default model not supported: '" + versionString + "'";
+                    return false;
                 }
             } else {
                 String versionTmp = checkForValidVersion(versionString);
@@ -851,12 +852,12 @@ public class Container {
                     contextInfo.put("error-information", "Incompatible version setting: " + versionString + " on model: " + DOMUtil.getCanonicalPath(modelElement));
 
                     dispatch((EventTarget)defaultModelElement,XFormsEventNames.VERSION_EXCEPTION,contextInfo);
-                    return "Incompatible version setting: " + versionString + " on model: " + DOMUtil.getCanonicalPath(modelElement);
+                    return false;
                 }
             }
         }
         LOGGER.info("running XForms version" + this.version);
-        return "";
+        return true;
     }
     
     protected String checkForValidVersion(String versionAttribute) {

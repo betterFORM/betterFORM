@@ -574,10 +574,14 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
         if (LOGGER.isDebugEnabled()) {
             if ( ((XFormsProcessorImpl)  this.xformsProcessor).getContainer() != null) {
-                if ( ((XFormsProcessorImpl)  this.xformsProcessor).getContainer().getDefaultModel() != null) {
-                    if ( ((XFormsProcessorImpl)  this.xformsProcessor).getContainer().getDefaultModel().getDefaultInstance() != null) {
-                        DOMUtil.prettyPrintDOM(((XFormsProcessorImpl)  this.xformsProcessor).getContainer().getDefaultModel().getDefaultInstance().getInstanceDocument());
+                try {
+                    if ( ((XFormsProcessorImpl)  this.xformsProcessor).getContainer().getDefaultModel() != null) {
+                        if ( ((XFormsProcessorImpl)  this.xformsProcessor).getContainer().getDefaultModel().getDefaultInstance() != null) {
+                            DOMUtil.prettyPrintDOM(((XFormsProcessorImpl)  this.xformsProcessor).getContainer().getDefaultModel().getDefaultInstance().getInstanceDocument());
+                        }
                     }
+                } catch (XFormsException xfe) {
+                    LOGGER.debug(xfe.getMessage());
                 }
             }
         }
