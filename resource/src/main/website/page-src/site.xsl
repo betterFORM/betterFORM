@@ -8,6 +8,7 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:html="http://www.w3.org/1999/xhtml"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 exclude-result-prefixes="xsl html">
 
 
@@ -26,10 +27,17 @@
     <xsl:variable name="langFile" select="concat('lang/properties_',$lang,'.xml')"/>
     <xsl:variable name="language" select="document($langFile)"/>
 
+    <xsl:variable name="date" select="current-date()"/>
+    <xsl:variable name="year" select="year-from-date(current-date())"/>
+    <xsl:variable name="nextYear" select="year-from-date(current-date())+1"/>
+    <xsl:variable name="month" select="month-from-date(current-date())"/>
+    <xsl:variable name="day" select="day-from-date(current-date())"/>
+    <xsl:variable name="currentDate" select="xs:date(concat($year,'-',$month,'-',$day))"/>
+    <xsl:variable name="expireDate" select="xs:date(concat($nextYear,'-',$month,'-',$day))"/>
 
 
     <xsl:template match="/">
-        <html xml:lang="en" lang="en">
+        <html xml:lang="{$lang}" lang="{$lang}">
             <head>
                 <!--
                 ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
@@ -42,11 +50,27 @@
                 <meta name="Author" content="Lars Windauer"/>
                 <meta name="publisher" content="betterFORM Project"/>
                 <meta name="description" content=" betterFORM allows easy creation of highly dynamic Web 2.0 user interfaces with attractive controls. Add validations, calculations, actions and events to build webapplications."/>
+                <meta name="abstract" content="The XForms Toolkit adds advanced eForms to your application.  The betterFORM XML Suite is an all-in-one solution for complex webapplications completely based upon XML.  betterFORM is free open source - no license cost, no restrictions - just open standards "/>
                 <meta name="copyright" content="betterForm Project"/>
                 <meta name="content-language" content="{$lang}"/>
-                <meta name="robots" content="all"/>
-                <meta http-equiv="expires" content="Wed, 9 Feb 2011 12:21:57 GMT"/>
-                <meta name="revisit-after" content="2 days"/>
+                <meta name="robots" content="index,follow"/>
+                <meta name="date" content="{$currentDate}"/>
+                <meta http-equiv="expires" content="{$expireDate}"/>
+                <meta name="revisit-after" content="10 days"/>
+                <meta name="revisit" content="after 10 days"/>
+                <meta name="DC.Title" content="betterFORM Project"/>
+                <meta name="DC.Creator" content="Jörn Turner"/>
+                <meta name="DC.Contributor" content="Lars Windauer"/>
+                <meta name="DC.Rights" content="betterFORM Project"/>
+                <meta name="DC.Publisher" content="betterFORM Project"/>
+                <meta name="DC.Date" content="{$currentDate}"/>
+                <meta name="DC.Subject" content="betterFORM XML Suite"/>
+                <meta name="DC.Description" content="The XForms Toolkit adds advanced eForms to your application.  The betterFORM XML Suite is an all-in-one solution for complex webapplications completely based upon XML.  betterFORM is free open source - no license cost, no restrictions - just open standards "/>
+                <meta name="DC.Coverage" content="Berlin / 2011"/>
+                <meta name="DC.Language" content="{$lang}"/>
+                <meta name="DC.Type" content="Software"/>
+                <meta name="DC.Format" content="text/html"/>
+
                 <meta name="google-site-verification" content="L5gmOYcZv-vwF2q0e-qSIXx8ecpKUN8A7lrW4ia9YR0"/>
                 <xsl:copy-of select="//html:head/html:meta"/>
 
