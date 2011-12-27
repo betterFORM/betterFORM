@@ -22,3 +22,9 @@ styling-relevant.
 
 - all state handlings will occur on the level of the control (not controlvalue).
 
+
+Open issues
+--------------------------------
+Component mapping with dojo.behavior solves some problems we had with extending controls but is not an
+answer to importing JS and CSS resources. Adding these still requires changing the xslt transform. We should
+add a declarative way of adding these.

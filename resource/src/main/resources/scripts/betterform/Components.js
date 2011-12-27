@@ -1,6 +1,16 @@
 dojo.provide("betterform.Components");
 dojo.require("betterform.ui.XFControl");
 
+
+/*
+todo: dependencies must be imported for foreign (non-dojo) components
+<script type="text/javascript src="..."/>
+<style type="text/css" src="..."/>
+*/
+
+/*
+    todo:see newJSLayer-readme.txt
+*/
 var componentBehavior = {
 
     /*
@@ -21,21 +31,38 @@ var componentBehavior = {
     // a default input control (TextField) bound to a string
     '.xfInput .xfValue': function(n) {
         console.debug("node: ",n);
-        var parentId = n.id.substring(0,n.id.indexOf("-"));
+        var xfId = n.id.substring(0,n.id.lastIndexOf("-"));
 
         //connecting widget to XFControl listening for external value changes (coming from FluxProcessor)
-        dojo.connect(dijit.byId(parentId), "isValid", function(){
+        dojo.connect(dijit.byId(xfId), "handleStateChanged", function(){
             // ##### setting value by platform/component-specific means #####
+            console.debug("self:  ",n);
+            console.debug("self:  ",xfId);
+            if(contextInfo){
+                console.debug("handleStateChanged",contextInfo);
+            }
+        });
+        //todo: add onblur res. onchange handler
+        dojo.connect(n,"onblur",function(){
+            console.debug("onblur",n);
+            fluxProcessor.setControlValue(xfId, n.value);
+        });
+    },
+    '.xfTrigger .xfValue': function(n) {
+        console.debug("node: ",n);
+        var parentId = n.id.substring(0,n.id.lastIndexOf("-"));
 
-
+        //connecting widget to XFControl listening for external value changes (coming from FluxProcessor)
+        dojo.connect(n, "onclick", function(){
+            // ##### setting value by platform/component-specific means #####
             console.debug("self:  ",n);
             console.debug("self:  ",parentId);
-            alert("The button was clicked and 'onClick' was called");
-
-
-
+            fluxProcessor.dispatchEvent(parentId);
         });
+        //todo: add onblur res. onchange handler
     }
+
+
 
 };
 

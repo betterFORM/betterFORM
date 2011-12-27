@@ -27,6 +27,10 @@ dojo.declare(
     controlType:"",
     controlValue:null,
     currentValue:null,
+    subscriber:null,
+
+    constructor:function() {
+    },
 
     buildRendering: function() {
         this.domNode = this.srcNodeRef;
@@ -39,8 +43,8 @@ dojo.declare(
         betterform.ui.util.setDefaultClasses(this.domNode);
 
         /*
-        Controls publish their validity state to the processor which will pass it to the selected alertHandler
-         */
+       Controls publish their validity state to the processor which will pass it to the selected alertHandler
+        */
         if (this.isValid()) {
             dojo.publish("/xf/valid", [this.id,"init"]);
         } else {
@@ -95,7 +99,10 @@ dojo.declare(
     handles state changes send by the server and applies them to the control
      */
     handleStateChanged:function(contextInfo) {
-        // console.debug("Control.handleStateChanged: ",contextInfo);
+        console.debug("Control.handleStateChanged: ",contextInfo);
+
+
+
 
         if (contextInfo["parentId"]) {
             // console.debug("Control._handleHelperChanged: ",contextInfo);
@@ -210,7 +217,7 @@ dojo.declare(
     },
 
     _handleSetValidProperty:function(validity) {
-        // console.debug("Control._handleSetValidProperty [id:"+this.id+ " valid: ",validity, "]");
+        console.debug("Control._handleSetValidProperty [id:"+this.id+ " valid: ",validity, "]");
         if (validity) {
             betterform.ui.util.replaceClass(this.domNode, "xfInvalid", "xfValid");
             dojo.publish("/xf/valid", [this.id,"applyChanges"]);

@@ -543,6 +543,10 @@
             	<xsl:attribute name="bf:incremental-delay" select="@bf:incremental-delay"/>
             </xsl:if>
 
+            <xsl:if test="exists(@bf:name)">
+                <xsl:attribute name="data-bf-name" select="@bf:name"/>
+            </xsl:if>
+
             <label for="{@id}-value" id="{@id}-label" class="{$label-classes}">
                 <xsl:call-template name="create-label">
                     <xsl:with-param name="label-elements" select="xf:label"/>
@@ -572,6 +576,11 @@
         -->
         <span id="{$id}" class="{$control-classes}">
             <xsl:call-template name="copy-style-attribute"/>
+            <xsl:if test="exists(@bf:name)">
+                <xsl:attribute name="data-bf-name" select="@bf:name"/>
+            </xsl:if>
+
+
             <label for="{$id}-value" id="{$id}-label" class="{$label-classes}">
                 <xsl:call-template name="create-label">
                     <xsl:with-param name="label-elements" select="xf:label"/>
@@ -600,6 +609,11 @@
 
         <span id="{$id}" class="{$control-classes}">
             <xsl:call-template name="copy-style-attribute"/>
+                <xsl:if test="exists(@bf:name)">
+                    <xsl:attribute name="data-bf-name" select="@bf:name"/>
+                </xsl:if>
+
+
                 <label for="{$id}-value" id="{$id}-label" class="{$label-classes}">
                 <xsl:call-template name="create-label">
                     <xsl:with-param name="label-elements" select="xf:label"/>
@@ -623,6 +637,10 @@
         </xsl:variable>
 
         <span id="{@id}" class="{$control-classes}">
+            <xsl:if test="exists(@bf:name)">
+                <xsl:attribute name="data-bf-name" select="@bf:name"/>
+            </xsl:if>
+
             <xsl:call-template name="trigger"/>
         </span>
     </xsl:template>
@@ -898,6 +916,18 @@
         <script type="text/javascript" src="{concat($contextroot,$scriptPath,'betterform/betterform-Full.js')}">&#160;</script>
         <xsl:text>
 </xsl:text>
+        <!--
+        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        Dojo require statements here
+        todo: should be moved out again once xslts are completely refactored or another build option is established
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        -->
+        <script type="text/javascript">
+            dojo.require("betterform.XFProcessor");
+        </script>
+        <xsl:text>
+</xsl:text>
+
     </xsl:template>
 
     <!-- todo: move this template out to e.g. 'dojoPlus.xsl' -->

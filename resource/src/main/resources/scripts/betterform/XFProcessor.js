@@ -3,7 +3,7 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("betterform.FluxProcessor");
+dojo.provide("betterform.XFProcessor");
 
 dojo.require("betterform.Components");
 dojo.require("dojo.behavior");
@@ -18,7 +18,7 @@ dojo.require("dojo.behavior");
  de.betterform.web.betterform.FluxFacade.
  **/
 
-dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
+dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
 {
     sessionKey:"",
     dataPrefix:"",
@@ -124,7 +124,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     setInlineRoundBorderAlertHandler:function() {
-        console.debug("FluxProcessor.setInlineRoundBorderAlertHandler");
+        console.debug("XFProcessor.setInlineRoundBorderAlertHandler");
         // this.hideAllCommonChilds(dojo.doc);
         this.unsubscribeFromAlertHandler();
         this.defaultAlertHandler = new betterform.ui.common.InlineRoundBordersAlert({});
@@ -173,7 +173,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     handleUnload:function(evt) {
-        // console.debug("FluxProcessor.handleUnload Event: ", evt);
+        // console.debug("XFProcessor.handleUnload Event: ", evt);
         if (this.isDirty && !this.skipshutdown) {
             dojo.stopEvent(evt);
             // console.debug(this.unloadMsg);
@@ -203,7 +203,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     ignoreExceptions: function (msg) {
-        console.warn("FluxProcessor.ignoreExceptions():");
+        console.warn("XFProcessor.ignoreExceptions():");
     },
 
 
@@ -239,9 +239,11 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
 
             dojoObject = dojo.byId(nextPendingClientServerEvent.getTargetId());
             if (dojoObject == null) {
-                console.warn("Event (Client to Server) for Dojo Control " + dojoObject + " skipped. CAUSE: OBJECT is NULL");
+                console.warn("Event (Client to Server) for Dojo Control " + dojoObject + " skipped. CAUSE: OBJECT is NULL",nextPendingClientServerEvent.getTargetId());
                 continue;
             }
+
+            console.debug("searching dijit for event", nextPendingClientServerEvent.getTargetId());
 
             dijitObject = dijit.byId(nextPendingClientServerEvent.getTargetId())
             if (dijitObject == null) {
@@ -356,7 +358,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
 
     //eventually an 'activate' method still makes sense to provide a simple DOMActivate of a trigger Element
     _dispatchEvent: function (targetId) {
-        //console.debug("FluxProcessor.dispatch(",targetId,") this: ", this);
+        //console.debug("XFProcessor.dispatch(",targetId,") this: ", this);
         try {
             dwr.engine.setErrorHandler(this._handleExceptions);
             dwr.engine.setOrdered(true);
@@ -368,7 +370,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     dispatchEventType:function(targetId, eventType, contextInfo) {
-        // console.debug("FluxProcessor.dispatchEventType(",targetId,") this: ", this, " eventType:",eventType, " contextInfo:",contextInfo);
+        // console.debug("XFProcessor.dispatchEventType(",targetId,") this: ", this, " eventType:",eventType, " contextInfo:",contextInfo);
         var newClientServerEvent = new betterform.ClientServerEvent();
         newClientServerEvent.setTargetId(targetId);
         newClientServerEvent.setEventType(eventType);
@@ -378,7 +380,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     _dispatchEventType:function(targetId, eventType, contextInfo) {
-        // console.debug("FluxProcessor._dispatchEventType(",targetId,") this: ", this, " eventType:",eventType, " contextInfo:",contextInfo);
+        // console.debug("XFProcessor._dispatchEventType(",targetId,") this: ", this, " eventType:",eventType, " contextInfo:",contextInfo);
         try {
             dwr.engine.setErrorHandler(this._handleExceptions);
             dwr.engine.setOrdered(true);
@@ -402,7 +404,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     _setControlValue: function (id, value) {
-        // console.debug("FluxProcessor.setControlValue", id, value);
+        // console.debug("XFProcessor.setControlValue", id, value);
         this.isDirty = true;
         try {
             dwr.engine.setErrorHandler(this._handleExceptions);
@@ -435,7 +437,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     _setRepeatIndex:function(/*String*/repeatId, /*String*/targetPosition) {
-        // console.debug("FluxProcessor.setRepeatIndex for Repeat "+ repeatId + " to position " + targetPosition);
+        // console.debug("XFProcessor.setRepeatIndex for Repeat "+ repeatId + " to position " + targetPosition);
         try {
             dwr.engine.setErrorHandler(this._handleExceptions);
             dwr.engine.setOrdered(true);
@@ -483,7 +485,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     _useLoadingMessage:function(dojoObject) {
-        // console.debug("FluxProcessor._useLoadingMessage");
+        // console.debug("XFProcessor._useLoadingMessage");
         if (fluxProcessor.indicatorObjectTimer) {
             clearTimeout(fluxProcessor.indicatorObjectTimer);
         }
@@ -511,7 +513,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     _handleExceptions:function(msg, exception) {
-        // console.debug("FluxProcessor._handleExceptions msg:",msg, " exception: ", exception);
+        // console.debug("XFProcessor._handleExceptions msg:",msg, " exception: ", exception);
         if (msg != undefined && exception != undefined) {
             console.error(msg, ' - Exception: ', exception);
         } else if (msg != undefined) {
@@ -536,6 +538,15 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
                     function(xmlEvent) {
                         // *** DO NOT COMMENT THIS OUT !!! ***
                         console.debug(xmlEvent.type, " [", xmlEvent.contextInfo, "]");
+
+/*
+                        var hasBfName=false;
+                        if (xmlEvent.contextInfo.bfName != undefined){
+                            dojo.query("[name='"  + xmlEvent.contextInfo.bfName + "']")[xmlEvent.contextInfo.position].handleEvent(xmlEvent.contextInfo);
+                        } else {
+                            dojo.byId(xmlEvent.contextInfo.targetId).handleEvent(xmlEvent.contextInfo);
+                        }
+*/
                         switch (xmlEvent.type) {
                             case "betterform-index-changed"      : fluxProcessor._handleBetterFormIndexChanged(xmlEvent); break;
                             case "betterform-insert-itemset"     : fluxProcessor._handleBetterFormInsertItemset(xmlEvent); break;
@@ -826,7 +837,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
          to unload (loaded) subforms
          */
         else if (xmlEvent.contextInfo.show == "none") {
-            // console.debug("FluxProcessor._handleBetterFormLoadURI: htmlEntryPoint", htmlEntryPoint);
+            // console.debug("XFProcessor._handleBetterFormLoadURI: htmlEntryPoint", htmlEntryPoint);
             this._unloadDOM(xmlEvent.contextInfo.xlinkTarget);
         }
         else {
@@ -940,10 +951,10 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
                     if (item != undefined) {
                         var childDijit = dijit.byId(dojo.attr(item, 'id'));
                         if (childDijit != undefined) {
-                            // console.debug("FluxProcessor._unloadDOM: destroy ", childDijit);
+                            // console.debug("XFProcessor._unloadDOM: destroy ", childDijit);
                             childDijit.destroy();
                         } else {
-                            // console.debug("FluxProcessor._unloadDOM: ChildDijit is null ");
+                            // console.debug("XFProcessor._unloadDOM: ChildDijit is null ");
                             childDijit = dijit.byId(dojo.attr(item, widgetID));
                             if (childDijit != undefined) {
                                 childDijit.destroy();
@@ -962,7 +973,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     _handleBetterFormRenderMessage:function(/*XMLEvent*/ xmlEvent) {
         var message = xmlEvent.contextInfo.message;
         var level = xmlEvent.contextInfo.level;
-        //console.debug("FluxProcessor.handleRenderMessage: message='" + message + "', level='" + level + "'");
+        //console.debug("XFProcessor.handleRenderMessage: message='" + message + "', level='" + level + "'");
         if (this.webtest != 'true') {
 
             if (level == "ephemeral") {
@@ -1095,7 +1106,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     _handleBetterFormDialogOpen:function(/*XMLEvent*/ xmlEvent) {
-       // console.debug("FluxProcessor._handleBetterformDialogOpen: targetId: >",xmlEvent.contextInfo.targetId,"< parentId: " , xmlEvent.contextInfo.parentId);
+       // console.debug("XFProcessor._handleBetterformDialogOpen: targetId: >",xmlEvent.contextInfo.targetId,"< parentId: " , xmlEvent.contextInfo.parentId);
        var xfControlId =xmlEvent.contextInfo.targetId;
        // if XForms Control Dijit allready exists call show on selected control
        if(dijit.byId(xfControlId) != undefined){
@@ -1106,7 +1117,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     _handleBetterFormDialogClose:function(/*XMLEvent*/ xmlEvent) {
-       // console.debug("FluxProcessor._handleBetterformDialogClose: targetId: >",xmlEvent.contextInfo.targetId,"< parentId: " , xmlEvent.contextInfo.parentId);
+       // console.debug("XFProcessor._handleBetterformDialogClose: targetId: >",xmlEvent.contextInfo.targetId,"< parentId: " , xmlEvent.contextInfo.parentId);
        var xfControlId =xmlEvent.contextInfo.targetId;
        // if XForms Control Dijit allready exists call hide on selected control
        if(dijit.byId(xfControlId) != undefined){
@@ -1117,10 +1128,10 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     _handleBetterFormStateChanged:function(/*XMLEvent*/ xmlEvent) {
-        //console.debug("FluxProcessor._handleBetterFormStateChanged: targetId: " + xmlEvent.contextInfo.targetId , " parentId: " , xmlEvent.contextInfo.parentId);
+        //console.debug("XFProcessor._handleBetterFormStateChanged: targetId: " + xmlEvent.contextInfo.targetId , " parentId: " , xmlEvent.contextInfo.parentId);
 
         /*
-         console.debug("FluxProcessor._handleStateChanged this:", this,
+         console.debug("XFProcessor._handleStateChanged this:", this,
          "\n\txmlEvent: ",xmlEvent,
          "\n\tcontextInfo: ",xmlEvent.contextInfo,
          "\n\tparentId: ",xmlEvent.contextInfo.parentId,
@@ -1142,11 +1153,11 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
          *
          * **/
         if (xmlEvent.contextInfo.targetName != undefined && xmlEvent.contextInfo.targetName == "repeat") {
-            // console.debug("FluxProcessor._handleBetterFormStateChanged for Repeat");
+            // console.debug("XFProcessor._handleBetterFormStateChanged for Repeat");
             var repeatElement = dojo.query("*[repeatId='" + xfControlId + "']")[0];
-            // console.debug("FluxProcessor._handleBetterFormStateChanged for Repeat:",repeatElement);
+            // console.debug("XFProcessor._handleBetterFormStateChanged for Repeat:",repeatElement);
             if (repeatElement == undefined) {
-                console.error("(FluxProcessor._handleBetterFormStateChanged xf:repeat: ", xfControlId, " does not exist");
+                console.error("(XFProcessor._handleBetterFormStateChanged xf:repeat: ", xfControlId, " does not exist");
                 return;
             }
             var repeat = dijit.byId(dojo.attr(repeatElement, "id"));
@@ -1159,7 +1170,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
             }
         }
         else if (xmlEvent.contextInfo.targetName != undefined && xmlEvent.contextInfo.targetName == "group") {
-            // console.debug("FluxProcessor._handleBetterFormStateChanged for Group");
+            // console.debug("XFProcessor._handleBetterFormStateChanged for Group");
             var group = dijit.byId(xmlEvent.contextInfo.targetId);
 
             if (group == undefined && dojo.byId(xmlEvent.contextInfo.targetId) != undefined) {
@@ -1179,17 +1190,17 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
             if (group != undefined) {
                 group.handleStateChanged(xmlEvent.contextInfo);
             } else {
-                console.warn("FluxProcessor._handleBetterFormStateChanged: don't know how to handle xmlEvent: ", xmlEvent, " for target: " + xmlEvent.contextInfo.targetId + " [", xmlEvent.contextInfo.targetName, "]");
+                console.warn("XFProcessor._handleBetterFormStateChanged: don't know how to handle xmlEvent: ", xmlEvent, " for target: " + xmlEvent.contextInfo.targetId + " [", xmlEvent.contextInfo.targetName, "]");
             }
         }
         // HANDLING XF:COPY FOR ALL SELECTS
         else if (xmlEvent.contextInfo.targetName != undefined && xmlEvent.contextInfo.targetName == "select1" && xmlEvent.contextInfo.copyItem != undefined) {
-            // console.debug("FluxProcessor._handleBetterFormStateChanged xf:copy handling: xmlEvent: ",xmlEvent, " contextInfo: ", xmlEvent.contextInfo);
-            var warningMsg = "FluxProcessor._handleBetterFormStateChanged: Select1 ControlValue " + xmlEvent.contextInfo.targetId + "-value: No item selected"
+            // console.debug("XFProcessor._handleBetterFormStateChanged xf:copy handling: xmlEvent: ",xmlEvent, " contextInfo: ", xmlEvent.contextInfo);
+            var warningMsg = "XFProcessor._handleBetterFormStateChanged: Select1 ControlValue " + xmlEvent.contextInfo.targetId + "-value: No item selected"
             var select1 = dojo.byId(xmlEvent.contextInfo.targetId + "-value");
             if (select1 != undefined) {
                 var selectedItemId = xmlEvent.contextInfo.selectedItem;
-                // console.debug("FluxProcessor._handleBetterFormStateChanged xf:copy: selectedItem: ", selectedItemId);
+                // console.debug("XFProcessor._handleBetterFormStateChanged xf:copy: selectedItem: ", selectedItemId);
                 if (selectedItemId != undefined && selectedItemId != "") {
                     var selectItems = dojo.query(".xfSelectorItem", select1);
                     var itemSelected = false;
@@ -1218,7 +1229,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
          *
          * **/
         else if (dijit.byId(xfControlId) != undefined) {
-            // console.debug("FluxProcessor.handleStateChanged on existing Dijit [id: " + xfControlId + ", / object:",dijit.byId(xfControlId),+"]");
+            // console.debug("XFProcessor.handleStateChanged on existing Dijit [id: " + xfControlId + ", / object:",dijit.byId(xfControlId),+"]");
             var xfControlDijit = dijit.byId(xfControlId);
             // console.debug("_handleBetterFormStateChanged: ", xfControlDijit, " xmlEvent.contextInfo:",xmlEvent.contextInfo);
             xfControlDijit.handleStateChanged(xmlEvent.contextInfo);
@@ -1231,7 +1242,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
          * **/
 
         else if (dojo.byId(xfControlId) != undefined) {
-            // console.debug("FluxProcessor.handleStateChanged on existing DOM  [id: " + xfControlId + ", / xmlEvent:",xmlEvent,+"]");
+            // console.debug("XFProcessor.handleStateChanged on existing DOM  [id: " + xfControlId + ", / xmlEvent:",xmlEvent,+"]");
             var controlNodeCreated = new betterform.ui.Control({contextInfo:xmlEvent.contextInfo}, dojo.byId(xfControlId));
             if(controlNodeCreated.handleStateChanged) {
                 controlNodeCreated.handleStateChanged(xmlEvent.contextInfo);
@@ -1248,22 +1259,22 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
 
 
         else if (xmlEvent.contextInfo.parentId != undefined && xmlEvent.contextInfo.parentId != "") {
-            // console.debug("FluxProcessor.handleStateChanged: xmlEvent.contextInfo.parentId = " + xmlEvent.contextInfo.parentId);
+            // console.debug("XFProcessor.handleStateChanged: xmlEvent.contextInfo.parentId = " + xmlEvent.contextInfo.parentId);
             var parentDijit = dijit.byId(xmlEvent.contextInfo.parentId);
             // parent dijit does exist and executes handleStateChanged
             if (parentDijit != undefined) {
-                // console.debug("FluxProcessor.handleStateChanged(ParentDijit" + parentDijit.id + ") no control found, execute handle state change on parent");
+                // console.debug("XFProcessor.handleStateChanged(ParentDijit" + parentDijit.id + ") no control found, execute handle state change on parent");
                 parentDijit.handleStateChanged(xmlEvent.contextInfo);
             }
             // parent dijit does not(!!) exist yet
             else {
                 var parentControlNode = dojo.byId(xmlEvent.contextInfo.parentId);
                 if (parentControlNode == undefined) {
-                    console.error("FluxProcessor betterform-state-changed  Warning: Neither Target nor its Parent does exist [xmlEvent", xmlEvent, "]");
+                    console.error("XFProcessor betterform-state-changed  Warning: Neither Target nor its Parent does exist [xmlEvent", xmlEvent, "]");
                 }
                 //  special handling for Select controls, check if parent node is selector item
                 else if (dojo.hasClass(parentControlNode, "xfSelectorItem")) {
-                    // console.debug("FluxProcessor.handleStateChanged Target Node does not exist, Parent Control is SelectorItem (ParentSelector:" , parentControlNode , ")");
+                    // console.debug("XFProcessor.handleStateChanged Target Node does not exist, Parent Control is SelectorItem (ParentSelector:" , parentControlNode , ")");
                     var selectParentId = dojo.attr(parentControlNode.parentNode, "id");
                     if(dijit.byId(selectParentId)) {
                         dijit.byId(selectParentId).handleStateChanged(xmlEvent.contextInfo);
@@ -1278,26 +1289,26 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
                             // console.debug("Update value of option - value: ",xmlEvent.contextInfo.value);
                             dojo.attr(parentControlNode,"value",xmlEvent.contextInfo.value);
                         }else {
-                            console.warn("FluxProcessor betterform-state-changed: : error updating xfSelector item ",xmlEvent.contextInfo);
+                            console.warn("XFProcessor betterform-state-changed: : error updating xfSelector item ",xmlEvent.contextInfo);
                         }
                     }else {
-                        console.warn("FluxProcessor betterform-state-changed: : can't find xfSelectorItem ", selectParentId);
+                        console.warn("XFProcessor betterform-state-changed: : can't find xfSelectorItem ", selectParentId);
                     }
                 }
                 else {
-                    console.warn("FluxProcessor betterform-state-changed: No handleStateChanged implementation availabled for contextinfo: ", xmlEvent.contextInfo);
+                    console.warn("XFProcessor betterform-state-changed: No handleStateChanged implementation availabled for contextinfo: ", xmlEvent.contextInfo);
                 }
             }
         }
         // Check if it is a nested output in a trigger label. If so, (really quick hack: chance xmlEvent.contextInfo)
         else if(xmlEvent.contextInfo.targetName != undefined  && xmlEvent.contextInfo.targetName == "output"){
-            // console.debug("FluxProcessor._handleBetterFormStateChanged xf:output inside label handling: xmlEvent: ",xmlEvent, " contextInfo: ", xmlEvent.contextInfo);
+            // console.debug("XFProcessor._handleBetterFormStateChanged xf:output inside label handling: xmlEvent: ",xmlEvent, " contextInfo: ", xmlEvent.contextInfo);
 
 	        var possibleId = xmlEvent.contextInfo.targetId.substring(1,xmlEvent.contextInfo.targetId.length) -2 ;
-            var warningMsg = "FluxProcessor._handleBetterFormStateChanged: element for dynamic label " + xmlEvent.contextInfo.targetId + ": Control not found ";
+            var warningMsg = "XFProcessor._handleBetterFormStateChanged: element for dynamic label " + xmlEvent.contextInfo.targetId + ": Control not found ";
 	        var control = dijit.byId("C"+possibleId);
 	        if ((control != undefined) && (control.controlType == "trigger")) {
-                // console.debug("FluxProcessor._handleBetterFormStateChanged for dynamic label on trigger control: " ,control, "controlType: ", control.controlType);
+                // console.debug("XFProcessor._handleBetterFormStateChanged for dynamic label on trigger control: " ,control, "controlType: ", control.controlType);
 		        xmlEvent.contextInfo.targetId = "C"+(possibleId-1);
 		        xmlEvent.contextInfo.parentId = "C"+(possibleId-2);
 		        xmlEvent.contextInfo.targetName = "label";
@@ -1305,7 +1316,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
             } else if (control != undefined) {
 		        // There was a dijit, so currently assuming it is either an output, input or group. Try setting it...
 		        // target ID does not change, parent does
-                // console.debug("FluxProcessor._handleBetterFormStateChanged input/output/group control: " ,control, "controlType: ", control.controlType);
+                // console.debug("XFProcessor._handleBetterFormStateChanged input/output/group control: " ,control, "controlType: ", control.controlType);
 		        xmlEvent.contextInfo.parentId = "C"+(possibleId);
 		        xmlEvent.contextInfo.targetName = "label";
                 control.handleStateChanged(xmlEvent.contextInfo);
@@ -1313,7 +1324,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
 		        // Currently the only case encountered where this is needed is for a selectorItem
 	            control = dojo.byId("C"+possibleId-2);
 	            if (control != undefined) {
-                    // console.debug("FluxProcessor._handleBetterFormStateChanged selectorItem control: " ,control, "controlType: ", control.controlType);
+                    // console.debug("XFProcessor._handleBetterFormStateChanged selectorItem control: " ,control, "controlType: ", control.controlType);
 		            // targetId stays the same
 		            xmlEvent.contextInfo.targetName = "label";
 		            xmlEvent.contextInfo.parentId = "C"+(possibleId-2);
@@ -1323,7 +1334,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
 		        }
 	        }
 	    } else {
-            console.error("FluxProcessor betterform-state-changed Error: Processor does not know how to handle betterform-state-changed based on xmlEvent ", xmlEvent.contextInfo.targetId);
+            console.error("XFProcessor betterform-state-changed Error: Processor does not know how to handle betterform-state-changed based on xmlEvent ", xmlEvent.contextInfo.targetId);
         }
 
     },
@@ -1331,15 +1342,15 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     _handleBetterFormInsertRepeatItem:function(xmlEvent) {
         // console.debug("betterform-insert-repeatitem [id: '", xmlEvent.contextInfo.targetId, "'] contextInfo:",xmlEvent.contextInfo);
         var repeatToInsertIntoDOM = dojo.query("*[repeatId='" + xmlEvent.contextInfo.targetId + "']");
-        // console.debug("FluxProcessor._handleBetterFormInsertRepeatItem repeatToInsertIntoDOM: ",repeatToInsertIntoDOM);
-        var repeatToInsertInto = dijit.byId(dojo.attr(repeatToInsertIntoDOM[0], "id"));
-        if (repeatToInsertInto == undefined) {
-            // console.debug("FluxProcessor._handleBetterFormInsertRepeatItem ",repeatToInsertIntoDOM);
+
+        var repeatObject = _getRepeatObject(xmlEvent);
+        if (repeatObject == undefined) {
+            // console.debug("XFProcessor._handleBetterFormInsertRepeatItem ",repeatToInsertIntoDOM);
             // console.dirxml(repeatToInsertIntoDOM[0]);
             dojo.require("betterform.ui.container.Repeat");
-            repeatToInsertInto = new betterform.ui.container.Repeat({}, repeatToInsertIntoDOM[0]);
+            repeatObject = new betterform.ui.container.Repeat({}, repeatToInsertIntoDOM[0]);
         }
-        repeatToInsertInto.handleInsert(xmlEvent.contextInfo);
+        repeatObject.handleInsert(xmlEvent.contextInfo);
 
     },
 
@@ -1372,17 +1383,17 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
                     itemsetDijit = new betterform.ui.select.CheckBoxItemset({contextInfo:xmlEvent.contextInfo}, itemsetDOM);
                 }
                 else {
-                    console.warn("FluxProcessor apply betterform-insert-itemset: Itemset Type " + itemsetType + " not supported yet");
+                    console.warn("XFProcessor apply betterform-insert-itemset: Itemset Type " + itemsetType + " not supported yet");
                 }
             } else {
-                console.warn("FluxProcessor apply betterform-insert-itemset: ItemSet Type is null");
+                console.warn("XFProcessor apply betterform-insert-itemset: ItemSet Type is null");
                 return;
             }
             // console.debug("betterform-insert-itemset [id: '", xmlEvent.contextInfo.targetId, " / dojotype:'",itemsetType,"']");
             if (itemsetDijit != undefined) {
                 itemsetDijit.handleInsert(xmlEvent.contextInfo);
             } else {
-                console.warn("FluxProcessor apply betterform-insert-itemset: Error during itemset creation: ItemsetId " + xmlEvent.contextInfo.targetId + " itemsetType: " + itemsetType + " not supported yet");
+                console.warn("XFProcessor apply betterform-insert-itemset: Error during itemset creation: ItemsetId " + xmlEvent.contextInfo.targetId + " itemsetType: " + itemsetType + " not supported yet");
             }
         }
 
@@ -1393,20 +1404,24 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
             dijit.byId(xmlEvent.contextInfo.targetId).handleDelete(xmlEvent.contextInfo);
         }
         else if (xmlEvent.contextInfo.targetName == "repeat" || xmlEvent.contextInfo.targetName == "tbody") {
-            var repeatElement = dojo.query("*[repeatId='" + xmlEvent.contextInfo.targetId + "']");
-            var repeatDijit  = dijit.byId(dojo.attr(repeatElement[0], "id"));
-            repeatDijit.handleDelete(xmlEvent.contextInfo);
+            var repeatObject = _getRepeatObject(xmlEvent);
+            repeatObject.handleDelete(xmlEvent.contextInfo);
             var positionOfDeletedItem = xmlEvent.contextInfo.position;
-            if(positionOfDeletedItem <= repeatDijit._getSize()){
-                repeatDijit._handleSetRepeatIndex(positionOfDeletedItem);
+            if(positionOfDeletedItem <= repeatObject._getSize()){
+                repeatObject._handleSetRepeatIndex(positionOfDeletedItem);
             }
         }
     },
     _handleBetterFormIndexChanged:function(xmlEvent) {
-        var repeatElement = dojo.query("*[repeatId='" + xmlEvent.contextInfo.targetId + "']");
-        var repeat = dijit.byId(dojo.attr(repeatElement[0], "id"));
-        console.debug("FluxProcessor.betterform-index-changed Repeat: ", repeat, " targetId: ", xmlEvent.contextInfo.targetId);
+        var repeat = _getRepeatObject(xmlEvent);
+        console.debug("XFProcessor.betterform-index-changed Repeat: ", repeat, " targetId: ", xmlEvent.contextInfo.targetId);
         repeat.handleSetRepeatIndex(xmlEvent.contextInfo);
+    },
+
+    _getRepeatObject: function (xmlEvent){
+        var repeatElement = dojo.query("*[repeatId='" + xmlEvent.contextInfo.targetId + "']");
+        var repeatObject = dijit.byId(dojo.attr(repeatElement[0], "id"));
+        return repeatObject;
     },
 
     _handleUploadProgressEvent:function(xmlEvent) {
@@ -1451,7 +1466,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
             var domControlValue = dojo.byId(xfControlId);
             domControlValue.focus();
         } else {
-            console.warn("FluxProcessor._handleDOMFocusIn no Element found for id:", xfControlId, " might have been destroyed");
+            console.warn("XFProcessor._handleDOMFocusIn no Element found for id:", xfControlId, " might have been destroyed");
         }
     },
 
@@ -1482,7 +1497,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     _handleSwitchToggled:function(xmlEvent) {
-        // console.debug("FluxProcessor._handleSwitchToggled xmlEvent:", xmlEvent);
+        // console.debug("XFProcessor._handleSwitchToggled xmlEvent:", xmlEvent);
         var tmpSwitch = dijit.byId(xmlEvent.contextInfo.targetId);
         if (tmpSwitch == undefined && dojo.byId(xmlEvent.contextInfo.targetId) != undefined) {
             // console.debug("create new switch: ", xmlEvent);
@@ -1494,7 +1509,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
 
     fetchProgress:function(id, fileName) {
         try {
-            console.debug("FluxProcessor.fetchProgress id:", id, "fileName: " , fileName , " this.sessionKey:", this.sessionKey);
+            console.debug("XFProcessor.fetchProgress id:", id, "fileName: " , fileName , " this.sessionKey:", this.sessionKey);
             Flux.fetchProgress(id, fileName, this.sessionKey, this.applyChanges);
         }
         catch(ex) {
@@ -1507,7 +1522,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
      */
 
     setLocale:function(locale) {
-        // console.debug("FluxProcessor.setLocale: Changed locale to: " + locale);
+        // console.debug("XFProcessor.setLocale: Changed locale to: " + locale);
         try {
             Flux.setLocale(locale, this.sessionKey, this.applyChanges);
         }

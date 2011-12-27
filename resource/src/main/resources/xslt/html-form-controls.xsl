@@ -472,7 +472,6 @@
                 title="{xf:hint/text()}"
                 type="submit"
                 value="{xf:label}"
-
                 >
             <xsl:if test="bf:data/@bf:readonly='true'">
                 <xsl:attribute name="readonly">readonly</xsl:attribute>
