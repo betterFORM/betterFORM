@@ -356,7 +356,7 @@
                     <div id="helpWindow" style="display:none"/>
 
                     <div id="bfCopyright">
-                        <xsl:text disable-output-escaping="yes">powered by betterFORM, &amp;copy; 2010</xsl:text>
+                        <xsl:text disable-output-escaping="yes">powered by betterFORM, &amp;copy; 2011</xsl:text>
                     </div>
                 </div>
             </div>

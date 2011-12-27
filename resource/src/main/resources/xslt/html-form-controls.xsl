@@ -51,14 +51,9 @@
                     <xsl:if test="bf:data/@bf:readonly='true'">
                         <xsl:attribute name="disabled">disabled</xsl:attribute>
                     </xsl:if>
-                    <xsl:choose>
-                        <xsl:when test="bf:data/text()='true'">
-                            <xsl:attribute name="checked">true</xsl:attribute>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:attribute name="value">true</xsl:attribute>
-                        </xsl:otherwise>
-                    </xsl:choose>
+                    <xsl:if test="bf:data/text()='true'">
+                        <xsl:attribute name="checked">true</xsl:attribute>
+                    </xsl:if>
                     <!--
                     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                     the hint will be applied as html title attribute and additionally output

@@ -531,7 +531,6 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
 
     applyChanges: function(data) {
         try {
-            console.group("EventLog");
             var validityEvents = new Array();
             var index = 0;
             dojo.forEach(data,
@@ -593,7 +592,6 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
                         }
                     }
                     );
-            console.groupEnd();
             if (validityEvents.length > 0) {
                 fluxProcessor._handleValidity(validityEvents);
             }
@@ -1128,7 +1126,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
     },
 
     _handleBetterFormStateChanged:function(/*XMLEvent*/ xmlEvent) {
-        //console.debug("XFProcessor._handleBetterFormStateChanged: targetId: " + xmlEvent.contextInfo.targetId , " parentId: " , xmlEvent.contextInfo.parentId);
+        console.debug("XFProcessor._handleBetterFormStateChanged: targetId: " + xmlEvent.contextInfo.targetId , " parentId: " , xmlEvent.contextInfo.parentId);
 
         /*
          console.debug("XFProcessor._handleStateChanged this:", this,

@@ -99,10 +99,7 @@ dojo.declare(
     handles state changes send by the server and applies them to the control
      */
     handleStateChanged:function(contextInfo) {
-        console.debug("Control.handleStateChanged: ",contextInfo);
-
-
-
+        console.debug("XFControl.handleStateChanged: ",contextInfo);
 
         if (contextInfo["parentId"]) {
             // console.debug("Control._handleHelperChanged: ",contextInfo);
@@ -117,7 +114,7 @@ dojo.declare(
 
             if (contextInfo["targetName"] == "input" && this.value != null) {
                 var noNSType = betterform.ui.util.removeNamespace(contextInfo["type"]);
-                this._changedDataType(noNSType, contextInfo);
+                this._checkForDataTypeChange(noNSType, contextInfo);
 
                 if (noNSType == "date" || noNSType == "dateTime") {
                     this._handleSetControlValue(contextInfo["schemaValue"]);
@@ -159,13 +156,19 @@ dojo.declare(
     sends updated value of a widget to the server
      */
     setControlValue:function(/* String */ value) {
-        fluxProcessor.setControlValue(this.id, value);
-        this._handleRequiredEmpty();
+        console.debug("XFControl: setControlValue: currentvalue: ", this.currentValue);
+        console.debug("XFControl: setControlValue: newValue: ", value);
+
+        if (value != undefined && this.currentValue != value) {
+            this.currentValue = value;
+            fluxProcessor.setControlValue(this.id, value);
+            this._handleRequiredEmpty();
+        }
     },
 
 
-    _changedDataType:function(dataType, contextInfo) {
-        // console.debug("check if dataType changed for ui control: old dataType: " + this.dataType + " new dataType: ", dataType, " contextInfo:",contextInfo);
+    _checkForDataTypeChange:function(dataType, contextInfo) {
+        console.debug("_checkForDataTypeChange: old dataType: " + this.dataType + " new dataType: ", dataType, " contextInfo:",contextInfo);
 
         if (this.controlValue == undefined) {
             var controlValueTemplate = dojo.query("*[id ='" + this.id + "-value']", this.domNode)[0];
@@ -179,7 +182,7 @@ dojo.declare(
             else {
                 dojo.attr(controlValueTemplate, "dataType", dataType);
                 dojo.attr(controlValueTemplate, "id", this.id + "-value");
-                this.controlValue = fluxProcessor.factory.createWidget(controlValueTemplate, this.id);
+//                this.controlValue = fluxProcessor.factory.createWidget(controlValueTemplate, this.id);
 
             }
 
@@ -207,20 +210,20 @@ dojo.declare(
     },
 
     _handleSetControlValue:function(value) {
-        // console.debug("handleSetControlValue: " + this.controlValue.currentValue + " value: " + value);
+        console.debug("handleSetControlValue: " + this.controlValue.currentValue + " value: " + value);
         if(this.controlValue.currentValue != value) {
             this.controlValue.currentValue = value;
-            this.controlValue._handleSetControlValue(value, true);
+//            this.controlValue._handleSetControlValue(value, true);
             this._handleRequiredEmpty();
         }
         // dojo.publish("/xf/valueChanged",[this,value])
     },
 
     _handleSetValidProperty:function(validity) {
-        console.debug("Control._handleSetValidProperty [id:"+this.id+ " valid: ",validity, "]");
+        console.debug("XFControl._handleSetValidProperty [id:"+this.id+ " valid: ",validity, "]");
         if (validity) {
             betterform.ui.util.replaceClass(this.domNode, "xfInvalid", "xfValid");
-            dojo.publish("/xf/valid", [this.id,"applyChanges"]);
+//            dojo.publish("/xf/valid", [this.id,"applyChanges"]);
         }
         else {
             betterform.ui.util.replaceClass(this.domNode, "xfValid", "xfInvalid");
