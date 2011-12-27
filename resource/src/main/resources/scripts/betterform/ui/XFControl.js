@@ -126,10 +126,21 @@ dojo.declare(
                 this._handleSetControlValue(this.value);
             }
 
-            if (this.valid != null) {
+            if (this.valid != null ) {
                 this._handleSetValidProperty(eval(this.valid));
             }
 
+            /*
+            todo: got the feeling that this case should be handled elsewhere....
+            if a control is intially invalid it just has xfInvalid but not bfInvalidControl. This may happen
+            during init and somehow the subscriber won't be called then (too early???)
+
+            Ok, for now: if control is not valid (has 'xfInvalid' class) and not has 'bfInvalidControl' (which
+            actually shows an alert) it must nevertheless publish invalid event for the alerts to work correctly.
+            */
+            if(!this.isValid() && !dojo.hasClass(this.domNode,"bfInvalidControl")){
+                this._handleSetValidProperty(false);
+            }
             if (this.readonly != null) {
                 this._handleSetReadonlyProperty(eval(this.readonly));
             }
@@ -147,11 +158,26 @@ dojo.declare(
     fetches the value from the widget
      */
     getControlValue:function() {
-        if (this.controlValue != undefined) {
-            return this.controlValue.getControlValue();
+//        if (this.controlValue != undefined) {
+//            return this.controlValue.getControlValue();
+//        }
+        if(this.currentValue != undefined){
+            return this.currentValue;
         }
     },
 
+    getCurrentValue:function(){
+        return this.currentValue;
+    },
+
+    isValueChanged:function(value){
+        if (value != undefined && this.currentValue != value) {
+            return true;
+        }else{
+            return false;
+        }
+
+    },
     /*
     sends updated value of a widget to the server
      */
@@ -210,10 +236,9 @@ dojo.declare(
     },
 
     _handleSetControlValue:function(value) {
-        console.debug("handleSetControlValue: " + this.controlValue.currentValue + " value: " + value);
-        if(this.controlValue.currentValue != value) {
-            this.controlValue.currentValue = value;
-//            this.controlValue._handleSetControlValue(value, true);
+        console.debug("handleSetControlValue: " + this.currentValue + " value: " + value);
+        if(this.currentValue != value) {
+            this.currentValue = value;
             this._handleRequiredEmpty();
         }
         // dojo.publish("/xf/valueChanged",[this,value])
@@ -223,7 +248,7 @@ dojo.declare(
         console.debug("XFControl._handleSetValidProperty [id:"+this.id+ " valid: ",validity, "]");
         if (validity) {
             betterform.ui.util.replaceClass(this.domNode, "xfInvalid", "xfValid");
-//            dojo.publish("/xf/valid", [this.id,"applyChanges"]);
+            dojo.publish("/xf/valid", [this.id,"applyChanges"]);
         }
         else {
             betterform.ui.util.replaceClass(this.domNode, "xfValid", "xfInvalid");

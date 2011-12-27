@@ -72,7 +72,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
 
         //#########    ALERT IMPLEMENTATION  #############
         //#########    ALERT IMPLEMENTATION  #############
-
+        // console.debug("Alert Handler Init");
         var globalAlertEnabled = dojo.query(".GlobalAlert", dojo.doc)[0];
         if (globalAlertEnabled != undefined) {
             dojo.require("betterform.ui.common.GlobalAlert");
@@ -92,20 +92,22 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
             this.defaultAlertHandler = new betterform.ui.common.InlineRoundBordersAlert({});
         }
 
-        var inlineAlertEnabled = dojo.query(".InlineAlert", dojo.doc)[0];
-        if (inlineAlertEnabled != undefined) {
-            dojo.require("betterform.ui.common.InlineAlert");
-            this.defaultAlertHandler = new betterform.ui.common.InlineAlert({});
-            console.debug("Enabled InlineAlert Handler ", this.defaultAlertHandler);
-
-        }
-
         var toolTipAlertEnabled = dojo.query(".ToolTipAlert", dojo.doc)[0];
         if (toolTipAlertEnabled != undefined || (this.defaultAlertHandler == undefined)) {
             dojo.require("betterform.ui.common.ToolTipAlert");
             this.defaultAlertHandler = new betterform.ui.common.ToolTipAlert({});
             console.debug("Enabled ToolTipAlert Handler ", this.defaultAlertHandler);
         }
+
+//        var inlineAlertEnabled = dojo.query(".InlineAlert", dojo.doc)[0];
+//        if (inlineAlertEnabled != undefined) {
+        //todo: choose default handler in a safe way - fix this
+        //default alert handler
+            dojo.require("betterform.ui.common.InlineAlert");
+            this.defaultAlertHandler = new betterform.ui.common.InlineAlert({});
+            console.debug("Enabled InlineAlert Handler ", this.defaultAlertHandler);
+
+//        }
 
         this.subscribers[0] = dojo.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
         this.subscribers[1] = dojo.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");

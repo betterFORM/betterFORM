@@ -48,7 +48,10 @@ var componentBehavior = {
         There always need to be at least 2 event listener:
 
         - one listening tor handleStateChanged which are events coming from the processor representing
-        changes of the value or state of a node that need to be applied to the widget.
+        changes of the value or state of a node that need to be applied to the widget. The following event handler
+        will be triggered by the execution of 'handleStateChanged' in XFControl. This means that all updates on
+        XFControl and their representing CSS classes are done. This handler just needs to propagate the change
+        to the widget for updating the value.
 
         - one for listening to the respective change events fired by the widget (usually onBlur or onChange)
         to pass the changed value to the processor
@@ -60,21 +63,26 @@ var componentBehavior = {
                 console.debug("contextInfo",contextInfo);
             }
             //apply value to widget - handle required, valid and readonly if necessary
-
+            //todo: this is probably not even necessary here?
+            var newValue = contextInfo["value"];
+            if(newValue != undefined){
+                console.debug("newValue: ",newValue);
+                n.value=newValue;
+            }
         });
 
         dojo.connect(n,"onblur",function(){
             console.debug("onblur",n);
-            console.debug("xfId",xfId);
             var xfControl = dijit.byId(xfId);
-
-            //update the XFControl which will handle sending of new (if so) value to server
             xfControl.setControlValue(n.value);
-//            fluxProcessor.setControlValue(xfId, n.value);
         });
 
         //todo: Dijits will need to create themselves later here...
     },
+
+    // ############################## BOOLEAN INPUT ##############################
+    // ############################## BOOLEAN INPUT ##############################
+    // ############################## BOOLEAN INPUT ##############################
     '.xfInput.xsdBoolean .xfValue': function(n) {
         console.debug("boolean input field: ",n);
         var xfId = n.id.substring(0,n.id.lastIndexOf("-"));
@@ -83,30 +91,42 @@ var componentBehavior = {
             if(contextInfo){
                 console.debug("contextInfo",contextInfo);
             }
-            //apply value to widget - handle required, valid and readonly if necessary
+            //apply value to widget - handle required + readonly if necessary
 
         });
 
         dojo.connect(n,"onblur",function(){
-            console.debug("onblur",n);
-            console.debug("xfId",xfId);
-            console.debug("checked",n.checked);
+//            console.debug("onblur",n);
+//            console.debug("xfId",xfId);
+//            console.debug("checked",n.checked);
             var xfControl = dijit.byId(xfId);
             if(n.checked != undefined){
                 xfControl.setControlValue(n.checked);
             }
         });
         dojo.connect(n,"onclick",function(){
-            console.debug("onclick",n);
-            console.debug("xfId",xfId);
-            console.debug("value",n.value);
-            console.debug("checked",n.checked);
+//            console.debug("onclick",n);
+//            console.debug("xfId",xfId);
+//            console.debug("value",n.value);
+//            console.debug("checked",n.checked);
             var xfControl = dijit.byId(xfId);
             if(n.checked != undefined){
                 xfControl.setControlValue(n.checked);
             }
         });
 
+    },
+
+    // ############################## DATE INPUT ##############################
+    // ############################## DATE INPUT ##############################
+    // ############################## DATE INPUT ##############################
+    '.xfInput.xsdDate .xfValue': function(n) {
+    },
+
+    // ############################## DATETIME INPUT ##############################
+    // ############################## DATETIME INPUT ##############################
+    // ############################## DATETIME INPUT ##############################
+    '.xfInput.xsdDateTime .xfValue': function(n) {
     },
 
 
@@ -117,8 +137,8 @@ var componentBehavior = {
         //connecting widget to XFControl listening for external value changes (coming from FluxProcessor)
         dojo.connect(n, "onclick", function(){
             // ##### setting value by platform/component-specific means #####
-            console.debug("self:  ",n);
-            console.debug("self:  ",parentId);
+//            console.debug("self:  ",n);
+//            console.debug("self:  ",parentId);
             fluxProcessor.dispatchEvent(parentId);
         });
         //todo: add onblur res. onchange handler

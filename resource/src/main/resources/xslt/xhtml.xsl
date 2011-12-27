@@ -730,62 +730,62 @@
             <xsl:when test="local-name()='input'">
                 <xsl:call-template name="input"/>
                 <!-- xf:hint is handled by widget itself -->
-                <xsl:apply-templates select="xf:help"/>
-                <xsl:apply-templates select="xf:alert"/>
+                <!--<xsl:apply-templates select="xf:help"/>-->
+                <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
             <xsl:when test="local-name()='output'">
                 <xsl:call-template name="output"/>
                 <!-- xf:hint is handled by widget itself -->
-                <xsl:apply-templates select="xf:help"/>
-                <xsl:apply-templates select="xf:alert"/>
+                <!--<xsl:apply-templates select="xf:help"/>-->
+                <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
             <xsl:when test="local-name()='range'">
                 <xsl:call-template name="range"/>
                 <!-- xf:hint is handled by widget itself -->
-                <xsl:apply-templates select="xf:help"/>
-                <xsl:apply-templates select="xf:alert"/>
+                <!--<xsl:apply-templates select="xf:help"/>-->
+                <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
             <xsl:when test="local-name()='secret'">
                 <xsl:call-template name="secret"/>
                 <!-- xf:hint is handled by widget itself -->
-                <xsl:apply-templates select="xf:help"/>
-                <xsl:apply-templates select="xf:alert"/>
+                <!--<xsl:apply-templates select="xf:help"/>-->
+                <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
             <xsl:when test="local-name()='select'">
                 <xsl:call-template name="select"/>
                 <!-- xf:hint is handled by widget itself -->
-                <xsl:apply-templates select="xf:help"/>
-                <xsl:apply-templates select="xf:alert"/>
+                <!--<xsl:apply-templates select="xf:help"/>-->
+                <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
             <xsl:when test="local-name()='select1'">
                 <xsl:call-template name="select1"/>
                 <!-- xf:hint is handled by widget itself -->
-                <xsl:apply-templates select="xf:help"/>
-                <xsl:apply-templates select="xf:alert"/>
+                <!--<xsl:apply-templates select="xf:help"/>-->
+                <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
             <xsl:when test="local-name()='submit'">
                 <xsl:call-template name="submit"/>
                 <!-- xf:hint is handled by widget itself -->
-                <xsl:apply-templates select="xf:help"/>
-                <xsl:apply-templates select="xf:alert"/>
+                <!--<xsl:apply-templates select="xf:help"/>-->
+                <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
             <xsl:when test="local-name()='trigger'">
                 <xsl:call-template name="trigger"/>
                 <!-- xf:hint is handled by widget itself -->
-                <xsl:apply-templates select="xf:help"/>
-                <xsl:apply-templates select="xf:alert"/>
+                <!--<xsl:apply-templates select="xf:help"/>-->
+                <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
             <xsl:when test="local-name()='textarea'">
                 <xsl:call-template name="textarea"/>
                 <!-- xf:hint is handled by widget itself -->
-                <xsl:apply-templates select="xf:help"/>
-                <xsl:apply-templates select="xf:alert"/>
+                <!--<xsl:apply-templates select="xf:help"/>-->
+                <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
             <xsl:when test="local-name()='upload'">
                 <xsl:call-template name="upload"/>
                 <!-- xf:hint is handled by widget itself -->
-                <xsl:apply-templates select="xf:help"/>
-                <xsl:apply-templates select="xf:alert"/>
+                <!--<xsl:apply-templates select="xf:help"/>-->
+                <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
             <xsl:when test="local-name()='repeat'">
                 <xsl:apply-templates select="."/>

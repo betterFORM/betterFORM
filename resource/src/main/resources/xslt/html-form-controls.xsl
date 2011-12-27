@@ -63,23 +63,32 @@
                     <xsl:apply-templates select="xf:hint"/>
                 </input>
             </xsl:when>
+            <xsl:when test="$type='date'">
+                <input  id="{$id}-value"
+                        name="{$name}"
+                        type="date"
+                        class="xfValue"
+                        tabindex="{$navindex}"
+                        placeholder="{xf:hint/text()}">
+                    <xsl:if test="bf:data/@bf:readonly='true'">
+                        <xsl:attribute name="disabled">disabled</xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="bf:data/text()='true'">
+                        <xsl:attribute name="checked">true</xsl:attribute>
+                    </xsl:if>
+                </input>
+            </xsl:when>
             <xsl:otherwise>
                 <input  id="{$id}-value"
                         name="{$name}"
                         type="text"
                         class="xfValue"
                         tabindex="{$navindex}"
-                        value="{bf:data/text()}">
+                        value="{bf:data/text()}"
+                        placeholder="{xf:hint}">
                     <xsl:if test="bf:data/@bf:readonly='true'">
                         <xsl:attribute name="disabled">disabled</xsl:attribute>
                     </xsl:if>
-                    <!--
-                    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                    the hint will be applied as html title attribute and additionally output
-                    as a span
-                    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                    -->
-                    <xsl:apply-templates select="xf:hint"/>
                 </input>
             </xsl:otherwise>
         </xsl:choose>
