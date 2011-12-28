@@ -3,7 +3,7 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("betterform.ui.XFControl");
+dojo.provide("betterform.ui.xf.XFControl");
 
 dojo.require("dijit._Widget");
 dojo.require("dijit._Templated");
@@ -92,6 +92,13 @@ dojo.declare(
             return true;
         } else {
             console.error("No validate state found for " + this.id);
+        }
+    },
+    isIncremental:function(){
+        if (dojo.hasClass(this.domNode,"xfIncremental")){
+            return true;
+        }else{
+            return false;
         }
     },
 

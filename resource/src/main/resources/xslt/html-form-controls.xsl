@@ -69,7 +69,8 @@
                         type="date"
                         class="xfValue"
                         tabindex="{$navindex}"
-                        placeholder="{xf:hint/text()}">
+                        placeholder="{xf:hint/text()}"
+                        value="{bf:data/text()}">
                     <xsl:if test="bf:data/@bf:readonly='true'">
                         <xsl:attribute name="disabled">disabled</xsl:attribute>
                     </xsl:if>
