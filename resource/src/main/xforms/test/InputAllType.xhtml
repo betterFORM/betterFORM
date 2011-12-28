@@ -60,7 +60,16 @@
         <xf:input ref="date">
             <xf:label>Input XF Date: </xf:label>
             <xf:hint>date hint</xf:hint>
+            <xf:alert>date format error</xf:alert>
         </xf:input>
+        <xf:trigger>
+            <xf:label>setvalue invalid</xf:label>
+            <xf:setvalue ref="date" value="'foo'"/>
+        </xf:trigger>
+        <xf:trigger>
+            <xf:label>setvalue valid</xf:label>
+            <xf:setvalue ref="date" value="'2011-12-12'"/>
+        </xf:trigger>
 </xf:group>
 </body>
 </html>

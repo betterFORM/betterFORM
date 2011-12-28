@@ -3,7 +3,7 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("betterform.ui.xf.XFControl");
+dojo.provide("betterform.xf.XFControl");
 
 dojo.require("dijit._Widget");
 dojo.require("dijit._Templated");
@@ -20,7 +20,7 @@ dojo.require("dijit._Templated");
  **/
 
 dojo.declare(
-        "betterform.ui.XFControl",
+        "betterform.xf.XFControl",
         [dijit._Widget, dijit._Templated],
 {
     id:"",
@@ -135,16 +135,18 @@ dojo.declare(
 
             if (this.valid != null ) {
                 this._handleSetValidProperty(eval(this.valid));
+            }else if(!this.isValid() && !dojo.hasClass(this.domNode,"bfInvalidControl")){
+                /*
+                 todo: got the feeling that this case should be handled elsewhere....
+                 if a control is intially invalid it just has xfInvalid but not bfInvalidControl. This may happen
+                 during init and somehow the subscriber won't be called then (too early???)
+
+                 Ok, for now: if control is not valid (has 'xfInvalid' class) and not has 'bfInvalidControl' (which
+                 actually shows an alert) it must nevertheless publish invalid event for the alerts to work correctly.
+                 */
+                this._handleSetValidProperty(false);
             }
 
-            /*
-            todo: got the feeling that this case should be handled elsewhere....
-            if a control is intially invalid it just has xfInvalid but not bfInvalidControl. This may happen
-            during init and somehow the subscriber won't be called then (too early???)
-
-            Ok, for now: if control is not valid (has 'xfInvalid' class) and not has 'bfInvalidControl' (which
-            actually shows an alert) it must nevertheless publish invalid event for the alerts to work correctly.
-            */
             if(!this.isValid() && !dojo.hasClass(this.domNode,"bfInvalidControl")){
                 this._handleSetValidProperty(false);
             }
@@ -189,8 +191,7 @@ dojo.declare(
     sends updated value of a widget to the server
      */
     setControlValue:function(/* String */ value) {
-        console.debug("XFControl: setControlValue: currentvalue: ", this.currentValue);
-        console.debug("XFControl: setControlValue: newValue: ", value);
+        console.debug("XFControl: setControlValue: currentvalue:", this.currentValue, " - newValue:",value);
 
         if (value != undefined && this.currentValue != value) {
             this.currentValue = value;

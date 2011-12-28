@@ -20,15 +20,7 @@ dojo.declare(
 
     postCreate:function() {
         this.inherited(arguments);
-
-        dojo.connect(this.xfControl, "handleStateChanged", function(contextInfo){
-            console.debug("handleStateChanged for:  ",xfControl);
-            if(contextInfo){
-                console.debug("contextInfo",contextInfo);
-            }
-            //apply value to widget - handle required + readonly if necessary
-            this.set("value","foo");
-        });
+        console.debug("date: xfcontrol",this.xfControl);
 
     },
 

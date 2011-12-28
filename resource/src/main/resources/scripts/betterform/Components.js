@@ -1,5 +1,5 @@
 dojo.provide("betterform.Components");
-dojo.require("betterform.ui.XFControl");
+dojo.require("betterform.xf.XFControl");
 
 
 /*
@@ -24,7 +24,7 @@ var componentBehavior = {
         console.debug("XFControl found: ",n);
 
         var controlId = dojo.attr(n,"id");
-        new betterform.ui.XFControl({
+        new betterform.xf.XFControl({
             id:controlId,
             controlType:"generic"
         }, n);
@@ -124,7 +124,6 @@ var componentBehavior = {
     //using detailed behavior syntax
     '.xfInput.xsdDate .xfValue': function(n){
         console.debug("date input field: ",n);
-        console.debug("date input field value: ",n.value);
          // create dijit for datePicker as not widly available yet in browsers
         dojo.require("betterform.xf.input.Date");
 
@@ -132,16 +131,6 @@ var componentBehavior = {
              xfControl  : dijit.byId(getXfId(n)),
              value      : new Date(n.value)
         },n);
-
-        var xfId = n.id.substring(0,n.id.lastIndexOf("-"));
-        dojo.connect(dijit.byId(xfId), "handleStateChanged", function(contextInfo){
-            console.debug("handleStateChanged for:  ",n);
-            if(contextInfo){
-                console.debug("contextInfo",contextInfo);
-            }
-            //apply value to widget - handle required + readonly if necessary
-            dateWidget.setControlValue(n.value);
-        });
     },
 
     // ############################## DATETIME INPUT ##############################
