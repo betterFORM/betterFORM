@@ -353,9 +353,7 @@
         <echo message="************************************************************************************"/>
         <echo/>
         <copy todir="${webapp.dir}/${forms.target}">
-            <fileset dir="${basedir}/src/test/resources/testsuite/xhtml/XFormsTestSuite1.1E1">
-                <include name="**/*.xhtml"/>
-            </fileset>
+            <fileset dir="${basedir}/src/test/resources/testsuite/xhtml"/>
         </copy>
     </target>
 
