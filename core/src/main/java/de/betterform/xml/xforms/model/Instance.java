@@ -614,23 +614,24 @@ public class Instance extends XFormsElement {
      *
      * @return the original instance.
      */
-    private Element createInitialInstance() throws XFormsLinkException {
+    private Element createInitialInstance() throws XFormsException {
         String srcAttribute = getXFormsAttribute(SRC_ATTRIBUTE);
-
+        String resourceUri;
         //@src takes precedence
         if (srcAttribute != null) {
+            resourceUri = srcAttribute;
             return fetchData(srcAttribute);
+        }else{
+            resourceUri = "#" + this.getId();
         }
 
         // if inline content is given this takes precedence over @resource
-        if(DOMUtil.getChildElements(this.element).size() != 1) {
-            try {
-                this.container.dispatch(this.model.getTarget(), XFormsEventNames.LINK_EXCEPTION, null);
-            } catch (XFormsException e) {
-                Map contextInfo = new HashMap();
-                contextInfo.put("resource-uri",srcAttribute);
-                throw new XFormsLinkException("invalid inlined instance data for instance: '" +getId() +"'", this.model.getTarget(), contextInfo);
-            }
+        List childs = DOMUtil.getChildElements(this.element); 
+        if(childs.size() != 1) {
+            Map contextInfo = new HashMap();
+            contextInfo.put("resource-uri",resourceUri);
+            contextInfo.put("resource-error","multiple root elements found in instance");
+            this.container.dispatch(this.model.getTarget(), XFormsEventNames.LINK_EXCEPTION, contextInfo);
         }
         Element child = DOMUtil.getFirstChildElement(this.element);
         if(child != null){
@@ -647,24 +648,26 @@ public class Instance extends XFormsElement {
         //throw new XFormsLinkException("Failed to fetch external data", this.model.getTarget(), null);
     }
 
-    private Element fetchData(String srcAttribute) throws XFormsLinkException {
-        Object result;
+    private Element fetchData(String srcAttribute) throws XFormsException {
+        Object result=null;
         try {
             result = this.container.getConnectorFactory().createURIResolver(srcAttribute, this.element).resolve();
+            if (result instanceof Document) {
+                return ((Document) result).getDocumentElement();
+            }
+            if (result instanceof Element) {
+                return (Element) result;
+            }
         }
         catch (Exception e) {
-            throw new XFormsLinkException("uri resolution failed for '" + srcAttribute + "' at Instance id: '" + this.getId() + "'", e, this.model.getTarget(), srcAttribute);
+            Map contextInfo = new HashMap();
+            contextInfo.put("resource-uri",srcAttribute);
+            this.container.dispatch(this.model.getTarget(), XFormsEventNames.LINK_EXCEPTION, contextInfo);
+//            throw new XFormsLinkException("uri resolution failed for '" + srcAttribute + "' at Instance id: '" + this.getId() + "'", e, this.model.getTarget(), srcAttribute);
         }
 
-        if (result instanceof Document) {
-            return ((Document) result).getDocumentElement();
-        }
-
-        if (result instanceof Element) {
-            return (Element) result;
-        }
-
-        throw new XFormsLinkException("object model not supported", this.model.getTarget(), srcAttribute);
+        return (Element) result;
+//        throw new XFormsLinkException("object model not supported", this.model.getTarget(), srcAttribute);
     }
 
     /**

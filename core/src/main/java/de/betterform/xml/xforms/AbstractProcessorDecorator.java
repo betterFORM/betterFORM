@@ -120,9 +120,7 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
         //betterform notification event must be passed always
         this.root.addEventListener(BetterFormEventNames.LOAD_URI, this, true);
 
-        if (isEventUsed(XFormsEventNames.LINK_EXCEPTION)) {
-            this.root.addEventListener(XFormsEventNames.LINK_EXCEPTION, this, true);
-        }
+        this.root.addEventListener(XFormsEventNames.LINK_EXCEPTION, this, true);
         if (isEventUsed(XFormsEventNames.LINK_ERROR)) {
             this.root.addEventListener(XFormsEventNames.LINK_ERROR, this, true);
         }

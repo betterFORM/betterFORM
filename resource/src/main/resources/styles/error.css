@@ -3,6 +3,8 @@
         font-size:14pt;
         background:url('../../bfResources/images/bgOne.gif') repeat-x scroll;
     }
+
+
 	pre { font-size:8pt; }
     .errorContent{
         margin-top:50px;
@@ -35,4 +37,23 @@
         margin-top:20px;
         margin-left:0;
         margin-bottom:0;
+    }
+
+    caption{
+        font-size:10pt;
+        font-weight:bold;
+        text-align:left;
+        color:steelblue;
+        margin-top:10px;
+    }
+    td{
+        font-size:10pt;
+        color:steelblue;
+        padding: 3px;
+        background: white;
+    }
+    table{
+        background:whitesmoke;
+        padding:3px;
+
     }

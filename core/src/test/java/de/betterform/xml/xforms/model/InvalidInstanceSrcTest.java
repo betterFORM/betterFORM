@@ -9,18 +9,15 @@ import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.xforms.TestEventListener;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.XMLTestBase;
-import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.exception.XFormsLinkException;
 import org.w3c.dom.events.EventTarget;
-
-import java.util.HashMap;
 
 /**
  * Test cases for the instance implementation.
  *
  * @author Tobi Krebs
  */
-public class InvalidInstanceTest extends XMLTestBase {
+public class InvalidInstanceSrcTest extends XMLTestBase {
     private XFormsProcessorImpl xformsProcesssorImpl;
     private TestEventListener LinkListener;
 
@@ -31,7 +28,7 @@ public class InvalidInstanceTest extends XMLTestBase {
      */
     protected void setUp() throws Exception {
         this.xformsProcesssorImpl = new XFormsProcessorImpl();
-        this.xformsProcesssorImpl.setXForms(getClass().getResourceAsStream("InvalidInstanceTest.xhtml"));
+        this.xformsProcesssorImpl.setXForms(getClass().getResourceAsStream("InvalidInstanceURITest.xhtml"));
         this.LinkListener = new TestEventListener();
         EventTarget eventTarget = (EventTarget) this.xformsProcesssorImpl.getXForms();
         eventTarget.addEventListener(XFormsEventNames.LINK_EXCEPTION, this.LinkListener, true);
@@ -42,11 +39,12 @@ public class InvalidInstanceTest extends XMLTestBase {
         EventTarget eventTarget = (EventTarget) this.xformsProcesssorImpl.getXForms();
         eventTarget.removeEventListener(XFormsEventNames.INSERT, this.LinkListener, true);
         this.LinkListener=null;
+        this.xformsProcesssorImpl.shutdown();
         super.tearDown();
     }
 
     protected String getTestCaseURI() {
-        return "InvalidInstanceTest.xhtml";  //To change body of implemented methods use File | Settings | File Templates.
+        return "InvalidInstanceURITest.xhtml";  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public void testInvalidInstance() throws Exception {
@@ -54,15 +52,9 @@ public class InvalidInstanceTest extends XMLTestBase {
         try{
             this.xformsProcesssorImpl.init();
         }catch (XFormsLinkException e){
-            assertNotNull(e);
-            HashMap map = (HashMap) e.getContextInfo();
-            assertEquals(map.get("resource-uri"),"#instance");
-            assertEquals(map.get("resource-error"),"multiple root elements found in instance");
+            assertNotNull(this.LinkListener.getId());
+            assertEquals("doesnotexist.xml", this.LinkListener.getContext("resource-uri"));
         }
-//        assertNotNull(this.LinkListener.getId());
-//        assertEquals("#instance",this.LinkListener.getContext("resource-uri"));
-        //this assert a non-standard property 'resource-error' that is not defined by spec but gives additional information
-//        assertEquals("multiple root elements found in instance",this.LinkListener.getContext("resource-error"));
     }
 }
 

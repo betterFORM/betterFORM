@@ -1,6 +1,7 @@
 package de.betterform.agent.web.servlet;
 
 import de.betterform.xml.config.Config;
+import de.betterform.xml.xforms.exception.XFormsErrorIndication;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,6 +23,21 @@ import java.net.URLEncoder;
  */
 public class XFormsErrorServlet extends HttpServlet {
     private static final Log LOGGER = LogFactory.getLog(XFormsErrorServlet.class);
+    
+    private String getHtmlhead(String contextName){
+        return "" +
+                "<html>" +
+                "<head>" +
+                "<title>Error Page</title>" +
+                "<link rel=\"stylesheet\" type=\"text/css\" href=\"" + contextName + "/bfResources/styles/error.css\"/>" +
+                "</head>" +
+                "<body>" +
+                "<div class=\"errorContent\">" +
+                "<img src=\"" + contextName + "/bfResources/images/error.png\" width=\"24\" height=\"24\" alt=\"Error\" style=\"float:left;padding-right:5px;\"/>" +
+                "<div class=\"message1\">Oops, an error occured...<br/></div>";
+    }
+
+/*
     private static final String HTMLHEAD ="" +
             "<html>" +
             "<head>" +
@@ -30,6 +48,7 @@ public class XFormsErrorServlet extends HttpServlet {
             "<div class=\"errorContent\">" +
             "<img src=\"../../bfResources/images/error.png\" width=\"24\" height=\"24\" alt=\"Error\" style=\"float:left;padding-right:5px;\"/>" +
             "<div class=\"message1\">Oops, an error occured...<br/></div>";
+*/
     private static final String HTMLFOOT ="" +
             "</div>" +
             "</body>" +
@@ -68,10 +87,43 @@ public class XFormsErrorServlet extends HttpServlet {
         html.append(xpath);
         html.append("</div>");
 
-        html.append("<div class=\"message3\"><strong>Caused by:</strong><br/>");
-        html.append(cause);
-        html.append("</div>");
+        if(ex.getCause() !=null){
+            html.append("<div class=\"message3\"><strong>Caused by:</strong><br/>");
+            html.append(cause);
+            html.append("</div>");
+        }
 
+        if(ex instanceof XFormsErrorIndication){
+            Object o = ((XFormsErrorIndication)ex).getContextInfo();
+            if(o instanceof HashMap){
+                HashMap<String,Object> map = (HashMap) ((XFormsErrorIndication) ex).getContextInfo();
+
+                if(map.size() != 0){
+                    html.append("<table>");
+                    html.append("<caption>Context Information:</caption>");
+                    for(Map.Entry<String,Object> entry : map.entrySet()){
+                        html.append("<tr><td>");
+                        html.append(entry.getKey());
+                        html.append("</td>");
+                        html.append("<td>");
+                        html.append(entry.getValue().toString());
+                        html.append("</td></tr>");
+                    }
+                    html.append("</table>");
+
+                }
+            }
+            //todo: check -> there are contextInfos containing a simple string but seems to be integrated within above error message already - skip for now
+/*
+            else{
+                html.append("<div>");
+                html.append(o.toString());
+                html.append("</div>");
+            }
+*/
+
+        }
+        
         html.append("<form><input type=\"button\" value=\"Back\" onClick=\"history.back()\"/></form>");
 
 
@@ -122,7 +174,7 @@ public class XFormsErrorServlet extends HttpServlet {
 
         response.setContentType("text/html");
         PrintWriter writer = response.getWriter();
-        writer.println(HTMLHEAD);
+        writer.println(getHtmlhead(request.getContextPath()));
         writer.println(getHTML(request));
         writer.println(HTMLFOOT);
         writer.flush();
