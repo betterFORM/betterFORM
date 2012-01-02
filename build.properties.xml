@@ -139,69 +139,67 @@
             </classpath>
 
             <classpath pathid="webdriver.test.class.path" description="classpath for compiling webdriver based classes">
-                <pathelement location="${basedir}/src/test/lib/apache-mime4j-0.6.jar"
+                <pathelement location="${web.dir}/src/test/lib/apache-mime4j-0.6.jar"
                              groupid="org.seleniumhq.selenium" version="0.6" artifactId="apache-mime"/>
-                <pathelement location="${basedir}/src/test/lib/bsh-1.3.0.jar"
+                <pathelement location="${web.dir}/src/test/lib/bsh-1.3.0.jar"
                              groupid="org.seleniumhq.selenium" version="1.3.0" artifactId="bsh"/>
-                <pathelement location="${basedir}/src/test/lib/cglib-nodep-2.1_3.jar"
+                <pathelement location="${web.dir}/src/test/lib/cglib-nodep-2.1_3.jar"
                              groupid="org.seleniumhq.selenium" version="2.1_3" artifactId="cglib-nodep"/>
-                <pathelement location="${basedir}/src/test/lib/commons-codec-1.4.jar"
+                <pathelement location="${web.dir}/src/test/lib/commons-codec-1.4.jar"
                              groupid="org.seleniumhq.selenium" version="1.4" artifactId="commons-codec"/>
-                <pathelement location="${basedir}/src/test/lib/commons-collections-3.2.1.jar"
+                <pathelement location="${web.dir}/src/test/lib/commons-collections-3.2.1.jar"
                              groupid="org.seleniumhq.selenium" version="3.2.1" artifactId="commons-collection"/>
-                <pathelement location="${basedir}/src/test/lib/commons-exec-1.1.jar"
+                <pathelement location="${web.dir}/src/test/lib/commons-exec-1.1.jar"
                              groupid="org.seleniumhq.selenium" version="1.1" artifactId="commons-exec"/>
-                <pathelement location="${basedir}/src/test/lib/commons-io-2.0.1.jar"
+                <pathelement location="${web.dir}/src/test/lib/commons-io-2.0.1.jar"
                              groupid="org.seleniumhq.selenium" version="2.0.1" artifactId="commons-io"/>
-                <pathelement location="${basedir}/src/test/lib/commons-jxpath-1.3"
-                             groupid="org.seleniumhq.selenium" version="1.3" artifactId="commons-jxpath"/>
-                <pathelement location="${basedir}/src/test/lib/commons-lang-2.6.jar"
+                <pathelement location="${web.dir}/src/test/lib/commons-lang-2.6.jar"
                              groupid="org.seleniumhq.selenium" version="2.6" artifactId="commons-lang"/>
-                <pathelement location="${basedir}/src/test/lib/commons-logging-1.1.1.jar"
+                <pathelement location="${web.dir}/src/test/lib/commons-logging-1.1.1.jar"
                              groupid="org.seleniumhq.selenium" version="1.1.1" artifactId="commons-logging"/>
-                <pathelement location="${basedir}/src/test/lib/cssparser-0.9.5.jar"
+                <pathelement location="${web.dir}/src/test/lib/cssparser-0.9.5.jar"
                              groupid="org.seleniumhq.selenium" version="0.9.5" artifactId="cssparser"/>
-                <pathelement location="${basedir}/src/test/lib/guava-10.0.1.jar"
+                <pathelement location="${web.dir}/src/test/lib/guava-10.0.1.jar"
                              groupid="org.seleniumhq.selenium" version="10.0.1" artifactId="guava"/>
-                <pathelement location="${basedir}/src/test/lib/hamcrest-all-1.1.jar"
+                <pathelement location="${web.dir}/src/test/lib/hamcrest-all-1.1.jar"
                              groupid="org.seleniumhq.selenium" version="1.1" artifactId="hamcrest-all"/>
-                <pathelement location="${basedir}/src/test/lib/htmlunit-2.9"
+                <pathelement location="${web.dir}/src/test/lib/htmlunit-2.9.jar"
                              groupid="org.seleniumhq.selenium" version="2.9" artifactId="htmlunit"/>
-                <pathelement location="${basedir}/src/test/lib/htmlunit-core-js-2.9"
+                <pathelement location="${web.dir}/src/test/lib/htmlunit-core-js-2.9.jar"
                              groupid="org.seleniumhq.selenium" version="2.9" artifactId="htmlunit-core-js"/>
-                <pathelement location="${basedir}/src/test/lib/httpclient-4.1.2.jar"
+                <pathelement location="${web.dir}/src/test/lib/httpclient-4.1.2.jar"
                              groupid="org.seleniumhq.selenium" version="4.1.2" artifactId="httpclient"/>
-                <pathelement location="${basedir}/src/test/lib/httpcore-4.1.3.jar"
+                <pathelement location="${web.dir}/src/test/lib/httpcore-4.1.3.jar"
                              groupid="org.seleniumhq.selenium" version="4.1.3" artifactId="httpcore"/>
-                <pathelement location="${basedir}/src/test/lib/httpmime-4.1.2.jar"
+                <pathelement location="${web.dir}/src/test/lib/httpmime-4.1.2.jar"
                              groupid="org.seleniumhq.selenium" version="4.1.2" artifactId="httpmime"/>
-                <pathelement location="${basedir}/src/test/lib/jcommander-1.13.jar"
+                <pathelement location="${web.dir}/src/test/lib/jcommander-1.13.jar"
                              groupid="org.seleniumhq.selenium" version="1.13" artifactId="jcommander"/>
-                <pathelement location="${basedir}/src/test/lib/jna-3.3.0.jar"
+                <pathelement location="${web.dir}/src/test/lib/jna-3.3.0.jar"
                              groupid="org.seleniumhq.selenium" version="3.3.0" artifactId="jna"/>
-                <pathelement location="${basedir}/src/test/lib/json-20080701.jar"
+                <pathelement location="${web.dir}/src/test/lib/json-20080701.jar"
                              groupid="org.seleniumhq.selenium" version="20080701" artifactId="json"/>
-                <pathelement location="${basedir}/src/test/lib/junit-dep-4.10.jar"
+                <pathelement location="${web.dir}/src/test/lib/junit-dep-4.10.jar"
                              groupid="org.seleniumhq.selenium" version="4.10" artifactId="junit-dep"/>
-                <pathelement location="${basedir}/src/test/lib/operardriver-v0.8.1.jar"
+                <pathelement location="${web.dir}/src/test/lib/operadriver-v0.8.1.jar"
                              groupid="org.seleniumhq.selenium" version="v0.8.1" artifactId="operadriver"/>
-                <pathelement location="${basedir}/src/test/lib/protobuf-java-2.4.1.jar"
+                <pathelement location="${web.dir}/src/test/lib/protobuf-java-2.4.1.jar"
                              groupid="org.seleniumhq.selenium" version="2.4.1" artifactId="protobuf-java"/>
-                <pathelement location="${basedir}/src/test/lib/sac-1.3.jar"
+                <pathelement location="${web.dir}/src/test/lib/sac-1.3.jar"
                              groupid="org.seleniumhq.selenium" version="1.3" artifactId="sac"/>
-                <pathelement location="${basedir}/src/test/lib/selenium-java-2.15.0.jar"
+                <pathelement location="${web.dir}/src/test/lib/selenium-java-2.15.0.jar"
                              groupid="org.seleniumhq.selenium" version="2.15.0" artifactId="selenium-java"/>
-                <pathelement location="${basedir}/src/test/lib/serializer-2.7.1.jar"
+                <pathelement location="${web.dir}/src/test/lib/serializer-2.7.1.jar"
                              groupid="org.seleniumhq.selenium" version="2.7.1" artifactId="serializer"/>
-                <pathelement location="${basedir}/src/test/lib/testng-6.0.1-nobsh-noguice.jar"
+                <pathelement location="${web.dir}/src/test/lib/testng-6.0.1-nobsh-noguice.jar"
                              groupid="org.seleniumhq.selenium" version="6.0.1-nobsh-noguice" artifactId="testng"/>
-                <pathelement location="${basedir}/src/test/lib/xalan-2.7.1.jar"
+                <pathelement location="${web.dir}/src/test/lib/xalan-2.7.1.jar"
                              groupid="org.seleniumhq.selenium" version="2.7.1" artifactId="xalan"/>
-                <pathelement location="${basedir}/src/test/lib/xercesImpl-2.9.1.jar"
+                <pathelement location="${web.dir}/src/test/lib/xercesImpl-2.9.1.jar"
                              groupid="org.seleniumhq.selenium" version="2.9.1" artifactId="xercesImpl"/>
-                <pathelement location="${basedir}/src/test/lib/xml-apis-1.3.04.jar"
+                <pathelement location="${web.dir}/src/test/lib/xml-apis-1.3.04.jar"
                              groupid="org.seleniumhq.selenium" version="1.3.04" artifactId="xml-apis"/>
-                <pathelement path="${basedir}/target/classes"/>
+                <pathelement path="${web.dir}/target/classes"/>
             </classpath>
 
             <tomcat-webdriver>
@@ -271,7 +269,7 @@
                 <pathelement location="${installer.dir}/target/bf-XRX/lib/core/xmldb.jar" groupid="org.xmldb" version="11112001" artifactId="xmldb"/>
             </classpath>
         </compile>
-        <izPack>
+       <izPack>
             <dir>/opt/izPack-4.3.4</dir>
         </izPack>
         <launch4j>

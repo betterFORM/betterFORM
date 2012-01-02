@@ -52,7 +52,7 @@
                     </dependency>
                     <xsl:for-each select="document($buildprops)/root/web//pathelement[@artifactId]">
                         <dependency>
-                            <groupId><xsl:value-of select="@groupid"/></groupId>
+                            <groupId><xsl:value-of select="@groupId | @groupid"/></groupId>
                             <artifactId><xsl:value-of select="@artifactId"/></artifactId>
                             <version><xsl:value-of select="@version"/></version>
                             <xsl:if test="string-length(@scope)&gt; 0"><scope><xsl:value-of select="@scope"/></scope></xsl:if>
@@ -68,7 +68,7 @@
 
                     <xsl:for-each select="document($buildprops)/root/betty//pathelement[@artifactId]">
                         <dependency>
-                            <groupId><xsl:value-of select="@groupid"/></groupId>
+                            <groupId><xsl:value-of select="@groupId | @groupid"/></groupId>
                             <artifactId><xsl:value-of select="@artifactId"/></artifactId>
                             <version><xsl:value-of select="@version"/></version>
                             <xsl:if test="string-length(@scope)&gt; 0"><scope><xsl:value-of select="@scope"/></scope></xsl:if>
@@ -78,7 +78,7 @@
             </xsl:choose>
             <xsl:for-each select="document($buildprops)/root/core//pathelement[@artifactId]">
                 <dependency>
-                    <groupId><xsl:value-of select="@groupid"/></groupId>
+                    <groupId><xsl:value-of select="@groupId | @groupid"/></groupId>
                     <artifactId><xsl:value-of select="@artifactId"/></artifactId>
                     <version><xsl:value-of select="@version"/></version>
                     <xsl:if test="string-length(@scope)&gt; 0"><scope><xsl:value-of select="@scope"/></scope></xsl:if>
