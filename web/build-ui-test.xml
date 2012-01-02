@@ -15,7 +15,7 @@
         <mkdir dir="${web.test.tomcat-webdriver.home}/webapps/betterform/forms/XFormsTestSuite1.1E1"/>
 
         <copy todir="${web.test.tomcat-webdriver.home}/webapps/betterform/forms/XFormsTestSuite1.1E1">
-            <fileset dir="${basedir}/src/test/resources/com.orbeon.testsuite.w3c/resources/XForms1.1">
+            <fileset dir="${basedir}/src/test/resources/testsuite/xhtml/XFormsTestSuite1.1E1">
                 <include name="**/*.xhtml"/>
             </fileset>
         </copy>
@@ -108,7 +108,7 @@
         <mkdir dir="${basedir}/target/xml/Chapt${chapterNo}"/>
 
         <copy todir="${basedir}/target/xml/Chapt${chapterNo}" flatten="true">
-            <fileset dir="${basedir}/src/test/resources/com.orbeon.testsuite.w3c/src/tests/Chapt${chapterNo}">
+            <fileset dir="${basedir}/src/test/resources/testsuite/xml/Chapt${chapterNo}">
                 <include name="**/*.xml"/>
             </fileset>
         </copy>
