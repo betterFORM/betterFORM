@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<test-case xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner" xmlns:xf="http://www.w3.org/2002/xforms" xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../test-case.xsd">
+<test-case xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner" xmlns:xf="http://www.w3.org/2002/xforms"
+           xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../test-case.xsd">
+    <!-- test insert / delete action -->
     <open href="test/actions.xhtml" bfTest="true"/>
     <assert-title title="Actions"/>
+    <assert-control-present locator="btnDeleteMsg" type="button"/>
+    <assert-control-present locator="outputMsg" type="output"/>
+    <assert-control-present locator="btnInsertMsg" type="button"/>
+    <click locator="btnDeleteMsg"/>
+    <assert-control-not-present locator="outputMsg" type="output"/>
+    <click locator="btnInsertMsg"/>
+    <assert-control-present locator="outputMsg" type="output"/>
+
+    <!-- setvalue test for input with constraint -->
+    <assert-control-present locator="btnSetvalueHello" type="button"/>
+    <assert-control-present locator="btnSetvalueHelloWorld" type="button"/>
+    <assert-control-present locator="firstInput" type="input"/>
+    <assert-control-value locator="firstInput" value="Hello World"/>
+    <click locator="btnSetvalueHello"/>
+    <assert-control-value locator="firstInput" value="Hello"/>
+    <assert-control-invalid locator="firstInput"/>
+    <click locator="btnSetvalueHelloWorld"/>
+    <assert-control-value locator="firstInput" value="Hello World"/>
+    <assert-control-valid locator="firstInput"/>
+
+    <!-- setvalue test for typed input (type="integer") -->
+    <assert-control-present locator="btnSetvalueText" type="button"/>
+    <assert-control-present locator="btnSetvalue4711" type="button"/>
+    <assert-control-present locator="secondInput" type="input"/>
+    <assert-control-value locator="secondInput" value="4711" trim="true"/>
+    <click locator="btnSetvalueText"/>
+    <assert-control-value locator="secondInput" value="text" trim="true"/>
+    <assert-control-invalid locator="secondInput"/>
+    <click locator="btnSetvalue4711"/>
+    <assert-control-value locator="secondInput" value="4711" trim="true"/>
+    <assert-control-valid locator="secondInput"/>
+
 
 </test-case>
