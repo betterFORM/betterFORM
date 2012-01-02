@@ -34,7 +34,7 @@
         </junitreport>
     </target>
 
-    <target name="build-jar" depends="generate-java-tests-jenkins-test">
+    <target name="build-jar" depends="generate-java-tests">
         <copy todir="${basedir}/target/java/">
             <fileset dir="${basedir}/src/test/java" includes="**/WebDriver*.java"/>
         </copy>
@@ -52,12 +52,6 @@
         <jar basedir="${basedir}/target/classes" compress="true" jarfile="${basedir}/target/betterform-webdriver.jar" update="true"/>
 
 
-    </target>
-
-    <target name="generate-java-tests-jenkins-test">
-        <antcall target="generate-chapter-java-tests">
-            <param name="chapterNo" value="02"/>
-        </antcall>
     </target>
 
     <target name="generate-java-tests">
