@@ -69,18 +69,18 @@
             
             <xf:group class="buttons" appearance="bf:horizontalTable">
                 <xf:label/>
-                <xf:trigger>
+                <xf:trigger id="btnDeleteMsg">
                     <xf:label>delete</xf:label>
                     <xf:delete nodeset="message" />
                 </xf:trigger>
-                <xf:output ref="message">
+                <xf:output ref="message" id="outputMsg">
                     <xf:label>Node to delete</xf:label>
                 </xf:output>
             </xf:group>
 
             <xf:group class="buttons" appearance="bf:horizontalTable">
                 <xf:label/>
-                <xf:trigger>
+                <xf:trigger id="btnInsertMsg">
                     <xf:label>insert</xf:label>
                     <xf:message if="exists(instance()/message)">Please delete Node with the delete button first</xf:message>
                     <xf:insert context="/data" origin="instance('template')/message" if="not(exists(instance()/message))"/>
@@ -121,12 +121,12 @@
             
             <xf:group appearance="minimal">
                 <xf:label>setValue</xf:label>
-                <xf:trigger>
+                <xf:trigger id="btnSetvalueHello">
                     <xf:label>setvalue 'Hello'</xf:label>
                     <xf:hint>Use setvalue to explicitly set specific values to nodes in the instance.</xf:hint>
                     <xf:setvalue bind="helloworld" value="'Hello'"/>
                 </xf:trigger>
-                <xf:trigger>
+                <xf:trigger id="btnSetvalueHelloWorld">
                     <xf:label>setvalue 'Hello World'</xf:label>
                     <xf:hint>Use setvalue to explicitly set specific values to nodes in the instance.</xf:hint>
                     <xf:action>
@@ -147,14 +147,14 @@
             </xf:group>
             <xf:group appearance="minimal">
                 <xf:label>setValue2</xf:label>
-                <xf:trigger>
+                <xf:trigger id="btnSetvalueText">
                     <xf:label>setvalue 'text'</xf:label>
                     <xf:hint>Use setvalue to explicitly set specific values to nodes in the instance.</xf:hint>
                     <xf:action>
                         <xf:setvalue bind="hw" value="'text'"/>
                     </xf:action>
                 </xf:trigger>
-                <xf:trigger>
+                <xf:trigger id="btnSetvalue4711">
                     <xf:label>setvalue '4711'</xf:label>
                     <xf:hint>Use setvalue to explicitly set specific values to nodes in the instance.</xf:hint>
                     <xf:action>
@@ -162,7 +162,7 @@
                     </xf:action>
                 </xf:trigger>
                 <br/>
-                <xf:input bind="hw">
+                <xf:input bind="hw" id="secondInput">
                     <xf:label>input 2</xf:label>
                     <xf:hint>this field only accepts numbers</xf:hint>
                     <xf:alert>please specify a number</xf:alert>
