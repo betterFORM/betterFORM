@@ -1,4 +1,6 @@
 <project default="run-tests" basedir=".">
+    <property name="web.dir" value="."/>
+
     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
     <path id="saxon.libs" description="classpath for Saxon">
