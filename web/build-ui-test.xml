@@ -12,14 +12,6 @@
     <target name="run-tests" depends="build-jar">
         <mkdir dir="${basedir}/target/doc/test/classes"/>
 
-        <mkdir dir="${web.test.tomcat-webdriver.home}/webapps/betterform/forms/XFormsTestSuite1.1E1"/>
-
-        <copy todir="${web.test.tomcat-webdriver.home}/webapps/betterform/forms/XFormsTestSuite1.1E1">
-            <fileset dir="${basedir}/src/test/resources/testsuite/xhtml/XFormsTestSuite1.1E1">
-                <include name="**/*.xhtml"/>
-            </fileset>
-        </copy>
-
         <junit fork="yes" printsummary="on" haltonfailure="on">
             <formatter type="xml"/>
             <classpath refid="webdriver.test.class.path"/>

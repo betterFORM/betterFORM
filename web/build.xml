@@ -345,6 +345,20 @@
         </copy>
     </target>
 
+    <!-- TODO cleanup -->
+    <target name="deploy-webdriver-test-resources" description="copy all official XForms test suite files to webapp dir">
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="copying Test Suites..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+        <copy todir="${webapp.dir}/${forms.target}">
+            <fileset dir="${basedir}/src/test/resources/testsuite/xhtml/XFormsTestSuite1.1E1">
+                <include name="**/*.xhtml"/>
+            </fileset>
+        </copy>
+    </target>
+
     <target name="doc" depends="compile" description="generate documentation">
         <!--create deploy directory-->
         <mkdir dir="${basedir}/target/doc"/>
