@@ -56,7 +56,7 @@ public class XFormsErrorServlet extends HttpServlet {
         request.getSession().removeAttribute("betterform.exception");
         request.getSession().removeAttribute("betterform.exception.message");
 
-        html.append("<div class=\"message2\">");
+        html.append("<div class=\"message2\" id=\"msg\">");
         html.append(msg);
         html.append("</div>");
 
