@@ -23,7 +23,7 @@ import java.util.Vector;
  * Last Updated:
  */
 public class WebDriverTestFunctions extends WebDriverTest {
-    protected String baseUrl="http://localhost:8081/betterform/forms/XFormsTestSuite1.1E1/Edition1/";
+    protected String baseUrl="http://localhost:8001/betterform/forms/XFormsTestSuite1.1E1/Edition1/";
 	protected StringBuffer verificationErrors = new StringBuffer();
 
 
