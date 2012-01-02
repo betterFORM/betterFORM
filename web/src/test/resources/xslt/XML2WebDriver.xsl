@@ -102,11 +102,11 @@
     </xsl:template>
 
     <xsl:template match="xftr:assert-control-value-contains">
-            assertTrue(getControlValue("<xsl:value-of select="concat(@locator, '-value')"/>").contains("<xsl:value-of select="replace( normalize-space(@value) ,$quot, $quote)"/>"));
+            assertTrue(getControlValue("<xsl:value-of select="@locator"/>").contains("<xsl:value-of select="replace( normalize-space(@value) ,$quot, $quote)"/>"));
     </xsl:template>
 
     <xsl:template match="xftr:assert-control-value">
-        assertEquals(getControlValue("<xsl:value-of select="concat(@locator, '-value')"/>"), "<xsl:value-of select="replace( normalize-space(@value) ,$quot, $quote)"/>");
+        assertEquals(getControlValue("<xsl:value-of select="@locator"/>"), "<xsl:value-of select="replace( normalize-space(@value) ,$quot, $quote)"/>");
     </xsl:template>
 
     <xsl:template match="xftr:assert-control-valid">
@@ -123,6 +123,10 @@
 
     <xsl:template match="xftr:assert-control-required">
         assertTrue(isControlRequired("<xsl:value-of select="@locator"/>"));
+    </xsl:template>
+
+    <xsl:template match="xftr:assert-control-optional">
+        assertFalse(isControlRequired("<xsl:value-of select="@locator"/>"));
     </xsl:template>
 
     <xsl:template match="xftr:assert-control-invalid">
@@ -164,6 +168,18 @@
 
     <xsl:template match="xftr:assert-message">
 	assertTrue(checkAlert("<xsl:value-of select="@message"/>"));
+    </xsl:template>
+
+    <xsl:template match="xftr:assert-control-hint-present">
+        assertTrue(isControlHintPresent("<xsl:value-of select="@locator"/>"));
+    </xsl:template>
+
+    <xsl:template match="xftr:assert-control-help-present">
+        assertTrue(isControlHelpPresent("<xsl:value-of select="@locator"/>"));
+    </xsl:template>
+
+    <xsl:template match="xftr:assert-control-alert-present">
+        assertTrue(isControlAlertPresent("<xsl:value-of select="@locator"/>"));
     </xsl:template>
 
     <xsl:template match="xftr:fail">

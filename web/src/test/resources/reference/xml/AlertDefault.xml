@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test-case xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner" xmlns:xf="http://www.w3.org/2002/xforms" xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../test-case.xsd">
+    <open href="reference/AlertDefault.xhtml" bfTest="true"/>
+    <assert-title title="Default Alert Handler - inline alerts"/>
+
+    <assert-control-present locator="input1" type="input"/>
+    <assert-control-present locator="input2" type="input"/>
+    <assert-control-present locator="input3" type="input"/>
+    <assert-control-present locator="input4" type="input"/>
+
+
+    <type-input locator="input1" value="1"/>
+    <assert-control-invalid locator="input1"/>
+    <!-- <assert-control-help-present locator="input1-help"/> -->
+    <!-- <assert-control-hint-present locator="input1-hint"/> -->
+    <assert-control-alert-present locator="input1-alert"/>
+    <assert-control-value locator="input1" value="1"/>
+
+    <type-input locator="input1" value="12"/>
+    <assert-control-invalid locator="input1"/>
+    <type-input locator="input1" value="123"/>
+    <assert-control-invalid locator="input1"/>
+    <type-input locator="input1" value="1234"/>
+    <assert-control-invalid locator="input1"/>
+    <type-input locator="input1" value="12345"/>
+    <assert-control-invalid locator="input1"/>
+    <type-input locator="input1" value="123456"/>
+    <assert-control-valid locator="input1"/>
+
+    <type-input locator="input2" value="1"/>
+    <assert-control-invalid locator="input2"/>
+    <type-input locator="input1" value="12"/>
+    <assert-control-invalid locator="input2"/>
+    <type-input locator="input2" value="123"/>
+    <assert-control-invalid locator="input2"/>
+    <type-input locator="input2" value="1234"/>
+    <assert-control-invalid locator="input2"/>
+    <type-input locator="input2" value="12345"/>
+    <assert-control-invalid locator="input2"/>
+    <type-input locator="input2" value="123456"/>
+    <assert-control-valid locator="input2"/>
+
+
+    <!--
+    <assert-control-readwrite locator="input1"/>
+    <click locator="input1-readonly"/>
+    <assert-control-readonly locator="input1"/>
+    <click locator="input1-readonly"/>
+
+
+    <assert-control-required locator="input1"/>
+    <click locator="input1-required"/>
+    <assert-control-optional locator="input1"/>
+    <click locator="input1-required"/>
+
+
+    <assert-control-present locator="input1" type="input"/>
+    <click locator="input1-relevant"/>
+    <assert-control-not-present locator="input1" type="input"/>
+    <click locator="input1-relevant"/>
+
+    <assert-control-valid locator="input1"/>
+    <click locator="input1-valid"/>
+    <assert-control-invalid locator="input1"/>
+    <click locator="input1-valid"/>
+    -->
+</test-case>
