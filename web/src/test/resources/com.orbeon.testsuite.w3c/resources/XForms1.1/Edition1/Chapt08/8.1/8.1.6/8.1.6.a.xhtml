@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xhtml:head>
+        <xhtml:title>8.1.6.a mediatype attribute for upload element (non-normative)</xhtml:title>
+        <xforms:model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <xforms:instance>
+                <mail>
+                    <picture>
+                        <attach xsi:type="xsd:base64Binary"/>
+                        <name xsi:type="xsd:anyURI"/>
+                        <type/>
+                    </picture>
+                </mail>
+            </xforms:instance>
+        </xforms:model>
+        <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="xf-group-1">
+            <xforms:label class="title">8.1.6.a mediatype attribute for upload element (non-normative)</xforms:label>
+        </xforms:group>
+        <xforms:group xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="xf-group-2">
+            <xforms:label>
+              When you activate the Upload Image upload control your choice of files may be limited to those 
+              that are the same media type as the ones in the mediatype attribute. The mediatype attribute 
+              contains the value "image/jpeg image/png". 
+  			</xforms:label>
+        </xforms:group>
+        <xforms:upload xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" mediatype="image/jpeg image/png" ref="/mail/picture/attach" id="xf-upload-1">
+            <xforms:label>Upload Image</xforms:label>
+            <xforms:mediatype ref="@mediatype"/>
+        </xforms:upload>
+    </xhtml:body>
+</xhtml:html>

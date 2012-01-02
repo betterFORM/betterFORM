@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xhtml:head>
+        <xhtml:title>7.2.b evaluation context for the non-outermost binding elements</xhtml:title>
+        <xforms:model>
+            <xforms:instance>
+                <user>
+                    <name>
+                        <first>Curtiss</first>
+                        <last>Hewie</last>
+                    </name>
+                    <contact>
+                        <email>chewie@example.com</email>
+                    </contact>
+                </user>
+            </xforms:instance>
+            <xforms:bind id="firstname" nodeset="name/first"/>
+            <xforms:bind id="lastname" nodeset="name/last"/>
+        </xforms:model>
+        <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group id="xf-group-1">
+            <xforms:label class="title">
+				7.2.b evaluation context for the non-outermost binding elements 
+			</xforms:label>
+        </xforms:group>
+        <xforms:group id="xf-group-2">
+            <xforms:label>
+				You must see a value of "Curtiss" for First Name, a value of "Hewie" for Last 
+				Name, and a value of "chewie@example.com" for Email Address. 
+			</xforms:label>
+        </xforms:group>
+        
+        <xforms:input bind="firstname" id="xf-input-1">
+            <xforms:label>First Name : </xforms:label>
+        </xforms:input>
+        <xforms:input bind="lastname" id="xf-input-2">
+            <xforms:label>Last Name : </xforms:label>
+        </xforms:input>    
+        <xforms:output ref="contact/email" id="xf-output-1">
+            <xforms:label>Email Address : </xforms:label>
+        </xforms:output>
+    
+    </xhtml:body>
+</xhtml:html>

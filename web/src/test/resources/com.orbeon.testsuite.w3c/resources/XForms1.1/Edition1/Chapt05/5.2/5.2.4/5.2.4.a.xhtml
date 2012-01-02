@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events">
+  <xhtml:head>
+  	<xhtml:title>5.2.4.a dayTimeDuration datatype</xhtml:title>
+  	<xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+  	<xforms:model>
+  		<xforms:instance>
+  			<car>
+  				<rentalLeaseLength/>
+  			</car>
+  		</xforms:instance>
+  		<xforms:bind id="dayTime_bind" nodeset="/car/rentalLeaseLength" type="xforms:dayTimeDuration" required="true()"/>
+  		<xforms:setvalue ref="rentalLeaseLength" ev:event="xforms-ready">P5DT3H4M2S</xforms:setvalue>
+  	</xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group id="xf-group-1">
+  		<xforms:label class="title">5.2.4.a dayTimeDuration datatype</xforms:label>
+  	</xforms:group>
+  	<xforms:group id="xf-group-2">
+  		<xforms:label>
+	  		You must have seen the message "You entered a valid dayTimeDuration". 
+	  	</xforms:label>
+  	</xforms:group>
+  	
+  		<xforms:input bind="dayTime_bind" id="xf-input-1">
+  			<xforms:label>Length of rental car lease (dayTimeDuration)</xforms:label>
+  			<xforms:action ev:event="xforms-valid">
+  				<xforms:message level="modal">You entered a valid dayTimeDuration</xforms:message>
+  			</xforms:action>
+		</xforms:input>
+		
+  </xhtml:body>
+</xhtml:html>

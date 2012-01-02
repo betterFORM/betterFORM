@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xhtml:head>
+        <xhtml:title>10.18.e iteration of XForms actions - Summing Selected Results example</xhtml:title>
+        <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+        <xforms:model id="mod1">
+            <xforms:instance id="temps">
+              <root>
+            	<counter/>
+            	<accumulator/>
+            	<some>
+            	  <nodes selected="true">1</nodes>
+            	  <nodes selected="true">2</nodes>
+            	  <nodes selected="true">3</nodes>
+            	</some>
+              </root>
+            </xforms:instance>
+        </xforms:model>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group id="xf-group-1">
+            <xforms:label class="title">10.18.e iteration of XForms actions - Summing Selected Results example</xforms:label>
+        </xforms:group>
+        <xforms:group id="xf-group-2">
+            <xforms:label>
+              You must see a value of "6" for the Total Sum output and a value of "4" for 
+              the Counter output. 
+            </xforms:label>
+        </xforms:group>
+		<xforms:group id="xf-group-3">
+			<xforms:output ref="instance('temps')/accumulator" id="xf-output-1">
+			  <xforms:label>Total Sum : </xforms:label>
+			</xforms:output>
+		</xforms:group>
+		<xforms:group id="xf-group-4">
+			<xforms:output ref="instance('temps')/counter" id="xf-output-2">
+			  <xforms:label>Counter : </xforms:label>
+			</xforms:output>
+		</xforms:group>
+		<xforms:group id="xf-group-5">
+			<xforms:trigger id="xf-trigger-1">
+				<xforms:label>Get Sum</xforms:label>
+				<xforms:action ev:event="DOMActivate">
+					<xforms:setvalue ref="instance('temps')/counter" value="1"/>
+					<xforms:setvalue ref="instance('temps')/accumulator" value="0"/>
+					<xforms:action while="instance('temps')/counter &lt;= count(instance('temps')/some/nodes)">
+						<xforms:setvalue ref="instance('temps')/accumulator" value=". + instance('temps')/some/nodes[number(instance('temps')/counter)]" if="boolean-from-string(instance('temps')/some/nodes[number(instance('temps')/counter)]/@selected)"/>
+						<xforms:setvalue ref="instance('temps')/counter" value=". + 1"/>
+					</xforms:action>
+				</xforms:action>
+			</xforms:trigger>
+		</xforms:group>
+		
+    </xhtml:body>
+</xhtml:html>

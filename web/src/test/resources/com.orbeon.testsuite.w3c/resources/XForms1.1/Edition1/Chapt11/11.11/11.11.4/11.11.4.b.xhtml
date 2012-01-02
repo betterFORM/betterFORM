@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:my="http://www.example.com">
+  <xhtml:head>
+    <xhtml:title>11.11.4.b handling SOAP success response</xhtml:title>
+    <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+		<xforms:instance id="selectedInst">       
+			<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+			  <SOAP-ENV:Body>
+			    <my:start>
+			    	<data/>
+			    </my:start>
+			  </SOAP-ENV:Body>
+			</SOAP-ENV:Envelope>
+		</xforms:instance>
+		<xforms:submission id="submit" action="http://xformstest.org/cgi-bin/echo.sh" method="post" mediatype="application/soap+xml" replace="none">
+        	<xforms:message ev:event="xforms-submit-done" level="modal">xforms-submit-done</xforms:message>
+        </xforms:submission>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group id="xf-group-1">
+  		<xforms:label class="title">11.11.4.b handling SOAP success response</xforms:label>
+  	</xforms:group>
+  	<xforms:group id="xf-group-2">
+  		<xforms:label>
+  		  When you activate the Submit SOAP submit control you must see an xforms-submit-done message. 
+  		</xforms:label>
+  	</xforms:group>
+	<xforms:submit submission="submit" id="xf-submit-1">
+		<xforms:label>Submit SOAP</xforms:label>
+	</xforms:submit>
+  </xhtml:body>  
+</xhtml:html>

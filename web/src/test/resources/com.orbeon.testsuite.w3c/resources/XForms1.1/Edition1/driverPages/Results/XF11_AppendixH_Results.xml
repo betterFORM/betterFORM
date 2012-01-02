@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/11 XF11TestSuite.xsd" specVersion="1.1" xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/11">
+    <specChapter chapterName="H. " productId="" chapterTitle="Complete XForms Examples">
+        <statusSummary>
+            <numNormTotal>0</numNormTotal>
+            <numNormPass>0</numNormPass>
+            <numNormFail>0</numNormFail>
+            <numNormUnknown>0</numNormUnknown>
+            <numBasicTotal>0</numBasicTotal>
+            <numBasicPass>0</numBasicPass>
+            <numBasicFail>0</numBasicFail>
+            <numBasicUnknown>0</numBasicUnknown>
+        </statusSummary>
+        <profile>
+            <specification>XForms 1.1</specification>
+            <normativeOnly>false</normativeOnly>
+            <basicOnly>false</basicOnly>
+        </profile>
+        <testCase>
+            <testCaseSection>H.1</testCaseSection>
+            <testCaseName>H.1</testCaseName>
+            <testCaseLink>../../Appendix/H/h.1.xhtml</testCaseLink>
+            <testCaseDescription>XForms in XHTML</testCaseDescription>
+            <testCaseSpecLinkName>H.1</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#xforms-in-xhtml-00</testCaseSpecLink>
+            <testCaseBasic>false</testCaseBasic>
+            <testCaseNormative>false</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>false</testCaseRequired>
+            <testCaseNote/>
+        </testCase>
+        <testCase>
+            <testCaseSection>H.2</testCaseSection>
+            <testCaseName>H.2</testCaseName>
+            <testCaseLink>../../Appendix/H/h.2.xhtml</testCaseLink>
+            <testCaseDescription>Editing Hierarchical Bookmarks Using XForms</testCaseDescription>
+            <testCaseSpecLinkName>H.2</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#bookmarks-in-x-smiles</testCaseSpecLink>
+            <testCaseBasic>false</testCaseBasic>
+            <testCaseNormative>false</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>false</testCaseRequired>
+            <testCaseNote/>
+        </testCase>        
+        <testCase>
+            <testCaseSection>H.3</testCaseSection>
+            <testCaseName>H.3</testCaseName>
+            <testCaseLink>../../Appendix/H/h.3.svg</testCaseLink>
+            <testCaseDescription>Survey Using XForms and SVG</testCaseDescription>
+            <testCaseSpecLinkName>H.3</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#N93686</testCaseSpecLink>
+            <testCaseBasic>false</testCaseBasic>
+            <testCaseNormative>false</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>false</testCaseRequired>
+            <testCaseNote/>
+        </testCase>
+    </specChapter>
+</testSuite>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <xhtml:head>
+        <xhtml:title>3.2.3.a single-node binding - ref attribute</xhtml:title>
+        <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+        <xforms:model>
+            <xforms:instance>
+                <car>
+                    <make>Acura</make>
+                    <year>1994</year>
+                    <color>white</color>
+                    <hp>120</hp>
+                </car>
+            </xforms:instance>
+            <xforms:bind id="bind_001" nodeset="/car/year"/>
+        </xforms:model>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group id="xf-group-1">
+            <xforms:label class="title">3.2.3.a single-node binding - ref attribute</xforms:label>
+        </xforms:group>
+        <xforms:group id="xf-group-2">
+        	<xforms:label>
+        		<!-- ref attribute points to a valid node;  -->
+        		You must see the value "120": 
+        	</xforms:label>
+        </xforms:group>
+        <xforms:group id="xf-group-3">
+            <xforms:output ref="/car/hp" id="xf-output-1">
+                <xforms:label/>
+            </xforms:output>
+        </xforms:group>
+        
+        <xforms:group id="xf-group-4">
+        	<xforms:label>
+        		<!-- ref has no meaning when bind is present;  -->
+        		You must see the value "1994": 
+        	</xforms:label>
+        </xforms:group>
+        <xforms:group id="xf-group-5">
+            <xforms:output ref="/car/make" bind="bind_001" id="xf-output-2">
+                <xforms:label/>
+            </xforms:output>
+        </xforms:group>
+        
+    </xhtml:body>
+</xhtml:html>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms">
+	<xhtml:head>
+		<xhtml:title>7.10.1.a instance() function</xhtml:title>
+		<xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+		<xforms:model>
+			<xforms:instance id="wrongInstance">
+				<orderForm>
+					<shipTo>
+						<firstName>George</firstName>
+					</shipTo>
+				</orderForm>
+			</xforms:instance>
+			<xforms:instance id="orderform">
+				<orderForm>
+					<shipTo>
+						<firstName>John</firstName>
+					</shipTo>
+				</orderForm>
+			</xforms:instance>
+		</xforms:model>
+	</xhtml:head>
+	<xhtml:body>
+	    <xforms:group id="xf-group-1">
+		    <xforms:label class="title">
+			7.10.1.a instance() function
+		    </xforms:label>
+		</xforms:group>
+		<xforms:group id="xf-group-2">
+			<xforms:label>
+			  You must see the value "John" for the First Name output. 
+			  You must see the value "George" for the Second Name output. 
+			</xforms:label>
+		</xforms:group>
+		<xforms:group id="xf-group-3">
+		  <xforms:output ref="instance('orderform')/shipTo/firstName" id="xf-output-1">
+			<xforms:label>First Name : </xforms:label>
+		  </xforms:output>
+		</xforms:group>
+		<xforms:group id="xf-group-4">
+		  <xforms:output ref="instance()/shipTo/firstName" id="xf-output-2">
+			<xforms:label>Second Name : </xforms:label>
+		  </xforms:output>
+		</xforms:group>
+		
+	</xhtml:body>
+</xhtml:html>

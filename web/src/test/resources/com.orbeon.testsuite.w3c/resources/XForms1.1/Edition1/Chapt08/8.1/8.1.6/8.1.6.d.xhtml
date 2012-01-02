@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xforms="http://www.w3.org/2002/xforms">
+  <xhtml:head>
+    <xhtml:title>8.1.6.d data binding restrictions for upload element</xhtml:title>
+    <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+       <xforms:instance>       
+          <mail>
+          	<picture>
+          		<attachment xsi:type="xsd:string"/> <!-- binding to type string is invalid for an upload control -->
+          		<name/>
+          		<type/>
+          	</picture>
+          </mail>
+       </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group id="xf-group-1">
+  	    <xforms:label class="title">8.1.6.d data binding restrictions for upload element</xforms:label>
+  	</xforms:group>
+  	<xforms:group id="xf-group-2">
+  		<xforms:label>
+    	  You must have seen an xforms-binding-exception message or a fatal error due to an 
+		  xforms-binding-exception. The upload must not work correctly.
+  		</xforms:label>
+  	</xforms:group>
+    <xforms:group id="xf-group-3">
+       	<xforms:upload ref="/mail/picture/attachment" id="xf-upload-1">
+       		<xforms:label>Upload that binds to node with invalid datatype</xforms:label>
+       		<xforms:filename ref="/mail/picture/name"/>
+       		<xforms:mediatype ref="/mail/picture/type"/>
+       		<xforms:hint>Invalid</xforms:hint>
+       		<xforms:message ev:event="xforms-binding-exception" level="modal">xforms-binding-exception</xforms:message>
+       	</xforms:upload>
+    </xforms:group>   	
+    <xforms:group id="xf-group-4">
+		<xforms:output ref="/mail/picture/name" id="xf-output-1">
+  			<xforms:label>Filename : </xforms:label>
+  		</xforms:output>
+	</xforms:group>
+	<xforms:group id="xf-group-5">
+		<xforms:output ref="/mail/picture/type" id="xf-output-2">
+			<xforms:label>Media type : </xforms:label>
+		</xforms:output>
+  	</xforms:group>
+  </xhtml:body>
+</xhtml:html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:my="http://www.example.com">
+  <xhtml:head>
+    <xhtml:title>11.11.3.b SOAP HTTP binding with post method</xhtml:title>
+    <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+		<xforms:instance id="selectedInst">       
+			<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope">
+			  <SOAP-ENV:Body>
+			    <my:start>
+			    	<data/>
+			    </my:start>
+			  </SOAP-ENV:Body>
+			</SOAP-ENV:Envelope>
+		</xforms:instance>
+		<xforms:submission id="submit" action="http://xformstest.org/cgi-bin/echo.sh" method="post" mediatype="application/soap+xml; charset=ASCII"/>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group id="xf-group-1">
+  		<xforms:label class="title">11.11.3.b SOAP HTTP binding with post method</xforms:label>
+  	</xforms:group>
+  	<xforms:group id="xf-group-2">
+  		<xforms:label>
+  		  Activate the Submit SOAP submit control to replace this page with the form data. 
+  		  The value of the content type header must be "application/soap+xml". 
+  		</xforms:label>
+  	</xforms:group>
+	<xforms:submit submission="submit" id="xf-submit-1">
+		<xforms:label>Submit SOAP</xforms:label>
+	</xforms:submit>
+	
+  </xhtml:body>  
+</xhtml:html>

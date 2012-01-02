@@ -1,0 +1,146 @@
+<project default="run-tests" basedir=".">
+    <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
+
+    <path id="saxon.libs" description="classpath for Saxon">
+        <pathelement location="${basedir}/../core/src/main/lib/saxon-9.2.1.5.jar"/>
+    </path>
+
+    <target name="clean">
+        <delete dir="${basedir}/target"/>
+    </target>
+
+    <target name="run-tests" depends="build-jar">
+        <mkdir dir="${basedir}/target/doc/test/classes"/>
+
+        <mkdir dir="${web.test.tomcat-webdriver.home}/webapps/betterform/forms/XFormsTestSuite1.1E1"/>
+
+        <copy todir="${web.test.tomcat-webdriver.home}/webapps/betterform/forms/XFormsTestSuite1.1E1">
+            <fileset dir="${basedir}/src/test/resources/com.orbeon.testsuite.w3c/resources/XForms1.1">
+                <include name="**/*.xhtml"/>
+            </fileset>
+        </copy>
+
+        <junit fork="yes" printsummary="on" haltonfailure="on">
+            <formatter type="xml"/>
+            <classpath refid="webdriver.test.class.path"/>
+
+            <batchtest fork="yes" todir="${basedir}/target/doc/test/classes">
+                <resources>
+                    <zipfileset src="${basedir}/target/betterform-webdriver.jar" includes="**/Test*.class" excludes="**/WebDriver*.class"/>
+                </resources>
+            </batchtest>
+        </junit>
+
+    </target>
+
+    <target name="generate-testreport">
+        <junitreport description="generate junit reports" todir="${basedir}/target/doc/test">
+            <fileset dir="${basedir}/target/doc/test/classes">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report todir="${basedir}/target/doc/test"/>
+        </junitreport>
+    </target>
+
+    <target name="build-jar" depends="generate-java-tests-jenkins-test">
+        <copy todir="${basedir}/target/java/">
+            <fileset dir="${basedir}/src/test/java" includes="**/WebDriver*.java"/>
+        </copy>
+
+        <mkdir dir="${basedir}/target/classes"/>
+
+        <javac description="compile test files"
+               srcdir="${basedir}/target/java/"
+               destdir="${basedir}/target/classes"
+               classpathref="webdriver.test.class.path"
+               debug="true"
+               deprecation="true"
+               optimize="off"/>
+
+        <jar basedir="${basedir}/target/classes" compress="true" jarfile="${basedir}/target/betterform-webdriver.jar" update="true"/>
+
+
+    </target>
+
+    <target name="generate-java-tests-jenkins-test">
+        <antcall target="generate-chapter-java-tests">
+            <param name="chapterNo" value="02"/>
+        </antcall>
+    </target>
+
+    <target name="generate-java-tests">
+        <antcall target="generate-chapter-java-tests">
+            <param name="chapterNo" value="02"/>
+        </antcall>
+        <antcall target="generate-chapter-java-tests">
+            <param name="chapterNo" value="03"/>
+        </antcall>
+        <antcall target="generate-chapter-java-tests">
+            <param name="chapterNo" value="04"/>
+        </antcall>
+        <antcall target="generate-chapter-java-tests">
+            <param name="chapterNo" value="05"/>
+        </antcall>
+        <antcall target="generate-chapter-java-tests">
+            <param name="chapterNo" value="06"/>
+        </antcall>
+        <antcall target="generate-chapter-java-tests">
+            <param name="chapterNo" value="07"/>
+        </antcall>
+        <antcall target="generate-chapter-java-tests">
+            <param name="chapterNo" value="08"/>
+        </antcall>
+        <antcall target="generate-chapter-java-tests">
+            <param name="chapterNo" value="09"/>
+        </antcall>
+        <antcall target="generate-chapter-java-tests">
+            <param name="chapterNo" value="10"/>
+        </antcall>
+        <antcall target="generate-chapter-java-tests">
+            <param name="chapterNo" value="11"/>
+        </antcall>
+        <antcall target="generate-appendix-java-tests"/>
+    </target>
+
+    <target name="generate-chapter-java-tests">
+        <mkdir dir="${basedir}/target/java"/>
+        <mkdir dir="${basedir}/target/temp"/>
+        <mkdir dir="${basedir}/target/xml/Chapt${chapterNo}"/>
+
+        <copy todir="${basedir}/target/xml/Chapt${chapterNo}" flatten="true">
+            <fileset dir="${basedir}/src/test/resources/com.orbeon.testsuite.w3c/src/tests/Chapt${chapterNo}">
+                <include name="**/*.xml"/>
+            </fileset>
+        </copy>
+
+        <xslt basedir="${basedir}/target/xml/"
+              destdir="${basedir}/target/temp"
+              style="${basedir}/src/test/resources/xslt/XML2WebDriver.xsl"
+              force="true"
+              includes="Chapt${chapterNo}/*.xml"
+              extension=".java"
+              filedirparameter="filedir"
+              filenameparameter="filename">
+            <classpath refid="saxon.libs"/>
+        </xslt>
+
+        <delete>
+            <fileset dir="${basedir}/target/temp" casesensitive="yes" >
+                <include name="**/*.java"/>
+                <exclude name="**/*Test*"/>
+            </fileset>
+        </delete>
+
+        <mkdir dir="${basedir}/target/java/de/betterform/conformance/xf11/"/>
+
+        <copy todir="${basedir}/target/java/de/betterform/conformance/xf11/">
+            <fileset dir="${basedir}/target/temp" includes="**/*.java"/>
+        </copy>
+
+        <delete dir="${basedir}/target/temp"/>
+    </target>
+
+    <target name="generate-appendix-java-tests">
+        <!-- TODO -->
+    </target>
+</project>

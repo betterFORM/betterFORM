@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>4.2.1.c2 inline source takes precedence over external source for initial instance data</xhtml:title>
+    <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+    <!-- in XForms 1.0 external instance data took precedence over inline data -->
+    <!-- in XForms 1.1, however, inline data is what takes precedence -->
+      <xforms:instance resource="4.2.1.instance1.xml">
+      	<number>100</number>
+      </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group id="xf-group-1">
+    	<xforms:label class="title">4.2.1.c2 inline source takes precedence over external source for initial instance data</xforms:label>
+    </xforms:group>
+	<xforms:group id="xf-group-2">
+    	<xforms:label>You must see the value "100":</xforms:label>
+    </xforms:group>
+   	<xforms:output ref="/number" id="xf-output-1">
+   		<xforms:label/>
+   	</xforms:output>
+	
+  </xhtml:body>
+</xhtml:html>

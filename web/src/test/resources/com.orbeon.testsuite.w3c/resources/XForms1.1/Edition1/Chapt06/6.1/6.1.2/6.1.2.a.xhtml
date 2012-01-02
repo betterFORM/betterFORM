@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xforms="http://www.w3.org/2002/xforms">
+	<xhtml:head>
+		<xhtml:title>6.1.2.a readonly property</xhtml:title>
+		<xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+		<xforms:model>
+			<xforms:instance>
+				<person-name>
+					<first-name>Roland</first-name>
+					<last-name>Orlando</last-name>
+				</person-name>
+			</xforms:instance>
+			<xforms:bind id="fname" nodeset="/person-name/first-name" readonly="true()"/>
+		</xforms:model>
+	</xhtml:head>
+	<xhtml:body>
+		<xforms:group id="xf-group-1">
+			<xforms:label class="title">6.1.2.a readonly property</xforms:label>
+		</xforms:group>
+		<xforms:group id="xf-group-2">
+			<xforms:label>
+				You must see the value "Roland" in the First Name input control and the value 
+				"Orlando" in the Last Name input control. You must only be able to change the value in the 
+				Last Name input control. 
+			</xforms:label>	
+		</xforms:group>
+		<xforms:group id="xf-group-3">
+			<xforms:input ref="/person-name/first-name" id="xf-input-1">
+				<xforms:label>First Name:</xforms:label>
+			</xforms:input>
+		</xforms:group>
+		<xforms:group id="xf-group-4">
+			<xforms:input ref="/person-name/last-name" id="xf-input-2">
+				<xforms:label>Last Name:</xforms:label>
+			</xforms:input>
+		</xforms:group>
+			
+	</xhtml:body>
+</xhtml:html>

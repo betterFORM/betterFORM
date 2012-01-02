@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xforms="http://www.w3.org/2002/xforms">
+  <xhtml:head>
+    <xhtml:title>8.1.7.d incremental attribute of range element</xhtml:title>
+    <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+       <xforms:instance>       
+			<car>
+				<mileage xsi:type="xsd:integer">5</mileage>
+				<age xsi:type="xsd:integer">5</age>	
+			</car>
+       </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group id="xf-group-1">
+  	    <xforms:label class="title">8.1.7.d incremental attribute of range element</xforms:label>
+  	</xforms:group>
+  	<xforms:group id="xf-group-2">
+  		<xforms:label>
+  			You must see a range control that displays an xforms-value-changed message 
+  			when you change its value.
+  		</xforms:label>
+  	</xforms:group>
+  	<xforms:group id="xf-group-3">
+  		<xforms:range ref="/car/age" start="0" end="10" incremental="true" id="xf-range-1">
+  			<xforms:label>Car age</xforms:label>
+ 	       	<xforms:action ev:event="xforms-value-changed">
+ 	       		<xforms:message level="modal">xforms-value-changed</xforms:message>
+ 	       	</xforms:action>
+  		</xforms:range>
+	</xforms:group>
+  	<xforms:group id="xf-group-4">
+		<xforms:output ref="/car/age" id="xf-output-1">
+			<xforms:label>Car age : </xforms:label>
+		</xforms:output>
+	</xforms:group>	
+  </xhtml:body>
+</xhtml:html>

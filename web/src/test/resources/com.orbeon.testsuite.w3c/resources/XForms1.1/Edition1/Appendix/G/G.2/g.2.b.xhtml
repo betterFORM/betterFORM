@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>g.2.b repeat-item pseudo-element (non-normative)</xhtml:title>
+    <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+      <xforms:instance>
+        <car>
+          <make>Honda</make>
+          <make>Toyota</make>
+          <make>Acura</make>
+        </car>
+      </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group id="xf-group-1">
+  		<xforms:label class="title">g.2.b repeat-item pseudo-element (non-normative)</xforms:label>
+  	</xforms:group>
+    <xforms:group id="xf-group-2">
+    	<xforms:label>
+		You smust see a list of cars with a yellow background. Also, the repeat items 
+		must have a dashed box around them.
+		</xforms:label>
+    </xforms:group>
+	<xforms:repeat nodeset="/car/make">
+		<xforms:output ref="." id="xf-output-1">
+			<xforms:label/>
+		</xforms:output>
+	</xforms:repeat>
+	
+  </xhtml:body>
+</xhtml:html>

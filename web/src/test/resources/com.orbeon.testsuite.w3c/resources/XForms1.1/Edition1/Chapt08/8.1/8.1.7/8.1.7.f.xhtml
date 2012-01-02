@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xforms="http://www.w3.org/2002/xforms">
+  <xhtml:head>
+    <xhtml:title>8.1.7.f data binding restrictions on range element</xhtml:title>
+    <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+       <xforms:instance>       
+			<car>
+				<car_yearmonthduration xsi:type="xforms:yearMonthDuration">P1Y</car_yearmonthduration>
+				<car_daytimeduration xsi:type="xforms:dayTimeDuration">PT10M10S</car_daytimeduration>
+				<car_date xsi:type="xsd:date">2000-01-01</car_date>
+				<car_time xsi:type="xsd:time">00:00:00</car_time>
+				<car_dateTime xsi:type="xsd:dateTime">2006-01-01T00:00:00Z</car_dateTime>
+				<car_gYearMonth xsi:type="xsd:gYearMonth">2006-01</car_gYearMonth>
+				<car_gYear xsi:type="xsd:gYear">2000</car_gYear>
+				<car_gMonthDay xsi:type="xsd:gMonthDay">--01-01</car_gMonthDay>
+				<car_gDay xsi:type="xsd:gDay">---01</car_gDay>
+				<car_gMonth xsi:type="xsd:gMonth">--01</car_gMonth>
+				<car_float xsi:type="xsd:float">0</car_float>
+				<car_decimal xsi:type="xsd:decimal">0</car_decimal>
+				<car_double xsi:type="xsd:double">0</car_double>
+			</car>
+       </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group id="xf-group-1">
+  	    <xforms:label class="title">8.1.7.f data binding restrictions on range element</xforms:label>
+  	</xforms:group>
+  	<xforms:group id="xf-group-2">
+  		<xforms:label>
+  			All of the range elements must work since they are bound to acceptable datatypes. 
+  		</xforms:label>
+  	</xforms:group>
+  	<xforms:group id="xf-group-3">
+  		<xforms:label/>
+		<xforms:output ref="car_yearmonthduration" id="xf-output-1">
+			<xforms:label>yearMonthDuration : </xforms:label>
+		</xforms:output>
+  		<xforms:range ref="car_yearmonthduration" start="P1Y" end="P10Y" incremental="true" id="xf-range-1">
+  			<xforms:label>yearMonthDuration range : </xforms:label>
+  		</xforms:range>
+  	</xforms:group>
+  	<xforms:group id="xf-group-4">
+  		<xforms:label/>
+		<xforms:output ref="car_daytimeduration" id="xf-output-2">
+			<xforms:label>dayTimeDuration : </xforms:label>
+		</xforms:output>
+  		<xforms:range ref="car_daytimeduration" start="PT10M10S" end="PT30M20S" incremental="true" id="xf-range-2">
+  			<xforms:label>dayTimeDuration range : </xforms:label>
+  		</xforms:range>
+  	</xforms:group>
+  	<xforms:group id="xf-group-5">
+  		<xforms:label/>
+		<xforms:output ref="car_date" id="xf-output-3">
+			<xforms:label>date : </xforms:label>
+		</xforms:output>
+  		<xforms:range ref="car_date" start="2000-01-01" end="2000-12-31" step="1" id="xf-range-3">
+  			<xforms:label>date range : </xforms:label>
+  		</xforms:range>
+  	</xforms:group>
+  	<xforms:group id="xf-group-6">
+  		<xforms:label/>
+		<xforms:output ref="car_time" id="xf-output-4">
+			<xforms:label>time : </xforms:label>
+		</xforms:output>
+  		<xforms:range ref="car_time" start="00:00:00" end="06:00:00" step="1" id="xf-range-4">
+  			<xforms:label>time range : </xforms:label>
+  		</xforms:range>
+  	</xforms:group>
+  	<xforms:group id="xf-group-7">
+  		<xforms:label/>
+		<xforms:output ref="car_dateTime" id="xf-output-5">
+			<xforms:label>dateTime : </xforms:label>
+		</xforms:output>
+  		<xforms:range ref="car_dateTime" start="2006-01-01T00:00:00Z" end="2006-01-01T06:00:00Z" step="1" id="xf-range-5">
+  			<xforms:label>dateTime range : </xforms:label>
+  		</xforms:range>
+  	</xforms:group>
+  	<xforms:group id="xf-group-8">
+  		<xforms:label/>
+		<xforms:output ref="car_gYearMonth" id="xf-output-6">
+			<xforms:label>gYearMonth : </xforms:label>
+		</xforms:output>
+  		<xforms:range ref="car_gYearMonth" start="2006-01" end="2006-12" step="1" id="xf-range-6">
+  			<xforms:label>gYearMonth range : </xforms:label>
+  		</xforms:range>
+  	</xforms:group>
+  	<xforms:group id="xf-group-9">
+  		<xforms:label/>
+		<xforms:output ref="car_gYear" id="xf-output-7">
+			<xforms:label>gYear: </xforms:label>
+		</xforms:output>
+  		<xforms:range ref="car_gYear" start="2000" end="2006" step="1" id="xf-range-7">
+  			<xforms:label>gYear range : </xforms:label>
+  		</xforms:range>
+  	</xforms:group>
+  	<xforms:group id="xf-group-10">
+  		<xforms:label/>
+		<xforms:output ref="car_gMonthDay" id="xf-output-8">
+			<xforms:label>gMonthDay: </xforms:label>
+		</xforms:output>
+  		<xforms:range ref="car_gMonthDay" start="--01-01" end="--01-31" step="1" id="xf-range-8">
+  			<xforms:label>gMonthDay range : </xforms:label>
+  		</xforms:range>
+  	</xforms:group>
+  	<xforms:group id="xf-group-11">
+  		<xforms:label/>
+		<xforms:output ref="car_gDay" id="xf-output-9">
+			<xforms:label>gDay: </xforms:label>
+		</xforms:output>
+  		<xforms:range ref="car_gDay" start="---01" end="---31" step="1" id="xf-range-9">
+  			<xforms:label>gDay range : </xforms:label>
+  		</xforms:range>
+  	</xforms:group>
+  	<xforms:group id="xf-group-12">
+  		<xforms:label/>
+		<xforms:output ref="car_gMonth" id="xf-output-10">
+			<xforms:label>gMonth: </xforms:label>
+		</xforms:output>
+  		<xforms:range ref="car_gMonth" start="--01" end="--12" step="1" id="xf-range-10">
+  			<xforms:label>gMonth range : </xforms:label>
+  		</xforms:range>
+  	</xforms:group>
+  	<xforms:group id="xf-group-13">
+  		<xforms:label/>
+		<xforms:output ref="car_float" id="xf-output-11">
+			<xforms:label>float: </xforms:label>
+		</xforms:output>
+  		<xforms:range ref="car_float" start="0" end="2e4" step="1e3" id="xf-range-11">
+  			<xforms:label>float range : </xforms:label>
+  		</xforms:range>
+  	</xforms:group>
+  	<xforms:group id="xf-group-14">
+  		<xforms:label/>
+		<xforms:output ref="car_decimal" id="xf-output-12">
+			<xforms:label>decimal: </xforms:label>
+		</xforms:output>
+  		<xforms:range ref="car_decimal" start="0" end="2e4" step="1e3" id="xf-range-12">
+  			<xforms:label>decimal range : </xforms:label>
+  		</xforms:range>
+  	</xforms:group>
+  	<xforms:group id="xf-group-15">
+  		<xforms:label/>
+		<xforms:output ref="car_double" id="xf-output-13">
+			<xforms:label>double: </xforms:label>
+		</xforms:output>
+  		<xforms:range ref="car_double" start="0" end="2e4" step="1e3" id="xf-range-13">
+  			<xforms:label>double range : </xforms:label>
+  		</xforms:range>
+  	</xforms:group>
+		
+  </xhtml:body>
+</xhtml:html>

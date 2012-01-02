@@ -1,0 +1,847 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/11 XF11TestSuite.xsd" specVersion="1.1"
+    xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/11">
+    <specChapter chapterName="8. " productId="" chapterTitle="Core Form Controls">
+        <statusSummary>
+            <numNormTotal>0</numNormTotal>
+            <numNormPass>0</numNormPass>
+            <numNormFail>0</numNormFail>
+            <numNormUnknown>0</numNormUnknown>
+            <numBasicTotal>0</numBasicTotal>
+            <numBasicPass>0</numBasicPass>
+            <numBasicFail>0</numBasicFail>
+            <numBasicUnknown>0</numBasicUnknown>
+        </statusSummary>
+        <profile>
+            <specification>XForms 1.1</specification>
+            <normativeOnly>false</normativeOnly>
+            <basicOnly>false</basicOnly>
+        </profile>
+        <testCase>
+            <testCaseSection>8.1</testCaseSection>
+            <testCaseName>8.1.a</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.a.xhtml</testCaseLink>
+            <testCaseDescription>navindex and accesskey</testCaseDescription>
+            <testCaseSpecLinkName>8.1</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#N76392</testCaseSpecLink>
+            <testCaseBasic>false</testCaseBasic>
+            <testCaseNormative>false</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>false</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.1</testCaseSection>
+            <testCaseName>8.1.1.a</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.1/8.1.1.a.xhtml</testCaseLink>
+            <testCaseDescription>form control violates data binding restriction</testCaseDescription>
+            <testCaseSpecLinkName>8.1.1</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-processing</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.1</testCaseSection>
+            <testCaseName>8.1.1.b</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.1/8.1.1.b.xhtml</testCaseLink>
+            <testCaseDescription>non-relevant form control becoming relevant</testCaseDescription>
+            <testCaseSpecLinkName>8.1.1</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-processing</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.1</testCaseSection>
+            <testCaseName>8.1.1.c</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.1/8.1.1.c.xhtml</testCaseLink>
+            <testCaseDescription>relevant form control becoming non-relevant</testCaseDescription>
+            <testCaseSpecLinkName>8.1.1</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-processing</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.2</testCaseSection>
+            <testCaseName>8.1.2.a</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.2/8.1.2.a.xhtml</testCaseLink>
+            <testCaseDescription>incremental attribute for input element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.2</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-input</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.2</testCaseSection>
+            <testCaseName>8.1.2.b</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.2/8.1.2.b.xhtml</testCaseLink>
+            <testCaseDescription>data binding restrictions for input element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.2</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-input</testCaseSpecLink>
+            <testCaseBasic>false</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.2</testCaseSection>
+            <testCaseName>8.1.2.c</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.2/8.1.2.c.xhtml</testCaseLink>
+            <testCaseDescription>datatype bound to input element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.2</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-input</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.3</testCaseSection>
+            <testCaseName>8.1.3.a</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.3/8.1.3.a.xhtml</testCaseLink>
+            <testCaseDescription>incremental attribute of secret element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.3</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-secret</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.3</testCaseSection>
+            <testCaseName>8.1.3.b</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.3/8.1.3.b.xhtml</testCaseLink>
+            <testCaseDescription>data binding restrictions for secret element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.3</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-secret</testCaseSpecLink>
+            <testCaseBasic>false</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.4</testCaseSection>
+            <testCaseName>8.1.4.a</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.4/8.1.4.a.xhtml</testCaseLink>
+            <testCaseDescription>incremental attribute of textarea element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.4</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-textarea</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.4</testCaseSection>
+            <testCaseName>8.1.4.b</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.4/8.1.4.b.xhtml</testCaseLink>
+            <testCaseDescription>data binding restrictions for textarea element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.4</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-textarea</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.5</testCaseSection>
+            <testCaseName>8.1.5.a</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.5/8.1.5.a.xhtml</testCaseLink>
+            <testCaseDescription>appearance attribute of output element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.5</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-output</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.5</testCaseSection>
+            <testCaseName>8.1.5.b</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.5/8.1.5.b.xhtml</testCaseLink>
+            <testCaseDescription>value attribute of output element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.5</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-output</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.5</testCaseSection>
+            <testCaseName>8.1.5.c</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.5/8.1.5.c.xhtml</testCaseLink>
+            <testCaseDescription>UI Common added to output element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.5</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-output</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.5</testCaseSection>
+            <testCaseName>8.1.5.d</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.5/8.1.5.d.xhtml</testCaseLink>
+            <testCaseDescription>mediatype attribute of output element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.5</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-output</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.5.1</testCaseSection>
+            <testCaseName>8.1.5.1.a</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.5/8.1.5.1/8.1.5.1.a.xhtml</testCaseLink>
+            <testCaseDescription>mediatype element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.5.1</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-output-mediatype</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.6</testCaseSection>
+            <testCaseName>8.1.6.a</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.6/8.1.6.a.xhtml</testCaseLink>
+            <testCaseDescription>mediatype attribute for upload element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.6</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-upload</testCaseSpecLink>
+            <testCaseBasic>false</testCaseBasic>
+            <testCaseNormative>false</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>false</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.6</testCaseSection>
+            <testCaseName>8.1.6.b</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.6/8.1.6.b.xhtml</testCaseLink>
+            <testCaseDescription>incremental attribute for upload element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.6</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-upload</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.6</testCaseSection>
+            <testCaseName>8.1.6.c</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.6/8.1.6.c.xhtml</testCaseLink>
+            <testCaseDescription>filename and mediatype elements for upload element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.6</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-upload</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.6</testCaseSection>
+            <testCaseName>8.1.6.d</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.6/8.1.6.d.xhtml</testCaseLink>
+            <testCaseDescription>data binding restrictions for upload element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.6</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-upload</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>        
+        <testCase>
+            <testCaseSection>8.1.6</testCaseSection>
+            <testCaseName>8.1.6.e</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.6/8.1.6.e.xhtml</testCaseLink>
+            <testCaseDescription>upload element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.6</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-upload</testCaseSpecLink>
+            <testCaseBasic>false</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.6.1</testCaseSection>
+            <testCaseName>8.1.6.1.a</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.6/8.1.6.1/8.1.6.1.a.xhtml</testCaseLink>
+            <testCaseDescription>filename element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.6.1</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-upload-filename</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.6.2</testCaseSection>
+            <testCaseName>8.1.6.2.a</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.6/8.1.6.2/8.1.6.2.a.xhtml</testCaseLink>
+            <testCaseDescription>mediatype element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.6.2</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-upload-mediatype</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.7</testCaseSection>
+            <testCaseName>8.1.7.a</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.7/8.1.7.a.xhtml</testCaseLink>
+            <testCaseDescription>start attribute of range element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.7</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-range</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.7</testCaseSection>
+            <testCaseName>8.1.7.b</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.7/8.1.7.b.xhtml</testCaseLink>
+            <testCaseDescription>end attribute of range element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.7</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-range</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.7</testCaseSection>
+            <testCaseName>8.1.7.c</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.7/8.1.7.c.xhtml</testCaseLink>
+            <testCaseDescription>step attribute of range element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.7</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-range</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.7</testCaseSection>
+            <testCaseName>8.1.7.d</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.7/8.1.7.d.xhtml</testCaseLink>
+            <testCaseDescription>incremental attribute of range element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.7</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-range</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.7</testCaseSection>
+            <testCaseName>8.1.7.e</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.7/8.1.7.e.xhtml</testCaseLink>
+            <testCaseDescription>example of range element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.7</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-range</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.7</testCaseSection>
+            <testCaseName>8.1.7.f</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.7/8.1.7.f.xhtml</testCaseLink>
+            <testCaseDescription>data binding restrictions on range element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.7</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-range</testCaseSpecLink>
+            <testCaseBasic>false</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.7</testCaseSection>
+            <testCaseName>8.1.7.g</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.7/8.1.7.g.xhtml</testCaseLink>
+            <testCaseDescription>data binding restrictions on range element for basic processors</testCaseDescription>
+            <testCaseSpecLinkName>8.1.7</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-range</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.8</testCaseSection>
+            <testCaseName>8.1.8.a</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.8/8.1.8.a.xhtml</testCaseLink>
+            <testCaseDescription>trigger element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.8</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-trigger</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.8</testCaseSection>
+            <testCaseName>8.1.8.b</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.8/8.1.8.b.xhtml</testCaseLink>
+            <testCaseDescription>trigger element with appearance attribute</testCaseDescription>
+            <testCaseSpecLinkName>8.1.8</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-trigger</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.9</testCaseSection>
+            <testCaseName>8.1.9.a</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.9/8.1.9.a.xhtml</testCaseLink>
+            <testCaseDescription>submit element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.9</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-submit</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.9</testCaseSection>
+            <testCaseName>8.1.9.b</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.9/8.1.9.b.xhtml</testCaseLink>
+            <testCaseDescription>submit element with appearance attribute</testCaseDescription>
+            <testCaseSpecLinkName>8.1.9</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-submit</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.10</testCaseSection>
+            <testCaseName>8.1.10.a</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.10/8.1.10.a.xhtml</testCaseLink>
+            <testCaseDescription>selection attribute of select element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.10</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-selectMany</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.10</testCaseSection>
+            <testCaseName>8.1.10.b</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.10/8.1.10.b.xhtml</testCaseLink>
+            <testCaseDescription>incremental attribute of select element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.10</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-selectMany</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.10</testCaseSection>
+            <testCaseName>8.1.10.c</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.10/8.1.10.c.xhtml</testCaseLink>
+            <testCaseDescription>appearance attribute of select element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.10</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-selectMany</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.10</testCaseSection>
+            <testCaseName>8.1.10.d</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.10/8.1.10.d.xhtml</testCaseLink>
+            <testCaseDescription>value out of range of a select element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.10</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-selectMany</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.11</testCaseSection>
+            <testCaseName>8.1.11.a</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.11/8.1.11.a.xhtml</testCaseLink>
+            <testCaseDescription>selection attribute of select1 element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.11</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-selectOne</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.11</testCaseSection>
+            <testCaseName>8.1.11.b</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.11/8.1.11.b.xhtml</testCaseLink>
+            <testCaseDescription>incremental attribute of select1 element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.11</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-selectOne</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.11</testCaseSection>
+            <testCaseName>8.1.11.c</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.11/8.1.11.c.xhtml</testCaseLink>
+            <testCaseDescription>appearance attribute of select1 element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.11</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-selectOne</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.1.11</testCaseSection>
+            <testCaseName>8.1.11.d</testCaseName>
+            <testCaseLink>../../Chapt08/8.1/8.1.11/8.1.11.d.xhtml</testCaseLink>
+            <testCaseDescription>value out of range of a select1 element</testCaseDescription>
+            <testCaseSpecLinkName>8.1.11</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-selectOne</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.2.1</testCaseSection>
+            <testCaseName>8.2.1.a</testCaseName>
+            <testCaseLink>../../Chapt08/8.2/8.2.1/8.2.1.a.xhtml</testCaseLink>
+            <testCaseDescription>label element references instance data</testCaseDescription>
+            <testCaseSpecLinkName>8.2.1</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-commonelems-label</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.2.1</testCaseSection>
+            <testCaseName>8.2.1.b</testCaseName>
+            <testCaseLink>../../Chapt08/8.2/8.2.1/8.2.1.b.xhtml</testCaseLink>
+            <testCaseDescription>label element uses inline text</testCaseDescription>
+            <testCaseSpecLinkName>8.2.1</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-commonelems-label</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.2.1</testCaseSection>
+            <testCaseName>8.2.1.c</testCaseName>
+            <testCaseLink>../../Chapt08/8.2/8.2.1/8.2.1.c.xhtml</testCaseLink>
+            <testCaseDescription>label element has binding precedence</testCaseDescription>
+            <testCaseSpecLinkName>8.2.1</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-commonelems-label</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.2.2</testCaseSection>
+            <testCaseName>8.2.2.a</testCaseName>
+            <testCaseLink>../../Chapt08/8.2/8.2.2/8.2.2.a.xhtml</testCaseLink>
+            <testCaseDescription>help element references instance data</testCaseDescription>
+            <testCaseSpecLinkName>8.2.2</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-commonelems-help</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.2.2</testCaseSection>
+            <testCaseName>8.2.2.b</testCaseName>
+            <testCaseLink>../../Chapt08/8.2/8.2.2/8.2.2.b.xhtml</testCaseLink>
+            <testCaseDescription>help element uses inline text</testCaseDescription>
+            <testCaseSpecLinkName>8.2.2</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-commonelems-help</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.2.2</testCaseSection>
+            <testCaseName>8.2.2.c</testCaseName>
+            <testCaseLink>../../Chapt08/8.2/8.2.2/8.2.2.c.xhtml</testCaseLink>
+            <testCaseDescription>bind precedence for help element</testCaseDescription>
+            <testCaseSpecLinkName>8.2.2</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-commonelems-help</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.2.3</testCaseSection>
+            <testCaseName>8.2.3.a</testCaseName>
+            <testCaseLink>../../Chapt08/8.2/8.2.3/8.2.3.a.xhtml</testCaseLink>
+            <testCaseDescription>hint element references instance data</testCaseDescription>
+            <testCaseSpecLinkName>8.2.3</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-commonelems-hint</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.2.3</testCaseSection>
+            <testCaseName>8.2.3.b</testCaseName>
+            <testCaseLink>../../Chapt08/8.2/8.2.3/8.2.3.b.xhtml</testCaseLink>
+            <testCaseDescription>hint element uses inline text</testCaseDescription>
+            <testCaseSpecLinkName>8.2.3</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-commonelems-hint</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.2.3</testCaseSection>
+            <testCaseName>8.2.3.c</testCaseName>
+            <testCaseLink>../../Chapt08/8.2/8.2.3/8.2.3.c.xhtml</testCaseLink>
+            <testCaseDescription>bind precedence for hint element</testCaseDescription>
+            <testCaseSpecLinkName>8.2.3</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-commonelems-hint</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.2.4</testCaseSection>
+            <testCaseName>8.2.4.a</testCaseName>
+            <testCaseLink>../../Chapt08/8.2/8.2.4/8.2.4.a.xhtml</testCaseLink>
+            <testCaseDescription>alert element references instance data</testCaseDescription>
+            <testCaseSpecLinkName>8.2.4</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-commonelems-alert</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.2.4</testCaseSection>
+            <testCaseName>8.2.4.b</testCaseName>
+            <testCaseLink>../../Chapt08/8.2/8.2.4/8.2.4.b.xhtml</testCaseLink>
+            <testCaseDescription>alert element uses inline text</testCaseDescription>
+            <testCaseSpecLinkName>8.2.4</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-commonelems-alert</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.2.4</testCaseSection>
+            <testCaseName>8.2.4.c</testCaseName>
+            <testCaseLink>../../Chapt08/8.2/8.2.4/8.2.4.c.xhtml</testCaseLink>
+            <testCaseDescription>bind precedence for alert element</testCaseDescription>
+            <testCaseSpecLinkName>8.2.4</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-commonelems-alert</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.3.1</testCaseSection>
+            <testCaseName>8.3.1.a</testCaseName>
+            <testCaseLink>../../Chapt08/8.3/8.3.1/8.3.1.a.xhtml</testCaseLink>
+            <testCaseDescription>choices element</testCaseDescription>
+            <testCaseSpecLinkName>8.3.1</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-selection-commonelems-choices</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.3.2</testCaseSection>
+            <testCaseName>8.3.2.a</testCaseName>
+            <testCaseLink>../../Chapt08/8.3/8.3.2/8.3.2.a.xhtml</testCaseLink>
+            <testCaseDescription>item element</testCaseDescription>
+            <testCaseSpecLinkName>8.3.2</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-selection-commonelems-item</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.3.3</testCaseSection>
+            <testCaseName>8.3.3.a</testCaseName>
+            <testCaseLink>../../Chapt08/8.3/8.3.3/8.3.3.a.xhtml</testCaseLink>
+            <testCaseDescription>data binding restrictions on value element</testCaseDescription>
+            <testCaseSpecLinkName>8.3.3</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-selection-commonelems-value</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.3.3</testCaseSection>
+            <testCaseName>8.3.3.b</testCaseName>
+            <testCaseLink>../../Chapt08/8.3/8.3.3/8.3.3.b.xhtml</testCaseLink>
+            <testCaseDescription>precedence for value element</testCaseDescription>
+            <testCaseSpecLinkName>8.3.3</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-selection-commonelems-value</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>
+        <testCase>
+            <testCaseSection>8.3.3</testCaseSection>
+            <testCaseName>8.3.3.c</testCaseName>
+            <testCaseLink>../../Chapt08/8.3/8.3.3/8.3.3.c.xhtml</testCaseLink>
+            <testCaseDescription>value element with inline content</testCaseDescription>
+            <testCaseSpecLinkName>8.3.3</testCaseSpecLinkName>
+            <testCaseSpecLink>http://www.w3.org/TR/xforms11/#ui-selection-commonelems-value</testCaseSpecLink>
+            <testCaseBasic>true</testCaseBasic>
+            <testCaseNormative>true</testCaseNormative>
+            <testCaseStatus>Unknown</testCaseStatus>
+            <testCaseDate>2005-09-10</testCaseDate>
+            <testCaseRequired>true</testCaseRequired>
+            <testCaseNote />
+        </testCase>        
+    </specChapter>
+</testSuite>

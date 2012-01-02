@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events">
+  <xhtml:head>
+  	<xhtml:title>5.2.3.a listItems datatype</xhtml:title>
+  	<xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+  	<xforms:model>
+  		<xforms:instance>
+  			<car>
+  				<availableColors/>
+  			</car>
+  		</xforms:instance>
+  		<xforms:bind id="listItems_bind" nodeset="/car/availableColors" type="xforms:listItems" required="true()"/>
+  		<xforms:setvalue ref="availableColors" ev:event="xforms-ready">Red Blue Green</xforms:setvalue>
+  	</xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group id="xf-group-1">
+  		<xforms:label class="title">5.2.3.a listItems datatype</xforms:label>
+  	</xforms:group>
+  	<xforms:group id="xf-group-2">
+  		<xforms:label>
+	  		You must have seen the message "You entered a valid listItems".
+	  	</xforms:label>	
+  	</xforms:group>
+
+  		<xforms:input bind="listItems_bind" id="xf-input-1">
+  			<xforms:label>Colors available (listItems)</xforms:label>
+  			<xforms:action ev:event="xforms-valid">
+  				<xforms:message level="modal">You entered a valid listItems</xforms:message>
+  			</xforms:action>
+		</xforms:input>
+		
+		
+  </xhtml:body>
+</xhtml:html>

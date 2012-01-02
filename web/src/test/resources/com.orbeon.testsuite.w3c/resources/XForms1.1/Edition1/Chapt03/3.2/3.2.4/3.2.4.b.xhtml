@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>3.2.4.b node-set binding - model attribute of itemset element</xhtml:title>
+    <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+    <xforms:model id="order">
+      <xforms:instance>
+        <carOrder/>
+      </xforms:instance>
+      <xforms:submission id="submit_car" method="post" action="http://xformstest.org/cgi-bin/echo.sh"/>
+    </xforms:model>
+    <xforms:model id="carsForSale">
+      <xforms:instance>
+        <carsAvailable>
+          <car>Audi</car>
+          <car>BMW</car>
+          <car>Mercedes</car>
+          <car>Porsche</car>
+          <car>Volkswagen</car>
+        </carsAvailable>
+      </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group id="xf-group-1">
+  		<xforms:label class="title">3.2.4.b node-set binding - model attribute of itemset element</xforms:label>
+  	</xforms:group>
+    
+    <xforms:group id="xf-group-2">
+		<xforms:label>
+      	You must be able to select any or all of the items in the select control. After activating the Submit Cars 
+      	trigger you must be able to see all the values you selected displayed on the screen in the form data.
+      	</xforms:label>
+    </xforms:group>
+    
+    <!-- itemset has model attribute and a nodeset attribute -->
+    <xforms:select ref="/carOrder" model="order" id="xf-select-1">
+      	<xforms:label>Cars</xforms:label>
+        <xforms:itemset nodeset="/carsAvailable/car" model="carsForSale">
+	        <xforms:label ref="."/>
+    	    <xforms:value ref="."/>
+        </xforms:itemset>
+    </xforms:select>
+    
+    <xforms:submit submission="submit_car" id="xf-submit-1">
+        <xforms:label>Submit Cars</xforms:label>
+    </xforms:submit>
+
+	
+  </xhtml:body>
+</xhtml:html>

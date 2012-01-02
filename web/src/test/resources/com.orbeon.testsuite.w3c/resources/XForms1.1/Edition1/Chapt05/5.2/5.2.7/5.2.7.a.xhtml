@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events">
+    <xhtml:head>
+        <xhtml:title>5.2.7.a card-number datatype</xhtml:title>
+        <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+        <xforms:model>
+            <xforms:instance>
+                <ID/>
+            </xforms:instance>
+            <xforms:bind nodeset="/ID" type="xforms:card-number"/>
+        </xforms:model>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group id="xf-group-1">
+            <xforms:label class="title">5.2.7.a card-number datatype</xforms:label>
+        </xforms:group>
+        <xforms:group id="xf-group-2">
+            <xforms:label>
+              When you activate the Valid card-number Test triggers you must see the message "You entered a 
+              valid card-number". 
+              When you activate the Invalid card-number Test triggers you must see the message "You entered an 
+              invalid card-number". 
+            </xforms:label>
+        </xforms:group>
+        <xforms:group id="xf-group-3">
+            <xforms:input ref="/ID" id="xf-input-1">
+                <xforms:label>ID card number : </xforms:label>
+                <xforms:action ev:event="xforms-valid">
+                    <xforms:message level="modal">You entered a valid card-number</xforms:message>
+                </xforms:action>
+                <xforms:action ev:event="xforms-invalid">
+                    <xforms:message level="modal">You entered an invalid card-number</xforms:message>
+                </xforms:action>
+            </xforms:input>
+        </xforms:group>
+        
+        <xforms:trigger id="xf-trigger-1">
+        	<xforms:label>Valid card-number Test 1</xforms:label>
+    		<xforms:setvalue ref="/ID" ev:event="DOMActivate">012345678910</xforms:setvalue>
+    	</xforms:trigger>
+    	<xforms:trigger id="xf-trigger-2">
+        	<xforms:label>Valid card-number Test 2</xforms:label>
+    		<xforms:setvalue ref="/ID" ev:event="DOMActivate">1234567891011121314</xforms:setvalue>
+    	</xforms:trigger>
+    	<xforms:trigger id="xf-trigger-3">
+        	<xforms:label>Invalid card-number Test 1</xforms:label>
+    		<xforms:setvalue ref="/ID" ev:event="DOMActivate">0II23581321</xforms:setvalue>
+    	</xforms:trigger>
+    	<xforms:trigger id="xf-trigger-4">
+        	<xforms:label>Invalid card-number Test 2</xforms:label>
+    		<xforms:setvalue ref="/ID" ev:event="DOMActivate">0112E581321345589144</xforms:setvalue>
+    	</xforms:trigger>
+        
+    </xhtml:body>
+</xhtml:html>

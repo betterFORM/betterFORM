@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events">
+    <xhtml:head>
+        <xhtml:title>5.2.7.b card-number datatype - credit card example</xhtml:title>
+        <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+        <xforms:model>
+	  	  <xforms:instance>
+			<payment method="cc">
+		  	  <number/>
+			  <expiry/>
+			</payment>
+	  	  </xforms:instance>
+	  	  <xforms:bind nodeset="number" type="xforms:card-number"/>
+		</xforms:model>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group id="xf-group-1">
+            <xforms:label class="title">5.2.7.b card-number datatype - credit card example</xforms:label>
+        </xforms:group>
+        <xforms:group id="xf-group-2">
+            <xforms:label>
+                When you activate the Valid card-number Test trigger below you must see the message 
+				"You entered a valid card-number". 
+            </xforms:label>
+        </xforms:group>
+        <xforms:group id="xf-group-3">
+            <xforms:input ref="number" id="xf-input-1">
+                <xforms:label>ID card number : </xforms:label>
+                <xforms:action ev:event="xforms-valid">
+                    <xforms:message level="modal">You entered a valid card-number</xforms:message>
+                </xforms:action>
+                <xforms:action ev:event="xforms-invalid">
+                    <xforms:message level="modal">Invalid ID number</xforms:message>
+                </xforms:action>
+            </xforms:input>
+        </xforms:group>
+        
+        <xforms:trigger id="xf-trigger-1">
+        	<xforms:label>Valid card-number Test</xforms:label>
+    		<xforms:setvalue ref="number" ev:event="DOMActivate">4111111111111111</xforms:setvalue>
+    	</xforms:trigger>
+        
+    </xhtml:body>
+</xhtml:html>

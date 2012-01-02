@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="XForms 1.1 Driver Pages Generator" default="generate" basedir="..">
+    <target name="generate">
+        <xslt basedir="xml" destdir="html" includes="*.xml" extension=".html" style="html/chapterPages.xsl"/>
+    </target>
+</project>

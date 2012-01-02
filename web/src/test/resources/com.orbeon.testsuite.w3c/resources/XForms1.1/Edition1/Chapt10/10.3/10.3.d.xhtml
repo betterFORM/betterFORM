@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xhtml:head>
+        <xhtml:title>10.3.d insert action using at attribute</xhtml:title>
+        <xforms:model id="mod1">
+            <xforms:instance id="first">
+                <number_lists>
+                    <number_list>
+                        <number>1</number>
+                        <number>2</number>
+                        <number>3</number>
+                        <number>4</number>
+                        <number>5</number>
+                    </number_list>
+                    <number_list/>
+                </number_lists>
+            </xforms:instance>
+        </xforms:model>
+        <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group id="xf-group-1">
+            <xforms:label class="title">10.3.d insert action using at attribute</xforms:label>
+        </xforms:group>
+        <xforms:group id="xf-group-2">
+            <xforms:label>
+              After activating any of the Test triggers the integer sequence must match the one on 
+              the label of the activated trigger. 
+            </xforms:label>
+        </xforms:group>
+        <xforms:group id="xf-group-3">
+            <xforms:trigger id="xf-trigger-1">
+                <xforms:label>Test A: 1 2 3 4 5 5</xforms:label>
+                <xforms:action ev:event="DOMActivate">
+                    <xforms:reset model="mod1"/>
+                    <!-- without at attribute, should take last position -->
+                    <xforms:insert nodeset="number_list[1]/number"/>
+                </xforms:action>
+            </xforms:trigger>
+            <xforms:trigger id="xf-trigger-2">
+                <xforms:label>Test B: 1 2 5 3 4 5</xforms:label>
+                <xforms:action ev:event="DOMActivate">
+                    <xforms:reset model="mod1"/>
+                    <!-- at attribute is not an integer, round up to index 2 -->
+                    <xforms:insert nodeset="number_list/number" at="1.5"/>
+                </xforms:action>
+            </xforms:trigger>
+            <xforms:trigger id="xf-trigger-3">
+                <xforms:label>Test C: 1 2 3 5 4 5</xforms:label>
+                <xforms:action ev:event="DOMActivate">
+                    <xforms:reset model="mod1"/>
+                    <!-- at attribute between 1 and node-set size -->
+                    <xforms:insert nodeset="number_list/number" at="3"/>
+                </xforms:action>
+            </xforms:trigger>
+            <xforms:trigger id="xf-trigger-4">
+                <xforms:label>Test D: 1 5 2 3 4 5</xforms:label>
+                <xforms:action ev:event="DOMActivate">
+                    <xforms:reset model="mod1"/>
+                    <!-- at attribute less than 1 -->
+                    <xforms:insert nodeset="number_list/number" at="-2"/>
+                </xforms:action>
+            </xforms:trigger>
+            <xforms:trigger id="xf-trigger-5">
+                <xforms:label>Test E: 1 2 3 4 5 5</xforms:label>
+                <xforms:action ev:event="DOMActivate">
+                    <xforms:reset model="mod1"/>
+                     <!-- at attribute greater than node-set size -->
+                     <xforms:insert nodeset="number_list/number" at="6"/>
+                </xforms:action>
+            </xforms:trigger>
+            <xforms:trigger id="xf-trigger-6">
+                <xforms:label>Test F: 1 2 3 4 5 5</xforms:label>
+                <xforms:action ev:event="DOMActivate">
+                    <xforms:reset model="mod1"/>
+                     <!-- at attribute is NaN -->
+                     <xforms:insert nodeset="number_list/number" at="'foo'"/>
+                </xforms:action>
+            </xforms:trigger>
+            <xforms:trigger id="xf-trigger-7">
+                <xforms:label>Test G: List sizes remain 5 and 0, respectively</xforms:label>
+                <xforms:action ev:event="DOMActivate">
+                    <xforms:reset model="mod1"/>
+                     <!-- empty node-set, at is ignored -->
+                     <xforms:insert nodeset="number_list[2]/number" at="2"/>
+                </xforms:action>
+            </xforms:trigger>
+        </xforms:group>
+        <xforms:group id="xf-group-4">
+            <xforms:label>Integer sequence: </xforms:label>
+        </xforms:group>
+        <xforms:repeat nodeset="number_list[1]/number">
+            <xforms:output value="." id="xf-output-1">
+                <xforms:label/>
+            </xforms:output>
+        </xforms:repeat>
+        <xforms:output value="count(number_list[1]/number)" id="xf-output-2">
+            <xforms:label>Size of List X: </xforms:label>
+        </xforms:output>
+        <xforms:output value="count(number_list[2]/number)" id="xf-output-3">
+            <xforms:label>Size of List Y: </xforms:label>
+        </xforms:output>
+    </xhtml:body>
+</xhtml:html>

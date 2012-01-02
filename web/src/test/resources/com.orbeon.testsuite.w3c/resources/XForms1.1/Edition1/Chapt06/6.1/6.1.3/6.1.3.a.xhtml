@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xforms="http://www.w3.org/2002/xforms">
+	<xhtml:head>
+		<xhtml:title>6.1.3.a required property</xhtml:title>
+		<xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+		<xforms:model>
+			<xforms:instance>
+				<person-name>
+					<first-name/>
+					<last-name/>
+				</person-name>
+			</xforms:instance>
+			<xforms:bind id="fname_bind" nodeset="/person-name/first-name" required="true()"/>
+      		<xforms:submission id="fname" action="http://xformstest.org/cgi-bin/echo.sh" method="post" bind="fname_bind"/>
+		</xforms:model>
+	</xhtml:head>
+	<xhtml:body>
+		<xforms:group id="xf-group-1">
+			<xforms:label class="title">6.1.3.a required property</xforms:label>
+		</xforms:group>
+		<xforms:group id="xf-group-2">
+			<xforms:label>
+				The Submit First Name submit control must not replace this page with the form data until you have 
+				entered a value into the First Name input field. 
+			</xforms:label>	
+		</xforms:group>
+
+		<xforms:input ref="/person-name/first-name" id="xf-input-1">
+			<xforms:label>First Name:</xforms:label>
+		</xforms:input>
+
+		<xforms:submit submission="fname" id="xf-submit-1">
+			<xforms:label>Submit First Name</xforms:label>
+		</xforms:submit>
+
+		
+	</xhtml:body>
+</xhtml:html>

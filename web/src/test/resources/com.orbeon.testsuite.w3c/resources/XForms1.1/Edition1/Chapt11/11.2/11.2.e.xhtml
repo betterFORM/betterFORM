@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<xhtml:head>
+		<xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+		<xhtml:title>11.2.e xforms-submit stops with invalid instance data</xhtml:title>
+		<xforms:model>
+			<xforms:instance>
+				<root>
+					<data xsi:type="xsd:integer">ab.cd</data>
+				</root>
+			</xforms:instance>
+			<xforms:instance id="error_holder">
+				<root>
+					<error_name/>
+				</root>
+			</xforms:instance>
+			<xforms:submission id="sub1" method="post" ref="data" action="http://xformstest.org/cgi-bin/echo.sh" replace="none"/>
+		</xforms:model>
+	</xhtml:head>
+	<xhtml:body>
+		<xforms:group id="xf-group-1">
+			<xforms:label class="title">11.2.e xforms-submit stops with invalid instance data</xforms:label>
+		</xforms:group>
+		<xforms:group id="xf-group-2">
+			<xforms:label>
+			  After you activate the Submit Here submit control you must see an xforms-submit-error 
+			  message and see the value "validation-error" as output from the Error Name output control. 
+			</xforms:label>
+		</xforms:group>
+		<xforms:group id="xf-group-3">
+			<xforms:output ref="instance('error_holder')/error_name" id="xf-output-1">
+				<xforms:label>Error Name : </xforms:label>
+			</xforms:output>
+		</xforms:group>
+		<xforms:submit submission="sub1" id="xf-submit-1">
+			<xforms:label>Submit Here</xforms:label>
+		</xforms:submit>
+		<xforms:action ev:event="xforms-submit-error" ev:observer="sub1">
+			<xforms:message level="modal">xforms-submit-error</xforms:message>
+			<xforms:setvalue ref="instance('error_holder')/error_name" value="event('error-type')"/>
+		</xforms:action>
+		
+	</xhtml:body>
+</xhtml:html>

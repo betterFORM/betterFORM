@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events">			
+	<xhtml:head>
+	  <xhtml:title>4.4.1.a xforms-insert event</xhtml:title>
+		<xforms:model>
+		  <xforms:instance>
+			<Dates>
+			  <date>2006-12-25</date>
+			  <date>2006-01-01</date>
+			</Dates>
+		  </xforms:instance>
+		  <xforms:action ev:event="xforms-insert">
+			<xforms:message ev:event="xforms-insert" level="modal">xforms-insert</xforms:message>
+			<xforms:setvalue model="description_catcher" ref="insert_description" value="event('position')"/>
+			<xforms:setvalue model="description_catcher" ref="new_value" value="event('inserted-nodes')"/>
+		  </xforms:action>
+		</xforms:model>			 
+		<xforms:model id="description_catcher">
+		  <xforms:instance>
+			<descriptions>
+			  <insert_description/>
+				<new_value/>
+			</descriptions>
+		  </xforms:instance>
+		</xforms:model>
+        <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+	</xhtml:head>	
+	<xhtml:body>
+		<xforms:group id="xf-group-1">
+			<xforms:label class="title">4.4.1.a xforms-insert event</xforms:label>
+		</xforms:group>
+		<xforms:group id="xf-group-2">
+			<xforms:label>
+				 Activate the Insert A Date trigger below to fire the xforms-insert event. You must see an 
+				 xforms-insert message and the correct values must be output below. 
+			</xforms:label>
+		</xforms:group>
+		<xforms:group id="xf-group-3">
+			<xforms:trigger id="xf-trigger-1">
+				<xforms:label>Insert A Date</xforms:label>
+				<xforms:action ev:event="DOMActivate">
+					<xforms:insert nodeset="/Dates/date" at="1" position="before"/>
+				</xforms:action>
+			</xforms:trigger>
+		</xforms:group>
+		<xforms:group id="xf-group-4">
+            <xforms:label>You must see the value "before" : </xforms:label>
+			<xforms:output model="description_catcher" ref="insert_description" id="xf-output-1">
+				<xforms:label/>
+			</xforms:output>
+		</xforms:group>
+		<xforms:group id="xf-group-5">
+            <xforms:label>You must see the value "2006-01-01" : </xforms:label>
+			<xforms:output model="description_catcher" ref="new_value" id="xf-output-2">
+				<xforms:label/>
+			</xforms:output>
+		</xforms:group>
+		
+	</xhtml:body>
+</xhtml:html>

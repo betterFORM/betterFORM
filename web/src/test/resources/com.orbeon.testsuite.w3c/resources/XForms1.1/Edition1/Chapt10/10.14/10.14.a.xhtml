@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xforms="http://www.w3.org/2002/xforms">
+  	<xhtml:head>
+    	<xhtml:title>10.14.a load element attributes</xhtml:title>
+    	<xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+    	<xforms:model>
+       		<xforms:instance>
+				<data>
+					<uri>/xforms-test-suite/xforms11.html</uri>
+					<binduri uri="/xforms-test-suite/xforms11.html"/>
+				</data>
+       		</xforms:instance>
+       		<xforms:bind id="uribind" nodeset="binduri/@uri"/>
+    	</xforms:model>
+  	</xhtml:head>
+  	<xhtml:body>
+  		<xforms:group id="xf-group-1">
+	  		<xforms:label class="title">10.14.a load element attributes</xforms:label>
+	  	</xforms:group>
+  		<xforms:group id="xf-group-2">
+  			<xforms:label>
+  			  When activated, each of the three triggers below must take you to the XForms 1.1 specification 
+  			  on the W3C website. 
+			</xforms:label>
+  		</xforms:group>
+		<xforms:trigger id="xf-trigger-1">
+			<xforms:label>Load Xforms Spec From resource Attribute</xforms:label>
+			<xforms:load ev:event="DOMActivate" resource="/xforms-test-suite/xforms11.html"/>
+		</xforms:trigger>
+
+		<xforms:trigger id="xf-trigger-2">
+			<xforms:label>Load Xforms Spec From ref Attribute</xforms:label>
+			<xforms:load ev:event="DOMActivate" ref="/data/uri"/>
+		</xforms:trigger>
+
+		<xforms:trigger id="xf-trigger-3">
+			<xforms:label>Load Xforms Spec From bind Attribute</xforms:label>
+			<xforms:load ev:event="DOMActivate" bind="uribind"/>
+		</xforms:trigger>
+
+  </xhtml:body>
+</xhtml:html>

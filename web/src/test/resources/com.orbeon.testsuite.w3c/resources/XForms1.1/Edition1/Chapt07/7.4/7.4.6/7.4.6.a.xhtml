@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms">
+	<xhtml:head>
+		<xhtml:title>7.4.6.a binding examples</xhtml:title>
+		<xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+		<xforms:model id="orders">
+			<xforms:instance id="orderform">
+				<orderForm>
+					<shipTo>
+						<firstName>John</firstName>
+					</shipTo>
+				</orderForm>
+			</xforms:instance>
+			<xforms:bind nodeset="/orderForm/shipTo/firstName" id="fn"/>
+		</xforms:model>
+	</xhtml:head>
+	<xhtml:body>
+	    <xforms:group id="xf-group-1">
+		    <xforms:label class="title">
+			7.4.6.a binding examples
+		    </xforms:label>
+		</xforms:group>
+		<xforms:group id="xf-group-2">
+			<xforms:label>
+				You must see the value "John" in all three input fields. 
+			</xforms:label>
+		</xforms:group>
+		<xforms:input ref="/orderForm/shipTo/firstName" id="xf-input-1">
+			<xforms:label>Driver 1's First Name : </xforms:label>
+		</xforms:input>
+		<xforms:input bind="fn" id="xf-input-2">
+			<xforms:label>Driver 2's First Name : </xforms:label>
+		</xforms:input>
+		<xforms:input model="orders" ref="/orderForm/shipTo/firstName" id="xf-input-3">
+			<xforms:label>Driver 3's First Name : </xforms:label>
+		</xforms:input>
+		
+	</xhtml:body>
+</xhtml:html>

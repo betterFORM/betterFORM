@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xforms="http://www.w3.org/2002/xforms">
+	<xhtml:head>
+		<xhtml:title>11.1.t targetref attribute of submission element</xhtml:title>
+		<xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+		<xforms:model id="form1">
+			<xforms:submission id="submit01" method="get" replace="instance" instance="instance2" action="11.1.t.data.xml" targetref="/car"/>
+			<xforms:instance id="instance2">
+				<car>
+					<carOwner>Thomas</carOwner>
+					<make>Toyota</make>
+					<color>silver</color>
+				</car>
+			</xforms:instance>
+		</xforms:model>
+	</xhtml:head>
+	<xhtml:body>
+	    <xforms:group id="xf-group-1">
+		    <xforms:label class="title">11.1.t targetref attribute of submission element</xforms:label>
+		</xforms:group>
+		<xforms:group id="xf-group-2">
+		    <xforms:label>
+			  You must see the values "Thomas", "Toyota", and "silver" in the output 
+			  controls. When you activate the Replace Instance submit control the values must change to 
+			  "Janel", "Saturn", and "red". 
+		    </xforms:label>
+		</xforms:group>
+		<xforms:group id="xf-group-3">
+		    <xforms:label class="subtitle">Second Instance</xforms:label>
+		</xforms:group>
+		<xforms:group id="xf-group-4">
+			<xforms:output ref="instance('instance2')/carOwner" id="xf-output-1">
+				<xforms:label>Car Owner : </xforms:label>
+			</xforms:output>
+		</xforms:group>
+		<xforms:group id="xf-group-5">
+			<xforms:output ref="instance('instance2')/make" id="xf-output-2">
+				<xforms:label>Car Make : </xforms:label>
+			</xforms:output>
+		</xforms:group>
+		<xforms:group id="xf-group-6">
+			<xforms:output ref="instance('instance2')/color" id="xf-output-3">
+				<xforms:label>Car Color : </xforms:label>
+			</xforms:output>
+		</xforms:group>
+		<xforms:group id="xf-group-7">
+			<xforms:submit submission="submit01" id="xf-submit-1">
+				<xforms:label>Replace Instance</xforms:label>
+			</xforms:submit>
+		</xforms:group>
+		
+	</xhtml:body>
+</xhtml:html>

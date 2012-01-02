@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xhtml:head>
+        <xhtml:title>11.1.d action attribute of submission element</xhtml:title>
+        <xforms:model>
+            <!-- valid submission sends data to xformstest.org which echos information back to user -->
+            <xforms:submission action="http://xformstest.org/cgi-bin/echo.sh" id="submit" method="post"/>
+            <xforms:instance>
+                <car>
+                    <make>Subaru
+          			<model>Impreza WRX STi</model>
+                    </make>
+                    <year>2005</year>
+                </car>
+            </xforms:instance>
+        </xforms:model>
+        <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group id="xf-group-1">
+            <xforms:label class="title">11.1.d action attribute of submission element</xforms:label>
+        </xforms:group>
+        <xforms:group id="xf-group-2">
+            <xforms:label>
+              When you activate the Submit trigger the page must be replaced by the form data. 
+		  	  The form data must contain the values "Subaru" and "Impreza WRX STi", and 
+		  	  "2005". 
+    	</xforms:label>
+        </xforms:group>
+        <xforms:submit id="submitButton_001" submission="submit">
+            <xforms:label>Submit</xforms:label>
+        </xforms:submit>
+    </xhtml:body>
+</xhtml:html>
