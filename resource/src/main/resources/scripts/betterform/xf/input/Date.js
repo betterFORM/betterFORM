@@ -24,25 +24,6 @@ dojo.declare(
 
     },
 
-    onChange: function(/*anything*/ newValue, /*Boolean, optional*/ priorityChange){
-        console.debug("betterform.ui.input.Date.onChange");
-        this.inherited(arguments);
-//        if(this.incremental){
-            this.xfControl.setControlValue(this.getControlValue("value"));
-//        }
-    },
-
-    _onFocus:function() {
-        //console.debug("betterform.ui.input.Date._onFocus: "+ this.id);
-        this.inherited(arguments);
-        this.handleOnFocus();
-    },
-
-    _onBlur:function(){
-        this.handleOnBlur();
-        this.inherited(arguments);
-    },
-
     /* overwritten function of SuperClass ValidationTextBox */
     validate: function(/*Boolean*/ isFocused){},
 
@@ -62,7 +43,7 @@ dojo.declare(
         return currentDate; 
     },
 
-    _handleSetControlValue:function(date) {
+    setControlValue:function(date) {
         // console.debug("Date._handleSetControlValue date:",date);
         if(date == undefined || date == ""){
             dojo.attr(this.textbox, "value","");
@@ -71,18 +52,8 @@ dojo.declare(
             this._setValueAttr(dojo.date.stamp.fromISOString(date,this.constraint));
             // this._setValueAttr(this.parse(date, this.constraints), false, date);
         }
-    },
-
-    _handleDOMFocusIn:function() {
-        //console.debug("Date._handleDOMFocusIn()");
-        this.bfFocus = true;
-        var control = dijit.byId(this.id);
-
-        if (control != undefined ) {
-            control.focus();
-        }
-
     }
+
 
 });
 

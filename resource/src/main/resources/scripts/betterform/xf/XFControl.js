@@ -103,6 +103,44 @@ dojo.declare(
     },
 
     /*
+     fetches the value from the widget
+     */
+    getControlValue:function() {
+//        if (this.controlValue != undefined) {
+//            return this.controlValue.getControlValue();
+//        }
+        if(this.currentValue != undefined){
+            return this.currentValue;
+        }
+    },
+
+    getCurrentValue:function(){
+        return this.currentValue;
+    },
+
+    isValueChanged:function(value){
+        if (value != undefined && this.currentValue != value) {
+            return true;
+        }else{
+            return false;
+        }
+
+    },
+    /*
+     sends updated value of a widget to the server
+     */
+    setControlValue:function(/* String */ value) {
+        console.debug("XFControl: setControlValue: currentvalue:", this.currentValue, " - newValue:",value);
+
+        if (value != undefined && this.currentValue != value) {
+            this.currentValue = value;
+            fluxProcessor.setControlValue(this.id, value);
+            this._handleRequiredEmpty();
+        }
+    },
+
+
+    /*
     handles state changes send by the server and applies them to the control
      */
     handleStateChanged:function(contextInfo) {
@@ -160,43 +198,6 @@ dojo.declare(
                 this._handleSetEnabledProperty(eval(this.relevant));
             }
 
-        }
-    },
-
-    /*
-    fetches the value from the widget
-     */
-    getControlValue:function() {
-//        if (this.controlValue != undefined) {
-//            return this.controlValue.getControlValue();
-//        }
-        if(this.currentValue != undefined){
-            return this.currentValue;
-        }
-    },
-
-    getCurrentValue:function(){
-        return this.currentValue;
-    },
-
-    isValueChanged:function(value){
-        if (value != undefined && this.currentValue != value) {
-            return true;
-        }else{
-            return false;
-        }
-
-    },
-    /*
-    sends updated value of a widget to the server
-     */
-    setControlValue:function(/* String */ value) {
-        console.debug("XFControl: setControlValue: currentvalue:", this.currentValue, " - newValue:",value);
-
-        if (value != undefined && this.currentValue != value) {
-            this.currentValue = value;
-            fluxProcessor.setControlValue(this.id, value);
-            this._handleRequiredEmpty();
         }
     },
 

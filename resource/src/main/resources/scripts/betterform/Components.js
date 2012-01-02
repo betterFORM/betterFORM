@@ -1,5 +1,6 @@
 dojo.provide("betterform.Components");
 dojo.require("betterform.xf.XFControl");
+dojo.require("dijit.form.DateTextBox");
 
 
 /*
@@ -122,15 +123,55 @@ var componentBehavior = {
     // ############################## DATE INPUT ##############################
 
     //using detailed behavior syntax
-    '.xfInput.xsdDate .xfValue': function(n){
-        console.debug("date input field: ",n);
-         // create dijit for datePicker as not widly available yet in browsers
-        dojo.require("betterform.xf.input.Date");
+    '.xfInput.xsdDate .xfValue' : {
+        found: function(n){
+//            console.debug("date input field: ",n);
+//            console.debug("date input field: ",n.value);
+            // create dijit for datePicker as not widly available yet in browsers
+/*
+            dojo.require("betterform.xf.input.Date");
 
-        var dateWidget=new betterform.xf.input.Date({
-             xfControl  : dijit.byId(getXfId(n)),
-             value      : new Date(n.value)
-        },n);
+            var dateWidget=new betterform.xf.input.Date({
+                xfControl  : dijit.byId(getXfId(n)),
+                value      : new Date(n.value)
+            },n);
+*/
+            var dateWidget = new dijit.form.DateTextBox({
+                value      : new Date(n.value)
+            },n);
+
+            var xfId = getXfId(n);
+            dojo.connect(dijit.byId(xfId), "handleStateChanged", function(contextInfo){
+                // ##### setting value by platform/component-specific means #####
+                console.debug("handleStateChanged for:  ",n);
+                if(contextInfo){
+                    console.debug("contextInfo",contextInfo);
+                }
+                var newValue = contextInfo["schemaValue"];
+                if(newValue != undefined){
+                    console.debug("newValue: ",newValue);
+                    dijit.byId(xfId).setControlValue(newValue);
+//                    dojo.attr(dojo.byId(n.id),"value",contextInfo["value"]);
+                    dijit.byId(xfId+"-value").set('value', contextInfo["schemaValue"]);
+                    dijit.byId(xfId+"-value").set('displayedValue', new Date(contextInfo["value"]));
+                }
+            });
+
+            dojo.connect(dateWidget,"onChange",function(evt){
+                var dateValue =  dateWidget.serialize(dateWidget.get("value")).substring(0,10);
+                console.debug("onchange on widget",dateValue);
+                dijit.byId(xfId).setControlValue(dateValue);
+            });
+//            dojo.connect(dateWidget,"onBlur",function(){
+//                console.debug("onblur on widget",this.displayedValue);
+////                dojo.attr(dojo.byId(n.id),"value",this.displayedValue);
+//                this.set("value",this.displayValue);
+//                console.debug("this.value: ",this.value);
+//                console.debug("this.value: ",this.get("value"));
+//
+//                dijit.byId(xfId).setControlValue(this.displayedValue);
+//            });
+        }
     },
 
     // ############################## DATETIME INPUT ##############################
@@ -159,5 +200,7 @@ var componentBehavior = {
 };
 
 function getXfId(/*Node*/n){
-    return n.id.substring(0,n.id.lastIndexOf("-"));
+    var tmp = n.id.substring(0,n.id.lastIndexOf("-"));
+    console.debug("returning xfId: ",tmp);
+    return tmp;
 }

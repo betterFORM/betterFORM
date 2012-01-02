@@ -247,20 +247,20 @@
 
     <xsl:template name="get-name-classes">
         <xsl:param name="name" select="local-name()" />
-        <xsl:param name="appearance"/>
+        <xsl:param name="appearance" />
 
         <xsl:variable name="fullName"><xsl:call-template name="toUpperCaseFirstLetter"><xsl:with-param name="name" select="$name"/></xsl:call-template></xsl:variable>
         <xsl:variable name="displayAppearance"><xsl:call-template name="toUpperCaseFirstLetter"><xsl:with-param name="name" select="$appearance"/></xsl:call-template></xsl:variable>
         <!--<xsl:message>fullName:<xsl:value-of select="$fullName"/> appearance:<xsl:value-of select="$appearance"/> DisplayAppearance:<xsl:value-of select="$displayAppearance"/></xsl:message>-->
         <xsl:choose>
-            <xsl:when test="$appearance">
+            <xsl:when test="@appearance">
                 <!--<xsl:value-of select="concat($xf,$name, ' ', $appearance, '-',$name)"/>-->
                 <!--<xsl:value-of select="concat($xf,$fullName, ' ', $xf,$displayAppearance,$fullName)"/>-->
-                <xsl:value-of select="concat($xf,$displayAppearance,$fullName, ' app',$displayAppearance,$fullName)"/>
+                <xsl:value-of select="concat($xf,$displayAppearance,$fullName, ' app',$displayAppearance)"/>
                 <!--<xsl:message>computedClassAppearance : <xsl:value-of select="concat($xf,$fullName, ' ', $xf,$displayAppearance,$fullName)"/></xsl:message>-->
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="concat($xf,$fullName, ' app',$fullName)"/>
+                <xsl:value-of select="concat($xf,$fullName, ' appDefault')"/>
                 <!--<xsl:message>computedClass : <xsl:value-of select="concat($xf,$fullName)"/></xsl:message>-->
             </xsl:otherwise>
         </xsl:choose>
