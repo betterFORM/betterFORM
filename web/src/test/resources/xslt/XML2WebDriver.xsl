@@ -8,6 +8,7 @@
     <xsl:param name="filename">bogus</xsl:param>
     <xsl:param name="filedir">.</xsl:param>
 
+    <xsl:param name="baseURL"/>
     <xsl:output name="javaText" method="text"/>
 
     <xsl:variable name="testname" select="replace(substring-before($filename,'.xml'),'\.','_')"/>
@@ -39,7 +40,15 @@
     </xsl:template>
 
     <xsl:template match="xftr:open">
-        webDriver.get(baseUrl + "<xsl:value-of select="@href"/>");
+        <xsl:choose>
+            <xsl:when test="exists(@bfTest)">
+                webDriver.get("<xsl:value-of select="$baseURL"/>" + "<xsl:value-of select="@href"/>");
+            </xsl:when>
+            <xsl:otherwise>
+                webDriver.get("<xsl:value-of select="$baseURL"/>" + "XFormsTestSuite1.1E1/Edition1/" + "<xsl:value-of select="@href"/>");
+            </xsl:otherwise>
+        </xsl:choose>
+
     </xsl:template>
 
     <xsl:template match="xftr:assert-title">

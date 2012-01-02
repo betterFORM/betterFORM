@@ -19,11 +19,10 @@ import java.util.Vector;
 /**
  * Base class for black box testing of betterForm Web.
  * Author: Lars Windauer, Tobi Krebs
- * Date: Jan 27, 2008
+ * Date: Jan 02, 2012
  * Last Updated:
  */
 public class WebDriverTestFunctions extends WebDriverTest {
-    protected String baseUrl="http://localhost:8001/betterform/forms/XFormsTestSuite1.1E1/Edition1/";
 	protected StringBuffer verificationErrors = new StringBuffer();
 
 
