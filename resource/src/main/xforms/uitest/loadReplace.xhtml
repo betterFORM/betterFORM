@@ -5,7 +5,7 @@
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:ev="http://www.w3.org/2001/xml-events">
     <head>
-        <title>hello</title>
+        <title>Load Show Replace Test</title>
         <xf:model>
             <xf:instance xmlns="">
                 <data>
@@ -17,7 +17,7 @@
     </head>
     <body>
 		<xf:group>
-			<xf:trigger>
+			<xf:trigger id="trigger-show-replace">
 				<xf:label>load google.com and replace current form</xf:label>
                 <xf:load show="replace" resource="http://google.com"/>
 			</xf:trigger>
