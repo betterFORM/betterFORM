@@ -75,29 +75,29 @@
 				<div class="testdesc">Boolean 5 becomes invalid if not checked (initial value is checked)</div>
 				<div class="testdesc">Triggering 'Replace Instance' unchecks all Boolean controls. Boolean 2 becomes readonly and Boolean 4 gets disabled</div>
 				<xf:group appearance="full" class="controls">
-                <xf:input ref="item[1]">
+                <xf:input ref="item[1]" id="input-1">
                     <xf:label><b>1</b></xf:label>
                     <xf:help>Must be false to make <i>2</i> readonly</xf:help>
                     <xf:hint>Must be false to make <i>2</i> readonly</xf:hint>
                 </xf:input>
-                <xf:input ref="item[2]">
+                <xf:input ref="item[2]" id="input-2">
                     <xf:label><b>2</b></xf:label>
                 </xf:input>
-                <xf:input ref="item[3]">
+                <xf:input ref="item[3]" id="input-3">
                     <xf:label><b>3</b></xf:label>
 					<xf:help>Must be true to make <i>4</i> relevant</xf:help>
 					<xf:hint>Must be true to make <i>4</i> relevant</xf:hint>
                 </xf:input>
-                <xf:input ref="item[4]">
+                <xf:input ref="item[4]" id="input-4">
                     <xf:label><b>4</b></xf:label>
 					<xf:alert>Must be true</xf:alert>
                 </xf:input>
-                <xf:input ref="item[5]">
+                <xf:input ref="item[5]" id="input-5">
                     <xf:label><b>5</b></xf:label>
                     <xf:alert>Must be true</xf:alert>
                 </xf:input>
 			</xf:group>
-			<xf:trigger>
+			<xf:trigger id="trigger-1">
 				<xf:label>Replace Instance</xf:label>
 				<xf:send submission="s-replace-instance"/>
 				<xf:refresh/>

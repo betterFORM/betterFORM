@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test-case xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner"
+           xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../test-case.xsd">
+    <!-- test insert / delete action -->
+    <open href="test/Boolean.xhtml" bfTest="true"/>
+    <assert-title title="Test form for Boolean controls"/>
+
+    <assert-control-present locator="input-1" type="input"/>
+    <assert-control-present locator="input-2" type="input"/>
+    <assert-control-present locator="input-3" type="input"/>
+    <assert-control-present locator="input-4" type="input"/>
+    <assert-control-present locator="input-5" type="input"/>
+    <assert-control-present locator="trigger-1" type="button"/>
+
+    <assert-boolean-control-value locator="input-1" value="true"/>
+    <assert-boolean-control-value locator="input-2" value="true"/>
+    <assert-boolean-control-value locator="input-3" value="true"/>
+    <assert-boolean-control-value locator="input-4" value="true"/>
+    <assert-boolean-control-value locator="input-5" value="true"/>
+
+    <click locator="input-1"/>
+    <assert-boolean-control-value locator="input-1" value="false"/>
+    <assert-control-readonly locator="input-2"/>
+
+    <click locator="input-1"/>
+    <assert-boolean-control-value locator="input-1" value="true"/>
+    <assert-control-readwrite locator="input-2"/>
+
+    <click locator="input-3"/>
+    <assert-boolean-control-value locator="input-3" value="false"/>
+    <assert-control-not-present locator="input-4" type="input"/>
+
+    <click locator="input-3"/>
+    <assert-boolean-control-value locator="input-3" value="true"/>
+    <assert-control-present locator="input-4" type="input"/>
+
+    <click locator="input-4"/>
+    <assert-boolean-control-value locator="input-4" value="false"/>
+    <assert-control-alert-present type="tooltip" locator="input-4" value="Must be true"/>
+
+    <click locator="input-4"/>
+    <assert-boolean-control-value locator="input-4" value="true"/>
+    <assert-control-alert-not-present type="tooltip" locator="input-4" value="Must be true"/>
+
+    <click locator="trigger-1"/>
+    <assert-control-present locator="input-1" type="input"/>
+    <assert-control-present locator="input-2" type="input"/>
+    <assert-control-present locator="input-3" type="input"/>
+    <assert-control-not-present locator="input-4" type="input"/>
+    <assert-control-present locator="input-5" type="input"/>
+
+    <assert-boolean-control-value locator="input-1" value="false"/>
+    <assert-boolean-control-value locator="input-2" value="false"/>
+    <assert-boolean-control-value locator="input-3" value="false"/>
+    <assert-boolean-control-value locator="input-5" value="false"/>
+
+
+</test-case>
