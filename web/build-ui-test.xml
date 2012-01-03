@@ -9,7 +9,11 @@
     <property name="baseURL" value="http://localhost:8001/betterform/forms/"/>
 
     <target name="clean">
-        <delete dir="${basedir}/target"/>
+        <delete file="${basedir}/target/betterform-webdriver.jar"/>
+        <delete dir="${basedir}/target/classes"/>
+        <delete dir="${basedir}/target/doc"/>
+        <delete dir="${basedir}/target/java"/>
+        <delete dir="${basedir}/target/xml"/>
     </target>
 
     <target name="run-tests" depends="build-jar">
@@ -37,7 +41,7 @@
         </junitreport>
     </target>
 
-    <target name="build-jar" depends="generate-betterform-java-tests,generate-testsuite-java-tests">
+    <target name="build-jar" depends="generate-betterform-java-tests">
         <copy todir="${basedir}/target/java/">
             <fileset dir="${basedir}/src/test/java" includes="**/WebDriver*.java"/>
         </copy>
@@ -138,7 +142,7 @@
         <mkdir dir="${basedir}/target/xml/bfTests"/>
 
         <copy todir="${basedir}/target/xml/bfTests" flatten="true">
-            <fileset dir="${basedir}/src/test/resources/uitest">
+            <fileset dir="${basedir}/src/test/resources/uitest/test">
                 <include name="**/*.xml"/>
             </fileset>
         </copy>
