@@ -143,12 +143,6 @@
             </fileset>
         </copy>
 
-        <copy todir="${basedir}/target/xml/bfTests" flatten="true">
-            <fileset dir="${basedir}/src/test/resources/reference/xml">
-                <include name="**/*.xml"/>
-            </fileset>
-        </copy>
-
         <xslt basedir="${basedir}/target/xml/"
               destdir="${basedir}/target/temp"
               style="${basedir}/src/test/resources/xslt/XML2WebDriver.xsl"

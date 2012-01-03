@@ -144,6 +144,10 @@ public class WebDriverTestFunctions extends WebDriverTest {
         return webDriver.findElement(By.id(id + "-value")).getAttribute("value");
     }
 
+    public String getBooleanControlValue(String id) {
+        return webDriver.findElement(By.id(id)).getAttribute("aria-pressed");
+    }
+
     public boolean isControlValueValid(String id) {
         WebElement webElement = webDriver.findElement(By.id(id));
         String classAttribute = webElement.getAttribute("class");
@@ -237,6 +241,11 @@ public class WebDriverTestFunctions extends WebDriverTest {
          }
         return false;
 
+    }
+
+    public boolean cssSelectorIsValid(String cssSelector) {
+        WebElement foundElement = webDriver.findElement(By.cssSelector(cssSelector));
+        return foundElement != null;
     }
 
     public boolean isControlValueInRange(String id, String start, String end) {

@@ -109,8 +109,16 @@
         assertEquals(getControlValue("<xsl:value-of select="@locator"/>"), "<xsl:value-of select="replace( normalize-space(@value) ,$quot, $quote)"/>");
     </xsl:template>
 
+    <xsl:template match="xftr:assert-boolean-control-value">
+        assertEquals(getBooleanControlValue("<xsl:value-of select="concat(@locator, '-value')"/>"), "<xsl:value-of select="replace( normalize-space(@value) ,$quot, $quote)"/>");
+    </xsl:template>
+
     <xsl:template match="xftr:assert-control-valid">
         assertTrue(isControlValueValid("<xsl:value-of select="@locator"/>"));
+    </xsl:template>
+
+    <xsl:template match="xftr:assert-control-has-css-class">
+        assertTrue(cssSelectorIsValid("<xsl:value-of select="@cssSelector"/>"));
     </xsl:template>
 
     <xsl:template match="xftr:assert-control-readwrite">
