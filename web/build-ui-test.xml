@@ -6,7 +6,7 @@
     <path id="saxon.libs" description="classpath for Saxon">
         <pathelement location="${basedir}/../core/src/main/lib/saxon-9.2.1.5.jar"/>
     </path>
-    <property name="baseURL" value="http://localhost:8001/betterform/forms/"/>
+    <property name="baseURL" value="http://localhost:8080/betterform/forms/"/>
 
     <target name="clean">
         <delete dir="${basedir}/target"/>
@@ -127,7 +127,9 @@
             <fileset dir="${basedir}/target/temp" includes="**/*.java"/>
         </copy>
 
+        <!-- cleanup -->
         <delete dir="${basedir}/target/temp"/>
+        <delete dir="${basedir}/target/xml"/>
     </target>
 
     <target name="generate-betterform-java-tests">
@@ -137,6 +139,12 @@
 
         <copy todir="${basedir}/target/xml/bfTests" flatten="true">
             <fileset dir="${basedir}/src/test/resources/uitest">
+                <include name="**/*.xml"/>
+            </fileset>
+        </copy>
+
+        <copy todir="${basedir}/target/xml/bfTests" flatten="true">
+            <fileset dir="${basedir}/src/test/resources/reference/xml">
                 <include name="**/*.xml"/>
             </fileset>
         </copy>
