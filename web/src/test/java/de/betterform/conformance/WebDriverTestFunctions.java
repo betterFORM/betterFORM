@@ -134,10 +134,14 @@ public class WebDriverTestFunctions extends WebDriverTest {
     }
 
     public String getControlValue(String id) {
-        if (id.contains("output")) {
-            return webDriver.findElement(By.id(id)).getText();
+        WebElement webElement = webDriver.findElement(By.id(id));
+        String classAttribute = webElement.getAttribute("class");
+
+        if (classAttribute.contains("xfOutput")) {
+            return webDriver.findElement(By.id(id + "-value")).getText();
         }
-        return webDriver.findElement(By.id(id)).getAttribute("value");
+
+        return webDriver.findElement(By.id(id + "-value")).getAttribute("value");
     }
 
     public boolean isControlValueValid(String id) {
@@ -169,7 +173,20 @@ public class WebDriverTestFunctions extends WebDriverTest {
         String classAttribute = webElement.getAttribute("class");
 
         if (classAttribute != null) {
-            return classAttribute.contains("xfReadWrite") && webElement.getAttribute("readonly").equals("false");
+            if (classAttribute.contains("xfReadWrite")) {
+                if (webElement.getAttribute("readonly") != null) {
+                       return webElement.getAttribute("readonly").equals("false");
+                }
+
+                WebElement webElementValue = webDriver.findElement(By.id(id+ "-value"));
+
+                if ( webElementValue.getAttribute("aria-readonly") != null ) {
+                    return webElementValue.getAttribute("aria-readonly").equals("false");
+                } else {
+                    //TODO: is this enough??
+                    return true;
+                }
+            }
         }
 
         return false;
@@ -181,7 +198,20 @@ public class WebDriverTestFunctions extends WebDriverTest {
         String classAttribute = webElement.getAttribute("class");
 
         if (classAttribute != null) {
-            return classAttribute.contains("xfReadOnly") && webElement.getAttribute("readonly").equals("true");
+            if (classAttribute.contains("xfReadOnly")) {
+                if (webElement.getAttribute("readonly") != null) {
+                    return webElement.getAttribute("readonly").equals("true");
+                }
+
+                WebElement webElementValue = webDriver.findElement(By.id(id+ "-value")); 
+
+                if ( webElementValue.getAttribute("aria-readonly") != null ) {
+                    return webElementValue.getAttribute("aria-readonly").equals("true");
+                } else {
+                    //TODO: is this enough ??
+                    return true;
+                }
+            }
         }
 
         return false;
@@ -264,5 +294,46 @@ public class WebDriverTestFunctions extends WebDriverTest {
         String alertText = alert.getText();
         alert.accept();
         return alertText.startsWith(expectedText);
+    }
+
+    public boolean isControlHintPresent(String id) {
+        WebElement webElement = webDriver.findElement(By.id(id));
+
+        String classAttribute = webElement.getAttribute("class");
+
+        if (classAttribute != null && classAttribute.contains("xfHint")) {
+            if (! webElement.getCssValue("display").equals("none")) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    public boolean isControlHelpPresent(String id) {
+        WebElement webElement = webDriver.findElement(By.id(id));
+        String classAttribute = webElement.getAttribute("class");
+
+        if (classAttribute != null && classAttribute.contains("xfHelp")) {
+            if (! webElement.getCssValue("display").equals("none")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isControlAlertPresent(String id) {
+        WebElement webElement = webDriver.findElement(By.id(id));
+
+        String classAttribute = webElement.getAttribute("class");
+
+        if (classAttribute != null && classAttribute.contains("xfAlert")) {
+            if (! webElement.getCssValue("display").equals("none")) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
