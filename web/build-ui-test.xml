@@ -16,7 +16,7 @@
         <delete dir="${basedir}/target/xml"/>
     </target>
 
-    <target name="run-tests" depends="build-jar">
+    <target name="run-tests" depends="clean,build-jar">
         <mkdir dir="${basedir}/target/doc/test/classes"/>
 
         <junit fork="yes" printsummary="on" haltonfailure="on">
@@ -41,7 +41,7 @@
         </junitreport>
     </target>
 
-    <target name="build-jar" depends="generate-betterform-java-tests">
+    <target name="build-jar" depends="generate-betterform-java-tests,generate-testsuite-java-tests">
         <copy todir="${basedir}/target/java/">
             <fileset dir="${basedir}/src/test/java" includes="**/WebDriver*.java"/>
         </copy>
@@ -142,7 +142,7 @@
         <mkdir dir="${basedir}/target/xml/bfTests"/>
 
         <copy todir="${basedir}/target/xml/bfTests" flatten="true">
-            <fileset dir="${basedir}/src/test/resources/uitest/test">
+            <fileset dir="${basedir}/src/test/resources/uitest">
                 <include name="**/*.xml"/>
             </fileset>
         </copy>
