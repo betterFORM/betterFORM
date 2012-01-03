@@ -3,7 +3,7 @@
            xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner"
            xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../test-case.xsd">
     <!-- test insert / delete action -->
-    <open href="test/Boolean.xhtml" bfTest="true"/>
+    <open href="uitest/Boolean.xhtml" bfTest="true"/>
     <assert-title title="Test form for Boolean controls"/>
 
     <assert-control-present locator="input-1" type="input"/>

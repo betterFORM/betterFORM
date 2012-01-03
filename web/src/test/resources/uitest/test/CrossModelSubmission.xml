@@ -3,7 +3,7 @@
            xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner"
            xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../test-case.xsd">
     <!-- test insert / delete action -->
-    <open href="test/CrossModelSubmission.xhtml" bfTest="true"/>
+    <open href="uitest/CrossModelSubmission.xhtml" bfTest="true"/>
     <assert-title title="CrossModelSubmission"/>
 
 

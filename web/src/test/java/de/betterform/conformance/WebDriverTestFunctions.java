@@ -46,12 +46,13 @@ public class WebDriverTestFunctions extends WebDriverTest {
 
     public void selectOption(final String id, String option) {
         WebElement webElement = webDriver.findElement(By.id(id));
-
         String classes = webElement.getAttribute("class");
-        List<String> selectOptions = new Vector<String>();
+
+        WebElement webElementValue = webDriver.findElement(By.id(id+"-value"));
+        String controlType = webElementValue.getAttribute("controlType");
 
         if (classes != null) {
-            if (classes.contains("xfSelect1")) {
+            if (classes.contains("xfSelect1") && "select1RadioButton".equals(controlType)) {
                 Iterator<WebElement> select1OptionsElements = webElement.findElements(By.cssSelector(".xfSelectorItem")).iterator();
 
                 while (select1OptionsElements.hasNext()) {
@@ -61,7 +62,7 @@ public class WebDriverTestFunctions extends WebDriverTest {
                         return;
                     }
                 }
-            } else if (classes.contains("xfSelect")) {
+            } else {
                 Select select = new Select(webDriver.findElement(By.id(id+ "-value")));
 
                 select.selectByVisibleText(option);
