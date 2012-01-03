@@ -92,7 +92,7 @@
         <xf:label>a sample trigger</xf:label>
         <xf:message>button clicked</xf:message>
     </xf:trigger>
-    <xf:input ref="theme">
+    <xf:input id="input1" ref="theme">
         <xf:label>current theme</xf:label>
     </xf:input>
 </xf:group>

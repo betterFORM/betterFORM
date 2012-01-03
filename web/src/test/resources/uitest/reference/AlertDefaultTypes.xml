@@ -28,7 +28,7 @@
     <assert-control-invalid locator="input1"/>
     <assert-control-alert-present locator="input1-alert" value="Your input is not long enough"/>
     <assert-control-value locator="input1" value="1"/>
-    <click locator="input1"/>
+    <click locator="input2"/>
     <assert-control-alert-present locator="input1-alert" value="Your input is not long enough"/>
 
     <click locator="input1"/>
@@ -37,7 +37,7 @@
     <assert-control-invalid locator="input1"/>
     <assert-control-alert-present locator="input1-alert" value="Your input is not long enough"/>
     <assert-control-value locator="input1" value="12"/>
-    <click locator="input1"/>
+    <click locator="input2"/>
     <assert-control-alert-present locator="input1-alert" value="Your input is not long enough"/>
 
     <click locator="input1"/>
@@ -46,7 +46,7 @@
     <assert-control-invalid locator="input1"/>
     <assert-control-alert-present locator="input1-alert" value="Your input is not long enough"/>
     <assert-control-value locator="input1" value="12345"/>
-    <click locator="input1"/>
+    <click locator="input2"/>
     <assert-control-alert-present locator="input1-alert" value="Your input is not long enough"/>
 
     <click locator="input1"/>
@@ -63,7 +63,7 @@
     <assert-control-invalid locator="input2"/>
     <assert-control-alert-present locator="input2-alert" value="Alert für Control B"/>
     <assert-control-value locator="input2" value="1"/>
-    <click locator="input2"/>
+    <click locator="input3"/>
     <assert-control-alert-present locator="input2-alert" value="Alert für Control B"/>
 
     <click locator="input2"/>
@@ -72,7 +72,7 @@
     <assert-control-invalid locator="input2"/>
     <assert-control-alert-present locator="input2-alert" value="Alert für Control B"/>
     <assert-control-value locator="input2" value="abcde"/>
-    <click locator="input2"/>
+    <click locator="input3"/>
     <assert-control-alert-present locator="input2-alert" value="Alert für Control B"/>
 
     <click locator="input2"/>
@@ -81,7 +81,7 @@
     <assert-control-invalid locator="input2"/>
     <assert-control-alert-present locator="input2-alert" value="Alert für Control B"/>
     <assert-control-value locator="input2" value="32/32/3232"/>
-    <click locator="input2"/>
+    <click locator="input3"/>
     <assert-control-alert-present locator="input2-alert" value="Alert für Control B"/>
 
     <click locator="input2"/>
@@ -90,108 +90,97 @@
     <assert-control-valid locator="input2"/>
     <assert-control-alert-not-present locator="input2-alert" value="Alert für Control B"/>
     <assert-control-value locator="input2" value="1/1/2001"/>
-    <click locator="input2"/>
+    <click locator="input3"/>
     <assert-control-alert-not-present locator="input2-alert" value="Alert für Control B"/>
 
 
-<!--
-    <click locator="input2"/>
-    <assert-control-alert-present locator="input2-alert" value="Your input is not long enough"/>
-    <type-input locator="input2" value="12"/>
-    <assert-control-invalid locator="input2"/>
-    <assert-control-alert-present locator="input2-alert" value="Your input is not long enough"/>
-    <assert-control-value locator="input2" value="12"/>
-    <click locator="input2"/>
-    <assert-control-alert-present locator="input2-alert" value="Your input is not long enough"/>
-
-    <click locator="input2"/>
-    <assert-control-alert-present locator="input2-alert" value="Your input is not long enough"/>
-    <type-input locator="input2" value="12345"/>
-    <assert-control-invalid locator="input2"/>
-    <assert-control-alert-present locator="input2-alert" value="Your input is not long enough"/>
-    <assert-control-value locator="input2" value="12345"/>
-    <click locator="input2"/>
-    <assert-control-alert-present locator="input2-alert" value="Your input is not long enough"/>
-
-    <click locator="input2"/>
-    <assert-control-alert-present locator="input2-alert" value="Your input is not long enough"/>
-    <type-input locator="input2" value="123456"/>
-    <assert-control-valid locator="input2"/>
-    <assert-control-value locator="input2" value="123456"/>
     <click locator="input3"/>
-    <assert-control-alert-not-present locator="input2-alert" value="Your input is not long enough"/>
-
-    <click locator="input3"/>
-    <assert-control-hint-present locator="input3-hint" value="The input must be longer than 5 characters"/>
-    <type-input locator="input3" value="1"/>
+    <assert-control-hint-present locator="input3-hint" value="Please input a number"/>
+    <type-input locator="input3" value="a"/>
     <assert-control-invalid locator="input3"/>
-    <assert-control-alert-present locator="input3-alert" value="Your input is not long enough"/>
+    <assert-control-alert-present locator="input3-alert" value="The input must be an integer number"/>
+    <assert-control-value locator="input3" value="a"/>
+    <click locator="input3"/>
+    <assert-control-alert-present locator="input3-alert" value="The input must be an integer number"/>
+
+    <click locator="input3"/>
+    <type-input locator="input3" value="21abcde23"/>
+    <assert-control-invalid locator="input3"/>
+    <assert-control-alert-present locator="input3-alert" value="The input must be an integer number"/>
+    <assert-control-value locator="input3" value="21abcde23"/>
+    <click locator="input3"/>
+    <assert-control-alert-present locator="input3-alert" value="The input must be an integer number"/>
+
+    <click locator="input3"/>
+    <type-input locator="input3" value="32/32/3232"/>
+    <assert-control-invalid locator="input3"/>
+    <assert-control-alert-present locator="input3-alert" value="The input must be an integer number"/>
+    <assert-control-value locator="input3" value="32/32/3232"/>
+    <click locator="input3"/>
+    <assert-control-alert-present locator="input3-alert" value="The input must be an integer number"/>
+
+
+    <click locator="input3"/>
+    <type-input locator="input3" value="-1"/>
+    <assert-control-valid locator="input3"/>
+    <assert-control-alert-not-present locator="input3-alert" value="The input must be an integer number"/>
+    <assert-control-value locator="input3" value="-1"/>
+    <click locator="input3"/>
+    <assert-control-alert-not-present locator="input3-alert" value="The input must be an integer number"/>
+
+    <click locator="input3"/>
+    <type-input locator="input3" value="0"/>
+    <assert-control-valid locator="input3"/>
+    <assert-control-alert-not-present locator="input3-alert" value="The input must be an integer number"/>
+    <assert-control-value locator="input3" value="0"/>
+    <click locator="input3"/>
+    <assert-control-alert-not-present locator="input3-alert" value="The input must be an integer number"/>
+
+    <click locator="input3"/>
+    <type-input locator="input3" value="1"/>
+    <assert-control-valid locator="input3"/>
+    <assert-control-alert-not-present locator="input3-alert" value="The input must be an integer number"/>
     <assert-control-value locator="input3" value="1"/>
     <click locator="input3"/>
-    <assert-control-alert-present locator="input3-alert" value="Your input is not long enough"/>
+    <assert-control-alert-not-present locator="input3-alert" value="The input must be an integer number"/>
 
-    <click locator="input3"/>
-    <assert-control-alert-present locator="input3-alert" value="Your input is not long enough"/>
-    <type-input locator="input3" value="12"/>
-    <assert-control-invalid locator="input3"/>
-    <assert-control-alert-present locator="input3-alert" value="Your input is not long enough"/>
-    <assert-control-value locator="input3" value="12"/>
-    <click locator="input3"/>
-    <assert-control-alert-present locator="input3-alert" value="Your input is not long enough"/>
-
-    <click locator="input3"/>
-    <assert-control-alert-present locator="input3-alert" value="Your input is not long enough"/>
-    <type-input locator="input3" value="12345"/>
-    <assert-control-invalid locator="input3"/>
-    <assert-control-alert-present locator="input3-alert" value="Your input is not long enough"/>
-    <assert-control-value locator="input3" value="12345"/>
-    <click locator="input3"/>
-    <assert-control-alert-present locator="input3-alert" value="Your input is not long enough"/>
-
-    <click locator="input3"/>
-    <assert-control-alert-present locator="input3-alert" value="Your input is not long enough"/>
-    <type-input locator="input3" value="123456"/>
-    <assert-control-valid locator="input3"/>
-    <assert-control-value locator="input3" value="123456"/>
-    <click locator="input4"/>
-    <assert-control-alert-not-present locator="input3-alert" value="Your input is not long enough"/>
 
     <click locator="input4"/>
-    <assert-control-hint-present locator="input4-hint" value="The input must be longer than 5 characters"/>
+    <assert-control-hint-present locator="input4-hint" value="Hint für Control D"/>
     <type-input locator="input4" value="1"/>
-    <assert-control-invalid locator="input4"/>
-    <assert-control-alert-present locator="input4-alert" value="Your input is not long enough"/>
+    <assert-control-valid locator="input4"/>
+    <assert-control-alert-not-present locator="input4-alert" value="Your input is not long enough"/>
     <assert-control-value locator="input4" value="1"/>
     <click locator="input4"/>
-    <assert-control-alert-present locator="input4-alert" value="Your input is not long enough"/>
+    <assert-control-alert-not-present locator="input4-alert" value="Your input is not long enough"/>
 
     <click locator="input4"/>
-    <assert-control-alert-present locator="input4-alert" value="Your input is not long enough"/>
+    <assert-control-alert-not-present locator="input4-alert" value="Your input is not long enough"/>
     <type-input locator="input4" value="12"/>
-    <assert-control-invalid locator="input4"/>
-    <assert-control-alert-present locator="input4-alert" value="Your input is not long enough"/>
+    <assert-control-valid locator="input4"/>
+    <assert-control-alert-not-present locator="input4-alert" value="Your input is not long enough"/>
     <assert-control-value locator="input4" value="12"/>
     <click locator="input4"/>
-    <assert-control-alert-present locator="input4-alert" value="Your input is not long enough"/>
+    <assert-control-alert-not-present locator="input4-alert" value="Your input is not long enough"/>
 
     <click locator="input4"/>
-    <assert-control-alert-present locator="input4-alert" value="Your input is not long enough"/>
+    <assert-control-alert-not-present locator="input4-alert" value="Your input is not long enough"/>
     <type-input locator="input4" value="12345"/>
-    <assert-control-invalid locator="input4"/>
-    <assert-control-alert-present locator="input4-alert" value="Your input is not long enough"/>
+    <assert-control-valid locator="input4"/>
+    <assert-control-alert-not-present locator="input4-alert" value="Your input is not long enough"/>
     <assert-control-value locator="input4" value="12345"/>
     <click locator="input4"/>
-    <assert-control-alert-present locator="input4-alert" value="Your input is not long enough"/>
+    <assert-control-alert-not-present locator="input4-alert" value="Your input is not long enough"/>
 
     <click locator="input4"/>
-    <assert-control-alert-present locator="input4-alert" value="Your input is not long enough"/>
+    <assert-control-alert-not-present locator="input4-alert" value="Your input is not long enough"/>
     <type-input locator="input4" value="123456"/>
     <assert-control-valid locator="input4"/>
     <assert-control-value locator="input4" value="123456"/>
     <click locator="input1"/>
     <assert-control-alert-not-present locator="input4-alert" value="Your input is not long enough"/>
 
--->
+
     <type-input locator="input1" value=""/>
     <assert-control-value locator="input1" value=""/>
     <click locator="input1"/>
@@ -219,34 +208,34 @@
     <click locator="input2"/>
     <assert-control-hint-present locator="input2-hint" value="Type a valid date or pick one from the drowdown"/>
 
-<!--
+
     <type-input locator="input3" value=""/>
     <assert-control-value locator="input3" value=""/>
     <click locator="input3"/>
-    <assert-control-hint-present locator="input3-hint" value="The input must be longer than 5 characters"/>
-    <type-input locator="input3" value="1"/>
+    <assert-control-hint-present locator="input3-hint" value="Please input a number"/>
+    <type-input locator="input3" value="abcd"/>
     <assert-control-invalid locator="input3"/>
-    <assert-control-alert-present locator="input3-alert" value="Your input is not long enough"/>
-    <assert-control-value locator="input3" value="1"/>
+    <assert-control-alert-present locator="input3-alert" value="The input must be an integer number"/>
+    <assert-control-value locator="input3" value="abcd"/>
     <type-input locator="input3" value=""/>
     <assert-control-value locator="input3" value=""/>
     <click locator="input3"/>
-    <assert-control-hint-present locator="input3-hint" value="The input must be longer than 5 characters"/>
+    <assert-control-hint-present locator="input3-hint" value="Please input a number"/>
 
 
     <type-input locator="input4" value=""/>
     <assert-control-value locator="input4" value=""/>
     <click locator="input4"/>
-    <assert-control-hint-present locator="input4-hint" value="The input must be longer than 5 characters"/>
+    <assert-control-hint-present locator="input4-hint" value="Hint für Control D"/>
     <type-input locator="input4" value="1"/>
-    <assert-control-invalid locator="input4"/>
-    <assert-control-alert-present locator="input4-alert" value="Your input is not long enough"/>
+    <assert-control-valid locator="input4"/>
+    <assert-control-alert-not-present locator="input4-alert" value="Your input is not long enough"/>
     <assert-control-value locator="input4" value="1"/>
     <type-input locator="input4" value=""/>
     <assert-control-value locator="input4" value=""/>
     <click locator="input4"/>
-    <assert-control-hint-present locator="input4-hint" value="The input must be longer than 5 characters"/>
--->
+    <assert-control-hint-present locator="input4-hint" value="Hint für Control D"/>
+
 <!--
     <assert-control-readwrite locator="input1"/>
     <click locator="input1-readonly"/>

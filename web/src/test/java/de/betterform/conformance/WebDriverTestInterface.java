@@ -30,7 +30,8 @@ public interface WebDriverTestInterface {
 
     public boolean isControlHintPresent(String id, String value);
     public boolean isControlHelpPresent(String id, String value);
-    public boolean isControlAlertPresent(String id, String value);
+    public boolean isControlAlertPresent(String id, String value, String type);
+    public boolean isHtmlClassPresent(String cssSelector, String value);
 
     public void hasException();
     public String getExceptionType();

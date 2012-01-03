@@ -45,28 +45,33 @@ public class WebDriverTestFunctions extends WebDriverTest {
     }
 
     public void selectOption(final String id, String option) {
-        Select select = new Select(webDriver.findElement(By.id(id)));
+        WebElement webElement = webDriver.findElement(By.id(id));
 
-        //deselect first();
-        /*
-        if (select.isMultiple()) {
-            select.deselectAll();
-        } else {
-            List <WebElement> webElements = select.getAllSelectedOptions();
-            Iterator<WebElement> webElementIterator = webElements.iterator();
+        String classes = webElement.getAttribute("class");
+        List<String> selectOptions = new Vector<String>();
 
-            while (webElementIterator.hasNext()) {
-                select.deselectByVisibleText(webElementIterator.next().getText());
+        if (classes != null) {
+            if (classes.contains("xfSelect1")) {
+                Iterator<WebElement> select1OptionsElements = webElement.findElements(By.cssSelector(".xfSelectorItem")).iterator();
+
+                while (select1OptionsElements.hasNext()) {
+                    WebElement select1Option = select1OptionsElements.next();
+                    if (option.equals(select1Option.getText())) {
+                        select1Option.findElement(By.name("select-value")).click();
+                        return;
+                    }
+                }
+            } else if (classes.contains("xfSelect")) {
+                Select select = new Select(webDriver.findElement(By.id(id+ "-value")));
+
+                select.selectByVisibleText(option);
+
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+
+                }
             }
-        }
-        */
-
-        select.selectByVisibleText(option);
-
-        try {
-         Thread.sleep(1000);
-        } catch (Exception e) {
-
         }
     }
 
@@ -89,21 +94,34 @@ public class WebDriverTestFunctions extends WebDriverTest {
     }
 
     public boolean checkSelectionOptions(String id, String[] options) {
-        Select select = new Select(webDriver.findElement(By.id(id)));
-        Iterator<WebElement> selectOptionsElements = select.getOptions().iterator();
+        WebElement webElement = webDriver.findElement(By.id(id));
 
-
+        String classes = webElement.getAttribute("class");
         List<String> selectOptions = new Vector<String>();
 
-        while (selectOptionsElements.hasNext()) {
-            selectOptions.add(selectOptionsElements.next().getText());
-        }
+        if (classes != null) {
+            if (classes.contains("xfSelect1")) {
+                Iterator<WebElement> select1OptionsElements = webElement.findElements(By.cssSelector(".xfSelectorItem")).iterator();
 
+                while (select1OptionsElements.hasNext()) {
+                    selectOptions.add(select1OptionsElements.next().getText());
+                }
+
+            } else if (classes.contains("xfSelect")) {
+                Select select = new Select(webDriver.findElement(By.id(id + "-value")));
+                Iterator<WebElement> selectOptionsElements = select.getOptions().iterator();
+
+                while (selectOptionsElements.hasNext()) {
+                    selectOptions.add(selectOptionsElements.next().getText().trim());
+                }
+
+            }
+        }
 
         boolean optionsPresent = true;
 
         for (int i = 0; i < options.length; i++) {
-            optionsPresent &= selectOptions.contains(options[i]);
+            optionsPresent &= selectOptions.contains(options[i].trim());
         }
 
         return optionsPresent;
@@ -314,7 +332,11 @@ public class WebDriverTestFunctions extends WebDriverTest {
         return checkControlHelpHintAlert(id, value, "xfHelp");
     }
 
-    public boolean isControlAlertPresent(String id, String value) {
+    public boolean isControlAlertPresent(String id, String value, String type) {
+        if ("TOOLTIP".equalsIgnoreCase(type)) {
+            return checkControlToolTipHelpHintAlert(id,value, "alert");
+        }
+        
         return checkControlHelpHintAlert(id, value, "xfAlert");
     }
 
@@ -330,6 +352,37 @@ public class WebDriverTestFunctions extends WebDriverTest {
                 }
                 return true;
             }
+        }
+
+        return false;
+    }
+
+    private boolean checkControlToolTipHelpHintAlert(String id, String value, String type) {
+        String toolTipId =  id + "-MasterToolTip-" + type;
+
+        WebElement webElement = webDriver.findElement(By.cssSelector("#" + toolTipId + " div"));
+
+        String roleAttribute = webElement.getAttribute("role");
+
+        if (roleAttribute != null && roleAttribute.contains(type)) {
+            if (! webElement.getCssValue("display").equals("none")) {
+                if (! "".equals(value)) {
+                    return value.equalsIgnoreCase(webElement.getText());
+                }
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isHtmlClassPresent(String cssSelector, String value) {
+        WebElement webElement = webDriver.findElement(By.cssSelector(cssSelector));
+        
+        String classes = webElement.getAttribute("class");
+
+        if (classes != null) {
+            return classes.contains(value);
         }
 
         return false;

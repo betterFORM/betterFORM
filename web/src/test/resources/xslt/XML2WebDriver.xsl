@@ -57,7 +57,7 @@
     </xsl:template>
 
     <xsl:template match="xftr:assert-selection-options">
-            assertTrue(checkSelectionOptions("<xsl:value-of select="concat(@locator, '-value')"/>", "<xsl:value-of select="@options"/>".split(",")));
+            assertTrue(checkSelectionOptions("<xsl:value-of select="@locator"/>", "<xsl:value-of select="@options"/>".split(",")));
     </xsl:template>
 
     <xsl:template match="xftr:assert-control-present">
@@ -78,7 +78,7 @@
 
 
     <xsl:template match="xftr:select-option">
-        selectOption("<xsl:value-of select="concat(@locator, '-value')"/>", "<xsl:value-of select="replace( normalize-space(@option) ,$quot, $quote)"/>");
+        selectOption("<xsl:value-of select="@locator"/>", "<xsl:value-of select="replace( normalize-space(@option) ,$quot, $quote)"/>");
     </xsl:template>
 
     <xsl:template match="xftr:click">
@@ -106,11 +106,11 @@
     </xsl:template>
 
     <xsl:template match="xftr:assert-control-value">
-        assertEquals(getControlValue("<xsl:value-of select="@locator"/>"), "<xsl:value-of select="replace( normalize-space(@value) ,$quot, $quote)"/>");
+        assertEquals("<xsl:value-of select="replace( normalize-space(@value) ,$quot, $quote)"/>", getControlValue("<xsl:value-of select="@locator"/>"));
     </xsl:template>
 
     <xsl:template match="xftr:assert-boolean-control-value">
-        assertEquals(getBooleanControlValue("<xsl:value-of select="concat(@locator, '-value')"/>"), "<xsl:value-of select="replace( normalize-space(@value) ,$quot, $quote)"/>");
+        assertEquals("<xsl:value-of select="replace( normalize-space(@value) ,$quot, $quote)"/>", getBooleanControlValue("<xsl:value-of select="concat(@locator, '-value')"/>"));
     </xsl:template>
 
     <xsl:template match="xftr:assert-control-valid">
@@ -195,11 +195,23 @@
     </xsl:template>
 
     <xsl:template match="xftr:assert-control-alert-present">
-        assertTrue(isControlAlertPresent("<xsl:value-of select="@locator"/>", "<xsl:value-of select="@value"/>"));
+        <xsl:choose>
+            <xsl:when test="exists(@type)">
+                assertTrue(isControlAlertPresent("<xsl:value-of select="@locator"/>", "<xsl:value-of select="@value"/>", "<xsl:value-of select="@type"/>"));
+            </xsl:when>
+            <xsl:otherwise>
+                assertTrue(isControlAlertPresent("<xsl:value-of select="@locator"/>", "<xsl:value-of select="@value"/>", null));
+            </xsl:otherwise>
+        </xsl:choose>
+
     </xsl:template>
 
     <xsl:template match="xftr:assert-control-alert-not-present">
-        assertFalse(isControlAlertPresent("<xsl:value-of select="@locator"/>", "<xsl:value-of select="@value"/>"));
+        assertFalse(isControlAlertPresent("<xsl:value-of select="@locator"/>", "<xsl:value-of select="@value"/>", null));
+    </xsl:template>
+
+    <xsl:template match="xftr:assert-html-class">
+        assertTrue(isHtmlClassPresent("<xsl:value-of select="@cssSelector"/>", "<xsl:value-of select="@value"/>"));
     </xsl:template>
 
     <xsl:template match="xftr:fail">

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test-case xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner"
+           xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../test-case.xsd">
+    <open href="reference/AVTThemeSwitcher.xhtml" bfTest="true"/>
+    <assert-title title="AVT Theme Switcher"/>
+
+    <assert-control-present locator="select" type="select1"/>
+    <assert-control-present locator="input1" type="input"/>
+    <assert-control-value locator="input1" value="tundra"/>
+    <assert-html-class cssSelector="body" value="tundra"/>
+
+    <assert-selection-options locator="select" options="claro, soria, tundra"/>
+
+    <select-option locator="select" option="claro"/>
+    <assert-control-value locator="input1" value="claro"/>
+    <assert-html-class cssSelector="body" value="claro"/>
+
+    <select-option locator="select" option="soria"/>
+    <assert-control-value locator="input1" value="soria"/>
+    <assert-html-class cssSelector="body" value="soria"/>
+
+    <select-option locator="select" option="tundra"/>
+    <assert-control-value locator="input1" value="tundra"/>
+    <assert-html-class cssSelector="body" value="tundra"/>
+</test-case>
