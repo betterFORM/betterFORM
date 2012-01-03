@@ -296,40 +296,29 @@ public class WebDriverTestFunctions extends WebDriverTest {
         return alertText.startsWith(expectedText);
     }
 
-    public boolean isControlHintPresent(String id) {
-        WebElement webElement = webDriver.findElement(By.id(id));
 
-        String classAttribute = webElement.getAttribute("class");
-
-        if (classAttribute != null && classAttribute.contains("xfHint")) {
-            if (! webElement.getCssValue("display").equals("none")) {
-                return true;
-            }
-        }
-        
-        return false;
+    public boolean isControlHintPresent(String id, String value) {
+        return checkControlHelpHintAlert(id, value, "xfHint");
     }
 
-    public boolean isControlHelpPresent(String id) {
-        WebElement webElement = webDriver.findElement(By.id(id));
-        String classAttribute = webElement.getAttribute("class");
-
-        if (classAttribute != null && classAttribute.contains("xfHelp")) {
-            if (! webElement.getCssValue("display").equals("none")) {
-                return true;
-            }
-        }
-
-        return false;
+    public boolean isControlHelpPresent(String id, String value) {
+        return checkControlHelpHintAlert(id, value, "xfHelp");
     }
 
-    public boolean isControlAlertPresent(String id) {
+    public boolean isControlAlertPresent(String id, String value) {
+        return checkControlHelpHintAlert(id, value, "xfAlert");
+    }
+
+    private boolean checkControlHelpHintAlert(String id, String value, String htmlclass) {
         WebElement webElement = webDriver.findElement(By.id(id));
 
         String classAttribute = webElement.getAttribute("class");
 
-        if (classAttribute != null && classAttribute.contains("xfAlert")) {
+        if (classAttribute != null && classAttribute.contains(htmlclass)) {
             if (! webElement.getCssValue("display").equals("none")) {
+                if (! "".equals(value)) {
+                    return value.equalsIgnoreCase(webElement.getText());
+                }
                 return true;
             }
         }

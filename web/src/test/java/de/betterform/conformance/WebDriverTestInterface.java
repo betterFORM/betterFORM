@@ -28,9 +28,9 @@ public interface WebDriverTestInterface {
     public boolean isControlFocused(String id);
     public boolean isControlValueInRange(String id, String start, String end);
 
-    public boolean isControlHintPresent(String id);
-    public boolean isControlHelpPresent(String id);
-    public boolean isControlAlertPresent(String id);
+    public boolean isControlHintPresent(String id, String value);
+    public boolean isControlHelpPresent(String id, String value);
+    public boolean isControlAlertPresent(String id, String value);
 
     public void hasException();
     public String getExceptionType();

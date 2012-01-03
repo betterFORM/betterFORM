@@ -171,15 +171,27 @@
     </xsl:template>
 
     <xsl:template match="xftr:assert-control-hint-present">
-        assertTrue(isControlHintPresent("<xsl:value-of select="@locator"/>"));
+        assertTrue(isControlHintPresent("<xsl:value-of select="@locator"/>", "<xsl:value-of select="@value"/>"));
+    </xsl:template>
+
+    <xsl:template match="xftr:assert-control-hint-not-present">
+        assertFalse(isControlHintPresent("<xsl:value-of select="@locator"/>", "<xsl:value-of select="@value"/>"));
     </xsl:template>
 
     <xsl:template match="xftr:assert-control-help-present">
-        assertTrue(isControlHelpPresent("<xsl:value-of select="@locator"/>"));
+        assertTrue(isControlHelpPresent("<xsl:value-of select="@locator"/>", "<xsl:value-of select="@value"/>"));
+    </xsl:template>
+
+    <xsl:template match="xftr:assert-control-help-not-present">
+        assertFalse(isControlHelpPresent("<xsl:value-of select="@locator"/>", "<xsl:value-of select="@value"/>"));
     </xsl:template>
 
     <xsl:template match="xftr:assert-control-alert-present">
-        assertTrue(isControlAlertPresent("<xsl:value-of select="@locator"/>"));
+        assertTrue(isControlAlertPresent("<xsl:value-of select="@locator"/>", "<xsl:value-of select="@value"/>"));
+    </xsl:template>
+
+    <xsl:template match="xftr:assert-control-alert-not-present">
+        assertFalse(isControlAlertPresent("<xsl:value-of select="@locator"/>", "<xsl:value-of select="@value"/>"));
     </xsl:template>
 
     <xsl:template match="xftr:fail">
