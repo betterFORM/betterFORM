@@ -1472,8 +1472,10 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     _handleLinkException:function(xmlEvent) {
+        console.debug("_handleLinkException: ", xmlEvent);
         if (this.webtest != 'true') {
             console.error("Fatal error - " + xmlEvent.type + ": Failed to load resource: " + xmlEvent.contextInfo.resourceUri);
+            alert("xforms-link-exception: " + "resource '" + xmlEvent.contextInfo['resource-uri'] + "' failed with error= '" + xmlEvent.contextInfo['resource-error'] + "'");
         } else {
             //only for testing purposes
             fluxProcessor.logTestMessage("Fatal error - " + xmlEvent.type + ": Failed to load resource: " + xmlEvent.contextInfo.resourceUri);

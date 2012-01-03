@@ -29,10 +29,13 @@ public class InvalidInstanceSrcTest extends XMLTestBase {
     protected void setUp() throws Exception {
         this.xformsProcesssorImpl = new XFormsProcessorImpl();
         this.xformsProcesssorImpl.setXForms(getClass().getResourceAsStream("InvalidInstanceURITest.xhtml"));
+        String path = getClass().getResource("InvalidInstanceURITest.xhtml").getPath();
+        String baseURI = "file://" + path.substring(0, path.lastIndexOf("InvalidInstanceURITest.xhtml"));
+        this.xformsProcesssorImpl.setBaseURI(baseURI);
+
         this.LinkListener = new TestEventListener();
         EventTarget eventTarget = (EventTarget) this.xformsProcesssorImpl.getXForms();
         eventTarget.addEventListener(XFormsEventNames.LINK_EXCEPTION, this.LinkListener, true);
-
     }
 
     protected void tearDown() throws Exception {
@@ -48,11 +51,12 @@ public class InvalidInstanceSrcTest extends XMLTestBase {
     }
 
     public void testInvalidInstance() throws Exception {
+
         Exception exception = null;
         try{
             this.xformsProcesssorImpl.init();
         }catch (XFormsLinkException e){
-            assertNotNull(this.LinkListener.getId());
+            assertNotNull(e);
             assertEquals("doesnotexist.xml", this.LinkListener.getContext("resource-uri"));
         }
     }

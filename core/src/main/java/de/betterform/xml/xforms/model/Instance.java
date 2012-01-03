@@ -5,6 +5,7 @@
 
 package de.betterform.xml.xforms.model;
 
+import de.betterform.xml.xforms.exception.XFormsErrorIndication;
 import net.sf.saxon.dom.NodeWrapper;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.trans.XPathException;
@@ -626,7 +627,7 @@ public class Instance extends XFormsElement {
         }
 
         // if inline content is given this takes precedence over @resource
-        List childs = DOMUtil.getChildElements(this.element); 
+        List childs = DOMUtil.getChildElements(this.element);
         if(childs.size() != 1) {
             Map contextInfo = new HashMap();
             contextInfo.put("resource-uri",resourceUri);
@@ -648,26 +649,36 @@ public class Instance extends XFormsElement {
         //throw new XFormsLinkException("Failed to fetch external data", this.model.getTarget(), null);
     }
 
-    private Element fetchData(String srcAttribute) throws XFormsException {
-        Object result=null;
+    private Element fetchData(String srcAttribute) throws XFormsLinkException {
+        Object result;
         try {
             result = this.container.getConnectorFactory().createURIResolver(srcAttribute, this.element).resolve();
+        }
+        catch (Exception e) {
+            String msg;
+            if(e.getCause()!=null){
+                msg=e.getCause().getMessage();
+            }else{
+                msg=e.getMessage();
+            }
+            
+            HashMap<String,String> map = new HashMap<String, String>(2);
+            map.put("resource-uri",srcAttribute);
+            map.put("detailMessage",msg);
+            throw new XFormsLinkException("uri resolution failed for '" + srcAttribute + "' at Instance id: '" + this.getId() + "'", e, this.model.getTarget(), map);
+//            throw new XFormsLinkException("uri resolution failed for '" + srcAttribute + "' at Instance id: '" + this.getId() + "'", e, this.model.getTarget(), s
+// rcAttribute);
+        }
+
             if (result instanceof Document) {
                 return ((Document) result).getDocumentElement();
             }
+
             if (result instanceof Element) {
                 return (Element) result;
-            }
-        }
-        catch (Exception e) {
-            Map contextInfo = new HashMap();
-            contextInfo.put("resource-uri",srcAttribute);
-            this.container.dispatch(this.model.getTarget(), XFormsEventNames.LINK_EXCEPTION, contextInfo);
-//            throw new XFormsLinkException("uri resolution failed for '" + srcAttribute + "' at Instance id: '" + this.getId() + "'", e, this.model.getTarget(), srcAttribute);
         }
 
-        return (Element) result;
-//        throw new XFormsLinkException("object model not supported", this.model.getTarget(), srcAttribute);
+        throw new XFormsLinkException("object model not supported", this.model.getTarget(), srcAttribute);
     }
 
     /**

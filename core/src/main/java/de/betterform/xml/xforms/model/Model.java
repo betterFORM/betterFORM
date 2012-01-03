@@ -764,8 +764,8 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
             }
             if (event.getType().equals(XFormsEventNames.LINK_EXCEPTION)) {
                 getLogger().error(this + " link exception: " + ((XMLEvent) event).getContextInfo());
-                this.container.shutdown();
-                throw new XFormsLinkException("XForms Link Exception: " + ((XMLEvent) event).getContextInfo().get("resource-uri"), event.getTarget(), ((XMLEvent) event).getContextInfo());
+//                this.container.shutdown();
+//                throw new XFormsLinkException("XForms Link Exception: " + ((XMLEvent) event).getContextInfo().get("resource-uri"), event.getTarget(), ((XMLEvent) event).getContextInfo());
                 //todo:config switch for strict exception handlilng
             }
             if (event.getType().equals(XFormsEventNames.LINK_ERROR)) {
