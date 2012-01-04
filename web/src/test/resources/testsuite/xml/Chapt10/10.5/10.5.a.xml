@@ -27,11 +27,17 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
    <assert-title title="10.5.a setindex element rules"/>
    <click locator="xf-trigger-1"/>
    <assert-message message="xforms-scroll-first"/>
+   <assert-message message="xforms-scroll-first"/>
+   <assert-message message="xforms-scroll-first"/>
    <assert-control-value locator="xf-output-1" value="1"/>
    <click locator="xf-trigger-2"/>
    <assert-message message="xforms-scroll-last"/>
+   <assert-message message="xforms-scroll-last"/>
+   <assert-message message="xforms-scroll-last"/>
    <assert-control-value locator="xf-output-1" value="3"/>
-   <click locator="xf-trigger-1"/>
-   <assert-no-messages/>
+
+   <click locator="xf-trigger-3"/>
+
    <assert-control-value locator="xf-output-1" value="2"/>
+    <assert-no-messages/>
 </test-case>

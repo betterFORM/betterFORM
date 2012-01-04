@@ -352,7 +352,7 @@
         <echo message="copying Test Suites..."/>
         <echo message="************************************************************************************"/>
         <echo/>
-        <copy todir="${webapp.dir}/${forms.target}">
+        <copy todir="${webapp.dir}/${forms.target}" overwrite="true">
             <fileset dir="${basedir}/src/test/resources/testsuite/xhtml"/>
         </copy>
     </target>
