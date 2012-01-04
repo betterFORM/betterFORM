@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test-case xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner"
+           xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../test-case.xsd">
+    <!-- test insert / delete action -->
+    <open href="uitest/EventTester.xhtml" bfTest="true"/>
+    <assert-title title="Event Tester"/>
+
+    <assert-control-present locator="input-1" type="input"/>
+    <assert-control-present locator="output-events" type="output"/>
+    <assert-control-present locator="select1-constraint" type="select1"/>
+    <assert-control-present locator="select1-readonly" type="select1"/>
+    <assert-control-present locator="select1-required" type="select1"/>
+    <assert-control-present locator="select1-relevant" type="select1"/>
+    <assert-control-present locator="trigger-clear" type="button"/>
+
+    <assert-control-value locator="input-1" value="control"/>
+    <assert-control-value locator="output-events" value=""/>
+    <assert-control-readonly locator="input-1"/>
+
+    <!-- CHECK CONSTRAINT -->
+    <select-option locator="select1-constraint" option="false"/>
+    <assert-control-value locator="output-events" value="xforms-invalid"/>
+    <assert-control-invalid locator="input-1"/>
+    <assert-control-alert-present type="tooltip" locator="input-1" value="The constraint is now invalid"/>
+
+    <select-option locator="select1-constraint" option="true"/>
+    <assert-control-value locator="output-events" value="xforms-invalid xforms-valid"/>
+    <assert-control-valid locator="input-1"/>
+    <assert-control-alert-not-present type="tooltip" locator="input-1" value="The constraint is now invalid"/>
+
+    <!-- CLEAR -->
+    <click locator="trigger-clear"/>
+
+    <!-- CHECK READONLY -->
+    <assert-control-readonly locator="input-1"/>
+    <assert-control-value locator="output-events" value=""/>
+
+
+    <select-option locator="select1-readonly" option="false"/>
+    <assert-control-value locator="output-events" value="xforms-readwrite"/>
+    <assert-control-readwrite locator="input-1"/>
+
+    <select-option locator="select1-readonly" option="true"/>
+    <assert-control-value locator="output-events" value="xforms-readwrite xforms-readonly"/>
+    <assert-control-readonly locator="input-1"/>
+
+    <!-- CLEAR -->
+    <click locator="trigger-clear"/>
+
+    <!-- CHECK REQUIRED -->
+    <assert-control-required locator="input-1"/>
+    <assert-control-value locator="output-events" value=""/>
+
+
+    <select-option locator="select1-required" option="false"/>
+    <assert-control-value locator="output-events" value="xforms-optional"/>
+    <assert-control-optional locator="input-1"/>
+
+    <select-option locator="select1-required" option="true"/>
+    <assert-control-value locator="output-events" value="xforms-optional xforms-required"/>
+    <assert-control-required locator="input-1"/>
+
+    <!-- CLEAR -->
+    <click locator="trigger-clear"/>
+
+    <!-- CHECK REQUIRED -->
+    <assert-control-required locator="input-1"/>
+    <assert-control-value locator="output-events" value=""/>
+
+    <assert-control-present locator="input-1"/>
+    <select-option locator="select1-relevant" option="false"/>
+    <assert-control-value locator="output-events" value="xforms-disabled"/>
+    <assert-control-not-present locator="input-1"/>
+
+    <select-option locator="select1-relevant" option="true"/>
+    <assert-control-value locator="output-events" value="xforms-disabled xforms-enabled xforms-value-changed xforms-valid xforms-readonly xforms-required"/>
+    <assert-control-present locator="input-1"/>
+
+
+</test-case>

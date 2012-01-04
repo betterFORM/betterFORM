@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test-case xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner" xmlns:xf="http://www.w3.org/2002/xforms"
+           xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../test-case.xsd">
+    <!-- test insert / delete action -->
+    <open href="uitest/BindSetvalue.xhtml" bfTest="true"/>
+    <assert-title title="Bind / Value Changed Test"/>
+
+    <assert-message message="the value has changed"/>
+    <assert-control-present locator="input-1" type="input"/>
+    <assert-control-value locator="input-1" value="new value"/>
+
+    <click locator="trigger-reset"/>
+    <assert-no-messages/>
+    <assert-control-value locator="input-1" value="initial value"/>
+
+    <type-input locator="input-1" value="my custom value"/>
+    <assert-message message="the value has changed"/>
+    <assert-control-value locator="input-1" value="my custom value"/>
+
+
+
+</test-case>

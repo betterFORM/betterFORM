@@ -58,7 +58,7 @@ public class WebDriverTestFunctions extends WebDriverTest {
                 while (select1OptionsElements.hasNext()) {
                     WebElement select1Option = select1OptionsElements.next();
                     if (option.equals(select1Option.getText())) {
-                        select1Option.findElement(By.name("select-value")).click();
+                        select1Option.findElement(By.name(id+"-value")).click();
                         return;
                     }
                 }

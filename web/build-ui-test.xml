@@ -162,7 +162,7 @@
         <delete>
             <fileset dir="${basedir}/target/temp" casesensitive="yes" >
                 <include name="**/*.java"/>
-                <exclude name="**/*Test*"/>
+                <exclude name="**/Test_*"/>
             </fileset>
         </delete>
 
