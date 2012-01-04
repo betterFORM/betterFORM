@@ -9,6 +9,7 @@ import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.ExpressionVisitor;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.DoubleValue;
 import net.sf.saxon.value.Int64Value;
@@ -58,15 +59,25 @@ public class Index extends XFormsFunction
 		        
 		     // check repeat element
 		        List nodeset;
-			try {
-//			    nodeset = XPathCache.getInstance().evaluate(container.getRootNodeInfo(), "//" + NamespaceConstants.XFORMS_PREFIX + ":repeat[@id='" + idref + "'] | //*[@id='" + idref + "'][@" + NamespaceConstants.XFORMS_PREFIX + ":repeat-nodeset or @" + NamespaceConstants.XFORMS_PREFIX + ":repeat-bind]", BetterFormNamespaceMap.kNAMESPACE_MAP, functionContext);
-			    nodeset = XPathCache.getInstance().evaluate(container.getHostContext("").getNodeset(),1, "//" + NamespaceConstants.XFORMS_PREFIX + ":repeat[@id='" + idref + "'] | //*[@id='" + idref + "'][@" + NamespaceConstants.XFORMS_PREFIX + ":repeat-nodeset or @" + NamespaceConstants.XFORMS_PREFIX + ":repeat-bind]", BetterFormNamespaceMap.kNAMESPACE_MAP, functionContext);
-			} catch (XFormsException e) {
-			    throw (XPathException)e.getCause();
-			}
-		        
-		        return (nodeset.size() == 1)?Int64Value.makeIntegerValue(1):DoubleValue.NaN;
-			}
+                try {
+                    nodeset = XPathCache.getInstance().evaluate(container.getHostContext("").getNodeset(), 1, "//" + NamespaceConstants.XFORMS_PREFIX + ":repeat[@id='" + idref + "'] | //*[@id='" + idref + "'][@" + NamespaceConstants.XFORMS_PREFIX + ":repeat-nodeset or @" + NamespaceConstants.XFORMS_PREFIX + ":repeat-bind]", BetterFormNamespaceMap.kNAMESPACE_MAP, functionContext);
+
+                    /*
+                      this is a bit of a hack for the situation that there's reference to the index function
+                      but the actual repeat has not yet been initialized. Here we'll lookup in the DOM if there's
+                      a startindex defined.
+                    */
+                    String startIndex = XPathCache.getInstance().evaluateAsString(nodeset,1,"//*[@id='" + idref + "']/@startindex",BetterFormNamespaceMap.kNAMESPACE_MAP,functionContext);
+                    if(startIndex != null && !container.isModelConstructDone()){
+                        return Int64Value.parseNumber(startIndex);
+                    }
+                        
+                } catch (XFormsException e) {
+                    throw (XPathException)e.getCause();
+                }
+                    
+                    return (nodeset.size() == 1)?Int64Value.makeIntegerValue(1):DoubleValue.NaN;
+                }
 		}
 		// XXX dispatch compute exception
 		return null;
