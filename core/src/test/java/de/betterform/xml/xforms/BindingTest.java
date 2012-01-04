@@ -31,7 +31,6 @@ public class BindingTest extends XMLTestBase {
 
     public void testAbsoluteRefs() throws Exception {
         assertValues("My data", "My label", 1);
-        fail();
     }
 
     public void testBinds() throws Exception {
