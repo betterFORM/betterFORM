@@ -13,16 +13,16 @@ import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import org.w3c.dom.Document;
 
-public class RepeatIndexFunctionTest extends BetterFormTestCase {
+public class RepeatIndexStartIndexTest extends BetterFormTestCase {
 
     protected void setUp() throws Exception {
          super.setUp();
     }
 
-    public void testIndexFunctionBeforeRepeat() throws Exception{
+    public void testStartIndexAttribute() throws Exception{
         Document hostDoc = (Document) this.processor.getXForms();
         // DOMUtil.prettyPrintDOM(hostDoc);
-        String value = XPathUtil.evaluateAsString(hostDoc, "//*[@id='showRepeatIndex']/bf:data");
+        String value = XPathUtil.evaluateAsString(hostDoc, "//*[@id='myrepeat']/bf:data/@bf:index");
         assertEquals("Repeat Index must be '3'", "3", value);
 
     }
