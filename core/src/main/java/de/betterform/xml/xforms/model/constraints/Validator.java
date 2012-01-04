@@ -6,15 +6,6 @@
 package de.betterform.xml.xforms.model.constraints;
 
 
-import net.sf.saxon.trans.XPathException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.xerces.impl.dv.InvalidDatatypeValueException;
-import org.apache.xerces.impl.dv.ValidatedInfo;
-import org.apache.xerces.impl.dv.XSSimpleType;
-import org.apache.xerces.impl.validation.ValidationState;
-import org.apache.xerces.util.NamespaceSupport;
-import org.apache.xerces.xs.XSConstants;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.ns.NamespaceResolver;
@@ -23,6 +14,17 @@ import de.betterform.xml.xforms.model.Instance;
 import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.model.ModelItem;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
+import net.sf.saxon.trans.XPathException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.xerces.impl.dv.InvalidDatatypeValueException;
+import org.apache.xerces.impl.dv.ValidatedInfo;
+import org.apache.xerces.impl.dv.XSSimpleType;
+import org.apache.xerces.impl.dv.xs.XSSimpleTypeDecl;
+import org.apache.xerces.impl.validation.ValidationState;
+import org.apache.xerces.impl.xs.XSComplexTypeDecl;
+import org.apache.xerces.util.NamespaceSupport;
+import org.apache.xerces.xs.XSConstants;
 import org.w3c.dom.Node;
 
 import java.util.Collections;
@@ -161,12 +163,17 @@ public class Validator {
         }
 
         String restrictionName = NamespaceResolver.getExpandedName(this.model.getElement(), restriction);
-        XSSimpleType restrictionType = (XSSimpleType) this.datatypes.get(restrictionName);
+        Object restrictionType = this.datatypes.get(restrictionName);
         if (restrictionType == null) {
             return false;
         }
 
-        return restrictionType.derivedFromType(baseType, XSConstants.DERIVATION_RESTRICTION);
+        if (restrictionType instanceof XSSimpleTypeDecl) {
+            return ((XSSimpleTypeDecl) restrictionType).isDOMDerivedFrom(baseType.getNamespace(), baseType.getName(), XSConstants.DERIVATION_LIST);
+        } else if (restrictionType instanceof XSComplexTypeDecl) {
+            return ((XSComplexTypeDecl) restrictionType).isDOMDerivedFrom(baseType.getNamespace(), baseType.getName(), XSConstants.DERIVATION_LIST);
+        }
+        return ((XSSimpleType) restrictionType).derivedFromType(baseType, XSConstants.DERIVATION_RESTRICTION);
     }
 
     /**

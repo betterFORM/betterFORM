@@ -260,11 +260,18 @@ public class ValidatorTest extends BetterFormTestCase {
         assertEquals(true, validator.isRestricted("xs:decimal", "xs:integer"));
 
         // assert self restriction
+
         assertEquals(true, validator.isRestricted("decimal", "decimal"));
+
         assertEquals(true, validator.isRestricted("decimal", "xs:decimal"));
         assertEquals(true, validator.isRestricted("xs:decimal", "decimal"));
         assertEquals(true, validator.isRestricted("xs:decimal", "xs:decimal"));
+        assertEquals(true, validator.isRestricted("xs:decimal", "xf:decimal"));
+        assertEquals(false, validator.isRestricted("xf:dateTime", "xs:dateTime"));
         assertEquals(true, validator.isRestricted("xs:dateTime", "xf:dateTime"));
+        assertEquals(true, validator.isRestricted("xs:string", "xf:dateTime"));
+        assertEquals(false, validator.isRestricted("xs:decimal", "xf:dateTime"));
+
         // assert user restriction
         assertEquals(true, validator.isRestricted("decimal", "test:restricted"));
         assertEquals(true, validator.isRestricted("xs:decimal", "test:restricted"));
