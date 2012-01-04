@@ -19,7 +19,7 @@
     <target name="run-tests" depends="clean,build-jar">
         <mkdir dir="${basedir}/target/doc/test/classes"/>
 
-        <junit fork="yes" printsummary="on" haltonfailure="on">
+        <junit fork="yes" printsummary="on">
             <formatter type="xml"/>
             <classpath refid="webdriver.test.class.path"/>
 
