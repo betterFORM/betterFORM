@@ -167,6 +167,10 @@ public class WebDriverTestFunctions extends WebDriverTest {
         return webDriver.findElement(By.id(id)).getAttribute("aria-pressed");
     }
 
+    public String getInnerHTML(String id) {
+        return webDriver.findElement(By.id(id)).getText();
+    }
+
     public boolean isControlValueValid(String id) {
         WebElement webElement = webDriver.findElement(By.id(id));
         String classAttribute = webElement.getAttribute("class");

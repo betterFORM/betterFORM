@@ -3,7 +3,7 @@
 	  xmlns:xf="http://www.w3.org/2002/xforms"
 	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-		>
+      xmlns:ev="http://www.w3.org/2001/xml-events">
 	<head>
 		<title>JavaScript Actions</title>
 		<xf:model id="hello-model">
@@ -14,6 +14,11 @@
 				</data>
 			</xf:instance>
 			<xf:bind id="bind1" nodeset="name" required="true()"/>
+            <xf:action ev:event="xforms-ready">
+                <script type="text/javascript">
+                    document.getElementById("message").innerHTML = "message from xforms-ready event";
+                </script>
+            </xf:action>
 		</xf:model>
 	</head>
 	<body>
@@ -23,7 +28,15 @@
 
 			
 			<xf:group id="scriptActionGroup" appearance="full">
-				<xf:trigger>
+				<xf:trigger id="trigger-reset">
+					<xf:label>Reset</xf:label>
+                    <script type="text/javascript">
+                        document.getElementById("message").innerHTML = "";
+                        document.getElementById("scriptActionGroup").style.color = "black";
+                    </script>
+				</xf:trigger>
+
+				<xf:trigger id="trigger-execute-function">
 					<xf:label>Execute Function</xf:label>
 					<xf:action>
 						<script type="text/javascript">
@@ -32,7 +45,7 @@
 					</xf:action>
 				</xf:trigger>
 
-				<xf:trigger>
+				<xf:trigger id="trigger-directly-execute-js">
 					<xf:label>Directly execute JavaScript</xf:label>
 					<xf:action>
 						<script type="text/javascript">
@@ -42,14 +55,14 @@
 					</xf:action>
 				</xf:trigger>
 
-				<xf:trigger>
+				<xf:trigger id="trigger-execute-function-v2">
 					<xf:label>Execute Function (without surrounding xf:action)</xf:label>
 					<script type="text/javascript">
 						bar();
 					</script>
 				</xf:trigger>
 
-				<xf:trigger>
+				<xf:trigger id="trigger-directly-execute-js-v2">
 					<xf:label>Directly execute JavaScript (without surrounding xf:action)</xf:label>
 					<script type="text/javascript">
 						document.getElementById("message").innerHTML = "message from Trigger 'Directly execute JavaScript'";
@@ -57,15 +70,16 @@
 					</script>
 				</xf:trigger>
 
-				<xf:input id="name" ref="name">
+				<xf:input id="name" ref="name" incremental="true">
 					<xf:label>Name</xf:label>
 				</xf:input>
 
-				<xf:trigger>
-					<xf:label>setControlValue</xf:label>
+				<xf:trigger id="trigger-set-control-value">
+					<xf:label>set ControlValue with JavaScript</xf:label>
 					<xf:action>
 						<script type="text/javascript">
-							fluxProcessor.setControlValue("name","foo");
+							// dojo.attr("name-value","value","foo");
+                            dijit.byId("name-value").set("value","foo");
 						</script>
 					</xf:action>
 				</xf:trigger>
