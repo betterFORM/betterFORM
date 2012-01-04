@@ -80,7 +80,7 @@
         </compile>
         <test>
             <classpath pathid="test.class.path" description="classpath for compiling core with test classes">
-                <pathelement location="${core.dir}/src/test/lib/junit-3.8.2.jar" groupid="junit" version="3.8.2" artifactId="junit" scope="test"/>
+                <pathelement location="${core.dir}/src/test/lib/junit-4.10.jar" groupid="junit" version="4.10" artifactId="junit" scope="test"/>
                 <path refid="compile.class.path"/>
                 <pathelement path="${core.dir}/target/test-classes"/>
                 <pathelement path="${core.dir}/src/test/lib/jmdns.jar"/>
