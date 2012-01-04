@@ -57,13 +57,32 @@
             position: relative;
             top: -8px;
         }
+
+        #outergroup {
+            border:1px solid black;
+        }
+        #group-1 {
+            border:2px solid red;
+        }
+        #group-2 {
+            border:2px solid blue;
+        }
+        #group-3 {
+            border:2px solid yellow;
+        }
+        #case1 {
+            background-color: #add8e6;
+        }
+        #case2 {
+            background-color: #ffb6c1;
+        }
     </style>
 
 </head>
 <body class="tundra" style="overflow:hidden;padding:50px;">
-<xf:group appearance="full">
+<xf:group appearance="full" id="outergroup">
     <xf:label>Switch / Case Events</xf:label>
-    <xf:group appearance="full">
+    <xf:group appearance="full" id="group-1">
         <xf:label>Before Switch / Case</xf:label>
         <xf:select1 id="select1" ref="select-1">
                 <xf:label>Select 1 (outer Case)</xf:label>
@@ -74,7 +93,7 @@
                 <xf:message ev:event="xforms-value-changed">select1 outer case value changed</xf:message>
             </xf:select1>
     </xf:group>
-    <xf:group appearance="full">
+    <xf:group appearance="full" id="group-2">
         <xf:label>Switch / Case: </xf:label>
         <xf:switch>
             <xf:case id="case1" >
@@ -123,9 +142,8 @@
             </xf:case>
         </xf:switch>
     </xf:group>
-    <xf:group appearance="full">
+    <xf:group appearance="full" id="group-3">
         <xf:label>After Switch / Case </xf:label>
-
         <xf:select1 id="select4" ref="select-4">
             <xf:label>Select 4 (outer Case)</xf:label>
             <xf:itemset nodeset="/data/items/item">
@@ -134,7 +152,6 @@
             </xf:itemset>
             <xf:message ev:event="xforms-value-changed">select4 outer case value changed</xf:message>
         </xf:select1>
-
     </xf:group>
 </xf:group>
 </body>
