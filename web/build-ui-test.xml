@@ -19,9 +19,9 @@
     <target name="run-tests" depends="clean,build-jar">
         <mkdir dir="${basedir}/target/doc/test/classes"/>
 
-        <junit fork="yes" printsummary="on" maxmemory="1024m">
-            <jvmarg value="-Xmx1024M"/>
-            <jvmarg value="-Xms512M"/>
+        <junit fork="true" forkmode="perTest" printsummary="true" maxmemory="2048m">
+            <jvmarg value="-Xmx2048m"/>
+            <jvmarg value="-Xms1024m"/>
             <formatter type="xml"/>
             <classpath refid="webdriver.test.class.path"/>
 
