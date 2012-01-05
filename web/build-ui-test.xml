@@ -269,9 +269,7 @@
     </target>
 
     <target name="run-betterform-uitests" depends="clean">
-        <antcall target="generate-chapter-java-tests">
-            <param name="chapterNo" value="11"/>
-        </antcall>
+        <antcall target="generate-betterform-java-tests"/>
         <antcall target="build-jar"/>
         <antcall target="execute-junit-tests"/>
     </target>
