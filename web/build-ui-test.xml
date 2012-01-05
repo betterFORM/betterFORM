@@ -11,27 +11,32 @@
     <target name="clean">
         <delete file="${basedir}/target/betterform-webdriver.jar"/>
         <delete dir="${basedir}/target/classes"/>
-        <delete dir="${basedir}/target/doc"/>
         <delete dir="${basedir}/target/java"/>
         <delete dir="${basedir}/target/xml"/>
     </target>
 
-    <target name="run-tests" depends="clean,build-jar">
-        <mkdir dir="${basedir}/target/doc/test/classes"/>
+    <target name="run-tests" depends="clean" description="execute all uitests">
+        <antcall target="generate-betterform-java-tests"/>
+        <antcall target="generate-testsuite-java-tests"/>
+        <antcall target="build-jar"/>
+        <antcall target="execute-junit-tests"/>
+    </target>
 
-        <junit fork="true" forkmode="perTest" printsummary="true" maxmemory="2048m">
-            <jvmarg value="-Xmx2048m"/>
+    <target name="execute-junit-tests">
+        <mkdir dir="${basedir}/target/doc/test/classes"/>
+        <junit fork="true" forkmode="perTest" printsummary="true" maxmemory="1536m">
+            <jvmarg value="-Xmx1536m"/>
             <jvmarg value="-Xms1024m"/>
             <formatter type="xml"/>
             <classpath refid="webdriver.test.class.path"/>
 
             <batchtest fork="yes" todir="${basedir}/target/doc/test/classes">
                 <resources>
-                    <zipfileset src="${basedir}/target/betterform-webdriver.jar" includes="**/Test*.class" excludes="**/WebDriver*.class"/>
+                    <zipfileset src="${basedir}/target/betterform-webdriver.jar" includes="**/Test*.class"
+                                excludes="**/WebDriver*.class"/>
                 </resources>
             </batchtest>
         </junit>
-
     </target>
 
     <target name="generate-testreport">
@@ -43,7 +48,7 @@
         </junitreport>
     </target>
 
-    <target name="build-jar" depends="generate-betterform-java-tests,generate-testsuite-java-tests">
+    <target name="build-jar">
         <copy todir="${basedir}/target/java/">
             <fileset dir="${basedir}/src/test/java" includes="**/WebDriver*.java"/>
         </copy>
@@ -58,7 +63,8 @@
                deprecation="true"
                optimize="off"/>
 
-        <jar basedir="${basedir}/target/classes" compress="true" jarfile="${basedir}/target/betterform-webdriver.jar" update="true"/>
+        <jar basedir="${basedir}/target/classes" compress="true" jarfile="${basedir}/target/betterform-webdriver.jar"
+             update="true"/>
 
 
     </target>
@@ -94,7 +100,7 @@
         <antcall target="generate-chapter-java-tests">
             <param name="chapterNo" value="11"/>
         </antcall>
-        <antcall target="generate-appendix-java-tests"/>
+        <!--<antcall target="generate-appendix-java-tests"/>-->
     </target>
 
     <target name="generate-chapter-java-tests">
@@ -121,7 +127,7 @@
         </xslt>
 
         <delete>
-            <fileset dir="${basedir}/target/temp" casesensitive="yes" >
+            <fileset dir="${basedir}/target/temp" casesensitive="yes">
                 <include name="**/*.java"/>
                 <exclude name="**/*Test*"/>
             </fileset>
@@ -162,7 +168,7 @@
         </xslt>
 
         <delete>
-            <fileset dir="${basedir}/target/temp" casesensitive="yes" >
+            <fileset dir="${basedir}/target/temp" casesensitive="yes">
                 <include name="**/*.java"/>
                 <exclude name="**/Test_*"/>
             </fileset>
@@ -178,6 +184,96 @@
     </target>
 
     <target name="generate-appendix-java-tests">
-        <!-- TODO -->
+        <fail message="NOT IMPLEMENTED YET"/>
     </target>
+
+
+    <target name="run-w3c-uitests-chapt02" depends="clean">
+        <antcall target="generate-chapter-java-tests">
+            <param name="chapterNo" value="02"/>
+        </antcall>
+        <antcall target="build-jar"/>
+        <antcall target="execute-junit-tests"/>
+    </target>
+
+    <target name="run-w3c-uitests-chapt03" depends="clean">
+        <antcall target="generate-chapter-java-tests">
+            <param name="chapterNo" value="03"/>
+        </antcall>
+        <antcall target="build-jar"/>
+        <antcall target="execute-junit-tests"/>
+    </target>
+
+    <target name="run-w3c-uitests-chapt04" depends="clean">
+        <antcall target="generate-chapter-java-tests">
+            <param name="chapterNo" value="04"/>
+        </antcall>
+        <antcall target="build-jar"/>
+        <antcall target="execute-junit-tests"/>
+    </target>
+
+    <target name="run-w3c-uitests-chapt05" depends="clean">
+        <antcall target="generate-chapter-java-tests" >
+            <param name="chapterNo" value="05"/>
+        </antcall>
+        <antcall target="build-jar"/>
+        <antcall target="execute-junit-tests"/>
+    </target>
+
+    <target name="run-w3c-uitests-chapt06" depends="clean">
+        <antcall target="generate-chapter-java-tests">
+            <param name="chapterNo" value="06"/>
+        </antcall>
+        <antcall target="build-jar"/>
+        <antcall target="execute-junit-tests"/>
+    </target>
+
+    <target name="run-w3c-uitests-chapt07" depends="clean">
+        <antcall target="generate-chapter-java-tests">
+            <param name="chapterNo" value="07"/>
+        </antcall>
+        <antcall target="build-jar"/>
+        <antcall target="execute-junit-tests"/>
+    </target>
+
+    <target name="run-w3c-uitests-chapt08" depends="clean">
+        <antcall target="generate-chapter-java-tests">
+            <param name="chapterNo" value="08"/>
+        </antcall>
+        <antcall target="build-jar"/>
+        <antcall target="execute-junit-tests"/>
+    </target>
+
+    <target name="run-w3c-uitests-chapt09" depends="clean">
+        <antcall target="generate-chapter-java-tests">
+            <param name="chapterNo" value="09"/>
+        </antcall>
+        <antcall target="build-jar"/>
+        <antcall target="execute-junit-tests"/>
+    </target>
+
+    <target name="run-w3c-uitests-chapt10" depends="clean">
+        <antcall target="generate-chapter-java-tests">
+            <param name="chapterNo" value="10"/>
+        </antcall>
+        <antcall target="build-jar"/>
+        <antcall target="execute-junit-tests"/>
+    </target>
+
+    <target name="run-w3c-uitests-chapt11" depends="clean">
+        <antcall target="generate-chapter-java-tests">
+            <param name="chapterNo" value="11"/>
+        </antcall>
+        <antcall target="build-jar"/>
+        <antcall target="execute-junit-tests"/>
+    </target>
+
+    <target name="run-betterform-uitests" depends="clean">
+        <antcall target="generate-chapter-java-tests">
+            <param name="chapterNo" value="11"/>
+        </antcall>
+        <antcall target="build-jar"/>
+        <antcall target="execute-junit-tests"/>
+    </target>
+
 </project>
