@@ -182,6 +182,13 @@
 	assertTrue(checkAlert("<xsl:value-of select="@message"/>"));
     </xsl:template>
 
+
+    <xsl:template match="xftr:assert-alert-contains">
+        alert = getAlert();
+        assertTrue(alert.getText().contains("<xsl:value-of select="replace( normalize-space(@message) ,$quot, $quote)"/>"));
+        alert.accept();
+    </xsl:template>
+
     <xsl:template match="xftr:assert-control-hint-present">
         assertTrue(isControlHintPresent("<xsl:value-of select="@locator"/>", "<xsl:value-of select="@value"/>"));
     </xsl:template>
