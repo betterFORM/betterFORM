@@ -24,7 +24,7 @@
 
     <target name="execute-junit-tests">
         <mkdir dir="${basedir}/target/doc/test/classes"/>
-        <junit fork="true" forkmode="perTest" printsummary="true" maxmemory="1536m">
+        <junit fork="true" printsummary="true" maxmemory="1536m">
             <jvmarg value="-Xmx1536m"/>
             <jvmarg value="-Xms1024m"/>
             <formatter type="xml"/>
