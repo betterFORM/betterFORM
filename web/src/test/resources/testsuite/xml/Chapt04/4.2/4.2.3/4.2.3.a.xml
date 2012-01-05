@@ -24,7 +24,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <test-case xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner" xmlns:xf="http://www.w3.org/2002/xforms" xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../../../test-case.xsd">
    <open href="Chapt04/4.2/4.2.3/4.2.3.a.xhtml"/>
-   <assert-title title="4.2.3.a xforms-model-construct-done and xforms-ready events"/>
-   <assert-message message="xforms-model-construct-done was dispatched"/>
-   <assert-message message="xforms-ready dispatched"/>
+    <assert-title title="4.2.3.a xforms-model-construct-done and xforms-ready events"/>
+    <assert-alert-contains message="xforms-model-construct-done was dispatched"/>
+    <assert-alert-contains message="xforms-ready dispatched"/>
 </test-case>
