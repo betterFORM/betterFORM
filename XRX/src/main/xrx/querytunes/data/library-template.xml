@@ -1,0 +1,8 @@
+<library>
+    <album>
+        <artist/>
+        <name/>
+        <genre/>
+        <track id="" trackNumber="" trackCount=""/>
+    </album>
+</library>
