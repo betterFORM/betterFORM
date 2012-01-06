@@ -30,8 +30,12 @@
     <xsl:variable name="date" select="current-date()"/>
     <xsl:variable name="year" select="year-from-date(current-date())"/>
     <xsl:variable name="nextYear" select="year-from-date(current-date())+1"/>
-    <xsl:variable name="month" select="month-from-date(current-date())"/>
-    <xsl:variable name="day" select="day-from-date(current-date())"/>
+    <xsl:variable name="month" select="if(string-length(string(month-from-date(current-date()))) eq 2)
+                                            then string(month-from-date(current-date()))
+                                            else concat('0',month-from-date(current-date()))" />
+    <xsl:variable name="day" select="if(string-length(string(day-from-date(current-date()))) eq 2)
+                                            then string(day-from-date(current-date()))
+                                            else concat('0',day-from-date(current-date()))"/>
     <xsl:variable name="currentDate" select="xs:date(concat($year,'-',$month,'-',$day))"/>
     <xsl:variable name="expireDate" select="xs:date(concat($nextYear,'-',$month,'-',$day))"/>
 
@@ -360,8 +364,17 @@
 
 
                             <div id="bottomMenu">
-                                &#169; 2011 betterFORM&#160;&#160; | &#160;&#160;
-                                <a href="contact.html">impressum</a>
+                                &#169; 2012 betterFORM&#160;&#160; | &#160;&#160;
+                                <xsl:choose>
+                                    <xsl:when test="$lang='en'">
+                                        <a href="contact.html">imprint</a> | &#160;&#160;
+                                        <a href="privacy.html">privacy</a>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <a href="contact.html">Impressum</a> | &#160;&#160;
+                                        <a href="privacy.html">Datenschutzerklärung</a>
+                                    </xsl:otherwise>
+                                </xsl:choose>
                             </div>
                         </div>
                     </div>
