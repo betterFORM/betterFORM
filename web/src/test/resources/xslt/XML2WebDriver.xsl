@@ -191,6 +191,11 @@
     </xsl:template>
 
 
+    <xsl:template match="xftr:assert-alert">
+        alert = getAlert();
+        assertEquals(alert.getText(), "<xsl:value-of select="replace( normalize-space(@message) ,$quot, $quote)"/>");
+        alert.accept();
+    </xsl:template>
     <xsl:template match="xftr:assert-alert-contains">
         alert = getAlert();
         assertTrue(alert.getText().contains("<xsl:value-of select="replace( normalize-space(@message) ,$quot, $quote)"/>"));
