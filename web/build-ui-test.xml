@@ -110,7 +110,7 @@
 
         <copy todir="${basedir}/target/xml/Chapt${chapterNo}" flatten="true">
             <fileset dir="${basedir}/src/test/resources/testsuite/xml/Chapt${chapterNo}">
-                <include name="**/4.6.1.b1.xml"/>
+                <include name="**/*.xml"/>
             </fileset>
         </copy>
 
