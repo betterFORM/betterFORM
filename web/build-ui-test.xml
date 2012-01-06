@@ -103,6 +103,7 @@
         <!--<antcall target="generate-appendix-java-tests"/>-->
     </target>
 
+
     <target name="generate-chapter-java-tests">
         <mkdir dir="${basedir}/target/java"/>
         <mkdir dir="${basedir}/target/temp"/>
