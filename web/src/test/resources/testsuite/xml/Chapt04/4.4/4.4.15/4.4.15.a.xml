@@ -27,6 +27,6 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
    <assert-title title="4.4.15.a xforms-select and xforms-deselect events"/>
    <select-option locator="xf-select-1" option="Subaru"/>
    <assert-message message="xforms-select"/>
-   <select-option locator="xf-select-1" option="Pinto"/>
+   <deselect-by-value locator="xf-select-1" value="sub"/>
    <assert-message message="xforms-deselect"/>
 </test-case>

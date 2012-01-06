@@ -76,6 +76,10 @@ public class WebDriverTestFunctions extends WebDriverTest {
         }
     }
 
+    public void deselectOptionByValue(final String id, String value){
+        new Select(webDriver.findElement(By.id(id))).deselectByValue(value);
+    }
+
     public void click(String id) {
         WebElement webElement = webDriver.findElement(By.id(id));
         webElement.click();

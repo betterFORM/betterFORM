@@ -125,6 +125,24 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			      <xs:attribute name="option" use="required"/>
 			    </xs:complexType>
 			  </xs:element>
+			  <xs:element name="deselect-by-value">
+			    <xs:complexType>
+			      <xs:attribute name="locator" use="required"/>
+			      <xs:attribute name="value" use="required"/>
+			    </xs:complexType>
+			  </xs:element>
+			  <xs:element name="assert-inner-html">
+			    <xs:complexType>
+			      <xs:attribute name="locator" use="required"/>
+			      <xs:attribute name="value" use="required"/>
+			    </xs:complexType>
+			  </xs:element>
+			  <xs:element name="assert-inner-html-contains">
+			    <xs:complexType>
+			      <xs:attribute name="locator" use="required"/>
+			      <xs:attribute name="value" use="required"/>
+			    </xs:complexType>
+			  </xs:element>
 			  <xs:element name="assert-control-value">
 			    <xs:complexType>
 			      <xs:attribute name="locator" use="required"/>

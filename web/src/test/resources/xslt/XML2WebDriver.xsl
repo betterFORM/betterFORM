@@ -81,6 +81,10 @@
         selectOption("<xsl:value-of select="@locator"/>", "<xsl:value-of select="replace( normalize-space(@option) ,$quot, $quote)"/>");
     </xsl:template>
 
+    <xsl:template match="xftr:deselect-by-value">
+        deselectOptionByValue("<xsl:value-of select="concat(@locator, '-value')"/>", "<xsl:value-of select="replace( normalize-space(@value) ,$quot, $quote)"/>");
+    </xsl:template>
+
     <xsl:template match="xftr:click">
         click("<xsl:value-of select="concat(@locator, '-value')"/>");
     </xsl:template>
@@ -111,6 +115,10 @@
 
     <xsl:template match="xftr:assert-inner-html">
         assertEquals("<xsl:value-of select="replace( normalize-space(@value) ,$quot, $quote)"/>", getInnerHTML("<xsl:value-of select="@locator"/>"));
+    </xsl:template>
+
+    <xsl:template match="xftr:assert-inner-html-contains">
+        assertTrue(getInnerHTML("<xsl:value-of select="@locator"/>").contains("<xsl:value-of select="replace(normalize-space(@value) ,$quot, $quote)"/>"));
     </xsl:template>
 
     <xsl:template match="xftr:assert-boolean-control-value">
