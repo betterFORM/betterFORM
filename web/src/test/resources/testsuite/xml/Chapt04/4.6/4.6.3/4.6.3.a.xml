@@ -26,33 +26,33 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
    <open href="Chapt04/4.6/4.6.3/4.6.3.a.xhtml"/>
    <assert-title title="4.6.3.a event sequencing for select/select1 controls with incremental=&#34;true&#34;"/>
    <select-option locator="xf-select-1" option="Honda"/>
-   <assert-control-value locator="xf-output-1·2" value="xforms-select (select)"/>
-   <assert-control-value locator="xf-output-1·3" value="xforms-recalculate"/>
-   <assert-control-value locator="xf-output-1·4" value="xforms-revalidate"/>
-   <assert-control-value locator="xf-output-1·5" value="xforms-refresh"/>
-   <assert-control-value locator="xf-output-1·6" value="xforms-value-changed (select)"/>
-   <select-option locator="xf-select-1" option="Acura"/>
-   <assert-control-value locator="xf-output-1·7" value="xforms-deselect (select)"/>
-   <assert-control-value locator="xf-output-1·8" value="xforms-select (select)"/>
-   <assert-control-value locator="xf-output-1·9" value="xforms-recalculate"/>
-   <assert-control-value locator="xf-output-1·10" value="xforms-revalidate"/>
-   <assert-control-value locator="xf-output-1·11" value="xforms-refresh"/>
-   <assert-control-value locator="xf-output-1·12" value="xforms-value-changed (select)"/>
-   
-   <open href="Chapt04/4.6/4.6.3/4.6.3.a.xhtml"/>
-   <assert-title title="4.6.3.a event sequencing for select/select1 controls with incremental=&#34;true&#34;"/>
-   <select-option locator="xf-select1-1" option="Honda"/>
-   <assert-control-value locator="xf-output-1·2" value="xforms-select (select1)"/>
-   <assert-control-value locator="xf-output-1·3" value="xforms-recalculate"/>
-   <assert-control-value locator="xf-output-1·4" value="xforms-revalidate"/>
-   <assert-control-value locator="xf-output-1·5" value="xforms-refresh"/>
-   <assert-control-value locator="xf-output-1·6" value="xforms-value-changed (select1)"/>
-   <select-option locator="xf-select1-1" option="Acura"/>
-   <assert-control-value locator="xf-output-1·7" value="xforms-deselect (select1)"/>
-   <assert-control-value locator="xf-output-1·8" value="xforms-select (select1)"/>
-   <assert-control-value locator="xf-output-1·9" value="xforms-recalculate"/>
-   <assert-control-value locator="xf-output-1·10" value="xforms-revalidate"/>
-   <assert-control-value locator="xf-output-1·11" value="xforms-refresh"/>
-   <assert-control-value locator="xf-output-1·12" value="xforms-value-changed (select1)"/>
-   
+   <assert-control-value locator="C65" value="xforms-select (select)"/>
+   <assert-control-value locator="C68" value="xforms-recalculate"/>
+   <assert-control-value locator="C71" value="xforms-revalidate"/>
+   <assert-control-value locator="C74" value="xforms-refresh"/>
+   <assert-control-value locator="C77" value="xforms-value-changed (select)"/>
+
+    <deselect-by-value locator="xf-select-1" value="hon"/>
+   <assert-control-value locator="C80" value="xforms-deselect (select)"/>
+   <assert-control-value locator="C83" value="xforms-recalculate"/>
+   <assert-control-value locator="C86" value="xforms-revalidate"/>
+   <assert-control-value locator="C89" value="xforms-refresh"/>
+   <assert-control-value locator="C92" value="xforms-value-changed (select)"/>
+
+    <open href="Chapt04/4.6/4.6.3/4.6.3.a.xhtml"/>
+    <assert-alert message="This page is asking you to confirm that you want to leave - data you have entered may not be saved."/>
+    <assert-title title="4.6.3.a event sequencing for select/select1 controls with incremental=&#34;true&#34;"/>
+    <select-option locator="xf-select1-1" option="Honda"/>
+    <assert-control-value locator="C65" value="xforms-select (select1)"/>
+    <assert-control-value locator="C68" value="xforms-recalculate"/>
+    <assert-control-value locator="C71" value="xforms-revalidate"/>
+    <assert-control-value locator="C74" value="xforms-refresh"/>
+    <assert-control-value locator="C77" value="xforms-value-changed (select1)"/>
+
+    <select-option locator="xf-select1-1" option=""/>
+    <assert-control-value locator="C80" value="xforms-deselect (select1)"/>
+    <assert-control-value locator="C83" value="xforms-recalculate"/>
+    <assert-control-value locator="C86" value="xforms-revalidate"/>
+    <assert-control-value locator="C89" value="xforms-refresh"/>
+    <assert-control-value locator="C92" value="xforms-value-changed (select1)"/>
 </test-case>
