@@ -23,8 +23,17 @@ STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <test-case xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner" xmlns:xf="http://www.w3.org/2002/xforms" xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../../../test-case.xsd">
-   <open href="Chapt04/4.6/4.6.3/4.6.3.c.xhtml"/>
-   <assert-title title="4.6.3.c event sequencing for select/select1 controls (focus changes)"/>
-   <fail msg="Test not implemented yet!"/>
-   <!-- FIXME: fix test 4.6.3.c -->
+    <open href="Chapt04/4.6/4.6.3/4.6.3.c.xhtml"/>
+    <assert-title title="4.6.3.c event sequencing for select/select1 controls with incremental=&#34;false&#34; (focus changes)"/>
+    <deselect-by-value locator="xf-select-1" value="acu"/>
+    <select-option locator="xf-select-1" option="Honda"/>
+    <assert-control-value locator="C64" value="xforms-deselect (select)"/>
+    <assert-control-value locator="C67" value="xforms-select (select)"/>
+
+    <select-option locator="xf-select1-1" option="Honda"/>
+    <assert-control-value locator="C70" value="xforms-recalculate"/>
+    <assert-control-value locator="C73" value="xforms-revalidate"/>
+    <assert-control-value locator="C76" value="xforms-refresh"/>
+
+
 </test-case>
