@@ -12,5 +12,6 @@
     <xforms:model>
     </xforms:model>
     <body>
+        <xforms:output ref="foo"/>
     </body>
 </envelope>

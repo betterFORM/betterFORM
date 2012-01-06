@@ -818,13 +818,6 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
             for (int index = 0; index < count; index++) {
                 Element xformsInstance = instanceElements.get(index);
                 createInstanceObject(xformsInstance);
-                String debug = Config.getInstance().getProperty("betterform.debug-allowed");
-                if(debug != null && debug.equals("true")){
-                    Map contextInfo = new HashMap(1);
-                    contextInfo.put("modelId",XFormsElement.getXFormsAttribute((Element) xformsInstance.getParentNode(),"id"));
-                    contextInfo.put("instanceId",XFormsElement.getXFormsAttribute(xformsInstance,"id"));
-                    this.container.dispatch(this.target, BetterFormEventNames.INSTANCE_CREATED, contextInfo);
-                }
             }
         }
 
@@ -861,6 +854,13 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
         Instance instance = (Instance) this.container.getElementFactory().createXFormsElement(xformsInstance, this);
         instance.init();
         this.instances.add(instance);
+        String debug = Config.getInstance().getProperty("betterform.debug-allowed");
+        if(debug != null && debug.equals("true")){
+            Map contextInfo = new HashMap(1);
+            contextInfo.put("modelId",XFormsElement.getXFormsAttribute((Element) xformsInstance.getParentNode(),"id"));
+            contextInfo.put("instanceId",XFormsElement.getXFormsAttribute(xformsInstance,"id"));
+            this.container.dispatch(this.target, BetterFormEventNames.INSTANCE_CREATED, contextInfo);
+        }
     }
 
 
@@ -882,6 +882,10 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
 
             // initialize ui elements
             Initializer.initializeUIElements(this.container.getDocument().getDocumentElement());
+            Instance inst = getDefaultInstance();
+            if(!inst.hasInitialInstance()){
+                inst.storeContainerRef();
+            }
             // We need to do an extra refresh because value and node ref expressions of UI controls can refer to for 
             // example the repeat-index of a repeat that is not yet initialized when the UI control is initialized
             // (the repeat is after the UI control in document order)  
