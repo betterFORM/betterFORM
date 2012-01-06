@@ -73,15 +73,12 @@ public class Instance extends XFormsElement {
         }
         // load initial instance
         this.initialInstance = createInitialInstance();
-
         // create instance document
         this.instanceDocument = createInstanceDocument();
         storeContainerRef();
-        
+
         registerId();
-
         initXPathContext();
-
     }
 
     private void initXPathContext() {
@@ -628,7 +625,7 @@ public class Instance extends XFormsElement {
 
         // if inline content is given this takes precedence over @resource
         List childs = DOMUtil.getChildElements(this.element);
-        if(childs.size() != 1) {
+        if(childs.size() > 1) {
             Map contextInfo = new HashMap();
             contextInfo.put("resource-uri",resourceUri);
             contextInfo.put("resource-error","multiple root elements found in instance");
@@ -765,7 +762,7 @@ public class Instance extends XFormsElement {
         }
     }
 
-    private void storeContainerRef() {
+    void storeContainerRef() {
         if(instanceDocument.getDocumentElement() != null){
             instanceDocument.getDocumentElement().setUserData("container",this.model.getContainer(),null);
             instanceDocument.getDocumentElement().setUserData("instance",this,null);

@@ -37,9 +37,8 @@ public class LazyInstanceTest extends BetterFormTestCase {
     public void testInit() throws Exception {
         assertNotNull(this.instance);
         dump(this.instance.getInstanceDocument());
-//        assertEquals("instance", this.instance.getId());
         assertNotNull(this.instance.getInstanceDocument());
-//        assertEquals("data", this.instance.getInstanceDocument().getDocumentElement().getNodeName());
+        assertNotNull(this.instance.getInstanceDocument().getDocumentElement().getUserData("instance"));
     }
 
 
