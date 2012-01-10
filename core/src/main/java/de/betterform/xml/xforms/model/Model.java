@@ -883,7 +883,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
             // initialize ui elements
             Initializer.initializeUIElements(this.container.getDocument().getDocumentElement());
             Instance inst = getDefaultInstance();
-            if(!inst.hasInitialInstance()){
+            if(inst != null && !inst.hasInitialInstance()){
                 inst.storeContainerRef();
             }
             // We need to do an extra refresh because value and node ref expressions of UI controls can refer to for 

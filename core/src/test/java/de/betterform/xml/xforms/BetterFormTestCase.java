@@ -9,6 +9,7 @@
  */
 package de.betterform.xml.xforms;
 
+import de.betterform.xml.xforms.model.Instance;
 import junit.framework.TestCase;
 import net.sf.saxon.dom.NodeWrapper;
 import net.sf.saxon.om.Item;
@@ -110,7 +111,11 @@ public abstract class BetterFormTestCase extends TestCase {
     }
 
     protected NodeInfo getDefaultContext() throws XFormsException {
-        return (NodeInfo) getDefaultModel().getDefaultInstance().getInstanceNodeset().get(0);
+        Instance defaultInstance = getDefaultModel().getDefaultInstance();
+        if(defaultInstance != null){
+            return (NodeInfo) getDefaultModel().getDefaultInstance().getInstanceNodeset().get(0);
+        }
+        return null;
     }
 
 
