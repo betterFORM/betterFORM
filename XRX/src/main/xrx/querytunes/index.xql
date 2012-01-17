@@ -1,10 +1,17 @@
 xquery version "1.0";
 
 declare namespace exist = "http://exist.sourceforge.net/NS/exist";
+declare namespace xf = "http://www.w3.org/2002/xforms";
 
 import module namespace request="http://exist-db.org/xquery/request";
 
 declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
+
+
+
+declare function local:numberOfAlbums() as xs:integer {
+    count(collection('/db/betterform/apps/querytunes/data')//album)
+};
 
 let $contextPath := request:get-context-path()
 return
@@ -15,6 +22,26 @@ return
     <head>
         <title>betterFORM Demo XForms: Address, Registration, FeatureExplorer</title>
         <link rel="stylesheet" type="text/css" href="{$contextPath}/rest/db/betterform/forms/demo/styles/demo.css"/>
+        <style type="text/css">
+           .tableHeader th {{
+                 font-weight:bold;
+                 font-size: 12pt;
+           }}
+
+           .tableBody .column1 {{
+                text-align:right;
+           }}
+
+           .tableBody td {{
+                 padding-right:20px;
+                 padding-bottom:5px;
+                 position:relative;
+           }}
+           
+           #inputStart .xfValue {{
+                width:30px;
+            }}
+        </style>
     </head>
     <body id="timetracker" class="tundra InlineRoundBordersAlert">
         <div class="page">
@@ -22,10 +49,15 @@ return
                 <xf:model id="model-1">
                     <xf:instance>
                         <data xmlns="">
-                            <start>20</start>
-                            <quantity>20</quantity>
+                            <start>1</start>
+                            <quantity>10</quantity>
+                            <search/>
                         </data>
                     </xf:instance>
+                    <xf:bind nodeset="instance()">
+                        <xf:bind nodeset="start" type="integer"/>
+                        <xf:bind nodeset="quantity" type="integer"/>
+                    </xf:bind>
 
                     <xf:submission id="s-query-albums"
                                     resource="{$contextPath}/rest/db/betterform/apps/querytunes/view/list-itunes-albums.xql"
@@ -38,7 +70,39 @@ return
                             <xf:message>Submission 'Query Albums' failed</xf:message>
                         </xf:action>
                     </xf:submission>
+
+                    <xf:action ev:event="xforms-ready">
+                        <xf:send submission="s-query-albums"/>
+                    </xf:action>
+
+                   <xf:instance id="i-controller" xmlns="">
+                        <data>
+                            <currentAlbum/> 
+                            <next/>
+                            <previous/>
+                            <overall>{local:numberOfAlbums()}</overall>
+                        </data>
+                    </xf:instance>
+                    
+                    <xf:bind nodeset="instance('i-controller')">
+                        <xf:bind nodeset="previous" readonly="0 &gt; instance()/start - instance()/quantity"/>
+                        <xf:bind nodeset="next" readonly="instance()/start + instance()/quantity &gt; instance('i-controller')/overall"/>
+                    </xf:bind>
+                    
                 </xf:model>
+                <xf:input id="currentAlbum" ref="instance('i-controller')/currentAlbum">
+                    <xf:label>This is just a dummy used by JS</xf:label>
+                </xf:input>
+                <xf:trigger id="showAlbum">
+                    <xf:label>Show Album</xf:label>
+                    <xf:action>
+                        <xf:load show="embed" targetid="embedDialog">
+                            <xf:resource value="concat('{$contextPath}/rest/db/betterform/apps/querytunes/view/view-album.xql#xforms?album=',instance('i-controller')/currentAlbum)"/>
+                        </xf:load>
+                    </xf:action>
+                </xf:trigger>
+
+
             </div>
 
             <!-- ######################### Content ################################## -->
@@ -55,7 +119,7 @@ return
                             <table id="searchBar">
                                 <tr>
                                     <td>
-                                        <xf:input ref="start" incremental="true">
+                                        <xf:input id="inputStart" ref="start" incremental="true" >
                                             <xf:label>Start</xf:label>
                                             <xf:action ev:event="xforms-value-changed" if="instance()/start &gt; 0">
                                                 <xf:dispatch name="DOMActivate" targetid="overviewTrigger"/>
@@ -68,6 +132,10 @@ return
                                             <xf:action ev:event="xforms-value-changed">
                                                 <xf:dispatch  name="DOMActivate" targetid="overviewTrigger"/>
                                             </xf:action>
+                                            <xf:item>
+                                                <xf:label>10</xf:label>
+                                                <xf:value>10</xf:value>
+                                            </xf:item>
                                             <xf:item>
                                                 <xf:label>20</xf:label>
                                                 <xf:value>20</xf:value>
@@ -83,6 +151,13 @@ return
                                         </xf:select1>
                                     </td>
                                     <td>
+                                        <xf:input ref="search" incremental="true">
+                                            <xf:label>Search</xf:label>
+                                            <xf:send submission="s-query-albums" ev:event="xforms-value-changed"/>
+                                            
+                                        </xf:input>
+                                    </td>
+                                    <td>
                                         <xf:trigger id="closeFilter">
                                             <xf:label/>
                                             <script type="text/javascript">
@@ -95,22 +170,74 @@ return
                             </table>
                         </div>
                     </div>
-                    <div id="searchBtn" dojoType="dijit.form.Button" showLabel="true" onclick="alert('todo');">
-                        <span>Search</span>
-                    </div>
+                    <xf:trigger id="overviewTrigger">
+                        <xf:label>Search</xf:label>
+                        <xf:send submission="s-query-albums"/>
+                    </xf:trigger>
+
                 </div>
 
-                <img id="shadowTop" src="{$contextPath}/rest/db/betterform/apps/timetracker/resources/images/shad_top.jpg" alt=""/>
-                <xf:trigger id="overviewTrigger">
-                    <xf:label>iTunes</xf:label>
-                    <xf:send submission="s-query-albums"/>
-                </xf:trigger>
+                <img id="shadowTop" src="{$contextPath}/rest/db/betterform/apps/timetracker/resources/images/shad_top.jpg" alt="" style="height: 5px;position: relative;top: -6px;width: 100%;"/>
 
+
+                <div id="albumDialog" dojotype="dijit.Dialog" style="width:610px;height:480px;" title="Album" autofocus="false">
+                    <div id="embedDialog"></div>
+                </div>
+                <div class="paging" style="float:right;">
+                    <xf:trigger appearance="minimal" ref="instance('i-controller')/previous">
+                        <xf:label>previous</xf:label>
+                        <xf:setvalue ref="instance()/start" value="number(instance()/start) - number(instance()/quantity)" />
+                        <xf:recalculate/>
+                        <xf:dispatch name="DOMActivate" targetid="overviewTrigger"/>
+                    </xf:trigger>
+                    <span> / </span>
+                    <xf:trigger appearance="minimal" ref="instance('i-controller')/next">
+                        <xf:label>next</xf:label>
+                        <xf:setvalue ref="instance()/start" value="number(instance()/start) + number(instance()/quantity)" />
+                        <xf:recalculate/>
+                        <xf:dispatch name="DOMActivate" targetid="overviewTrigger"/>
+                    </xf:trigger>
+                </div>
+                
+                <!-- inlined content -->
                 <!-- inlined content -->
                 <div id="embedInline"></div>
             </div>
         </div>
         <script defer="defer" type="text/javascript" src="{$contextPath}/bfResources/scripts/betterform/betterform-TimeTracker.js"> </script>
+        <script type="text/javascript" defer="defer">
+            <!--
+            var xfReadySubscribers;
 
+            function embed(targetTrigger,targetMount){
+                console.debug("embed",targetTrigger,targetMount);
+                if(dojo.byId('embedDialog') != undefined) {
+                    dojo.byId('embedDialog').innerHTML = "";
+                }
+                
+                if(targetMount == "embedDialog"){
+                    dijit.byId("albumDialog").show();
+                }
+
+                var targetMount =  dojo.byId(targetMount);
+
+                fluxProcessor.dispatchEvent(targetTrigger);
+                console.debug("dispatched Event to ", targetTrigger);
+            }
+
+            var editSubcriber = dojo.subscribe("/album/show", function(data){
+                console.debug("album show: ", data);
+                fluxProcessor.setControlValue("currentAlbum",data);
+                embed('showAlbum','embedDialog');
+
+            });
+
+
+            var refreshSubcriber = dojo.subscribe("/task/refresh", function(){
+                fluxProcessor.dispatchEvent("overviewTrigger");
+            });
+
+            // -->
+        </script>
     </body>
 </html>
