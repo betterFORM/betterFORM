@@ -9,39 +9,37 @@ declare option exist:serialize "method=xhtml media-type=application/xhtml+html";
 
 (: creates the output for all tasks matching the query :)
 declare function local:main() as node() * {
-    let $albums := local:getMatchingTasks()
-    let $start := xs:integer(request:get-parameter("start", "1"))    
-    for $album at $pos in $albums
-        let $currentPosition := $pos + $start - 1
-        let $position := if($currentPosition lt 10) then concat(0,$currentPosition) else $currentPosition
-        return            
-            if(string-length($album/artist) gt 0) then 
-                <tr class="tableBody">
-                    <td class="column1">{$position}</td>
-                    <td class="column2">{data($album/artist)}</td>
-                    <td class="column3"><a href="javascript:dojo.publish('/album/show',['{data($album/@id)}']);">{data($album/name)}</a></td>
-                    <td class="column4"></td>
-                </tr>
-            else ()
 
-};
-
-declare function local:getMatchingTasks() as node() * {
     let $start := xs:integer(request:get-parameter("start", "1"))
     let $quantity := xs:integer(request:get-parameter("quantity", "20"))
     let $search := request:get-parameter("search","")
-    return 
-        if(string-length($search) gt 0) then 
+    
+    let $albums :=          
+            if(string-length($search) gt 0) then 
             for $album in collection('/db/betterform/apps/querytunes/data')//album
                 where contains(lower-case($album/name),lower-case($search)) or contains(lower-case($album/artist),lower-case($search))
+                order by $album/artist/text() ascending  collation "?lang=de-DE"                
                 return $album
         else 
             for $album in collection('/db/betterform/apps/querytunes/data')//album
-                where $album/position() ge $start and $album/position() lt ($start + $quantity)        
+                order by $album/artist/text() ascending collation "?lang=de-DE"                 
                 return $album
 
-};
+    for $album at $pos in $albums
+        let $currentPosition := $pos + $start - 1
+        let $position := if($currentPosition lt 10) then concat(0,$currentPosition) else $currentPosition        
+        where $pos ge $start and $pos lt ($start + $quantity)                
+            return            
+                if(string-length($album/artist) gt 0) then 
+                    <tr class="tableBody">
+                        <td class="column1">{$position}</td>
+                        <td class="column2">{data($album/artist)}</td>
+                        <td class="column3"><a href="javascript:dojo.publish('/album/show',['{data($album/@id)}']);">{data($album/name)}</a></td>
+                        <td class="column4"></td>
+                    </tr>
+                else ()
 
+};
 
 let $contextPath := request:get-context-path()
 return

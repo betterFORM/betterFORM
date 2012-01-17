@@ -27,7 +27,7 @@ declare function local:getAlbumMetadata() as node() {
     let $albumId := request:get-parameter("album", "")
     let $album := collection('/db/betterform/apps/querytunes/data')//album[@id=$albumId]
     return 
-        <h1>{$album/artist} : {$album/name}</h1>
+        <h1 id="albumHeader">{$album/artist/text()} : {$album/name/text()}</h1>
 };
 declare function local:getArtist() as xs:string {
     let $albumId := request:get-parameter("album", "")
@@ -59,7 +59,7 @@ return
                 </xf:model>
             </div>
             <xf:group>
-                <h2>{local:getAlbumMetadata()}</h2> 
+                {local:getAlbumMetadata()} 
                 <table id="albumTable">
                     <tr class="tableHeader">
                         <th class="column1">No.</th>
@@ -77,6 +77,9 @@ return
                  <a href="http://www.last.fm/search?q={local:getArtist()}" target="_blank">last.fm</a>
                  -
                  <a href="http://grooveshark.com/#!/search?q={local:getArtist()}" target="_blank">Grooveshark</a>
+                 -
+                 <a href="http://twitter.com/#!/search/{local:getArtist()}" target="_blank">Twitter</a>
+                                  
                   
             </xf:group>
         </div>

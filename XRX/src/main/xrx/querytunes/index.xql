@@ -22,26 +22,7 @@ return
     <head>
         <title>betterFORM Demo XForms: Address, Registration, FeatureExplorer</title>
         <link rel="stylesheet" type="text/css" href="{$contextPath}/rest/db/betterform/forms/demo/styles/demo.css"/>
-        <style type="text/css">
-           .tableHeader th {{
-                 font-weight:bold;
-                 font-size: 12pt;
-           }}
-
-           .tableBody .column1 {{
-                text-align:right;
-           }}
-
-           .tableBody td {{
-                 padding-right:20px;
-                 padding-bottom:5px;
-                 position:relative;
-           }}
-           
-           #inputStart .xfValue {{
-                width:30px;
-            }}
-        </style>
+        <link rel="stylesheet" type="text/css" href="./resources/css/querytunes.css"/>
     </head>
     <body id="timetracker" class="tundra InlineRoundBordersAlert">
         <div class="page">
@@ -80,13 +61,17 @@ return
                             <currentAlbum/> 
                             <next/>
                             <previous/>
+                            <labelNext/>
+                            <labelPrevious/>
                             <overall>{local:numberOfAlbums()}</overall>
                         </data>
                     </xf:instance>
                     
                     <xf:bind nodeset="instance('i-controller')">
-                        <xf:bind nodeset="previous" readonly="0 &gt; instance()/start - instance()/quantity"/>
-                        <xf:bind nodeset="next" readonly="instance()/start + instance()/quantity &gt; instance('i-controller')/overall"/>
+                        <xf:bind nodeset="previous" readonly="instance()/start &lt;= 1"/>
+                        <xf:bind nodeset="next" readonly="instance()/start + instance()/quantity &gt; instance('i-controller')/overall"/>                        
+                        <xf:bind nodeset="labelPrevious" calculate="concat('previous ', instance()/quantity)"/>
+                        <xf:bind nodeset="labelNext" calculate="concat('next ', instance()/quantity)"/>
                     </xf:bind>
                     
                 </xf:model>
@@ -101,6 +86,10 @@ return
                         </xf:load>
                     </xf:action>
                 </xf:trigger>
+                <xf:trigger id="overviewTrigger">
+                    <xf:label>Search</xf:label>
+                    <xf:send submission="s-query-albums"/>
+                </xf:trigger>
 
 
             </div>
@@ -108,10 +97,11 @@ return
             <!-- ######################### Content ################################## -->
             <div id="content">
                 <div id="header">
-                    <a href="http://www.betterform.de"><img src="{$contextPath}/rest/db/betterform/apps/timetracker/resources/images/bf_logo_201x81.png" alt="betterFORM"/></a>
+                    <a id="linklogo" href="http://www.betterform.de"><img src="{$contextPath}/rest/db/betterform/apps/timetracker/resources/images/bf_logo_201x81.png" alt="betterFORM"/></a>
                     <div id="appName">queryTunes</div>
+    
                 </div>
-                <div id="toolbar" dojoType="dijit.Toolbar">
+                <div id="toolbar" dojoType="dijit.Toolbar" style="clear:both;">
                     <div id="overviewBtn" dojoType="dijit.form.DropDownButton" showLabel="true"
                          onclick="fluxProcessor.dispatchEvent('overviewTrigger');">
                         <span>Filter</span>
@@ -153,7 +143,12 @@ return
                                     <td>
                                         <xf:input ref="search" incremental="true">
                                             <xf:label>Search</xf:label>
-                                            <xf:send submission="s-query-albums" ev:event="xforms-value-changed"/>
+                                            <xf:action ev:event="xforms-value-changed">
+                                                <xf:setvalue ref="instance()/start" value="1"/>
+                                                <xf:recalculate/>
+                                                <xf:send submission="s-query-albums" />                                                
+                                            </xf:action>
+                                            
                                             
                                         </xf:input>
                                     </td>
@@ -169,30 +164,26 @@ return
                                 </tr>
                             </table>
                         </div>
-                    </div>
-                    <xf:trigger id="overviewTrigger">
-                        <xf:label>Search</xf:label>
-                        <xf:send submission="s-query-albums"/>
-                    </xf:trigger>
-
+                    </div>                    
                 </div>
 
-                <img id="shadowTop" src="{$contextPath}/rest/db/betterform/apps/timetracker/resources/images/shad_top.jpg" alt="" style="height: 5px;position: relative;top: -6px;width: 100%;"/>
+                <img id="shadowTop" src="{$contextPath}/rest/db/betterform/apps/timetracker/resources/images/shad_top.jpg" alt=""/>
 
 
-                <div id="albumDialog" dojotype="dijit.Dialog" style="width:610px;height:480px;" title="Album" autofocus="false">
+                <div id="albumDialog" dojotype="dijit.Dialog" style="left:200px;top:200px;position:absolute;width:auto;height:auto;" title="Album" autofocus="false">
                     <div id="embedDialog"></div>
                 </div>
+                
                 <div class="paging" style="float:right;">
                     <xf:trigger appearance="minimal" ref="instance('i-controller')/previous">
-                        <xf:label>previous</xf:label>
+                        <xf:label ref="instance('i-controller')/labelPrevious"/>
                         <xf:setvalue ref="instance()/start" value="number(instance()/start) - number(instance()/quantity)" />
                         <xf:recalculate/>
                         <xf:dispatch name="DOMActivate" targetid="overviewTrigger"/>
                     </xf:trigger>
                     <span> / </span>
                     <xf:trigger appearance="minimal" ref="instance('i-controller')/next">
-                        <xf:label>next</xf:label>
+                        <xf:label ref="instance('i-controller')/labelNext"/>
                         <xf:setvalue ref="instance()/start" value="number(instance()/start) + number(instance()/quantity)" />
                         <xf:recalculate/>
                         <xf:dispatch name="DOMActivate" targetid="overviewTrigger"/>
@@ -216,7 +207,11 @@ return
                 }
                 
                 if(targetMount == "embedDialog"){
-                    dijit.byId("albumDialog").show();
+                    dijit.byId("albumDialog").show();                    
+                    dojo.style(dojo.byId('albumDialog'), {
+                        top:'200px',
+                        left:'200px'
+                    });
                 }
 
                 var targetMount =  dojo.byId(targetMount);
