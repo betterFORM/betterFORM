@@ -82,10 +82,8 @@ public class FluxProcessor extends WebProcessor {
         this.root.addEventListener(BetterFormEventNames.ITEM_DELETED, this, true);
         this.root.addEventListener(BetterFormEventNames.INDEX_CHANGED, this, true);
         this.root.addEventListener(BetterFormEventNames.SWITCH_TOGGLED, this, true);
-        this.root.addEventListener(BetterFormEventNames.SCRIPT_ACTION, this, true);
         this.root.addEventListener(BetterFormEventNames.AVT_CHANGED, this, true);
-
-		//TODO, see where BetterFormEventNames.SHOW/HIDE should be added? Lars: moved to WebProcessor		
+		//TODO, see where BetterFormEventNames.SHOW/HIDE should be added? Lars: moved to WebProcessor
     }
 
 
@@ -284,7 +282,6 @@ public class FluxProcessor extends WebProcessor {
             this.root.removeEventListener(BetterFormEventNames.ITEM_DELETED, this, true);
             this.root.removeEventListener(BetterFormEventNames.INDEX_CHANGED, this, true);
             this.root.removeEventListener(BetterFormEventNames.SWITCH_TOGGLED, this, true);            
-            this.root.removeEventListener(BetterFormEventNames.SCRIPT_ACTION, this, true);
             this.root.removeEventListener(BetterFormEventNames.AVT_CHANGED, this, true);
         }
 
