@@ -46,32 +46,30 @@ public class WebDriverTestFunctions extends WebDriverTest {
 
     public void selectOption(final String id, String option) {
         WebElement webElement = webDriver.findElement(By.id(id));
-        String classes = webElement.getAttribute("class");
 
         WebElement webElementValue = webDriver.findElement(By.id(id+"-value"));
         String controlType = webElementValue.getAttribute("controlType");
 
-        if (classes != null) {
-            if (classes.contains("xfSelect1") && "select1RadioButton".equals(controlType)) {
-                Iterator<WebElement> select1OptionsElements = webElement.findElements(By.cssSelector(".xfSelectorItem")).iterator();
 
-                while (select1OptionsElements.hasNext()) {
-                    WebElement select1Option = select1OptionsElements.next();
-                    if (option.equals(select1Option.getText())) {
-                        select1Option.findElement(By.name(id+"-value")).click();
-                        return;
-                    }
+        if (hasHTMlClass(webElement, "xfSelect1") && "select1RadioButton".equals(controlType)) {
+            Iterator<WebElement> select1OptionsElements = webElement.findElements(By.cssSelector(".xfSelectorItem")).iterator();
+
+            while (select1OptionsElements.hasNext()) {
+                WebElement select1Option = select1OptionsElements.next();
+                if (option.equals(select1Option.getText())) {
+                    select1Option.findElement(By.name(id+"-value")).click();
+                    return;
                 }
-            } else {
-                Select select = new Select(webDriver.findElement(By.id(id+ "-value")));
+            }
+        } else {
+            Select select = new Select(webDriver.findElement(By.id(id+ "-value")));
 
-                select.selectByVisibleText(option);
+            select.selectByVisibleText(option);
 
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception e) {
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
 
-                }
             }
         }
     }
@@ -177,48 +175,37 @@ public class WebDriverTestFunctions extends WebDriverTest {
 
     public boolean isControlValueValid(String id) {
         WebElement webElement = webDriver.findElement(By.id(id));
-        String classAttribute = webElement.getAttribute("class");
-
-        if (classAttribute != null) {
-            return classAttribute.contains("xfValid");
-        }
-
-        return false;
-
+        return hasHTMlClass(webElement, "xfValid");
     }
 
     public boolean isControlValueInvalid(String id) {
         WebElement webElement = webDriver.findElement(By.id(id));
-        String classAttribute = webElement.getAttribute("class");
-
-        if (classAttribute != null) {
-            return classAttribute.contains("xfInvalid");
-        }
-
-        return false;
-
+        return hasHTMlClass(webElement, "xfInvalid");
     }
 
     public boolean isControlReadWrite(String id) {
         WebElement webElement = webDriver.findElement(By.id(id));
-        String classAttribute = webElement.getAttribute("class");
 
-        if (classAttribute != null) {
-            if (classAttribute.contains("xfReadWrite")) {
-                if (webElement.getAttribute("readonly") != null) {
-                       return webElement.getAttribute("readonly").equals("false");
-                }
 
-                WebElement webElementValue = webDriver.findElement(By.id(id+ "-value"));
 
-                if ( webElementValue.getAttribute("aria-readonly") != null ) {
-                    return webElementValue.getAttribute("aria-readonly").equals("false");
-                } else {
-                    //TODO: is this enough??
-                    return true;
-                }
+        if (hasHTMlClass(webElement, "xfReadWrite")) {
+            if (hasHTMlClass(webElement,"xfContainer")) {
+                return true;
+            }
+            if (webElement.getAttribute("readonly") != null) {
+                   return webElement.getAttribute("readonly").equals("false");
+            }
+
+            WebElement webElementValue = webDriver.findElement(By.id(id+ "-value"));
+
+            if ( webElementValue.getAttribute("aria-readonly") != null ) {
+                return webElementValue.getAttribute("aria-readonly").equals("false");
+            } else {
+                //TODO: is this enough??
+                return true;
             }
         }
+
 
         return false;
 
@@ -226,24 +213,25 @@ public class WebDriverTestFunctions extends WebDriverTest {
 
     public boolean isControlReadOnly(String id) {
         WebElement webElement = webDriver.findElement(By.id(id));
-        String classAttribute = webElement.getAttribute("class");
 
-        if (classAttribute != null) {
-            if (classAttribute.contains("xfReadOnly")) {
-                if (webElement.getAttribute("readonly") != null) {
-                    return webElement.getAttribute("readonly").equals("true");
-                }
+        if (hasHTMlClass(webElement, "xfReadOnly")) {
+            if (hasHTMlClass(webElement, "xfContainer")) {
+                return true;
+            }
+            if (webElement.getAttribute("readonly") != null) {
+                return webElement.getAttribute("readonly").equals("true");
+            }
 
-                WebElement webElementValue = webDriver.findElement(By.id(id+ "-value")); 
+            WebElement webElementValue = webDriver.findElement(By.id(id+ "-value"));
 
-                if ( webElementValue.getAttribute("aria-readonly") != null ) {
-                    return webElementValue.getAttribute("aria-readonly").equals("true");
-                } else {
-                    //TODO: is this enough ??
-                    return true;
-                }
+            if ( webElementValue.getAttribute("aria-readonly") != null ) {
+                return webElementValue.getAttribute("aria-readonly").equals("true");
+            } else {
+                //TODO: is this enough ??
+                return true;
             }
         }
+
 
         return false;
 
@@ -251,13 +239,19 @@ public class WebDriverTestFunctions extends WebDriverTest {
 
     public boolean isControlRequired(String id) {
         WebElement webElement = webDriver.findElement(By.id(id));
-        String classAttribute = webElement.getAttribute("class");
+        return hasHTMlClass(webElement, "xfRequired");
+    }
 
-        if (classAttribute != null) {
-            return classAttribute.contains("xfRequired");
+    public boolean isControlOptional(String id) {
+        boolean optional = !(isControlRequired(id));
+        
+        if (optional) {
+            WebElement label = webDriver.findElement(By.id(id)).findElement(By.tagName("label"));
+            String text = label.getText();
+            //TODO: FIXME Check that '*' is NOT present!
         }
 
-        return false;
+        return optional;
     }
 
      public boolean isControlFocused(String id) {
@@ -352,9 +346,7 @@ public class WebDriverTestFunctions extends WebDriverTest {
     private boolean checkControlHelpHintAlert(String id, String value, String htmlclass) {
         WebElement webElement = webDriver.findElement(By.id(id));
 
-        String classAttribute = webElement.getAttribute("class");
-
-        if (classAttribute != null && classAttribute.contains(htmlclass)) {
+        if (hasHTMlClass(webElement,htmlclass)) {
             if (! webElement.getCssValue("display").equals("none")) {
                 if (! "".equals(value)) {
                     return value.equalsIgnoreCase(webElement.getText());
@@ -374,24 +366,120 @@ public class WebDriverTestFunctions extends WebDriverTest {
         String roleAttribute = webElement.getAttribute("role");
 
         if (roleAttribute != null && roleAttribute.contains(type)) {
-            if (! webElement.getCssValue("display").equals("none")) {
-                if (! "".equals(value)) {
-                    return value.equalsIgnoreCase(webElement.getText());
-                }
-                return true;
+            if (! "".equals(value)) {
+                return value.equalsIgnoreCase(webElement.getText());
             }
         }
 
         return false;
     }
 
-    public boolean isHtmlClassPresent(String cssSelector, String value) {
+    public boolean isHtmlClassPresentByTagName(String tagName, String value) {
+        WebElement webElement = webDriver.findElement(By.tagName(tagName));
+        return hasHTMlClass(webElement,value);
+    }
+    public boolean isHtmlClassPresentByCssSelector(String cssSelector, String value) {
         WebElement webElement = webDriver.findElement(By.cssSelector(cssSelector));
-        
+        return hasHTMlClass(webElement,value);
+    }
+
+    private boolean hasHTMlClass(WebElement webElement, String htmlClass) {
         String classes = webElement.getAttribute("class");
 
         if (classes != null) {
-            return classes.contains(value);
+            return classes.contains(htmlClass);
+        }
+
+        return false;
+    }
+
+    public boolean hasControlAppearance(String locator, String type, String appearance) {
+        String htmlClass;
+        if (WebDriverTestInterface.appearanceDefault.equals(appearance) ) {
+            htmlClass = "xf" + type.substring(0,1).toUpperCase() + type.substring(1);
+        } else if(appearance.contains("bf:")) {
+            String[] split = appearance.split(":");
+            htmlClass = split[0] + split[1].substring(0,1).toUpperCase() + split[1].substring(1);
+        } else {
+            htmlClass = "xf" + appearance.substring(0,1).toUpperCase() + appearance.substring(1) + type.substring(0,1).toUpperCase() + type.substring(1);
+        }
+
+        WebElement control = webDriver.findElement(By.id(locator));
+
+        if (hasHTMlClass(control, htmlClass)) {
+            if ("group".equals(type)) {
+                return hasGrouplayout(control, appearance);
+            }
+        }
+        return false;
+    }
+
+
+    private boolean hasGrouplayout(WebElement group, String apperance) {
+        boolean validLayout = true;
+
+        if (WebDriverTestInterface.appearanceFull.equals(apperance)) {
+             if (WebDriverTestInterface.spanTagName.equals(group.getTagName())) {
+                 Iterator<WebElement> children = group.findElements(By.className(WebDriverTestInterface.xfControlClass)).iterator();
+
+                 while (children.hasNext()) {
+                     WebElement child = children.next();
+                     if (child.getAttribute("widgetid") != null) {
+                         WebElement widget = child.findElement(By.id("widget_" + child.getAttribute("widgetid") + "-value"));
+
+                         validLayout &= "200px".equals(widget.getCssValue("left"));
+                         validLayout &= "left".equals(widget.getCssValue("text-align"));
+                     }
+                     validLayout &= WebDriverTestInterface.spanTagName.equals(child.getTagName());
+                 }
+
+                 return validLayout;
+             }
+        } else  if (WebDriverTestInterface.appearanceCompact.equals(apperance) || WebDriverTestInterface.appearanceDefault.equals(apperance)) {
+            if (WebDriverTestInterface.spanTagName.equals(group.getTagName())) {
+                Iterator<WebElement> children = group.findElements(By.className(WebDriverTestInterface.xfControlClass)).iterator();
+
+                while (children.hasNext()) {
+                    WebElement child = children.next();
+                    if (child.getAttribute("widgetid") != null) {
+                        WebElement widget = child.findElement(By.id("widget_" + child.getAttribute("widgetid") + "-value"));
+
+                        validLayout &= "start".equals(widget.getCssValue("text-align"));
+
+                    }
+                    validLayout &= WebDriverTestInterface.spanTagName.equals(child.getTagName());
+                }
+
+                return validLayout;
+            }
+        } else  if (WebDriverTestInterface.appearanceHorizontalTable.equals(apperance)) {
+            if (WebDriverTestInterface.tableTagName.equals(group.getTagName())) {
+                final List<WebElement> children = group.findElements(By.tagName(WebDriverTestInterface.tableRowTagName));
+
+                if ( children.size() == 3 ) {
+                    WebElement labelRow = children.get(1);
+                    WebElement valueRow = children.get(2);
+
+                    final List<WebElement> labels = labelRow.findElements(By.tagName(WebDriverTestInterface.tableColTagName));
+                    final List<WebElement> values = valueRow.findElements(By.tagName(WebDriverTestInterface.tableColTagName));
+
+                    if (labels.size() == values.size()) {
+                        for (int i = 0; i < labels.size(); i++) {
+                            validLayout &= hasHTMlClass(labels.get(i), "bfHorizontalTableLabel)");
+                            List<WebElement> htmlLabels = labels.get(i).findElements(By.tagName(WebDriverTestInterface.labelTagName));
+
+                            validLayout &= (htmlLabels.size() == 1);
+                            validLayout &= (hasHTMlClass(htmlLabels.get(0), "bfTableLabel"));
+                            //TODO: !!!!
+                        }
+
+                        for (int i = 0; i < labels.size(); i++) {
+                            validLayout &= hasHTMlClass(values.get(i), "bfHorizontalTableValue)");
+                            //TODO: !!!!
+                        }
+                    }
+                }
+            }
         }
 
         return false;

@@ -146,7 +146,7 @@
     </xsl:template>
 
     <xsl:template match="xftr:assert-control-optional">
-        assertFalse(isControlRequired("<xsl:value-of select="@locator"/>"));
+        assertTrue(isControlOptional("<xsl:value-of select="@locator"/>"));
     </xsl:template>
 
     <xsl:template match="xftr:assert-control-invalid">
@@ -231,11 +231,31 @@
     </xsl:template>
 
     <xsl:template match="xftr:assert-control-alert-not-present">
-        assertFalse(isControlAlertPresent("<xsl:value-of select="@locator"/>", "<xsl:value-of select="@value"/>", null));
+        <xsl:choose>
+            <xsl:when test="exists(@type)">
+                assertFalse(isControlAlertPresent("<xsl:value-of select="@locator"/>", "<xsl:value-of select="@value"/>", "<xsl:value-of select="@type"/>"));
+            </xsl:when>
+            <xsl:otherwise>
+                assertFalse(isControlAlertPresent("<xsl:value-of select="@locator"/>", "<xsl:value-of select="@value"/>", null));
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template match="xftr:assert-html-class">
-        assertTrue(isHtmlClassPresent("<xsl:value-of select="@cssSelector"/>", "<xsl:value-of select="@value"/>"));
+        <xsl:choose>
+            <xsl:when test="exists(@tagName)">
+                assertTrue(isHtmlClassPresentByTagName("<xsl:value-of select="@tagName"/>", "<xsl:value-of select="@value"/>"));
+            </xsl:when>
+            <xsl:when test="exists(@cssSelector)">
+                assertTrue(isHtmlClassPresentByCssSelector("<xsl:value-of select="@cssSelector"/>", "<xsl:value-of select="@value"/>"));
+            </xsl:when>
+            <xsl:otherwise><xsl:message terminate="yes"><xsl:value-of select="name(.)"/> has unknown selector.</xsl:message></xsl:otherwise>
+        </xsl:choose>
+
+    </xsl:template>
+
+    <xsl:template match="xftr:assert-control-appearance">
+         assertTrue(hasControlAppearance("<xsl:value-of select="@locator"/>", "<xsl:value-of select="@type"/>", "<xsl:value-of select="@appearance"/>"));
     </xsl:template>
 
     <xsl:template match="xftr:fail">
@@ -243,6 +263,6 @@
     </xsl:template>
 
     <xsl:template match="xftr:*">
-        <xsl:message terminate="yes">Element <xsl:value-of select="name(.)"/> not implemented!</xsl:message>
+        <xsl:message terminate="yes">Element  not implemented!</xsl:message>
     </xsl:template>
 </xsl:stylesheet>

@@ -55,7 +55,7 @@
     <assert-control-valid locator="input1"/>
     <assert-control-value locator="input1" value="123456"/>
     <click locator="input2"/>
-    <assert-control-alert-not-present locator="input1" value="Your input is not long enough"/>
+    <assert-control-alert-not-present type="tooltip" locator="input1" value="Your input is not long enough"/>
 
     <click locator="input2"/>
     <assert-control-hint-present locator="input2-hint" value="The input must be longer than 5 characters"/>
@@ -90,7 +90,7 @@
     <assert-control-valid locator="input2"/>
     <assert-control-value locator="input2" value="123456"/>
     <click locator="input3"/>
-    <assert-control-alert-not-present locator="input2" value="Your input is not long enough"/>
+    <assert-control-alert-not-present type="tooltip" locator="input2" value="Your input is not long enough"/>
 
     <click locator="input3"/>
     <assert-control-hint-present locator="input3-hint" value="The input must be longer than 5 characters"/>
@@ -125,7 +125,7 @@
     <assert-control-valid locator="input3"/>
     <assert-control-value locator="input3" value="123456"/>
     <click locator="input4"/>
-    <assert-control-alert-not-present locator="input3" value="Your input is not long enough"/>
+    <assert-control-alert-not-present type="tooltip" locator="input3" value="Your input is not long enough"/>
 
     <click locator="input4"/>
     <assert-control-hint-present locator="input4-hint" value="The input must be longer than 5 characters"/>
@@ -160,7 +160,7 @@
     <assert-control-valid locator="input4"/>
     <assert-control-value locator="input4" value="123456"/>
     <click locator="input1"/>
-    <assert-control-alert-not-present locator="input4" value="Your input is not long enough"/>
+    <assert-control-alert-not-present type="tooltip" locator="input4" value="Your input is not long enough"/>
 
 
     <type-input locator="input1" value=""/>

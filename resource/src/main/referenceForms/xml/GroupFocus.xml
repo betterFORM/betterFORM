@@ -62,7 +62,7 @@
 
                 </code>
                 <code class="ui">
-<xf:input ref=".">
+<xf:input id="input1" ref=".">
     <xf:label>Input before observerd Group</xf:label>
 </xf:input>
 <xf:group id="observedGroup" appearance="minimal">
@@ -85,7 +85,7 @@
         <p class="caseTwo">Input 2 has focus</p>
     </xf:case>
 </xf:switch>
-<xf:input ref=".">
+<xf:input id="input2" ref=".">
     <xf:label>Input after observed Group</xf:label>
 </xf:input>
 

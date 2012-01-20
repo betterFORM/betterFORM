@@ -40,21 +40,21 @@
 </code>
                 </xf:model>
                 <code class="ui">
-<xf:trigger>
+<xf:trigger id="trigger1">
     <xf:label>Load HTML 5 audio element as part from an external file</xf:label>
     <xf:send submission="s-embedHTML-audio"/>
 </xf:trigger>
 
 <div id="mountpoint-audio"/>
 
-<xf:trigger>
+<xf:trigger id="trigger2">
     <xf:label>Load Plain HTML as part from an external file</xf:label>
     <xf:send submission="s-embedHTML-plain"/>
 </xf:trigger>
 
 <div id="mountpoint-plain"/>
 
-<xf:trigger>
+<xf:trigger id="trigger3">
     <xf:label>Load full external HTML file</xf:label>
     <xf:send submission="s-embedHTML-full"/>
 </xf:trigger>

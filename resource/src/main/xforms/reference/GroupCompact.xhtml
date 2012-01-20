@@ -232,29 +232,29 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:group ref="grouped-data/group" appearance="compact">
+            <xf:group id="group1" ref="grouped-data/group" appearance="compact">
                
                <xf:label>Group with compact appearance</xf:label>
                
-               <xf:input ref="a">
+               <xf:input id="input1" ref="a">
                   
                   <xf:label>A-label</xf:label>
                   
                </xf:input>
                
-               <xf:input ref="b">
+               <xf:input id="input2" ref="b">
                   
                   <xf:label>Bb-label</xf:label>
                   
                </xf:input>
                
-               <xf:input ref="c">
+               <xf:input id="input3" ref="c">
                   
                   <xf:label>Ccc-label</xf:label>
                   
                </xf:input>
                
-               <xf:input ref="d">
+               <xf:input id="input4" ref="d">
                   
                   <xf:label>Dddd-label</xf:label>
                   
@@ -268,25 +268,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="input1-readonly" ref="grouped-data/@readonly" incremental="true">
+               <xf:input id="group1-readonly" ref="grouped-data/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="input1-required" ref="grouped-data/@required" incremental="true">
+               <xf:input id="group1-required" ref="grouped-data/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="input1-relevant" ref="grouped-data/@relevant" incremental="true">
+               <xf:input id="group1-relevant" ref="grouped-data/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="input1-valid" ref="grouped-data/@constraint" incremental="true">
+               <xf:input id="group1-valid" ref="grouped-data/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   
@@ -296,18 +296,18 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:group ref="grouped-data/group" appearance="compact"&gt;
+         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:group id="group1" ref="grouped-data/group" appearance="compact"&gt;
     &lt;xf:label&gt;Group with compact appearance&lt;/xf:label&gt;
-    &lt;xf:input ref="a"&gt;
+    &lt;xf:input id="input1" ref="a"&gt;
         &lt;xf:label&gt;A-label&lt;/xf:label&gt;
     &lt;/xf:input&gt;
-    &lt;xf:input ref="b"&gt;
+    &lt;xf:input id="input2" ref="b"&gt;
         &lt;xf:label&gt;Bb-label&lt;/xf:label&gt;
     &lt;/xf:input&gt;
-    &lt;xf:input ref="c"&gt;
+    &lt;xf:input id="input3" ref="c"&gt;
         &lt;xf:label&gt;Ccc-label&lt;/xf:label&gt;
     &lt;/xf:input&gt;
-    &lt;xf:input ref="d"&gt;
+    &lt;xf:input id="input4" ref="d"&gt;
         &lt;xf:label&gt;Dddd-label&lt;/xf:label&gt;
     &lt;/xf:input&gt;
 &lt;/xf:group&gt;

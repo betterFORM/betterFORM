@@ -8,19 +8,19 @@
     <assert-control-present locator="select" type="select1"/>
     <assert-control-present locator="input1" type="input"/>
     <assert-control-value locator="input1" value="tundra"/>
-    <assert-html-class cssSelector="body" value="tundra"/>
+    <assert-html-class tagName="body" value="tundra"/>
 
     <assert-selection-options locator="select" options="claro, soria, tundra"/>
 
     <select-option locator="select" option="claro"/>
     <assert-control-value locator="input1" value="claro"/>
-    <assert-html-class cssSelector="body" value="claro"/>
+    <assert-html-class tagName="body" value="claro"/>
 
     <select-option locator="select" option="soria"/>
     <assert-control-value locator="input1" value="soria"/>
-    <assert-html-class cssSelector="body" value="soria"/>
+    <assert-html-class tagName="body" value="soria"/>
 
     <select-option locator="select" option="tundra"/>
     <assert-control-value locator="input1" value="tundra"/>
-    <assert-html-class cssSelector="body" value="tundra"/>
+    <assert-html-class tagName="body" value="tundra"/>
 </test-case>

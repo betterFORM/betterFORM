@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test-case xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner" xmlns:xf="http://www.w3.org/2002/xforms" xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../test-case.xsd">
+    <open href="reference/EmbedHTML.xhtml" bfTest="true"/>
+    <assert-title title='Submission element with replace="embedHTML"'/>
+
+    <assert-control-present locator="trigger1" type="trigger"/>
+    <assert-control-present locator="trigger2" type="trigger"/>
+    <assert-control-present locator="trigger3" type="trigger"/>
+
+    <assert-control-not-present locator="HTMLToEmbed-audio" type="div"/>
+    <assert-control-not-present locator="HTMLToEmbed-plain" type="div"/>
+    <assert-control-not-present locator="title" type="title"/>
+
+    <click locator="trigger1"/>
+    <assert-control-present locator="HTMLToEmbed-audio" type="div"/>
+    <assert-control-not-present locator="HTMLToEmbed-plain" type="div"/>
+    <assert-control-not-present locator="title" type="title"/>
+
+    <open href="reference/EmbedHTML.xhtml" bfTest="true"/>
+    <assert-title title='Submission element with replace="embedHTML"'/>
+    <click locator="trigger2"/>
+    <assert-control-not-present locator="HTMLToEmbed-audio" type="div"/>
+    <assert-control-present locator="HTMLToEmbed-plain" type="div"/>
+    <assert-control-not-present locator="title" type="title"/>
+
+    <open href="reference/EmbedHTML.xhtml" bfTest="true"/>
+    <assert-title title='Submission element with replace="embedHTML"'/>
+    <click locator="trigger3"/>
+    <assert-control-present locator="title" type="title"/>
+    <assert-control-present locator="HTMLToEmbed-audio" type="div"/>
+    <assert-control-present locator="HTMLToEmbed-plain" type="div"/>
+
+    <open href="reference/EmbedHTML.xhtml" bfTest="true"/>
+    <assert-title title='Submission element with replace="embedHTML"'/>
+
+    <click locator="trigger1"/>
+    <assert-control-present locator="HTMLToEmbed-audio" type="div"/>
+    <assert-control-not-present locator="HTMLToEmbed-plain" type="div"/>
+    <assert-control-not-present locator="title" type="title"/>
+
+    <click locator="trigger2"/>
+    <assert-control-present locator="HTMLToEmbed-audio" type="div"/>
+    <assert-control-present locator="HTMLToEmbed-plain" type="div"/>
+    <assert-control-not-present locator="title" type="title"/>
+
+    <click locator="trigger3"/>
+    <assert-control-present locator="title" type="title"/>
+    <assert-control-present locator="HTMLToEmbed-audio" type="div"/>
+    <assert-control-present locator="HTMLToEmbed-plain" type="div"/>
+</test-case>

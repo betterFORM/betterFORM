@@ -30,6 +30,8 @@ XRX/target/*
 tools/installer/target/*
 tools/installer/target-utils/*
 tools/editor/target/*
+##Ignore generated Java-Tests
+web/src/test/java/de/betterfrom/conformance/xf11/*
 web/target/*
 xApp/target/*
 zaphod/target/*

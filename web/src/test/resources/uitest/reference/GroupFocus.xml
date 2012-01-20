@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test-case xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner"
+           xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../test-case.xsd">
+    <open href="reference/GroupFocus.xhtml" bfTest="true"/>
+    <assert-title title="Group Focus"/>
+
+    <assert-control-present locator="observedGroup" type="group"/>
+    <assert-control-present locator="input1" type="input"/>
+    <assert-control-present locator="inputCase1" type="input"/>
+    <assert-control-present locator="inputCase2" type="input"/>
+    <assert-control-present locator="input2" type="input"/>
+
+    <click locator="input1"/>
+    <assert-control-present locator="c-empty" type="case"/>
+    <assert-control-not-present locator="c-input1" type="case"/>
+    <assert-control-not-present locator="c-input2" type="case"/>
+
+    <click locator="inputCase1"/>
+    <assert-control-present locator="c-input1" type="case"/>
+    <assert-control-not-present locator="c-empty" type="case"/>
+    <assert-control-not-present locator="c-input2" type="case"/>
+
+    <click locator="inputCase2"/>
+    <assert-control-present locator="c-input2" type="case"/>
+    <assert-control-not-present locator="c-input1" type="case"/>
+    <assert-control-not-present locator="c-empty" type="case"/>
+
+    <click locator="input2"/>
+    <assert-control-present locator="c-empty" type="case"/>
+    <assert-control-not-present locator="c-input1" type="case"/>
+    <assert-control-not-present locator="c-input2" type="case"/>
+
+    <type-input locator="input1" value="4012888888881881"/>
+    <assert-control-value locator="input1" value="4012888888881881"/>
+    <type-input locator="inputCase1" value="4012888888881882"/>
+    <assert-control-value locator="inputCase1" value="4012888888881882"/>
+    <type-input locator="inputCase2" value="4012888888881883"/>
+    <assert-control-value locator="inputCase2" value="4012888888881883"/>
+    <type-input locator="input2" value="4012888888881884"/>
+    <assert-control-value locator="input2" value="4012888888881884"/>
+
+
+    <click locator="input1"/>
+    <assert-control-present locator="c-empty" type="case"/>
+    <assert-control-not-present locator="c-input1" type="case"/>
+    <assert-control-not-present locator="c-input2" type="case"/>
+
+    <click locator="inputCase1"/>
+    <assert-control-present locator="c-input1" type="case"/>
+    <assert-control-not-present locator="c-empty" type="case"/>
+    <assert-control-not-present locator="c-input2" type="case"/>
+
+    <click locator="inputCase2"/>
+    <assert-control-present locator="c-input2" type="case"/>
+    <assert-control-not-present locator="c-input1" type="case"/>
+    <assert-control-not-present locator="c-empty" type="case"/>
+
+    <click locator="input2"/>
+    <assert-control-present locator="c-empty" type="case"/>
+    <assert-control-not-present locator="c-input1" type="case"/>
+    <assert-control-not-present locator="c-input2" type="case"/>
+
+<!--
+    <assert-control-present locator="group1" type="group"/>
+    <assert-control-present locator="input1" type="input"/>
+    <assert-control-present locator="input2" type="input"/>
+    <assert-control-present locator="input3" type="input"/>
+    <assert-control-present locator="input4" type="input"/>
+
+    <assert-control-readwrite locator="group1"/>
+    <assert-control-readwrite locator="input1"/>
+    <assert-control-readwrite locator="input2"/>
+    <assert-control-readwrite locator="input3"/>
+    <assert-control-readwrite locator="input4"/>
+
+    <click locator="group1-readonly"/>
+    <assert-control-readonly locator="group1"/>
+    <assert-control-readonly locator="input1"/>
+    <assert-control-readonly locator="input2"/>
+    <assert-control-readonly locator="input3"/>
+    <assert-control-readonly locator="input4"/>
+    <click locator="group1-readonly"/>
+
+    <assert-control-required locator="group1"/>
+    <assert-control-optional locator="input1"/>
+    <assert-control-optional locator="input2"/>
+    <assert-control-optional locator="input3"/>
+    <assert-control-optional locator="input4"/>
+    <click locator="group1-required"/>
+    <assert-control-optional locator="group1"/>
+    <assert-control-optional locator="input1"/>
+    <assert-control-optional locator="input2"/>
+    <assert-control-optional locator="input3"/>
+    <assert-control-optional locator="input4"/>
+    <click locator="group1-required"/>
+
+    <assert-control-present locator="group1"/>
+    <assert-control-present locator="input1"/>
+    <assert-control-present locator="input2"/>
+    <assert-control-present locator="input3"/>
+    <assert-control-present locator="input4"/>
+    <click locator="group1-relevant"/>
+    <assert-control-not-present locator="group1"/>
+    <assert-control-not-present locator="input1"/>
+    <assert-control-not-present locator="input2"/>
+    <assert-control-not-present locator="input3"/>
+    <assert-control-not-present locator="input4"/>
+    <click locator="group1-relevant"/>
+
+
+    <assert-control-valid locator="group1"/>
+    <assert-control-valid locator="input1"/>
+    <assert-control-valid locator="input2"/>
+    <assert-control-valid locator="input3"/>
+    <assert-control-valid locator="input4"/>
+    <click locator="group1-valid"/>
+    <assert-control-invalid locator="group1"/>
+    <assert-control-valid locator="input1"/>
+    <assert-control-valid locator="input2"/>
+    <assert-control-valid locator="input3"/>
+    <assert-control-valid locator="input4"/>
+    <click locator="group1-valid"/>
+
+    <type-input locator="input1" value="4012888888881881"/>
+    <assert-control-value locator="input1" value="4012888888881881"/>
+    <type-input locator="input2" value="4012888888881882"/>
+    <assert-control-value locator="input2" value="4012888888881882"/>
+    <type-input locator="input3" value="4012888888881883"/>
+    <assert-control-value locator="input3" value="4012888888881883"/>
+    <type-input locator="input4" value="4012888888881884"/>
+    <assert-control-value locator="input4" value="4012888888881884"/>
+-->
+
+</test-case>
