@@ -8,6 +8,23 @@ import module namespace util="http://exist-db.org/xquery/util";
 
 declare option exist:serialize "method=xhtml media-type=text/xml";
 
+declare function local:millisecondsToDuration($duration as xs:double)  {
+    if($duration gt 0) then 
+        let $hours   := floor($duration div (1000 * 60 * 60))
+        let $minutes := floor(($duration div (1000 * 60)) mod 60)
+        let $formatedMinutes := if($minutes < 10) then concat(0,$minutes)
+                                else $minutes       
+        let $seconds := floor(($duration  div 1000) mod 60)
+        let $formatedSeconds := if($seconds < 10) then concat(0,$seconds)
+                                else $seconds
+        return 
+            if($hours > 0) then 
+                concat($hours, ":", $formatedMinutes, ":", $formatedSeconds)
+            else 
+                concat($formatedMinutes, ":", $formatedSeconds)
+    else()            
+};
+
 (: creates the output for all tasks matching the query :)
 declare function local:viewAlbum() as node() * {     
      let $albumId := request:get-parameter("album", "")
@@ -17,7 +34,7 @@ declare function local:viewAlbum() as node() * {
             <tr class="tableBody">
                 <td class="column1">{data($track/@trackNumber)}</td>                
                 <td class="column2">{data($track)}</td>
-                <td class="column3">{substring(xs:string(number(data($track/@size)) div number(1048576)), 1,4)}</td>
+                <td class="column3">{local:millisecondsToDuration(xs:double($track/@time))}</td>
                 <td></td>
             
             </tr>
@@ -27,7 +44,7 @@ declare function local:getAlbumMetadata() as node() {
     let $albumId := request:get-parameter("album", "")
     let $album := collection('/db/betterform/apps/querytunes/data')//album[@id=$albumId]
     return 
-        <h1 id="albumHeader">{$album/artist/text()} : {$album/name/text()}</h1>
+        <h1 id="albumHeader">{$album/artist/text()} : {$album/name/text()} Duration: {local:millisecondsToDuration(sum($album//track/@time))}</h1>
 };
 declare function local:getArtist() as xs:string {
     let $albumId := request:get-parameter("album", "")
@@ -64,7 +81,7 @@ return
                     <tr class="tableHeader">
                         <th class="column1">No.</th>
                         <th class="column2">Titel</th>
-                        <th class="column3">Size (MB)</th>
+                        <th class="column3">Duration</th>
                         <th class="column4"></th>
                      </tr>
                      {local:viewAlbum()}

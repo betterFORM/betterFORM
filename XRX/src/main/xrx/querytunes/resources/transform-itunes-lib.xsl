@@ -57,8 +57,7 @@
             <xsl:attribute name="sampleRate" select="child::*[preceding-sibling::* = 'Sample Rate'][1]"/>
             <xsl:attribute name="playCount" select="child::*[preceding-sibling::* = 'Play Count'][1]"/>
             <xsl:attribute name="playDate" select="child::*[preceding-sibling::* = 'Play Date'][1]"/>
-            <xsl:attribute name="album" select="$albumName"/>
-            <xsl:attribute name="location" select="child::*[preceding-sibling::* = 'Location'][1]"/>
+            <xsl:attribute name="kind" select="child::*[preceding-sibling::* = 'Kind'][1]"/>
 
             <!--
             <xsl:value-of select="child::*[preceding-sibling::* = 'Normalization']" />

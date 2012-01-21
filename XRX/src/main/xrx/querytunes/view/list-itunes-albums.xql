@@ -18,11 +18,11 @@ declare function local:main() as node() * {
             if(string-length($search) gt 0) then 
             for $album in collection('/db/betterform/apps/querytunes/data')//album
                 where contains(lower-case($album/name),lower-case($search)) or contains(lower-case($album/artist),lower-case($search))
-                order by $album/artist/text() ascending  collation "?lang=de-DE"                
+                order by $album/artist/text() ascending  collation "?lang=de-DE"
                 return $album
         else 
             for $album in collection('/db/betterform/apps/querytunes/data')//album
-                order by $album/artist/text() ascending collation "?lang=de-DE"                 
+                order by $album/artist/text() ascending collation "?lang=de-DE"
                 return $album
 
     for $album at $pos in $albums
