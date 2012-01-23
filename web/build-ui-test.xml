@@ -6,7 +6,7 @@
     <path id="saxon.libs" description="classpath for Saxon">
         <pathelement location="${basedir}/../core/src/main/lib/saxon-9.2.1.5.jar"/>
     </path>
-    <property name="baseURL" value="http://localhost:8080/betterform/forms/"/>
+    <property name="baseURL" value="http://localhost:8001/betterform/forms/"/>
 
     <target name="clean">
         <delete file="${basedir}/target/betterform-webdriver.jar"/>
