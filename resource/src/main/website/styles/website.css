@@ -1308,14 +1308,20 @@ content-area{
 #newssection .header {
     font-size: 30pt;
     display: block;
-    padding-top:30px;
-    padding-left:20px;
+    padding-top:20px;
+    padding-left:8px;
 }
-#newssection .text {
-    padding-top:5px;
-    padding-left:20px;
+#newssection .text1 {
+    padding-left:8px;
     display: block;
 }
+#newssection .text2 {
+    font-size: 10pt;
+    padding: 8px;
+    display: block;
+    margin-top: -5px;
+}
+
 #index #sub-header #newssectionlink {
     display: inline;
     float: none;

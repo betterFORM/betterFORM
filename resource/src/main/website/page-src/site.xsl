@@ -154,7 +154,7 @@
                             placeHolder:"juitterContainer",
                             loadMSG: "Loading messages...",
                             imgName: "loader.gif", // Loading image, to enable it, go to the loadMSG var above and change it to "image/gif"
-                            total: 3, // number of tweets to be show - max 100
+                            total: 2, // number of tweets to be show - max 100
                             readMore: "blablb",
                             nameUser:"none",
                             openExternalLinks:"newWindow"

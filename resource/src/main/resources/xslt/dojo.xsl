@@ -4,7 +4,6 @@
   ~ Licensed under the terms of BSD License
   -->
 <xsl:stylesheet version="2.0"
-                xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xf="http://www.w3.org/2002/xforms"
                 xmlns:bf="http://betterform.sourceforge.net/xforms"
@@ -81,7 +80,7 @@
 
     <xsl:variable name="default-hint-appearance" select="'bubble'"/>
 
-
+    <xsl:variable name="include-betterform-css" select="if(contains(//body/@class,'no-bf-css')) then 'false' else 'true'" />
 
     <xsl:output method="xhtml" version="1.0" encoding="UTF-8" indent="no"
                 doctype-system="/resources/xsd/xhtml1-transitional.dtd"/>
@@ -140,7 +139,9 @@
     <xsl:template name="include-xforms-css">
         <!-- include betterForm default stylesheet -->
         <link rel="stylesheet" type="text/css" href="{$default-css}"/>
-        <link rel="stylesheet" type="text/css" href="{$betterform-css}"/>
+        <xsl:if test="$include-betterform-css='true'">
+            <link rel="stylesheet" type="text/css" href="{$betterform-css}"/>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template name="addLocalScript">
@@ -292,8 +293,10 @@
                      </xsl:for-each>
 
                      <xsl:variable name="outermostNodeset"
-                                  select=".//xf:*[not(ancestor::*[namespace-uri()='http://www.w3.org/2002/xforms'])][not(namespace-uri()='http://www.w3.org/2002/xforms' and local-name()='model')]"/>
+                                  select=".//xf:*[not(ancestor::*[namespace-uri()='http://www.w3.org/2002/xforms'])]
+                                  [not(namespace-uri()='http://www.w3.org/2002/xforms' and local-name()='model')]"/>
 
+                    <xsl:message>###################################<xsl:value-of select="count($outermostNodeset)"/></xsl:message>
                     <!-- detect how many outermost XForms elements we have in the body -->
                     <xsl:choose>
                         <xsl:when test="count($outermostNodeset) = 1">
@@ -630,7 +633,7 @@
     <xsl:template match="xf:hint">
         <xsl:variable name="parentId" select="../@id"/>
         <!--<xsl:message terminate="no">parentId: <xsl:value-of select="../@id"/>  id: <xsl:value-of select="@id"/> </xsl:message>-->
-        <span id="{../@id}-hint" class="xfHint" style="display:none">
+        <span id="{../@id}-hint" class="xfHint">
             <xsl:apply-templates/>
 
             <!-- if help exists we output the linking icon here -->
