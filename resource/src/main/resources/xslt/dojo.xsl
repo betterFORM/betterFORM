@@ -147,7 +147,7 @@
 
     <xsl:template name="addLocalScript">
         <script type="text/javascript" defer="defer">
-            <xsl:if test="$debug-enabled">
+            <xsl:if test="$debug-enabled='true'">
                 function getXFormsDOM(){
                     Flux.getXFormsDOM(document.getElementById("bfSessionKey").value,
                                     function(data){console.dirxml(data);}
@@ -287,7 +287,14 @@
                 </div>
             </noscript>
             <div id="formWrapper">
-                <div dojotype="betterform.FluxProcessor" jsId="fluxProcessor" id="fluxProcessor" sessionkey="{$sessionKey}" contextroot="{$contextroot}" usesDOMFocusIN="{$uses-DOMFocusIn}" dataPrefix="{$data-prefix}">
+                <div dojotype="betterform.FluxProcessor"
+                     jsId="fluxProcessor"
+                     id="fluxProcessor"
+                     sessionkey="{$sessionKey}"
+                     contextroot="{$contextroot}"
+                     usesDOMFocusIN="{$uses-DOMFocusIn}"
+                     dataPrefix="{$data-prefix}"
+                     logEvents="{$debug-enabled}">
 
                     <xsl:for-each select="//xf:model">
                         <div class="xfModel" style="display:none" id="{@id}" jsId="{@id}" dojoType="betterform.XFormsModelElement"/>
@@ -391,6 +398,14 @@
                         }
                     }
                 </script>
+                <div id="evtLogContainer" style="width:26px;height:26px;overflow:hidden;">
+                    <div id="logControls">
+                        <a id="switchLog" href="javascript:toggleLog();">&gt;</a>
+                        <a id="trashLog" href="javascript:clearLog();">x</a>
+                    </div>
+                    <ul id="eventLog">
+                    </ul>
+                </div>
                 <div id="openclose">
                     <a href="javascript:toggleDebug();" ><img class="debug-icon" src="{concat($contextroot,'/bfResources/images/collapse.png')}" alt=""/></a>
                 </div>
