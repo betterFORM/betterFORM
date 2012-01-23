@@ -4,6 +4,7 @@
   ~ Licensed under the terms of BSD License
   -->
 <xsl:stylesheet version="2.0"
+                xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xf="http://www.w3.org/2002/xforms"
                 xmlns:bf="http://betterform.sourceforge.net/xforms"
@@ -80,7 +81,7 @@
 
     <xsl:variable name="default-hint-appearance" select="'bubble'"/>
 
-    <xsl:variable name="include-betterform-css" select="if(contains(//body/@class,'no-bf-css')) then 'false' else 'true'" />
+    <!--<xsl:variable name="include-betterform-css" select="if(contains(//body/@class,'no-bf-css')) then 'false' else 'true'" />-->
 
     <xsl:output method="xhtml" version="1.0" encoding="UTF-8" indent="no"
                 doctype-system="/resources/xsd/xhtml1-transitional.dtd"/>
@@ -139,9 +140,9 @@
     <xsl:template name="include-xforms-css">
         <!-- include betterForm default stylesheet -->
         <link rel="stylesheet" type="text/css" href="{$default-css}"/>
-        <xsl:if test="$include-betterform-css='true'">
+        <!--<xsl:if test="$include-betterform-css='true'">-->
             <link rel="stylesheet" type="text/css" href="{$betterform-css}"/>
-        </xsl:if>
+        <!--</xsl:if>-->
     </xsl:template>
 
     <xsl:template name="addLocalScript">
