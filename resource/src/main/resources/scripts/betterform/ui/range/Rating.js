@@ -61,7 +61,7 @@ dojo.declare(
 
     _handleSetControlValue:function(value) {
         // console.debug("betterform.ui.range.Rating._handleSetControlValue: Value: ", value);
-        this.set("value",value);
+        this.setAttribute("value",value);
     }
 
 });

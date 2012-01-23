@@ -149,7 +149,7 @@
     </xsl:template>
 
 
-    <xsl:template name="select">       
+    <xsl:template name="select">
         <xsl:variable name="navindex" select="if (exists(@navindex)) then @navindex else '0'"/>
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="selection" select="@selection"/>
@@ -209,6 +209,57 @@
                 </select>
             </xsl:otherwise>
         </xsl:choose>
+    </xsl:template>
+
+    <xsl:template name="range">
+        <xsl:variable name="datatype">
+            <xsl:call-template name="getType"/>
+        </xsl:variable>
+        <xsl:message select="concat('Datatype: ',$datatype)"/>
+        <xsl:variable name="lname" select="local-name()"/>
+        <xsl:variable name="name" select="concat($data-prefix,@id)"/>
+
+        <xsl:variable name="incremental" select="if (exists(@incremental)) then @incremental else 'false'"/>
+
+        <xsl:variable name="incrementaldelay">
+            <xsl:value-of select="if (exists(@bf:incremental-delay)) then @bf:incremental-delay else '0'"/>
+        </xsl:variable>
+
+        <xsl:if test="$incrementaldelay ne '0'">
+            <xsl:message>
+                <xsl:value-of select="concat(' incremental-delay: ', $incrementaldelay)"/>
+            </xsl:message>
+        </xsl:if>
+        <xsl:variable name="navindex" select="if (exists(@navindex)) then @navindex else '0'"/>
+        <xsl:variable name="accesskey" select="if (exists(@accesskey)) then @accesskey else 'none'"/>
+
+        <xsl:variable name="value" select="bf:data/text()"/>
+        <xsl:variable name="start" select="@start"/>
+        <xsl:variable name="end" select="@end"/>
+        <xsl:variable name="step" select="@step"/>
+        <xsl:variable name="appearance" select="@appearance"/>
+        <xsl:message select="concat('Value: ',$value)"/>
+
+        <span id="{concat(@id,'-value')}"
+              class="xfValue"
+              dataType="{$datatype}"
+              controlType="{local-name()}"
+              appearance="{$appearance}"
+              name="{$name}"
+              incremental="{$incremental}"
+              tabindex="{$navindex}"
+              start="{$start}"
+              end="{$end}"
+              delay="{$incrementaldelay}"
+              step="{$step}"
+              value="{$value}"
+              title="">
+            <xsl:if test="$accesskey != ' none'">
+                <xsl:attribute name="accessKey">
+                    <xsl:value-of select="$accesskey"/>
+                </xsl:attribute>
+            </xsl:if>
+        </span>
     </xsl:template>
 
 

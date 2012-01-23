@@ -815,40 +815,7 @@
             </xsl:when>
 
             <xsl:when test="local-name()='range'">
-                <xsl:variable name="value" select="bf:data/@bf:value"/>
-                <xsl:variable name="start" select="bf:data/@bf:start"/>
-                <xsl:variable name="end" select="bf:data/@bf:end"/>
-                <xsl:variable name="step" select="bf:data/@bf:step"/>
-                <xsl:variable name="appearance" select="@appearance"/>
-
-                <span id="{concat(@id,'-value')}"
-                     class="xfValue"
-                     dataType="{$datatype}"
-                     controlType="{local-name()}"
-                     appearance="{$appearance}"
-                     name="{$name}"
-                     incremental="{$incremental}"
-                     tabindex="{$navindex}"
-                     start="{$start}"
-                     end="{$end}"
-                     step="{$step}"
-                     value="{$value}"
-                     title="">
-                    <xsl:if test="$accesskey != ' none'">
-                        <xsl:attribute name="accessKey"><xsl:value-of select="$accesskey"/></xsl:attribute>
-                    </xsl:if>
-
-<!--                  <ol dojoType="dijit.form.HorizontalRuleLabels" container="topDecoration"
-                        style="height:1em;font-size:75%;color:gray;">
-                        <xsl:if test="$start">
-                            <li><xsl:value-of select="$start"/></li>
-                            <li> </li>
-                        </xsl:if>
-                        <xsl:if test="$end">
-                            <li><xsl:value-of select="$end"/></li>
-                        </xsl:if>
-                    </ol>-->
-                </span>
+                <xsl:call-template name="range"/>
             </xsl:when>
             <xsl:when test="local-name()='select'">
                 <xsl:call-template name="select"/>

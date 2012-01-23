@@ -22,6 +22,7 @@ dojo.declare(
     },
 
     createRangeRatingWidget:function(controlId, sourceNode, classValue) {
+        // console.debug("createRangeRatingWidget: controlId:",controlId, " sourceNode:",sourceNode );
         var xfValue = parseInt(dojo.attr(sourceNode,"value"), "10");
         var end = 10;
         if(dojo.attr(sourceNode,"end")!= ""){
@@ -46,12 +47,14 @@ dojo.declare(
 
 
     createRangeSliderWidget:function(controlId, sourceNode, classValue) {
+        // console.debug("createRangeSliderWidget: controlId:",controlId, " sourceNode:",sourceNode );
         var xfValue = dojo.attr(sourceNode,"value")
         if (xfValue == "") {
             xfValue = 0;
         } else {
             xfValue = parseInt(xfValue, "10");
         }
+        // console.debug("createRangeSliderWidget: xfValue:",xfValue);
         var start = 0;
         var end = 10;
         var step = 1;

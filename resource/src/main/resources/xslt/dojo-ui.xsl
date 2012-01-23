@@ -522,18 +522,20 @@
             <xsl:call-template name="assemble-control-classes"/>
         </xsl:variable>
 
+<!--
         <xsl:variable name="htmlElem">
             <xsl:choose>
                 <xsl:when test="local-name()='output'">span</xsl:when>
                 <xsl:otherwise>div</xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
+-->
 
         <xsl:variable name="incrementaldelay">
             <xsl:value-of select="if (exists(@bf:incremental-delay)) then @bf:incremental-delay else 'undef'"/>
         </xsl:variable>
 
-        <xsl:element name="{$htmlElem}">
+        <xsl:element name="span">
             <xsl:attribute name="id" select="$id"/>
             <xsl:attribute name="class" select="concat($control-classes,' xfRepeated')"/>
             <xsl:attribute name="controlType" select="local-name()"/>
@@ -551,6 +553,9 @@
             <xsl:choose>
                 <xsl:when test="exists(@mediatype)">
                     <xsl:attribute name="mediatype" select="@mediatype"/>
+                </xsl:when>
+                <xsl:when test="'range' = local-name()">
+                    <xsl:call-template name="range"/>
                 </xsl:when>
                 <xsl:when test="'select' = local-name()">
                     <xsl:call-template name="select"/>
@@ -684,14 +689,16 @@
             <xsl:call-template name="assemble-control-classes"/>
         </xsl:variable>
 
+<!--
         <xsl:variable name="htmlElem">
             <xsl:choose>
                 <xsl:when test="local-name()='output'">span</xsl:when>
                 <xsl:otherwise>div</xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
+-->
 
-        <xsl:element name="{$htmlElem}">
+        <xsl:element name="span">
             <xsl:attribute name="id" select="$id"/>
             <xsl:attribute name="class" select="concat($control-classes,' xfRepeated')"/>
             <xsl:attribute name="controlType" select="local-name()"/>
@@ -710,6 +717,9 @@
 
             <!--<xsl:apply-templates select="xforms:alert"/>-->
             <xsl:choose>
+                <xsl:when test="'range' = local-name()">
+                    <xsl:call-template name="range"/>
+                </xsl:when>
                 <xsl:when test="'select' = local-name()">
                     <xsl:call-template name="select"/>
                     <!--<xsl:apply-templates select="xforms:alert"/>-->

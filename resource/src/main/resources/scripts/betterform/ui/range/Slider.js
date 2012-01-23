@@ -17,7 +17,7 @@ dojo.declare(
 {
 
     postMixInProperties:function() {
-         this.inherited(arguments);
+        this.inherited(arguments);
         this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);
     },
 
@@ -41,6 +41,7 @@ dojo.declare(
     },
 
     _setValueAttr: function(value, priorityChange,isServerUpdate) {
+        // console.debug("Slider._setValueAttr: value: ", value);
         if(!isServerUpdate){
             var tmpValue = dojo.attr(this.valueNode, "value");
             // console.debug("Slider._setValueAttr value: " + value + " valueNode.value:", tmpValue);
@@ -52,6 +53,7 @@ dojo.declare(
     },
 
     _handleSetControlValue:function(value, isServerUpdate) {
+        // console.debug("Slider._handleSetControlValue: value: ", value);
         var newValue  = parseInt(value, "10");
         if(newValue == undefined || newValue == "" || newValue == "NaN" || newValue < this.minimum){
             newValue = this.minimum;
