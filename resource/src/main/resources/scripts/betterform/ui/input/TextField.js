@@ -29,6 +29,17 @@ dojo.declare(
     postCreate:function() {
         this.inherited(arguments);
         this.setCurrentValue();
+        var inputDijit = this;
+        dojo.connect(this.domNode, "onkeypress", function (evt){
+            if(evt.keyCode){
+                switch(evt.keyCode){
+                    case dojo.keys.ENTER:
+                        // console.debug("keyboard hit return");
+                        inputDijit.setControlValue();
+                        fluxProcessor.dispatchEvent(inputDijit.xfControlId);
+                }
+            }
+        });
     },
 
     _onFocus:function() {
