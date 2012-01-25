@@ -522,10 +522,21 @@ alert + hints should always be aligned with the control.
 .bfCheckBoxGroup .xfSelectorItem{
 	margin-right:6px;
 }
-
+/* TODO: Review Select CSS Classes, there is no xfFullSelect but only xfSelect on the Control Dijit */
 .xfFullSelect .xfSelectorItem .xfLabel {
     display: inline;
     float: none;
+}
+
+.xfSelect  .xfOptGroupLabelFull,
+.xfSelect1 .xfOptGroupLabelFull {
+    font-weight:bold;
+    font-style:	italic;
+    text-align:	left;
+    padding-right:10px;
+}
+.xfSelect1 .xfOptGroupLabelFull {
+    padding-left:5px;
 }
 
 .xfFullGroup .xfControl .xfValue {
