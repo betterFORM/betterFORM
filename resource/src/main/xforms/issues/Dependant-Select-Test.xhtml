@@ -66,7 +66,7 @@
     <table border="1">
         <tr>
             <td style="vertical-align: top!important;">
-                <xf:select1 ref="instance('selected-values')/selected-performance-window">
+                <xf:select1 ref="instance('selected-values')/selected-performance-window" >
                     <xf:label>Performance Window:</xf:label>
                     <xf:itemset nodeset="instance('performance-windows')/item">
                         <xf:label ref="@name"/>
@@ -100,7 +100,7 @@
     <xf:repeat id="rid" nodeset="instance('months')/item[position() le (24 - number(instance('selected-values')/selected-performance-window))]">
         Month:<xf:output value="./@name"/>
     </xf:repeat>
-    
+
 
 </body>
 </html>

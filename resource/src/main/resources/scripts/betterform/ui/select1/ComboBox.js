@@ -33,6 +33,16 @@ dojo.declare(
     postCreate:function() {
         // console.debug("ComboBox.postCreate");
         dojo.connect(this.domNode,"onchange", this,"_onChange");
+        var optgroups = dojo.query('optgroup[controltype="optGroup"]',this.domNode);
+        if(optgroups.length){
+            for(var i =0;i< optgroups.length; i++){
+                var optGroupDijit = dijit.byId(optgroups[i].id);
+                if(!optGroupDijit){
+                    new betterform.ui.select.OptGroup({}, optgroups[i]);
+                }
+            }
+        }
+
         this.setCurrentValue();
     },
 

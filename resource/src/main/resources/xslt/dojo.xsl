@@ -523,8 +523,13 @@
                 <!--<xsl:with-param name="appearance" select="@appearance"/>-->
             </xsl:call-template>
         </xsl:variable>
+        <xsl:variable name="assembled-label-classes"><xsl:call-template name="assemble-label-classes"/></xsl:variable>
         <xsl:variable name="label-classes">
-            <xsl:call-template name="assemble-label-classes"/>
+            <xsl:choose>
+                <xsl:when test="string-length($assembled-label-classes) &gt; 0"><xsl:value-of select="$assembled-label-classes"/></xsl:when>
+                <xsl:otherwise>xfLabel</xsl:otherwise>
+            </xsl:choose>
+
         </xsl:variable>
 
         <span id="{$id}" class="{$control-classes}" dojoType="betterform.ui.Control">
