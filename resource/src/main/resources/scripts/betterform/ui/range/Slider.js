@@ -15,6 +15,19 @@ dojo.declare(
         "betterform.ui.range.Slider",
         [betterform.ui.ControlValue,dijit.form.HorizontalSlider],
 {
+    // overwritten HorizontalSlider.buildRendering to fix handling of label
+    buildRendering: function(){
+        this.inherited(arguments);
+        // revert label id changed by HorizontalSlider
+        var label = dojo.query('label[id="'+this.id+'_label"]');
+        if(label.length){
+            label[0].id = (this.xfControlId+"-label");
+            dijit.setWaiState(this.focusNode, "labelledby", label[0].id);
+        }
+        dijit.setWaiState(this.focusNode, "valuemin", this.minimum);
+        dijit.setWaiState(this.focusNode, "valuemax", this.maximum);
+    },
+
 
     postMixInProperties:function() {
         this.inherited(arguments);

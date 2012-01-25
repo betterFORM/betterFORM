@@ -216,7 +216,6 @@
             <xsl:call-template name="getType"/>
         </xsl:variable>
         <xsl:message select="concat('Datatype: ',$datatype)"/>
-        <xsl:variable name="lname" select="local-name()"/>
         <xsl:variable name="name" select="concat($data-prefix,@id)"/>
 
         <xsl:variable name="incremental" select="if (exists(@incremental)) then @incremental else 'false'"/>
@@ -225,11 +224,13 @@
             <xsl:value-of select="if (exists(@bf:incremental-delay)) then @bf:incremental-delay else '0'"/>
         </xsl:variable>
 
+<!--
         <xsl:if test="$incrementaldelay ne '0'">
             <xsl:message>
                 <xsl:value-of select="concat(' incremental-delay: ', $incrementaldelay)"/>
             </xsl:message>
         </xsl:if>
+-->
         <xsl:variable name="navindex" select="if (exists(@navindex)) then @navindex else '0'"/>
         <xsl:variable name="accesskey" select="if (exists(@accesskey)) then @accesskey else 'none'"/>
 
@@ -238,7 +239,6 @@
         <xsl:variable name="end" select="@end"/>
         <xsl:variable name="step" select="@step"/>
         <xsl:variable name="appearance" select="@appearance"/>
-        <xsl:message select="concat('Value: ',$value)"/>
 
         <span id="{concat(@id,'-value')}"
               class="xfValue"

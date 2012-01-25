@@ -48,7 +48,7 @@ dojo.declare(
 
     createRangeSliderWidget:function(controlId, sourceNode, classValue) {
         // console.debug("createRangeSliderWidget: controlId:",controlId, " sourceNode:",sourceNode );
-        var xfValue = dojo.attr(sourceNode,"value")
+        var xfValue = dojo.attr(sourceNode,"value");
         if (xfValue == "") {
             xfValue = 0;
         } else {
