@@ -1442,9 +1442,15 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
 
     },
     _handleBetterFormItemDeleted:function(xmlEvent) {
-        console.debug("handle betterform-item-deleted for ", xmlEvent.contextInfo.targetName, " [id: '", xmlEvent.contextInfo.targetId, "'] contextInfo:", xmlEvent.contextInfo);
+        // console.debug("handle betterform-item-deleted for ", xmlEvent.contextInfo.targetName, " [id: '", xmlEvent.contextInfo.targetId, "'] contextInfo:", xmlEvent.contextInfo);
         if (xmlEvent.contextInfo.targetName == "itemset") {
-            dijit.byId(xmlEvent.contextInfo.targetId).handleDelete(xmlEvent.contextInfo);
+            var itemset = dijit.byId(xmlEvent.contextInfo.targetId);
+            // console.debug("_handleBetterFormItemDeleted",itemset);
+            if(itemset){
+                dijit.byId(xmlEvent.contextInfo.targetId).handleDelete(xmlEvent.contextInfo);
+            } else {
+                console.warn("Itemset with id: '", xmlEvent.contextInfo.targetId, "' does not exist");
+            }
         }
         else if (xmlEvent.contextInfo.targetName == "repeat" || xmlEvent.contextInfo.targetName == "tbody") {
             var repeatElement = dojo.query("*[repeatId='" + xmlEvent.contextInfo.targetId + "']");
