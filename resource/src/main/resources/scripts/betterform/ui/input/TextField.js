@@ -8,6 +8,7 @@ dojo.provide("betterform.ui.input.TextField");
 dojo.require("dijit._Widget");
 dojo.require("dijit._Templated");
 dojo.require("dijit.form.TextBox");
+dojo.require("dojox.html.entities");
 
 
 dojo.declare(
@@ -23,7 +24,7 @@ dojo.declare(
         if (dojo.attr(this.srcNodeRef, "delay") != undefined && dojo.attr(this.srcNodeRef, "delay") != "") {
             this.delay = eval(dojo.attr(this.srcNodeRef, "delay"));
         }
- 
+
     },
 
     postCreate:function() {
@@ -40,6 +41,7 @@ dojo.declare(
                 }
             }
         });
+        this._handleSetControlValue(dojox.html.entities.decode(this._getValueAttr()));
     },
 
     _onFocus:function() {
