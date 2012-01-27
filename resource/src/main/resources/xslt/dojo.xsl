@@ -147,22 +147,6 @@
 
     <xsl:template name="addLocalScript">
         <script type="text/javascript" defer="defer">
-            <xsl:if test="$debug-enabled='true'">
-                function getXFormsDOM(){
-                    Flux.getXFormsDOM(document.getElementById("bfSessionKey").value,
-                                    function(data){console.dirxml(data);}
-                    );
-                }
-
-                function getInstanceDocument(instanceId){
-                    var model = dojo.query(".xfModel", dojo.doc)[0];
-                    dijit.byId(dojo.attr(model, "id")).getInstanceDocument(instanceId,
-                    function(data){
-                        console.dirxml(data);
-                    });
-                }
-            </xsl:if>
-
             <!--
             function loadBetterFORMJs(pathToRelease, developmentJsClass){
                 if (isBetterFORMRelease) {
