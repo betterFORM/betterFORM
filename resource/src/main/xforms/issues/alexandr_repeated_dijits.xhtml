@@ -7,6 +7,10 @@
       lang="de">
     <head>
         <title>Test of repeat and setvalue.</title>
+        <!-- TODO:
+                The problem here is, that the betterFORM processor assigns an id to the NumberSpinner <div>. This does not work within repeats since
+                 this id is not updated for the second (third.. ) row and we receive an id clash. Either the processor must generate different ids here
+                 or leave foreign markup untouched. -->
 
         <style type="text/css">
             .xfGroupLabel{
@@ -23,19 +27,6 @@
         <link rel="stylesheet" type="text/css" href="../../resources/styles/reference.css" />
 	    <link href="common2.css" rel="stylesheet" type="text/css"/>
         
-        <script type="text/javascript">
-                dojo.require("dojox.highlight");
-                dojo.require("dojox.highlight.languages.xml");
-                dojo.addOnLoad(function() {
-                    dojo.query("code").forEach(dojox.highlight.init);
-                });
-
-                dojo.require("dijit.form.Button");
-                dojo.require("dijit.TitlePane");
-                dojo.require('dijit.layout.ContentPane');
-				dojo.require("dijit.form.NumberSpinner");
-
-        </script>
 
     </head>
     <body class="soria" style="margin:30px;">
@@ -128,7 +119,7 @@
 <!-- Modified code -inside Repeat section -->
 
 <!-- Prevents normal rednering -->
-                    <div dojoType="dijit.form.NumberSpinner" intermediateChanges="true" id="temperatureCelsius" constraints="{min:0,max:40}" value="15"></div>
+                    <div dojoType="dijit.form.NumberSpinner" intermediateChanges="true"  constraints="{min:0,max:40}" value="15"></div>
 <!-- Prevents normal rednering -->
                   
                       </xf:group>
@@ -148,5 +139,19 @@
                   </div>
               </div>
           </div>
+    <script type="text/javascript">
+        dojo.require("dojox.highlight");
+        dojo.require("dojox.highlight.languages.xml");
+        dojo.addOnLoad(function() {
+            dojo.query("code").forEach(dojox.highlight.init);
+        });
+
+        dojo.require("dijit.form.Button");
+        dojo.require("dijit.TitlePane");
+        dojo.require('dijit.layout.ContentPane');
+        dojo.require("dijit.form.NumberSpinner");
+
+    </script>
+
     </body>
 </html>
