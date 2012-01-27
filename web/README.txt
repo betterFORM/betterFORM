@@ -34,7 +34,7 @@ deploy-to-servlet-container
     within $PROJECT_HOME/build.properties.xml
 
 
-package
+create-war
     creates betterForm Web war file
         - replaces developer dojo branch by fresh compiled dojo release
         - see web/target/betterform/resources/scripts/util/buildscripts/profiles/betterform.profile
