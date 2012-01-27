@@ -45,7 +45,7 @@ public abstract class WebDriverTest implements WebDriverTestInterface {
             }
         }
 
-        this.webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        this.webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     @After
