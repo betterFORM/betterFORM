@@ -135,18 +135,15 @@ public class XFormsErrorServlet extends HttpServlet {
             html.append("<a href=\"mailto:");
             html.append(mail);
 
-            mailbody.append("?subject='XForms Problem at ");
+            mailbody.append("?subject=XForms Problem at ");
             mailbody.append(request.getSession().getAttribute("betterform.referer"));
-            mailbody.append("'");
-            mailbody.append("&Body='Message:\n");
+            mailbody.append("&Body=Message:\n");
             mailbody.append(msg);
-            mailbody.append("\n\nElement causing Exception:\n");
+            mailbody.append("%0D%0A%0D%0AElement causing Exception:");
             mailbody.append(xpath);
-            mailbody.append("\n\nCaused by:\n");
-            mailbody.append(cause);
-            mailbody.append("'");
-
-            html.append(URLEncoder.encode(mailbody.toString(), "UTF-8"));
+            mailbody.append("%0D%0A%0D%0ACaused by:\n");
+            mailbody.append(URLEncoder.encode(cause,"UTF-8"));
+            html.append(mailbody.toString());
             html.append("\">");
             html.append("Report this problem...</a>");
             html.append("</div>");
