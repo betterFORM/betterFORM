@@ -13,7 +13,6 @@ import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.exception.XFormsException;
-import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xpath.XPathUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,7 +21,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.xforms.XFormsModelElement;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +31,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
+ * creates debugging output of a XForms document. Supports to render the host document as it exists at the time
+ * this servlet is called as well as the output of any instance document.
+ *
  * @author Joern Turner
  */
 public class XFormsInspectorServlet extends HttpServlet /* extends AbstractXFormsServlet */ {

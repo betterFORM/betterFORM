@@ -4,7 +4,6 @@
  */
 package de.betterform.xml.util;
 
-import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import junit.framework.TestCase;
 import org.w3c.dom.Document;
@@ -48,15 +47,7 @@ public class PositionalXMLReaderTest extends TestCase {
         Document doc = PositionalXMLReader.readXML(is);
         is.close();
 
-//        Node n = DOMUtil.getFirstChildElement(doc);
-//        Node n = DOMUtil.getById(doc,"dayTime_bind");
-        Node n = XPathUtil.evaluateAsSingleNode(doc, "//*[@id='dayTime_bind']");
-
-//        Node n = doc.getElementsByTagName("bind").item(0);
-
-        DOMUtil.prettyPrintDOM(doc);
-//        Node n = XPathUtil.evaluateAsSingleNode(doc, "//*[@id='dayTime_bind']");
-
+        Node n = XPathUtil.evaluateAsSingleNode(doc, "/xhtml:html//xforms:bind[@id='dayTime_bind']");
         assertEquals("19",n.getUserData("lineNumber"));
 
     }
@@ -68,7 +59,6 @@ public class PositionalXMLReaderTest extends TestCase {
         is.close();
 
         Node n = XPathUtil.evaluateAsSingleNode(doc, "//*[@id='foo']");
-
         assertEquals("29",n.getUserData("lineNumber"));
         n = XPathUtil.evaluateAsSingleNode(doc, "//*[@id='t-changeValue']");
         assertEquals("30",n.getUserData("lineNumber"));

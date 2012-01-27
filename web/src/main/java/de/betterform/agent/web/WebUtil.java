@@ -6,17 +6,15 @@
 
 package de.betterform.agent.web;
 
-import de.betterform.xml.xforms.ui.Filename;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.connector.http.AbstractHTTPConnector;
 import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.model.submission.RequestHeaders;
 import de.betterform.xml.xslt.TransformerService;
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.cookie.ClientCookie;
-import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.cookie.BasicClientCookie;
 
 import javax.servlet.http.HttpServletRequest;
@@ -329,9 +327,9 @@ public class WebUtil {
         }
 
         //storing the TransformerService
-        processor.setContextParam(TransformerService.TRANSFORMER_SERVICE, httpSession.getServletContext().getAttribute(TransformerService.class.getName()));
+        processor.setContextParam(TransformerService.TRANSFORMER_SERVICE, httpSession.getServletContext().getAttribute(TransformerService.TRANSFORMER_SERVICE));
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("TransformerService: " + httpSession.getServletContext().getAttribute(TransformerService.class.getName()));
+            LOGGER.debug("TransformerService: " + httpSession.getServletContext().getAttribute(TransformerService.TRANSFORMER_SERVICE));
         }
 
         //[2] read any request params that are *not* betterForm params and pass them into the context map

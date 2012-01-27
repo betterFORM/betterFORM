@@ -5,10 +5,10 @@
 
 package de.betterform.xml.xslt.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xslt.TransformerService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamSource;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Provides a resource caching implmentation of TransformerService. Special
+ * Provides a resource caching implementation of TransformerService. Special
  * care is taken for the inter-dependencies of the cached resources, i.e.
  * a resource is considered dirty if any dependant resource is dirty. This
  * means that a stylesheet will be reloaded even if just an included stylesheet
@@ -32,6 +32,7 @@ public class CachingTransformerService implements TransformerService, URIResolve
     private static final Log LOGGER = LogFactory.getLog(CachingTransformerService.class);
 
     private HashMap resources;
+    private HashMap<String,URI> name2URI;
     private ArrayList resolvers;
     private TransformerFactory transformerFactory;
     private boolean nocache = false;
@@ -41,6 +42,7 @@ public class CachingTransformerService implements TransformerService, URIResolve
      */
     public CachingTransformerService() {
         this.resources = new HashMap();
+        this.name2URI = new HashMap<String, URI>();
         this.resolvers = new ArrayList();
     }
 
@@ -94,7 +96,11 @@ public class CachingTransformerService implements TransformerService, URIResolve
         return getTransformerFactory().newTransformer();
     }
 
-
+    public Transformer getTransformerByName(String xsltFileName) throws TransformerException {
+        URI uri = this.name2URI.get(xsltFileName);
+        return getTransformer(uri);
+    }
+    
     /**
      * Returns a transformer for the specified stylesheet.
      * <p/>
@@ -129,6 +135,7 @@ public class CachingTransformerService implements TransformerService, URIResolve
 
                 // store entry in cache
                 this.resources.put(uri, entry);
+                this.name2URI.put(getXsltName(uri), uri);
             }
             else {
                 if (LOGGER.isDebugEnabled()) {
@@ -148,6 +155,11 @@ public class CachingTransformerService implements TransformerService, URIResolve
         catch (Exception e) {
             throw new TransformerException(e);
         }
+    }
+
+    private String getXsltName(URI uri) {
+        String s = uri.toString();
+        return s.substring(s.lastIndexOf("/")+1);
     }
 
     public void setNoCache(boolean b){

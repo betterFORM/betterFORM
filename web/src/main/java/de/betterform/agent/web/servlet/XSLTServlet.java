@@ -21,18 +21,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamSource;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
- * This servlet follows the PFG pattern (Post, forward, get) and provides the GET part. A seperate GET request at the end
- * of the request processing is used to render the output. This avoids problems with cached POST requests and the user
- * using the back button of the browser. Cause the GET request does not trigger such a warning the user can smoothly step
- * backwards.
  *
- * @author Joern Turner
- * @version $Version: $
- * @see de.betterform.agent.web.servlet.PlainHtmlServlet
  */
 public class XSLTServlet extends HttpServlet /* extends AbstractXFormsServlet */ {
     private static final Log LOGGER = LogFactory.getLog(XSLTServlet.class);

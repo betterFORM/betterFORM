@@ -7,12 +7,6 @@
 
 package de.betterform.agent.web.filter;
 
-import de.betterform.xml.dom.DOMUtil;
-import net.sf.ehcache.CacheManager;
-import org.apache.commons.fileupload.FileUpload;
-import org.apache.commons.fileupload.servlet.ServletRequestContext;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.agent.web.WebFactory;
 import de.betterform.agent.web.WebProcessor;
 import de.betterform.agent.web.WebUtil;
@@ -20,8 +14,15 @@ import de.betterform.agent.web.event.DefaultUIEventImpl;
 import de.betterform.agent.web.event.UIEvent;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
+import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.ns.NamespaceConstants;
+import de.betterform.xml.xforms.exception.XFormsErrorIndication;
 import de.betterform.xml.xforms.exception.XFormsException;
+import net.sf.ehcache.CacheManager;
+import org.apache.commons.fileupload.FileUpload;
+import org.apache.commons.fileupload.servlet.ServletRequestContext;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -214,6 +215,17 @@ public class XFormsFilter implements Filter {
                     catch (Exception e) {
                         LOG.error(e.getMessage(), e);
                         if (webProcessor != null) {
+                            //reset xforms to state before init and serialize it to StreamResult
+                            //reparse with PositionalXMLReader for error summary
+
+                            if(e instanceof XFormsErrorIndication){
+                                try {
+                                    session.setAttribute("betterform.hostDoc",webProcessor.getXForms());
+                                } catch (XFormsException e1) {
+                                    e1.printStackTrace();
+                                }
+                            }
+
                             // attempt to shutdown processor
                             try {
                                 webProcessor.shutdown();

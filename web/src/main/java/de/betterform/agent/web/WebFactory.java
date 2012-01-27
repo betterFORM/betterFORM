@@ -176,10 +176,17 @@ public class WebFactory {
                 LOGGER.debug("initializing xslt cache");
             }
 
-            // load default stylesheet
             try {
-                URI uri = getXsltURI(xsltPath, xsltDefault);
-                transformerService.getTransformer(uri);
+                // load default stylesheet
+                URI defaultTransformUri = getXsltURI(xsltPath, xsltDefault);
+                transformerService.getTransformer(defaultTransformUri);
+                
+                URI errorTransformer = getXsltURI(xsltPath,"error.xsl");
+                transformerService.getTransformer(errorTransformer);
+                
+                URI highlightingErrorTransformer = getXsltURI(xsltPath,"highlightError.xsl");
+                transformerService.getTransformer(highlightingErrorTransformer);
+
             }
             catch (Exception e) {
                 throw new XFormsConfigException(e);
@@ -188,11 +195,11 @@ public class WebFactory {
 
         // store service in servlet context
         // todo: contemplate about transformer service thread-safety
-        servletContext.setAttribute(TransformerService.class.getName(), transformerService);
+        servletContext.setAttribute(TransformerService.TRANSFORMER_SERVICE, transformerService);
     }
 
      public static XSLTGenerator setupTransformer(String xsltPath, String xslFile, ServletContext context) throws URISyntaxException {
-        TransformerService transformerService = (TransformerService) context.getAttribute(TransformerService.class.getName());
+        TransformerService transformerService = (TransformerService) context.getAttribute(TransformerService.TRANSFORMER_SERVICE);
         URI uri = new File(WebFactory.resolvePath(xsltPath, context)).toURI().resolve(new URI(xslFile));
 
         XSLTGenerator generator = new XSLTGenerator();

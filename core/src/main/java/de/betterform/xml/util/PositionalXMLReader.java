@@ -1,16 +1,6 @@
 package de.betterform.xml.util;
 
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Stack;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -18,6 +8,11 @@ import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import javax.xml.parsers.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Stack;
 
 public class PositionalXMLReader {
     final static String LINE_NUMBER_KEY_NAME = "lineNumber";
@@ -54,8 +49,6 @@ public class PositionalXMLReader {
                 for (int i = 0; i < attributes.getLength(); i++) {
                     el.setAttribute(attributes.getQName(i), attributes.getValue(i));
                 }
-                System.out.println("element: " + el.getTagName());
-                System.out.println("line: " + this.locator.getLineNumber());
                 el.setUserData(LINE_NUMBER_KEY_NAME, String.valueOf(this.locator.getLineNumber()), null);
                 elementStack.push(el);
             }

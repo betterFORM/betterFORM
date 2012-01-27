@@ -4,8 +4,8 @@
  */
 package de.betterform.xml.xslt.impl;
 
-import junit.framework.TestCase;
 import de.betterform.xml.xforms.exception.XFormsException;
+import junit.framework.TestCase;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -32,6 +32,24 @@ public class CachingTransformerServiceTest extends TestCase {
     private CachingTransformerService transformerService;
     private TestResourceResolver resourceResolver;
     private File parent;
+
+    public void testGetTransformerByName() throws Exception{
+        URI simpleURI = new File(this.parent, "CachingTransformerServiceSimpleTest.xsl").toURI();
+        Transformer simpleTransformer = this.transformerService.getTransformerByName("CachingTransformerServiceSimpleTest.xsl");
+        assertNotNull(simpleTransformer);
+        assertTrue(simpleTransformer instanceof Transformer);
+    }
+
+    public void testGetTransformerByNameNonExisting() throws Exception{
+        try {
+            URI invalidURI = new File(this.parent, "CachingTransformerServiceInvalidTest.xsl").toURI();
+            this.transformerService.getTransformer(invalidURI);
+            fail();
+        }
+        catch (Exception e) {
+            assertTrue(e instanceof TransformerException);
+        }
+    }
 
     /**
      * Tests obtaining a transformer object from the cache.
@@ -65,6 +83,7 @@ public class CachingTransformerServiceTest extends TestCase {
         assertEquals(1, this.resourceResolver.resources.keySet().size());
         assertEquals(true, this.resourceResolver.resources.keySet().contains(simpleURI));
     }
+
     public void testSetTransformer() throws Exception{
         try{
             this.transformerService.setTransformerFactory(TransformerFactory.newInstance());

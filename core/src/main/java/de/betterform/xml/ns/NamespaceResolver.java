@@ -252,7 +252,9 @@ public class NamespaceResolver {
                 }
 
                 //check for default namespace
-                if(attrQName.equals("xmlns")){
+                if(attrQName.equals("xmlns") && attr.getNodeValue().equals("http://www.w3.org/1999/xhtml")){
+                    nsPrefixMap.put("html",attr.getNodeValue());
+                }else if(attrQName.equals("xmlns")){
                     nsPrefixMap.put("",attr.getNodeValue());
                 }else{
                     String nsName = attr.getNodeName().substring(attrQName.indexOf(":")+1);

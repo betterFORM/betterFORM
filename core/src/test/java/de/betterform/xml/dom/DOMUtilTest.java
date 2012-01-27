@@ -110,6 +110,32 @@ public class DOMUtilTest extends TestCase {
         assertEquals("/root[1]/foo:elem1[2]/foo:elem2[2]/foo:elem3[1]",canonPath);
     }
 
+    public void testCanonicalPathHTMLNS() throws Exception{
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setNamespaceAware(true);
+        factory.setValidating(false);
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document document = builder.parse(getClass().getResourceAsStream("DOMUtilNSTest.xhtml"));
+
+        String canonPath;
+        Node root = document.getDocumentElement();
+        canonPath = DOMUtil.getCanonicalPath(root);
+        assertEquals("/html:html[1]",canonPath);
+
+        Node head = DOMUtil.findNthChildNS(root,"http://www.w3.org/1999/xhtml","head",1);
+        canonPath = DOMUtil.getCanonicalPath(head);
+        assertEquals("/html:html[1]/html:head[1]",canonPath);
+
+        Node meta = DOMUtil.findNthChildNS(head,"http://www.w3.org/1999/xhtml","meta",1);
+        canonPath = DOMUtil.getCanonicalPath(meta);
+        assertEquals("/html:html[1]/html:head[1]/html:meta[1]",canonPath);
+        
+        Node xfModel = DOMUtil.findNthChildNS(head,"http://www.w3.org/2002/xforms","model",1);
+        canonPath = DOMUtil.getCanonicalPath(xfModel);
+        assertEquals("/html:html[1]/html:head[1]/xf:model[1]",canonPath);
+
+    }
+
     /**
      * __UNDOCUMENTED__
      *

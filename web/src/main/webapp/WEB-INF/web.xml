@@ -89,7 +89,7 @@
 -->
     <servlet>
         <servlet-name>error</servlet-name>
-        <servlet-class>de.betterform.agent.web.servlet.XFormsErrorServlet</servlet-class>
+        <servlet-class>de.betterform.agent.web.servlet.ErrorServlet</servlet-class>
     </servlet>
 
 

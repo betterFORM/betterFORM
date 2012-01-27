@@ -7,7 +7,6 @@ package de.betterform.xml.dom;
 
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.*;
@@ -1090,7 +1089,15 @@ public class DOMUtil {
         }
 
         //add ourselves
-        String canonPath = node.getNodeName();
+        String canonPath;
+        String ns= node.getNamespaceURI();
+        String nodeName1=node.getNodeName();
+        String nodeName2=node.getLocalName();
+        if(ns!=null && ns.equals("http://www.w3.org/1999/xhtml") && node.getNodeName().equals(node.getLocalName())){
+            canonPath = "html:" + node.getNodeName();
+        }else{
+            canonPath = node.getNodeName();
+        }
         if (node.getNodeType() == Node.ATTRIBUTE_NODE) {
             canonPath = "@" + canonPath;
         } else if (node.getNodeType() == Node.ELEMENT_NODE) {
@@ -1117,6 +1124,25 @@ public class DOMUtil {
 
 
         return canonPath;
+    }
+
+    public static String serializeToString(org.w3c.dom.Document doc)    {
+        try
+        {
+            DOMSource domSource = new DOMSource(doc);
+            StringWriter writer = new StringWriter();
+            StreamResult result = new StreamResult(writer);
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer transformer = tf.newTransformer();
+            transformer.transform(domSource, result);
+            writer.flush();
+            return writer.toString();
+        }
+        catch(TransformerException ex)
+        {
+            ex.printStackTrace();
+            return null;
+        }
     }
 }
 

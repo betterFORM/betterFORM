@@ -21,7 +21,7 @@ import java.net.URI;
  * @version $Id: TransformerService.java 3240 2008-07-02 10:02:39Z lasse $
  */
 public interface TransformerService {
-    public static final String TRANSFORMER_SERVICE = "transformer.service";
+    public static final String TRANSFORMER_SERVICE = TransformerService.class.getName();
     /**
      * Returns the transformer factory.
      *
