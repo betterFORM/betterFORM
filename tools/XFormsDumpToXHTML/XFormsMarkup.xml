@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:bf="http://betterform.sourceforge.net/xforms"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <title>Load element with load="new"</title>
+        <xf:model id="C1">
+            <xf:instance xmlns="" id="C2">
+                <data/>
+            </xf:instance>
+        </xf:model>
+    </head>
+    <body>
+        <xf:trigger id="C3">
+            <xf:label id="C4">Load this Page in a new window</xf:label>
+            <xf:action id="C5">
+                <xf:load id="C6" resource="LoadNew.xhtml" show="new"/>
+            </xf:action>
+        </xf:trigger>
+    </body>
+</html>

@@ -10,7 +10,9 @@
         <!-- TODO:
                 The problem here is, that the betterFORM processor assigns an id to the NumberSpinner <div>. This does not work within repeats since
                  this id is not updated for the second (third.. ) row and we receive an id clash. Either the processor must generate different ids here
-                 or leave foreign markup untouched. -->
+                 or leave foreign markup untouched. The workaround is to create the Dijits via JavaScript (the ids have to be removed first, see the sample
+                 code at the bottom of the page -->
+
 
         <style type="text/css">
             .xfGroupLabel{
@@ -119,7 +121,7 @@
 <!-- Modified code -inside Repeat section -->
 
 <!-- Prevents normal rednering -->
-                    <div dojoType="dijit.form.NumberSpinner" intermediateChanges="true"  constraints="{min:0,max:40}" value="15"></div>
+                    <div  class="numberSpinner" intermediateChanges="true"  constraints="{min:0,max:40}" value="15"></div>
 <!-- Prevents normal rednering -->
                   
                       </xf:group>
@@ -143,6 +145,16 @@
         dojo.require("dojox.highlight");
         dojo.require("dojox.highlight.languages.xml");
         dojo.addOnLoad(function() {
+
+            var numberSpinner = dojo.query(".numberSpinner");
+            console.debug("numberSpinner:",numberSpinner);
+            dojo.forEach(numberSpinner, function(value) {
+                var newDate = new Date();
+                var newid =  newDate.getTime();
+                dojo.attr(value, "id", newid);
+                console.debug("value: ",value);
+                new dijit.form.NumberSpinner({},value);
+            });
             dojo.query("code").forEach(dojox.highlight.init);
         });
 
