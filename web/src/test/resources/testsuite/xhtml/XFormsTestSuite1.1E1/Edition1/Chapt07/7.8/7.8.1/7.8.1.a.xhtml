@@ -24,12 +24,14 @@
   		</xforms:label>
   	</xforms:group>
   	<xforms:group id="xf-group-3">
-		<xforms:output value="if(ex:age &gt; 17, 'Yes', 'No')" id="xf-output-1">
+        <!-- changed from 'if' to 'IF' due to a name clash between xforms and xpath -->
+		<xforms:output value="IF(ex:age &gt; 17, 'Yes', 'No')" id="xf-output-1">
    		    <xforms:label>Adult : </xforms:label>
 		</xforms:output>
 	</xforms:group>
 	<xforms:group id="xf-group-4">
-		<xforms:output value="if(ex:points &lt; 6, 'Safe', 'Unsafe')" id="xf-output-2">
+        <!-- changed from 'if' to 'IF' due to a name clash between xforms and xpath -->
+		<xforms:output value="IF(ex:points &lt; 6, 'Safe', 'Unsafe')" id="xf-output-2">
 			<xforms:label>Safety : </xforms:label> 
 		</xforms:output>
 	</xforms:group>

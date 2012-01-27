@@ -158,7 +158,7 @@
     </xsl:template>
 
     <xsl:template match="xftr:assert-control-value-in-range">
-            assertTrue(isControlValueInRange("<xsl:value-of select="concat(@locator, '-value')"/>", "<xsl:value-of select="@start"/>", "<xsl:value-of select="@end"/>"));
+            assertTrue(isControlValueInRange("<xsl:value-of select="@locator"/>", "<xsl:value-of select="@start"/>", "<xsl:value-of select="@end"/>"));
     </xsl:template>
 
 

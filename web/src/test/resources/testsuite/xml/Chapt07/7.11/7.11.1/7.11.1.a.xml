@@ -25,8 +25,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 <test-case xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner" xmlns:xf="http://www.w3.org/2002/xforms" xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../../../test-case.xsd">
    <open href="Chapt07/7.11/7.11.1/7.11.1.a.xhtml"/>
    <assert-title title="7.11.1.a choose() function"/>
-   <assert-control-value locator="xf-output-1·1" value="Garfield"/>
-   <assert-control-value locator="xf-output-1·2" value="Heathcliff"/>
-   <assert-control-value locator="xf-output-1·3" value="Felix"/>
-   <assert-control-value locator="xf-output-1·4" value="Tom"/>
+   <assert-control-value locator="C9" value="Garfield"/>
+   <assert-control-value locator="C12" value="Heathcliff"/>
+   <assert-control-value locator="C15" value="Felix"/>
+   <assert-control-value locator="C18" value="Tom"/>
 </test-case>

@@ -26,12 +26,12 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
    <open href="Chapt07/7.10/7.10.4/7.10.4.a.xhtml"/>
    <assert-title title="7.10.4.a context() function"/>
    <assert-control-value locator="xf-output-1" value="Unknown"/>
-   <click locator="xf-trigger-1·1"/>
+   <click locator="C10"/>
    <assert-control-value locator="xf-output-1" value="apple"/>
-   <click locator="xf-trigger-1·2"/>
+   <click locator="C15"/>
    <assert-control-value locator="xf-output-1" value="orange"/>
-   <click locator="xf-trigger-1·3"/>
+   <click locator="C20"/>
    <assert-control-value locator="xf-output-1" value="mandarine"/>
-   <click locator="xf-trigger-1·4"/>
+   <click locator="C25"/>
    <assert-control-value locator="xf-output-1" value="tomato"/>
 </test-case>
