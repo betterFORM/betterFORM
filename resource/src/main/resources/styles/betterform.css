@@ -224,6 +224,9 @@ a.active {
 	padding-bottom:4px;
 }
 
+.xfHint{
+    display:none;
+}
 .xfAlert, .xfHint{
 	position:absolute;
 	top:-3px;

@@ -126,7 +126,7 @@
 }
 
 #registration .xfHint {
-    display: block;
+    /*display: block;*/
     background: #F2F2F2 url(../images/hint.png) no-repeat 3% 7px;
     color: #666666;
     -moz-border-radius-topright: 8px;
