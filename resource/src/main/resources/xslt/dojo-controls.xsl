@@ -444,7 +444,9 @@
                 </optgroup>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:call-template name="build-items-list"/>
+                <xsl:for-each select="xforms:itemset|xforms:item|xforms:choices">
+                    <xsl:call-template name="build-items-list"/>
+                </xsl:for-each>
             </xsl:otherwise>
         </xsl:choose>
 	</xsl:template>

@@ -270,11 +270,15 @@
         <xsl:param name="name"/>
         <xsl:variable name="start" select="upper-case(substring($name,1,1))"/>
         <xsl:variable name="end" select="substring($name,2)"/>
-<!--
-        <xsl:message>start:<xsl:value-of select="$start"/></xsl:message>
-        <xsl:message>end:<xsl:value-of select="$end"/></xsl:message>
--->
-        <xsl:value-of select="concat($start,$end)"/>
+        <xsl:choose>
+            <xsl:when test="string-length($start) gt 0 and string-length($end) gt 0">                 
+                <xsl:value-of select="concat($start,$end)"/>
+            </xsl:when>            
+            <xsl:when test="string-length($start) gt 0 and string-length($end) = 0">                 
+                <xsl:value-of select="$start"/>
+            </xsl:when>            
+            <xsl:otherwise/>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template name="assemble-label-classes">
