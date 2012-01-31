@@ -5,12 +5,6 @@
 
 package de.betterform.xml.xforms.model;
 
-import de.betterform.xml.xforms.exception.XFormsErrorIndication;
-import net.sf.saxon.dom.NodeWrapper;
-import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.trans.XPathException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.XFormsEventNames;
@@ -24,6 +18,11 @@ import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import de.betterform.xml.xpath.XPathUtil;
 import de.betterform.xml.xpath.impl.saxon.BetterFormXPathContext;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
+import net.sf.saxon.dom.NodeWrapper;
+import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.trans.XPathException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.*;
 import org.w3c.dom.traversal.DocumentTraversal;
 import org.w3c.dom.traversal.NodeFilter;
@@ -673,7 +672,15 @@ public class Instance extends XFormsElement {
 
             if (result instanceof Element) {
                 return (Element) result;
-        }
+            }
+        
+            if (result instanceof String) {
+                try {
+                    return DOMUtil.parseString((String) result, true, false).getDocumentElement();
+                } catch (Exception e) {
+                    throw new XFormsLinkException("object model not supported", this.model.getTarget(), srcAttribute);
+                }
+            }
 
         throw new XFormsLinkException("object model not supported", this.model.getTarget(), srcAttribute);
     }

@@ -17,7 +17,7 @@ import org.w3c.dom.events.EventTarget;
  *
  * @author Tobi Krebs
  */
-public class InvalidInstanceSrcTest extends XMLTestBase {
+public class InvalidInstanceNoXMLSourceTest extends XMLTestBase {
     private XFormsProcessorImpl xformsProcesssorImpl;
     private TestEventListener LinkListener;
 
@@ -28,9 +28,9 @@ public class InvalidInstanceSrcTest extends XMLTestBase {
      */
     protected void setUp() throws Exception {
         this.xformsProcesssorImpl = new XFormsProcessorImpl();
-        this.xformsProcesssorImpl.setXForms(getClass().getResourceAsStream("InvalidInstanceURITest.xhtml"));
-        String path = getClass().getResource("InvalidInstanceURITest.xhtml").getPath();
-        String baseURI = "file://" + path.substring(0, path.lastIndexOf("InvalidInstanceURITest.xhtml"));
+        this.xformsProcesssorImpl.setXForms(getClass().getResourceAsStream("InvalidInstanceNoXMLSourceTest.xhtml"));
+        String path = getClass().getResource("InvalidInstanceNoXMLSourceTest.xhtml").getPath();
+        String baseURI = "file://" + path.substring(0, path.lastIndexOf("InvalidInstanceNoXMLSourceTest.xhtml"));
         this.xformsProcesssorImpl.setBaseURI(baseURI);
 
         this.LinkListener = new TestEventListener();
@@ -47,16 +47,17 @@ public class InvalidInstanceSrcTest extends XMLTestBase {
     }
 
     protected String getTestCaseURI() {
-        return "InvalidInstanceURITest.xhtml";  //To change body of implemented methods use File | Settings | File Templates.
+        return "InvalidInstanceNoXMLSourceTest.xhtml";  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public void testInvalidInstance() throws Exception {
+    public void testInvalidInstanceNoXMLSource() throws Exception {
         try{
             this.xformsProcesssorImpl.init();
             fail();
         }catch (XFormsLinkException e){
             assertNotNull(e);
-            assertEquals("doesnotexist.xml", this.LinkListener.getContext("resource-uri"));
+            assertEquals("noXML.txt", this.LinkListener.getContext("resource-uri"));
+            assertEquals("Content is not allowed in prolog.", this.LinkListener.getContext("detailMessage"));
         }
 
 
