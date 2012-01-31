@@ -21,6 +21,7 @@ import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
@@ -1045,6 +1046,13 @@ public class DOMUtil {
         transformer.transform(new DOMSource(node), new StreamResult(stream));
     }
 
+    public static void prettyPrintDOM(Node node, Node output) throws TransformerException {
+        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+        transformer.transform(new DOMSource(node), new DOMResult(node));
+    }
+
     public static void prettyPrintDOMAsHTML(Node node, OutputStream stream) throws TransformerException {
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -1144,6 +1152,31 @@ public class DOMUtil {
             return null;
         }
     }
+
+    /**
+     * creates a new non-namespaced, non-validating Document and creates a root node which is returned 
+     * @return the newly created root node
+     */
+    public static Element createRootElement(String rootNodeName) {
+        Document inputDoc = DOMUtil.newDocument(false, false);
+        Element rootNode = inputDoc.createElement(rootNodeName);
+        inputDoc.appendChild(rootNode);
+        return rootNode;
+    }
+
+    /**
+     * creates and appends an Element with given name to given parent and adds value as TextNode to new Element
+     * @param parent the parent Element to append to
+     * @param elementName the name of the Element to create
+     * @param value the TextNode value of the newly created Element
+     * 
+     */
+    public static void appendElement(Element parent,String elementName, String value) {
+        Element e = parent.getOwnerDocument().createElement(elementName);
+        DOMUtil.setElementValue(e, value);
+        parent.appendChild(e);
+    }
+
 }
 
 // end of class
