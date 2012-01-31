@@ -10,6 +10,11 @@
     <assert-control-present locator="input3" type="input"/>
     <assert-control-present locator="input4" type="input"/>
 
+    <assert-control-hint-not-present locator="input1-hint" value="The input must be longer than 5 characters"/>
+    <assert-control-hint-not-present locator="input2-hint" value="The input must be longer than 5 characters"/>
+    <assert-control-hint-not-present locator="input3-hint" value="The input must be longer than 5 characters"/>
+    <assert-control-hint-not-present locator="input4-hint" value="The input must be longer than 5 characters"/>
+
     <click locator="input1"/>
     <assert-control-hint-present locator="input1-hint" value="The input must be longer than 5 characters"/>
 
