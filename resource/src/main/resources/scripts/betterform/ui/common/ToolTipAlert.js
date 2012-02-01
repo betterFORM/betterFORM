@@ -62,6 +62,10 @@ dojo.declare("betterform.ui.common.ToolTipAlert",
             if (alertDijit != undefined && controlValue != undefined) {
                 alertDijit.hide(controlValue);
             }
+            if(dojo.hasClass(controlValue,"bfInvalidControl")) {
+                dojo.removeClass(controlValue,"bfInvalidControl");
+            }
+
         } else if (commonChild != undefined && commonChild == this.hint) {
             this._render(id, commonChild,"none");
         }
