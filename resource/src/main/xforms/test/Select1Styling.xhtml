@@ -1,0 +1,158 @@
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:xf="http://www.w3.org/2002/xforms">
+<head>
+    <title>Select1 appearance=simple Styling</title>
+    <style type="text/css">
+        .bf .xfSelect1 .select1wrapper {
+            background-image: url("/betterform/bfResources/images/dropdownButton.png");
+            background-position: right center;
+            background-repeat: no-repeat;
+            background-color: white;
+            border: 1px solid lightGray;
+            height: 15px;
+            overflow: hidden;
+            width: 120px;
+            display:block;
+        }
+
+        .bf .xfSelect1 select {
+            background: none repeat scroll 0 0 transparent;
+            border: 0 none;
+            font-size: 12px;
+            height: 15px;
+            padding: 0;
+            width: 180px;
+        }
+
+        .styled-select {
+            background-image: url("/betterform/bfResources/images/dropdownButton.png");
+            background-position: right center;
+            background-repeat: no-repeat;
+            border: 1px solid lightGray;
+            height: 15px;
+            overflow: hidden;
+            width: 120px;
+            display:block;
+        }
+
+        .styled-select select {
+            background: none repeat scroll 0 0 transparent;
+            border: 0 none;
+            font-size: 12px;
+            height: 15px;
+            padding: 0;
+            width: 180px;
+        }
+            /*        .styled-select select {
+                        background: transparent;
+                        -webkit-appearance: none;
+                        width: 213px;
+                        padding: 5px;
+                        font-size: 13px;
+                        border:1px solid #69A3D3;
+                        height: 28px;
+                        padding-right:55px
+                    }
+
+                    .styled-select {
+                        width: 183px;
+                        height: 29px;
+                        overflow: hidden;
+                        background:url("/betterform/bfResources/images/dropdownButton.png") no-repeat right #FFF;
+                        border-right:1px solid #69A3D3
+                    }
+
+                    .styled-select select {
+                        padding-right:0px;
+                        vertical-align:top !important;
+                        text-align:left;
+                        line-height:10px;
+                        height:auto;
+                    }
+                    .styled-select {
+                        border-bottom:1px solid #69A3D3
+                    }
+            */
+
+
+/*
+        select.select{
+            position:relative;
+            z-index:10;
+            width:166px !important;
+            height:26px !important;
+            line-height:26px;
+        }
+
+            *//* dynamically created SPAN, placed below the SELECT *//*
+        span .select{
+            position:absolute;
+            bottom:0;
+            float:left;
+            left:0;
+            width:166px;
+            height:26px;
+            line-height:26px;
+            text-indent:10px;
+            background:url(/betterform/bfResources/images/bg_select.gif) no-repeat 0 0;
+            cursor:default;
+            z-index:1;
+
+
+        }*/
+    </style>
+</head>
+<body>
+<div id="xforms">
+    <div style="display:none;">
+        <xf:model>
+            <xf:instance>
+                <data xmlns="">
+                    <value/>
+                    <value/>
+                </data>
+            </xf:instance>
+
+
+            <xf:instance id="colors">
+                    <items xmlns="">
+                        <color>
+                            <name>red</name>
+                            <value>00FF00</value>
+                        </color>
+                        <color>
+                            <name>green</name>
+                            <value>0000FF</value>
+                        </color>
+                        <color>
+                            <name>blue</name>
+                            <value>FF0000</value>
+                        </color>
+                    </items>
+            </xf:instance>
+        </xf:model>
+    </div>
+    <xf:group appearance="compact">
+        <xf:label>CSS styled Select1 appearance="minimal"</xf:label>
+        <xf:select1 id="select1" ref="value[1]" appearance="minimal">
+            <xf:label>XForms Select</xf:label>
+            <xf:itemset  nodeset="instance('colors')/color">
+                <xf:label ref="name"/>
+                <xf:value ref="value"/>
+            </xf:itemset>
+        </xf:select1>
+        <br/>
+        <br/>
+        <div>HTML Select</div>
+        <div class="styled-select">
+            <select>
+                <option>entry1</option>
+                <option>entry2</option>
+            </select>
+        </div>
+    </xf:group>
+
+</div>
+</body>
+</html>
