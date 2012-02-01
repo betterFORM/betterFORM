@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -115,13 +114,14 @@ public class XFormsInspectorServlet extends HttpServlet /* extends AbstractXForm
                 }
                 try{
                     Document instance = model.getInstanceDocument(instanceId);
-                    response.setContentType("application/xml");
-                    DOMUtil.prettyPrintDOM(instance, out);
+                    DOMUtil.appendElement(rootNode,"model",modelId);
+                    DOMUtil.appendElement(rootNode,"instance",instanceId);
+                    WebUtil.doTransform(getServletContext(), response, instance, "highlightDocument.xsl", rootNode);
+
+//                    DOMUtil.prettyPrintDOM(instance, out);
                 }catch(DOMException de){
-                    sendError(request, response, session, null,"Instance with id '" + instanceId + "' not found.");
+                    sendError(request, response, session, null, "Instance with id '" + instanceId + "' not found.");
                     return;
-                } catch (TransformerException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 }
             }
 

@@ -29,7 +29,7 @@
                         font-family:Tahoma;
                         font-size:14pt;
                         background:url('<xsl:value-of select="$params/context"/>/bfResources/images/bgOne.gif') repeat-x scroll;
-                        font-family: san-serif;
+                        font-family: sans-serif;
                         color:#4682b4;
                     }
                     .syntaxhighlighter{
@@ -101,6 +101,9 @@
 	</xsl:template>
 	
 	<xsl:template match="text()">
+<!--        <xsl:variable name="cleanedText" select="translate(., '&#x20;&#x9;&#xD;&#xA;', ' ')"/>
+        <xsl:copy-of select="$cleanedText"/>
+-->
         <xsl:copy-of select="."/>
 	</xsl:template>
 
