@@ -4,8 +4,9 @@
   -->
 
 <project name="Installer-eXist" default="create-XRX" basedir=".">
-    <property name="eXist.1.4.src" value="http://downloads.sourceforge.net/project/exist/Stable/1.4.1/eXist-setup-1.4.1-rev15155.jar"/>
-    <property name="eXist.1.5.src" value="http://downloads.sourceforge.net/project/exist/Stable/1.4.1/eXist-setup-1.4.1-rev15155.jar"/>
+    <property name="eXist.1.4.src" value="http://downloads.sourceforge.net/project/exist/Stable/1.4.2/eXist-setup-1.4.2dev-rev15584.jar"/>
+                                          <!-- http://downloads.sourceforge.net/project/exist/Stable/1.4.1/eXist-setup-1.4.1-rev15155.jar"/> -->
+    <property name="eXist.1.5.src" value="http://downloads.sourceforge.net/project/exist/Stable/1.4.2/eXist-setup-1.4.2dev-rev15584.jar"/>
 
     <property name="eXist.db.user" value="betterFORM"/>
     <property name="eXist.db.passwd" value="Tha0xeiC8a"/>
