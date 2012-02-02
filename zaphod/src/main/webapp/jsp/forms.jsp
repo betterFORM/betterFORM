@@ -1,5 +1,5 @@
 <%--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   --%>
 
@@ -37,11 +37,8 @@
 <%--<%@ page import="org.apache.commons.logging.Log"%>--%>
 <%--<%@ page import="org.apache.commons.logging.LogFactory"%>--%>
 <%@ page import="java.io.File"%>
-<%@ page import="java.io.InputStreamReader" %>
-<%@ page import="java.io.Reader" %>
 <%@ page import="java.text.DateFormat" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="java.util.Enumeration" %>
 <%@ page session="true"%>
 
    <body text="black" link="black" vlink="black" alink="orange">
