@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
-  ~ Licensed under the terms of BSD License
-  -->
-
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 <!-- $Id: log4j.xml 3038 2007-12-17 13:17:29Z lars $ -->
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
