@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
-  ~ Licensed under the terms of BSD License
-  -->
-
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xf="http://www.w3.org/2002/xforms"
         >
     <head>
-        <title>Alerts Simple </title>
+        <title>Full Repeat ToolTip Alert Test</title>
 
         <style type="text/css">
 			.xfGroupLabel {
@@ -143,10 +138,6 @@
 
 			</xf:bind>
 
-		<xf:submission id="s-debug" action="{$contextroot}/bfResources/jsp/debug-instance.jsp"
-					   method="post" replace="all"
-					   validate="false"/>
-
 		<xf:submission id="s-validate" action="echo:foo"
 					   method="get"
 					   replace="none"
@@ -154,61 +145,34 @@
 		</xf:model>
 
     </head>
-    <body class="tundra InlineAlert"  >
+    <body class="tundra ToolTip" >
     <div>
-        <h2>Alert Simple Test</h2>
-		<table>
-			<tr>
-				<td>
-					<xf:trigger>
-						<xf:label>Required</xf:label>
-						<xf:setvalue ref="repeated/@required" value="IF(.='true','false', 'true')"/>
-					</xf:trigger>
-				</td>
-				<td>
-					<xf:trigger>
-						<xf:label>Relevance</xf:label>
-						<xf:setvalue ref="repeated/@relevant" value="IF(.='true','false', 'true')"/>
-					</xf:trigger>
-				</td>
-				<td>
-					<xf:trigger>
-						<xf:label>Readonly</xf:label>
-						<xf:setvalue ref="repeated/@readonly" value="IF(.='true','false', 'true')"/>
-					</xf:trigger>
-				</td>
-				<td>
-					<xf:trigger>
-						<xf:label>Constraint</xf:label>
-						<xf:setvalue ref="repeated/@constraint" value="IF(.='true','false', 'true')"/>
-					</xf:trigger>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<xf:output ref="repeated/@required"/>
-				</td>
-				<td>
-					<xf:output ref="repeated/@relevant"/>
-				</td>
-				<td>
-					<xf:output ref="repeated/@readonly"/>
-
-				</td>
-				<td>
-					<xf:output ref="repeated/@constraint"/>
-
-				</td>
-			</tr>
-		</table>
-		<p>For a valid Input / Date and Date TIme insert more then 5 characters into the field</p>
+        <h2>Full Repeat ToolTip Alert Test</h2>
+        <xf:group appearance="minimal">
+            <xf:label>MIP Controls</xf:label>
+            <xf:trigger>
+                <xf:label><xf:output value="concat('Required:',instance()/repeated/@required)"/></xf:label>
+                <xf:setvalue ref="repeated/@required" value="IF(.='true','false', 'true')"/>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label><xf:output value="concat('Relevance:',instance()/repeated/@relevant)"/></xf:label>
+                <xf:setvalue ref="repeated/@relevant" value="IF(.='true','false', 'true')"/>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label><xf:output value="concat('Readonly:',instance()/repeated/@readonly)"/></xf:label>
+                <xf:setvalue ref="repeated/@readonly" value="IF(.='true','false', 'true')"/>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label><xf:output value="concat('Valid:',instance()/repeated/@constraint)"/></xf:label>
+                <xf:setvalue ref="repeated/@constraint" value="IF(.='true','false', 'true')"/>
+            </xf:trigger>
+        </xf:group>
+		<p>For a valid Input / Date and Date Time insert more then 5 characters into the field</p>
 		<p>For a valid Boolean set state selected</p>
 		<p>For a valid Select(1) choose (only!) England</p>
 
 <!--		<xf:group  appearance="bf:verticalTable">-->
 		<xf:repeat nodeset="repeated/item" appearance="full">
-			<xf:group  appearance="minimal">
-				<xf:label/>
 					<xf:input ref="input[1]" incremental="true">
 						<xf:label>Input 1 (incremental):</xf:label>
 						<xf:alert>Input 1 <b>Alert</b>  (incremental)</xf:alert>
@@ -325,13 +289,7 @@
 						<xf:help>Textarea 1 Help</xf:help>
 					</xf:textarea>
 -->
-
-				</xf:group>
 		</xf:repeat>
     </div>
-            <xf:trigger appearance="full">
-                <xf:label>Validate</xf:label>
-                <xf:send submission="s-validate"/>
-            </xf:trigger>
     </body>
 </html>

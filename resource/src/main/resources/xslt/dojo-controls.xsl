@@ -129,19 +129,21 @@
                     </xsl:when>
                     <!-- Standard Minimal Select -->
                     <xsl:otherwise>
-                        <select id="{$id}-value"
-                                name="{$name}"
-                                class="xfValue"
-                                dataType="{$datatype}"
-                                controlType="select1ComboBox"
-                                title=""
-                                tabindex="{$navindex}"
-                                schemaValue="{bf:data/@bf:schema-value}"
-                                incremental="{$incremental}">
-                            <xsl:call-template name="build-items">
-                                <xsl:with-param name="parent" select="$parent"/>
-                            </xsl:call-template>
-                        </select>
+                        <span class="select1wrapper">
+                            <select id="{$id}-value"
+                                    name="{$name}"
+                                    class="xfValue"
+                                    dataType="{$datatype}"
+                                    controlType="select1ComboBox"
+                                    title=""
+                                    tabindex="{$navindex}"
+                                    schemaValue="{bf:data/@bf:schema-value}"
+                                    incremental="{$incremental}">
+                                <xsl:call-template name="build-items">
+                                    <xsl:with-param name="parent" select="$parent"/>
+                                </xsl:call-template>
+                            </select>
+                        </span>
                     </xsl:otherwise>
                 </xsl:choose>
         </xsl:otherwise>

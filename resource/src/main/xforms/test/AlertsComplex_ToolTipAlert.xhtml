@@ -5,10 +5,9 @@
   -->
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:xf="http://www.w3.org/2002/xforms"
-        >
+      xmlns:xf="http://www.w3.org/2002/xforms">
     <head>
-        <title>Complex Alert Test</title>
+        <title>Complex Test for ToolTip Alerts</title>
 
         <style type="text/css">
             h1 {
@@ -36,7 +35,7 @@
 			<xf:instance id="i-1" xmlns="">
 				<data>
 					<trigger/>
-					<repeated relevant="true" readonly="false" constraint="false">
+					<repeated required="true" relevant="true" readonly="false" constraint="false">
 						<item>
 							<input/>
 							<input/>
@@ -59,22 +58,22 @@
 			</xf:instance>
 			<xf:bind nodeset="repeated/item" relevant="boolean-from-string(../@relevant)" readonly="boolean-from-string(../@readonly)">
 
-				<xf:bind nodeset="input[1]" constraint="string-length(.) &gt; 4 or boolean-from-string(../../@constraint)"/>
-				<xf:bind nodeset="input[2]" constraint="boolean-from-string(.) = true() or boolean-from-string(../../@constraint)" type="xf:boolean"/>
-				<xf:bind nodeset="input[3]" constraint="string-length(.) &gt; 4 or boolean-from-string(../../@constraint)" type="xf:date"/>
-				<xf:bind nodeset="input[4]" constraint="string-length(.) &gt; 4 or boolean-from-string(../../@constraint)" type="xf:dateTime"/>
-				<xf:bind nodeset="select1[1]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
-				<xf:bind nodeset="select1[2]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
-				<xf:bind nodeset="select1[3]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
-				<xf:bind nodeset="select[1]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
-				<xf:bind nodeset="select[2]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
+				<xf:bind nodeset="input[1]" constraint="string-length(.) &gt; 4 or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)"/>
+				<xf:bind nodeset="input[2]" constraint="boolean-from-string(.) = true() or boolean-from-string(../../@constraint)" type="xf:boolean" required="boolean-from-string(../../@required)"/>
+				<xf:bind nodeset="input[3]" constraint="string-length(.) &gt; 4 or boolean-from-string(../../@constraint)" type="xf:date" required="boolean-from-string(../../@required)"/>
+				<xf:bind nodeset="input[4]" constraint="string-length(.) &gt; 4 or boolean-from-string(../../@constraint)" type="xf:dateTime" required="boolean-from-string(../../@required)"/>
+				<xf:bind nodeset="select1[1]" constraint=". = 'uk' or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)"/>
+				<xf:bind nodeset="select1[2]" constraint=". = 'uk' or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)"/>
+				<xf:bind nodeset="select1[3]" constraint=". = 'uk' or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)"/>
+				<xf:bind nodeset="select[1]" constraint=". = 'uk' or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)"/>
+				<xf:bind nodeset="select[2]" constraint=". = 'uk' or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)"/>
 			</xf:bind>
         </xf:model>
     </head>
-    <body class="tundra">
+    <body class="tundra ToolTipAlert">
     <div>
-        <h1>Alert Test</h1>
-        <xf:group appearance="minimlal">
+        <h1>Complex Test for ToolTip Alerts</h1>
+        <xf:group appearance="minimal">
             <xf:label>Group Appearances</xf:label>
             <xf:trigger>
                 <xf:label>no group</xf:label>
@@ -106,8 +105,12 @@
             </xf:trigger>
         </xf:group>
         <br/>
-        <xf:group appearance="minimlal">
+        <xf:group appearance="minimal">
             <xf:label>MIP Controls</xf:label>
+            <xf:trigger>
+                <xf:label><xf:output value="concat('Required:',instance()/repeated/@required)"/></xf:label>
+                <xf:setvalue ref="repeated/@required" value="IF(.='true','false', 'true')"/>
+            </xf:trigger>
             <xf:trigger>
                 <xf:label><xf:output value="concat('Relevance:',instance()/repeated/@relevant)"/></xf:label>
                 <xf:setvalue ref="repeated/@relevant" value="IF(.='true','false', 'true')"/>

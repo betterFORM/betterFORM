@@ -226,6 +226,7 @@ dojo.declare(
     },
 
     isValid:function() {
+        // console.debug("Control.isValid ", dojo.hasClass(this.domNode, "xfValid"))
         if (dojo.hasClass(this.domNode, "xfInvalid")) {
             return false;
         } else if (dojo.hasClass(this.domNode, "xfValid")) {
