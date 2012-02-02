@@ -1,14 +1,7 @@
 /*
- * jQuery Hotkeys Plugin
- * Copyright 2010, John Resig
- * Dual licensed under the MIT or GPL Version 2 licenses.
- *
- * Based upon the plugin by Tzury Bar Yochay:
- * http://github.com/tzuryby/hotkeys
- *
- * Original idea by:
- * Binny V A, http://www.openjs.com/scripts/events/keyboard_shortcuts/
-*/
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
 
 (function(jQuery){
 	
