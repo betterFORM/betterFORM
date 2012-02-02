@@ -110,11 +110,12 @@ a.active {
     color: #444444;
 }
 
-/* ################### some theme-specific (Dojo tundra) styles ################### */
-.bf * {
+.bf .xfControl {
     font-family: sans-serif;
     font-size: 10pt;
 }
+
+/* ################### some theme-specific (Dojo tundra) styles ################### */
 
 .bf .dijitToasterContainer {
     padding: 2px;
@@ -194,6 +195,13 @@ a.active {
 	position:relative;
 }
 
+.bfValueWrapper {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
 /* ***************************************************************************** */
 /* ********************* GENERAL XFORMS MIP AND COMMON-CHILD STYLES ************ */
 /* ***************************************************************************** */
@@ -234,12 +242,9 @@ a.active {
 
 
 
-.xfHint{
-    display:none;
-}
 .xfAlert, .xfHint{
 	position:absolute;
-	top:-3px;
+	top:0;
 	/*bottom:2px;*/
 	font-size:9pt;
 	border:thin solid #cccccc;
@@ -249,6 +254,13 @@ a.active {
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
 }
+.xfHint {
+    display:none;
+    border-color:#DBDBDB;
+    background:#F2F2F2 url(../images/hint.png) 5px 50% no-repeat;
+    z-index:300;
+    color:#666666;
+}
 
 .xfRequiredEmpty:after{
     content:'Please fill in a value';
@@ -257,9 +269,9 @@ a.active {
 special handling for alerts and hints in compact groups as the label is above control and changes the situation.
 alert + hints should always be aligned with the control.
 */
-.xfCompactGroup .xfControl .xfAlert,
-.xfCompactGroup .xfControl .xfHint{
-	bottom:3px;
+.xfCompactGroup .bfValueWrapper .xfAlert,
+.xfCompactGroup .bfValueWrapper .xfHint{
+	top:0;
 }
 
 .xfAlert {
@@ -275,13 +287,6 @@ alert + hints should always be aligned with the control.
 	background:#F2F2F2 url(../images/tabClose.gif) right center no-repeat;
 }
 
-.xfHint {
-    height:15px;
-	border-color:#DBDBDB;
-	background:#F2F2F2 url(../images/hint.png) 5px 50% no-repeat;
-	z-index:300;
-	color:#666666;
-}
 .xfCompactGroup .xfHint,
 .xfCompactGroup .xfAlert{
     top:19px;
@@ -555,22 +560,32 @@ alert + hints should always be aligned with the control.
 .xfSelect1 .xfOptGroupLabelFull {
     padding-left:5px;
 }
+
+/* remove styles from select element to apply custom style */
+.bf .select1Min .xfLabel {
+    position: relative;
+    top: 5px;
+}
 /* apply custom style to Select1 appearance="minimal" */
 .bf .xfSelect1 .select1wrapper {
+    background-color: white;
     background-image: url("../images/dropdownButton.png");
     background-position: right center;
     background-repeat: no-repeat;
-    background-color: white;
     border: 1px solid lightGray;
-    height: 15px;
+    display: inline-block;
+    height: 16px;
     overflow: hidden;
+    position: relative;
+    top: 5px;
     width: 120px;
-    display:block;
-    float:left;
-    margin-bottom: 10px;
 }
 
-/* remove styles from select element to apply custom style */
+/* reset top:5px for horizontal layout */
+.bf .bfHorizontalTableValue .select1Min .select1wrapper,
+.bf .xfCompactRepeat .xfSelect1 .select1wrapper{
+    top:0;
+}
 .bf .xfSelect1 .select1wrapper select {
     background: none repeat scroll 0 0 transparent;
     border: 0 none;
@@ -616,6 +631,11 @@ alert + hints should always be aligned with the control.
 }
 
 .bfVerticalTableValue {
+}
+
+.bf .bfVerticalTable .bfVerticalTableInfo {
+    position:relative;
+    display: inline-block;
 }
 
 .bfHorizontalTable {

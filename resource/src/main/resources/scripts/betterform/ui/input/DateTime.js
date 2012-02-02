@@ -49,7 +49,7 @@ dojo.declare(
     },
 
     applyValues:function(value) {
-        console.debug("DateTime.applyValues value",value);
+        // console.debug("DateTime.applyValues value",value);
         if(value.indexOf("+") !=-1){
             this.timezone = value.substring(value.indexOf("+"),value.length);
             value = value.substring(0,value.indexOf("+"));
@@ -58,7 +58,7 @@ dojo.declare(
             this.timezone = "Z"
             value = value.substring(0,value.indexOf("Z"));
         }
-        console.debug("this.timezone:",this.timezone, " value: ",value);
+        // console.debug("this.timezone:",this.timezone, " value: ",value);
         var dateValue;
         var timeValue;
         if(value != undefined && value != ""){
@@ -71,7 +71,7 @@ dojo.declare(
         }
         this.currentDateValue = dateValue;
         this.timeValue = timeValue;
-         console.debug("Date:", dateValue, " Time:",timeValue);
+        // console.debug("Date:", dateValue, " Time:",timeValue);
 
         // handle date part
         if(this.dateDijit == undefined) {
@@ -158,7 +158,7 @@ dojo.declare(
     },
 
     _handleSetControlValue:function(value) {
-         console.debug("_handleSetControlValue value",value);
+        // console.debug("_handleSetControlValue value",value);
         if(this.miliseconds && value.indexOf(".") != -1){
             value = value.substring(0,value.indexOf("."));
         }

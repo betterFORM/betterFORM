@@ -8,8 +8,9 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xf="http://www.w3.org/2002/xforms"
                 xmlns:bf="http://betterform.sourceforge.net/xforms"
+                xmlns:xhtml="http://www.w3.org/1999/xhtml"
                 xmlns:ev="http://www.w3.org/2001/xml-events"
-                exclude-result-prefixes="xf bf"
+                exclude-result-prefixes="xf bf xhtml ev"
                 xpath-default-namespace= "http://www.w3.org/1999/xhtml">
 
     <xsl:import href="common.xsl"/>
@@ -489,10 +490,11 @@
                     <xsl:with-param name="label-elements" select="xf:label"/>
                 </xsl:call-template>
             </label>
-
-            <xsl:call-template name="buildControl"/>
-            <xsl:apply-templates select="xf:alert"/>
-            <xsl:apply-templates select="xf:hint"/>
+            <span class="bfValueWrapper">
+                <xsl:call-template name="buildControl"/>
+                <xsl:apply-templates select="xf:alert"/>
+                <xsl:apply-templates select="xf:hint"/>
+            </span>
             <!--<xsl:apply-templates select="xf:help"/>-->
 
             <xsl:copy-of select="script"/>

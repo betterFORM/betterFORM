@@ -9,7 +9,8 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:bf="http://betterform.sourceforge.net/xforms"
     xmlns:xf="http://www.w3.org/2002/xforms"
-    exclude-result-prefixes="xf bf xsl"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    exclude-result-prefixes="xhtml xf bf"
     xpath-default-namespace="http://www.w3.org/1999/xhtml">
 
     <!-- ### this url will be used to build the form action attribute ### -->
@@ -157,7 +158,7 @@
     <xsl:template name="copyInlineScript">
         <!-- copy inline javascript -->
         <xsl:for-each select="script">
-            <script xmlns="http://www.w3.org/1999/xhtml">
+            <script type="text/javascript" >
                 <xsl:attribute name="type">
                     <xsl:value-of select="@type"/>
                 </xsl:attribute>
