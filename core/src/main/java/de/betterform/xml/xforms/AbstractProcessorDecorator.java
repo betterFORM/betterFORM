@@ -1,6 +1,6 @@
 
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 package de.betterform.xml.xforms;
@@ -17,7 +17,7 @@ import org.w3c.dom.events.EventTarget;
 import org.w3c.xforms.XFormsModelElement;
 import org.xml.sax.InputSource;
 
-import java.io.*;
+import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;

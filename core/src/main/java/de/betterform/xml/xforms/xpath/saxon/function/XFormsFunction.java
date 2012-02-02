@@ -1,15 +1,15 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xforms.xpath.saxon.function;
 
 import de.betterform.xml.xforms.Container;
+import de.betterform.xml.xforms.XFormsProcessorImpl;
 import net.sf.saxon.dom.NodeWrapper;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.functions.SystemFunction;
-import de.betterform.xml.xforms.XFormsProcessorImpl;
 import net.sf.saxon.om.Item;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

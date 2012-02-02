@@ -1,18 +1,18 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xforms.xpath.saxon.function;
-
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
 
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.DateTimeValue;
 import net.sf.saxon.value.StringValue;
+
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /**
  * Implementation of 7.9.3 The now() Function <p/> The now function returns the

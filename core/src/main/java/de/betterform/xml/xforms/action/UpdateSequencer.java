@@ -1,13 +1,13 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xforms.action;
 
+import de.betterform.xml.xforms.model.Model;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import de.betterform.xml.xforms.model.Model;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;

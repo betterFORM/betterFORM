@@ -1,24 +1,23 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xforms.xpath.saxon.function;
 
 import de.betterform.xml.dom.DOMUtil;
-import net.sf.saxon.expr.Expression;
-import net.sf.saxon.expr.ExpressionVisitor;
-import net.sf.saxon.expr.StaticProperty;
-import net.sf.saxon.expr.XPathContext;
-import net.sf.saxon.om.Item;
-import net.sf.saxon.trans.XPathException;
-
 import de.betterform.xml.xforms.XFormsElement;
 import de.betterform.xml.xforms.action.AbstractAction;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.ui.AbstractUIElement;
 import de.betterform.xml.xforms.ui.BindingElement;
 import de.betterform.xml.xforms.ui.RepeatItem;
+import net.sf.saxon.expr.Expression;
+import net.sf.saxon.expr.ExpressionVisitor;
+import net.sf.saxon.expr.StaticProperty;
+import net.sf.saxon.expr.XPathContext;
+import net.sf.saxon.om.Item;
+import net.sf.saxon.trans.XPathException;
 
 import java.util.List;
 

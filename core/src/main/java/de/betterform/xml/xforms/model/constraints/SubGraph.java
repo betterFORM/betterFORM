@@ -1,13 +1,13 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xforms.model.constraints;
 
+import de.betterform.xml.xpath.impl.saxon.BetterFormXPathContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import de.betterform.xml.xpath.impl.saxon.BetterFormXPathContext;
 import org.w3c.dom.Node;
 
 import java.util.Iterator;

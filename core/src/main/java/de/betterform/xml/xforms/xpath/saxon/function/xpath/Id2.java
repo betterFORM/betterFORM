@@ -1,10 +1,16 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xforms.xpath.saxon.function.xpath;
 
+import de.betterform.xml.xforms.XFormsElement;
+import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xforms.model.bind.Binding;
+import de.betterform.xml.xforms.xpath.saxon.function.XFormsFunction;
+import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
+import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import net.sf.saxon.Configuration;
 import net.sf.saxon.dom.DocumentWrapper;
 import net.sf.saxon.expr.Expression;
@@ -16,13 +22,6 @@ import net.sf.saxon.om.EmptyIterator;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.trans.XPathException;
-import de.betterform.xml.xforms.XFormsElement;
-import de.betterform.xml.xforms.exception.XFormsException;
-import de.betterform.xml.xforms.model.bind.Binding;
-import de.betterform.xml.xforms.model.bind.BindingResolver;
-import de.betterform.xml.xforms.xpath.saxon.function.XFormsFunction;
-import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
-import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.traversal.DocumentTraversal;

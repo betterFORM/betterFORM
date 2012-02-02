@@ -1,18 +1,18 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xpath.impl.saxon.sxpath;
 
+import net.sf.saxon.expr.TypeChecker;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.XPathContextMajor;
-import net.sf.saxon.expr.TypeChecker;
 import net.sf.saxon.instruct.SlotManager;
 import net.sf.saxon.om.*;
 import net.sf.saxon.sxpath.XPathVariable;
-import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.trans.SaxonErrorCode;
+import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.SequenceType;
 import net.sf.saxon.value.Value;
 
