@@ -1,8 +1,7 @@
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
-  ~ Author: betterFORM Team (info AT betterform.de)
--->
+  -->
 
 <project name="betterFORM extension installer" default="update-betterFORM" basedir=".">
 
