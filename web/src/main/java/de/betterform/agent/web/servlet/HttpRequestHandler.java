@@ -1,11 +1,24 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 
 package de.betterform.agent.web.servlet;
 
+import de.betterform.agent.web.WebFactory;
+import de.betterform.agent.web.WebProcessor;
+import de.betterform.agent.web.servlet.compositecontrols.CompositeControlFactory;
+import de.betterform.agent.web.servlet.compositecontrols.CompositeControlValue;
+import de.betterform.agent.web.upload.MonitoredDiskFileItemFactory;
+import de.betterform.agent.web.upload.UploadInfo;
+import de.betterform.agent.web.upload.UploadListener;
+import de.betterform.xml.config.Config;
+import de.betterform.xml.events.DOMEventNames;
+import de.betterform.xml.xforms.XFormsElement;
+import de.betterform.xml.xforms.XFormsProcessor;
+import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xforms.ui.AbstractFormControl;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUpload;
 import org.apache.commons.fileupload.FileUploadException;
@@ -14,29 +27,16 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import de.betterform.xml.xforms.XFormsProcessor;
-import de.betterform.agent.web.servlet.compositecontrols.CompositeControlFactory;
-import de.betterform.agent.web.servlet.compositecontrols.CompositeControlValue;
-import de.betterform.agent.web.upload.MonitoredDiskFileItemFactory;
-import de.betterform.agent.web.upload.UploadInfo;
-import de.betterform.agent.web.upload.UploadListener;
-import de.betterform.agent.web.WebProcessor;
-import de.betterform.agent.web.WebFactory;
-import de.betterform.xml.events.DOMEventNames;
-import de.betterform.xml.xforms.XFormsElement;
-import de.betterform.xml.config.Config;
-import de.betterform.xml.xforms.exception.XFormsException;
-import de.betterform.xml.xforms.ui.AbstractFormControl;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.net.URLEncoder;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.net.URI;
 
 /**
  * Default implementation for handling HTTP requests.

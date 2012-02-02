@@ -1,12 +1,11 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.agent.web.filter;
 
 import de.betterform.agent.web.WebFactory;
-import de.betterform.agent.web.WebUtil;
 import de.betterform.generator.XSLTGenerator;
 import de.betterform.xml.xforms.exception.XFormsException;
 import org.apache.commons.logging.Log;
@@ -15,12 +14,6 @@ import org.apache.commons.logging.LogFactory;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 import java.net.URISyntaxException;
 

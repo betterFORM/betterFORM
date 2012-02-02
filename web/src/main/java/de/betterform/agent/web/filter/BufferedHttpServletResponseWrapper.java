@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -10,17 +10,11 @@ package de.betterform.agent.web.filter;
 import de.betterform.agent.web.WebUtil;
 import org.apache.http.HeaderElement;
 import org.apache.http.message.BasicHeaderValueParser;
-import org.apache.http.util.CharArrayBuffer;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 
 /**
  * @author Matthijs Wensveen <m.wensveen@func.nl>

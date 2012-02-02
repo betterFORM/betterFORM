@@ -1,3 +1,8 @@
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
 <project default="run-tests" basedir="." name="Integration Tests">
     <property name="web.dir" value="."/>
 

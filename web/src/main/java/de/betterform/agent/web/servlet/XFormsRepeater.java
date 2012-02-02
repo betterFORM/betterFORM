@@ -1,21 +1,21 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 /* Licensed under the terms of BSD and Apache 2 Licenses */
 package de.betterform.agent.web.servlet;
 
-import de.betterform.xml.xforms.exception.XFormsException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.agent.web.WebFactory;
 import de.betterform.agent.web.WebProcessor;
 import de.betterform.agent.web.WebUtil;
 import de.betterform.xml.config.XFormsConfigException;
+import de.betterform.xml.xforms.exception.XFormsException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +28,6 @@ import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
-import javax.servlet.ServletContext;
 
 /**
  * The XFormsRepeater handles forwarded requests from other contexts and interacts with

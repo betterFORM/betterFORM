@@ -1,7 +1,7 @@
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
--->
+  -->
 
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xftr="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner">
