@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--
-    author: Joern Turner
-    author: Lars Windauer
-    author: Tobias Krebs
- -->
 <project id="test" default="run" basedir=".">
     <target name="run">
         <mkdir dir="run"/>
