@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 package de.betterform.xml.xforms.model;
@@ -7,11 +7,9 @@ package de.betterform.xml.xforms.model;
 
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
-import de.betterform.xml.dom.DOMUtil;
+import junit.framework.TestCase;
 
 import java.io.InputStream;
-
-import junit.framework.TestCase;
 
 // end of class
 

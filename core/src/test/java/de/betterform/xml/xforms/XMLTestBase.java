@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 package de.betterform.xml.xforms;
 
-import junit.framework.TestCase;
 import de.betterform.xml.dom.DOMComparator;
 import de.betterform.xml.dom.DOMUtil;
+import junit.framework.TestCase;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -14,9 +14,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.TransformerException;
 import java.io.File;
-import java.io.OutputStream;
-import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 /**
  * Base class for XML black box testing.

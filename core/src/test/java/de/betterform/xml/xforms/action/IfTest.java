@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -12,8 +12,6 @@ import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
-
-import java.io.InputStream;
 
 /**
  * Test cases for XForms 1.1. 'if' attribute for Conditional Execution of Actions

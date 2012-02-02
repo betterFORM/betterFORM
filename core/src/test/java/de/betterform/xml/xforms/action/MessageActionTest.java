@@ -1,15 +1,15 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xforms.action;
 
-import junit.framework.TestCase;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.DOMEventNames;
-import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.TestEventListener;
+import de.betterform.xml.xforms.XFormsProcessorImpl;
+import junit.framework.TestCase;
 import org.w3c.dom.events.EventTarget;
 
 /**

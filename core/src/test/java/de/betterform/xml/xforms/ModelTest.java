@@ -1,13 +1,13 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 package de.betterform.xml.xforms;
 
-import junit.framework.TestCase;
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.model.Instance;
 import de.betterform.xml.xforms.model.Model;
+import junit.framework.TestCase;
 import org.apache.xerces.xs.XSModel;
 
 import java.util.List;
