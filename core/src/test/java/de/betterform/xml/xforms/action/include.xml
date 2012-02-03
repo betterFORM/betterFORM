@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+<betterform-config>
+    <!-- PLEASE COMMENT YOUR ENTRIES -->
+    <properties>
+        <!-- generate default alert elements if none present. -->
+        <property name="betterform.ui.generateDefaultAlerts" value="false"/>
+        <!-- define the default text for automatically generated alert elements. -->
+        <property name="betterform.ui.defaultAlertText" value="The specified value is invalid"/>
+
+        <property name="language" value="de"/>
+        <property name="enable.l10n" value="true"/>
+        <property name="xforms.schema" value="XFormsDatatypes11.xsd"/>
+        <property name="betterform.debug-allowed" value="true" description="if debug may be switched by Url param 'debug'"/>
+        <!-- WARNING: not ready for production use -->
+        <property name="betterform.event-optimization-enabled" value="false" description="TBD: if event optimization is enabled, only events present within the current form will be processed"/>
+        <property name="webprocessor.doIncludes" value="true"/>
+        <property name="resource.dir.name" value="../../../../../../../../resource/src/main/resources/"/>
+    </properties>
+
+    <useragents>
+        <useragent name="foo"
+                   processor="foo.bar"
+                   description="descriptive text">
+        </useragent>
+        <useragent name="bar"
+                   processor="bar.baz"
+                   description="descriptive text">
+        </useragent>
+    </useragents>
+
+    <ui-generators>
+        <ui-generator useragent="foo" stylesheet="dojo.xsl"/>
+        <ui-generator useragent="bar" stylesheet="dojodev.xsl"/>
+        <ui-generator useragent="baz" stylesheet="html4.xsl"/>
+    </ui-generators>
+
+    <connectors>
+        <!--
+            For each of the connector types you can specifiy one connector to handle one URI scheme.
+        -->
+        <uri-resolver scheme="file" class="de.betterform.connector.file.FileURIResolver"/>
+        <uri-resolver scheme="http" class="de.betterform.connector.http.HTTPURIResolver"/>
+        <uri-resolver scheme="https" class="de.betterform.connector.http.HTTPURIResolver"/>
+        <uri-resolver scheme="class" class="de.betterform.util.ClassResourceLoader"/>
+        <uri-resolver scheme="xmlrpc" class="de.betterform.connector.xmlrpc.XMLRPCURIResolver"/>
+
+        <submission-handler scheme="file" class="de.betterform.connector.file.FileSubmissionHandler"/>
+        <submission-handler scheme="http" class="de.betterform.connector.http.HTTPSubmissionHandler"/>
+        <submission-handler scheme="https" class="de.betterform.connector.http.HTTPSubmissionHandler"/>
+        <submission-handler scheme="mailto" class="de.betterform.connector.smtp.SMTPSubmissionHandler"/>
+        <submission-handler scheme="xmlrpc" class="de.betterform.connector.xmlrpc.XMLRPCSubmissionHandler"/>
+        <submission-handler scheme="echo" class="de.betterform.connector.echo.EchoSubmissionHandler"/>
+        <submission-handler scheme="xslt" class="de.betterform.connector.xslt.XSLTSubmissionHandler"/>
+        <submission-handler scheme="model" class="de.betterform.connector.ModelSubmissionHandler"/>
+    </connectors>
+
+    <custom-elements>
+        <!--
+              In this section you can associate a foreign namespaced element with a class that implements any
+              arbitrary control. The element is identified by its namespace URI and element name. The implementing
+              class must extend XFormsElement and have a constructor corresponding to the following signature:
+              public YourClass(Element, Model);
+          -->
+        <!--element namespace="http://yourdomain.com/path" name="yourcontrol" class="com.yourdomain.yourpackage.YourClass"/-->
+    </custom-elements>
+
+
+</betterform-config>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:bf="http://betterform.sourceforge.net/xforms">
+    <head>
+        <meta name="author" content="unl at users.sourceforge.net"/>
+        <meta name="description" content="test form for load action"/>
+        <meta name="version" content="$Id: LoadActionTest.xhtml 3460 2008-08-14 09:11:58Z joern $"/>
+    </head>
+    <body>
+    <form action="">
+        <xf:model id="model">
+            <xf:instance xmlns="">
+                <data>
+                    <uri>bind.xml</uri>
+                    <items>
+                        <item>item 1</item>
+                        <item>item 2</item>
+                        <item>item 3</item>
+                    </items>
+                </data>
+            </xf:instance>
+            <xf:bind  nodeset="uri[1]" readonly="true()"/>
+
+            <xf:submission id="s-load-child1"
+                           method="get"
+                           replace="none"
+                           resource="echo:hallo">
+
+                <xf:action ev:event="xforms-submit-done">
+                    <xf:load show="embed" targetid="embeddedForm">
+                        <xf:resource value="'LoadEmbeddedChildWithBfInclude1.xhtml'"/>
+                    </xf:load>                   
+                    <xf:send submission="s-insert-child-data"/>
+
+ <!--                       <xf:message ev:event="xforms-submit-done" level="modal">Load Level 2</xf:message>-->
+                </xf:action>
+            </xf:submission>
+
+            <xf:submission id="s-insert-child-data"
+                           action="echo:hallo"
+                           method="get"
+                           ref="items"
+                           replace="instance"
+                           instance="i-child-1"
+                           target="model('m-child-1')/data/childs">
+            </xf:submission>
+
+        </xf:model>
+        <xf:group>
+            <div id="embeddedForm"/>
+            <xf:trigger id="trigger-load-embed-1">
+                <xf:label>Load embedded Form 1</xf:label>
+                <xf:load show="embed" targetid="embeddedForm">
+                    <xf:resource value="'LoadEmbeddedChildWithBfInclude1.xhtml'"/>
+                </xf:load>
+            </xf:trigger>
+            <xf:trigger id="trigger-load-embed-2">
+                <xf:label>Load embedded Form 2</xf:label>
+                <xf:action>
+                    <xf:load show="embed" targetid="embeddedForm">
+                        <xf:resource value="'LoadEmbeddedChildWithBfInclude2.xhtml'"/>
+                    </xf:load>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="trigger-load-embed-3">
+                <xf:label>Load embedded Form 1</xf:label>
+                <xf:send submission="s-load-child1"/>
+            </xf:trigger>
+            <xf:input ref="uri[1]">
+                <xf:label>URI</xf:label>
+            </xf:input>
+        </xf:group>
+    </form>
+
+    </body>
+</html>

@@ -23,7 +23,7 @@ import org.w3c.xforms.XFormsModelElement;
  * @version $Id: 
  */
 public class LoadActionEmbedTest extends BetterFormTestCase {
-     private EventCountListener messageCountListener;
+     protected EventCountListener messageCountListener;
 //    static {
 //        org.apache.log4j.BasicConfigurator.configure();
 //    }

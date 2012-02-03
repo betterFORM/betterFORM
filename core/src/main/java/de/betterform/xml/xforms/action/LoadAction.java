@@ -37,6 +37,8 @@ import org.w3c.dom.events.EventTarget;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
 import java.io.IOException;
@@ -303,29 +305,26 @@ public class LoadAction extends AbstractBoundAction {
     private Node doIncludes(Node embed, String absoluteURI) {
 
         try {
-            String xsltPath = this.container.getProcessor().getContext().get("webapp.realpath") + Config.getInstance().getProperty("resource.dir.name") + "xslt";
-            String uri = absoluteURI.substring(0, absoluteURI.lastIndexOf("/") + 1);
+            if (Config.getInstance().getProperty("resource.dir.name") != null) {
+                String uri = absoluteURI.substring(0, absoluteURI.lastIndexOf("/") + 1);
 
-            CachingTransformerService transformerService  = (CachingTransformerService) this.container.getProcessor().getContext().get(TransformerService.TRANSFORMER_SERVICE);
-            XSLTGenerator xsltGenerator = new XSLTGenerator();
-            xsltGenerator.setTransformerService(transformerService);
-            xsltGenerator.setStylesheetURI(new URI(xsltPath));
+                CachingTransformerService transformerService  = (CachingTransformerService) this.container.getProcessor().getContext().get(TransformerService.TRANSFORMER_SERVICE);
+                Transformer transformer = transformerService.getTransformerByName("include.xsl");
 
-            xsltGenerator.setParameter("root", uri);
-            DOMSource source = new DOMSource(embed);
-            DOMResult result = new DOMResult();
-            xsltGenerator.setInput(source);
-            xsltGenerator.setOutput(result);
-            xsltGenerator.generate();
+                DOMSource source = new DOMSource(embed);
+                DOMResult result = new DOMResult();
+                transformer.setParameter("root",uri);
+                transformer.transform(source, result);
 
-            return result.getNode();
-
-        } catch (URISyntaxException e) {
-            LOGGER.debug("LoadAction.doInclude: URISyntaxException:", e);
+                return result.getNode();
+            } else {
+                    LOGGER.debug("LoadAction.doInclude: doIncludes activated but 'resource.dir.name' is not set in config file.");
+            }
         } catch (XFormsException e) {
             LOGGER.debug("LoadAction.doInclude: XFormsException", e);
+        } catch (TransformerException e) {
+            LOGGER.debug("LoadAction.doInclude: TransformerException:", e);
         }
-
         return embed;
     }
 
