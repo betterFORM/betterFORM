@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:bf="http://betterform.sourceforge.net/xforms">
+	<head>
+		<title>Load-Embed-CSS-JavaScript-Subform</title>
+		<script type="text/javascript" src="resources/script.js"/>
+        <link rel="stylesheet" type="text/css" href="resources/style.css" />
+
+		<script type="text/javascript">
+            function test2() {
+                alert("Hello from Subform");
+            }
+		</script>
+
+        <style type="text/css">
+            .red {
+                background: red;
+            }
+
+            .blue {
+                background: blue;
+            }
+		</style>
+
+	</head>
+	<body>
+		<div id="xforms">
+			<div style="display:none">
+                <bf:include src="Load-Embed-CSS-JavaScript-Subform.xhtml#model-1"/>
+			</div>
+			<xf:group>
+                <bf:include src="Load-Embed-CSS-JavaScript-Subform.xhtml#blue"/>
+			</xf:group>
+		</div>
+	</body>
+</html>

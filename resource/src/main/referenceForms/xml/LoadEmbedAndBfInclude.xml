@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<html xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Load subform with load="embed", in this case the subform addintonally uses bfInclude</title>
+    </head>
+    <body>
+        <div class="description">
+            <p>
+                Showcase on howto load a subform with load="<span class="keyword">embed</span>" containing itself bfInclude directives.
+            </p>
+            <p>
+              a bfInclude directive looks like this:<br/>
+              <br/>
+                <span class="keyword">&lt;bf:include src="Load-Embed-CSS-JavaScript-Subform.xhtml#model-1"/&gt;</span><br/>
+              <br/>
+              To make this work you will have to enable "webprocessor.doIncludes" in betterform-config.xml.
+            </p>
+        </div>
+        <div class="sample">
+            <div class="markup">
+                <xf:model>
+                    <xf:instance xmlns="">
+                        <data/>
+                    </xf:instance>
+                </xf:model>
+
+
+<code class="ui">
+<xf:group>
+    <xf:label>
+        <p>
+            Load a Subform containing CSS and JavaScript.<br/>
+            JavaScript and CSS-Rules from the Subform will be included in the Masterform.
+        </p>
+    </xf:label>
+
+    <xf:trigger>
+        <xf:label>Load Subform including CSS and Javascript</xf:label>
+        <xf:action>
+            <xf:load show="embed" targetid="embedInline">
+                <xf:resource value="'resources/Load-Embed-CSS-JavaScript-Subform-bfInclude.xhtml#xforms'"/>
+                <xf:extension includeCSS="true" includeScript="true"/>
+            </xf:load>
+        </xf:action>
+    </xf:trigger>
+
+
+</xf:group>
+    <div id="embedInline"/>
+<xf:group>
+    <xf:trigger>
+        <xf:label>Unload Subform.</xf:label>
+        <xf:action>
+            <xf:load show="none" targetid="embedInline"/>
+        </xf:action>
+    </xf:trigger>
+</xf:group>
+<xf:group>
+    <xf:trigger>
+        <xf:label>Show Subform Source.</xf:label>
+        <xf:action>
+            <xf:load show="new">
+                <xf:resource value="'resources/Load-Embed-CSS-JavaScript-Subform-bfInclude.xhtml?source=true'"/>
+            </xf:load>
+        </xf:action>
+    </xf:trigger>
+</xf:group>
+</code>
+            </div>
+            <div class="notes" style="font-style: oblique;font-size: 14px;">
+                <b>Unloading of JavaScript doesn´t work as expected right now.<br/>
+                It is removed from the DOM, but still accessible within JavaScript.</b>
+            </div>
+        </div>
+    </body>
+</html>

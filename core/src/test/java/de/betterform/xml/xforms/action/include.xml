@@ -18,7 +18,6 @@
         <!-- WARNING: not ready for production use -->
         <property name="betterform.event-optimization-enabled" value="false" description="TBD: if event optimization is enabled, only events present within the current form will be processed"/>
         <property name="webprocessor.doIncludes" value="true"/>
-        <property name="resource.dir.name" value="../../../../../../../../resource/src/main/resources/"/>
     </properties>
 
     <useragents>
