@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:bf="http://betterform.sourceforge.net/xforms">
+<head>
+    <title>bfInclude with subforms Sample (Masterform)</title>
+</head>
+<body>
+<div style="display:none">
+    <xf:model id="model-1">
+        <xf:instance id="i-default">
+            <data xmlns="">
+            </data>
+        </xf:instance>
+    </xf:model>
+</div>
+<xf:group>
+    <xf:trigger>
+        <xf:label>Load Subform containing bf:include</xf:label>
+        <xf:action>
+            <xf:load show="embed" targetid="mountPointSubform">
+                <xf:resource value="'bfInclude-Subform.xhtml#xforms'"/>
+            </xf:load>
+        </xf:action>
+    </xf:trigger>
+
+    <xf:trigger>
+            <xf:label>Rebuild</xf:label>
+            <xf:rebuild/>
+    </xf:trigger>
+
+    <div id="mountPointSubform"/>
+</xf:group>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:bf="http://betterform.sourceforge.net/xforms">
+
+    <head>
+        <title>bfInclude with subforms Sample (subform)</title>
+    </head>
+    <body>
+        <div id="xforms">
+            <div style="display:none">
+                <xf:model id="model-include">
+                    <xf:instance id="i-include">
+                        <data xmlns="">
+                            <output>Hello from include!</output>
+                        </data>
+                    </xf:instance>
+                </xf:model>
+            </div>
+
+            <xf:group id="group-include">
+                <xf:label>This group contains the via bf:Include included controls</xf:label>
+
+                <xf:output id="output1" model="model-subform" ref="instance('i-subform')/output">
+                    <xf:label>Hello from XForms: </xf:label>
+                </xf:output>
+
+                <xf:output id="output2" model="model-include" ref="instance('i-include')/output">
+                    <xf:label>Hello from XForms: </xf:label>
+                </xf:output>
+            </xf:group>
+        </div>
+    </body>
+</html>

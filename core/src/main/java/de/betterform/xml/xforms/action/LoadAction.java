@@ -6,9 +6,9 @@
 package de.betterform.xml.xforms.action;
 
 
-import com.sun.mail.imap.protocol.Namespaces;
 import de.betterform.connector.ConnectorFactory;
 import de.betterform.connector.URIResolver;
+import de.betterform.generator.XSLTGenerator;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
@@ -17,7 +17,6 @@ import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.ns.NamespaceResolver;
 import de.betterform.xml.xforms.Initializer;
 import de.betterform.xml.xforms.XFormsConstants;
-import de.betterform.xml.xforms.XFormsElement;
 import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Instance;
@@ -25,8 +24,9 @@ import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.model.submission.AttributeOrValueChild;
 import de.betterform.xml.xforms.ui.RepeatItem;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
+import de.betterform.xml.xslt.TransformerService;
+import de.betterform.xml.xslt.impl.CachingTransformerService;
 import net.sf.saxon.dom.NodeWrapper;
-import net.sf.saxon.value.StringValue;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
@@ -37,7 +37,16 @@ import org.w3c.dom.events.EventTarget;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.dom.DOMResult;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -214,7 +223,15 @@ public class LoadAction extends AbstractBoundAction {
             inlineJavaScript = getInlineJavaScript(embed);
             externalJavaScript = getExternalJavaScript(embed);
         }
+
+        if (Config.getInstance().getProperty("webprocessor.doIncludes", "false").equals("true")) {
+            embed = doIncludes(embed, absoluteURI);
+        }
+
         embed = extractFragment(absoluteURI, embed);
+
+
+
         if(LOGGER.isDebugEnabled()){
             DOMUtil.prettyPrintDOM(embed);
         }
@@ -286,6 +303,35 @@ public class LoadAction extends AbstractBoundAction {
             this.container.dispatch(this.target, BetterFormEventNames.EXCEPTION, map);
             //throw new XFormsException(message);
         }
+    }
+
+    private Node doIncludes(Node embed, String absoluteURI) {
+
+        try {
+            String xsltPath = this.container.getProcessor().getContext().get("webapp.realpath") + Config.getInstance().getProperty("resource.dir.name") + "xslt";
+            String uri = absoluteURI.substring(0, absoluteURI.lastIndexOf("/") + 1);
+
+            CachingTransformerService transformerService  = (CachingTransformerService) this.container.getProcessor().getContext().get(TransformerService.TRANSFORMER_SERVICE);
+            XSLTGenerator xsltGenerator = new XSLTGenerator();
+            xsltGenerator.setTransformerService(transformerService);
+            xsltGenerator.setStylesheetURI(new URI(xsltPath));
+
+            xsltGenerator.setParameter("root", uri);
+            DOMSource source = new DOMSource(embed);
+            DOMResult result = new DOMResult();
+            xsltGenerator.setInput(source);
+            xsltGenerator.setOutput(result);
+            xsltGenerator.generate();
+
+            return result.getNode();
+
+        } catch (URISyntaxException e) {
+            LOGGER.debug("LoadAction.doInclude: URISyntaxException:", e);
+        } catch (XFormsException e) {
+            LOGGER.debug("LoadAction.doInclude: XFormsException", e);
+        }
+
+        return embed;
     }
 
     private String getInlineCSS(Node embed) throws XFormsException {

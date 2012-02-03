@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:bf="http://betterform.sourceforge.net/xforms">
+<head>
+    <title>bfInclude with subforms Sample (subform)</title>
+</head>
+<body>
+<div id="xforms">
+    <div style="display:none">
+        <xf:model id="model-subform">
+            <xf:instance id="i-subform">
+                <data xmlns="">
+                    <input></input>
+                    <output>subform</output>
+                </data>
+            </xf:instance>
+        </xf:model>
+
+        <bf:include src="bfInclude-Includes.xhtml#model-include"/>
+    </div>
+    <xf:group>
+        <xf:input id="input1" ref="input">
+            <xf:label>An input</xf:label>
+        </xf:input>
+
+        <bf:include src="bfInclude-Includes.xhtml#group-include"/>
+
+    </xf:group>
+</div>
+</body>
+</html>
