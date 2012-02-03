@@ -4,6 +4,7 @@
  */
 package de.betterform.xml.xforms;
 
+import de.betterform.xml.xforms.action.EventCountListener;
 import junit.framework.TestCase;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.XFormsEventNames;
@@ -41,11 +42,23 @@ public class ContainerTest extends TestCase {
         assertTrue(dom != null);
     }
 
-//    public void testGetModels() throws Exception{
-//        processor.setXForms(getXmlResource("model-test.xml"));
-//        processor.init();
-//        assertTrue(processor.getContainer().getModelList().size()==2);
-//    }
+    public void testGetModels() throws Exception{
+        processor.setXForms(getClass().getResourceAsStream("model-test.xml"));
+        processor.init();
+        assertTrue(processor.getContainer().getModels().size()==2);
+    }
+
+
+    public void testMultipleModelConstructDoneEvents() throws Exception{
+        processor.setXForms(getClass().getResourceAsStream("model-test.xml"));
+        EventCountListener eventCountListener = new EventCountListener(XFormsEventNames.MODEL_CONSTRUCT_DONE);
+
+        EventTarget eventTarget = (EventTarget) this.processor.getXForms();
+        eventTarget.addEventListener(XFormsEventNames.MODEL_CONSTRUCT_DONE, eventCountListener, true);
+        this.processor.init();
+
+        assertEquals(eventCountListener.getCount(), 2);
+    }
 
     public void testGetDefaultModel() throws Exception {
         processor.setXForms(getClass().getResourceAsStream("model-test.xml"));

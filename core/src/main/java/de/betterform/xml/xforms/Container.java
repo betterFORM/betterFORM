@@ -712,12 +712,14 @@ public class Container {
         }
 
         for (int i = 0; i < nrOfModels; i++) {
-        	boolean isCompatible= false;
+        	boolean isCompatible= true;
+            Model model = embeddedModels.get(i);
+            model.init();
+
         	if (i == 0) {
 	            isCompatible = checkVersionCompatibility();
         	}
-        	Model model = embeddedModels.get(i);
-        	model.init();
+
             if(!(isCompatible)){
                 return;
             }
