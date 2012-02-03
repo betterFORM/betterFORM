@@ -1,10 +1,9 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 package de.betterform.xml.xforms.xpath.saxon.function.xpath;
 
-import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.xforms.Container;
 import de.betterform.xml.xforms.xpath.saxon.function.XFormsFunction;
 import net.sf.saxon.expr.Expression;
@@ -12,7 +11,7 @@ import net.sf.saxon.expr.ExpressionVisitor;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.value.*;
+import net.sf.saxon.value.FloatValue;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

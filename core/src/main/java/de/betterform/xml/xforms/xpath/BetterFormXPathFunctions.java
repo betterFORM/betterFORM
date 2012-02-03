@@ -1,27 +1,15 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xforms.xpath;
 
-import net.sf.saxon.dom.NodeWrapper;
-import net.sf.saxon.expr.XPathContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import de.betterform.connector.http.AbstractHTTPConnector;
-import de.betterform.xml.config.Config;
-import de.betterform.xml.config.XFormsConfigException;
-import de.betterform.xml.xforms.Container;
-import de.betterform.xml.xforms.model.submission.RequestHeader;
-import de.betterform.xml.xforms.model.submission.RequestHeaders;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
-import java.net.URI;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

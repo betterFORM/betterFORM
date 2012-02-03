@@ -1,13 +1,12 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 package de.betterform.xml.base;
 
-import junit.framework.TestCase;
-
 import de.betterform.xml.ns.NamespaceResolver;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
+import junit.framework.TestCase;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -210,20 +210,33 @@ a.active {
 */
 }
 
-.bfInvalidControl .xfValue,
-.bfInvalidControl .xfDateTextBox,
-.bfInvalidControl .xfValue,
-.bfInvalidControl .xfTimeTextBox {
-	border: 1px solid #8B0000;
+.bf .bfInvalidControl .xfValue,
+.bf .bfInvalidControl .select1wrapper,
+.bf .bfInvalidControl .xfDateTextBox,
+.bf .bfInvalidControl .xfTimeTextBox {
+	border: 1px solid #8B0000 !important;
 }
-
 .bfInvalidControl .bfCheckBoxGroup {
-	border:none;
-	border-bottom:1px solid #8B0000;
-	margin-right:4px;
-	padding-bottom:4px;
+    border:none;
+    border-bottom:1px solid #8B0000;
+    margin-right:4px;
+    padding-bottom:4px;
 }
 
+/* Keep styling for Selects even if invalid */
+.bf .bfInvalidControl .select1wrapper .xfValue,
+.bf .bfInvalidControl .xfValue .xfSelectorItem .xfRadioValue  {
+    border: 0 none !important;
+}
+.bf .bfInvalidControl .xfValue .xfSelectorItem .xfCheckBoxValue {
+    border: 1px solid gray !important;
+}
+
+
+
+.xfHint{
+    display:none;
+}
 .xfAlert, .xfHint{
 	position:absolute;
 	top:-3px;
@@ -528,6 +541,10 @@ alert + hints should always be aligned with the control.
     float: none;
 }
 
+.select1Comp .xfOptGroup .xfSelectorItem,
+.selectMin .xfOptGroup .xfSelectorItem {
+    padding-left: 5px;
+}
 .xfSelect  .xfOptGroupLabelFull,
 .xfSelect1 .xfOptGroupLabelFull {
     font-weight:bold;
@@ -537,6 +554,30 @@ alert + hints should always be aligned with the control.
 }
 .xfSelect1 .xfOptGroupLabelFull {
     padding-left:5px;
+}
+/* apply custom style to Select1 appearance="minimal" */
+.bf .xfSelect1 .select1wrapper {
+    background-image: url("../images/dropdownButton.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+    background-color: white;
+    border: 1px solid lightGray;
+    height: 15px;
+    overflow: hidden;
+    width: 120px;
+    display:block;
+    float:left;
+    margin-bottom: 10px;
+}
+
+/* remove styles from select element to apply custom style */
+.bf .xfSelect1 .select1wrapper select {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    font-size: 12px;
+    height: 15px;
+    padding: 0;
+    width: 140px;
 }
 
 .xfFullGroup .xfControl .xfValue {

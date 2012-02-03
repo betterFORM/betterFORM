@@ -1,13 +1,9 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xforms.xpath.saxon.function;
-
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
 
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
@@ -15,6 +11,10 @@ import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.DateValue;
 import net.sf.saxon.value.NumericValue;
 import net.sf.saxon.value.StringValue;
+
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /**
  * Implementation of 7.9.5 The days-to-date() Function <p/> This function

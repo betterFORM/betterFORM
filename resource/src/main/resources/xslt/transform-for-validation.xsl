@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0"
                 xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-                xmlns:bf="http://betterform.sourceforge.net/xforms">
+        >
     
     <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
 

@@ -1,14 +1,14 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xpath.impl.saxon;
 
+import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
+
 import java.util.List;
 import java.util.Map;
-
-import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 
 /**
  * @author Nick Van den Bleeken

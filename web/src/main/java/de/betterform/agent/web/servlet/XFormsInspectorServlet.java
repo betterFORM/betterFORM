@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -18,7 +18,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
+import org.w3c.dom.Element;
 import org.w3c.xforms.XFormsModelElement;
 
 import javax.servlet.ServletException;
@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -91,14 +90,16 @@ public class XFormsInspectorServlet extends HttpServlet /* extends AbstractXForm
 
         try {
 
+            response.setContentType("text/html");
+            OutputStream out = response.getOutputStream();
+            Element rootNode = DOMUtil.createRootElement("data");
+            DOMUtil.appendElement(rootNode,"URI",processor.getBaseURI());
+            DOMUtil.appendElement(rootNode,"context",request.getContextPath());
             if (resource.indexOf("hostDOM") != -1) {
                 // output Host document markup
-                Node host = processor.getXForms();
-                OutputStream out = response.getOutputStream();
-                response.setContentType("text/plain");
+                Document host = (Document) processor.getXForms();
                 request.setAttribute(WebFactory.IGNORE_RESPONSE_BODY, "TRUE");
-                DOMUtil.prettyPrintDOM(host, out);
-                out.close();
+                WebUtil.doTransform(getServletContext(),response, host,"highlightDocument.xsl",rootNode);
             } else {
                 String modelId = steps[steps.length-2];
                 String instanceId = steps[steps.length-1];
@@ -111,26 +112,23 @@ public class XFormsInspectorServlet extends HttpServlet /* extends AbstractXForm
                     sendError(request, response, session, xe,"Model with id '" + modelId + "' not found.");
                     return;
                 }
-                // fetch Instance and serialize as XML
                 try{
                     Document instance = model.getInstanceDocument(instanceId);
-                    OutputStream out = response.getOutputStream();
-                    response.setContentType("application/xml");
-                    DOMUtil.prettyPrintDOM(instance, out);
+                    DOMUtil.appendElement(rootNode,"model",modelId);
+                    DOMUtil.appendElement(rootNode,"instance",instanceId);
+                    WebUtil.doTransform(getServletContext(), response, instance, "highlightDocument.xsl", rootNode);
+
+//                    DOMUtil.prettyPrintDOM(instance, out);
                 }catch(DOMException de){
-                    sendError(request, response, session, null,"Instance with id '" + instanceId + "' not found.");
+                    sendError(request, response, session, null, "Instance with id '" + instanceId + "' not found.");
                     return;
                 }
             }
 
         } catch (XFormsException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (TransformerException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            //todo: should use sendError?
+            e.printStackTrace();
         }
-
-
-        // write to outputstream
     }
 
     private void sendError(HttpServletRequest request, HttpServletResponse response, HttpSession session, Exception e,String message) throws ServletException, IOException {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -153,7 +153,8 @@ public class WebFactory {
 
     /**
      * initializes a XSLT Transformer service. Currently an implementation of CachingTransformerService is
-     * instanciated. Future versions may make this configurable.
+     * instanciated. Future versions may make this configurable. This is the place to preload transoformations
+     * that are used throughout the application.
      *
      * @throws XFormsConfigException a Config exception will occur in case there's no valid setting for XSLT_CACHE_PROPERTY,XSLT_DEFAULT_PROPERTY or
      *                               XSLT_PATH_PROPERTY
@@ -187,6 +188,10 @@ public class WebFactory {
                 URI highlightingErrorTransformer = getXsltURI(xsltPath,"highlightError.xsl");
                 transformerService.getTransformer(highlightingErrorTransformer);
 
+                if(Config.getInstance().getProperty("betterform.debug-allowed").equals("true")){
+                    URI highlightingDocument = getXsltURI(xsltPath,"highlightDocument.xsl");
+                    transformerService.getTransformer(highlightingDocument);
+                }
             }
             catch (Exception e) {
                 throw new XFormsConfigException(e);

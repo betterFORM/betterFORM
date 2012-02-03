@@ -1,12 +1,10 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 package de.betterform.xml.xforms.model;
 
 import junit.framework.TestCase;
-import de.betterform.xml.xforms.model.XercesElementImpl;
-import de.betterform.xml.xforms.model.XercesNodeImpl;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

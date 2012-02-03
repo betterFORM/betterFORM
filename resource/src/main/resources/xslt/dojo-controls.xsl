@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
@@ -129,19 +129,21 @@
                     </xsl:when>
                     <!-- Standard Minimal Select -->
                     <xsl:otherwise>
-                        <select id="{$id}-value"
-                                name="{$name}"
-                                class="xfValue"
-                                dataType="{$datatype}"
-                                controlType="select1ComboBox"
-                                title=""
-                                tabindex="{$navindex}"
-                                schemaValue="{bf:data/@bf:schema-value}"
-                                incremental="{$incremental}">
-                            <xsl:call-template name="build-items">
-                                <xsl:with-param name="parent" select="$parent"/>
-                            </xsl:call-template>
-                        </select>
+                        <span class="select1wrapper">
+                            <select id="{$id}-value"
+                                    name="{$name}"
+                                    class="xfValue"
+                                    dataType="{$datatype}"
+                                    controlType="select1ComboBox"
+                                    title=""
+                                    tabindex="{$navindex}"
+                                    schemaValue="{bf:data/@bf:schema-value}"
+                                    incremental="{$incremental}">
+                                <xsl:call-template name="build-items">
+                                    <xsl:with-param name="parent" select="$parent"/>
+                                </xsl:call-template>
+                            </select>
+                        </span>
                     </xsl:otherwise>
                 </xsl:choose>
         </xsl:otherwise>

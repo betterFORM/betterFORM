@@ -1,19 +1,18 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.agent.web.flux;
 
-import junit.framework.TestCase;
-
-import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.agent.web.session.SerializableObject;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import de.betterform.xml.xforms.XFormsProcessor;
+import junit.framework.TestCase;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class FluxProcessorTest extends TestCase {
 /*

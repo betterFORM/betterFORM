@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
 package de.betterform.agent.web.servlet;
 
 import de.betterform.agent.web.WebUtil;
@@ -5,26 +10,17 @@ import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.util.PositionalXMLReader;
 import de.betterform.xml.xforms.exception.XFormsErrorIndication;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
-import de.betterform.xml.xslt.TransformerService;
-import de.betterform.xml.xslt.impl.CachingTransformerService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,12 +57,12 @@ public class ErrorServlet extends HttpServlet {
         }
 
         //create XML structure for exception details
-        Element rootNode = createRootElement();
-        appendElement(rootNode,"context",request.getContextPath());
-        appendElement(rootNode,"url", request.getSession().getAttribute("betterform.referer").toString());
-        appendElement(rootNode,"xpath",xpath);
-        appendElement(rootNode,"message",msg);
-        appendElement(rootNode,"cause",cause);
+        Element rootNode = DOMUtil.createRootElement("error");
+        DOMUtil.appendElement(rootNode, "context", request.getContextPath());
+        DOMUtil.appendElement(rootNode, "url", request.getSession().getAttribute("betterform.referer").toString());
+        DOMUtil.appendElement(rootNode, "xpath", xpath);
+        DOMUtil.appendElement(rootNode, "message", msg);
+        DOMUtil.appendElement(rootNode, "cause", cause);
 
         //transform is different depending on exception type
         if(ex instanceof XFormsErrorIndication){
@@ -77,7 +73,7 @@ public class ErrorServlet extends HttpServlet {
                     Element contextinfo = rootNode.getOwnerDocument().createElement("contextInfo");
                     rootNode.appendChild(contextinfo);
                     for(Map.Entry<String,Object> entry : map.entrySet()){
-                        appendElement(rootNode, entry.getKey(), entry.getValue().toString());
+                        DOMUtil.appendElement(rootNode, entry.getKey(), entry.getValue().toString());
                     }
                 }
             }
@@ -96,47 +92,21 @@ public class ErrorServlet extends HttpServlet {
                 //eval xpath
                 Node n = XPathUtil.evaluateAsSingleNode(newDoc,xpath);
                 String linenumber = (String) n.getUserData("lineNumber");
-                appendElement(rootNode,"lineNumber",linenumber);
+                DOMUtil.appendElement(rootNode, "lineNumber", linenumber);
 
                 DOMUtil.prettyPrintDOM(rootNode);
 
-                doTransform(response, newDoc, "highlightError.xsl", rootNode);
+                WebUtil.doTransform(getServletContext(), response, newDoc, "highlightError.xsl", rootNode);
             } catch (Exception e) {
                 e.printStackTrace();  
             }
 
         } else{
-            doTransform(response, rootNode.getOwnerDocument(), "error.xsl",null);
+            WebUtil.doTransform(getServletContext(), response, rootNode.getOwnerDocument(), "error.xsl", null);
         }
     }
 
-    private void doTransform(HttpServletResponse response, Document input, String stylesheetName,Element params) throws IOException {
-        ServletContext context = getServletContext();
-        CachingTransformerService transformerService  = (CachingTransformerService) context.getAttribute(TransformerService.TRANSFORMER_SERVICE);
-        Source xmlSource =  new DOMSource(input);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        try {
-            Transformer transformer = transformerService.getTransformerByName(stylesheetName);
-            if(params != null){
-                transformer.setParameter("errorInfo",params);
-            }
-            transformer.transform(xmlSource, new StreamResult(outputStream));
 
-        } catch (TransformerException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        response.setContentType(WebUtil.HTML_CONTENT_TYPE);
-        response.setContentLength(outputStream.toByteArray().length);
-        response.getOutputStream().write(outputStream.toByteArray());
-        response.getOutputStream().close();
-    }
-
-    private Element createRootElement() {
-        Document inputDoc = DOMUtil.newDocument(false, false);
-        Element rootNode = inputDoc.createElement("error");
-        inputDoc.appendChild(rootNode);
-        return rootNode;
-    }
 
     private Object getSessionAttribute(HttpServletRequest request,String sessionVar) {
         Object o = request.getSession().getAttribute(sessionVar);
@@ -144,9 +114,4 @@ public class ErrorServlet extends HttpServlet {
         return o;
     }
 
-    private void appendElement(Element parent,String elementName, String value) {
-        Element e = parent.getOwnerDocument().createElement(elementName);
-        DOMUtil.setElementValue(e, value);
-        parent.appendChild(e);
-    }
 }

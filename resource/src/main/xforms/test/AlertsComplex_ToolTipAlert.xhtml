@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id: testTextfield.xhtml 3122 2008-01-24 12:03:16Z lars $ -->
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:xf="http://www.w3.org/2002/xforms"
-    xmlns:ev="http://www.w3.org/2001/xml-events"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      xmlns:xf="http://www.w3.org/2002/xforms">
     <head>
-        <title>Complex Alert Test</title>
+        <title>Complex Test for ToolTip Alerts</title>
 
         <style type="text/css">
+            h1 {
+                font-size: large;
+                font-weight:bolder;
+            }
+
 			.xfGroupLabel {
-				font-size:large;
-				font-weight:bolder;
-			}
+                display: block;
+                float: left;
+                font-weight: bolder;
+                position: relative;
+                top: 6px;
+                width: 140px;
+            }
 
-
-
+            .xfCaseLabel {
+                font-size:larger;
+                font-weight:bolder;
+                display:block;
+            }
         </style>
 
         <xf:model>
 			<xf:instance id="i-1" xmlns="">
 				<data>
 					<trigger/>
-					<repeated relevant="true" readonly="false" constraint="false">
+					<repeated required="true" relevant="true" readonly="false" constraint="false">
 						<item>
 							<input/>
 							<input/>
@@ -45,119 +58,77 @@
 			</xf:instance>
 			<xf:bind nodeset="repeated/item" relevant="boolean-from-string(../@relevant)" readonly="boolean-from-string(../@readonly)">
 
-				<xf:bind nodeset="input[1]" constraint="string-length(.) &gt; 4 or boolean-from-string(../../@constraint)"/>
-				<xf:bind nodeset="input[2]" constraint="boolean-from-string(.) = true() or boolean-from-string(../../@constraint)" type="xf:boolean"/>
-				<xf:bind nodeset="input[3]" constraint="string-length(.) &gt; 4 or boolean-from-string(../../@constraint)" type="xf:date"/>
-				<xf:bind nodeset="input[4]" constraint="string-length(.) &gt; 4 or boolean-from-string(../../@constraint)" type="xf:dateTime"/>
-				<xf:bind nodeset="select1[1]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
-				<xf:bind nodeset="select1[2]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
-				<xf:bind nodeset="select1[3]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
-				<xf:bind nodeset="select[1]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
-				<xf:bind nodeset="select[2]" constraint=". = 'uk' or boolean-from-string(../../@constraint)"/>
-
+				<xf:bind nodeset="input[1]" constraint="string-length(.) &gt; 4 or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)"/>
+				<xf:bind nodeset="input[2]" constraint="boolean-from-string(.) = true() or boolean-from-string(../../@constraint)" type="xf:boolean" required="boolean-from-string(../../@required)"/>
+				<xf:bind nodeset="input[3]" constraint="string-length(.) &gt; 4 or boolean-from-string(../../@constraint)" type="xf:date" required="boolean-from-string(../../@required)"/>
+				<xf:bind nodeset="input[4]" constraint="string-length(.) &gt; 4 or boolean-from-string(../../@constraint)" type="xf:dateTime" required="boolean-from-string(../../@required)"/>
+				<xf:bind nodeset="select1[1]" constraint=". = 'uk' or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)"/>
+				<xf:bind nodeset="select1[2]" constraint=". = 'uk' or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)"/>
+				<xf:bind nodeset="select1[3]" constraint=". = 'uk' or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)"/>
+				<xf:bind nodeset="select[1]" constraint=". = 'uk' or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)"/>
+				<xf:bind nodeset="select[2]" constraint=". = 'uk' or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)"/>
 			</xf:bind>
-
-        <xf:submission id="s-debug" action="{$contextroot}/bfResources/jsp/debug-instance.jsp"
-                       method="post" replace="all"
-                       validate="false"/>
         </xf:model>
     </head>
-    <body class="tundra"  style="overflow:hidden;" >
+    <body class="tundra ToolTipAlert">
     <div>
-        <h1>Alert Test</h1>
-		<xf:group>
-			<xf:label>Group Appearances</xf:label>
-			<table>
-				<tr>
-					<td>
-						<xf:trigger>
-							<xf:label>no group</xf:label>
-							<xf:toggle case="noGroup"/>
-						</xf:trigger>
-
-					</td>
-					<td>
-						<xf:trigger>
-							<xf:label>no appearance</xf:label>
-							<xf:toggle case="noAppearance"/>
-						</xf:trigger>
-
-					</td>
-					<td>
-						<xf:trigger>
-							<xf:label>minimal</xf:label>
-							<xf:toggle case="minimalGroup"/>
-						</xf:trigger>
-
-					</td>
-					<td>
-						<xf:trigger>
-							<xf:label>compact</xf:label>
-							<xf:toggle case="compactGroup"/>
-						</xf:trigger>
-
-					</td>
-					<td>
-						<xf:trigger>
-							<xf:label>full</xf:label>
-							<xf:toggle case="fullGroup"/>
-						</xf:trigger>
-
-					</td>
-					<td>
-						<xf:trigger>
-							<xf:label>horizontal</xf:label>
-							<xf:toggle case="horizontalTable"/>
-						</xf:trigger>
-
-					</td>
-					<td>
-						<xf:trigger>
-							<xf:label>vertical</xf:label>
-							<xf:toggle case="verticalTable"/>
-						</xf:trigger>
-
-					</td>
-				</tr>
-				<tr>
-					<td>
-					 	<xf:trigger>
-							 <xf:label>Relevance</xf:label>
-							 <xf:setvalue ref="repeated/@relevant" value="IF(.='true','false', 'true')" />
-					 	</xf:trigger>
-					</td>
-					<td>
-						<xf:trigger>
-							<xf:label>Readonly</xf:label>
-							<xf:setvalue ref="repeated/@readonly" value="IF(.='true','false', 'true')" />
-						</xf:trigger>
-
-					</td>
-					<td>
-						<xf:trigger>
-							<xf:label>Constraint</xf:label>
-							<xf:setvalue ref="repeated/@constraint" value="IF(.='true','false', 'true')" />
-						</xf:trigger>
-
-					</td>
-					<td>
-
-					</td>
-					<td>
-
-					</td>
-					<td>
-
-					</td>
-					<td>
-
-					</td>
-				</tr>
-			</table>
-		</xf:group>
+        <h1>Complex Test for ToolTip Alerts</h1>
+        <xf:group appearance="minimal">
+            <xf:label>Group Appearances</xf:label>
+            <xf:trigger>
+                <xf:label>no group</xf:label>
+                <xf:toggle case="noGroup"/>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>no appearance</xf:label>
+                <xf:toggle case="noAppearance"/>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>minimal</xf:label>
+                <xf:toggle case="minimalGroup"/>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>compact</xf:label>
+                <xf:toggle case="compactGroup"/>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>full</xf:label>
+                <xf:toggle case="fullGroup"/>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>horizontal</xf:label>
+                <xf:toggle case="horizontalTable"/>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>vertical</xf:label>
+                <xf:toggle case="verticalTable"/>
+            </xf:trigger>
+        </xf:group>
+        <br/>
+        <xf:group appearance="minimal">
+            <xf:label>MIP Controls</xf:label>
+            <xf:trigger>
+                <xf:label><xf:output value="concat('Required:',instance()/repeated/@required)"/></xf:label>
+                <xf:setvalue ref="repeated/@required" value="IF(.='true','false', 'true')"/>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label><xf:output value="concat('Relevance:',instance()/repeated/@relevant)"/></xf:label>
+                <xf:setvalue ref="repeated/@relevant" value="IF(.='true','false', 'true')"/>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label><xf:output value="concat('Readonly:',instance()/repeated/@readonly)"/></xf:label>
+                <xf:setvalue ref="repeated/@readonly" value="IF(.='true','false', 'true')"/>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label><xf:output value="concat('Valid:',instance()/repeated/@constraint)"/></xf:label>
+                <xf:setvalue ref="repeated/@constraint" value="IF(.='true','false', 'true')"/>
+            </xf:trigger>
+        </xf:group>
+        <br/>
+        <br/>
 		<xf:switch>
 			<xf:case id="noGroup" selected="true">
-					<label for="noGroup" class="xfGroupLabel">without Group</label>
+					<label for="noGroup" class="xfCaseLabel">No surrounding Group</label>
 
 					<xf:input ref="repeated/item[1]/input[1]">
 						<xf:label>Input 1:</xf:label>
@@ -247,9 +218,8 @@
 				
 			</xf:case>
 			<xf:case id="noAppearance" >
+                <label for="noAppearance" class="xfCaseLabel">Group without appearance attribute</label>
 				<xf:group ref=".">
-					<xf:label>Group without appearance</xf:label>
-
 					<xf:input ref="repeated/item[1]/input[1]">
 						<xf:label>Input 1:</xf:label>
 						<xf:alert>minimalGroup Input 1 Alert</xf:alert>
@@ -338,8 +308,9 @@
 				</xf:group>
 			</xf:case>
 			<xf:case id="minimalGroup">
+                <label for="minimalGroup" class="xfCaseLabel">Group with appearance="minimal"</label>
 				<xf:group ref="." appearance="minimal">
-					<xf:label>Minimal Group</xf:label>
+
 					<xf:input ref="repeated/item[1]/input[1]">
 						<xf:label>Input 1:</xf:label>
 						<xf:alert>minimalGroup Input 1 Alert</xf:alert>
@@ -428,9 +399,8 @@
 				</xf:group>
 			</xf:case>
 			<xf:case id="compactGroup">
+                <label for="compactGroup" class="xfCaseLabel">Group with appearance="compact"</label>
 				<xf:group ref="repeated/item[1]" appearance="compact">
-					<xf:label>Compact Group</xf:label>
-
 					<xf:input ref="input[1]">
 						<xf:label>Input 1:</xf:label>
 						<xf:alert>minimalGroup Input 1 Alert</xf:alert>
@@ -520,9 +490,8 @@
 				</xf:group>
 			</xf:case>
 			<xf:case id="fullGroup">
+                <label for="fullGroup" class="xfCaseLabel">Group with appearance="full"</label>
 				<xf:group ref="repeated/item[1]" appearance="full">
-					<xf:label>Full Group</xf:label>
-
 					<xf:input ref="input[1]">
 						<xf:label>Input 1:</xf:label>
 						<xf:alert>minimalGroup Input 1 Alert</xf:alert>
@@ -612,9 +581,8 @@
 				</xf:group>
 			</xf:case>
 			<xf:case id="horizontalTable">
+                <label for="horizontalTable" class="xfCaseLabel">Group with appearance="bf:horizontalTable"</label>
 				<xf:group ref="repeated/item[1]" appearance="bf:horizontalTable">
-					<xf:label>horizontalTable Group</xf:label>
-
 					<xf:input ref="input[1]">
 						<xf:label>Input 1:</xf:label>
 						<xf:alert>minimalGroup Input 1 Alert</xf:alert>
@@ -704,9 +672,9 @@
 				</xf:group>
 			</xf:case>
 			<xf:case id="verticalTable">
-				<xf:group ref="repeated/item[1]" appearance="bf:verticalTable">
-					<xf:label>verticalTable Group</xf:label>
+                <label for="verticalTable" class="xfCaseLabel">Group with appearance="bf:verticalTable"</label>
 
+				<xf:group ref="repeated/item[1]" appearance="bf:verticalTable">
 					<xf:input ref="input[1]">
 						<xf:label>Input 1:</xf:label>
 						<xf:alert>minimalGroup Input 1 Alert</xf:alert>
@@ -797,11 +765,5 @@
 			</xf:case>
 		</xf:switch>
     </div>
-
-
-            <xf:trigger appearance="full">
-                <xf:label>Debug</xf:label>
-                <xf:send submission="s-debug"/>
-            </xf:trigger>
     </body>
 </html>

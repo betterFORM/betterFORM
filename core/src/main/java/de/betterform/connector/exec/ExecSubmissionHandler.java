@@ -1,21 +1,20 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.connector.exec;
 
-import de.betterform.xml.dom.DOMUtil;
-import de.betterform.xml.xforms.XFormsProcessor;
-import org.apache.log4j.Category;
 import de.betterform.connector.AbstractConnector;
 import de.betterform.connector.SubmissionHandler;
+import de.betterform.xml.dom.DOMUtil;
+import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.submission.Submission;
+import org.apache.log4j.Category;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.ByteArrayInputStream;

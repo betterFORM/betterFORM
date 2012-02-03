@@ -1,18 +1,20 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xpath.impl.saxon;
 
-import net.sf.saxon.expr.*;
-
 import de.betterform.xml.xforms.Container;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.xpath.saxon.function.Instance;
 import de.betterform.xml.xpath.XPathReferenceFinder;
+import net.sf.saxon.expr.*;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 /**
  *

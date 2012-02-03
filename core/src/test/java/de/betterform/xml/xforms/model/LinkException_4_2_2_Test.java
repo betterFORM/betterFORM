@@ -1,14 +1,14 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xforms.model;
 
-import junit.framework.TestCase;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.exception.XFormsLinkException;
+import junit.framework.TestCase;
 
 /**
  * Test cases for the instance implementation.

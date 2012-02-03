@@ -1,22 +1,23 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 
 package de.betterform.agent.web.event;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.XMLEvent;
 import de.betterform.xml.events.XMLEventFactory;
-import de.betterform.xml.events.impl.DefaultXMLEventService;
-import de.betterform.xml.events.impl.XercesXMLEventFactory;
 import de.betterform.xml.events.impl.DefaultXMLEventInitializer;
+import de.betterform.xml.events.impl.DefaultXMLEventService;
 import de.betterform.xml.events.impl.XercesXMLEvent;
+import de.betterform.xml.events.impl.XercesXMLEventFactory;
 import de.betterform.xml.xforms.XFormsConstants;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
+
 import java.util.*;
 
 

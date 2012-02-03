@@ -1,5 +1,10 @@
 
-    function showAddMenu(targetId,xfType){
+/*
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
+function showAddMenu(targetId,xfType){
         switch (xfType){
             case "document": documentMenu(targetId);break;
             case "model": modelMenu(targetId);break;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -9,7 +9,15 @@
  */
 package de.betterform.xml.xforms;
 
+import de.betterform.xml.config.Config;
+import de.betterform.xml.dom.DOMComparator;
+import de.betterform.xml.dom.DOMUtil;
+import de.betterform.xml.ns.NamespaceConstants;
+import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Instance;
+import de.betterform.xml.xforms.model.Model;
+import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
+import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import junit.framework.TestCase;
 import net.sf.saxon.dom.NodeWrapper;
 import net.sf.saxon.om.Item;
@@ -17,20 +25,17 @@ import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.value.BooleanValue;
 import net.sf.saxon.value.NumericValue;
 import net.sf.saxon.value.StringValue;
-import de.betterform.xml.config.Config;
-import de.betterform.xml.ns.NamespaceConstants;
-import de.betterform.xml.xforms.exception.XFormsException;
-import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
-import de.betterform.xml.xforms.model.Model;
-import de.betterform.xml.xpath.impl.saxon.XPathCache;
-import de.betterform.xml.dom.DOMUtil;
-import de.betterform.xml.dom.DOMComparator;
-import org.w3c.dom.Node;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 import javax.xml.transform.TransformerException;
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Nick Van den Bleeken

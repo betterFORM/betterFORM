@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -15,6 +15,14 @@ dojo.declare(
         "betterform.ui.range.Rating",
         [betterform.ui.ControlValue,dojox.form.Rating],
 {
+
+    buildRendering: function(){
+        this.inherited(arguments);
+        var initialValue = dojo.attr(this.srcNodeRef, "value");
+        if(initialValue == "" || initialValue == undefined || isNaN(initialValue)){
+            this.value = 0;
+        }
+    },
     postMixInProperties:function() {
         this.inherited(arguments);
         this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);

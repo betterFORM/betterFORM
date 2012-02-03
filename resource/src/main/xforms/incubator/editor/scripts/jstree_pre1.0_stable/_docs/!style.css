@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
 html, body { margin:0; padding:0; background:#D9E3CB; }
 body, td, th, pre, code, select, option, input, textarea { font-family:"lucida grande",tahoma,verdana,arial,sans-serif; font-size:10pt; }
 #dhead { margin:0 0 0 -10px; padding:0; line-height:80px; font-size:18pt; font-family:Georgia; /*text-shadow:1px 1px 2px gray;*/ border-bottom:10px solid #73796B; margin-bottom:0.5em; text-align:center; width:820px; background:black; color:white; -moz-border-radius:5px 5px 0 0; border-radius:5px 5px 0 0; -webkit-border-radius:5px 5px 0 0; text-indent:-2000px; background:black url("logo.png") center center no-repeat; }

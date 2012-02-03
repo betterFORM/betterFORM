@@ -1,24 +1,24 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xforms.action;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import de.betterform.xml.events.XFormsEventNames;
+import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
-import de.betterform.xml.xforms.model.Model;
+import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.xforms.exception.XFormsBindingException;
 import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.model.submission.AttributeOrValueChild;
 import de.betterform.xml.xforms.ui.Case;
-import de.betterform.xml.xforms.ui.Switch;
-import de.betterform.xml.dom.DOMUtil;
-import org.w3c.dom.Element;
 import de.betterform.xml.xforms.ui.RepeatItem;
+import de.betterform.xml.xforms.ui.Switch;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import java.util.HashMap;

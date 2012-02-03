@@ -1,25 +1,27 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.config;
 
-import net.sf.saxon.dom.DocumentWrapper;
-import net.sf.saxon.dom.NodeWrapper;
-import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.sxpath.IndependentContext;
 import de.betterform.connector.InstanceSerializer;
 import de.betterform.connector.InstanceSerializerMap;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
+import net.sf.saxon.dom.DocumentWrapper;
+import net.sf.saxon.dom.NodeWrapper;
+import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.sxpath.IndependentContext;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.InputStream;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Load the configuration in the default XML format from an InputStream.

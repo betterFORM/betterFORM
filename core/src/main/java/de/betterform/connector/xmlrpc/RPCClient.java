@@ -1,18 +1,18 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.connector.xmlrpc;
 
+import de.betterform.xml.xforms.exception.XFormsException;
+import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
-import java.net.URL;
-import org.apache.xmlrpc.XmlRpcException;
-import de.betterform.xml.xforms.exception.XFormsException;
 import org.w3c.dom.Document;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Hashtable;
 import java.util.Vector;
 

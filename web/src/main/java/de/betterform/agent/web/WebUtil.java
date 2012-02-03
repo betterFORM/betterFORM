@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -10,17 +10,28 @@ import de.betterform.connector.http.AbstractHTTPConnector;
 import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.model.submission.RequestHeaders;
 import de.betterform.xml.xslt.TransformerService;
+import de.betterform.xml.xslt.impl.CachingTransformerService;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.cookie.ClientCookie;
 import org.apache.http.impl.cookie.BasicClientCookie;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -358,5 +369,42 @@ public class WebUtil {
 
         return isXML;
     }
+
+    /**
+     * transforms an input document and writes it to the ServletOutputStream.
+     *
+     * @param context the servlet context
+     * @param response the servlet response
+     * @param input an DOM input document to transform
+     * @param stylesheetName the name of the stylesheet to use. This must be preloaded in CachingTransformerService. See WebFactory
+     * @param params transformation parameters as a piece of DOM if any. The params object is passed as param 'params' to the stylesheets
+     * @throws java.io.IOException
+     */
+    public static void doTransform(ServletContext context,
+                                   HttpServletResponse response,
+                                   Document input,
+                                   String stylesheetName,
+                                   Object params) throws IOException {
+        CachingTransformerService transformerService  = (CachingTransformerService) context.getAttribute(TransformerService.TRANSFORMER_SERVICE);
+        Source xmlSource =  new DOMSource(input);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            Transformer transformer = transformerService.getTransformerByName(stylesheetName);
+            if(params != null){
+                if(params instanceof Node){
+                    transformer.setParameter("params",params);
+                }
+            }
+            transformer.transform(xmlSource, new StreamResult(outputStream));
+
+        } catch (TransformerException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        response.setContentType(WebUtil.HTML_CONTENT_TYPE);
+        response.setContentLength(outputStream.toByteArray().length);
+        response.getOutputStream().write(outputStream.toByteArray());
+        response.getOutputStream().close();
+    }
+
 
 }

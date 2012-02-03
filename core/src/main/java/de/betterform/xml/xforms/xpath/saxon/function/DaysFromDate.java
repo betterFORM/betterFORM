@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -8,11 +8,7 @@ package de.betterform.xml.xforms.xpath.saxon.function;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.value.CalendarValue;
-import net.sf.saxon.value.DateTimeValue;
-import net.sf.saxon.value.DateValue;
-import net.sf.saxon.value.DoubleValue;
-import net.sf.saxon.value.Int64Value;
+import net.sf.saxon.value.*;
 
 /**
  * Implementation of 7.9.2 The local-dateTime() Function <p/> This function

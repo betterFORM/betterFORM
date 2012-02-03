@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
 package de.betterform.xml.xforms.model;
 
 import de.betterform.xml.xforms.XFormsProcessorImpl;

@@ -1,16 +1,10 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.session;
 
-import net.sf.saxon.dom.DocumentWrapper;
-import net.sf.saxon.dom.NodeWrapper;
-import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.sxpath.IndependentContext;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.generator.XSLTGenerator;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
@@ -21,6 +15,12 @@ import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import de.betterform.xml.xslt.impl.CachingTransformerService;
 import de.betterform.xml.xslt.impl.FileResourceResolver;
+import net.sf.saxon.dom.DocumentWrapper;
+import net.sf.saxon.dom.NodeWrapper;
+import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.sxpath.IndependentContext;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 

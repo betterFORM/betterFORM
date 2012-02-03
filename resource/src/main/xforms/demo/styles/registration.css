@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -126,7 +126,7 @@
 }
 
 #registration .xfHint {
-    display: block;
+    /*display: block;*/
     background: #F2F2F2 url(../images/hint.png) no-repeat 3% 7px;
     color: #666666;
     -moz-border-radius-topright: 8px;

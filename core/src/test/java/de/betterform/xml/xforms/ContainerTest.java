@@ -1,16 +1,16 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 package de.betterform.xml.xforms;
 
 import de.betterform.xml.xforms.action.EventCountListener;
-import junit.framework.TestCase;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.xforms.exception.XFormsBindingException;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Model;
+import junit.framework.TestCase;
 import org.w3c.dom.Document;
 import org.w3c.dom.events.EventTarget;
 
@@ -47,7 +47,6 @@ public class ContainerTest extends TestCase {
         processor.init();
         assertTrue(processor.getContainer().getModels().size()==2);
     }
-
 
     public void testMultipleModelConstructDoneEvents() throws Exception{
         processor.setXForms(getClass().getResourceAsStream("model-test.xml"));

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
@@ -11,9 +11,6 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:bf="http://betterform.sourceforge.net/xforms"
         xmlns:ev="http://www.w3.org/2001/xml-events"
-        xmlns:xf="http://www.w3.org/2002/xforms"
-        xmlns:xs="http://www.w3.org/2001/XMLSchema"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:hdlg="http://www.hdlg.info/XML/filesystem"
         exclude-result-prefixes="bf xsl ev">
     <xsl:param name="targetURL" select="''"/>

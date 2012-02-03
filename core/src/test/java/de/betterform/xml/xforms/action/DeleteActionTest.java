@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -10,8 +10,8 @@ import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.xforms.BetterFormTestCase;
 import de.betterform.xml.xforms.TestEventListener;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
-import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.Document;
+import org.w3c.dom.events.EventTarget;
 
 import java.util.Map;
 

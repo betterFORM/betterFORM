@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.connector.file;
 
-import junit.framework.TestCase;
 import de.betterform.connector.ConnectorFactory;
 import de.betterform.connector.SubmissionHandler;
 import de.betterform.xml.dom.DOMComparator;
-import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.XFormsProcessor;
+import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.model.submission.Submission;
+import junit.framework.TestCase;
 import org.w3c.dom.Document;
 
 import javax.xml.parsers.DocumentBuilder;

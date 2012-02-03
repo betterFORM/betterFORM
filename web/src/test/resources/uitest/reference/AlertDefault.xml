@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<test-case xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner" xmlns:xf="http://www.w3.org/2002/xforms" xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../test-case.xsd">
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<test-case xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner"
+           xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../test-case.xsd">
     <open href="reference/AlertDefault.xhtml" bfTest="true"/>
     <assert-title title="Default Alert Handler - inline alerts"/>
 
@@ -7,6 +14,11 @@
     <assert-control-present locator="input2" type="input"/>
     <assert-control-present locator="input3" type="input"/>
     <assert-control-present locator="input4" type="input"/>
+
+    <assert-control-hint-not-present locator="input1-hint" value="The input must be longer than 5 characters"/>
+    <assert-control-hint-not-present locator="input2-hint" value="The input must be longer than 5 characters"/>
+    <assert-control-hint-not-present locator="input3-hint" value="The input must be longer than 5 characters"/>
+    <assert-control-hint-not-present locator="input4-hint" value="The input must be longer than 5 characters"/>
 
     <click locator="input1"/>
     <assert-control-hint-present locator="input1-hint" value="The input must be longer than 5 characters"/>

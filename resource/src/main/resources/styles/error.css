@@ -1,4 +1,9 @@
-	body{
+	/*
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
+body{
         font-family:Tahoma;
         font-size:14pt;
         background:url('../../bfResources/images/bgOne.gif') repeat-x scroll;

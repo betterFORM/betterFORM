@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 <xsl:stylesheet version="2.0"
@@ -288,7 +288,7 @@
                                   select=".//xf:*[not(ancestor::*[namespace-uri()='http://www.w3.org/2002/xforms'])]
                                   [not(namespace-uri()='http://www.w3.org/2002/xforms' and local-name()='model')]"/>
 
-                    <xsl:message>###################################<xsl:value-of select="count($outermostNodeset)"/></xsl:message>
+                    <xsl:message>Outermost Nodeset size:<xsl:value-of select="count($outermostNodeset)"/></xsl:message>
                     <!-- detect how many outermost XForms elements we have in the body -->
                     <xsl:choose>
                         <xsl:when test="count($outermostNodeset) = 1">

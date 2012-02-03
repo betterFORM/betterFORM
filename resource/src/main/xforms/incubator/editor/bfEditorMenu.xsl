@@ -1,12 +1,11 @@
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-        xmlns:ev="http://www.w3.org/2001/xml-events"
-        xmlns:xf="http://www.w3.org/2002/xforms" version="2.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xf="http://www.w3.org/2002/xforms" version="2.0"
         >
     <!--
     THE MENU BAR OF THE XFORMS EDITOR APPLICATION ALONG WITH THE XFORMS TRIGGERS TO SUPPORT THE MENU ACTIONS.

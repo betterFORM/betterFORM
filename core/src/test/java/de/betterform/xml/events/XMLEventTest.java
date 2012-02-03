@@ -1,15 +1,14 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.events;
 
-import junit.framework.TestCase;
 import de.betterform.xml.events.impl.XercesXMLEvent;
+import junit.framework.TestCase;
 
 import java.util.HashMap;
-import java.util.Collection;
 
 /**
  * Unit test for XMLEvent implementations.

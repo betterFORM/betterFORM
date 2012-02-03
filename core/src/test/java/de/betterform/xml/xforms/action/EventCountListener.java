@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xforms.action;
 
-import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
 
 public class EventCountListener implements EventListener {
     private int count;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -8,14 +8,13 @@ package de.betterform.xml.xforms.xpath.saxon.function;
 import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.xforms.XFormsElement;
 import de.betterform.xml.xforms.exception.XFormsComputeException;
-
+import de.betterform.xml.xforms.exception.XFormsException;
 import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.ExpressionVisitor;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.StringValue;
-import de.betterform.xml.xforms.exception.XFormsException;
 
 /**
  * 7.9.1 The property() Function

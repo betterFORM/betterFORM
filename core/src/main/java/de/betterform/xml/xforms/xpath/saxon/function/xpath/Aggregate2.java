@@ -1,19 +1,12 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xforms.xpath.saxon.function.xpath;
 
 
-import javax.xml.transform.SourceLocator;
-
-import net.sf.saxon.expr.ArithmeticExpression;
-import net.sf.saxon.expr.Atomizer;
-import net.sf.saxon.expr.Calculator;
-import net.sf.saxon.expr.LastPositionFinder;
-import net.sf.saxon.expr.StaticProperty;
-import net.sf.saxon.expr.XPathContext;
+import net.sf.saxon.expr.*;
 import net.sf.saxon.functions.SystemFunction;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.SequenceIterator;
@@ -23,13 +16,9 @@ import net.sf.saxon.type.BuiltInAtomicType;
 import net.sf.saxon.type.ItemType;
 import net.sf.saxon.type.Type;
 import net.sf.saxon.type.TypeHierarchy;
-import net.sf.saxon.value.AtomicValue;
-import net.sf.saxon.value.Cardinality;
-import net.sf.saxon.value.DoubleValue;
-import net.sf.saxon.value.DurationValue;
-import net.sf.saxon.value.Int64Value;
-import net.sf.saxon.value.NumericValue;
-import net.sf.saxon.value.UntypedAtomicValue;
+import net.sf.saxon.value.*;
+
+import javax.xml.transform.SourceLocator;
 
 /**
 * This class implements the sum(), avg(), count() functions,

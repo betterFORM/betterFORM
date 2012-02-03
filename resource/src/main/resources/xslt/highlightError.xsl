@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
@@ -12,18 +12,17 @@
 
     <xsl:output method="xhtml" encoding="UTF-8" indent="yes"/>
 	<xsl:strip-space elements="bf:data"/>
-    <xsl:param name="errorInfo" />
+    <xsl:param name="params" />
 
 	<xsl:template match="/">
-		<xsl:variable name="content" select="."/>
 		<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 			<head>
 				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 				<title>Error</title>
-				<script type="text/javascript" src="{$errorInfo/context}/bfResources/scripts/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
-				<script type="text/javascript" src="{$errorInfo/context}/bfResources/scripts/syntaxhighlighter_3.0.83/scripts/shBrushXml.js"></script>
-				<link type="text/css" rel="stylesheet" href="{$errorInfo/context}/bfResources/scripts/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
-				<link type="text/css" rel="stylesheet" href="{$errorInfo/context}/bfResources/scripts/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+				<script type="text/javascript" src="{$params/context}/bfResources/scripts/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+				<script type="text/javascript" src="{$params/context}/bfResources/scripts/syntaxhighlighter_3.0.83/scripts/shBrushXml.js"></script>
+				<link type="text/css" rel="stylesheet" href="{$params/context}/bfResources/scripts/syntaxhighlighter_3.0.83/styles/shCore.css"/>
+				<link type="text/css" rel="stylesheet" href="{$params/context}/bfResources/scripts/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
 				<script type="text/javascript">SyntaxHighlighter.all();</script><xsl:text>
 </xsl:text>
 
@@ -31,7 +30,7 @@
                     body{
                         font-family:Tahoma;
                         font-size:14pt;
-                        background:url('<xsl:value-of select="$errorInfo/context"/>/bfResources/images/bgOne.gif') repeat-x scroll;
+                        background:url('<xsl:value-of select="$params/context"/>/bfResources/images/bgOne.gif') repeat-x scroll;
                         font-family: san-serif;
                         color:#4682b4;
                     }
@@ -76,20 +75,20 @@
 
 			<body>
                 <div id="errorBody">
-                    <img id="errorIcon" src="{$errorInfo/context}/bfResources/images/error.png" width="24" height="24" alt="Error"/>
+                    <img id="errorIcon" src="{$params/context}/bfResources/images/error.png" width="24" height="24" alt="Error"/>
                     <div class="message1">Oops, an error occured...<br/></div>
-                    <div class="message2"><xsl:value-of select="$errorInfo/message"/></div>
+                    <div class="message2"><xsl:value-of select="$params/message"/></div>
                     <table>
                         <tr>
                             <td>URL</td>
-                            <td><xsl:value-of select="$errorInfo/url"/></td>
+                            <td><xsl:value-of select="$params/url"/></td>
                         </tr>
                         <tr>
                             <td>XPath</td>
-                            <td><xsl:value-of select="$errorInfo/xpath"/></td>
+                            <td><xsl:value-of select="$params/xpath"/></td>
                         </tr>
                     </table>
-                    <pre class="brush: xml; highlight:[{$errorInfo//lineNumber}]">
+                    <pre class="brush: xml; highlight:[{$params//lineNumber}]">
                         <xsl:copy>
                             <xsl:apply-templates />
                         </xsl:copy>
@@ -97,7 +96,7 @@
                     <div style="float:right;text-align:right;font-size:8pt;font-family: san-serif;" id="copyright">
                         <a href="http://www.betterform.de">
                             <img style="vertical-align:text-bottom; margin-right:5px;"
-                                 src="{$errorInfo/context}/bfResources/images/betterform_icon16x16.png" alt="betterFORM project"/>
+                                 src="{$params/context}/bfResources/images/betterform_icon16x16.png" alt="betterFORM project"/>
                         </a>
                         <span>&#xA9; 2012 betterFORM</span>
                     </div>

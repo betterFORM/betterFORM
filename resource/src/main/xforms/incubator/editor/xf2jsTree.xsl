@@ -1,4 +1,12 @@
-<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:bf="http://betterform.sourceforge.net/xforms" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms" version="2.0" exclude-result-prefixes="html" xml:base="/exist/rest/db/betterform/apps/editor/">
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:ev="http://www.w3.org/2001/xml-events"
+                xmlns:html="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms" version="2.0"
+                exclude-result-prefixes="html" xml:base="/exist/rest/db/betterform/apps/editor/">
     <xsl:variable name="bfEditorPath" select="'/rest/db/betterform/apps/editor/'"/>
     <!-- author: Joern Turner -->
     <!-- author: Tobias Krebs -->
