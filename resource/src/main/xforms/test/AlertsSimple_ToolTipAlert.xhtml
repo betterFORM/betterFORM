@@ -15,7 +15,6 @@
                 font-size: large;
                 font-weight:bolder;
             }
-
             .xfGroupLabel {
                 display: block;
                 float: left;
@@ -88,7 +87,7 @@
 		</xf:model>
 
     </head>
-    <body class="tundra ToolTipAlert" >
+    <body class="tundra ToolTipAlert">
     <div>
         <h1>Simple Test for ToolTip Alerts</h1>
         <br/>
@@ -112,49 +111,42 @@
             </xf:trigger>
         </xf:group>
 
-		<p>For a valid Input / Date and Date Time insert more then 5 characters into the field</p>
+		<p>For a valid Input / Date and Date Time insert more than 5 characters into the field</p>
 		<p>For a valid Boolean set state selected</p>
 		<p>For a valid Select(1) choose (only!) England</p>
 
 		<xf:group  appearance="full">
 			<xf:label/>
 				<xf:input ref="repeated/item[1]/input[1]" incremental="true">
-					<xf:label>Input 1 (incremental):</xf:label>
-					<xf:alert>Input 1 <b>Alert</b>  (incremental)</xf:alert>
-					<xf:hint>Input 1 <b>Hint</b>  (incremental)</xf:hint>
+					<xf:label>Input 1</xf:label>
+                    <xf:alert>Input 1 <b>Alert</b></xf:alert>
+					<xf:hint>Insert more than 5 characters for a valid <b>Input 1</b></xf:hint>
 					<xf:help>Input 1 Help  (incremental)</xf:help>
-				</xf:input>
-
-				<xf:input ref="repeated/item[1]/input[1]" incremental="false">
-					<xf:label>Input 1:</xf:label>
-					<xf:alert>Input 1 <b>Alert</b></xf:alert>
-					<xf:hint>Input 1 <b>Hint</b></xf:hint>
-					<xf:help>Input 1 Help</xf:help>
 				</xf:input>
 
 				<xf:input ref="repeated/item[1]/input[2]">
 					<xf:label>Input 2:</xf:label>
 					<xf:alert>Input 2 <b>Alert</b></xf:alert>
-					<xf:hint>Input 2 <b>Hint</b></xf:hint>
+                    <xf:hint>Checkbox must be selected for a valid <b>Input 2</b></xf:hint>
 					<xf:help>Input 2 Help</xf:help>
 				</xf:input>
+
 				<xf:input ref="repeated/item[1]/input[3]">
 					<xf:label>Input 3:</xf:label>
-					<xf:alert>Input 3 <b>Alert</b></xf:alert>
-					<xf:hint>Input 3 <b>Hint</b></xf:hint>
+                    <xf:alert>Input 3 <b>Alert</b></xf:alert>
+					<xf:hint>For a valid <b>Input 3</b> insert a valid date</xf:hint>
 					<xf:help>Input 3 Help</xf:help>
 				</xf:input>
 
-			
 				<xf:input ref="repeated/item[1]/input[4]">
 					<xf:label>Input 4:</xf:label>
-					<xf:alert>Input 4 <b>Alert</b></xf:alert>
-					<xf:hint>Input 4 <b>Hint</b></xf:hint>
+                    <xf:alert>Input 4 <b>Alert</b></xf:alert>
+					<xf:hint>For a valid <b>Input 4</b> insert a valid date / time</xf:hint>
 					<xf:help>Input 4 Help</xf:help>
 				</xf:input>
 
 				<xf:select1  ref="repeated/item[1]/select1[1]" appearance="minimal">
-					<xf:label>Select1</xf:label>
+                    <xf:label>Select1 [1]</xf:label>
                     <xf:choices>
                         <xf:item>
                             <xf:label>England</xf:label>
@@ -170,7 +162,7 @@
                         </xf:item>
                     </xf:choices>
 					<xf:alert>Select1 1 <b>Alert</b></xf:alert>
-					<xf:hint>Select1 1 <b>Hint</b></xf:hint>
+                    <xf:hint>For a valid <b>Select1</b> England must be selected</xf:hint>
 					<xf:help>Select1 1 Help</xf:help>
 				</xf:select1>
 
@@ -191,7 +183,7 @@
                         </xf:item>
                     </xf:choices>
                     <xf:alert>Select1 2 <b>Alert</b></xf:alert>
-                    <xf:hint>Select1 2 <b>Hint</b></xf:hint>
+                    <xf:hint>For a valid <b>Select1 [2]</b> England must be selected</xf:hint>
                     <xf:help>Select1 2 Help</xf:help>
                 </xf:select1>
 
@@ -212,7 +204,7 @@
                         </xf:item>
                     </xf:choices>
                     <xf:alert>Select1 3 <b>Alert</b></xf:alert>
-                    <xf:hint>Select1 3 <b>Hint</b></xf:hint>
+                    <xf:hint>For a valid <b>Select1 [3]</b> England must be selected</xf:hint>
                     <xf:help>Select1 3 Help</xf:help>
                 </xf:select1>
 
@@ -234,7 +226,7 @@
                         </xf:item>
                     </xf:choices>
                     <xf:alert> Select 1 <b>Alert</b></xf:alert>
-                    <xf:hint> Select 1 <b>Hint</b></xf:hint>
+                    <xf:hint>For a valid <b>Select [1]</b> England must be selected</xf:hint>
                     <xf:help> Select 1 Help</xf:help>
                 </xf:select>
 
@@ -255,45 +247,46 @@
                         </xf:item>
                     </xf:choices>
                     <xf:alert> Select 2 <b>Alert</b></xf:alert>
-                    <xf:hint> Select 2 <b>Hint</b></xf:hint>
+                    <xf:hint>For a valid <b>Select [2]</b> England must be selected</xf:hint>
                     <xf:help> Select 2 Help</xf:help>
                 </xf:select>
 
-                <xf:textarea ref="repeated/item[1]/textarea[1]" appearance="minimal">
-                    <xf:label>Textarea [1]</xf:label>
-                    <xf:alert>Textarea 1 <b>Alert</b></xf:alert>
-                    <xf:hint>Textarea 1 <b>Hint</b></xf:hint>
-                    <xf:help>Textarea 1 Help</xf:help>
-                </xf:textarea>
-
+            <xf:textarea ref="repeated/item[1]/textarea[1]" appearance="minimal">
+                <xf:label>Textarea [1]</xf:label>
+                <xf:alert>Textarea 1 <b>Alert</b></xf:alert>
+                <xf:hint>Insert more then 5 characters for a valid <b>Textarea [1]</b></xf:hint>
+                <xf:help>Textarea 1 Help</xf:help>
+            </xf:textarea>
 
             <xf:textarea ref="repeated/item[1]/textarea[2]" mediatype="text/html">
                 <xf:label>Textarea [2]</xf:label>
                 <xf:alert>Textarea 2 <b>Alert</b></xf:alert>
-                <xf:hint>Textarea 2 <b>Hint</b></xf:hint>
+                <xf:hint>Insert more then 5 characters for a valid <b>Textarea [2]</b></xf:hint>
                 <xf:help>Textarea 2 Help</xf:help>
             </xf:textarea>
+
             <xf:textarea ref="repeated/item[1]/textarea[3]" mediatype="dojo">
                 <xf:label>Textarea [3]</xf:label>
                 <xf:alert>Textarea 3 <b>Alert</b></xf:alert>
-                <xf:hint>Textarea 3 <b>Hint</b></xf:hint>
+                <xf:hint>Insert more then 5 characters for a valid <b>Textarea [3]</b></xf:hint>
                 <xf:help>Textarea 3 Help</xf:help>
             </xf:textarea>
 
 
-                <xf:range id="range1" ref="repeated/item[1]/range[1]" start="0" step="1" end="5" incremental="true">
-                    <xf:label>Range[1]</xf:label>
-                    <xf:alert>Range 1 <b>Alert</b></xf:alert>
-                    <xf:hint>Range 1 <b>Hint</b></xf:hint>
-                    <xf:help>Range 1 Help</xf:help>
-                </xf:range>
-                <xf:range id="range2" ref="repeated/item[1]/range[2]" start="0" step="1" end="5" appearance="bf:rating" incremental="true">
-                    <xf:label>Range[2]</xf:label>
-                    <xf:alert>Range 2 <b>Alert</b></xf:alert>
-                    <xf:hint>Range 2 <b>Hint</b></xf:hint>
-                    <xf:help>Range 2 Help</xf:help>
-                </xf:range>
+            <xf:range id="range1" ref="repeated/item[1]/range[1]" start="0" step="1" end="5" incremental="true">
+                <xf:label>Range[1]</xf:label>
+                <xf:alert>Range 1 <b>Alert</b></xf:alert>
+                <xf:hint>Select a value bigger than 2  for a valid <b>Range [1]</b></xf:hint>
+                <xf:help>Range 1 Help</xf:help>
+            </xf:range>
+
+            <xf:range id="range2" ref="repeated/item[1]/range[2]" start="0" step="1" end="5" appearance="bf:rating" incremental="true">
+                <xf:label>Range[2]</xf:label>
+                <xf:alert>Range 2 <b>Alert</b></xf:alert>
+                <xf:hint>Select a value bigger than 2  for a valid <b>Range [2]</b></xf:hint>
+                <xf:help>Range 2 Help</xf:help>
+            </xf:range>
 			</xf:group>
-    </div>
+        </div>
     </body>
 </html>
