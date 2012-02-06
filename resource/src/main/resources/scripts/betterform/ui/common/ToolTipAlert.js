@@ -14,14 +14,14 @@ dojo.declare("betterform.ui.common.ToolTipAlert",
     hideSpeed:1000,
 
     _show:function(id, commonChild,action) {
-        console.debug("ToolTipAlert._show: [id:" + id , " commonChild: " + commonChild + "]");
+        // console.debug("ToolTipAlert._show: [id:" + id , " commonChild: " + commonChild + "]");
         var commonChildNode = dojo.byId(id + '-' + commonChild);
 
         if(commonChild != undefined && commonChild == this.hint) {
             this._render(id, commonChild,"inline");
         }
         else if(commonChildNode != undefined && commonChild == this.alert) {
-            console.debug("ToolTipAlert._show: [id:" + id , " commonChildNode: " + commonChildNode + "]");
+            // console.debug("ToolTipAlert._show: [id:" + id , " commonChildNode: " + commonChildNode + "]");
 
             var toolTipId = id+"-MasterToolTip-" +commonChild;
             var alertTooltip = dijit.byId(toolTipId);
@@ -36,7 +36,7 @@ dojo.declare("betterform.ui.common.ToolTipAlert",
                 }));
             }
 
-            console.debug("ToolTipAlert: controlValueNode:",valueNode);
+            // console.debug("ToolTipAlert: controlValueNode:",valueNode);
             alertTooltip.show(commonChildNode.innerHTML, valueNode);
 
             dojo.style(alertTooltip.domNode, "opacity", "1");
@@ -73,7 +73,7 @@ dojo.declare("betterform.ui.common.ToolTipAlert",
     },
 
     _render:function(id, commonChild, show) {
-        console.debug("ToolTipAlert._render [id:'",id,"' commonChild:'", commonChild," ' show:'",show, "']");
+        // console.debug("ToolTipAlert._render [id:'",id,"' commonChild:'", commonChild," ' show:'",show, "']");
         var mip = dojo.byId(id + "-" + commonChild);
         if (mip != undefined && mip.innerHTML != '') {
             dojo.style(mip, "display", show);
