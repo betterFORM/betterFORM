@@ -259,11 +259,11 @@
             </div>
             <!-- Toaster widget for ephemeral messages -->
 
+            <xsl:variable name="toaster-position" select="if(exists(/xhtml:html/@bf:toaster-position)) then /xhtml:html/@bf:toaster-position else 'bl-up'"/>
             <div dojoType="dojox.widget.Toaster"
                  id="betterformMessageToaster"
-                 positionDirection="bl-up"
-                 duration="8000"
-                 separator="&lt;div style='height:1px;border-top:thin dotted;width:100%;'&gt;&lt;/div&gt;"
+                 positionDirection="{$toaster-position}"
+                 duration="6000"
                  messageTopic="testMessageTopic">
             </div>
             <noscript>
