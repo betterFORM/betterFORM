@@ -177,6 +177,10 @@
 	display:block;
 	
 }
+.contactsRepeat tbody{
+    width: 100%;
+    display: table;
+}
 
 .contactsRepeat .xfRepeatHeader {
     padding: 5px;
@@ -188,9 +192,13 @@
 }
 
 .contactsSubForm {
-    border: 1px solid black;
     display: block;
 }
+.contactsSubForm .xfContainer{
+    border: thin dotted #666666;
+    background: #eeeeee;
+}
+
 
 .contactsSubForm .xfGroupLabel {
     padding: 5px;

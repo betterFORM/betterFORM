@@ -103,10 +103,10 @@
 #registration  .info {
     font-size: 9pt;
     font-family: sans-serif;
-    width: 95%;
     padding: 7px 0px 5px 30px;
     height: 15px;
     border: solid 1px;
+    width: 200px;
 }
 
 #registration .xfAlert {
@@ -117,17 +117,16 @@
     -moz-border-radius-bottomright: 8px;
     -webkit-border-top-right-radius: 8px;
     -webkit-border-bottom-right-radius: 8px;
-    background: #FFCFCF url(../images/error.png) no-repeat scroll 2% 5px;
+    background: #FFCFCF url(../images/error.png) no-repeat scroll 5px center;
     margin: 0; /*overflow: hidden; */
     white-space: nowrap;
-    width: 100%;
     border-color: #E5A3A3 !important;
 	position: relative;
 }
 
 #registration .xfHint {
     /*display: block;*/
-    background: #F2F2F2 url(../images/hint.png) no-repeat 3% 7px;
+    background: #F2F2F2 url(../images/hint.png) no-repeat 5px center;
     color: #666666;
     -moz-border-radius-topright: 8px;
     -moz-border-radius-bottomright: 8px;
@@ -135,7 +134,6 @@
     -webkit-border-bottom-right-radius: 8px;
     margin: 0; /*overflow: hidden;*/
     white-space: nowrap;
-    width: 190px;
     border-color: #DBDBDB !important;
 	position: relative;
 
