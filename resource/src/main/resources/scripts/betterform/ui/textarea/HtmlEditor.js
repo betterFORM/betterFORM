@@ -61,7 +61,7 @@ dojo.declare(
     },
 
    applyState:function() {
-        console.debug("HTMLEditor.applyState (id:" + this.id +") isReadonly1: ",this.xfControl.isReadonly());
+        // console.debug("HTMLEditor.applyState (id:" + this.id +") isReadonly1: ",this.xfControl.isReadonly());
         this.set("readOnly",this.xfControl.isReadonly());
         this.set("disabled",this.xfControl.isReadonly());
     }

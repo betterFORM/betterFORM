@@ -107,9 +107,8 @@ public class Range extends AbstractFormControl {
             this.datatype = this.datatype.substring(this.datatype.indexOf(":")+1,this.datatype.length());
         }
         BigDecimal foreignValue = null;
-        if("int".equals(this.datatype) || "integer".equals(this.datatype) || "float".equals(this.datatype) || "decimal".equals(this.datatype) || "double".equals(this.datatype)){
+        if("int".equals(this.datatype) || "integer".equals(this.datatype) || "float".equals(this.datatype) || "decimal".equals(this.datatype) || "double".equals(this.datatype)|| "string".equals(this.datatype)){
             if(tmpValue == null || tmpValue.equals("")) tmpValue = "0";
-
             foreignValue = new BigDecimal(tmpValue);
         }
 
