@@ -47,7 +47,11 @@ dojo.declare(
 
 
     getControlValue:function(){
-        return this.getValue();
+        var tmpValue = this.getValue(true);
+        // remove unwanted markup inserted by the dojo editor implementation
+        tmpValue = dojo.trim(tmpValue);
+        tmpValue = tmpValue.replace("<br _moz_editor_bogus_node=\"TRUE\" />", "");
+        return tmpValue;
     },
 
 

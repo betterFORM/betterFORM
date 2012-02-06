@@ -42,9 +42,10 @@
 							<select/>
 							<select/>
 							<textarea/>
-                            <range>2</range>
-                            <range>2</range>
-                            <output>Hello World</output>
+							<textarea/>
+							<textarea/>
+                            <range/>
+                            <range/>
 							<upload/>
 						</item>
 
@@ -67,10 +68,11 @@
 				<xf:bind nodeset="select1[3]" constraint=". = 'uk' or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)"/>
 				<xf:bind nodeset="select[1]" constraint=". = 'uk' or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)"/>
 				<xf:bind nodeset="select[2]" constraint=". = 'uk' or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)"/>
-				<xf:bind nodeset="output[1]" constraint="string-length(.) &gt; 12 or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)"/>
 				<xf:bind nodeset="textarea[1]" constraint="string-length(.) &gt; 4 or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)"/>
-				<xf:bind nodeset="range[1]" constraint="number(.) &gt; 2 or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)" type="integer"/>
-				<xf:bind nodeset="range[2]" constraint="number(.) &gt; 2 or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)" type="integer"/>
+				<xf:bind nodeset="textarea[2]" constraint="string-length(.) &gt; 4 or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)"/>
+				<xf:bind nodeset="textarea[3]" constraint="string-length(.) &gt; 4 or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)"/>
+				<xf:bind nodeset="range[1]" constraint="number(.) &gt; 2 or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)" />
+				<xf:bind nodeset="range[2]" constraint="number(.) &gt; 2 or boolean-from-string(../../@constraint)" required="boolean-from-string(../../@required)" />
 
 			</xf:bind>
 
@@ -187,16 +189,6 @@
                             <xf:value>dk</xf:value>
                         </xf:item>
                     </xf:choices>
-                    <xf:choices>
-                        <xf:item>
-                            <xf:label>One</xf:label>
-                            <xf:value>One</xf:value>
-                        </xf:item>
-                        <xf:item>
-                            <xf:label>Two</xf:label>
-                            <xf:value>Two</xf:value>
-                        </xf:item>
-                    </xf:choices>
                     <xf:alert>Select1 2 <b>Alert</b></xf:alert>
                     <xf:hint>Select1 2 <b>Hint</b></xf:hint>
                     <xf:help>Select1 2 Help</xf:help>
@@ -265,18 +257,28 @@
                     <xf:hint> Select 2 <b>Hint</b></xf:hint>
                     <xf:help> Select 2 Help</xf:help>
                 </xf:select>
-                <xf:output  ref="repeated/item[1]/output[1]" appearance="minimal">
-                    <xf:label>Output [1]</xf:label>
-                    <xf:alert>Output 1 <b>Alert</b></xf:alert>
-                    <xf:hint>Output 1 <b>Hint</b></xf:hint>
-                    <xf:help>Output 1 Help</xf:help>
-                </xf:output>
+
                 <xf:textarea ref="repeated/item[1]/textarea[1]" appearance="minimal">
                     <xf:label>Textarea [1]</xf:label>
                     <xf:alert>Textarea 1 <b>Alert</b></xf:alert>
                     <xf:hint>Textarea 1 <b>Hint</b></xf:hint>
                     <xf:help>Textarea 1 Help</xf:help>
                 </xf:textarea>
+
+
+            <xf:textarea ref="repeated/item[1]/textarea[2]" mediatype="text/html">
+                <xf:label>Textarea [2]</xf:label>
+                <xf:alert>Textarea 2 <b>Alert</b></xf:alert>
+                <xf:hint>Textarea 2 <b>Hint</b></xf:hint>
+                <xf:help>Textarea 2 Help</xf:help>
+            </xf:textarea>
+            <xf:textarea ref="repeated/item[1]/textarea[3]" mediatype="dojo">
+                <xf:label>Textarea [3]</xf:label>
+                <xf:alert>Textarea 3 <b>Alert</b></xf:alert>
+                <xf:hint>Textarea 3 <b>Hint</b></xf:hint>
+                <xf:help>Textarea 3 Help</xf:help>
+            </xf:textarea>
+
 
             <xf:range id="range1" ref="repeated/item[1]/range[1]" start="0" step="1" end="5" incremental="true">
                 <xf:label>Range[1]</xf:label>
@@ -291,7 +293,6 @@
                 <xf:hint>Range 2 <b>Hint</b></xf:hint>
                 <xf:help>Range 2 Help</xf:help>
             </xf:range>
-
 			</xf:group>
         </div>
     </body>

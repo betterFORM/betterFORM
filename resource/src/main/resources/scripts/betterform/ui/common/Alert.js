@@ -26,8 +26,7 @@ dojo.declare("betterform.ui.common.Alert",
             return; 
         }
         // console.debug("control: ",control);
-        var isBoolean = dojo.hasClass(control.domNode, "xsdBoolean");
-        var controlValueIsEmpty = ((control.getControlValue() == undefined || control.getControlValue() == '') || (isBoolean && !control.getControlValue()));
+        var controlValueIsEmpty = this._controlValueIsEmpty(control);
 
         // console.debug("controlValueIsEmpty:",controlValueIsEmpty, " control.getControlValue(): ",control.getControlValue());
 
@@ -62,14 +61,12 @@ dojo.declare("betterform.ui.common.Alert",
             return;
         }
 
-
-
-
         // console.debug("control: ",control);
-        var isBoolean = dojo.hasClass(control.domNode, "xsdBoolean");
-        var controlValueIsEmpty = ((control.getControlValue() == undefined || control.getControlValue() == '') || (isBoolean && !control.getControlValue()));
-        // console.debug("controlValueIsEmpty:",controlValueIsEmpty, " control.getControlValue(): ",control.getControlValue());
 
+        // evaluate if control value is empty
+        var controlValueIsEmpty = this._controlValueIsEmpty(control);
+
+        // console.debug("controlValueIsEmpty:",controlValueIsEmpty, " control.getControlValue(): ",control.getControlValue());
         if(dojo.byId(id + "-" + this.alert) == undefined || action == "init" || action == "changeAlertType") {
             return;
         }
@@ -138,6 +135,21 @@ dojo.declare("betterform.ui.common.Alert",
 
     _hide:function(id, commonChild,action) {
         console.error("Alert._hide must be overwritten by its extending class");
+    },
+
+    _controlValueIsEmpty:function(controlDijit){
+
+        var controlValueIsEmpty = false;
+        var controlValue = controlDijit.getControlValue();
+        if (controlValue == undefined ||  controlValue == '') {
+            controlValueIsEmpty =  true;
+        }else if (dojo.hasClass(controlDijit.domNode, "xsdBoolean") && !controlValue) {
+            controlValueIsEmpty = true;
+        } else if (dojo.hasClass(controlDijit.domNode, "xfRange") && (controlValue == 0 || controlValue == "0")){
+            controlValueIsEmpty = true;
+        }
+        // console.debug("Alert._controlValueIsEmpty: ",controlValueIsEmpty, " controlValue is: ",controlValue, " controlDOMNode: ", controlDijit.domNode);
+        return controlValueIsEmpty;
     }
 
 });
