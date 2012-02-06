@@ -90,19 +90,19 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
             this.defaultAlertHandler = new betterform.ui.common.InlineRoundBordersAlert({});
         }
 
-        var inlineAlertEnabled = dojo.query(".InlineAlert", dojo.doc)[0];
-        if (inlineAlertEnabled != undefined) {
-            dojo.require("betterform.ui.common.InlineAlert");
-            this.defaultAlertHandler = new betterform.ui.common.InlineAlert({});
-            console.debug("Enabled InlineAlert Handler ", this.defaultAlertHandler);
-
-        }
-
         var toolTipAlertEnabled = dojo.query(".ToolTipAlert", dojo.doc)[0];
-        if (toolTipAlertEnabled != undefined || (this.defaultAlertHandler == undefined)) {
+        if (toolTipAlertEnabled != undefined ) {
             dojo.require("betterform.ui.common.ToolTipAlert");
             this.defaultAlertHandler = new betterform.ui.common.ToolTipAlert({});
-            console.debug("Enabled ToolTipAlert Handler ", this.defaultAlertHandler);
+            // console.debug("Enabled ToolTipAlert Handler ", this.defaultAlertHandler);
+        }
+
+        var inlineAlertEnabled = dojo.query(".InlineAlert", dojo.doc)[0];
+        if (inlineAlertEnabled != undefined || this.defaultAlertHandler == undefined) {
+            dojo.require("betterform.ui.common.InlineAlert");
+            this.defaultAlertHandler = new betterform.ui.common.InlineAlert({});
+            // console.debug("Enabled InlineAlert Handler ", this.defaultAlertHandler);
+
         }
 
         this.subscribers[0] = dojo.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
