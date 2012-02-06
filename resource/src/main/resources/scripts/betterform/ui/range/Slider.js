@@ -37,6 +37,10 @@ dojo.declare(
     postCreate:function() {
         this.inherited(arguments);
         this.setCurrentValue();
+        if(this.tabIndex != undefined){
+            dojo.attr(this.domNode, "tabindex", this.tabIndex);
+        }
+
     },
 
     _onFocus:function() {

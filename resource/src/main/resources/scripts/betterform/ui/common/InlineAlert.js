@@ -14,7 +14,7 @@ dojo.declare("betterform.ui.common.InlineAlert",
 
     // @Override
     _show:function(id, commonChild) {
-        // console.debug("InlineAlert._show [id:'",id,"' commonChild:'", commonChild,"']");
+        //console.debug("InlineAlert._show [id:'",id,"' commonChild:'", commonChild,"']");
         var commonChildNode = dojo.byId(id + '-' + commonChild);
         if(commonChildNode == undefined || commonChild == this.info) {
             return;

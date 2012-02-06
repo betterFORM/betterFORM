@@ -25,9 +25,12 @@ dojo.declare("betterform.ui.common.Alert",
             console.warn("control '" +id +"' does not exist");
             return; 
         }
-        
-        var controlValueIsEmpty = (control.getControlValue() == undefined || control.getControlValue() == '') && !(dojo.hasClass(control.domNode, "xsdBoolean")); 
-        
+        // console.debug("control: ",control);
+        var isBoolean = dojo.hasClass(control.domNode, "xsdBoolean");
+        var controlValueIsEmpty = ((control.getControlValue() == undefined || control.getControlValue() == '') || (isBoolean && !control.getControlValue()));
+
+        // console.debug("controlValueIsEmpty:",controlValueIsEmpty, " control.getControlValue(): ",control.getControlValue());
+
         if(action == "init") {
             // do nothing on init
             return;
@@ -59,7 +62,13 @@ dojo.declare("betterform.ui.common.Alert",
             return;
         }
 
-        var controlValueIsEmpty = (control.getControlValue() == undefined || control.getControlValue() == '') && !(dojo.hasClass(control.domNode, "xsdBoolean"));
+
+
+
+        // console.debug("control: ",control);
+        var isBoolean = dojo.hasClass(control.domNode, "xsdBoolean");
+        var controlValueIsEmpty = ((control.getControlValue() == undefined || control.getControlValue() == '') || (isBoolean && !control.getControlValue()));
+        // console.debug("controlValueIsEmpty:",controlValueIsEmpty, " control.getControlValue(): ",control.getControlValue());
 
         if(dojo.byId(id + "-" + this.alert) == undefined || action == "init" || action == "changeAlertType") {
             return;
