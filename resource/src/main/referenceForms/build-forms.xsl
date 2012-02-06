@@ -352,11 +352,16 @@
         </td>
     </xsl:template>
 
-    <xsl:template match="*|@*|text()|comment()">
+    <xsl:template match="*|@*|text()">
         <xsl:copy>
             <xsl:copy-of select="@*"/>
             <xsl:apply-templates/>
         </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="comment()"><xsl:text>
+    </xsl:text>
+    <xsl:copy/>
     </xsl:template>
 
     <xsl:template match="*|@*|text()|comment()" mode="xforms">
