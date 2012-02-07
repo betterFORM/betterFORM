@@ -1002,7 +1002,7 @@ public class DOMUtil {
     /**
      * parses a DOM from a String
      *
-     * @param input      the input String that muast contain a complete and well-formed XML document
+     * @param input      the input String that must contain a complete and well-formed XML document
      * @param namespaces parser is namespace aware
      * @param validating parser is validating
      * @return the resulting DOM Document
