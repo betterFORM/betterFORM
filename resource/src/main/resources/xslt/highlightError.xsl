@@ -10,7 +10,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:bf="http://betterform.sourceforge.net/xforms">
 
-    <xsl:output method="xhtml" encoding="UTF-8" indent="yes"/>
+    <xsl:output method="xhtml" encoding="UTF-8" indent="yes" version="1.0" doctype-system="/resources/xsd/xhtml1-transitional.dtd"/>
 	<xsl:strip-space elements="bf:data"/>
     <xsl:param name="params" />
 
@@ -19,10 +19,10 @@
 			<head>
 				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 				<title>Error</title>
-				<script type="text/javascript" src="{$params/context}/bfResources/scripts/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
-				<script type="text/javascript" src="{$params/context}/bfResources/scripts/syntaxhighlighter_3.0.83/scripts/shBrushXml.js"></script>
-				<link type="text/css" rel="stylesheet" href="{$params/context}/bfResources/scripts/syntaxhighlighter_3.0.83/styles/shCore.css"/>
-				<link type="text/css" rel="stylesheet" href="{$params/context}/bfResources/scripts/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+				<script type="text/javascript" src="{$params/context}/bfResources/scripts/syntaxhighlighter/scripts/shCore.js"></script>
+				<script type="text/javascript" src="{$params/context}/bfResources/scripts/syntaxhighlighter/scripts/shBrushXml.js"></script>
+				<link type="text/css" rel="stylesheet" href="{$params/context}/bfResources/scripts/syntaxhighlighter/styles/shCore.css"/>
+				<link type="text/css" rel="stylesheet" href="{$params/context}/bfResources/scripts/syntaxhighlighter/styles/shCoreDefault.css"/>
 				<script type="text/javascript">SyntaxHighlighter.all();</script><xsl:text>
 </xsl:text>
 

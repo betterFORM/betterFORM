@@ -21,6 +21,7 @@
         </javac>
         <dojo>dojo-release-1.6.1-src</dojo>
         <timeline>timeline_libraries_v2.3.0</timeline>
+        <syntaxhighlighter>syntaxhighlighter_3.0.83</syntaxhighlighter>
     </properties>
     <app>
         <name>betterform</name>
