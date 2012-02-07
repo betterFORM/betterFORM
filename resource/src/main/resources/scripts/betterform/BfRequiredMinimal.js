@@ -36,6 +36,7 @@ dojo.require("betterform.ui.input.Boolean");
 dojo.require("betterform.ui.input.TextField");
 dojo.require("betterform.ui.input.Date");
 dojo.require("betterform.ui.input.Time");
+dojo.require("betterform.ui.input.DropDownTime");
 dojo.require("betterform.ui.input.DropDownDate");
 dojo.require("betterform.ui.input.DateTime");
 dojo.require("betterform.ui.output.Link");
