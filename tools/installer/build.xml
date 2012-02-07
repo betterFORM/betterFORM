@@ -74,7 +74,7 @@
 
         <!-- Use standalone compiler -->
         <taskdef name="izpack"
-                 classpath="${basedir}/lib/standalone-compiler-4.3.4.jar"
+                 classpath="${basedir}/lib/standalone-compiler-4.3.5.jar"
                  classname="com.izforge.izpack.ant.IzPackTask"/>
 
 
