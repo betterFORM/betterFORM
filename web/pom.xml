@@ -12,7 +12,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.betterform</groupId>
     <artifactId>betterform</artifactId>
-    <version>3.2.0-RC4</version>
+    <version>4.0</version>
     
     
 
@@ -98,7 +98,7 @@
 <dependency>
 <groupId>de.betterform</groupId>
 <artifactId>betterform-core</artifactId>
-<version>3.2.0-RC4</version>
+<version>4.0</version>
 </dependency>
 <dependency>
 <groupId>org.directwebremoting.dwr</groupId>
