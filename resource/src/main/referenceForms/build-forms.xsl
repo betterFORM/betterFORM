@@ -47,10 +47,10 @@
 
     <xsl:template match="body">
         <xsl:copy>
-            <xsl:attribute name="class" select="if(exists(@class)) then @class else 'soria InlineAlert'"/>
+            <xsl:attribute name="class" select="if(exists(@class)) then @class else 'soria'"/>
             <xsl:attribute name="style">margin:30px</xsl:attribute>
 
-            <div id="xforms" class="InlineAlert">
+            <div id="xforms">
                 <!-- the xforms model here -->
                 <xsl:apply-templates select="div[@class='sample']/div[@class='markup']/xf:model"/>
                 <xsl:apply-templates select="div[@class='sample']/div[@class='markup']/code/xf:model"/>

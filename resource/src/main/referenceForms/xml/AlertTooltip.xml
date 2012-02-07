@@ -140,10 +140,6 @@
                 </tr>
 -->
                 <tr>
-                    <td>InlineAlert</td>
-                    <td>matches a body that uses inline alerts</td>
-                </tr>
-                <tr>
                     <td>xfInput</td>
                     <td>matches an Element that represents a XForms input element</td>
                 </tr>
