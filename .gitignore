@@ -37,5 +37,5 @@ xApp/target/*
 zaphod/target/*
 
 ## files to ignore
-tools/installer/betterform-install*
+tools/installer/betterform-*install*
 
