@@ -2,9 +2,15 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ev="http://www.w3.org/2001/xml-events"
       xmlns:bfc="http://betterform.sourceforge.net/xforms/controls"
-      xmlns:bf="http://betterform.sourceforge.net/xforms">
+        >
     <head>
         <title>The Dialog Element</title>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+
+
     </head>
     <body>
         <div class="description">
@@ -34,7 +40,7 @@
                     </xf:instance>
                 </xf:model>
                 <code class="ui">
-<xf:trigger>
+<xf:trigger id="trigger1">
     <xf:label>show dialog</xf:label>
     <bfc:show dialog="loginDialog" ev:event="DOMActivate" />
 </xf:trigger>

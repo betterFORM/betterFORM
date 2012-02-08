@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xforms="http://www.w3.org/2002/xforms">
+  	<xhtml:head>
+    	<xhtml:title>8.1.5.a appearance attribute of output element</xhtml:title>
+    	<xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+    	<xforms:model>
+       		<xforms:instance>
+ 		    	<car>
+   			   		<make>Lotus</make>
+   			   		<year>2005</year>
+   			   		<color>Aztec Bronze</color>
+        		</car>
+       		</xforms:instance>
+    	</xforms:model>
+  	</xhtml:head>
+  	<xhtml:body>
+  	    <xforms:group id="xf-group-1">
+  		    <xforms:label class="title">8.1.5.a appearance attribute of output element</xforms:label>
+  		</xforms:group>
+  		<xforms:group id="xf-group-2">
+  			<xforms:label>
+  			  You must see three output controls. The Car Make output control must have the value "Lotus". 
+  			  The Car Year output control must have the value "2005". 
+  			  The Car Color output control must have the value "Aztec Bronze". 
+			</xforms:label>
+		</xforms:group>
+		<xforms:group id="xf-group-3">
+  			<xforms:output ref="/car/make" appearance="full" id="xf-output-1">
+     			<xforms:label>Car Make (appearance=full): </xforms:label>
+  			</xforms:output>
+  		</xforms:group>
+  		<xforms:group id="xf-group-4">
+  			<xforms:output ref="/car/year" appearance="compact" id="xf-output-2">
+     			<xforms:label>Car Year (appearance=compact): </xforms:label>
+  			</xforms:output>
+  		</xforms:group>
+  		<xforms:group id="xf-group-5">
+  			<xforms:output ref="/car/color" appearance="minimal" id="xf-output-3">
+     			<xforms:label>Car Color (appearance=minimal): </xforms:label>
+  			</xforms:output>
+		</xforms:group>
+  </xhtml:body>
+</xhtml:html>

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2010 betterForm -->
 <xsd:schema targetNamespace="http://www.w3.org/2002/xforms"
             xmlns:xforms="http://www.w3.org/2002/xforms"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema"

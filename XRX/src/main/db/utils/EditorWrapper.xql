@@ -7,5 +7,5 @@ declare namespace transform="http://exist-db.org/xquery/transform";
 let $filename := request:get-parameter("filename", '')
 let $contextPath := request:get-context-path()
 let $doc := doc($filename)
-return transform:transform($doc, doc("/db/betterform/apps/editor/xf2jsTree.xsl"),
+return transform:transform($doc, doc("/db/betterform/apps/editor/bfExistEditor.xsl"),
 <parameters><param name="bfContext" value="{$contextPath}"/><param name="filename" value="{$filename}"/></parameters>)

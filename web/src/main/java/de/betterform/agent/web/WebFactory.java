@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -91,7 +91,6 @@ public class WebFactory {
             //passed as http header
             useragent = request.getHeader(WebFactory.USER_AGENT);
         } else if (request.getAttribute(WebFactory.USER_AGENT) != null) {
-            //passed from config in web.xml
             useragent = (String) request.getAttribute(WebFactory.USER_AGENT);
         } else {
             throw new XFormsConfigException("Useragent has not been set.");
@@ -154,7 +153,8 @@ public class WebFactory {
 
     /**
      * initializes a XSLT Transformer service. Currently an implementation of CachingTransformerService is
-     * instanciated. Future versions may make this configurable.
+     * instanciated. Future versions may make this configurable. This is the place to preload transoformations
+     * that are used throughout the application.
      *
      * @throws XFormsConfigException a Config exception will occur in case there's no valid setting for XSLT_CACHE_PROPERTY,XSLT_DEFAULT_PROPERTY or
      *                               XSLT_PATH_PROPERTY
@@ -177,10 +177,21 @@ public class WebFactory {
                 LOGGER.debug("initializing xslt cache");
             }
 
-            // load default stylesheet
             try {
-                URI uri = getXsltURI(xsltPath, xsltDefault);
-                transformerService.getTransformer(uri);
+                // load default stylesheet
+                URI defaultTransformUri = getXsltURI(xsltPath, xsltDefault);
+                transformerService.getTransformer(defaultTransformUri);
+                
+                URI errorTransformer = getXsltURI(xsltPath,"error.xsl");
+                transformerService.getTransformer(errorTransformer);
+                
+                URI highlightingErrorTransformer = getXsltURI(xsltPath,"highlightError.xsl");
+                transformerService.getTransformer(highlightingErrorTransformer);
+
+                if(Config.getInstance().getProperty("betterform.debug-allowed").equals("true")){
+                    URI highlightingDocument = getXsltURI(xsltPath,"highlightDocument.xsl");
+                    transformerService.getTransformer(highlightingDocument);
+                }
             }
             catch (Exception e) {
                 throw new XFormsConfigException(e);
@@ -189,11 +200,11 @@ public class WebFactory {
 
         // store service in servlet context
         // todo: contemplate about transformer service thread-safety
-        servletContext.setAttribute(TransformerService.class.getName(), transformerService);
+        servletContext.setAttribute(TransformerService.TRANSFORMER_SERVICE, transformerService);
     }
 
      public static XSLTGenerator setupTransformer(String xsltPath, String xslFile, ServletContext context) throws URISyntaxException {
-        TransformerService transformerService = (TransformerService) context.getAttribute(TransformerService.class.getName());
+        TransformerService transformerService = (TransformerService) context.getAttribute(TransformerService.TRANSFORMER_SERVICE);
         URI uri = new File(WebFactory.resolvePath(xsltPath, context)).toURI().resolve(new URI(xslFile));
 
         XSLTGenerator generator = new XSLTGenerator();

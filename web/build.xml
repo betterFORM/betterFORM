@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
@@ -161,6 +161,10 @@
 
     </target>
 
+    <target name="package" depends="deploy, deploy-forms" description="create js optimized war file">
+        <antcall target="create-war"/>
+    </target>
+
     <target name="create-war" description="create a betterFORM web application archive">
         <echo>
         ************************************************************************************
@@ -207,11 +211,6 @@
         </echo>
         <!--todo: webapp dir should be urgently be cleaned up from betterform site resources. Therefore this
         copy only copies positively -->
-        <copy description="copy webapp/jsp dir"
-              todir="${webapp.dir}/jsp"
-              filtering="true">
-            <fileset dir="${basedir}/src/main/webapp/jsp"/>
-        </copy>
         <copy description="copy dashboard"
               todir="${webapp.dir}"
               filtering="true"
@@ -347,6 +346,18 @@
         <echo/>
         <copy todir="${webapp.dir}/${forms.target}">
             <fileset dir="../resource/src/test/resources"/>
+        </copy>
+    </target>
+
+    <!-- TODO cleanup -->
+    <target name="deploy-webdriver-test-resources" description="copy all official XForms test suite files to webapp dir">
+        <echo/>
+        <echo message="************************************************************************************"/>
+        <echo message="copying Test Suites..."/>
+        <echo message="************************************************************************************"/>
+        <echo/>
+        <copy todir="${webapp.dir}/${forms.target}" overwrite="true">
+            <fileset dir="${basedir}/src/test/resources/testsuite/xhtml"/>
         </copy>
     </target>
 

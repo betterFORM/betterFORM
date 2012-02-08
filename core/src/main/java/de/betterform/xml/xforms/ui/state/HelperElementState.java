@@ -1,13 +1,13 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xforms.ui.state;
 
 import de.betterform.xml.dom.DOMUtil;
-import de.betterform.xml.xforms.model.ModelItem;
 import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xforms.model.ModelItem;
 import de.betterform.xml.xforms.ui.BindingElement;
 import de.betterform.xml.xforms.ui.UIElementState;
 

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>3.3.2.e instance with inline data and resource attribute</xhtml:title>
+    <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+      <xforms:instance resource="3.3.2.c.data.xml">
+        <entry>
+          <name>Wendy</name>
+          <age>20</age>
+          <education>college</education>
+        </entry>
+      </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group id="xf-group-1">
+      <xforms:label class="title">3.3.2.e instance with inline data and resource attribute</xforms:label>
+    </xforms:group>
+    <xforms:group id="xf-group-2">
+      <xforms:label>
+        You must see three output fields. The Name output field must have the value "Wendy", 
+        the Age output field must have the value "20", and the Education output field must 
+        have the value "college".
+      </xforms:label>
+    </xforms:group>
+    <xforms:group id="xf-group-3">
+      <xforms:output ref="name" id="xf-output-1">
+        <xforms:label>Name : </xforms:label>
+      </xforms:output>
+    </xforms:group>
+    <xforms:group id="xf-group-4">
+      <xforms:output ref="age" id="xf-output-2">
+        <xforms:label>Age : </xforms:label>
+      </xforms:output>
+    </xforms:group>
+    <xforms:group id="xf-group-5">
+      <xforms:output ref="education" id="xf-output-3">
+        <xforms:label>Education : </xforms:label>
+      </xforms:output>
+    </xforms:group>
+  </xhtml:body>
+</xhtml:html>

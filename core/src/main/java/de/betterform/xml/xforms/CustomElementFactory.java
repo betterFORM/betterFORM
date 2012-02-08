@@ -1,19 +1,19 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xforms;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
-import de.betterform.xml.xforms.model.Model;
-import de.betterform.xml.xforms.ui.AbstractUIElement;
+import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.action.AbstractAction;
 import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xforms.model.Model;
+import de.betterform.xml.xforms.ui.AbstractUIElement;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 
 import java.util.Collections;

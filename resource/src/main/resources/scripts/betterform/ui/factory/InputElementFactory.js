@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -34,6 +34,9 @@ dojo.declare(
                 break;
             case "bf:time":
                 newInputWidget = this.createInputBfTimeWidget(controlId, sourceNode, classValue, appearance);
+                break;
+            case "bf:dropdowntime":
+                newInputWidget = this.createInputBfDropDownTimeWidget(controlId, sourceNode, classValue, appearance);
                 break;
             case "bf:dropdowndate":
                 newInputWidget = this.createInputBfDropDownDateWidget(controlId, sourceNode, classValue, appearance);
@@ -79,9 +82,9 @@ dojo.declare(
         return newInputTreeWidget;
     },
 
-    createInputBfTimeWidget:function(controlId, sourceNode, classValue, appearance) {
+    createInputBfDropDownTimeWidget:function(controlId, sourceNode, classValue, appearance) {
         var xfValue = sourceNode.innerHTML;
-        return newInputTimeWidget = new betterform.ui.input.Time({
+        return newInputTimeWidget = new betterform.ui.input.DropDownTime({
             name:controlId + "-value",
             value:xfValue,
             "class":classValue,
@@ -241,43 +244,43 @@ dojo.declare(
 
     createInputDateTimeWidget:function(controlId, sourceNode, classValue, appearance) {
                 var newInputDateTimeWidget = null;
-                var xfValue = dojo.attr(sourceNode, "schemaValue");
+        var xfValue = dojo.attr(sourceNode, "schemaValue");
                 // examine if dateTime value contains miliseconds and set property to true if so
-                var miliseconds = false;
-                if(xfValue != undefined && xfValue.indexOf(".")==19){
-                    xfValue = xfValue.substring(0,19);
-                    miliseconds = true;
-                }
-                if(xfValue == undefined){
-                    xfValue = "";
-                }
+        var miliseconds = false;
+        if(xfValue != undefined && xfValue.indexOf(".")==19){
+            xfValue = xfValue.substring(0,19);
+            miliseconds = true;
+        }
+        if(xfValue == undefined){
+            xfValue = "";
+        }
                 var datePattern;
-                if (appearance.indexOf("iso8601:") != -1) {
+        if (appearance.indexOf("iso8601:") != -1) {
                     datePattern = appearance.substring(appearance.indexOf("iso8601:")+8);
                     //console.debug("UIelementFactory.createWidget 1. datePattern:" + datePattern);
                     if(datePattern.indexOf(" ") != -1) {
                         datePattern = datePattern.substring(0,datePattern.indexOf(" ")).trim();
                         //console.debug("UIelementFactory.createWidget 2. datePattern:" + datePattern);
-                    }
+        }
                 }
 
                 if (datePattern != undefined) {
-                    try {
+        try {
                     newInputDateTimeWidget = new betterform.ui.input.DateTime({
-                        name:controlId + "-value",
-                        value:xfValue,
-                        miliseconds:miliseconds,
-                        constraints:{
+                name:controlId + "-value",
+                value: xfValue,
+                miliseconds:miliseconds,
+                constraints:{
                             datePattern:datePattern,
                             timePattern:'HH:mm:ss'
 
-                        },
-                        title:dojo.attr(sourceNode, "title"),
-                        xfControlId:controlId
-                    }, sourceNode);
-                    } catch (ex) {
-                        alert(ex)
-                    }
+                },
+                title:dojo.attr(sourceNode, "title"),
+                xfControlId:controlId
+            }, sourceNode);
+        } catch (ex) {
+            alert(ex)
+        }
                 } else {
 
                     newInputDateTimeWidget = new betterform.ui.input.DateTime({
@@ -288,7 +291,7 @@ dojo.declare(
                             datePattern:'M/d/yyyy',
                             timePattern:'HH:mm:ss'
 
-                        },
+    },
                         title:dojo.attr(sourceNode, "title"),
                         xfControlId:controlId
                     }, sourceNode);
@@ -309,6 +312,50 @@ dojo.declare(
                 */
                 return newInputDateTimeWidget;
         },
+
+    createInputBfTimeWidget:function(controlId, sourceNode, classValue, appearance) {
+        var newInputTimeWidget = null;
+        var xfValue = dojo.attr(sourceNode, "schemaValue");
+
+        var miliseconds = false;
+        if(xfValue != undefined && xfValue.indexOf(".")==19){
+            xfValue = xfValue.substring(0,19);
+            miliseconds = true;
+        }
+
+        if(xfValue == undefined){
+            xfValue = "";
+        } else {
+            xfValue = "T" + xfValue;
+        }
+
+        //ISO 8601 uses the 24-hour clock system. The basic format is [hh][mm][ss] and the extended format is [hh]:[mm]:[ss].
+        var timePattern = "HH:mm:ss";
+
+        if (miliseconds) {
+            timePattern = timePattern + ":SSS";
+        }
+
+        if (appearance.indexOf("iso8601:") != -1) {
+            timePattern = appearance.substring(appearance.indexOf("iso8601:")+8);
+            //console.debug("UIelementFactory.createWidget 1. timePattern:" + timePattern);
+        }
+
+        try {
+            newInputTimeWidget = new betterform.ui.input.Time({
+                name:controlId + "-value",
+                value: new Date(xfValue),
+                miliseconds:miliseconds,
+                constraints:{
+                    timePattern:timePattern
+                },
+                title:dojo.attr(sourceNode, "title"),
+                xfControlId:controlId
+            }, sourceNode);
+        } catch (ex) {
+            alert(ex)
+        }
+    },
 
     createInputBooleanWidget:function(controlId, sourceNode, classValue, appearance) {
         var xfValue = sourceNode.innerHTML;

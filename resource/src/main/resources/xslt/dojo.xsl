@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 <xsl:stylesheet version="2.0"
@@ -8,8 +8,9 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xf="http://www.w3.org/2002/xforms"
                 xmlns:bf="http://betterform.sourceforge.net/xforms"
+                xmlns:xhtml="http://www.w3.org/1999/xhtml"
                 xmlns:ev="http://www.w3.org/2001/xml-events"
-                exclude-result-prefixes="xf bf"
+                exclude-result-prefixes="xf bf xhtml ev"
                 xpath-default-namespace= "http://www.w3.org/1999/xhtml">
 
     <xsl:import href="common.xsl"/>
@@ -81,7 +82,7 @@
 
     <xsl:variable name="default-hint-appearance" select="'bubble'"/>
 
-
+    <!--<xsl:variable name="include-betterform-css" select="if(contains(//body/@class,'no-bf-css')) then 'false' else 'true'" />-->
 
     <xsl:output method="xhtml" version="1.0" encoding="UTF-8" indent="no"
                 doctype-system="/resources/xsd/xhtml1-transitional.dtd"/>
@@ -140,27 +141,13 @@
     <xsl:template name="include-xforms-css">
         <!-- include betterForm default stylesheet -->
         <link rel="stylesheet" type="text/css" href="{$default-css}"/>
-        <link rel="stylesheet" type="text/css" href="{$betterform-css}"/>
+        <!--<xsl:if test="$include-betterform-css='true'">-->
+            <link rel="stylesheet" type="text/css" href="{$betterform-css}"/>
+        <!--</xsl:if>-->
     </xsl:template>
 
     <xsl:template name="addLocalScript">
         <script type="text/javascript" defer="defer">
-            <xsl:if test="$debug-enabled">
-                function getXFormsDOM(){
-                    Flux.getXFormsDOM(document.getElementById("bfSessionKey").value,
-                                    function(data){console.dirxml(data);}
-                    );
-                }
-
-                function getInstanceDocument(instanceId){
-                    var model = dojo.query(".xfModel", dojo.doc)[0];
-                    dijit.byId(dojo.attr(model, "id")).getInstanceDocument(instanceId,
-                    function(data){
-                        console.dirxml(data);
-                    });
-                }
-            </xsl:if>
-
             <!--
             function loadBetterFORMJs(pathToRelease, developmentJsClass){
                 if (isBetterFORMRelease) {
@@ -272,11 +259,11 @@
             </div>
             <!-- Toaster widget for ephemeral messages -->
 
+            <xsl:variable name="toaster-position" select="if(exists(/xhtml:html/@bf:toaster-position)) then /xhtml:html/@bf:toaster-position else 'bl-up'"/>
             <div dojoType="dojox.widget.Toaster"
                  id="betterformMessageToaster"
-                 positionDirection="bl-up"
-                 duration="8000"
-                 separator="&lt;div style='height:1px;border-top:thin dotted;width:100%;'&gt;&lt;/div&gt;"
+                 positionDirection="{$toaster-position}"
+                 duration="6000"
                  messageTopic="testMessageTopic">
             </div>
             <noscript>
@@ -285,15 +272,24 @@
                 </div>
             </noscript>
             <div id="formWrapper">
-                <div dojotype="betterform.FluxProcessor" jsId="fluxProcessor" id="fluxProcessor" sessionkey="{$sessionKey}" contextroot="{$contextroot}" usesDOMFocusIN="{$uses-DOMFocusIn}" dataPrefix="{$data-prefix}">
+                <div dojotype="betterform.FluxProcessor"
+                     jsId="fluxProcessor"
+                     id="fluxProcessor"
+                     sessionkey="{$sessionKey}"
+                     contextroot="{$contextroot}"
+                     usesDOMFocusIN="{$uses-DOMFocusIn}"
+                     dataPrefix="{$data-prefix}"
+                     logEvents="{$debug-enabled}">
 
                     <xsl:for-each select="//xf:model">
                         <div class="xfModel" style="display:none" id="{@id}" jsId="{@id}" dojoType="betterform.XFormsModelElement"/>
                      </xsl:for-each>
 
                      <xsl:variable name="outermostNodeset"
-                                  select=".//xf:*[not(ancestor::*[namespace-uri()='http://www.w3.org/2002/xforms'])][not(namespace-uri()='http://www.w3.org/2002/xforms' and local-name()='model')]"/>
+                                  select=".//xf:*[not(ancestor::*[namespace-uri()='http://www.w3.org/2002/xforms'])]
+                                  [not(namespace-uri()='http://www.w3.org/2002/xforms' and local-name()='model')]"/>
 
+                    <xsl:message>Outermost Nodeset size:<xsl:value-of select="count($outermostNodeset)"/></xsl:message>
                     <!-- detect how many outermost XForms elements we have in the body -->
                     <xsl:choose>
                         <xsl:when test="count($outermostNodeset) = 1">
@@ -387,6 +383,14 @@
                         }
                     }
                 </script>
+                <div id="evtLogContainer" style="width:26px;height:26px;overflow:hidden;">
+                    <div id="logControls">
+                        <a id="switchLog" href="javascript:toggleLog();">&gt;</a>
+                        <a id="trashLog" href="javascript:clearLog();">x</a>
+                    </div>
+                    <ul id="eventLog">
+                    </ul>
+                </div>
                 <div id="openclose">
                     <a href="javascript:toggleDebug();" ><img class="debug-icon" src="{concat($contextroot,'/bfResources/images/collapse.png')}" alt=""/></a>
                 </div>
@@ -486,10 +490,11 @@
                     <xsl:with-param name="label-elements" select="xf:label"/>
                 </xsl:call-template>
             </label>
-
-            <xsl:call-template name="buildControl"/>
-            <xsl:apply-templates select="xf:alert"/>
-            <xsl:apply-templates select="xf:hint"/>
+            <span class="bfValueWrapper">
+                <xsl:call-template name="buildControl"/>
+                <xsl:apply-templates select="xf:alert"/>
+                <xsl:apply-templates select="xf:hint"/>
+            </span>
             <!--<xsl:apply-templates select="xf:help"/>-->
 
             <xsl:copy-of select="script"/>
@@ -504,8 +509,13 @@
                 <!--<xsl:with-param name="appearance" select="@appearance"/>-->
             </xsl:call-template>
         </xsl:variable>
+        <xsl:variable name="assembled-label-classes"><xsl:call-template name="assemble-label-classes"/></xsl:variable>
         <xsl:variable name="label-classes">
-            <xsl:call-template name="assemble-label-classes"/>
+            <xsl:choose>
+                <xsl:when test="string-length($assembled-label-classes) &gt; 0"><xsl:value-of select="$assembled-label-classes"/></xsl:when>
+                <xsl:otherwise>xfLabel</xsl:otherwise>
+            </xsl:choose>
+
         </xsl:variable>
 
         <span id="{$id}" class="{$control-classes}" dojoType="betterform.ui.Control">
@@ -630,7 +640,7 @@
     <xsl:template match="xf:hint">
         <xsl:variable name="parentId" select="../@id"/>
         <!--<xsl:message terminate="no">parentId: <xsl:value-of select="../@id"/>  id: <xsl:value-of select="@id"/> </xsl:message>-->
-        <span id="{../@id}-hint" class="xfHint" style="display:none">
+        <span id="{../@id}-hint" class="xfHint">
             <xsl:apply-templates/>
 
             <!-- if help exists we output the linking icon here -->
@@ -796,40 +806,7 @@
             </xsl:when>
 
             <xsl:when test="local-name()='range'">
-                <xsl:variable name="value" select="bf:data/@bf:value"/>
-                <xsl:variable name="start" select="bf:data/@bf:start"/>
-                <xsl:variable name="end" select="bf:data/@bf:end"/>
-                <xsl:variable name="step" select="bf:data/@bf:step"/>
-                <xsl:variable name="appearance" select="@appearance"/>
-
-                <span id="{concat(@id,'-value')}"
-                     class="xfValue"
-                     dataType="{$datatype}"
-                     controlType="{local-name()}"
-                     appearance="{$appearance}"
-                     name="{$name}"
-                     incremental="{$incremental}"
-                     tabindex="{$navindex}"
-                     start="{$start}"
-                     end="{$end}"
-                     step="{$step}"
-                     value="{$value}"
-                     title="">
-                    <xsl:if test="$accesskey != ' none'">
-                        <xsl:attribute name="accessKey"><xsl:value-of select="$accesskey"/></xsl:attribute>
-                    </xsl:if>
-
-<!--                  <ol dojoType="dijit.form.HorizontalRuleLabels" container="topDecoration"
-                        style="height:1em;font-size:75%;color:gray;">
-                        <xsl:if test="$start">
-                            <li><xsl:value-of select="$start"/></li>
-                            <li> </li>
-                        </xsl:if>
-                        <xsl:if test="$end">
-                            <li><xsl:value-of select="$end"/></li>
-                        </xsl:if>
-                    </ol>-->
-                </span>
+                <xsl:call-template name="range"/>
             </xsl:when>
             <xsl:when test="local-name()='select'">
                 <xsl:call-template name="select"/>

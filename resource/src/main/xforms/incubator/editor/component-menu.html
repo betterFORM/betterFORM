@@ -1,0 +1,765 @@
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<ul>
+   <li id="document-tmpl" class="rootCategory"><a href="#">document</a><ul class="category">
+         <li class="element" data-xf-type="model"><a href="#">model</a></li>
+      </ul>
+      <ul class="category">
+         <li class="container"><a href="#">Container</a><ul>
+               <li data-xf-type="group" class="container"><a href="#">group</a></li>
+               <li data-xf-type="repeat" class="container"><a href="#">repeat</a></li>
+               <li data-xf-type="switch" class="container"><a href="#">switch</a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li id="model-tmpl" class="rootCategory"><a href="#">model</a><ul class="category">
+         <li class="element" data-xf-type="bind"><a href="#">bind</a></li>
+         <li class="element" data-xf-type="instance"><a href="#">instance</a></li>
+         <li class="element" data-xf-type="schema"><a href="#">schema</a></li>
+         <li class="element" data-xf-type="submission"><a href="#">submission</a></li>
+      </ul>
+      <ul class="category">
+         <li class="actions" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="#">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="#">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="#">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="#">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="#">load</a></li>
+               <li data-xf-type="message" class="action"><a href="#">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="#">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="#">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="#">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="#">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="#">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="#">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="#">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="#">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="#">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="#">toggle</a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li id="instance-tmpl" class="rootCategory"><a href="#">instance</a><ul class="category">
+         <li data-xf-type="instance-root" class="element"><a href="#">Instance root</a></li>
+      </ul>
+   </li>
+   <li id="bind-tmpl" class="rootCategory"><a href="#">bind</a><ul class="category">
+         <li class="element" data-xf-type="bind"><a href="#">bind</a></li>
+      </ul>
+   </li>
+   <li id="label-tmpl" class="rootCategory"><a href="#">label</a><ul class="category">
+         <li class="element" data-xf-type="output"><a href="#">output</a></li>
+      </ul>
+   </li>
+   <li id="hint-tmpl" class="rootCategory"><a href="#">hint</a><ul class="category">
+         <li class="element" data-xf-type="output"><a href="#">output</a></li>
+      </ul>
+   </li>
+   <li id="help-tmpl" class="rootCategory"><a href="#">help</a><ul class="category">
+         <li class="element" data-xf-type="output"><a href="#">output</a></li>
+      </ul>
+   </li>
+   <li id="alert-tmpl" class="rootCategory"><a href="#">alert</a><ul class="category">
+         <li class="element" data-xf-type="output"><a href="#">output</a></li>
+      </ul>
+   </li>
+   <li id="item-tmpl" class="rootCategory"><a href="#">item</a><ul class="category">
+         <li class="element" data-xf-type="value"><a href="#">value</a></li>
+      </ul>
+      <ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="#">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="#">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="#">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="#">label</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="actions" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="#">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="#">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="#">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="#">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="#">load</a></li>
+               <li data-xf-type="message" class="action"><a href="#">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="#">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="#">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="#">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="#">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="#">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="#">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="#">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="#">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="#">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="#">toggle</a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li id="itemset-tmpl" class="rootCategory"><a href="#">itemset</a><ul class="category">
+         <li class="element" data-xf-type="copy"><a href="#">copy</a></li>
+         <li class="element" data-xf-type="value"><a href="#">value</a></li>
+      </ul>
+      <ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="#">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="#">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="#">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="#">label</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="actions" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="#">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="#">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="#">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="#">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="#">load</a></li>
+               <li data-xf-type="message" class="action"><a href="#">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="#">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="#">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="#">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="#">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="#">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="#">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="#">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="#">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="#">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="#">toggle</a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li id="choices-tmpl" class="rootCategory"><a href="#">choices</a><ul class="category">
+         <li class="element" data-xf-type="choices"><a href="#">choices</a></li>
+         <li class="element" data-xf-type="item"><a href="#">item</a></li>
+         <li class="element" data-xf-type="itemset"><a href="#">itemset</a></li>
+      </ul>
+      <ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="label" class="common"><a href="#">label</a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li id="input-tmpl" class="rootCategory"><a href="#">input</a><ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="#">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="#">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="#">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="#">label</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="actions" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="#">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="#">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="#">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="#">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="#">load</a></li>
+               <li data-xf-type="message" class="action"><a href="#">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="#">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="#">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="#">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="#">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="#">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="#">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="#">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="#">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="#">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="#">toggle</a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li id="secret-tmpl" class="rootCategory"><a href="#">secret</a><ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="#">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="#">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="#">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="#">label</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="actions" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="#">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="#">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="#">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="#">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="#">load</a></li>
+               <li data-xf-type="message" class="action"><a href="#">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="#">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="#">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="#">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="#">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="#">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="#">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="#">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="#">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="#">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="#">toggle</a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li id="textarea-tmpl" class="rootCategory"><a href="#">textarea</a><ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="#">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="#">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="#">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="#">label</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="actions" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="#">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="#">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="#">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="#">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="#">load</a></li>
+               <li data-xf-type="message" class="action"><a href="#">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="#">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="#">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="#">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="#">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="#">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="#">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="#">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="#">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="#">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="#">toggle</a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li id="upload-tmpl" class="rootCategory"><a href="#">upload</a><ul class="category">
+         <li class="element" data-xf-type="filename"><a href="#">filename</a></li>
+         <li class="element" data-xf-type="mediatype"><a href="#">mediatype</a></li>
+      </ul>
+      <ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="#">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="#">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="#">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="#">label</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="actions" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="#">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="#">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="#">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="#">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="#">load</a></li>
+               <li data-xf-type="message" class="action"><a href="#">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="#">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="#">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="#">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="#">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="#">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="#">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="#">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="#">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="#">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="#">toggle</a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li id="select1-tmpl" class="rootCategory"><a href="#">select1</a><ul class="category">
+         <li class="element" data-xf-type="choices"><a href="#">choices</a></li>
+         <li class="element" data-xf-type="item"><a href="#">item</a></li>
+         <li class="element" data-xf-type="itemset"><a href="#">itemset</a></li>
+      </ul>
+      <ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="#">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="#">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="#">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="#">label</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="actions" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="#">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="#">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="#">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="#">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="#">load</a></li>
+               <li data-xf-type="message" class="action"><a href="#">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="#">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="#">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="#">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="#">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="#">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="#">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="#">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="#">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="#">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="#">toggle</a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li id="select-tmpl" class="rootCategory"><a href="#">select</a><ul class="category">
+         <li class="element" data-xf-type="choices"><a href="#">choices</a></li>
+         <li class="element" data-xf-type="item"><a href="#">item</a></li>
+         <li class="element" data-xf-type="itemset"><a href="#">itemset</a></li>
+      </ul>
+      <ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="#">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="#">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="#">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="#">label</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="actions" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="#">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="#">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="#">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="#">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="#">load</a></li>
+               <li data-xf-type="message" class="action"><a href="#">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="#">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="#">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="#">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="#">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="#">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="#">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="#">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="#">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="#">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="#">toggle</a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li id="range-tmpl" class="rootCategory"><a href="#">range</a><ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="#">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="#">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="#">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="#">label</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="actions" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="#">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="#">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="#">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="#">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="#">load</a></li>
+               <li data-xf-type="message" class="action"><a href="#">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="#">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="#">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="#">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="#">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="#">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="#">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="#">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="#">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="#">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="#">toggle</a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li id="trigger-tmpl" class="rootCategory"><a href="#">trigger</a><ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="#">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="#">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="#">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="#">label</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="actions" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="#">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="#">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="#">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="#">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="#">load</a></li>
+               <li data-xf-type="message" class="action"><a href="#">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="#">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="#">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="#">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="#">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="#">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="#">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="#">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="#">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="#">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="#">toggle</a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li id="output-tmpl" class="rootCategory"><a href="#">output</a><ul class="category">
+         <li class="element" data-xf-type="mediatype"><a href="#">mediatype</a></li>
+      </ul>
+      <ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="#">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="#">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="#">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="#">label</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="actions" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="#">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="#">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="#">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="#">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="#">load</a></li>
+               <li data-xf-type="message" class="action"><a href="#">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="#">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="#">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="#">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="#">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="#">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="#">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="#">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="#">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="#">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="#">toggle</a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li id="submit-tmpl" class="rootCategory"><a href="#">submit</a><ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="#">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="#">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="#">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="#">label</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="actions" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="#">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="#">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="#">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="#">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="#">load</a></li>
+               <li data-xf-type="message" class="action"><a href="#">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="#">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="#">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="#">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="#">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="#">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="#">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="#">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="#">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="#">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="#">toggle</a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li id="repeat-tmpl" class="rootCategory"><a href="#">repeat</a><ul class="category">
+         <li class="controls"><a href="#">Controls</a><ul>
+               <li data-xf-type="input" class="controls"><a href="#">input</a></li>
+               <li data-xf-type="output" class="controls"><a href="#">output</a></li>
+               <li data-xf-type="range" class="controls"><a href="#">range</a></li>
+               <li data-xf-type="secret" class="controls"><a href="#">secret</a></li>
+               <li data-xf-type="select" class="controls"><a href="#">select</a></li>
+               <li data-xf-type="select1" class="controls"><a href="#">select1</a></li>
+               <li data-xf-type="submit" class="controls"><a href="#">submit</a></li>
+               <li data-xf-type="textarea" class="controls"><a href="#">textarea</a></li>
+               <li data-xf-type="trigger" class="controls"><a href="#">trigger</a></li>
+               <li data-xf-type="upload" class="controls"><a href="#">upload</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="container"><a href="#">Container</a><ul>
+               <li data-xf-type="group" class="container"><a href="#">group</a></li>
+               <li data-xf-type="repeat" class="container"><a href="#">repeat</a></li>
+               <li data-xf-type="switch" class="container"><a href="#">switch</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="actions" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="#">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="#">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="#">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="#">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="#">load</a></li>
+               <li data-xf-type="message" class="action"><a href="#">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="#">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="#">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="#">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="#">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="#">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="#">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="#">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="#">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="#">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="#">toggle</a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li id="group-tmpl" class="rootCategory"><a href="#">group</a><ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="alert" class="common"><a href="#">alert</a></li>
+               <li data-xf-type="help" class="common"><a href="#">help</a></li>
+               <li data-xf-type="hint" class="common"><a href="#">hint</a></li>
+               <li data-xf-type="label" class="common"><a href="#">label</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="controls"><a href="#">Controls</a><ul>
+               <li data-xf-type="input" class="controls"><a href="#">input</a></li>
+               <li data-xf-type="output" class="controls"><a href="#">output</a></li>
+               <li data-xf-type="range" class="controls"><a href="#">range</a></li>
+               <li data-xf-type="secret" class="controls"><a href="#">secret</a></li>
+               <li data-xf-type="select" class="controls"><a href="#">select</a></li>
+               <li data-xf-type="select1" class="controls"><a href="#">select1</a></li>
+               <li data-xf-type="submit" class="controls"><a href="#">submit</a></li>
+               <li data-xf-type="textarea" class="controls"><a href="#">textarea</a></li>
+               <li data-xf-type="trigger" class="controls"><a href="#">trigger</a></li>
+               <li data-xf-type="upload" class="controls"><a href="#">upload</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="container"><a href="#">Container</a><ul>
+               <li data-xf-type="group" class="container"><a href="#">group</a></li>
+               <li data-xf-type="repeat" class="container"><a href="#">repeat</a></li>
+               <li data-xf-type="switch" class="container"><a href="#">switch</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="actions" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="#">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="#">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="#">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="#">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="#">load</a></li>
+               <li data-xf-type="message" class="action"><a href="#">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="#">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="#">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="#">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="#">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="#">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="#">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="#">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="#">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="#">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="#">toggle</a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li id="switch-tmpl" class="rootCategory"><a href="#">switch</a><ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="label" class="common"><a href="#">label</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="controls"><a href="#">Controls</a><ul>
+               <li data-xf-type="input" class="controls"><a href="#">input</a></li>
+               <li data-xf-type="output" class="controls"><a href="#">output</a></li>
+               <li data-xf-type="range" class="controls"><a href="#">range</a></li>
+               <li data-xf-type="secret" class="controls"><a href="#">secret</a></li>
+               <li data-xf-type="select" class="controls"><a href="#">select</a></li>
+               <li data-xf-type="select1" class="controls"><a href="#">select1</a></li>
+               <li data-xf-type="submit" class="controls"><a href="#">submit</a></li>
+               <li data-xf-type="textarea" class="controls"><a href="#">textarea</a></li>
+               <li data-xf-type="trigger" class="controls"><a href="#">trigger</a></li>
+               <li data-xf-type="upload" class="controls"><a href="#">upload</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="container"><a href="#">Container</a><ul>
+               <li data-xf-type="group" class="container"><a href="#">group</a></li>
+               <li data-xf-type="repeat" class="container"><a href="#">repeat</a></li>
+               <li data-xf-type="switch" class="container"><a href="#">switch</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="actions" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="#">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="#">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="#">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="#">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="#">load</a></li>
+               <li data-xf-type="message" class="action"><a href="#">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="#">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="#">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="#">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="#">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="#">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="#">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="#">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="#">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="#">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="#">toggle</a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li id="case-tmpl" class="rootCategory"><a href="#">case</a><ul class="category">
+         <li class="common"><a href="#">Common</a><ul>
+               <li data-xf-type="label" class="common"><a href="#">label</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="controls"><a href="#">Controls</a><ul>
+               <li data-xf-type="input" class="controls"><a href="#">input</a></li>
+               <li data-xf-type="output" class="controls"><a href="#">output</a></li>
+               <li data-xf-type="range" class="controls"><a href="#">range</a></li>
+               <li data-xf-type="secret" class="controls"><a href="#">secret</a></li>
+               <li data-xf-type="select" class="controls"><a href="#">select</a></li>
+               <li data-xf-type="select1" class="controls"><a href="#">select1</a></li>
+               <li data-xf-type="submit" class="controls"><a href="#">submit</a></li>
+               <li data-xf-type="textarea" class="controls"><a href="#">textarea</a></li>
+               <li data-xf-type="trigger" class="controls"><a href="#">trigger</a></li>
+               <li data-xf-type="upload" class="controls"><a href="#">upload</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="container"><a href="#">Container</a><ul>
+               <li data-xf-type="group" class="container"><a href="#">group</a></li>
+               <li data-xf-type="repeat" class="container"><a href="#">repeat</a></li>
+               <li data-xf-type="switch" class="container"><a href="#">switch</a></li>
+            </ul>
+         </li>
+      </ul>
+      <ul class="category">
+         <li class="actions" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="#">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="#">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="#">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="#">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="#">load</a></li>
+               <li data-xf-type="message" class="action"><a href="#">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="#">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="#">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="#">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="#">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="#">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="#">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="#">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="#">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="#">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="#">toggle</a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li id="action-tmpl" class="rootCategory"><a href="#">action</a><ul class="category">
+         <li class="actions" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="#">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="#">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="#">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="#">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="#">load</a></li>
+               <li data-xf-type="message" class="action"><a href="#">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="#">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="#">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="#">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="#">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="#">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="#">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="#">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="#">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="#">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="#">toggle</a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li id="toggle-tmpl" class="rootCategory"><a href="#">toggle</a><ul class="category">
+         <li class="element" data-xf-type="case"><a href="#">case</a></li>
+      </ul>
+   </li>
+   <li id="setfocus-tmpl" class="rootCategory"><a href="#">setfocus</a><ul class="category">
+         <li class="element" data-xf-type="control"><a href="#">control</a></li>
+      </ul>
+   </li>
+   <li id="dispatch-tmpl" class="rootCategory"><a href="#">dispatch</a><ul class="category">
+         <li class="element" data-xf-type="delay"><a href="#">delay</a></li>
+         <li class="element" data-xf-type="name"><a href="#">name</a></li>
+         <li class="element" data-xf-type="target"><a href="#">target</a></li>
+         <li class="element" data-xf-type="targetid"><a href="#">targetid</a></li>
+      </ul>
+   </li>
+   <li id="load-tmpl" class="rootCategory"><a href="#">load</a><ul class="category">
+         <li class="element" data-xf-type="resource"><a href="#">resource</a></li>
+      </ul>
+   </li>
+   <li id="message-tmpl" class="rootCategory"><a href="#">message</a><ul class="category">
+         <li class="element" data-xf-type="output"><a href="#">output</a></li>
+      </ul>
+   </li>
+   <li id="submission-tmpl" class="rootCategory"><a href="#">submission</a><ul class="category">
+         <li class="element" data-xf-type="header"><a href="#">header</a></li>
+         <li class="element" data-xf-type="method"><a href="#">method</a></li>
+         <li class="element" data-xf-type="resource"><a href="#">resource</a></li>
+      </ul>
+      <ul class="category">
+         <li class="actions" style="text-align:left;"><a href="#">Actions</a><ul>
+               <li data-xf-type="action" class="action"><a href="#">action</a></li>
+               <li data-xf-type="delete" class="action"><a href="#">delete</a></li>
+               <li data-xf-type="dispatch" class="action"><a href="#">dispatch</a></li>
+               <li data-xf-type="insert" class="action"><a href="#">insert</a></li>
+               <li data-xf-type="load" class="action"><a href="#">load</a></li>
+               <li data-xf-type="message" class="action"><a href="#">message</a></li>
+               <li data-xf-type="rebuild" class="action"><a href="#">rebuild</a></li>
+               <li data-xf-type="recalculate" class="action"><a href="#">recalculate</a></li>
+               <li data-xf-type="refresh" class="action"><a href="#">refresh</a></li>
+               <li data-xf-type="reset" class="action"><a href="#">reset</a></li>
+               <li data-xf-type="revalidate" class="action"><a href="#">revalidate</a></li>
+               <li data-xf-type="send" class="action"><a href="#">send</a></li>
+               <li data-xf-type="setfocus" class="action"><a href="#">setfocus</a></li>
+               <li data-xf-type="setindex" class="action"><a href="#">setindex</a></li>
+               <li data-xf-type="setvalue" class="action"><a href="#">setvalue</a></li>
+               <li data-xf-type="toggle" class="action"><a href="#">toggle</a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   <li id="header-tmpl" class="rootCategory"><a href="#">header</a><ul class="category">
+         <li class="element" data-xf-type="name"><a href="#">name</a></li>
+         <li class="element" data-xf-type="value"><a href="#">value</a></li>
+      </ul>
+   </li>
+   <li id="instance-root-tmpl" class="rootCategory"><a href="#">instance-root</a><ul class="category">
+         <li data-xf-type="instance-data" class="element"><a href="#">Instance data</a></li>
+      </ul>
+   </li>
+   <li id="instance-data-tmpl" class="rootCategory"><a href="#">instance-data</a><ul class="category">
+         <li data-xf-type="instance-data" class="element"><a href="#">Instance data</a></li>
+      </ul>
+   </li>
+</ul>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
@@ -14,7 +14,7 @@
     xpath-default-namespace="http://www.w3.org/1999/xhtml">
 
 
-    <xsl:import href="dojo-dev.xsl"/>
+    <xsl:import href="dojo.xsl"/>
 
     <!-- ********************************* PARAMETERS ********************************   -->
     <xsl:param name="action-url" select="'javascript:submit()'"/>

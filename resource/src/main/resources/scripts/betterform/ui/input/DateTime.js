@@ -1,5 +1,5 @@
     /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -20,6 +20,8 @@ dojo.declare(
     timeDijit:null,
     constraints:null,
     timezone:null,
+    currentDateValue:null,
+    timeValue:null,
 
     postMixInProperties:function() {
         this.inherited(arguments);
@@ -47,7 +49,7 @@ dojo.declare(
     },
 
     applyValues:function(value) {
-        console.debug("DateTime.applyValues value",value);
+        // console.debug("DateTime.applyValues value",value);
         if(value.indexOf("+") !=-1){
             this.timezone = value.substring(value.indexOf("+"),value.length);
             value = value.substring(0,value.indexOf("+"));
@@ -56,7 +58,7 @@ dojo.declare(
             this.timezone = "Z"
             value = value.substring(0,value.indexOf("Z"));
         }
-        console.debug("this.timezone:",this.timezone, " value: ",value);
+        // console.debug("this.timezone:",this.timezone, " value: ",value);
         var dateValue;
         var timeValue;
         if(value != undefined && value != ""){
@@ -67,21 +69,23 @@ dojo.declare(
             dateValue = "";
             timeValue = "";
         }
-         console.debug("Date:", dateValue, " Time:",timeValue);
+        this.currentDateValue = dateValue;
+        this.timeValue = timeValue;
+        // console.debug("Date:", dateValue, " Time:",timeValue);
 
         // handle date part
         if(this.dateDijit == undefined) {
             this.dateDijit = dijit.byId(this.dateFacet.id);
             if(this.constraints.formatLength != undefined){
-                this.dateDijit.constraints.formatLength = this.constraints.formatLength;
+                // this.dateDijit.constraints.formatLength = this.constraints.formatLength;
             }
             if(this.constraints.locale != undefined){
-                this.dateDijit.constraints.locale = this.constraints.locale;
+                // this.dateDijit.constraints.locale = this.constraints.locale;
             }
             if(this.constraints.datePattern != undefined){
-                this.dateDijit.constraints.datePattern = this.constraints.datePattern;
+                // this.dateDijit.constraints.datePattern = this.constraints.datePattern;
             }
-            this.dateDijit.constraints.selector = "date";
+            // this.dateDijit.constraints.selector = "date";
         }
         dojo.attr(this.dateDijit.textbox, "value", dateValue);
         //this.dateDijit._setValueAttr(dateValue);
@@ -90,18 +94,24 @@ dojo.declare(
         if(this.timeDijit == undefined) {
             this.timeDijit = dijit.byId(this.timeFacet.id);
             if(this.constraints.formatLength != undefined){
-                this.timeDijit.constraints.formatLength = this.constraints.formatLength;
+                // this.timeDijit.constraints.formatLength = this.constraints.formatLength;
             }
             if(this.constraints.locale != undefined){
-                this.timeDijit.constraints.locale = this.constraints.locale;
+                // this.timeDijit.constraints.locale = this.constraints.locale;
             }
             if(this.constraints.timePattern != undefined){
-                this.timeDijit.constraints.timePattern = this.constraints.timePattern;
+                // this.timeDijit.constraints.timePattern = this.constraints.timePattern;
             }
-            this.timeDijit.constraints.selector = "time";
+            //this.timeDijit.constraints.selector = "time";
         }
+        // overwritten Dojo functions to avoid validation by Dojo
+        this.dateDijit.validate = function(/*Boolean*/ isFocused){ return true; };
+        this.timeDijit.validate = function(/*Boolean*/ isFocused){ return true; };
 
-        this.timeDijit._setValueAttr(timeValue);
+        // console.debug("this.timeDijit._setValueAttr(): timeValue:",timeValue);
+        if(timeValue.length > 0){
+            this.timeDijit._setValueAttr(timeValue);
+        }
         this.setCurrentValue(value);
     },
 
@@ -148,7 +158,7 @@ dojo.declare(
     },
 
     _handleSetControlValue:function(value) {
-         console.debug("_handleSetControlValue value",value);
+        // console.debug("_handleSetControlValue value",value);
         if(this.miliseconds && value.indexOf(".") != -1){
             value = value.substring(0,value.indexOf("."));
         }

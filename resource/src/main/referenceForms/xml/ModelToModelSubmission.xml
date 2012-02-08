@@ -4,6 +4,12 @@
       xmlns:ev="http://www.w3.org/2001/xml-events">
     <head>
         <title>Model-to-Model Submission</title>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+
+
     </head>
     <body>
         <div class="description">

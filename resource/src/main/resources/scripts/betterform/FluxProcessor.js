@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -36,6 +36,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     _earlyTemplatedStartup:true,
     widgetsInTemplate:true,
     usesDOMFocusIN:false,
+    logEvents:false,
 
 
     /*
@@ -89,19 +90,19 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
             this.defaultAlertHandler = new betterform.ui.common.InlineRoundBordersAlert({});
         }
 
-        var inlineAlertEnabled = dojo.query(".InlineAlert", dojo.doc)[0];
-        if (inlineAlertEnabled != undefined) {
-            dojo.require("betterform.ui.common.InlineAlert");
-            this.defaultAlertHandler = new betterform.ui.common.InlineAlert({});
-            console.debug("Enabled InlineAlert Handler ", this.defaultAlertHandler);
-
-        }
-
         var toolTipAlertEnabled = dojo.query(".ToolTipAlert", dojo.doc)[0];
-        if (toolTipAlertEnabled != undefined || (this.defaultAlertHandler == undefined)) {
+        if (toolTipAlertEnabled != undefined ) {
             dojo.require("betterform.ui.common.ToolTipAlert");
             this.defaultAlertHandler = new betterform.ui.common.ToolTipAlert({});
-            console.debug("Enabled ToolTipAlert Handler ", this.defaultAlertHandler);
+            // console.debug("Enabled ToolTipAlert Handler ", this.defaultAlertHandler);
+        }
+
+        var inlineAlertEnabled = dojo.query(".InlineAlert", dojo.doc)[0];
+        if (inlineAlertEnabled != undefined || this.defaultAlertHandler == undefined) {
+            dojo.require("betterform.ui.common.InlineAlert");
+            this.defaultAlertHandler = new betterform.ui.common.InlineAlert({});
+            // console.debug("Enabled InlineAlert Handler ", this.defaultAlertHandler);
+
         }
 
         this.subscribers[0] = dojo.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
@@ -530,13 +531,60 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     applyChanges: function(data) {
         // console.debug("FluxProcessor.applyChanges data:",data);
         try {
-            console.group("EventLog");
             var validityEvents = new Array();
             var index = 0;
+
+            //eventLog writing
+            var eventLog = dojo.byId("eventLog");
+
             dojo.forEach(data,
                     function(xmlEvent) {
-                        // *** DO NOT COMMENT THIS OUT !!! ***
-                        console.debug(xmlEvent.type, " [", xmlEvent.contextInfo, "]");
+//                        console.debug(xmlEvent.type, " [", xmlEvent.contextInfo, "]");
+
+                        /*
+                        if 'logEvents' is true the eventlog from the server will be written
+                        to DOM and can be viewed in a separate expandable section in the window.
+                        */
+                        if(fluxProcessor.logEvents){
+                            //iterate contextinfo
+                            var contextInfo = xmlEvent.contextInfo;
+                            var tableCells = "";
+
+                            for (dataItem in contextInfo){
+                                var funcArg = contextInfo[dataItem];
+
+                                //suppressing empty default info
+                                if(funcArg != null) {
+                                    if(dataItem == "targetId" &&
+                                        (xmlEvent.type == "betterform-state-changed" ||
+                                         xmlEvent.type == "xforms-value-changed" ||
+                                         xmlEvent.type == "xforms-valid" ||
+                                         xmlEvent.type == "xforms-invalid" ||
+                                         xmlEvent.type == "xforms-readonly" ||
+                                         xmlEvent.type == "xforms-readwrite" ||
+                                         xmlEvent.type == "xforms-required" ||
+                                         xmlEvent.type == "xforms-optional" ||
+                                         xmlEvent.type == "xforms-enabled" ||
+                                         xmlEvent.type == "DOMFocusOut" ||
+                                         xmlEvent.type == "DOMActivate" ||
+                                         xmlEvent.type == "betterform-AVT-changed"
+                                         )
+                                    ){
+                                        tableCells += "<tr><td class='propName'>"+ dataItem + "</td><td class='propValue'><a href='#' onclick='reveal(this);'>" + contextInfo[dataItem] + "</a></td></tr>"
+                                    }else if(dataItem == "targetElement" && xmlEvent.type == "betterform-load-uri"){
+                                        var targetElement = contextInfo.xlinkTarget;
+                                        tableCells += "<tr><td class='propName'>"+ dataItem + "</td><td class='propValue'><a href='#' onclick='reveal(this);'>" + targetElement + "</a></td></tr>"
+                                    }
+                                    else {
+                                        tableCells += "<tr><td class='propName'>"+ dataItem + "</td><td class='propValue'>" +  contextInfo[dataItem] + "</td></tr>"
+                                    }
+                                }
+                            }
+                            //create output
+                            dojo.create("li", {
+                                innerHTML: "<a href='#' onclick='toggleEntry(this);'><span>"+xmlEvent.type+"</span></a><table class='eventLogTable'>" + tableCells + "</table>"
+                            }, eventLog);
+                        }
                         switch (xmlEvent.type) {
 
                             case "betterform-index-changed"      : fluxProcessor._handleBetterFormIndexChanged(xmlEvent); break;
@@ -587,7 +635,14 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
                         }
                     }
                     );
-            console.groupEnd();
+
+            if(fluxProcessor.logEvents){
+                // add a devider for eventLogViewer
+                dojo.create("li", {
+                    innerHTML: "<span class='logDevider'/>"
+                }, eventLog);
+            }
+
             if (validityEvents.length > 0) {
                 fluxProcessor._handleValidity(validityEvents);
             }
@@ -694,11 +749,10 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
         dojo.query(".xfRequired", dojo.doc).forEach(function(control) {
             //if control has no value add CSS class xfRequiredEmpty
             var xfControl = dijit.byId(control.id);
-            if(xfControl != undefined){
+            if(xfControl != undefined && xfControl.getControlValue === 'function'){
                 var xfValue = xfControl.getControlValue();
                 if(xfValue == undefined || xfValue == ''){
                     dojo.addClass(xfControl.domNode,"xfRequiredEmpty");
-
                 }
             }
         });
@@ -1388,9 +1442,15 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
 
     },
     _handleBetterFormItemDeleted:function(xmlEvent) {
-        console.debug("handle betterform-item-deleted for ", xmlEvent.contextInfo.targetName, " [id: '", xmlEvent.contextInfo.targetId, "'] contextInfo:", xmlEvent.contextInfo);
+        // console.debug("handle betterform-item-deleted for ", xmlEvent.contextInfo.targetName, " [id: '", xmlEvent.contextInfo.targetId, "'] contextInfo:", xmlEvent.contextInfo);
         if (xmlEvent.contextInfo.targetName == "itemset") {
-            dijit.byId(xmlEvent.contextInfo.targetId).handleDelete(xmlEvent.contextInfo);
+            var itemset = dijit.byId(xmlEvent.contextInfo.targetId);
+            // console.debug("_handleBetterFormItemDeleted",itemset);
+            if(itemset){
+                dijit.byId(xmlEvent.contextInfo.targetId).handleDelete(xmlEvent.contextInfo);
+            } else {
+                console.warn("Itemset with id: '", xmlEvent.contextInfo.targetId, "' does not exist");
+            }
         }
         else if (xmlEvent.contextInfo.targetName == "repeat" || xmlEvent.contextInfo.targetName == "tbody") {
             var repeatElement = dojo.query("*[repeatId='" + xmlEvent.contextInfo.targetId + "']");
@@ -1472,8 +1532,10 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     _handleLinkException:function(xmlEvent) {
+        console.debug("_handleLinkException: ", xmlEvent);
         if (this.webtest != 'true') {
             console.error("Fatal error - " + xmlEvent.type + ": Failed to load resource: " + xmlEvent.contextInfo.resourceUri);
+            alert("xforms-link-exception: " + "resource '" + xmlEvent.contextInfo['resource-uri'] + "' failed with error= '" + xmlEvent.contextInfo['resource-error'] + "'");
         } else {
             //only for testing purposes
             fluxProcessor.logTestMessage("Fatal error - " + xmlEvent.type + ": Failed to load resource: " + xmlEvent.contextInfo.resourceUri);

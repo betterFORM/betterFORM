@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
-  ~ Licensed under the terms of BSD License
-  -->
-
 <xsd:schema targetNamespace="http://www.w3.org/2002/xforms"
             xmlns:ev="http://www.w3.org/2001/xml-events"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
@@ -123,7 +118,9 @@ structural elements
 				</xsd:choice>
 			</xsd:sequence>
 			<xsd:attributeGroup ref="xforms:Common.Attributes"/>
-			<xsd:attributeGroup ref="xforms:XML.Events"/>
+            <!-- this is inconsistent with the Spec which correctly does not mention xml event attributes for the model element
+            Instead the model may have actions as childs .-->
+			<!-- <xsd:attributeGroup ref="xforms:XML.Events"/> -->
 			<xsd:attribute name="functions" type="xforms:QNameList" use="optional"/>
 			<xsd:attribute name="schema" type="xforms:anyURIList" use="optional"/>
 			<xsd:attribute name="version" type="xforms:versionList" use="optional"/>

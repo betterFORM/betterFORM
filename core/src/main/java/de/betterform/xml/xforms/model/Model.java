@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -22,6 +22,7 @@ import de.betterform.xml.xforms.action.UpdateSequencer;
 import de.betterform.xml.xforms.exception.XFormsComputeException;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.exception.XFormsLinkException;
+import de.betterform.xml.xforms.exception.XFormsVersionException;
 import de.betterform.xml.xforms.model.bind.Bind;
 import de.betterform.xml.xforms.model.bind.RefreshView;
 import de.betterform.xml.xforms.model.constraints.MainDependencyGraph;
@@ -442,7 +443,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
                 String namespaceURI = NamespaceResolver.getNamespaceURI(this.element, prefix);
                 if (namespaceURI == null) namespaceURI = "";
                 FunctionLibrary functionLibrary = XPathCache.getFgXFormsFunctionLibrary();
-                if ((functionLibrary.getFunctionSignature(new StructuredQName(prefix, namespaceURI, localName), -1)) != null) {
+                if ((functionLibrary.getFunctionSignature(new StructuredQName(prefix, namespaceURI, localName), -1)) == null) {
                     throw new XFormsComputeException("Function '" + localName + "' cannot be found in Namespace: '" + namespaceURI + "'", this.target, null);
 //                    Map<String, String> errorMsg = new HashMap<String, String>();
 //                    errorMsg.put("error-message","XFormsComputeException: Function '" + localName + "' cannot be found in Namespace: '" + namespaceURI + "'");
@@ -763,7 +764,9 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
             }
             if (event.getType().equals(XFormsEventNames.LINK_EXCEPTION)) {
                 getLogger().error(this + " link exception: " + ((XMLEvent) event).getContextInfo());
-                return;
+//                this.container.shutdown();
+//                throw new XFormsLinkException("XForms Link Exception: " + ((XMLEvent) event).getContextInfo().get("resource-uri"), event.getTarget(), ((XMLEvent) event).getContextInfo());
+                //todo:config switch for strict exception handlilng
             }
             if (event.getType().equals(XFormsEventNames.LINK_ERROR)) {
                 getLogger().warn(this + " link error: " + ((XMLEvent) event).getContextInfo());
@@ -776,7 +779,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
             if (event.getType().equals(XFormsEventNames.VERSION_EXCEPTION)) {
                 getLogger().error(this + " version exception: " + ((XMLEvent) event).getContextInfo());
                 this.container.shutdown();
-                return;
+                throw new XFormsVersionException( "version exception: " + ((XMLEvent) event).getContextInfo().get("error-information"), event.getTarget(), ((XMLEvent) event).getContextInfo());
             }
         }
         catch (Exception e) {
@@ -815,13 +818,6 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
             for (int index = 0; index < count; index++) {
                 Element xformsInstance = instanceElements.get(index);
                 createInstanceObject(xformsInstance);
-                String debug = Config.getInstance().getProperty("betterform.debug-allowed");
-                if(debug != null && debug.equals("true")){
-                    Map contextInfo = new HashMap(1);
-                    contextInfo.put("modelId",XFormsElement.getXFormsAttribute((Element) xformsInstance.getParentNode(),"id"));
-                    contextInfo.put("instanceId",XFormsElement.getXFormsAttribute(xformsInstance,"id"));
-                    this.container.dispatch(this.target, BetterFormEventNames.INSTANCE_CREATED, contextInfo);
-                }
             }
         }
 
@@ -858,6 +854,13 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
         Instance instance = (Instance) this.container.getElementFactory().createXFormsElement(xformsInstance, this);
         instance.init();
         this.instances.add(instance);
+        String debug = Config.getInstance().getProperty("betterform.debug-allowed");
+        if(debug != null && debug.equals("true")){
+            Map contextInfo = new HashMap(1);
+            contextInfo.put("modelId",XFormsElement.getXFormsAttribute((Element) xformsInstance.getParentNode(),"id"));
+            contextInfo.put("instanceId",XFormsElement.getXFormsAttribute(xformsInstance,"id"));
+            this.container.dispatch(this.target, BetterFormEventNames.INSTANCE_CREATED, contextInfo);
+        }
     }
 
 
@@ -879,6 +882,10 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
 
             // initialize ui elements
             Initializer.initializeUIElements(this.container.getDocument().getDocumentElement());
+            Instance inst = getDefaultInstance();
+            if(inst != null && !inst.hasInitialInstance()){
+                inst.storeContainerRef();
+            }
             // We need to do an extra refresh because value and node ref expressions of UI controls can refer to for 
             // example the repeat-index of a repeat that is not yet initialized when the UI control is initialized
             // (the repeat is after the UI control in document order)  

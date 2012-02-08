@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xforms="http://www.w3.org/2002/xforms">
+	<xhtml:head>
+		<xhtml:title>5.1.e built-in primitive type via xsi:type</xhtml:title>
+		<xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+		<xforms:model>
+			<xforms:instance>
+				<types>
+					<my_date xsi:type="xsd:date"/>
+				</types>
+			</xforms:instance>
+		</xforms:model>
+		
+		<xforms:model id="event_model">
+			<xforms:instance>
+				<events>
+					<event/>
+				</events>
+			</xforms:instance>
+		</xforms:model>
+	</xhtml:head>
+	
+	<xhtml:body>
+		<xforms:group id="xf-group-1">
+			<xforms:label class="title">5.1.e built-in primitive type via xsi:type</xforms:label>
+		</xforms:group>
+
+		<xforms:group id="xf-group-2">
+			<xforms:label>
+				When you activate the Valid Value trigger you must see an "xforms-valid" output 
+				for the date data type. When you activate the Invalid Value trigger you must see an 
+				"XFORMS-INVALID" output for the date data type. 
+			</xforms:label>
+		</xforms:group>
+		
+			<xforms:output model="event_model" ref="/events/event" id="xf-output-1">
+				<xforms:label>Event result:</xforms:label>
+			</xforms:output>
+
+    <xforms:trigger id="xf-trigger-1">
+		  <xforms:label>Valid Value</xforms:label>
+		    <xforms:action ev:event="DOMActivate">
+			   <xforms:setvalue ref="my_date">1999-05-31</xforms:setvalue>
+			</xforms:action>
+		</xforms:trigger>
+
+	    <xforms:trigger id="xf-trigger-2">
+		  <xforms:label>Invalid Value</xforms:label>
+		    <xforms:action ev:event="DOMActivate">
+			   <xforms:setvalue ref="my_date">Bogus Data</xforms:setvalue>
+			</xforms:action>
+		</xforms:trigger>
+		
+		<xforms:group id="xf-group-3">
+			<xforms:input ref="my_date" id="xf-input-1">
+				<xforms:label>date </xforms:label>
+				<xforms:setvalue ev:event="xforms-invalid" model="event_model" ref="/events/event[1]">
+					XFORMS-INVALID (date)
+				</xforms:setvalue>
+				<xforms:setvalue ev:event="xforms-valid" model="event_model" ref="/events/event[1]">
+					xforms-valid (date)
+				</xforms:setvalue>
+			</xforms:input>
+		</xforms:group>
+
+	</xhtml:body>
+	
+</xhtml:html>

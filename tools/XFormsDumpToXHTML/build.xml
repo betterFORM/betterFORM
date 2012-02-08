@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
         <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
@@ -21,10 +21,10 @@
     <!-- **************************************** HOUSEKEEPING **************************************** -->
     <target name="transformToXForms">
         <xslt destdir="${basedir}/target"
-              style="${basedir}/../../src/main/resources/xslt/dojo-dev.xsl"
+              style="${basedir}/../../resource/src/main/resources/xslt/dojo-dev.xsl"
               force="true"
-              in="BindingTest1.xml"
-              out="${basedir}/dump.xhtml">
+              in="XFormsMarkup.xml"
+              out="${basedir}/ProcessedMarkup.xhtml">
             <classpath refid="transform.class.path"/>
         </xslt>
     </target>

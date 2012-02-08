@@ -1,15 +1,15 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.connector.xmlrpc;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.connector.AbstractConnector;
 import de.betterform.connector.URIResolver;
+import de.betterform.xml.xforms.exception.XFormsException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 
 import java.net.URI;

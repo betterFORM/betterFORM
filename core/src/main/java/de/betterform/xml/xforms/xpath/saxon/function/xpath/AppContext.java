@@ -1,9 +1,13 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 package de.betterform.xml.xforms.xpath.saxon.function.xpath;
 
+import de.betterform.connector.http.AbstractHTTPConnector;
+import de.betterform.xml.xforms.Container;
+import de.betterform.xml.xforms.model.submission.RequestHeader;
+import de.betterform.xml.xforms.model.submission.RequestHeaders;
 import de.betterform.xml.xforms.xpath.saxon.function.XFormsFunction;
 import net.sf.saxon.dom.DocumentWrapper;
 import net.sf.saxon.dom.NodeWrapper;
@@ -14,18 +18,13 @@ import net.sf.saxon.om.ListIterator;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.sxpath.IndependentContext;
 import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.value.ObjectValue;
-import net.sf.saxon.value.StringValue;
-
-import de.betterform.connector.http.AbstractHTTPConnector;
-import de.betterform.xml.xforms.Container;
-import de.betterform.xml.xforms.model.submission.RequestHeader;
-import de.betterform.xml.xforms.model.submission.RequestHeaders;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 
 /**

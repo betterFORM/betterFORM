@@ -1,11 +1,10 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 package de.betterform.xml.xforms;
 
 import de.betterform.xml.xforms.exception.XFormsComputeException;
-import de.betterform.xml.xforms.exception.XFormsException;
 import org.w3c.dom.Document;
 
 /**
@@ -23,11 +22,19 @@ public class ModelFunctionsTest extends XMLTestBase {
     /**
      * test the positive case - functions are found
      */
-    public void testCheckExtensionFunctions() throws Exception {
-        XFormsProcessorImpl xformsProcesssorImpl = new XFormsProcessorImpl();
-        Document form = getXmlResource("ModelTest2.xhtml");
-        xformsProcesssorImpl.setXForms(form);
-        xformsProcesssorImpl.init();
+    public void testCheckExtensionFunctions() {
+        Exception exception = null;
+        
+        try {
+            XFormsProcessorImpl xformsProcesssorImpl = new XFormsProcessorImpl();
+            Document form = getXmlResource("ModelTest2.xhtml");
+            xformsProcesssorImpl.setXForms(form);
+            xformsProcesssorImpl.init();
+        } catch (Exception e) {
+            exception = e;
+        }
+
+        assertNull(exception);
     }
 
     /**
@@ -35,16 +42,18 @@ public class ModelFunctionsTest extends XMLTestBase {
      */
     public void testCheckExtensionFunctions2() {
         XFormsProcessorImpl xformsProcesssorImpl = new XFormsProcessorImpl();
+        Exception exception = null;
         try {
             Document form = getXmlResource("ModelTest3.xhtml");
             xformsProcesssorImpl.setXForms(form);
             xformsProcesssorImpl.init();
-        } catch (XFormsException e) {
-            assertTrue(e instanceof XFormsComputeException);
         } catch (Exception e) {
-            fail("XFormsComputeException should be thrown");
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            exception = e;
         }
+
+        assertNotNull(exception);
+        assertTrue(exception instanceof XFormsComputeException);
+
     }
 
     /**

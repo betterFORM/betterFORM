@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <title>Input Field / DOMActivate</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+        <xf:model id="">
+            <xf:instance xmlns="">
+                <data>
+                    <search/>
+                </data>
+            </xf:instance>
+        </xf:model>
+
+    </head>
+
+    <body>
+        <h2>Input Field / DOMActivate Sample</h2>
+        <xf:group>
+            <xf:label>If the Input field has the focus and the user presses return it fires a 'DOMActivate' event. The DOM Activate Event activates the XForms Trigger and updates the Google Map</xf:label>
+        </xf:group>
+        <xf:group appearance="minimal" style="padding-top:20px;padding-bottom:20px;">
+            <xf:input ref="search" id="search">
+                <xf:label>Search Google Maps:</xf:label>
+                <xf:action ev:event="DOMActivate">
+                    <xf:dispatch name="DOMActivate" targetid="t-search"/>
+                </xf:action>
+            </xf:input>
+            <xf:trigger id="t-search">
+                <xf:label>Go</xf:label>
+                <xf:action>
+                    <script type="text/javascript">
+                        updateMap()
+                    </script>
+                </xf:action>
+            </xf:trigger>
+        </xf:group>
+    <div id="map_canvas" style="width:400px; height:400px;"></div>
+
+        <script type="text/javascript">
+            var geocoder;
+            var map;
+            function initialize() {
+                geocoder = new google.maps.Geocoder();
+                var latlng = new google.maps.LatLng(52.30, 13.25);
+                var myOptions = {
+                    zoom:8,
+                    center:latlng,
+                    mapTypeId:google.maps.MapTypeId.ROADMAP
+
+                };
+                map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+            }
+
+            function updateMap() {
+                if(map == undefined) {
+                    initialize();
+                }
+                var address = dijit.byId("search-value").get("value");
+                geocoder.geocode({ 'address':address}, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        map.setCenter(results[0].geometry.location);
+                        var marker = new google.maps.Marker({
+                            map:map,
+                            position:results[0].geometry.location
+                        });
+                    } else {
+                        alert("Error receiving Geocode: " + status);
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>

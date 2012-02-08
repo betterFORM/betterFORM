@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xforms="http://www.w3.org/2002/xforms">
+  	<xhtml:head>
+    	<xhtml:title>9.3.6.a itemset element example</xhtml:title>
+    	<xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+    	<xforms:model id="cone">
+       		<xforms:instance>
+				<icecream>
+					<order><type/></order>
+				</icecream>
+       		</xforms:instance>
+    	</xforms:model>
+    	<xforms:model id="flavors">
+    		<xforms:instance>
+    			<flavors>
+    				<flavor type="v">
+    					<description>Vanilla</description>
+    					<type>v</type>
+    				</flavor>
+    				<flavor type="s">
+    					<description>Strawberry</description>
+    					<type>s</type>
+    				</flavor>
+    				<flavor type="c">
+    					<description>Chocolate</description>
+    					<type>c</type>
+    				</flavor>
+    			</flavors>
+    		</xforms:instance>
+    	</xforms:model>
+  	</xhtml:head>
+  	<xhtml:body>
+  		<xforms:group id="xf-group-1">
+  			<xforms:label class="title">9.3.6.a itemset element example</xforms:label>
+  		</xforms:group>	
+  		<xforms:group id="xf-group-2">
+  			<xforms:label>
+  			  You must see two select controls that both contain the values "Vanilla", "Strawberry", 
+  			  and "Chocolate". 
+	  		</xforms:label>
+  		</xforms:group>
+		<xforms:group id="xf-group-3">
+			<xforms:label>
+				List 1 (itemset element) : 
+			</xforms:label>
+			<xforms:select1 model="cone" ref="/icecream/order" id="xf-select1-1">
+				<xforms:label/>
+				<xforms:itemset model="flavors" nodeset="/flavors/flavor">
+					<xforms:label ref="description"/>
+					<xforms:copy ref="type"/>
+				</xforms:itemset>
+			</xforms:select1>
+		</xforms:group>
+	    <xforms:group id="xf-group-4">	
+	    	<xforms:label>
+	    		List 2 (choice element) : 
+	    	</xforms:label>	
+			<xforms:select model="cone" ref="/icecream/order/type" id="xf-select-1">
+				<xforms:label/>
+				<xforms:choices>
+					<xforms:item>
+						<xforms:label>Vanilla</xforms:label>
+						<xforms:value>v</xforms:value>
+					</xforms:item>
+					<xforms:item>
+						<xforms:label>Strawberry</xforms:label>
+						<xforms:value>s</xforms:value>
+					</xforms:item>
+					<xforms:item>
+						<xforms:label>Chocolate</xforms:label>
+						<xforms:value>c</xforms:value>
+					</xforms:item>
+				</xforms:choices>
+			</xforms:select>
+	    </xforms:group>
+		
+  </xhtml:body>
+</xhtml:html>

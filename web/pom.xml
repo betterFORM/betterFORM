@@ -1,20 +1,21 @@
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>de.betterform</groupId>
         <artifactId>betterform-project</artifactId>
-        <version>3.2.0-RC4</version>
+        <version>4.0</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.betterform</groupId>
     <artifactId>betterform</artifactId>
-    <version>3.2.0-RC4</version>
-    
-    
+    <version>4.0</version>
+
+
 
     <packaging>war</packaging>
 
@@ -95,140 +96,326 @@
 
 
     <dependencies>
-<dependency>
-<groupId>de.betterform</groupId>
-<artifactId>betterform-core</artifactId>
-<version>3.2.0-RC4</version>
-</dependency>
-<dependency>
-<groupId>org.directwebremoting.dwr</groupId>
-<artifactId>dwr</artifactId>
-<version>2.0.5</version>
-</dependency>
-<dependency>
-<groupId>javax.servlet</groupId>
-<artifactId>servlet-api</artifactId>
-<version>2.4</version>
-<scope>provided</scope>
-</dependency>
-<dependency>
-<groupId>org.seleniumhq.selenium.client-drivers</groupId>
-<artifactId>selenium-java-client-driver</artifactId>
-<version>1.0.1</version>
-<scope>test</scope>
-</dependency>
-<dependency>
-<groupId>net.sf.saxon</groupId>
-<artifactId>saxon</artifactId>
-<version>9.2.1.5</version>
-</dependency>
-<dependency>
-<groupId>commons-codec</groupId>
-<artifactId>commons-codec</artifactId>
-<version>1.4</version>
-</dependency>
-<dependency>
-<groupId>commons-fileupload</groupId>
-<artifactId>commons-fileupload</artifactId>
-<version>1.2.1</version>
-</dependency>
-<dependency>
-<groupId>httpcomponents</groupId>
-<artifactId>httpcomponents-core</artifactId>
-<version>4.1</version>
-</dependency>
-<dependency>
-<groupId>httpcomponents</groupId>
-<artifactId>httpcomponents-client</artifactId>
-<version>4.1.1</version>
-</dependency>
-<dependency>
-<groupId>httpcomponents</groupId>
-<artifactId>httpcomponents-mime</artifactId>
-<version>4.1.1</version>
-</dependency>
-<dependency>
-<groupId>commons-io</groupId>
-<artifactId>commons-io</artifactId>
-<version>1.4</version>
-</dependency>
-<dependency>
-<groupId>commons-lang</groupId>
-<artifactId>commons-lang</artifactId>
-<version>2.4</version>
-</dependency>
-<dependency>
-<groupId>commons-logging</groupId>
-<artifactId>commons-logging</artifactId>
-<version>1.1.1</version>
-</dependency>
-<dependency>
-<groupId>javax.activation</groupId>
-<artifactId>activation</artifactId>
-<version>1.1.1</version>
-</dependency>
-<dependency>
-<groupId>javax.mail</groupId>
-<artifactId>mail</artifactId>
-<version>1.4.2</version>
-</dependency>
-<dependency>
-<groupId>log4j</groupId>
-<artifactId>log4j</artifactId>
-<version>1.2.15</version>
-<exclusions>
-<exclusion>
-<artifactId>jmxtools</artifactId>
-<groupId>com.sun.jdmk</groupId>
-</exclusion>
-<exclusion>
-<artifactId>jmxri</artifactId>
-<groupId>com.sun.jmx</groupId>
-</exclusion>
-</exclusions>
-</dependency>
-<dependency>
-<groupId>xerces</groupId>
-<artifactId>xercesImpl</artifactId>
-<version>2.9.1</version>
-</dependency>
-<dependency>
-<groupId>xml-apis</groupId>
-<artifactId>xml-apis</artifactId>
-<version>1.3.04</version>
-</dependency>
-<dependency>
-<groupId>org.apache.xmlrpc</groupId>
-<artifactId>xmlrpc-common</artifactId>
-<version>3.1.2</version>
-</dependency>
-<dependency>
-<groupId>org.apache.xmlrpc</groupId>
-<artifactId>xmlrpc-client</artifactId>
-<version>3.1.2</version>
-</dependency>
-<dependency>
-<groupId>org.apache.xmlrpc</groupId>
-<artifactId>xmlrpc-server</artifactId>
-<version>3.1.2</version>
-</dependency>
-<dependency>
-<groupId>net.sf.ehcache</groupId>
-<artifactId>ehcache</artifactId>
-<version>1.6.2</version>
-</dependency>
-<dependency>
-<groupId>org.apache.ant</groupId>
-<artifactId>ant</artifactId>
-<version>1.8.2</version>
-</dependency>
-<dependency>
-<groupId>junit</groupId>
-<artifactId>junit</artifactId>
-<version>3.8.2</version>
-<scope>test</scope>
-</dependency>
-</dependencies>
+        <dependency>
+            <groupId>de.betterform</groupId>
+            <artifactId>betterform-core</artifactId>
+            <version>4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.directwebremoting.dwr</groupId>
+            <artifactId>dwr</artifactId>
+            <version>2.0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.4</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium.client-drivers</groupId>
+            <artifactId>selenium-java-client-driver</artifactId>
+            <version>1.0.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>apache-mime</artifactId>
+            <version>0.6</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>bsh</artifactId>
+            <version>1.3.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>cglib-nodep</artifactId>
+            <version>2.1_3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.4</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>commons-collection</artifactId>
+            <version>3.2.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>commons-exec</artifactId>
+            <version>1.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.0.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>cssparser</artifactId>
+            <version>0.9.5</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>guava</artifactId>
+            <version>10.0.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>1.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>htmlunit</artifactId>
+            <version>2.9</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>htmlunit-core-js</artifactId>
+            <version>2.9</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.1.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.1.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>4.1.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>jcommander</artifactId>
+            <version>1.13</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>jna</artifactId>
+            <version>3.3.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>jna-platform</artifactId>
+            <version>3.3.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>json</artifactId>
+            <version>20080701</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>junit-dep</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>operadriver</artifactId>
+            <version>v0.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>2.4.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>sac</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>2.16.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>serializer</artifactId>
+            <version>2.7.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.0.1-nobsh-noguice</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>xalan</artifactId>
+            <version>2.7.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.9.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.3.04</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.saxon</groupId>
+            <artifactId>saxon</artifactId>
+            <version>9.2.1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>httpcomponents</groupId>
+            <artifactId>httpcomponents-core</artifactId>
+            <version>4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>httpcomponents</groupId>
+            <artifactId>httpcomponents-client</artifactId>
+            <version>4.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>httpcomponents</groupId>
+            <artifactId>httpcomponents-mime</artifactId>
+            <version>4.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.2</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.15</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jmxtools</artifactId>
+                    <groupId>com.sun.jdmk</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jmxri</artifactId>
+                    <groupId>com.sun.jmx</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.11.02</version>
+        </dependency>
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.4.01</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlrpc</groupId>
+            <artifactId>xmlrpc-common</artifactId>
+            <version>3.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlrpc</groupId>
+            <artifactId>xmlrpc-client</artifactId>
+            <version>3.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlrpc</groupId>
+            <artifactId>xmlrpc-server</artifactId>
+            <version>3.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.ant</groupId>
+            <artifactId>ant</artifactId>
+            <version>1.8.2</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
     <developers>
         <developer>
@@ -548,31 +735,32 @@
             <build>
                 <plugins>
                     <plugin>
-                      <artifactId>maven-antrun-plugin</artifactId>
-                      <executions>
-                        <execution>
-                          <phase>compile</phase>
-                          <configuration>
-                              <tasks>
-    				  <property name="compile_classpath" refid="maven.compile.classpath"/>
-                		  <property name="runtime_classpath" refid="maven.runtime.classpath"/>
-                		  <property name="test_classpath" refid="maven.test.classpath"/>
-                		  <property name="plugin_classpath" refid="maven.plugin.classpath"/>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>compile</phase>
+                                <configuration>
+                                    <tasks>
+                                        <property name="compile_classpath" refid="maven.compile.classpath"/>
+                                        <property name="runtime_classpath" refid="maven.runtime.classpath"/>
+                                        <property name="test_classpath" refid="maven.test.classpath"/>
+                                        <property name="plugin_classpath" refid="maven.plugin.classpath"/>
 
-                		  <echo message="compile classpath: ${compile_classpath}"/>
-                		  <echo message="runtime classpath: ${runtime_classpath}"/>
-                	   	  <echo message="test classpath:    ${test_classpath}"/>
-                		  <echo message="plugin classpath:  ${plugin_classpath}"/>
-                                  <copy todir="${project.build.directory}/${project.build.finalName}/forms" overwrite="true">
-                                      <fileset dir="${basedir}/../src/main/xforms"/>
-                                  </copy>
-                              </tasks>
-                          </configuration>
-                          <goals>
-                            <goal>run</goal>
-                          </goals>
-                        </execution>
-                      </executions>
+                                        <echo message="compile classpath: ${compile_classpath}"/>
+                                        <echo message="runtime classpath: ${runtime_classpath}"/>
+                                        <echo message="test classpath:    ${test_classpath}"/>
+                                        <echo message="plugin classpath:  ${plugin_classpath}"/>
+                                        <copy todir="${project.build.directory}/${project.build.finalName}/forms"
+                                              overwrite="true">
+                                            <fileset dir="${basedir}/../src/main/xforms"/>
+                                        </copy>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
 
                 </plugins>
@@ -586,7 +774,7 @@
                     mvn -Pdemo package (creates an exploded webapp and war file both containing the betterform demo forms)
                     mvn -Ptest jetty:run-exploded (starts up jetty at localhost:8080/betterform including demo forms )
             -->
-            
+
             <id>integration-test</id>
             <build>
                 <plugins>
@@ -615,7 +803,7 @@
                     </plugin>
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>selenium-maven-plugin</artifactId>                        
+                        <artifactId>selenium-maven-plugin</artifactId>
                         <executions>
                             <execution>
                                 <id>start-selenium</id>
@@ -638,7 +826,9 @@
                             <container>
                                 <containerId>tomcat5x</containerId>
                                 <zipUrlInstaller>
-                                    <url>http://ftp.uni-erlangen.de/pub/mirrors/apache/tomcat/tomcat-5/v5.5.27/bin/apache-tomcat-5.5.27.tar.gz</url>
+                                    <url>
+                                        http://ftp.uni-erlangen.de/pub/mirrors/apache/tomcat/tomcat-5/v5.5.27/bin/apache-tomcat-5.5.27.tar.gz
+                                    </url>
                                     <installDir>tomcat-5.5.27</installDir>
                                 </zipUrlInstaller>
                                 <output>${project.build.directory}/tomcat5x.log</output>
@@ -650,7 +840,9 @@
                                     <cargo.logging>high</cargo.logging>
                                     <cargo.hostname>localhost</cargo.hostname>
                                     <cargo.servlet.port>8081</cargo.servlet.port>
-                                    <cargo.jvmargs>-Xms128m -Xmx512m -Xdebug -Xnoagent -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n</cargo.jvmargs>
+                                    <cargo.jvmargs>-Xms128m -Xmx512m -Xdebug -Xnoagent
+                                        -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n
+                                    </cargo.jvmargs>
                                 </properties>
                             </configuration>
                         </configuration>

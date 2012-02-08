@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -13,9 +13,9 @@ dojo.require("dijit.PopupMenuBarItem");
 dojo.require("dijit.MenuItem");
 
 
-dojo.require("betterform.xfEditorUtil");
-dojo.provide("betterform.editor.addMenu");
-dojo.require("betterform.editor.Editor");
+//dojo.require("betterform.xfEditorUtil");
+//dojo.provide("betterform.editor.addMenu");
+//dojo.require("betterform.editor.Editor");
 dojo.require("dijit.layout.TabContainer");
 dojo.require("dijit.form.TextBox");
 dojo.require("dijit.form.Select");

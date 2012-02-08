@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -13,23 +13,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author <a href="mailto:tobias.krebs@betterform.de">tobi</a>
  * @version $Id: FormsServlet 23.11.10 tobi $
  */
 public class FormsServlet extends HttpServlet {
-    private List ignores;
-    private static final String ROOTCOLLECTION = "forms";
+    protected List ignores;
+    protected static final String ROOTCOLLECTION = "forms";
     public static final String RESOURCE_PATH = "/bfResources";
 
     @Override
     public void init() throws ServletException {
         super.init();
         String ignoreString= getInitParameter("ignores");
-        ignores = Arrays.asList(ignoreString.split(" "));
-
+        if (ignoreString != null) {
+            ignores = Arrays.asList(ignoreString.split(" "));
+        } else {
+            ignores = Collections.EMPTY_LIST;
+        }
     }
 
     /**
@@ -374,59 +379,63 @@ public class FormsServlet extends HttpServlet {
 
     }
 
-    private void addFolderLink(StringBuffer html, HttpServletRequest request, String uri){
-        html.append(
-                "        <div class=\"file\">\n" +
-                        "       <a class=\"bfIconFile\" href=\"" + request.getContextPath() + "/" + uri + "/addFolder.xhtml" + "\" target=\"_blank\">" +
-                        "          <img src=\"" + request.getContextPath() + RESOURCE_PATH + "/images/add-folder.png"+"\" border=\"0\">\n" +
-                        "       </a>\n" +
-                        "       <a class=\"textLink\" title=\"add a folder to this collection\" href=\"" + request.getContextPath() + "/" + uri + "/addFolder.xhtml" + "\" target=\"_blank\">" + "add a folder" + "</a>\n" +
-                        "       <a class=\"sourceLink\" title=\""+ "view" +"\" href=\"" + request.getContextPath() + "/" + uri + "/addFolder.xhtml" + "?source=true \" target=\"_blank\">" + "<&nbsp;/&nbsp;>" + "</a>\n" +
-                        " </div>");
-    }
+    /*
+        private void addFolderLink(StringBuffer html, HttpServletRequest request, String uri){
+            html.append(
+                    "        <div class=\"file\">\n" +
+                            "       <a class=\"bfIconFile\" href=\"" + request.getContextPath() + "/" + uri + "/addFolder.xhtml" + "\" target=\"_blank\">" +
+                            "          <img src=\"" + request.getContextPath() + RESOURCE_PATH + "/images/add-folder.png"+"\" border=\"0\">\n" +
+                            "       </a>\n" +
+                            "       <a class=\"textLink\" title=\"add a folder to this collection\" href=\"" + request.getContextPath() + "/" + uri + "/addFolder.xhtml" + "\" target=\"_blank\">" + "add a folder" + "</a>\n" +
+                            "       <a class=\"sourceLink\" title=\""+ "view" +"\" href=\"" + request.getContextPath() + "/" + uri + "/addFolder.xhtml" + "?source=true \" target=\"_blank\">" + "<&nbsp;/&nbsp;>" + "</a>\n" +
+                            " </div>");
+        }
 
-    private void addFileLink(StringBuffer html, HttpServletRequest request, String uri){
-        html.append(
-                "        <div class=\"file\">\n" +
-                        "       <a class=\"bfIconFile\" href=\"" + request.getContextPath() + "/" + uri + "/addFileLink.xhtml" + "\" target=\"_blank\">" +
-                        "          <img src=\"" + request.getContextPath() + RESOURCE_PATH + "/images/add-file.png"+"\" border=\"0\">\n" +
-                        "       </a>\n" +
-                        "       <a class=\"textLink\" title=\"add a file to this collection\" href=\"" + request.getContextPath() + "/" + uri + "/addFileLink.xhtml" + "\" target=\"_blank\">" + "add a file" + "</a>\n" +
-                        "       <a class=\"sourceLink\" title=\""+ "view" +"\" href=\"" + request.getContextPath() + "/" + uri + "/addFileLink.xhtml" + "?source=true \" target=\"_blank\">" + "<&nbsp;/&nbsp;>" + "</a>\n" +
-                        " </div>");
-    }
-
+        private void addFileLink(StringBuffer html, HttpServletRequest request, String uri){
+            html.append(
+                    "        <div class=\"file\">\n" +
+                            "       <a class=\"bfIconFile\" href=\"" + request.getContextPath() + "/" + uri + "/addFileLink.xhtml" + "\" target=\"_blank\">" +
+                            "          <img src=\"" + request.getContextPath() + RESOURCE_PATH + "/images/add-file.png"+"\" border=\"0\">\n" +
+                            "       </a>\n" +
+                            "       <a class=\"textLink\" title=\"add a file to this collection\" href=\"" + request.getContextPath() + "/" + uri + "/addFileLink.xhtml" + "\" target=\"_blank\">" + "add a file" + "</a>\n" +
+                            "       <a class=\"sourceLink\" title=\""+ "view" +"\" href=\"" + request.getContextPath() + "/" + uri + "/addFileLink.xhtml" + "?source=true \" target=\"_blank\">" + "<&nbsp;/&nbsp;>" + "</a>\n" +
+                            " </div>");
+        }
+    */
     private void handleFile(StringBuffer html, HttpServletRequest request, String uri, File aFile, File f, boolean shortenNames) {
 
 
         String fileExtension = aFile.getName().substring(aFile.getName().lastIndexOf(".") +1 , aFile.getName().length()).toUpperCase();
         String iconFile = "standardIcon.png";
+
         if(aFile.getName().equalsIgnoreCase("FeatureExplorer.xhtml")){
             iconFile = "gear-blue.png";
         } else if(aFile.getName().equalsIgnoreCase("Status.xhtml")){
             iconFile = "settings_blue.png";
-        }else if(aFile.getName().equalsIgnoreCase("Demo.xhtml")){
+        } else if(aFile.getName().equalsIgnoreCase("Demo.xhtml")){
             iconFile = "atomium_blue.png";
-        }else if(fileExtension.equals("XHTML")){
+        } else if(aFile.getName().equalsIgnoreCase("NewStandaloneXForm.xhtml") || aFile.getName().equalsIgnoreCase("NewEmbedableXForm.xhtml")){
+            iconFile = "type-bf-edit.png";
+        } else if(fileExtension.equals("XHTML")){
 //            iconFile = "bf_logo_square_no_effect_gray.png";
             iconFile = "type-bf.png";
-        }else if(fileExtension.equals("TXT")){
+        } else if(fileExtension.equals("TXT")){
             iconFile = "type-txt.png" ;
-        }else if(fileExtension.equals("XML")){
+        } else if(fileExtension.equals("XML")){
             iconFile = "type-xml.png";
-        } if(fileExtension.equals("XSD")){
+        } else if(fileExtension.equals("XSD")){
             iconFile = "type-xsd.png";
-        }else if(fileExtension.equals("XSL")){
+        } else if(fileExtension.equals("XSL")){
             iconFile = "type-xsl.png";
-        }else if(fileExtension.equals("GIF")){
+        } else if(fileExtension.equals("GIF")){
             iconFile = "type-gif.png";
-        }else if(fileExtension.equals("PNG")){
+        } else if(fileExtension.equals("PNG")){
             iconFile = "type-png.png";
-        }else if(fileExtension.equals("JPG")){
+        } else if(fileExtension.equals("JPG")){
             iconFile = "type-jpg.png";
-        }else if(fileExtension.equals("CSS")){
+        } else if(fileExtension.equals("CSS")){
             iconFile = "type-css.png";
-        }else if(fileExtension.equals("JS")){
+        } else if(fileExtension.equals("JS")){
             iconFile = "type-js-png";
         }
 
@@ -449,6 +458,7 @@ public class FormsServlet extends HttpServlet {
                         "                </a>\n" +
                         "                <a class=\"textLink\" title=\""+ fileName+"\" href=\"" + request.getContextPath() + "/" + uri + "/" + fileName + "\" target=\"_blank\">" + getFileName(aFile,shortenNames) + "</a>\n" +
                         "                <a class=\"sourceLink\" title=\""+ "view" +"\" href=\"" + request.getContextPath() + "/" + uri + "/" + fileName + "?source=true \" target=\"_blank\">" + "<&nbsp;/&nbsp;>" + "</a>\n" +
+                        "                <a class=\"editorLink\" title=\""+ "editor" +"\" href=\"" + request.getContextPath() + "/bfEditor/" + uri + "/" + fileName + "\" target=\"_blank\">" + "<&nbsp;/&nbsp;>" + "</a>\n" +
 /*
                         "            <div>\n" +
                         "                <a href=\"" + request.getContextPath() + "/" + uri + "/" + fileName + "?source=true\" target=\"_blank\">source</a>\n" +

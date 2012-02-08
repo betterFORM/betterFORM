@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <title>Repeats</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+        <style type="text/css">
+            #nested-input-value{width:400px;}
+			.xfRepeatIndex .xfRepeatIndex{
+				background:#90ee90;
+			}
+        </style>
+
+        <xf:model id="model_1">
+            <xf:instance id="instance_1" xmlns="">
+                <repeats>
+                    <annotation >
+                          <propertyName >property 1</propertyName>
+                          <innerNode >trans 1.1</innerNode>
+                          <innerNode >trans 1.2</innerNode>
+                          <innerNode >trans 1.3</innerNode>
+                    </annotation>
+                    <annotation >
+                          <propertyName>property 2</propertyName>
+                        <innerNode >trans 2.1</innerNode>
+                        <innerNode >trans 2.2</innerNode>
+                    </annotation>
+                    <annotation >
+                        <propertyName>property 3</propertyName>
+                        <innerNode >trans 3.1</innerNode>
+                        <innerNode >trans 3.2</innerNode>
+                        <innerNode >trans 3.3</innerNode>
+                        <innerNode >trans 3.4</innerNode>
+                    </annotation>
+                </repeats>
+            </xf:instance>
+            <xf:submission id="submission_1" action="{$contextroot}/jsp/debug-instance.jsp" method="post" validate="false"/>
+
+        </xf:model>
+    </head>
+    <body>
+        <xf:group>
+            <xf:label>Nested Repeat</xf:label>
+            <xf:group>
+                <xf:label>Outer Group Controls</xf:label>
+                <xf:group>
+                    <xf:label>Insert</xf:label>
+                    <xf:trigger>
+                        <xf:label>Insert Into Selected Outer Repeat</xf:label>
+                        <xf:insert nodeset="annotation" at="index('r-outerRepeat')" position="after"/>
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>Insert Into Outer Repeat @first</xf:label>
+                        <xf:insert nodeset="annotation" at="1" position="before"/>
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>Insert Into Outer Repeat @last</xf:label>
+                        <xf:insert nodeset="annotation" at="last()" position="after"/>
+                    </xf:trigger>
+                </xf:group>
+                <xf:group>
+                    <xf:label>Delete</xf:label>
+                    <xf:trigger>
+                        <xf:label>Delete Selected Outer RepeatItem</xf:label>
+                        <xf:delete nodeset="annotation" at="index('r-outerRepeat')" />
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>Delete Outer RepeatItem @first</xf:label>
+                        <xf:delete nodeset="annotation" at="1" />
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>Delete Outer RepeatItem @last</xf:label>
+                        <xf:delete nodeset="annotation" at="last()" />
+                    </xf:trigger>
+                </xf:group>
+            </xf:group>
+
+            <xf:group appearance="full">
+                <xf:label>Outer Repeat</xf:label>
+
+                <xf:repeat id="r-outerRepeat" nodeset="annotation" appearance="full">
+                    <xf:input id="property" ref="propertyName">
+                        <xf:label>PropertyName</xf:label>
+                    </xf:input>
+                    <xf:group ref="." appearance="full">
+                        <xf:label>InnerRepeat</xf:label>
+                        <xf:repeat id="r-innerRepeat" nodeset="innerNode" appearance="full">
+                            <xf:input id="innerNode" ref=".">
+                                <xf:label>innerNode</xf:label>
+                            </xf:input>
+                        </xf:repeat>
+						<xf:group id="innerGroup" appearance="compact">
+							<xf:label>Inner Group Controls</xf:label>
+							<xf:trigger>
+								<xf:label>Insert Into Inner Repeat @last</xf:label>
+								<xf:insert nodeset="//annotation[index('r-outerRepeat')]/innerNode" at="last()" position="after"/>
+							</xf:trigger>
+							<xf:trigger id="delete-inner-repeat-item">
+								<xf:label>Delete Inner RepeatItem @last</xf:label>
+								<xf:delete nodeset="//annotation[index('r-outerRepeat')]/innerNode" at="last()"/>
+							</xf:trigger>
+						</xf:group>
+                    </xf:group>
+                </xf:repeat>
+            </xf:group>
+
+        </xf:group>
+        <xf:trigger>
+            <xf:send submission="submission_1"/>
+            <xf:label>Submit</xf:label>
+        </xf:trigger>
+    </body>
+</html>

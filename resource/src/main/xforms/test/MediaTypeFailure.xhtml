@@ -2,6 +2,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8"/>
         <title>MediaType failure in repeat.</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
         <xf:model>
             <xf:instance id="save-data">
                 <item xmlns="" id="item.0">
@@ -34,7 +39,7 @@
         </xf:model>
     </head>
     <body class="soria InlineAlert" style="margin:30px">
-        <div xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="xforms" class="InlineAlert">
+    <div xmlns:ev="http://www.w3.org/2001/xml-events" id="xforms" class="InlineAlert">
             <h2>Example</h2>
             <div class="repeat">
                 <xf:repeat nodeset="instance('save-data')/supplemental/Note" id="notes-repeat" appearance="full">

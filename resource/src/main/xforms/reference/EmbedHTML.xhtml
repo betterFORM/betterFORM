@@ -5,12 +5,20 @@
       
       <title>Submission element with replace="embedHTML"</title>
       
+      
+      <!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+      
+      
+      
       <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
       <link rel="stylesheet" type="text/css" href="reference.css" />
    </head>
    
-   <body class="soria InlineAlert" style="margin:30px">
-      <div id="xforms" class="InlineAlert">
+   <body class="soria" style="margin:30px">
+      <div id="xforms">
          <div style="display:none">
             <xf:model>
                
@@ -50,7 +58,7 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:trigger>
+            <xf:trigger id="trigger1">
                
                <xf:label>Load HTML 5 audio element as part from an external file</xf:label>
                
@@ -58,7 +66,7 @@
                
             </xf:trigger>
             <div id="mountpoint-audio"></div>
-            <xf:trigger>
+            <xf:trigger id="trigger2">
                
                <xf:label>Load Plain HTML as part from an external file</xf:label>
                
@@ -66,7 +74,7 @@
                
             </xf:trigger>
             <div id="mountpoint-plain"></div>
-            <xf:trigger>
+            <xf:trigger id="trigger3">
                
                <xf:label>Load full external HTML file</xf:label>
                
@@ -82,21 +90,21 @@
 
 &lt;xf:submission id="s-embedHTML-full" replace="embedHTML" targetid="mountpoint-full" resource="resources/htmlToEmbed.html" method="get"&gt;&lt;/xf:submission&gt;
 
-&lt;xf:trigger&gt;
+&lt;xf:trigger id="trigger1"&gt;
     &lt;xf:label&gt;Load HTML 5 audio element as part from an external file&lt;/xf:label&gt;
     &lt;xf:send submission="s-embedHTML-audio"&gt;&lt;/xf:send&gt;
 &lt;/xf:trigger&gt;
 
 &lt;div id="mountpoint-audio"&gt;&lt;/div&gt;
 
-&lt;xf:trigger&gt;
+&lt;xf:trigger id="trigger2"&gt;
     &lt;xf:label&gt;Load Plain HTML as part from an external file&lt;/xf:label&gt;
     &lt;xf:send submission="s-embedHTML-plain"&gt;&lt;/xf:send&gt;
 &lt;/xf:trigger&gt;
 
 &lt;div id="mountpoint-plain"&gt;&lt;/div&gt;
 
-&lt;xf:trigger&gt;
+&lt;xf:trigger id="trigger3"&gt;
     &lt;xf:label&gt;Load full external HTML file&lt;/xf:label&gt;
     &lt;xf:send submission="s-embedHTML-full"&gt;&lt;/xf:send&gt;
 &lt;/xf:trigger&gt;

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<test-case xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner"
+           xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../test-case.xsd">
+    <!-- test insert / delete action -->
+    <open href="test/loadReplace.xhtml" bfTest="true"/>
+    <assert-title title="Load Show Replace Test"/>
+    <assert-control-present locator="trigger-show-replace" type="button"/>
+    <click locator="trigger-show-replace"/>
+    <assert-title title="Google"/>
+
+
+</test-case>

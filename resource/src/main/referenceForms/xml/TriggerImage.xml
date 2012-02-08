@@ -2,7 +2,13 @@
 <html xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>Trigger control rendered as button</title>
+        <title>Trigger control rendered as button with an image specified by the src-attribute</title>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+
+
     </head>
     <body>
         <div class="description">

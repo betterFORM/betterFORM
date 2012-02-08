@@ -1,8 +1,7 @@
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
-  ~ Author: betterFORM Team (info AT betterform.de)
--->
+  -->
 
 <project name="betterFORM extension installer" default="update-betterFORM" basedir=".">
 
@@ -229,6 +228,14 @@ Error: eXist is not installed in ${eXist.home}.
            <param name="file-source" value="${resource.dir}/src/main/xforms/TimeTracker.xhtml"/>
            <param name="db.uri" value="xmldb:exist://${eXist.server.name}:${eXist.server.port}${eXist.context}/xmlrpc/db/${eXist.db.rootcollection.name}"/>
         </antcall>
+
+        <antcall target="db.install-files-into-eXist-DB">
+           <param name="db.user" value="${eXist.db.user}"/>
+           <param name="db.passwd" value="${eXist.db.passwd}"/>
+           <param name="file-source-dir" value="${main.dir}/xrx/querytunes"/>
+           <param name="db.uri" value="xmldb:exist://${eXist.server.name}:${eXist.server.port}${eXist.context}/xmlrpc/db/${eXist.db.rootcollection.name}/apps/querytunes"/>
+        </antcall>
+
     </target>
 
     <target name="install-demo-xrx-betterFORM-user" description="install demo Forms into db">

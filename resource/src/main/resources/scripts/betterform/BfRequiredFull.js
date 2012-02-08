@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -26,4 +26,5 @@ dojo.require("betterform.ui.range.Slider");
 dojo.require("betterform.ui.textarea.HtmlEditor");
 dojo.require("betterform.ui.textarea.DojoEditor");
 dojo.require("betterform.ui.textarea.SimpleTextarea");
-dojo.require("betterform.editor.Editor");
+
+dojo.require("betterform.devtool");

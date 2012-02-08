@@ -1,0 +1,23 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+<head>
+    <title>Javascript test</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
+    <xf:model id="m-tmpData">
+        <xf:instance id="i-tmpData">
+            <data xmlns=""/>
+        </xf:instance>
+        <xf:action ev:event="xforms-ready">
+            <xf:message level="modal">hello</xf:message>
+            <script type="text/javascript">
+                alert("Test");
+            </script>
+        </xf:action>
+    </xf:model>
+</head>
+<body/>
+</html>

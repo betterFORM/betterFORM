@@ -1,13 +1,12 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.events;
 
-import de.betterform.xml.dom.DOMUtil;
-import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.BetterFormTestCase;
+import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.action.EventCountListener;
 import de.betterform.xml.xforms.ui.Selector;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;

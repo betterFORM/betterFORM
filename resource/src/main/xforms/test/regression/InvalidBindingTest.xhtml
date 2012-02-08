@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<html
+ xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+        >
+<head>
+    <meta name="author" content="unl at users.sourceforge.net"/>
+    <meta name="description" content="test form for instance"/>
+    <meta name="version" content="$Id: InstanceTest.xhtml 2750 2007-08-10 10:09:08Z joern $"/>
+    <xf:model id="model">
+        <xf:instance id="instance" xmlns="">
+            <first>1st</first>
+        </xf:instance>
+
+    </xf:model>
+</head>
+<body>
+<xf:group>
+    <xf:label>This form produces a xforms-binding-exception.</xf:label>
+
+    <xf:input bind="doesnotexist">
+        <xf:label>This cannot be displayed as binding does not exist</xf:label>
+    </xf:input>
+</xf:group>
+</body>
+</html>
+

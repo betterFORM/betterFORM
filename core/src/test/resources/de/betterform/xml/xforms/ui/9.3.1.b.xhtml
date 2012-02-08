@@ -1,15 +1,12 @@
 <?xml version="1.0"  encoding="ISO-8859-1"?>
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
 <xhtml:html
-      xmlns:xhtml="http://www.w3.org/1999/xhtml"
-      xmlns:ev="http://www.w3.org/2001/xml-events"
-      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"             
-      xmlns:xforms="http://www.w3.org/2002/xforms">
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:xforms="http://www.w3.org/2002/xforms">
   	<xhtml:head>
     	<xhtml:title>9.3.1.b startindex attribute of repeat element</xhtml:title>
     	<xhtml:link rel="stylesheet" href="../../../driverPages/forms/TestSuite11.css" type="text/css"/>
@@ -43,6 +40,8 @@
 				<xforms:label/>
 			</xforms:output>
 		</xforms:repeat>
-		
+          <xforms:output id="showRepeatIndex2" value="index('myrepeat')">
+              <xforms:label>Initial index : </xforms:label>
+          </xforms:output>
   </xhtml:body>
 </xhtml:html>

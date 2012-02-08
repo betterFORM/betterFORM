@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -8,6 +8,7 @@ dojo.provide("betterform.ui.input.TextField");
 dojo.require("dijit._Widget");
 dojo.require("dijit._Templated");
 dojo.require("dijit.form.TextBox");
+dojo.require("dojox.html.entities");
 
 
 dojo.declare(
@@ -23,12 +24,24 @@ dojo.declare(
         if (dojo.attr(this.srcNodeRef, "delay") != undefined && dojo.attr(this.srcNodeRef, "delay") != "") {
             this.delay = eval(dojo.attr(this.srcNodeRef, "delay"));
         }
- 
+
     },
 
     postCreate:function() {
         this.inherited(arguments);
         this.setCurrentValue();
+        var inputDijit = this;
+        dojo.connect(this.domNode, "onkeypress", function (evt){
+            if(evt.keyCode){
+                switch(evt.keyCode){
+                    case dojo.keys.ENTER:
+                        // console.debug("keyboard hit return");
+                        inputDijit.setControlValue();
+                        fluxProcessor.dispatchEvent(inputDijit.xfControlId);
+                }
+            }
+        });
+        this._handleSetControlValue(dojox.html.entities.decode(this._getValueAttr()));
     },
 
     _onFocus:function() {

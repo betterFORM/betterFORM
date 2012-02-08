@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -14,7 +14,7 @@ dojo.declare("betterform.ui.common.InlineAlert",
 
     // @Override
     _show:function(id, commonChild) {
-        // console.debug("InlineAlert._show [id:'",id,"' commonChild:'", commonChild,"']");
+        //console.debug("InlineAlert._show [id:'",id,"' commonChild:'", commonChild,"']");
         var commonChildNode = dojo.byId(id + '-' + commonChild);
         if(commonChildNode == undefined || commonChild == this.info) {
             return;
@@ -44,7 +44,7 @@ dojo.declare("betterform.ui.common.InlineAlert",
                 mip.onclick = dojo.hitch(this, function(evt) {
                     // console.debug("Alert clicked id: ", id, " commonChild: ", commonChild, " show: " , show);
                     this._hide(id,commonChild);
-                    this._show(id,"hint");
+                   // this._show(id,"hint");
                 });
             }
             dojo.style(mip, "display", show);

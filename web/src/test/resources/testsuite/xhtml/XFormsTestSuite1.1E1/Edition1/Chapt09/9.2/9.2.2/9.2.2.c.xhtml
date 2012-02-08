@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xforms="http://www.w3.org/2002/xforms">
+  	<xhtml:head>
+    	<xhtml:title>9.2.2.c case element with multiple selected attributes</xhtml:title>
+    	<xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+    	<xforms:model>
+       		<xforms:instance>
+       			<person>
+					<name>Janel</name>
+					<eyeColor>Blue</eyeColor>
+				</person>
+       		</xforms:instance>
+    	</xforms:model>
+  	</xhtml:head>
+  	<xhtml:body>
+  		<xforms:group id="xf-group-1">
+  			<xforms:label class="title">9.2.2.c case element with multiple selected attributes</xforms:label>
+  		</xforms:group>	
+  		<xforms:group id="xf-group-2">
+  			<xforms:label>
+	  			You must see the output "Name : Janel" below. 
+	  			You must NOT be able to see an output labeled "Eye Color" or it must 
+  			    be somehow unavailable to you. 
+	  		</xforms:label>	
+  		</xforms:group>
+  	<!-- There are two cases in the switch and both have a selected value of true. -->
+		<xforms:switch>
+			<xforms:case id="in" selected="true">
+				<xforms:output ref="/person/name" id="xf-output-1">
+					<xforms:label>Name : </xforms:label>
+				</xforms:output>
+			</xforms:case>
+			<xforms:case id="out" selected="true">
+				<xforms:output ref="/person/eyeColor" id="xf-output-2">
+					<xforms:label>Eye Color : </xforms:label>
+				</xforms:output>
+			</xforms:case>
+		</xforms:switch>
+		
+  </xhtml:body>
+</xhtml:html>

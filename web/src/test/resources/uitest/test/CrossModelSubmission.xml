@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<test-case xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner"
+           xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../test-case.xsd">
+    <!-- test insert / delete action -->
+    <open href="uitest/CrossModelSubmission.xhtml" bfTest="true"/>
+    <assert-title title="CrossModelSubmission"/>
+
+
+    <assert-control-present locator="trigger-cross-model-submission-1" type="button"/>
+    <assert-control-present locator="trigger-cross-model-submission-2" type="button"/>
+    <assert-control-present locator="item1" type="input"/>
+    <assert-control-present locator="item2" type="input"/>
+    <assert-control-present locator="item3" type="input"/>
+
+
+    <!-- <assert-control-has-css-class cssSelector="#item1 div.dijitCheckBoxChecked"/> -->
+    <assert-boolean-control-value locator="item1" value="undefined"/>
+    <assert-control-value locator="item2" value="9/9/2009"/>
+    <assert-control-value locator="item3" value="item instance 2"/>
+
+    <assert-control-not-present locator="items1" type="input"/>
+    <assert-control-not-present locator="items2" type="input"/>
+    <assert-control-not-present locator="items3" type="input"/>
+
+    <click locator="trigger-cross-model-submission-1"/>
+
+    <assert-boolean-control-value locator="item1" value="true"/>
+    <assert-control-value locator="item2" value="1/1/2001"/>
+    <assert-control-value locator="item3" value="item instance 1"/>
+
+    <open href="test/CrossModelSubmission.xhtml" bfTest="true"/>
+    <assert-title title="CrossModelSubmission"/>
+
+    <click locator="trigger-cross-model-submission-2"/>
+
+    <assert-control-present locator="items1" type="input"/>
+    <assert-control-present locator="items2" type="input"/>
+    <assert-control-present locator="items3" type="input"/>
+
+    <assert-control-value locator="items1" value="new item 1"/>
+    <assert-control-value locator="items2" value="new item 2"/>
+    <assert-control-value locator="items3" value="new item 3"/>
+
+    <!-- click trigger-cross-model-submission-1 => items1-3 must disappear, boolean, date and input value must match to instance i-1-m-1 -->
+    <click locator="trigger-cross-model-submission-1"/>
+    <assert-title title="CrossModelSubmission"/>
+    <assert-boolean-control-value locator="item1" value="true"/>
+    <assert-control-value locator="item2" value="1/1/2001"/>
+    <assert-control-value locator="item3" value="item instance 1"/>
+
+
+</test-case>

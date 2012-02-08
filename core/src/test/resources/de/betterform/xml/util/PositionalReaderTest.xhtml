@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+        >
+<head>
+    <title>Select1</title>
+    <xf:model>
+        <xf:instance id="internal" xmlns="">
+            <data>
+                <items selected="1">
+                    <item value="1">One</item>
+                    <item value="2">Two</item>
+                    <item value="3">Three</item>
+                </items>
+            </data>
+        </xf:instance>
+    </xf:model>
+
+</head>
+<body class="tundra" style="overflow:hidden;padding:50px;">
+<xf:group>
+
+    <div id="foo"/>
+    <xf:trigger id="t-changeValue">
+        <xf:label>Change Value</xf:label>
+        <xf:setvalue ref="items/@selected" value="'2'"/>
+    </xf:trigger>
+
+
+    <xf:select1 id="select1" ref="items/@selected">
+        <xf:label>Select 1 (outer Case)</xf:label>
+        <xf:itemset nodeset="items/item">
+            <xf:label ref="."/>
+            <xf:value ref="@value"/>
+        </xf:itemset>
+        <xf:message ev:event="xforms-value-changed" level="ephemeral">select id=1 value changed</xf:message>
+    </xf:select1>
+</xf:group>
+</body>
+</html>

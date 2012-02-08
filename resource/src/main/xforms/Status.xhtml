@@ -1,17 +1,16 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:xf="http://www.w3.org/2002/xforms"
-      xmlns:ev="http://www.w3.org/2001/xml-events"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-      xmlns:j2ee="http://java.sun.com/xml/ns/j2ee"
-   
-        >
+      xmlns:xf="http://www.w3.org/2002/xforms">
     <head>
 	<link rel="SHORTCUT ICON" href="../../images/betterform.ico"/>
     <link rel="ICON" href="../../images/betterform.ico" type="image/x-icon"/>
 		
         <title>Status</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
         <style type="text/css">
             .welcome {
                 font-size: 14pt;
@@ -139,6 +138,7 @@
 
             <!--<xf:group appearance="bf:verticalTable">-->
                     <!--<xf:label>web.xml Settings</xf:label>-->
+<!--
 			<div class="xfGroupLabel">web.xml settings</div>
                     <xf:input
                             ref="instance('webxml')/j2ee:context-param[j2ee:param-name[.='betterform.configfile']]/j2ee:param-value">
@@ -151,6 +151,7 @@
                     <xf:input ref="instance('webxml')/j2ee:filter-mapping[j2ee:filter-name='XFormsFilter']/j2ee:url-pattern">
                         <xf:label>Filter mapping</xf:label>
                     </xf:input>
+-->
             <!--</xf:group>-->
 
             <!--<xf:group appearance="minimal">-->

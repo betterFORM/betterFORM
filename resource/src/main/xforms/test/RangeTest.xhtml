@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+<head>
+    <title>Range Test</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
+    <!--
+         Standard template for embedded forms. Uses an additional div Element with @id="xforms" to allow addressing
+         by a xforms load action.
+         -->
+</head>
+<body>
+<div id="xforms">
+    <div style="display:none">
+        <xf:model>
+            <xf:instance>
+                <data xmlns="">
+                    <range>3</range>
+                    <range>4</range>
+                    <relevant>false</relevant>
+                    <readonly>false</readonly>
+                </data>
+            </xf:instance>
+            <xf:bind nodeset="range[1]" type="integer" constraint=". &gt; 2" readonly="boolean-from-string(instance()/readonly)"/>
+            <xf:bind nodeset="range[2]" type="integer" relevant="boolean-from-string(instance()/relevant)" constraint=". &gt; 3" readonly="boolean-from-string(instance()/readonly)"/>
+        </xf:model>
+    </div>
+
+    <xf:group appearance="full">
+        <xf:label>Range Test Page</xf:label>
+        <xf:range ref="range[1]" start="1" step="1" end="5" incremental="true">
+            <xf:label>Range 1</xf:label>
+            <xf:help>Help for Range 1</xf:help>
+            <xf:hint>Hint for Range 1</xf:hint>
+            <xf:alert>Selected value must be bigger 2</xf:alert>
+        </xf:range>
+
+        <xf:range ref="range[2]" start="1" step="1" end="5" incremental="true">
+            <xf:label>Range 2</xf:label>
+            <xf:help>Help for Range 2</xf:help>
+            <xf:hint>Hint for Range 2</xf:hint>
+            <xf:alert>Selected value must be bigger 3</xf:alert>
+        </xf:range>
+
+        <xf:trigger>
+            <xf:label>display range 2</xf:label>
+            <xf:setvalue ref="relevant" value="true()"/>
+        </xf:trigger>
+        <xf:trigger>
+            <xf:label>hide range 2</xf:label>
+            <xf:setvalue ref="relevant" value="false()"/>
+        </xf:trigger>
+    </xf:group>
+</div>
+</body>
+</html>

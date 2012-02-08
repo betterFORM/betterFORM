@@ -227,6 +227,8 @@ declare function fileListing:getIconForExtension($fileName as xs:string) as xs:s
 	else if ($extension eq 'JS') then ( 'type-js.png' )
 	else ( 'standardIcon.png' )					
 };
+(: To enable the editor link in the XRX Dashboard add the following line :)
+(: <a class="editorLink" title="editor" href="{fn:concat($filePath, 'db/betterform/utils/EditorWrapper.xql?filename=', '/db/', $path, '/', $fileLink)}" target="_blank">editor</a> :)
 
 declare function fileListing:handleFile($uri as xs:string, $contextPath as xs:string, $path as xs:string, $ajaxFunction as xs:string, $fileName as xs:string, $shorten as xs:string, $enableCommands as xs:boolean) {
 	let $icon := fileListing:getIconForExtension($fileName)
@@ -245,7 +247,6 @@ declare function fileListing:handleFile($uri as xs:string, $contextPath as xs:st
 		    </a>
 		    <a class="textLink" title="{$fileName}" href="{fn:concat($filePath, 'db/', $path, '/', $fileLink)}" target="_blank">{$shortendFileName}</a>
 		    <a class="sourceLink" title="view" href="{fn:concat($filePath, 'db/', $path, '/', $fileLink, '?source=true')}" target="_blank">source</a>
-		    <a class="editorLink" title="editor" href="{fn:concat($filePath, 'db/betterform/utils/EditorWrapper.xql?filename=', '/db/', $path, '/', $fileLink)}" target="_blank">editor</a>
         </div>
 		) else (
 		<div class="file">

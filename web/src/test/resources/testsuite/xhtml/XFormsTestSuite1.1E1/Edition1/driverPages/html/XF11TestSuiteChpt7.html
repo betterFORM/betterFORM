@@ -1,0 +1,704 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>7. XPath Expressions in XForms</title>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+        <link type="text/css" href="TestSuite11.css" rel="stylesheet" />
+    </head>
+    <body>
+        <h2>XForms Test Suite</h2>
+        <h1>7. XPath Expressions in XForms</h1>
+        <table width="100%" border="2" cellspacing="1" cellpadding="2">
+            <tr>
+                <th align="left" class="testCaseNameTitle">Test Case</th>
+                <th align="left" class="testCaseNameTitle">Description</th>
+                <th align="left" class="testCaseNameTitle">Link To Spec</th>
+                <th align="left" class="testCaseNameTitle">Normative For XForms Basic</th>
+                <th align="left" class="testCaseNameTitle">Normative For XForms Full</th>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.2/7.2.a.xhtml">7.2.a</a>
+                </td>
+                <td>evaluation context for the outermost binding elements</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#expr-eval">7.2</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.2/7.2.b.xhtml">7.2.b</a>
+                </td>
+                <td>evaluation context for the non-outermost binding elements</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#expr-eval">7.2</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.2/7.2.c.xhtml">7.2.c</a>
+                </td>
+                <td>context node always resides within the context model</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#expr-eval">7.2</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.2/7.2.d.xhtml">7.2.d</a>
+                </td>
+                <td>context node for the computed expression is the node currently being processed</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#expr-eval">7.2</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.2/7.2.e.xhtml">7.2.e</a>
+                </td>
+                <td>context size and position</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#expr-eval">7.2</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.2/7.2.f.xhtml">7.2.f</a>
+                </td>
+                <td>namespace declarations in scope for the attribute are applied to the expression</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#expr-eval">7.2</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.4/7.4.6/7.4.6.a.xhtml">7.4.6.a</a>
+                </td>
+                <td>binding examples</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#ui-binding-examples">7.4.6</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.5/7.5.a.xhtml">7.5.a</a>
+                </td>
+                <td>error in modal item property causes an xforms-compute-exception</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#expr-lib">7.5</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.5/7.5.b.xhtml">7.5.b</a>
+                </td>
+                <td>error not in modal item property causes an xforms-binding-exception</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#expr-lib">7.5</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.6/7.6.1/7.6.1.a.xhtml">7.6.1.a</a>
+                </td>
+                <td>boolean-from-string() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-boolean-from-string">7.6.1</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.6/7.6.2/7.6.2.a.xhtml">7.6.2.a</a>
+                </td>
+                <td>is-card-number() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-is-card-number">7.6.2</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.7/7.7.1/7.7.1.a.xhtml">7.7.1.a</a>
+                </td>
+                <td>avg() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-avg">7.7.1</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.7/7.7.1/7.7.1.b.xhtml">7.7.1.b</a>
+                </td>
+                <td>avg() function negative test</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-avg">7.7.1</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.7/7.7.2/7.7.2.a.xhtml">7.7.2.a</a>
+                </td>
+                <td>min() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-min">7.7.2</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.7/7.7.2/7.7.2.b.xhtml">7.7.2.b</a>
+                </td>
+                <td>min() function negative test</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-min">7.7.2</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.7/7.7.3/7.7.3.a.xhtml">7.7.3.a</a>
+                </td>
+                <td>max() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-max">7.7.3</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.7/7.7.3/7.7.3.b.xhtml">7.7.3.b</a>
+                </td>
+                <td>max() function negative test</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-max">7.7.3</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.7/7.7.4/7.7.4.a.xhtml">7.7.4.a</a>
+                </td>
+                <td>count-non-empty() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-count-non-empty">7.7.4</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.7/7.7.5/7.7.5.a.xhtml">7.7.5.a</a>
+                </td>
+                <td>index() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-index">7.7.5</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.7/7.7.5/7.7.5.b.xhtml">7.7.5.b</a>
+                </td>
+                <td>index() function negative test</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-index">7.7.5</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.7/7.7.6/7.7.6.a.xhtml">7.7.6.a</a>
+                </td>
+                <td>power() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-power">7.7.6</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.7/7.7.7/7.7.7.a.xhtml">7.7.7.a</a>
+                </td>
+                <td>random() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-random">7.7.7</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.7/7.7.8/7.7.8.a.xhtml">7.7.8.a</a>
+                </td>
+                <td>compare() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-compare">7.7.8</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.8/7.8.1/7.8.1.a.xhtml">7.8.1.a</a>
+                </td>
+                <td>if() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-if">7.8.1</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.8/7.8.2/7.8.2.a.xhtml">7.8.2.a</a>
+                </td>
+                <td>property() function with version property</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-property">7.8.2</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.8/7.8.2/7.8.2.b.xhtml">7.8.2.b</a>
+                </td>
+                <td>property() function with conformance-level property</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-property">7.8.2</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.8/7.8.2/7.8.2.c.xhtml">7.8.2.c</a>
+                </td>
+                <td>property() function with invalid NCNAME property</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-property">7.8.2</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.8/7.8.2/7.8.2.d.xhtml">7.8.2.d</a>
+                </td>
+                <td>property() function with invalid QNamebutnotNCNAME property</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-property">7.8.2</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.8/7.8.3/7.8.3.a.xhtml">7.8.3.a</a>
+                </td>
+                <td>digest() function using sha1, md5, and sha256</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-digest">7.8.3</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.8/7.8.3/7.8.3.b.xhtml">7.8.3.b</a>
+                </td>
+                <td>digest() function using sha384 and sha512</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-digest">7.8.3</a>
+                </td>
+                <td>false</td>
+                <td>false</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.8/7.8.3/7.8.3.c.xhtml">7.8.3.c</a>
+                </td>
+                <td>digest() function negative test with invalid NCNAME property</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-digest">7.8.3</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.8/7.8.3/7.8.3.d.xhtml">7.8.3.d</a>
+                </td>
+                <td>digest() function negative test with a QNameButNotNCNAME</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-digest">7.8.3</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.8/7.8.3/7.8.3.e.xhtml">7.8.3.e</a>
+                </td>
+                <td>digest() function with invalid encoding method</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-digest">7.8.3</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.8/7.8.3/7.8.3.f.xhtml">7.8.3.f</a>
+                </td>
+                <td>digest() function default encoding base64</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-digest">7.8.3</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.8/7.8.4/7.8.4.a.xhtml">7.8.4.a</a>
+                </td>
+                <td>hmac() function using sha1, md5, and sha256</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-hmac">7.8.4</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.8/7.8.4/7.8.4.b.xhtml">7.8.4.b</a>
+                </td>
+                <td>hmac() function using sha384 and sha512</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-hmac">7.8.4</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.8/7.8.4/7.8.4.c.xhtml">7.8.4.c</a>
+                </td>
+                <td>hmac() function with invalid NCNAME property</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-hmac">7.8.4</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.8/7.8.4/7.8.4.d.xhtml">7.8.4.d</a>
+                </td>
+                <td>hmac() function with invalid QNameButNotNCNAME</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-hmac">7.8.4</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.8/7.8.4/7.8.4.e.xhtml">7.8.4.e</a>
+                </td>
+                <td>hmac() function with invalid encoding method</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-hmac">7.8.4</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.8/7.8.4/7.8.4.f.xhtml">7.8.4.f</a>
+                </td>
+                <td>hmac() function using default encoding base64</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-hmac">7.8.4</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.9/7.9.1/7.9.1.a.xhtml">7.9.1.a</a>
+                </td>
+                <td>local-date() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-local-date">7.9.1</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.9/7.9.2/7.9.2.a.xhtml">7.9.2.a</a>
+                </td>
+                <td>local-dateTime() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-local-dateTime">7.9.2</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.9/7.9.3/7.9.3.a.xhtml">7.9.3.a</a>
+                </td>
+                <td>now() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-now">7.9.3</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.9/7.9.4/7.9.4.a.xhtml">7.9.4.a</a>
+                </td>
+                <td>days-from-date() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-days-from-date">7.9.4</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.9/7.9.4/7.9.4.b.xhtml">7.9.4.b</a>
+                </td>
+                <td>days-from-date() function ignores hours, minutes, and seconds components</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-days-from-date">7.9.4</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.9/7.9.4/7.9.4.c.xhtml">7.9.4.c</a>
+                </td>
+                <td>days-from-date() function negative test</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-days-from-date">7.9.4</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.9/7.9.5/7.9.5.a.xhtml">7.9.5.a</a>
+                </td>
+                <td>days-to-date() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-days-to-date">7.9.5</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.9/7.9.6/7.9.6.a.xhtml">7.9.6.a</a>
+                </td>
+                <td>seconds-from-dateTime() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-seconds-from-dateTime">7.9.6</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.9/7.9.7/7.9.7.a.xhtml">7.9.7.a</a>
+                </td>
+                <td>seconds-to-dateTime() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-seconds-to-dateTime">7.9.7</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.9/7.9.8/7.9.8.a.xhtml">7.9.8.a</a>
+                </td>
+                <td>adjust-dateTime-to-timezone() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-adjust-dateTime-to-timezone">7.9.8</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.9/7.9.9/7.9.9.a.xhtml">7.9.9.a</a>
+                </td>
+                <td>seconds() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-seconds">7.9.9</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.9/7.9.10/7.9.10.a.xhtml">7.9.10.a</a>
+                </td>
+                <td>months() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-months">7.9.10</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.10/7.10.1/7.10.1.a.xhtml">7.10.1.a</a>
+                </td>
+                <td>instance() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-instance">7.10.1</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.10/7.10.2/7.10.2.a.xhtml">7.10.2.a</a>
+                </td>
+                <td>current() function example 1</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-current">7.10.2</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.10/7.10.2/7.10.2.b.xhtml">7.10.2.b</a>
+                </td>
+                <td>current() function example 2</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-current">7.10.2</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.10/7.10.3/7.10.3.a.xhtml">7.10.3.a</a>
+                </td>
+                <td>id() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-id">7.10.3</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.10/7.10.3/7.10.3.b.xhtml">7.10.3.b</a>
+                </td>
+                <td>id() function with xml:id</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-id">7.10.3</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.10/7.10.3/7.10.3.c.xhtml">7.10.3.c</a>
+                </td>
+                <td>id() function with xsi:type</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-id">7.10.3</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.10/7.10.4/7.10.4.a.xhtml">7.10.4.a</a>
+                </td>
+                <td>context() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-context">7.10.4</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.11/7.11.1/7.11.1.a.xhtml">7.11.1.a</a>
+                </td>
+                <td>choose() function</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-choose">7.11.1</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.11/7.11.2/7.11.2.a.xhtml">7.11.2.a</a>
+                </td>
+                <td>event() function with inserted-nodes property</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#fn-event">7.11.2</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="../../Chapt07/7.12/7.12.a.xhtml">7.12.a</a>
+                </td>
+                <td>invalid functions attribute in model element</td>
+                <td>
+                    <a href="http://www.w3.org/TR/xforms11/#expr-lib-extension">7.12</a>
+                </td>
+                <td>true</td>
+                <td>true</td>
+            </tr>
+        </table>
+    </body>
+</html>

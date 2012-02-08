@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -115,7 +115,7 @@ public class BetterFORMKeyStoreManager implements X509KeyManager {
             return null;
         }
 
-         @Override
+         //@Override
         public String chooseClientAlias(String[] keyType, Principal[] principals, Socket socket) {
             Iterator<X509KeyManager> iterator = this.customX509KeyManagers.iterator();
             while (iterator.hasNext()) {
@@ -131,7 +131,7 @@ public class BetterFORMKeyStoreManager implements X509KeyManager {
             return javaDefaultKeyManager.chooseClientAlias(keyType, principals, socket);
         }
 
-        @Override
+        //@Override
         public String chooseServerAlias(String keyType, Principal[] principals, Socket socket) {
             Iterator<X509KeyManager> iterator = this.customX509KeyManagers.iterator();
             while (iterator.hasNext()) {
@@ -147,7 +147,7 @@ public class BetterFORMKeyStoreManager implements X509KeyManager {
             return javaDefaultKeyManager.chooseServerAlias(keyType, principals, socket);
         }
 
-        @Override
+        //@Override
         public X509Certificate[] getCertificateChain(String alias) {
             Iterator<X509KeyManager> iterator = this.customX509KeyManagers.iterator();
             while (iterator.hasNext()) {
@@ -164,7 +164,7 @@ public class BetterFORMKeyStoreManager implements X509KeyManager {
             return javaDefaultKeyManager.getCertificateChain(alias);
         }
 
-        @Override
+        //@Override
         public String[] getClientAliases(String keyType, Principal[] principals) {
             String[] customClientAliases = null;
             Iterator<X509KeyManager> iterator = this.customX509KeyManagers.iterator();
@@ -175,7 +175,7 @@ public class BetterFORMKeyStoreManager implements X509KeyManager {
             return (String[]) ArrayUtils.addAll(customClientAliases, javaDefaultKeyManager.getClientAliases(keyType, principals));
         }
 
-        @Override
+        //@Override
         public PrivateKey getPrivateKey(String alias) {
             Iterator<X509KeyManager> iterator = this.customX509KeyManagers.iterator();
             while (iterator.hasNext()) {
@@ -191,7 +191,7 @@ public class BetterFORMKeyStoreManager implements X509KeyManager {
             return javaDefaultKeyManager.getPrivateKey(alias);
         }
 
-        @Override
+        //@Override
         public String[] getServerAliases(String keyType, Principal[] principals) {
             String[] customClientAliases = null;
             Iterator<X509KeyManager> iterator = this.customX509KeyManagers.iterator();

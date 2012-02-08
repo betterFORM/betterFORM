@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
@@ -9,7 +9,8 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:bf="http://betterform.sourceforge.net/xforms"
     xmlns:xf="http://www.w3.org/2002/xforms"
-    exclude-result-prefixes="xf bf xsl"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    exclude-result-prefixes="xhtml xf bf"
     xpath-default-namespace="http://www.w3.org/1999/xhtml">
 
     <!-- ### this url will be used to build the form action attribute ### -->
@@ -121,6 +122,7 @@
         </xsl:for-each>
     </xsl:template>
 
+
     <xsl:template name="getLinkAndStyle"><xsl:text>
 </xsl:text><xsl:for-each select="link|style">
             <xsl:element name="{local-name()}">
@@ -156,7 +158,7 @@
     <xsl:template name="copyInlineScript">
         <!-- copy inline javascript -->
         <xsl:for-each select="script">
-            <script xmlns="http://www.w3.org/1999/xhtml">
+            <script type="text/javascript" >
                 <xsl:attribute name="type">
                     <xsl:value-of select="@type"/>
                 </xsl:attribute>
@@ -181,10 +183,10 @@
     <xsl:template name="addDojoRequires"/>
 
     <xsl:template name="assemble-control-classes">
-        <!--<xsl:param name="appearance"/>-->
 
         <xsl:variable name="name-classes">
             <xsl:call-template name="get-name-classes">
+                <!--todo: check this-->
                 <!--<xsl:with-param name="appearance" select="$appearance"/>-->
             </xsl:call-template>
         </xsl:variable>
@@ -220,7 +222,6 @@
                 <xsl:otherwise/>
             </xsl:choose>
         </xsl:variable>
-        <!--<xsl:value-of select="normalize-space(concat('xf-control ',$name-classes, ' ', 'xs-',$type ,' ',$mip-classes, ' ', $author-classes,' ',$incremental,' ',$repeatClasses))"/>-->
         <xsl:value-of select="normalize-space(concat('xfControl ',$name-classes, ' ', $type ,' ',$mip-classes, ' ', $author-classes,' ',$incremental,' ',$repeatClasses))"/>
     </xsl:template>
 
@@ -249,7 +250,6 @@
         <xsl:param name="name" select="local-name()" />
         <xsl:param name="appearance"/>
 
-
         <xsl:variable name="fullName"><xsl:call-template name="toUpperCaseFirstLetter"><xsl:with-param name="name" select="$name"/></xsl:call-template></xsl:variable>
         <xsl:variable name="displayAppearance"><xsl:call-template name="toUpperCaseFirstLetter"><xsl:with-param name="name" select="$appearance"/></xsl:call-template></xsl:variable>
         <!--<xsl:message>fullName:<xsl:value-of select="$fullName"/> appearance:<xsl:value-of select="$appearance"/> DisplayAppearance:<xsl:value-of select="$displayAppearance"/></xsl:message>-->
@@ -271,11 +271,15 @@
         <xsl:param name="name"/>
         <xsl:variable name="start" select="upper-case(substring($name,1,1))"/>
         <xsl:variable name="end" select="substring($name,2)"/>
-<!--
-        <xsl:message>start:<xsl:value-of select="$start"/></xsl:message>
-        <xsl:message>end:<xsl:value-of select="$end"/></xsl:message>
--->
-        <xsl:value-of select="concat($start,$end)"/>
+        <xsl:choose>
+            <xsl:when test="string-length($start) gt 0 and string-length($end) gt 0">                 
+                <xsl:value-of select="concat($start,$end)"/>
+            </xsl:when>            
+            <xsl:when test="string-length($start) gt 0 and string-length($end) = 0">                 
+                <xsl:value-of select="$start"/>
+            </xsl:when>            
+            <xsl:otherwise/>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template name="assemble-label-classes">
@@ -364,15 +368,9 @@
 
     <!-- ### CSS CLASS ASSEMBLY HELPERS ### -->
     <xsl:template name="get-author-classes">
-        <xsl:choose>
-            <xsl:when test="@class">
-                <xsl:value-of select="@class"/>
-            </xsl:when>
-            <!-- this is bullshit -->
-            <xsl:when test="@class">
-                <xsl:value-of select="@class"/>
-            </xsl:when>
-        </xsl:choose>
+        <xsl:if test="@class">
+            <xsl:value-of select="@class"/>
+        </xsl:if>
     </xsl:template>
 
 

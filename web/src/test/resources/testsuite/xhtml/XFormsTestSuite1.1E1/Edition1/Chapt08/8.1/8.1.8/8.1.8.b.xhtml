@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:ex="http://www.example.com">
+	<xhtml:head>
+		<xhtml:title>8.1.8.b trigger element with appearance attribute</xhtml:title>
+		<xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+		<xforms:model>
+			<xforms:instance>
+				<root/>
+			</xforms:instance>
+		</xforms:model>
+	</xhtml:head>
+	<xhtml:body>
+		<xforms:group id="xf-group-1">
+			<xforms:label class="title">8.1.8.b trigger element with appearance attribute</xforms:label>
+		</xforms:group>
+		<xforms:group id="xf-group-2">
+			<xforms:label>
+				You must see two trigger controls on this page, one labeled "Regular Trigger" and 
+				the other labeled "Minimal Trigger". They may look different. 
+			</xforms:label>
+		</xforms:group>
+		<xforms:group id="xf-group-3">
+			<xforms:trigger id="xf-trigger-1">
+				<xforms:label>Regular Trigger</xforms:label>
+			</xforms:trigger>
+		</xforms:group>
+		<xforms:group id="xf-group-4">
+			<xforms:trigger appearance="minimal" id="xf-trigger-2">
+				<xforms:label>Minimal Trigger</xforms:label>
+			</xforms:trigger>
+		</xforms:group>
+	</xhtml:body>
+	
+</xhtml:html>

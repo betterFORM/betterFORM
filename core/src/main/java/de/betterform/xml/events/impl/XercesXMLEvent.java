@@ -1,17 +1,16 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.events.impl;
 
 import de.betterform.xml.events.XMLEvent;
+import org.apache.xerces.dom.events.EventImpl;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.xerces.dom.events.EventImpl;
 
 /**
  * XMLEvent implementation based on Xerces' DOM event implementation.

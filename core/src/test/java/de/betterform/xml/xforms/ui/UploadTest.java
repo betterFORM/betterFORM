@@ -1,19 +1,17 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 package de.betterform.xml.xforms.ui;
 
-import junit.framework.TestCase;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.binary.Hex;
 import de.betterform.xml.events.XFormsEventNames;
+import de.betterform.xml.xforms.TestEventListener;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.action.EventCountListener;
 import de.betterform.xml.xforms.model.ModelItem;
-import de.betterform.xml.xforms.exception.XFormsBindingException;
-import de.betterform.xml.xforms.TestEventListener;
-import de.betterform.xml.xforms.ui.Upload;
+import junit.framework.TestCase;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Hex;
 
 import java.io.BufferedInputStream;
 

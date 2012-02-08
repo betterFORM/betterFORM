@@ -3,6 +3,12 @@
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>Example of complex nested group layout</title>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+
+
 
         <style type="text/css">
             .sample .xfLabel,.sample .xfValue{

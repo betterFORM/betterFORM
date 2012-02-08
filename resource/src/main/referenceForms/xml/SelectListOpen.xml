@@ -3,6 +3,12 @@
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>select control allowing users to type in a value</title>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+
+
     </head>
     <body>
         <div class="description">

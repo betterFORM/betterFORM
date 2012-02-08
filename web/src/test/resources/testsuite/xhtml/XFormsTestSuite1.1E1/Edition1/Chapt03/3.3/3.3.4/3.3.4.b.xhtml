@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>3.3.4.b more bind element examples</xhtml:title>
+    <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+      <xforms:instance id="i_001">
+        <car>
+		  <avg>not 3000</avg>
+		  <prices>
+		    <price>1000.00</price>
+		    <price>2000.00</price>
+		    <price>3000.00</price>
+		  </prices>
+        </car>
+      </xforms:instance>
+      <xforms:bind id="bind_001" nodeset="avg">
+        <!-- bind with no nodeset -->
+        <xforms:bind calculate="avg(../prices/price)"/>
+      </xforms:bind>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group id="xf-group-1">
+  		<xforms:label class="title">3.3.4.b more bind element examples</xforms:label>
+  	</xforms:group>
+	<xforms:group id="xf-group-2">
+	  <xforms:label>You must see the value "2000":</xforms:label>
+    <xforms:output bind="bind_001" id="xf-output-1">
+        <xforms:label>Average car price: </xforms:label>
+    </xforms:output>
+	</xforms:group>
+  </xhtml:body>
+</xhtml:html>

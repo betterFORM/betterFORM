@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:et="http://w3c.org/eventtracker">
+
+<xhtml:head>
+	<xhtml:title>10.6.a events dispatched by toggle element</xhtml:title>
+	<xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+	<xforms:model>
+		<xforms:instance>
+			<yourname/>
+		</xforms:instance>
+	</xforms:model>
+</xhtml:head>
+<xhtml:body>
+	<xforms:group id="xf-group-1">
+		<xforms:label class="title">10.6.a events dispatched by toggle element</xforms:label>
+	</xforms:group>
+	<xforms:group id="xf-group-2">
+		<xforms:label>
+				If you are in the "in" case and you activate the Show Out Case trigger
+				you must see an xforms-deselect(in) message followed by an 
+				xforms-select(out) message. 
+				If you are in the "out" case and you activate the Show In Case trigger
+				you must see an xforms-deselect(out) message followed by an 
+				xforms-select(in) message. 
+		</xforms:label>
+	</xforms:group>
+	<xforms:switch>
+		<xforms:case id="in">
+			<xforms:group id="xf-group-3">
+				<xforms:label>You are now in the "in" case</xforms:label>
+			</xforms:group>
+			<xforms:trigger ref="/yourname" id="xf-trigger-1">
+				<xforms:label>Show Out Case</xforms:label>
+				<xforms:toggle ev:event="DOMActivate" case="out"/>
+			</xforms:trigger>
+			<xforms:group id="xf-group-4">
+				<xforms:action ev:event="xforms-select" ev:observer="in">
+					<xforms:message level="modal">xforms-select(in)</xforms:message>
+				</xforms:action>
+			</xforms:group>
+			<xforms:group id="xf-group-5">
+				<xforms:action ev:event="xforms-deselect" ev:observer="in">
+        			<xforms:message level="modal">xforms-deselect(in)</xforms:message>
+				</xforms:action>
+			</xforms:group>
+		</xforms:case>
+		<xforms:case id="out">
+			<xforms:group id="xf-group-6">
+				<xforms:label>You are now in the "out" case</xforms:label>
+			</xforms:group>
+			<xforms:trigger id="xf-trigger-2">
+				<xforms:label>Show In Case</xforms:label>
+				<xforms:toggle ev:event="DOMActivate" case="in"/>
+			</xforms:trigger>
+			<xforms:group id="xf-group-7">
+				<xforms:action ev:event="xforms-select" ev:observer="out">
+					<xforms:message level="modal">xforms-select(out)</xforms:message>
+				</xforms:action>
+			</xforms:group>
+			<xforms:group id="xf-group-8">
+				<xforms:action ev:event="xforms-deselect" ev:observer="out">
+					<xforms:message level="modal">xforms-deselect(out)</xforms:message>
+				</xforms:action>
+			</xforms:group>
+		</xforms:case>
+	</xforms:switch>
+
+</xhtml:body>
+</xhtml:html>

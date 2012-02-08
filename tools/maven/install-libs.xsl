@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
@@ -56,7 +56,7 @@
                     <xsl:choose>
                         <xsl:when test="$module=document($buildprops)/root/core/app/name">
                             <xsl:for-each select="document($buildprops)/root/core//pathelement[@artifactId]">
-                                <xsl:variable name="install-cmd">install:install-file -DgroupId=<xsl:value-of select="@groupid"/> -DartifactId=<xsl:value-of select="@artifactId"/> -Dversion=<xsl:value-of select="@version"/> -Dpackaging=jar -Dfile=<xsl:value-of select="@location"/></xsl:variable>
+                                <xsl:variable name="install-cmd">install:install-file -DgroupId=<xsl:value-of select="@groupId | @groupid"/> -DartifactId=<xsl:value-of select="@artifactId"/> -Dversion=<xsl:value-of select="@version"/> -Dpackaging=jar -Dfile=<xsl:value-of select="@location"/></xsl:variable>
                                 <antcall target="mvn">
                                     <xsl:element name="param">
                                         <xsl:attribute name="name">goal</xsl:attribute>
@@ -67,25 +67,34 @@
                         </xsl:when>
 
                         <xsl:when test="$module=document($buildprops)/root/web/app/name">
-                            <xsl:for-each select="document($buildprops)/root/web//pathelement[@artifactId]">
-                                <xsl:variable name="install-cmd">install:install-file -DgroupId=<xsl:value-of select="@groupid"/> -DartifactId=<xsl:value-of select="@artifactId"/> -Dversion=<xsl:value-of select="@version"/> -Dpackaging=jar -Dfile=<xsl:value-of select="@location"/></xsl:variable>
-                                <antcall target="mvn">
-                                    <xsl:element name="param">
-                                        <xsl:attribute name="name">goal</xsl:attribute>
-                                        <xsl:attribute name="value"><xsl:value-of select="$install-cmd"/></xsl:attribute>
-                                    </xsl:element>
-                                </antcall>
-                            </xsl:for-each>
-                            <antcall target="mvn">
-                                <xsl:element name="param">
-                                    <xsl:attribute name="name">goal</xsl:attribute>
-                                    <xsl:attribute name="value">install:install-file -DgroupId=de.betterform -DartifactId=<xsl:value-of select="document($buildprops)/root/core/app/name"/> -Dversion=<xsl:value-of select="document($buildprops)/root/core/app/version"/> -Dpackaging=jar -Dfile=${core.dir}/target/<xsl:value-of select="document($buildprops)/root/core/app/name"/>-<xsl:value-of select="document($buildprops)/root/core/app/version"/>.jar</xsl:attribute>
-                                </xsl:element>
-                            </antcall>
+
+                                    <xsl:for-each select="document($buildprops)/root/web//pathelement[@artifactId]">
+                                        <xsl:choose>
+                                            <xsl:when test="@location">
+                                                <xsl:variable name="install-cmd">install:install-file -DgroupId=<xsl:value-of select="@groupId | @groupid"/> -DartifactId=<xsl:value-of select="@artifactId"/> -Dversion=<xsl:value-of select="@version"/> -Dpackaging=jar -Dfile=<xsl:value-of select="@location"/></xsl:variable>
+                                                <antcall target="mvn">
+                                                    <xsl:element name="param">
+                                                        <xsl:attribute name="name">goal</xsl:attribute>
+                                                        <xsl:attribute name="value"><xsl:value-of select="$install-cmd"/></xsl:attribute>
+                                                    </xsl:element>
+                                                </antcall>
+                                            </xsl:when>
+                                        </xsl:choose>
+                                    </xsl:for-each>
+                                    <xsl:choose>
+                                        <xsl:when test="document($buildprops)/root/web//pathelement[@location]">
+                                            <antcall target="mvn">
+                                                <xsl:element name="param">
+                                                    <xsl:attribute name="name">goal</xsl:attribute>
+                                                    <xsl:attribute name="value">install:install-file -DgroupId=de.betterform -DartifactId=<xsl:value-of select="document($buildprops)/root/core/app/name"/> -Dversion=<xsl:value-of select="document($buildprops)/root/core/app/version"/> -Dpackaging=jar -Dfile=${core.dir}/target/<xsl:value-of select="document($buildprops)/root/core/app/name"/>-<xsl:value-of select="document($buildprops)/root/core/app/version"/>.jar</xsl:attribute>
+                                                </xsl:element>
+                                            </antcall>
+                                        </xsl:when>
+                                    </xsl:choose>
                         </xsl:when>
                         <xsl:when test="$module=document($buildprops)/root/betty/app/name">
                             <xsl:for-each select="document($buildprops)/root/betty//pathelement[@artifactId]">
-                                <xsl:variable name="install-cmd">install:install-file -DgroupId=<xsl:value-of select="@groupid"/> -DartifactId=<xsl:value-of select="@artifactId"/> -Dversion=<xsl:value-of select="@version"/> -Dpackaging=jar -Dfile=<xsl:value-of select="@location"/></xsl:variable>
+                                <xsl:variable name="install-cmd">install:install-file -DgroupId=<xsl:value-of select="@groupId | @groupid"/> -DartifactId=<xsl:value-of select="@artifactId"/> -Dversion=<xsl:value-of select="@version"/> -Dpackaging=jar -Dfile=<xsl:value-of select="@location"/></xsl:variable>
                                 <antcall target="mvn">
                                     <xsl:element name="param">
                                         <xsl:attribute name="name">goal</xsl:attribute>

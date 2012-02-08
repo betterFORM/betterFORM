@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xsi="http://www.w3.org/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+     <xhtml:head>
+          <xhtml:title>7.10.3.c id() function with xsi:type</xhtml:title>
+          <xforms:model>
+               <xforms:instance>
+                    <root>
+                         <level_1a>
+                              <level_1achild xsi:type="xsd:ID" name="Node-A">a</level_1achild>
+                              <level_1achild xsi:type="xsd:ID" name="Node-D">d</level_1achild>
+                         </level_1a>
+                         <level_1b>
+                              <level_1bchild xsi:type="xsd:ID" name="Node-B">b</level_1bchild>
+                              <level_1bchild xsi:type="xsd:ID" name="Node-F">f</level_1bchild>
+                              <level_1bchild xsi:type="xsd:ID" name="Node-C">c</level_1bchild>
+                         </level_1b>
+                    </root>
+               </xforms:instance>
+          </xforms:model>
+          <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+     </xhtml:head>
+     <xhtml:body>
+          <xforms:group id="xf-group-1">
+               <xforms:label class="title">7.10.3.c id() function with xsi:type</xforms:label>
+          </xforms:group>
+          <xforms:group id="xf-group-2">
+               <xforms:label>
+                 You must see the values "Node-A", "Node-B", and "Node-C" for the Node 
+                 Values output. 
+            </xforms:label>
+          </xforms:group>
+          <xforms:repeat nodeset="id('a b c')">
+               <xforms:output ref="@name" id="xf-output-1">
+                    <xforms:label>Node Values : </xforms:label>
+               </xforms:output>
+          </xforms:repeat>
+     </xhtml:body>
+</xhtml:html>

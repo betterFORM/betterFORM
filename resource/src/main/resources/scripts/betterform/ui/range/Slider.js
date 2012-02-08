@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -15,15 +15,32 @@ dojo.declare(
         "betterform.ui.range.Slider",
         [betterform.ui.ControlValue,dijit.form.HorizontalSlider],
 {
+    // overwritten HorizontalSlider.buildRendering to fix handling of label
+    buildRendering: function(){
+        this.inherited(arguments);
+        // revert label id changed by HorizontalSlider
+        var label = dojo.query('label[id="'+this.id+'_label"]');
+        if(label.length){
+            label[0].id = (this.xfControlId+"-label");
+            dijit.setWaiState(this.focusNode, "labelledby", label[0].id);
+        }
+        dijit.setWaiState(this.focusNode, "valuemin", this.minimum);
+        dijit.setWaiState(this.focusNode, "valuemax", this.maximum);
+    },
+
 
     postMixInProperties:function() {
-         this.inherited(arguments);
+        this.inherited(arguments);
         this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);
     },
 
     postCreate:function() {
         this.inherited(arguments);
         this.setCurrentValue();
+        if(this.tabIndex != undefined){
+            dojo.attr(this.domNode, "tabindex", this.tabIndex);
+        }
+
     },
 
     _onFocus:function() {
@@ -41,6 +58,7 @@ dojo.declare(
     },
 
     _setValueAttr: function(value, priorityChange,isServerUpdate) {
+        // console.debug("Slider._setValueAttr: value: ", value);
         if(!isServerUpdate){
             var tmpValue = dojo.attr(this.valueNode, "value");
             // console.debug("Slider._setValueAttr value: " + value + " valueNode.value:", tmpValue);
@@ -52,6 +70,7 @@ dojo.declare(
     },
 
     _handleSetControlValue:function(value, isServerUpdate) {
+        // console.debug("Slider._handleSetControlValue: value: ", value);
         var newValue  = parseInt(value, "10");
         if(newValue == undefined || newValue == "" || newValue == "NaN" || newValue < this.minimum){
             newValue = this.minimum;

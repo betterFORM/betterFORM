@@ -5,12 +5,20 @@
       
       <title>Default Alert Handler - inline alerts</title>
       
+      
+      <!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+      
+      
+      
       <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
       <link rel="stylesheet" type="text/css" href="reference.css" />
    </head>
    
-   <body class="soria InlineAlert" style="margin:30px">
-      <div id="xforms" class="InlineAlert">
+   <body class="soria" style="margin:30px">
+      <div id="xforms">
          <div style="display:none">
             <xf:model>
                
@@ -77,18 +85,18 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d2e160" onmouseover="showClass('InlineAlert');" onmouseout="hideClass('InlineAlert');">InlineAlert
-                     <div dojoType="dijit.Tooltip" connectId="d2e160">matches a body that uses inline alerts</div>
+                  <td id="d2e162" onmouseover="showClass('InlineAlert');" onmouseout="hideClass('InlineAlert');">InlineAlert
+                     <div dojoType="dijit.Tooltip" connectId="d2e162">matches a body that uses inline alerts</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d2e169" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
-                     <div dojoType="dijit.Tooltip" connectId="d2e169">matches an Element that represents a XForms input element</div>
+                  <td id="d2e171" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
+                     <div dojoType="dijit.Tooltip" connectId="d2e171">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d2e178" onmouseover="showClass('xfAlert');" onmouseout="hideClass('xfAlert');">xfAlert
-                     <div dojoType="dijit.Tooltip" connectId="d2e178">matches an Element that represents a XForms alert element</div>
+                  <td id="d2e180" onmouseover="showClass('xfAlert');" onmouseout="hideClass('xfAlert');">xfAlert
+                     <div dojoType="dijit.Tooltip" connectId="d2e180">matches an Element that represents a XForms alert element</div>
                   </td>
                </tr>
                <tr>
@@ -182,43 +190,43 @@
                
                <xf:label>Each field must have more than 5 characters to become valid</xf:label>
                
-               <xf:input ref="a">
+               <xf:input id="input1" ref="a">
                   
                   <xf:label>A-label</xf:label>
                   
-                  <xf:alert>Your input is not long enough</xf:alert>
+                  <xf:alert id="input1-alert">Your input is not long enough</xf:alert>
                   
-                  <xf:hint>The input must be longer than 5 characters</xf:hint>
+                  <xf:hint id="input1-hint">The input must be longer than 5 characters</xf:hint>
                   
                </xf:input>
                
-               <xf:input ref="b">
+               <xf:input id="input2" ref="b">
                   
                   <xf:label>Bb-label</xf:label>
                   
-                  <xf:alert>Your input is not long enough</xf:alert>
+                  <xf:alert id="input2-alert">Your input is not long enough</xf:alert>
                   
-                  <xf:hint>The input must be longer than 5 characters</xf:hint>
+                  <xf:hint id="input2-hint">The input must be longer than 5 characters</xf:hint>
                   
                </xf:input>
                
-               <xf:input ref="c">
+               <xf:input id="input3" ref="c">
                   
                   <xf:label>Ccc-label</xf:label>
                   
-                  <xf:hint>The input must be longer than 5 characters</xf:hint>
+                  <xf:hint id="input3-hint">The input must be longer than 5 characters</xf:hint>
                   
-                  <xf:alert>Your input is not long enough</xf:alert>
+                  <xf:alert id="input3-alert">Your input is not long enough</xf:alert>
                   
                </xf:input>
                
-               <xf:input ref="d">
+               <xf:input id="input4" ref="d">
                   
                   <xf:label>Dddd-label</xf:label>
                   
-                  <xf:hint>The input must be longer than 5 characters</xf:hint>
+                  <xf:hint id="input4-hint">The input must be longer than 5 characters</xf:hint>
                   
-                  <xf:alert>Your input is not long enough</xf:alert>
+                  <xf:alert id="input4-alert">Your input is not long enough</xf:alert>
                   
                </xf:input>
                
@@ -243,25 +251,25 @@
 
 &lt;xf:group ref="grouped-data/group" appearance="compact" class="InlineAlert"&gt;
     &lt;xf:label&gt;Each field must have more than 5 characters to become valid&lt;/xf:label&gt;
-    &lt;xf:input ref="a"&gt;
+    &lt;xf:input id="input1" ref="a"&gt;
         &lt;xf:label&gt;A-label&lt;/xf:label&gt;
-        &lt;xf:alert&gt;Your input is not long enough&lt;/xf:alert&gt;
-        &lt;xf:hint&gt;The input must be longer than 5 characters&lt;/xf:hint&gt;
+        &lt;xf:alert id="input1-alert"&gt;Your input is not long enough&lt;/xf:alert&gt;
+        &lt;xf:hint id="input1-hint"&gt;The input must be longer than 5 characters&lt;/xf:hint&gt;
     &lt;/xf:input&gt;
-    &lt;xf:input ref="b"&gt;
+    &lt;xf:input id="input2" ref="b"&gt;
         &lt;xf:label&gt;Bb-label&lt;/xf:label&gt;
-        &lt;xf:alert&gt;Your input is not long enough&lt;/xf:alert&gt;
-        &lt;xf:hint&gt;The input must be longer than 5 characters&lt;/xf:hint&gt;
+        &lt;xf:alert id="input2-alert"&gt;Your input is not long enough&lt;/xf:alert&gt;
+        &lt;xf:hint id="input2-hint"&gt;The input must be longer than 5 characters&lt;/xf:hint&gt;
     &lt;/xf:input&gt;
-    &lt;xf:input ref="c"&gt;
+    &lt;xf:input id="input3" ref="c"&gt;
         &lt;xf:label&gt;Ccc-label&lt;/xf:label&gt;
-        &lt;xf:hint&gt;The input must be longer than 5 characters&lt;/xf:hint&gt;
-        &lt;xf:alert&gt;Your input is not long enough&lt;/xf:alert&gt;
+        &lt;xf:hint id="input3-hint"&gt;The input must be longer than 5 characters&lt;/xf:hint&gt;
+        &lt;xf:alert id="input3-alert"&gt;Your input is not long enough&lt;/xf:alert&gt;
     &lt;/xf:input&gt;
-    &lt;xf:input ref="d"&gt;
+    &lt;xf:input id="input4" ref="d"&gt;
         &lt;xf:label&gt;Dddd-label&lt;/xf:label&gt;
-        &lt;xf:hint&gt;The input must be longer than 5 characters&lt;/xf:hint&gt;
-        &lt;xf:alert&gt;Your input is not long enough&lt;/xf:alert&gt;
+        &lt;xf:hint id="input4-hint"&gt;The input must be longer than 5 characters&lt;/xf:hint&gt;
+        &lt;xf:alert id="input4-alert"&gt;Your input is not long enough&lt;/xf:alert&gt;
     &lt;/xf:input&gt;
 &lt;/xf:group&gt;
 

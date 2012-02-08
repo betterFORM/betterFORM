@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xhtml:head>
+        <xhtml:title>8.1.a navindex and accesskey (non-normative)</xhtml:title>
+        <xforms:model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <xforms:instance>
+                <order>
+                    <quantity>3</quantity>
+                    <name>Steven</name>
+                    <item>Ball</item>
+                </order>
+            </xforms:instance>
+        </xforms:model>
+        <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="xf-group-1">
+            <xforms:label class="title">8.1.a navindex and accesskey (non-normative)</xforms:label>
+        </xforms:group>
+        <xforms:group xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="xf-group-2">
+            <xforms:label>
+		    This test case is non-normative and assumes that navindex attributes 
+		    will be recognized and interpreted as described in section 4.3.1 of the specification. 
+			Navigation order must be the Name input first, the Quantity input second, and the Item input third. 
+			Keyboard users can use the Tab key to test the navigation order. 
+			The input controls are also set to use access keys. Keyboard users can hold down the Alt key, the Shift 
+			key, and the key in parentheses in the labels of the input controls to jump directly to an input control. 
+			</xforms:label>
+        </xforms:group>
+        <xforms:group id="xf-group-3">
+	        <xforms:input xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" accesskey="q" navindex="2" ref="/order/quantity" id="xf-input-1">
+	            <xforms:label>Quantity(q):</xforms:label>
+	        </xforms:input>
+        </xforms:group>
+        <xforms:group id="xf-group-4">
+	        <xforms:input xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" accesskey="n" navindex="1" ref="/order/name" id="xf-input-2">
+	            <xforms:label>Name(n):</xforms:label>
+	        </xforms:input>
+        </xforms:group>
+        <xforms:group id="xf-group-5">
+	        <xforms:input xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" accesskey="i" navindex="3" ref="/order/item" id="xf-input-3">
+	            <xforms:label>Item(i):</xforms:label>
+	        </xforms:input>
+        </xforms:group>
+        
+    </xhtml:body>
+</xhtml:html>

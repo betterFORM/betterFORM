@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -36,6 +36,7 @@ dojo.require("betterform.ui.input.Boolean");
 dojo.require("betterform.ui.input.TextField");
 dojo.require("betterform.ui.input.Date");
 dojo.require("betterform.ui.input.Time");
+dojo.require("betterform.ui.input.DropDownTime");
 dojo.require("betterform.ui.input.DropDownDate");
 dojo.require("betterform.ui.input.DateTime");
 dojo.require("betterform.ui.output.Link");

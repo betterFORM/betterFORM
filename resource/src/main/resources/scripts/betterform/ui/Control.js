@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -155,7 +155,14 @@ dojo.declare(
         // add classes
         dojo.addClass(controlValueTemplate, "xfValue");
         // insert ControlValue node
-        dojo.place(controlValueTemplate, this.domNode);
+        var bfValueWrapper = dojo.query(".bfValueWrapper", this.domNode)[0];
+        console.debug("control to insert: ", controlValueTemplate);
+        if(bfValueWrapper != undefined) {
+            dojo.place(controlValueTemplate, bfValueWrapper);
+        }else {
+            dojo.place(controlValueTemplate, this.domNode);
+        }
+
 
         // incremental handling
         if (dojo.hasClass(this.domNode, "xfIncremental")) {
@@ -226,6 +233,7 @@ dojo.declare(
     },
 
     isValid:function() {
+        // console.debug("Control.isValid ", dojo.hasClass(this.domNode, "xfValid"))
         if (dojo.hasClass(this.domNode, "xfInvalid")) {
             return false;
         } else if (dojo.hasClass(this.domNode, "xfValid")) {

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:ex="http://example.org">
+	<xhtml:head>
+		<xhtml:title>7.7.3.b max() function negative test</xhtml:title>
+		<xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+		<xforms:model>
+			<xforms:instance>
+				<ex:root>
+					<ex:valuea>2</ex:valuea>
+					<ex:valuea>Y</ex:valuea>
+				</ex:root>
+			</xforms:instance>
+			<xforms:instance>
+				<ex:root>
+					<ex:valueb/>
+					<ex:valueb/>
+				</ex:root>
+			</xforms:instance>
+		</xforms:model>
+	</xhtml:head>
+	<xhtml:body>
+		<xforms:group id="xf-group-1">
+		    <xforms:label class="title">
+			7.7.3.b max() function negative test
+		    </xforms:label>
+		</xforms:group>
+		<xforms:group id="xf-group-2">
+			<xforms:label>
+			  You must see a value of "NaN" for Maximum A and Maximum B. 
+			</xforms:label>
+		</xforms:group>
+	    <xforms:group id="xf-group-3">
+			<xforms:output value="max(ex:valuea)" id="xf-output-1">
+				<xforms:label>Maximum A : </xforms:label>
+			</xforms:output>
+		</xforms:group>
+		<xforms:group id="xf-group-4">
+			<xforms:output value="max(ex:valueb)" id="xf-output-2">
+				<xforms:label>Maximum B : </xforms:label>
+			</xforms:output>
+		</xforms:group>
+		
+	</xhtml:body>
+</xhtml:html>

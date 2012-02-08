@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
@@ -9,7 +9,7 @@
     author: Lars Windauer
     author: Tobias Krebs
  -->
-<project id="webtests" name="betterForm Webtests " default="test" basedir="." xmlns:bf="bar">
+<project id="webtests" name="betterForm Webtests " default="test" basedir=".">
 
     <!-- **************************************** PROPERTIES **************************************** -->
     <!-- **************************************** PROPERTIES **************************************** -->
@@ -551,6 +551,45 @@
 	    <param name="chapterNo" value="11"/>
 	</antcall>
 	<antcall target="testAppendix"/>
+    </target>
+
+    <target name="testHTML" description="run all unit tests">
+        <echo/>
+        <echo message="************************************************************************************************************"/>
+        <echo message="running webtest suite for all Chapters"/>
+        <echo message="************************************************************************************************************"/>
+        <echo/>
+	<antcall target="generateSeleniumHTMLTestsChapter">
+	    <param name="chapterNo" value="02"/>
+	</antcall>
+	<antcall target="generateSeleniumHTMLTestsChapter">
+	    <param name="chapterNo" value="03"/>
+	</antcall>
+	<antcall target="generateSeleniumHTMLTestsChapter">
+	    <param name="chapterNo" value="04"/>
+	</antcall>
+	<antcall target="generateSeleniumHTMLTestsChapter">
+	    <param name="chapterNo" value="05"/>
+	</antcall>
+	<antcall target="generateSeleniumHTMLTestsChapter">
+	    <param name="chapterNo" value="06"/>
+	</antcall>
+	<antcall target="generateSeleniumHTMLTestsChapter">
+	    <param name="chapterNo" value="07"/>
+	</antcall>
+	<antcall target="generateSeleniumHTMLTestsChapter">
+	    <param name="chapterNo" value="08"/>
+	</antcall>
+	<antcall target="generateSeleniumHTMLTestsChapter">
+	    <param name="chapterNo" value="09"/>
+	</antcall>
+	<antcall target="generateSeleniumHTMLTestsChapter">
+	    <param name="chapterNo" value="10"/>
+	</antcall>
+	<antcall target="generateSeleniumHTMLTestsChapter">
+	    <param name="chapterNo" value="11"/>
+	</antcall>
+	<antcall target="generateSeleniumHTMLTestsAppendix"/>
     </target>
 
     <!-- Run a single Chapter of the Selenium Testsuite for W3C XForm 1.1 Conformance Testsuite

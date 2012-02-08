@@ -1,4 +1,9 @@
-/* 
+/*
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
+/*
     Document   : reference.css
     Created on : Oct 19, 2009, 1:48:59 PM
     Author     : Jörn Turner <joern.turner (at) betterform.de>,
@@ -341,7 +346,7 @@ html body #formWrapper #xforms .showClass{
 }
 .bf .xfTextarea .xfAlert,
 .bf .xfTextarea .xfHint {
-	top:12px;
+	/*top:12px;*/
 }
 
 .xfContainer .xfControl{

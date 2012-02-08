@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms">
+<head>
+    <title>Value test</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
+    <xf:model>
+        <xf:instance id="valtest">
+            <valtest xmlns="">
+                <valsearch/>
+                <myvalueref></myvalueref>
+                <myvaluevalue></myvaluevalue>
+            </valtest>
+        </xf:instance>
+        <xf:instance id="values">
+            <values xmlns="">
+                <v id="r1">radio 1</v>
+                <v id="r2">radio 2</v>
+                <v id="r3">radio 3</v>
+                <v id="t1">tv 1</v>
+                <v id="t2">tv 2</v>
+                <v id="t3">tv 3</v>
+            </values>
+        </xf:instance>
+    </xf:model>
+</head>
+<body>
+<p>
+    When a new value is supplied via the input field  for the filter, the itemset of the select1 fails to visually
+    Though the itemset updates correctly the new key never arrives at the client layer (at least the node set is as can be seen by the 'count').
+</p>
+
+<xf:group ref="instance('valtest')">
+    <xf:input ref="valsearch" >
+        <xf:label>Filter value</xf:label>
+    </xf:input>
+    Value from filter: <xf:output ref="valsearch"/><br/>
+    Count after filter filter: <xf:output value="count(instance('values')/v[contains(., instance('valtest')/valsearch)])" /><br/>
+
+    <xf:select1 ref="myvaluevalue" incremental="true">
+        <xf:label>Select a value (using value)</xf:label>
+        <xf:itemset nodeset="instance('values')/v[contains(., instance('valtest')/valsearch)]">
+            <xf:label ref="."/>
+            <xf:value ref="@id"/>
+        </xf:itemset>
+    </xf:select1>
+    <br/>
+    Value from value: <xf:output incremental="true" ref="myvaluevalue"/><br/>
+</xf:group>
+</body>
+</html>

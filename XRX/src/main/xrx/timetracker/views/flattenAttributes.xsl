@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
@@ -8,7 +8,6 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xf="http://www.w3.org/2002/xforms"
                 xmlns:ev="http://www.w3.org/2001/xml-events"
-                xmlns:ts="http://www.w3c.org/MarkUp/Forms/XForms/Test/11"
                 exclude-result-prefixes="html ev xsl xf">
 
     <xsl:output method="xml" encoding="UTF-8"/>

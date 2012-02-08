@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -239,18 +239,26 @@ public class NamespaceResolver {
         for (int c = 0; c < attrs.getLength(); c++) {
             attr = attrs.item(c);
 
-            if (NamespaceConstants.XMLNS_NS.equals(attr.getNamespaceURI())) {
-                prefix = attr.getPrefix() == null ? "" : attr.getLocalName();
+            // check for overridden namespace declaration
+            if (nsPrefixMap == null && parentNsPrefixMap != null) {
+                nsPrefixMap = new HashMap<String, String>(parentNsPrefixMap);
+            }
 
-                // check for overridden namespace declaration
-                if (nsPrefixMap == null && parentNsPrefixMap != null) {
-                    nsPrefixMap = new HashMap<String, String>(parentNsPrefixMap);
+            String attrQName = attr.getNodeName();
+            if(attr.getNodeName().startsWith("xmlns")){
+
+                if (nsPrefixMap == null) {
+                    nsPrefixMap = new HashMap<String, String>();
                 }
-                if(prefix!=null && attr.getNodeValue()!=null){
-                    if(nsPrefixMap==null){
-                        nsPrefixMap=new HashMap<String, String>();
-                    }
-                    nsPrefixMap.put(prefix, attr.getNodeValue());
+
+                //check for default namespace
+                if(attrQName.equals("xmlns") && attr.getNodeValue().equals("http://www.w3.org/1999/xhtml")){
+                    nsPrefixMap.put("html",attr.getNodeValue());
+                }else if(attrQName.equals("xmlns")){
+                    nsPrefixMap.put("",attr.getNodeValue());
+                }else{
+                    String nsName = attr.getNodeName().substring(attrQName.indexOf(":")+1);
+                    nsPrefixMap.put(nsName,attr.getNodeValue());
                 }
 
             }

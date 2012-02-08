@@ -1,16 +1,16 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 
 package de.betterform.agent.web.flux;
 
+import de.betterform.xml.dom.DOMUtil;
+import de.betterform.xml.xforms.exception.XFormsException;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import de.betterform.xml.dom.DOMUtil;
-import de.betterform.xml.xforms.exception.XFormsException;
 import org.directwebremoting.WebContextFactory;
 import org.w3c.dom.Element;
 

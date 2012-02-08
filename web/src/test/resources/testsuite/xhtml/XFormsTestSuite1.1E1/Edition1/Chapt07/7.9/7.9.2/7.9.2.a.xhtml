@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:ex="http://example.org">
+	<xhtml:head>
+		<xhtml:title>7.9.2.a local-dateTime() function</xhtml:title>
+		<xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+		<xforms:model>
+			<xforms:instance>
+				<ex:root/>
+			</xforms:instance>
+		</xforms:model>
+	</xhtml:head>
+	<xhtml:body>
+	    <xforms:group id="xf-group-1">
+		    <xforms:label class="title">
+		   	    7.9.2.a local-dateTime() function
+		    </xforms:label>
+		</xforms:group>
+		<xforms:group id="xf-group-2">
+			<xforms:label>
+				You must see either the time based on local time zone information or only the time portion 
+				of the result of the now() function for the Local dateTime output. 
+			</xforms:label>
+		</xforms:group>
+		<xforms:output value="local-dateTime()" id="xf-output-1">
+			<xforms:label>Local dateTime : </xforms:label>
+		</xforms:output>
+		
+	</xhtml:body>
+</xhtml:html>

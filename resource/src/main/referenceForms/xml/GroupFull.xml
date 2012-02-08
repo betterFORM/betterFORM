@@ -3,6 +3,12 @@
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>Full group</title>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+
+
     </head>
     <body>
         <div class="description">
@@ -44,18 +50,18 @@
                     </xf:bind>
                 </xf:model>
                 <code class="ui">
-<xf:group ref="grouped-data/group" appearance="full">
+<xf:group id="group1" ref="grouped-data/group" appearance="full">
     <xf:label>Group with full appearance</xf:label>
-    <xf:input ref="a">
+    <xf:input id="input1" ref="a">
         <xf:label>A-label</xf:label>
     </xf:input>
-    <xf:input ref="b">
+    <xf:input id="input2" ref="b">
         <xf:label>Bb-label</xf:label>
     </xf:input>
-    <xf:input ref="c">
+    <xf:input id="input3" ref="c">
         <xf:label>Ccc-label</xf:label>
     </xf:input>
-    <xf:input ref="d">
+    <xf:input id="input4" ref="d">
         <xf:label>Dddd-label</xf:label>
     </xf:input>
 </xf:group>
@@ -64,16 +70,16 @@
             <div class="MIPS">
                 <xf:group appearance="full">
                     <xf:label></xf:label>
-                    <xf:input id="input1-readonly" ref="grouped-data/@readonly" incremental="true">
+                    <xf:input id="group1-readonly" ref="grouped-data/@readonly" incremental="true">
                         <xf:label>readonly</xf:label>
                     </xf:input>
-                    <xf:input id="input1-required" ref="grouped-data/@required" incremental="true">
+                    <xf:input id="group1-required" ref="grouped-data/@required" incremental="true">
                         <xf:label>required</xf:label>
                     </xf:input>
-                    <xf:input id="input1-relevant" ref="grouped-data/@relevant" incremental="true">
+                    <xf:input id="group1-relevant" ref="grouped-data/@relevant" incremental="true">
                         <xf:label>relevant</xf:label>
                     </xf:input>
-                    <xf:input id="input1-valid" ref="grouped-data/@constraint" incremental="true">
+                    <xf:input id="group1-valid" ref="grouped-data/@constraint" incremental="true">
                         <xf:label>valid</xf:label>
                     </xf:input>
                 </xf:group>

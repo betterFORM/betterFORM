@@ -48,7 +48,6 @@ absolute.
 .dijitToasterContainer {
 	display: block;
 	position: fixed;
-	width: 100%;
 	margin: 0px;
 	font: Tahoma, Helvetica, Verdana, Arial;
 }

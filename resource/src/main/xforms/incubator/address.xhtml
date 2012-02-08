@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<html 
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:addr="http://betterform.sourceforge.net/samples/address"
-    xmlns:xforms="http://www.w3.org/2002/xforms"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ev="http://www.w3.org/2001/xml-events">
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:addr="http://betterform.sourceforge.net/samples/address"
+        xmlns:xforms="http://www.w3.org/2002/xforms"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns:ev="http://www.w3.org/2001/xml-events">
     <head>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
         <xforms:model id="address" ev:event="xforms-revalidate" ev:defaultAction="cancel">
             <!--            <xforms:submission id="save" xforms:action="http://localhost:8080/betterform-1.0.0/jsp/forms.jsp" xforms:method="post" xforms:replace="all"/>-->
             <xforms:submission id="debug" xforms:action="{$contextroot}/jsp/debug-instance.jsp" xforms:method="post" xforms:replace="all"/>

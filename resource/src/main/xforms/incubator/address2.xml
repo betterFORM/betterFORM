@@ -4,6 +4,11 @@
       xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns:ev="http://www.w3.org/2001/xml-events"
         >
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
         <xf:model id="address" ev:event="xforms-revalidate" ev:defaultAction="cancel">
 
 

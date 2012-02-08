@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
 <xsl:stylesheet version="2.0"
+                xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xforms="http://www.w3.org/2002/xforms"
                 xmlns:bf="http://betterform.sourceforge.net/xforms"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                exclude-result-prefixes="bf xforms xsl xsd"
+                xmlns:xhtml="http://www.w3.org/1999/xhtml"
+                exclude-result-prefixes="xhtml bf xforms xsl xsd"
                 xpath-default-namespace="http://www.w3.org/1999/xhtml">
 
     <xsl:variable name="data-prefix" select="'d_'"/>
@@ -129,19 +131,21 @@
                     </xsl:when>
                     <!-- Standard Minimal Select -->
                     <xsl:otherwise>
-                        <select id="{$id}-value"
-                                name="{$name}"
-                                class="xfValue"
-                                dataType="{$datatype}"
-                                controlType="select1ComboBox"
-                                title=""
-                                tabindex="{$navindex}"
-                                schemaValue="{bf:data/@bf:schema-value}"
-                                incremental="{$incremental}">
-                            <xsl:call-template name="build-items">
-                                <xsl:with-param name="parent" select="$parent"/>
-                            </xsl:call-template>
-                        </select>
+                        <span class="select1wrapper">
+                            <select id="{$id}-value"
+                                    name="{$name}"
+                                    class="xfValue"
+                                    dataType="{$datatype}"
+                                    controlType="select1ComboBox"
+                                    title=""
+                                    tabindex="{$navindex}"
+                                    schemaValue="{bf:data/@bf:schema-value}"
+                                    incremental="{$incremental}">
+                                <xsl:call-template name="build-items">
+                                    <xsl:with-param name="parent" select="$parent"/>
+                                </xsl:call-template>
+                            </select>
+                        </span>
                     </xsl:otherwise>
                 </xsl:choose>
         </xsl:otherwise>
@@ -149,7 +153,7 @@
     </xsl:template>
 
 
-    <xsl:template name="select">       
+    <xsl:template name="select">
         <xsl:variable name="navindex" select="if (exists(@navindex)) then @navindex else '0'"/>
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="selection" select="@selection"/>
@@ -175,6 +179,7 @@
                         <xsl:call-template name="build-checkboxes-list">
                             <xsl:with-param name="name" select="$name"/>
                             <xsl:with-param name="parent" select="$parent"/>
+                            <xsl:with-param name="navindex" select="$navindex"/>
                         </xsl:call-template>
                     </xsl:for-each>
                 </span>
@@ -209,6 +214,57 @@
                 </select>
             </xsl:otherwise>
         </xsl:choose>
+    </xsl:template>
+
+    <xsl:template name="range">
+        <xsl:variable name="datatype">
+            <xsl:call-template name="getType"/>
+        </xsl:variable>
+        <xsl:message select="concat('Datatype: ',$datatype)"/>
+        <xsl:variable name="name" select="concat($data-prefix,@id)"/>
+
+        <xsl:variable name="incremental" select="if (exists(@incremental)) then @incremental else 'false'"/>
+
+        <xsl:variable name="incrementaldelay">
+            <xsl:value-of select="if (exists(@bf:incremental-delay)) then @bf:incremental-delay else '0'"/>
+        </xsl:variable>
+
+<!--
+        <xsl:if test="$incrementaldelay ne '0'">
+            <xsl:message>
+                <xsl:value-of select="concat(' incremental-delay: ', $incrementaldelay)"/>
+            </xsl:message>
+        </xsl:if>
+-->
+        <xsl:variable name="navindex" select="if (exists(@navindex)) then @navindex else '0'"/>
+        <xsl:variable name="accesskey" select="if (exists(@accesskey)) then @accesskey else 'none'"/>
+
+        <xsl:variable name="value" select="bf:data/text()"/>
+        <xsl:variable name="start" select="@start"/>
+        <xsl:variable name="end" select="@end"/>
+        <xsl:variable name="step" select="@step"/>
+        <xsl:variable name="appearance" select="@appearance"/>
+
+        <span id="{concat(@id,'-value')}"
+              class="xfValue"
+              dataType="{$datatype}"
+              controlType="{local-name()}"
+              appearance="{$appearance}"
+              name="{$name}"
+              incremental="{$incremental}"
+              tabindex="{$navindex}"
+              start="{$start}"
+              end="{$end}"
+              delay="{$incrementaldelay}"
+              step="{$step}"
+              value="{$value}"
+              title="">
+            <xsl:if test="$accesskey != ' none'">
+                <xsl:attribute name="accessKey">
+                    <xsl:value-of select="$accesskey"/>
+                </xsl:attribute>
+            </xsl:if>
+        </span>
     </xsl:template>
 
 
@@ -383,12 +439,20 @@
                 <xsl:with-param name="label-elements" select="xforms:label"/>
             </xsl:call-template>
         </xsl:variable>
-	    <xsl:if test="$label != ''">
-	        <option id="{@id}" value="{$label}" class="xfSelectorItem"><xsl:value-of select="$label" /></option>
-	        </xsl:if>
-	        <xsl:for-each select="xforms:itemset|xforms:item|xforms:choices">
-	           <xsl:call-template name="build-items-list"/>
-	        </xsl:for-each>
+        <xsl:choose>
+            <xsl:when test="$label != ''">
+                <optgroup id="{@id}" label="{$label}" class="xfOptGroupLabel">
+                    <xsl:for-each select="xforms:itemset|xforms:item|xforms:choices">
+                        <xsl:call-template name="build-items-list"/>
+                    </xsl:for-each>
+                </optgroup>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:for-each select="xforms:itemset|xforms:item|xforms:choices">
+                    <xsl:call-template name="build-items-list"/>
+                </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>
 	</xsl:template>
 
     <xsl:template name="build-items-itemset">
@@ -446,23 +510,27 @@
     <xsl:template name="build-checkboxes-list">
     	<xsl:param name="name"/>
         <xsl:param name="parent"/>
+        <xsl:param name="navindex"/>
     	<xsl:choose>
     		<xsl:when test="local-name(.) = 'choices'">
     			<xsl:call-template name="build-checkboxes-choices">
             		<xsl:with-param name="name" select="$name"/>
             		<xsl:with-param name="parent" select="$parent"/>
+            		<xsl:with-param name="navindex" select="$navindex"/>
             	</xsl:call-template>
     		</xsl:when>
     		<xsl:when test="local-name(.) = 'itemset'">
     			<xsl:call-template name="build-checkboxes-itemset">
             		<xsl:with-param name="name" select="$name"/>
             		<xsl:with-param name="parent" select="$parent"/>
+            		<xsl:with-param name="navindex" select="$navindex"/>
             	</xsl:call-template>
     		</xsl:when>
     		<xsl:when test="local-name(.) = 'item'">
     			<xsl:call-template name="build-checkboxes-item">
             		<xsl:with-param name="name" select="$name"/>
             		<xsl:with-param name="parent" select="$parent"/>
+            		<xsl:with-param name="navindex" select="$navindex"/>
             	</xsl:call-template>
     		</xsl:when>
     	</xsl:choose>
@@ -472,22 +540,48 @@
 	<xsl:template name="build-checkboxes-choices">
 		<xsl:param name="name"/>
         <xsl:param name="parent"/>
-		<xsl:for-each select="xforms:itemset|xforms:item|xforms:choices">
-			<xsl:call-template name="build-checkboxes-list">
-				<xsl:with-param name="name" select="$name"/>
-           		<xsl:with-param name="parent" select="$parent"/>
-			</xsl:call-template>
-		</xsl:for-each>
+        <xsl:param name="navindex"/>
+
+        <xsl:variable name="label">
+            <xsl:call-template name="create-label">
+                <xsl:with-param name="label-elements" select="xforms:label"/>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:choose>
+            <xsl:when test="$label != ''">
+                <span id="{@id}">
+                    <span id="{@id}-label" class="xfOptGroupLabelFull"><xsl:value-of select="$label"/></span>
+                    <xsl:for-each select="xforms:itemset|xforms:item|xforms:choices">
+                        <xsl:call-template name="build-checkboxes-list">
+                            <xsl:with-param name="name" select="$name"/>
+                            <xsl:with-param name="parent" select="$parent"/>
+                            <xsl:with-param name="navindex" select="$navindex"/>
+                        </xsl:call-template>
+                    </xsl:for-each>
+                </span>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:for-each select="xforms:itemset|xforms:item|xforms:choices">
+                    <xsl:call-template name="build-checkboxes-list">
+                        <xsl:with-param name="name" select="$name"/>
+                        <xsl:with-param name="parent" select="$parent"/>
+                        <xsl:with-param name="navindex" select="$navindex"/>
+                    </xsl:call-template>
+                </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>
 	</xsl:template>
 
     <xsl:template name="build-checkboxes-itemset">
     	<xsl:param name="name"/>
         <xsl:param name="parent"/>
+        <xsl:param name="navindex"/>
 		<span id="{@id}" dojoType="betterform.ui.select.CheckBoxItemset" >
 			<xsl:for-each select="xforms:item">
 				<xsl:call-template name="build-checkboxes-item">
 	           		<xsl:with-param name="name" select="$name"/>
 	           		<xsl:with-param name="parent" select="$parent"/>
+	           		<xsl:with-param name="navindex" select="$navindex"/>
 				</xsl:call-template>
 			</xsl:for-each>
 		</span>
@@ -583,6 +677,8 @@
         	<xsl:call-template name="build-radiobuttons-list">
         		<xsl:with-param name="name" select="$name"/>
         		<xsl:with-param name="parent" select="$parent"/>
+        		<xsl:with-param name="navindex" select="$navindex"/>
+
         	</xsl:call-template>
         </xsl:for-each>
     </xsl:template>
@@ -590,24 +686,29 @@
     <xsl:template name="build-radiobuttons-list">
     	<xsl:param name="name"/>
     	<xsl:param name="parent"/>
+    	<xsl:param name="navindex"/>
+
         <!-- todo: refactor to handle xforms:choice / xforms:itemset by matching -->
         <xsl:choose>
     		<xsl:when test="local-name(.) = 'choices'">
     			<xsl:call-template name="build-radiobuttons-choices">
             		<xsl:with-param name="name" select="$name"/>
             		<xsl:with-param name="parent" select="$parent"/>
+            		<xsl:with-param name="navindex" select="$navindex"/>
             	</xsl:call-template>
     		</xsl:when>
     		<xsl:when test="local-name(.) = 'itemset'">
     			<xsl:call-template name="build-radiobuttons-itemset">
             		<xsl:with-param name="name" select="$name"/>
             		<xsl:with-param name="parent" select="$parent"/>
+            		<xsl:with-param name="navindex" select="$navindex"/>
             	</xsl:call-template>
     		</xsl:when>
     		<xsl:when test="local-name(.) = 'item'">
     			<xsl:call-template name="build-radiobuttons-item">
             		<xsl:with-param name="name" select="$name"/>
             		<xsl:with-param name="parent" select="$parent"/>
+            		<xsl:with-param name="navindex" select="$navindex"/>
             	</xsl:call-template>
     		</xsl:when>
     	</xsl:choose>
@@ -616,23 +717,50 @@
 	<xsl:template name="build-radiobuttons-choices">
 		<xsl:param name="name"/>
 		<xsl:param name="parent"/>
-		<xsl:for-each select="xforms:itemset|xforms:item|xforms:choices">
-			<xsl:call-template name="build-radiobuttons-list">
-				<xsl:with-param name="name" select="$name"/>
-           		<xsl:with-param name="parent" select="$parent"/>
-			</xsl:call-template>
-		</xsl:for-each>
+		<xsl:param name="navindex"/>
+
+        <xsl:variable name="label">
+            <xsl:call-template name="create-label">
+                <xsl:with-param name="label-elements" select="xforms:label"/>
+            </xsl:call-template>
+
+        </xsl:variable>
+        <xsl:choose>
+            <xsl:when test="$label != ''">
+                <span id="{@id}">
+                    <span id="{@id}-label" class="xfOptGroupLabelFull"><xsl:value-of select="$label"/></span>
+                    <xsl:for-each select="xforms:itemset|xforms:item|xforms:choices">
+                        <xsl:call-template name="build-radiobuttons-list">
+                            <xsl:with-param name="name" select="$name"/>
+                            <xsl:with-param name="parent" select="$parent"/>
+                            <xsl:with-param name="navindex" select="$navindex"/>
+                        </xsl:call-template>
+                    </xsl:for-each>
+                </span>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:for-each select="xforms:itemset|xforms:item|xforms:choices">
+                    <xsl:call-template name="build-radiobuttons-list">
+                        <xsl:with-param name="name" select="$name"/>
+                        <xsl:with-param name="parent" select="$parent"/>
+                        <xsl:with-param name="navindex" select="$navindex"/>
+                    </xsl:call-template>
+                </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>
 	</xsl:template>
 
     <xsl:template name="build-radiobuttons-itemset">
     	<xsl:param name="name"/>
     	<xsl:param name="parent"/>
+    	<xsl:param name="navindex"/>
 
 		<span id="{@id}" dojoType="betterform.ui.select1.RadioItemset" class="xfRadioItemset">
 			<xsl:for-each select="xforms:item">
 				<xsl:call-template name="build-radiobuttons-item">
 	           		<xsl:with-param name="name" select="$name"/>
 	           		<xsl:with-param name="parent" select="$parent"/>
+	           		<xsl:with-param name="navindex" select="$navindex"/>
 				</xsl:call-template>
 			</xsl:for-each>
 		</span>

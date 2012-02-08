@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema 
+<xs:schema
     targetNamespace="http://www.w3.org/2001/xml-events" 
     xmlns:ev="http://www.w3.org/2001/xml-events" 
     xmlns:xs="http://www.w3.org/2001/XMLSchema" 

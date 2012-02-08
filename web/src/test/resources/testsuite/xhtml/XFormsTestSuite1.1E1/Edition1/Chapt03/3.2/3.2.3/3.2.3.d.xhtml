@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <xhtml:head>
+        <xhtml:title>3.2.3.d single-node binding - bind attribute overrides ref and model</xhtml:title>
+        <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+        <xforms:model id="myCar">
+            <xforms:instance>
+                <car>
+                    <make>Mercedes</make>
+                    <year>2004</year>
+                    <color>silver</color>
+                    <hp>450</hp>
+                </car>
+            </xforms:instance>
+            <xforms:bind id="bind_001" nodeset="/car/color"/>
+        </xforms:model>
+        <xforms:model id="notmyCar">
+        	<xforms:instance>
+        		<car>
+        			<make>Pinto</make>
+        			<year>1975</year>
+        			<color>onFire</color>
+        			<hp>300</hp>
+        		</car>
+        	</xforms:instance>
+        </xforms:model>
+    </xhtml:head>
+    <xhtml:body>
+        <xforms:group id="xf-group-1">
+            <xforms:label class="title">3.2.3.d single-node binding - bind attribute overrides ref and model</xforms:label>
+        </xforms:group>
+        <xforms:group id="xf-group-2">
+            <xforms:label>
+				<!-- The bind attribute points to a valid bind element;  -->
+				You must see the value "silver": 
+			</xforms:label>
+        </xforms:group>
+        <xforms:output bind="bind_001" ref="/car/make" model="notmyCar" id="xf-output-1">
+            <xforms:label/>
+        </xforms:output>
+    </xhtml:body>
+</xhtml:html>

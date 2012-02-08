@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
 <!-- $Id: build.xml,v 1.90 2006/11/16 23:55:43 joernt Exp $ -->
-<project id="build Dojo" name="Dojo Build" default="build-dojo" basedir="">
+<project id="buildDojo" name="Util: Dojo Build" default="build-dojo" basedir="">
 
     <xmlproperty file="../build.properties.xml"
                  semanticAttributes="true" keepRoot="false"/>
@@ -15,6 +15,7 @@
     <property name="src.dir" value="${basedir}/src"/>
     <property name="dojo.version" value="${properties.dojo}"/>
     <property name="timeline.version" value="${properties.timeline}" />
+    <property name="syntaxhighlighter.version" value="${properties.timeline}" />
 
     <property name="scripts.target" value="${target.dir}/scripts"/>
 
@@ -33,6 +34,14 @@
         <unzip src="src/main/lib/${timeline.version}.zip" dest="${scripts.target}/simile/timeline">
             <cutdirsmapper dirs="1"/>
         </unzip>
+        <!-- TODO: integrate sytaxhighlighter into build
+             TODO: check for changed files in resources/src/../syntaxhighlighter ...
+         -->
+        <!--
+        <unzip src="src/main/lib/${syntaxhighlighter.version}.zip" dest="${scripts.target}/syntaxhighlighter/timeline">
+            <cutdirsmapper dirs="1"/>
+        </unzip>
+        -->
         <copy file="${src.dir}/main/lib/dwr.js.optimized" tofile="${scripts.target}/dwr.js"/>
     </target>
 
@@ -137,17 +146,11 @@
             <arg value="symbol=short"/>
             <arg value="layerOptimize=shrinksafe"/>
 
-            <arg value="version=1.5"/>
+            <arg value="version=1.6"/>
         </java>
         <!-- cleanup JS/CSS resources of betterform dojo release -->
         <antcall target="cleanup-js-release"/>
         <copy file="${src.dir}/main/lib/dwr.js.optimized" tofile="${scripts.target}/release/dojo/dwr.js"/>
-        <copy todir="${scripts.target}/release/dojo/jstree_pre1.0_stable">
-            <fileset dir="${src.dir}/main/resources/scripts/jstree_pre1.0_stable"/>
-        </copy>
-        <copy todir="${scripts.target}/release/dojo/betterform">
-            <fileset file="${src.dir}/main/resources/scripts/betterform/xfEditorUtil.js"/>
-        </copy>
         <zip description="create optimized JavaScript zip"
              zipfile="${src.dir}/main/lib/${app.name}-js-optimized.zip"
              basedir="${scripts.target}/release/dojo"/>
@@ -173,6 +176,11 @@
         <property name="bfJSRelease"  value="${scripts.target}/release/dojo"/>
 
         <mkdir dir="${bfJSRelease}" />
+        <!-- TODO: integrate sytaxhighlighter into build -->
+        <copy todir="${bfJSRelease}/syntaxhighlighter" flatten="false">
+            <fileset dir="${scripts.target}/syntaxhighlighter" includes="**/*"/>
+        </copy>
+
         <!-- copy betterFORM JS resources -->
         <property name="bfRelease" value="${bfJSRelease}/betterform"/>
         <copy todir="${bfRelease}" flatten="false">

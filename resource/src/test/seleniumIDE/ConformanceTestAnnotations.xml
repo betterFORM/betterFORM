@@ -1,3 +1,8 @@
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
 <conformanceTests>
 	<description>Due to testing issues with Selenium the results are not always correct when run with Selenium RC.</description>
     <falseNegative>

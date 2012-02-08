@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<test-case xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner"
+           xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../test-case.xsd">
+    <!-- test insert / delete action -->
+    <open href="uitest/localization.xhtml" bfTest="true"/>
+    <assert-title title="Internationalization &amp; Localization"/>
+
+    <assert-control-present locator="output-welcome" type="output"/>
+    <assert-control-present locator="lang-selector" type="select1"/>
+    <assert-control-present locator="output-content1" type="output"/>
+
+    <assert-control-present locator="output-decimal" type="output"/>
+    <assert-control-present locator="output-double" type="output"/>
+    <assert-control-present locator="output-float" type="output"/>
+    <assert-control-present locator="output-date" type="output"/>
+<!--
+    <assert-control-present locator="output-dateTime" type="output"/>
+    <assert-control-present locator="output-dateTimeGMT" type="output"/>
+-->
+    <assert-control-present locator="output-unbound" type="output"/>
+
+    <assert-control-present locator="input-decimal" type="input"/>
+    <assert-control-present locator="input-double" type="input"/>
+    <assert-control-present locator="input-float" type="input"/>
+    <assert-control-present locator="input-date" type="input"/>
+<!--
+    <assert-control-present locator="input-dateTime" type="input"/>
+    <assert-control-present locator="input-dateTimeGMT" type="input"/>
+-->
+    <assert-control-value locator="lang-selector" value="en"/>
+    <assert-control-value locator="output-welcome" value="Welcome to the betterFORM Localization Demo Page"/>
+    <assert-control-value locator="output-content1" value="This page demonstrates how easy internationalization &amp; localization can by done with Chiba"/>
+
+    <assert-control-value locator="output-decimal" value="10,001.1111111"/>
+    <assert-control-label locator="output-decimal" value="Decimal"/>
+
+    <assert-control-value locator="output-double" value="1.127181727"/>
+    <assert-control-label locator="output-double" value="Double"/>
+
+    <assert-control-value locator="output-float" value="1.13799898"/>
+    <assert-control-label locator="output-float" value="Float"/>
+
+    <assert-control-value locator="output-date" value="Jan 6, 2004"/>
+    <assert-control-label locator="output-date" value="Date"/>
+
+    <assert-control-value locator="output-unbound" value="50005.555555499996"/>
+    <assert-control-label locator="output-unbound" value="Unbound Value"/>
+
+    <assert-control-present locator="input-decimal" value="10,001.1111111"/>
+    <assert-control-label locator="input-decimal" value="Decimal"/>
+
+    <assert-control-present locator="input-double" value="1.127181727"/>
+    <assert-control-label locator="input-double" value="Double"/>
+
+    <assert-control-present locator="input-float" value="1.13799898"/>
+    <assert-control-label locator="input-float" value="Float"/>
+
+    <assert-control-present locator="input-date" value="1/6/2004"/>
+    <assert-control-label locator="input-date" value="Date"/>
+
+
+    <!-- Switch to German -->
+    <select-option locator="lang-selector" option="de"/>
+    <assert-control-value locator="output-welcome" value="Willkommen auf der Chiba Localization Demo Seite"/>
+    <assert-control-value-contains locator="output-content1" value="Dies Seite demonstriert wie leicht Internationalisierung und Lokalisierung mit Chiba"/>
+
+    <assert-control-value locator="output-decimal" value="10.001,1111111"/>
+    <assert-control-label locator="output-decimal" value="Dezimal"/>
+
+    <assert-control-value locator="output-double" value="1,127181727"/>
+    <assert-control-value locator="output-float" value="1,13799898"/>
+
+    <assert-control-value locator="output-date" value="06.01.2004"/>
+    <assert-control-label locator="output-date" value="Datum"/>
+
+    <assert-control-value locator="output-unbound" value="50005.555555499996"/>
+    <assert-control-label locator="output-unbound" value="Ungebundener Wert"/>
+
+    <assert-control-present locator="input-decimal" value="10.001,1111111"/>
+    <assert-control-label locator="input-decimal" value="Dezimal"/>
+
+    <assert-control-present locator="input-double" value="1,127181727"/>
+    <assert-control-present locator="input-float" value="1,13799898"/>
+
+    <assert-control-present locator="input-date" value="1/6/2004"/>
+    <assert-control-label locator="input-date" value="Datum"/>
+
+    <fail msg="dateTime, dateTimeGMT UITest not implemented yet, verify 'unbound value' value "/>
+
+</test-case>

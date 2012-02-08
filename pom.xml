@@ -1,14 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <!--
-        ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
-        ~ Licensed under the terms of BSD License
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
     -->
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.betterform</groupId>
     <artifactId>betterform-project</artifactId>
-    <version>3.2.0-RC4</version>
+    <version>4.0</version>
     <packaging>pom</packaging>
 
     <name>betterForm Project</name>
@@ -23,9 +24,9 @@
         <module>zaphod</module>
     </modules>
 
-     <organization>
-            <name>betterForm Project</name>
-            <url>http://betterform.de</url>
+    <organization>
+        <name>betterForm Project</name>
+        <url>http://betterform.de</url>
     </organization>
 
 
@@ -141,55 +142,6 @@
         <system>Trac</system>
         <url>https://betterform.de/trac</url>
     </issueManagement>
-<!--
-    <pluginRepositories>
-        <pluginRepository>
-            <id>jboss-public-repository-group</id>
-            <name>JBoss Public Maven Repository Group</name>
-            <url>https://repository.jboss.org/nexus/content/groups/public
-            </url>
-            <layout>default</layout>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </snapshots>
-        </pluginRepository>
-        <pluginRepository>
-            <id>maven-central-repository-group</id>
-            <name>Maven Central Repository Group</name>
-            <url>https://repository.jboss.org/nexus/content/repositories/central
-            </url>
-            <layout>default</layout>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </snapshots>
-        </pluginRepository>
-
-        <pluginRepository>
-            <id>jboss-snapshots-repository</id>
-            <name>JBoss Snapshots Repository</name>
-            <url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
-            <layout>default</layout>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
--->
 
 
     <build>
@@ -200,13 +152,6 @@
                     <locales>en</locales>
                     <inputEncoding>UTF-8</inputEncoding>
                     <outputEncoding>UTF-8</outputEncoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-idea-plugin</artifactId>
-                <configuration>
-                    <jdkName>1.5</jdkName>
                 </configuration>
             </plugin>
             <plugin>
@@ -222,6 +167,7 @@
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
                 <configuration>
+                    <outputDirectory>${project.build.outputDirectory}</outputDirectory>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
@@ -232,52 +178,13 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <dependencies>
-                  <dependency>
-                    <groupId>org.apache.maven.scm</groupId>
-                    <artifactId>maven-scm-provider-gitexe</artifactId>
-                    <version>1.1-db-1</version>
-                  </dependency>
-                </dependencies>
-            </plugin>
-            <plugin>
-                 <groupId>org.apache.maven.plugins</groupId>
-                 <artifactId>maven-scm-plugin</artifactId>
-                 <dependencies>
-                   <dependency>
-                     <groupId>org.apache.maven.scm</groupId>
-                     <artifactId>maven-scm-provider-gitexe</artifactId>
-                     <version>1.1-db-1</version>
-                   </dependency>
-                 </dependencies>
-             </plugin>
         </plugins>
-        <extensions>
-            <extension>
-                <groupId>org.jvnet.wagon-svn</groupId>
-                <artifactId>wagon-svn</artifactId>
-                <version>1.8</version>
-            </extension>
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-ssh-external</artifactId>
-				<version>1.0-alpha-6</version>
-            </extension>
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-webdav</artifactId>
-                <version>1.0-beta-2</version>
-            </extension>
-        </extensions>
     </build>
     <dependencies>
-      	<dependency>
-			<groupId>org.apache.ant</groupId>
-        	<artifactId>ant</artifactId>
-        	<version>1.7.1</version>
-      	</dependency>
-</dependencies>
+        <dependency>
+            <groupId>org.apache.ant</groupId>
+            <artifactId>ant</artifactId>
+            <version>1.7.1</version>
+        </dependency>
+    </dependencies>
 </project>

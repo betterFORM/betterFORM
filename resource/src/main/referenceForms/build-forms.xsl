@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 <!-- TODO:
@@ -11,9 +11,6 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:xf="http://www.w3.org/2002/xforms"
-                xmlns:ev="http://www.w3.org/2001/xml-events"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 xpath-default-namespace="http://www.w3.org/1999/xhtml"
                 exclude-result-prefixes="#all">
 
@@ -50,10 +47,10 @@
 
     <xsl:template match="body">
         <xsl:copy>
-            <xsl:attribute name="class" select="if(exists(@class)) then @class else 'soria InlineAlert'"/>
+            <xsl:attribute name="class" select="if(exists(@class)) then @class else 'soria'"/>
             <xsl:attribute name="style">margin:30px</xsl:attribute>
 
-            <div id="xforms" class="InlineAlert">
+            <div id="xforms">
                 <!-- the xforms model here -->
                 <xsl:apply-templates select="div[@class='sample']/div[@class='markup']/xf:model"/>
                 <xsl:apply-templates select="div[@class='sample']/div[@class='markup']/code/xf:model"/>
@@ -355,11 +352,16 @@
         </td>
     </xsl:template>
 
-    <xsl:template match="*|@*|text()|comment()">
+    <xsl:template match="*|@*|text()">
         <xsl:copy>
             <xsl:copy-of select="@*"/>
             <xsl:apply-templates/>
         </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="comment()"><xsl:text>
+    </xsl:text>
+    <xsl:copy/>
     </xsl:template>
 
     <xsl:template match="*|@*|text()|comment()" mode="xforms">

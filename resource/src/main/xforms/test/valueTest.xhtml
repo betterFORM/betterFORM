@@ -1,0 +1,57 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<title>Value test</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+		<xf:model>
+			<xf:instance id="valtest">
+				<valtest xmlns="">
+					<myvalueref>un</myvalueref>
+					<myvaluevalue>un</myvaluevalue>
+				</valtest>
+			</xf:instance>
+			<xf:instance id="values">
+				<values xmlns="">
+					<v id="un">ONE</v>
+					<v id="deux">TWO</v>
+					<v id="trois">THREE</v>
+				</values>
+			</xf:instance>
+		</xf:model>
+	</head>
+	<body>
+        <p>
+            When a new value is supplied via the input field the select1 fails to update when the second item from
+            the select1 is choosen. Though the itemset updates correctly the new key never arrives at the client layer.
+        </p>
+		<xf:group ref="instance('valtest')">
+
+<!--
+
+			<xf:select1 ref="myvalueref" incremental="true">
+				<xf:label>Select a value (using ref)</xf:label>
+				<xf:itemset nodeset="instance('values')/v">
+					<xf:label ref="."/>
+					<xf:value ref="@id"/>
+				</xf:itemset>
+			</xf:select1>
+-->
+			<xf:select1 ref="myvaluevalue" incremental="true">
+				<xf:label>Select a value (using value)</xf:label>
+				<xf:itemset nodeset="instance('values')/v">
+					<xf:label ref="."/>
+					<xf:value ref="@id"/>
+				</xf:itemset>
+			</xf:select1>
+			<br/>
+            <xf:input ref="instance('values')/v[2]/@id">
+                <xf:label>Change value</xf:label>
+            </xf:input>
+			Value from ref: <xf:output incremental="true" ref="myvalueref"/><br/>
+			Value from value: <xf:output incremental="true" ref="myvaluevalue"/><br/>
+		</xf:group>
+	</body>
+</html>

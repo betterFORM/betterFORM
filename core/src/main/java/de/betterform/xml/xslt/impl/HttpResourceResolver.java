@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -10,7 +10,7 @@ import de.betterform.xml.xforms.exception.XFormsException;
 import org.w3c.dom.Document;
 
 import javax.xml.transform.dom.DOMSource;
-import java.io.*;
+import java.io.InputStream;
 import java.net.URI;
 import java.util.HashMap;
 

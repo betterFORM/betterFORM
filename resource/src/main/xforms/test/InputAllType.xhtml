@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+<head>
+    <title>Single Input Test</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
+
+    <xf:model>
+        <xf:instance xmlns="">
+            <data>
+                <string></string>
+                <boolean/>
+                <xfboolean/>
+                <date>2011-12-31</date>
+                <datetime/>
+            </data>
+        </xf:instance>
+        <xf:bind nodeset="string" constraint="string-length(.) &gt; 3" required="true"/>
+        <xf:bind nodeset="boolean" type="boolean"/>
+        <xf:bind nodeset="xfboolean" type="xf:boolean"/>
+        <xf:bind nodeset="date" type="xf:date"/>
+
+    </xf:model>
+</head>
+
+<body class="tundra">
+    <xf:group  appearance="full">
+        <xf:group>
+            <xf:input ref="string">
+                <xf:label>Input String: </xf:label>
+                <xf:alert>Constraint failed</xf:alert>
+                <xf:hint>plain text input</xf:hint>
+            </xf:input>
+            <xf:trigger>
+                <xf:label>setvalue invalid</xf:label>
+                <xf:setvalue ref="string" value="'foo'"/>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>setvalue valid</xf:label>
+                <xf:setvalue ref="string" value="'foobar'"/>
+            </xf:trigger>
+        </xf:group>
+
+        <xf:input ref="boolean">
+            <xf:label>Input XSD Boolean: </xf:label>
+        </xf:input>
+        <xf:input ref="xfboolean">
+            <xf:label>Input XF Boolean: </xf:label>
+        </xf:input>
+        <xf:input ref="date">
+            <xf:label>Input XF Date: </xf:label>
+            <xf:hint>date hint</xf:hint>
+            <xf:alert>date format error</xf:alert>
+        </xf:input>
+        <xf:trigger>
+            <xf:label>setvalue invalid</xf:label>
+            <xf:setvalue ref="date" value="'foo'"/>
+        </xf:trigger>
+        <xf:trigger>
+            <xf:label>setvalue valid</xf:label>
+            <xf:setvalue ref="date" value="'2011-12-12'"/>
+        </xf:trigger>
+        <xf:input ref="date" appearance="bf:dijit">
+            <xf:label>Input XF Date: </xf:label>
+            <xf:hint>date hint</xf:hint>
+            <xf:alert>date format error</xf:alert>
+        </xf:input>
+</xf:group>
+</body>
+</html>

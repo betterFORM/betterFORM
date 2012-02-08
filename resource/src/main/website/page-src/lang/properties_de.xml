@@ -1,0 +1,18 @@
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<data lang="de">
+    <solutions>lösungen</solutions>
+    <Solutions>Lösungen</Solutions>
+    <contact>kontakt</contact>
+    <xmlApplications>XML Anwendungen</xmlApplications>
+    <dataManagement>Daten Management</dataManagement>
+    <references>Referenzen</references>
+    <services>Services</services>
+    <development>Entwicklung</development>
+    <training>Schulungen</training>
+    <customSolutions>Individuelle Lösungen</customSolutions>
+    <documentation>Dokumentation</documentation>
+</data>

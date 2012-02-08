@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (c) 2010, Nick Van den Bleeken
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, 
+are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice, this
+      list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice, 
+      this list of conditions and the following disclaimer in the documentation 
+      and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY 
+EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT 
+SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, 
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, 
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT 
+OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<test-case xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner" xmlns:xf="http://www.w3.org/2002/xforms" xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../test-case.xsd">
+	<open href="Chapt02/2.3.a.xhtml"/>
+	<assert-title title="2.3.a Example: Value Constraints"/>
+	<assert-selection-options locator="xf-select1-1" options="Cash,Credit"/>
+	<assert-control-present locator="xf-input-1" type="input"/>
+	<assert-control-present locator="xf-input-2" type="input"/>
+	<type-input locator="xf-input-1" value="4012888888881881"/>
+	<type-input locator="xf-input-2" value="2001"/>
+	<click locator="xf-submit-1"/>
+	<assert-control-invalid locator="xf-input-2"/>
+	<type-input locator="xf-input-2" value="2001-08"/>
+	<click locator="xf-submit-1"/>
+	<wait-for-page-to-load/>
+	<assert-title title="Results from echo.sh"/>
+	<assert-text-present text="method=&#34;cc&#34;"/>
+	<assert-text-present text="&lt;number&gt;4012888888881881&lt;/number&gt;"/>
+	<assert-text-present text="&lt;expiry&gt;2001-08&lt;/expiry&gt;"/>
+</test-case>

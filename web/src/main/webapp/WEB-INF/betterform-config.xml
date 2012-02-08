@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
@@ -23,8 +23,7 @@
 
         <property name="xslt.cache.enabled" value="true" description="flag for XSLT caching"/>
 
-        <property name="error.page" value="jsp/error.jsp"
-                  description="location of error-page relative to context"/>
+        <property name="error.page" value="error/error.page" description="location of error-page relative to context"/>
 
 		<!-- DEPRECATED -->
 <!--
@@ -102,7 +101,7 @@
         -->
         <property name="betterform.ui.defaultAlertText" value="The specified value is invalid"/>
 
-        <property name="betterform.debug-allowed" value="true" description="if debug may be switched by Url param 'debug'"/>
+        <property name="betterform.debug-allowed" value="true" description="if true enables debug bar and event log viewer"/>
         <!-- WARNING: not ready for production use -->
         <property name="betterform.event-optimization-enabled" value="true" description="TBD: if event optimization is enabled, only events present within the current form will be processed"/>
 
@@ -166,22 +165,12 @@
                    processor="de.betterform.agent.web.flux.FluxProcessor"
                    description="AJAX-enabled useragent with packed resources for production environments">
         </useragent>
-        <useragent name="dojodev"
-                   processor="de.betterform.agent.web.flux.FluxProcessor"
-                   description="AJAX-enabled useragent with development resources and debug support">
-        </useragent>
-        <useragent name="bfEditor"
-                   processor="de.betterform.agent.web.flux.FluxProcessor"
-                   description="useragent that requests editing of a form">
-        </useragent>
 
     </useragents>
 
     <ui-generators>
         <ui-generator useragent="dojo" stylesheet="dojo.xsl"/>
-        <ui-generator useragent="dojodev" stylesheet="dojo-dev.xsl"/>
         <ui-generator useragent="html" stylesheet="html4.xsl"/>
-        <ui-generator useragent="bfEditor" stylesheet="bfEditor.xsl"/>
     </ui-generators>
 
     <connectors>

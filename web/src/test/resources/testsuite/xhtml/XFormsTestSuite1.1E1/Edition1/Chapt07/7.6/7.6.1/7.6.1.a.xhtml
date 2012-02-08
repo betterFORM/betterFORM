@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:ex="http://example.com">
+  <xhtml:head>
+    <xhtml:title>7.6.1.a boolean-from-string() function</xhtml:title>
+	<xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+        <xforms:instance>
+	    	<ex:driver>
+				<ex:safe>true</ex:safe>
+				<ex:experienced>TRUE</ex:experienced>
+				<ex:insured>1</ex:insured>
+				<ex:points>false</ex:points>
+				<ex:accidents>FALSE</ex:accidents>
+				<ex:mv_violation>0</ex:mv_violation>
+				<ex:junk>3dod0</ex:junk>
+            </ex:driver>
+        </xforms:instance>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+    <xforms:group id="xf-group-1">
+  	    <xforms:label class="title">
+  		7.6.1.a boolean-from-string() function
+  	    </xforms:label>
+  	</xforms:group>
+  	<xforms:group id="xf-group-2">
+  		<xforms:label>
+	  		You must see the value "true" for the Safe Driver, Experienced Driver and Insured Driver outputs. 
+	  		You must see the value "false" for the License Points, Accidents, Moving Violations, and  
+	  		Junk Instance Data outputs. 
+	  	</xforms:label>	
+  	</xforms:group>
+  	<xforms:group id="xf-group-3">
+		<xforms:output value="boolean-from-string(ex:safe)" id="xf-output-1">
+    		<xforms:label>Safe Driver : </xforms:label>
+		</xforms:output>
+	</xforms:group>
+	<xforms:group id="xf-group-4">
+		<xforms:output value="boolean-from-string(ex:experienced)" id="xf-output-2">
+    		<xforms:label>Experienced Driver : </xforms:label>
+		</xforms:output>
+	</xforms:group>
+	<xforms:group id="xf-group-5">
+		<xforms:output value="boolean-from-string(ex:insured)" id="xf-output-3">
+    		<xforms:label>Insured Driver : </xforms:label>
+		</xforms:output>
+	</xforms:group>
+	<xforms:group id="xf-group-6">
+		<xforms:output value="boolean-from-string(ex:points)" id="xf-output-4">
+    		<xforms:label>License Points : </xforms:label>
+		</xforms:output>
+	</xforms:group>
+	<xforms:group id="xf-group-7">
+		<xforms:output value="boolean-from-string(ex:accidents)" id="xf-output-5">
+    		<xforms:label>Accidents : </xforms:label>
+		</xforms:output>
+	</xforms:group>
+	<xforms:group id="xf-group-8">
+		<xforms:output value="boolean-from-string(ex:mv_violation)" id="xf-output-6">
+    		<xforms:label>Moving Violations : </xforms:label>
+		</xforms:output>
+	</xforms:group>
+	<xforms:group id="xf-group-9">
+		<xforms:output value="boolean-from-string(ex:junk)" id="xf-output-7">
+    		<xforms:label>Junk Instance Data : </xforms:label>
+		</xforms:output>
+	</xforms:group>
+	
+  </xhtml:body>
+</xhtml:html>

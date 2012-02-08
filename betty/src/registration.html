@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?><
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title></title>
+        <link rel="stylesheet" type="text/css" href="resources/scripts/dojo/dojo.css"/>
+        <link rel="stylesheet" type="text/css" href="resources/scripts/dijit/themes/tundra/tundra.css"/>
+        <link rel="stylesheet" type="text/css" href="resources/styles/xforms.css"/>
+        <link rel="stylesheet" type="text/css" href="resources/styles/betterform.css"/>
+        <link rel="stylesheet" type="text/css" href="resources/styles/registration.css"/>
+        <style type="text/css">
+            .hide {
+                display: none;
+            }
+
+            #bettyProcessor {
+                position: fixed;
+                bottom: 6px;
+                right: 10px;
+            }
+
+            #splash {
+                width: 300px;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                z-index: 999;
+                opacity: 0.8;
+                height: 30px;
+            }
+
+            .splash-screen {
+                -moz-border-radius: 10px;
+                border: thin solid steelBlue;
+                height: 12px;
+                padding: 8px;
+                background: #b0c4de;
+            }
+
+            .splash-message {
+                float: left;
+                margin: 18px;
+            }
+
+                /*
+                                .splash-image {
+                                    background-image: url(resources/images/betterform_icon49x49.png);
+                                    background-repeat: no-repeat;
+                                    background-position: left center;
+                                    width: 49px;
+                                    height: 49px;
+                                    float: left;
+                                }
+                */
+        </style>
+        <style type="text/css">
+            @import "styles/registration.css";
+        </style>
+        <script type="text/javascript">
+            var djConfig = {
+                debugAtAllCosts:false,
+                locale:'en',
+                isDebug:true,
+                parseOnLoad:false
+            };
+        </script>
+        <script type="text/javascript" src="resources/scripts/dojo/dojo.js"></script>
+        <script type="text/javascript" src="resources/scripts/betterform/ui/input/Textfield.js"></script>
+        <script type="text/javascript">
+            dojo.require("dojo.parser");
+            dojo.require("betterform.Betty");
+            dojo.require("betterform.ui.Control");
+            dojo.require("betterform.ui.container.Group");
+            dojo.require("betterform.ui.util");
+            dojo.require("betterform.ui.input");
+            var insertPoint;
+            dojo.addOnLoad(function() {
+                console.log("document ready");
+            });
+
+            setSplash = function setSplash(html) {
+                var splash = document.getElementById("splash");
+                splash.innerHTML = html;
+                return true;
+            }
+            setView = function setView(html) {
+                console.log("setView called");
+                var insertPoint = dojo.byId("xformsui");
+                console.debug("insertPoint", insertPoint);
+                insertPoint.innerHTML = html;
+                dojo.style("xformsui", "opacity", "0");
+                var fadeArgsIn = {
+                    node: "xformsui"
+                };
+                dojo.fadeIn(fadeArgsIn).play();
+
+
+                //                    dojo.addClass(dojo.byId("splash"), "hide");
+                dojo.removeClass(insertPoint, "hide")
+                //                    dojo.parser.parse(insertPoint);
+                dojo.parser.parse();
+                dojo.style("splash", "opacity", ".8");
+                var fadeArgs = {
+                    node: "splash",
+                    duration:3000
+                };
+                dojo.fadeOut(fadeArgs).play();
+
+            }
+            function debug(message) {
+                console.log(message);
+            }
+        </script>
+    </head>
+    <body xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events"
+          class="tundra">
+        <div id="splash"></div>
+        <div id="xformsui" class="hide">
+            <div xmlns="" id="xforms">
+                <div id="registration" class="InlineRoundBordersAlert">
+                    <div style="display:none" id="xf1">
+                        <xf:model xmlns="http://www.w3.org/1999/xhtml" id="m-registration">
+                            <xf:instance xmlns="">
+                                <data>
+                                    <firstname/>
+                                    <lastname/>
+                                    <alias/>
+                                    <email/>
+                                    <pass1/>
+                                    <pass2/>
+                                    <agreement>true</agreement>
+                                </data>
+                            </xf:instance>
+                            <xf:bind nodeset="alias" constraint="string-length(.) &gt; 3" required="true()"></xf:bind>
+                            <xf:bind nodeset="email" type="email" constraint="string-length(.) &gt; 3"
+                                     required="true()"></xf:bind>
+                            <xf:bind nodeset="pass1" constraint="string-length(.) &gt;= 6" required="true()"></xf:bind>
+                            <xf:bind nodeset="pass2" constraint=". = ../pass1" required="true()"></xf:bind>
+                            <xf:bind nodeset="agreement" type="boolean"></xf:bind>
+                            <xf:submission id="s-send" replace="instance" resource="echo:test" method="get">
+                                <xf:action ev:event="xforms-submit-error">
+                                    <xf:message>Registration failed. Please fill in valid values</xf:message>
+                                </xf:action>
+                                <xf:action ev:event="xforms-submit-done">
+                                    <xf:message>You have been registered successfully.</xf:message>
+                                </xf:action>
+                            </xf:submission>
+                            <!--<xf:setfocus control="first" ev:event="xforms-ready"/>--></xf:model>
+                    </div>
+
+                    <div id="signin">
+                        Already a member? Sign in here
+                    </div>
+                    <xf:group xmlns="http://www.w3.org/1999/xhtml" id="registration-ui" appearance="bf:verticalTable">
+                        <xf:label>Join the group
+                            <span xmlns="" id="subtitle">Enjoy being a part of it!</span>
+                        </xf:label>
+                        <xf:input id="first" ref="firstname">
+                            <xf:label>Firstname:</xf:label>
+                            <xf:hint>enter your firstname</xf:hint>
+                        </xf:input>
+                        <xf:input ref="lastname">
+                            <xf:label>Lastname:</xf:label>
+                            <xf:hint>enter your lastname</xf:hint>
+                        </xf:input>
+                        <xf:input ref="alias">
+                            <xf:label>Username:</xf:label>
+                            <xf:hint>please choose a username</xf:hint>
+                            <xf:alert>enter more than 3 characters</xf:alert>
+                        </xf:input>
+                        <xf:input ref="email">
+                            <xf:label>Email:</xf:label>
+                            <xf:alert>is not a valid email address</xf:alert>
+                            <xf:hint>enter a valid email address</xf:hint>
+                        </xf:input>
+                        <xf:secret ref="pass1">
+                            <xf:label>password:</xf:label>
+                            <xf:alert>must be at least 6 characters</xf:alert>
+                            <xf:hint>more than 6 characters required</xf:hint>
+                        </xf:secret>
+                        <xf:secret ref="pass2">
+                            <xf:label>reenter password:</xf:label>
+                            <xf:hint>please retype your password</xf:hint>
+                            <xf:alert>password does not match</xf:alert>
+                        </xf:secret>
+                        <xf:trigger appearance="triggerMiddleColumn">
+                            <xf:label>Create my account</xf:label>
+                            <xf:hint>Be calm - this is just a demo! ;)</xf:hint>
+                            <xf:send submission="s-send"></xf:send>
+                        </xf:trigger>
+                    </xf:group>
+                </div>
+            </div>
+        </div>
+        <applet id="bettyProcessor" name="bettyProcessor" code="de.betterform.agent.betty.Betty" codebase="bin"
+                documentbase="."
+                archive="betty-1.0.jar,commons-codec-1.4.jar,saxon-9.2.1.5.jar,commons-fileupload-1.2.1.jar,httpcore-4.1.jar,httpclient-4.1.1.jar,httpmime-4.1.1.jar,commons-io-1.4.jar,commons-lang-2.4.jar,commons-logging-1.1.1.jar,activation-1.1.1.jar,mail-1.4.2.jar,log4j-1.2.15.jar,xercesImpl-2.9.1.jar,xml-apis-1.3.04.jar,xmlrpc-common-3.1.2.jar,xmlrpc-client-3.1.2.jar,xmlrpc-server-3.1.2.jar,ehcache-1.6.2.jar,ant-1.8.2.jar"
+                width="17" height="17" mayscript="true"></applet>
+    </body>
+</html>

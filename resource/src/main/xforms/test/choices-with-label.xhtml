@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html
+ xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+        >
+    <head>
+        <title>Choices With Labels</title>
+        <!--
+          ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+          ~ Licensed under the terms of BSD License
+        -->
+        <style type="text/css">
+            .xfFullGroup .xfGroupLabel  {
+                font-weight:bold;
+                font-size: 16pt;
+                padding-bottom: 15px;
+                padding-top: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model id="model-1">
+                <xf:instance>
+                    <data xmlns="">
+                        <values>g</values>
+                        <value>g</value>
+                    </data>
+                </xf:instance>
+            </xf:model>
+        </div>
+        <xf:group appearance="full">
+            <xf:label>Select appearance="minimal"</xf:label>
+            <xf:select ref="/data/values" appearance="minimal">
+                <xf:label>Colors</xf:label>
+                <xf:choices>
+                    <xf:label>Green colors</xf:label>
+                    <xf:item>
+                        <xf:label>Pale green</xf:label>
+                        <xf:value>pg</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>Green</xf:label>
+                        <xf:value>g</xf:value>
+                    </xf:item>
+                </xf:choices>
+                <xf:choices>
+                    <xf:label>Red colors</xf:label>
+                    <xf:item>
+                        <xf:label>Red</xf:label>
+                        <xf:value>r</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>Magenta</xf:label>
+                        <xf:value>m</xf:value>
+                    </xf:item>
+                </xf:choices>
+            </xf:select>
+        </xf:group>
+        <xf:group appearance="full">
+            <xf:label>Select appearance="compact"</xf:label>
+            <xf:select ref="/data/values" appearance="compact">
+                <xf:label>Colors</xf:label>
+                <xf:choices>
+                    <xf:label>Green colors</xf:label>
+                    <xf:item>
+                        <xf:label>Pale green</xf:label>
+                        <xf:value>pg</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>Green</xf:label>
+                        <xf:value>g</xf:value>
+                    </xf:item>
+                </xf:choices>
+                <xf:choices>
+                    <xf:label>Red colors</xf:label>
+                    <xf:item>
+                        <xf:label>Red</xf:label>
+                        <xf:value>r</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>Magenta</xf:label>
+                        <xf:value>m</xf:value>
+                    </xf:item>
+                </xf:choices>
+            </xf:select>
+        </xf:group>
+        <xf:group appearance="full">
+            <xf:label>Select appearance="full"</xf:label>
+            <xf:select ref="/data/values" appearance="full">
+                <xf:label>Colors</xf:label>
+                <xf:choices>
+                    <xf:label>Green colors</xf:label>
+                    <xf:item>
+                        <xf:label>Pale green</xf:label>
+                        <xf:value>pg</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>Green</xf:label>
+                        <xf:value>g</xf:value>
+                    </xf:item>
+                </xf:choices>
+                <xf:choices>
+                    <xf:label>Red colors</xf:label>
+                    <xf:item>
+                        <xf:label>Red</xf:label>
+                        <xf:value>r</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>Magenta</xf:label>
+                        <xf:value>m</xf:value>
+                    </xf:item>
+                </xf:choices>
+            </xf:select>
+        </xf:group>
+        <xf:group appearance="full">
+            <xf:label>Select1 appearance="minimal"</xf:label>
+            <xf:select1 ref="/data/value" appearance="minimal">
+                <xf:label>Colors</xf:label>
+                <xf:choices>
+                    <xf:label>Green colors</xf:label>
+                    <xf:item>
+                        <xf:label>Pale green</xf:label>
+                        <xf:value>pg</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>Green</xf:label>
+                        <xf:value>g</xf:value>
+                    </xf:item>
+                </xf:choices>
+                <xf:choices>
+                    <xf:label>Red colors</xf:label>
+                    <xf:item>
+                        <xf:label>Red</xf:label>
+                        <xf:value>r</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>Magenta</xf:label>
+                        <xf:value>m</xf:value>
+                    </xf:item>
+                </xf:choices>
+            </xf:select1>
+        </xf:group>
+        <xf:group appearance="full">
+            <xf:label>Select1 appearance="compact"</xf:label>
+            <xf:select1 ref="/data/value" appearance="compact">
+                <xf:label>Colors</xf:label>
+                <xf:choices>
+                    <xf:label>Green colors</xf:label>
+                    <xf:item>
+                        <xf:label>Pale green</xf:label>
+                        <xf:value>pg</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>Green</xf:label>
+                        <xf:value>g</xf:value>
+                    </xf:item>
+                </xf:choices>
+                <xf:choices>
+                    <xf:label>Red colors</xf:label>
+                    <xf:item>
+                        <xf:label>Red</xf:label>
+                        <xf:value>r</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>Magenta</xf:label>
+                        <xf:value>m</xf:value>
+                    </xf:item>
+                </xf:choices>
+            </xf:select1>
+        </xf:group>
+        <xf:group appearance="full">
+            <xf:label>Select1 appearance="full"</xf:label>
+            <xf:select1 ref="/data/value" appearance="full">
+                <xf:label>Colors</xf:label>
+                <xf:choices>
+                    <xf:label>Green colors</xf:label>
+                    <xf:item>
+                        <xf:label>Pale green</xf:label>
+                        <xf:value>pg</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>Green</xf:label>
+                        <xf:value>g</xf:value>
+                    </xf:item>
+                </xf:choices>
+                <xf:choices>
+                    <xf:label>Red colors</xf:label>
+                    <xf:item>
+                        <xf:label>Red</xf:label>
+                        <xf:value>r</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>Magenta</xf:label>
+                        <xf:value>m</xf:value>
+                    </xf:item>
+                </xf:choices>
+            </xf:select1>
+        </xf:group>
+        <br/>
+        <xf:group appearance="full">
+            <xf:label>HTML Sample</xf:label>
+            <select name="colors" size="6">
+                <optgroup label="Green Colors">
+                    <option label="pg">Pale Green</option>
+                    <option label="g">Green</option>
+                </optgroup>
+                <optgroup label="Red Colors">
+                    <option label="r">Red</option>
+                    <option label="m">Magenta</option>
+                </optgroup>
+            </select>
+        </xf:group>
+    </body>
+</html>

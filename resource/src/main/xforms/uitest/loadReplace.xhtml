@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <title>Load Show Replace Test</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+        <xf:model>
+            <xf:instance xmlns="">
+                <data>
+                    <name/>
+                </data>
+            </xf:instance>
+
+        </xf:model>
+    </head>
+    <body>
+		<xf:group>
+			<xf:trigger id="trigger-show-replace">
+				<xf:label>load google.com and replace current form</xf:label>
+                <xf:load show="replace" resource="http://google.com"/>
+			</xf:trigger>
+		</xf:group>
+    </body>
+</html>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<test-case xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner"
+           xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../test-case.xsd">
+    <open href="reference/InputText.xhtml" bfTest="true"/>
+    <assert-title title="Text input control"/>
+    <assert-control-present locator="input1" type="input"/>
+    <type-input locator="input1" value="4012888888881881"/>
+    <assert-control-value locator="input1" value="4012888888881881"/>
+
+    <assert-control-readwrite locator="input1"/>
+    <click locator="input1-readonly"/>
+    <assert-control-readonly locator="input1"/>
+    <click locator="input1-readonly"/>
+
+
+    <assert-control-required locator="input1"/>
+    <click locator="input1-required"/>
+    <assert-control-optional locator="input1"/>
+    <click locator="input1-required"/>
+
+
+    <assert-control-present locator="input1" type="input"/>
+    <click locator="input1-relevant"/>
+    <assert-control-not-present locator="input1" type="input"/>
+    <click locator="input1-relevant"/>
+
+    <assert-control-valid locator="input1"/>
+    <click locator="input1-valid"/>
+    <assert-control-invalid locator="input1"/>
+    <click locator="input1-valid"/>
+</test-case>

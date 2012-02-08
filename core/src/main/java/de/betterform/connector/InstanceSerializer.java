@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -8,8 +8,6 @@ package de.betterform.connector;
 import de.betterform.connector.serializer.SerializerRequestWrapper;
 import de.betterform.xml.xforms.model.submission.Submission;
 import org.w3c.dom.Node;
-
-import java.io.OutputStream;
 
 /**
  * Interface for serialization of instances. Implementations should

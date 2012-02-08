@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
@@ -292,8 +292,7 @@
 
 
     <xsl:template
-            match="xforms:input|xforms:output|xforms:range|xforms:secret|xforms:select|xforms:select1|xforms:textarea|xforms:upload"
-            mode="table">
+            match="xforms:input|xforms:output|xforms:range|xforms:secret|xforms:select|xforms:select1|xforms:textarea|xforms:upload" mode="table">
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="control-classes">
             <xsl:call-template name="assemble-control-classes">
@@ -301,13 +300,15 @@
             </xsl:call-template>
         </xsl:variable>
 
-        <div id="{$id}"
+        <span id="{$id}"
              dojoType="betterform.ui.Control"
              class="{$control-classes}">
             <xsl:call-template name="copy-style-attribute"/>
-            <xsl:call-template name="buildControl"/>
-            <xsl:copy-of select="xhtml:script"/>
-        </div>
+            <span class="bfValueWrapper">
+                <xsl:call-template name="buildControl"/>
+                <xsl:copy-of select="xhtml:script"/>
+            </span>
+        </span>
     </xsl:template>
     <!--<xsl:template match="bf:data" mode="table" priority="10"/>-->
 
@@ -516,28 +517,22 @@
     <!-- overridden control template for compact repeat -->
     <xsl:template
             match="xforms:input|xforms:output|xforms:range|xforms:secret|xforms:select|xforms:select1|xforms:textarea|xforms:upload"
-            mode="repeated-compact-prototype" priority="10">
+            mode="repeated-compact-prototype" priority="20">
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="control-classes">
             <xsl:call-template name="assemble-control-classes"/>
-        </xsl:variable>
-
-        <xsl:variable name="htmlElem">
-            <xsl:choose>
-                <xsl:when test="local-name()='output'">span</xsl:when>
-                <xsl:otherwise>div</xsl:otherwise>
-            </xsl:choose>
         </xsl:variable>
 
         <xsl:variable name="incrementaldelay">
             <xsl:value-of select="if (exists(@bf:incremental-delay)) then @bf:incremental-delay else 'undef'"/>
         </xsl:variable>
 
-        <xsl:element name="{$htmlElem}">
+        <xsl:element name="span">
             <xsl:attribute name="id" select="$id"/>
             <xsl:attribute name="class" select="concat($control-classes,' xfRepeated')"/>
             <xsl:attribute name="controlType" select="local-name()"/>
             <xsl:attribute name="appearance" select="@appearance"/>
+            <xsl:attribute name="title" select="normalize-space(xforms:hint)"/>
             <xsl:attribute name="dojoAttachEvent">onfocus:_onFocus</xsl:attribute>
             <xsl:if test="$incrementaldelay ne 'undef'">
                 <xsl:message>
@@ -545,24 +540,29 @@
                 </xsl:message>
                 <xsl:attribute name="delay" select="$incrementaldelay"/>
             </xsl:if>
-
+            <xsl:if test="exists(@mediatype)">
+                <xsl:attribute name="mediatype" select="@mediatype"/>
+            </xsl:if>
             <xsl:call-template name="copy-style-attribute"/>
-
-            <xsl:choose>
-                <xsl:when test="exists(@mediatype)">
-                    <xsl:attribute name="mediatype" select="@mediatype"/>
-                </xsl:when>
-                <xsl:when test="'select' = local-name()">
-                    <xsl:call-template name="select"/>
-                </xsl:when>
-                <xsl:when test="'select1' = local-name()">
-                    <xsl:call-template name="select1"/>
-                </xsl:when>
-            </xsl:choose>
-            <xsl:apply-templates select="xforms:alert"/>
-            <xsl:apply-templates select="xforms:hint"/>
-            <xsl:apply-templates select="xforms:help"/>
-
+            <span class="bfValueWrapper">
+                <xsl:choose>
+                    <xsl:when test="exists(@mediatype)">
+                        <xsl:attribute name="mediatype" select="@mediatype"/>
+                    </xsl:when>
+                    <xsl:when test="'range' = local-name()">
+                        <xsl:call-template name="range"/>
+                    </xsl:when>
+                    <xsl:when test="'select' = local-name()">
+                        <xsl:call-template name="select"/>
+                    </xsl:when>
+                    <xsl:when test="'select1' = local-name()">
+                        <xsl:call-template name="select1"/>
+                    </xsl:when>
+                </xsl:choose>
+                <xsl:apply-templates select="xforms:alert"/>
+                <xsl:apply-templates select="xforms:hint"/>
+                <xsl:apply-templates select="xforms:help"/>
+            </span>
         </xsl:element>
 
     </xsl:template>
@@ -677,53 +677,57 @@
 
     <xsl:template
             match="xforms:input|xforms:output|xforms:range|xforms:secret|xforms:select|xforms:select1|xforms:textarea|xforms:upload"
-            mode="repeated-full-prototype"
-            priority="20">
+            mode="repeated-full-prototype" priority="20">
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="control-classes">
             <xsl:call-template name="assemble-control-classes"/>
         </xsl:variable>
 
-        <xsl:variable name="htmlElem">
-            <xsl:choose>
-                <xsl:when test="local-name()='output'">span</xsl:when>
-                <xsl:otherwise>div</xsl:otherwise>
-            </xsl:choose>
+        <xsl:variable name="incrementaldelay">
+            <xsl:value-of select="if (exists(@bf:incremental-delay)) then @bf:incremental-delay else 'undef'"/>
         </xsl:variable>
 
-        <xsl:element name="{$htmlElem}">
+        <xsl:element name="span">
             <xsl:attribute name="id" select="$id"/>
             <xsl:attribute name="class" select="concat($control-classes,' xfRepeated')"/>
             <xsl:attribute name="controlType" select="local-name()"/>
             <xsl:attribute name="appearance" select="@appearance"/>
             <xsl:attribute name="title" select="normalize-space(xforms:hint)"/>
             <xsl:attribute name="dojoAttachEvent">onfocus:_onFocus</xsl:attribute>
-
+            <xsl:if test="$incrementaldelay ne 'undef'">
+                <xsl:message>
+                    <xsl:value-of select="concat(' incremental-delay: ', $incrementaldelay)"/>
+                </xsl:message>
+                <xsl:attribute name="delay" select="$incrementaldelay"/>
+            </xsl:if>
             <xsl:if test="exists(@mediatype)">
                 <xsl:attribute name="mediatype" select="@mediatype"/>
             </xsl:if>
+            <xsl:call-template name="copy-style-attribute"/>
             <label class="xfLabel">
                 <xsl:call-template name="create-label">
                     <xsl:with-param name="label-elements" select="xforms:label"/>
                 </xsl:call-template>
             </label>
-
-            <!--<xsl:apply-templates select="xforms:alert"/>-->
-            <xsl:choose>
-                <xsl:when test="'select' = local-name()">
-                    <xsl:call-template name="select"/>
-                    <!--<xsl:apply-templates select="xforms:alert"/>-->
-                </xsl:when>
-                <xsl:when test="'select1' = local-name()">
-                    <xsl:call-template name="select1"/>
-                    <!--<xsl:apply-templates select="xforms:alert"/>-->
-                </xsl:when>
-            </xsl:choose>
-
-            <xsl:apply-templates select="xforms:alert"/>
-            <xsl:apply-templates select="xforms:hint"/>
-            <xsl:apply-templates select="xforms:help"/>
-
+            <span class="bfValueWrapper">
+                <xsl:choose>
+                    <xsl:when test="exists(@mediatype)">
+                        <xsl:attribute name="mediatype" select="@mediatype"/>
+                    </xsl:when>
+                    <xsl:when test="'range' = local-name()">
+                        <xsl:call-template name="range"/>
+                    </xsl:when>
+                    <xsl:when test="'select' = local-name()">
+                        <xsl:call-template name="select"/>
+                    </xsl:when>
+                    <xsl:when test="'select1' = local-name()">
+                        <xsl:call-template name="select1"/>
+                    </xsl:when>
+                </xsl:choose>
+                <xsl:apply-templates select="xforms:alert"/>
+                <xsl:apply-templates select="xforms:hint"/>
+                <xsl:apply-templates select="xforms:help"/>
+            </span>
         </xsl:element>
     </xsl:template>
 
@@ -897,12 +901,12 @@
                     <xsl:with-param name="label-elements" select="xforms:label"/>
                 </xsl:call-template>
             </label>
-
-            <xsl:call-template name="buildControl"/>
-            <xsl:apply-templates select="xforms:alert"/>
-            <xsl:apply-templates select="xforms:hint"/>
-            <xsl:apply-templates select="xforms:help"/>
-
+            <span class="bfValueWrapper">
+                <xsl:call-template name="buildControl"/>
+                <xsl:apply-templates select="xforms:alert"/>
+                <xsl:apply-templates select="xforms:hint"/>
+                <xsl:apply-templates select="xforms:help"/>
+            </span>
 
         </div>
     </xsl:template>

@@ -1,0 +1,53 @@
+/*
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
+.tableHeader th {
+    font-weight:bold;
+    font-size: 12pt;
+}
+
+.tableBody .column1 {
+    text-align:right;
+}
+
+.tableBody td {
+    padding-right:20px;
+    padding-bottom:5px;
+    position:relative;
+}
+
+#inputStart .xfValue {
+    width:30px;
+}
+
+#albumHeader {
+    font-size: 1.5em;
+    font-weight: bold;
+    line-height: 1em;
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
+#closeFilter-value{
+    background-image:url(/betterform/rest/db/betterform/apps/timetracker/resources/images/search.gif);
+    width:24px;
+    height:24px;
+}
+#linklogo {
+    display:block;
+    float:left;
+}
+#appName {
+    float:left;
+    font-size:22pt;
+    font-weight:bold;
+    position:relative;
+    top:37px;
+}
+#shadowTop {
+    height: 5px;
+    position: relative;
+    top: -6px;
+    width: 100%;
+}

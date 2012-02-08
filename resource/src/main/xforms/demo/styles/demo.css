@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
 #demo .contentBody{
 	width:100%;
 }
@@ -172,6 +177,10 @@
 	display:block;
 	
 }
+.contactsRepeat tbody{
+    width: 100%;
+    display: table;
+}
 
 .contactsRepeat .xfRepeatHeader {
     padding: 5px;
@@ -183,9 +192,13 @@
 }
 
 .contactsSubForm {
-    border: 1px solid black;
     display: block;
 }
+.contactsSubForm .xfContainer{
+    border: thin dotted #666666;
+    background: #eeeeee;
+}
+
 
 .contactsSubForm .xfGroupLabel {
     padding: 5px;

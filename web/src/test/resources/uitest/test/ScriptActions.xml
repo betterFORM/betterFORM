@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<test-case xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner"
+           xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../test-case.xsd">
+    <!-- test insert / delete action -->
+    <open href="uitest/ScriptActions.xhtml" bfTest="true"/>
+    <assert-title title="JavaScript Actions"/>
+
+    <assert-control-present locator="trigger-execute-function" type="button"/>
+    <assert-control-present locator="trigger-directly-execute-js" type="button"/>
+    <assert-control-present locator="trigger-execute-function-v2" type="button"/>
+    <assert-control-present locator="trigger-directly-execute-js-v2" type="button"/>
+    <assert-control-present locator="trigger-set-control-value" type="button"/>
+    <assert-control-present locator="name" type="input"/>
+
+    <assert-inner-html locator="message" value="message from xforms-ready event"/>
+    <click locator="trigger-reset"/>
+    <assert-inner-html locator="message" value=""/>
+
+    <click locator="trigger-execute-function"/>
+    <assert-inner-html locator="message" value="message from Trigger 'Execute Function'"/>
+
+    <click locator="trigger-reset"/>
+    <assert-inner-html locator="message" value=""/>
+    <click locator="trigger-directly-execute-js"/>
+    <assert-inner-html locator="message" value="message from Trigger 'Directly execute JavaScript'"/>
+
+    <click locator="trigger-reset"/>
+    <assert-inner-html locator="message" value=""/>
+    <click locator="trigger-execute-function-v2"/>
+    <assert-inner-html locator="message" value="message from Trigger 'Execute Function'"/>
+
+    <click locator="trigger-reset"/>
+    <assert-inner-html locator="message" value=""/>
+    <click locator="trigger-directly-execute-js-v2"/>
+    <assert-inner-html locator="message" value="message from Trigger 'Directly execute JavaScript'"/>
+
+    <click locator="trigger-reset"/>
+    <assert-inner-html locator="message" value=""/>
+    <assert-control-value locator="name" value=""/>
+    <click locator="trigger-set-control-value"/>
+    <assert-control-value locator="name" value="foo"/>
+
+
+
+</test-case>

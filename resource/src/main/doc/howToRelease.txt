@@ -3,7 +3,6 @@ mandatory steps to build a betterFORM release
 
 - change release number in build.properties.xml
 - update release-notes.txt
-- change News box in web/src/main/webapp/index.html (remember to adapt to correct date!)
 - search and replace old version to new version number in web/src/main/webapp/download.html
 - search and replace old version to new version number in tools/exist/betterform/build.xml (#15)
 - update pom files by running ROOT-OF-WORKSPACE/build.xml target 'update-maven-poms'.

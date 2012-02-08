@@ -1,17 +1,16 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 package de.betterform.xml.xpath;
 
-import java.util.Collections;
-import java.util.Set;
-
-import junit.framework.TestCase;
-
 import de.betterform.xml.xforms.Container;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import de.betterform.xml.xpath.impl.saxon.SaxonReferenceFinderImpl;
+import junit.framework.TestCase;
+
+import java.util.Collections;
+import java.util.Set;
 
 /**
  * Tests reference detection.

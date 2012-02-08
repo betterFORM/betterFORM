@@ -1,12 +1,10 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xforms.model;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.model.bind.DeclarationView;
 import de.betterform.xml.xforms.model.bind.LocalUpdateView;
@@ -16,6 +14,9 @@ import de.betterform.xml.xforms.model.bind.impl.DeclarationViewImpl;
 import de.betterform.xml.xforms.model.bind.impl.LocalUpdateViewImpl;
 import de.betterform.xml.xforms.model.bind.impl.RefreshViewImpl;
 import de.betterform.xml.xforms.model.bind.impl.StateChangeViewImpl;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 /**
@@ -275,7 +276,12 @@ class XercesNodeImpl implements ModelItem {
 
     public Model getModel() {
         if(this.node != null) {
-            Instance instance = (Instance) this.node.getOwnerDocument().getDocumentElement().getUserData("instance");
+            Instance instance;
+            if (this.node instanceof Document) {
+                instance = (Instance) ((Document) this.node).getDocumentElement().getUserData("instance");
+            } else {
+                instance = (Instance) this.node.getOwnerDocument().getDocumentElement().getUserData("instance");
+            }
             if(instance != null) {
                 return instance.getModel();
             }

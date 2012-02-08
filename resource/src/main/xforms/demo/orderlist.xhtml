@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ Copyright (c) 2010. betterForm Project - http://www.betterform.de
-  ~ Licensed under the terms of BSD License
-  -->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns:ev="http://www.w3.org/2001/xml-events">
 <head>
     <title>Shopping cart</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
     <meta name="author" content="joernt at users.sourceforge.net"/>
     <meta name="author" content="lars.windauer at chiba-project.org"/>
     <meta name="author" content="tobias.krebs at betterform.de"/>
@@ -21,6 +22,9 @@
     <style type="text/css">
         .soria #xforms {
             overflow: hidden;
+        }
+        .xfFullGroup .xfControl .xfLabel {
+            width: 55px;
         }
     </style>
 
@@ -182,7 +186,7 @@
         </div>
         <br/>
 
-        <div class="orderListRegionSelect">
+        <!--<div class="orderListRegionSelect">-->
             <xf:select1 appearance="minimal" ref="instance('shippingAndTaxes')">
                 <xf:label id="region">Ship to:</xf:label>
                 <xf:hint>Choose your region for correct tax and shipping cost calculation</xf:hint>
@@ -191,7 +195,7 @@
                     <xf:copy ref="."/>
                 </xf:itemset>
             </xf:select1>
-        </div>
+        <!--</div>-->
 
         <xf:group appearance="minimal">
             <xf:repeat id="repeatid" bind="items" appearance="compact" class="orderListRepeat">

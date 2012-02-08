@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xhtml:head>
+    <xhtml:title>3.2.4.c node-set binding - bind attribute of itemset element</xhtml:title>
+    <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+    <xforms:model id="carsForSale">
+      <xforms:instance>
+        <carsAvailable>
+          <car>Audi</car>
+          <car>BMW</car>
+          <car>Mercedes</car>
+          <car>Porsche</car>
+          <car>Volkswagen</car>
+          <carOrder/>
+        </carsAvailable>
+      </xforms:instance>
+      <xforms:bind id="bind_carOrder" nodeset="/carsAvailable/carOrder"/>
+      <xforms:bind id="bind_car" nodeset="/carsAvailable/car"/>
+      <!-- submission has a bind to bind_carOrder, and should only submit that element -->
+      <xforms:submission id="submit_carOrder" action="http://xformstest.org/cgi-bin/echo.sh" bind="bind_carOrder" method="post"/>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group id="xf-group-1">
+  		<xforms:label class="title">3.2.4.c node-set binding - bind attribute of itemset element</xforms:label>
+  	</xforms:group>
+    <xforms:group id="xf-group-2">
+    	<xforms:label>
+	      You must be able to select any or all of the items in the select control. After activating the Submit Cars 
+      	trigger you must be able to see all the values you selected displayed on the screen in the form data.
+	    </xforms:label>
+	    <!-- No other elements of the data instance should be submitted due to the bind. -->
+    </xforms:group>    
+
+    <xforms:select bind="bind_carOrder" id="xf-select-1">
+     	<xforms:label>Cars</xforms:label>
+      	<!-- itemset uses bind instead of nodeset -->
+        <xforms:itemset bind="bind_car">
+	        <xforms:label ref="."/>
+    	    <xforms:value ref="."/>
+        </xforms:itemset>
+    </xforms:select>
+    
+    <xforms:submit submission="submit_carOrder" id="xf-submit-1">
+        <xforms:label>Submit Cars</xforms:label>
+    </xforms:submit>
+
+	
+  </xhtml:body>
+</xhtml:html>

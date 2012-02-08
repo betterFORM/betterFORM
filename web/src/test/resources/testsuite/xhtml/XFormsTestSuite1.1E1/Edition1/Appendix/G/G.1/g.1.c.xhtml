@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xhtml:head>
+    <xhtml:title>g.1.c valid and invalid pseudo-classes (non-normative)</xhtml:title>
+    <xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+    <xforms:model>
+      <xforms:instance>
+        <car>
+          <oilChange>true</oilChange>
+          <tireRotation>not yet</tireRotation>
+        </car>
+      </xforms:instance>
+      <xforms:bind id="oil" nodeset="/car/oilChange" type="xsd:boolean"/>
+      <xforms:bind id="tire" nodeset="/car/tireRotation" type="xsd:boolean"/>
+    </xforms:model>
+  </xhtml:head>
+  <xhtml:body>
+  	<xforms:group id="xf-group-1">
+  		<xforms:label class="title">g.1.c valid and invalid pseudo-classes (non-normative)</xforms:label>
+  	</xforms:group>
+  	<xforms:group id="xf-group-2">
+  		<xforms:label>
+  		The valid output must have a teal background, the invalid output 
+  		must have a red background.
+  		</xforms:label>
+  	</xforms:group>
+  	
+	<xforms:output ref="/car/oilChange" id="xf-output-1">
+		<xforms:label>Oil Change (valid)</xforms:label>
+	</xforms:output>
+	
+	<xforms:output ref="/car/tireRotation" id="xf-output-2">
+		<xforms:label>Tire Rotation (invalid)</xforms:label>
+	</xforms:output>
+    
+	
+  </xhtml:body>
+</xhtml:html>

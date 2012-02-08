@@ -1,22 +1,24 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 
 package de.betterform.agent.web.event;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.events.BetterFormEventNames;
+import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.events.XMLEvent;
 import de.betterform.xml.events.XMLEventFactory;
-import de.betterform.xml.events.impl.DefaultXMLEventService;
-import de.betterform.xml.events.impl.XercesXMLEventFactory;
 import de.betterform.xml.events.impl.DefaultXMLEventInitializer;
+import de.betterform.xml.events.impl.DefaultXMLEventService;
 import de.betterform.xml.events.impl.XercesXMLEvent;
+import de.betterform.xml.events.impl.XercesXMLEventFactory;
 import de.betterform.xml.xforms.XFormsConstants;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
+
 import java.util.*;
 
 
@@ -120,6 +122,7 @@ public class EventQueue {
 
     public List<XMLEvent> aggregateEventList() {
         // Stack is used to "navigate" through the event list
+        LinkedList<XMLEvent> aggregatedFocusList= new LinkedList<XMLEvent>();
         Stack<XMLEvent> aggregatedInsertEventsStack = new Stack();
         Stack<XMLEvent> aggregatedEmbedEventsStack = new Stack();
         ArrayList<XMLEvent> aggregatedEventList = new ArrayList<XMLEvent>(eventList.size());
@@ -170,10 +173,17 @@ public class EventQueue {
                 aggregatedEmbedEventsStack.pop().addProperty("targetElement", xmlEvent.getContextInfo("targetElement"));
                 aggregatedEventList.add(xmlEvent);
             }
+            else if(xmlEvent.getType().equals(XFormsEventNames.FOCUS)){
+                aggregatedFocusList.push(xmlEvent);
+            }
             // all other events within eventList are simply copied to the new eventlist
             else {
                 aggregatedEventList.add(xmlEvent);
             }
+        }
+
+        while (!aggregatedFocusList.isEmpty()) {
+            aggregatedEventList.add(aggregatedFocusList.pollLast());
         }
         return aggregatedEventList;
     }

@@ -4,6 +4,12 @@
       xmlns:ev="http://www.w3.org/2001/xml-events">
     <head>
         <title>Tooltip Alert Handler</title>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+
+
     </head>
     <body>
         <div class="description">
@@ -53,25 +59,25 @@
                 <code class="ui">
 <xf:group ref="grouped-data/group" appearance="compact" class="ToolTipAlert">
     <xf:label>Each field must have more than 5 characters to become valid</xf:label>
-    <xf:input ref="a">
+    <xf:input id="input1" ref="a">
         <xf:label>A-label</xf:label>
-        <xf:alert>Your input is not long enough</xf:alert>
-        <xf:hint>The input must be longer than 5 characters</xf:hint>
+        <xf:alert id="input1-alert">Your input is not long enough</xf:alert>
+        <xf:hint id="input1-hint">The input must be longer than 5 characters</xf:hint>
     </xf:input>
-    <xf:input ref="b">
+    <xf:input id="input2" ref="b">
         <xf:label>Bb-label</xf:label>
-        <xf:alert>Your input is not long enough</xf:alert>
-        <xf:hint>The input must be longer than 5 characters</xf:hint>
+        <xf:alert id="input2-alert">Your input is not long enough</xf:alert>
+        <xf:hint id="input2-hint">The input must be longer than 5 characters</xf:hint>
     </xf:input>
-    <xf:input ref="c">
+    <xf:input id="input3" ref="c">
         <xf:label>Ccc-label</xf:label>
-        <xf:hint>The input must be longer than 5 characters</xf:hint>
-        <xf:alert>Your input is not long enough</xf:alert>
+        <xf:alert id="input3-alert">Your input is not long enough</xf:alert>
+        <xf:hint id="input3-hint">The input must be longer than 5 characters</xf:hint>
     </xf:input>
-    <xf:input ref="d">
+    <xf:input id="input4" ref="d">
         <xf:label>Dddd-label</xf:label>
-        <xf:hint>The input must be longer than 5 characters</xf:hint>
-        <xf:alert>Your input is not long enough</xf:alert>
+        <xf:alert id="input4-alert">Your input is not long enough</xf:alert>
+        <xf:hint id="input4-hint">The input must be longer than 5 characters</xf:hint>
     </xf:input>
 </xf:group>
 <xf:trigger>
@@ -133,10 +139,6 @@
                     <th>Description</th>
                 </tr>
 -->
-                <tr>
-                    <td>InlineAlert</td>
-                    <td>matches a body that uses inline alerts</td>
-                </tr>
                 <tr>
                     <td>xfInput</td>
                     <td>matches an Element that represents a XForms input element</td>

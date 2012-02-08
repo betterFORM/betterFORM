@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -7,17 +7,9 @@
 package de.betterform.agent.web.servlet;
 
 import de.betterform.agent.web.WebFactory;
-import de.betterform.agent.web.WebProcessor;
-import de.betterform.agent.web.WebUtil;
-import de.betterform.agent.web.filter.CharResponseWrapper;
-import de.betterform.generator.UIGenerator;
-import de.betterform.generator.XSLTGenerator;
 import de.betterform.xml.dom.DOMUtil;
-import de.betterform.xml.xforms.XFormsProcessor;
-import de.betterform.xml.xforms.exception.XFormsException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.w3c.dom.Document;
 
 import javax.servlet.ServletConfig;
@@ -26,29 +18,21 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMResult;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import java.io.*;
-import java.net.URISyntaxException;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
- * This servlet follows the PFG pattern (Post, forward, get) and provides the GET part. A seperate GET request at the end
- * of the request processing is used to render the output. This avoids problems with cached POST requests and the user
- * using the back button of the browser. Cause the GET request does not trigger such a warning the user can smoothly step
- * backwards.
  *
- * @author Joern Turner
- * @version $Version: $
- * @see de.betterform.agent.web.servlet.PlainHtmlServlet
  */
 public class XSLTServlet extends HttpServlet /* extends AbstractXFormsServlet */ {
     private static final Log LOGGER = LogFactory.getLog(XSLTServlet.class);
-    private String xsltPath;
+    private String editorHome;
     private String xslFile;
     public static final String defContentType = "text/html; charset=UTF-8";
     public static final String contentTypeHTML = defContentType;
@@ -68,8 +52,9 @@ public class XSLTServlet extends HttpServlet /* extends AbstractXFormsServlet */
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        this.xsltPath = config.getInitParameter("xsltHome");
+        this.editorHome = config.getInitParameter("editorHome");
         this.xslFile = config.getInitParameter("xsltFile");
+
 
     }
 
@@ -98,7 +83,7 @@ public class XSLTServlet extends HttpServlet /* extends AbstractXFormsServlet */
             throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
 
-        String stylePath = servletContext.getRealPath(xsltPath);
+        String stylePath = servletContext.getRealPath(editorHome);
         File styleFile = new File(stylePath,xslFile);
         if(styleFile == null){
             throw new ServletException("XSL stylesheet cannot be found: " + styleFile);
@@ -141,6 +126,12 @@ public class XSLTServlet extends HttpServlet /* extends AbstractXFormsServlet */
                 TransformerFactory tFactory = TransformerFactory.newInstance();
                 Source xslSource = new StreamSource(new FileInputStream(styleFile));
                 t = tFactory.newTransformer(xslSource);
+                String contextName=request.getContextPath();
+
+                t.setParameter("APP_CONTEXT",contextName);
+                t.setParameter("EDITOR_HOME", stylePath.substring(stylePath.indexOf("/betterform/")) + "/");
+                t.setParameter("filename", "file://" + inputFile);
+
 //                cache.put(xsl, t);
 //            }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -573,7 +573,17 @@ public class WebProcessor extends AbstractProcessorDecorator {
         generator.setParameter("trigger-prefix", triggerPrefix);
 
         if (LOGGER.isDebugEnabled()) {
-            DOMUtil.prettyPrintDOM(((XFormsProcessorImpl)  this.xformsProcessor).getContainer().getDefaultModel().getDefaultInstance().getInstanceDocument());
+            if ( ((XFormsProcessorImpl)  this.xformsProcessor).getContainer() != null) {
+                try {
+                    if ( ((XFormsProcessorImpl)  this.xformsProcessor).getContainer().getDefaultModel() != null) {
+                        if ( ((XFormsProcessorImpl)  this.xformsProcessor).getContainer().getDefaultModel().getDefaultInstance() != null) {
+                            DOMUtil.prettyPrintDOM(((XFormsProcessorImpl)  this.xformsProcessor).getContainer().getDefaultModel().getDefaultInstance().getInstanceDocument());
+                        }
+                    }
+                } catch (XFormsException xfe) {
+                    LOGGER.debug(xfe.getMessage());
+                }
+            }
         }
         generator.setParameter("locale", locale);
 //        if(useragent.equals("bfEditor")){

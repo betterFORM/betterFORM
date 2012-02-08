@@ -3,6 +3,12 @@
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>Submission element with replace="embedHTML"</title>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+
+
     </head>
     <body>
         <div class="description">
@@ -40,21 +46,21 @@
 </code>
                 </xf:model>
                 <code class="ui">
-<xf:trigger>
+<xf:trigger id="trigger1">
     <xf:label>Load HTML 5 audio element as part from an external file</xf:label>
     <xf:send submission="s-embedHTML-audio"/>
 </xf:trigger>
 
 <div id="mountpoint-audio"/>
 
-<xf:trigger>
+<xf:trigger id="trigger2">
     <xf:label>Load Plain HTML as part from an external file</xf:label>
     <xf:send submission="s-embedHTML-plain"/>
 </xf:trigger>
 
 <div id="mountpoint-plain"/>
 
-<xf:trigger>
+<xf:trigger id="trigger3">
     <xf:label>Load full external HTML file</xf:label>
     <xf:send submission="s-embedHTML-full"/>
 </xf:trigger>

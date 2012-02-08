@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 package de.betterform.xml.xforms.model;
@@ -37,9 +37,8 @@ public class LazyInstanceTest extends BetterFormTestCase {
     public void testInit() throws Exception {
         assertNotNull(this.instance);
         dump(this.instance.getInstanceDocument());
-//        assertEquals("instance", this.instance.getId());
         assertNotNull(this.instance.getInstanceDocument());
-//        assertEquals("data", this.instance.getInstanceDocument().getDocumentElement().getNodeName());
+        assertNotNull(this.instance.getInstanceDocument().getDocumentElement().getUserData("instance"));
     }
 
 

@@ -1,15 +1,10 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xforms.model;
 
-import net.sf.saxon.dom.NodeWrapper;
-import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.trans.XPathException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.XFormsEventNames;
@@ -23,6 +18,11 @@ import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import de.betterform.xml.xpath.XPathUtil;
 import de.betterform.xml.xpath.impl.saxon.BetterFormXPathContext;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
+import net.sf.saxon.dom.NodeWrapper;
+import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.trans.XPathException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.*;
 import org.w3c.dom.traversal.DocumentTraversal;
 import org.w3c.dom.traversal.NodeFilter;
@@ -72,15 +72,12 @@ public class Instance extends XFormsElement {
         }
         // load initial instance
         this.initialInstance = createInitialInstance();
-
         // create instance document
         this.instanceDocument = createInstanceDocument();
         storeContainerRef();
-        
+
         registerId();
-
         initXPathContext();
-
     }
 
     private void initXPathContext() {
@@ -614,23 +611,24 @@ public class Instance extends XFormsElement {
      *
      * @return the original instance.
      */
-    private Element createInitialInstance() throws XFormsLinkException {
+    private Element createInitialInstance() throws XFormsException {
         String srcAttribute = getXFormsAttribute(SRC_ATTRIBUTE);
-
+        String resourceUri;
         //@src takes precedence
         if (srcAttribute != null) {
+            resourceUri = srcAttribute;
             return fetchData(srcAttribute);
+        }else{
+            resourceUri = "#" + this.getId();
         }
 
         // if inline content is given this takes precedence over @resource
-        if(DOMUtil.getChildElements(this.element).size() != 1) {
-            try {
-                this.container.dispatch(this.model.getTarget(), XFormsEventNames.LINK_EXCEPTION, null);
-            } catch (XFormsException e) {
-                Map contextInfo = new HashMap();
-                contextInfo.put("resource-uri",srcAttribute);
-                throw new XFormsLinkException("invalid inlined instance data for instance: '" +getId() +"'", this.model.getTarget(), contextInfo);
-            }
+        List childs = DOMUtil.getChildElements(this.element);
+        if(childs.size() > 1) {
+            Map contextInfo = new HashMap();
+            contextInfo.put("resource-uri",resourceUri);
+            contextInfo.put("resource-error","multiple root elements found in instance");
+            this.container.dispatch(this.model.getTarget(), XFormsEventNames.LINK_EXCEPTION, contextInfo);
         }
         Element child = DOMUtil.getFirstChildElement(this.element);
         if(child != null){
@@ -653,16 +651,36 @@ public class Instance extends XFormsElement {
             result = this.container.getConnectorFactory().createURIResolver(srcAttribute, this.element).resolve();
         }
         catch (Exception e) {
-            throw new XFormsLinkException("uri resolution failed for '" + srcAttribute + "' at Instance id: '" + this.getId() + "'", e, this.model.getTarget(), srcAttribute);
+            String msg;
+            if(e.getCause()!=null){
+                msg=e.getCause().getMessage();
+            }else{
+                msg=e.getMessage();
+            }
+            
+            HashMap<String,String> map = new HashMap<String, String>(2);
+            map.put("resource-uri",srcAttribute);
+            map.put("detailMessage",msg);
+            throw new XFormsLinkException("uri resolution failed for '" + srcAttribute + "' at Instance id: '" + this.getId() + "'", e, this.model.getTarget(), map);
+//            throw new XFormsLinkException("uri resolution failed for '" + srcAttribute + "' at Instance id: '" + this.getId() + "'", e, this.model.getTarget(), s
+// rcAttribute);
         }
 
-        if (result instanceof Document) {
-            return ((Document) result).getDocumentElement();
-        }
+            if (result instanceof Document) {
+                return ((Document) result).getDocumentElement();
+            }
 
-        if (result instanceof Element) {
-            return (Element) result;
-        }
+            if (result instanceof Element) {
+                return (Element) result;
+            }
+        
+            if (result instanceof String) {
+                try {
+                    return DOMUtil.parseString((String) result, true, false).getDocumentElement();
+                } catch (Exception e) {
+                    throw new XFormsLinkException("object model not supported", this.model.getTarget(), srcAttribute);
+                }
+            }
 
         throw new XFormsLinkException("object model not supported", this.model.getTarget(), srcAttribute);
     }
@@ -751,7 +769,7 @@ public class Instance extends XFormsElement {
         }
     }
 
-    private void storeContainerRef() {
+    void storeContainerRef() {
         if(instanceDocument.getDocumentElement() != null){
             instanceDocument.getDocumentElement().setUserData("container",this.model.getContainer(),null);
             instanceDocument.getDocumentElement().setUserData("instance",this,null);

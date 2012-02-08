@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -43,6 +43,16 @@ dojo.declare(
     },
     postCreate:function() {
         this.inherited(arguments);
+        var optgroups = dojo.query('optgroup[controltype="optGroup"]',this.domNode);
+        if(optgroups.length){
+            for(var i =0;i< optgroups.length; i++){
+                var optGroupDijit = dijit.byId(optgroups[i].id);
+                if(!optGroupDijit){
+                    new betterform.ui.select.OptGroup({}, optgroups[i]);
+                }
+
+            }
+        }
         this.setCurrentValue();
         if(this.openSelection) {
             // console.debug("openSelection: this.srcNodeRef: ",this.srcNodeRef);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -7,7 +7,6 @@ package de.betterform.xml.dom;
 
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.*;
@@ -22,6 +21,7 @@ import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
@@ -1002,7 +1002,7 @@ public class DOMUtil {
     /**
      * parses a DOM from a String
      *
-     * @param input      the input String that muast contain a complete and well-formed XML document
+     * @param input      the input String that must contain a complete and well-formed XML document
      * @param namespaces parser is namespace aware
      * @param validating parser is validating
      * @return the resulting DOM Document
@@ -1046,6 +1046,21 @@ public class DOMUtil {
         transformer.transform(new DOMSource(node), new StreamResult(stream));
     }
 
+    public static void prettyPrintDOM(Node node, Node output) throws TransformerException {
+        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+        transformer.transform(new DOMSource(node), new DOMResult(node));
+    }
+
+    public static void prettyPrintDOMAsHTML(Node node, OutputStream stream) throws TransformerException {
+        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty(OutputKeys.METHOD, "html");
+        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+        transformer.transform(new DOMSource(node), new StreamResult(stream));
+    }
+
     private static DocumentBuilder createDocumentBuilder(boolean namespaces, boolean validating)
             throws ParserConfigurationException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -1082,7 +1097,15 @@ public class DOMUtil {
         }
 
         //add ourselves
-        String canonPath = node.getNodeName();
+        String canonPath;
+        String ns= node.getNamespaceURI();
+        String nodeName1=node.getNodeName();
+        String nodeName2=node.getLocalName();
+        if(ns!=null && ns.equals("http://www.w3.org/1999/xhtml") && node.getNodeName().equals(node.getLocalName())){
+            canonPath = "html:" + node.getNodeName();
+        }else{
+            canonPath = node.getNodeName();
+        }
         if (node.getNodeType() == Node.ATTRIBUTE_NODE) {
             canonPath = "@" + canonPath;
         } else if (node.getNodeType() == Node.ELEMENT_NODE) {
@@ -1110,6 +1133,50 @@ public class DOMUtil {
 
         return canonPath;
     }
+
+    public static String serializeToString(org.w3c.dom.Document doc)    {
+        try
+        {
+            DOMSource domSource = new DOMSource(doc);
+            StringWriter writer = new StringWriter();
+            StreamResult result = new StreamResult(writer);
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer transformer = tf.newTransformer();
+            transformer.transform(domSource, result);
+            writer.flush();
+            return writer.toString();
+        }
+        catch(TransformerException ex)
+        {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * creates a new non-namespaced, non-validating Document and creates a root node which is returned 
+     * @return the newly created root node
+     */
+    public static Element createRootElement(String rootNodeName) {
+        Document inputDoc = DOMUtil.newDocument(false, false);
+        Element rootNode = inputDoc.createElement(rootNodeName);
+        inputDoc.appendChild(rootNode);
+        return rootNode;
+    }
+
+    /**
+     * creates and appends an Element with given name to given parent and adds value as TextNode to new Element
+     * @param parent the parent Element to append to
+     * @param elementName the name of the Element to create
+     * @param value the TextNode value of the newly created Element
+     * 
+     */
+    public static void appendElement(Element parent,String elementName, String value) {
+        Element e = parent.getOwnerDocument().createElement(elementName);
+        DOMUtil.setElementValue(e, value);
+        parent.appendChild(e);
+    }
+
 }
 
 // end of class

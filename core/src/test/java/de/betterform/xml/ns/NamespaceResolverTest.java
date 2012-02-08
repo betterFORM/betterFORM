@@ -1,11 +1,10 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 package de.betterform.xml.ns;
 
 import junit.framework.TestCase;
-import de.betterform.xml.dom.DOMUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -51,12 +50,13 @@ public class NamespaceResolverTest extends TestCase {
     public void testGetAllNamespacesHost() throws Exception {
         Map map = NamespaceResolver.getAllNamespaces(this.document.getDocumentElement());
 
-        assertEquals("wrong number of namespaces in scope", 6, map.size());
+        assertEquals("wrong number of namespaces in scope", 7, map.size());
         assertEquals("wrong 'xf' namespace", "http://www.w3.org/2002/xforms", map.get("xf"));
         assertEquals("wrong 'ev' namespace", "http://www.w3.org/2001/xml-events", map.get("ev"));
         assertEquals("wrong 'xsi' namespace", "http://www.w3.org/2001/XMLSchema-instance", map.get("xsi"));
         assertEquals("wrong 'xsd' namespace", "http://www.w3.org/2001/XMLSchema", map.get("xsd"));
         assertEquals("wrong 'test' namespace", "http://tempuri.org/ns1", map.get("test"));
+        assertEquals("wrong 'html' namespace", "http://www.w3.org/1999/xhtml", map.get("html"));
     }
 
     /**
@@ -67,7 +67,7 @@ public class NamespaceResolverTest extends TestCase {
     public void testGetAllNamespaces() throws Exception {
         Map map = NamespaceResolver.getAllNamespaces(this.root);
 
-        assertEquals("wrong number of namespaces in scope", 7, map.size());
+        assertEquals("wrong number of namespaces in scope", 8, map.size());
 
         assertEquals("wrong 'xf' namespace", "http://www.w3.org/2002/xforms", map.get("xf"));
         assertEquals("wrong 'ev' namespace", "http://www.w3.org/2001/xml-events", map.get("ev"));
@@ -75,6 +75,8 @@ public class NamespaceResolverTest extends TestCase {
         assertEquals("wrong 'xsd' namespace", "http://www.w3.org/2001/XMLSchema", map.get("xsd"));
         assertEquals("wrong 'bf' namespace", "http://betterform.sourceforge.net/xforms", map.get("bf"));
         assertEquals("wrong 'test' namespace", "http://tempuri.org/ns2", map.get("test"));
+        assertEquals("wrong 'html' namespace", "http://www.w3.org/1999/xhtml", map.get("html"));
+
     }
 
     /**

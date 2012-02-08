@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -107,9 +107,8 @@ public class Range extends AbstractFormControl {
             this.datatype = this.datatype.substring(this.datatype.indexOf(":")+1,this.datatype.length());
         }
         BigDecimal foreignValue = null;
-        if("int".equals(this.datatype) || "integer".equals(this.datatype) || "float".equals(this.datatype) || "decimal".equals(this.datatype) || "double".equals(this.datatype)){
+        if("int".equals(this.datatype) || "integer".equals(this.datatype) || "float".equals(this.datatype) || "decimal".equals(this.datatype) || "double".equals(this.datatype)|| "string".equals(this.datatype)){
             if(tmpValue == null || tmpValue.equals("")) tmpValue = "0";
-
             foreignValue = new BigDecimal(tmpValue);
         }
 
@@ -158,10 +157,11 @@ public class Range extends AbstractFormControl {
                 validator.isRestricted("integer", this.datatype) ||
                 validator.isRestricted("float", this.datatype) ||
                 validator.isRestricted("decimal", this.datatype) ||
+                validator.isRestricted("string", this.datatype) ||
                 validator.isRestricted("double", this.datatype)) {
 
 
-            if("int".equals(this.datatype) || "integer".equals(this.datatype)  || "float".equals(this.datatype) || "decimal".equals(this.datatype) || "double".equals(this.datatype)){
+            if("int".equals(this.datatype) || "integer".equals(this.datatype)  || "float".equals(this.datatype) || "decimal".equals(this.datatype) || "double".equals(this.datatype) || "string".equals(this.datatype)){
                 this.createDecimalRange();
             }
         }else {

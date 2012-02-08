@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:ex="http://www.example.com">
+	<xhtml:head>
+		<xhtml:title>8.1.9.b submit element with appearance attribute</xhtml:title>
+		<xhtml:link rel="stylesheet" href="/xforms-test-suite/TestSuite11.css" type="text/css"/>
+		<xforms:model>
+			<xforms:instance>
+				<name>Janel</name>
+			</xforms:instance>
+			<xforms:submission id="sub" ref="/name" action="http://xformstest.org/cgi-bin/echo.sh" method="post" replace="none"/>
+		</xforms:model>
+	</xhtml:head>
+	<xhtml:body>
+		<xforms:group id="xf-group-1">
+			<xforms:label class="title">8.1.9.b submit element with appearance attribute</xforms:label>
+		</xforms:group>
+		<xforms:group id="xf-group-2">
+			<xforms:label>
+				You must see two submit controls on this page, one labeled "Regular Submit" and 
+				the other labeled "Minimal Submit". They may look different. 
+			</xforms:label>
+		</xforms:group>
+		<xforms:group id="xf-group-3">
+			<xforms:submit submission="sub" id="xf-submit-1">
+				<xforms:label>Regular Submit</xforms:label>
+			</xforms:submit>
+		</xforms:group>
+		<xforms:group id="xf-group-4">
+			<xforms:submit submission="sub" appearance="minimal" id="xf-submit-2">
+				<xforms:label>Minimal Submit</xforms:label>
+			</xforms:submit>
+		</xforms:group>
+		
+	</xhtml:body>
+</xhtml:html>

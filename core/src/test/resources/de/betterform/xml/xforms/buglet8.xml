@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<envelope
+        xmlns:xforms="http://www.w3.org/2002/xforms"
+        xml:lang="en">
+    <xforms:model version="1.0">
+    </xforms:model>
+    <xforms:model version="1.1">
+    </xforms:model>
+    <body>
+    </body>
+</envelope>

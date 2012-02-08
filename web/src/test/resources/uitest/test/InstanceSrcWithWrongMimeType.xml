@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<test-case xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner"
+           xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../test-case.xsd">
+    <!-- test insert / delete action -->
+    <open href="uitest/InstanceSrcWithWrongMimeType.xhtml" bfTest="true"/>
+    <assert-title title="InstanceSrcWithWrongMimeType"/>
+    <assert-control-present locator="input1" type="input"/>
+    <assert-control-present locator="output1" type="output"/>
+    <assert-control-value locator="input1" value="input"/>
+    <assert-control-value locator="output1" value="output"/>
+</test-case>

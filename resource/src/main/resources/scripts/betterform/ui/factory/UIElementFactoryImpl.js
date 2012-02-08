@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -177,7 +177,7 @@ dojo.declare(
 
     createTextareaWidget:function(sourceNode, controlId, mediatype, appearance, classValue) {
         // todo: fixme: textarea mediatype="dojo" makes no sense - should be an appearance instead
-        console.debug("sourceNode: ",sourceNode," controlId:",controlId," mediatype:",mediatype," appearance:",appearance," classValue:",classValue);
+        // console.debug("sourceNode: ",sourceNode," controlId:",controlId," mediatype:",mediatype," appearance:",appearance," classValue:",classValue);
         if(mediatype && mediatype.toLowerCase() == "text/html") {
             if(!dojo.hasClass(sourceNode,"xfTextareaHTMLValue")){
                 dojo.addClass(sourceNode,"")

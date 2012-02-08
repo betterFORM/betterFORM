@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
-<envelope xmlns:bf="http://betterform.sourceforge.net/xforms"
-    xmlns:xforms="http://www.w3.org/2002/xforms"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    xmlns:ev="http://www.w3.org/2001/xml-events"
-    xml:lang="en">
+<envelope
+        xml:lang="en">
     <body>
     </body>
 </envelope>

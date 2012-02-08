@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>header</title>
+    </head>
+    <body>
+        <div id="xforms">
+            <div style="display:none;">
+                <xf:model xmlns:xf="http://www.w3.org/2002/xforms" id="formdef">
+                    <xf:instance xmlns="" id="i-props">
+                        <data>
+                            <xfElement/>
+                        </data>
+                    </xf:instance>
+
+                    <xf:instance id="i-data">
+                        <data xmlns="">
+                            <dataAttributes/>
+                            <updateProperties/>
+                            <edit>
+                                <oldAttributeName></oldAttributeName>
+                                <oldAttributeValue></oldAttributeValue>
+                                <newAttributeName></newAttributeName>
+                                <newAttributeValue></newAttributeValue>
+                            </edit>
+                            <attributeName></attributeName>
+                            <attributeValue></attributeValue>
+                        </data>
+                    </xf:instance>
+                    <xf:bind nodeset="instance('i-data')/edit" relevant="string-length(instance('i-data')/edit/oldAttributeName) > 0"/>
+                    <xf:bind nodeset="instance('i-data')/edit/newAttributeName" relevant="not(. eq 'instancenodevalue')"/>
+
+                    <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="xforms-ready">
+                        <script>
+                            xformsEditor.editProperties(dojo.attr(dojo.byId("xfDoc"), "data-bf-currentid"));
+                        </script>
+                    </xf:action>
+                </xf:model>
+
+                <xf:input xmlns:xf="http://www.w3.org/2002/xforms" ref="instance('i-data')/dataAttributes" id="dataAttributes">
+                    <xf:label>hidden</xf:label>
+                        <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="xforms-value-changed">
+                            <xf:insert origin="bf:props2xml(string(instance('i-data')/dataAttributes/text()))" context="instance('i-props')" model="formdef"/>
+                        </xf:action>
+                    </xf:input>
+
+                <xf:output xmlns:xf="http://www.w3.org/2002/xforms" ref="instance('i-data')/updateProperties" id="properties-output">
+                    <xf:label>props:</xf:label>
+                    <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="betterform-state-changed">
+                        <script>
+                            dojo.publish('/properties/changed',[]);
+                        </script>
+                    </xf:action>
+                </xf:output>
+            </div>
+
+            <xf:group id="properties" appearance="full" ref="xfElement">
+                <xf:action xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="DOMFocusOut"
+                           ev:observer="properties"
+                           ev:phase="capture"
+                           propagate="stop">
+                        <xf:setvalue ref="instance('i-data')/updateProperties" value="string(bf:xml2props(instance('i-props')/xfElement))"/>
+               </xf:action>
+               <xf:group>
+                    <xf:label>Attributes:</xf:label>
+
+                   <xf:repeat id="existing" nodeset="attribute::*" apperance="">
+                        <xf:output value="IF ( name(.) eq 'instancenodevalue', 'Node value', concat('Name: ', name(.)) ) "/>
+                        <xf:output ref=".">
+                            <xf:label>Value:</xf:label>
+                        </xf:output>
+                        <xf:trigger>
+                            <xf:label>Edit</xf:label>
+                            <xf:setvalue ref="instance('i-data')/edit/oldAttributeName" value="context()/name(.)"/>
+                            <xf:setvalue ref="instance('i-data')/edit/oldAttributeValue" value="context()/."/>
+                            <xf:setvalue ref="instance('i-data')/edit/newAttributeName" value="context()/name(.)"/>
+                            <xf:setvalue ref="instance('i-data')/edit/newAttributeValue" value="context()/."/>
+
+                        </xf:trigger>
+                    </xf:repeat>
+                </xf:group>
+
+                <xf:group ref="instance('i-data')/edit">
+                    <xf:label>Edit attribute</xf:label>
+
+                    <xf:output value="IF ( instance('i-data')/edit/newAttributeName eq 'instancenodevalue', 'Node value', '' ) "/>
+                    <xf:input ref="instance('i-data')/edit/newAttributeName">
+                        <xf:label>Name:</xf:label>
+                    </xf:input>
+                    <xf:input ref="instance('i-data')/edit/newAttributeValue">
+                        <xf:label>Value:</xf:label>
+                    </xf:input>
+                    <xf:trigger>
+                            <xf:label>apply</xf:label>
+                            <xf:delete model="formdef" nodeset="instance('i-props')/xfElement/@*[name() = name(bf:createAttributeNode(instance('i-data')/edit/oldAttributeName,instance('i-data')/edit/oldAttributeValue)/attribute::*)]"/>
+                            <xf:insert model="formdef" context="instance('i-props')/xfElement"  origin="bf:createAttributeNode(instance('i-data')/edit/newAttributeName,instance('i-data')/edit/newAttributeValue)/attribute::*"/>
+                            <xf:setvalue ref="instance('i-data')/edit/oldAttributeName" value="''"/>
+                        <xf:setvalue ref="instance('i-data')/updateProperties" value="string(bf:xml2props(instance('i-props')/xfElement))"/>
+                    </xf:trigger>
+                </xf:group>
+
+                <xf:group id="new" model="formdef" >
+                    <xf:label>Add new attribute</xf:label>
+                    <xf:input ref="instance('i-data')/attributeName">
+                        <xf:label>Attribute name</xf:label>
+                    </xf:input>
+
+                    <xf:input ref="instance('i-data')/attributeValue">
+                        <xf:label>Attribute value</xf:label>
+                    </xf:input>
+
+                    <xf:trigger>
+                        <xf:label>Add Attribute</xf:label>
+                        <xf:insert model="formdef" context="instance('i-props')/xfElement"  origin="bf:createAttributeNode(instance('i-data')/attributeName,instance('i-data')/attributeValue)/attribute::*"/>
+                        <xf:setvalue ref="instance('i-data')/attributeName" value="''"/>
+                        <xf:setvalue ref="instance('i-data')/attributeValue" value="''"/>
+
+                    </xf:trigger>
+                </xf:group>
+            </xf:group>
+        </div>
+    </body>
+</html>

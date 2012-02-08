@@ -1,14 +1,14 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 package de.betterform.xml.xforms;
 
+import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xforms.ui.BindingElement;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import de.betterform.xml.xforms.exception.XFormsException;
-import de.betterform.xml.xforms.ui.BindingElement;
 
 /**
  * Tests scoped resolution.

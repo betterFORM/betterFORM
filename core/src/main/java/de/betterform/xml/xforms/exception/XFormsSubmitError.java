@@ -1,16 +1,16 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
 package de.betterform.xml.xforms.exception;
 
-import net.sf.saxon.dom.DocumentWrapper;
-import net.sf.saxon.om.Item;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.Container;
 import de.betterform.xml.xforms.XFormsConstants;
 import de.betterform.xml.xforms.XFormsProcessor;
+import net.sf.saxon.dom.DocumentWrapper;
+import net.sf.saxon.om.Item;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

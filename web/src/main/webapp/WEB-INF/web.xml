@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
 <!DOCTYPE web-app PUBLIC
  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
  "http://java.sun.com/dtd/web-app_2_3.dtd">
@@ -55,6 +60,12 @@
 		<filter-name>XFormsFilter</filter-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</filter-mapping>
+<!--
+	<filter-mapping>
+		<filter-name>XFormsFilter</filter-name>
+		<url-pattern>/en/support.html</url-pattern>
+	</filter-mapping>
+-->
 
 <!--
     <filter-mapping>
@@ -81,6 +92,17 @@
 		<servlet-name>XFormsRequest</servlet-name>
 	</filter-mapping>
 -->
+    <servlet>
+        <servlet-name>error</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.ErrorServlet</servlet-class>
+    </servlet>
+
+
+
+    <servlet-mapping>
+        <servlet-name>error</servlet-name>
+        <url-pattern>/error/*</url-pattern>
+    </servlet-mapping>
 
 <!--
     <servlet>
@@ -169,12 +191,12 @@
         <servlet-name>bfEditor</servlet-name>
         <servlet-class>de.betterform.agent.web.servlet.XSLTServlet</servlet-class>
         <init-param>
-            <param-name>xsltHome</param-name>
+            <param-name>editorHome</param-name>
             <param-value>/forms/incubator/editor/</param-value>
         </init-param>
         <init-param>
             <param-name>xsltFile</param-name>
-            <param-value>xf2jsTree.xsl</param-value>
+            <param-value>bfEditor.xsl</param-value>
         </init-param>
     </servlet>
     
@@ -315,6 +337,16 @@
     <servlet-mapping>
         <servlet-name>FormsServlet</servlet-name>
         <url-pattern>/FormBrowser</url-pattern>
+    </servlet-mapping>
+
+      <servlet>
+        <servlet-name>FileStoreServlet</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.FileStoreServlet</servlet-class>
+    </servlet>
+
+     <servlet-mapping>
+        <servlet-name>FileStoreServlet</servlet-name>
+        <url-pattern>/FileStore</url-pattern>
     </servlet-mapping>
 <!--
     <security-constraint>

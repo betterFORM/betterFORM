@@ -4,6 +4,14 @@
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       
       <title>AVT Theme Switcher</title>
+      
+      
+      <!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+      
+      
       <style type="text/css">
             @import "../../bfResources/scripts/dijit/themes/tundra/tundra.css";
             @import "../../bfResources/scripts/dijit/themes/soria/soria.css";
@@ -31,7 +39,7 @@
    </head>
    
    <body class="{theme} InlineAlert bf" style="margin:30px">
-      <div id="xforms" class="InlineAlert">
+      <div id="xforms">
          <div style="display:none">
             <xf:model id="model-1">
                
@@ -118,7 +126,7 @@
                   
                </xf:trigger>
                
-               <xf:input ref="theme">
+               <xf:input id="input1" ref="theme">
                   
                   <xf:label>current theme</xf:label>
                   
@@ -158,7 +166,7 @@
         &lt;xf:label&gt;a sample trigger&lt;/xf:label&gt;
         &lt;xf:message&gt;button clicked&lt;/xf:message&gt;
     &lt;/xf:trigger&gt;
-    &lt;xf:input ref="theme"&gt;
+    &lt;xf:input id="input1" ref="theme"&gt;
         &lt;xf:label&gt;current theme&lt;/xf:label&gt;
     &lt;/xf:input&gt;
 &lt;/xf:group&gt;

@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
 <xformsdef>
     <!-- outermost elements have a docPath as their 'mount-point' in the host doc -->
     <xfElement name="model" id="" docPath="/html[1]/body[1]/div[1]/xf:model[1]" level="1">

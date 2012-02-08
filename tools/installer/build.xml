@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
@@ -74,7 +74,7 @@
 
         <!-- Use standalone compiler -->
         <taskdef name="izpack"
-                 classpath="${basedir}/lib/standalone-compiler-4.3.4.jar"
+                 classpath="${basedir}/lib/standalone-compiler-4.3.5.jar"
                  classname="com.izforge.izpack.ant.IzPackTask"/>
 
 
@@ -85,7 +85,7 @@
            __== Makes the installer using IzPack ==__
         </echo>
 
-        <!--
+        <!--                                                                                      set
                 <izpack input="${basedir}/installer.xml"
                         output="${basedir}/target/betterform-install.jar"
                         installerType="web"

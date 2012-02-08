@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011. betterForm Project - http://www.betterform.de
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -25,6 +25,7 @@ dojo.declare(
     incremental:false,
     currentValue:"",    
     bfFocus:false,
+    tabIndex:null,
 
 
     applyProperties:function(xfControl, node) {
@@ -36,7 +37,7 @@ dojo.declare(
         }else {
             this.incremental = false;
         }
-        if (dojo.attr(node, "tabIndex")) {
+        if (dojo.attr(node, "tabindex")) {
             this.tabIndex = eval(dojo.attr(node, "tabindex"));
         }
     },

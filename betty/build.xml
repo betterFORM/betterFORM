@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
 
@@ -16,11 +16,11 @@
             ATTENTION - the properties below must be set before build.properties.xml
             is called - DO NOT MOVE
      ###  -->
-    <property name="project.dir" value=".."/>
+    <property name="project.dir" value="."/>
     <property name="core.dir" value="${project.dir}/../core"/>
     <property name="web.dir" value="${project.dir}/../web"/>
     <property name="betty.dir" value="."/>
-    <property name="src.dir" value="${project.dir}/resource"/>
+    <property name="resource.dir" value="${project.dir}/../resource"/>
 
     <xmlproperty file="${basedir}/../build.properties.xml"
              semanticAttributes="true" keepRoot="false" />
@@ -29,7 +29,7 @@
     <property file="build.properties"/>
     <property file="signjar.properties"/>
     <property name="target" value="${basedir}/target"/>
-    <property name="targetname" value="${target}/${betty.app.name}-${betty.app.version}"/>
+    <property name="targetname" value="${target}/${betty.app.name}"/>
     <property name="forms.target" value="."/>
     <!--<property name="dojo.name" value="dojo-release-1.1.1"/>-->
 
@@ -44,6 +44,9 @@
         <delete dir="${basedir}/target"/>
     </target>
 
+    <target name="copy-java-policy">
+        <copy file="betty.policy" tofile="${java.home}/.java.policy"/>
+    </target>
 
     <target name="prepare">
         <echo/>
@@ -112,7 +115,7 @@
                optimize="${properties.javac.optimize}"/>
     </target>
 
-    <target name="package" depends="compile" description="create Betty jar">
+    <target name="create-jar" depends="compile" description="create Betty jar">
         <echo/>
         <echo message="************************************************************************************"/>
         <echo message="creating Betty jar..."/>
@@ -127,7 +130,7 @@
     </target>
 
 
-    <target name="deploy" depends="package" description="create a runnable installation">
+    <target name="deploy" depends="create-jar" description="create a runnable installation">
         <echo/>
         <echo message="************************************************************************************"/>
         <echo message="creating Betty application layout..."/>
@@ -153,12 +156,11 @@
 
         <echo/>
         <echo message="************************************************************************************"/>
-        <echo message="copying Core resources..."/>
+        <echo message="copying resources..."/>
         <echo message="************************************************************************************"/>
         <echo/>
         <copy todir="${targetname}/resources">
-            <fileset dir="${basedir}/src/resources" excludes="**/*.tar.gz"/>
-            <!--<fileset dir="${basedir}/src/resources" />-->
+            <fileset dir="${basedir}/src/resources" />
         </copy>
 
          <copy todir="${targetname}/resources">
@@ -171,35 +173,56 @@
         <echo message="************************************************************************************"/>
         <echo/>
 
-        <!--<antcall target="prepare-js"/>-->
+        <untar src="${resource.dir}/src/main/lib/dojo-release-1.6.1-src.tar.gz" dest="${targetname}/resources/scripts" compression="gzip">
+            <cutdirsmapper dirs="1"/>
+        </untar>
 
-<!--
-        <copy todir="${targetname}/resources">
-            <fileset dir="${basedir}/${properties.rootDir}/src/main/resources"  />
-        </copy>
--->
-        <copy file="${basedir}/betty.policy" todir="${targetname}/bin"/>
+        <!--<copy file="${basedir}/betty.policy" todir="${targetname}/bin"/>-->
         <copy file="${basedir}/install.bat" todir="${targetname}/bin"/>
-        <copy file="${basedir}/betterform-config.xml" todir="${targetname}/bin"/>
+        <copy file="${web.dir}/src/main/webapp/WEB-INF/betterform-config.xml" todir="${targetname}/bin"/>
 
         <copy file="${basedir}/src/resources/etc/log4j.xml" todir="${targetname}/bin"/>
+
+
     </target>
 
     <target name="copy-forms" description="copy forms">
-        <echo/>
-        <echo message="************************************************************************************"/>
-        <echo message="copying forms..."/>
-        <echo message="************************************************************************************"/>
-        <echo/>
-        <xslt basedir="${src.dir}/src/main/xforms"
-              destdir="${basedir}/target/${betty.app.name}-${betty.app.version}"
+        <copy file="${basedir}/src/registration.html" todir="${targetname}"/>
+        <echo>
+        ************************************************************************************
+        preparing forms for betty ...
+        ************************************************************************************
+        </echo>
+        <xslt basedir="${resource.dir}/src/main/xforms"
+              destdir="${basedir}/target/forms/"
               style="${basedir}/src/resources/xslt/xhtml2betty.xsl"
               force="true"
               includes="**/*.xhtml"
-              extension=".html">
+              extension=".html"
+              filedirparameter="filedir">
             <classpath refid="transform.class.path"/>
         </xslt>
 
+        <echo>
+        ************************************************************************************
+        copying forms ...
+        ************************************************************************************
+        </echo>
+        <copy todir="${basedir}/target/${betty.app.name}" flatten="true">
+            <fileset dir="${basedir}/target/forms" includes="**/*.html"/>
+        </copy>
+
+
+        <echo>
+        ************************************************************************************
+        copying resources ...
+        ************************************************************************************
+        </echo>
+        <copy todir="${basedir}/target/${betty.app.name}" overwrite="true">
+            <fileset dir="${resource.dir}/src/main/xforms" excludes="**/*.xhtml"/>
+        </copy>
+
+        <!--<delete dir="${basedir}/target/forms"/>   -->
 <!--
         <copy todir="${targetname}/${forms.target}"
               overwrite="true">
@@ -240,7 +263,7 @@
             <classpath refid="test.class.path"/>
             <formatter type="xml"/>
             <batchtest fork="yes" todir="${basedir}/target/test">
-                <!--<fileset dir="${src.dir}" includes="**/*Test.java"/>-->
+                <!--<fileset dir="${resource.dir}" includes="**/*Test.java"/>-->
                 <fileset dir="${basedir}/src/test" includes="**/*Test.java"/>
             </batchtest>
         </junit>
@@ -268,9 +291,29 @@
         <echo message="************************************************************************************"/>
         <echo/>
 
+
+<!--
+        <genkey alias="${signjar.alias}" storepass="${signjar.storepass}" keystore="${basedir}/target/keystore">
+            <dname>
+                &lt;!&ndash;CommonName&ndash;&gt;
+                <param name="CN" value="betterform.de"/>
+                &lt;!&ndash; OrganizationalUnit &ndash;&gt;
+                <param name="OU" value="betterFORM project"/>
+                &lt;!&ndash; Organization &ndash;&gt;
+                <param name="O" value="betterFORM"/>
+                &lt;!&ndash; CountryCode &ndash;&gt;
+                <param name="C" value="DE"/>
+                &lt;!&ndash; Location &ndash;&gt;
+                <param name="L" value="Berlin"/>
+                &lt;!&ndash; State &ndash;&gt;
+                <param name="ST" value="Berlin"/>
+            </dname>
+        </genkey>
+-->
+
         <!-- sign jar -->
         <!-- todo: existence of keystore must be checked -->
-        <signjar alias="${signjar.alias}" storepass="${signjar.storepass}">
+        <signjar alias="${signjar.alias}" storepass="${signjar.storepass}" keystore="${basedir}/target/keystore">
             <!--<fileset dir="${deploy.dir}/${app.name}-${app.version}/bin" includes="*.jar"/>  -->
             <fileset dir="${targetname}/bin" includes="*.jar"/>
         </signjar>
