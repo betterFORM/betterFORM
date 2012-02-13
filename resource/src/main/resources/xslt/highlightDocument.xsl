@@ -10,7 +10,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         >
 
-    <xsl:output method="xhtml" encoding="UTF-8" indent="no" version="1.0" doctype-system="/resources/xsd/xhtml1-transitional.dtd"/>
+    <xsl:output method="xhtml" encoding="UTF-8" indent="yes" version="1.0" doctype-system="/resources/xsd/xhtml1-transitional.dtd"/>
     <xsl:param name="params"/>
 
     <xsl:preserve-space elements="*"/>
@@ -104,7 +104,7 @@
 <!--        <xsl:variable name="cleanedText" select="translate(., '&#x20;&#x9;&#xD;&#xA;', ' ')"/>
         <xsl:copy-of select="$cleanedText"/>
 -->
-        <xsl:copy-of select="."/>
+        <xsl:copy-of select="normalize-space(.)"/>
 	</xsl:template>
 
 	<xsl:template match="@*">
