@@ -4,12 +4,16 @@
  */
 package de.betterform.installer.utils;
 
-import org.exist.security.User;
+import org.exist.security.Permission;
+import org.exist.security.internal.aider.GroupAider;
+import org.exist.security.internal.aider.UserAider;
 import org.exist.xmldb.DatabaseInstanceManager;
 import org.exist.xmldb.UserManagementService;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
+import org.xmldb.api.modules.CollectionManagementService;
+
 /**
  * @author <a href="mailto:tobias.krebs@betterform.de">tobi</a>
  * @version $Id: SetupBetterFORMUser 26.11.10 tobi $
@@ -45,8 +49,32 @@ public class SetupBetterFORMUser {
 
         Collection db = DatabaseManager.getCollection(dbUri, admin, adminPasswd);
         UserManagementService userManagementService = (UserManagementService) db.getService("UserManagementService", "1.0");
-        userManagementService.addUser(new User(betterFORM, passwd, betterFORM));
+
+        //Create betterFORM group
+        GroupAider group = new GroupAider(betterFORM);
+        userManagementService.addGroup(group);
+
+        //Create betterFORM user
+        UserAider user = new UserAider(betterFORM);
+        user.setPassword(passwd);
+        user.addGroup(group);
+        userManagementService.addAccount(user);
+
         Collection root = DatabaseManager.getCollection(dbUri, admin, adminPasswd);
+        //Create betterFORM collection
+        CollectionManagementService collectionManagementService = (CollectionManagementService) root.getService("CollectionManagementService", "1.0");
+        Collection betterFORMCollection = collectionManagementService.createCollection(betterFORM);
+
+
+        //Set owner and permissions
+        Permission permissions = userManagementService.getPermissions(betterFORMCollection);
+        permissions.setOwner(betterFORM);
+        permissions.setGroup(betterFORM);
+        permissions.setSticky(true);
+        permissions.setMode(755);
+        betterFORMCollection.close();
+
+        //Shutdown DB
         DatabaseInstanceManager manager = (DatabaseInstanceManager) root.getService("DatabaseInstanceManager", "1.0");
         manager.shutdown();
     }
