@@ -106,7 +106,7 @@
 	</xsl:template>
 
 	<xsl:variable name="nl">
-		<xsl:text> </xsl:text>
+		<xsl:text></xsl:text>
 	</xsl:variable>
 	<xsl:variable name="indent-increment" select="''"/>
 	
@@ -160,7 +160,7 @@
         </xsl:copy>
     </xsl:template>
 
-	
+
 	<!--<xsl:template match="bf:data" priority="10"/>-->
 	<!--<xsl:template match="xf:group[@appearance='repeated']"/>-->
 	<!--<xsl:template match="@src"/>-->
