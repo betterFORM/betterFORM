@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
- * Licensed under the terms of BSD License
- */
-
 package de.betterform.xml.util;
 
 
@@ -12,12 +7,23 @@ import org.w3c.dom.Node;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
+import org.xml.sax.ext.DefaultHandler2;
 import org.xml.sax.helpers.DefaultHandler;
 
 import javax.xml.parsers.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Stack;
+
+/**
+ *
+ * @author Kevin Krohe
+ * Code originally written by priomsrb.  Posted to the following location:
+ *
+ * http://stackoverflow.com/questions/4915422/get-line-number-from-xml-node-java
+ *
+ *
+ */
 
 public class PositionalXMLReader {
     final static String LINE_NUMBER_KEY_NAME = "lineNumber";
@@ -38,7 +44,7 @@ public class PositionalXMLReader {
 
         final Stack<Element> elementStack = new Stack<Element>();
         final StringBuilder textBuffer = new StringBuilder();
-        final DefaultHandler handler = new DefaultHandler() {
+        final DefaultHandler2 handler = new DefaultHandler2() {
             private Locator locator;
 
             @Override
@@ -73,6 +79,11 @@ public class PositionalXMLReader {
             @Override
             public void characters(final char ch[], final int start, final int length) throws SAXException {
                 textBuffer.append(ch, start, length);
+            }
+
+            @Override
+            public void comment(char[] chars, int i, int i1) throws SAXException {
+                super.comment(chars, i, i1);    //To change body of overridden methods use File | Settings | File Templates.
             }
 
             // Outputs text accumulated under the current node
