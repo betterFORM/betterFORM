@@ -53,7 +53,7 @@
 
 
     <target name="create-betterFORMInstaller-jar" description="Builds a betterForm Installer providing WAR, jetty-standalone and XRX-Bundle" depends="prepare">
-         <echo>
+        <echo>
             __== Creating Installer ==__
         </echo>
 
@@ -79,13 +79,13 @@
 
 
 
-        <sleep seconds="30" description="wait for fs to settle"/>
+        <sleep seconds="15" description="wait for fs to settle"/>
         <!-- We call IzPack -->
         <echo>
            __== Makes the installer using IzPack ==__
         </echo>
 
-        <!--                                                                                      set
+        <!--
                 <izpack input="${basedir}/installer.xml"
                         output="${basedir}/target/betterform-install.jar"
                         installerType="web"

@@ -19,7 +19,7 @@
         <webdir>http://www.betterform.de/packs</webdir>
     </info>
 
-    <guiprefs width="640" height="600" resizable="no">
+    <guiprefs width="640" height="610" resizable="no">
         <modifier key="useButtonIcons" value="no"/>
   		<modifier key="useLabelIcons" value="no"/>
   		<modifier key="layoutAnchor" value="NORTHWEST"/>
@@ -90,13 +90,13 @@
         <panel classname="HTMLHelloPanel" id="welcome"/>
         <panel classname="JDKPathPanel"/>
         <panel classname="LicencePanel"/>
-        <panel classname="TargetPanel"/>
         <panel classname="HTMLInfoPanel" id="readme" />
+        <panel classname="TargetPanel"/>
         <panel classname="PacksPanel"/>
         <panel classname="UserInputPanel" id="UserInputPanel.0" condition="XRX"/>
         <panel classname="InstallPanel"/>
         <panel classname="ProcessPanel" condition="XRX"/>
-         <panel classname="ShortcutPanel"/>
+        <panel classname="ShortcutPanel"/>
         <panel classname="FinishPanel"/>
     </panels>
 
@@ -164,8 +164,8 @@
 
     <packs>
 
-        <pack name="betterFORM_XRX" id="betterFORM-XRX-bundle" required="no" preselected="yes" condition="XRX-install">
-            <description>betterFORM and eXist bundled</description>
+        <pack name="betterFORM XML Suite" id="betterFORM-XRX-bundle" required="no" preselected="yes" condition="XRX-install">
+            <description>betterFORM XML Suite is the betterFORM XForms Toolkit and eXist XML database bundled together as a ready to go XRX framework</description>
 
             <fileset targetdir="$INSTALL_PATH" dir="bf-XRX"/>
 
@@ -213,14 +213,14 @@
             <executable targetfile="$INSTALL_PATH/start.sh" stage="never" os="unix"/>
         </pack>
 
-        <pack id="jetty" name="betterFORM standalone" required="no" preselected="no" condition="jetty-install">
-            <description>betterFORM standalone running on jetty webcontainer</description>
+        <pack id="jetty" name="betterFORM XForms Toolkit (standalone)" required="no" preselected="no" condition="jetty-install">
+            <description>betterFORM XForms Toolkit bundled with the jetty webcontainer</description>
             <fileset dir="jetty/betterform" targetdir="$INSTALL_PATH" includes="*/**"/>
             <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/web/root"/>
         </pack>
 
-        <pack name="betterFORM WAR" id="betterForm" required="no" preselected="no" condition="bf-install">
-            <description>betterFORM 3.0 XForms Engine packaged as WAR</description>
+        <pack name="betterFORM XForms Toolkit (deployable)" id="betterForm" required="no" preselected="no" condition="bf-install">
+            <description>betterFORM XForms Toolkit deployable to a webcontainer.</description>
             <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/betterform"/>
         </pack>
 
