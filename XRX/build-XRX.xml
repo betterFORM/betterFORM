@@ -103,6 +103,8 @@ Error: eXist is not installed in ${eXist.home}.
                 <include name="client.properties"/>
             </fileset>
         </copy>
+
+        <antcall target="patch-web-xml"/>
     </target>
 
     <!-- *********************************************************************************************************** -->
@@ -125,6 +127,21 @@ Error: eXist is not installed in ${eXist.home}.
 
         <move file="${eXist.home}/webapp/WEB-INF/betterform-config.xml.out" tofile="${eXist.home}/webapp/WEB-INF/betterform-config.xml"/>
         <touch file="${betterFORM.config.patch.marker}"/>
+    </target>
+
+    <target name="patch-web-xml">
+        <echo>
+            __== Patching web.xml ==__
+        </echo>
+        <copy file="${etc.dir}/MergeDisplayNameAndErrorPage.xsl" tofile="${eXist.home}/MergeDisplayNameAndErrorPage.xsl" failonerror="true"/>
+        <xslt in="${eXist.home}/webapp/WEB-INF/web.xml" out="${eXist.home}/webapp/WEB-INF/web.xml.out" force="true"
+              style="${eXist.home}/MergeDisplayNameAndErrorPage.xsl">
+            <classpath refid="generator.libs"/>
+        </xslt>
+        <delete file="${eXist.home}/MergeDisplayNameAndErrorPage.xsl"/>
+
+
+        <move file="${eXist.home}/webapp/WEB-INF/web.xml.out" tofile="${eXist.home}/webapp/WEB-INF/web.xml"/>
     </target>
 
     <target name="patch-eXist-config" unless="eXist.conf.patched">

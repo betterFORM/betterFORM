@@ -1,6 +1,6 @@
 The BSD License
 -------------------------------------
-Copyright (c) 2011, betterForm Project (http://www.betterform.de)
+Copyright (c) 2012, betterForm Project (http://www.betterform.de)
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
