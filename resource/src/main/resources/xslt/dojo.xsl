@@ -98,7 +98,7 @@
     <!-- ####################################################################################################### -->
     <xsl:template match="head">
 
-        <xsl:comment> *** powered by betterFORM, &amp;copy; 2011 *** </xsl:comment>
+        <xsl:comment> *** powered by betterFORM, &amp;copy; 2012 *** </xsl:comment>
 
         <head>
             <title>
@@ -400,7 +400,7 @@
                                 <img style="vertical-align:text-bottom; margin-right:5px;"
                                      src="{concat($contextroot,'/bfResources/images/betterform_icon16x16.png')}" alt="betterFORM project"/>
                             </a>
-                            <span>&#xA9; 2011 betterFORM</span>
+                            <span>&#xA9; 2012 betterFORM</span>
                         </div>
                         <div id="debug-pane-links">
                             <a href="{concat($contextroot,'/inspector/',$sessionKey,'/','hostDOM')}" target="_blank">Host Document</a>
