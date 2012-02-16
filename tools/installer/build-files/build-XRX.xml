@@ -178,6 +178,11 @@
             <fileset dir="${installer.target}/bf-XRX/installer/scripts" includes="build.sh build.bat"/>
         </copy>
 
+        <!-- Copy wrapper.conf template refuses to be overriden by installer -->
+        <delete file="${installer.target}/bf-XRX/tools/wrapper/conf/wrapper.conf"/>
+        <copy tofile="${installer.target}/bf-XRX/tools/wrapper/conf/wrapper.conf" file="${installer.target}/bf-XRX/tools/wrapper/conf/wrapper.conf.install" overwrite="true"/>
+
+
 	    <unzip src="${basedir}/lib/betterFORM-Launcher-1.4-xrx-distribution.zip" dest="${installer.target}/bf-XRX"/>
         <move file="${installer.target}/bf-XRX/betterFORM-Launcher-1.4.jar" tofile="${installer.target}/bf-XRX/betterFORM.jar"/>
 

@@ -200,7 +200,6 @@
             <executable targetfile="$INSTALL_PATH/bin/functions.d/jmx-settings.sh" stage="never" os="unix"/>
 
             <!-- Service -->
-            <singlefile src="bf-XRX/tools/wrapper/conf/wrapper.conf.install" target="$INSTALL_PATH/tools/wrapper/conf/wrapper.conf" override="true"/>
             <parsable targetfile="$INSTALL_PATH/tools/wrapper/conf/wrapper.conf"/>
             <executable targetfile="$INSTALL_PATH/tools/wrapper/bin/wrapper" stage="never" os="unix"/>
             <executable targetfile="$INSTALL_PATH/tools/wrapper/bin/exist.sh" stage="never" os="unix"/>
