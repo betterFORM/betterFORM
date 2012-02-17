@@ -23,9 +23,8 @@
      -->
 
     <!-- you need to reference a valid GitHub tag here which your xApplication takes as a base -->
-    <property name="betterform.version" value="https://github.com/betterFORM/betterFORM/zipball/AppBuilder"/>
-    <property name="eXist.version"
-              value="http://netcologne.dl.sourceforge.net/project/exist/Stable/1.4/eXist-setup-1.4.0-rev10440.jar"/>
+    <property name="betterform.version" value="https://github.com/betterFORM/betterFORM/zipball/ProjectAssistant"/>
+    <property name="eXist.version" value="http://downloads.sourceforge.net/project/exist/Stable/1.4.2/eXist-setup-1.4.2dev-rev15584.jar"/>
 
 
     <property name="xApp.name" value="xApp-01"/>
@@ -89,9 +88,15 @@
         <echo message="Building betterForm extension"/>
         <echo message="************************************************************************************************************"/>
         <echo/>
-        <ant antfile="${bf.src}/XRX/build-XRX.xml" target="install-betterFORM" useNativeBasedir="true" inheritAll="false">
+        <ant antfile="${bf.src}/XRX/build-XRX.xml" target="update-betterFORM" useNativeBasedir="true" inheritAll="false">
             <property name="eXist.home" value="${xApp.target}"/>
         </ant>
+
+        <ant antfile="${bf.src}/XRX/build-XRX.xml" target="setup-betterFORM-context" inheritall="false" usenativebasedir="true">
+            <property name="eXist.home" value="${xApp.target}"/>
+        </ant>
+
+
 
         <echo/>
         <echo message="************************************************************************************************************"/>
@@ -145,7 +150,7 @@
     </target>
 
     <target name="stop" description="stop XRX Application" >
-        <ant antfile="${bf.src}/XRX/build-eXist-database.xml" target="stop-eXist" inheritall="false" usenativebasedir="true">
+        <ant antfile="${bf.src}/XRX/build-utils-eXist.xml" target="stop-eXist" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${xApp.target}"/>
         </ant>
     </target>
@@ -212,6 +217,14 @@
            <property name="db-passwd" value="${db.pwd}"/>
            <property name="file-source-dir" value="${xApp.src}/main/xrx/"/>
            <property name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}"/>
+        </ant>
+
+        <ant antfile="${bf.src}/XRX/build-utils-eXist.xml" target="install-files-into-eXist-DB">
+            <property name="eXist.home" value="${xApp.target}"/>
+            <property name="db-user" value="${db.user}"/>
+            <property name="db-passwd" value="${db.pwd}"/>
+            <property name="file-source-dir" value="${xApp.src}/main/db"/>
+            <property name="db-uri" value="xmldb:exist://${server.name}:${server.port}/${webapp.context}/xmlrpc/db/${rootcollection.name}"/>
         </ant>
     </target>
 
