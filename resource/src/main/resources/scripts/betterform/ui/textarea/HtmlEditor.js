@@ -47,7 +47,11 @@ dojo.declare(
 
 
     getControlValue:function(){
-        return this.getValue();
+        var tmpValue = this.getValue(true);
+        // remove unwanted markup inserted by the dojo editor implementation
+        tmpValue = dojo.trim(tmpValue);
+        tmpValue = tmpValue.replace("<br _moz_editor_bogus_node=\"TRUE\" />", "");
+        return tmpValue;
     },
 
 
@@ -57,7 +61,7 @@ dojo.declare(
     },
 
    applyState:function() {
-        console.debug("HTMLEditor.applyState (id:" + this.id +") isReadonly1: ",this.xfControl.isReadonly());
+        // console.debug("HTMLEditor.applyState (id:" + this.id +") isReadonly1: ",this.xfControl.isReadonly());
         this.set("readOnly",this.xfControl.isReadonly());
         this.set("disabled",this.xfControl.isReadonly());
     }

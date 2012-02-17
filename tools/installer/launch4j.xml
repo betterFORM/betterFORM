@@ -32,12 +32,12 @@
     <timeoutErr>true</timeoutErr>
   </splash>
   <versionInfo>
-	<fileVersion>3.2.0.0</fileVersion>
-	<txtFileVersion>3.2.0-RC4</txtFileVersion>
+	<fileVersion>4.1.0.0</fileVersion>
+	<txtFileVersion>4.1.0</txtFileVersion>
 	<fileDescription>betterFORM Installer</fileDescription>
 	<copyright>betterFORM Project</copyright>
-	<productVersion>3.2.0.0</productVersion>
-	<txtProductVersion>3.2.0-RC4</txtProductVersion>
+	<productVersion>4.1.0.0</productVersion>
+	<txtProductVersion>4.1.0</txtProductVersion>
 	<productName>betterFORM</productName>
 	<internalName>betterFORM</internalName>
 	<originalFilename>betterFORM-install.exe</originalFilename>

@@ -27,10 +27,4 @@
     <xsl:template match="property[@name='initLogging']/@value" priority="10">
         <xsl:attribute name="value">false</xsl:attribute>
     </xsl:template>
-
-
-    <xsl:template match="property[@name='error.page']/@value" priority="10">
-        <xsl:attribute name="value">betterform/xquery/xferror.xql</xsl:attribute>
-    </xsl:template>
-
 </xsl:stylesheet>

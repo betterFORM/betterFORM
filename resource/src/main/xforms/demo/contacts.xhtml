@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
-  ~ Licensed under the terms of BSD License
-  -->
-
 <html xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:xf="http://www.w3.org/2002/xforms"
 	  xmlns:ev="http://www.w3.org/2001/xml-events"
-		>
+      xmlns:bf="http://betterform.sourceforge.net/xforms"
+	  bf:toaster-position="tl-down">
 	<head>
 		<title>Embedding a subform with the load action</title>
 		<meta name="author" content="joernt at users.sourceforge.net"/>
@@ -35,18 +31,20 @@
 			</div>
 			<div class="Section" dojotype="dijit.layout.ContentPane">
 
-				<xf:group appearance="full" id="contact" class="contactsFullGroup">
+				<xf:group appearance="minimal" id="contact" class="contactsFullGroup">
                     <xf:action ev:event="unload-subforms">
                         <xf:message level="ephemeral">unloading subform...</xf:message>
                         <xf:load show="none" targetid="address"/>
                     </xf:action>
 
-					<div class="Headline">Address Collection with a Subform:</div>
+					<div class="Headline">Address Collection with a Subform</div>
 
+<!--
 					<div class="description">
 						<p>This Demo shows  a simple address collection form. It uses subforms for edting single entries.</p>
                         <p>Demonstrates exchange of data between models with a model submission.</p>
 					</div>
+-->
 
 					<xf:repeat id="addresses" nodeset="address" appearance="compact" class="contactsRepeat">
 						<xf:output ref="title">

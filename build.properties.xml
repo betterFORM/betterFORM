@@ -4,10 +4,6 @@
   -->
 
 <root>
-    <!--
-      ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
-      ~ Licensed under the terms of BSD License
-      -->
     <properties>
         <!-- path to forms for modules (actual: src/main/xforms src/main/html)-->
         <rootDir>..</rootDir>
@@ -21,15 +17,16 @@
         </javac>
         <dojo>dojo-release-1.6.1-src</dojo>
         <timeline>timeline_libraries_v2.3.0</timeline>
+        <syntaxhighlighter>syntaxhighlighter_3.0.83</syntaxhighlighter>
     </properties>
     <app>
         <name>betterform</name>
-        <version>3.2.0-RC4</version>
+        <version>4.1</version>
     </app>
     <core>
         <app>
             <name>betterform-core</name>
-            <version>3.2.0-RC4</version>
+            <version>4.1</version>
         </app>
         <transform>
             <classpath pathid="transform.class.path" description="classpath for saxon XPath and XSLT engine">
@@ -96,7 +93,7 @@
     <web>
         <app>
             <name>betterform</name>
-            <version>3.2.0-RC4</version>
+            <version>4.1</version>
         </app>
         <transform>
             <classpath pathid="transform2.class.path" description="classpath for saxon XPath and XSLT engine">
@@ -285,7 +282,7 @@
                 <pathelement location="${installer.dir}/target/bf-XRX/lib/core/xmldb.jar" groupid="org.xmldb" version="11112001" artifactId="xmldb"/>
             </classpath>
         </compile>
-       <izPack>
+        <izPack>
             <dir>/opt/izPack-4.3.4</dir>
         </izPack>
         <launch4j>
@@ -294,7 +291,7 @@
     </installer>
     <eXist>
         <!-- point this to the place where you installed exist -->
-        <home>/Applications/betterFORM-RC4</home>
+        <home>/Applications/betterFORM-4.0</home>
         <!-- Leave this empty if you run eXist in root context -->
         <!-- If you use the betterform XRX bundle this is 'betterform' -->
         <context>/exist</context>

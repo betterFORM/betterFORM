@@ -10,7 +10,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         >
 
-    <xsl:output method="xhtml" encoding="UTF-8" indent="no"/>
+    <xsl:output method="xhtml" encoding="UTF-8" indent="yes" version="1.0" doctype-system="/resources/xsd/xhtml1-transitional.dtd"/>
     <xsl:param name="params"/>
 
     <xsl:preserve-space elements="*"/>
@@ -19,10 +19,10 @@
 			<head>
 				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 				<title><xsl:value-of select="$params/URI"/></title>
-                <script type="text/javascript" src="{$params/context}/bfResources/scripts/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
-                <script type="text/javascript" src="{$params/context}/bfResources/scripts/syntaxhighlighter_3.0.83/scripts/shBrushXml.js"></script>
-                <link type="text/css" rel="stylesheet" href="{$params/context}/bfResources/scripts/syntaxhighlighter_3.0.83/styles/shCore.css"/>
-                <link type="text/css" rel="stylesheet" href="{$params/context}/bfResources/scripts/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+                <script type="text/javascript" src="{$params/context}/bfResources/scripts/syntaxhighlighter/scripts/shCore.js"></script>
+                <script type="text/javascript" src="{$params/context}/bfResources/scripts/syntaxhighlighter/scripts/shBrushXml.js"></script>
+                <link type="text/css" rel="stylesheet" href="{$params/context}/bfResources/scripts/syntaxhighlighter/styles/shCore.css"/>
+                <link type="text/css" rel="stylesheet" href="{$params/context}/bfResources/scripts/syntaxhighlighter/styles/shCoreDefault.css"/>
 				<script type="text/javascript">SyntaxHighlighter.all();</script>
                 <style type="text/css">
                     body{
@@ -104,7 +104,7 @@
 <!--        <xsl:variable name="cleanedText" select="translate(., '&#x20;&#x9;&#xD;&#xA;', ' ')"/>
         <xsl:copy-of select="$cleanedText"/>
 -->
-        <xsl:copy-of select="."/>
+        <xsl:copy-of select="normalize-space(.)"/>
 	</xsl:template>
 
 	<xsl:template match="@*">

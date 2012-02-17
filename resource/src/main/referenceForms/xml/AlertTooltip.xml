@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
-  ~ Licensed under the terms of BSD License
-  -->
-
 <html xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ev="http://www.w3.org/2001/xml-events">
     <head>
         <title>Tooltip Alert Handler</title>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+
+
     </head>
     <body>
         <div class="description">
@@ -138,10 +139,6 @@
                     <th>Description</th>
                 </tr>
 -->
-                <tr>
-                    <td>InlineAlert</td>
-                    <td>matches a body that uses inline alerts</td>
-                </tr>
                 <tr>
                     <td>xfInput</td>
                     <td>matches an Element that represents a XForms input element</td>

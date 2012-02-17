@@ -161,6 +161,10 @@
 
     </target>
 
+    <target name="package" depends="deploy, deploy-forms" description="create js optimized war file">
+        <antcall target="create-war"/>
+    </target>
+
     <target name="create-war" description="create a betterFORM web application archive">
         <echo>
         ************************************************************************************

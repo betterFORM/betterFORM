@@ -6,97 +6,110 @@
 dojo.provide("betterform.ui.input.Time");
 
 
+dojo.require("dijit._Widget");
+dojo.require("dijit._Templated");
+dojo.require("dijit.form.TimeTextBox");
+
 dojo.declare(
-        "betterform.ui.input.Time",
-        [betterform.ui.ControlValue],
-{
-    templateString: dojo.cache("betterform", "ui/templates/Time.html"),
+    "betterform.ui.input.Time",
+    [betterform.ui.ControlValue, dijit.form.TimeTextBox],
+    {
 
-    constructor:function() {
-        console.debug("Time.constructor");
+        intermediateChanges:true,
+        delay:300,
+        constraints:null,
 
-    },
+        postMixInProperties:function() {
+            this.inherited(arguments);
+            this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);
+            if (dojo.attr(this.srcNodeRef, "delay") != undefined && dojo.attr(this.srcNodeRef, "delay") != "") {
+                this.delay = eval(dojo.attr(this.srcNodeRef, "delay"));
+            }
 
-    postMixInProperties:function() {
-        console.debug("Time.postMixInProperties");
-        this.inherited(arguments);
-        this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);
-    },
+        },
 
-    postCreate:function() {
-        console.debug("Time.postCreate this.domNode:", this.domNode, " this.value: ", this.value);
-        this.inherited(arguments);
-        dojo.attr(this.domNode, "value", this.value);
-        this.applyValues();
-        dojo.connect(this.hoursFacet, "onkeyup", this, "onHoursChanged");
-        dojo.connect(this.minutesFacet, "onkeyup", this, "onMinutesChanged");
+        postCreate:function() {
+            //this.inherited(arguments);
+            //this.setCurrentValue();
 
-    },
-    applyValues:function() {
-        console.debug("Time.applyValues value:",this.value);
-        var timeContainer = this.value.split(":");
-        if(timeContainer.length != 3) {
-            return;
+            this.inherited(arguments);
+            dojo.attr(this.domNode, "value", this.value);
+
+            // console.debug("DateTime.postCreate: value:",this.value);
+            this.applyValues(this.value);
+        },
+
+        applyValues:function() {
+            console.debug("Time.applyValues value:",this.value);
+        },
+
+        _onFocus:function() {
+            this.inherited(arguments);
+            this.handleOnFocus();
+        },
+
+        _onBlur:function() {
+            this.inherited(arguments);
+            this.handleOnBlur();
+        },
+
+        _delayTimer: undefined,
+
+        onChange: function(/*anything*/ newValue, /*Boolean, optional*/ priorityChange){
+            //this.inherited(arguments);
+
+            if(this.incremental){
+                if (this.delay > 0) {
+                    if (this._delayTimer != undefined ) {
+                        clearTimeout(this._delayTimer);
+                    }
+                    console.debug("Delay: ", this.delay);
+                    this._delayTimer = setTimeout(dojo.hitch(this,"setControlValueDelayed"),this.delay);
+                } else {
+                    this.setControlValue();
+                }
+            }
+        },
+
+        // Not sure why this function is needed and a direct setControlValue in the onChange behaves strange...
+        // Probably some dojo quirk or my lack of understanding
+        setControlValueDelayed:function() {
+            this.setControlValue();
+        },
+
+        getControlValue:function(){
+            console.debug("betterform.ui.input.Time.getControlValue for Control "+ this.id +": ", this.get('value') + " attr: ",this.attr('value'));
+            var currentDate;
+            var notISODate = this.get('value');
+
+            if(notISODate == undefined){
+                // console.debug("Empty (undefined) date: this: " , this);
+                currentDate = this.focusNode.value;
+            }else {
+                currentDate = dojo.date.stamp.toISOString(notISODate,this.constraints);
+            }
+
+            if(currentDate.indexOf("T") != -1){
+                currentDate = currentDate.split("T")[1];
+            }
+
+
+            return currentDate;
+        },
+
+
+        _handleSetControlValue:function(date) {
+            // console.debug("Date._handleSetControlValue date:",date);
+            if(date == undefined || date == ""){
+                dojo.attr(this.textbox, "value","");
+            }
+            else {
+                this._setValueAttr(dojo.date.stamp.fromISOString(date,this.constraint));
+                // this._setValueAttr(this.parse(date, this.constraints), false, date);
+            }
         }
-        console.debug("Time.postCreate this.timeContainer:", timeContainer);
-        dojo.attr(this.hoursFacet, "value", timeContainer[0]);
-        dojo.attr(this.minutesFacet, "value", timeContainer[1]);
-        dojo.attr(this.secondsFacet, "value", timeContainer[2]);
-    },
 
-    onHoursChanged:function(evt) {
-        console.debug("Time.onHoursChanged: evt:",evt, " keyCode: ", evt.keyCode);
-        var hours = dojo.attr(this.hoursFacet,"value");
-        if(evt.keyCode != 16 && evt.keyCode != 9 && hours.length == "2"){
-            this.minutesFacet.focus();
-        }
-    },
-
-    onMinutesChanged:function(evt) {
-        console.debug("Time.onMinutesChanged: evt:",evt, " keyCode: ", evt.keyCode);
-        var minutes = dojo.attr(this.minutesFacet,"value");
-        if(evt.keyCode != 16 && evt.keyCode != 9 && minutes.length == "2"){
-            this.secondsFacet.focus();
-        }
-    },
-
-    _onFocus:function() {
-        console.debug("betterform.ui.input.Time._onFocus");
-        this.inherited(arguments);
-        this.handleOnFocus();
-    },
-
-    _onBlur:function() {
-        console.debug("betterform.ui.input.Time._onBlur");
-        this.inherited(arguments);
-        this.handleOnBlur();
-    },
+    });
 
 
-    onChange: function(/*anything*/ newValue, /*Boolean, optional*/ priorityChange){
-        console.debug("betterform.ui.input.Time.onChange");
-    },
 
-    getControlValue:function(){
-
-        var hours = dojo.attr(this.hoursFacet, "value");
-        if(hours == undefined || hours == ""){
-            hours = "00";
-        }
-        var minutes = dojo.attr(this.minutesFacet, "value");
-        if(minutes == undefined || minutes == ""){
-            minutes = "00";
-        }
-        var seconds = dojo.attr(this.secondsFacet, "value");
-        if(seconds == undefined || seconds == ""){
-            seconds = "00";
-        }
-        var currentTime = hours + ":" + minutes + ":" + seconds;
-        console.debug("betterform.ui.input.Time.getControlValue currentValue: ", currentTime);
-        return currentTime;
-    },
-
-    _handleSetControlValue:function(value) {
-        console.debug("betterform.ui.input.Time._handleSetControlValue value: ",value);
-    }
-});

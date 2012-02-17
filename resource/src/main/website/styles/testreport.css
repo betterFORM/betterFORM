@@ -2,151 +2,128 @@
  * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
-
 body {
-    font-family: sans-serif;
-    /*margin: 50px;*/
-}
-.report td{
-    font-size:9pt;
-    background:white;
-}
-.report td a{
-    color:#363636;
-    text-decoration:underline;
-    padding:0;
-    margin:0;
+  font-family: sans-serif;
+  /*margin: 50px;*/
 
 }
-.report td a:hover{
-    text-decoration:underline;
-    color:#488aa6;
+.report td {
+  font-size: 9pt;
+  background: white;
 }
-
+.report td a {
+  color: #363636;
+  text-decoration: underline;
+  padding: 0;
+  margin: 0;
+}
+.report td a:hover {
+  text-decoration: underline;
+  color: #488aa6;
+}
 table {
-    width: 100%;
+  width: 100%;
 }
-.devider{
-    clear:both;
-    height:20px;
+.devider {
+  clear: both;
+  height: 20px;
 }
 td {
-    background-color: lightSteelBlue;
+  background-color: lightSteelBlue;
 }
-
 .totals td {
-    text-align: center;
-    font-weight: bold;
-    font-size: 12pt;
-    padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 12pt;
+  padding: 10px;
 }
-
-.noWrap{
-    white-space:nowrap;
+.noWrap {
+  white-space: nowrap;
 }
 .true {
-    font-weight: bold;
+  font-weight: bold;
 }
-
 .numNormPass, .numBasicPass, .Passed {
-    background: #7ba841 !important;
+  background: #7ba841 !important;
 }
-
 .numNormFail, .numBasicFail, .Failed {
-    background: #c56f46 !important;
+  background: #c56f46 !important;
 }
-
 .numNormUnknown, .numBasicUnknown, .Unknown {
-    background: #e7e8e8 !important;
+  background: #e7e8e8 !important;
 }
-
 .Passed {
-    background: #7ba841 !important;
+  background: #7ba841 !important;
 }
-
 .Failed {
-    background: #c56f46 !important;
+  background: #c56f46 !important;
 }
-
 .Manual {
-    background: darkgreen;
+  background: darkgreen;
 }
-
 .Unknown {
-    background: #e7e8e8 !important;
+  background: #e7e8e8 !important;
 }
-
 .testConfig {
-    margin-bottom: 10px;
-    padding: 0 !important;
-    background:white;
-
+  margin-bottom: 10px;
+  padding: 0 !important;
+  background: white;
 }
-
 .testConfig .header {
-    border-bottom: 1px solid;
-    display: block;
-    font-size: large;
-    font-variant: small-caps;
-    margin-bottom: 5px;
-    background:#488aa6;
-    color:white;
-    padding:3px;
+  border-bottom: 1px solid;
+  display: block;
+  font-size: large;
+  font-variant: small-caps;
+  margin-bottom: 5px;
+  background: #488aa6;
+  color: white;
+  padding: 3px;
 }
-
 .testConfig div {
-    display: block;
-    font-size: 10pt;
-    font-weigth: bolder;
+  display: block;
+  font-size: 10pt;
+  font-weigth: bolder;
 }
-
 .testConfig table {
-    width: 100%;
+  width: 100%;
 }
-
 .testConfig td {
-    background: White;
-    font-size:11pt;
+  background: White;
+  font-size: 11pt;
 }
-
 .pageheader {
-    display: block;
-    font-size: x-large;
-    font-weight: bold;
-    margin-bottom: 20px;
+  display: block;
+  font-size: x-large;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
-
 #summary {
-    font-size: 12pt;
-    background-color: #488aa6;
-    padding: 10px !important;
-    color:white;
+  font-size: 12pt;
+  background-color: #488aa6;
+  padding: 10px !important;
+  color: white;
 }
-#summary div{
-    padding:0 !important;
+#summary div {
+  padding: 0 !important;
 }
-
-
 .chapterHeader {
-    background: #488aa6 !important;
-    font-size: 12pt;
-    padding: 10px;
-    color:white;
+  background: #488aa6 !important;
+  font-size: 12pt;
+  padding: 10px;
+  color: white;
 }
-
 .Note {
-    text-align: center;
-    font-size: 8pt;
-    display: none;
+  text-align: center;
+  font-size: 8pt;
+  display: none;
 }
-
 .dijitTooltipContainer {
-    padding: 3px;
-    background: lightyellow;
-    border: thin solid lightsteelblue;
-    font-size: 11pt;
+  padding: 3px;
+  background: lightyellow;
+  border: thin solid lightsteelblue;
+  font-size: 11pt;
 }
-.lastUpdate{
-    display:inline;
-    white-space:nowrap;
+.lastUpdate {
+  display: inline;
+  white-space: nowrap;
 }

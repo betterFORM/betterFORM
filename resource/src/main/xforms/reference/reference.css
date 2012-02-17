@@ -346,7 +346,7 @@ html body #formWrapper #xforms .showClass{
 }
 .bf .xfTextarea .xfAlert,
 .bf .xfTextarea .xfHint {
-	top:12px;
+	/*top:12px;*/
 }
 
 .xfContainer .xfControl{

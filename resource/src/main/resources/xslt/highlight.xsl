@@ -23,15 +23,15 @@
         <html>
             <head>
                 <title></title>
-                <link href="{$contextName}/bfResources/scripts/syntaxhighlighter_3.0.83/styles/shCore.css" rel="stylesheet" type="text/css" /><xsl:text>
+                <link href="{$contextName}/bfResources/scripts/syntaxhighlighter/styles/shCore.css" rel="stylesheet" type="text/css" /><xsl:text>
 </xsl:text>
-                <link href="{$contextName}/bfResources/scripts/syntaxhighlighter_3.0.83/styles/shThemeDefault.css"  rel="stylesheet" type="text/css" /><xsl:text>
+                <link href="{$contextName}/bfResources/scripts/syntaxhighlighter/styles/shThemeDefault.css"  rel="stylesheet" type="text/css" /><xsl:text>
 </xsl:text>
 
 
-                <script type="text/javascript" src="{$contextName}/bfResources/scripts/syntaxhighlighter_3.0.83/scripts/shCore.js"/><xsl:text>
+                <script type="text/javascript" src="{$contextName}/bfResources/scripts/syntaxhighlighter/scripts/shCore.js"/><xsl:text>
 </xsl:text>
-                <script type="text/javascript" src="{$contextName}/bfResources/scripts/syntaxhighlighter_3.0.83/scripts/shBrushXml.js"></script><xsl:text>
+                <script type="text/javascript" src="{$contextName}/bfResources/scripts/syntaxhighlighter/scripts/shBrushXml.js"></script><xsl:text>
 </xsl:text>
             </head>
             <body><xsl:text>

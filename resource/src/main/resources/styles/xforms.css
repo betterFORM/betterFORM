@@ -2,15 +2,12 @@
  * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
-
 /* ***************************************************************************** */
 /* ************** XFORMS CSS STYLESHEET  *************************************** */
 /* ***************************************************************************** */
-
 /* ***************************************************************************** */
 /* ****************** GENERAL XFORMS MIP AND COMMON-CHILD STYLES *************** */
 /* ***************************************************************************** */
-
 /*
     The rules contained in this stylesheet have importance for the execution
     of XForms logic such as hiding/showing non-relevant/relevant elements.
@@ -21,114 +18,91 @@
 */
 .xfDisabled iframe,
 .xfDisabled label,
-.xfDisabled label ,
+.xfDisabled label,
 .xfDisabled .xfValue,
 .xfDisabled span,
-.xfDisabled .xfGroupLabel{
-    display: none;
+.xfDisabled .xfGroupLabel {
+  display: none;
 }
-
 .xfReadWrite .xfValue a:hover,
 .xfReadWrite .xfValue a:focus,
 .xfReadWrite .xfValue a:link,
 .xfReadWrite .xfValue a:visited,
-.xfReadWrite .xfValue a:active  {
-	color:#7080A0;
-
+.xfReadWrite .xfValue a:active {
+  color: #7080A0;
 }
-
 .xfReadOnly .xfValue a:focus,
 .xfReadOnly .xfValue a:hover,
 .xfReadOnly .xfValue a:link,
 .xfReadOnly .xfValue a:visited,
-.xfReadOnly .xfValue a:active  {
-	color:#AFAFAF;
-	border:0;
+.xfReadOnly .xfValue a:active {
+  color: #AFAFAF;
+  border: 0;
 }
-
-.xfReadOnly .xfValue a,
-.xfReadOnly .xfValue .dijitButtonNode,
-.xfReadOnly .xfValue {
-    background: #E4E4E4 url(../images/buttonDisabled.png) repeat-x scroll center top;
-    border-color: #D5D5D5 #D5D5D5 #BDBDBD;
-    cursor: not-allowed !important;
+.xfReadOnly .xfValue a, .xfReadOnly .xfValue .dijitButtonNode, .xfReadOnly .xfValue {
+  background: #e4e4e4 url(../images/buttonDisabled.png) repeat-x scroll center top;
+  border-color: #D5D5D5 #D5D5D5 #BDBDBD;
+  cursor: not-allowed !important;
 }
-
 /*********** styles character used for signaling 'required' (normally '*') ***********/
-
-.xfRequired .xfLabel {
+.xfRequired .xfLabel:after, .xfRequired .bfTableLabel:after {
+  content: '*';
+  color: #8b0000;
 }
-
-.xfRequired .xfLabel:after,
-.xfRequired .bfTableLabel:after {
-    content: '*';
-    color: #8b0000;
-}
-
 .xfRequired .xfValue .xfLabel {
-/*background:url(../images/required.gif) no-repeat left top;*/
-    padding-left: 0px;
-    font-weight: normal;
-}
+  /*background:url(../images/required.gif) no-repeat left top;*/
 
-.xfRequiredEmpty .xfValue{
-	border:thin solid #8b0000;
+  padding-left: 0px;
+  font-weight: normal;
 }
-
+.xfRequiredEmpty .xfValue {
+  border: thin solid #8b0000;
+}
 .xfSelectOpen .xfValue {
-    width: 100%;
+  width: 100%;
 }
-
-.xfControl{display:inline-block;}
-
+.xfControl {
+  display: inline-block;
+}
 /* ***************************************************************************** */
 /* **************************** REPEAT STYLES  ********************************* */
 /* ***************************************************************************** */
-
 .xfRepeatPrototype {
-    display: none;
+  display: none;
 }
-
 .xfRepeatSelector {
-/*float: left;*/
-}
+  /*float: left;*/
 
+}
 .xfSelectorPrototype {
-    display: none;
+  display: none;
 }
-
 .xfMinimalRepeat {
-    display: block;
+  display: block;
 }
-
 .xfMinimalRepeat .xfRepeatItem {
-    float: left;
-    clear: none;
+  float: left;
+  clear: none;
 }
-
 .xfMinimalRepeat .xfRepeatIndex {
-    float: left;
-    clear: none;
+  float: left;
+  clear: none;
 }
-
 .xfCompactRepeat td .xfDisabled {
-    display: none;
+  display: none;
 }
-
 /* ***************************************************************************** */
 /* **************************** SWITCH STYLES ********************************** */
 /* ***************************************************************************** */
-
 .xfSwitch .xfSelectedCase {
-    display: inherit;
+  display: inherit;
 }
-
 .xfSwitch .xfDeselectedCase {
-    display: none;
+  display: none;
 }
-
 .xfFullSwitch .caFillerTab {
-    overflow: hidden;
+  overflow: hidden;
 }
-
-.xfTextarea .dijitEditor{background:white;}
+.xfTextarea .dijitEditor {
+  background: white;
+}

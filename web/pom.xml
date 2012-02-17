@@ -2,19 +2,19 @@
   ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>de.betterform</groupId>
         <artifactId>betterform-project</artifactId>
-        <version>3.2.0-RC4</version>
+        <version>4.1</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.betterform</groupId>
     <artifactId>betterform</artifactId>
-    <version>3.2.0-RC4</version>
-    
-    
+    <version>4.1</version>
+
+
 
     <packaging>war</packaging>
 
@@ -98,7 +98,7 @@
 <dependency>
 <groupId>de.betterform</groupId>
 <artifactId>betterform-core</artifactId>
-<version>3.2.0-RC4</version>
+<version>4.1</version>
 </dependency>
 <dependency>
 <groupId>org.directwebremoting.dwr</groupId>
@@ -734,31 +734,31 @@
             <build>
                 <plugins>
                     <plugin>
-                      <artifactId>maven-antrun-plugin</artifactId>
-                      <executions>
-                        <execution>
-                          <phase>compile</phase>
-                          <configuration>
-                              <tasks>
-    				  <property name="compile_classpath" refid="maven.compile.classpath"/>
-                		  <property name="runtime_classpath" refid="maven.runtime.classpath"/>
-                		  <property name="test_classpath" refid="maven.test.classpath"/>
-                		  <property name="plugin_classpath" refid="maven.plugin.classpath"/>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>compile</phase>
+                                <configuration>
+                                    <tasks>
+                                        <property name="compile_classpath" refid="maven.compile.classpath"/>
+                                        <property name="runtime_classpath" refid="maven.runtime.classpath"/>
+                                        <property name="test_classpath" refid="maven.test.classpath"/>
+                                        <property name="plugin_classpath" refid="maven.plugin.classpath"/>
 
-                		  <echo message="compile classpath: ${compile_classpath}"/>
-                		  <echo message="runtime classpath: ${runtime_classpath}"/>
-                	   	  <echo message="test classpath:    ${test_classpath}"/>
-                		  <echo message="plugin classpath:  ${plugin_classpath}"/>
-                                  <copy todir="${project.build.directory}/${project.build.finalName}/forms" overwrite="true">
-                                      <fileset dir="${basedir}/../src/main/xforms"/>
-                                  </copy>
-                              </tasks>
-                          </configuration>
-                          <goals>
-                            <goal>run</goal>
-                          </goals>
-                        </execution>
-                      </executions>
+                                        <echo message="compile classpath: ${compile_classpath}"/>
+                                        <echo message="runtime classpath: ${runtime_classpath}"/>
+                                        <echo message="test classpath:    ${test_classpath}"/>
+                                        <echo message="plugin classpath:  ${plugin_classpath}"/>
+                                        <copy todir="${project.build.directory}/${project.build.finalName}/forms" overwrite="true">
+                                            <fileset dir="${basedir}/../src/main/xforms"/>
+                                        </copy>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
 
                 </plugins>
@@ -772,7 +772,7 @@
                     mvn -Pdemo package (creates an exploded webapp and war file both containing the betterform demo forms)
                     mvn -Ptest jetty:run-exploded (starts up jetty at localhost:8080/betterform including demo forms )
             -->
-            
+
             <id>integration-test</id>
             <build>
                 <plugins>
@@ -801,7 +801,7 @@
                     </plugin>
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>selenium-maven-plugin</artifactId>                        
+                        <artifactId>selenium-maven-plugin</artifactId>
                         <executions>
                             <execution>
                                 <id>start-selenium</id>
@@ -824,7 +824,9 @@
                             <container>
                                 <containerId>tomcat5x</containerId>
                                 <zipUrlInstaller>
-                                    <url>http://ftp.uni-erlangen.de/pub/mirrors/apache/tomcat/tomcat-5/v5.5.27/bin/apache-tomcat-5.5.27.tar.gz</url>
+                                    <url>
+                                        http://ftp.uni-erlangen.de/pub/mirrors/apache/tomcat/tomcat-5/v5.5.27/bin/apache-tomcat-5.5.27.tar.gz
+                                    </url>
                                     <installDir>tomcat-5.5.27</installDir>
                                 </zipUrlInstaller>
                                 <output>${project.build.directory}/tomcat5x.log</output>
@@ -836,7 +838,9 @@
                                     <cargo.logging>high</cargo.logging>
                                     <cargo.hostname>localhost</cargo.hostname>
                                     <cargo.servlet.port>8081</cargo.servlet.port>
-                                    <cargo.jvmargs>-Xms128m -Xmx512m -Xdebug -Xnoagent -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n</cargo.jvmargs>
+                                    <cargo.jvmargs>-Xms128m -Xmx512m -Xdebug -Xnoagent
+                                        -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n
+                                    </cargo.jvmargs>
                                 </properties>
                             </configuration>
                         </configuration>

@@ -25,6 +25,7 @@ dojo.declare(
     incremental:false,
     currentValue:"",    
     bfFocus:false,
+    tabIndex:null,
 
 
     applyProperties:function(xfControl, node) {
@@ -36,7 +37,7 @@ dojo.declare(
         }else {
             this.incremental = false;
         }
-        if (dojo.attr(node, "tabIndex")) {
+        if (dojo.attr(node, "tabindex")) {
             this.tabIndex = eval(dojo.attr(node, "tabindex"));
         }
     },

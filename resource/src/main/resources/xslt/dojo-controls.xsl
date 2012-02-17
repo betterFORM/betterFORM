@@ -5,11 +5,13 @@
   -->
 
 <xsl:stylesheet version="2.0"
+                xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xforms="http://www.w3.org/2002/xforms"
                 xmlns:bf="http://betterform.sourceforge.net/xforms"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                exclude-result-prefixes="bf xforms xsl xsd"
+                xmlns:xhtml="http://www.w3.org/1999/xhtml"
+                exclude-result-prefixes="xhtml bf xforms xsl xsd"
                 xpath-default-namespace="http://www.w3.org/1999/xhtml">
 
     <xsl:variable name="data-prefix" select="'d_'"/>
