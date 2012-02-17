@@ -37,8 +37,8 @@
             <classpath pathid="compile.class.path" description="classpath for compiling core classes">
                 <pathelement path="${core.dir}/target/classes"/>
                 <path refid="transform.class.path"/>
-                <pathelement location="${core.dir}/src/main/lib/commons-codec-1.4.jar" groupid="commons-codec"
-                             version="1.4" artifactId="commons-codec"/>
+                <pathelement location="${core.dir}/src/main/lib/commons-codec-1.6.jar" groupid="commons-codec"
+                             version="1.6" artifactId="commons-codec"/>
                 <pathelement location="${core.dir}/src/main/lib/commons-fileupload-1.2.1.jar"
                              groupid="commons-fileupload" version="1.2.1" artifactId="commons-fileupload"/>
                 <!-- <pathelement location="${core.dir}/src/main/lib/commons-httpclient-3.1.jar" groupid="commons-httpclient" version="3.1" artifactId="commons-httpclient"/> -->
@@ -48,10 +48,10 @@
                              version="4.1.1" artifactId="httpcomponents-client"/>
                 <pathelement location="${core.dir}/src/main/lib/httpmime-4.1.1.jar" groupid="httpcomponents" version="4.1.1"
                              artifactId="httpcomponents-mime"/>
-                <pathelement location="${core.dir}/src/main/lib/commons-io-1.4.jar" groupid="commons-io" version="1.4"
+                <pathelement location="${core.dir}/src/main/lib/commons-io-2.1.jar" groupid="commons-io" version="2.1"
                              artifactId="commons-io"/>
-                <pathelement location="${core.dir}/src/main/lib/commons-lang-2.4.jar" groupid="commons-lang"
-                             version="2.4" artifactId="commons-lang"/>
+                <pathelement location="${core.dir}/src/main/lib/commons-lang3-3.1.jar" groupid="commons-lang"
+                             version="3.1" artifactId="commons-lang"/>
                 <pathelement location="${core.dir}/src/main/lib/commons-logging-1.1.1.jar" groupid="commons-logging"
                              version="1.1.1" artifactId="commons-logging"/>
                 <pathelement location="${core.dir}/src/main/lib/activation-1.1.1.jar" groupid="javax.activation"
@@ -60,10 +60,6 @@
                              artifactId="mail"/>
                 <pathelement location="${core.dir}/src/main/lib/log4j-1.2.15.jar" groupid="log4j" version="1.2.15"
                              artifactId="log4j"/>
-                <!--
-                <pathelement location="${core.dir}/src/main/lib/saxon-dom-9.1.0.8.jar" groupid="net.sf.saxon" version="9.1.0.8" artifactId="saxon-dom"/>
-                <pathelement location="${core.dir}/src/main/lib/saxon-9.1.0.8.jar" groupid="net.sf.saxon" version="9.1.0.8" artifactId="saxon"/>
-                -->
                 <pathelement location="${core.dir}/src/main/lib/xercesImpl-2.11.02.jar" groupid="xerces" version="2.11.02" artifactId="xercesImpl"/>
                 <pathelement location="${core.dir}/src/main/lib/xml-apis-1.4.01.jar" groupid="xml-apis" artifactId="xml-apis" version="1.4.01"/>
                 <pathelement location="${core.dir}/src/main/lib/xmlrpc-common-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-common"/>
