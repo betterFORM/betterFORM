@@ -95,10 +95,6 @@
              manifest="${basedir}/src/main/resources/MANIFEST.MF"/>
     </target>
 
-    <target name="setupBetterFORMContext">
-
-    </target>
-
     <target name="create-XRX" depends="get-eXist">
         <echo>
             __== Creating XRX-environment for Installer ==__
