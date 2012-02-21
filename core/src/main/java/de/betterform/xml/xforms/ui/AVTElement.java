@@ -16,15 +16,9 @@ import org.w3c.dom.Element;
 // end of class
 
 /**
- * Implementation of <b>8.1.5 The output Element</b>.
+ * Implementation of AVT
  * <p/>
- * Note: In case this control is not bound but has a <code>value</code>
- * attribute, re-evaluation of this attribute occurs during
- * <code>xforms-refresh</code>.
  *
- * @author Ulrich Nicolas Liss&eacute;
- * @author Nick Van den Bleeken
- * @version $Id: Output.java 3253 2008-07-08 09:26:40Z lasse $
  */
 public class AVTElement extends BindingElement {
     private static final Log LOGGER = LogFactory.getLog(AVTElement.class);
