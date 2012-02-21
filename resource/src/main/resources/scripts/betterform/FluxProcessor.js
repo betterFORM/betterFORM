@@ -658,7 +658,11 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
     },
 
     _handleAVTChanged:function(xmlEvent){
-        dojo.attr(xmlEvent.contextInfo.targetId,xmlEvent.contextInfo.attribute,xmlEvent.contextInfo.value);
+        if (dojo.byId(xmlEvent.contextInfo.targetId) != undefined) {
+            dojo.attr(xmlEvent.contextInfo.targetId,xmlEvent.contextInfo.attribute,xmlEvent.contextInfo.value);
+        } else {
+            console.warn("_handleAVTChanged: Control with id: " + xmlEvent.contextInfo.targetId + " not found");
+        }
     },
 
     _handleInstanceCreated:function(xmlEvent){
