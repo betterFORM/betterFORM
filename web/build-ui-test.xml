@@ -22,7 +22,7 @@
 
     <target name="run-tests" depends="clean" description="execute all uitests">
         <antcall target="generate-betterform-java-tests"/>
-        <antcall target="generate-testsuite-java-tests"/>
+        <antcall target="generate-testsuite-stable-java-tests"/>
         <antcall target="build-jar"/>
         <antcall target="execute-junit-tests"/>
     </target>
@@ -75,35 +75,57 @@
 
     </target>
 
+    <target name="generate-testsuite-stable-java-tests">
+        <antcall target="generate-testsuite-java-tests">
+            <param name="status" value="stable"/>
+        </antcall>
+    </target>
+
+    <target name="generate-testsuite-unstable-java-tests">
+        <antcall target="generate-testsuite-java-tests">
+            <param name="status" value="unstable"/>
+        </antcall>
+    </target>
+    
     <target name="generate-testsuite-java-tests">
         <antcall target="generate-chapter-java-tests">
+            <param name="status" value="${status}"/>
             <param name="chapterNo" value="02"/>
         </antcall>
         <antcall target="generate-chapter-java-tests">
+            <param name="status" value="${status}"/>
             <param name="chapterNo" value="03"/>
         </antcall>
         <antcall target="generate-chapter-java-tests">
+            <param name="status" value="${status}"/>
             <param name="chapterNo" value="04"/>
         </antcall>
         <antcall target="generate-chapter-java-tests">
+            <param name="status" value="${status}"/>
             <param name="chapterNo" value="05"/>
         </antcall>
         <antcall target="generate-chapter-java-tests">
+            <param name="status" value="${status}"/>
             <param name="chapterNo" value="06"/>
         </antcall>
         <antcall target="generate-chapter-java-tests">
+            <param name="status" value="${status}"/>
             <param name="chapterNo" value="07"/>
         </antcall>
         <antcall target="generate-chapter-java-tests">
+            <param name="status" value="${status}"/>
             <param name="chapterNo" value="08"/>
         </antcall>
         <antcall target="generate-chapter-java-tests">
+            <param name="status" value="${status}"/>
             <param name="chapterNo" value="09"/>
         </antcall>
         <antcall target="generate-chapter-java-tests">
+            <param name="status" value="${status}"/>
             <param name="chapterNo" value="10"/>
         </antcall>
         <antcall target="generate-chapter-java-tests">
+            <param name="status" value="${status}"/>
             <param name="chapterNo" value="11"/>
         </antcall>
         <!--<antcall target="generate-appendix-java-tests"/>-->
@@ -116,7 +138,7 @@
         <mkdir dir="${basedir}/target/xml/Chapt${chapterNo}"/>
 
         <copy todir="${basedir}/target/xml/Chapt${chapterNo}" flatten="true">
-            <fileset dir="${basedir}/src/test/resources/testsuite/xml/Chapt${chapterNo}">
+            <fileset dir="${basedir}/src/test/resources/testsuite/xml/${status}/Chapt${chapterNo}">
                 <include name="**/*.xml"/>
             </fileset>
         </copy>
@@ -197,6 +219,7 @@
 
     <target name="run-w3c-uitests-chapt02" depends="clean">
         <antcall target="generate-chapter-java-tests">
+            <param name="status" value="stable"/>
             <param name="chapterNo" value="02"/>
         </antcall>
         <antcall target="build-jar"/>
@@ -205,6 +228,7 @@
 
     <target name="run-w3c-uitests-chapt03" depends="clean">
         <antcall target="generate-chapter-java-tests">
+            <param name="status" value="stable"/>
             <param name="chapterNo" value="03"/>
         </antcall>
         <antcall target="build-jar"/>
@@ -213,6 +237,7 @@
 
     <target name="run-w3c-uitests-chapt04" depends="clean">
         <antcall target="generate-chapter-java-tests">
+            <param name="status" value="stable"/>
             <param name="chapterNo" value="04"/>
         </antcall>
         <antcall target="build-jar"/>
@@ -221,6 +246,7 @@
 
     <target name="run-w3c-uitests-chapt05" depends="clean">
         <antcall target="generate-chapter-java-tests" >
+            <param name="status" value="stable"/>
             <param name="chapterNo" value="05"/>
         </antcall>
         <antcall target="build-jar"/>
@@ -229,6 +255,7 @@
 
     <target name="run-w3c-uitests-chapt06" depends="clean">
         <antcall target="generate-chapter-java-tests">
+            <param name="status" value="stable"/>
             <param name="chapterNo" value="06"/>
         </antcall>
         <antcall target="build-jar"/>
@@ -237,6 +264,7 @@
 
     <target name="run-w3c-uitests-chapt07" depends="clean">
         <antcall target="generate-chapter-java-tests">
+            <param name="status" value="stable"/>
             <param name="chapterNo" value="07"/>
         </antcall>
         <antcall target="build-jar"/>
@@ -245,6 +273,7 @@
 
     <target name="run-w3c-uitests-chapt08" depends="clean">
         <antcall target="generate-chapter-java-tests">
+            <param name="status" value="stable"/>
             <param name="chapterNo" value="08"/>
         </antcall>
         <antcall target="build-jar"/>
@@ -253,6 +282,7 @@
 
     <target name="run-w3c-uitests-chapt09" depends="clean">
         <antcall target="generate-chapter-java-tests">
+            <param name="status" value="stable"/>
             <param name="chapterNo" value="09"/>
         </antcall>
         <antcall target="build-jar"/>
@@ -261,6 +291,7 @@
 
     <target name="run-w3c-uitests-chapt10" depends="clean">
         <antcall target="generate-chapter-java-tests">
+            <param name="status" value="stable"/>
             <param name="chapterNo" value="10"/>
         </antcall>
         <antcall target="build-jar"/>
@@ -269,6 +300,7 @@
 
     <target name="run-w3c-uitests-chapt11" depends="clean">
         <antcall target="generate-chapter-java-tests">
+            <param name="status" value="stable"/>
             <param name="chapterNo" value="11"/>
         </antcall>
         <antcall target="build-jar"/>
@@ -287,7 +319,8 @@
         <copy todir="${basedir}/src/test/java" overwrite="true">
             <fileset dir="${basedir}/target/java" includes="**/*.java" excludes="**/WebDriver*.java"/>
         </copy>
-        <antcall target="generate-testsuite-java-tests"/>
+        <antcall target="generate-testsuite-stable-java-tests"/>
+        <antcall target="generate-testsuite-unstable-java-tests"/>
         <copy todir="${basedir}/src/test/java" overwrite="true">
             <fileset dir="${basedir}/target/java" includes="**/*.java" excludes="**/WebDriver*.java"/>
         </copy>

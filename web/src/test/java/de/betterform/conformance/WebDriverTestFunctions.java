@@ -296,13 +296,13 @@ public class WebDriverTestFunctions extends WebDriverTest {
     public void hasException() {
         (new WebDriverWait(webDriver, 30)).until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver d) {
-                return "Error Page".equals(d.getTitle());
+                return "Error".equals(d.getTitle());
             }
         });
     }
 
     public String getExceptionType() {
-      return webDriver.findElement(By.id("msg")).getText();
+      return webDriver.findElement(By.className("message2")).getText();
     }
 
 
