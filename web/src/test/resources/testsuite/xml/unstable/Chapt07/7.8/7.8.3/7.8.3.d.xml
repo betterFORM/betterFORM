@@ -24,6 +24,5 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <test-case xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner" xmlns:xf="http://www.w3.org/2002/xforms" xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../../../test-case.xsd">
    <open href="Chapt07/7.8/7.8.3/7.8.3.d.xhtml"/>
-   <assert-title title="7.8.3.d digest() function negative test with a QNameButNotNCNAME"/>
    <assert-exception type="xforms-compute-exception"/>
 </test-case>
