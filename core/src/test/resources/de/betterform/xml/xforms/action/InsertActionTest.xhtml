@@ -54,17 +54,30 @@
                     <item mutable="1">My data 2</item>
                     <item mutable="0">My data 3</item>
                 </data>
-                <xf:bind id="bind-2" nodeset="instance('instance-2')/item[@mutable='1']"/>
+
             </xf:instance>
-            
+            <xf:bind id="bind-2" nodeset="instance('instance-2')/item[@mutable='1']"/>
+
             <xf:instance xmlns="" id="instance-no-item">
                 <data>
                 	<subtotal/>
 			        <tax/>
 			        <total/>
                 </data>
-                <xf:bind id="bind-2" nodeset="instance('instance-2')/item[@mutable='1']"/>
+
             </xf:instance>
+            <xf:bind id="bind-2" nodeset="instance('instance-2')/item[@mutable='1']"/>
+
+            <xf:instance id="instance-range-integer">
+                <data xmlns="">
+                    <repeat>
+                        <range>3</range>
+                        <range>4</range>
+                    </repeat>
+                </data>
+            </xf:instance>
+            <xf:bind nodeset="instance('instance-range-integer')/repeat/range" type="integer"/>
+
         </xf:model>
     </head>
     <body>
@@ -223,8 +236,23 @@
                     <xf:insert context="instance('instance-no-item')" nodeset="item" at="last()" position="after" origin="instance('instance-template')/item[1]" />
                 </xf:action>
             </xf:trigger>  -->
-            
-            
+
+            <xf:trigger id="insert-repeated-range">
+                <xf:label>Insert 2 more Range Controls</xf:label>
+                <xf:insert nodeset="instance('instance-range-integer')/repeat" at="last()" position="after"/>
+            </xf:trigger>
+
+            <xf:group>
+                <xf:label>Repetead Range Controls</xf:label>
+                <xf:repeat appearance="compact" nodeset="instance('instance-range-integer')/repeat">
+                    <xf:range ref="range[1]" start="1" step="1" end="5" incremental="true">
+                        <xf:label>Range 1</xf:label>
+                    </xf:range>
+                    <xf:range ref="range[2]" start="1" step="1" end="5" incremental="true" appearance="bf:rating">
+                        <xf:label>Range 2</xf:label>
+                    </xf:range>
+                </xf:repeat>
+            </xf:group>
             
         </xf:group>
     </body>
