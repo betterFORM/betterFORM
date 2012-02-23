@@ -157,11 +157,10 @@ public class Range extends AbstractFormControl {
                 validator.isRestricted("integer", this.datatype) ||
                 validator.isRestricted("float", this.datatype) ||
                 validator.isRestricted("decimal", this.datatype) ||
-                validator.isRestricted("string", this.datatype) ||
                 validator.isRestricted("double", this.datatype)) {
 
 
-            if("int".equals(this.datatype) || "integer".equals(this.datatype)  || "float".equals(this.datatype) || "decimal".equals(this.datatype) || "double".equals(this.datatype) || "string".equals(this.datatype)){
+            if("int".equals(this.datatype) || "integer".equals(this.datatype)  || "float".equals(this.datatype) || "decimal".equals(this.datatype) || "double".equals(this.datatype)){
                 this.createDecimalRange();
             }
         }else {
