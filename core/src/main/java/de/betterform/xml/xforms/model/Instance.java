@@ -346,6 +346,11 @@ public class Instance extends XFormsElement {
 
         String[] canonicalParts = XPathUtil.getNodesetAndPredicates(canonicalPath);
 
+        if (originNode.hasChildNodes()) {
+            setDatatypeOnChilds(originNode, insertedNode);
+        }
+
+
         // dispatch internal betterform event (for instant repeat updating)
         HashMap map = new HashMap();
         map.put("nodeset", canonicalParts[0]);
@@ -358,6 +363,27 @@ public class Instance extends XFormsElement {
         }
         
         return insertedNode;
+    }
+    
+    private void setDatatypeOnChilds(Node originNode, Node insertedNode) {
+        NodeList originChilds = originNode.getChildNodes();
+        NodeList insertedChilds = insertedNode.getChildNodes();
+        if (insertedChilds.getLength() == originChilds.getLength()) {
+            for (int i = 0; i < originChilds.getLength(); i++) {
+                Node originChild = originChilds.item(i);
+                Node insertedChild = insertedChilds.item(i);
+
+                ModelItem modelItemOrigin = getModelItem(originChild);
+                ModelItem modelItemInserted = getModelItem(insertedChild);
+                modelItemInserted.getDeclarationView().setDatatype(modelItemOrigin.getDeclarationView().getDatatype());
+
+                if (originChild.hasChildNodes()) {
+                    setDatatypeOnChilds(originChild, insertedChild);
+                }
+            }
+        } else {
+            LOGGER.debug(this + " inserted node has fewer child than origin.");
+        }
     }
 
     /**
