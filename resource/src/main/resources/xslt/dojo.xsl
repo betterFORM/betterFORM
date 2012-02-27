@@ -297,7 +297,19 @@
                              This option allows to mix HTML forms with XForms markup. -->
                             <!-- todo: issue to revisit: this obviously does not work in case there's only one xforms control in the document. In that case the necessary form tag is not written. -->
                             <!-- hack solution: add an output that you style invisible to the form to make it work again. -->
-                            <xsl:apply-templates mode="inline"/>
+                            <!-- hack to enable xforms controls without surrounding xf:group -->
+                            <xsl:variable name="inlineContent"><xsl:apply-templates mode="inline"/></xsl:variable>
+                            <xsl:choose>
+                                <xsl:when test="exists($inlineContent//xf:*)">
+                                    <xsl:element name="form">
+                                        <xsl:call-template name="createFormAttributes"/>
+                                        <xsl:apply-templates select="*"/>
+                                    </xsl:element>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:copy-of select="$inlineContent"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
                         </xsl:when>
                         <xsl:otherwise>
                             <!-- in case there are multiple outermost xforms elements we are forced to create
