@@ -66,7 +66,7 @@
     <body class="{theme}">...</body>   
 </html>
                 </code>
-                <xf:model id="model-1">
+                <xf:model>
                     <code>
 <xf:instance id="instance-1" xmlns="">
     <avt>
