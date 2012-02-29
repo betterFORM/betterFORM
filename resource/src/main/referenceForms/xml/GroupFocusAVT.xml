@@ -62,7 +62,7 @@
         <div class="sample">
             <div class="markup">
                 <code>
-<xf:model id="model-1">
+<xf:model id="model-child">
     <xf:instance>
         <data xmlns="">
             <class></class>
@@ -94,7 +94,7 @@
 </xf:input>
 
 <!--Action within UI listening on Model action-->
-<xf:action ev:observer="model-1" ev:event="xforms-ready">
+<xf:action ev:observer="model-child" ev:event="xforms-ready">
     <xf:setfocus control="input1"/>
 </xf:action>
 

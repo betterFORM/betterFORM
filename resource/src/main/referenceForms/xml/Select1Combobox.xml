@@ -36,7 +36,7 @@
         </div>
         <div class="sample">
             <div class="markup">
-                <xf:model id="model-1">
+                <xf:model>
                     <xf:instance id="instance-1">
                         <data xmlns="" constraint="true" readonly="false" required="false" relevant="true">
                             <select1 constraint="true" readonly="false" required="true" relevant="true">
