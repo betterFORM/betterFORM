@@ -7,12 +7,15 @@ package de.betterform.installer.utils;
 import org.exist.security.Permission;
 import org.exist.security.internal.aider.GroupAider;
 import org.exist.security.internal.aider.UserAider;
+import org.exist.security.internal.aider.PermissionAider;
+import org.exist.security.internal.aider.PermissionAiderFactory;
 import org.exist.xmldb.DatabaseInstanceManager;
 import org.exist.xmldb.UserManagementService;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
 import org.xmldb.api.modules.CollectionManagementService;
+import org.exist.security.ACLPermission;
 
 /**
  * @author <a href="mailto:tobias.krebs@betterform.de">tobi</a>
@@ -67,11 +70,27 @@ public class SetupBetterFORMUser {
 
 
         //Set owner and permissions
+        PermissionAider permissionAider;
         Permission permissions = userManagementService.getPermissions(betterFORMCollection);
+        /*
+        System.err.println("---------------------------------");
+        System.err.println("Owner:" + permissions.getOwner());
+        System.err.println("Group:" + permissions.getGroup());
+        System.err.println("---------------------------------");
+        */
         permissions.setOwner(betterFORM);
         permissions.setGroup(betterFORM);
         permissions.setSticky(true);
-        permissions.setMode(755);
+        //permissions.setOwnerMode(new Integer(7));
+        //permissions.setGroupMode(new Integer(5));
+        //permissions.setOtherMode(new Integer(5));
+        userManagementService.setPermissions(betterFORMCollection, permissions);
+        /*
+        System.err.println("---------------------------------");
+        System.err.println("Owner:" + permissions.getOwner());
+        System.err.println("Group:" + permissions.getGroup());
+        System.err.println("---------------------------------");
+        */
         betterFORMCollection.close();
 
         //Shutdown DB
