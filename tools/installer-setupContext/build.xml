@@ -20,11 +20,19 @@
         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
     </fail>
 
+    <target name="create-ico-jar">
+        <mkdir dir="${installer.target}/ico/org/eclipse/jetty"/>
+        <copy file="" tofile="${installer.target}/ico/org/eclipse/jetty/favicon.ico"/>
+    </target>
+
     <target name="create-context-jar">
         <echo message="*******************************************************************************"/>
         <echo message="* Building betterFORMWebappcontextJar.jar                                               *"/>
         <echo message="*******************************************************************************"/>
-        <mkdir dir="${target.dir}/classes"/>
+
+        <mkdir dir="${target.dir}/classes/org/eclipse/jetty"/>
+
+        <copy file="${basedir}/../../resource/src/main/website/images/betterform.ico" tofile="${target.dir}/classes/org/eclipse/jetty/favicon.ico"/>
 
         <javac description="compile source files"
                srcdir="${src.dir}"

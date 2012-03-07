@@ -46,6 +46,7 @@
 	<target name="setup">
         <xdb:addgroup xmlns:xdb="http://exist-db.org/ant" user="${user}" password="${password}" uri="${eXist.uri}/db" name="${group2add}" />
 		<xdb:adduser  xmlns:xdb="http://exist-db.org/ant" user="${user}" password="${password}" uri="${eXist.uri}/db" name="${user2add}" secret="${secret}" primaryGroup="${group2add}" />
+        <xdb:create  xmlns:xdb="http://exist-db.org/ant" user="${user}" password="${password}" uri="${eXist.uri}/db" collection="${collection}" permissions="user=+read,+write,+execute,group=+read,-write,+execute,other=+read,-write,+execute"/>
         <xdb:chown xmlns:xdb="http://exist-db.org/ant" user="${user}" password="${password}" uri="${eXist.uri}/db/${collection}" name="${user2add}" group="${group2add}"/>
         <xdb:chmod xmlns:xdb="http://exist-db.org/ant" user="${user}" password="${password}" uri="${eXist.uri}/db/${collection}" permissions="user=+read,+write,+execute,group=+read,-write,+execute,other=+read,-write,+execute"/>
 	</target>

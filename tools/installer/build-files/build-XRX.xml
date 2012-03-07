@@ -7,8 +7,8 @@
     <property name="eXist.stable.src" value="http://downloads.sourceforge.net/project/exist/Stable/2.0/eXist-setup-2.0-tech-preview.jar"/>
     <property name="eXist.dev.src" value="http://downloads.sourceforge.net/project/exist/Stable/1.4.2/eXist-setup-1.4.2dev-rev15584.jar"/>
 
-    <property name="eXist.db.user" value="admin"/>
-    <property name="eXist.db.passwd" value=""/>
+    <property name="eXist.db.user" value="betterFORM"/>
+    <property name="eXist.db.passwd" value="Tha0xeiC8a"/>
 
     <available property="eXist-stable-available" file="${installer.utils}/exist-install-stable.jar"/>
     <available property="eXist-dev-available" file="${installer-utils}/exist-install-dev.jar"/>
@@ -79,6 +79,10 @@
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
         </ant>
 
+        <ant antfile="${installer.dir}/build-files/setup-user.xml" target="setup" inheritall="false" usenativebasedir="true">
+            <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
+        </ant>
+
         <ant antfile="${xrx.dir}/build-XRX.xml" target="install-forms" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
             <property name="eXist.db.user" value="${eXist.db.user}"/>
@@ -105,12 +109,12 @@
             <property name="eXist.db.passwd" value="${eXist.db.passwd}"/>
         </ant>
 	-->
-        <ant antfile="${installer.dir}/build-files/setup-user.xml" target="setup" inheritall="false" usenativebasedir="true">
-            <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
-        </ant>
+
 
         <ant antfile="${xrx.dir}/build-utils-eXist.xml" target="stop-eXist">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
+            <property name="eXist.db.user" value="admin"/>
+            <property name="eXist.db.passwd" value=""/>
         </ant>
 
         <ant antfile="${xrx.dir}/build-XRX.xml" target="setup-betterFORM-context" inheritall="false" usenativebasedir="true">
@@ -121,6 +125,7 @@
             <property name="dest.dir" value="${installer.target}/bf-XRX/extensions/betterform/main/lib/"/>
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
         </ant>
+        <delete file="${installer.target}/bf-XRX/tools/jetty/lib/existdb-favicon.jar"/>
 
         <copy todir="${installer.target}/bf-XRX/extensions/betterform/main/lib/" overwrite="true" failonerror="true" file="${basedir}/../../core/src/main/lib/commons-lang3-3.1.jar"/>
 

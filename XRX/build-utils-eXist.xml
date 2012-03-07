@@ -58,7 +58,8 @@
                    createsubcollections="true"
                    createcollection="true"
                    user="${db.user}"
-                   password="${db.passwd}">
+                   password="${db.passwd}"
+                   permissions="user=+read,+write,+execute,group=+read,-write,+execute,other=+read,-write,+execute">
             <fileset dir="${file-source-dir}" excludes="**/.svn **/.svn/**"/>
         </xdb:store>
     </target>
@@ -80,7 +81,8 @@
                    createsubcollections="true"
                    createcollection="true"
                    user="${db.user}"
-                   password="${db.passwd}">
+                   password="${db.passwd}"
+                   permissions="user=+read,+write,+execute,group=+read,-write,+execute,other=+read,-write,+execute">
             <fileset file="${file-source}"/>
         </xdb:store>
     </target>
