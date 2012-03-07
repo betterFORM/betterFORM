@@ -102,10 +102,11 @@
         <sleep seconds="20"/>
     </target>
 
-    <target name="stop-eXist" unless="password.notset">
+    <target name="stop-eXist">
         <echo message="******************************************************************************"/>
         <echo message="* Stopping eXist-DB                                                           *"/>
         <echo message="*******************************************************************************"/>
+        <sleep seconds="5"/>
         <antcall target="stop-eXist-with-password"/>
         <antcall target="stop-eXist-without-password"/>
 

@@ -1,0 +1,67 @@
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<project name="setup-context" default="create-setup-jar" basedir=".">
+    <property name="target.dir" value="${basedir}/target"/>
+    <property name="dest.dir" value="${target.dir}"/>
+    <property name="src.dir" value="${basedir}/src/main/java"/>
+    <property name="resource.dir" value="${basedir}/src/main/resources"/>
+    <property name="xrx.dir" value="${basedir}/../../XRX"/>
+
+    <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
+
+    <available property="eXist.available" file="${eXist.home}/exist.jar" />
+
+    <fail unless="eXist.available">Error: Can't detect eXist installation
+        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        Error: eXist is not installed in ${eXist.home}.
+        Please make sure eXist is installed and check the 'eXist.home-property'
+        in this build.properties.xml.
+        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    </fail>
+
+    <target name="run-betterFORM-setup">
+        <antcall target="create-setup-jar" inheritrefs="true"/>
+
+        <ant antfile="${xrx.dir}/build-utils-eXist.xml" target="start-eXist"/>
+
+        <java jar="${dest.dir}/betterFORM-setup.jar"
+              fork="true"
+              dir="${dest.dir}"
+              maxmemory="512m"
+              failonerror="true"
+              classpathref="installer.class.path"/>
+
+        <!-- Wait for db-shutdown -->
+        <sleep seconds="20"/>
+    </target>
+
+    <target name="create-setup-jar">
+        <echo message="*******************************************************************************"/>
+        <echo message="* Building betterFORM-setup.jar                                               *"/>
+        <echo message="*******************************************************************************"/>
+
+        <mkdir dir="${target.dir}/classes"/>
+
+        <javac description="compile source files"
+               srcdir="${src.dir}"
+               destdir="${target.dir}/classes"
+               classpathref="installer.class.path"
+               target="${properties.javac.version}"
+               debug="${properties.javac.debug}"
+               deprecation="${properties.javac.deprecation}"
+               optimize="${properties.javac.optimize}"/>
+
+        <jar description="package context jar"
+             jarfile="${dest.dir}/betterFORM-setup.jar"
+             basedir="${target.dir}/classes"
+             manifest="${resource.dir}/MANIFEST.MF"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${target.dir}"/>
+    </target>
+</project>
+

@@ -259,35 +259,9 @@
         <url>/betterform/forms</url>
     </webtest>
     -->
-    <installer>
-        <!-- ### installerType must be either 'standard' or 'web'. Default value is 'web' ### -->
-        <installerType>standard</installerType>
-        <exist>
-            <version>stable</version>
-        </exist>
-        <compile>
-            <classpath pathid="installer.class.path" description="classpath for compiling installer classes">
-                <!-- Use libs provided by eXist Installer -->
-                <!--
-                <pathelement location="${installer.dir}/src/main/lib/exist-1.4.jar" groupid="org.exist" version="1.4"
-                             artifactId="exist"/>
-                <pathelement location="${installer.dir}/src/main/lib/xmldb.jar" groupid="org.xmldb" version="11112001"
-                             artifactId="xmldb"/>
-                -->
-                <pathelement location="${installer.dir}/target/bf-XRX/exist.jar" groupid="org.exist" version="2.0" artifactId="exist"/>
-                <pathelement location="${installer.dir}/target/bf-XRX/lib/core/xmldb.jar" groupid="org.xmldb" version="11112001" artifactId="xmldb"/>
-            </classpath>
-        </compile>
-        <izPack>
-            <dir>/home/zwobit/Development/bin/izPack-4.3.5</dir>
-        </izPack>
-        <launch4j>
-            <dir>/home/zwobit/Development/bin/launch4j-3.0.2</dir>
-        </launch4j>
-    </installer>
     <eXist>
         <!-- point this to the place where you installed exist -->
-        <home>/Applications/betterFORM-4.0</home>
+        <home>/home/zwobit/Development/Source/eXist/eXist-2.0.x</home>
         <!-- Leave this empty if you run eXist in root context -->
         <!-- If you use the betterform XRX bundle this is 'betterform' -->
         <context>/exist</context>
@@ -306,5 +280,29 @@
             <port>8080</port>
         </server>
     </eXist>
+    <installer>
+        <!-- ### installerType must be either 'standard' or 'web'. Default value is 'web' ### -->
+        <installerType>standard</installerType>
+        <exist>
+            <version>stable</version>
+        </exist>
+        <compile>
+            <classpath pathid="installer.class.path" description="classpath for compiling installer classes">
+                <pathelement location="${eXist.home}/exist.jar" groupid="org.exist" version="2.0" artifactId="exist"/>
+                <pathelement location="${eXist.home}/lib/core/xmldb.jar" groupid="org.xmldb" version="20011111" artifactId="xmldb"/>
+                <pathelement location="${eXist.home}/tools/jetty/lib/jetty-webapp-7.5.4.v20111024.jar" groupid="org.eclipse.jetty" version="7.5.4.v20111024" artifactId="jetty-webapp"/>
+                <pathelement location="${eXist.home}/tools/jetty/lib/jetty-servlet-7.5.4.v20111024.jar" groupid="org.eclipse.jetty" version="7.5.4.v20111024" artifactId="jetty-servlet"/>
+                <pathelement location="${eXist.home}/tools/jetty/lib/jetty-server-7.5.4.v20111024.jar" groupid="org.eclipse.jetty" version="7.5.4.v20111024" artifactId="jetty-server"/>
+                <pathelement location="${eXist.home}/tools/jetty/lib/jetty-util-7.5.4.v20111024.jar" groupid="org.eclipse.jetty" version="7.5.4.v20111024" artifactId="jetty-util"/>
+                <pathelement location="${eXist.home}/lib/optional/servlet-api-2.5.jar" groupid="javax.servlet" version="2.5" artifactId="servlet-api"/>
+            </classpath>
+        </compile>
+        <izPack>
+            <dir>/home/zwobit/Development/bin/izPack-4.3.5</dir>
+        </izPack>
+        <launch4j>
+            <dir>/home/zwobit/Development/bin/launch4j-3.0.2</dir>
+        </launch4j>
+    </installer>
 </root>
 

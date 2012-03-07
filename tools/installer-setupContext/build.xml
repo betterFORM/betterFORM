@@ -1,0 +1,45 @@
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<project name="setup-context" default="create-context-jar" basedir=".">
+    <property name="target.dir" value="${basedir}/target"/>
+    <property name="dest.dir" value="${target.dir}"/>
+    <property name="src.dir" value="${basedir}/src/main/java"/>
+
+    <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
+
+    <available property="eXist.available" file="${eXist.home}/exist.jar" />
+
+    <fail unless="eXist.available">Error: Can't detect eXist installation
+        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        Error: eXist is not installed in ${eXist.home}.
+        Please make sure eXist is installed and check the 'eXist.home-property'
+        in this build.properties.xml.
+        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    </fail>
+
+    <target name="create-context-jar">
+        <echo message="*******************************************************************************"/>
+        <echo message="* Building betterFORMWebappcontextJar.jar                                               *"/>
+        <echo message="*******************************************************************************"/>
+        <mkdir dir="${target.dir}/classes"/>
+
+        <javac description="compile source files"
+               srcdir="${src.dir}"
+               destdir="${target.dir}/classes"
+               classpathref="installer.class.path"
+               target="${properties.javac.version}"
+               debug="${properties.javac.debug}"
+               deprecation="${properties.javac.deprecation}"
+               optimize="${properties.javac.optimize}"/>
+
+        <jar destfile="${dest.dir}/betterFORM-context.jar"
+             basedir="${target.dir}/classes" />
+    </target>
+
+    <target name="clean">
+        <delete dir="${target.dir}"/>
+    </target>
+</project>

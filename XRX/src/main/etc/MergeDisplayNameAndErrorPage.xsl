@@ -12,7 +12,7 @@
 
     <xsl:template match="/webxml:web-app/webxml:description">
         <description>betterFORM Open Source XForms Framework</description>
-        <display-name>betterFORM Open Source XForms Framework</display-name>
+        <display-name>betterFORM</display-name>
         <context-param>
             <param-name>betterform.configfile</param-name>
             <param-value>WEB-INF/betterform-config.xml</param-value>
@@ -29,7 +29,7 @@
         </servlet>
     </xsl:template>
 
-    <xsl:template match="/webxml:web-app/webxml:servlet-mapping[webxml:servlet-name/text()='ResourceServlet']">
+    <xsl:template match="/webxml:web-app/webxml:servlet-mapping[webxml:servlet-name/text()='error']">
         <xsl:copy-of select="."/>
         <servlet-mapping>
             <servlet-name>error</servlet-name>

@@ -12,8 +12,8 @@
     <property name="installer.target" value="${basedir}/target"/>
     <property name="installer.utils" value="${basedir}/target-utils"/>
 
-    <property name="eXist.db.user" value="betterFORM"/>
-    <property name="eXist.db.passwd" value="Tha0xeiC8a"/>
+    <property name="eXist.db.user" value="admin"/>
+    <property name="eXist.db.passwd" value=""/>
 
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
@@ -37,13 +37,15 @@
         </copy>
 
         <!-- Create WAR for Installer -->
-        <ant antfile="${buildfiles.dir}/build-WAR.xml" target="create-war" usenativebasedir="true" inheritall="false">
-            <property name="installer.target" value="${installer.target}"/>
-        </ant>
+            <ant antfile="${buildfiles.dir}/build-WAR.xml" target="create-war" usenativebasedir="true" inheritall="false">
+                <property name="installer.target" value="${installer.target}"/>
+            </ant>
+
 
 
         <!-- Create jetty-environment for Installer -->
-        <ant antfile="${buildfiles.dir}/build-jetty.xml" target="create-jetty" usenativebasedir="false"/>
+            <ant antfile="${buildfiles.dir}/build-jetty.xml" target="create-jetty" usenativebasedir="false"/>
+
 
         <!-- Create XRX-environment for Installer -->
 

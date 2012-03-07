@@ -1,6 +1,6 @@
 (: 	This is the main controller for the web application. It is called from the
 	XQueryURLRewrite filter configured in web.xml. :)
-xquery version "1.0";
+xquery version "3.0";
 
 (:~ -------------------------------------------------------
     Main controller: handles all requests not matched by
@@ -19,11 +19,13 @@ return
 		<dispatch xmlns="http://exist.sourceforge.net/NS/exist">
 			<redirect url="dashboard.html"/>
 		</dispatch>
+
 	(: ignore Cocoon :)
 	else if (matches($exist:path, "/cocoon")) then
 		<ignore xmlns="http://exist.sourceforge.net/NS/exist">
             <cache-control cache="yes"/>
 		</ignore>
+
 	else if ($exist:resource eq 'applications.xml') then
 		<dispatch xmlns="http://exist.sourceforge.net/NS/exist">
 			<!-- query results are passed to XSLT servlet via request attribute -->
@@ -44,6 +46,7 @@ return
 				</forward>
 			</view>
 		</dispatch>
+
 	else if ($exist:resource eq 'articles') then
 		<dispatch xmlns="http://exist.sourceforge.net/NS/exist">
 			<forward url="xquery/exist-articles.xql">
@@ -75,15 +78,11 @@ return
 		</dispatch>
 		
 	(: the following xml files use different stylesheets :)
-	else if ($exist:resource = ('index.xml', 'roadmap.xml', 'facts.xml')
-	    or $exist:path = '/examples.xml') then
-		let $stylesheet :=
-			if ($exist:resource eq 'roadmap.xml') then
-				"stylesheets/roadmap.xsl"
-			else if ($exist:resource eq "facts.xml") then
-				"stylesheets/facts.xsl"
-			else
-				"stylesheets/doc2html-2.xsl"
+	else if ($exist:resource = ('index.xml', 'roadmap.xml', 'facts.xml')) then
+		let $stylesheet := switch ($exist:resource)
+			case "roadmap.xml" return "stylesheets/roadmap.xsl"
+			case "facts.xml"   return "stylesheets/facts.xsl"
+			default            return "stylesheets/doc2html-2.xsl"
 		return
 			<dispatch xmlns="http://exist.sourceforge.net/NS/exist">
 				<view>
@@ -96,7 +95,8 @@ return
 				</view>
 				<cache-control cache="no"/>
 			</dispatch>
-	else if ( ends-with($exist:resource, '.xml') and not(contains($exist:path,'forms')) ) then
+
+	else if (ends-with($exist:resource, '.xml') or $exist:resource eq "examples.xql") then
 		(: 	check if the requested document was selected from a query result.
 			if yes, pass it to docs.xql to get the match highlighting. :)
 		if ($query) then
@@ -119,21 +119,20 @@ return
     					    <set-attribute name="xslt.highlight-matches"
     					        value="all"/>
     				        <set-attribute name="xslt.xinclude-path" value=".."/>
+    				        <set-attribute name="xslt.root" value="."/>
     					</forward>
     				</view>
 				</dispatch>
+
 		else
 			<dispatch xmlns="http://exist.sourceforge.net/NS/exist">
 				<view>
 					<forward servlet="XSLTServlet">
-						<set-attribute name="xslt.stylesheet" 
-							value="{$exist:root}/stylesheets/db2xhtml.xsl"/>
-					    <set-attribute name="xslt.output.media-type"
-					        value="text/html"/>
-						<set-attribute name="xslt.output.doctype-public"
-						    value="-//W3C//DTD XHTML 1.0 Transitional//EN"/>
-						<set-attribute name="xslt.output.doctype-system"
-						    value="resources/xhtml1-transitional.dtd"/>
+						<set-attribute name="xslt.stylesheet" value="stylesheets/db2xhtml.xsl"/>
+					    <set-attribute name="xslt.output.media-type" value="text/html"/>
+						<set-attribute name="xslt.output.doctype-public" value="-//W3C//DTD XHTML 1.0 Transitional//EN"/>
+						<set-attribute name="xslt.output.doctype-system" value="resources/xhtml1-transitional.dtd"/>
+						<set-attribute name="xslt.root" value="."/>
 					    {
 					        if ($exist:resource eq 'download.xml') then
 					            <set-attribute name="xslt.table-of-contents"
@@ -145,6 +144,7 @@ return
 				</view>
             	<cache-control cache="no"/>
 			</dispatch>
+
 	else if (ends-with($exist:path, '/dump')) then
 		let $newPath := substring-before($exist:path, '/dump')
 		return
@@ -158,6 +158,7 @@ return
 				    </forward>
 				</view>
 			</dispatch>
+
 	else
 		<ignore xmlns="http://exist.sourceforge.net/NS/exist">
             <cache-control cache="yes"/>

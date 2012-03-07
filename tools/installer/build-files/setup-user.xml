@@ -1,0 +1,52 @@
+<!--
+  ~ Copyright (c) 2012. Tobi Krebs tobias.krebs at betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+<project name="setup" default="setup" basedir=".">
+    <!-- Username and password for running tasks -->
+    <property name="user" value="admin"/>
+    <property name="password" value=""/>
+    
+    <property name="group2add" value="betterFORM"/>
+	<property name="user2add" value="betterFORM"/>
+	<property name="collection" value="betterform"/>
+	<property name="secret" value="Tha0xeiC8a"/>
+
+    <xmlproperty file="../../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
+
+    <property name="eXist.uri" value="xmldb:exist://${eXist.server.name}:${eXist.server.port}${eXist.context}/xmlrpc"/>
+
+    <available property="eXist.available" file="${eXist.home}/exist.jar" />
+
+    <fail unless="eXist.available">Error: Can't detect eXist installation
+        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        Error: eXist is not installed in ${eXist.home}.
+        Please make sure eXist is installed and check the 'eXist.home-property'
+        in this build.properties.xml.
+        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    </fail>
+
+	<path id="classpath.xdb">
+    		<fileset dir="${eXist.home}/lib/core">
+		        <include name="*.jar"/>
+		</fileset>
+		<pathelement path="${eXist.home}/exist.jar"/>
+		<pathelement path="${eXist.home}/exist-optional.jar"/>
+	</path>
+	
+	<typedef resource="org/exist/ant/antlib.xml" uri="http://exist-db.org/ant">
+    		<classpath refid="classpath.xdb"/>
+	</typedef>
+
+    <target name="delete">
+        <xdb:rmuser  xmlns:xdb="http://exist-db.org/ant" user="${user}" password="${password}" uri="${eXist.uri}/db" name="${user2add}"/>
+        <xdb:rmgroup xmlns:xdb="http://exist-db.org/ant" user="${user}" password="${password}" uri="${eXist.uri}/db" name="${group2add}"/>
+    </target>
+    
+	<target name="setup">
+        <xdb:addgroup xmlns:xdb="http://exist-db.org/ant" user="${user}" password="${password}" uri="${eXist.uri}/db" name="${group2add}" />
+		<xdb:adduser  xmlns:xdb="http://exist-db.org/ant" user="${user}" password="${password}" uri="${eXist.uri}/db" name="${user2add}" secret="${secret}" primaryGroup="${group2add}" />
+        <xdb:chown xmlns:xdb="http://exist-db.org/ant" user="${user}" password="${password}" uri="${eXist.uri}/db/${collection}" name="${user2add}" group="${group2add}"/>
+        <xdb:chmod xmlns:xdb="http://exist-db.org/ant" user="${user}" password="${password}" uri="${eXist.uri}/db/${collection}" permissions="user=+read,+write,+execute,group=+read,-write,+execute,other=+read,-write,+execute"/>
+	</target>
+</project>
