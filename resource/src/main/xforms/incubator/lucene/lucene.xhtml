@@ -1,0 +1,79 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:bf="http://betterform.sourceforge.net/xforms"
+      xmlns:xqdoc="http://www.xqdoc.org/1.0"
+      xmlns:existconf="http://exist-db.org/collection-config/1.0">
+<head>
+    <title>Index configurator</title>
+</head>
+<body>
+<div style="display:none">
+    <xf:model id="model-1">
+        <xf:instance id="i-configuration">
+            <collection xmlns="http://exist-db.org/collection-config/1.0">
+                <index xmlns:xqdoc="http://www.xqdoc.org/1.0">
+                    <fulltext default="none" attributes="no"/>
+                    <lucene>
+                        <analyzer class="org.apache.lucene.analysis.standard.StandardAnalyzer"/>
+                        <text qname="section">
+                            <ignore qname="title"/>
+                            <ignore qname="programlisting"/>
+                            <ignore qname="screen"/>
+                            <ignore qname="synopsis"/>
+                        </text>
+                        <text qname="title" boost="2.0"/>
+                    </lucene>
+                    <lucene>
+                        <analyzer class="org.apache.lucene.analysis.standard.StandardAnalyzer"/>
+                        <text qname="para"/>
+                        <text qname="title" boost="2.0"/>
+                        <ignore qname="title"/>
+                    </lucene>
+                    <ngram qname="xqdoc:name"/>
+                    <ngram qname="xqdoc:description"/>
+                </index>
+            </collection>
+        </xf:instance>
+
+        <xf:instance id="i-controller">
+            <data xmlns="">
+                <configuration></configuration>
+            </data>
+        </xf:instance>
+    </xf:model>
+</div>
+<xf:group ref="instance('i-configuration')" appearance="full">
+    <xf:label/>
+    <xf:repeat nodeset="existconf:index/existconf:lucene" appearance="full">
+        <xf:label>Lucene configuration</xf:label>
+        <xf:repeat nodeset="existconf:analyzer" appearance="full">
+            <xf:label>Analyzers</xf:label>
+            <xf:input ref="@class">
+                <xf:label>Analyzer class:</xf:label>
+            </xf:input>
+        </xf:repeat>
+        <xf:repeat nodeset="existconf:text" appearance="full">
+            <xf:label>Text</xf:label>
+
+            <xf:repeat nodeset="@*">
+                <xf:label/>
+                <xf:input ref=".">
+                    <xf:label><xf:output value="local-name(.)"/></xf:label>
+                </xf:input>
+            </xf:repeat>
+
+            <xf:repeat nodeset="existconf:*" appearance="full">
+                <xf:label><xf:output value="local-name(.)"/></xf:label>
+
+                <xf:repeat nodeset="@*" appearance="full">
+                    <xf:input ref=".">
+                        <xf:label><xf:output value="local-name(.)"/></xf:label>
+                    </xf:input>
+                </xf:repeat>
+            </xf:repeat>
+        </xf:repeat>
+    </xf:repeat>
+</xf:group>
+</body>
+</html>
