@@ -22,6 +22,7 @@ dojo.declare(
         // console.debug("DropDownDate.postMixInProperties");
         this.inherited(arguments);
         this.applyProperties(dijit.byId(this.xfControlId), this.srcNodeRef);
+        this.incremental = false;
     },
 
     postCreate:function() {
@@ -65,7 +66,7 @@ dojo.declare(
         } else {
             this.days = dijit.byId(this.daysFacet.id).getValue();
         }
-        this.setCurrentDate();
+        // this.setCurrentDate();
     },
 
     onMonthsChanged:function(evt) {
@@ -90,9 +91,7 @@ dojo.declare(
             value = "0" + value;
             // console.debug("DropDownDate.onMonthsChanged() modified month value:", value);
         }
-
         this.months = value;
-        this.setCurrentDate();
     },
 
     onYearsChanged:function(evt) {
@@ -119,14 +118,7 @@ dojo.declare(
             //In range!
             this.years = year;
         }
-
         // console.debug("DropDownDate.onYearsChanged newYear: " , this.years);
-        this.setCurrentDate();
-    },
-
-    onYearsBlur:function(evt) {
-        // console.debug("DropDownDate.onYearsBlur.");
-        this.setControlValue();
     },
 
     _onFocus:function() {
@@ -136,33 +128,36 @@ dojo.declare(
     },
 
     _onBlur:function() {
-        // console.debug("betterform.ui.input.DropDownDate._onBlur");
-        this.inherited(arguments);
+        console.debug("betterform.ui.input.DropDownDate._onBlur");
         this.handleOnBlur();
+        this.inherited(arguments);
+
     },
 
     onChange: function(/*anything*/ newValue, /*Boolean, optional*/ priorityChange) {
-        // console.debug("betterform.ui.input.DropDownDate.onChange");
+        console.debug("betterform.ui.input.DropDownDate.onChange");
     },
 
     _handleSetControlValue:function(value) {
-        // console.debug("betterform.ui.input.DropDownDate._handleSetControlValue value",value);
+        console.debug("betterform.ui.input.DropDownDate._handleSetControlValue value",value);
         this.applyValues(value);
     },
 
 
     getControlValue:function() {
-        // console.debug("betterform.ui.input.DropDownDate.getControlValue currentValue: ", this.value);
-        return this.value;
-    },
+        // console.debug("betterform.ui.input.DropDownDate.getControlValue computeDate: ", this.years + "-" + this.months + "-" + this.days);
+/*
+        if(isNaN(this.years) || isNaN(this.months) || isNaN(this.days) || this.years == "" || this.months == "" || this.days == "") {
+            console.debug("betterform.ui.input.DropDownDate.getControlValue: invalid date, returning empty value");
+            return "";
+        }else {
+*/
+            this.value = this.years + "-" + this.months + "-" + this.days;
+            // console.debug("betterform.ui.input.DropDownDate.getControlValue currentDate: ", this.value);
+            dojo.attr(this.valueNode, "value", this.value);
+            return this.value;
 
-    setCurrentDate:function() {
-        // console.debug("betterform.ui.input.DropDownDate.setCurrentDate computeDate: ", this.years + "-" + this.months + "-" + this.days);
-        var currentDate = this.years + "-" + this.months + "-" + this.days;
-        // console.debug("betterform.ui.input.DropDownDate.setCurrentDate currentDate: ", currentDate);
-        dojo.attr(this.valueNode, "value", currentDate);
-        this.value = currentDate;
-        this.setControlValue();
+//        }
     },
 
     /*
@@ -170,8 +165,8 @@ dojo.declare(
      is already present and other MIPs are entirely managed through CSS.
      */
     applyState:function() {
-        dijit.byId(this.daysFacet.id).attr("readOnly", this.xfControl.isReadonly());
-        dijit.byId(this.monthsFacet.id).attr("readOnly", this.xfControl.isReadonly());
-        dijit.byId(this.yearsFacet.id).attr("readOnly", this.xfControl.isReadonly());
+        dijit.byId(this.daysFacet.id).set("readOnly", this.xfControl.isReadonly());
+        dijit.byId(this.monthsFacet.id).set("readOnly", this.xfControl.isReadonly());
+        dijit.byId(this.yearsFacet.id).set("readOnly", this.xfControl.isReadonly());
     }
 });

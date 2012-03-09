@@ -675,18 +675,7 @@
         <xsl:variable name="lname" select="local-name()"/>
         <xsl:variable name="name" select="concat($data-prefix,@id)"/>
        <!-- TODO: DateTime -->
-        <xsl:variable name="incremental">
-            <xsl:choose>
-                <xsl:when test="$lname='input' and
-                            $datatype='date'
-                            ">
-                    <xsl:value-of select="if (exists(@incremental)) then @incremental else 'true'"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="if (exists(@incremental)) then @incremental else 'false'"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
+        <xsl:variable name="incremental"><xsl:value-of select="if (exists(@incremental)) then @incremental else 'false'"/></xsl:variable>
         <xsl:variable name="incrementaldelay">
         	<xsl:value-of select="if (exists(@bf:incremental-delay)) then @bf:incremental-delay else '0'"/>
         </xsl:variable>
