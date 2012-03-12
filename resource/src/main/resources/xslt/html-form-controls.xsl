@@ -693,6 +693,12 @@
                         <xsl:value-of select="$navindex"/>
                     </xsl:attribute>
                 </xsl:if>
+                <xsl:if test="$parent/bf:data/@bf:readonly='true'">
+                    <xsl:attribute name="disabled">disabled</xsl:attribute>
+                </xsl:if>
+                <xsl:if test="@selected='true'">
+                    <xsl:attribute name="checked">checked</xsl:attribute>
+                </xsl:if>
                 <xsl:choose>
         			<xsl:when test="xf:copy">
            				<xsl:attribute name="value" select="xf:copy/@id"/>
@@ -709,12 +715,6 @@
                         <xsl:apply-templates select="$parent/xf:hint"/>
                     </xsl:otherwise>
                 </xsl:choose>
-                <xsl:if test="$parent/bf:data/@bf:readonly='true'">
-                    <xsl:attribute name="disabled">disabled</xsl:attribute>
-                </xsl:if>
-                <xsl:if test="@selected='true'">
-                    <xsl:attribute name="checked">checked</xsl:attribute>
-                </xsl:if>
             </input>
             <span id="{@id}-label" class="label">
                 <xsl:if test="$parent/bf:data/@bf:readonly='true'">
@@ -843,6 +843,12 @@
                         <xsl:value-of select="$navindex"/>
                     </xsl:attribute>
                 </xsl:if>
+                <xsl:if test="$parent/bf:data/@bf:readonly='true'">
+                    <xsl:attribute name="disabled">disabled</xsl:attribute>
+                </xsl:if>
+                <xsl:if test="@selected='true'">
+                    <xsl:attribute name="checked">checked</xsl:attribute>
+                </xsl:if>
                 <xsl:choose>
         			<xsl:when test="xf:copy">
            				<xsl:attribute name="value" select="xf:copy/@id"/>
@@ -859,12 +865,6 @@
                         <xsl:apply-templates select="$parent/xf:hint"/>
                     </xsl:otherwise>
                 </xsl:choose>
-                <xsl:if test="$parent/bf:data/@bf:readonly='true'">
-                    <xsl:attribute name="disabled">disabled</xsl:attribute>
-                </xsl:if>
-                <xsl:if test="@selected='true'">
-                    <xsl:attribute name="checked">checked</xsl:attribute>
-                </xsl:if>
             </input>
             <span id="{@id}-label" class="label">
                 <xsl:if test="$parent/bf:data/@bf:readonly='true'">
@@ -888,7 +888,12 @@
                         <xsl:value-of select="$navindex"/>
                     </xsl:attribute>
                 </xsl:if>
-                
+                <xsl:if test="$parent/bf:data/@bf:readonly='true'">
+                    <xsl:attribute name="disabled">disabled</xsl:attribute>
+                </xsl:if>
+                <xsl:if test="@selected='true'">
+                    <xsl:attribute name="checked">checked</xsl:attribute>
+                </xsl:if>
                 <xsl:choose>
 					<xsl:when test="xf:copy">
    						<xsl:attribute name="value" select="xf:copy/@id"/>
@@ -905,12 +910,6 @@
                         <xsl:apply-templates select="$parent/xf:hint"/>
                     </xsl:otherwise>
                 </xsl:choose>
-                <xsl:if test="$parent/bf:data/@bf:readonly='true'">
-                    <xsl:attribute name="disabled">disabled</xsl:attribute>
-                </xsl:if>
-                <xsl:if test="@selected='true'">
-                    <xsl:attribute name="checked">checked</xsl:attribute>
-                </xsl:if>
             </input>
             <span id="{$item-id}-label" class="label">
                 <xsl:if test="$parent/bf:data/@bf:readonly='true'">
