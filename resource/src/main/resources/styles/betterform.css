@@ -124,6 +124,15 @@ a:link, a:visited, a:active {
 .bf .xsdDateTime .dijitError {
   background: #ffffff url("../images/validationInputBg.png") repeat-x scroll left top;
 }
+.bf .bfValueWrapper .xfTimeControl {
+  display: inline-block;
+}
+.bf .bfValueWrapper .xfTimeControl .dijitComboBox {
+  width: 18px;
+}
+.bf .bfValueWrapper .xfTimeControl .dijitButtonNode {
+  display: none;
+}
 .dijitError .dijitValidationIcon, .dijitError .dijitValidationIconText {
   visibility: hidden;
 }
