@@ -57,6 +57,7 @@ dojo.declare(
         } else {
             dojo.publish("/xf/invalid", [this.id,"init"]);
         }
+
     },
 
     /*
@@ -73,7 +74,7 @@ dojo.declare(
 
         if (value != undefined && this.currentValue != value) {
             //do not send update to server if in mode 'incremental' as value already has been passed
-            if( (!this.incremental && evt.type == "blur") || (this.incremental && evt.type == "keyup") ){
+            if( (!this.incremental && evt.type == "blur") || (this.incremental && evt.type == "keyup") || evt.type == "click" ){
                 //update internal value
                 this.currentValue = value;
                 //handle validity and dispatch events if necessary
@@ -209,7 +210,7 @@ dojo.declare(
             }
 
             if (this.valid != null ) {
-                this._handleSetValidProperty(eval(this.valid));
+                this._handleSetValidProperty(this.valid == 'true');
             }else if(!this.isValid() && !dojo.hasClass(this.domNode,"bfInvalidControl")){
                 /*
                  todo: got the feeling that this case should be handled elsewhere....
@@ -226,13 +227,13 @@ dojo.declare(
                 this._handleSetValidProperty(false);
             }
             if (this.readonly != null) {
-                this._handleSetReadonlyProperty(eval(this.readonly));
+                this._handleSetReadonlyProperty(this.readonly == 'true');
             }
             if (this.required != null) {
-                this._handleSetRequiredProperty(eval(this.required));
+                this._handleSetRequiredProperty(this.required == 'true');
             }
             if (this.relevant != null) {
-                this._handleSetEnabledProperty(eval(this.relevant));
+                this._handleSetEnabledProperty(this.relevant == 'true');
             }
 
         }
@@ -303,14 +304,19 @@ dojo.declare(
 
     },
 
-    _handleSetReadonlyProperty: function() {
-        if (!eval(this.readonly)) {
-            betterform.ui.util.replaceClass(this.domNode, "xfReadOnly", "xfReadWrite");
+    _handleSetReadonlyProperty: function(/*Boolean*/ readonly) {
+        console.debug("_handleSetReadonlyProperty: readonly: ", readonly);
+        if (readonly) {
+            console.debug("_handleSetReadonlyProperty: readonly");
+            betterform.ui.util.replaceClass(this.domNode, "xfReadWrite", "xfReadOnly");
+            dojo.attr(this.getWidget(), "readonly",true);
         }
         else {
-            betterform.ui.util.replaceClass(this.domNode, "xfReadWrite", "xfReadOnly");
+            console.debug("_handleSetReadonlyProperty: notReadonly");
+            betterform.ui.util.replaceClass(this.domNode, "xfReadOnly", "xfReadWrite");
+            this.getWidget().removeAttribute("readonly");
+
         }
-        this.controlValue.applyState();
     },
 
     _handleSetRequiredProperty:function() {
@@ -496,6 +502,13 @@ dojo.declare(
         if (dojo.hasClass(this.domNode, "xfRequiredEmpty")) {
             dojo.removeClass(this.domNode, "xfRequiredEmpty");
         }
+    },
+
+    getWidget:function() {
+        if(this.widget == undefined) {
+            this.widget = dojo.byId(this.id+"-value");
+        }
+        return this.widget;
     }
 });
 

@@ -51,7 +51,7 @@ var componentBehavior = {
         ###########################################################################################
         Event handler binding XForms and widget layer.
 
-        There always need to be at least 2 event listener:
+        There always need to be at least 3 event listener:
 
         - one listening tor handleStateChanged which are events coming from the processor representing
         changes of the value or state of a node that need to be applied to the widget. The following event handler
@@ -83,7 +83,6 @@ var componentBehavior = {
         dojo.connect(n,"onkeyup",function(evt){
             console.debug("onkeypress",n);
             xfControl.setValue(n.value,evt);
-//            xfControl.setValue(n.value);
         });
 
         dojo.connect(n,"onblur",function(evt){
@@ -193,7 +192,9 @@ var componentBehavior = {
     '.xfInput.xsdDateTime .xfValue': function(n) {
     },
 
-
+    // ############################## TRIGGER INPUT ##############################
+    // ############################## TRIGGER INPUT ##############################
+    // ############################## TRIGGER INPUT ##############################
     '.xfTrigger .xfValue': function(n) {
         console.debug("node: ",n);
         var parentId = n.id.substring(0,n.id.lastIndexOf("-"));
