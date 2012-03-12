@@ -165,7 +165,7 @@
     <!-- ############################## HEAD ############################## -->
     <xsl:template match="head">
 
-        <xsl:comment> *** powered by betterFORM, &amp;copy; 2011 *** </xsl:comment>
+        <xsl:comment> *** powered by betterFORM, &amp;copy; 2012 *** </xsl:comment>
 
         <head>
             <title>
@@ -311,7 +311,8 @@
                         sessionkey="{$sessionKey}"
                         contextroot="{$contextroot}"
                         usesDOMFocusIN="{$uses-DOMFocusIn}"
-                        dataPrefix="{$data-prefix}">
+                        dataPrefix="{$data-prefix}"
+                        logEvents="{$debug-enabled}">
 
                     <!--
                     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -412,6 +413,14 @@
                         }
                     }
                 </script>
+                <div id="evtLogContainer" style="width:26px;height:26px;overflow:hidden;">
+                    <div id="logControls">
+                        <a id="switchLog" href="javascript:toggleLog();">&gt;</a>
+                        <a id="trashLog" href="javascript:clearLog();">x</a>
+                    </div>
+                    <ul id="eventLog">
+                    </ul>
+                </div>
                 <div id="openclose">
                     <a href="javascript:toggleDebug();" ><img class="debug-icon" src="{concat($contextroot,'/bfResources/images/collapse.png')}" alt=""/></a>
                 </div>

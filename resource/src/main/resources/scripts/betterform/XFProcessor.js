@@ -39,6 +39,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
     _earlyTemplatedStartup:true,
     widgetsInTemplate:true,
     usesDOMFocusIN:false,
+    logEvents:false,
 
 
     /*
@@ -397,7 +398,8 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
         }
     },
 
-    setControlValue: function(id, value) {
+    sendValue: function(id, value) {
+        console.debug("XFProcessor.sendValue", id, value);
         var newClientServerEvent = new betterform.ClientServerEvent();
         newClientServerEvent.setTargetId(id);
         newClientServerEvent.setValue(value);
@@ -535,19 +537,59 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
         try {
             var validityEvents = new Array();
             var index = 0;
+
+            //eventLog writing
+            var eventLog = dojo.byId("eventLog");
+
             dojo.forEach(data,
                     function(xmlEvent) {
                         // *** DO NOT COMMENT THIS OUT !!! ***
                         console.debug(xmlEvent.type, " [", xmlEvent.contextInfo, "]");
 
 /*
-                        var hasBfName=false;
-                        if (xmlEvent.contextInfo.bfName != undefined){
-                            dojo.query("[name='"  + xmlEvent.contextInfo.bfName + "']")[xmlEvent.contextInfo.position].handleEvent(xmlEvent.contextInfo);
-                        } else {
-                            dojo.byId(xmlEvent.contextInfo.targetId).handleEvent(xmlEvent.contextInfo);
-                        }
+                        if 'logEvents' is true the eventlog from the server will be written
+                        to DOM and can be viewed in a separate expandable section in the window.
 */
+                        if(fluxProcessor.logEvents){
+                            //iterate contextinfo
+                            var contextInfo = xmlEvent.contextInfo;
+                            var tableCells = "";
+
+                            for (dataItem in contextInfo){
+                                var funcArg = contextInfo[dataItem];
+
+                                //suppressing empty default info
+                                if(funcArg != null) {
+                                    if(dataItem == "targetId" &&
+                                        (xmlEvent.type == "betterform-state-changed" ||
+                                         xmlEvent.type == "xforms-value-changed" ||
+                                         xmlEvent.type == "xforms-valid" ||
+                                         xmlEvent.type == "xforms-invalid" ||
+                                         xmlEvent.type == "xforms-readonly" ||
+                                         xmlEvent.type == "xforms-readwrite" ||
+                                         xmlEvent.type == "xforms-required" ||
+                                         xmlEvent.type == "xforms-optional" ||
+                                         xmlEvent.type == "xforms-enabled" ||
+                                         xmlEvent.type == "DOMFocusOut" ||
+                                         xmlEvent.type == "DOMActivate" ||
+                                         xmlEvent.type == "betterform-AVT-changed"
+                                         )
+                                    ){
+                                        tableCells += "<tr><td class='propName'>"+ dataItem + "</td><td class='propValue'><a href='#' onclick='reveal(this);'>" + contextInfo[dataItem] + "</a></td></tr>"
+                                    }else if(dataItem == "targetElement" && xmlEvent.type == "betterform-load-uri"){
+                                        var targetElement = contextInfo.xlinkTarget;
+                                        tableCells += "<tr><td class='propName'>"+ dataItem + "</td><td class='propValue'><a href='#' onclick='reveal(this);'>" + targetElement + "</a></td></tr>"
+                                    }
+                                    else {
+                                        tableCells += "<tr><td class='propName'>"+ dataItem + "</td><td class='propValue'>" +  contextInfo[dataItem] + "</td></tr>"
+                                    }
+                                }
+                            }
+                            //create output
+                            dojo.create("li", {
+                                innerHTML: "<a href='#' onclick='toggleEntry(this);'><span>"+xmlEvent.type+"</span></a><table class='eventLogTable'>" + tableCells + "</table>"
+                            }, eventLog);
+                        }
                         switch (xmlEvent.type) {
                             case "betterform-index-changed"      : fluxProcessor._handleBetterFormIndexChanged(xmlEvent); break;
                             case "betterform-insert-itemset"     : fluxProcessor._handleBetterFormInsertItemset(xmlEvent); break;
@@ -594,6 +636,14 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
                         }
                     }
                     );
+
+            if(fluxProcessor.logEvents){
+                // add a devider for eventLogViewer
+                dojo.create("li", {
+                    innerHTML: "<span class='logDevider'/>"
+                }, eventLog);
+            }
+
             if (validityEvents.length > 0) {
                 fluxProcessor._handleValidity(validityEvents);
             }
@@ -705,7 +755,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
         dojo.query(".xfRequired", dojo.doc).forEach(function(control) {
             //if control has no value add CSS class xfRequiredEmpty
             var xfControl = dijit.byId(control.id);
-            if(xfControl != undefined){
+            if(xfControl != undefined && xfControl.getControlValue === 'function'){
                 var xfValue = xfControl.getControlValue();
                 if(xfValue == undefined || xfValue == ''){
                     dojo.addClass(xfControl.domNode,"xfRequiredEmpty");

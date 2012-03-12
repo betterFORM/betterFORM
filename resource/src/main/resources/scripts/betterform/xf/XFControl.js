@@ -28,6 +28,9 @@ dojo.declare(
     controlValue:null,
     currentValue:null,
     subscriber:null,
+    bfFocus:false,
+    incremental:false,
+
 
     constructor:function() {
     },
@@ -42,6 +45,10 @@ dojo.declare(
         // ensure all needed classes for Control are in place in case we have a dynamically created control
         betterform.ui.util.setDefaultClasses(this.domNode);
 
+        if(this.isIncremental()){
+            this.incremental = true;
+        }
+
         /*
        Controls publish their validity state to the processor which will pass it to the selected alertHandler
         */
@@ -51,6 +58,45 @@ dojo.declare(
             dojo.publish("/xf/invalid", [this.id,"init"]);
         }
     },
+
+    /*
+     sends updated value of a widget to the server
+     */
+    setValue:function(/* String */ value, evt) {
+        console.debug("XFControl: setControlValue: currentvalue:", this.currentValue, " - newValue:",value);
+        console.debug("XFControl evt: ",evt);
+
+        if(evt.type == "blur"){
+            // control has lost focus
+            this.bfFocus = false;
+        }
+
+        if (value != undefined && this.currentValue != value) {
+            //do not send update to server if in mode 'incremental' as value already has been passed
+            if( (!this.incremental && evt.type == "blur") || (this.incremental && evt.type == "keyup") ){
+                //update internal value
+                this.currentValue = value;
+                //handle validity and dispatch events if necessary
+                if(this.isValid()){
+                    dojo.publish("/xf/valid",[this.id,"onBlur"]);
+                }else {
+                    dojo.publish("/xf/invalid",[this.id,"onBlur"]);
+                }
+
+                fluxProcessor.sendValue(this.id, value);
+            }
+
+            this._handleRequiredEmpty();
+
+        }
+
+        if(evt.type == "blur"){
+            //notify server of lost focus
+            fluxProcessor.dispatchEventType(this.id,"DOMFocusOut");
+        }
+
+    },
+
 
     isRequired:function() {
         // console.debug("Control.isRequired",this.domNode);
@@ -86,6 +132,8 @@ dojo.declare(
     },
 
     isValid:function() {
+        console.debug("XFControl.isValid",this.domNode);
+
         if (dojo.hasClass(this.domNode, "xfInvalid")) {
             return false;
         } else if (dojo.hasClass(this.domNode, "xfValid")) {
@@ -114,9 +162,11 @@ dojo.declare(
         }
     },
 
+/*
     getCurrentValue:function(){
         return this.currentValue;
     },
+*/
 
     isValueChanged:function(value){
         if (value != undefined && this.currentValue != value) {
@@ -126,19 +176,6 @@ dojo.declare(
         }
 
     },
-    /*
-     sends updated value of a widget to the server
-     */
-    setControlValue:function(/* String */ value) {
-        console.debug("XFControl: setControlValue: currentvalue:", this.currentValue, " - newValue:",value);
-
-        if (value != undefined && this.currentValue != value) {
-            this.currentValue = value;
-            fluxProcessor.setControlValue(this.id, value);
-            this._handleRequiredEmpty();
-        }
-    },
-
 
     /*
     handles state changes send by the server and applies them to the control

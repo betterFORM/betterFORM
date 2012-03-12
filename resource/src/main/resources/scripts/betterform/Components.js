@@ -46,7 +46,7 @@ var componentBehavior = {
          element in the document.
         */
         var xfId = getXfId(n);
-
+        var xfControl = dijit.byId(xfId);
         /*
         ###########################################################################################
         Event handler binding XForms and widget layer.
@@ -77,10 +77,18 @@ var componentBehavior = {
             }
         });
 
-        dojo.connect(n,"onblur",function(){
+        /*
+        if incremental support is needed this eventhandler has to be added for the widget
+         */
+        dojo.connect(n,"onkeyup",function(evt){
+            console.debug("onkeypress",n);
+            xfControl.setValue(n.value,evt);
+//            xfControl.setValue(n.value);
+        });
+
+        dojo.connect(n,"onblur",function(evt){
             console.debug("onblur",n);
-            var xfControl = dijit.byId(xfId);
-            xfControl.setControlValue(n.value);
+            xfControl.setValue(n.value, evt);
         });
 
         //todo: Dijits will need to create themselves later here...
@@ -101,23 +109,23 @@ var componentBehavior = {
 
         });
 
-        dojo.connect(n,"onblur",function(){
+        dojo.connect(n,"onblur",function(evt){
 //            console.debug("onblur",n);
 //            console.debug("xfId",xfId);
 //            console.debug("checked",n.checked);
             var xfControl = dijit.byId(xfId);
             if(n.checked != undefined){
-                xfControl.setControlValue(n.checked);
+                xfControl.setValue(n.checked,evt);
             }
         });
-        dojo.connect(n,"onclick",function(){
+        dojo.connect(n,"onclick",function(evt){
 //            console.debug("onclick",n);
 //            console.debug("xfId",xfId);
 //            console.debug("value",n.value);
 //            console.debug("checked",n.checked);
             var xfControl = dijit.byId(xfId);
             if(n.checked != undefined){
-                xfControl.setControlValue(n.checked);
+                xfControl.setValue(n.checked,evt);
             }
         });
 
@@ -174,7 +182,7 @@ var componentBehavior = {
 //                console.debug("this.value: ",this.value);
 //                console.debug("this.value: ",this.get("value"));
 //
-//                dijit.byId(xfId).setControlValue(this.displayedValue);
+//                dijit.byId(xfId).setValue(this.displayedValue);
 //            });
         }
     },
