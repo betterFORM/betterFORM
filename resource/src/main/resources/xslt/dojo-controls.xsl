@@ -9,6 +9,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xforms="http://www.w3.org/2002/xforms"
                 xmlns:bf="http://betterform.sourceforge.net/xforms"
+                xmlns:bfn="http://betterform.sourceforge.net/xforms/functions"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 xmlns:xhtml="http://www.w3.org/1999/xhtml"
                 exclude-result-prefixes="xhtml bf xforms xsl xsd"
@@ -30,18 +31,13 @@
     <!-- ######################################################################################################## -->
 
     <xsl:template name="select1">
-        <xsl:variable name="schemaValue" select="bf:data/@bf:schema-value"/>
         <xsl:variable name="navindex" select="if (exists(@navindex)) then @navindex else '0'"/>
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="name" select="concat($data-prefix,$id)"/>
         <xsl:variable name="parent" select="."/>
         <xsl:variable name="incremental" select="if (exists(@incremental)) then @incremental else 'true'"/>
-        <xsl:variable name="handler">
-            <xsl:choose>
-                <xsl:when test="$incremental='false'">onblur</xsl:when>
-                <xsl:otherwise>onchange</xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
+        <xsl:variable name="appearance" select="bfn:getAppearance(@appearance)"/>
+
         <xsl:variable name="size">
             <xsl:choose>
                 <xsl:when test="@size"><xsl:value-of select="@size"/></xsl:when>
@@ -55,7 +51,7 @@
         </xsl:if>
         
         <xsl:choose>
-            <xsl:when test="@appearance='compact'">
+            <xsl:when test="$appearance='compact'">
                 <select id="{concat($id,'-value')}"
                         name="{$name}"
                         size="{$size}"
@@ -68,6 +64,7 @@
                         incremental="{$incremental}">
                     <xsl:call-template name="build-items">
                         <xsl:with-param name="parent" select="$parent"/>
+                        <xsl:with-param name="appearance" select="$appearance"/>
                     </xsl:call-template>
                 </select>
                 <!-- handle itemset prototype -->
@@ -81,7 +78,7 @@
                 </xsl:if>
 
             </xsl:when>
-            <xsl:when test="@appearance='full'">
+            <xsl:when test="$appearance='full'">
                 <span id="{$id}-value"
                       controlType="select1RadioButton"
                       class="xfValue"                      
@@ -126,6 +123,7 @@
                                 incremental="{$incremental}">
                             <xsl:call-template name="build-items">
                                 <xsl:with-param name="parent" select="$parent"/>
+                                <xsl:with-param name="appearance" select="$appearance"/>
                             </xsl:call-template>
                         </select>
                     </xsl:when>
@@ -143,6 +141,7 @@
                                     incremental="{$incremental}">
                                 <xsl:call-template name="build-items">
                                     <xsl:with-param name="parent" select="$parent"/>
+                                    <xsl:with-param name="appearance" select="$appearance"/>
                                 </xsl:call-template>
                             </select>
                         </span>
@@ -162,10 +161,11 @@
         <xsl:variable name="incremental" select="if (exists(@incremental)) then @incremental else 'true'"/>
         <xsl:variable name="schemaValue" select="bf:data/@bf:schema-value"/>
         <xsl:variable name="datatype"><xsl:call-template name="getType"/></xsl:variable>
+        <xsl:variable name="appearance" select="bfn:getAppearance(@appearance)"/>
         <xsl:choose>
             <!-- only 'full' is supported as explicit case and renders a group of checkboxes. All other values
             of appearance will be matched and represented as a list control. -->
-            <xsl:when test="@appearance='full'">
+            <xsl:when test="$appearance='full'">
                 <span id="{$parent/@id}-value"
                       name="{$name}"
                       class="xfValue bfCheckBoxGroup"
@@ -210,6 +210,7 @@
                         incremental="{$incremental}">
                     <xsl:call-template name="build-items">
                         <xsl:with-param name="parent" select="$parent"/>
+                        <xsl:with-param name="appearance" select="$appearance"/>
                     </xsl:call-template>
                 </select>
             </xsl:otherwise>
@@ -220,7 +221,7 @@
         <xsl:variable name="datatype">
             <xsl:call-template name="getType"/>
         </xsl:variable>
-        <xsl:message select="concat('Datatype: ',$datatype)"/>
+<!--        <xsl:message select="concat('Datatype: ',$datatype)"/>-->
         <xsl:variable name="name" select="concat($data-prefix,@id)"/>
 
         <xsl:variable name="incremental" select="if (exists(@incremental)) then @incremental else 'false'"/>
@@ -382,21 +383,22 @@
 
     <xsl:template name="build-items">
         <xsl:param name="parent"/>
-        <xsl:if test="local-name($parent) ='select1' and ($parent/@appearance='minimal' or not(exists($parent/@appearance)))">
+        <xsl:param name="appearance"/>
+        <xsl:if test="(local-name($parent) ='select1' and ($appearance = 'minimal') or not(exists($parent/@appearance)))">
 
-            <xsl:variable name="aggregatedEmptyLabel" >
-                <xsl:for-each select="$parent//*[not(exists(ancestor::bf:data))]/xforms:label">
+            <xsl:variable name="aggregatedEmptyValue" >
+                <xsl:for-each select="$parent//*[not(exists(ancestor::bf:data))]/xforms:value">
                     <xsl:if test=". =''">true</xsl:if>
                 </xsl:for-each>
             </xsl:variable>
-            <xsl:variable name="hasEmptyLabel" as="xsd:boolean">
+            <xsl:variable name="hasEmptyValue" as="xsd:boolean">
                 <xsl:choose>
-                    <xsl:when test="contains($aggregatedEmptyLabel, 'true')">true</xsl:when>
-                    <xsl:otherwise>false</xsl:otherwise>
+                    <xsl:when test="contains($aggregatedEmptyValue, 'true')"><xsl:value-of select="true()"/></xsl:when>
+                    <xsl:otherwise><xsl:value-of select="false()"/></xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
 
-            <xsl:if test="not($hasEmptyLabel)">
+            <xsl:if test="not($hasEmptyValue)">
                 <option value="" class="xfSelectorItem">
                     <xsl:if test="string-length($parent/bf:data/text()) = 0">
                         <xsl:attribute name="selected">selected</xsl:attribute>
@@ -415,17 +417,24 @@
         </xsl:if>
 -->
 		<xsl:for-each select="$parent/xforms:itemset|$parent/xforms:item|$parent/xforms:choices">
-			<xsl:call-template name="build-items-list"/>
+			<xsl:call-template name="build-items-list">
+                <xsl:with-param name="selectNode" select="$parent"/>
+            </xsl:call-template>
 		</xsl:for-each>
     </xsl:template>
 
     <xsl:template name="build-items-list">
+        <xsl:param name="selectNode"  />
     	<xsl:choose>
     		<xsl:when test="local-name(.) = 'choices'">    		    
-    		    <xsl:call-template name="build-items-choices"/>
+    		    <xsl:call-template name="build-items-choices">
+                    <xsl:with-param name="selectNode" select="$selectNode"/>
+                </xsl:call-template>
     		</xsl:when>
     		<xsl:when test="local-name(.) = 'itemset'">
-    			<xsl:call-template name="build-items-itemset"/>
+    			<xsl:call-template name="build-items-itemset">
+                    <xsl:with-param name="selectNode" select="$selectNode"/>
+                </xsl:call-template>
     		</xsl:when>
     		<xsl:when test="local-name(.) = 'item'">
     			<xsl:call-template name="build-items-item"/>
@@ -434,6 +443,7 @@
     </xsl:template>
 
 	<xsl:template name="build-items-choices">
+        <xsl:param name="selectNode"  />
         <xsl:variable name="label">
             <xsl:call-template name="create-label">
                 <xsl:with-param name="label-elements" select="xforms:label"/>
@@ -443,24 +453,44 @@
             <xsl:when test="$label != ''">
                 <optgroup id="{@id}" label="{$label}" class="xfOptGroupLabel">
                     <xsl:for-each select="xforms:itemset|xforms:item|xforms:choices">
-                        <xsl:call-template name="build-items-list"/>
+                        <xsl:call-template name="build-items-list">
+                            <xsl:with-param name="selectNode" select="$selectNode"/>
+                        </xsl:call-template>
                     </xsl:for-each>
                 </optgroup>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:for-each select="xforms:itemset|xforms:item|xforms:choices">
-                    <xsl:call-template name="build-items-list"/>
+                    <xsl:call-template name="build-items-list">
+                        <xsl:with-param name="selectNode" select="$selectNode"/>
+                    </xsl:call-template>
                 </xsl:for-each>
             </xsl:otherwise>
         </xsl:choose>
 	</xsl:template>
 
     <xsl:template name="build-items-itemset">
-		<optgroup id="{@id}" class="xfOptGroup" controlType="optGroup" label="">
-			<xsl:for-each select="xforms:item">
-				<xsl:call-template name="build-items-item"/>
-            </xsl:for-each>
-		</optgroup>
+        <xsl:param name="selectNode"/>
+        <xsl:variable name="bfNoOptGroup" as="xsd:boolean">
+            <xsl:choose>
+                <xsl:when test="contains($selectNode/@appearance, 'bfNoOptGroup')"><xsl:value-of select="true()"/></xsl:when>
+                <xsl:otherwise><xsl:value-of select="false()"/></xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:choose>
+            <xsl:when test="$bfNoOptGroup">
+                <xsl:for-each select="xforms:item">
+                    <xsl:call-template name="build-items-item"/>
+                </xsl:for-each>
+            </xsl:when>
+            <xsl:otherwise>
+                <optgroup id="{@id}" class="xfOptGroup" controlType="optGroup" label="{@label}">
+                    <xsl:for-each select="xforms:item">
+                        <xsl:call-template name="build-items-item"/>
+                    </xsl:for-each>
+                </optgroup>
+            </xsl:otherwise>
+        </xsl:choose>
 	</xsl:template>
 
 	<xsl:template name="build-items-item">
@@ -846,11 +876,28 @@
                 <xsl:if test="$parent/bf:data/@bf:readonly='true'">
                     <xsl:attribute name="disabled">disabled</xsl:attribute>
                 </xsl:if>
-                <xsl:message>Fix this for internationalization</xsl:message>
+                <!--<xsl:message>Fix this for internationalization</xsl:message>-->
                 <xsl:apply-templates select="xforms:label" mode="prototype"/>
             </span>
         </span>
     </xsl:template>
 
 
+    <xsl:function name="bfn:getAppearance" as="xsd:string?">
+        <xsl:param name="arg" as="xsd:string?"/>
+<!--
+        <xsl:sequence select="concat(upper-case(substring($arg,1,1)),substring($arg,2))"/>
+-->
+        <xsl:choose>
+            <xsl:when test="exists($arg) and contains($arg,'bfNoOptGroup')">
+                <xsl:choose>
+                    <xsl:when test="contains($arg,'minimal')">minimal</xsl:when>
+                    <xsl:when test="contains($arg,'compact')">compact</xsl:when>
+                    <xsl:when test="contains($arg,'full')">full</xsl:when>
+                    <xsl:otherwise><xsl:value-of select="$arg"/></xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:otherwise><xsl:value-of select="$arg"/></xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
 </xsl:stylesheet>

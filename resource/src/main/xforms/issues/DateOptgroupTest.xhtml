@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:bf="http://betterform.sourceforge.net/xforms">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Policy Holder Details</title>
+    <style type="text/css">
+        .xfInvalid {
+            background:red;
+        }
+        optgroup {
+            background-color: #90ee90;
+            color: #a52a2a;
+        }
+        option {
+            background-color: #faf0e6;
+            color: #556b2f;
+        }
+    </style>
+</head>
+<body>
+
+<div id="xforms">
+<div style="display:none">
+    <xf:model id="model-1">
+        <xf:instance id="i-default" xmlns="">
+            <data readonly="false">
+                <dob/>
+                <maritalStatusCode/>
+            </data>
+        </xf:instance>
+        <xf:bind nodeset="instance('i-default')">
+            <xf:bind nodeset="dob" type="xf:date" readonly="boolean-from-string(../@readonly)"/>
+        </xf:bind>
+
+        <xf:instance id="i-controller" xmlns="">
+            <data>
+                <item value="1">one</item>
+                <item value="2">two</item>
+                <item value="3">three</item>
+            </data>
+        </xf:instance>
+    </xf:model>
+</div>
+    
+<xf:group appearance="full">
+    <xf:input ref="instance()/dob" appearance="bf:dropdowndate=-17:-100">
+        <xf:label>Birth:</xf:label>
+        <xf:alert>alert</xf:alert>
+    </xf:input>
+
+    <xf:output ref="instance()/dob">
+        <xf:label>Birth:</xf:label>
+        <xf:alert>alert</xf:alert>
+    </xf:output>
+
+    <xf:trigger>
+        <xf:label>Readonly</xf:label>
+        <xf:setvalue ref="instance()/@readonly" value="not(boolean-from-string(.))"/>
+    </xf:trigger>
+
+    <xf:select1 ref="instance()/maritalStatusCode"  appearance="minimal bfNoOptGroup">
+        <xf:label>maritalStatusCode (with bfNoOptGroup)</xf:label>
+        <xf:itemset nodeset="instance('i-controller')/item">
+            <xf:label ref="." />
+            <xf:value ref="@value" />
+        </xf:itemset>
+    </xf:select1>
+    <pre><code>
+    &lt;xf:select1 ref="/actionform/detail/driver[type='policyHolder']/maritalStatusCode"  appearance="minimal bfNoOptGroup"&gt;
+        &lt;xf:label&gt;maritalStatusCode (with bfNoOptGroup)&lt;/xf:label&gt;
+        &lt;xf:itemset nodeset="instance('i-controller')/item"&gt;
+            &lt;xf:label ref="." /&gt;
+            &lt;xf:value ref="@value" /&gt;
+        &lt;/xf:itemset&gt;
+    &lt;/xf:select1&gt;
+    </code></pre>
+
+    <xf:select1 ref="instance()/maritalStatusCode"  appearance="minimal">
+        <xf:label>maritalStatusCode (with OptGroup label)</xf:label>
+        <xf:item>
+            <xf:label>--Select--</xf:label>
+            <xf:value/>
+        </xf:item>
+        <xf:itemset nodeset="instance('i-controller')/item" label="maritalStatusCode">
+            <xf:label ref="." />
+            <xf:value ref="@value" />
+        </xf:itemset>
+    </xf:select1>
+
+    <pre><code>
+    &lt;xf:select1 ref="/actionform/detail/driver[type='policyHolder']/maritalStatusCode"  appearance="minimal"&gt;
+        &lt;xf:label&gt;maritalStatusCode (with OptGroup label)&lt;/xf:label&gt;
+        &lt;xf:item&gt;
+            &lt;xf:label&gt;--Select--&lt;/xf:label&gt;
+            &lt;xf:value/&gt;
+        &lt;/xf:item&gt;
+        &lt;xf:itemset nodeset="instance('i-controller')/item" label="maritalStatusCode"&gt;
+            &lt;xf:label ref="." /&gt;
+            &lt;xf:value ref="@value" /&gt;
+        &lt;/xf:itemset&gt;
+    &lt;/xf:select1&gt;
+    </code></pre>
+    
+    <xf:output ref="instance()/maritalStatusCode">
+        <xf:label>Material Status:</xf:label>
+    </xf:output>
+
+</xf:group>
+</div>
+</body>
+</html>
