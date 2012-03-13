@@ -12,10 +12,16 @@
 <div id="xforms">
     <div style="display:none;">
         <xf:model>
-            <xf:instance xmlns="">
+            <xf:instance>
                 <data>
-                    <select1minimalItemset />
-                    <select1minimal/>
+                    <target xmlns=""/>
+                    <ColorCode/>
+                </data>
+            </xf:instance>
+
+            <xf:instance id="two">
+                <data>
+                    <ColorCode xmlns=""/>
                 </data>
             </xf:instance>
 
@@ -33,48 +39,52 @@
                             <name>BLUE</name>
                             <value>FF0000</value>
                         </color>
-                     </items>
+                    </items>
             </xf:instance>
         </xf:model>
     </div>
-
-    <xf:group appearance="full">
-        <xf:select1 ref="instance()/select1minimalItemset" appearance="minimal">
-            <xf:label>Select with Itemset</xf:label>
+    <xf:group>
+        <xf:select1 ref="target" appearance="full">
+            <xf:label/>
             <xf:itemset  nodeset="instance('colors')/color">
-                <xf:label ref="name"/>
+                <xf:label>
+                    <xf:output value="'../../bfResources/images/bf_logo_square.png'" mediatype="image/*"/>
+                </xf:label>
                 <xf:value ref="value"/>
             </xf:itemset>
         </xf:select1>
-        <xf:output ref="instance()/select1minimalItemset" appearance="minimal">
-            <xf:label>Itemset result</xf:label>
-        </xf:output>
     </xf:group>
 
-    <xf:group appearance="full">
-        <xf:select1 ref="instance()/select1minimal" appearance="minimal" >
-            <xf:label>Color Code</xf:label>
+    <xf:group>
+        <xf:select1 ref="instance('two')/ColorCode" appearance="full" >
+            <xf:item>
+                <xf:label>
+                    <xf:output value="'../../bfResources/images/bf_logo_square.png'" mediatype="image/*"/>
+                </xf:label>
+                <xf:value>red</xf:value>
+            </xf:item>
             <xf:item>
                  <xf:label>Orange</xf:label>
                 <xf:value>orange</xf:value>
+            </xf:item>
+            <xf:item>
+                 <xf:label>
+                    <xf:output value="'../../bfResources/images/bf_logo_square.png'" mediatype="image/*"/>
+                </xf:label>
+                <xf:value>yellow</xf:value>
             </xf:item>
             <xf:item>
                  <xf:label>Green</xf:label>
                 <xf:value>green</xf:value>
             </xf:item>
             <xf:item>
-                 <xf:label>Blue</xf:label>
+                 <xf:label>
+                    <xf:output value="'../../bfResources/images/bf_logo_square.png'" mediatype="image/*"/>
+                </xf:label>
                 <xf:value>blue</xf:value>
             </xf:item>
        </xf:select1>
-        <xf:output ref="instance()/select1minimal">
-            <xf:label>Selected select1minimal</xf:label>
-        </xf:output>
-        <xf:trigger>
-            <xf:label>Change select1minimal</xf:label>
-            <xf:setvalue ref="instance()/select1minimal" value="'green'"/>
-            <xf:setvalue ref="instance()/select1minimalItemset" value="'0000FF'"/>
-        </xf:trigger>
+        <img src="../../bfResources/images/bf_logo_square.png"/>
     </xf:group>
 </div>
 </body>
