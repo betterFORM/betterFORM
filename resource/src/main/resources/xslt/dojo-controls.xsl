@@ -147,7 +147,7 @@
                         </span>
                     </xsl:otherwise>
                 </xsl:choose>
-        </xsl:otherwise>
+            </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 
@@ -402,8 +402,7 @@
                 <option value="" class="xfSelectorItem">
                     <xsl:if test="string-length($parent/bf:data/text()) = 0">
                         <xsl:attribute name="selected">selected</xsl:attribute>
-                    </xsl:if>
-                </option>
+                    </xsl:if>--SELECT--</option>
             </xsl:if>
         </xsl:if>
 		<!-- add an empty item, because otherwise deselection is not possible -->
