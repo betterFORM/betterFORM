@@ -4,8 +4,6 @@
  */
 
 dojo.provide("betterform.xf.SecretBehavior");
-dojo.require("betterform.xf.XFControl");
-dojo.require("dijit.form.DateTextBox");
 
 
 var secretBehavior = {

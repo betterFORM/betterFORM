@@ -4,8 +4,7 @@
  */
 
 dojo.provide("betterform.xf.TextareaBehavior");
-dojo.require("betterform.xf.XFControl");
-dojo.require("dijit.form.DateTextBox");
+
 
 
 var textareaBehavior = {

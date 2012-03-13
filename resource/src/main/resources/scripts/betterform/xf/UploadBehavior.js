@@ -4,8 +4,6 @@
  */
 
 dojo.provide("betterform.xf.UploadBehavior");
-dojo.require("betterform.xf.XFControl");
-dojo.require("dijit.form.DateTextBox");
 
 var uploadBehavior = {
 
