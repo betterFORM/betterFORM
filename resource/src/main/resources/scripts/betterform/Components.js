@@ -206,7 +206,26 @@ var componentBehavior = {
     // ############################## OUTPUT MAPPINGS ############################################################
     // ############################## OUTPUT MAPPINGS ############################################################
     '.xfOutput.xsdString .xfValue': function(n) {
-        //todo: implement
+        console.debug("output field: ",n);
+
+        var xfId = getXfId(n);
+        var xfControl = dijit.byId(xfId);
+
+        dojo.connect(dijit.byId(xfId), "handleStateChanged", function(contextInfo){
+            // ##### setting value by platform/component-specific means #####
+            console.debug("handleStateChanged for:  ",n);
+            if(contextInfo){
+                console.debug("contextInfo",contextInfo);
+            }
+            //apply value to widget - handle required, valid and readonly if necessary
+            //todo: this is probably not even necessary here?
+            var newValue = contextInfo["value"];
+            if(newValue != undefined){
+                console.debug("newValue: ",newValue);
+                n.innerHTML = newValue;
+            }
+        });
+
     },
 
     '.xfOutput.xsdString img.xfValue': function(n) {
@@ -236,6 +255,48 @@ var componentBehavior = {
     // ############################## SELECT1 MAPPINGS ############################################################
     // ############################## SELECT1 MAPPINGS ############################################################
     // ############################## SELECT1 MAPPINGS ############################################################
+    '.xfMinimalSelect1 .select1wrapper .xfValue': function(n) {
+        console.debug("select1 field: ",n);
+
+        var xfId = getXfId(n);
+        var xfControl = dijit.byId(xfId);
+
+        dojo.connect(dijit.byId(xfId), "handleStateChanged", function(contextInfo){
+            // ##### setting value by platform/component-specific means #####
+            console.debug("handleStateChanged for:  ",n);
+            if(contextInfo){
+                console.debug("contextInfo",contextInfo);
+            }
+            //apply value to widget - handle required, valid and readonly if necessary
+            //todo: this is probably not even necessary here?
+            var newValue = contextInfo["value"];
+            if(newValue != undefined){
+                console.debug("newValue: ",newValue);
+                n.value=newValue;
+            }
+        });
+
+        /*
+         if incremental support is needed this eventhandler has to be added for the widget
+         */
+        dojo.connect(n,"onkeyup",function(evt){
+            console.debug("onkeypress",n);
+            xfControl.setValue(n.value,evt);
+//            xfControl.setValue(n.value);
+        });
+
+        dojo.connect(n,"onblur",function(evt){
+            console.debug("onblur",n);
+            xfControl.setValue(n.value, evt);
+        });
+
+        //todo: Dijits will need to create themselves later here...
+    },
+
+
+    // ############################## SELECT MAPPINGS ############################################################
+    // ############################## SELECT MAPPINGS ############################################################
+    // ############################## SELECT MAPPINGS ############################################################
     '.xfSelect .xfValue':function(n){
         //todo: no sensible mapping for combobox
     },
@@ -247,11 +308,6 @@ var componentBehavior = {
     '.xfSelect .xfValue':function(n){
         //todo: no sensible mapping for radiolist
     },
-
-
-    // ############################## SELECT MAPPINGS ############################################################
-    // ############################## SELECT MAPPINGS ############################################################
-    // ############################## SELECT MAPPINGS ############################################################
 
 
     // ############################## TEXTAREA MAPPINGS ############################################################

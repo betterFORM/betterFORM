@@ -953,7 +953,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
         }
 
         var externalStyleList = document.getElementsByTagName("link");
-        console.debug("styleList" , externalStyleList);
+        console.debug("prepare unloading of styles:" , externalStyleList);
         if (externalStyleList != undefined) {
         dojo.forEach(externalStyleList, function(item) {
                 //console.debug("style: ", item);

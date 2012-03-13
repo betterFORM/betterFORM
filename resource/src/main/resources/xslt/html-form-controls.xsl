@@ -166,6 +166,7 @@
             <xsl:otherwise>
                 <span   id="{$id}-value"
                         tabindex="{$navindex}"
+                        class="xfValue"
                         title="{xf:hint/text()}">
                     <xsl:value-of select="bf:data/text()"/>
                 </span>
@@ -257,12 +258,29 @@
     <!-- ############################## SELECT1 ############################## -->
     <!-- ############################## SELECT1 ############################## -->
     <xsl:template name="select1">
+        <xsl:variable name="schemaValue" select="bf:data/@bf:schema-value"/>
+        <xsl:variable name="navindex" select="if (exists(@navindex)) then @navindex else '0'"/>
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="name" select="concat($data-prefix,$id)"/>
-        <xsl:variable name="navindex" select="if (exists(@navindex)) then @navindex else '0'"/>
-
         <xsl:variable name="parent" select="."/>
-        <xsl:variable name="size" select="if(exists(@size)) then @size else '5'"/>
+        <xsl:variable name="incremental" select="if (exists(@incremental)) then @incremental else 'true'"/>
+        <xsl:variable name="handler">
+            <xsl:choose>
+                <xsl:when test="$incremental='false'">onblur</xsl:when>
+                <xsl:otherwise>onchange</xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="size">
+            <xsl:choose>
+                <xsl:when test="@size"><xsl:value-of select="@size"/></xsl:when>
+                <xsl:otherwise>5</xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="datatype"><xsl:call-template name="getType"/></xsl:variable>
+
+        <xsl:if test="exists(.//xf:itemset)"><xsl:text>
+</xsl:text>
+        </xsl:if>
 
         <xsl:choose>
             <!--
@@ -279,7 +297,7 @@
                         title="{xf:hint/text()}"
                         >
                     <xsl:if test="bf:data/@bf:readonly='true'"><xsl:attribute name="readonly">readonly</xsl:attribute></xsl:if>
-                    <xsl:apply-templates select="xf:hint"/>
+                        incremental="{$incremental}">
                     <xsl:call-template name="build-items">
                         <xsl:with-param name="parent" select="$parent"/>
                     </xsl:call-template>
@@ -298,35 +316,54 @@
                     <xsl:with-param name="navindex" select="$navindex"/>
                 </xsl:call-template>
             </xsl:when>
-            <!--
-            >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            a minimal select1 is rendered as a DROPDOWN
-            <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            -->
             <xsl:otherwise>
-                <select id="{$id}-value"
-                        name="{$name}"
-                        class="xfValue"
-                        tabindex="{$navindex}"
-                        size="1"
-                        title="{xf:hint/text()}">
-                    <xsl:if test="bf:data/@bf:readonly='true'">
-                        <xsl:attribute name="readonly">readonly</xsl:attribute>
-                    </xsl:if>
-                    <xsl:call-template name="build-items">
-                        <xsl:with-param name="parent" select="$parent"/>
-                    </xsl:call-template>
-                </select>
-                <!-- todo: review: create hidden parameter for deselection -->
-                <input type="hidden" name="{$name}" value=""/>
-                <!--
-                >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                the hint will be applied as html title attribute and additionally output
-                as a span
-                The hint span will be put outside of the anchor
-                <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                -->
-                <xsl:apply-templates select="xf:hint"/>
+                <!-- No appearance or appearance='minimal'-->
+                <xsl:choose>
+                    <!--
+                    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                    a minimal select1 with OpenSelection
+                    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                    -->
+                    <xsl:when test="@selection='open'">
+                        <select id="{concat($id,'-value')}"
+                                name="{$name}"
+                                class="xfValue"
+                                size="1"
+                                dataType="{$datatype}"
+                                controlType="select1ComboBoxOpen"
+                                title=""
+                                tabindex="{$navindex}"
+                                schemaValue="{bf:data/@bf:schema-value}"
+                                autocomplete="true"
+                                incremental="{$incremental}">
+                            <xsl:call-template name="build-items">
+                                <xsl:with-param name="parent" select="$parent"/>
+                            </xsl:call-template>
+                        </select>
+                    </xsl:when>
+                    <!--
+                    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                    a minimal select1 is rendered as a DROPDOWN
+                    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                    -->
+                    <xsl:otherwise>
+                        <span class="select1wrapper">
+                            <select id="{$id}-value"
+                                    name="{$name}"
+                                    class="xfValue"
+                                    dataType="{$datatype}"
+                                    controlType="select1ComboBox"
+                                    title=""
+                                    tabindex="{$navindex}"
+                                    schemaValue="{bf:data/@bf:schema-value}"
+                                    incremental="{$incremental}">
+                                <xsl:call-template name="build-items">
+                                    <xsl:with-param name="parent" select="$parent"/>
+                                </xsl:call-template>
+                            </select>
+                        </span>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>

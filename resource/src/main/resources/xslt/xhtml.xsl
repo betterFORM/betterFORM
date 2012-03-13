@@ -12,7 +12,7 @@
                 exclude-result-prefixes="xf bf"
                 xpath-default-namespace="http://www.w3.org/1999/xhtml">
 
-    <xsl:import href="common.xsl"/>
+    <!--<xsl:import href="common.xsl"/>-->
     <xsl:include href="html-form-controls.xsl"/>
     <xsl:include href="ui.xsl"/>
 
@@ -231,6 +231,43 @@
         </head>
     </xsl:template>
 
+    <!--
+    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    include-xforms-css imports the default stylesheets.
+    This template can be overwritten when additional files are needed.
+    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    -->
+    <xsl:template name="include-xforms-css">
+        <link rel="stylesheet" type="text/css" href="{$default-css}"/>
+        <link rel="stylesheet" type="text/css" href="{$betterform-css}"/>
+    </xsl:template>
+
+
+
+    <xsl:template name="addDojoCSS"><xsl:text>
+</xsl:text>
+        <xsl:variable name="cssTheme">
+                    <xsl:choose>
+                        <xsl:when test="contains(//body/@class, 'tundra')">tundra</xsl:when>
+                        <xsl:when test="contains(//body/@class, 'soria')">soria</xsl:when>
+                        <xsl:when test="contains(//body/@class, 'nihilo')">nihilo</xsl:when>
+                        <xsl:when test="contains(//body/@class, 'claro')">claro</xsl:when>
+                        <xsl:when test="contains(//body/@class, 'a11y')">a11y</xsl:when>
+                        <xsl:otherwise><xsl:value-of select="$defaultTheme"/></xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+
+                <style type="text/css">
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dijit/themes/', $cssTheme, '/', $cssTheme,'.css')"/>";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojo/resources/dojo.css')"/>";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/widget/Toaster/Toaster.css')"/>";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/layout/resources/FloatingPane.css')"/>";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/layout/resources/ResizeHandle.css')"/>";
+                </style><xsl:text>
+</xsl:text>
+    </xsl:template>
+
+
     <!-- ############################## BODY ############################## -->
     <!-- ############################## BODY ############################## -->
     <!-- ############################## BODY ############################## -->
@@ -346,7 +383,18 @@
 
                             <!--possible solution -->
                             <!--<xsl:when test="count($outermostNodeset)=1 and count($outermostNodeset/xf:*) != 0">-->
-                            <xsl:apply-templates mode="inline"/>
+                            <xsl:variable name="inlineContent"><xsl:apply-templates mode="inline"/></xsl:variable>
+                            <xsl:choose>
+                                <xsl:when test="exists($inlineContent//xf:*)">
+                                    <xsl:element name="form">
+                                        <xsl:call-template name="createFormAttributes"/>
+                                        <xsl:apply-templates select="*"/>
+                                    </xsl:element>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:copy-of select="$inlineContent"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
                         </xsl:when>
                         <xsl:otherwise>
                             <!-- in case there are multiple outermost xforms elements we are forced to create
@@ -430,7 +478,7 @@
                                 <img style="vertical-align:text-bottom; margin-right:5px;"
                                      src="{concat($contextroot,'/bfResources/images/betterform_icon16x16.png')}" alt="betterFORM project"/>
                             </a>
-                            <span>&#xA9; 2011 betterFORM</span>
+                            <span>&#xA9; 2012 betterFORM</span>
                         </div>
                         <div id="debug-pane-links">
                             <a href="{concat($contextroot,'/inspector/',$sessionKey,'/','hostDOM')}" target="_blank">Host Document</a>
@@ -538,7 +586,11 @@
     <!-- ######################################################################################################## -->
 
     <xsl:template match="xf:input|xf:range|xf:secret|xf:select|xf:select1|xf:textarea|xf:upload">
-        <xsl:variable name="control-classes"><xsl:call-template name="assemble-control-classes"/></xsl:variable>
+        <xsl:variable name="control-classes">
+            <xsl:call-template name="assemble-control-classes">
+                    <xsl:with-param name="appearance" select="@appearance"/>
+            </xsl:call-template>
+        </xsl:variable>
         <xsl:variable name="label-classes"><xsl:call-template name="assemble-label-classes"/></xsl:variable>
 
         <!--
@@ -561,11 +613,12 @@
                     <xsl:with-param name="label-elements" select="xf:label"/>
                 </xsl:call-template>
             </label>
-
-            <xsl:call-template name="buildControl"/>
-            <xsl:apply-templates select="xf:alert"/>
-            <xsl:apply-templates select="xf:hint"/>
-            <xsl:apply-templates select="xf:help"/>
+            <span class="bfValueWrapper">
+                <xsl:call-template name="buildControl"/>
+                <xsl:apply-templates select="xf:alert"/>
+                <xsl:apply-templates select="xf:hint"/>
+                <xsl:apply-templates select="xf:help"/>
+            </span>
             <xsl:copy-of select="script"/>
         </span>
     </xsl:template>
@@ -576,7 +629,11 @@
     <!-- ############################## OUTPUT ############################## -->
     <xsl:template match="xf:output">
         <xsl:variable name="id" select="@id"/>
-        <xsl:variable name="control-classes"><xsl:call-template name="assemble-control-classes"/></xsl:variable>
+        <xsl:variable name="control-classes">
+            <xsl:call-template name="assemble-control-classes">
+                <xsl:with-param name="appearance" select="@appearance"/>
+            </xsl:call-template>
+        </xsl:variable>
         <xsl:variable name="label-classes"><xsl:call-template name="assemble-label-classes"/></xsl:variable>
 
         <!--
@@ -609,7 +666,7 @@
        <xsl:variable name="id" select="@id"/>
         <xsl:variable name="control-classes">
             <xsl:call-template name="assemble-control-classes">
-                <!--<xsl:with-param name="appearance" select="@appearance"/>-->
+                <xsl:with-param name="appearance" select="@appearance"/>
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="label-classes">
@@ -642,7 +699,9 @@
     <!-- ############################## TRIGGER / SUBMIT ############################## -->
     <xsl:template match="xf:trigger|xf:submit">
         <xsl:variable name="control-classes">
-            <xsl:call-template name="assemble-control-classes"/>
+            <xsl:call-template name="assemble-control-classes">
+                <xsl:with-param name="appearance" select="@appearance"/>
+            </xsl:call-template>
         </xsl:variable>
 
         <span id="{@id}" class="{$control-classes}">
@@ -821,39 +880,6 @@
     <!-- ####################################### NAMED HELPER TEMPLATES ########################################## -->
     <!-- ####################################### NAMED HELPER TEMPLATES ########################################## -->
 
-    <!--
-    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    include-xforms-css imports the default stylesheets.
-    This template can be overwritten when additional files are needed.
-    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    -->
-    <xsl:template name="include-xforms-css">
-        <link rel="stylesheet" type="text/css" href="{$default-css}"/>
-        <link rel="stylesheet" type="text/css" href="{$betterform-css}"/>
-    </xsl:template>
-
-    <xsl:template name="addDojoCSS"><xsl:text>
-</xsl:text>
-        <xsl:variable name="cssTheme">
-                    <xsl:choose>
-                        <xsl:when test="contains(//body/@class, 'tundra')">tundra</xsl:when>
-                        <xsl:when test="contains(//body/@class, 'soria')">soria</xsl:when>
-                        <xsl:when test="contains(//body/@class, 'nihilo')">nihilo</xsl:when>
-                        <xsl:when test="contains(//body/@class, 'claro')">claro</xsl:when>
-                        <xsl:when test="contains(//body/@class, 'a11y')">a11y</xsl:when>
-                        <xsl:otherwise><xsl:value-of select="$defaultTheme"/></xsl:otherwise>
-                    </xsl:choose>
-                </xsl:variable>
-
-                <style type="text/css">
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dijit/themes/', $cssTheme, '/', $cssTheme,'.css')"/>";
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojo/resources/dojo.css')"/>";
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/widget/Toaster/Toaster.css')"/>";
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/layout/resources/FloatingPane.css')"/>";
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/layout/resources/ResizeHandle.css')"/>";
-                </style><xsl:text>
-</xsl:text>
-    </xsl:template>
 
     <xsl:template name="addLocalScript">
         <script type="text/javascript" defer="defer">
