@@ -408,6 +408,9 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
         }
     },
 
+    /*
+    Sends a value from a widget to the server. Will be called after any user interaction.
+     */
     sendValue: function(id, value) {
         console.debug("XFProcessor.sendValue", id, value);
         var newClientServerEvent = new betterform.ClientServerEvent();
@@ -560,6 +563,9 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
                         if 'logEvents' is true the eventlog from the server will be written
                         to DOM and can be viewed in a separate expandable section in the window.
 */
+                        //todo: the following code should be made a behavior only if debugging is available
+                        //probably we have to add a private _applyChanges method to do the actual work to
+                        //allow us to hook to this function and connect to it for outputting debug output.
                         if(fluxProcessor.logEvents){
                             //iterate contextinfo
                             var contextInfo = xmlEvent.contextInfo;
@@ -784,6 +790,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
         });
     },
 
+    //todo: factor out this method into its own class and use publish/subscribe?
     _handleBetterFormLoadURI:function(/*XMLEvent*/ xmlEvent) {
         // xf:load show=replace
         if (xmlEvent.contextInfo.show == "replace") {
@@ -956,6 +963,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
         }
     },
 
+    //todo: see above '_handleBetterFormLoadURI'
     _unloadDOM:function(target) {
         //delete CSS specific to subform
         var htmlEntryPoint = dojo.byId(target);
@@ -1134,6 +1142,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
     /*
      * function for testing purpose to avoid usage of JS alerts that can cause problems with Selenium
      */
+    //todo: is this function needed any more???
     logTestMessage:function(message) {
         var log = dojo.byId('messageLog');
         if (!log) {
@@ -1147,7 +1156,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
         messageDiv.appendChild(messageText);
         log.appendChild(messageDiv);
     },
-
+    //todo: is this function needed any more???
     _countMessages:function (log) {
         var logMessagesCount = log.getElementsByTagName('message').length;
         return logMessagesCount;
