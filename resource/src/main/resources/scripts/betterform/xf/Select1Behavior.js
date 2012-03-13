@@ -4,8 +4,7 @@
  */
 
 dojo.provide("betterform.xf.Select1Behavior");
-
-
+dojo.require("betterform.xf.Select1");
 var select1Behavior = {
 
     // ############################## SELECT1 MAPPINGS ############################################################
@@ -49,6 +48,9 @@ var select1Behavior = {
             console.debug("onblur",n);
             xfControl.setValue(n.value, evt);
         });
+
+        new betterform.xf.Select1Minimal({id:n.id}, n);
+
     },
 
     '.xfSelect .xfValue':function(n){

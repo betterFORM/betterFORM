@@ -1199,7 +1199,20 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
     _handleBetterFormStateChanged:function(/*XMLEvent*/ xmlEvent) {
         console.debug("XFProcessor._handleBetterFormStateChanged: targetId: " + xmlEvent.contextInfo.targetId , " parentId: " , xmlEvent.contextInfo.parentId);
 
-        /*
+
+        // new implementation code
+        var parentId = xmlEvent.contextInfo.parentId;
+        if(parentId) {
+            var parentNode = dojo.byId(parentId);
+            if (dojo.hasClass(parentNode, "xfSelectorItem")) {
+                var selectParentId = dojo.attr(parentNode.parentNode, "id");
+                if(dijit.byId(selectParentId)) {
+                    dijit.byId(selectParentId).handleStateChanged(xmlEvent.contextInfo);
+                }
+            }
+        }
+
+         /*
          console.debug("XFProcessor._handleStateChanged this:", this,
          "\n\txmlEvent: ",xmlEvent,
          "\n\tcontextInfo: ",xmlEvent.contextInfo,
@@ -1212,6 +1225,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
          "\n\tmip:valid: ",xmlEvent.contextInfo.valid,
          "\n\tmip:enabled: ",xmlEvent.contextInfo.enabled
          );
+
          */
 
         var xfControlId = xmlEvent.contextInfo.targetId;
@@ -1425,11 +1439,11 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
 
     _handleBetterFormInsertItemset:function(xmlEvent) {
         console.debug("betterform-insert-itemset [id: '", xmlEvent.contextInfo.targetId, " / contextInfo:",xmlEvent.contextInfo,']' );
-        var selectDijit = dijit.byId(xmlEvent.contextInfo.parentId);
+        var selectDijit = dijit.byId(xmlEvent.contextInfo.parentId + "-value");
         console.debug("betterform-insert-itemset [selectDijit: '", selectDijit ,']' );
 
         if (selectDijit != undefined) {
-            selectDijit.handleInsertItem(xmlEvent);
+            selectDijit.handleInsertItem(xmlEvent.contextInfo);
         }
         // OLD CODE
 /*
@@ -1477,7 +1491,17 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
 
     },
     _handleBetterFormItemDeleted:function(xmlEvent) {
-        console.debug("handle betterform-item-deleted for ", xmlEvent.contextInfo.targetName, " [id: '", xmlEvent.contextInfo.targetId, "'] contextInfo:", xmlEvent.contextInfo);
+        console.debug("handle betterform-item-deleted for ", xmlEvent.contextInfo.targetName, " [id: '", xmlEvent.contextInfo.targetId, "'] xmlEvent:", xmlEvent);
+        if (xmlEvent.contextInfo.targetName == "itemset") {
+            var selectDijit = dijit.byId(xmlEvent.contextInfo.parentId + "-value");
+            console.debug("betterform-insert-itemset [selectDijit: '", selectDijit ,']' );
+            if (selectDijit != undefined) {
+                selectDijit.handleDeleteItem(xmlEvent.contextInfo);
+            }
+        }
+
+        // OLD CODE
+/*
         if (xmlEvent.contextInfo.targetName == "itemset") {
             dijit.byId(xmlEvent.contextInfo.targetId).handleDelete(xmlEvent.contextInfo);
         }
@@ -1489,6 +1513,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
                 repeatObject._handleSetRepeatIndex(positionOfDeletedItem);
             }
         }
+*/
     },
     _handleBetterFormIndexChanged:function(xmlEvent) {
         var repeat = _getRepeatObject(xmlEvent);

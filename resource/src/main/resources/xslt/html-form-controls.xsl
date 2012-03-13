@@ -676,21 +676,36 @@
 	</xsl:template>
 
     <xsl:template name="build-items-itemset">
-		<optgroup id="{@id}" class="xfOptGroup"  label="">
-			<xsl:for-each select="xf:item">
-				<xsl:call-template name="build-items-item"/>
-            </xsl:for-each>
-		</optgroup>
-	</xsl:template>
+        <!-- create first option with data-bf-itemset attribute -->
+        <xsl:variable name="itemValue">
+            <xsl:choose>
+                <xsl:when test="exists(xf:item[1]/xf:copy)"><xsl:value-of select="xf:item[1]/xf:copy/@id"/></xsl:when>
+                <xsl:otherwise><xsl:value-of select="xf:item[1]/xf:value"/></xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <option id="{xf:item[1]/@id}" value="{$itemValue}" class="xfSelectorItem" data-bf-itemset="{@id}">
+            <xsl:if test="xf:item/@selected='true'">
+                <xsl:attribute name="selected">selected</xsl:attribute>
+            </xsl:if>
+            <xsl:call-template name="create-label">
+                <xsl:with-param name="label-elements" select="xf:item[1]/xf:label"/>
+            </xsl:call-template>
+        </option>
+        <!-- create all following options -->
+        <xsl:for-each select="xf:item[position() gt 1]">
+            <xsl:call-template name="build-items-item"/>
+        </xsl:for-each>
 
-	<xsl:template name="build-items-item">
+    </xsl:template>
+
+    <xsl:template name="build-items-item">
         <xsl:variable name="itemValue">
             <xsl:choose>
                 <xsl:when test="exists(xf:copy)"><xsl:value-of select="xf:copy/@id"/></xsl:when>
                 <xsl:otherwise><xsl:value-of select="xf:value"/></xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <option id="{@id}" value="{$itemValue}" title="" class="xfSelectorItem">
+        <option id="{@id}" value="{$itemValue}" class="xfSelectorItem">
             <xsl:if test="@selected='true'">
                 <xsl:attribute name="selected">selected</xsl:attribute>
             </xsl:if>
