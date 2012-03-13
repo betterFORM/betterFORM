@@ -182,53 +182,42 @@
     <!-- ############################## RANGE ############################## -->
     <!-- ############################## RANGE ############################## -->
     <xsl:template name="range">
-        <xsl:variable name="datatype">
-            <xsl:call-template name="getType"/>
-        </xsl:variable>
-        <xsl:message select="concat('Datatype: ',$datatype)"/>
-        <xsl:variable name="name" select="concat($data-prefix,@id)"/>
-
-        <xsl:variable name="incremental" select="if (exists(@incremental)) then @incremental else 'false'"/>
-
-        <xsl:variable name="incrementaldelay">
-            <xsl:value-of select="if (exists(@bf:incremental-delay)) then @bf:incremental-delay else '0'"/>
-        </xsl:variable>
-
-        <!--
-                <xsl:if test="$incrementaldelay ne '0'">
-                    <xsl:message>
-                        <xsl:value-of select="concat(' incremental-delay: ', $incrementaldelay)"/>
-                    </xsl:message>
-                </xsl:if>
-        -->
+        <xsl:variable name="id" select="@id"/>
+        <xsl:variable name="name" select="concat($data-prefix,$id)"/>
         <xsl:variable name="navindex" select="if (exists(@navindex)) then @navindex else '0'"/>
-        <xsl:variable name="accesskey" select="if (exists(@accesskey)) then @accesskey else 'none'"/>
-
-        <xsl:variable name="value" select="bf:data/text()"/>
+        <!--
+        todo: review: start and end are optional attributes in XForms but how can we make sense of that?
+        -->
         <xsl:variable name="start" select="@start"/>
         <xsl:variable name="end" select="@end"/>
         <xsl:variable name="step" select="@step"/>
-        <xsl:variable name="appearance" select="@appearance"/>
+        <xsl:variable name="value" select="bf:data/text()"/>
 
-        <span id="{concat(@id,'-value')}"
-              class="xfValue"
-              dataType="{$datatype}"
-              controlType="{local-name()}"
-              appearance="{$appearance}"
-              name="{$name}"
-              incremental="{$incremental}"
-              tabindex="{$navindex}"
-              start="{$start}"
-              end="{$end}"
-              delay="{$incrementaldelay}"
-              step="{$step}"
-              value="{$value}"
-              title="">
-            <xsl:if test="$accesskey != ' none'">
-                <xsl:attribute name="accessKey">
-                    <xsl:value-of select="$accesskey"/>
-                </xsl:attribute>
-            </xsl:if>
+        <span>
+            <input  id="{$id}-value"
+                    name="{$name}"
+                    class="xfValue"
+                    type="range"
+                    min="{$start}"
+                    max="{$end}"
+                    value="{$value}"
+                    tabindex="{$navindex}"
+                    title="{xf:hint/text()}">
+                <xsl:if test="bf:data/@bf:readonly='true'">
+                    <xsl:attribute name="readonly">readonly</xsl:attribute>
+                </xsl:if>
+                <xsl:if test="string-length($step) != 0">
+                    <xsl:attribute name="step" select="$step"/>
+                </xsl:if>
+            </input>
+            <!--
+            >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            the hint will be applied as html title attribute and additionally output
+            as a span
+            The hint span will be put outside of the anchor
+            <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            -->
+            <xsl:apply-templates select="xf:hint"/>
         </span>
     </xsl:template>
 
@@ -555,94 +544,40 @@
     <!-- ############################## TRIGGER ############################## -->
     <!-- ############################## TRIGGER ############################## -->
     <xsl:template name="trigger">
-        <xsl:param name="classes"/>
-        <xsl:variable name="navindex" select="if (exists(@navindex)) then @navindex else '0'"/>
         <xsl:variable name="id" select="@id"/>
-        <xsl:variable name="appearance" select="@appearance"/>
-        <xsl:variable name="name" select="concat($data-prefix,$id)"/>
-        <xsl:variable name="src" select="@src" />
-        <xsl:variable name="control-classes">
-            <xsl:call-template name="assemble-control-classes">
-                <!--<xsl:with-param name="appearance" select="$appearance"/>-->
-            </xsl:call-template>
-        </xsl:variable>
-        <xsl:variable name="label">
-            <xsl:call-template name="create-label">
-                <xsl:with-param name="label-elements" select="xf:label"/>
-            </xsl:call-template>
-        </xsl:variable>
-        <!--<span id="{$id}" class="{$control-classes}" dojoType="betterform.ui.Control">-->
-        <!-- minimal appearance only supported in scripted mode -->
-            <xsl:choose>
-                <xsl:when test="$appearance='minimal'">
-                        <span id="{$id}-value"
-                              appearance="{@appearance}"
-                              controlType="minimalTrigger"
-                              name="{$name}"
-                              class="xfValue {@class}"
-                              title=""
-                              navindex="{$navindex}"
-                              accesskey="{@accesskey}"
-                              label="{$label}"
-                              source="{$src}">
-                              <xsl:apply-templates select="@*[not(name()='class')][not(name()='id')][not(name()='appearance')][not(name()='src')]"/>
-                        </span>
-                </xsl:when>
-                <xsl:when test="$appearance='bf:imageTrigger'">
-                    <button id="{$id}-value"
-                            appearance="{@appearance}"
-                            controlType="trigger"
-                            label="{$label}"
-                            name="{$name}"
-                            type="button"
-                            class="xfValue"
-                            title=""
-                            navindex="{$navindex}"
-                            accesskey="{@accesskey}"
-                            source="{$src}">
-                            <xsl:apply-templates select="@*[not(name()='class')][not(name()='id')][not(name()='appearance')][not(name()='src')]"/>
-                        <span id="{$id}-label" class="buttonLabel">
-                            <xsl:call-template name="create-label">
-                                <xsl:with-param name="label-elements" select="xf:label"/>
-                            </xsl:call-template>
-                        </span>
-                    </button>
-                </xsl:when>
-                <xsl:when test="xf:label//*[exists(@mediatype)][1]/@mediatype">
-                    <xsl:variable name="labelmediatype" select="xf:label//*[exists(@mediatype)][1]/@mediatype"/>
-                    <button id="{$id}-value"
-                            appearance="{@appearance}"
-                            controlType="trigger"
-                            label="{$label}"
-                            name="{$name}"
-                            type="button"
-                            class="xfValue"
-                            title=""
-                            navindex="{$navindex}"
-                            accesskey="{@accesskey}"
-                            labelmediatype="{$labelmediatype}">
-                        <xsl:value-of select="$label"/>
-                    </button>
-                </xsl:when>
+        <xsl:variable name="name" select="concat($trigger-prefix,$id)"/>
+        <xsl:variable name="navindex" select="@navindex" />
 
-                <xsl:otherwise>
-                    <xsl:variable name="source" select="if (contains(@mediatype, 'image/')) then $label else $src"/>
-                    <button id="{$id}-value"
-                            appearance="{@appearance}"
-                            controlType="trigger"
-                            label="{$label}"
-                            name="{$name}"
-                            type="button"
-                            class="xfValue"
-                            title=""
-                            navindex="{$navindex}"
-                            accesskey="{@accesskey}"
-                            source="{$source}">
-                        <xsl:value-of select="$label"/>
-                    </button>
-                </xsl:otherwise>
-            </xsl:choose>
-        <!--</span>-->
+            <!-- minimal appearance only supported in scripted mode -->
+        <input  id="{$id}-value"
+                name="{$name}"
+                class="xfValue"
+                tabindex="{$navindex}"
+                title="{xf:hint/text()}"
+                type="submit"
+                value="{xf:label}"
+                >
+            <xsl:if test="bf:data/@bf:readonly='true'">
+                <xsl:attribute name="readonly">readonly</xsl:attribute>
+            </xsl:if>
+            <!-- todo: does this still apply? -->
+            <xsl:if test="@accesskey">
+                <xsl:attribute name="accesskey">
+                    <xsl:value-of select="@accesskey"/>
+                </xsl:attribute>
+                <xsl:attribute name="title">
+                    <xsl:value-of select="normalize-space(xf:hint)"/>- KEY: [ALT]+ <xsl:value-of select="@accesskey"/>
+                </xsl:attribute>
+            </xsl:if>
+        </input>
+        <!--
+        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        the hint will be applied as html title attribute and additionally output
+        as a span
+        The hint span will be put outside of the anchor
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        -->
+        <xsl:apply-templates select="xf:hint"/>
     </xsl:template>
 
     <!-- ############################## UPLOAD ############################## -->
@@ -1129,8 +1064,6 @@
                         <xsl:value-of select="$navindex"/>
                     </xsl:attribute>
                 </xsl:if>
-
-
                 <xsl:attribute name="value">
                     <xsl:choose>
                         <xsl:when test="xf:copy"><xsl:value-of select="xf:copy/@id"/></xsl:when>
