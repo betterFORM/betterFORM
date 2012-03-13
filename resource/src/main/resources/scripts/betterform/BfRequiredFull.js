@@ -28,4 +28,3 @@ dojo.require("betterform.ui.textarea.DojoEditor");
 dojo.require("betterform.ui.textarea.SimpleTextarea");
 
 dojo.require("betterform.devtool");
-dojo.require("betterform.Components");

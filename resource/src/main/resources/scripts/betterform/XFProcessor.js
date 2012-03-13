@@ -5,7 +5,17 @@
 
 dojo.provide("betterform.XFProcessor");
 
-//dojo.require("betterform.Components");
+
+dojo.require("betterform.xf.ControlBehavior");
+dojo.require("betterform.xf.InputBehavior");
+dojo.require("betterform.xf.OutputBehavior");
+dojo.require("betterform.xf.RangeBehavior");
+dojo.require("betterform.xf.SecretBehavior");
+dojo.require("betterform.xf.Select1Behavior");
+dojo.require("betterform.xf.SelectBehavior");
+dojo.require("betterform.xf.TextareaBehavior");
+dojo.require("betterform.xf.TriggerBehavior");
+dojo.require("betterform.xf.UploadBehavior");
 dojo.require("dojo.behavior");
 
 /**
@@ -659,7 +669,16 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
     },
 
     _buildUI : function(){
-        dojo.behavior.add(componentBehavior);
+        dojo.behavior.add(controlBehavior);
+        dojo.behavior.add(inputBehavior);
+        dojo.behavior.add(outputBehavior);
+        dojo.behavior.add(rangeBehavior);
+        dojo.behavior.add(secretBehavior);
+        dojo.behavior.add(select1Behavior);
+        dojo.behavior.add(selectBehavior);
+        dojo.behavior.add(textareaBehavior);
+        dojo.behavior.add(triggerBehavior);
+        dojo.behavior.add(uploadBehavior);
         dojo.behavior.apply();
     },
 
@@ -1405,7 +1424,15 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
     },
 
     _handleBetterFormInsertItemset:function(xmlEvent) {
-        // console.debug("betterform-insert-itemset [id: '", xmlEvent.contextInfo.targetId, " / contextInfo:",xmlEvent.contextInfo,']' );
+        console.debug("betterform-insert-itemset [id: '", xmlEvent.contextInfo.targetId, " / contextInfo:",xmlEvent.contextInfo,']' );
+        var selectDijit = dijit.byId(xmlEvent.contextInfo.parentId);
+        console.debug("betterform-insert-itemset [selectDijit: '", selectDijit ,']' );
+
+        if (selectDijit != undefined) {
+            selectDijit.handleInsertItem(xmlEvent);
+        }
+        // OLD CODE
+/*
         if (dijit.byId(xmlEvent.contextInfo.targetId) != undefined) {
             // console.debug("betterform-insert-itemset handle Insert [id: '", xmlEvent.contextInfo.targetId, " / dijit:",dijit.byId(xmlEvent.contextInfo.targetId),']' );
             dijit.byId(xmlEvent.contextInfo.targetId).handleInsert(xmlEvent.contextInfo);
@@ -1446,6 +1473,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
                 console.warn("XFProcessor apply betterform-insert-itemset: Error during itemset creation: ItemsetId " + xmlEvent.contextInfo.targetId + " itemsetType: " + itemsetType + " not supported yet");
             }
         }
+*/
 
     },
     _handleBetterFormItemDeleted:function(xmlEvent) {

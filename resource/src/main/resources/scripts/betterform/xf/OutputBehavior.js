@@ -4,17 +4,31 @@
  */
 
 dojo.provide("betterform.xf.OutputBehavior");
-dojo.require("betterform.xf.XFControl");
-dojo.require("dijit.form.DateTextBox");
-
 
 var outputBehavior = {
-
     // ############################## OUTPUT MAPPINGS ############################################################
     // ############################## OUTPUT MAPPINGS ############################################################
     // ############################## OUTPUT MAPPINGS ############################################################
     '.xfOutput.xsdString .xfValue': function(n) {
-        //todo: implement
+        console.debug("output field: ",n);
+
+        var xfControl = dijit.byId(getXfId(n));
+
+        dojo.connect(xfControl, "handleStateChanged", function(contextInfo){
+            // ##### setting value by platform/component-specific means #####
+            console.debug("handleStateChanged for:  ",n);
+            if(contextInfo){
+                console.debug("contextInfo",contextInfo);
+            }
+            //apply value to widget - handle required, valid and readonly if necessary
+            //todo: this is probably not even necessary here?
+            var newValue = contextInfo["value"];
+            if(newValue != undefined){
+                console.debug("newValue: ",newValue);
+                n.innerHTML = newValue;
+            }
+        });
+
     },
 
     '.xfOutput.xsdString img.xfValue': function(n) {
@@ -24,7 +38,5 @@ var outputBehavior = {
     '.xfOutput.xsdAnyURI .xfValue': function(n) {
         //todo: implement
     }
-
-
 };
 

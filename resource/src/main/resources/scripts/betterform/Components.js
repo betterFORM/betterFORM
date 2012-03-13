@@ -26,6 +26,7 @@ var componentBehavior = {
      Order is important here - all XFControl should be instanciated before their respective widget childs are
      created. Thus this rule must be the first in a component definition file like this.
     */
+/*
     '.xfControl':function(n) {
         console.debug("XFControl found: ",n);
 
@@ -35,6 +36,7 @@ var componentBehavior = {
             controlType:"generic"
         }, n);
     },
+*/
 
 
     // ############################## INPUT MAPPINGS ############################################################
@@ -202,39 +204,6 @@ var componentBehavior = {
 
     // ??? todo: how to handle custom date format control ???
 
-    // ############################## OUTPUT MAPPINGS ############################################################
-    // ############################## OUTPUT MAPPINGS ############################################################
-    // ############################## OUTPUT MAPPINGS ############################################################
-    '.xfOutput.xsdString .xfValue': function(n) {
-        console.debug("output field: ",n);
-
-        var xfId = getXfId(n);
-        var xfControl = dijit.byId(xfId);
-
-        dojo.connect(dijit.byId(xfId), "handleStateChanged", function(contextInfo){
-            // ##### setting value by platform/component-specific means #####
-            console.debug("handleStateChanged for:  ",n);
-            if(contextInfo){
-                console.debug("contextInfo",contextInfo);
-            }
-            //apply value to widget - handle required, valid and readonly if necessary
-            //todo: this is probably not even necessary here?
-            var newValue = contextInfo["value"];
-            if(newValue != undefined){
-                console.debug("newValue: ",newValue);
-                n.innerHTML = newValue;
-            }
-        });
-
-    },
-
-    '.xfOutput.xsdString img.xfValue': function(n) {
-        //todo: implement + fix missing 'xfValue' on img element
-    },
-
-    '.xfOutput.xsdAnyURI .xfValue': function(n) {
-        //todo: implement
-    },
 
     // ############################## RANGE MAPPINGS ############################################################
     // ############################## RANGE MAPPINGS ############################################################
@@ -252,47 +221,6 @@ var componentBehavior = {
         //todo: implement
     },
 
-    // ############################## SELECT1 MAPPINGS ############################################################
-    // ############################## SELECT1 MAPPINGS ############################################################
-    // ############################## SELECT1 MAPPINGS ############################################################
-    '.xfMinimalSelect1 .select1wrapper .xfValue': function(n) {
-        console.debug("select1 field: ",n);
-
-        var xfId = getXfId(n);
-        var xfControl = dijit.byId(xfId);
-
-        dojo.connect(dijit.byId(xfId), "handleStateChanged", function(contextInfo){
-            // ##### setting value by platform/component-specific means #####
-            console.debug("handleStateChanged for:  ",n);
-            if(contextInfo){
-                console.debug("contextInfo",contextInfo);
-            }
-            //apply value to widget - handle required, valid and readonly if necessary
-            //todo: this is probably not even necessary here?
-            var newValue = contextInfo["value"];
-            if(newValue != undefined){
-                console.debug("newValue: ",newValue);
-                n.value=newValue;
-            }
-        });
-
-        /*
-         if incremental support is needed this eventhandler has to be added for the widget
-         */
-        dojo.connect(n,"onkeyup",function(evt){
-            console.debug("onkeypress",n);
-            xfControl.setValue(n.value,evt);
-//            xfControl.setValue(n.value);
-        });
-
-        dojo.connect(n,"onblur",function(evt){
-            console.debug("onblur",n);
-            xfControl.setValue(n.value, evt);
-        });
-
-        //todo: Dijits will need to create themselves later here...
-    },
-
 
     // ############################## SELECT MAPPINGS ############################################################
     // ############################## SELECT MAPPINGS ############################################################
@@ -307,30 +235,12 @@ var componentBehavior = {
 
     '.xfSelect .xfValue':function(n){
         //todo: no sensible mapping for radiolist
-    },
-
-
-    // ############################## TEXTAREA MAPPINGS ############################################################
-    // ############################## TEXTAREA MAPPINGS ############################################################
-    // ############################## TEXTAREA MAPPINGS ############################################################
-
-    // ############################## TRIGGER MAPPINGS ############################################################
-    // ############################## TRIGGER MAPPINGS ############################################################
-    // ############################## TRIGGER MAPPINGS ############################################################
-
-    '.xfTrigger .xfValue': function(n) {
-        console.debug("node: ",n);
-        var parentId = n.id.substring(0,n.id.lastIndexOf("-"));
-
-        //connecting widget to XFControl listening for external value changes (coming from FluxProcessor)
-        dojo.connect(n, "onclick", function(){
-            // ##### setting value by platform/component-specific means #####
-//            console.debug("self:  ",n);
-//            console.debug("self:  ",parentId);
-            fluxProcessor.dispatchEvent(parentId);
-        });
-        //todo: add onblur res. onchange handler
     }
+
+
+    // ############################## TEXTAREA MAPPINGS ############################################################
+    // ############################## TEXTAREA MAPPINGS ############################################################
+    // ############################## TEXTAREA MAPPINGS ############################################################
 
     // ############################## UPLOAD MAPPINGS ############################################################
     // ############################## UPLOAD MAPPINGS ############################################################

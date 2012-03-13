@@ -261,24 +261,12 @@
     <!-- ############################## SELECT1 ############################## -->
     <!-- ############################## SELECT1 ############################## -->
     <xsl:template name="select1">
-        <xsl:variable name="schemaValue" select="bf:data/@bf:schema-value"/>
         <xsl:variable name="navindex" select="if (exists(@navindex)) then @navindex else '0'"/>
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="name" select="concat($data-prefix,$id)"/>
         <xsl:variable name="parent" select="."/>
         <xsl:variable name="incremental" select="if (exists(@incremental)) then @incremental else 'true'"/>
-        <xsl:variable name="handler">
-            <xsl:choose>
-                <xsl:when test="$incremental='false'">onblur</xsl:when>
-                <xsl:otherwise>onchange</xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <xsl:variable name="size">
-            <xsl:choose>
-                <xsl:when test="@size"><xsl:value-of select="@size"/></xsl:when>
-                <xsl:otherwise>5</xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
+        <xsl:variable name="size" select="if(exists(@size)) then @size else 5"/>
         <xsl:variable name="datatype"><xsl:call-template name="getType"/></xsl:variable>
 
         <xsl:if test="exists(.//xf:itemset)"><xsl:text>
@@ -295,8 +283,6 @@
                 <select id="{$id}-value"
                         name="{$name}"
                         size="{$size}"
-                        dataType="{$datatype}"
-                        controlType="select1List"
                         class="xfValue"
                         title=""
                         tabindex="{$navindex}"
@@ -324,7 +310,6 @@
             -->
             <xsl:when test="@appearance='full'">
                 <span id="{$id}-value"
-                      controlType="select1RadioButton"
                       class="xfValue"
                       incremental="{$incremental}">
                     <xsl:call-template name="build-radiobuttons">
@@ -363,7 +348,6 @@
                                 class="xfValue"
                                 size="1"
                                 dataType="{$datatype}"
-                                controlType="select1ComboBoxOpen"
                                 title=""
                                 tabindex="{$navindex}"
                                 schemaValue="{bf:data/@bf:schema-value}"
@@ -384,8 +368,6 @@
                             <select id="{$id}-value"
                                     name="{$name}"
                                     class="xfValue"
-                                    dataType="{$datatype}"
-                                    controlType="select1ComboBox"
                                     title=""
                                     tabindex="{$navindex}"
                                     schemaValue="{bf:data/@bf:schema-value}"
@@ -411,7 +393,6 @@
         <xsl:variable name="name" select="concat($data-prefix,$id)"/>
         <xsl:variable name="parent" select="."/>
         <xsl:variable name="incremental" select="if (exists(@incremental)) then @incremental else 'true'"/>
-        <xsl:variable name="schemaValue" select="bf:data/@bf:schema-value"/>
         <xsl:variable name="datatype"><xsl:call-template name="getType"/></xsl:variable>
         <xsl:choose>
             <!-- only 'full' is supported as explicit case and renders a group of checkboxes. All other values
@@ -421,7 +402,6 @@
                       name="{$name}"
                       class="xfValue bfCheckBoxGroup"
                       selection="{$selection}"
-                      controlType="selectCheckBoxGroup"
                       dataType="{$datatype}"
                       title=""
                       schemaValue="{bf:data/@bf:schema-value}"
@@ -456,8 +436,6 @@
                         name="{$name}"
                         size="{@size}"
                         multiple="true"
-                        controlType="selectList"
-                        dataType="{$datatype}"
                         class="xfValue"
                         title=""
                         tabindex="{$navindex}"
@@ -698,7 +676,7 @@
 	</xsl:template>
 
     <xsl:template name="build-items-itemset">
-		<optgroup id="{@id}" class="xfOptGroup" controlType="optGroup" label="">
+		<optgroup id="{@id}" class="xfOptGroup"  label="">
 			<xsl:for-each select="xf:item">
 				<xsl:call-template name="build-items-item"/>
             </xsl:for-each>
@@ -838,7 +816,6 @@
                    class="xfCheckBoxValue"
                    type="checkbox"
                    tabindex="0"
-                   controlType="checkBoxEntry"
                    selectWidgetId="{$parent/@id}-value"
                    name="{$name}">
 
@@ -1018,13 +995,10 @@
                 <xsl:with-param name="label-elements" select="xf:label"/>
             </xsl:call-template>
         </xsl:variable>
-        <span id="{@id}"
-              class="xfSelectorItem"
-              controlType="radioButtonEntry">
+        <span id="{@id}" class="xfSelectorItem">
             <input id="{@id}-value"
                    class="xfRadioValue"
                    dataType="radio"
-                   controlType="radio"
                    parentId="{$parentId}"
                    name="{$name}"
                    selected="{@selected}"

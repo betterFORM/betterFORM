@@ -5,7 +5,6 @@
 
 dojo.provide("betterform.xf.ControlBehavior");
 dojo.require("betterform.xf.XFControl");
-dojo.require("dijit.form.DateTextBox");
 
 
 /*
@@ -33,3 +32,9 @@ var controlBehavior = {
     }
 
 };
+function getXfId(/*Node*/n){
+    var tmp = n.id.substring(0,n.id.lastIndexOf("-"));
+    console.debug("returning xfId: ",tmp);
+    return tmp;
+}
+
