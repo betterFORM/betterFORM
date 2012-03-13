@@ -5,7 +5,7 @@
 
 dojo.provide("betterform.XFProcessor");
 
-dojo.require("betterform.Components");
+//dojo.require("betterform.Components");
 dojo.require("dojo.behavior");
 
 /**

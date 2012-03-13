@@ -98,6 +98,11 @@ dojo.declare(
 
     },
 
+    getXfId:function(/*Node*/n){
+        var tmp = n.id.substring(0,n.id.lastIndexOf("-"));
+//        console.debug("returning xfId: ",tmp);
+        return tmp;
+    },
 
     isRequired:function() {
         // console.debug("Control.isRequired",this.domNode);
