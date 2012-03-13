@@ -3,7 +3,7 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("betterform.InputBehavior");
+dojo.provide("betterform.xf.InputBehavior");
 dojo.require("betterform.xf.XFControl");
 dojo.require("dijit.form.DateTextBox");
 

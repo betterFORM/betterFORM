@@ -3,7 +3,7 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("betterform.RangeBehavior");
+dojo.provide("betterform.xf.RangeBehavior");
 dojo.require("betterform.xf.XFControl");
 dojo.require("dijit.form.DateTextBox");
 
