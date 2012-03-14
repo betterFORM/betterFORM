@@ -242,7 +242,7 @@
             <xsl:when test="bf:data/@bf:type">
                 <xsl:value-of select="bf:data/@bf:type"/>
             </xsl:when>
-            <xsl:otherwise/>
+            <xsl:otherwise>string</xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 
