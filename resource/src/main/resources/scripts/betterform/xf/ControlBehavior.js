@@ -22,7 +22,7 @@ var controlBehavior = {
      created. Thus this rule must be the first in a component definition file like this.
     */
     '.xfControl':function(n) {
-        console.debug("ControlBehaviour: XFControl found: ",n);
+        // console.debug("ControlBehaviour: XFControl found: ",n);
 
         var controlId = dojo.attr(n,"id");
         new betterform.xf.XFControl({
@@ -34,7 +34,7 @@ var controlBehavior = {
 };
 function getXfId(/*Node*/n){
     var tmp = n.id.substring(0,n.id.lastIndexOf("-"));
-    console.debug("returning xfId: ",tmp);
+    // console.debug("returning xfId: ",tmp);
     return tmp;
 }
 

@@ -27,7 +27,7 @@ var inputBehavior = {
 
     // a default input control (TextField) bound to a string
     '.xfInput.xsdString .xfValue': function(n) {
-        console.debug("string input field: ",n);
+        // console.debug("string input field: ",n);
 
         /*
          ###########################################################################################
@@ -53,15 +53,15 @@ var inputBehavior = {
         */
         dojo.connect(dijit.byId(xfId), "handleStateChanged", function(contextInfo){
             // ##### setting value by platform/component-specific means #####
-            console.debug("handleStateChanged for:  ",n);
+            // console.debug("handleStateChanged for:  ",n);
             if(contextInfo){
-                console.debug("contextInfo",contextInfo);
+                // console.debug("contextInfo",contextInfo);
             }
             //apply value to widget - handle required, valid and readonly if necessary
             //todo: this is probably not even necessary here?
             var newValue = contextInfo["value"];
             if(newValue != undefined){
-                console.debug("newValue: ",newValue);
+                // console.debug("newValue: ",newValue);
                 n.value=newValue;
             }
         });
@@ -70,12 +70,12 @@ var inputBehavior = {
         if incremental support is needed this eventhandler has to be added for the widget
          */
         dojo.connect(n,"onkeyup",function(evt){
-            console.debug("onkeypress",n);
+            // console.debug("onkeypress",n);
             xfControl.setValue(n.value,evt);
         });
 
         dojo.connect(n,"onblur",function(evt){
-            console.debug("onblur",n);
+            // console.debug("onblur",n);
             xfControl.setValue(n.value, evt);
         });
 
@@ -86,12 +86,12 @@ var inputBehavior = {
     // ############################## BOOLEAN INPUT ##############################
     // ############################## BOOLEAN INPUT ##############################
     '.xfInput.xsdBoolean .xfValue': function(n) {
-        console.debug("boolean input field: ",n);
+        // console.debug("boolean input field: ",n);
         var xfId = n.id.substring(0,n.id.lastIndexOf("-"));
         dojo.connect(dijit.byId(xfId), "handleStateChanged", function(contextInfo){
-            console.debug("handleStateChanged for:  ",n);
+            // console.debug("handleStateChanged for:  ",n);
             if(contextInfo){
-                console.debug("contextInfo",contextInfo);
+                // console.debug("contextInfo",contextInfo);
             }
             //apply value to widget - handle required + readonly if necessary
 
@@ -144,13 +144,13 @@ var inputBehavior = {
             var xfId = getXfId(n);
             dojo.connect(dijit.byId(xfId), "handleStateChanged", function(contextInfo){
                 // ##### setting value by platform/component-specific means #####
-                console.debug("handleStateChanged for:  ",n);
+                // console.debug("handleStateChanged for:  ",n);
                 if(contextInfo){
-                    console.debug("contextInfo",contextInfo);
+                    // console.debug("contextInfo",contextInfo);
                 }
                 var newValue = contextInfo["schemaValue"];
                 if(newValue != undefined){
-                    console.debug("newValue: ",newValue);
+                    // console.debug("newValue: ",newValue);
                     dijit.byId(xfId).setControlValue(newValue);
 //                    dojo.attr(dojo.byId(n.id),"value",contextInfo["value"]);
                     dijit.byId(xfId+"-value").set('value', contextInfo["schemaValue"]);
@@ -160,7 +160,7 @@ var inputBehavior = {
 
             dojo.connect(dateWidget,"onChange",function(evt){
                 var dateValue =  dateWidget.serialize(dateWidget.get("value")).substring(0,10);
-                console.debug("onchange on widget",dateValue);
+                //console.debug("onchange on widget",dateValue);
                 dijit.byId(xfId).setControlValue(dateValue);
             });
 //            dojo.connect(dateWidget,"onBlur",function(){

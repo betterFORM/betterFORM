@@ -1,17 +1,19 @@
 dojo.provide("betterform.xf.Repeat");
 
+dojo.require("betterform.xf.Container");
+
 dojo.declare(
-    "betterform.xf.Repeat",dijit._Widget,
+    "betterform.xf.Repeat",betterform.xf.Container,
     {
         handleSetRepeatIndex:function(/*Map*/ contextInfo) {
-            console.debug("Repeat.handleSetRepeatIndex: contextInfo'",contextInfo, " for Repeat id: ", this.id);
+            // console.debug("Repeat.handleSetRepeatIndex: contextInfo'",contextInfo, " for Repeat id: ", this.id);
             if(contextInfo != undefined && contextInfo.index != undefined ){
                 this._handleSetRepeatIndex(contextInfo.index);
             }
         },
 
         handleInsert:function(/*Map*/ contextInfo) {
-            console.debug("handleInsert contextInfo: ",contextInfo);
+            // console.debug("handleInsert contextInfo: ",contextInfo);
             // search for former repeat-index and remove it
             this._removeRepeatIndexClasses();
 
@@ -29,7 +31,7 @@ dojo.declare(
 
             } else if (contextInfo.repeatedSelects) {
                 generatedIds = contextInfo.repeatedSelects[0].generatedIds;
-                console.debug("Generated Ids: ", generatedIds);
+                // console.debug("Generated Ids: ", generatedIds);
                 var clonedNodeId = contextInfo.repeatedSelects[0].generatedIds[0];
                 dojo.attr(insertedNode, "id", clonedNodeId);
             }
@@ -39,21 +41,21 @@ dojo.declare(
             // create dijit and place it within repeat
             var position = eval(contextInfo.position);
 
-            console.debug("InsertedNode: " + insertedNode.id );
+            // console.debug("InsertedNode: " + insertedNode.id );
             var repeatItemExists = dojo.query("*[repeatItemId='" + insertedNode.id + "']");
             var repeatItemNode = undefined;
             if (repeatItemExists[0] != null ) {
-                console.warn("Skipping already present repeatItem: ", repeatItemExists);
-                console.debug("repeatItemExists.id: " , dojo.attr(repeatItemExists[0], "id"));
+                // console.warn("Skipping already present repeatItem: ", repeatItemExists);
+                // console.debug("repeatItemExists.id: " , dojo.attr(repeatItemExists[0], "id"));
                 repeatItemNode = dojo.byId(dojo.attr(repeatItemExists[0], "id"));
             }else {
                 repeatItemNode = this._createRepeatItem(insertedNode, position);
             }
-            console.debug("repeatItemNode",repeatItemNode);
+            // console.debug("repeatItemNode",repeatItemNode);
 
             dojo.query(".repeated", repeatItemNode).forEach(
                 function(item) {
-                    console.debug("Create UIControl for unbound item", item, " id:",item.id);
+                    // console.debug("Create UIControl for unbound item", item, " id:",item.id);
                     if(!dojo.hasClass(item,"xfControl")){
                         dojo.addClass(item,"xfControl");
                     }
@@ -62,11 +64,11 @@ dojo.declare(
             dojo.behavior.apply();
 
             dojo.style(repeatItemNode,"display", "block");
-            console.debug("Inserted new Repeat Item", repeatItemNode);
+            // console.debug("Inserted new Repeat Item", repeatItemNode);
         },
 
         _handleSetRepeatIndex:function(index) {
-            console.debug("Repeat._handleSetRepeatIndex: position='", index,"' for Repeat id: ", this.id);
+            // console.debug("Repeat._handleSetRepeatIndex: position='", index,"' for Repeat id: ", this.id);
             var intIndex = eval(index)
             if (intIndex == 0) {
                 //this.setFocusOnChild(this.domNode);
@@ -174,7 +176,7 @@ dojo.declare(
 
         },
         _createRepeatItem:function(/*Dijit*/node, /* int */position) {
-            console.debug("RepeatItem._createRepeatItem node:",node, " at position " + position);
+            // console.debug("RepeatItem._createRepeatItem node:",node, " at position " + position);
             var repeatItemCount = this._getSize();
             var appearance;
             if (dojo.hasClass(this.domNode, "xfFullRepeat")) {

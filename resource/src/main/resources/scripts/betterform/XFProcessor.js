@@ -231,7 +231,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
      * ... changed references are updated. (e.g. xf:repeat items)
      */
     eventFifoReader: function() {
-        // console.debug("eventFifoReader: this.clientServerEventQueue:",this.clientServerEventQueue);
+        console.debug("eventFifoReader: this.clientServerEventQueue:",this.clientServerEventQueue);
         var nextPendingClientServerEvent = null;
         var raceCondition = false;
         var dojoObject = null;
@@ -252,76 +252,90 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
             //*****************************************************************************
             // START: skip this pending Event, if one of the following conditions occurred:
             //*****************************************************************************
-            if(nextPendingClientServerEvent.getCallerFunction() != "setRepeatIndex"){
+
+            if(nextPendingClientServerEvent.getCallerFunction() == "setRepeatIndex"){
+                dojoObject = dojo.query("*[repeatId='" + nextPendingClientServerEvent.getTargetId() + "']")[0];
+            }else {
                 dojoObject = dojo.byId(nextPendingClientServerEvent.getTargetId());
-                if (dojoObject == null) {
-                    console.warn("Event (Client to Server) for Dojo Control " + dojoObject + " skipped. CAUSE: OBJECT is NULL",nextPendingClientServerEvent.getTargetId());
-                    continue;
-                }
+            }
+            // console.debug("EventFifoReader dojoObject:",dojoObject, " targetId: ",nextPendingClientServerEvent.getTargetId());
+            if (dojoObject == null) {
+                console.warn("Event (Client to Server) for Dojo Control " + dojoObject + " skipped. CAUSE: OBJECT is NULL",nextPendingClientServerEvent.getTargetId());
+                continue;
+            }
 
-                console.debug("searching dijit for event", nextPendingClientServerEvent.getTargetId());
+            if(nextPendingClientServerEvent.getCallerFunction() == "setRepeatIndex"){
+                dijitObject = this._getRepeatObject(nextPendingClientServerEvent.getTargetId());
+            }else {
+                dijitObject = dijit.byId(nextPendingClientServerEvent.getTargetId());
+            }
 
-                dijitObject = dijit.byId(nextPendingClientServerEvent.getTargetId())
-                if (dijitObject == null) {
-                    console.warn("Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: OBJECT is NULL");
-                    continue;
-                }
 
-                // Test if this dijit-control has an isReadonly() method
+            // console.debug("EventFifoReader dijitObject:",dijitObject, " targetId: ",nextPendingClientServerEvent.getTargetId());
 
-                if (dijitObject && dijitObject.isReadonly()) {
-                    console.warn("Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: READ-ONLY");
-                    continue;
-                }
+            if (dijitObject == null) {
+                console.warn("Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: OBJECT is NULL");
+                continue;
+            }
 
-                // Test if the Control's event was a setControlValue
-                if (nextPendingClientServerEvent.getCallerFunction() == "setControlValue") {
-                    // Test if the next Control-Value-Change originates from the same Control as this Control-Value-Change
-                    if (this.clientServerEventQueue[0] != null) {
-                        // Test if the targetId of this event and the next one are equal
-                        if (this.clientServerEventQueue[0].getTargetId() == nextPendingClientServerEvent.getTargetId()) {
-                            // Test if the CallerFunction of the next Event is also setControlValue
-                            if (this.clientServerEventQueue[0].getCallerFunction() == "setControlValue") {
-                                console.debug("Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: superseeded by following value-change of same Control");
-                                continue;
-                            }
-                            else {
-                                //console.debug("Nothing to skip. CAUSE: Following Event's CallerFunction differs from setControlValue");
-                            }
+            // Test if this dijit-control has an isReadonly() method
+            console.debug("EventFifoReader check if Object is readonly:",dijitObject, " reaondly: ",dijitObject.isReadonly());
+
+            if (dijitObject && dijitObject.isReadonly()) {
+                console.warn("Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: READ-ONLY");
+                continue;
+            }
+
+            // Test if the Control's event was a setControlValue
+            if (nextPendingClientServerEvent.getCallerFunction() == "setControlValue") {
+                // Test if the next Control-Value-Change originates from the same Control as this Control-Value-Change
+                if (this.clientServerEventQueue[0] != null) {
+                    // Test if the targetId of this event and the next one are equal
+                    if (this.clientServerEventQueue[0].getTargetId() == nextPendingClientServerEvent.getTargetId()) {
+                        // Test if the CallerFunction of the next Event is also setControlValue
+                        if (this.clientServerEventQueue[0].getCallerFunction() == "setControlValue") {
+                            console.debug("Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: superseeded by following value-change of same Control");
+                            continue;
                         }
                         else {
-                            // console.debug("Nothing to skip. CAUSE: Next Event's ID was different from this Event's ID");
+                            //console.debug("Nothing to skip. CAUSE: Following Event's CallerFunction differs from setControlValue");
                         }
                     }
                     else {
-                        // console.debug("Nothing to skip. CAUSE: Buffer was empty");
+                        // console.debug("Nothing to skip. CAUSE: Next Event's ID was different from this Event's ID");
                     }
                 }
                 else {
-                    // console.debug("Nothing to skip. CAUSE: No setControlValue found");
+                    // console.debug("Nothing to skip. CAUSE: Buffer was empty");
+                }
+            }
+            else {
+                // console.debug("Nothing to skip. CAUSE: No setControlValue found");
+            }
+
+            // Further processing of setRepeatIndex events
+            // TODO: check if really not needed anymore
+/*
+            if (nextPendingClientServerEvent.getCallerFunction() == "setRepeatIndex") {
+                if (nextPendingClientServerEvent.getRepeatItem() == null) {
+                    console.warn("Event (Client to Server) for Dijit Control " + nextPendingClientServerEvent.getTargetId() + " skipped. CAUSE: Repeat-Item for being selected has disappeared");
+                    continue;
                 }
 
-                // Further processing of setRepeatIndex events
-                if (nextPendingClientServerEvent.getCallerFunction() == "setRepeatIndex") {
-                    if (nextPendingClientServerEvent.getRepeatItem() == null) {
-                        console.warn("Event (Client to Server) for Dijit Control " + nextPendingClientServerEvent.getTargetId() + " skipped. CAUSE: Repeat-Item for being selected has disappeared");
-                        continue;
-                    }
-
-                    if (nextPendingClientServerEvent.getValue() != dijit.byNode(nextPendingClientServerEvent.getRepeatItem())._getXFormsPosition()) {
-                        console.warn("Original Position: " + nextPendingClientServerEvent.getValue + " New Position: " + nextPendingClientServerEvent.getRepeatItem()._getXFormsPosition());
-                        // Update the changed Position of this XForms-Repeat-Item
-                        nextPendingclientServerEvent.setValue(dijit.byNode(nextPendingClientServerEvent.getRepeatItem())._getXFormsPosition());
-                    }
+                if (nextPendingClientServerEvent.getValue() != dijit.byNode(nextPendingClientServerEvent.getRepeatItem())._getXFormsPosition()) {
+                    console.warn("Original Position: " + nextPendingClientServerEvent.getValue + " New Position: " + nextPendingClientServerEvent.getRepeatItem()._getXFormsPosition());
+                    // Update the changed Position of this XForms-Repeat-Item
+                    nextPendingclientServerEvent.setValue(dijit.byNode(nextPendingClientServerEvent.getRepeatItem())._getXFormsPosition());
                 }
+            }
+*/
 
-                //*****************************************************************************
-                // END:   skip this pending Event, if one of the following conditions occurred:
-                //*****************************************************************************
+            //*****************************************************************************
+            // END:   skip this pending Event, if one of the following conditions occurred:
+            //*****************************************************************************
 
-                if (dojoObject != null) {
-                    this._useLoadingMessage(dojoObject);
-                }
+            if (dojoObject != null) {
+                this._useLoadingMessage(dojoObject);
             }
 
             // console.debug("XFProcessor.dispatch event for ",nextPendingClientServerEvent.getCallerFunction());
@@ -553,7 +567,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
             dojo.forEach(data,
                     function(xmlEvent) {
                         // *** DO NOT COMMENT THIS OUT !!! ***
-                        console.debug(xmlEvent.type, " [", xmlEvent.contextInfo, "]");
+                        // console.debug(xmlEvent.type, " [", xmlEvent.contextInfo, "]");
 
 /*
                         if 'logEvents' is true the eventlog from the server will be written
@@ -1206,7 +1220,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
     },
 
     _handleBetterFormStateChanged:function(/*XMLEvent*/ xmlEvent) {
-        console.debug("XFProcessor._handleBetterFormStateChanged: targetId: " + xmlEvent.contextInfo.targetId , " parentId: " , xmlEvent.contextInfo.parentId);
+        // console.debug("XFProcessor._handleBetterFormStateChanged: targetId: " + xmlEvent.contextInfo.targetId , " parentId: " , xmlEvent.contextInfo.parentId);
 
 
         // new implementation code
@@ -1247,19 +1261,12 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
          * **/
         if (xmlEvent.contextInfo.targetName != undefined && xmlEvent.contextInfo.targetName == "repeat") {
             // console.debug("XFProcessor._handleBetterFormStateChanged for Repeat");
-            var repeatElement = dojo.query("*[repeatId='" + xfControlId + "']")[0];
-            // console.debug("XFProcessor._handleBetterFormStateChanged for Repeat:",repeatElement);
-            if (repeatElement == undefined) {
-                console.error("(XFProcessor._handleBetterFormStateChanged xf:repeat: ", xfControlId, " does not exist");
-                return;
-            }
-            var repeat = dijit.byId(dojo.attr(repeatElement, "id"));
+            var repeat = this._getRepeatObject(xfControlId);
             if (repeat != undefined) {
                 repeat.handleStateChanged(xmlEvent.contextInfo);
             }
-            else if (repeat == undefined && repeatElement != undefined) {
-                repeat = new betterform.ui.container.Repeat({}, repeatElement);
-                repeat.handleStateChanged(xmlEvent.contextInfo);
+            else if (repeat == undefined) {
+                console.error("Repeat [id:'", xfControlId, "'] does not exist");
             }
         }
         else if (xmlEvent.contextInfo.targetName != undefined && xmlEvent.contextInfo.targetName == "group") {
@@ -1439,7 +1446,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
         // console.debug("betterform-insert-repeatitem [id: '", xmlEvent.contextInfo.targetId, "'] xmlEvent:",xmlEvent);
         var repeatToInsertIntoDOM = dojo.query("*[repeatId='" + xmlEvent.contextInfo.targetId + "']");
 
-        var repeatObject = this._getRepeatObject(xmlEvent);
+        var repeatObject = this._getRepeatObject(xmlEvent.contextInfo.targetId);
         if (repeatObject == undefined) {
             // console.debug("XFProcessor._handleBetterFormInsertRepeatItem ",repeatToInsertIntoDOM);
             // console.dirxml(repeatToInsertIntoDOM[0]);
@@ -1530,13 +1537,13 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
     },
     _handleBetterFormIndexChanged:function(xmlEvent) {
         // console.debug("_handleBetterFormIndexChanged xmlEvent:",xmlEvent);
-        var repeat = this._getRepeatObject(xmlEvent);
+        var repeat = this._getRepeatObject(xmlEvent.contextInfo.targetId);
         console.debug("XFProcessor.betterform-index-changed Repeat: ", repeat, " targetId: ", xmlEvent.contextInfo.targetId);
         repeat.handleSetRepeatIndex(xmlEvent.contextInfo);
     },
 
-    _getRepeatObject: function (xmlEvent){
-        var repeatElement = dojo.query("*[repeatId='" + xmlEvent.contextInfo.targetId + "']");
+    _getRepeatObject: function (targetId){
+        var repeatElement = dojo.query("*[repeatId='" + targetId + "']");
         var repeatObject = dijit.byId(dojo.attr(repeatElement[0], "id"));
         return repeatObject;
     },

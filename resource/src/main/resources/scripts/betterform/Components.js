@@ -248,9 +248,3 @@ var componentBehavior = {
 
 
 };
-
-function getXfId(/*Node*/n){
-    var tmp = n.id.substring(0,n.id.lastIndexOf("-"));
-    console.debug("returning xfId: ",tmp);
-    return tmp;
-}

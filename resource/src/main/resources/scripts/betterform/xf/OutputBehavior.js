@@ -14,20 +14,22 @@ var outputBehavior = {
 
         var xfControl = dijit.byId(getXfId(n));
 
-        dojo.connect(xfControl, "handleStateChanged", function(contextInfo){
+        dojo.connect(dijit.byId(xfId), "OutputBehaviour.handleStateChanged", function(contextInfo){
             // ##### setting value by platform/component-specific means #####
-            console.debug("handleStateChanged for:  ",n);
+            console.debug("OutputBehaviour.handleStateChanged for:  ",n);
             if(contextInfo){
                 console.debug("contextInfo",contextInfo);
             }
             //apply value to widget - handle required, valid and readonly if necessary
             //todo: this is probably not even necessary here?
             var newValue = contextInfo["value"];
-            if(newValue != undefined){
-                console.debug("newValue: ",newValue);
-                n.innerHTML = newValue;
+            if(newValue == undefined){
+                newValue = "";
             }
+            console.debug("newValue: ",newValue);
+            n.innerHTML = newValue;
         });
+
 
     },
 

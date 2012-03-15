@@ -40,7 +40,7 @@ dojo.declare(
     },
 
     postCreate:function() {
-        console.debug("\nControl.postCreate; DOM Node:",this.domNode,"\n");
+        // console.debug("\nControl.postCreate; DOM Node:",this.domNode,"\n");
         // TODO: examine if this can be done in handleStateChanged
         // ensure all needed classes for Control are in place in case we have a dynamically created control
         betterform.ui.util.setDefaultClasses(this.domNode);
@@ -64,8 +64,8 @@ dojo.declare(
      sends updated value of a widget to the server
      */
     setValue:function(/* String */ value, evt) {
-        console.debug("XFControl: setControlValue: currentvalue:", this.currentValue, " - newValue:",value);
-        console.debug("XFControl evt: ",evt);
+        // console.debug("XFControl: setControlValue: currentvalue:", this.currentValue, " - newValue:",value);
+        // console.debug("XFControl evt: ",evt);
 
         if(evt.type == "blur"){
             // control has lost focus
@@ -132,7 +132,7 @@ dojo.declare(
     },
 
     isValid:function() {
-        console.debug("XFControl.isValid",this.domNode);
+        // console.debug("XFControl.isValid",this.domNode);
 
         if (dojo.hasClass(this.domNode, "xfInvalid")) {
             return false;
@@ -192,7 +192,7 @@ dojo.declare(
             this.readonly = contextInfo["readonly"];
             this.required = contextInfo["required"];
             this.relevant = contextInfo["enabled"];
-            //console.debug("Control.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " contextInfo:",contextInfo);
+            console.debug("Control.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " contextInfo:",contextInfo);
 
             if (contextInfo["targetName"] == "input" && this.value != null) {
                 var noNSType = betterform.ui.util.removeNamespace(contextInfo["type"]);
@@ -240,7 +240,7 @@ dojo.declare(
 
 
     _checkForDataTypeChange:function(dataType, contextInfo) {
-        console.debug("_checkForDataTypeChange: old dataType: " + this.dataType + " new dataType: ", dataType, " contextInfo:",contextInfo);
+        // console.debug("_checkForDataTypeChange: old dataType: " + this.dataType + " new dataType: ", dataType, " contextInfo:",contextInfo);
 
         if (this.controlValue == undefined) {
             var controlValueTemplate = dojo.query("*[id ='" + this.id + "-value']", this.domNode)[0];
@@ -291,7 +291,7 @@ dojo.declare(
     },
 
     _handleSetValidProperty:function(validity) {
-        console.debug("XFControl._handleSetValidProperty [id:"+this.id+ " valid: ",validity, "]");
+        // console.debug("XFControl._handleSetValidProperty [id:"+this.id+ " valid: ",validity, "]");
         if (validity) {
             betterform.ui.util.replaceClass(this.domNode, "xfInvalid", "xfValid");
             dojo.publish("/xf/valid", [this.id,"applyChanges"]);
@@ -304,14 +304,14 @@ dojo.declare(
     },
 
     _handleSetReadonlyProperty: function(/*Boolean*/ readonly) {
-        console.debug("_handleSetReadonlyProperty: readonly: ", readonly);
+        // console.debug("XFControl._handleSetReadonlyProperty: id: " + this.id + " readonly: ", readonly);
         if (readonly) {
-            console.debug("_handleSetReadonlyProperty: readonly");
+            // console.debug("_handleSetReadonlyProperty: readonly");
             betterform.ui.util.replaceClass(this.domNode, "xfReadWrite", "xfReadOnly");
             dojo.attr(this.getWidget(), "readonly",true);
         }
         else {
-            console.debug("_handleSetReadonlyProperty: notReadonly");
+            // console.debug("_handleSetReadonlyProperty: notReadonly");
             betterform.ui.util.replaceClass(this.domNode, "xfReadOnly", "xfReadWrite");
             this.getWidget().removeAttribute("readonly");
 
@@ -364,10 +364,11 @@ dojo.declare(
     },
 
     _handleHelperChanged: function(properties) {
-        // console.debug("Control.handleHelperChanged: type='" + properties["type"] + "',  value='" + properties["value"] + "'");
+       console.debug("Control.handleHelperChanged: type='" + properties["type"] + "',  value='" + properties["value"] + "'");
         switch (properties["targetName"]) {
             case "label":
-                this.controlValue._setLabel(properties["value"]);
+                // this.controlValue._setLabel(properties["value"]);
+                console.warn("XFControl._handleHelperChanged case: 'label' not implemented yet [id:", this.id,"]");
                 return;
             case "help":
                 this._setHelp(properties["value"]);
@@ -379,8 +380,10 @@ dojo.declare(
                 this._setAlert(properties["value"]);
                 return;
             case "value":
-                this.controlValue._handleSetControlValue(properties["value"]);
+                console.warn("XFControl._handleHelperChanged case: 'value' not implemented yet [id:", this.id,"]");
+                // this.controlValue._handleSetControlValue(properties["value"]);
                 return;
+
         }
     },
 
