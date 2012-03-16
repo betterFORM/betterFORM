@@ -18,7 +18,6 @@ dojo.declare(
         "betterform.xf.Widget",
         [dijit._Widget, dijit._Templated],
 {
-    //    tabIndex:0,
     id:null,
     name:"",
     xfControl:null,

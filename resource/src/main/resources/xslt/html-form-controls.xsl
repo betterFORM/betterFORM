@@ -11,7 +11,7 @@
                 xmlns:bf="http://betterform.sourceforge.net/xforms"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 xmlns:xhtml="http://www.w3.org/1999/xhtml"
-                exclude-result-prefixes="bf xf xsl"
+                exclude-result-prefixes="bf xf xsl xsd xhtml"
                 xpath-default-namespace="http://www.w3.org/1999/xhtml">
 
     <xsl:variable name="data-prefix" select="'d_'"/>
@@ -118,6 +118,7 @@
                         name="{$name}"
                         src="{bf:data/text()}"
                         alt="{xf:label}"
+                        class="xfValue"
                         title="{xf:hint/text()}">
                     <!--
                     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -125,7 +126,6 @@
                     as a span
                     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                     -->
-                    <xsl:apply-templates select="xf:hint"/>
                 </img>
             </xsl:when>
             <!--

@@ -183,7 +183,7 @@
 
     <xsl:template name="assemble-control-classes">
         <xsl:param name="appearance"/>
-
+        <!-- TODO: JT: if meadiatype is set appearance should not be present  -->
         <xsl:variable name="name-classes">
             <xsl:call-template name="get-name-classes">
                 <!--todo: check this-->
@@ -201,6 +201,10 @@
 
         <xsl:variable name="author-classes">
             <xsl:call-template name="get-author-classes"/>
+        </xsl:variable>
+
+        <xsl:variable name="mediatype-classes" >
+            <xsl:call-template name="get-mediatype-classes"/>
         </xsl:variable>
 
         <xsl:variable name="incremental">
@@ -222,7 +226,7 @@
                 <xsl:otherwise/>
             </xsl:choose>
         </xsl:variable>
-        <xsl:value-of select="normalize-space(concat('xfControl ',$name-classes, ' ', $type ,' ',$mip-classes, ' ', $author-classes,' ',$incremental,' ',$repeatClasses))"/>
+        <xsl:value-of select="normalize-space(concat('xfControl ',$name-classes, ' ', $type ,' ',$mip-classes, ' ', $author-classes,' ',$incremental,' ',$repeatClasses,' ',$mediatype-classes))"/>
     </xsl:template>
 
     <xsl:template name="getXSDType">
@@ -366,6 +370,15 @@
         <xsl:if test="@class">
             <xsl:value-of select="@class"/>
         </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="get-mediatype-classes">
+        <xsl:choose>
+            <xsl:when test="starts-with(@mediatype, 'image/')">mediatypeImage</xsl:when>
+            <xsl:when test="starts-with(@mediatype, 'text/')">mediatype<xsl:call-template name="toUpperCaseFirstLetter">
+                <xsl:with-param name="name" select="substring-after(@mediatype,'/')"/></xsl:call-template></xsl:when>
+            <xsl:otherwise>mediatypeText</xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
 

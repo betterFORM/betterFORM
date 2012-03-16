@@ -12,7 +12,7 @@ var outputBehavior = {
     // ############################## OUTPUT MAPPINGS ############################################################
     // ############################## OUTPUT MAPPINGS ############################################################
     // ############################## OUTPUT MAPPINGS ############################################################
-    '.xfOutput.xsdString .xfValue': function(n) {
+    '.xfOutput.xsdString.mediatypeText .xfValue': function(n) {
         console.debug("output field: ",n);
 
         var xfId = getXfId(n);
@@ -23,13 +23,27 @@ var outputBehavior = {
         };
 
     },
+    '.xfOutput.mediatypeImage .xfValue': function(n) {
+        var xfControl = dijit.byId(getXfId(n));
 
-    '.xfOutput.xsdString img.xfValue': function(n) {
-        //todo: implement + fix missing 'xfValue' on img element
+        xfControl.setValue = function(value) {
+            dojo.attr(n, "src", value);
+        };
+
     },
 
     '.xfOutput.xsdAnyURI .xfValue': function(n) {
-        //todo: implement
+        var xfControl = dijit.byId(getXfId(n));
+
+        xfControl.setValue = function(value) {
+            dojo.attr(n, "href", value);
+            n.innerHTML = value;
+        }
+    },
+    '.xfOutput.mediatypeHtml .xfValue': function(n) {
+        dijit.byId(getXfId(n)).setValue = function(value) {
+            n.innerHTML = value;
+        };
     }
 };
 
