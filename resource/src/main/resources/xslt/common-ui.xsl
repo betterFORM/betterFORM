@@ -242,7 +242,6 @@
             <xsl:when test="bf:data/@bf:type">
                 <xsl:value-of select="bf:data/@bf:type"/>
             </xsl:when>
-            <xsl:otherwise>string</xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 
@@ -257,11 +256,11 @@
             <xsl:when test="@appearance">
                 <!--<xsl:value-of select="concat($xf,$name, ' ', $appearance, '-',$name)"/>-->
                 <!--<xsl:value-of select="concat($xf,$fullName, ' ', $xf,$displayAppearance,$fullName)"/>-->
-                <xsl:value-of select="concat($xf,$displayAppearance,$fullName, ' app',$displayAppearance, ' ' ,$xf,$fullName)"/>
+                <xsl:value-of select="concat($xf,$fullName, ' a',$displayAppearance)"/>
                 <!--<xsl:message>computedClassAppearance : <xsl:value-of select="concat($xf,$fullName, ' ', $xf,$displayAppearance,$fullName)"/></xsl:message>-->
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="concat($xf,$fullName, ' appDefault')"/>
+                <xsl:value-of select="concat($xf,$fullName, ' aDefault')"/>
                 <!--<xsl:message>computedClass : <xsl:value-of select="concat($xf,$fullName)"/></xsl:message>-->
             </xsl:otherwise>
         </xsl:choose>

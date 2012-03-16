@@ -15,26 +15,11 @@ var select1Behavior = {
     // ############################## SELECT1 MAPPINGS ############################################################
     // ############################## SELECT1 MAPPINGS ############################################################
 
-    '.xfMinimalSelect1 .select1wrapper .xfValue': function(n) {
+    '.xfSelect1.aMinimal .select1wrapper .xfValue, .xfSelect1.aDefault .select1wrapper .xfValue': function(n) {
         console.debug("select1 field: ",n);
 
         var xfId = getXfId(n);
         var xfControl = dijit.byId(xfId);
-
-        dojo.connect(dijit.byId(xfId), "handleStateChanged", function(contextInfo){
-            // ##### setting value by platform/component-specific means #####
-            console.debug("handleStateChanged for:  ",n);
-            if(contextInfo){
-                console.debug("contextInfo",contextInfo);
-            }
-            //apply value to widget - handle required, valid and readonly if necessary
-            //todo: this is probably not even necessary here?
-            var newValue = contextInfo["value"];
-            if(newValue != undefined){
-                console.debug("newValue: ",newValue);
-                n.value=newValue;
-            }
-        });
 
         /*
          if incremental support is needed this eventhandler has to be added for the widget

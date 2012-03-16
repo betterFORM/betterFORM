@@ -42,7 +42,7 @@ var inputBehavior = {
         ###########################################################################################
         Event handler binding XForms and widget layer.
 
-        There always need to be at least 3 event listener:
+        There always need to be at least 2 event listener:
 
         - one listening tor handleStateChanged which are events coming from the processor representing
         changes of the value or state of a node that need to be applied to the widget. The following event handler
@@ -53,26 +53,6 @@ var inputBehavior = {
         - one for listening to the respective change events fired by the widget (usually onBlur or onChange)
         to pass the changed value to the processor
         */
-
-        /*
-        dojo.connect(dijit.byId(xfId), "handleStateChanged", function(contextInfo){
-            // ##### setting value by platform/component-specific means #####
-            // console.debug("handleStateChanged for:  ",n);
-            if(contextInfo){
-                // console.debug("contextInfo",contextInfo);
-            }
-            //apply value to widget - handle required, valid and readonly if necessary
-            //todo: this is probably not even necessary here?
-            if(contextInfo["targetName"] == "input") {
-                var newValue = contextInfo["value"];
-                if(newValue != undefined){
-                    // console.debug("newValue: ",newValue);
-                    n.value=newValue;
-                }
-
-            }
-        });
-*/
 
         /*
         if incremental support is needed this eventhandler has to be added for the widget
@@ -96,14 +76,6 @@ var inputBehavior = {
     '.xfInput.xsdBoolean .xfValue': function(n) {
         // console.debug("boolean input field: ",n);
         var xfId = n.id.substring(0,n.id.lastIndexOf("-"));
-        dojo.connect(dijit.byId(xfId), "handleStateChanged", function(contextInfo){
-            // console.debug("handleStateChanged for:  ",n);
-            if(contextInfo){
-                // console.debug("contextInfo",contextInfo);
-            }
-            //apply value to widget - handle required + readonly if necessary
-
-        });
 
         dojo.connect(n,"onblur",function(evt){
 //            console.debug("onblur",n);

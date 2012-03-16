@@ -18,35 +18,9 @@ var outputBehavior = {
         var xfId = getXfId(n);
         var xfControl = dijit.byId(xfId);
 
-
         xfControl.setValue = function(value) {
             n.innerHTML = value;
         };
-
-/*
-        dojo.connect(dijit.byId(xfId), "_handleSetControlValue", function(value){
-            betterform.util.innerHTML(n, value);
-        });
-*/
-
-/*
-
-        dojo.connect(dijit.byId(xfId), "handleStateChanged", function(contextInfo){
-            console.debug("OutputBehaviour.handleStateChanged for:  ",n);
-            if(contextInfo){
-                console.debug("contextInfo",contextInfo);
-            }
-            //apply value to widget - handle required, valid and readonly if necessary
-            //todo: this is probably not even necessary here?
-            var newValue = contextInfo["value"];
-            if(newValue == undefined){
-                newValue = "";
-            }
-            console.debug("newValue: ",newValue);
-            n.innerHTML = newValue;
-        });
-*/
-
 
     },
 
