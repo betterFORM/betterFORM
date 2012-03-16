@@ -25,5 +25,14 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 <test-case xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner" xmlns:xf="http://www.w3.org/2002/xforms" xsi:schemaLocation="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner ../../../test-case.xsd">
    <open href="Chapt08/8.1/8.1.2/8.1.2.a.xhtml"/>
    <assert-title title="8.1.2.a incremental attribute for input element"/>
-   <fail msg="Test not implemented yet!"/>
+
+   <type-input locator="xf-input-1" value="x" incremental="true" />
+   <assert-message message="xforms-value-changed"/>
+
+   <type-input locator="xf-input-1" value="m" incremental="true" />
+   <assert-message message="xforms-value-changed"/>
+
+   <type-input locator="xf-input-1" value="l" incremental="true" />
+   <assert-message message="xforms-value-changed"/>
+
 </test-case>

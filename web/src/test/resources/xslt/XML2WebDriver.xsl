@@ -90,7 +90,7 @@
     </xsl:template>
 
     <xsl:template match="xftr:type-input">
-        typeInput("<xsl:value-of select="concat(@locator, '-value')"/>", "<xsl:value-of select="replace( normalize-space(@value) ,$quot, $quote)"/>");
+        typeInput("<xsl:value-of select="concat(@locator, '-value')"/>", "<xsl:value-of select="replace( normalize-space(@value) ,$quot, $quote)"/>", Boolean.valueOf("<xsl:value-of select="replace( normalize-space(@incremental) ,$quot, $quote)" />"));
     </xsl:template>
 
     <xsl:template match="xftr:type-secret">

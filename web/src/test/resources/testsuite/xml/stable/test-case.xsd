@@ -200,6 +200,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			    <xs:complexType>
 			      <xs:attribute name="locator" use="required"/>
 			      <xs:attribute name="value" use="required"/>
+                  <xs:attribute name="incremental" use="optional" default="false"/>
 			    </xs:complexType>
 			  </xs:element>
 			  <xs:element name="type-secret">
