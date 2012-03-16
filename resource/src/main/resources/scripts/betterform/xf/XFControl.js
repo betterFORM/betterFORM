@@ -27,7 +27,6 @@ dojo.declare(
     controlType:"",
     controlValue:null,
     currentValue:null,
-    subscriber:null,
     bfFocus:false,
     incremental:false,
 
@@ -143,11 +142,7 @@ dojo.declare(
         }
     },
     isIncremental:function(){
-        if (dojo.hasClass(this.domNode,"xfIncremental")){
-            return true;
-        }else{
-            return false;
-        }
+        return dojo.hasClass(this.domNode, "xfIncremental");
     },
 
     /*
@@ -162,20 +157,6 @@ dojo.declare(
         }
     },
 
-/*
-    getCurrentValue:function(){
-        return this.currentValue;
-    },
-*/
-
-    isValueChanged:function(value){
-        if (value != undefined && this.currentValue != value) {
-            return true;
-        }else{
-            return false;
-        }
-
-    },
 
     /*
     handles state changes send by the server and applies them to the control
@@ -196,7 +177,7 @@ dojo.declare(
 
             if (contextInfo["targetName"] == "input" && this.value != null) {
                 var noNSType = betterform.ui.util.removeNamespace(contextInfo["type"]);
-                this._checkForDataTypeChange(noNSType, contextInfo);
+                this._checkForDataTypeChange(noNSType);
 
                 if (noNSType == "date" || noNSType == "dateTime") {
                     this.setValue(contextInfo["schemaValue"]);
@@ -207,39 +188,49 @@ dojo.declare(
             } else if (this.value != null) {
                 this.setValue(this.value);
             }
+            if(this.valid != undefined){
+                if (this.valid == "true") {
+                    this.setValid();
+                }else if(!dojo.hasClass(this.domNode,"bfInvalidControl")){
+                    /*
+                     todo: got the feeling that this case should be handled elsewhere....
+                     if a control is intially invalid it just has xfInvalid but not bfInvalidControl. This may happen
+                     during init and somehow the subscriber won't be called then (too early???)
 
-            if (this.valid != null ) {
-                this._handleSetValidProperty(this.valid == 'true');
-            }else if(!this.isValid() && !dojo.hasClass(this.domNode,"bfInvalidControl")){
-                /*
-                 todo: got the feeling that this case should be handled elsewhere....
-                 if a control is intially invalid it just has xfInvalid but not bfInvalidControl. This may happen
-                 during init and somehow the subscriber won't be called then (too early???)
-
-                 Ok, for now: if control is not valid (has 'xfInvalid' class) and not has 'bfInvalidControl' (which
-                 actually shows an alert) it must nevertheless publish invalid event for the alerts to work correctly.
-                 */
-                this._handleSetValidProperty(false);
+                     Ok, for now: if control is not valid (has 'xfInvalid' class) and not has 'bfInvalidControl' (which
+                     actually shows an alert) it must nevertheless publish invalid event for the alerts to work correctly.
+                     */
+                    this.setInvalid();
+                }
+            }
+            if(this.readonly != undefined) {
+                if (this.readonly == "true") {
+                    this.setReadonly();
+                }else {
+                    this.setReadwrite();
+                }
             }
 
-            if(!this.isValid() && !dojo.hasClass(this.domNode,"bfInvalidControl")){
-                this._handleSetValidProperty(false);
+            if(this.required != undefined) {
+                if (this.required == "true") {
+                    this.setRequired();
+                }else {
+                    this.setOptional();
+                }
             }
-            if (this.readonly != null) {
-                this._handleSetReadonlyProperty(this.readonly == 'true');
-            }
-            if (this.required != null) {
-                this._handleSetRequiredProperty(this.required == 'true');
-            }
-            if (this.relevant != null) {
-                this._handleSetEnabledProperty(this.relevant == 'true');
+            if(this.relevant != undefined) {
+                if (this.relevant == "true") {
+                    this.setEnabled();
+                }else {
+                    this.setDisabled();
+                }
             }
 
         }
     },
 
 
-    _checkForDataTypeChange:function(dataType, contextInfo) {
+    _checkForDataTypeChange:function(dataType) {
         // console.debug("_checkForDataTypeChange: old dataType: " + this.dataType + " new dataType: ", dataType, " contextInfo:",contextInfo);
 
         if (this.controlValue == undefined) {
@@ -300,77 +291,85 @@ dojo.declare(
         // dojo.publish("/xf/valueChanged",[this,value])
     },
 
-    _handleSetValidProperty:function(validity) {
-        // console.debug("XFControl._handleSetValidProperty [id:"+this.id+ " valid: ",validity, "]");
-        if (validity) {
-            betterform.ui.util.replaceClass(this.domNode, "xfInvalid", "xfValid");
-            dojo.publish("/xf/valid", [this.id,"applyChanges"]);
-        }
-        else {
-            betterform.ui.util.replaceClass(this.domNode, "xfValid", "xfInvalid");
-            dojo.publish("/xf/invalid", [this.id,"applyChanges"]);
-        }
+    setValid:function() {
+        betterform.ui.util.replaceClass(this.domNode, "xfInvalid", "xfValid");
+        dojo.publish("/xf/valid", [this.id,"applyChanges"]);
 
     },
 
-    _handleSetReadonlyProperty: function(/*Boolean*/ readonly) {
-        // console.debug("XFControl._handleSetReadonlyProperty: id: " + this.id + " readonly: ", readonly);
-        if (readonly) {
-            // console.debug("_handleSetReadonlyProperty: readonly");
-            betterform.ui.util.replaceClass(this.domNode, "xfReadWrite", "xfReadOnly");
-            dojo.attr(this.getWidget(), "readonly",true);
-        }
-        else {
-            // console.debug("_handleSetReadonlyProperty: notReadonly");
-            betterform.ui.util.replaceClass(this.domNode, "xfReadOnly", "xfReadWrite");
-            this.getWidget().removeAttribute("readonly");
+    setInvalid:function() {
+        betterform.ui.util.replaceClass(this.domNode, "xfValid", "xfInvalid");
+        dojo.publish("/xf/invalid", [this.id,"applyChanges"]);
+    },
 
+    setReadonly:function() {
+        betterform.ui.util.replaceClass(this.domNode, "xfReadWrite", "xfReadOnly");
+        dojo.attr(this.getWidget(), "readonly",true);
+    },
+
+    setReadwrite:function() {
+        betterform.ui.util.replaceClass(this.domNode,"xfReadOnly","xfReadWrite");
+        dojo.attr(this.getWidget(), "readonly",false);
+    },
+
+    setRequired:function() {
+        betterform.ui.util.replaceClass(this.domNode, "xfOptional", "xfRequired");
+    },
+
+    setOptional:function() {
+        betterform.ui.util.replaceClass(this.domNode, "xfRequired", "xfOptional");
+    },
+
+    setEnabled:function() {
+        var label = dojo.byId(this.id + "-label");
+        if (label != undefined) {
+            if (dojo.hasClass(label, "xfDisabled")) {
+                betterform.ui.util.replaceClass(label, "xfDisabled", "xfEnabled");
+            } else {
+                dojo.addClass(label, "xfEnabled");
+            }
         }
+        betterform.ui.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");
+
+        if (this.isValid()) {
+            dojo.publish("/xf/valid", [this.id, "xfDisabled"]);
+        } else {
+            dojo.publish("/xf/invalid", [this.id, "xfDisabled"]);
+        }
+    },
+
+    setDisabled:function() {
+        var label = dojo.byId(this.id + "-label");
+        if (label != undefined) {
+            if (dojo.hasClass(label, "xfEnabled")) {
+                betterform.ui.util.replaceClass(label, "xfEnabled", "xfDisabled");
+            } else {
+                dojo.addClass(label, "xfDisabled");
+            }
+        }
+        betterform.ui.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");
+        if (this.isValid()) {
+            dojo.publish("/xf/valid", [this.id, "xfDisabled"]);
+        } else {
+            dojo.publish("/xf/invalid", [this.id, "xfDisabled"]);
+        }
+    },
+
+    _handleSetValidProperty:function(validity) {
+        console.warn("XFControl._handleSetValidProperty was removed, use setValid / setInvalid instead");
+
+    },
+    _handleSetReadonlyProperty: function(/*Boolean*/ readonly) {
+        console.warn("XFControl._handleSetReadonlyProperty was removed, use setReadonly/ setReadwrite instead");
+
     },
 
     _handleSetRequiredProperty:function() {
-        if (this.required == "true") {
-            betterform.ui.util.replaceClass(this.domNode, "xfOptional", "xfRequired");
-        }
-        else {
-            betterform.ui.util.replaceClass(this.domNode, "xfRequired", "xfOptional");
-        }
+        console.warn("XFControl._handleSetRequiredProperty was removed, use setRequired/ setOptional instead");
     },
 
     _handleSetEnabledProperty:function(enabled) {
-        // console.debug("_handleSetEnabledProperty  enabled:",enabled, " domNode: ",this.domNode);
-        var targetId = this.id;
-        var label = dojo.byId(targetId + "-label");
-
-        if (enabled) {
-            if (label != undefined) {
-                if (dojo.hasClass(label, "xfDisabled")) {
-                    betterform.ui.util.replaceClass(label, "xfDisabled", "xfEnabled");
-                } else {
-                    dojo.addClass(label, "xfEnabled");
-                }
-            }
-
-            betterform.ui.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");
-        }
-        else {
-            if (label != undefined) {
-                if (dojo.hasClass(label, "xfEnabled")) {
-                    betterform.ui.util.replaceClass(label, "xfEnabled", "xfDisabled");
-                } else {
-                    dojo.addClass(label, "xfDisabled");
-                }
-            }
-
-            betterform.ui.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");
-            if (this.isValid()) {
-                dojo.publish("/xf/valid", [this.id, "xfDisabled"]);
-            } else {
-                dojo.publish("/xf/invalid", [this.id, "xfDisabled"]);
-            }
-        }
-
-
+        console.warn("XFControl._handleSetEnabledProperty was removed, use setEnabled/ setDisabled instead");
     },
 
     _handleHelperChanged: function(properties) {
@@ -393,47 +392,6 @@ dojo.declare(
                 return;
 
         }
-    },
-
-    _updateMIPClasses:function() {
-
-        /*
-         console.debug("betterform.ui.Control._checkMIP: contextInfo:",this.contextInfo,
-         " enabled: " +this.contextInfo.enabled +
-         " readonly: " + this.contextInfo.readonly+
-         " required: " +this.contextInfo.required +
-         " valid: " + this.contextInfo.valid);
-         */
-
-        if (this.contextInfo.enabled != undefined) {
-            if (this.contextInfo.enabled == "true") {
-                betterform.ui.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");
-            } else {
-                betterform.ui.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");
-            }
-        }
-        if (this.contextInfo.readonly != undefined) {
-            if (this.contextInfo.readonly == "true") {
-                betterform.ui.util.replaceClass(this.domNode, "xfReadWrite", "xfReadOnly");
-            } else {
-                betterform.ui.util.replaceClass(this.domNode, "xfReadOnly", "xfReadWrite");
-            }
-        }
-        if (this.contextInfo.required != undefined) {
-            if (this.contextInfo.required == "true") {
-                betterform.ui.util.replaceClass(this.domNode, "xfOptional", "xfRequired");
-            } else {
-                betterform.ui.util.replaceClass(this.domNode, "xfRequired", "xfOptional");
-            }
-        }
-        if (this.contextInfo.valid != undefined) {
-            if (this.contextInfo.valid == "true") {
-                betterform.ui.util.replaceClass(this.domNode, "xfInvalid", "xfValid");
-            } else {
-                betterform.ui.util.replaceClass(this.domNode, "xfValid", "xfInvalid");
-            }
-        }
-
     },
 
     setLabel:function(value) {
@@ -464,11 +422,11 @@ dojo.declare(
         // Container for storing the node which contains a title attribute
         var valueNode = dijit.byId(this.id + "-value");
 
-        // Value for: Is a hint Node available at the current DOM-structure
-        var hintNodeFound = false;
         // Value for: Is a title-Attribute availabel at the current DOM-structure
         var titleAttributeFound = false;
 
+        // Value for: Is a hint Node available at the current DOM-structure
+        var hintNodeFound;
         // Check if a hint-node is available and store that information
         hintNodeFound = hintNode != undefined;
 
