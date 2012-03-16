@@ -63,9 +63,9 @@ dojo.declare(
     /*
      sends updated value of a widget to the server
      */
-    setValue:function(/* String */ value, evt) {
-        // console.debug("XFControl: setControlValue: currentvalue:", this.currentValue, " - newValue:",value);
-        // console.debug("XFControl evt: ",evt);
+    sendValue:function(/* String */ value, evt) {
+        console.debug("XFControl: setControlValue: currentvalue:", this.currentValue, " - newValue:",value);
+        console.debug("XFControl evt: ",evt);
 
         if(evt.type == "blur"){
             // control has lost focus
@@ -199,13 +199,13 @@ dojo.declare(
                 this._checkForDataTypeChange(noNSType, contextInfo);
 
                 if (noNSType == "date" || noNSType == "dateTime") {
-                    this._handleSetControlValue(contextInfo["schemaValue"]);
+                    this.setValue(contextInfo["schemaValue"]);
                 } else {
-                    this._handleSetControlValue(this.value);
+                    this.setValue(this.value);
                 }
 
             } else if (this.value != null) {
-                this._handleSetControlValue(this.value);
+                this.setValue(this.value);
             }
 
             if (this.valid != null ) {
@@ -281,11 +281,21 @@ dojo.declare(
         this.dataType = dataType;
     },
 
-    _handleSetControlValue:function(value) {
-        console.debug("handleSetControlValue: " + this.currentValue + " value: " + value);
+    setValue:function(value) {
+        console.debug("XFControl.setValue: " + this.currentValue + " value: " + value);
+
         if(this.currentValue != value) {
             this.currentValue = value;
-            this._handleRequiredEmpty();
+            var valueNode = dojo.byId(this.id + "-value");
+            if (valueNode != undefined) {
+                dojo.attr(valueNode, "value", value);
+            }
+            else {
+                console.error("Failure updating value for Control '" + this.id + "-alert' with value: " + value);
+            }
+
+            // this._handleRequiredEmpty();
+
         }
         // dojo.publish("/xf/valueChanged",[this,value])
     },
@@ -364,24 +374,22 @@ dojo.declare(
     },
 
     _handleHelperChanged: function(properties) {
-       console.debug("Control.handleHelperChanged: type='" + properties["type"] + "',  value='" + properties["value"] + "'");
+       console.debug("Control.handleHelperChanged: this.id: "+this.id+ "type='" + properties["targetName"] + "',  value='" + properties["value"] + "'");
         switch (properties["targetName"]) {
             case "label":
-                // this.controlValue._setLabel(properties["value"]);
-                console.warn("XFControl._handleHelperChanged case: 'label' not implemented yet [id:", this.id,"]");
+                this.setLabel(properties["value"]);
                 return;
             case "help":
-                this._setHelp(properties["value"]);
+                this.setHelp(properties["value"]);
                 return;
             case "hint":
-                this._setHint(properties["value"]);
+                this.setHint(properties["value"]);
                 return;
             case "alert":
-                this._setAlert(properties["value"]);
+                this.setAlert(properties["value"]);
                 return;
             case "value":
-                console.warn("XFControl._handleHelperChanged case: 'value' not implemented yet [id:", this.id,"]");
-                // this.controlValue._handleSetControlValue(properties["value"]);
+                this.setValue(properties["value"]);
                 return;
 
         }
@@ -428,8 +436,19 @@ dojo.declare(
 
     },
 
-    _setHelp:function(value) {
-        // console.warn("TBD: Control._setHelp value:"+ value);
+    setLabel:function(value) {
+         console.debug("Control.setLabel value:"+ value);
+
+        var labelNode = dojo.byId(this.id + "-label");
+        if (labelNode != undefined) {
+            labelNode.innerHTML = value;
+        }
+        else {
+            console.warn("Failure updating help for Control '" + this.id + "-help' with value: " + value);
+        }
+    },
+    setHelp:function(value) {
+        // console.warn("TBD: Control.setHelp value:"+ value);
         var helpNode = dojo.byId(this.id + "-help");
         if (helpNode != undefined) {
             helpNode.innerHTML = value;
@@ -439,7 +458,7 @@ dojo.declare(
         }
     },
 
-    _setHint:function(value) {
+    setHint:function(value) {
         // Container for storing the hint-node if it exists
         var hintNode = dojo.byId(this.id + "-hint");
         // Container for storing the node which contains a title attribute
@@ -485,7 +504,7 @@ dojo.declare(
         }
     },
 
-    _setAlert:function(value) {
+    setAlert:function(value) {
         var alertNode = dojo.byId(this.id + "-alert");
         if (alertNode != undefined) {
             alertNode.innerHTML = value;
@@ -496,9 +515,6 @@ dojo.declare(
 
     },
 
-    _setValueChild:function(value) {
-        console.warn("TBD: Control._setValueChild value:" + value);
-    },
 
     _handleRequiredEmpty:function(){
         if (dojo.hasClass(this.domNode, "xfRequiredEmpty")) {

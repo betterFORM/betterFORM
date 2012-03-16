@@ -1219,6 +1219,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
        }
     },
 
+
     _handleBetterFormStateChanged:function(/*XMLEvent*/ xmlEvent) {
         // console.debug("XFProcessor._handleBetterFormStateChanged: targetId: " + xmlEvent.contextInfo.targetId , " parentId: " , xmlEvent.contextInfo.parentId);
 
@@ -1283,8 +1284,9 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
                 // console.debug("creating new Group (xmlEvent.contextInfo.targetId = undefined) : ",xmlEvent.contextInfo.targetId);
                 var control = dojo.query("*[repeatItemId='" + xmlEvent.contextInfo.targetId + "']")[0];
                 if (control != undefined && dojo.hasClass(control, "xfRepeatItem")) {
-                    // console.debug("group get: ",dijit.byId(dojo.attr(control, "id")));
-                    group = dijit.byId(dojo.attr(control, "id"));
+                    var repeatNode = control.parentNode;
+                    console.debug("repeat: ",repeatNode);
+                    group = dijit.byId(repeatNode.id);
                 }
             }
             if (group != undefined) {

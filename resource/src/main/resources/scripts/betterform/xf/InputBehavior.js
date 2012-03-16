@@ -6,6 +6,7 @@
 dojo.provide("betterform.xf.InputBehavior");
 dojo.require("betterform.xf.XFControl");
 dojo.require("dijit.form.DateTextBox");
+dojo.require("betterform.util");
 
 
 /*
@@ -36,6 +37,7 @@ var inputBehavior = {
         */
         var xfId = getXfId(n);
         var xfControl = dijit.byId(xfId);
+
         /*
         ###########################################################################################
         Event handler binding XForms and widget layer.
@@ -51,6 +53,8 @@ var inputBehavior = {
         - one for listening to the respective change events fired by the widget (usually onBlur or onChange)
         to pass the changed value to the processor
         */
+
+        /*
         dojo.connect(dijit.byId(xfId), "handleStateChanged", function(contextInfo){
             // ##### setting value by platform/component-specific means #####
             // console.debug("handleStateChanged for:  ",n);
@@ -59,24 +63,28 @@ var inputBehavior = {
             }
             //apply value to widget - handle required, valid and readonly if necessary
             //todo: this is probably not even necessary here?
-            var newValue = contextInfo["value"];
-            if(newValue != undefined){
-                // console.debug("newValue: ",newValue);
-                n.value=newValue;
+            if(contextInfo["targetName"] == "input") {
+                var newValue = contextInfo["value"];
+                if(newValue != undefined){
+                    // console.debug("newValue: ",newValue);
+                    n.value=newValue;
+                }
+
             }
         });
+*/
 
         /*
         if incremental support is needed this eventhandler has to be added for the widget
          */
         dojo.connect(n,"onkeyup",function(evt){
             // console.debug("onkeypress",n);
-            xfControl.setValue(n.value,evt);
+            xfControl.sendValue(n.value,evt);
         });
 
         dojo.connect(n,"onblur",function(evt){
             // console.debug("onblur",n);
-            xfControl.setValue(n.value, evt);
+            xfControl.sendValue(n.value, evt);
         });
 
         //todo: Dijits will need to create themselves later here...
@@ -103,7 +111,7 @@ var inputBehavior = {
 //            console.debug("checked",n.checked);
             var xfControl = dijit.byId(xfId);
             if(n.checked != undefined){
-                xfControl.setValue(n.checked,evt);
+                xfControl.sendValue(n.checked,evt);
             }
         });
         dojo.connect(n,"onclick",function(evt){
@@ -113,7 +121,7 @@ var inputBehavior = {
 //            console.debug("checked",n.checked);
             var xfControl = dijit.byId(xfId);
             if(n.checked != undefined){
-                xfControl.setValue(n.checked,evt);
+                xfControl.sendValue(n.checked,evt);
             }
         });
 

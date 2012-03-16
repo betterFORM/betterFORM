@@ -5,6 +5,9 @@
 
 dojo.provide("betterform.xf.OutputBehavior");
 
+dojo.require("betterform.xf.XFControl");
+dojo.require("betterform.util");
+
 var outputBehavior = {
     // ############################## OUTPUT MAPPINGS ############################################################
     // ############################## OUTPUT MAPPINGS ############################################################
@@ -12,10 +15,23 @@ var outputBehavior = {
     '.xfOutput.xsdString .xfValue': function(n) {
         console.debug("output field: ",n);
 
-        var xfControl = dijit.byId(getXfId(n));
+        var xfId = getXfId(n);
+        var xfControl = dijit.byId(xfId);
 
-        dojo.connect(dijit.byId(xfId), "OutputBehaviour.handleStateChanged", function(contextInfo){
-            // ##### setting value by platform/component-specific means #####
+
+        xfControl.setValue = function(value) {
+            n.innerHTML = value;
+        };
+
+/*
+        dojo.connect(dijit.byId(xfId), "_handleSetControlValue", function(value){
+            betterform.util.innerHTML(n, value);
+        });
+*/
+
+/*
+
+        dojo.connect(dijit.byId(xfId), "handleStateChanged", function(contextInfo){
             console.debug("OutputBehaviour.handleStateChanged for:  ",n);
             if(contextInfo){
                 console.debug("contextInfo",contextInfo);
@@ -29,6 +45,7 @@ var outputBehavior = {
             console.debug("newValue: ",newValue);
             n.innerHTML = newValue;
         });
+*/
 
 
     },
