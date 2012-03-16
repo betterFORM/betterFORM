@@ -1198,24 +1198,24 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
     },
 
     _handleBetterFormDialogOpen:function(/*XMLEvent*/ xmlEvent) {
-       // console.debug("XFProcessor._handleBetterformDialogOpen: targetId: >",xmlEvent.contextInfo.targetId,"< parentId: " , xmlEvent.contextInfo.parentId);
+       // console.debug("XFProcessor._handleBetterformDialogOpen: targetId: '",xmlEvent.contextInfo.targetId,"' parentId: " , xmlEvent.contextInfo.parentId);
        var xfControlId =xmlEvent.contextInfo.targetId;
        // if XForms Control Dijit allready exists call show on selected control
        if(dijit.byId(xfControlId) != undefined){
             dijit.byId(xfControlId).show();
        }else {
-            console.error("error during betterform-dialog-show-event: targetId >",xmlEvent.contextInfo.targetId,"<, xfControlId: >",xfControlId,"< does not exist");
+            console.error("error during betterform-dialog-show-event: targetId '",xmlEvent.contextInfo.targetId, "', xfControlId: '", xfControlId,"' does not exist");
        }
     },
 
     _handleBetterFormDialogClose:function(/*XMLEvent*/ xmlEvent) {
-       // console.debug("XFProcessor._handleBetterformDialogClose: targetId: >",xmlEvent.contextInfo.targetId,"< parentId: " , xmlEvent.contextInfo.parentId);
+       // console.debug("XFProcessor._handleBetterformDialogClose: targetId: '",xmlEvent.contextInfo.targetId,"' parentId: " , xmlEvent.contextInfo.parentId);
        var xfControlId =xmlEvent.contextInfo.targetId;
        // if XForms Control Dijit allready exists call hide on selected control
        if(dijit.byId(xfControlId) != undefined){
             dijit.byId(xfControlId).hide();
        }else {
-            console.error("error during betterform-dialog-hide-event: targetId >",xmlEvent.contextInfo.targetId,"< does not exist");
+            console.error("error during betterform-dialog-hide-event: targetId '",xmlEvent.contextInfo.targetId,"' does not exist");
        }
     },
 
@@ -1443,6 +1443,8 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
         }
 
     },
+
+
 
     _handleBetterFormInsertRepeatItem:function(xmlEvent) {
         // console.debug("betterform-insert-repeatitem [id: '", xmlEvent.contextInfo.targetId, "'] xmlEvent:",xmlEvent);
