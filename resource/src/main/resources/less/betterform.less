@@ -148,6 +148,18 @@ a:active {
     .xsdDateTime .dijitError {
         background: #FFFFFF url("@{image-url}/validationInputBg.png") repeat-x scroll left top;
     }
+    .bfValueWrapper .xfTimeControl{
+        display:inline-block;
+
+        .dijitComboBox {
+            width: 18px;
+        }
+
+        .dijitButtonNode {
+            display:none;
+        }
+
+    }
 }
 
 .dijitError .dijitValidationIcon,
@@ -1017,6 +1029,7 @@ table > .bfPending .xfRepeatIndex {
     height: 500px;
     border:thin solid @borderColor1;
     width: 280px;
+    box-shadow:10px 10px 5px #aaaaaa;
 
     #logControls{
         background:@repeat-index-color;
@@ -1026,11 +1039,13 @@ table > .bfPending .xfRepeatIndex {
         border-bottom: thin solid @borderColor1;
         position: absolute;
         height: 26px;
+        cursor:move;
 
         a{
             text-decoration: none;
             width: 26px;
             height: 26px;
+            cursor: pointer;
         }
 
         #switchLog{

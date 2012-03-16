@@ -5,15 +5,19 @@
 
 dojo.provide("betterform.devtool");
 dojo.require("dojox.fx");
+dojo.require("dojo.dnd.Moveable");
+
 var inprogress=false;
 
 function toggleLog(){
+    var dnd = new dojo.dnd.Moveable(dojo.byId("evtLogContainer"));
     var evtContainer = dojo.byId("evtLogContainer");
     var logStyle = dojo.attr(evtContainer,"style");
     if(logStyle.length != 0 ){
         dojo.attr(evtContainer,"style","");
     }else{
         dojo.attr(evtContainer,"style","width:26px;height:26px;overflow:hidden;");
+
     }
 }
 function clearLog(){
@@ -22,6 +26,7 @@ function clearLog(){
     });
 }
 function reveal(node){
+
     var id = node.innerHTML;
     var tNode = dojo.byId(id);
     if(tNode !=undefined && inprogress==false){

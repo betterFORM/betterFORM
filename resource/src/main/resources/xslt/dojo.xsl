@@ -138,11 +138,17 @@
         </head>
     </xsl:template>
 
+    <!--
+    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    include-xforms-css imports the default stylesheets.
+    This template can be overwritten when additional files are needed.
+    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    -->
     <xsl:template name="include-xforms-css">
         <!-- include betterForm default stylesheet -->
         <link rel="stylesheet" type="text/css" href="{$default-css}"/>
         <!--<xsl:if test="$include-betterform-css='true'">-->
-            <link rel="stylesheet" type="text/css" href="{$betterform-css}"/>
+        <link rel="stylesheet" type="text/css" href="{$betterform-css}"/>
         <!--</xsl:if>-->
     </xsl:template>
 

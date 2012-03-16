@@ -27,7 +27,9 @@ dojo.declare(
     controlType:"",
     controlValue:null,
     currentValue:null,
-    subscriber:null,
+    bfFocus:false,
+    incremental:false,
+
 
     constructor:function() {
     },
@@ -37,10 +39,14 @@ dojo.declare(
     },
 
     postCreate:function() {
-        console.debug("\nControl.postCreate; DOM Node:",this.domNode,"\n");
+        // console.debug("\nControl.postCreate; DOM Node:",this.domNode,"\n");
         // TODO: examine if this can be done in handleStateChanged
         // ensure all needed classes for Control are in place in case we have a dynamically created control
         betterform.ui.util.setDefaultClasses(this.domNode);
+
+        if(this.isIncremental()){
+            this.incremental = true;
+        }
 
         /*
        Controls publish their validity state to the processor which will pass it to the selected alertHandler
@@ -50,6 +56,45 @@ dojo.declare(
         } else {
             dojo.publish("/xf/invalid", [this.id,"init"]);
         }
+
+    },
+
+    /*
+     sends updated value of a widget to the server
+     */
+    sendValue:function(/* String */ value, evt) {
+        console.debug("XFControl: setControlValue: currentvalue:", this.currentValue, " - newValue:",value);
+        console.debug("XFControl evt: ",evt);
+
+        if(evt.type == "blur"){
+            // control has lost focus
+            this.bfFocus = false;
+        }
+
+        if (value != undefined && this.currentValue != value) {
+            //do not send update to server if in mode 'incremental' as value already has been passed
+            if( (!this.incremental && evt.type == "blur") || (this.incremental && evt.type == "keyup") || evt.type == "click" ){
+                //update internal value
+                this.currentValue = value;
+                //handle validity and dispatch events if necessary
+                if(this.isValid()){
+                    dojo.publish("/xf/valid",[this.id,"onBlur"]);
+                }else {
+                    dojo.publish("/xf/invalid",[this.id,"onBlur"]);
+                }
+
+                fluxProcessor.sendValue(this.id, value);
+            }
+
+            this._handleRequiredEmpty();
+
+        }
+
+        if(evt.type == "blur"){
+            //notify server of lost focus
+            fluxProcessor.dispatchEventType(this.id,"DOMFocusOut");
+        }
+
     },
 
     isRequired:function() {
@@ -86,6 +131,8 @@ dojo.declare(
     },
 
     isValid:function() {
+        // console.debug("XFControl.isValid",this.domNode);
+
         if (dojo.hasClass(this.domNode, "xfInvalid")) {
             return false;
         } else if (dojo.hasClass(this.domNode, "xfValid")) {
@@ -95,11 +142,7 @@ dojo.declare(
         }
     },
     isIncremental:function(){
-        if (dojo.hasClass(this.domNode,"xfIncremental")){
-            return true;
-        }else{
-            return false;
-        }
+        return dojo.hasClass(this.domNode, "xfIncremental");
     },
 
     /*
@@ -111,31 +154,6 @@ dojo.declare(
 //        }
         if(this.currentValue != undefined){
             return this.currentValue;
-        }
-    },
-
-    getCurrentValue:function(){
-        return this.currentValue;
-    },
-
-    isValueChanged:function(value){
-        if (value != undefined && this.currentValue != value) {
-            return true;
-        }else{
-            return false;
-        }
-
-    },
-    /*
-     sends updated value of a widget to the server
-     */
-    setControlValue:function(/* String */ value) {
-        console.debug("XFControl: setControlValue: currentvalue:", this.currentValue, " - newValue:",value);
-
-        if (value != undefined && this.currentValue != value) {
-            this.currentValue = value;
-            fluxProcessor.setControlValue(this.id, value);
-            this._handleRequiredEmpty();
         }
     },
 
@@ -155,55 +173,65 @@ dojo.declare(
             this.readonly = contextInfo["readonly"];
             this.required = contextInfo["required"];
             this.relevant = contextInfo["enabled"];
-            //console.debug("Control.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " contextInfo:",contextInfo);
+            console.debug("Control.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " contextInfo:",contextInfo);
 
             if (contextInfo["targetName"] == "input" && this.value != null) {
                 var noNSType = betterform.ui.util.removeNamespace(contextInfo["type"]);
-                this._checkForDataTypeChange(noNSType, contextInfo);
+                this._checkForDataTypeChange(noNSType);
 
                 if (noNSType == "date" || noNSType == "dateTime") {
-                    this._handleSetControlValue(contextInfo["schemaValue"]);
+                    this.setValue(contextInfo["schemaValue"]);
                 } else {
-                    this._handleSetControlValue(this.value);
+                    this.setValue(this.value);
                 }
 
             } else if (this.value != null) {
-                this._handleSetControlValue(this.value);
+                this.setValue(this.value);
+            }
+            if(this.valid != undefined){
+                if (this.valid == "true") {
+                    this.setValid();
+                }else if(!dojo.hasClass(this.domNode,"bfInvalidControl")){
+                    /*
+                     todo: got the feeling that this case should be handled elsewhere....
+                     if a control is intially invalid it just has xfInvalid but not bfInvalidControl. This may happen
+                     during init and somehow the subscriber won't be called then (too early???)
+
+                     Ok, for now: if control is not valid (has 'xfInvalid' class) and not has 'bfInvalidControl' (which
+                     actually shows an alert) it must nevertheless publish invalid event for the alerts to work correctly.
+                     */
+                    this.setInvalid();
+                }
+            }
+            if(this.readonly != undefined) {
+                if (this.readonly == "true") {
+                    this.setReadonly();
+                }else {
+                    this.setReadwrite();
+                }
             }
 
-            if (this.valid != null ) {
-                this._handleSetValidProperty(eval(this.valid));
-            }else if(!this.isValid() && !dojo.hasClass(this.domNode,"bfInvalidControl")){
-                /*
-                 todo: got the feeling that this case should be handled elsewhere....
-                 if a control is intially invalid it just has xfInvalid but not bfInvalidControl. This may happen
-                 during init and somehow the subscriber won't be called then (too early???)
-
-                 Ok, for now: if control is not valid (has 'xfInvalid' class) and not has 'bfInvalidControl' (which
-                 actually shows an alert) it must nevertheless publish invalid event for the alerts to work correctly.
-                 */
-                this._handleSetValidProperty(false);
+            if(this.required != undefined) {
+                if (this.required == "true") {
+                    this.setRequired();
+                }else {
+                    this.setOptional();
+                }
             }
-
-            if(!this.isValid() && !dojo.hasClass(this.domNode,"bfInvalidControl")){
-                this._handleSetValidProperty(false);
-            }
-            if (this.readonly != null) {
-                this._handleSetReadonlyProperty(eval(this.readonly));
-            }
-            if (this.required != null) {
-                this._handleSetRequiredProperty(eval(this.required));
-            }
-            if (this.relevant != null) {
-                this._handleSetEnabledProperty(eval(this.relevant));
+            if(this.relevant != undefined) {
+                if (this.relevant == "true") {
+                    this.setEnabled();
+                }else {
+                    this.setDisabled();
+                }
             }
 
         }
     },
 
 
-    _checkForDataTypeChange:function(dataType, contextInfo) {
-        console.debug("_checkForDataTypeChange: old dataType: " + this.dataType + " new dataType: ", dataType, " contextInfo:",contextInfo);
+    _checkForDataTypeChange:function(dataType) {
+        // console.debug("_checkForDataTypeChange: old dataType: " + this.dataType + " new dataType: ", dataType, " contextInfo:",contextInfo);
 
         if (this.controlValue == undefined) {
             var controlValueTemplate = dojo.query("*[id ='" + this.id + "-value']", this.domNode)[0];
@@ -244,147 +272,141 @@ dojo.declare(
         this.dataType = dataType;
     },
 
-    _handleSetControlValue:function(value) {
-        console.debug("handleSetControlValue: " + this.currentValue + " value: " + value);
+    setValue:function(value) {
+        console.debug("XFControl.setValue: " + this.currentValue + " value: " + value);
+
         if(this.currentValue != value) {
             this.currentValue = value;
-            this._handleRequiredEmpty();
+            var valueNode = dojo.byId(this.id + "-value");
+            if (valueNode != undefined) {
+                dojo.attr(valueNode, "value", value);
+            }
+            else {
+                console.error("Failure updating value for Control '" + this.id + "-alert' with value: " + value);
+            }
+
+            // this._handleRequiredEmpty();
+
         }
         // dojo.publish("/xf/valueChanged",[this,value])
     },
 
-    _handleSetValidProperty:function(validity) {
-        console.debug("XFControl._handleSetValidProperty [id:"+this.id+ " valid: ",validity, "]");
-        if (validity) {
-            betterform.ui.util.replaceClass(this.domNode, "xfInvalid", "xfValid");
-            dojo.publish("/xf/valid", [this.id,"applyChanges"]);
-        }
-        else {
-            betterform.ui.util.replaceClass(this.domNode, "xfValid", "xfInvalid");
-            dojo.publish("/xf/invalid", [this.id,"applyChanges"]);
-        }
+    setValid:function() {
+        betterform.ui.util.replaceClass(this.domNode, "xfInvalid", "xfValid");
+        dojo.publish("/xf/valid", [this.id,"applyChanges"]);
 
     },
 
-    _handleSetReadonlyProperty: function() {
-        if (!eval(this.readonly)) {
-            betterform.ui.util.replaceClass(this.domNode, "xfReadOnly", "xfReadWrite");
+    setInvalid:function() {
+        betterform.ui.util.replaceClass(this.domNode, "xfValid", "xfInvalid");
+        dojo.publish("/xf/invalid", [this.id,"applyChanges"]);
+    },
+
+    setReadonly:function() {
+        betterform.ui.util.replaceClass(this.domNode, "xfReadWrite", "xfReadOnly");
+        dojo.attr(this.getWidget(), "readonly",true);
+    },
+
+    setReadwrite:function() {
+        betterform.ui.util.replaceClass(this.domNode,"xfReadOnly","xfReadWrite");
+        dojo.attr(this.getWidget(), "readonly",false);
+    },
+
+    setRequired:function() {
+        betterform.ui.util.replaceClass(this.domNode, "xfOptional", "xfRequired");
+    },
+
+    setOptional:function() {
+        betterform.ui.util.replaceClass(this.domNode, "xfRequired", "xfOptional");
+    },
+
+    setEnabled:function() {
+        var label = dojo.byId(this.id + "-label");
+        if (label != undefined) {
+            if (dojo.hasClass(label, "xfDisabled")) {
+                betterform.ui.util.replaceClass(label, "xfDisabled", "xfEnabled");
+            } else {
+                dojo.addClass(label, "xfEnabled");
+            }
         }
-        else {
-            betterform.ui.util.replaceClass(this.domNode, "xfReadWrite", "xfReadOnly");
+        betterform.ui.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");
+
+        if (this.isValid()) {
+            dojo.publish("/xf/valid", [this.id, "xfDisabled"]);
+        } else {
+            dojo.publish("/xf/invalid", [this.id, "xfDisabled"]);
         }
-        this.controlValue.applyState();
+    },
+
+    setDisabled:function() {
+        var label = dojo.byId(this.id + "-label");
+        if (label != undefined) {
+            if (dojo.hasClass(label, "xfEnabled")) {
+                betterform.ui.util.replaceClass(label, "xfEnabled", "xfDisabled");
+            } else {
+                dojo.addClass(label, "xfDisabled");
+            }
+        }
+        betterform.ui.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");
+        if (this.isValid()) {
+            dojo.publish("/xf/valid", [this.id, "xfDisabled"]);
+        } else {
+            dojo.publish("/xf/invalid", [this.id, "xfDisabled"]);
+        }
+    },
+
+    _handleSetValidProperty:function(validity) {
+        console.warn("XFControl._handleSetValidProperty was removed, use setValid / setInvalid instead");
+
+    },
+    _handleSetReadonlyProperty: function(/*Boolean*/ readonly) {
+        console.warn("XFControl._handleSetReadonlyProperty was removed, use setReadonly/ setReadwrite instead");
+
     },
 
     _handleSetRequiredProperty:function() {
-        if (this.required == "true") {
-            betterform.ui.util.replaceClass(this.domNode, "xfOptional", "xfRequired");
-        }
-        else {
-            betterform.ui.util.replaceClass(this.domNode, "xfRequired", "xfOptional");
-        }
+        console.warn("XFControl._handleSetRequiredProperty was removed, use setRequired/ setOptional instead");
     },
 
     _handleSetEnabledProperty:function(enabled) {
-        // console.debug("_handleSetEnabledProperty  enabled:",enabled, " domNode: ",this.domNode);
-        var targetId = this.id;
-        var label = dojo.byId(targetId + "-label");
-
-        if (enabled) {
-            if (label != undefined) {
-                if (dojo.hasClass(label, "xfDisabled")) {
-                    betterform.ui.util.replaceClass(label, "xfDisabled", "xfEnabled");
-                } else {
-                    dojo.addClass(label, "xfEnabled");
-                }
-            }
-
-            betterform.ui.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");
-        }
-        else {
-            if (label != undefined) {
-                if (dojo.hasClass(label, "xfEnabled")) {
-                    betterform.ui.util.replaceClass(label, "xfEnabled", "xfDisabled");
-                } else {
-                    dojo.addClass(label, "xfDisabled");
-                }
-            }
-
-            betterform.ui.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");
-            if (this.isValid()) {
-                dojo.publish("/xf/valid", [this.id, "xfDisabled"]);
-            } else {
-                dojo.publish("/xf/invalid", [this.id, "xfDisabled"]);
-            }
-        }
-
-
+        console.warn("XFControl._handleSetEnabledProperty was removed, use setEnabled/ setDisabled instead");
     },
 
     _handleHelperChanged: function(properties) {
-        // console.debug("Control.handleHelperChanged: type='" + properties["type"] + "',  value='" + properties["value"] + "'");
+       console.debug("Control.handleHelperChanged: this.id: "+this.id+ "type='" + properties["targetName"] + "',  value='" + properties["value"] + "'");
         switch (properties["targetName"]) {
             case "label":
-                this.controlValue._setLabel(properties["value"]);
+                this.setLabel(properties["value"]);
                 return;
             case "help":
-                this._setHelp(properties["value"]);
+                this.setHelp(properties["value"]);
                 return;
             case "hint":
-                this._setHint(properties["value"]);
+                this.setHint(properties["value"]);
                 return;
             case "alert":
-                this._setAlert(properties["value"]);
+                this.setAlert(properties["value"]);
                 return;
             case "value":
-                this.controlValue._handleSetControlValue(properties["value"]);
+                this.setValue(properties["value"]);
                 return;
+
         }
     },
 
-    _updateMIPClasses:function() {
+    setLabel:function(value) {
+         console.debug("Control.setLabel value:"+ value);
 
-        /*
-         console.debug("betterform.ui.Control._checkMIP: contextInfo:",this.contextInfo,
-         " enabled: " +this.contextInfo.enabled +
-         " readonly: " + this.contextInfo.readonly+
-         " required: " +this.contextInfo.required +
-         " valid: " + this.contextInfo.valid);
-         */
-
-        if (this.contextInfo.enabled != undefined) {
-            if (this.contextInfo.enabled == "true") {
-                betterform.ui.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");
-            } else {
-                betterform.ui.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");
-            }
+        var labelNode = dojo.byId(this.id + "-label");
+        if (labelNode != undefined) {
+            labelNode.innerHTML = value;
         }
-        if (this.contextInfo.readonly != undefined) {
-            if (this.contextInfo.readonly == "true") {
-                betterform.ui.util.replaceClass(this.domNode, "xfReadWrite", "xfReadOnly");
-            } else {
-                betterform.ui.util.replaceClass(this.domNode, "xfReadOnly", "xfReadWrite");
-            }
+        else {
+            console.warn("Failure updating help for Control '" + this.id + "-help' with value: " + value);
         }
-        if (this.contextInfo.required != undefined) {
-            if (this.contextInfo.required == "true") {
-                betterform.ui.util.replaceClass(this.domNode, "xfOptional", "xfRequired");
-            } else {
-                betterform.ui.util.replaceClass(this.domNode, "xfRequired", "xfOptional");
-            }
-        }
-        if (this.contextInfo.valid != undefined) {
-            if (this.contextInfo.valid == "true") {
-                betterform.ui.util.replaceClass(this.domNode, "xfInvalid", "xfValid");
-            } else {
-                betterform.ui.util.replaceClass(this.domNode, "xfValid", "xfInvalid");
-            }
-        }
-
     },
-
-    _setHelp:function(value) {
-        // console.warn("TBD: Control._setHelp value:"+ value);
+    setHelp:function(value) {
+        // console.warn("TBD: Control.setHelp value:"+ value);
         var helpNode = dojo.byId(this.id + "-help");
         if (helpNode != undefined) {
             helpNode.innerHTML = value;
@@ -394,17 +416,17 @@ dojo.declare(
         }
     },
 
-    _setHint:function(value) {
+    setHint:function(value) {
         // Container for storing the hint-node if it exists
         var hintNode = dojo.byId(this.id + "-hint");
         // Container for storing the node which contains a title attribute
         var valueNode = dijit.byId(this.id + "-value");
 
-        // Value for: Is a hint Node available at the current DOM-structure
-        var hintNodeFound = false;
         // Value for: Is a title-Attribute availabel at the current DOM-structure
         var titleAttributeFound = false;
 
+        // Value for: Is a hint Node available at the current DOM-structure
+        var hintNodeFound;
         // Check if a hint-node is available and store that information
         hintNodeFound = hintNode != undefined;
 
@@ -440,7 +462,7 @@ dojo.declare(
         }
     },
 
-    _setAlert:function(value) {
+    setAlert:function(value) {
         var alertNode = dojo.byId(this.id + "-alert");
         if (alertNode != undefined) {
             alertNode.innerHTML = value;
@@ -451,14 +473,18 @@ dojo.declare(
 
     },
 
-    _setValueChild:function(value) {
-        console.warn("TBD: Control._setValueChild value:" + value);
-    },
 
     _handleRequiredEmpty:function(){
         if (dojo.hasClass(this.domNode, "xfRequiredEmpty")) {
             dojo.removeClass(this.domNode, "xfRequiredEmpty");
         }
+    },
+
+    getWidget:function() {
+        if(this.widget == undefined) {
+            this.widget = dojo.byId(this.id+"-value");
+        }
+        return this.widget;
     }
 });
 

@@ -28,3 +28,21 @@ Open issues
 Component mapping with dojo.behavior solves some problems we had with extending controls but is not an
 answer to importing JS and CSS resources. Adding these still requires changing the xslt transform. We should
 add a declarative way of adding these.
+
+ * Using Output within Labels (e.g. of a trigger) does not work yet
+ * Switching a RepeatFull to readonly does not work correctly, handleStateChanged events are only present for
+    repeat items but not the repeat itself.
+
+
+To use it
+--------------------------------
+- change betterform-config to use xhtml.xsl instead of dojo.xsl
+- redeploy
+
+The relevant JS classes to be worked on are:
+-XFControl
+-Component
+-XFProcessor
+
+todo: change name of useragent - 'dojo' is not appropriate any more
+todo: check for diffs between XFProcessor and FluxProcessor

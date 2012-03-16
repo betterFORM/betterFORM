@@ -59,7 +59,7 @@ public class EventQueue {
 	        String targetName = target.getLocalName();
 	        clonedEvent.addProperty("targetName", targetName);
 	
-	        if (BetterFormEventNames.STATE_CHANGED.equals(clonedEvent.getType()) && HELPER_ELEMENTS.contains(targetName)) {
+	        if ((BetterFormEventNames.STATE_CHANGED.equals(clonedEvent.getType()) && HELPER_ELEMENTS.contains(targetName)) || BetterFormEventNames.PROTOTYPE_CLONED.equals(clonedEvent.getType()) || BetterFormEventNames.ITEM_DELETED.equals(clonedEvent.getType())) {
 	            // parent id is needed for updating all helper elements cause they
 	            // are identified by '<parentId>-label' etc. rather than their own id
 	            String parentId = ((Element) target.getParentNode()).getAttributeNS(null, "id");
