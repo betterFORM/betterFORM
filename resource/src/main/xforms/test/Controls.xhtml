@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:bf="http://betterform.sourceforge.net/xforms">
+<head>
+    <title>Single Input Test</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+
+    -->
+
+
+
+    <style type="text/css">
+        .xfFullGroup .xfGroupLabel {
+            font-size:large;
+            font-weight: bold;
+            padding-top: 6px;
+        }
+        .xfGroup .xfControl .xfLabel {
+            float: left;
+        }
+    </style>
+
+    <xf:model>
+        <xf:instance xmlns="">
+            <data>
+                <group>
+                    <label for="label1">Group Label 1</label>
+                    <label for="label2">Group Label 2</label>
+                </group>
+                <input>
+                    <value>input value</value>
+                    <label>input label</label>
+                </input>
+                <input>
+                    <value>2012-01-01</value>
+                    <label>date label</label>
+                </input>
+                <input>
+                    <value>2012-01-01</value>
+                    <label>bf:dropdowndate</label>
+                    <alert>Alert for input[3]</alert>
+                    <hint>Hint Title</hint>
+                    <hint>Hint Body</hint>
+                </input>
+                <input>
+                    <value>2012-01-01</value>
+                    <label>iso8601:dd/MM/yyyy</label>
+                    <alert>Alert for input[3]</alert>
+                    <hint>Hint Title</hint>
+                    <hint>Hint Body</hint>
+                </input>
+                <output>
+                    <value>output value</value>
+                    <label>output text</label>
+                </output>
+                <output>
+                    <value>/betterform/bfResources/images/logo.png</value>
+                    <label>output image</label>
+                </output>
+                <output>
+                    <value>http://www.google.com</value>
+                    <label>output anyURI</label>
+                </output>
+                <output>
+                    <value><b>Bold</b> and <i>italic</i> text.></value>
+                    <label>output html</label>
+                </output>
+                <textarea>
+                    <value>references output[4]/value</value>
+                    <label>textarea html</label>
+                </textarea>
+                <select1>
+                    <value>00FF00</value>
+                    <label>select1 minimal</label>
+                </select1>
+                <select1>
+                    <value>0000FF</value>
+                    <label>select1 compact</label>
+                </select1>
+                <select1>
+                    <value>FF0000</value>
+                    <label>select1 full</label>
+                </select1>
+            </data>
+        </xf:instance>
+
+        <xf:bind nodeset="instance()">
+            <xf:bind nodeset="input[2]/value" type="date"/>
+            <xf:bind nodeset="input[3]/value" type="date"/>
+            <xf:bind nodeset="input[4]/value" type="date"/>
+            <xf:bind nodeset="output[3]/value" type="anyURI"/>
+        </xf:bind>
+
+        <xf:instance id="colors">
+            <items xmlns="">
+                <color>
+                    <name>RED</name>
+                    <value>00FF00</value>
+                </color>
+                <color>
+                    <name>GREEN</name>
+                    <value>0000FF</value>
+                </color>
+                <color>
+                    <name>BLUE</name>
+                    <value>FF0000</value>
+                </color>
+            </items>
+        </xf:instance>
+
+    </xf:model>
+</head>
+
+<body class="tundra">
+    <xf:group  appearance="minimal">
+
+        <!--<xf:group>
+            <xf:trigger>
+                <xf:label>Group Label</xf:label>
+                <xf:setvalue ref="instance()/group/label" value="'New Group Label'"/>
+            </xf:trigger>
+            <span style="margin:4px;padding:4px;border:thin dotted #808080">
+                <xf:trigger>
+                    <xf:label>Input Label</xf:label>
+                    <xf:setvalue ref="instance()/input/label" value="'new input label'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Input Value</xf:label>
+                    <xf:setvalue ref="instance()/input/value" value="'new input value'"/>
+                </xf:trigger>
+            </span>
+            <span style="margin:4px;padding:4px;border:thin dotted #808080">
+                <xf:trigger>
+                    <xf:label>Output Text Label</xf:label>
+                    <xf:setvalue ref="instance()/output[1]/label" value="'new output label'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Output Text Value</xf:label>
+                    <xf:setvalue ref="instance()/output[1]/value" value="'new output value'"/>
+                </xf:trigger>
+            </span>
+            <span style="margin:4px;padding:4px;border:thin dotted #808080">
+                <xf:trigger>
+                    <xf:label>Output Image Value</xf:label>
+                    <xf:setvalue ref="instance()/output[2]/value" value="'/betterform/bfResources/images/arrow-down.png'"/>
+                </xf:trigger>
+            </span>
+            <span style="margin:4px;padding:4px;border:thin dotted #808080">
+                <xf:trigger>
+                    <xf:label>Output anyURI</xf:label>
+                    <xf:setvalue ref="instance()/output[3]/value" value="'http://www.betterform.de'"/>
+                </xf:trigger>
+            </span>
+        </xf:group>-->
+<!--
+        <xf:group appearance="full" ref="instance()" class="xfFullGroup">
+            <xf:label ref="group/label"/>
+
+            <xf:input ref="input/value">
+                <xf:label ref="../label"/>
+            </xf:input>
+            <xf:output ref="output[1]/value">
+                <xf:label ref="../label"/>
+            </xf:output>
+
+            <xf:output ref="output[2]/value" mediatype="image/gif">
+                <xf:label ref="../label"/>
+                <xf:hint>a Hint for this control</xf:hint>
+                <xf:help>help for output1</xf:help>
+                <xf:alert>invalid</xf:alert>
+            </xf:output>
+            <xf:output ref="output[3]/value">
+                <xf:label ref="../label"/>
+            </xf:output>
+            <xf:output ref="output[4]/value" mediatype="text/html">
+                <xf:label ref="../label"/>
+            </xf:output>
+            <xf:textarea ref="output[4]/value" mediatype="text/html">
+                <xf:label ref="instance()/textarea[1]/label"/>
+            </xf:textarea>
+
+            <xf:select1 ref="select1[1]/value" appearance="minimal">
+                <xf:label ref="instance()/select1[1]/label"/>
+                <xf:itemset  nodeset="instance('colors')/color">
+                    <xf:label ref="name"/>
+                    <xf:value ref="value"/>
+                </xf:itemset>
+            </xf:select1>
+
+            <xf:select1 ref="select1[2]/value" appearance="compact">
+                <xf:label ref="instance()/select1[2]/label"/>
+                <xf:itemset  nodeset="instance('colors')/color">
+                    <xf:label ref="name"/>
+                    <xf:value ref="value"/>
+                </xf:itemset>
+            </xf:select1>
+
+            <xf:select1 ref="select1[3]/value" appearance="full">
+                <xf:label ref="instance()/select1[3]/label"/>
+                <xf:itemset  nodeset="instance('colors')/color">
+                    <xf:label ref="name"/>
+                    <xf:value ref="value"/>
+                </xf:itemset>
+            </xf:select1>
+        </xf:group>
+-->
+
+        <xf:group ref="instance()" appearance="full" id="eventListener" class="xfFullGroup">
+            <xf:label>Controls to implement</xf:label>
+            <xf:action ev:event="customEvent">
+                <xf:message>arrived</xf:message>
+            </xf:action>
+            <xf:trigger>
+                <xf:label>load embed</xf:label>
+                <xf:action>
+                    <xf:message>tbd</xf:message>
+<!--
+                    <xf:load show="embed" targetid="mountPoint">
+                        <xf:resource value="" />
+                    </xf:load>
+-->
+                    <script type="text/javascript">
+                        alert("worked")
+                    </script>
+                </xf:action>
+            </xf:trigger>
+            <xf:group ref="instance()/group[1]">
+                <p><xf:label ref="label[@for='label1']" /></p>
+                <p><xf:label ref="label[@for='label2']" /></p>
+            </xf:group>
+
+            <xf:select1 ref="select1[1]/value" id="colorselecter">
+                <xf:label>Select1 minimal</xf:label>
+                <xf:itemset  nodeset="instance('colors')/color">
+                    <xf:label ref="name"/>
+                    <xf:value ref="value"/>
+                </xf:itemset>
+                <xf:action ev:event="xforms-select">
+                    <script type="text/javascript">
+                        console.debug("colorselecter value changed");
+                    </script>
+                </xf:action>
+            </xf:select1>
+
+            <xf:select1 ref="select1[1]/value" appearance="compact">
+                <xf:label>Select1 compact</xf:label>
+                <xf:itemset  nodeset="instance('colors')/color">
+                    <xf:label ref="name"/>
+                    <xf:value ref="value"/>
+                </xf:itemset>
+            </xf:select1>
+
+            <xf:select1 ref="select1[1]/value" appearance="full">
+                <xf:label>Select1 full</xf:label>
+                <xf:itemset  nodeset="instance('colors')/color">
+                    <xf:label ref="name"/>
+                    <xf:value ref="value"/>
+                </xf:itemset>
+            </xf:select1>
+
+            <xf:input ref="input[2]/value" >
+                <xf:label ref="../label" />
+                <xf:alert ref="../alert" />
+                <xf:action ev:event="xforms-value-changed">
+                    <script type="text/javascript">
+                        console.debug("xforms-value-changed input[2]");
+                    </script>
+                </xf:action>
+            </xf:input>
+            <xf:input ref="input[3]/value"  appearance="bf:dropdowndate=-17:-100">
+                <xf:label ref="../label" />
+                <xf:alert ref="../alert" />
+                <xf:hint>
+                    <span class="help-title"><xf:output ref="../hint[1]"/></span>
+                    <span class="help-body"><xf:output ref="../hint[2]"/></span>
+                </xf:hint>
+                <xf:action ev:event="xforms-value-changed">
+                    <script type="text/javascript">
+                        console.debug("xforms-value-changed input[3]");
+                    </script>
+                </xf:action>
+            </xf:input>
+            <xf:input ref="input[4]/value"  appearance="iso8601:dd/MM/yyyy">
+                <xf:label ref="../label" />
+                <xf:alert ref="../alert" />
+            </xf:input>
+
+            <xf:trigger id="noRegButton" appearance="minimal">
+                <xf:label ref="trigger[1]/label"/>
+                <xf:action>
+                    <xf:message>trigger works</xf:message>
+                </xf:action>
+            </xf:trigger>
+
+
+
+
+
+        </xf:group>
+
+    </xf:group>
+</body>
+</html>

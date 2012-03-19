@@ -7,7 +7,6 @@ dojo.provide("betterform.xf.input.Date");
 
 
 dojo.require("dijit._Widget");
-dojo.require("dijit._Templated");
 dojo.require("dijit.form.DateTextBox");
 dojo.require("betterform.xf.Widget");
 

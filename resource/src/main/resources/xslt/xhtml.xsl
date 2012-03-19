@@ -261,8 +261,6 @@
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dijit/themes/', $cssTheme, '/', $cssTheme,'.css')"/>";
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojo/resources/dojo.css')"/>";
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/widget/Toaster/Toaster.css')"/>";
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/layout/resources/FloatingPane.css')"/>";
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/layout/resources/ResizeHandle.css')"/>";
                 </style><xsl:text>
 </xsl:text>
     </xsl:template>
@@ -503,10 +501,6 @@
             -->
             <xsl:call-template name="addDojoImport"/>
             <xsl:call-template name="addDWRImports"/>
-
-            <xsl:if test="exists(//xf:input[@appearance='caSimileTimeline'])">
-                <xsl:call-template name="addSimileTimelineImports" />
-            </xsl:if>
 
             <xsl:call-template name="addLocalScript"/>
             <xsl:call-template name="copyInlineScript"/>
@@ -883,35 +877,6 @@
 
     <xsl:template name="addLocalScript">
         <script type="text/javascript" defer="defer">
-            <xsl:if test="$debug-enabled">
-                function getXFormsDOM(){
-                    Flux.getXFormsDOM(document.getElementById("bfSessionKey").value,
-                                    function(data){console.dirxml(data);}
-                    );
-                }
-
-                function getInstanceDocument(instanceId){
-                    var model = dojo.query(".xfModel", dojo.doc)[0];
-                    dijit.byId(dojo.attr(model, "id")).getInstanceDocument(instanceId,
-                    function(data){
-                        console.dirxml(data);
-                    });
-                }
-            </xsl:if>
-
-            <!--
-            function loadBetterFORMJs(pathToRelease, developmentJsClass){
-                if (isBetterFORMRelease) {
-                    var scriptElement = document.createElement('script');
-                    scriptElement.type = 'text/javascript';
-                    scriptElement.src = pathToRelease;
-                    document.getElementsByTagName('head')[0].appendChild(scriptElement);
-                } else {
-                    dojo.require(developmentJsClass);
-                }
-            }
-            -->
-
             dojo.ready(function(){
                 dojo.ready(function(){
                     console.debug("ready");
@@ -948,7 +913,7 @@
         </xsl:choose>
 
 
-        <script type="text/javascript" src="{concat($contextroot,$scriptPath,'betterform/betterform-Full.js')}">&#160;</script>
+        <script type="text/javascript" src="{concat($contextroot,$scriptPath,'betterform/betterform-XHTML.js')}">&#160;</script>
         <xsl:text>
 </xsl:text>
         <!--
@@ -964,15 +929,4 @@
 </xsl:text>
 
     </xsl:template>
-
-    <!-- todo: move this template out to e.g. 'dojoPlus.xsl' -->
-    <xsl:template name="addSimileTimelineImports" >
-            <script type="text/javascript" src="{concat($contextroot,$scriptPath, 'simile/timeline/simile-ajax-api.js')}">&#160;</script><xsl:text>
-</xsl:text>
-            <script type="text/javascript" src="{concat($contextroot,$scriptPath, 'simile/timeline/simile-ajax-bundle.js')}">&#160;</script><xsl:text>
-</xsl:text>
-            <script type="text/javascript" src="{concat($contextroot,$scriptPath, 'simile/timeline/timeline-api.js?timeline-use-local-resources=true&amp;bundle=true&amp;forceLocale=en')}">&#160;</script><xsl:text>
-</xsl:text>
-    </xsl:template>
-
 </xsl:stylesheet>

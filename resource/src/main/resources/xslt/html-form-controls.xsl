@@ -364,7 +364,7 @@
                     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                     -->
                     <xsl:otherwise>
-                        <span class="select1wrapper">
+<!--                        <span class="select1wrapper">-->
                             <select id="{$id}-value"
                                     name="{$name}"
                                     class="xfValue"
@@ -376,7 +376,7 @@
                                     <xsl:with-param name="parent" select="$parent"/>
                                 </xsl:call-template>
                             </select>
-                        </span>
+<!--                        </span>-->
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:otherwise>
@@ -1010,33 +1010,36 @@
                 <xsl:with-param name="label-elements" select="xf:label"/>
             </xsl:call-template>
         </xsl:variable>
+
         <span id="{@id}" class="xfSelectorItem">
             <input id="{@id}-value"
                    class="xfRadioValue"
-                   dataType="radio"
+                   type="radio"
                    parentId="{$parentId}"
                    name="{$name}"
                    selected="{@selected}"
                    >
-                <xsl:if test="string-length($navindex) != 0">
-                    <xsl:attribute name="tabindex">
-                        <xsl:value-of select="$navindex"/>
-                    </xsl:attribute>
-                </xsl:if>
                 <xsl:attribute name="value">
                     <xsl:choose>
                         <xsl:when test="xf:copy"><xsl:value-of select="xf:copy/@id"/></xsl:when>
                         <xsl:otherwise><xsl:value-of select="normalize-space(xf:value)"/></xsl:otherwise>
                     </xsl:choose>
                 </xsl:attribute>
-                <xsl:attribute name="title"/>
+                <xsl:if test="string-length($navindex) != 0">
+                    <xsl:attribute name="tabindex">
+                        <xsl:value-of select="$navindex"/>
+                    </xsl:attribute>
+                </xsl:if>
+                <xsl:value-of select="$label"/>
             </input>
+<!--
             <label id="{@id}-label" for="{@id}-value" class="xfRadioLabel">
                 <xsl:if test="$parent/bf:data/@bf:readonly='true'">
                     <xsl:attribute name="disabled">disabled</xsl:attribute>
                 </xsl:if>
-                <xsl:value-of select="$label"/>
+
             </label>
+-->
         </span>
 	</xsl:template>
 

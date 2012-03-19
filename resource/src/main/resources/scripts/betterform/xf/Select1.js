@@ -79,4 +79,10 @@ dojo.declare(
         }
     }
 );
+dojo.declare(
+    "betterform.xf.Select1Compact",betterform.xf.Select1Minimal,
+    {
+
+    }
+);
 

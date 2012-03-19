@@ -267,7 +267,8 @@ dojo.declare(
 
 
     handleStateChanged:function(contextInfo) {
-        var relevant = eval(contextInfo["enabled"]);
+        //console.debug("Repeat.handleStateChanged contextInfo:",contextInfo);
+        var relevant = contextInfo["enabled"] == true;
         // console.debug("Repeat.handleStateChanged relevant:",relevant);
         if (relevant) {
             betterform.ui.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");

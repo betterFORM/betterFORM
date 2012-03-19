@@ -77,7 +77,6 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
 
         // Initialize the clientServerEventQueue for immediately being able to append Elements
         this.clientServerEventQueue = new Array();
-        this.factory = new betterform.ui.UIElementFactory();
         if (this.webtest != 'true') {
             dojo.connect(window, "onbeforeunload", this, "handleUnload");
             dojo.connect(window, "onunload", this, "close");
@@ -86,7 +85,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
 
         //#########    ALERT IMPLEMENTATION  #############
         //#########    ALERT IMPLEMENTATION  #############
-        // console.debug("Alert Handler Init");
+/*
         var globalAlertEnabled = dojo.query(".GlobalAlert", dojo.doc)[0];
         if (globalAlertEnabled != undefined) {
             dojo.require("betterform.ui.common.GlobalAlert");
@@ -107,21 +106,20 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
         }
 
         var toolTipAlertEnabled = dojo.query(".ToolTipAlert", dojo.doc)[0];
-        if (toolTipAlertEnabled != undefined || (this.defaultAlertHandler == undefined)) {
+        if (toolTipAlertEnabled != undefined ) {
             dojo.require("betterform.ui.common.ToolTipAlert");
             this.defaultAlertHandler = new betterform.ui.common.ToolTipAlert({});
-            console.debug("Enabled ToolTipAlert Handler ", this.defaultAlertHandler);
+            // console.debug("Enabled ToolTipAlert Handler ", this.defaultAlertHandler);
         }
+*/
 
-//        var inlineAlertEnabled = dojo.query(".InlineAlert", dojo.doc)[0];
-//        if (inlineAlertEnabled != undefined) {
-        //todo: choose default handler in a safe way - fix this
-        //default alert handler
+        var inlineAlertEnabled = dojo.query(".InlineAlert", dojo.doc)[0];
+        if (inlineAlertEnabled != undefined || this.defaultAlertHandler == undefined) {
             dojo.require("betterform.ui.common.InlineAlert");
             this.defaultAlertHandler = new betterform.ui.common.InlineAlert({});
-            console.debug("Enabled InlineAlert Handler ", this.defaultAlertHandler);
+            // console.debug("Enabled InlineAlert Handler ", this.defaultAlertHandler);
 
-//        }
+        }
 
         this.subscribers[0] = dojo.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
         this.subscribers[1] = dojo.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");
@@ -129,14 +127,9 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
         //#########    ALERT IMPLEMENTATION  END #############
         //#########    ALERT IMPLEMENTATION  END #############
 
-        //Moved to dojo.xsl after dojo.parse();
-        /* try {
-         console.debug("contextroot + \"/Flux\": " + fluxAttribute("contextroot") + "/Flux" );
-         Flux._path = fluxAttribute("contextroot") + "/Flux";
-         Flux.init( fluxAttribute("sessionkey"), dojo.hitch(this,this.applyChanges));
-         }catch(ex) {
-         fluxProcessor._handleExceptions("Failure executing initcall within Flux Constructor ", ex);
-         }*/
+        // Browser Detection
+        this.userAgent = navigator.userAgent;
+        console.debug("userAgent: ",this.userAgent);
     },
 
     setInlineRoundBorderAlertHandler:function() {

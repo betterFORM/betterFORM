@@ -6,7 +6,6 @@
 dojo.provide("betterform.xf.XFControl");
 
 dojo.require("dijit._Widget");
-dojo.require("dijit._Templated");
 
 
 /**
@@ -21,7 +20,7 @@ dojo.require("dijit._Templated");
 
 dojo.declare(
         "betterform.xf.XFControl",
-        [dijit._Widget, dijit._Templated],
+        dijit._Widget,
 {
     id:"",
     controlType:"",

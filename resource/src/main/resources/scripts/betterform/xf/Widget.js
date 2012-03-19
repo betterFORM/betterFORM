@@ -7,7 +7,6 @@ dojo.provide("betterform.xf.Widget");
 
 dojo.require("dijit._Widget");
 dojo.require("dijit.form._FormWidget");
-dojo.require("dijit._Templated");
 /*dojo.require("dojo._base.fx");*/
 
 
@@ -16,7 +15,7 @@ dojo.require("dijit._Templated");
  */
 dojo.declare(
         "betterform.xf.Widget",
-        [dijit._Widget, dijit._Templated],
+        dijit._Widget,
 {
     id:null,
     name:"",

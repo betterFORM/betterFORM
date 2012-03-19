@@ -108,15 +108,7 @@ var inputBehavior = {
         found: function(n){
 //            console.debug("date input field: ",n);
 //            console.debug("date input field: ",n.value);
-            // create dijit for datePicker as not widly available yet in browsers
-/*
-            dojo.require("betterform.xf.input.Date");
 
-            var dateWidget=new betterform.xf.input.Date({
-                xfControl  : dijit.byId(getXfId(n)),
-                value      : new Date(n.value)
-            },n);
-*/
             var dateWidget = new dijit.form.DateTextBox({
                 value      : new Date(n.value)
             },n);

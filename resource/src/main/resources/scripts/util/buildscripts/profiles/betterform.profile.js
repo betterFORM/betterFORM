@@ -127,6 +127,13 @@ dependencies = {
             dependencies: [
                 "betterform.BfRequiredXFormsEditor"
             ]
+        },
+        {
+            name: "../betterform/betterform-XHTML.js",
+            resourceName: "betterform.xhtml",
+            dependencies: [
+                "betterform.BfRequiredXHTML"
+            ]
         }
     ],
 
