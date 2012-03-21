@@ -79,14 +79,14 @@ dojo.declare(
             return;
         }
 
-        if(evt.type == "blur"){
+        if(evt && evt.type == "blur"){
             // control has lost focus
             this.bfFocus = false;
         }
 
         if (value != undefined && this.currentValue != value) {
             //do not send update to server if in mode 'incremental' as value already has been passed
-            if( (!this.incremental && evt.type == "blur") || (this.incremental && evt.type == "keyup") || evt.type == "click" ){
+            if( evt == undefined || (!this.incremental && evt.type == "blur") || (this.incremental && evt.type == "keyup") || evt.type == "click" ){
                 //update internal value
                 this.currentValue = value;
                 //handle validity and dispatch events if necessary
@@ -103,7 +103,7 @@ dojo.declare(
 
         }
 
-        if(evt.type == "blur"){
+        if(evt && evt.type == "blur"){
             //notify server of lost focus
             fluxProcessor.dispatchEventType(this.id,"DOMFocusOut");
         }
@@ -127,7 +127,7 @@ dojo.declare(
             this.readonly = contextInfo["readonly"];
             this.required = contextInfo["required"];
             this.relevant = contextInfo["enabled"];
-            console.debug("Control.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " contextInfo:",contextInfo);
+            // console.debug("Control.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " contextInfo:",contextInfo);
 
             if (contextInfo["targetName"] == "input" && this.value != null) {
                 var noNSType = betterform.ui.util.removeNamespace(contextInfo["type"]);

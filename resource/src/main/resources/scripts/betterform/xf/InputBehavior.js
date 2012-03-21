@@ -84,7 +84,7 @@ var inputBehavior = {
          here instead.
          */
         xfControl.setReadonly = function() {
-            console.debug("overwritten checkbox function")
+            console.debug("overwritten checkbox function");
             dojo.attr(n, "disabled","disabled");
         };
         xfControl.setReadwrite = function() {
@@ -115,48 +115,42 @@ var inputBehavior = {
     // ############################## DATE INPUT ##############################
     // ############################## DATE INPUT ##############################
 
-    //using detailed behavior syntax
-    '.xfInput.xsdDate .xfValue' : {
-        found: function(n){
-//            console.debug("date input field: ",n);
-//            console.debug("date input field: ",n.value);
+    /*  rendering HTML5 input type="date" control for mobiles and tablets  */
+    '.uaMobile .xfInput.xsdDate .xfValue, .uaTablet .xfInput.xsdDate .xfValue': function(n) {
+        var xfControl = dijit.byId(getXfId(n));
 
-            var dateWidget = new dijit.form.DateTextBox({
-                value      : new Date(n.value)
-            },n);
+        dojo.connect(n,"onkeyup",function(evt){
+            xfControl.sendValue(n.value,evt);
+        });
 
-            var xfId = getXfId(n);
-            dojo.connect(dijit.byId(xfId), "handleStateChanged", function(contextInfo){
-                // ##### setting value by platform/component-specific means #####
-                // console.debug("handleStateChanged for:  ",n);
-                if(contextInfo){
-                    // console.debug("contextInfo",contextInfo);
-                }
-                var newValue = contextInfo["schemaValue"];
-                if(newValue != undefined){
-                    // console.debug("newValue: ",newValue);
-                    dijit.byId(xfId).setControlValue(newValue);
-//                    dojo.attr(dojo.byId(n.id),"value",contextInfo["value"]);
-                    dijit.byId(xfId+"-value").set('value', contextInfo["schemaValue"]);
-                    dijit.byId(xfId+"-value").set('displayedValue', new Date(contextInfo["value"]));
-                }
-            });
+        dojo.connect(n,"onblur",function(evt){
+            xfControl.sendValue(n.value, evt);
+        });
+/*
+        dojo.connect(n,"onchange",function(evt){
+            console.debug("Mobile Date  onchange",n);
+            xfControl.sendValue(n.value, evt);
+        });
+*/
 
-            dojo.connect(dateWidget,"onChange",function(evt){
-                var dateValue =  dateWidget.serialize(dateWidget.get("value")).substring(0,10);
-                //console.debug("onchange on widget",dateValue);
-                dijit.byId(xfId).setControlValue(dateValue);
-            });
-//            dojo.connect(dateWidget,"onBlur",function(){
-//                console.debug("onblur on widget",this.displayedValue);
-////                dojo.attr(dojo.byId(n.id),"value",this.displayedValue);
-//                this.set("value",this.displayValue);
-//                console.debug("this.value: ",this.value);
-//                console.debug("this.value: ",this.get("value"));
-//
-//                dijit.byId(xfId).setValue(this.displayedValue);
-//            });
-        }
+    },
+
+    /*  rendering dijit.formDateTextBox (DropdownDatePicker) for desktop browser */
+    '.uaDesktop .xfInput.xsdDate .xfValue':function (n) {
+        var xfId = getXfId(n);
+        var xfControl = dijit.byId(xfId);
+        var dateWidget = new dijit.form.DateTextBox({
+            value:new Date(n.schemaValue)
+        }, n);
+
+        xfControl.setValue = function(value) {
+            dateWidget.set('value', value);
+        };
+
+        dojo.connect(dateWidget, "onChange", function (value) {
+            var dateValue = dateWidget.serialize(dateWidget.get("value")).substring(0, 10);
+            xfControl.sendValue(dateValue);
+        });
     },
 
 
