@@ -28,35 +28,35 @@ var inputBehavior = {
 
     // a default input control (TextField) bound to a string
     '.xfInput.xsdString .xfValue': function(n) {
-        // console.debug("string input field: ",n);
+        console.debug("FOUND: string input field: ",n);
 
         /*
          ###########################################################################################
-         xfId is the id of the parent element (the XFControl) that matches the id of the original XForms
-         element in the document.
+         xfId is the id of the parent element in the DOM that matches the id of the original XForms
+         element.
         */
         var xfId = getXfId(n);
+
+        /*
+        xfControl is an instance of the XFControl class. This is the generic class that handles all interactions
+        with the XForms processor implementation. The concrete native browser or javascript controls are called
+        'widgets' in the context of the client side. They are the concrete representations the user interacts with.
+         */
         var xfControl = dijit.byId(xfId);
 
         /*
         ###########################################################################################
-        Event handler binding XForms and widget layer.
+        EVENT BINDING
+        ###########################################################################################
 
-        There always need to be at least 2 event listener:
+        Widgets are bound to their XFControl via events. Whenever a user changes the value of a control this change
+        must be propagated to its XFControl which will in turn send it to the server whenever appropriate.
 
-        - one listening tor handleStateChanged which are events coming from the processor representing
-        changes of the value or state of a node that need to be applied to the widget. The following event handler
-        will be triggered by the execution of 'handleStateChanged' in XFControl. This means that all updates on
-        XFControl and their representing CSS classes are done. This handler just needs to propagate the change
-        to the widget for updating the value.
-
-        - one for listening to the respective change events fired by the widget (usually onBlur or onChange)
-        to pass the changed value to the processor
+        There must be at least one event handler to notify XFControl of value changes. However it is highly
+        recommended to add two listeners - one to support incremental updates and one for onblur updates. Please
+        be aware that the order of registration can be significant for proper operation.
         */
 
-        /*
-        if incremental support is needed this eventhandler has to be added for the widget
-         */
         dojo.connect(n,"onkeyup",function(evt){
             // console.debug("onkeypress",n);
             xfControl.sendValue(n.value,evt);
@@ -67,21 +67,34 @@ var inputBehavior = {
             xfControl.sendValue(n.value, evt);
         });
 
-        //todo: Dijits will need to create themselves later here...
     },
 
     // ############################## BOOLEAN INPUT ##############################
     // ############################## BOOLEAN INPUT ##############################
     // ############################## BOOLEAN INPUT ##############################
     '.xfInput.xsdBoolean .xfValue': function(n) {
-        // console.debug("boolean input field: ",n);
+        console.debug("FOUND: boolean input field: ",n);
         var xfId = n.id.substring(0,n.id.lastIndexOf("-"));
+        var xfControl = dijit.byId(xfId);
+
+        /*
+         input type="checkbox" fails to honor readonly attribute and thus is overwritten here. It seems this is
+         rather a HTML Spec issue as e.g. comboxes behave the same. You can visibly change the value though
+         the control is readonly. As this seems rather contra intuitive for users we have chosen to use 'disabled'
+         here instead.
+         */
+        xfControl.setReadonly = function() {
+            console.debug("overwritten checkbox function")
+            dojo.attr(n, "disabled","disabled");
+        };
+        xfControl.setReadwrite = function() {
+            n.removeAttribute("disabled");
+        }
 
         dojo.connect(n,"onblur",function(evt){
 //            console.debug("onblur",n);
 //            console.debug("xfId",xfId);
 //            console.debug("checked",n.checked);
-            var xfControl = dijit.byId(xfId);
             if(n.checked != undefined){
                 xfControl.sendValue(n.checked,evt);
             }
@@ -91,7 +104,6 @@ var inputBehavior = {
 //            console.debug("xfId",xfId);
 //            console.debug("value",n.value);
 //            console.debug("checked",n.checked);
-            var xfControl = dijit.byId(xfId);
             if(n.checked != undefined){
                 xfControl.sendValue(n.checked,evt);
             }

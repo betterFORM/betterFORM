@@ -19,7 +19,7 @@ var controlBehavior = {
      ###########################################################################################
      matching all elements with .xfControl and instanciate a XFControl instance for each of them.
      Order is important here - all XFControl should be instanciated before their respective widget childs are
-     created. Thus this rule must be the first in a component definition file like this.
+     created. Thus this behavior must be loaded before any other control behavior file.
     */
     '.xfControl':function(n) {
         // console.debug("ControlBehaviour: XFControl found: ",n);

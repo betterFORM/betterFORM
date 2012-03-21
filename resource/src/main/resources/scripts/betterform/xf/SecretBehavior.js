@@ -12,7 +12,17 @@ var secretBehavior = {
     // ############################## SECRET MAPPINGS ############################################################
     // ############################## SECRET MAPPINGS ############################################################
     '.xfSecret .xfValue':function(n){
-        //todo: implement
+        console.debug("FOUND: secret input: ",n);
+
+        var xfControl = dijit.byId( getXfId(n));
+
+        dojo.connect(n,"onkeyup",function(evt){
+            xfControl.sendValue(n.value,evt);
+        });
+
+        dojo.connect(n,"onblur",function(evt){
+            xfControl.sendValue(n.value, evt);
+        });
     }
 
 };

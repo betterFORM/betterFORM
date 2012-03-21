@@ -12,10 +12,19 @@ dojo.require("dijit._Widget");
  * All Rights Reserved.
  * @author Joern Turner
  *
+ * XFControl represents a XForms control on the client. Instances of XFControl maintain the  MIP states,
+ * the xforms appearance and some other information as CSS classes and acts as a proxy between concrete
+ * controls and XForms controls. It always wraps a widget which is the concrete control the user interacts
+ * with to input or change a value.
  *
- * Control is a generic wrapper for all XForms elements that have MiPs to maintain. One Component at runtime is a
- * one-to-one match to an XForms control in the XFormsProcessor. It has the same id as the original XForms control
- * and acts as a client-side proxy for it.
+ * An example DOM structure at runtime looks like this:
+ * <span id="original id of XForms control on the server" class="xfControl (...)">
+ *     <input type="text" class="xfValue".../>
+ * </span>
+ *
+ * A XFControl always gets the id of the original XForms control. This id is used in all events to connect
+ * the processor to the concrete UI widget used in the device (browser).
+ *
  **/
 
 dojo.declare(
@@ -59,11 +68,16 @@ dojo.declare(
     },
 
     /*
-     sends updated value of a widget to the server
+     sends an updated value of a widget to the server
      */
     sendValue:function(/* String */ value, evt) {
-        console.debug("XFControl: setControlValue: currentvalue:", this.currentValue, " - newValue:",value);
+        console.debug("XFControl: sendValue: currentvalue:", this.currentValue, " - newValue:",value);
         console.debug("XFControl evt: ",evt);
+
+        if(this.isReadonly()){
+            console.debug("XFControl sendValue - control is readonly - ignoring event");
+            return;
+        }
 
         if(evt.type == "blur"){
             // control has lost focus
@@ -96,69 +110,10 @@ dojo.declare(
 
     },
 
-    isRequired:function() {
-        // console.debug("Control.isRequired",this.domNode);
-        if (dojo.hasClass(this.domNode, "xfOptional")) {
-            return false;
-        } else if (dojo.hasClass(this.domNode, "xfRequired")) {
-            return true;
-        } else {
-            console.error("No required state found")
-        }
-    },
-
-    isReadonly:function() {
-        // console.debug("Control.isReadonly",this.domNode);
-        if (dojo.hasClass(this.domNode, "xfReadWrite")) {
-            return false;
-        } else if (dojo.hasClass(this.domNode, "xfReadOnly")) {
-            return true;
-        } else {
-            console.error("No readonly state found")
-        }
-    },
-
-    isRelevant:function() {
-        //console.debug("Control.isRelevant",this.domNode);
-        if (dojo.hasClass(this.domNode, "xfDisabled")) {
-            return false;
-        } else if (dojo.hasClass(this.domNode, "xfEnabled")) {
-            return true;
-        } else {
-            console.error("No relevant state found")
-        }
-    },
-
-    isValid:function() {
-        // console.debug("XFControl.isValid",this.domNode);
-
-        if (dojo.hasClass(this.domNode, "xfInvalid")) {
-            return false;
-        } else if (dojo.hasClass(this.domNode, "xfValid")) {
-            return true;
-        } else {
-            console.error("No validate state found for " + this.id);
-        }
-    },
-    isIncremental:function(){
-        return dojo.hasClass(this.domNode, "xfIncremental");
-    },
-
     /*
-     fetches the value from the widget
-     */
-    getControlValue:function() {
-//        if (this.controlValue != undefined) {
-//            return this.controlValue.getControlValue();
-//        }
-        if(this.currentValue != undefined){
-            return this.currentValue;
-        }
-    },
-
-
-    /*
-    handles state changes send by the server and applies them to the control
+    handles state changes (value and MIP changes) send by the server and applies them to the control. State
+    changes are received from the client side xforms processor (XFProcessor) which handles all communication
+    between client and server.
      */
     handleStateChanged:function(contextInfo) {
         console.debug("XFControl.handleStateChanged: ",contextInfo);
@@ -227,6 +182,67 @@ dojo.declare(
 
         }
     },
+
+    isRequired:function() {
+        // console.debug("Control.isRequired",this.domNode);
+        if (dojo.hasClass(this.domNode, "xfOptional")) {
+            return false;
+        } else if (dojo.hasClass(this.domNode, "xfRequired")) {
+            return true;
+        } else {
+            console.error("No required state found")
+        }
+    },
+
+    isReadonly:function() {
+        // console.debug("Control.isReadonly",this.domNode);
+        if (dojo.hasClass(this.domNode, "xfReadWrite")) {
+            return false;
+        } else if (dojo.hasClass(this.domNode, "xfReadOnly")) {
+            return true;
+        } else {
+            console.error("No readonly state found")
+        }
+    },
+
+    isRelevant:function() {
+        //console.debug("Control.isRelevant",this.domNode);
+        if (dojo.hasClass(this.domNode, "xfDisabled")) {
+            return false;
+        } else if (dojo.hasClass(this.domNode, "xfEnabled")) {
+            return true;
+        } else {
+            console.error("No relevant state found")
+        }
+    },
+
+    isValid:function() {
+        // console.debug("XFControl.isValid",this.domNode);
+
+        if (dojo.hasClass(this.domNode, "xfInvalid")) {
+            return false;
+        } else if (dojo.hasClass(this.domNode, "xfValid")) {
+            return true;
+        } else {
+            console.error("No validate state found for " + this.id);
+        }
+    },
+    isIncremental:function(){
+        return dojo.hasClass(this.domNode, "xfIncremental");
+    },
+
+    /*
+     fetches the value from the widget
+     */
+    getControlValue:function() {
+//        if (this.controlValue != undefined) {
+//            return this.controlValue.getControlValue();
+//        }
+        if(this.currentValue != undefined){
+            return this.currentValue;
+        }
+    },
+
 
 
     _checkForDataTypeChange:function(dataType) {
@@ -303,12 +319,12 @@ dojo.declare(
 
     setReadonly:function() {
         betterform.ui.util.replaceClass(this.domNode, "xfReadWrite", "xfReadOnly");
-        dojo.attr(this.getWidget(), "readonly",true);
+        dojo.attr(this.getWidget(), "readonly","readonly");
     },
 
     setReadwrite:function() {
         betterform.ui.util.replaceClass(this.domNode,"xfReadOnly","xfReadWrite");
-        dojo.attr(this.getWidget(), "readonly",false);
+        this.getWidget().removeAttribute("readonly");
     },
 
     setRequired:function() {

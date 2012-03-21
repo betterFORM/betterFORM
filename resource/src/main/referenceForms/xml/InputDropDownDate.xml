@@ -7,18 +7,11 @@
     <body>
         <div class="description">
             <p>
-                This form control enables free-form data entry or a user
-                interface component appropriate to the datatype of the bound
-                node.
-            </p>
-            <p>
                 An input which binds to a Node of type 'date' with an additional apperance "bf:dropdowndate" is rendered as a three piece select1 date control. The value
-                may also be be typed in directly.
+                may also be be typed in directly but allowed values for the year can be constrained by a custom
+                appearance attribute. Values exceeding the range will 'jump back' to the lowest or highest allowed value
+                respectively.
             </p>
-        </div>
-        <div class="references">
-            <a href="#ui-input"/>
-            <a href="#elems-form-controls"/>
         </div>
         <div class="sample">
             <div class="markup">

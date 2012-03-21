@@ -13,7 +13,7 @@
       
       
       
-      <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
+      <link rel="stylesheet" type="text/css" href="betterform/bfResources/scripts/dojox/highlight/resources/highlight.css" />
       <link rel="stylesheet" type="text/css" href="reference.css" />
    </head>
    
@@ -108,8 +108,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d33e156" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
-                     <div dojoType="dijit.Tooltip" connectId="d33e156">matches any Element that represents a XForms
+                  <td id="d1e164" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
+                     <div dojoType="dijit.Tooltip" connectId="d1e164">matches any Element that represents a XForms
                         group
                         |
                         repeat
@@ -121,8 +121,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d33e174" onmouseover="showClass('xfCompactRepeat');" onmouseout="hideClass('xfCompactRepeat');">xfCompactRepeat
-                     <div dojoType="dijit.Tooltip" connectId="d33e174">matches an Element that represents a XForms
+                  <td id="d1e182" onmouseover="showClass('xfCompactRepeat');" onmouseout="hideClass('xfCompactRepeat');">xfCompactRepeat
+                     <div dojoType="dijit.Tooltip" connectId="d1e182">matches an Element that represents a XForms
                         repeat
                         element
                         
@@ -130,8 +130,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d33e186" onmouseover="showClass('xfRepeatHeader');" onmouseout="hideClass('xfRepeatHeader');">xfRepeatHeader
-                     <div dojoType="dijit.Tooltip" connectId="d33e186">matches an Element that represents a XForms
+                  <td id="d1e194" onmouseover="showClass('xfRepeatHeader');" onmouseout="hideClass('xfRepeatHeader');">xfRepeatHeader
+                     <div dojoType="dijit.Tooltip" connectId="d1e194">matches an Element that represents a XForms
                         repeat
                         element
                         
@@ -139,36 +139,36 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d33e198" onmouseover="showClass('xfRepeatItem');" onmouseout="hideClass('xfRepeatItem');">xfRepeatItem
-                     <div dojoType="dijit.Tooltip" connectId="d33e198">matches all repeat items
+                  <td id="d1e206" onmouseover="showClass('xfRepeatItem');" onmouseout="hideClass('xfRepeatItem');">xfRepeatItem
+                     <div dojoType="dijit.Tooltip" connectId="d1e206">matches all repeat items
                         
                      </div>
                   </td>
                </tr>
                <tr>
-                  <td id="d33e210" onmouseover="showClass('xfRepeatIndex');" onmouseout="hideClass('xfRepeatIndex');">xfRepeatIndex
-                     <div dojoType="dijit.Tooltip" connectId="d33e210">matches the currently selected repeat item
+                  <td id="d1e218" onmouseover="showClass('xfRepeatIndex');" onmouseout="hideClass('xfRepeatIndex');">xfRepeatIndex
+                     <div dojoType="dijit.Tooltip" connectId="d1e218">matches the currently selected repeat item
                         
                      </div>
                   </td>
                </tr>
                <tr>
-                  <td id="d33e223" onmouseover="showClass('bfTableCol-1');" onmouseout="hideClass('bfTableCol-1');">bfTableCol-1
-                     <div dojoType="dijit.Tooltip" connectId="d33e223">matches the first column
+                  <td id="d1e231" onmouseover="showClass('bfTableCol-1');" onmouseout="hideClass('bfTableCol-1');">bfTableCol-1
+                     <div dojoType="dijit.Tooltip" connectId="d1e231">matches the first column
                         
                      </div>
                   </td>
                </tr>
                <tr>
-                  <td id="d33e232" onmouseover="showClass('bfTableCol-2');" onmouseout="hideClass('bfTableCol-2');">bfTableCol-2
-                     <div dojoType="dijit.Tooltip" connectId="d33e232">matches the second column
+                  <td id="d1e240" onmouseover="showClass('bfTableCol-2');" onmouseout="hideClass('bfTableCol-2');">bfTableCol-2
+                     <div dojoType="dijit.Tooltip" connectId="d1e240">matches the second column
                         
                      </div>
                   </td>
                </tr>
                <tr>
-                  <td id="d33e241" onmouseover="showClass('bfTableCol-3');" onmouseout="hideClass('bfTableCol-3');">bfTableCol-3
-                     <div dojoType="dijit.Tooltip" connectId="d33e241">matches the third column
+                  <td id="d1e249" onmouseover="showClass('bfTableCol-3');" onmouseout="hideClass('bfTableCol-3');">bfTableCol-3
+                     <div dojoType="dijit.Tooltip" connectId="d1e249">matches the third column
                         
                      </div>
                   </td>
@@ -332,6 +332,13 @@
                </xf:input>
                
             </xf:repeat>
+            <xf:trigger>
+               
+               <xf:label>append line</xf:label>
+               
+               <xf:insert nodeset="repeat/items[last()]"></xf:insert>
+               
+            </xf:trigger>
          </div>
          <div class="MIPS">
             
@@ -366,6 +373,11 @@
         &lt;xf:label&gt;Boolean:&lt;/xf:label&gt;
     &lt;/xf:input&gt;
 &lt;/xf:repeat&gt;
+
+&lt;xf:trigger&gt;
+    &lt;xf:label&gt;append line&lt;/xf:label&gt;
+    &lt;xf:insert nodeset="repeat/items[last()]"&gt;&lt;/xf:insert&gt;
+&lt;/xf:trigger&gt;
 </code></pre></div>
          <h2>Notes</h2>
          <div class="Notes">

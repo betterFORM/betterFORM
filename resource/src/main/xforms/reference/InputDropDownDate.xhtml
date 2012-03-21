@@ -5,7 +5,7 @@
       
       <title>Drop Down Date input control</title>
       
-      <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
+      <link rel="stylesheet" type="text/css" href="betterform/bfResources/scripts/dojox/highlight/resources/highlight.css" />
       <link rel="stylesheet" type="text/css" href="reference.css" />
    </head>
    
@@ -77,13 +77,13 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d20e238" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
-                     <div dojoType="dijit.Tooltip" connectId="d20e238">matches an Element that represents a XForms input element</div>
+                  <td id="d1e228" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
+                     <div dojoType="dijit.Tooltip" connectId="d1e228">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d20e247" onmouseover="showClass('xsdDate');" onmouseout="hideClass('xsdDate');">xsdDate
-                     <div dojoType="dijit.Tooltip" connectId="d20e247">matches an Element that is bound to a node widht datatype
+                  <td id="d1e237" onmouseover="showClass('xsdDate');" onmouseout="hideClass('xsdDate');">xsdDate
+                     <div dojoType="dijit.Tooltip" connectId="d1e237">matches an Element that is bound to a node widht datatype
                         date
                         
                      </div>
@@ -203,36 +203,15 @@
             <div class="description">
                
                <p>
-                  This form control enables free-form data entry or a user
-                  interface component appropriate to the datatype of the bound
-                  node.
-                  
-               </p>
-               
-               <p>
                   An input which binds to a Node of type 'date' with an additional apperance "bf:dropdowndate" is rendered as a three piece
                   select1 date control. The value
-                  may also be be typed in directly.
+                  may also be be typed in directly but allowed values for the year can be constrained by a custom
+                  appearance attribute. Values exceeding the range will 'jump back' to the lowest or highest allowed value
+                  respectively.
                   
                </p>
                
             </div>
-            <table id="references">
-               <tr>
-                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="images/w3c_home_nb.png" alt="W3C" /></a></td>
-                  <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
-               </tr>
-               <tr>
-                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html#ui-input" target="_blank">
-                        Recommendation
-                        </a></td>
-               </tr>
-               <tr>
-                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html#elems-form-controls" target="_blank">
-                        Quick Reference
-                        </a></td>
-               </tr>
-            </table>
          </div>
          <h2>Example</h2>
          <div class="Section sample">

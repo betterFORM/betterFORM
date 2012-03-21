@@ -514,7 +514,7 @@
 
     <!--
     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    match outermost group of XForms markup. An outermost group is necessary to allow standard HTML forms
+    match outermost group, repeat or switch. An outermost container is necessary to allow standard HTML forms
     to coexist with XForms markup and still produce non-nested form tags in the output.
     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     -->
@@ -849,6 +849,9 @@
                 <!--<xsl:apply-templates select="xf:help"/>-->
                 <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
+
+            <!--todo: JT: check if these can ever be reached -->
+<!--
             <xsl:when test="local-name()='repeat'">
                 <xsl:apply-templates select="."/>
             </xsl:when>
@@ -861,6 +864,7 @@
             <xsl:when test="local-name()='switch'">
                 <xsl:apply-templates select="."/>
             </xsl:when>
+-->
         </xsl:choose>
     </xsl:template>
 
@@ -913,7 +917,7 @@
         </xsl:choose>
 
 
-        <script type="text/javascript" src="{concat($contextroot,$scriptPath,'betterform/betterform-XHTML.js')}">&#160;</script>
+        <script type="text/javascript" src="{concat($contextroot,$scriptPath,'betterform/betterform-Full.js')}">&#160;</script>
         <xsl:text>
 </xsl:text>
         <!--

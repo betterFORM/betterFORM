@@ -13,7 +13,7 @@ var outputBehavior = {
     // ############################## OUTPUT MAPPINGS ############################################################
     // ############################## OUTPUT MAPPINGS ############################################################
     '.xfOutput.xsdString.mediatypeText .xfValue': function(n) {
-        console.debug("output field: ",n);
+        console.debug("FOUND: output string: ",n);
 
         var xfId = getXfId(n);
         var xfControl = dijit.byId(xfId);
@@ -24,6 +24,8 @@ var outputBehavior = {
 
     },
     '.xfOutput.mediatypeImage .xfValue': function(n) {
+        console.debug("FOUND: output mediatype image: ",n);
+
         var xfControl = dijit.byId(getXfId(n));
 
         xfControl.setValue = function(value) {
@@ -33,7 +35,20 @@ var outputBehavior = {
     },
 
     '.xfOutput.xsdAnyURI .xfValue': function(n) {
+        console.debug("FOUND: output anyURI: ",n);
+
         var xfControl = dijit.byId(getXfId(n));
+
+        //todo: this solution works in FF - others have to be tested
+        //todo: use dojo.style
+        xfControl.setReadonly = function(){
+            dojo.attr(n,"style","pointer-events:none;cursor:default;")
+        };
+
+        xfControl.setReadwrite = function(){
+            //todo: this is dirty - there might be a style already
+            n.removeAttribute("style");
+        }
 
         xfControl.setValue = function(value) {
             dojo.attr(n, "href", value);
@@ -41,6 +56,8 @@ var outputBehavior = {
         }
     },
     '.xfOutput.mediatypeHtml .xfValue': function(n) {
+        console.debug("FOUND: output mediatype HTML: ",n);
+
         dijit.byId(getXfId(n)).setValue = function(value) {
             n.innerHTML = value;
         };
