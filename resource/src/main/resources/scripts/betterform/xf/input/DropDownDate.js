@@ -96,6 +96,7 @@ dojo.declare(
             this.minimumYear = rangeEnd;
             this.maximumYear = rangeStart;
         }
+
         // console.debug("DropDownData.postMixInProperties before");
         this.inherited(arguments);
         // console.debug("DropDownData.postMixInProperties after");
@@ -103,19 +104,22 @@ dojo.declare(
     },
 
     postCreate:function() {
-        // console.debug("DropDownDate.postCreate this.domNode:", this.valueNode, " this.value: ", this.value);
+        console.debug("DropDownDate.postCreate this.domNode:", this.valueNode, " this.value: ", this.value);
+        this.daysDijit  = dijit.byId(this.daysFacet.id);
+        this.monthDijit = dijit.byId(this.monthsFacet.id);
+        this.yearDijit  = dijit.byId(this.yearsFacet.id);
+
         this.inherited(arguments);
 
         dojo.attr(this.valueNode, "value", this.value);
         this.applyValues(this.value);
-
-        dojo.connect(dijit.byId(this.daysFacet.id), "onChange", this, "onDaysChanged");
-        dojo.connect(dijit.byId(this.monthsFacet.id), "onChange", this, "onMonthsChanged");
-        dojo.connect(dijit.byId(this.yearsFacet.id), "onChange", this, "onYearsChanged");
+        dojo.connect(this.daysDijit, "onChange", this, "onDaysChanged");
+        dojo.connect(this.monthDijit, "onChange", this, "onMonthsChanged");
+        dojo.connect(this.yearDijit, "onChange", this, "onYearsChanged");
     },
 
     applyValues:function(value) {
-         // console.debug("DropDownDate.applyValues value:",value);
+         console.debug("DropDownDate.applyValues value:",value);
         if (value != undefined) {
 
             var splittedValue = value.split("-");
@@ -129,32 +133,32 @@ dojo.declare(
             this.months = splittedValue[1];
             this.days = splittedValue[2];
 
-            dijit.byId(this.daysFacet.id).set('value', this.days);
-            dijit.byId(this.monthsFacet.id).set('value', this.monthsArray[parseInt(this.months, "10") - 1]);
-            //dijit.byId(this.monthsFacet.id).set('displayValue', this.monthsArray[parseInt(months)-1]);
-            dijit.byId(this.yearsFacet.id).set('value', this.years);
+            this.daysDijit.set('value', this.days);
+            this.monthDijit.set('value', this.monthsArray[parseInt(this.months, "10") - 1]);
+            //this.monthDijit.set('displayValue', this.monthsArray[parseInt(months)-1]);
+            this.yearDijit.set('value', this.years);
         }
     },
 
     onDaysChanged:function(evt) {
         // console.debug("DropDownDate.onDaysChanged.");
-        var selectedItem = dijit.byId(this.daysFacet.id).get("item");
+        var selectedItem = this.daysDijit.get("item");
         if (selectedItem != undefined && selectedItem.value != "") {
             this.days = selectedItem.value;
         } else {
-            this.days = dijit.byId(this.daysFacet.id).get("value");
+            this.days = this.daysDijit.get("value");
         }
     },
 
     onMonthsChanged:function(evt) {
         // console.debug("DropDownDate.onMonthsChanged.");
-        var selectedItem = dijit.byId(this.monthsFacet.id).get("item");
+        var selectedItem = this.monthDijit.get("item");
         var value;
         if (selectedItem != undefined) {
             // console.debug("DropDownDate.onMonthsChanged() selectedItem defined: |", selectedItem.value, "|");
             value = parseInt(selectedItem.value, "10");
         } else {
-            var month = dijit.byId(this.monthsFacet.id).get("value");
+            var month = this.monthDijit.get("value");
             if (isNaN(month)) {
                 value = parseInt(dojo.indexOf(this.monthsArray,month) + 1, "10");
             } else {
@@ -174,14 +178,14 @@ dojo.declare(
 
     onYearsChanged:function(evt) {
         // console.debug("DropDownDate.onYearsChanged oldYear: " , this.years);
-        var selectedItem = dijit.byId(this.yearsFacet.id).get('item');
+        var selectedItem = this.yearDijit.get('item');
         var year;
 
         if (selectedItem != undefined && selectedItem.value != "") {
             year = selectedItem.value;
         } else {
-            // console.debug("DropDownDate.onYearsChanged dijit.byId(this.yearsFacet.id).get('value'): " , dijit.byId(this.yearsFacet.id).get("value"));
-            year = dijit.byId(this.yearsFacet.id).get("value");
+            // console.debug("DropDownDate.onYearsChanged this.yearDijit.get('value'): " , this.yearDijit.get("value"));
+            year = this.yearDijit.get("value");
         }
 
         // TODO: LW: Implement invalid state for range, problem is that the value is not invalid for the processor
@@ -189,10 +193,10 @@ dojo.declare(
 /*
         if (year > this.maximumYear) {
             this.years = this.maximumYear;
-            dijit.byId(this.yearsFacet.id).set("displayedValue",this.years);
+            this.yearDijit.set("displayedValue",this.years);
         } else if (year < this.minimumYear) {
             this.years = this.minimumYear;
-            dijit.byId(this.yearsFacet.id).set("displayedValue",this.years);
+            this.yearDijit.set("displayedValue",this.years);
         } else {
             //In range!
             this.years = year;
@@ -234,9 +238,13 @@ dojo.declare(
 
 
     set:function(attrName, value){
-        // console.debug("DropDownDate.set: attrName: "+ attrName+ "  value",value);
+        console.debug("DropDownDate.set: attrName: "+ attrName+ "  value",value);
         if(attrName == "value"){
             this.applyValues(value);
+        }else if(attrName == "readOnly"){
+            this.daysDijit.set("readOnly", value);
+            this.monthDijit.set("readOnly", value);
+            this.yearDijit.set("readOnly", value);
         }
     },
 
@@ -245,17 +253,6 @@ dojo.declare(
         if(attrName == "value"){
             return this.getControlValue();
         }
-    },
-
-    /*
-     only needs to check if XForms MIP readonly is true and disable control in that case. The value itself
-     is already present and other MIPs are entirely managed through CSS.
-     */
-    applyState:function() {
-        // console.debug("DropDownDate.applyState");
-        dijit.byId(this.daysFacet.id).set("readOnly", this.xfControl.isReadonly());
-        dijit.byId(this.monthsFacet.id).set("readOnly", this.xfControl.isReadonly());
-        dijit.byId(this.yearsFacet.id).set("readOnly", this.xfControl.isReadonly());
     }
 });
 });

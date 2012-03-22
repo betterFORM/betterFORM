@@ -23,7 +23,7 @@
 
     <xf:model>
         <xf:instance xmlns="">
-            <data>
+            <data required="true" relevant="true" valid="true" readonly="false">
                 <group>
                     <label for="label1">GroupLabel 1</label>
                     <label for="label2">GroupLabel 2</label>
@@ -35,6 +35,8 @@
                 <input>
                     <value>2012-01-01</value>
                     <label>date label</label>
+                    <alert>Alert for input[2]</alert>
+                    <hint>Alert for input[2]</hint>
                 </input>
                 <input>
                     <value>2012-01-01</value>
@@ -86,10 +88,10 @@
         </xf:instance>
 
         <xf:bind nodeset="instance()">
-            <xf:bind nodeset="input[2]/value" type="date"/>
-            <xf:bind nodeset="input[3]/value" type="date"/>
-            <xf:bind nodeset="input[4]/value" type="date"/>
-            <xf:bind nodeset="output[3]/value" type="anyURI"/>
+            <xf:bind nodeset="input[2]/value" type="date" required="boolean-from-string(instance()/@required)" relevant="boolean-from-string(instance()/@relevant)" constraint="boolean-from-string(instance()/@valid)" readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="input[3]/value" type="date" required="boolean-from-string(instance()/@required)" relevant="boolean-from-string(instance()/@relevant)" constraint="boolean-from-string(instance()/@valid)" readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="input[4]/value" type="date" required="boolean-from-string(instance()/@required)" relevant="boolean-from-string(instance()/@relevant)" constraint="boolean-from-string(instance()/@valid)" readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="output[3]/value" type="anyURI" required="boolean-from-string(instance()/@required)" relevant="boolean-from-string(instance()/@relevant)" constraint="boolean-from-string(instance()/@valid)" readonly="boolean-from-string(instance()/@readonly)"/>
         </xf:bind>
 
         <xf:instance id="colors">
@@ -119,6 +121,24 @@
                 <xf:label>Group Label</xf:label>
                 <xf:setvalue ref="instance()/group/label" value="'New Group Label'"/>
             </xf:trigger>
+            <span style="margin:4px;padding:4px;border:thin dotted #808080">
+                <xf:trigger>
+                    <xf:label>Required</xf:label>
+                    <xf:setvalue ref="instance()/@required" value="not(boolean-from-string(instance()/@required))"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Relevant</xf:label>
+                    <xf:setvalue ref="instance()/@relevant" value="not(boolean-from-string(instance()/@relevant))"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Valid</xf:label>
+                    <xf:setvalue ref="instance()/@valid" value="not(boolean-from-string(instance()/@valid))"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Readonly</xf:label>
+                    <xf:setvalue ref="instance()/@readonly" value="not(boolean-from-string(instance()/@readonly))"/>
+                </xf:trigger>
+            </span>
             <span style="margin:4px;padding:4px;border:thin dotted #808080">
                 <xf:trigger>
                     <xf:label>Input[1] Label</xf:label>
@@ -218,29 +238,36 @@
                     </script>
                 </xf:action>
             </xf:input>
+
             <xf:input ref="input[3]/value"  appearance="bf:dropdowndate">
                 <xf:label ref="../label" />
-            </xf:input>
-
-            <xf:input ref="input[3]/value"  appearance="bf:dropdowndate=-17:-100">
-                <xf:label ref="../label" />
-<!--
                 <xf:alert ref="../alert" />
                 <xf:hint>
                     <span class="help-title"><xf:output ref="../hint[1]"/></span>
                     <span class="help-body"><xf:output ref="../hint[2]"/></span>
                 </xf:hint>
-                <xf:action ev:event="xforms-value-changed">
-                    <script type="text/javascript">
-                        console.debug("xforms-value-changed input[3]");
-                    </script>
-                </xf:action>
--->
+                <!--
+                                <xf:action ev:event="xforms-value-changed">
+                                    <script type="text/javascript">
+                                        console.debug("xforms-value-changed input[3]");
+                                    </script>
+                                </xf:action>
+                -->
+            </xf:input>
+
+            <xf:input ref="input[3]/value"  appearance="bf:dropdowndate=-17:-100">
+                <xf:label>dropdowndate bound to the same node as above date control</xf:label>
+                <xf:alert ref="../alert" />
+                <xf:hint>
+                    <span class="help-title"><xf:output ref="../hint[1]"/></span>
+                    <span class="help-body"><xf:output ref="../hint[2]"/></span>
+                </xf:hint>
             </xf:input>
 
             <xf:input ref="input[4]/value"  appearance="iso8601:dd-MM-yyyy">
                 <xf:label ref="../label" />
                 <xf:alert ref="../alert" />
+                <xf:hint>input 4 hint</xf:hint>
             </xf:input>
             <!--
 
