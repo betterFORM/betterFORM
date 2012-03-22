@@ -13,7 +13,7 @@ var outputBehavior = {
     // ############################## OUTPUT MAPPINGS ############################################################
     // ############################## OUTPUT MAPPINGS ############################################################
     '.xfOutput.xsdString.mediatypeText .xfValue': function(n) {
-        console.debug("FOUND: output string: ",n);
+        // console.debug("FOUND: output string: ",n);
 
         var xfId = getXfId(n);
         var xfControl = dijit.byId(xfId);
@@ -24,7 +24,7 @@ var outputBehavior = {
 
     },
     '.xfOutput.mediatypeImage .xfValue': function(n) {
-        console.debug("FOUND: output mediatype image: ",n);
+        // console.debug("FOUND: output mediatype image: ",n);
 
         var xfControl = dijit.byId(getXfId(n));
 
@@ -35,7 +35,7 @@ var outputBehavior = {
     },
 
     '.xfOutput.xsdAnyURI .xfValue': function(n) {
-        console.debug("FOUND: output anyURI: ",n);
+        // console.debug("FOUND: output anyURI: ",n);
 
         var xfControl = dijit.byId(getXfId(n));
 
@@ -56,7 +56,7 @@ var outputBehavior = {
         }
     },
     '.xfOutput.mediatypeHtml .xfValue': function(n) {
-        console.debug("FOUND: output mediatype HTML: ",n);
+        // console.debug("FOUND: output mediatype HTML: ",n);
 
         dijit.byId(getXfId(n)).setValue = function(value) {
             n.innerHTML = value;

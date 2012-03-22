@@ -25,8 +25,8 @@
         <xf:instance xmlns="">
             <data>
                 <group>
-                    <label for="label1">Group Label 1</label>
-                    <label for="label2">Group Label 2</label>
+                    <label for="label1">GroupLabel 1</label>
+                    <label for="label2">GroupLabel 2</label>
                 </group>
                 <input>
                     <value>input value</value>
@@ -45,7 +45,7 @@
                 </input>
                 <input>
                     <value>2012-01-01</value>
-                    <label>iso8601:dd/MM/yyyy</label>
+                    <label>iso8601:dd-MM-yyyy</label>
                     <alert>Alert for input[3]</alert>
                     <hint>Hint Title</hint>
                     <hint>Hint Body</hint>
@@ -63,11 +63,11 @@
                     <label>output anyURI</label>
                 </output>
                 <output>
-                    <value><b>Bold</b> and <i>italic</i> text.></value>
+                    <value><b>Bold</b> and <i>italic</i> text</value>
                     <label>output html</label>
                 </output>
                 <textarea>
-                    <value>references output[4]/value</value>
+                    <value><![CDATA[<b>Bold</b> and <i>italic</i> text]]></value>
                     <label>textarea html</label>
                 </textarea>
                 <select1>
@@ -114,20 +114,31 @@
 
 <body class="tundra">
     <xf:group  appearance="minimal">
-
-        <!--<xf:group>
+        <xf:group>
             <xf:trigger>
                 <xf:label>Group Label</xf:label>
                 <xf:setvalue ref="instance()/group/label" value="'New Group Label'"/>
             </xf:trigger>
             <span style="margin:4px;padding:4px;border:thin dotted #808080">
                 <xf:trigger>
-                    <xf:label>Input Label</xf:label>
+                    <xf:label>Input[1] Label</xf:label>
                     <xf:setvalue ref="instance()/input/label" value="'new input label'"/>
                 </xf:trigger>
                 <xf:trigger>
-                    <xf:label>Input Value</xf:label>
+                    <xf:label>Input[1] Value</xf:label>
                     <xf:setvalue ref="instance()/input/value" value="'new input value'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Input[2] Value</xf:label>
+                    <xf:setvalue ref="instance()/input[2]/value" value="'2011-11-11'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Input[3] Value</xf:label>
+                    <xf:setvalue ref="instance()/input[3]/value" value="'2011-11-11'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Input[4] Value</xf:label>
+                    <xf:setvalue ref="instance()/input[4]/value" value="'2011-11-11'"/>
                 </xf:trigger>
             </span>
             <span style="margin:4px;padding:4px;border:thin dotted #808080">
@@ -152,84 +163,18 @@
                     <xf:setvalue ref="instance()/output[3]/value" value="'http://www.betterform.de'"/>
                 </xf:trigger>
             </span>
-        </xf:group>-->
-<!--
-        <xf:group appearance="full" ref="instance()" class="xfFullGroup">
-            <xf:label ref="group/label"/>
-
-            <xf:input ref="input/value">
-                <xf:label ref="../label"/>
-            </xf:input>
-            <xf:output ref="output[1]/value">
-                <xf:label ref="../label"/>
-            </xf:output>
-
-            <xf:output ref="output[2]/value" mediatype="image/gif">
-                <xf:label ref="../label"/>
-                <xf:hint>a Hint for this control</xf:hint>
-                <xf:help>help for output1</xf:help>
-                <xf:alert>invalid</xf:alert>
-            </xf:output>
-            <xf:output ref="output[3]/value">
-                <xf:label ref="../label"/>
-            </xf:output>
-            <xf:output ref="output[4]/value" mediatype="text/html">
-                <xf:label ref="../label"/>
-            </xf:output>
-            <xf:textarea ref="output[4]/value" mediatype="text/html">
-                <xf:label ref="instance()/textarea[1]/label"/>
-            </xf:textarea>
-
-            <xf:select1 ref="select1[1]/value" appearance="minimal">
-                <xf:label ref="instance()/select1[1]/label"/>
-                <xf:itemset  nodeset="instance('colors')/color">
-                    <xf:label ref="name"/>
-                    <xf:value ref="value"/>
-                </xf:itemset>
-            </xf:select1>
-
-            <xf:select1 ref="select1[2]/value" appearance="compact">
-                <xf:label ref="instance()/select1[2]/label"/>
-                <xf:itemset  nodeset="instance('colors')/color">
-                    <xf:label ref="name"/>
-                    <xf:value ref="value"/>
-                </xf:itemset>
-            </xf:select1>
-
-            <xf:select1 ref="select1[3]/value" appearance="full">
-                <xf:label ref="instance()/select1[3]/label"/>
-                <xf:itemset  nodeset="instance('colors')/color">
-                    <xf:label ref="name"/>
-                    <xf:value ref="value"/>
-                </xf:itemset>
-            </xf:select1>
         </xf:group>
--->
 
         <xf:group ref="instance()" appearance="full" id="eventListener" class="xfFullGroup">
-            <xf:label>Controls to implement</xf:label>
-            <xf:action ev:event="customEvent">
-                <xf:message>arrived</xf:message>
-            </xf:action>
-            <xf:trigger>
-                <xf:label>load embed</xf:label>
-                <xf:action>
-                    <xf:message>tbd</xf:message>
-<!--
-                    <xf:load show="embed" targetid="mountPoint">
-                        <xf:resource value="" />
-                    </xf:load>
--->
-                    <script type="text/javascript">
-                        alert("worked")
-                    </script>
-                </xf:action>
-            </xf:trigger>
-            <xf:group ref="instance()/group[1]">
-                <p><xf:label ref="label[@for='label1']" /></p>
-                <p><xf:label ref="label[@for='label2']" /></p>
-            </xf:group>
+            <p><xf:label ref="group[1]/label[@for='label1']" /></p>
+            <p><xf:label ref="group[1]/label[@for='label2']" /></p>
+            <span>Group is listening to custom event 'customEvent'</span>
 
+            <xf:action ev:event="customEvent">
+                <xf:message>custom event arrived</xf:message>
+            </xf:action>
+
+<!--
             <xf:select1 ref="select1[1]/value" id="colorselecter">
                 <xf:label>Select1 minimal</xf:label>
                 <xf:itemset  nodeset="instance('colors')/color">
@@ -259,6 +204,11 @@
                 </xf:itemset>
             </xf:select1>
 
+            <xf:input ref="input[1]/value">
+                <xf:label ref="../label"/>
+            </xf:input>
+-->
+
             <xf:input ref="input[2]/value" >
                 <xf:label ref="../label" />
                 <xf:alert ref="../alert" />
@@ -268,8 +218,13 @@
                     </script>
                 </xf:action>
             </xf:input>
+            <xf:input ref="input[3]/value"  appearance="bf:dropdowndate">
+                <xf:label ref="../label" />
+            </xf:input>
+
             <xf:input ref="input[3]/value"  appearance="bf:dropdowndate=-17:-100">
                 <xf:label ref="../label" />
+<!--
                 <xf:alert ref="../alert" />
                 <xf:hint>
                     <span class="help-title"><xf:output ref="../hint[1]"/></span>
@@ -280,21 +235,59 @@
                         console.debug("xforms-value-changed input[3]");
                     </script>
                 </xf:action>
+-->
             </xf:input>
-            <xf:input ref="input[4]/value"  appearance="iso8601:dd/MM/yyyy">
+
+            <xf:input ref="input[4]/value"  appearance="iso8601:dd-MM-yyyy">
                 <xf:label ref="../label" />
                 <xf:alert ref="../alert" />
             </xf:input>
+            <!--
 
-            <xf:trigger id="noRegButton" appearance="minimal">
-                <xf:label ref="trigger[1]/label"/>
-                <xf:action>
-                    <xf:message>trigger works</xf:message>
-                </xf:action>
-            </xf:trigger>
+                        <xf:output ref="output[1]/value">
+                            <xf:label ref="../label"/>
+                        </xf:output>
+
+                        <xf:output ref="output[2]/value" mediatype="image/gif">
+                            <xf:label ref="../label"/>
+                            <xf:hint>a Hint for this control</xf:hint>
+                            <xf:help>help for output1</xf:help>
+                            <xf:alert>invalid</xf:alert>
+                        </xf:output>
+
+                        <xf:output ref="output[3]/value">
+                            <xf:label ref="../label"/>
+                        </xf:output>
+
+                        <xf:textarea ref="textarea[1]/value" mediatype="text/html">
+                            <xf:label ref="../label"/>
+                        </xf:textarea>
+
+
+                        <xf:trigger id="noRegButton" appearance="minimal">
+                            <xf:label ref="trigger[1]/label"/>
+                            <xf:action>
+                                <xf:message>trigger works</xf:message>
+                            </xf:action>
+                        </xf:trigger>
+                        <xf:trigger>
+                            <xf:label>load embed</xf:label>
+                            <xf:action>
+                                <xf:message>tbd</xf:message>
+                                &lt;!&ndash;
+                                                    <xf:load show="embed" targetid="mountPoint">
+                                                        <xf:resource value="" />
+                                                    </xf:load>
+                                &ndash;&gt;
+                                <script type="text/javascript">
+                                    alert("worked")
+                                </script>
+                            </xf:action>
+                        </xf:trigger>
 
 
 
+            -->
 
 
         </xf:group>

@@ -72,8 +72,6 @@ dojo.declare(
      */
     sendValue:function(/* String */ value, evt) {
         console.debug("XFControl: sendValue: currentvalue:", this.currentValue, " - newValue:",value);
-        console.debug("XFControl evt: ",evt);
-
         if(this.isReadonly()){
             console.debug("XFControl sendValue - control is readonly - ignoring event");
             return;

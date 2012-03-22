@@ -72,15 +72,18 @@
                         type="date"
                         class="xfValue"
                         tabindex="{$navindex}"
+                        appearance="{@appearance}"
                         placeholder="{xf:hint/text()}"
                         schemaValue="{bf:data/@bf:schema-value}"
                         value="{bf:data/text()}">
                     <xsl:if test="bf:data/@bf:readonly='true'">
                         <xsl:attribute name="disabled">disabled</xsl:attribute>
                     </xsl:if>
+<!--
                     <xsl:if test="bf:data/text()='true'">
                         <xsl:attribute name="checked">true</xsl:attribute>
                     </xsl:if>
+-->
                 </input>
             </xsl:when>
             <xsl:otherwise>
