@@ -12,7 +12,7 @@ var outputBehavior = {
     // ############################## OUTPUT MAPPINGS ############################################################
     // ############################## OUTPUT MAPPINGS ############################################################
     // ############################## OUTPUT MAPPINGS ############################################################
-    '.xfOutput.xsdString.mediatypeText .xfValue': function(n) {
+    '.xfOutput.xsdString.mediatypeText .xfValue, .xfOutput.xsdInteger.mediatypeText .xfValue': function(n) {
         // console.debug("FOUND: output string: ",n);
 
         var xfId = getXfId(n);

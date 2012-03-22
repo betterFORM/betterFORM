@@ -182,14 +182,10 @@ var inputBehavior = {
             dateWidget.set('value', value);
         };
         xfControl.setReadonly = function() {
-            console.debug("InputBehaviour.setReadonly");
             dateWidget.set('readOnly', true);
-            // dateWidget.set('disabled', true);
         };
         xfControl.setReadwrite = function() {
-            console.debug("InputBehaviour.setReadwrite");
             dateWidget.set('readOnly', false);
-            // dateWidget.set('disabled', false);
         };
 
         dojo.connect(dateWidget, "onChange", function (value) {

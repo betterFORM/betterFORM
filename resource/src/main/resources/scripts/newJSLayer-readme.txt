@@ -32,6 +32,9 @@ add a declarative way of adding these.
  * Using Output within Labels (e.g. of a trigger) does not work yet
  * Switching a RepeatFull to readonly does not work correctly, handleStateChanged events are only present for
     repeat items but not the repeat itself.
+ * if behaviours are bound to datatypes like '.xfOutput.xsdString.mediatypeText .xfValue' we are missing a kind of
+   default behaviour or we have to write behaviour matches for all kind of possible datatypes
+   (listing of basic schema datatypes: http://www.w3.org/TR/xmlschema-2/#built-in-datatypes)
 
 
 To use it

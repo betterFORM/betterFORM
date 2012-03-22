@@ -192,28 +192,23 @@
         <!--
         todo: review: start and end are optional attributes in XForms but how can we make sense of that?
         -->
-        <xsl:variable name="start" select="@start"/>
-        <xsl:variable name="end" select="@end"/>
-        <xsl:variable name="step" select="@step"/>
-        <xsl:variable name="value" select="bf:data/text()"/>
-
-        <span>
-            <input  id="{$id}-value"
-                    name="{$name}"
-                    class="xfValue"
-                    type="range"
-                    min="{$start}"
-                    max="{$end}"
-                    value="{$value}"
-                    tabindex="{$navindex}"
-                    title="{xf:hint/text()}">
-                <xsl:if test="bf:data/@bf:readonly='true'">
-                    <xsl:attribute name="readonly">readonly</xsl:attribute>
-                </xsl:if>
-                <xsl:if test="string-length($step) != 0">
-                    <xsl:attribute name="step" select="$step"/>
-                </xsl:if>
-            </input>
+        <input  id="{$id}-value"
+                name="{$name}"
+                class="xfValue"
+                type="range"
+                incremental="{@incremental}"
+                min="{@start}"
+                max="{@end}"
+                value="{bf:data/text()}"
+                tabindex="{$navindex}"
+                title="{xf:hint/text()}">
+            <xsl:if test="bf:data/@bf:readonly='true'">
+                <xsl:attribute name="readonly">readonly</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="string-length(@step) != 0">
+                <xsl:attribute name="step" select="@step"/>
+            </xsl:if>
+        </input>
             <!--
             >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             the hint will be applied as html title attribute and additionally output
@@ -221,8 +216,6 @@
             The hint span will be put outside of the anchor
             <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             -->
-            <xsl:apply-templates select="xf:hint"/>
-        </span>
     </xsl:template>
 
     <!-- ############################## SECRET ############################## -->
