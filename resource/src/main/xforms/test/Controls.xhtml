@@ -137,6 +137,14 @@
                 </color>
             </items>
         </xf:instance>
+        <xf:instance id="origin">
+            <items xmlns="">
+                <color>
+                    <name>BLACK</name>
+                    <value>000000</value>
+                </color>
+            </items>
+        </xf:instance>
 
     </xf:model>
 </head>
@@ -232,6 +240,31 @@
                     <xf:setvalue ref="instance()/range[1]/value" value="2"/>
                 </xf:trigger>
             </div>
+            <div style="margin:4px;padding:4px;border:thin dotted #808080">
+                <span>Select1:</span>
+                <xf:trigger>
+                    <xf:label>Value[1]</xf:label>
+                    <xf:setvalue ref="instance()/select1[1]/value" value="'0000FF'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[2]</xf:label>
+                    <xf:setvalue ref="instance()/select1[2]/value" value="'FF0000'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[3]</xf:label>
+                    <xf:setvalue ref="instance()/select1[3]/value" value="'00FF00'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>insert color</xf:label>
+                    <xf:insert nodeset="instance('colors')/color[1]"  position="before"
+                               origin="instance('origin')/color"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>delete color</xf:label>
+                    <xf:delete nodeset="instance('colors')/color" at="1" />
+                </xf:trigger>
+
+            </div>
         </xf:group>
 
         <xf:group ref="instance()" appearance="full" id="eventListener" class="xfFullGroup">
@@ -243,22 +276,33 @@
                 <p><xf:label ref="group[1]/label[@for='label2']" /></p>
                 <span>Group with to labels listening to custom event 'customEvent'</span>
             </xf:group>
+            <hr/>
 
-
-            <xf:select1 ref="select1[1]/value" id="colorselecter">
+          <xf:select1 ref="select1[1]/value" id="colorselecter" incremental="false">
                 <xf:label>Select1 minimal</xf:label>
                 <xf:itemset  nodeset="instance('colors')/color">
                     <xf:label ref="name"/>
                     <xf:value ref="value"/>
+                    <xf:action ev:event="xforms-select">
+                        <xf:message>xf:message: xforms-select</xf:message>
+                        <script type="text/javascript">
+                            alert("js:message: xforms-select");
+                        </script>
+                    </xf:action>
                 </xf:itemset>
-                <xf:action ev:event="xforms-select">
-                    <script type="text/javascript">
-                        console.debug("colorselecter value changed");
-                    </script>
-                </xf:action>
-            </xf:select1>
+              <xf:action ev:event="xforms-value-changed">
+                  <script type="text/javascript">
+                      alert("js:message: xforms-value-changed");
+                  </script>
+              </xf:action>
 
-            <xf:select1 ref="select1[1]/value" appearance="compact">
+            </xf:select1>
+            <xf:output ref="select1[1]/value">
+                <xf:label>Select1 minimal value:</xf:label>
+            </xf:output>
+
+
+            <xf:select1 ref="select1[2]/value" appearance="compact" incremental="true">
                 <xf:label>Select1 compact</xf:label>
                 <xf:itemset  nodeset="instance('colors')/color">
                     <xf:label ref="name"/>
@@ -266,14 +310,23 @@
                 </xf:itemset>
             </xf:select1>
 
-            <xf:select1 ref="select1[1]/value" appearance="full">
+            <xf:output ref="select1[2]/value">
+                <xf:label>Select1 compact value:</xf:label>
+            </xf:output>
+
+
+            <xf:select1 ref="select1[3]/value" appearance="full">
                 <xf:label>Select1 full</xf:label>
                 <xf:itemset  nodeset="instance('colors')/color">
                     <xf:label ref="name"/>
                     <xf:value ref="value"/>
                 </xf:itemset>
             </xf:select1>
+            <xf:output ref="select1[3]/value">
+                <xf:label>Select1 full value:</xf:label>
+            </xf:output>
 
+            <hr/>
             <xf:input ref="input[1]/value">
                 <xf:label ref="../label"/>
             </xf:input>
@@ -297,25 +350,25 @@
                 </xf:hint>
             </xf:input>
 
-            <xf:input ref="input[3]/value"  appearance="bf:dropdowndate=-17:-100">
+
+            <xf:input ref="input[3]/value" appearance="bf:dropdowndate=-17:-100">
                 <xf:label>dropdowndate bound to the same node as above date control</xf:label>
-                <xf:alert ref="../alert" />
+                <xf:alert ref="../alert"/>
                 <xf:hint>
                     <span class="help-title"><xf:output ref="../hint[1]"/></span>
                     <span class="help-body"><xf:output ref="../hint[2]"/></span>
                 </xf:hint>
             </xf:input>
 
-            <xf:input ref="input[4]/value"  appearance="iso8601:dd-MM-yyyy">
-                <xf:label ref="../label" />
-                <xf:alert ref="../alert" />
+            <xf:input ref="input[4]/value" appearance="iso8601:dd-MM-yyyy">
+                <xf:label ref="../label"/>
+                <xf:alert ref="../alert"/>
                 <xf:hint>input 4 hint</xf:hint>
             </xf:input>
-
             <xf:output ref="output[1]/value">
                 <xf:label ref="../label"/>
             </xf:output>
-
+            <hr/>
             <xf:output ref="output[2]/value" mediatype="image/gif">
                 <xf:label ref="../label"/>
                 <xf:hint>a Hint for this control</xf:hint>
@@ -326,11 +379,11 @@
             <xf:output ref="output[3]/value">
                 <xf:label ref="../label"/>
             </xf:output>
-
+            <hr/>
             <xf:textarea ref="textarea[1]/value" mediatype="text/html">
                 <xf:label ref="../label"/>
             </xf:textarea>
-
+            <hr/>
             <xf:range ref="range[1]/value" start="1" step="1" end="10" incremental="true">
                 <xf:label ref="../label"/>
                 <xf:hint ref="../hint"/>
@@ -339,7 +392,7 @@
             <xf:output ref="range[1]/value">
                 <xf:label>Selected range value:</xf:label>
             </xf:output>
-
+            <hr/>
             <xf:trigger ref="trigger[1]/label" appearance="minimal">
                 <xf:label ref="."/>
                 <xf:action>
@@ -350,11 +403,9 @@
             <xf:trigger ref="trigger[2]/label">
                 <xf:label ref="."/>
                 <xf:action>
-                    <!--
-                                        <xf:load show="embed" targetid="mountPoint">
-                                            <xf:resource value="" />
-                                        </xf:load>
-                    -->
+                    <xf:load show="embed" targetid="mountPoint">
+                        <xf:resource value=""/>
+                    </xf:load>
                     <script type="text/javascript">
                         alert("load sample not implemented yet");
                     </script>

@@ -84,7 +84,8 @@ dojo.declare(
 
         if (value != undefined && this.currentValue != value) {
             //do not send update to server if in mode 'incremental' as value already has been passed
-            if( evt == undefined || (!this.incremental && evt.type == "blur") || (this.incremental && evt.type == "keyup") || evt.type == "click" ){
+            // console.debug("XFControl: sendValue: evt.type:", evt ? evt.type:undefined, " - this.incremental:",this.incremental);
+            if( evt == undefined || (!this.incremental && evt.type == "blur") || (this.incremental && evt.type == "keyup") || (this.incremental && evt.type == "change") || (this.incremental && evt.type == "click")){
                 //update internal value
                 this.currentValue = value;
                 //handle validity and dispatch events if necessary

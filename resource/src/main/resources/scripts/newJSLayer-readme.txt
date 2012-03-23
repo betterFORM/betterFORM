@@ -35,6 +35,9 @@ add a declarative way of adding these.
  * if behaviours are bound to datatypes like '.xfOutput.xsdString.mediatypeText .xfValue' we are missing a kind of
    default behaviour or we have to write behaviour matches for all kind of possible datatypes
    (listing of basic schema datatypes: http://www.w3.org/TR/xmlschema-2/#built-in-datatypes)
+ * xforms-select events within itemsets do not work
+ * validation of DropDownDate (if bf:dropdowndata=xyz is used there must be a corresponding constraint on the bind)
+
 
 
 To use it

@@ -1214,15 +1214,20 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
 
 
     _handleBetterFormStateChanged:function(/*XMLEvent*/ xmlEvent) {
-        // console.debug("XFProcessor._handleBetterFormStateChanged: targetId: " + xmlEvent.contextInfo.targetId , " parentId: " , xmlEvent.contextInfo.parentId);
+        // console.debug("XFProcessor._handleBetterFormStateChanged: targetId: " + xmlEvent.contextInfo.targetId , " xmlEvent: " , xmlEvent);
 
 
         // new implementation code
         var parentId = xmlEvent.contextInfo.parentId;
         if(parentId) {
             var parentNode = dojo.byId(parentId);
+            // console.debug("XFProcessor._handleBetterFormStateChanged: parentNode: ",parentNode);
             if (dojo.hasClass(parentNode, "xfSelectorItem")) {
                 var selectParentId = dojo.attr(parentNode.parentNode, "id");
+                if(dojo.hasClass(parentNode.parentNode,"xfRadioItemset")){
+                    selectParentId =dojo.attr(parentNode.parentNode.parentNode,"id");
+                }
+                // console.debug("XFProcessor._handleStateChanged: selectParentId: ",selectParentId);
                 if(dijit.byId(selectParentId)) {
                     dijit.byId(selectParentId).handleStateChanged(xmlEvent.contextInfo);
                     return;
@@ -1511,7 +1516,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
         console.debug("handle betterform-item-deleted for ", xmlEvent.contextInfo.targetName, " [id: '", xmlEvent.contextInfo.targetId, "'] xmlEvent:", xmlEvent);
         if (xmlEvent.contextInfo.targetName == "itemset") {
             var selectDijit = dijit.byId(xmlEvent.contextInfo.parentId + "-value");
-            console.debug("betterform-insert-itemset [selectDijit: '", selectDijit ,']' );
+            console.debug("handle betterform-item-deleted [selectDijit: '", selectDijit ,']' );
             if (selectDijit != undefined) {
                 selectDijit.handleDeleteItem(xmlEvent.contextInfo);
             }

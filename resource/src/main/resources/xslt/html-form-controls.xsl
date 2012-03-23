@@ -290,6 +290,7 @@
                     </xsl:call-template>
                 </select>
                 <!-- handle itemset prototype -->
+<!--
                 <xsl:if test="not(ancestor::xf:repeat)">
                     <xsl:for-each select="xf:itemset/bf:data/xf:item">
                         <xsl:call-template name="build-item-prototype">
@@ -298,6 +299,7 @@
                         </xsl:call-template>
                     </xsl:for-each>
                 </xsl:if>
+-->
 
             </xsl:when>
             <!--
@@ -317,6 +319,7 @@
                     </xsl:call-template>
                 </span>
                     <!-- handle itemset prototype -->
+<!--
                     <xsl:if test="not(ancestor::xf:repeat)">
                         <xsl:for-each select="xf:itemset/bf:data/xf:item">
                             <xsl:call-template name="build-radiobutton-prototype">
@@ -328,6 +331,7 @@
                             </xsl:call-template>
                         </xsl:for-each>
                     </xsl:if>
+-->
 
                 <!-- create hidden parameter for identification and deselection -->
             </xsl:when>
@@ -412,6 +416,7 @@
                     </xsl:for-each>
                 </span>
                 <!-- handle itemset prototype -->
+<!--
                 <xsl:if test="not(ancestor::xf:repeat)">
                     <xsl:for-each select="xf:itemset/bf:data/xf:item">
                         <xsl:call-template name="build-checkbox-prototype">
@@ -422,6 +427,7 @@
                         </xsl:call-template>
                     </xsl:for-each>
                 </xsl:if>
+-->
             </xsl:when>
             <!--
             >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -882,8 +888,6 @@
                 <xsl:if test="@selected='true'">
                     <xsl:attribute name="checked">checked</xsl:attribute>
                 </xsl:if>
-                <xsl:attribute name="onclick">setXFormsValue(this);</xsl:attribute>
-                <xsl:attribute name="onkeydown">DWRUtil.onReturn(event, submitFunction);</xsl:attribute>
                 <xsl:text> </xsl:text>
             </input>
             <span id="{@item-id}-label" class="xfLabel">
@@ -1013,30 +1017,24 @@
                    class="xfRadioValue"
                    type="radio"
                    parentId="{$parentId}"
-                   name="{$name}"
-                   selected="{@selected}"
+                   name="{$name}"                   
                    >
+                <xsl:if test="@selected = 'true'">
+                    <xsl:attribute name="checked">true</xsl:attribute>
+                </xsl:if>
                 <xsl:attribute name="value">
                     <xsl:choose>
                         <xsl:when test="xf:copy"><xsl:value-of select="xf:copy/@id"/></xsl:when>
                         <xsl:otherwise><xsl:value-of select="normalize-space(xf:value)"/></xsl:otherwise>
                     </xsl:choose>
                 </xsl:attribute>
-                <xsl:if test="string-length($navindex) != 0">
-                    <xsl:attribute name="tabindex">
-                        <xsl:value-of select="$navindex"/>
-                    </xsl:attribute>
-                </xsl:if>
-                <xsl:value-of select="$label"/>
             </input>
-<!--
             <label id="{@id}-label" for="{@id}-value" class="xfRadioLabel">
                 <xsl:if test="$parent/bf:data/@bf:readonly='true'">
                     <xsl:attribute name="disabled">disabled</xsl:attribute>
                 </xsl:if>
-
+                <xsl:value-of select="$label"/>
             </label>
--->
         </span>
 	</xsl:template>
 

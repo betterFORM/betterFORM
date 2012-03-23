@@ -12,13 +12,14 @@ var outputBehavior = {
     // ############################## OUTPUT MAPPINGS ############################################################
     // ############################## OUTPUT MAPPINGS ############################################################
     // ############################## OUTPUT MAPPINGS ############################################################
-    '.xfOutput.xsdString.mediatypeText .xfValue, .xfOutput.xsdInteger.mediatypeText .xfValue': function(n) {
-        // console.debug("FOUND: output string: ",n);
+    '.xfOutput.mediatypeText .xfValue': function(n) {
+        // console.debug("FOUN.xfOutput.mediatypeText .xfValuelue ",n);
 
         var xfId = getXfId(n);
         var xfControl = dijit.byId(xfId);
 
         xfControl.setValue = function(value) {
+            // console.debug("xfControl.setValue: .xfOutput.mediatypeText .xfValue")
             n.innerHTML = value;
         };
 
@@ -35,7 +36,7 @@ var outputBehavior = {
     },
 
     '.xfOutput.xsdAnyURI .xfValue': function(n) {
-        // console.debug("FOUND: output anyURI: ",n);
+        // console.debug("FOUND: .xfOutput.xsdAnyURI .xfValue",n);
 
         var xfControl = dijit.byId(getXfId(n));
 
@@ -51,6 +52,7 @@ var outputBehavior = {
         }
 
         xfControl.setValue = function(value) {
+            // console.debug("xfControl.setValue: .xfOutput.xsdAnyURI .xfValue")
             dojo.attr(n, "href", value);
             n.innerHTML = value;
         }
