@@ -15,7 +15,7 @@ var rangeBehavior = {
     // ############################## RANGE MAPPINGS ############################################################
     // ############################## RANGE MAPPINGS ############################################################
     '.xfRange.xsdInteger .xfValue':function(n){
-        console.debug("Found xf:range: node:",n);
+        // console.debug("Found xf:range: node:",n);
         var xfId = n.id.substring(0,n.id.lastIndexOf("-"));
         var xfControl = dijit.byId(xfId);
 
@@ -25,20 +25,17 @@ var rangeBehavior = {
         } else {
             xfValue = parseInt(xfValue, "10");
         }
-        console.debug("createRangeSliderWidget: xfValue:",xfValue);
+        // console.debug("createRangeSliderWidget: xfValue:",xfValue);
         var start = 0; var end = 10; var step = 1;
         var minAttr = dojo.attr(n,"min");
-        console.debug("minAttr:",minAttr);
         if(minAttr != ""){ start = parseInt(minAttr , "10"); }
         var maxAttr = dojo.attr(n,"max");
-        console.debug("maxAttr:",maxAttr);
         if(maxAttr!= ""){
             end = parseInt(maxAttr , "10");
         } else if (maxAttr == "" && minAttr != "") {
             end = parseInt(minAttr, "10") + end;
         }
         var stepAttr = dojo.attr(n,"step");
-        console.debug("stepAttr:",stepAttr);
 
         if(stepAttr != ""){step = parseInt(stepAttr, "10");}
         if(xfValue > end) {xfValue = end;}
@@ -47,7 +44,6 @@ var rangeBehavior = {
         // create and setup Range Rules
         var rulesNode = document.createElement('div');
 
-        console.debug("RangeBehaviour slider discreteValues:",discreteValues, " start:",start, " end:",end, " step:",step);
         n.appendChild(rulesNode);
         var sliderRules = new dijit.form.HorizontalRule({
             count: discreteValues,

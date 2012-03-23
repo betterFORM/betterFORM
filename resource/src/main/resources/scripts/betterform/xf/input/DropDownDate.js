@@ -104,7 +104,7 @@ dojo.declare(
     },
 
     postCreate:function() {
-        console.debug("DropDownDate.postCreate this.domNode:", this.valueNode, " this.value: ", this.value);
+        // console.debug("DropDownDate.postCreate this.domNode:", this.valueNode, " this.value: ", this.value);
         this.daysDijit  = dijit.byId(this.daysFacet.id);
         this.monthDijit = dijit.byId(this.monthsFacet.id);
         this.yearDijit  = dijit.byId(this.yearsFacet.id);
@@ -119,7 +119,7 @@ dojo.declare(
     },
 
     applyValues:function(value) {
-         console.debug("DropDownDate.applyValues value:",value);
+         // console.debug("DropDownDate.applyValues value:",value);
         if (value != undefined) {
 
             var splittedValue = value.split("-");
@@ -238,7 +238,7 @@ dojo.declare(
 
 
     set:function(attrName, value){
-        console.debug("DropDownDate.set: attrName: "+ attrName+ "  value",value);
+        // console.debug("DropDownDate.set: attrName: "+ attrName+ "  value",value);
         if(attrName == "value"){
             this.applyValues(value);
         }else if(attrName == "readOnly"){

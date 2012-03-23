@@ -29,7 +29,7 @@ var inputBehavior = {
 
     // a default input control (TextField) bound to a string
     '.xfInput.xsdString .xfValue': function(n) {
-        console.debug("FOUND: string input field: ",n);
+        // console.debug("FOUND: string input field: ",n);
 
         /*
          ###########################################################################################
@@ -74,7 +74,7 @@ var inputBehavior = {
     // ############################## BOOLEAN INPUT ##############################
     // ############################## BOOLEAN INPUT ##############################
     '.xfInput.xsdBoolean .xfValue': function(n) {
-        console.debug("FOUND: boolean input field: ",n);
+        // console.debug("FOUND: boolean input field: ",n);
         var xfId = n.id.substring(0,n.id.lastIndexOf("-"));
         var xfControl = dijit.byId(xfId);
 
@@ -85,7 +85,7 @@ var inputBehavior = {
          here instead.
          */
         xfControl.setReadonly = function() {
-            console.debug("overwritten checkbox function");
+            // console.debug("overwritten checkbox function");
             dojo.attr(n, "disabled","disabled");
         };
         xfControl.setReadwrite = function() {
@@ -149,7 +149,7 @@ var inputBehavior = {
 
             }
         }
-        console.debug("input type=date appearance:",appearance, " datePattern:",datePattern);
+        // console.debug("input type=date appearance:",appearance, " datePattern:",datePattern);
         var xfValue = new Date(dojo.attr(n,"schemavalue"));
         var dateWidget = undefined;
         if(appearance && appearance.indexOf("bf:dropdowndate") != -1){

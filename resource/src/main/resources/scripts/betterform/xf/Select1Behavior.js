@@ -23,12 +23,12 @@ var select1Behavior = {
          if incremental support is needed this eventhandler has to be added for the widget
          */
         dojo.connect(n,"onchange",function(evt){
-            console.debug("onchange",n);
+            // console.debug("onchange",n);
             xfControl.sendValue(n.value,evt);
         });
 
         dojo.connect(n,"onblur",function(evt){
-            console.debug("onblur",n);
+            // console.debug("onblur",n);
             xfControl.sendValue(n.value, evt);
         });
 
