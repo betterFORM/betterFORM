@@ -267,16 +267,17 @@ dojo.declare(
 
 
     handleStateChanged:function(contextInfo) {
-        //console.debug("Repeat.handleStateChanged contextInfo:",contextInfo);
-        var relevant = contextInfo["enabled"] == true;
-        // console.debug("Repeat.handleStateChanged relevant:",relevant);
-        if (relevant) {
-            betterform.ui.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");
+        // console.debug("Repeat.handleStateChanged contextInfo:",contextInfo, " enabled: ",contextInfo["enabled"]);
+        if(contextInfo["enabled"] != ""){
+            var relevant = contextInfo["enabled"] == 'true';
+            // console.debug("Repeat.handleStateChanged relevant:",relevant);
+            if (relevant) {
+                betterform.ui.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");
+            }
+            else {
+                betterform.ui.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");
+            }
         }
-        else {
-            betterform.ui.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");
-        }
-
     },
 
     _removeRepeatIndexClasses:function() {
