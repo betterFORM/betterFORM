@@ -99,6 +99,9 @@ dojo.declare(
             console.debug("repeatItemExists.id: " , dojo.attr(repeatItemExists[0], "id"));
             repeatItemWidget = dijit.byId(dojo.attr(repeatItemExists[0], "id"));
         }else {
+            if(!this.domNode.hasChildNodes() && dojo.hasClass(this.domNode,"xfCompactRepeat")){
+                this._createCompactRepeatHeader(insertedNode.cloneNode(true));
+            }
             repeatItemWidget = this._createRepeatItem(insertedNode, position);
         }
         // console.debug("repeatItemWidget",repeatItemWidget.domNode);
@@ -174,9 +177,42 @@ dojo.declare(
                         dojo.attr(xfNode, "id", generatedId);
                     }
                 }
-                );
+            );
 
     },
+    _createCompactRepeatHeader:function(node) {
+        // console.debug("_createCompactRepeatHeader: START show node",node);
+        // console.dirxml(node);
+        // console.debug("_createCompactRepeatHeader: END show node");
+
+        var tbody = dojo.create("tbody" ,null,this.domNode,"first");
+        // console.debug("_createCompactRepeatHeader: created tbody");
+
+        var repeatHeader = dojo.create("tr" ,null,tbody, "first");
+        // console.debug("_createCompactRepeatHeader: created tr");
+        dojo.addClass(repeatHeader, "xfRepeatHeader");
+
+
+        dojo.query("> td", node).forEach(function(columnNode){
+                // console.debug("Manipulate node as label node: ",columnNode);
+                var tdNode = dojo.create("td" ,{},repeatHeader);
+                tdNode.className = columnNode.className;
+
+                var control = dojo.query(".xfControl", columnNode)[0];
+                var labelId = dojo.attr(control,"id")+"-label";
+                var labelNode = dojo.create("label" ,{id:labelId},tdNode,"first");
+                dojo.addClass(labelNode, "xfLabel");
+                dojo.addClass(labelNode, "xfEnabled");
+            }
+        );
+
+        // console.debug("_createCompactRepeatHeader: tbody:",tbody, " \n\n");
+        // console.dirxml(tbody);
+        // console.debug("_createCompactRepeatHeader: END show node");
+
+
+    },
+
     _createRepeatItem:function(/*Dijit*/node, /* int */position) {
         // console.debug("RepeatItem._createRepeatItem node:",node, " at position " + position);
         var repeatItemCount = this._getSize();
