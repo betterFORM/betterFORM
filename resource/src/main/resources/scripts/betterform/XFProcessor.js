@@ -722,13 +722,14 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
     },
 
     _handleValidity:function(validityEvents) {
+        // console.debug("XFProcessor._handleValidity validityEvents:",validityEvents);
         dojo.forEach(validityEvents, function(xmlEvent) {
             var control = dijit.byId(xmlEvent.contextInfo.targetId);
             if (control != undefined) {
                 if (xmlEvent.type == "xforms-valid") {
-                    control._handleSetValidProperty(true);
+                    control.setValid();
                 } else {
-                    control._handleSetValidProperty(false);
+                    control.setInvalid();
                 }
             }
         });

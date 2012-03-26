@@ -108,10 +108,6 @@ dojo.declare(
 
 
         },
-        onBlur:function(evt) {
-            console.debug("betterform.xf.Select1Full.onBlur");
-        },
-
 
         handleInsertItem:function(contextInfo) {
             console.debug("betterform.xf.Select1Full.handleInsertItem: ", contextInfo);
