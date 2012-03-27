@@ -9,6 +9,7 @@
                 xmlns:xf="http://www.w3.org/2002/xforms"
                 xmlns:bf="http://betterform.sourceforge.net/xforms"
                 xmlns:ev="http://www.w3.org/2001/xml-events"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 exclude-result-prefixes="xf bf"
                 xpath-default-namespace="http://www.w3.org/1999/xhtml">
 
@@ -155,6 +156,23 @@
     <xsl:preserve-space elements="*"/>
     <xsl:strip-space elements="xf:action"/>
 
+    <!--
+
+    -->
+    <xsl:variable name="ualc" select="translate($user-agent,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"/>
+    <xsl:variable name="client-device">
+        <xsl:choose>
+            <xsl:when test="(contains($ualc,'android') and contains($ualc,'mobile'))
+                            or contains($ualc,'blackberry') or contains($ualc,'benq') or contains($ualc,'iemobile') or
+                            contains($ualc,'ipod') or contains($ualc,'iphone') or
+                            contains($ualc,'j2me') or contains($ualc,'nokia') or
+                            contains($ualc,'phone') or contains($ualc,'smartphone')">uaMobile</xsl:when>
+            <xsl:when test="(contains($ualc,'android') and contains($ualc, 'tablet')) or
+                            contains($ualc,'ipad') or contains($ualc,'table')">uaTablet</xsl:when>
+            <xsl:otherwise>uaDesktop</xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+
 
     <!-- ####################################################################################################### -->
     <!-- ##################################### TEMPLATES ####################################################### -->
@@ -287,9 +305,10 @@
             </xsl:choose>
         </xsl:variable>
 
-        <body class="{$theme} bf">
+        <body class="{$theme} bf {$client-device}">
             <xsl:copy-of select="@*[name() != 'class']"/>
-
+            <xsl:message>Useragent is <xsl:value-of select="$user-agent"/></xsl:message>
+            <xsl:message>Client Device: <xsl:value-of select="$client-device"/></xsl:message>
             <!--
             >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             the 'bfLoading' div is used to display an animated icon during ajax activity
@@ -402,9 +421,11 @@
                     </xsl:choose>
                     <div id="helpWindow" style="display:none"/>
 
+<!--
                     <div id="bfCopyright">
                         <xsl:text disable-output-escaping="yes">powered by betterFORM, &amp;copy; 2011</xsl:text>
                     </div>
+-->
                 </div>
             </div>
             <!--

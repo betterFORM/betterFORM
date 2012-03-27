@@ -16,21 +16,19 @@ var select1Behavior = {
     // ############################## SELECT1 MAPPINGS ############################################################
 
     '.xfSelect1.aMinimal .xfValue, .xfSelect1.aDefault .xfValue': function(n) {
-        console.debug("select1 field: ",n);
-
         var xfId = getXfId(n);
         var xfControl = dijit.byId(xfId);
 
         /*
          if incremental support is needed this eventhandler has to be added for the widget
          */
-        dojo.connect(n,"onkeyup",function(evt){
-            console.debug("onkeypress",n);
+        dojo.connect(n,"onchange",function(evt){
+            // console.debug("onchange",n);
             xfControl.sendValue(n.value,evt);
         });
 
         dojo.connect(n,"onblur",function(evt){
-            console.debug("onblur",n);
+            // console.debug("onblur",n);
             xfControl.sendValue(n.value, evt);
         });
 
@@ -38,45 +36,47 @@ var select1Behavior = {
 
     },
     '.xfSelect1.aCompact .xfValue': function(n) {
-        console.debug("select1 compact field: ",n);
-
         var xfId = getXfId(n);
         var xfControl = dijit.byId(xfId);
 
-        /*
-         if incremental support is needed this eventhandler has to be added for the widget
-         */
-        dojo.connect(n,"onkeyup",function(evt){
-            console.debug("onkeypress",n);
+        dojo.connect(n,"onblur",function(evt){
+            xfControl.sendValue(n.value, evt);
+        });
+        dojo.connect(n,"onchange",function(evt){
             xfControl.sendValue(n.value,evt);
         });
 
-        dojo.connect(n,"onblur",function(evt){
-            console.debug("onblur",n);
-            xfControl.sendValue(n.value, evt);
-        });
 
         new betterform.xf.Select1Compact({id:n.id}, n);
 
     },
     '.xfSelect1.aFull .xfValue': function(n) {
-        console.debug("select1 compact field: ",n);
-
         var xfId = getXfId(n);
         var xfControl = dijit.byId(xfId);
 
-        /*
-         if incremental support is needed this eventhandler has to be added for the widget
-         */
-        dojo.connect(n,"onkeyup",function(evt){
-            console.debug("onkeypress",n);
-            xfControl.sendValue(n.value,evt);
+        dojo.query(".xfRadioValue", n).forEach(function(radioValue){
+            radioValue.onclick = function(evt) {
+                xfControl.sendValue(radioValue.value,evt );
+            }
         });
 
+        xfControl.setValue = function(value) {
+            dojo.query(".xfRadioValue", n).forEach(function(radioValue){
+                if(radioValue.value == value){
+                    dojo.attr(radioValue,"checked", true);
+                }
+            });
+        };
+/*
         dojo.connect(n,"onblur",function(evt){
-            console.debug("onblur",n);
-            xfControl.sendValue(n.value, evt);
+            console.debug("handle on blur for select1 full");
+            // xfControl.sendValue(n.value, evt);
         });
+*/
+
+
+        new betterform.xf.Select1Full({id:n.id,controlId:xfId}, n);
+
     }
 };
 

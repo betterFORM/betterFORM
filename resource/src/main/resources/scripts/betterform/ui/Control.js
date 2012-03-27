@@ -156,7 +156,7 @@ dojo.declare(
         dojo.addClass(controlValueTemplate, "xfValue");
         // insert ControlValue node
         var bfValueWrapper = dojo.query(".bfValueWrapper", this.domNode)[0];
-        console.debug("control to insert: ", controlValueTemplate);
+        // console.debug("control to insert: ", controlValueTemplate);
         if(bfValueWrapper != undefined) {
             dojo.place(controlValueTemplate, bfValueWrapper);
         }else {

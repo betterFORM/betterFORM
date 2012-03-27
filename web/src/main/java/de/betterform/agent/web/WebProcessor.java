@@ -569,6 +569,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
         String dataPrefix = Config.getInstance().getProperty("betterform.web.dataPrefix");
         generator.setParameter("data-prefix", dataPrefix);
 
+        generator.setParameter("user-agent", request.getHeader("User-Agent"));
         String triggerPrefix = Config.getInstance().getProperty("betterform.web.triggerPrefix");
         generator.setParameter("trigger-prefix", triggerPrefix);
 
