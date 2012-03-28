@@ -3,7 +3,7 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("betterform.xf.XFControl");
+dojo.provide("bf.XFControl");
 
 dojo.require("dijit._Widget");
 
@@ -28,7 +28,7 @@ dojo.require("dijit._Widget");
  **/
 
 dojo.declare(
-        "betterform.xf.XFControl",
+        "bf.XFControl",
         dijit._Widget,
 {
     id:"",
@@ -50,7 +50,7 @@ dojo.declare(
         // console.debug("\nControl.postCreate; DOM Node:",this.domNode,"\n");
         // TODO: examine if this can be done in handleStateChanged
         // ensure all needed classes for Control are in place in case we have a dynamically created control
-        betterform.ui.util.setDefaultClasses(this.domNode);
+        bf.util.setDefaultClasses(this.domNode);
 
         if(this.isIncremental()){
             this.incremental = true;
@@ -129,7 +129,7 @@ dojo.declare(
             // console.debug("Control.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " contextInfo:",contextInfo);
 
             if (contextInfo["targetName"] == "input" && this.value != null) {
-                var noNSType = betterform.ui.util.removeNamespace(contextInfo["type"]);
+                var noNSType = bf.util.removeNamespace(contextInfo["type"]);
                 this._checkForDataTypeChange(noNSType);
 
                 if (noNSType == "date" || noNSType == "dateTime") {
@@ -306,44 +306,44 @@ dojo.declare(
     },
 
     setValid:function() {
-        betterform.ui.util.replaceClass(this.domNode, "xfInvalid", "xfValid");
+        bf.util.replaceClass(this.domNode, "xfInvalid", "xfValid");
         dojo.publish("/xf/valid", [this.id,"applyChanges"]);
 
     },
 
     setInvalid:function() {
-        betterform.ui.util.replaceClass(this.domNode, "xfValid", "xfInvalid");
+        bf.util.replaceClass(this.domNode, "xfValid", "xfInvalid");
         dojo.publish("/xf/invalid", [this.id,"applyChanges"]);
     },
 
     setReadonly:function() {
-        betterform.ui.util.replaceClass(this.domNode, "xfReadWrite", "xfReadOnly");
+        bf.util.replaceClass(this.domNode, "xfReadWrite", "xfReadOnly");
         dojo.attr(this.getWidget(), "readonly","readonly");
     },
 
     setReadwrite:function() {
-        betterform.ui.util.replaceClass(this.domNode,"xfReadOnly","xfReadWrite");
+        bf.util.replaceClass(this.domNode,"xfReadOnly","xfReadWrite");
         this.getWidget().removeAttribute("readonly");
     },
 
     setRequired:function() {
-        betterform.ui.util.replaceClass(this.domNode, "xfOptional", "xfRequired");
+        bf.util.replaceClass(this.domNode, "xfOptional", "xfRequired");
     },
 
     setOptional:function() {
-        betterform.ui.util.replaceClass(this.domNode, "xfRequired", "xfOptional");
+        bf.util.replaceClass(this.domNode, "xfRequired", "xfOptional");
     },
 
     setEnabled:function() {
         var label = dojo.byId(this.id + "-label");
         if (label != undefined) {
             if (dojo.hasClass(label, "xfDisabled")) {
-                betterform.ui.util.replaceClass(label, "xfDisabled", "xfEnabled");
+                bf.util.replaceClass(label, "xfDisabled", "xfEnabled");
             } else {
                 dojo.addClass(label, "xfEnabled");
             }
         }
-        betterform.ui.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");
+        bf.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");
 
         if (this.isValid()) {
             dojo.publish("/xf/valid", [this.id, "xfDisabled"]);
@@ -356,12 +356,12 @@ dojo.declare(
         var label = dojo.byId(this.id + "-label");
         if (label != undefined) {
             if (dojo.hasClass(label, "xfEnabled")) {
-                betterform.ui.util.replaceClass(label, "xfEnabled", "xfDisabled");
+                bf.util.replaceClass(label, "xfEnabled", "xfDisabled");
             } else {
                 dojo.addClass(label, "xfDisabled");
             }
         }
-        betterform.ui.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");
+        bf.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");
         if (this.isValid()) {
             dojo.publish("/xf/valid", [this.id, "xfDisabled"]);
         } else {
@@ -501,5 +501,13 @@ dojo.declare(
         return this.widget;
     }
 });
+bf.XFControl.getXfId = function(/*Node*/n){
+    console.debug("arrived at bf.XFControl.getXfId");
+/*
+    var tmp = n.id.substring(0,n.id.lastIndexOf("-"));
+    console.debug("returning xfId: ",tmp);
+    return tmp;
+*/
+};
 
 

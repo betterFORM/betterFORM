@@ -361,7 +361,7 @@
                 -->
                 <div    id="fluxProcessor"
                         jsId="fluxProcessor"
-                        dojotype="betterform.XFProcessor"
+                        dojotype="bf.XFProcessor"
                         sessionkey="{$sessionKey}"
                         contextroot="{$contextroot}"
                         usesDOMFocusIN="{$uses-DOMFocusIn}"
@@ -378,7 +378,7 @@
                                 jsId="{@id}"
                                 class="xfModel"
                                 style="display:none"
-                                dojoType="betterform.XFormsModelElement"/>
+                                dojoType="bf.XFormsModelElement"/>
                     </xsl:for-each>
 
                     <!--
@@ -902,16 +902,19 @@
 
     <xsl:template name="addLocalScript">
         <script type="text/javascript" defer="defer">
-            dojo.ready(function(){
-                dojo.ready(function(){
-                    console.debug("ready");
-                    dojo.parser.parse();
-                    Flux._path = dojo.attr(dojo.byId("fluxProcessor"), "contextroot") + "/Flux";
-                    console.debug("calling init");
-                    Flux.init( dojo.attr(dojo.byId("fluxProcessor"),"sessionkey"),
-                    dojo.hitch(fluxProcessor,fluxProcessor.applyChanges));
-                });
-            });
+            require(["dojo/ready", "dojo/parser", "dijit/registry", "dijit/Dialog","bf/BfRequiredXHTML"],
+                function(ready, parser, registry){
+                    ready(function(){
+                        console.debug("ready");
+                        console.debug("parser parse start");
+                        parser.parse();
+                        Flux._path = dojo.attr(dojo.byId("fluxProcessor"), "contextroot") + "/Flux";
+                        console.debug("calling init");
+                        Flux.init( dojo.attr(dojo.byId("fluxProcessor"),"sessionkey"),
+                                    dojo.hitch(fluxProcessor,fluxProcessor.applyChanges));
+                    });
+                }
+            );
         </script><xsl:text>
 </xsl:text>
     </xsl:template>
@@ -938,7 +941,7 @@
         </xsl:choose>
 
 
-        <script type="text/javascript" src="{concat($contextroot,$scriptPath,'betterform/betterform-Full.js')}">&#160;</script>
+        <!--<script type="text/javascript" src="{concat($contextroot,$scriptPath,'bf/betterform-XHTML.js')}">&#160;</script>-->
         <xsl:text>
 </xsl:text>
         <!--
@@ -948,7 +951,7 @@
         <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         -->
         <script type="text/javascript">
-            dojo.require("betterform.XFProcessor");
+            dojo.require("bf.XFProcessor");
         </script>
         <xsl:text>
 </xsl:text>

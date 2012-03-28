@@ -3,10 +3,10 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("betterform.xf.OutputBehavior");
+dojo.provide("bf.OutputBehavior");
 
-dojo.require("betterform.xf.XFControl");
-dojo.require("betterform.util");
+dojo.require("bf.XFControl");
+dojo.require("bf.util");
 
 var outputBehavior = {
     // ############################## OUTPUT MAPPINGS ############################################################

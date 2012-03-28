@@ -1,9 +1,9 @@
-dojo.provide("betterform.xf.Repeat");
+dojo.provide("bf.Repeat");
 
-dojo.require("betterform.xf.Container");
+dojo.require("bf.Container");
 
 dojo.declare(
-    "betterform.xf.Repeat",betterform.xf.Container,
+    "bf.Repeat",bf.Container,
     {
         handleSetRepeatIndex:function(/*Map*/ contextInfo) {
             // console.debug("Repeat.handleSetRepeatIndex: contextInfo'",contextInfo, " for Repeat id: ", this.id);
@@ -184,7 +184,7 @@ dojo.declare(
             } else {
                 appearance = "compact";
             }
-            // var repeatItemDijit = new betterform.ui.container.RepeatItem({repeatId:this.id,appearance:appearance}, node);
+            // var repeatItemDijit = new bf.ui.container.RepeatItem({repeatId:this.id,appearance:appearance}, node);
             // repeatItemDijit.hideRepeatItem();
             dojo.style(node, "display","none");
 

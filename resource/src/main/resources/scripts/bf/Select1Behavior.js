@@ -3,9 +3,9 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("betterform.xf.Select1Behavior");
-dojo.require("betterform.xf.Select1");
-dojo.require("betterform.xf.XFControl");
+dojo.provide("bf.Select1Behavior");
+dojo.require("bf.Select1");
+dojo.require("bf.XFControl");
 var select1Behavior = {
 
     // ############################## SELECT1 MAPPINGS ############################################################
@@ -32,7 +32,7 @@ var select1Behavior = {
             xfControl.sendValue(n.value, evt);
         });
 
-        new betterform.xf.Select1Minimal({id:n.id}, n);
+        new bf.Select1Minimal({id:n.id}, n);
 
     },
     '.xfSelect1.aCompact .xfValue': function(n) {
@@ -47,7 +47,7 @@ var select1Behavior = {
         });
 
 
-        new betterform.xf.Select1Compact({id:n.id}, n);
+        new bf.Select1Compact({id:n.id}, n);
 
     },
     '.xfSelect1.aFull .xfValue': function(n) {
@@ -75,7 +75,7 @@ var select1Behavior = {
 */
 
 
-        new betterform.xf.Select1Full({id:n.id,controlId:xfId}, n);
+        new bf.Select1Full({id:n.id,controlId:xfId}, n);
 
     }
 };

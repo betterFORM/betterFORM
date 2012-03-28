@@ -3,9 +3,9 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("betterform.xf.SelectBehavior");
+dojo.provide("bf.SelectBehavior");
 
-dojo.require("betterform.xf.Select");
+dojo.require("bf.Select");
 
 var selectBehavior = {
 
@@ -18,11 +18,11 @@ var selectBehavior = {
         var xfControl = dijit.byId(xfId);
 
         dojo.connect(n,"onchange",function(evt){
-            betterform.xf.SelectBehavior.selectMinimalSendValue(xfControl, n,evt);
+            bf.SelectBehavior.selectMinimalSendValue(xfControl, n,evt);
         });
 
         dojo.connect(n,"onblur",function(evt){
-            betterform.xf.SelectBehavior.selectMinimalSendValue(xfControl, n,evt);
+            bf.SelectBehavior.selectMinimalSendValue(xfControl, n,evt);
         });
 
         xfControl.setValue=function(value) {
@@ -36,7 +36,7 @@ var selectBehavior = {
         var xfControl = dijit.byId(xfId);
 
         dojo.connect(n,"onchange",function(evt){
-            betterform.xf.SelectBehavior.selectFullSendValue(xfControl, n,evt);
+            bf.SelectBehavior.selectFullSendValue(xfControl, n,evt);
         });
 
         xfControl.setValue=function(value) {
@@ -45,12 +45,12 @@ var selectBehavior = {
             });
         };
 
-        new betterform.xf.Select({id:n.id,control:xfControl}, n);
+        new bf.Select({id:n.id,control:xfControl}, n);
     }
 };
 
 
-betterform.xf.SelectBehavior.selectMinimalSendValue = function(xfControl,n,evt) {
+bf.SelectBehavior.selectMinimalSendValue = function(xfControl,n,evt) {
     var selectedValue = "";
     dojo.query(".xfSelectorItem",n).forEach(function(item){
         if(item.selected){
@@ -64,7 +64,7 @@ betterform.xf.SelectBehavior.selectMinimalSendValue = function(xfControl,n,evt) 
     xfControl.sendValue(selectedValue, evt);
 }
 
-betterform.xf.SelectBehavior.selectFullSendValue = function(xfControl,n,evt) {
+bf.SelectBehavior.selectFullSendValue = function(xfControl,n,evt) {
     var selectedValue = "";
     dojo.query(".xfCheckBoxValue",n).forEach(function(item){
         if(item.checked){

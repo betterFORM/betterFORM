@@ -1,8 +1,8 @@
-dojo.provide("betterform.xf.RepeatBehavior");
+dojo.provide("bf.RepeatBehavior");
 
-dojo.require("betterform.xf.Repeat");
+dojo.require("bf.Repeat");
 
-betterform.repeatBehavior = {
+bf.repeatBehavior = {
 
     /*
      ###########################################################################################
@@ -10,7 +10,7 @@ betterform.repeatBehavior = {
      */
     '.xfRepeat.xfFullRepeat':function(n) {
         // console.debug("\n\nRepeatBehaviour: XFControl found: ",n, " \n\n");
-        new betterform.xf.Repeat({id:n.id}, n);
+        new bf.Repeat({id:n.id}, n);
     },
 
     '.xfRepeat .xfRepeatItem':function(n) {

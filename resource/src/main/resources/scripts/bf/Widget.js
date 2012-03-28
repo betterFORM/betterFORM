@@ -3,7 +3,7 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("betterform.xf.Widget");
+dojo.provide("bf.Widget");
 
 dojo.require("dijit._Widget");
 dojo.require("dijit.form._FormWidget");
@@ -14,7 +14,7 @@ dojo.require("dijit.form._FormWidget");
  * Abstract ControlValue Dijit, do not instantiate directly
  */
 dojo.declare(
-        "betterform.xf.Widget",
+        "bf.Widget",
         dijit._Widget,
 {
     id:null,
@@ -139,7 +139,7 @@ dojo.declare(
             this._handleSetControlValue(value,false);
         }
         var valueNew = this.getControlValue();
-        // console.debug("betterform.ui.ControlValue.setControlValue ControlId: "+ this.xfControl.id +" valueOld:'" + this.currentValue + "' valueNew:'" + valueNew + "' [update processor:'" + eval(this.currentValue != valueNew) + "']");
+        // console.debug("bf.ui.ControlValue.setControlValue ControlId: "+ this.xfControl.id +" valueOld:'" + this.currentValue + "' valueNew:'" + valueNew + "' [update processor:'" + eval(this.currentValue != valueNew) + "']");
         if (this.currentValue != valueNew) {
             this.xfControl.setControlValue(valueNew);
             this.currentValue = valueNew;
@@ -161,10 +161,10 @@ dojo.declare(
      ###########################################################################################################
      */
     _handleSetControlValue:function(value) {
-        console.error("betterform.ui.ControlValue: abstract methods _handleSetControlValue() must be implemented by extending class ", this);
+        console.error("bf.ui.ControlValue: abstract methods _handleSetControlValue() must be implemented by extending class ", this);
     },
     getControlValue:function() {
-        console.error("betterform.ui.ControlValue: abstract methods getControlValue() must be implemented by extending class ", this);
+        console.error("bf.ui.ControlValue: abstract methods getControlValue() must be implemented by extending class ", this);
     }
 
 

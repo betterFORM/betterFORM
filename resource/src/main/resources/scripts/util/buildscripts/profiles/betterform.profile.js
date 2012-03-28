@@ -79,7 +79,7 @@ dependencies = {
             ]
         },
 */
-        /** betterFORM Full Release  **/
+/*        *//** betterFORM Full Release  **//*
         {
             name: "../betterform/betterform-Full.js",
             resourceName: "betterform.full",
@@ -90,7 +90,7 @@ dependencies = {
                 "betterform.BfRequiredFull"
             ]
         },
-        /** betterFORM Timetracker  Release  **/
+        *//** betterFORM Timetracker  Release  **//*
 		{
 		name: "../betterform/betterform-TimeTracker.js",
 		resourceName: "betterform.timetracker",
@@ -102,7 +102,7 @@ dependencies = {
 		]
 		},
 
-        /** betterFORM Dashboard Release  **/
+        *//** betterFORM Dashboard Release  **//*
 		{
 			name: "../betterform/betterform-Dashboard.js",
 			resourceName: "betterform.dashboard",
@@ -112,7 +112,7 @@ dependencies = {
 		},
             
             
-        /** betterFORM XFormsFeatureExplorer Release  **/
+        *//** betterFORM XFormsFeatureExplorer Release  **//*
         {
             name: "../betterform/betterform-XFormsFeatureExplorer.js",
             resourceName: "betterform.feature.explorer",
@@ -120,19 +120,19 @@ dependencies = {
                 "betterform.BfRequiredXFormsFeatureExplorer"
             ]
         },
-        /** betterFORM Editor Release  **/
+        *//** betterFORM Editor Release  **//*
         {
             name: "../betterform/betterform-XFormsEditor.js",
             resourceName: "betterform.editor",
             dependencies: [
                 "betterform.BfRequiredXFormsEditor"
             ]
-        },
+        },*/
         {
-            name: "../betterform/betterform-XHTML.js",
+            name: "../bf/betterform-XHTML.js",
             resourceName: "betterform.xhtml",
             dependencies: [
-                "betterform.BfRequiredXHTML"
+                "bf.BfRequiredXHTML"
             ]
         }
     ],
@@ -144,6 +144,7 @@ dependencies = {
         [ "dijit", "../dijit" ],
         [ "dojox", "../dojox" ],
         [ "betterform", "../betterform", "license.txt" ]
+        [ "bf", "../bf", "license.txt" ]
     ]
 }
 

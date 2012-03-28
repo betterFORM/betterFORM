@@ -3,7 +3,7 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("betterform.xf.RangeBehavior");
+dojo.provide("bf.RangeBehavior");
 
 dojo.require("dijit.form.HorizontalSlider");
 dojo.require("dijit.form.HorizontalRuleLabels");

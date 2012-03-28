@@ -1,7 +1,7 @@
-dojo.provide("betterform.xf.Select1");
+dojo.provide("bf.Select1");
 
 dojo.declare(
-    "betterform.xf.Select1",dijit._Widget,
+    "bf.Select1",dijit._Widget,
     {
         getNthSiblingOption:function(position, referenzedNode){
             var siblingNode = referenzedNode;
@@ -16,10 +16,10 @@ dojo.declare(
     }
 );
 dojo.declare(
-    "betterform.xf.Select1Minimal",betterform.xf.Select1,
+    "bf.Select1Minimal",bf.Select1,
     {
         handleInsertItem:function(contextInfo) {
-            console.debug("betterform.xf.Select1Minimal.handleInsertItem: ", contextInfo);
+            console.debug("bf.Select1Minimal.handleInsertItem: ", contextInfo);
             var position = contextInfo.position;
             var itemsetId = contextInfo.targetId;
             var generatedItemId =  contextInfo.generatedIds[contextInfo.prototypeId];
@@ -81,17 +81,17 @@ dojo.declare(
     }
 );
 dojo.declare(
-    "betterform.xf.Select1Compact",betterform.xf.Select1Minimal,
+    "bf.Select1Compact",bf.Select1Minimal,
     {
 
     }
 );
 dojo.declare(
-    "betterform.xf.Select1Full",betterform.xf.Select1,
+    "bf.Select1Full",bf.Select1,
     {
         controlId:undefined,
         _onBlur:function() {
-            console.debug("betterform.xf.Select1Full._onBlur arguments:",arguments);
+            console.debug("bf.Select1Full._onBlur arguments:",arguments);
             var checkedRadioItemValue = undefined;
             dojo.query(".xfRadioValue", this.domNode).forEach(function(item) {
                 console.debug("analysing radioitem:",item);
@@ -110,7 +110,7 @@ dojo.declare(
         },
 
         handleInsertItem:function(contextInfo) {
-            console.debug("betterform.xf.Select1Full.handleInsertItem: ", contextInfo);
+            console.debug("bf.Select1Full.handleInsertItem: ", contextInfo);
             var position = contextInfo.position;
             var itemsetId = contextInfo.targetId;
             var generatedItemId =  contextInfo.generatedIds[contextInfo.prototypeId];

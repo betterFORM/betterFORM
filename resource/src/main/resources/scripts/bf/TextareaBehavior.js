@@ -3,7 +3,7 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("betterform.xf.TextareaBehavior");
+dojo.provide("bf.TextareaBehavior");
 
 
 

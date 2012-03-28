@@ -3,13 +3,13 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("betterform.xf.Container");
+dojo.provide("bf.Container");
 
 
 dojo.require("dijit._Widget");
 
 dojo.declare(
-        "betterform.xf.Container",
+        "bf.Container",
         dijit._Widget,
 {
 
@@ -44,29 +44,29 @@ dojo.declare(
 
      _handleSetValidProperty:function(valid){
          if (valid) {
-             betterform.ui.util.replaceClass(this.domNode, "xfInvalid", "xfValid");
+             bf.util.replaceClass(this.domNode, "xfInvalid", "xfValid");
          } else {
-             betterform.ui.util.replaceClass(this.domNode, "xfValid", "xfInvalid");
+             bf.util.replaceClass(this.domNode, "xfValid", "xfInvalid");
          }
 
      },
      _handleSetReadonlyProperty: function(readonly){
          console.debug("Container._handleSetReadonlyProperty readonly = " , (this.readonly == false));
          if (readonly) {
-             betterform.ui.util.replaceClass(this.domNode, "xfReadWrite", "xfReadOnly");
+             bf.util.replaceClass(this.domNode, "xfReadWrite", "xfReadOnly");
          }
          else {
-             betterform.ui.util.replaceClass(this.domNode, "xfReadOnly", "xfReadWrite");
+             bf.util.replaceClass(this.domNode, "xfReadOnly", "xfReadWrite");
 
          }
      },
 
      _handleSetRequiredProperty:function(){
          if (this.required == "true") {
-             betterform.ui.util.replaceClass(this.domNode, "xfOptional", "xfRequired");
+             bf.util.replaceClass(this.domNode, "xfOptional", "xfRequired");
          }
          else {
-             betterform.ui.util.replaceClass(this.domNode, "xfRequired", "xfOptional");
+             bf.util.replaceClass(this.domNode, "xfRequired", "xfOptional");
          }
      },
 
@@ -75,12 +75,12 @@ dojo.declare(
          var label = dojo.byId(targetId + "-label");
 
          if (this.relevant == "true") {
-             betterform.ui.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");
-             betterform.ui.util.replaceClass(label, "xfDisabled", "xfEnabled");
+             bf.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");
+             bf.util.replaceClass(label, "xfDisabled", "xfEnabled");
          }
          else {
-             betterform.ui.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");
-             betterform.ui.util.replaceClass(label, "xfEnabled", "xfDisabled");
+             bf.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");
+             bf.util.replaceClass(label, "xfEnabled", "xfDisabled");
          }
      },
 

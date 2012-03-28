@@ -1,26 +1,24 @@
-/*
- * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
- * Licensed under the terms of BSD License
- */
-
-dojo.provide("betterform.XFProcessor");
+define(["dojo/_base/declare", "dijit/_Widget"], function(declare, _Widget){
+    return declare(_Widget, {
 
 // Controls
-dojo.require("betterform.xf.ControlBehavior");
-dojo.require("betterform.xf.InputBehavior");
-dojo.require("betterform.xf.OutputBehavior");
-dojo.require("betterform.xf.RangeBehavior");
-dojo.require("betterform.xf.SecretBehavior");
-dojo.require("betterform.xf.Select1Behavior");
-dojo.require("betterform.xf.SelectBehavior");
-dojo.require("betterform.xf.TextareaBehavior");
-dojo.require("betterform.xf.TriggerBehavior");
-dojo.require("betterform.xf.UploadBehavior");
+/*
+dojo.require("bf.ControlBehavior");
+dojo.require("bf.InputBehavior");
+dojo.require("bf.OutputBehavior");
+dojo.require("bf.RangeBehavior");
+dojo.require("bf.SecretBehavior");
+dojo.require("bf.Select1Behavior");
+dojo.require("bf.SelectBehavior");
+dojo.require("bf.TextareaBehavior");
+dojo.require("bf.TriggerBehavior");
+dojo.require("bf.UploadBehavior");
 // Container
-dojo.require("betterform.xf.RepeatBehavior");
+dojo.require("bf.RepeatBehavior");
 
 dojo.require("dojo.behavior");
-dojo.require("betterform.devtool");
+dojo.require("bf.devtool");
+*/
 /**
  All Rights Reserved.
  @author Joern Turner
@@ -31,8 +29,10 @@ dojo.require("betterform.devtool");
  de.betterform.web.betterform.FluxFacade.
  **/
 
-dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
-{
+/*
+dojo.declare("bf.XFProcessor", bf.XFormsProcessor,
+    {
+*/
     sessionKey:"",
     dataPrefix:"",
     skipshutdown:false,
@@ -88,35 +88,35 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
 /*
         var globalAlertEnabled = dojo.query(".GlobalAlert", dojo.doc)[0];
         if (globalAlertEnabled != undefined) {
-            dojo.require("betterform.ui.common.GlobalAlert");
-            this.defaultAlertHandler = new betterform.ui.common.GlobalAlert({});
+            dojo.require("bf.GlobalAlert");
+            this.defaultAlertHandler = new bf.GlobalAlert({});
             console.warn("!! WARNING: GLOBAL ALERT HANDLER NOT IMPLEMENTED YET !!!");
         }
 
         var bowlAlertEnabled = dojo.query(".BowlAlert", dojo.doc)[0];
         if (bowlAlertEnabled != undefined) {
-            dojo.require("betterform.ui.common.BowlAlert");
-            this.defaultAlertHandler = new betterform.ui.common.BowlAlert({});
+            dojo.require("bf.BowlAlert");
+            this.defaultAlertHandler = new bf.BowlAlert({});
             console.warn("!! WARNING: BOWL ALERT HANDLER NOT IMPLEMENTED YET !!!");
         }
 
         var inlineRoundBordersAlertEnabled = dojo.query(".InlineRoundBordersAlert", dojo.doc)[0];
         if (inlineRoundBordersAlertEnabled != undefined) {
-            this.defaultAlertHandler = new betterform.ui.common.InlineRoundBordersAlert({});
+            this.defaultAlertHandler = new bf.InlineRoundBordersAlert({});
         }
 
         var toolTipAlertEnabled = dojo.query(".ToolTipAlert", dojo.doc)[0];
         if (toolTipAlertEnabled != undefined ) {
-            dojo.require("betterform.ui.common.ToolTipAlert");
-            this.defaultAlertHandler = new betterform.ui.common.ToolTipAlert({});
+            dojo.require("bf.ToolTipAlert");
+            this.defaultAlertHandler = new bf.ToolTipAlert({});
             // console.debug("Enabled ToolTipAlert Handler ", this.defaultAlertHandler);
         }
 */
 
         var inlineAlertEnabled = dojo.query(".InlineAlert", dojo.doc)[0];
         if (inlineAlertEnabled != undefined || this.defaultAlertHandler == undefined) {
-            dojo.require("betterform.ui.common.InlineAlert");
-            this.defaultAlertHandler = new betterform.ui.common.InlineAlert({});
+            dojo.require("bf.InlineAlert");
+            this.defaultAlertHandler = new bf.InlineAlert({});
             // console.debug("Enabled InlineAlert Handler ", this.defaultAlertHandler);
 
         }
@@ -136,7 +136,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
         console.debug("XFProcessor.setInlineRoundBorderAlertHandler");
         // this.hideAllCommonChilds(dojo.doc);
         this.unsubscribeFromAlertHandler();
-        this.defaultAlertHandler = new betterform.ui.common.InlineRoundBordersAlert({});
+        this.defaultAlertHandler = new bf.InlineRoundBordersAlert({});
         this.subscribers[0] = dojo.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
         this.subscribers[1] = dojo.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");
         this.showAllCommonChilds(dojo.doc, "changeAlertType");
@@ -148,8 +148,8 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
         console.debug("setToolTipAlertHandler");
         // this.hideAllCommonChilds(dojo.doc);
         this.unsubscribeFromAlertHandler();
-        dojo.require("betterform.ui.common.ToolTipAlert");
-        this.defaultAlertHandler = new betterform.ui.common.ToolTipAlert({});
+        dojo.require("bf.ToolTipAlert");
+        this.defaultAlertHandler = new bf.ToolTipAlert({});
         this.subscribers[0] = dojo.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
         this.subscribers[1] = dojo.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");
         this.showAllCommonChilds(dojo.doc,"changeAlertType");
@@ -375,7 +375,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
 
     //eventually an 'activate' method still makes sense to provide a simple DOMActivate of a trigger Element
     dispatchEvent: function (targetId) {
-        var newClientServerEvent = new betterform.ClientServerEvent();
+        var newClientServerEvent = new bf.ClientServerEvent();
         newClientServerEvent.setTargetId(targetId);
         newClientServerEvent.setCallerFunction("dispatchEvent");
         this.eventFifoWriter(newClientServerEvent);
@@ -396,7 +396,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
 
     dispatchEventType:function(targetId, eventType, contextInfo) {
         // console.debug("XFProcessor.dispatchEventType(",targetId,") this: ", this, " eventType:",eventType, " contextInfo:",contextInfo);
-        var newClientServerEvent = new betterform.ClientServerEvent();
+        var newClientServerEvent = new bf.ClientServerEvent();
         newClientServerEvent.setTargetId(targetId);
         newClientServerEvent.setEventType(eventType);
         newClientServerEvent.setContextInfo(contextInfo);
@@ -425,7 +425,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
      */
     sendValue: function(id, value) {
         console.debug("XFProcessor.sendValue", id, value);
-        var newClientServerEvent = new betterform.ClientServerEvent();
+        var newClientServerEvent = new bf.ClientServerEvent();
         newClientServerEvent.setTargetId(id);
         newClientServerEvent.setValue(value);
         newClientServerEvent.setCallerFunction("setControlValue");
@@ -449,7 +449,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
 
     setRepeatIndex: function(/*String*/repeatId, /*String*/targetPosition) {
         // console.debug("FluxProcessor.setRepeatIndex repeatId:",repeatId, " targetPosition:",targetPosition);
-        var newClientServerEvent = new betterform.ClientServerEvent();
+        var newClientServerEvent = new bf.ClientServerEvent();
         newClientServerEvent.setTargetId(repeatId);
         newClientServerEvent.setValue(targetPosition);
         newClientServerEvent.setCallerFunction("setRepeatIndex");
@@ -533,7 +533,7 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
     },
 
     _handleExceptions:function(msg, exception) {
-        // console.debug("XFProcessor._handleExceptions msg:",msg, " exception: ", exception);
+        console.debug("XFProcessor._handleExceptions msg:",msg, " exception: ", exception);
         if (msg != undefined && exception != undefined) {
             console.error(msg, ' - Exception: ', exception);
         } else if (msg != undefined) {
@@ -678,10 +678,31 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
     },
 
     _buildUI : function(){
+        console.debug("XFProcessor._buildUI");
         // Controls
-        dojo.behavior.add(controlBehavior);
+            // map the current directory as the path for code in the 'tutorial' namespace
+            // dojo.registerModulePath("tutorial", location.pathname.replace(/\/\w+\.html$/, ""));
+            // Require the behavior resource
+        require(["dojo/behavior", "bf/ControlBehavior", "dojo/domReady!"], function(behavior, ControlBehavior) {
+            // register the behavior 'sheet'
+            console.debug("ControlBehavior:",ControlBehavior);
+            behavior.add(ControlBehavior);
+            // apply all registered behaviors to the current document
+            // behavior.apply();
+        });
+/*
+        require(["bf/ControlBehavior", "dojo/domReady!"], function(ControlBehavior){
+            console.debug("okay, NOW the modules I wanted AND DOM are ready! phew.");
+            // var controlBehaviour = new ControlBehavior();
+            console.debug("ControlBehaviour:",ControlBehavior);
+            console.debug("ControlBehaviour:",ControlBehavior.behavior);
+            dojo.behavior.add(controlBehaviour.behavior);
+        });
+*/
+
+/*
         dojo.behavior.add(inputBehavior);
-        dojo.behavior.add(outputBehavior);
+ dojo.behavior.add(outputBehavior);
         dojo.behavior.add(rangeBehavior);
         dojo.behavior.add(secretBehavior);
         dojo.behavior.add(select1Behavior);
@@ -690,8 +711,10 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
         dojo.behavior.add(triggerBehavior);
         dojo.behavior.add(uploadBehavior);
         // Container
-        dojo.behavior.add(betterform.repeatBehavior);
-
+        dojo.behavior.add(bf.repeatBehavior);
+*/
+        console.debug("Test bf.XFControl.getXFId");
+        bf.XFControl.getXfId();
         dojo.behavior.apply();
     },
 
@@ -838,8 +861,11 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
             dojo.attr(htmlEntryPoint, "id", xlinkTarget + "Old");
             var nodesToEmbed = dojo.byId(targetid);
 
-            dojo.require("dojo.parser");
-            dojo.parser.parse(htmlEntryPoint);
+            require("dojo/parser", function(parser){
+                parser.parse(htmlEntryPoint);
+            });
+
+            // dojo.parser.parse(htmlEntryPoint);
 
             dojo.place(nodesToEmbed, htmlEntryPoint, "before");
 //            dojo.fx.wipeIn({node: nodesToEmbed,duration: 500}).play();
@@ -966,8 +992,12 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
             //get original Element in master DOM
             var htmlEntryPoint = dojo.byId(targetid);
             htmlEntryPoint.innerHTML = content;
-            dojo.require("dojo.parser");
-            dojo.parser.parse(htmlEntryPoint);
+            require("dojo/parser", function(parser){
+                parser.parse(htmlEntryPoint);
+            });
+
+//            dojo.require("dojo.parser");
+//            dojo.parser.parse(htmlEntryPoint);
         }
     },
 
@@ -1689,4 +1719,5 @@ dojo.declare("betterform.XFProcessor", betterform.XFormsProcessor,
         console.dirxml(data);
         dojo.byId("debugFrame").innerHTML=data;
     }
+    })
 });

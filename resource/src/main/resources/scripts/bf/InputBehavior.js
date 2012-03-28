@@ -3,11 +3,11 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("betterform.xf.InputBehavior");
-dojo.require("betterform.xf.XFControl");
+dojo.provide("bf.InputBehavior");
+dojo.require("bf.XFControl");
 dojo.require("dijit.form.DateTextBox");
-dojo.require("betterform.xf.input.DropDownDate");
-dojo.require("betterform.util");
+dojo.require("bf.DropDownDate");
+dojo.require("bf.util");
 
 
 /*
@@ -153,7 +153,7 @@ var inputBehavior = {
         var xfValue = new Date(dojo.attr(n,"schemavalue"));
         var dateWidget = undefined;
         if(appearance && appearance.indexOf("bf:dropdowndate") != -1){
-            dateWidget = new betterform.xf.input.DropDownDate({
+            dateWidget = new bf.DropDownDate({
                     value:dojo.attr(n,"schemavalue"),
                     appearance:appearance,
                     constraints:{

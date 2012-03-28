@@ -3,7 +3,7 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("betterform.xf.TriggerBehavior");
+dojo.provide("bf.TriggerBehavior");
 
 var triggerBehavior = {
 

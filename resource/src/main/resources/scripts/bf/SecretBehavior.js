@@ -3,7 +3,7 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("betterform.xf.SecretBehavior");
+dojo.provide("bf.SecretBehavior");
 
 
 var secretBehavior = {
