@@ -20,7 +20,7 @@ dojo.require("betterform.xf.UploadBehavior");
 dojo.require("betterform.xf.RepeatBehavior");
 
 dojo.require("dojo.behavior");
-
+dojo.require("betterform.devtool");
 /**
  All Rights Reserved.
  @author Joern Turner
