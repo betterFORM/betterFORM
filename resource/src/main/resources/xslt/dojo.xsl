@@ -82,7 +82,7 @@
 
     <xsl:variable name="default-hint-appearance" select="'bubble'"/>
 
-    <!--<xsl:variable name="include-betterform-css" select="if(contains(//body/@class,'no-bf-css')) then 'false' else 'true'" />-->
+    <xsl:variable name="include-betterform-css" select="if(contains(//xhtml:body/@class,'no-bf-css')) then 'false' else 'true'"  />
 
     <xsl:output method="xhtml" version="1.0" encoding="UTF-8" indent="no"
                 doctype-system="/resources/xsd/xhtml1-transitional.dtd"/>
@@ -148,7 +148,10 @@
         <!-- include betterForm default stylesheet -->
         <link rel="stylesheet" type="text/css" href="{$default-css}"/>
         <!--<xsl:if test="$include-betterform-css='true'">-->
-        <link rel="stylesheet" type="text/css" href="{$betterform-css}"/>
+        <xsl:message>no bf css:<xsl:value-of select="$include-betterform-css"/></xsl:message>
+        <xsl:if test="$include-betterform-css!='false'">
+            <link rel="stylesheet" type="text/css" href="{$betterform-css}"/>
+        </xsl:if>
         <!--</xsl:if>-->
     </xsl:template>
 
