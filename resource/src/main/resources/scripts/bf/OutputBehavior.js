@@ -15,7 +15,7 @@ var outputBehavior = {
     '.xfOutput.mediatypeText .xfValue': function(n) {
         // console.debug("FOUN.xfOutput.mediatypeText .xfValuelue ",n);
 
-        var xfId = getXfId(n);
+        var xfId = bf.XFControl.getXfId(n);
         var xfControl = dijit.byId(xfId);
 
         xfControl.setValue = function(value) {
@@ -27,7 +27,7 @@ var outputBehavior = {
     '.xfOutput.mediatypeImage .xfValue': function(n) {
         // console.debug("FOUND: output mediatype image: ",n);
 
-        var xfControl = dijit.byId(getXfId(n));
+        var xfControl = dijit.byId(bf.XFControl.getXfId(n));
 
         xfControl.setValue = function(value) {
             dojo.attr(n, "src", value);
@@ -38,7 +38,7 @@ var outputBehavior = {
     '.xfOutput.xsdAnyURI .xfValue': function(n) {
         // console.debug("FOUND: .xfOutput.xsdAnyURI .xfValue",n);
 
-        var xfControl = dijit.byId(getXfId(n));
+        var xfControl = dijit.byId(bf.XFControl.getXfId(n));
 
         //todo: this solution works in FF - others have to be tested
         //todo: use dojo.style
@@ -60,7 +60,7 @@ var outputBehavior = {
     '.xfOutput.mediatypeHtml .xfValue': function(n) {
         // console.debug("FOUND: output mediatype HTML: ",n);
 
-        dijit.byId(getXfId(n)).setValue = function(value) {
+        dijit.byId(bf.XFControl.getXfId(n)).setValue = function(value) {
             n.innerHTML = value;
         };
     }

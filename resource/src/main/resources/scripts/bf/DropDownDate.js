@@ -2,13 +2,11 @@ define(["dojo/_base/declare",
         "dijit/_WidgetBase",
         "dijit/_TemplatedMixin",
         "dojo/text!./DropDownDate.html",
-        "dojo/dom-style",
-        "dojo/_base/fx",
-        "dojo/_base/lang"],
-    function(declare, WidgetBase, TemplatedMixin, template, domStyle, baseFx, lang){
-        return declare([WidgetBase, TemplatedMixin], {
+        "dijit/form/ComboBox"],
+    function(declare, WidgetBase, TemplatedMixin, template,ComboBox){
+        return declare("bf.DropDownDate",[WidgetBase, TemplatedMixin], {
 
-            templateString: dojo.cache("bf", "DropDownDate.html"),
+            templateString: template,
             widgetsInTemplate:true,
             minimumYear: 1900,
             maximumYear: 2100,
@@ -60,18 +58,18 @@ define(["dojo/_base/declare",
                 rangeEnd = parseInt(rangeEnd, "10");
 
                 // console.debug("DropDownDate: Range Start: ", rangeStart, " End: ", rangeEnd);
-                this.templateString = "<div class='xfDropDownDateControl'><input class='xfValue' type='hidden' dojoAttachPoint='valueNode' value=''/><" +
-                    "span class='xfDropDownDate'><select size='1' dojoType='dijit.form.ComboBox' dojoAttachPoint='daysFacet' class='xfDropDownDateDays'><option></option><" +
+                this.templateString = "<div class='xfDropDownDateControl'><input class='xfValue' type='hidden' data-dojo-attach-point='bfValue' value=''/><" +
+                    "span class='xfDropDownDate'><select size='1'  data-dojo-attach-point='daysFacet' class='xfDropDownDateDays'><option></option><" +
                     "option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><" +
                     "option>09</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><" +
                     "option>17</option><option>18</option><option>19</option><option>20</option><option>21</option><option>22</option><option>23</option><option>24</option><" +
                     "option>25</option><option>26</option><option>27</option><option>28</option><option>29</option><option>30</option><option>31</option></select><" +
-                    "select size='1' dojoType='dijit.form.ComboBox' dojoAttachPoint='monthsFacet' class='xfDropDownDateMonths'><option value=''></option><" +
+                    "select size='1'  data-dojo-attach-point='monthsFacet' class='xfDropDownDateMonths'><option value=''></option><" +
                     "option value='01'>"+this._msg["january"]+"</option><option value='02'>"+this._msg["february"]+"</option><option value='03'>"+this._msg["march"]+"<" +
                     "/option><option value='04'>"+this._msg["april"]+"</option><option value='05'>"+this._msg["may"]+"</option><option value='06'>"+this._msg["june"]+"<" +
                     "/option><option value='07'>"+this._msg["july"]+"</option><option value='08'>"+this._msg["august"]+"</option><option value='09'>"+this._msg["september"]+"<" +
                     "/option><option value='10'>"+this._msg["october"]+"</option><option value='11'>"+this._msg["november"]+"</option><option value='12'>"+this._msg["december"]+"<" +
-                    "/option></select><select size='1' dojoType='dijit.form.ComboBox' dojoAttachPoint='yearsFacet' class='xfDropDownDateYears'>";
+                    "/option></select><select size='1'  data-dojo-attach-point='yearsFacet' class='xfDropDownDateYears'>";
 
                 var end = "</select></span></div>";
 
@@ -95,30 +93,40 @@ define(["dojo/_base/declare",
                     this.minimumYear = rangeEnd;
                     this.maximumYear = rangeStart;
                 }
-
-                // console.debug("DropDownData.postMixInProperties before");
                 this.inherited(arguments);
                 // console.debug("DropDownData.postMixInProperties after");
                 this.incremental = false;
             },
 
             postCreate:function() {
-                // console.debug("DropDownDate.postCreate this.domNode:", this.valueNode, " this.value: ", this.value);
-                this.daysDijit  = dijit.byId(this.daysFacet.id);
-                this.monthDijit = dijit.byId(this.monthsFacet.id);
-                this.yearDijit  = dijit.byId(this.yearsFacet.id);
-
+                console.debug("DropDownDate.postCreate: before this.inherited");
                 this.inherited(arguments);
 
-                dojo.attr(this.valueNode, "value", this.value);
+                this.daysDijit = new ComboBox({},this.daysFacet);
+                dojo.addClass(this.daysDijit.domNode,"xfDropDownDateDays");
+                this.monthDijit = new ComboBox({},this.monthsFacet);
+                dojo.addClass(this.monthDijit.domNode,"xfDropDownDateMonths");
+                this.yearDijit = new ComboBox({},this.yearsFacet);
+                dojo.addClass(this.yearDijit.domNode,"xfDropDownDateYears");
+
+                // console.debug("DropDownData.postMixInProperties this.daysDijit:",this.daysDijit);
+
+                dojo.attr(this.bfValue, "value", this.value);
                 this.applyValues(this.value);
+
+                console.debug("postCreate: this.daysDijit:",this.daysDijit);
                 dojo.connect(this.daysDijit, "onChange", this, "onDaysChanged");
                 dojo.connect(this.monthDijit, "onChange", this, "onMonthsChanged");
                 dojo.connect(this.yearDijit, "onChange", this, "onYearsChanged");
             },
 
             applyValues:function(value) {
-                 // console.debug("DropDownDate.applyValues value:",value);
+                console.debug("DropDownDate.applyValues value:",value);
+                if(this.daysDijit == undefined) {
+                    console.debug("DropDownDate.applyValues this.daysDijit==undefined: return");
+                    return;
+                }
+
                 if (value != undefined) {
 
                     var splittedValue = value.split("-");
@@ -126,12 +134,13 @@ define(["dojo/_base/declare",
                         console.warn("DropDownDate.applyValues: value: ", value ," can't be applied");
                         return;
                     }
-                    // console.debug("DropDownDate.postCreate this.timeContainer:", splittedValue);
+                    console.debug("DropDownDate.applyValues this.timeContainer:", splittedValue);
 
                     this.years = splittedValue[0];
                     this.months = splittedValue[1];
                     this.days = splittedValue[2];
 
+                    console.debug("DropDownDate.applyValues this.daysDijit:", this.daysDijit);
                     this.daysDijit.set('value', this.days);
                     this.monthDijit.set('value', this.monthsArray[parseInt(this.months, "10") - 1]);
                     //this.monthDijit.set('displayValue', this.monthsArray[parseInt(months)-1]);
@@ -140,17 +149,18 @@ define(["dojo/_base/declare",
             },
 
             onDaysChanged:function(evt) {
-                // console.debug("DropDownDate.onDaysChanged.");
+                console.debug("DropDownDate.onDaysChanged.");
                 var selectedItem = this.daysDijit.get("item");
                 if (selectedItem != undefined && selectedItem.value != "") {
                     this.days = selectedItem.value;
                 } else {
                     this.days = this.daysDijit.get("value");
                 }
+                this.set("value", this.getControlValue());
             },
 
             onMonthsChanged:function(evt) {
-                // console.debug("DropDownDate.onMonthsChanged.");
+                console.debug("DropDownDate.onMonthsChanged.");
                 var selectedItem = this.monthDijit.get("item");
                 var value;
                 if (selectedItem != undefined) {
@@ -173,10 +183,11 @@ define(["dojo/_base/declare",
                 }
 
                 this.months = value;
+                this.set("value", this.getControlValue());
             },
 
             onYearsChanged:function(evt) {
-                // console.debug("DropDownDate.onYearsChanged oldYear: " , this.years);
+                console.debug("DropDownDate.onYearsChanged oldYear: " , this.years);
                 var selectedItem = this.yearDijit.get('item');
                 var year;
 
@@ -205,20 +216,8 @@ define(["dojo/_base/declare",
                     console.warn("DropDownDate.onYearsChanged: selected year is invalid, " + year + " is not >= " + this.minimumYear + " and <= " + this.maximumYear);
                 }
                 this.years = year;
-
+                this.set("value", this.getControlValue());
                 // console.debug("DropDownDate.onYearsChanged newYear: " , this.years);
-            },
-
-            _onFocus:function() {
-                // console.debug("DropDownDate._onFocus");
-                this.inherited(arguments);
-                // this.handleOnFocus();
-            },
-
-            _onBlur:function() {
-                // console.debug("DropDownDate._onBlur this.value:",this.value);
-                this.inherited(arguments);
-                this.onChange(this.value);
             },
 
             // TODO: Lars: verify if commented functions can be removed
@@ -231,13 +230,13 @@ define(["dojo/_base/declare",
             getControlValue:function() {
                 this.value = this.years + "-" + this.months + "-" + this.days;
                 // console.debug("bf.ui.input.DropDownDate.getControlValue currentDate: ", this.value);
-                dojo.attr(this.valueNode, "value", this.value);
+                dojo.attr(this.bfValue, "value", this.value);
                 return this.value;
             },
 
 
             set:function(attrName, value){
-                // console.debug("DropDownDate.set: attrName: "+ attrName+ "  value",value);
+                console.debug("DropDownDate.set: attrName: "+ attrName+ "  value",value);
                 if(attrName == "value"){
                     this.applyValues(value);
                 }else if(attrName == "readOnly"){

@@ -502,12 +502,9 @@ dojo.declare(
     }
 });
 bf.XFControl.getXfId = function(/*Node*/n){
-    console.debug("arrived at bf.XFControl.getXfId");
-/*
     var tmp = n.id.substring(0,n.id.lastIndexOf("-"));
     console.debug("returning xfId: ",tmp);
     return tmp;
-*/
 };
 
 

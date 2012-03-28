@@ -14,7 +14,7 @@ var selectBehavior = {
     // ############################## SELECT MAPPINGS ############################################################
 
     '.xfSelect.aMinimal .xfValue, .xfSelect.aDefault .xfValue, .xfSelect.aCompact .xfValue': function(n) {
-        var xfId = getXfId(n);
+        var xfId = bf.XFControl.getXfId(n);
         var xfControl = dijit.byId(xfId);
 
         dojo.connect(n,"onchange",function(evt){
@@ -32,7 +32,7 @@ var selectBehavior = {
         };
     },
     '.xfSelect.aFull .xfValue': function(n) {
-        var xfId = getXfId(n);
+        var xfId = bf.XFControl.getXfId(n);
         var xfControl = dijit.byId(xfId);
 
         dojo.connect(n,"onchange",function(evt){

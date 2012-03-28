@@ -679,30 +679,21 @@ dojo.declare("bf.XFProcessor", bf.XFormsProcessor,
 
     _buildUI : function(){
         console.debug("XFProcessor._buildUI");
-        // Controls
-            // map the current directory as the path for code in the 'tutorial' namespace
-            // dojo.registerModulePath("tutorial", location.pathname.replace(/\/\w+\.html$/, ""));
-            // Require the behavior resource
-        require(["dojo/behavior", "bf/ControlBehavior", "dojo/domReady!"], function(behavior, ControlBehavior) {
-            // register the behavior 'sheet'
+
+        require(["dojo/behavior",
+                 "bf/ControlBehavior",
+                 "bf/InputBehavior",
+                 "dojo/domReady!"],
+                 function(behavior, ControlBehavior,InputBehavior) {
             console.debug("ControlBehavior:",ControlBehavior);
+            console.debug("InputBehaviour:",InputBehavior);
             behavior.add(ControlBehavior);
-            // apply all registered behaviors to the current document
-            // behavior.apply();
+            behavior.add(InputBehavior);
         });
-/*
-        require(["bf/ControlBehavior", "dojo/domReady!"], function(ControlBehavior){
-            console.debug("okay, NOW the modules I wanted AND DOM are ready! phew.");
-            // var controlBehaviour = new ControlBehavior();
-            console.debug("ControlBehaviour:",ControlBehavior);
-            console.debug("ControlBehaviour:",ControlBehavior.behavior);
-            dojo.behavior.add(controlBehaviour.behavior);
-        });
-*/
 
 /*
         dojo.behavior.add(inputBehavior);
- dojo.behavior.add(outputBehavior);
+        dojo.behavior.add(outputBehavior);
         dojo.behavior.add(rangeBehavior);
         dojo.behavior.add(secretBehavior);
         dojo.behavior.add(select1Behavior);
@@ -713,8 +704,6 @@ dojo.declare("bf.XFProcessor", bf.XFormsProcessor,
         // Container
         dojo.behavior.add(bf.repeatBehavior);
 */
-        console.debug("Test bf.XFControl.getXFId");
-        bf.XFControl.getXfId();
         dojo.behavior.apply();
     },
 

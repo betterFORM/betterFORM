@@ -14,7 +14,7 @@ var secretBehavior = {
     '.xfSecret .xfValue':function(n){
         console.debug("FOUND: secret input: ",n);
 
-        var xfControl = dijit.byId( getXfId(n));
+        var xfControl = dijit.byId( bf.XFControl.getXfId(n));
 
         dojo.connect(n,"onkeyup",function(evt){
             xfControl.sendValue(n.value,evt);

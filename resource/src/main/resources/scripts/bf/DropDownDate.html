@@ -1,9 +1,8 @@
-<div class="xfDropDownDateControl"
-    ><input class="xfValue" type="hidden" dojoAttachPoint="valueNode" value=""
-    />
+<div class="xfDropDownDateControl" data-dojo-attach-point="containerNode"
+    ><input class="xfValue" type="hidden" data-dojo-attach-point="bfValue" value="" />
     <span class="xfDropDownDate">
-    <select size="1" dojoType="dijit.form.ComboBox" dojoAttachPoint="daysFacet" class="xfDropDownDateDays"/>
-    <select size="1" dojoType="dijit.form.ComboBox" dojoAttachPoint="monthsFacet" class="xfDropDownDateMonths" />
-    <select size="1" dojoType="dijit.form.ComboBox" dojoAttachPoint="yearsFacet" class="xfDropDownDateYears"/>
+        <select size="1"  data-dojo-attach-point="daysFacet" class="xfDropDownDateDays"></select>
+        <select size="1"  data-dojo-attach-point="monthsFacet" class="xfDropDownDateMonths"></select>
+        <select size="1"  data-dojo-attach-point="yearsFacet" class="xfDropDownDateYears"></select>
     </span>
 </div>

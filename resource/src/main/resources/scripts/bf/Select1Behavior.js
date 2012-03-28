@@ -16,7 +16,7 @@ var select1Behavior = {
     // ############################## SELECT1 MAPPINGS ############################################################
 
     '.xfSelect1.aMinimal .xfValue, .xfSelect1.aDefault .xfValue': function(n) {
-        var xfId = getXfId(n);
+        var xfId = bf.XFControl.getXfId(n);
         var xfControl = dijit.byId(xfId);
 
         /*
@@ -36,7 +36,7 @@ var select1Behavior = {
 
     },
     '.xfSelect1.aCompact .xfValue': function(n) {
-        var xfId = getXfId(n);
+        var xfId = bf.XFControl.getXfId(n);
         var xfControl = dijit.byId(xfId);
 
         dojo.connect(n,"onblur",function(evt){
@@ -51,7 +51,7 @@ var select1Behavior = {
 
     },
     '.xfSelect1.aFull .xfValue': function(n) {
-        var xfId = getXfId(n);
+        var xfId = bf.XFControl.getXfId(n);
         var xfControl = dijit.byId(xfId);
 
         dojo.query(".xfRadioValue", n).forEach(function(radioValue){

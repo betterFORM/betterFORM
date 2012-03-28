@@ -14,7 +14,7 @@ var textareaBehavior = {
     // ############################## TEXTAREA MAPPINGS ############################################################
     // xfControl xfTextarea aDefault xsdString xfEnabled xfReadWrite xfOptional xfValid mediatypeHtml
     '.xfTextarea.mediatypeHtml .xfValue' : function (n) {
-        var xfControl = dijit.byId(getXfId(n));
+        var xfControl = dijit.byId(bf.XFControl.getXfId(n));
 
         xfControl.setValue = function (value) {
             n.innerHTML = value;
