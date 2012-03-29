@@ -69,7 +69,7 @@ dojo.declare(
         handleStateChanged:function(contextInfo) {
             console.debug("Select1Minimal.handleStateChanged contextInfo:",contextInfo);
             var targetName = contextInfo.targetName;
-            var option = dojo.byId(contextInfo.parentId);
+            var option = dom.byId(contextInfo.parentId);
             if(targetName == "label" && option){
                 option.innerHTML = contextInfo.value;
             }else if(targetName == "value" && option){
@@ -115,7 +115,7 @@ dojo.declare(
             var itemsetId = contextInfo.targetId;
             var generatedItemId =  contextInfo.generatedIds[contextInfo.prototypeId];
 
-            var selectedItemset = dojo.byId(itemsetId);
+            var selectedItemset = dom.byId(itemsetId);
             if(selectedItemset){
                 // memorize checked radio item
 /*
@@ -154,7 +154,7 @@ dojo.declare(
 
         handleDeleteItem:function(contextInfo){
             console.debug("handleDeleteItem for id:",this.id, " contextInfo:",contextInfo);
-            var itemsetNode = dojo.byId(contextInfo.originalId);
+            var itemsetNode = dom.byId(contextInfo.originalId);
             var selectorItems  = dojo.query(".xfSelectorItem", itemsetNode);
 
             itemsetNode.removeChild(selectorItems[(contextInfo.position -1)]);
@@ -165,9 +165,9 @@ dojo.declare(
         handleStateChanged:function(contextInfo) {
             var targetName = contextInfo.targetName;
             if(targetName == "label"){
-                dojo.byId(contextInfo.parentId+"-label").innerHTML = contextInfo.value;
+                dom.byId(contextInfo.parentId+"-label").innerHTML = contextInfo.value;
             }else if(targetName == "value"){
-                dojo.attr(dojo.byId(contextInfo.parentId+"-value"),"value",contextInfo.value);
+                dojo.attr(dom.byId(contextInfo.parentId+"-value"),"value",contextInfo.value);
             }else {
                 console.warn("OptGroup.handleStateChanged: no action taken for contextInfo: ",contextInfo);
             }

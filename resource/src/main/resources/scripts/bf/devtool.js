@@ -10,8 +10,8 @@ dojo.require("dojo.dnd.Moveable");
 var inprogress=false;
 
 function toggleLog(){
-    var dnd = new dojo.dnd.Moveable(dojo.byId("evtLogContainer"));
-    var evtContainer = dojo.byId("evtLogContainer");
+    var dnd = new dojo.dnd.Moveable(dom.byId("evtLogContainer"));
+    var evtContainer = dom.byId("evtLogContainer");
     var logStyle = dojo.attr(evtContainer,"style");
     if(logStyle.length != 0 ){
         dojo.attr(evtContainer,"style","");
@@ -28,7 +28,7 @@ function clearLog(){
 function reveal(node){
 
     var id = node.innerHTML;
-    var tNode = dojo.byId(id);
+    var tNode = dom.byId(id);
     if(tNode !=undefined && inprogress==false){
         var currPadding = dojo.style(tNode,"padding");
         console.debug("padding >>> ", currPadding);

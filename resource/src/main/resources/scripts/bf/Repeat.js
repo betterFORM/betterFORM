@@ -18,7 +18,7 @@ dojo.declare(
             this._removeRepeatIndexClasses();
 
             // clone prototype and manipulate classes of repeat item
-            var prototype = dojo.byId(contextInfo.originalId + "-prototype");
+            var prototype = dom.byId(contextInfo.originalId + "-prototype");
             var insertedNode = prototype.cloneNode(true);
             this._replaceRepeatItemClasses(insertedNode);
 
@@ -47,7 +47,7 @@ dojo.declare(
             if (repeatItemExists[0] != null ) {
                 // console.warn("Skipping already present repeatItem: ", repeatItemExists);
                 // console.debug("repeatItemExists.id: " , dojo.attr(repeatItemExists[0], "id"));
-                repeatItemNode = dojo.byId(dojo.attr(repeatItemExists[0], "id"));
+                repeatItemNode = dom.byId(dojo.attr(repeatItemExists[0], "id"));
             }else {
                 repeatItemNode = this._createRepeatItem(insertedNode, position);
             }

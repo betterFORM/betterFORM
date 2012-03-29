@@ -72,7 +72,7 @@ dojo.declare(
 
      _handleSetEnabledProperty: function(){
          var targetId = this.id;
-         var label = dojo.byId(targetId + "-label");
+         var label = dom.byId(targetId + "-label");
 
          if (this.relevant == "true") {
              bf.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");

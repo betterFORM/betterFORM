@@ -9,7 +9,7 @@ define(["dojo/_base/declare","bf/Alert"],
         // @Override
         _show:function(id, commonChild) {
             //console.debug("InlineAlert._show [id:'",id,"' commonChild:'", commonChild,"']");
-            var commonChildNode = dojo.byId(id + '-' + commonChild);
+            var commonChildNode = dom.byId(id + '-' + commonChild);
             if(commonChildNode == undefined || commonChild == this.info) {
                 return;
             }
@@ -20,7 +20,7 @@ define(["dojo/_base/declare","bf/Alert"],
         // @Override
         _hide:function(id, commonChild) {
             // console.debug("InlineAlert._hide [id:'",id,"' commonChild:'", commonChild,"']");
-            var commonChildNode = dojo.byId(id + '-' + commonChild);
+            var commonChildNode = dom.byId(id + '-' + commonChild);
             if(commonChildNode == undefined || commonChild == this.info) {
                 return;
             }
@@ -30,7 +30,7 @@ define(["dojo/_base/declare","bf/Alert"],
 
         _render:function(id, commonChild, show) {
             // console.debug("InlineAlert._render [id:'",id,"' commonChild:'", commonChild," ' show:'",show, "']");
-            var mip = dojo.byId(id + "-" + commonChild);
+            var mip = dom.byId(id + "-" + commonChild);
             if (mip != undefined && mip.innerHTML != '') {
                 // add onclick handler to alerts to close them by mouse click
                 if(commonChild == "alert" && show=="inline") {

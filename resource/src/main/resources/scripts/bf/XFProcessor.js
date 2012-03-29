@@ -4,7 +4,8 @@ define(["dojo/_base/declare",
         "dojo/behavior",
         "bf/ControlBehavior",
         "bf/InputBehavior",
-        "dojo/domReady!"], function(declare, XFormsProcessor,ClientServerEvent,behavior, ControlBehavior,InputBehavior){
+        "dojo/dom",
+        "dojo/domReady!"], function(declare, XFormsProcessor,ClientServerEvent,behavior, ControlBehavior,InputBehavior,dom){
     return declare("bf.XFProcessor",XFormsProcessor, {
 
 /**
@@ -51,7 +52,7 @@ define(["dojo/_base/declare",
         console.debug("FluxProcessor.constructor");
         /*
          var fluxAttribute = function(attribute) {
-         return dojo.attr(dojo.byId("fluxProcessor"), attribute);
+         return dojo.attr(dom.byId("fluxProcessor"), attribute);
          };
          */
         // This is used for referencing this object from within ajax-callback-functions
@@ -243,7 +244,7 @@ define(["dojo/_base/declare",
             if(nextPendingClientServerEvent.getCallerFunction() == "setRepeatIndex"){
                 dojoObject = dojo.query("*[repeatId='" + nextPendingClientServerEvent.getTargetId() + "']")[0];
             }else {
-                dojoObject = dojo.byId(nextPendingClientServerEvent.getTargetId());
+                dojoObject = dom.byId(nextPendingClientServerEvent.getTargetId());
             }
             // console.debug("EventFifoReader dojoObject:",dojoObject, " targetId: ",nextPendingClientServerEvent.getTargetId());
             if (dojoObject == null) {
@@ -552,7 +553,7 @@ define(["dojo/_base/declare",
             var index = 0;
 
             //eventLog writing
-            var eventLog = dojo.byId("eventLog");
+            var eventLog = dom.byId("eventLog");
 
             dojo.forEach(data,
                     function(xmlEvent) {
@@ -691,10 +692,10 @@ define(["dojo/_base/declare",
         /* TODO: Lars: upgrade to Dojo 1.7 */
         /*
         dojo.require("dojox.fx");
-        var debugPane = dojo.byId("debug-pane-links");
+        var debugPane = dom.byId("debug-pane-links");
 
         if(debugPane != null){
-            var contextroot = dojo.attr(dojo.byId("debug-pane"),"context");
+            var contextroot = dojo.attr(dom.byId("debug-pane"),"context");
             var newLink = document.createElement("a");
             dojo.attr(newLink,"href",contextroot + xmlEvent.contextInfo.modelId + "/" + xmlEvent.contextInfo.instanceId);
             dojo.attr(newLink,"target","_blank");
@@ -771,7 +772,7 @@ define(["dojo/_base/declare",
         if (this.webtest != 'true') {
             var description = xmlEvent.contextInfo.message;
             console.error(xmlEvent.contextInfo.message);
-            var exception = dojo.byId('betterFORM-exception');
+            var exception = dom.byId('betterFORM-exception');
             var log;
             var exceptionText;
             if (!exception) {
@@ -848,7 +849,7 @@ define(["dojo/_base/declare",
 
             //determine the DOM Element in the client DOM which is the target for embedding
             var targetid;
-            if (dojo.byId(xlinkTarget) != undefined) {
+            if (dom.byId(xlinkTarget) != undefined) {
                 targetid = xlinkTarget;
             } else {
                 // if we reach here the xlinkTarget is no idref but the value of a name Attrbute that needs resolving
@@ -861,10 +862,10 @@ define(["dojo/_base/declare",
             this._unloadDOM(targetid);
 
             //get original Element in master DOM
-            var htmlEntryPoint = dojo.byId(targetid);
+            var htmlEntryPoint = dom.byId(targetid);
             htmlEntryPoint.innerHTML = xmlEvent.contextInfo.targetElement;
             dojo.attr(htmlEntryPoint, "id", xlinkTarget + "Old");
-            var nodesToEmbed = dojo.byId(targetid);
+            var nodesToEmbed = dom.byId(targetid);
 
             require("dojo/parser", function(parser){
                 parser.parse(htmlEntryPoint);
@@ -885,7 +886,7 @@ define(["dojo/_base/declare",
             var cssToLoad = xmlEvent.contextInfo.inlineCSS;
 //            console.debug("css to load: ", cssToLoad);
             var headID = document.getElementsByTagName("head")[0];
-            var mountpoint = dojo.byId(xlinkTarget);
+            var mountpoint = dom.byId(xlinkTarget);
 
             if(cssToLoad != undefined && cssToLoad != ""){
                 //console.debug("adding Style: ", cssToLoad);
@@ -989,7 +990,7 @@ define(["dojo/_base/declare",
 
             //determine the DOM Element in the client DOM which is the target for embedding
             var targetid;
-            if (dojo.byId(target) != undefined) {
+            if (dom.byId(target) != undefined) {
                 targetid = target;
             } else {
                 // if we reach here the target is no idref but the value of a name Attrbute that needs resolving
@@ -1002,7 +1003,7 @@ define(["dojo/_base/declare",
             this._unloadDOM(targetid);
 
             //get original Element in master DOM
-            var htmlEntryPoint = dojo.byId(targetid);
+            var htmlEntryPoint = dom.byId(targetid);
             htmlEntryPoint.innerHTML = content;
             require("dojo/parser", function(parser){
                 parser.parse(htmlEntryPoint);
@@ -1018,7 +1019,7 @@ define(["dojo/_base/declare",
         console.debug("XFProcessor._unloadDOM xmlEvent:",xmlEvent);
 
         //delete CSS specific to subform
-        var htmlEntryPoint = dojo.byId(target);
+        var htmlEntryPoint = dom.byId(target);
         if (htmlEntryPoint == undefined) {
             return;
         }
@@ -1190,7 +1191,7 @@ define(["dojo/_base/declare",
          this.logTestMessage(message);
          }
          */
-        var uiControl = dojo.byId(xmlEvent.contextInfo.targetId + "-value");
+        var uiControl = dom.byId(xmlEvent.contextInfo.targetId + "-value");
         if (uiControl != undefined) {
             if (dojo.hasClass(uiControl, "xfInRange")) {
                 dojo.removeClass(uiControl, "xfInRange");
@@ -1206,7 +1207,7 @@ define(["dojo/_base/declare",
      */
     _handleInRange:function(xmlEvent) {
         console.debug("XFProcessor._handleInRange xmlEvent:", xmlEvent);
-        var uiControl = dojo.byId(xmlEvent.contextInfo.targetId + "-value");
+        var uiControl = dom.byId(xmlEvent.contextInfo.targetId + "-value");
         if (uiControl != undefined) {
             if (dojo.hasClass(uiControl, "xfOutOfRange")) {
                 dojo.removeClass(uiControl, "xfOutOfRange");
@@ -1221,7 +1222,7 @@ define(["dojo/_base/declare",
     //todo: is this function needed any more???
     logTestMessage:function(message) {
         console.debug("XFProcessor.logTestMessage message:", message);
-        var log = dojo.byId('messageLog');
+        var log = dom.byId('messageLog');
         if (!log) {
             log = document.createElement('div');
             log.id = 'messageLog';
@@ -1298,7 +1299,7 @@ define(["dojo/_base/declare",
         //todo: review - control specific code should be here!
         var parentId = xmlEvent.contextInfo.parentId;
         if(parentId) {
-            var parentNode = dojo.byId(parentId);
+            var parentNode = dom.byId(parentId);
             // console.debug("XFProcessor._handleBetterFormStateChanged: parentNode: ",parentNode);
             if (dojo.hasClass(parentNode, "xfSelectorItem")) {
                 var selectParentId = dojo.attr(parentNode.parentNode, "id");
@@ -1350,10 +1351,10 @@ define(["dojo/_base/declare",
             // console.debug("XFProcessor._handleBetterFormStateChanged for Group");
             var group = dijit.byId(xmlEvent.contextInfo.targetId);
 
-            if (group == undefined && dojo.byId(xmlEvent.contextInfo.targetId) != undefined) {
-                // console.debug("creating new Group: ",dojo.byId(xmlEvent.contextInfo.targetId));
+            if (group == undefined && dom.byId(xmlEvent.contextInfo.targetId) != undefined) {
+                // console.debug("creating new Group: ",dom.byId(xmlEvent.contextInfo.targetId));
                 dojo.require("betterform.ui.container.Group");
-                group = new betterform.ui.container.Group({}, dojo.byId(xmlEvent.contextInfo.targetId));
+                group = new betterform.ui.container.Group({}, dom.byId(xmlEvent.contextInfo.targetId));
             }
             /* group markup does not exist in ui, check if targetid references an repeatItem */
             else if (xmlEvent.contextInfo.targetId != undefined) {
@@ -1375,7 +1376,7 @@ define(["dojo/_base/declare",
         else if (xmlEvent.contextInfo.targetName != undefined && xmlEvent.contextInfo.targetName == "select1" && xmlEvent.contextInfo.copyItem != undefined) {
             // console.debug("XFProcessor._handleBetterFormStateChanged xf:copy handling: xmlEvent: ",xmlEvent, " contextInfo: ", xmlEvent.contextInfo);
             var warningMsgXFCopy = "XFProcessor._handleBetterFormStateChanged: Select1 ControlValue " + xmlEvent.contextInfo.targetId + "-value: No item selected"
-            var select1 = dojo.byId(xmlEvent.contextInfo.targetId + "-value");
+            var select1 = dom.byId(xmlEvent.contextInfo.targetId + "-value");
             if (select1 != undefined) {
                 var selectedItemId = xmlEvent.contextInfo.selectedItem;
                 // console.debug("XFProcessor._handleBetterFormStateChanged xf:copy: selectedItem: ", selectedItemId);
@@ -1421,9 +1422,9 @@ define(["dojo/_base/declare",
 
         // TODO: old code to initialize controls after insert, happens with "apply behaviour" now
         /**
-        else if (dojo.byId(xfControlId) != undefined) {
+        else if (dom.byId(xfControlId) != undefined) {
             // console.debug("XFProcessor.handleStateChanged on existing DOM  [id: " + xfControlId + ", / xmlEvent:",xmlEvent,+"]");
-            var controlNodeCreated = new betterform.ui.Control({contextInfo:xmlEvent.contextInfo}, dojo.byId(xfControlId));
+            var controlNodeCreated = new betterform.ui.Control({contextInfo:xmlEvent.contextInfo}, dom.byId(xfControlId));
             if(controlNodeCreated.handleStateChanged) {
                 controlNodeCreated.handleStateChanged(xmlEvent.contextInfo);
             }else  {
@@ -1449,7 +1450,7 @@ define(["dojo/_base/declare",
             }
             // parent dijit does not(!!) exist yet
             else {
-                var parentControlNode = dojo.byId(xmlEvent.contextInfo.parentId);
+                var parentControlNode = dom.byId(xmlEvent.contextInfo.parentId);
                 if (parentControlNode == undefined) {
                     console.error("XFProcessor betterform-state-changed  Warning: Neither Target nor its Parent does exist [xmlEvent", xmlEvent, "]");
                 }
@@ -1503,7 +1504,7 @@ define(["dojo/_base/declare",
                 control.handleStateChanged(xmlEvent.contextInfo);
   	        } else {
 		        // Currently the only case encountered where this is needed is for a selectorItem
-	            control = dojo.byId("C"+possibleId-2);
+	            control = dom.byId("C"+possibleId-2);
 	            if (control != undefined) {
                     // console.debug("XFProcessor._handleBetterFormStateChanged selectorItem control: " ,control, "controlType: ", control.controlType);
 		            // targetId stays the same
@@ -1553,8 +1554,8 @@ define(["dojo/_base/declare",
             // console.debug("betterform-insert-itemset handle Insert [id: '", xmlEvent.contextInfo.targetId, " / dijit:",dijit.byId(xmlEvent.contextInfo.targetId),']' );
             dijit.byId(xmlEvent.contextInfo.targetId).handleInsert(xmlEvent.contextInfo);
         } else {
-            var itemsetDOM = dojo.byId(xmlEvent.contextInfo.targetId);
-            // console.debug("betterform-insert-itemset [id: '", xmlEvent.contextInfo.targetId, " / dom:'",dojo.byId(xmlEvent.contextInfo.targetId),"']");
+            var itemsetDOM = dom.byId(xmlEvent.contextInfo.targetId);
+            // console.debug("betterform-insert-itemset [id: '", xmlEvent.contextInfo.targetId, " / dom:'",dom.byId(xmlEvent.contextInfo.targetId),"']");
             var itemsetType = dojo.attr(itemsetDOM, "dojoType");
             // Prototypes don't have a dojoType, search for controlType instead
             if(itemsetType == undefined) {
@@ -1652,7 +1653,7 @@ define(["dojo/_base/declare",
                 var controlToFocus = dijit.byId(xmlEvent.contextInfo.targetId + "-value");
                 if(controlToFocus && controlToFocus.focus){
                    controlToFocus.focus();
-                }else if(dojo.byId(xmlEvent.contextInfo.targetId)){
+                }else if(dom.byId(xmlEvent.contextInfo.targetId)){
                     console.warn("Control is no dijit, focusing domNode: " + xmlEvent.contextInfo.targetId );
                     controlToFocus.domNode.focus();
                 }else {
@@ -1672,9 +1673,9 @@ define(["dojo/_base/declare",
         if (dijit.byId(xfControlId) != undefined) {
         	// console.debug("dom-focus-in-dijit control: ",xfControlId);
             dijit.byId(xfControlId)._handleDOMFocusIn();
-        } else if (dojo.byId(xfControlId) != undefined) {
+        } else if (dom.byId(xfControlId) != undefined) {
         	// console.debug("dom-focus-in-dojo control: ",xfControlId);
-            var domControlValue = dojo.byId(xfControlId);
+            var domControlValue = dom.byId(xfControlId);
             domControlValue.focus();
         } else {
             console.warn("XFProcessor._handleDOMFocusIn no Element found for id:", xfControlId, " might have been destroyed");
@@ -1684,7 +1685,7 @@ define(["dojo/_base/declare",
     _handleXFormsHint:function(xmlEvent) {
         console.debug("XFProcessor._handleXFormsHint xmlEvent:",xmlEvent);
         var xfControlId = xmlEvent.contextInfo.targetId;
-        var message = dojo.attr(dojo.byId(xfControlId + "-value"), "title");
+        var message = dojo.attr(dom.byId(xfControlId + "-value"), "title");
         dijit.byId("betterformMessageToaster").setContent(message, 'message');
         dijit.byId("betterformMessageToaster").show();
         if (this.webtest == 'true') {
@@ -1713,10 +1714,10 @@ define(["dojo/_base/declare",
     _handleSwitchToggled:function(xmlEvent) {
         console.debug("XFProcessor._handleSwitchToggled xmlEvent:", xmlEvent);
         var tmpSwitch = dijit.byId(xmlEvent.contextInfo.targetId);
-        if (tmpSwitch == undefined && dojo.byId(xmlEvent.contextInfo.targetId) != undefined) {
+        if (tmpSwitch == undefined && dom.byId(xmlEvent.contextInfo.targetId) != undefined) {
             // console.debug("create new switch: ", xmlEvent);
             dojo.require("betterform.ui.container.Switch");
-            tmpSwitch = new betterform.ui.container.Switch({}, dojo.byId(xmlEvent.contextInfo.targetId));
+            tmpSwitch = new betterform.ui.container.Switch({}, dom.byId(xmlEvent.contextInfo.targetId));
         }
         tmpSwitch.toggleCase(xmlEvent.contextInfo);
     },
@@ -1750,13 +1751,13 @@ define(["dojo/_base/declare",
         console.debug("showng help for:", id);
 
 
-        var helpCtrl = dojo.byId(id + '-help');
+        var helpCtrl = dom.byId(id + '-help');
         if (helpCtrl == undefined) {
             console.warn("No help available for Control Id: '" + id + "'");
             return;
         }
 
-        var helpText = dojo.byId(id + "-help-text");
+        var helpText = dom.byId(id + "-help-text");
         var currentState = dojo.style(helpText,"display");
 
         if(currentState == "none"){
@@ -1765,7 +1766,7 @@ define(["dojo/_base/declare",
             dojo.style(helpText, { "display":"none"});
         }
         //make sure that the input control at work does not loose the focus
-//        dojo.byId(id).focus();
+//        dom.byId(id).focus();
     },
 
     getInstanceDocument:function(modelId, instanceId){
@@ -1777,7 +1778,7 @@ define(["dojo/_base/declare",
     printInstance:function(data){
         console.debug("XFProcessor.printInstance data:", data);
         console.dirxml(data);
-        dojo.byId("debugFrame").innerHTML=data;
+        dom.byId("debugFrame").innerHTML=data;
     }
     })
 });

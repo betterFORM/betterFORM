@@ -14,7 +14,7 @@ dojo.declare("bf.InlineRoundBordersAlert",
     // @Override
     _show:function(id, commonChild) {
         console.debug("InlineRoundBordersAlert._show: [id:'",id,"' commonChild:'", commonChild,"']");
-        var commonChildNode = dojo.byId(id + '-' + commonChild);
+        var commonChildNode = dom.byId(id + '-' + commonChild);
         if(commonChildNode == undefined) {
             return;
         }
@@ -25,7 +25,7 @@ dojo.declare("bf.InlineRoundBordersAlert",
     // @Override
     _hide:function(id, commonChild) {
         console.debug("InlineRoundBordersAlert._hide: [id:'",id,"' commonChild:'", commonChild,"']");
-        var commonChildNode = dojo.byId(id + '-' + commonChild);
+        var commonChildNode = dom.byId(id + '-' + commonChild);
         if(commonChildNode == undefined) {
             return;
         }

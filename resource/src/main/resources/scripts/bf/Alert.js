@@ -65,7 +65,7 @@ define(["dojo/_base/declare"],
             var controlValueIsEmpty = this._controlValueIsEmpty(control);
 
             // console.debug("controlValueIsEmpty:",controlValueIsEmpty, " control.getControlValue(): ",control.getControlValue());
-            if(dojo.byId(id + "-" + this.alert) == undefined || action == "init" || action == "changeAlertType") {
+            if(dom.byId(id + "-" + this.alert) == undefined || action == "init" || action == "changeAlertType") {
                 return;
             }
 

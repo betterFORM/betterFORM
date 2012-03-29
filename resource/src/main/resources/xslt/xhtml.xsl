@@ -450,7 +450,7 @@
                 <!-- z-index of 1000 so it is also in front of shim for modal dialogs -->
                 <script type="text/javascript">
                     function toggleDebug(){
-                        var debugpane = dojo.byId("debug-pane");
+                        var debugpane = dom.byId("debug-pane");
                         if(dojo.hasClass(debugpane,"open")){
                             var closeAnim = dojo.animateProperty({
                               node:debugpane,
@@ -796,8 +796,8 @@
 
             <!-- if help exists we output the linking icon here -->
             <xsl:if test="exists(../xf:help)">
-                <a tabindex="-1" onmouseover="dojo.style(dojo.byId('{$parentId}'+'-help-text'),'display','inline-block');"
-                                 onmouseout="dojo.style(dojo.byId('{$parentId}'+'-help-text'),'display','none');"
+                <a tabindex="-1" onmouseover="dojo.style(dom.byId('{$parentId}'+'-help-text'),'display','inline-block');"
+                                 onmouseout="dojo.style(dom.byId('{$parentId}'+'-help-text'),'display','none');"
                    href=""
                    id="{$parentId}-help"
                    class="xfHelp">
@@ -908,15 +908,15 @@
 
     <xsl:template name="addLocalScript">
         <script type="text/javascript" defer="defer">
-            require(["dojo/ready", "dojo/parser", "dijit/registry", "dijit/Dialog","bf/XFProcessor","bf/XFormsModelElement"],
-                function(ready, parser, registry, XFProcessor, XFormsModelElement){
+            require(["dojo/ready", "dojo/parser", "dijit/registry","dojo/dom","bf/XFProcessor","bf/XFormsModelElement"],
+                function(ready, parser, registry, dom, XFProcessor, XFormsModelElement){
                     ready(function(){
                         console.debug("ready");
                         console.debug("parser parse start");
                         parser.parse();
-                        Flux._path = dojo.attr(dojo.byId("fluxProcessor"), "contextroot") + "/Flux";
+                        Flux._path = dojo.attr(dom.byId("fluxProcessor"), "contextroot") + "/Flux";
                         console.debug("calling init");
-                        Flux.init( dojo.attr(dojo.byId("fluxProcessor"),"sessionkey"),
+                        Flux.init( dojo.attr(dom.byId("fluxProcessor"),"sessionkey"),
                                     dojo.hitch(fluxProcessor,fluxProcessor.applyChanges));
                     });
                 }

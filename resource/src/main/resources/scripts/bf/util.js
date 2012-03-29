@@ -9,10 +9,10 @@ require(['dojo/_base/declare'], function(declare){
     });
 
     bf.util.showAtWidget = function(widgetId) {
-        //    var widget = dojo.byId(widgetId + '-value');
+        //    var widget = dom.byId(widgetId + '-value');
         var widget = dojo.query("*[widgetId='" + widgetId + "-value']");
         // console.debug("showWidget:", widget);
-        //var widget = dojo.byId(widgetId + '-value');
+        //var widget = dom.byId(widgetId + '-value');
 
 
         /* Wipe In Version */
@@ -21,7 +21,7 @@ require(['dojo/_base/declare'], function(declare){
         console.debug("pos:", dojo.coords(widget[0], false));
         console.debug("abs: ", dojo._abs(widget[0],true));
         console.debug("abs: ", dojo._abs(widget[0],false));
-        var help = dojo.byId(widgetId + "-helptext");
+        var help = dom.byId(widgetId + "-helptext");
         //help.style.left = position.x + 'px';
         var height = position.y + (2 * position.h);
         console.debug("Height: " + height);

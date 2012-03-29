@@ -287,7 +287,7 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/util"],
 
             if(this.currentValue != value) {
                 this.currentValue = value;
-                var valueNode = dojo.byId(this.id + "-value");
+                var valueNode = dom.byId(this.id + "-value");
                 if (valueNode != undefined) {
                     dojo.attr(valueNode, "value", value);
                 }
@@ -331,7 +331,7 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/util"],
         },
 
         setEnabled:function() {
-            var label = dojo.byId(this.id + "-label");
+            var label = dom.byId(this.id + "-label");
             if (label != undefined) {
                 if (dojo.hasClass(label, "xfDisabled")) {
                     bf.util.replaceClass(label, "xfDisabled", "xfEnabled");
@@ -349,7 +349,7 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/util"],
         },
 
         setDisabled:function() {
-            var label = dojo.byId(this.id + "-label");
+            var label = dom.byId(this.id + "-label");
             if (label != undefined) {
                 if (dojo.hasClass(label, "xfEnabled")) {
                     bf.util.replaceClass(label, "xfEnabled", "xfDisabled");
@@ -407,7 +407,7 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/util"],
         setLabel:function(value) {
              console.debug("Control.setLabel value:"+ value);
 
-            var labelNode = dojo.byId(this.id + "-label");
+            var labelNode = dom.byId(this.id + "-label");
             if (labelNode != undefined) {
                 labelNode.innerHTML = value;
             }
@@ -417,7 +417,7 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/util"],
         },
         setHelp:function(value) {
             // console.warn("TBD: Control.setHelp value:"+ value);
-            var helpNode = dojo.byId(this.id + "-help");
+            var helpNode = dom.byId(this.id + "-help");
             if (helpNode != undefined) {
                 helpNode.innerHTML = value;
             }
@@ -428,7 +428,7 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/util"],
 
         setHint:function(value) {
             // Container for storing the hint-node if it exists
-            var hintNode = dojo.byId(this.id + "-hint");
+            var hintNode = dom.byId(this.id + "-hint");
             // Container for storing the node which contains a title attribute
             var valueNode = dijit.byId(this.id + "-value");
 
@@ -473,7 +473,7 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/util"],
         },
 
         setAlert:function(value) {
-            var alertNode = dojo.byId(this.id + "-alert");
+            var alertNode = dom.byId(this.id + "-alert");
             if (alertNode != undefined) {
                 alertNode.innerHTML = value;
             }
@@ -492,7 +492,7 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/util"],
 
         getWidget:function() {
             if(this.widget == undefined) {
-                this.widget = dojo.byId(this.id+"-value");
+                this.widget = dom.byId(this.id+"-value");
             }
             return this.widget;
         }
