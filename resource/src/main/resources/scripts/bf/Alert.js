@@ -3,15 +3,15 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/_base/declare"],
-    function(declare){
+define(["dojo/_base/declare","dojo/_base/window"],
+    function(declare,win){
         return declare(null, {
 
         alert:"alert",
         hint:"hint",
         info:"info",
         none:"none",
-        alwaysShowHint: query(".bfAlwaysShowHint", dojo.doc)[0],
+        alwaysShowHint: query(".bfAlwaysShowHint", win.body())[0],
 
         handleValid:function(id,action){
             // TODO: applyChanges must remove an existing alert
@@ -44,8 +44,8 @@ define(["dojo/_base/declare"],
                 console.info("Alert.handleValid: action:'", action , "' unknown, commonChild handling for control '", id, "', execution stopped");
             }
 
-            if(dojo.hasClass(control.domNode,"bfInvalidControl")) {
-                dojo.removeClass(control.domNode,"bfInvalidControl");
+            if(domClass.contains(control.domNode,"bfInvalidControl")) {
+                domClass.remove(control.domNode,"bfInvalidControl");
             }
         },
 
@@ -95,7 +95,7 @@ define(["dojo/_base/declare"],
                 console.info("Alert.handleInvalid: action:'", action , "' unknown, commonChild handling for control '", id, "', execution stopped");
             }
 
-            if(!dojo.hasClass(control.domNode,"bfInvalidControl")) {
+            if(!domClass.contains(control.domNode,"bfInvalidControl")) {
                 domClass.add(control.domNode,"bfInvalidControl");
             }
         },
@@ -141,9 +141,9 @@ define(["dojo/_base/declare"],
             var controlValue = controlDijit.getControlValue();
             if (controlValue == undefined ||  controlValue == '') {
                 controlValueIsEmpty =  true;
-            }else if (dojo.hasClass(controlDijit.domNode, "xsdBoolean") && !controlValue) {
+            }else if (domClass.contains(controlDijit.domNode, "xsdBoolean") && !controlValue) {
                 controlValueIsEmpty = true;
-            } else if (dojo.hasClass(controlDijit.domNode, "xfRange") && (controlValue == 0 || controlValue == "0")){
+            } else if (domClass.contains(controlDijit.domNode, "xfRange") && (controlValue == 0 || controlValue == "0")){
                 controlValueIsEmpty = true;
             }
             // console.debug("Alert._controlValueIsEmpty: ",controlValueIsEmpty, " controlValue is: ",controlValue, " controlDOMNode: ", controlDijit.domNode);

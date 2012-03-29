@@ -3,7 +3,7 @@
  * Licensed under the terms of BSD License
  */
 
-require(['dojo/_base/declare'], function(declare){
+require(['dojo/_base/declare',"dojo/dom-class"], function(declare,domClass){
     declare("bf.util", null, {
 
     });
@@ -39,14 +39,14 @@ require(['dojo/_base/declare'], function(declare){
          if (!element || !element.className) {
              return false;
          }
-         if(dojo.hasClass(element,current)){
-            dojo.removeClass(element,current);
+         if(domClass.contains(element,current)){
+            domClass.remove(element,current);
          } else {
              console.warn("Element ", element , " does not have class ", current);
              return false;
              }
 
-         if(dojo.hasClass(element,update)){
+         if(domClass.contains(element,update)){
              console.warn("Element ", element , " class ", update, " allready present");
              return false;
          } else {
@@ -58,10 +58,10 @@ require(['dojo/_base/declare'], function(declare){
 
     bf.util.getContainerByClass = function(/* node */ node, /*String*/ cssClass ){
         var body = dojo.body();
-        while(node && node != body && !dojo.hasClass(node, cssClass)) {
+        while(node && node != body && !domClass.contains(node, cssClass)) {
             node = node.parentNode;
         }
-        if(dojo.hasClass(node, cssClass)){
+        if(domClass.contains(node, cssClass)){
             return node;
         }
         return null;
@@ -99,16 +99,16 @@ require(['dojo/_base/declare'], function(declare){
         return false;
     };
     bf.util.setDefaultClasses = function (element) {
-        if(!dojo.hasClass(element,"xfEnabled") && !dojo.hasClass(element,"xfDisabled")){
+        if(!domClass.contains(element,"xfEnabled") && !domClass.contains(element,"xfDisabled")){
             domClass.add(element,"xfEnabled");
         }
-        if(!dojo.hasClass(element,"xfOptional") && !dojo.hasClass(element,"xfRequired")){
+        if(!domClass.contains(element,"xfOptional") && !domClass.contains(element,"xfRequired")){
             domClass.add(element,"xfOptional");
         }
-        if(!dojo.hasClass(element,"xfReadWrite") && !dojo.hasClass(element,"xfReadOnly")){
+        if(!domClass.contains(element,"xfReadWrite") && !domClass.contains(element,"xfReadOnly")){
             domClass.add(element,"xfReadWrite");
         }
-        if(!dojo.hasClass(element,"xfValid") && !dojo.hasClass(element,"xfInvalid")){
+        if(!domClass.contains(element,"xfValid") && !domClass.contains(element,"xfInvalid")){
             domClass.add(element,"xfValid");
         }
     };

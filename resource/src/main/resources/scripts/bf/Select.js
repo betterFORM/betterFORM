@@ -1,16 +1,14 @@
-dojo.provide("bf.Select");
+define(["dojo/_base/declare", "dijit/_Widget"],
+    function(declare, _Widget){
+        return declare("bf.XFormsProcessor",_Widget, {
+            control:undefined,
 
-dojo.declare(
-    "bf.Select",dijit._Widget,
-    {
-        control:undefined,
-
-        _onBlur:function() {
-            console.debug("bf.SelectFull._onBlur arguments:",arguments, " control:",this.control);
-            var evt=new Object();
-            evt.type = "blur";
-            bf.SelectBehavior.selectFullSendValue(this.control,this.domNode,evt);
-        }
-    }
-);
+            _onBlur:function() {
+                console.debug("bf.SelectFull._onBlur arguments:",arguments, " control:",this.control);
+                var evt=new Object();
+                evt.type = "blur";
+                bf.SelectBehavior.selectFullSendValue(this.control,this.domNode,evt);
+            }
+        });
+});
 

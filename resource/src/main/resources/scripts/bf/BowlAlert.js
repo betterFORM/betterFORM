@@ -3,19 +3,17 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("bf.BowlAlert");
+define(["dojo/_base/declare","bf/Alert"],
+    function(declare, Alert){
+        return declare(Alert, {
 
-dojo.require("bf.Alert");
+        handleValid:function(id,action){
+            console.warn("COMING SOON GROWL STYLE ALERTS - bf.BowlAlert.valid [id:" + id , " action: " + action + "]");
+        },
 
-dojo.declare("bf.BowlAlert",
-        bf.Alert,
-{
-    handleValid:function(id,action){
-        console.warn("COMING SOON GROWL STYLE ALERTS - bf.BowlAlert.valid [id:" + id , " action: " + action + "]");
-    },
+        handleInvalid:function(id,action){
+            console.warn("COMING SOON GROWL STYLE ALERTS - bf.BowlAlert.invalid [id:" + id , " action: " + action + "]");
+        }
 
-    handleInvalid:function(id,action){
-        console.warn("COMING SOON GROWL STYLE ALERTS - bf.BowlAlert.invalid [id:" + id , " action: " + action + "]");
-    }
-
+    });
 });

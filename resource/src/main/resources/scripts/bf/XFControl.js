@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/_base/declare", "dijit/_Widget","bf/util"],
-    function(declare, _Widget){
+define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-class","bf/util"],
+    function(declare, _Widget, domClass){
         return declare("bf.XFControl",_Widget, {
 
 
@@ -140,7 +140,7 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/util"],
                 if(this.valid != undefined){
                     if (this.valid == "true") {
                         this.setValid();
-                    }else if(!dojo.hasClass(this.domNode,"bfInvalidControl")){
+                    }else if(!domClass.contains(this.domNode,"bfInvalidControl")){
                         /*
                          todo: got the feeling that this case should be handled elsewhere....
                          if a control is intially invalid it just has xfInvalid but not bfInvalidControl. This may happen
@@ -180,9 +180,9 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/util"],
 
         isRequired:function() {
             // console.debug("Control.isRequired",this.domNode);
-            if (dojo.hasClass(this.domNode, "xfOptional")) {
+            if (domClass.contains(this.domNode, "xfOptional")) {
                 return false;
-            } else if (dojo.hasClass(this.domNode, "xfRequired")) {
+            } else if (domClass.contains(this.domNode, "xfRequired")) {
                 return true;
             } else {
                 console.error("No required state found")
@@ -191,9 +191,9 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/util"],
 
         isReadonly:function() {
             // console.debug("Control.isReadonly",this.domNode);
-            if (dojo.hasClass(this.domNode, "xfReadWrite")) {
+            if (domClass.contains(this.domNode, "xfReadWrite")) {
                 return false;
-            } else if (dojo.hasClass(this.domNode, "xfReadOnly")) {
+            } else if (domClass.contains(this.domNode, "xfReadOnly")) {
                 return true;
             } else {
                 console.error("No readonly state found")
@@ -202,9 +202,9 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/util"],
 
         isRelevant:function() {
             //console.debug("Control.isRelevant",this.domNode);
-            if (dojo.hasClass(this.domNode, "xfDisabled")) {
+            if (domClass.contains(this.domNode, "xfDisabled")) {
                 return false;
-            } else if (dojo.hasClass(this.domNode, "xfEnabled")) {
+            } else if (domClass.contains(this.domNode, "xfEnabled")) {
                 return true;
             } else {
                 console.error("No relevant state found")
@@ -214,16 +214,16 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/util"],
         isValid:function() {
             // console.debug("XFControl.isValid",this.domNode);
 
-            if (dojo.hasClass(this.domNode, "xfInvalid")) {
+            if (domClass.contains(this.domNode, "xfInvalid")) {
                 return false;
-            } else if (dojo.hasClass(this.domNode, "xfValid")) {
+            } else if (domClass.contains(this.domNode, "xfValid")) {
                 return true;
             } else {
                 console.error("No validate state found for " + this.id);
             }
         },
         isIncremental:function(){
-            return dojo.hasClass(this.domNode, "xfIncremental");
+            return domClass.contains(this.domNode, "xfIncremental");
         },
 
         /*
@@ -269,9 +269,9 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/util"],
 
                 domClass.add(controlValueNode, "xfValue");
                 var formerTypeClass = "xsd" + this.dataType.replace(/^[a-z]/, this.dataType.substring(0, 1).toUpperCase());
-                if (dojo.hasClass(this.domNode, formerTypeClass)) {
+                if (domClass.contains(this.domNode, formerTypeClass)) {
                     // console.debug("remove CSS Type " + formerTypeClass);
-                    dojo.removeClass(this.domNode, formerTypeClass);
+                    domClass.remove(this.domNode, formerTypeClass);
                 }
                 domClass.add(this.domNode, "xsd" + dataType.replace(/^[a-z]/, dataType.substring(0, 1).toUpperCase()));
 
@@ -333,7 +333,7 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/util"],
         setEnabled:function() {
             var label = dom.byId(this.id + "-label");
             if (label != undefined) {
-                if (dojo.hasClass(label, "xfDisabled")) {
+                if (domClass.contains(label, "xfDisabled")) {
                     bf.util.replaceClass(label, "xfDisabled", "xfEnabled");
                 } else {
                     domClass.add(label, "xfEnabled");
@@ -351,7 +351,7 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/util"],
         setDisabled:function() {
             var label = dom.byId(this.id + "-label");
             if (label != undefined) {
-                if (dojo.hasClass(label, "xfEnabled")) {
+                if (domClass.contains(label, "xfEnabled")) {
                     bf.util.replaceClass(label, "xfEnabled", "xfDisabled");
                 } else {
                     domClass.add(label, "xfDisabled");
@@ -485,8 +485,8 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/util"],
 
 
         _handleRequiredEmpty:function(){
-            if (dojo.hasClass(this.domNode, "xfRequiredEmpty")) {
-                dojo.removeClass(this.domNode, "xfRequiredEmpty");
+            if (domClass.contains(this.domNode, "xfRequiredEmpty")) {
+                domClass.remove(this.domNode, "xfRequiredEmpty");
             }
         },
 

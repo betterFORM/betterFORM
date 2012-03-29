@@ -2,58 +2,103 @@
  * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
+require(['dojo/_base/declare'], function(declare){
+    declare("bf.devtool", null, {
 
-dojo.provide("bf.devtool");
-dojo.require("dojox.fx");
-dojo.require("dojo.dnd.Moveable");
-
-var inprogress=false;
-
-function toggleLog(){
-    var dnd = new dojo.dnd.Moveable(dom.byId("evtLogContainer"));
-    var evtContainer = dom.byId("evtLogContainer");
-    var logStyle = dojo.attr(evtContainer,"style");
-    if(logStyle.length != 0 ){
-        dojo.attr(evtContainer,"style","");
-    }else{
-        dojo.attr(evtContainer,"style","width:26px;height:26px;overflow:hidden;");
-
-    }
-}
-function clearLog(){
-    query("#eventLog li").forEach(function(node){
-        dojo.destroy(node);
+        /*
+        dojo.require("dojox.fx");
+         dojo.require("dojo.dnd.Moveable");
+        */
     });
-}
-function reveal(node){
 
-    var id = node.innerHTML;
-    var tNode = dom.byId(id);
-    if(tNode !=undefined && inprogress==false){
-        var currPadding = dojo.style(tNode,"padding");
-        console.debug("padding >>> ", currPadding);
-        dojox.fx.highlight({
-            node:tNode,
-            color:'#0066FF',
-            duration:1000,
-            onBegin:function(){
-                dojo.style(tNode,"padding","10px");
-                inprogress=true;
-            },
-            onEnd:function(){
-                dojo.style(tNode,"padding",currPadding);
-                inprogress=false;
-            }
-        }).play();
+    bf.devtool.inprogress=false;
+
+    bf.devtool.toggleLog = function(){
+        var dnd = new dojo.dnd.Moveable(dom.byId("evtLogContainer"));
+        var evtContainer = dom.byId("evtLogContainer");
+        var logStyle = dojo.attr(evtContainer,"style");
+        if(logStyle.length != 0 ){
+            dojo.attr(evtContainer,"style","");
+        }else{
+            dojo.attr(evtContainer,"style","width:26px;height:26px;overflow:hidden;");
+
+        }
+    };
+    bf.devtool.clearLog=function(){
+        query("#eventLog li").forEach(function(node){
+            dojo.destroy(node);
+        });
+    };
+
+    bf.devtool.reveal=function(node){
+
+        var id = node.innerHTML;
+        var tNode = dom.byId(id);
+        if(tNode !=undefined && bf.devtool.inprogress==false){
+            var currPadding = dojo.style(tNode,"padding");
+            console.debug("padding >>> ", currPadding);
+            dojox.fx.highlight({
+                node:tNode,
+                color:'#0066FF',
+                duration:1000,
+                onBegin:function(){
+                    dojo.style(tNode,"padding","10px");
+                    bf.devtool.inprogress=true;
+                },
+                onEnd:function(){
+                    dojo.style(tNode,"padding",currPadding);
+                    bf.devtool.inprogress=false;
+                }
+            }).play();
+        }
+    };
+
+    bf.devtool.toggleEntry=function(node){
+        var entry = query(".eventLogTable",node.parentNode)[0];
+        var entryStyle = dojo.attr(entry,"style");
+        if(entryStyle == undefined || entryStyle.length == 0 ){
+            dojo.style(entry,"display","none");
+        }else{
+            dojo.style(entry,"display","");
+        }
+    };
+
+    bf.devtool.toggleDebug = function(){
+        var debugpane = dom.byId("debug-pane");
+        if(dojo.hasClass(debugpane,"open")){
+            var closeAnim = dojo.animateProperty({
+                node:debugpane,
+                properties: {
+                    width:{start:100,end:0,unit:"%"},
+                    opacity:{start:1.0, end:0}
+                }
+            });
+            dojo.connect(closeAnim, "onEnd", function(node){
+                dojo.style(node,"opacity", 0);
+                dojo.style(node,"display", "none");
+            });
+            closeAnim.play();
+            dojo.removeClass(debugpane,"open");
+            dojo.addClass(debugpane,"closed");
+
+        }else{
+            dojo.style(debugpane,"display", "block");
+            var openAnim = dojo.animateProperty({
+                node:debugpane,
+                properties: {
+                    width:{start:0,end:100,units:"%"},
+                    opacity:{start:0, end:1.0}
+                }
+            });
+            dojo.connect(openAnim, "onEnd", function(node){
+                dojo.style(node,"opacity", 1.0);
+
+            });
+            openAnim.play();
+            dojo.removeClass(debugpane,"closed");
+            dojo.addClass(debugpane,"open");
+        }
     }
-}
-function toggleEntry(node){
-    var entry = query(".eventLogTable",node.parentNode)[0];
-    var entryStyle = dojo.attr(entry,"style");
-    if(entryStyle == undefined || entryStyle.length == 0 ){
-        dojo.style(entry,"display","none");
-    }else{
-        dojo.style(entry,"display","");
-    }
-}
+
+});
 

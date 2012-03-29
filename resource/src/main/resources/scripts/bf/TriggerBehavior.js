@@ -3,22 +3,21 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("bf.TriggerBehavior");
+define(["dojo/behavior"],
+    function(behavior) {
+        return {
 
-var triggerBehavior = {
 
+        // ############################## TRIGGER MAPPINGS ############################################################
+        // ############################## TRIGGER MAPPINGS ############################################################
+        // ############################## TRIGGER MAPPINGS ############################################################
 
-    // ############################## TRIGGER MAPPINGS ############################################################
-    // ############################## TRIGGER MAPPINGS ############################################################
-    // ############################## TRIGGER MAPPINGS ############################################################
-
-    '.xfTrigger .xfValue': function(n) {
-        var parentId = n.id.substring(0,n.id.lastIndexOf("-"));
-        dojo.connect(n, "onclick", function(){
-            fluxProcessor.dispatchEvent(parentId);
-        });
+        '.xfTrigger .xfValue': function(n) {
+            var parentId = n.id.substring(0,n.id.lastIndexOf("-"));
+            dojo.connect(n, "onclick", function(){
+                fluxProcessor.dispatchEvent(parentId);
+            });
+        }
     }
-
-
-};
+});
 

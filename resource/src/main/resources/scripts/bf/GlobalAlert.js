@@ -3,20 +3,16 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("bf.GlobalAlert");
+define(["dojo/_base/declare","bf/Alert"],
+    function(declare, Alert){
+        return declare(Alert, {
+        handleValid:function(id,action){
+            console.warn("COMING SOON GLOBAL ALERTS - bf.GlobalAlert.valid [id:" + id , " action: " + action + "]");
+        },
 
+        handleInvalid:function(id,action){
+            console.warn("COMING SOON GLOBAL ALERTS - bf.GlobalAlert.invalid [id:" + id , " action: " + action + "]");
+        }
 
-dojo.require("bf.Alert");
-
-dojo.declare("bf.GlobalAlert",
-        bf.Alert,
-{
-    handleValid:function(id,action){
-        console.warn("COMING SOON GLOBAL ALERTS - bf.GlobalAlert.valid [id:" + id , " action: " + action + "]");
-    },
-
-    handleInvalid:function(id,action){
-        console.warn("COMING SOON GLOBAL ALERTS - bf.GlobalAlert.invalid [id:" + id , " action: " + action + "]");
-    }
-
+    });
 });

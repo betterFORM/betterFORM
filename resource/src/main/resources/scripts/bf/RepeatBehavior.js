@@ -1,55 +1,54 @@
-dojo.provide("bf.RepeatBehavior");
+define(["dojo/behavior"],
+    function(behavior) {
+        return {
 
-dojo.require("bf.Repeat");
+        /*
+         ###########################################################################################
+         matching all elements with .xfRepeat and instanciate a Repeat Object for each of them.
+         */
+        '.xfRepeat.xfFullRepeat':function(n) {
+            // console.debug("\n\nRepeatBehaviour: XFControl found: ",n, " \n\n");
+            new bf.Repeat({id:n.id}, n);
+        },
 
-bf.repeatBehavior = {
+        '.xfRepeat .xfRepeatItem':function(n) {
 
-    /*
-     ###########################################################################################
-     matching all elements with .xfRepeat and instanciate a Repeat Object for each of them.
-     */
-    '.xfRepeat.xfFullRepeat':function(n) {
-        // console.debug("\n\nRepeatBehaviour: XFControl found: ",n, " \n\n");
-        new bf.Repeat({id:n.id}, n);
-    },
-
-    '.xfRepeat .xfRepeatItem':function(n) {
-
-        dojo.connect(n,"onclick",function(evt){
-            // console.debug("clicked on repeat Item ",n);
-            if(dojo.hasClass(n, "xfRepeatIndex")){
-                // console.debug("repeat item " + n.id + " allready selected");
-                return;
-            }
-            var repeatItems = n.parentNode.childNodes;
-            // console.debug("repeatItems: ",repeatItems);
-            dojo.forEach(repeatItems,
-                function(entry) {
-                    if (dojo.hasClass(entry, "xfRepeatIndex")) { dojo.removeClass(entry, "xfRepeatIndex");}
-                    if (dojo.hasClass(entry, "xfRepeatIndexPre")) { dojo.removeClass(entry, "xfRepeatIndexPre");}
+            dojo.connect(n,"onclick",function(evt){
+                // console.debug("clicked on repeat Item ",n);
+                if(domClass.contains(n, "xfRepeatIndex")){
+                    // console.debug("repeat item " + n.id + " allready selected");
+                    return;
                 }
-            );
-            domClass.add(n, "xfRepeatIndexPre");
-            dojo.attr(n, "selected", "true");
-
-            var position = 0;
-            dojo.forEach(repeatItems,
-                function(entry, index) {
-                    if(dojo.attr(entry, "selected") == "true"){
-                        entry.removeAttribute("selected");
-                        position = index + 1;
-
+                var repeatItems = n.parentNode.childNodes;
+                // console.debug("repeatItems: ",repeatItems);
+                dojo.forEach(repeatItems,
+                    function(entry) {
+                        if (domClass.contains(entry, "xfRepeatIndex")) { domClass.remove(entry, "xfRepeatIndex");}
+                        if (domClass.contains(entry, "xfRepeatIndexPre")) { domClass.remove(entry, "xfRepeatIndexPre");}
                     }
-                }
-            );
-            // console.debug("Position is: " + position);
-            // console.debug("Repeat Node is: " , n.parentNode);
-            var repeatId = dojo.attr(n.parentNode,"repeatid");
-            // console.debug("Repeat Id is: " + repeatId);
+                );
+                domClass.add(n, "xfRepeatIndexPre");
+                dojo.attr(n, "selected", "true");
 
-            fluxProcessor.setRepeatIndex(repeatId, position);
+                var position = 0;
+                dojo.forEach(repeatItems,
+                    function(entry, index) {
+                        if(dojo.attr(entry, "selected") == "true"){
+                            entry.removeAttribute("selected");
+                            position = index + 1;
 
-        });
+                        }
+                    }
+                );
+                // console.debug("Position is: " + position);
+                // console.debug("Repeat Node is: " , n.parentNode);
+                var repeatId = dojo.attr(n.parentNode,"repeatid");
+                // console.debug("Repeat Id is: " + repeatId);
 
+                fluxProcessor.setRepeatIndex(repeatId, position);
+
+            });
+
+        }
     }
-};
+});

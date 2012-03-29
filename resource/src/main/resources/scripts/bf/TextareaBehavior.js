@@ -3,34 +3,33 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("bf.TextareaBehavior");
+define(["dojo/behavior"],
+    function(behavior) {
 
+        return {
 
+        // ############################## TEXTAREA MAPPINGS ############################################################
+        // ############################## TEXTAREA MAPPINGS ############################################################
+        // ############################## TEXTAREA MAPPINGS ############################################################
+        // xfControl xfTextarea aDefault xsdString xfEnabled xfReadWrite xfOptional xfValid mediatypeHtml
+        '.xfTextarea.mediatypeHtml .xfValue' : function (n) {
+            var xfControl = dijit.byId(bf.XFControl.getXfId(n));
 
-var textareaBehavior = {
+            xfControl.setValue = function (value) {
+                n.innerHTML = value;
+            };
 
-    // ############################## TEXTAREA MAPPINGS ############################################################
-    // ############################## TEXTAREA MAPPINGS ############################################################
-    // ############################## TEXTAREA MAPPINGS ############################################################
-    // xfControl xfTextarea aDefault xsdString xfEnabled xfReadWrite xfOptional xfValid mediatypeHtml
-    '.xfTextarea.mediatypeHtml .xfValue' : function (n) {
-        var xfControl = dijit.byId(bf.XFControl.getXfId(n));
+            dojo.connect(n,"onkeyup",function(evt){
+                // console.debug("onkeypress",n);
+                xfControl.sendValue(n.value,evt);
+            });
 
-        xfControl.setValue = function (value) {
-            n.innerHTML = value;
-        };
+            dojo.connect(n,"onblur",function(evt){
+                // console.debug("onblur",n);
+                xfControl.sendValue(n.value, evt);
+            });
 
-        dojo.connect(n,"onkeyup",function(evt){
-            // console.debug("onkeypress",n);
-            xfControl.sendValue(n.value,evt);
-        });
-
-        dojo.connect(n,"onblur",function(evt){
-            // console.debug("onblur",n);
-            xfControl.sendValue(n.value, evt);
-        });
-
+        }
     }
-,
-};
+});
 

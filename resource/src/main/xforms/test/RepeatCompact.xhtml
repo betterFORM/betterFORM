@@ -2,7 +2,7 @@
 <html xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>group with appearance 'full'</title>
+        <title>RepeatCompact Tests</title>
         <!--
         ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
         ~ Licensed under the terms of BSD License
@@ -13,36 +13,52 @@
 
         <div style="display: none;">
             <xf:model>
-                <xf:instance>
+                <xf:instance id="i-default">
+                    <data xmlns="">
+<!--
+                        <repeat readonly="false" relevant="true">
+                            <items>
+                                <item label="control-1"/>
+                                <item label="control-2"/>
+                                <item label="control-3"/>
+                            </items>
+                        </repeat>
+-->
+                    </data>
+                </xf:instance>
+                <xf:bind nodeset="instance()/repeat/items" readonly="boolean-from-string(../@readonly)" relevant="boolean-from-string(../@relevant)"/>
+
+                <xf:instance id="i-origin">
                     <data xmlns="">
                         <repeat readonly="false" relevant="true">
                             <items>
-                                <item>text 1</item>
-                                <item>2009-01-20</item>
-                                <item>true</item>
+                                <item label="control-1">text 1</item>
+                                <item label="control-2">2009-01-20</item>
+                                <item label="control-3">true</item>
                             </items>
 
                             <items>
-                                <item>text 2</item>
-                                <item>2010-03-17</item>
-                                <item>false</item>
+                                <item label="control-4">text 2</item>
+                                <item label="control-5">2010-03-17</item>
+                                <item label="control-6">false</item>
                             </items>
 
                             <items>
-                                <item>text 3</item>
-                                <item>2011-05-22</item>
-                                <item>true</item>
-                            </items>
-
-                            <items>
-                                <item>text 4</item>
-                                <item>2008-06-13</item>
-                                <item>false</item>
+                                <item label="control-7">text 3</item>
+                                <item label="control-8">2011-05-22</item>
+                                <item label="control-9">true</item>
                             </items>
                         </repeat>
                     </data>
                 </xf:instance>
-                <xf:bind nodeset="instance()/repeat/items" readonly="boolean-from-string(../@readonly)" relevant="boolean-from-string(../@relevant)"/>
+
+                <xf:submission id="s-replace-instance"
+                               ref="instance('i-origin')"
+                               resource="echo:hallo"
+                               replace="instance"
+                               instance="i-default"
+                               method="get"        />
+
             </xf:model>
         </div>
         <div>
@@ -56,7 +72,7 @@
             <xf:trigger>
                 <xf:label>Add [first]</xf:label>
                 <xf:action>
-                    <xf:insert nodeset="repeat/items" at="first()" position="before"/>
+                    <xf:insert nodeset="repeat/items" at="1" position="before"/>
                 </xf:action>
             </xf:trigger>
             <xf:trigger>
@@ -75,15 +91,24 @@
                 </xf:action>
             </xf:trigger>
             <xf:trigger>
-                <xf:label>Add [first]</xf:label>
+                <xf:label>Delete [first]</xf:label>
                 <xf:action>
-                    <xf:delete nodeset="repeat/items" at="first()" />
+                    <xf:delete nodeset="repeat/items" at="1" />
                 </xf:action>
             </xf:trigger>
             <xf:trigger>
-                <xf:label>Add [last]</xf:label>
+                <xf:label>Delete [last]</xf:label>
                 <xf:action>
                     <xf:delete nodeset="repeat/items" at="last()" />
+                </xf:action>
+            </xf:trigger>
+        </div>
+        <div>
+            <span></span>
+            <xf:trigger>
+                <xf:label>Replace Instance</xf:label>
+                <xf:action>
+                    <xf:send submission="s-replace-instance"/>
                 </xf:action>
             </xf:trigger>
         </div>
@@ -96,24 +121,22 @@
                 </xf:action>
             </xf:trigger>
             <xf:trigger>
-                <xf:label><xf:output ref="concat('Relevant: ', instance()/repeat/@relevant)"/></xf:label>
+                <xf:label><xf:output value="concat('Relevant: ', instance()/repeat/@relevant)"/></xf:label>
                 <xf:action>
                     <xf:setvalue ref="instance()/repeat/@relevant" value="not(boolean-from-string(instance()/repeat/@relevant))" />
                 </xf:action>
             </xf:trigger>
         </div>
 
-        <xf:repeat id="repeat1" nodeset="repeat/items" appearance="full">
+        <xf:repeat id="repeat1" nodeset="repeat/items" appearance="compact">
             <xf:input ref="item[1]">
-                <xf:label>String:</xf:label>
+                <xf:label ref="@label"/>
             </xf:input>
-            <br/>
             <xf:input ref="item[2]">
-                <xf:label>String:</xf:label>
+                <xf:label ref="@label"/>
             </xf:input>
-            <br/>
             <xf:input ref="item[3]">
-                <xf:label>String:</xf:label>
+                <xf:label ref="@label"/>
             </xf:input>
         </xf:repeat>
     </body>

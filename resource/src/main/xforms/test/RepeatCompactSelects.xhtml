@@ -118,6 +118,13 @@
             <xf:label>Repeated Controls</xf:label>
 
 			<xf:repeat id="r-reapeated" nodeset="repeated/item[position() != last()]" appearance="compact">
+				<xf:input class="select1Min" ref="@select1" appearance="minimal">
+					<xf:label/>
+					<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
+						<xf:label ref="."/>
+						<xf:value ref="@value"/>
+					</xf:itemset>
+				</xf:input>
 				<xf:select1 class="select1Min" ref="@select1" appearance="minimal">
 					<xf:label/>
 					<xf:itemset nodeset="instance('i-1')/repeated/countries/country">

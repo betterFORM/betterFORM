@@ -7,7 +7,8 @@ define(["dojo/_base/declare",
         "dojo/dom",
         "dojo/query",
         "dojo/dom-class",
-        "dojo/domReady!"], function(declare, XFormsProcessor,ClientServerEvent,behavior, ControlBehavior,InputBehavior,dom,query,domClass){
+        "dojo/_base/window",
+        "dojo/domReady!"], function(declare, XFormsProcessor,ClientServerEvent,behavior, ControlBehavior,InputBehavior,dom,query,domClass,win){
     return declare("bf.XFProcessor",XFormsProcessor, {
 
 /**
@@ -73,26 +74,26 @@ define(["dojo/_base/declare",
         //#########    ALERT IMPLEMENTATION  #############
         //#########    ALERT IMPLEMENTATION  #############
 /*
-        var globalAlertEnabled = query(".GlobalAlert", dojo.doc)[0];
+        var globalAlertEnabled = query(".GlobalAlert", win.body())[0];
         if (globalAlertEnabled != undefined) {
             dojo.require("bf.GlobalAlert");
             this.defaultAlertHandler = new bf.GlobalAlert({});
             console.warn("!! WARNING: GLOBAL ALERT HANDLER NOT IMPLEMENTED YET !!!");
         }
 
-        var bowlAlertEnabled = query(".BowlAlert", dojo.doc)[0];
+        var bowlAlertEnabled = query(".BowlAlert", win.body())[0];
         if (bowlAlertEnabled != undefined) {
             dojo.require("bf.BowlAlert");
             this.defaultAlertHandler = new bf.BowlAlert({});
             console.warn("!! WARNING: BOWL ALERT HANDLER NOT IMPLEMENTED YET !!!");
         }
 
-        var inlineRoundBordersAlertEnabled = query(".InlineRoundBordersAlert", dojo.doc)[0];
+        var inlineRoundBordersAlertEnabled = query(".InlineRoundBordersAlert", win.body())[0];
         if (inlineRoundBordersAlertEnabled != undefined) {
             this.defaultAlertHandler = new bf.InlineRoundBordersAlert({});
         }
 
-        var toolTipAlertEnabled = query(".ToolTipAlert", dojo.doc)[0];
+        var toolTipAlertEnabled = query(".ToolTipAlert", win.body())[0];
         if (toolTipAlertEnabled != undefined ) {
             dojo.require("bf.ToolTipAlert");
             this.defaultAlertHandler = new bf.ToolTipAlert({});
@@ -101,7 +102,7 @@ define(["dojo/_base/declare",
 */
         // TODO: Lars: implement Alerts as behaviour
 /*
-        var inlineAlertEnabled = query(".InlineAlert", dojo.doc)[0];
+        var inlineAlertEnabled = query(".InlineAlert", win.body())[0];
         if (inlineAlertEnabled != undefined || this.defaultAlertHandler == undefined) {
             require(["bf/InlineAlert","dojo/domReady!"],
                 function(InlineAlert) {
@@ -128,25 +129,25 @@ define(["dojo/_base/declare",
     //todo: deprecated? -> change to behavior
     setInlineRoundBorderAlertHandler:function() {
         console.debug("XFProcessor.setInlineRoundBorderAlertHandler");
-        // this.hideAllCommonChilds(dojo.doc);
+        // this.hideAllCommonChilds(win.body());
         this.unsubscribeFromAlertHandler();
         this.defaultAlertHandler = new bf.InlineRoundBordersAlert({});
         this.subscribers[0] = dojo.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
         this.subscribers[1] = dojo.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");
-        this.showAllCommonChilds(dojo.doc, "changeAlertType");
+        this.showAllCommonChilds(win.body(), "changeAlertType");
 
     },
 
     //todo: deprecated? -> change to behavior
     setToolTipAlertHandler:function() {
         console.debug("setToolTipAlertHandler");
-        // this.hideAllCommonChilds(dojo.doc);
+        // this.hideAllCommonChilds(win.body());
         this.unsubscribeFromAlertHandler();
         dojo.require("bf.ToolTipAlert");
         this.defaultAlertHandler = new bf.ToolTipAlert({});
         this.subscribers[0] = dojo.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
         this.subscribers[1] = dojo.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");
-        this.showAllCommonChilds(dojo.doc,"changeAlertType");
+        this.showAllCommonChilds(win.body(),"changeAlertType");
     },
 
     //todo: move to XFControl?
@@ -163,8 +164,8 @@ define(["dojo/_base/declare",
     showAllCommonChilds:function(node,event) {
         console.debug("FluxProcessor.showAllCommonChilds");
         query(".xfControl", node).forEach(dojo.hitch(this, function(control) {
-            // console.debug("hide/show commonChild for control: ", control, " control valid state is:", dojo.hasClass(control),"xfValid");
-            if(dojo.hasClass(control,"xfValid")){
+            // console.debug("hide/show commonChild for control: ", control, " control valid state is:", domClass.contains(control),"xfValid");
+            if(domClass.contains(control,"xfValid")){
                 this.defaultAlertHandler.handleValid(dojo.attr(control,"id"),event);
             }else {
                 this.defaultAlertHandler.handleInvalid(dojo.attr(control,"id"),event);
@@ -490,7 +491,7 @@ define(["dojo/_base/declare",
 
     _fifoProcessingFinished: function() {
         console.debug("XFProcessor._fifoProcessingFinished");
-        dojo.removeClass(this.indicatorTargetObject, "bfPending");
+        domClass.remove(this.indicatorTargetObject, "bfPending");
         // Don't iterate through all items ... only use the last one and skip the rest
         var currentItem = this.lastServerClientFocusEvent;
         if (currentItem != undefined) {
@@ -510,7 +511,7 @@ define(["dojo/_base/declare",
             clearTimeout(fluxProcessor.indicatorObjectTimer);
         }
         if (this.indicatorTargetObject) {
-            dojo.removeClass(this.indicatorTargetObject, "bfPending");
+            domClass.remove(this.indicatorTargetObject, "bfPending");
         }
 
         this.indicatorTargetObject = dojoObject;
@@ -594,10 +595,10 @@ define(["dojo/_base/declare",
                                          xmlEvent.type == "betterform-AVT-changed"
                                          )
                                     ){
-                                        tableCells += "<tr><td class='propName'>"+ dataItem + "</td><td class='propValue'><a href='#' onclick='reveal(this);'>" + contextInfo[dataItem] + "</a></td></tr>"
+                                        tableCells += "<tr><td class='propName'>"+ dataItem + "</td><td class='propValue'><a href='#' onclick='bf.devtool.reveal(this);'>" + contextInfo[dataItem] + "</a></td></tr>"
                                     }else if(dataItem == "targetElement" && xmlEvent.type == "betterform-load-uri"){
                                         var targetElement = contextInfo.xlinkTarget;
-                                        tableCells += "<tr><td class='propName'>"+ dataItem + "</td><td class='propValue'><a href='#' onclick='reveal(this);'>" + targetElement + "</a></td></tr>"
+                                        tableCells += "<tr><td class='propName'>"+ dataItem + "</td><td class='propValue'><a href='#' onclick='bf.devtool.reveal(this);'>" + targetElement + "</a></td></tr>"
                                     }
                                     else {
                                         tableCells += "<tr><td class='propName'>"+ dataItem + "</td><td class='propValue'>" +  contextInfo[dataItem] + "</td></tr>"
@@ -606,7 +607,7 @@ define(["dojo/_base/declare",
                             }
                             //create output
                             dojo.create("li", {
-                                innerHTML: "<a href='#' onclick='toggleEntry(this);'><span>"+xmlEvent.type+"</span></a><table class='eventLogTable'>" + tableCells + "</table>"
+                                innerHTML: "<a href='#' onclick='bf.devtool.toggleEntry(this);'><span>"+xmlEvent.type+"</span></a><table class='eventLogTable'>" + tableCells + "</table>"
                             }, eventLog);
                         }
                         switch (xmlEvent.type) {
@@ -805,11 +806,11 @@ define(["dojo/_base/declare",
      */
     _handleSubmitError:function(xmlEvent) {
         console.warn("xforms-submit-error at ", xmlEvent.contextInfo);
-        query(".xfInvalid", dojo.doc).forEach(function(control) {
+        query(".xfInvalid", win.body()).forEach(function(control) {
             // console.debug("_handleSubmitError: invalid control: ", control);
             dojo.publish("/xf/invalid", [dojo.attr(control, "id"),"submitError"]);
         });
-        query(".xfRequired", dojo.doc).forEach(function(control) {
+        query(".xfRequired", win.body()).forEach(function(control) {
             //if control has no value add CSS class xfRequiredEmpty
             var xfControl = dijit.byId(control.id);
             if(xfControl != undefined && xfControl.getControlValue === 'function'){
@@ -1195,8 +1196,8 @@ define(["dojo/_base/declare",
          */
         var uiControl = dom.byId(xmlEvent.contextInfo.targetId + "-value");
         if (uiControl != undefined) {
-            if (dojo.hasClass(uiControl, "xfInRange")) {
-                dojo.removeClass(uiControl, "xfInRange");
+            if (domClass.contains(uiControl, "xfInRange")) {
+                domClass.remove(uiControl, "xfInRange");
             }
             domClass.add(uiControl, "xfOutOfRange");
         }
@@ -1211,8 +1212,8 @@ define(["dojo/_base/declare",
         console.debug("XFProcessor._handleInRange xmlEvent:", xmlEvent);
         var uiControl = dom.byId(xmlEvent.contextInfo.targetId + "-value");
         if (uiControl != undefined) {
-            if (dojo.hasClass(uiControl, "xfOutOfRange")) {
-                dojo.removeClass(uiControl, "xfOutOfRange");
+            if (domClass.contains(uiControl, "xfOutOfRange")) {
+                domClass.remove(uiControl, "xfOutOfRange");
             }
             domClass.add(uiControl, "xfInRange");
         }
@@ -1303,9 +1304,9 @@ define(["dojo/_base/declare",
         if(parentId) {
             var parentNode = dom.byId(parentId);
             // console.debug("XFProcessor._handleBetterFormStateChanged: parentNode: ",parentNode);
-            if (dojo.hasClass(parentNode, "xfSelectorItem")) {
+            if (domClass.contains(parentNode, "xfSelectorItem")) {
                 var selectParentId = dojo.attr(parentNode.parentNode, "id");
-                if(dojo.hasClass(parentNode.parentNode,"xfRadioItemset")){
+                if(domClass.contains(parentNode.parentNode,"xfRadioItemset")){
                     selectParentId =dojo.attr(parentNode.parentNode.parentNode,"id");
                 }
                 // console.debug("XFProcessor._handleStateChanged: selectParentId: ",selectParentId);
@@ -1362,7 +1363,7 @@ define(["dojo/_base/declare",
             else if (xmlEvent.contextInfo.targetId != undefined) {
                 // console.debug("creating new Group (xmlEvent.contextInfo.targetId = undefined) : ",xmlEvent.contextInfo.targetId);
                 var repeatItemNode = query("*[repeatItemId='" + xmlEvent.contextInfo.targetId + "']")[0];
-                if (repeatItemNode != undefined && dojo.hasClass(repeatItemNode, "xfRepeatItem")) {
+                if (repeatItemNode != undefined && domClass.contains(repeatItemNode, "xfRepeatItem")) {
                     var repeatNode = repeatItemNode.parentNode;
                     console.debug("repeat: ",repeatNode);
                     group = dijit.byId(repeatNode.id);
@@ -1457,7 +1458,7 @@ define(["dojo/_base/declare",
                     console.error("XFProcessor betterform-state-changed  Warning: Neither Target nor its Parent does exist [xmlEvent", xmlEvent, "]");
                 }
                 //  special handling for Select controls, check if parent node is selector item
-                else if (dojo.hasClass(parentControlNode, "xfSelectorItem")) {
+                else if (domClass.contains(parentControlNode, "xfSelectorItem")) {
                     // console.debug("XFProcessor.handleStateChanged Target Node does not exist, Parent Control is SelectorItem (ParentSelector:" , parentControlNode , ")");
                     var selectParentId = dojo.attr(parentControlNode.parentNode, "id");
                     if(dijit.byId(selectParentId)) {

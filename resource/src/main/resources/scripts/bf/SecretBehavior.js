@@ -3,27 +3,29 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("bf.SecretBehavior");
+define(["dojo/behavior"],
+    function(behavior) {
 
 
-var secretBehavior = {
+    return {
 
-    // ############################## SECRET MAPPINGS ############################################################
-    // ############################## SECRET MAPPINGS ############################################################
-    // ############################## SECRET MAPPINGS ############################################################
-    '.xfSecret .xfValue':function(n){
-        console.debug("FOUND: secret input: ",n);
+        // ############################## SECRET MAPPINGS ############################################################
+        // ############################## SECRET MAPPINGS ############################################################
+        // ############################## SECRET MAPPINGS ############################################################
+        '.xfSecret .xfValue':function(n){
+            console.debug("FOUND: secret input: ",n);
 
-        var xfControl = dijit.byId( bf.XFControl.getXfId(n));
+            var xfControl = dijit.byId( bf.XFControl.getXfId(n));
 
-        dojo.connect(n,"onkeyup",function(evt){
-            xfControl.sendValue(n.value,evt);
-        });
+            dojo.connect(n,"onkeyup",function(evt){
+                xfControl.sendValue(n.value,evt);
+            });
 
-        dojo.connect(n,"onblur",function(evt){
-            xfControl.sendValue(n.value, evt);
-        });
+            dojo.connect(n,"onblur",function(evt){
+                xfControl.sendValue(n.value, evt);
+            });
+        }
+
     }
-
-};
+});
 
