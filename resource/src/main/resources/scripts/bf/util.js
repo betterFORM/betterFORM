@@ -50,7 +50,7 @@ require(['dojo/_base/declare'], function(declare){
              console.warn("Element ", element , " class ", update, " allready present");
              return false;
          } else {
-             dojo.addClass(element,update);
+             domClass.add(element,update);
          }
          return true;
      };
@@ -100,16 +100,16 @@ require(['dojo/_base/declare'], function(declare){
     };
     bf.util.setDefaultClasses = function (element) {
         if(!dojo.hasClass(element,"xfEnabled") && !dojo.hasClass(element,"xfDisabled")){
-            dojo.addClass(element,"xfEnabled");
+            domClass.add(element,"xfEnabled");
         }
         if(!dojo.hasClass(element,"xfOptional") && !dojo.hasClass(element,"xfRequired")){
-            dojo.addClass(element,"xfOptional");
+            domClass.add(element,"xfOptional");
         }
         if(!dojo.hasClass(element,"xfReadWrite") && !dojo.hasClass(element,"xfReadOnly")){
-            dojo.addClass(element,"xfReadWrite");
+            domClass.add(element,"xfReadWrite");
         }
         if(!dojo.hasClass(element,"xfValid") && !dojo.hasClass(element,"xfInvalid")){
-            dojo.addClass(element,"xfValid");
+            domClass.add(element,"xfValid");
         }
     };
 

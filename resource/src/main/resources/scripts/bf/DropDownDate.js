@@ -2,8 +2,9 @@ define(["dojo/_base/declare",
         "dijit/_WidgetBase",
         "dijit/_TemplatedMixin",
         "dojo/text!./DropDownDate.html",
-        "dijit/form/ComboBox"],
-    function(declare, WidgetBase, TemplatedMixin, template,ComboBox){
+        "dijit/form/ComboBox",
+        "dojo/dom-class"],
+    function(declare, WidgetBase, TemplatedMixin, template,ComboBox,domClass){
         return declare("bf.DropDownDate",[WidgetBase, TemplatedMixin], {
 
             templateString: template,
@@ -103,11 +104,11 @@ define(["dojo/_base/declare",
                 this.inherited(arguments);
 
                 this.daysDijit = new ComboBox({},this.daysFacet);
-                dojo.addClass(this.daysDijit.domNode,"xfDropDownDateDays");
+                domClass.add(this.daysDijit.domNode,"xfDropDownDateDays");
                 this.monthDijit = new ComboBox({},this.monthsFacet);
-                dojo.addClass(this.monthDijit.domNode,"xfDropDownDateMonths");
+                domClass.add(this.monthDijit.domNode,"xfDropDownDateMonths");
                 this.yearDijit = new ComboBox({},this.yearsFacet);
-                dojo.addClass(this.yearDijit.domNode,"xfDropDownDateYears");
+                domClass.add(this.yearDijit.domNode,"xfDropDownDateYears");
 
                 // console.debug("DropDownData.postMixInProperties this.daysDijit:",this.daysDijit);
 

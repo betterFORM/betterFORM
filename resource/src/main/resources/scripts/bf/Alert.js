@@ -96,7 +96,7 @@ define(["dojo/_base/declare"],
             }
 
             if(!dojo.hasClass(control.domNode,"bfInvalidControl")) {
-                dojo.addClass(control.domNode,"bfInvalidControl");
+                domClass.add(control.domNode,"bfInvalidControl");
             }
         },
 

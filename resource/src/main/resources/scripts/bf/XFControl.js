@@ -267,13 +267,13 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/util"],
                 dojo.attr(controlValueNode, "controlType", this.controlType);
                 dojo.attr(controlValueNode, "id", this.id + "-value");
 
-                dojo.addClass(controlValueNode, "xfValue");
+                domClass.add(controlValueNode, "xfValue");
                 var formerTypeClass = "xsd" + this.dataType.replace(/^[a-z]/, this.dataType.substring(0, 1).toUpperCase());
                 if (dojo.hasClass(this.domNode, formerTypeClass)) {
                     // console.debug("remove CSS Type " + formerTypeClass);
                     dojo.removeClass(this.domNode, formerTypeClass);
                 }
-                dojo.addClass(this.domNode, "xsd" + dataType.replace(/^[a-z]/, dataType.substring(0, 1).toUpperCase()));
+                domClass.add(this.domNode, "xsd" + dataType.replace(/^[a-z]/, dataType.substring(0, 1).toUpperCase()));
 
                 this.controlValue.destroy();
                 this.controlValue = fluxProcessor.factory.createWidget(controlValueNode, this.id);
@@ -336,7 +336,7 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/util"],
                 if (dojo.hasClass(label, "xfDisabled")) {
                     bf.util.replaceClass(label, "xfDisabled", "xfEnabled");
                 } else {
-                    dojo.addClass(label, "xfEnabled");
+                    domClass.add(label, "xfEnabled");
                 }
             }
             bf.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");
@@ -354,7 +354,7 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/util"],
                 if (dojo.hasClass(label, "xfEnabled")) {
                     bf.util.replaceClass(label, "xfEnabled", "xfDisabled");
                 } else {
-                    dojo.addClass(label, "xfDisabled");
+                    domClass.add(label, "xfDisabled");
                 }
             }
             bf.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");

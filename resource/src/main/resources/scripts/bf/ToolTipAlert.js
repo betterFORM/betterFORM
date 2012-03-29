@@ -41,8 +41,8 @@ dojo.declare("bf.ToolTipAlert",
 
             dojo.style(alertTooltip.domNode, "opacity", "1");
             dojo.style(alertTooltip.domNode, "cursor", "pointer");
-            dojo.addClass(alertTooltip.domNode, "bfToolTipAlert");
-            dojo.addClass(valueNode, "bfInvalidControl");
+            domClass.add(alertTooltip.domNode, "bfToolTipAlert");
+            domClass.add(valueNode, "bfInvalidControl");
 
 /*        if (action == "applyChanges" && (!controlValueIsEmpty || dojo.hasClass(controlValue.domNode, "xsdBoolean"))) {
             setTimeout(dojo.hitch(this,function() {this._fadeOutAndHide(id,commonChild)}),this.displayDuration);

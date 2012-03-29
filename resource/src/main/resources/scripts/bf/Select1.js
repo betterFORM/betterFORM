@@ -41,7 +41,7 @@ dojo.declare(
                     }
                     item = dojo.create("option", {id:generatedItemId}, option, "after");
                 }
-                dojo.addClass(item, "xfSelectorItem");
+                domClass.add(item, "xfSelectorItem");
             }else {
                 console.warn("itemset '",itemsetId,"' does not exist for Select1 [id:'",this.id ,"']");
             }
@@ -126,9 +126,9 @@ dojo.declare(
 */
 
                 var xfSelectorItem = dojo.create("span", {id:generatedItemId}, selectedItemset, "last");
-                dojo.addClass(xfSelectorItem, "xfSelectorItem");
+                domClass.add(xfSelectorItem, "xfSelectorItem");
                 var xfSelectorItemValue = dojo.create("input", {id:generatedItemId+"-value"}, xfSelectorItem, "first");
-                dojo.addClass(xfSelectorItemValue, "xfRadioValue");
+                domClass.add(xfSelectorItemValue, "xfRadioValue");
                 dojo.attr(xfSelectorItemValue, "type", "radio");
                 dojo.attr(xfSelectorItemValue, "name", "d_" + this.controlId);
                 dojo.attr(xfSelectorItemValue, "parentid", this.controlId);
@@ -140,7 +140,7 @@ dojo.declare(
 
                 var xfSelectorItemLabel = dojo.create("label", {id:generatedItemId+"-label"}, xfSelectorItemValue, "after");
                 dojo.attr(xfSelectorItemLabel, "for", generatedItemId+"-value");
-                dojo.addClass(xfSelectorItemLabel, "xfRadioLabel");
+                domClass.add(xfSelectorItemLabel, "xfRadioLabel");
 
 /*
                 var radioItemToCheck= query(".xfRadioValue[value=\""+ checkedRadioItemValue +"\"]", selectedItemset)[0];

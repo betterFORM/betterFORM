@@ -6,7 +6,8 @@ define(["dojo/_base/declare",
         "bf/InputBehavior",
         "dojo/dom",
         "dojo/query",
-        "dojo/domReady!"], function(declare, XFormsProcessor,ClientServerEvent,behavior, ControlBehavior,InputBehavior,dom,query){
+        "dojo/dom-class",
+        "dojo/domReady!"], function(declare, XFormsProcessor,ClientServerEvent,behavior, ControlBehavior,InputBehavior,dom,query,domClass){
     return declare("bf.XFProcessor",XFormsProcessor, {
 
 /**
@@ -514,7 +515,7 @@ define(["dojo/_base/declare",
 
         this.indicatorTargetObject = dojoObject;
 
-        dojo.addClass(dojoObject, "bfPending");
+        domClass.add(dojoObject, "bfPending");
 
         try {
             dwr.engine.setPreHook(function() {
@@ -814,7 +815,7 @@ define(["dojo/_base/declare",
             if(xfControl != undefined && xfControl.getControlValue === 'function'){
                 var xfValue = xfControl.getControlValue();
                 if(xfValue == undefined || xfValue == ''){
-                    dojo.addClass(xfControl.domNode,"xfRequiredEmpty");
+                    domClass.add(xfControl.domNode,"xfRequiredEmpty");
 
                 }
             }
@@ -1197,7 +1198,7 @@ define(["dojo/_base/declare",
             if (dojo.hasClass(uiControl, "xfInRange")) {
                 dojo.removeClass(uiControl, "xfInRange");
             }
-            dojo.addClass(uiControl, "xfOutOfRange");
+            domClass.add(uiControl, "xfOutOfRange");
         }
     },
 
@@ -1213,7 +1214,7 @@ define(["dojo/_base/declare",
             if (dojo.hasClass(uiControl, "xfOutOfRange")) {
                 dojo.removeClass(uiControl, "xfOutOfRange");
             }
-            dojo.addClass(uiControl, "xfInRange");
+            domClass.add(uiControl, "xfInRange");
         }
     },
 

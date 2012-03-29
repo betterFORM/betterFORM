@@ -912,7 +912,6 @@
                 function(ready, parser, registry, dom, XFProcessor, XFormsModelElement){
                     ready(function(){
                         console.debug("ready");
-                        console.debug("parser parse start");
                         parser.parse();
                         Flux._path = dojo.attr(dom.byId("fluxProcessor"), "contextroot") + "/Flux";
                         console.debug("calling init");

@@ -57,7 +57,7 @@ dojo.declare(
                 function(item) {
                     // console.debug("Create UIControl for unbound item", item, " id:",item.id);
                     if(!dojo.hasClass(item,"xfControl")){
-                        dojo.addClass(item,"xfControl");
+                        domClass.add(item,"xfControl");
                     }
                 }
             );
@@ -84,7 +84,7 @@ dojo.declare(
             }
             // console.debug("handleSetRepeatIndex for repeatIndexNode",repeatIndexNode);
             if (repeatIndexNode != undefined) {
-                dojo.addClass(repeatIndexNode, "xfRepeatIndex");
+                domClass.add(repeatIndexNode, "xfRepeatIndex");
                 //this.setFocusOnChild(repeatIndexNode);
 
             }
@@ -120,8 +120,8 @@ dojo.declare(
             // console.dirxml(node);
             dojo.removeClass(node, "xfRepeatPrototype");
             dojo.removeClass(node, "xfDisabled");
-            dojo.addClass(node, "xfRepeatItem");
-            dojo.addClass(node, "xfEnabled");
+            domClass.add(node, "xfRepeatItem");
+            domClass.add(node, "xfEnabled");
         },
 
         _replacePrototypeIds:function(node, generatedIds) {

@@ -29,7 +29,7 @@ bf.repeatBehavior = {
                     if (dojo.hasClass(entry, "xfRepeatIndexPre")) { dojo.removeClass(entry, "xfRepeatIndexPre");}
                 }
             );
-            dojo.addClass(n, "xfRepeatIndexPre");
+            domClass.add(n, "xfRepeatIndexPre");
             dojo.attr(n, "selected", "true");
 
             var position = 0;
