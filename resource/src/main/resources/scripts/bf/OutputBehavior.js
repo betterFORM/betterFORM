@@ -6,7 +6,7 @@
 dojo.provide("bf.OutputBehavior");
 
 dojo.require("bf.XFControl");
-dojo.require("bf.util");
+
 
 var outputBehavior = {
     // ############################## OUTPUT MAPPINGS ############################################################

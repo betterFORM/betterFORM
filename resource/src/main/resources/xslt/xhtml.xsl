@@ -952,6 +952,7 @@
         -->
         <script type="text/javascript">
             dojo.require("bf.XFProcessor");
+            dojo.require("dojox.widget.Toaster");
         </script>
         <xsl:text>
 </xsl:text>

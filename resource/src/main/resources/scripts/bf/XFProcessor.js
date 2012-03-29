@@ -1,24 +1,8 @@
-define(["dojo/_base/declare", "dijit/_Widget"], function(declare, _Widget){
-    return declare(_Widget, {
+define(["dojo/_base/declare",
+        "bf/XFormsProcessor",
+        "bf/ClientServerEvent"], function(declare, XFormsProcessor,ClientServerEvent){
+    return declare("bf.XFProcessor",XFormsProcessor, {
 
-// Controls
-/*
-dojo.require("bf.ControlBehavior");
-dojo.require("bf.InputBehavior");
-dojo.require("bf.OutputBehavior");
-dojo.require("bf.RangeBehavior");
-dojo.require("bf.SecretBehavior");
-dojo.require("bf.Select1Behavior");
-dojo.require("bf.SelectBehavior");
-dojo.require("bf.TextareaBehavior");
-dojo.require("bf.TriggerBehavior");
-dojo.require("bf.UploadBehavior");
-// Container
-dojo.require("bf.RepeatBehavior");
-
-dojo.require("dojo.behavior");
-dojo.require("bf.devtool");
-*/
 /**
  All Rights Reserved.
  @author Joern Turner
@@ -29,10 +13,6 @@ dojo.require("bf.devtool");
  de.betterform.web.betterform.FluxFacade.
  **/
 
-/*
-dojo.declare("bf.XFProcessor", bf.XFormsProcessor,
-    {
-*/
     sessionKey:"",
     dataPrefix:"",
     skipshutdown:false,
@@ -375,7 +355,7 @@ dojo.declare("bf.XFProcessor", bf.XFormsProcessor,
 
     //eventually an 'activate' method still makes sense to provide a simple DOMActivate of a trigger Element
     dispatchEvent: function (targetId) {
-        var newClientServerEvent = new bf.ClientServerEvent();
+        var newClientServerEvent = new ClientServerEvent();
         newClientServerEvent.setTargetId(targetId);
         newClientServerEvent.setCallerFunction("dispatchEvent");
         this.eventFifoWriter(newClientServerEvent);
@@ -396,7 +376,7 @@ dojo.declare("bf.XFProcessor", bf.XFormsProcessor,
 
     dispatchEventType:function(targetId, eventType, contextInfo) {
         // console.debug("XFProcessor.dispatchEventType(",targetId,") this: ", this, " eventType:",eventType, " contextInfo:",contextInfo);
-        var newClientServerEvent = new bf.ClientServerEvent();
+        var newClientServerEvent = new ClientServerEvent();
         newClientServerEvent.setTargetId(targetId);
         newClientServerEvent.setEventType(eventType);
         newClientServerEvent.setContextInfo(contextInfo);
@@ -425,7 +405,7 @@ dojo.declare("bf.XFProcessor", bf.XFormsProcessor,
      */
     sendValue: function(id, value) {
         console.debug("XFProcessor.sendValue", id, value);
-        var newClientServerEvent = new bf.ClientServerEvent();
+        var newClientServerEvent = new ClientServerEvent();
         newClientServerEvent.setTargetId(id);
         newClientServerEvent.setValue(value);
         newClientServerEvent.setCallerFunction("setControlValue");
@@ -449,7 +429,7 @@ dojo.declare("bf.XFProcessor", bf.XFormsProcessor,
 
     setRepeatIndex: function(/*String*/repeatId, /*String*/targetPosition) {
         // console.debug("FluxProcessor.setRepeatIndex repeatId:",repeatId, " targetPosition:",targetPosition);
-        var newClientServerEvent = new bf.ClientServerEvent();
+        var newClientServerEvent = new ClientServerEvent();
         newClientServerEvent.setTargetId(repeatId);
         newClientServerEvent.setValue(targetPosition);
         newClientServerEvent.setCallerFunction("setRepeatIndex");

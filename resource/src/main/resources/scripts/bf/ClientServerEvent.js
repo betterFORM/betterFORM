@@ -3,80 +3,79 @@
  * Licensed under the terms of BSD License
  */
 
-dojo.provide("bf.ClientServerEvent");
+define(["dojo/_base/declare"], function(declare){
+    return declare("ClientServerEvent", null,{
 
-/*
- This class represents the interface to the XForms processor (aka 'betterForm Web'). It is the only class
- actually having dependency on DWR to handle the AJAX part of things and calling remote Java methods on
- de.betterform.web.flux.FluxFacade.
- */
-dojo.declare("bf.ClientServerEvent",
-        null,
-{
-    targetId:null,
-    eventType:null,
-    contextInfo:null,
-    value:null,
-    repeatItem:null,
-    callerFunction:"",
+        /*
+         This class represents the interface to the XForms processor (aka 'betterForm Web'). It is the only class
+         actually having dependency on DWR to handle the AJAX part of things and calling remote Java methods on
+         de.betterform.web.flux.FluxFacade.
+         */
 
-    constructor: function() {
-    },
+        targetId:null,
+        eventType:null,
+        contextInfo:null,
+        value:null,
+        repeatItem:null,
+        callerFunction:"",
 
-    createClientServerEvent: function(targetId, eventType, contextInfo) {
-        var newInstance = new bf.ClientServerEvent();
-        newInstance.targetId = targetId;
-        newInstance.eventType = eventType;
-        newInstance.contextInfo = contextInfo;
-        return newInstance;
-    },
+        constructor:function () {
+        },
 
-    setTargetId: function(targetId) {
-        this.targetId = targetId;
-    },
+        createClientServerEvent:function (targetId, eventType, contextInfo) {
+            var newInstance = new ClientServerEvent();
+            newInstance.targetId = targetId;
+            newInstance.eventType = eventType;
+            newInstance.contextInfo = contextInfo;
+            return newInstance;
+        },
 
-    setEventType: function(eventType) {
-        this.eventType = eventType;
-    },
+        setTargetId:function (targetId) {
+            this.targetId = targetId;
+        },
 
-    setContextInfo: function(contextInfo) {
-        this.contextInfo = contextInfo;
-    },
+        setEventType:function (eventType) {
+            this.eventType = eventType;
+        },
 
-    setValue: function(value) {
-        this.value = value;
-    },
+        setContextInfo:function (contextInfo) {
+            this.contextInfo = contextInfo;
+        },
 
-    setRepeatItem: function(repeatItem) {
-        this.repeatItem = repeatItem;
-    },
+        setValue:function (value) {
+            this.value = value;
+        },
 
-    setCallerFunction: function(callerFunction) {
-        this.callerFunction = callerFunction;
-    },
+        setRepeatItem:function (repeatItem) {
+            this.repeatItem = repeatItem;
+        },
 
-    getTargetId: function() {
-        return this.targetId;
-    },
+        setCallerFunction:function (callerFunction) {
+            this.callerFunction = callerFunction;
+        },
 
-    getEventType: function() {
-        return this.eventType;
-    },
+        getTargetId:function () {
+            return this.targetId;
+        },
 
-    getContextInfo: function() {
-        return this.contextInfo;
-    },
+        getEventType:function () {
+            return this.eventType;
+        },
 
-    getValue: function() {
-        return this.value;
-    },
+        getContextInfo:function () {
+            return this.contextInfo;
+        },
 
-    getRepeatItem: function() {
-        return this.repeatItem;
-    },
+        getValue:function () {
+            return this.value;
+        },
 
-    getCallerFunction: function() {
-        return this.callerFunction;
-    }
-}
-        );
+        getRepeatItem:function () {
+            return this.repeatItem;
+        },
+
+        getCallerFunction:function () {
+            return this.callerFunction;
+        }
+    })
+});

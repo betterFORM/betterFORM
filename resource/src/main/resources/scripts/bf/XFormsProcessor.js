@@ -1,58 +1,55 @@
-/*
- * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
- * Licensed under the terms of BSD License
- */
+define(["dojo/_base/declare", "dijit/_Widget"],
+    function(declare, _Widget){
+        return declare("bf.XFormsProcessor",_Widget, {
+    /*
+     * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+     * Licensed under the terms of BSD License
+     */
 
-dojo.provide("bf.XFormsProcessor");
+    /*
+    This class represents the interface to the XForms processor (aka 'betterForm Web'). It is the only class
+    actually having dependency on DWR to handle the AJAX part of things and calling remote Java methods on
+    de.betterform.web.flux.FluxFacade.
+    */
+        sessionKey:"",
 
-dojo.require("dijit._Widget");
+        constructor: function() {
+            console.info("creating XFormsProcessor");
+        },
 
-/*
-This class represents the interface to the XForms processor (aka 'betterForm Web'). It is the only class
-actually having dependency on DWR to handle the AJAX part of things and calling remote Java methods on
-de.betterform.web.flux.FluxFacade.
-*/
-dojo.declare("bf.XFormsProcessor",
-        dijit._Widget,
-{
-    sessionKey:"",
+        init: function(){
+        },
 
-    constructor: function() {
-        console.info("creating XFormsProcessor");
-    },
+        keepAlive: function() {
+        },
 
-    init: function(){
-    },
-    
-    keepAlive: function() {
-    },
+        closeSession: function() {
+        },
 
-    closeSession: function() {
-    },
+        ignoreExceptions: function (msg){
+        },
 
-    ignoreExceptions: function (msg){
-    },
+        //eventually an 'activate' method still makes sense to provide a simple DOMActivate of a trigger Element
 
-    //eventually an 'activate' method still makes sense to provide a simple DOMActivate of a trigger Element
+        dispatchEvent: function (targetId) {
+        },
 
-    dispatchEvent: function (targetId) {
-    },
+        setControlValue: function (id, value) {
+        },
 
-    setControlValue: function (id, value) {
-    },
-
-    setRange: function (id, value) {
-    },
+        setRange: function (id, value) {
+        },
 
 
-    setRepeatIndex:function (targetRepeatElement){
-    },
+        setRepeatIndex:function (targetRepeatElement){
+        },
 
 
-    _useLoadingMessage:function(){
-    },
+        _useLoadingMessage:function(){
+        },
 
-    _handleExceptions:function(msg) {
-        console.error(msg);
-    }
+        _handleExceptions:function(msg) {
+            console.error(msg);
+        }
+    })
 });

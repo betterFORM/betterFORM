@@ -229,6 +229,7 @@
 
 <body class="tundra">
     <xf:group appearance="minimal">
+<!--
         <xf:group>
             <div style="margin:4px;padding:4px;border:thin dotted #808080">
                 <span>MIPS:</span>
@@ -356,8 +357,10 @@
 
             </div>
         </xf:group>
+-->
 
         <xf:group ref="instance()" appearance="full" id="eventListener" class="xfFullGroup">
+<!--
             <xf:group ref="group[1]" id="groupWithEventListener">
                 <xf:action ev:event="customEvent">
                     <xf:message>custom event arrived</xf:message>
@@ -370,11 +373,13 @@
                 </p>
                 <span>Group with to labels listening to custom event 'customEvent'</span>
             </xf:group>
+-->
 
             <hr/>
             <!--################### SELECT1 SAMPLES #############################-->
             <!--################### SELECT1 SAMPLES #############################-->
             <!--################### SELECT1 SAMPLES #############################-->
+<!--
             <xf:select1 ref="select1[1]/value" id="colorselecter" incremental="false">
                 <xf:label>Select1 minimal</xf:label>
                 <xf:itemset nodeset="instance('colors')/color">
@@ -424,9 +429,9 @@
             </xf:output>
 
             <hr/>
-            <!--################### SELECT SAMPLES #############################-->
-            <!--################### SELECT SAMPLES #############################-->
-            <!--################### SELECT SAMPLES #############################-->
+            &lt;!&ndash;################### SELECT SAMPLES #############################&ndash;&gt;
+            &lt;!&ndash;################### SELECT SAMPLES #############################&ndash;&gt;
+            &lt;!&ndash;################### SELECT SAMPLES #############################&ndash;&gt;
 
             <xf:select ref="select[1]/value" appearance="minimal" incremental="true">
                 <xf:label>Select minimal</xf:label>
@@ -435,11 +440,11 @@
                     <xf:value ref="value"/>
                 </xf:itemset>
             </xf:select>
-<!--
+&lt;!&ndash;
             <xf:output ref="select[1]/value">
                 <xf:label>Select minimal value:</xf:label>
             </xf:output>
--->
+&ndash;&gt;
 
             <xf:select ref="select[1]/value" appearance="full" incremental="false">
                 <xf:label>Select1 full</xf:label>
@@ -454,9 +459,11 @@
             </xf:output>
 
             <hr/>
-            <!--################### INPUT SAMPLES #############################-->
-            <!--################### INPUT SAMPLES #############################-->
-            <!--################### INPUT SAMPLES #############################-->
+            &lt;!&ndash;################### INPUT SAMPLES #############################&ndash;&gt;
+            &lt;!&ndash;################### INPUT SAMPLES #############################&ndash;&gt;
+            &lt;!&ndash;################### INPUT SAMPLES #############################&ndash;&gt;
+-->
+<!--
 
             <xf:input ref="input[1]/value">
                 <xf:label ref="../label"/>
@@ -471,16 +478,21 @@
                     </script>
                 </xf:action>
             </xf:input>
+-->
+
 
             <xf:input ref="input[3]/value" appearance="bf:dropdowndate">
                 <xf:label ref="../label"/>
+<!--
                 <xf:alert ref="../alert"/>
                 <xf:hint>
                     <span class="help-title"><xf:output ref="../hint[1]"/></span>
                     <span class="help-body"><xf:output ref="../hint[2]"/></span>
                 </xf:hint>
+-->
             </xf:input>
 
+<!--
 
             <xf:input ref="input[3]/value" appearance="bf:dropdowndate=-17:-100">
                 <xf:label>dropdowndate bound to the same node as above date control</xf:label>
@@ -490,6 +502,8 @@
                     <span class="help-body"><xf:output ref="../hint[2]"/></span>
                 </xf:hint>
             </xf:input>
+-->
+<!--
 
             <xf:input ref="input[4]/value" appearance="iso8601:dd-MM-yyyy">
                 <xf:label ref="../label"/>
@@ -518,7 +532,8 @@
                 <xf:label ref="../label"/>
             </xf:output>
             <hr/>
-            <xf:textarea ref="textarea[1]/value" mediatype="text/html">
+-->
+<!--            <xf:textarea ref="textarea[1]/value" mediatype="text/html">
                 <xf:label ref="../label"/>
             </xf:textarea>
             <hr/>
@@ -552,7 +567,7 @@
             <xf:trigger ref="trigger[3]/label">
                 <xf:label ref="."/>
                 <xf:dispatch name="customEvent" targetid="groupWithEventListener"/>
-            </xf:trigger>
+            </xf:trigger>-->
         </xf:group>
     </xf:group>
 </body>

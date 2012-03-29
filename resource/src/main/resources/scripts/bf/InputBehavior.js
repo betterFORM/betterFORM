@@ -1,16 +1,9 @@
-define(["dojo/dom", "dojo/dom-class", "dojo/behavior", "dojo/_base/xhr"], function(dom, domClass, behavior, xhr) {
+define([],
+    function() {
 /*
  * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
-
-/*
-dojo.provide("bf.InputBehavior");
-dojo.require("bf.XFControl");
-dojo.require("dijit.form.DateTextBox");
-dojo.require("bf.DropDownDate");
-dojo.require("bf.util");
-*/
 
 
 /*
