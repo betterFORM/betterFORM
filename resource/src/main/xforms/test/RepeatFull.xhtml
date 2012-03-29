@@ -90,13 +90,13 @@
         <div>
             <span>MIPS</span>
             <xf:trigger>
-                <xf:label><xf:output value="concat('Readonly: ', instance()/repeat/@readonly)"/> </xf:label>
+                <xf:label>Readonly: <xf:output ref="instance()/repeat/@readonly"/></xf:label>
                 <xf:action>
                     <xf:setvalue ref="instance()/repeat/@readonly" value="not(boolean-from-string(instance()/repeat/@readonly))" />
                 </xf:action>
             </xf:trigger>
             <xf:trigger>
-                <xf:label><xf:output ref="concat('Relevant: ', instance()/repeat/@relevant)"/></xf:label>
+                <xf:label>Relevant: <xf:output ref="instance()/repeat/@relevant"/></xf:label>
                 <xf:action>
                     <xf:setvalue ref="instance()/repeat/@relevant" value="not(boolean-from-string(instance()/repeat/@relevant))" />
                 </xf:action>
