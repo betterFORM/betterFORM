@@ -5,7 +5,8 @@ define(["dojo/_base/declare",
         "bf/ControlBehavior",
         "bf/InputBehavior",
         "dojo/dom",
-        "dojo/domReady!"], function(declare, XFormsProcessor,ClientServerEvent,behavior, ControlBehavior,InputBehavior,dom){
+        "dojo/query",
+        "dojo/domReady!"], function(declare, XFormsProcessor,ClientServerEvent,behavior, ControlBehavior,InputBehavior,dom,query){
     return declare("bf.XFProcessor",XFormsProcessor, {
 
 /**
@@ -71,26 +72,26 @@ define(["dojo/_base/declare",
         //#########    ALERT IMPLEMENTATION  #############
         //#########    ALERT IMPLEMENTATION  #############
 /*
-        var globalAlertEnabled = dojo.query(".GlobalAlert", dojo.doc)[0];
+        var globalAlertEnabled = query(".GlobalAlert", dojo.doc)[0];
         if (globalAlertEnabled != undefined) {
             dojo.require("bf.GlobalAlert");
             this.defaultAlertHandler = new bf.GlobalAlert({});
             console.warn("!! WARNING: GLOBAL ALERT HANDLER NOT IMPLEMENTED YET !!!");
         }
 
-        var bowlAlertEnabled = dojo.query(".BowlAlert", dojo.doc)[0];
+        var bowlAlertEnabled = query(".BowlAlert", dojo.doc)[0];
         if (bowlAlertEnabled != undefined) {
             dojo.require("bf.BowlAlert");
             this.defaultAlertHandler = new bf.BowlAlert({});
             console.warn("!! WARNING: BOWL ALERT HANDLER NOT IMPLEMENTED YET !!!");
         }
 
-        var inlineRoundBordersAlertEnabled = dojo.query(".InlineRoundBordersAlert", dojo.doc)[0];
+        var inlineRoundBordersAlertEnabled = query(".InlineRoundBordersAlert", dojo.doc)[0];
         if (inlineRoundBordersAlertEnabled != undefined) {
             this.defaultAlertHandler = new bf.InlineRoundBordersAlert({});
         }
 
-        var toolTipAlertEnabled = dojo.query(".ToolTipAlert", dojo.doc)[0];
+        var toolTipAlertEnabled = query(".ToolTipAlert", dojo.doc)[0];
         if (toolTipAlertEnabled != undefined ) {
             dojo.require("bf.ToolTipAlert");
             this.defaultAlertHandler = new bf.ToolTipAlert({});
@@ -99,7 +100,7 @@ define(["dojo/_base/declare",
 */
         // TODO: Lars: implement Alerts as behaviour
 /*
-        var inlineAlertEnabled = dojo.query(".InlineAlert", dojo.doc)[0];
+        var inlineAlertEnabled = query(".InlineAlert", dojo.doc)[0];
         if (inlineAlertEnabled != undefined || this.defaultAlertHandler == undefined) {
             require(["bf/InlineAlert","dojo/domReady!"],
                 function(InlineAlert) {
@@ -150,7 +151,7 @@ define(["dojo/_base/declare",
     //todo: move to XFControl?
     // Hide commonChilds 'alert', 'hint', 'info'
     hideAllCommonChilds:function(node) {
-        dojo.query(".xfControl", node).forEach(dojo.hitch(this, function(control) {
+        query(".xfControl", node).forEach(dojo.hitch(this, function(control) {
             console.debug("hide commonChild for control: ", control);
             this.defaultAlertHandler._displayNone(dojo.attr(control,"id"),"applyChanges");
         }));
@@ -160,7 +161,7 @@ define(["dojo/_base/declare",
    // Show commonChilds 'alert', 'hint', 'info'
     showAllCommonChilds:function(node,event) {
         console.debug("FluxProcessor.showAllCommonChilds");
-        dojo.query(".xfControl", node).forEach(dojo.hitch(this, function(control) {
+        query(".xfControl", node).forEach(dojo.hitch(this, function(control) {
             // console.debug("hide/show commonChild for control: ", control, " control valid state is:", dojo.hasClass(control),"xfValid");
             if(dojo.hasClass(control,"xfValid")){
                 this.defaultAlertHandler.handleValid(dojo.attr(control,"id"),event);
@@ -242,7 +243,7 @@ define(["dojo/_base/declare",
             //*****************************************************************************
 
             if(nextPendingClientServerEvent.getCallerFunction() == "setRepeatIndex"){
-                dojoObject = dojo.query("*[repeatId='" + nextPendingClientServerEvent.getTargetId() + "']")[0];
+                dojoObject = query("*[repeatId='" + nextPendingClientServerEvent.getTargetId() + "']")[0];
             }else {
                 dojoObject = dom.byId(nextPendingClientServerEvent.getTargetId());
             }
@@ -711,7 +712,7 @@ define(["dojo/_base/declare",
     _handleModelRemoved:function(xmlEvent){
         console.debug("XFProcessor._handleModelRemoved xmlEvent:",xmlEvent);
         var modelId = xmlEvent.contextInfo.modelId;
-        dojo.query("#debug-pane a[modelId='" + modelId +"']").orphan();
+        query("#debug-pane a[modelId='" + modelId +"']").orphan();
 
     },
 
@@ -803,11 +804,11 @@ define(["dojo/_base/declare",
      */
     _handleSubmitError:function(xmlEvent) {
         console.warn("xforms-submit-error at ", xmlEvent.contextInfo);
-        dojo.query(".xfInvalid", dojo.doc).forEach(function(control) {
+        query(".xfInvalid", dojo.doc).forEach(function(control) {
             // console.debug("_handleSubmitError: invalid control: ", control);
             dojo.publish("/xf/invalid", [dojo.attr(control, "id"),"submitError"]);
         });
-        dojo.query(".xfRequired", dojo.doc).forEach(function(control) {
+        query(".xfRequired", dojo.doc).forEach(function(control) {
             //if control has no value add CSS class xfRequiredEmpty
             var xfControl = dijit.byId(control.id);
             if(xfControl != undefined && xfControl.getControlValue === 'function'){
@@ -854,7 +855,7 @@ define(["dojo/_base/declare",
             } else {
                 // if we reach here the xlinkTarget is no idref but the value of a name Attrbute that needs resolving
                 // to an id.
-                var tmp = dojo.query("*[name='" + xlinkTarget + "']")[0];
+                var tmp = query("*[name='" + xlinkTarget + "']")[0];
                 targetid = tmp.id;
                 console.debug("target id for embedding is: ", targetid);
             }
@@ -995,7 +996,7 @@ define(["dojo/_base/declare",
             } else {
                 // if we reach here the target is no idref but the value of a name Attrbute that needs resolving
                 // to an id.
-                var tmp = dojo.query("*[name='" + target + "']")[0];
+                var tmp = query("*[name='" + target + "']")[0];
                 targetid = tmp.id;
                 console.debug("target id for embedding is: ", targetid);
             }
@@ -1083,7 +1084,7 @@ define(["dojo/_base/declare",
         /*
         destroy all child dijits within subform tree
          */
-        var widgets = dojo.query("*[" + widgetID + "]", htmlEntryPoint);
+        var widgets = query("*[" + widgetID + "]", htmlEntryPoint);
         dojo.forEach(widgets,
                 function(item) {
                     if (item != undefined) {
@@ -1359,7 +1360,7 @@ define(["dojo/_base/declare",
             /* group markup does not exist in ui, check if targetid references an repeatItem */
             else if (xmlEvent.contextInfo.targetId != undefined) {
                 // console.debug("creating new Group (xmlEvent.contextInfo.targetId = undefined) : ",xmlEvent.contextInfo.targetId);
-                var repeatItemNode = dojo.query("*[repeatItemId='" + xmlEvent.contextInfo.targetId + "']")[0];
+                var repeatItemNode = query("*[repeatItemId='" + xmlEvent.contextInfo.targetId + "']")[0];
                 if (repeatItemNode != undefined && dojo.hasClass(repeatItemNode, "xfRepeatItem")) {
                     var repeatNode = repeatItemNode.parentNode;
                     console.debug("repeat: ",repeatNode);
@@ -1381,7 +1382,7 @@ define(["dojo/_base/declare",
                 var selectedItemId = xmlEvent.contextInfo.selectedItem;
                 // console.debug("XFProcessor._handleBetterFormStateChanged xf:copy: selectedItem: ", selectedItemId);
                 if (selectedItemId != undefined && selectedItemId != "") {
-                    var selectItems = dojo.query(".xfSelectorItem", select1);
+                    var selectItems = query(".xfSelectorItem", select1);
                     var itemSelected = false;
                     for (var i = 0; i < selectItems.length; i++) {
                         if (dojo.attr(selectItems[i], "id") == selectedItemId) {
@@ -1526,7 +1527,7 @@ define(["dojo/_base/declare",
     //todo: note that xforms-insert might not target repeat or itemset
     _handleBetterFormInsertRepeatItem:function(xmlEvent) {
         console.debug("XFProcessor.betterform-insert-repeatitem [id: '", xmlEvent.contextInfo.targetId, "'] xmlEvent:",xmlEvent);
-        var repeatToInsertIntoDOM = dojo.query("*[repeatId='" + xmlEvent.contextInfo.targetId + "']");
+        var repeatToInsertIntoDOM = query("*[repeatId='" + xmlEvent.contextInfo.targetId + "']");
 
         var repeatObject = this._getRepeatObject(xmlEvent.contextInfo.targetId);
         if (repeatObject == undefined) {
@@ -1630,7 +1631,7 @@ define(["dojo/_base/declare",
 
     _getRepeatObject: function (targetId){
         console.debug("XFProcessor._getRepeatObject targetId:",targetId);        
-        var repeatElement = dojo.query("*[repeatId='" + targetId + "']");
+        var repeatElement = query("*[repeatId='" + targetId + "']");
         var repeatObject = dijit.byId(dojo.attr(repeatElement[0], "id"));
         return repeatObject;
     },

@@ -244,9 +244,9 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/util"],
             // console.debug("_checkForDataTypeChange: old dataType: " + this.dataType + " new dataType: ", dataType, " contextInfo:",contextInfo);
 
             if (this.controlValue == undefined) {
-                var controlValueTemplate = dojo.query("*[id ='" + this.id + "-value']", this.domNode)[0];
+                var controlValueTemplate = query("*[id ='" + this.id + "-value']", this.domNode)[0];
                 if (controlValueTemplate == undefined) {
-                    controlValueTemplate = dojo.query(".xfValue", this.domNode)[0];
+                    controlValueTemplate = query(".xfValue", this.domNode)[0];
                 }
                 if (controlValueTemplate == undefined) {
                     console.error("Control.handleStateChanged Error: XFControl " + this.id + " has no ControlValue node");

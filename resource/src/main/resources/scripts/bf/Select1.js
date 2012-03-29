@@ -24,7 +24,7 @@ dojo.declare(
             var itemsetId = contextInfo.targetId;
             var generatedItemId =  contextInfo.generatedIds[contextInfo.prototypeId];
 
-            var referenzedNode = dojo.query('option[data-bf-itemset=\"'+ itemsetId + '\"]',this.id)[0];
+            var referenzedNode = query('option[data-bf-itemset=\"'+ itemsetId + '\"]',this.id)[0];
             if(referenzedNode){
                 var item = undefined;
                 if(position == 1){
@@ -52,7 +52,7 @@ dojo.declare(
             var position = contextInfo.position;
             var itemsetId = contextInfo.targetId;
 
-            var referenzedNode = dojo.query('option[data-bf-itemset=\"'+ itemsetId + '\"]',this.id)[0];
+            var referenzedNode = query('option[data-bf-itemset=\"'+ itemsetId + '\"]',this.id)[0];
             var option2remove = undefined;
             if(referenzedNode){
                 if(position == 1){
@@ -93,7 +93,7 @@ dojo.declare(
         _onBlur:function() {
             console.debug("bf.Select1Full._onBlur arguments:",arguments);
             var checkedRadioItemValue = undefined;
-            dojo.query(".xfRadioValue", this.domNode).forEach(function(item) {
+            query(".xfRadioValue", this.domNode).forEach(function(item) {
                 console.debug("analysing radioitem:",item);
                 if(item.checked){
                     checkedRadioItemValue = item.value;
@@ -119,7 +119,7 @@ dojo.declare(
             if(selectedItemset){
                 // memorize checked radio item
 /*
-                var checkedRadioItem = dojo.query(".xfRadioValue[checked]", selectedItemset);
+                var checkedRadioItem = query(".xfRadioValue[checked]", selectedItemset);
                 console.debug("checkedRadioItem: ",checkedRadioItem);
                 var checkedRadioItemValue = checkedRadioItem[0].value;
                 console.debug("checkedRadioItemValue: ",checkedRadioItemValue);
@@ -143,7 +143,7 @@ dojo.declare(
                 dojo.addClass(xfSelectorItemLabel, "xfRadioLabel");
 
 /*
-                var radioItemToCheck= dojo.query(".xfRadioValue[value=\""+ checkedRadioItemValue +"\"]", selectedItemset)[0];
+                var radioItemToCheck= query(".xfRadioValue[value=\""+ checkedRadioItemValue +"\"]", selectedItemset)[0];
                 console.debug("radioItemToCheck: ",radioItemToCheck);
                 dojo.attr(radioItemToCheck,"checked", true);
 */
@@ -155,7 +155,7 @@ dojo.declare(
         handleDeleteItem:function(contextInfo){
             console.debug("handleDeleteItem for id:",this.id, " contextInfo:",contextInfo);
             var itemsetNode = dom.byId(contextInfo.originalId);
-            var selectorItems  = dojo.query(".xfSelectorItem", itemsetNode);
+            var selectorItems  = query(".xfSelectorItem", itemsetNode);
 
             itemsetNode.removeChild(selectorItems[(contextInfo.position -1)]);
 

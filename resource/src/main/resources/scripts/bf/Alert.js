@@ -11,7 +11,7 @@ define(["dojo/_base/declare"],
         hint:"hint",
         info:"info",
         none:"none",
-        alwaysShowHint:  dojo.query(".bfAlwaysShowHint", dojo.doc)[0],
+        alwaysShowHint: query(".bfAlwaysShowHint", dojo.doc)[0],
 
         handleValid:function(id,action){
             // TODO: applyChanges must remove an existing alert

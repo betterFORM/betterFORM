@@ -54,14 +54,14 @@ var select1Behavior = {
         var xfId = bf.XFControl.getXfId(n);
         var xfControl = dijit.byId(xfId);
 
-        dojo.query(".xfRadioValue", n).forEach(function(radioValue){
+        query(".xfRadioValue", n).forEach(function(radioValue){
             radioValue.onclick = function(evt) {
                 xfControl.sendValue(radioValue.value,evt );
             }
         });
 
         xfControl.setValue = function(value) {
-            dojo.query(".xfRadioValue", n).forEach(function(radioValue){
+            query(".xfRadioValue", n).forEach(function(radioValue){
                 if(radioValue.value == value){
                     dojo.attr(radioValue,"checked", true);
                 }

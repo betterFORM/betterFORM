@@ -21,7 +21,7 @@ function toggleLog(){
     }
 }
 function clearLog(){
-    dojo.query("#eventLog li").forEach(function(node){
+    query("#eventLog li").forEach(function(node){
         dojo.destroy(node);
     });
 }
@@ -48,7 +48,7 @@ function reveal(node){
     }
 }
 function toggleEntry(node){
-    var entry = dojo.query(".eventLogTable",node.parentNode)[0];
+    var entry = query(".eventLogTable",node.parentNode)[0];
     var entryStyle = dojo.attr(entry,"style");
     if(entryStyle == undefined || entryStyle.length == 0 ){
         dojo.style(entry,"display","none");

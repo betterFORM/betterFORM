@@ -42,7 +42,7 @@ dojo.declare(
             var position = eval(contextInfo.position);
 
             // console.debug("InsertedNode: " + insertedNode.id );
-            var repeatItemExists = dojo.query("*[repeatItemId='" + insertedNode.id + "']");
+            var repeatItemExists = query("*[repeatItemId='" + insertedNode.id + "']");
             var repeatItemNode = undefined;
             if (repeatItemExists[0] != null ) {
                 // console.warn("Skipping already present repeatItem: ", repeatItemExists);
@@ -53,7 +53,7 @@ dojo.declare(
             }
             // console.debug("repeatItemNode",repeatItemNode);
 
-            dojo.query(".repeated", repeatItemNode).forEach(
+            query(".repeated", repeatItemNode).forEach(
                 function(item) {
                     // console.debug("Create UIControl for unbound item", item, " id:",item.id);
                     if(!dojo.hasClass(item,"xfControl")){
@@ -78,9 +78,9 @@ dojo.declare(
 
             var repeatIndexNode;
             if (dojo.hasClass(this.domNode, "xfCompactRepeat")) {
-                repeatIndexNode = dojo.query("> tbody > .xfRepeatItem", this.domNode)[intIndex - 1];
+                repeatIndexNode = query("> tbody > .xfRepeatItem", this.domNode)[intIndex - 1];
             } else {
-                repeatIndexNode = dojo.query("> .xfRepeatItem", this.domNode)[intIndex - 1];
+                repeatIndexNode = query("> .xfRepeatItem", this.domNode)[intIndex - 1];
             }
             // console.debug("handleSetRepeatIndex for repeatIndexNode",repeatIndexNode);
             if (repeatIndexNode != undefined) {
@@ -92,23 +92,23 @@ dojo.declare(
 
         _removeRepeatIndexClasses:function() {
             if (dojo.hasClass(this.domNode, "xfCompactRepeat")) {
-                dojo.query("> tbody > .xfRepeatIndexPre", this.domNode).forEach(
+                query("> tbody > .xfRepeatIndexPre", this.domNode).forEach(
                     function(repeatIndexItem) {
                         dojo.removeClass(repeatIndexItem, "xfRepeatIndexPre");
                     }
                 );
-                dojo.query("> tbody > .xfRepeatIndex", this.domNode).forEach(
+                query("> tbody > .xfRepeatIndex", this.domNode).forEach(
                     function(repeatIndexItem) {
                         dojo.removeClass(repeatIndexItem, "xfRepeatIndex");
                     }
                 );
             } else {
-                dojo.query("> .xfRepeatIndexPre", this.domNode).forEach(
+                query("> .xfRepeatIndexPre", this.domNode).forEach(
                     function(repeatIndexItem) {
                         dojo.removeClass(repeatIndexItem, "xfRepeatIndexPre");
                     }
                 );
-                dojo.query("> .xfRepeatIndex", this.domNode).forEach(
+                query("> .xfRepeatIndex", this.domNode).forEach(
                     function(repeatIndexItem) {
                         dojo.removeClass(repeatIndexItem, "xfRepeatIndex");
                     }
@@ -130,7 +130,7 @@ dojo.declare(
                 compactRepeat = true;
             }
 
-            dojo.query("*", node).forEach(
+            query("*", node).forEach(
                 function(xfNode) {
                     var idAtt = dojo.attr(xfNode, "id");
                     var repeatId = dojo.attr(xfNode, "repeatid");
@@ -191,9 +191,9 @@ dojo.declare(
             var targetNode = null;
             if (position == 1 && repeatItemCount > 0) {
                 if (dojo.hasClass(this.domNode, "xfCompactRepeat")) {
-                    targetNode = dojo.query("> tbody > .xfRepeatItem", this.domNode)[0];
+                    targetNode = query("> tbody > .xfRepeatItem", this.domNode)[0];
                 } else {
-                    targetNode = dojo.query("> .xfRepeatItem", this.domNode)[0];
+                    targetNode = query("> .xfRepeatItem", this.domNode)[0];
                 }
                 dojo.place(node, targetNode, "before");
 
@@ -201,7 +201,7 @@ dojo.declare(
 
                 if (dojo.hasClass(this.domNode, "xfCompactRepeat")) {
                     // console.debug("RepeatItem._createRepeatItem for CompactRepeat domNode: ", this.domNode);
-                    var tbodyNode = dojo.query("tbody", this.domNode)[0];
+                    var tbodyNode = query("tbody", this.domNode)[0];
                     if (tbodyNode == undefined) {
                         tbodyNode = dojo.doc.createElement("tbody");
                         dojo.place(tbodyNode, this.domNode);
@@ -218,9 +218,9 @@ dojo.declare(
                 //  2. Default Insert happens after the targetNode
 
                 if (dojo.hasClass(this.domNode, "xfCompactRepeat")) {
-                    targetNode = dojo.query("> tbody > .xfRepeatItem", this.domNode)[position - 2];
+                    targetNode = query("> tbody > .xfRepeatItem", this.domNode)[position - 2];
                 } else {
-                    targetNode = dojo.query("> .xfRepeatItem", this.domNode)[position - 2];
+                    targetNode = query("> .xfRepeatItem", this.domNode)[position - 2];
                 }
                 // console.debug("RepeatItem._createRepeatItem targetNode: ", targetNode , " repeatItem: ", repeatItemDijit);
                 dojo.place(node, targetNode, "after");
@@ -232,9 +232,9 @@ dojo.declare(
         _getSize:function() {
             var size;
             if (dojo.hasClass(this.domNode, "xfCompactRepeat")) {
-                size = dojo.query("> tbody > .xfRepeatItem", this.domNode).length;
+                size = query("> tbody > .xfRepeatItem", this.domNode).length;
             } else {
-                size = dojo.query("> .xfRepeatItem", this.domNode).length;
+                size = query("> .xfRepeatItem", this.domNode).length;
             }
             return size;
         }

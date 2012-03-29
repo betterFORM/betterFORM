@@ -10,7 +10,7 @@ require(['dojo/_base/declare'], function(declare){
 
     bf.util.showAtWidget = function(widgetId) {
         //    var widget = dom.byId(widgetId + '-value');
-        var widget = dojo.query("*[widgetId='" + widgetId + "-value']");
+        var widget = query("*[widgetId='" + widgetId + "-value']");
         // console.debug("showWidget:", widget);
         //var widget = dom.byId(widgetId + '-value');
 
@@ -139,7 +139,7 @@ require(['dojo/_base/declare'], function(declare){
     bf.util.closeSelect1 = function(htmlCase) {
         /*
         console.debug("bf.util.closeSelect1 argument: ",arguments);
-        var selectList = dojo.query(".dijitComboBox",htmlCase);
+        var selectList = query(".dijitComboBox",htmlCase);
         console.debug("bf.util.closeSelect1 select: ", selectList);
         var id = dojo.attr(selectList[0],"widgetid");
         console.debug("bf.util.closeSelect1 id: ", id);
@@ -147,6 +147,6 @@ require(['dojo/_base/declare'], function(declare){
         console.debug("bf.util.closeSelect1 dijit: ", dijitValue);
         dijitValue._hideResultList();
         */
-        dojo.query(".xfSelect1 .dijitComboBox",htmlCase).forEach("dijit.byId(dojo.attr(item, 'widgetid'))._hideResultList()");
+        query(".xfSelect1 .dijitComboBox",htmlCase).forEach("dijit.byId(dojo.attr(item, 'widgetid'))._hideResultList()");
     };
 });

@@ -1,5 +1,5 @@
-define(["dojo/dom", "dojo/dom-class", "dojo/behavior", "dojo/_base/xhr"],
-    function(dom, domClass, behavior, xhr) {
+define(["dojo/behavior"],
+    function(behavior) {
 /*
  * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License

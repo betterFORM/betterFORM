@@ -26,7 +26,7 @@ dojo.declare("bf.ToolTipAlert",
             var toolTipId = id+"-MasterToolTip-" +commonChild;
             var alertTooltip = dijit.byId(toolTipId);
 
-            var valueNode = dojo.query('.xfValue', dom.byId(id))[0];
+            var valueNode = query('.xfValue', dom.byId(id))[0];
             if(alertTooltip == undefined) {
                 alertTooltip = new dijit._MasterTooltip({id:toolTipId});
 
@@ -58,7 +58,7 @@ dojo.declare("bf.ToolTipAlert",
 
 
         if (commonChildNode != undefined && commonChild == this.alert) {
-            var controlValue = dojo.query('.xfValue', dom.byId(id))[0];
+            var controlValue = query('.xfValue', dom.byId(id))[0];
             var alertDijit = dijit.byId(id+"-MasterToolTip-" +commonChild);
             if (alertDijit != undefined && controlValue != undefined) {
                 alertDijit.hide(controlValue);
@@ -87,7 +87,7 @@ dojo.declare("bf.ToolTipAlert",
     _fadeOutAndHide:function(id,commonChild) {
         var alertTooltip = dijit.byId(id+"-MasterToolTip-" +commonChild);
         // No need to check if tooltip exists since this function is only called if (after a check before) it exists
-        var valueNode = dojo.query('.xfValue', dom.byId(id))[0];
+        var valueNode = query('.xfValue', dom.byId(id))[0];
         // console.debug("ToolTipAlert._fadeOutAndHide  [id: " + id + " - alertTooltip:" , alertTooltip ,"]");
         var speed = this.hideSpeed;
         dojo.fadeOut({
