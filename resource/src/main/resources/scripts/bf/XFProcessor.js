@@ -17,20 +17,19 @@ define(["dojo/_base/declare",
     dataPrefix:"",
     skipshutdown:false,
     isDirty:false,
-    factory:null,
     currentControlId:"",
     unloadMsg:"You are about to leave this XForms application",
-    webtest:'@WEBTEST@',
+    webtest:'@WEBTEST@',//todo: deprecated?
     isReady:false,
     contextroot:"",
-    defaultAlertHandler:null,
-    subscribers:[],
+    defaultAlertHandler:null,//todo: change to use behavior
+    subscribers:[], //todo:see line above
     clientServerEventQueue:[],
     requestPending:false,
     fifoReaderTimer:null,
     lastServerClientFocusEvent:null,
     _earlyTemplatedStartup:true,
-    widgetsInTemplate:true,
+    widgetsInTemplate:true, //todo: still needed?
     usesDOMFocusIN:false,
     logEvents:false,
 
@@ -112,6 +111,7 @@ define(["dojo/_base/declare",
         console.debug("userAgent: ",this.userAgent);
     },
 
+    //todo: deprecated? -> change to behavior
     setInlineRoundBorderAlertHandler:function() {
         console.debug("XFProcessor.setInlineRoundBorderAlertHandler");
         // this.hideAllCommonChilds(dojo.doc);
@@ -123,7 +123,7 @@ define(["dojo/_base/declare",
 
     },
 
-
+    //todo: deprecated? -> change to behavior
     setToolTipAlertHandler:function() {
         console.debug("setToolTipAlertHandler");
         // this.hideAllCommonChilds(dojo.doc);
@@ -135,6 +135,7 @@ define(["dojo/_base/declare",
         this.showAllCommonChilds(dojo.doc,"changeAlertType");
     },
 
+    //todo: move to XFControl?
     // Hide commonChilds 'alert', 'hint', 'info'
     hideAllCommonChilds:function(node) {
         dojo.query(".xfControl", node).forEach(dojo.hitch(this, function(control) {
@@ -143,7 +144,8 @@ define(["dojo/_base/declare",
         }));
     },
 
-    // Show commonChilds 'alert', 'hint', 'info'
+    //todo: move to XFControl?
+   // Show commonChilds 'alert', 'hint', 'info'
     showAllCommonChilds:function(node,event) {
         dojo.query(".xfControl", node).forEach(dojo.hitch(this, function(control) {
             // console.debug("hide/show commonChild for control: ", control, " control valid state is:", dojo.hasClass(control),"xfValid");
@@ -155,6 +157,7 @@ define(["dojo/_base/declare",
         }));
     },
 
+    //todo: deprecated -> move to behavior
     unsubscribeFromAlertHandler:function() {
         for (var i = 0; i < this.subscribers.length; i++) {
             dojo.unsubscribe(this.subscribers[i]);
@@ -736,7 +739,14 @@ define(["dojo/_base/declare",
         });
     },
 
+
+    /*
+        ******************************************************************************************************
+        * handles XForms binding exception
+        ******************************************************************************************************
+     */
     _handleBindingException:function(xmlEvent) {
+        //todo: must be reviewed completely
         if (this.webtest != 'true') {
             console.warn("xforms-binding-exception at " + xmlEvent.contextInfo.targetId + " - " + xmlEvent.contextInfo.defaultinfo);
         } else {
@@ -745,7 +755,13 @@ define(["dojo/_base/declare",
         }
     },
 
+    /*
+         ******************************************************************************************************
+         * handles XForms binding exception
+         ******************************************************************************************************
+     */
     _handleVersionException:function(xmlEvent) {
+        //todo: must be reviewed completely
         if (this.webtest != 'true') {
             console.error(xmlEvent.contextInfo.errorinformation);
         } else {
@@ -754,6 +770,11 @@ define(["dojo/_base/declare",
         }
     },
 
+    /*
+         ******************************************************************************************************
+         * handles arbitrary exception occuring on server-side and write them our to DOM
+         ******************************************************************************************************
+     */
      _handleBetterformException:function(xmlEvent) {
         if (this.webtest != 'true') {
             var description = xmlEvent.contextInfo.message;
@@ -780,6 +801,12 @@ define(["dojo/_base/declare",
         }
     },
 
+    /*
+         ******************************************************************************************************
+         * handles XForms submit error by publishing /xf/invalid to all invalid controls and adding
+         * a class 'xfRequiredEmpty' to required controls that have no value
+         ******************************************************************************************************
+     */
     _handleSubmitError:function(xmlEvent) {
         console.warn("xforms-submit-error at ", xmlEvent.contextInfo);
         dojo.query(".xfInvalid", dojo.doc).forEach(function(control) {
@@ -799,7 +826,12 @@ define(["dojo/_base/declare",
         });
     },
 
-    //todo: factor out this method into its own class and use publish/subscribe?
+
+    /*
+         ******************************************************************************************************
+         * handles the XForms load actions including the embedding of subforms.
+         ******************************************************************************************************
+     */
     _handleBetterFormLoadURI:function(/*XMLEvent*/ xmlEvent) {
         // xf:load show=replace
         if (xmlEvent.contextInfo.show == "replace") {
@@ -933,6 +965,11 @@ define(["dojo/_base/declare",
         }
     },
 
+    /*
+         ******************************************************************************************************
+         * handles XForms xforms-submit-done events
+         ******************************************************************************************************
+     */
     _handleSubmitDone:function(xmlEvent) {
         if (xmlEvent.contextInfo.document != null) {
             //***** handle submission replace="new" *****
@@ -979,7 +1016,7 @@ define(["dojo/_base/declare",
         }
     },
 
-    //todo: see above '_handleBetterFormLoadURI'
+    //todo: see above '_handleBetterFormLoadURI'  - should be moved behind handleLoadURI function
     _unloadDOM:function(target) {
         //delete CSS specific to subform
         var htmlEntryPoint = dojo.byId(target);
@@ -1002,6 +1039,9 @@ define(["dojo/_base/declare",
         });
         }
 
+        /*
+        unload previously loaded subform-specific stylesheets
+         */
         var externalStyleList = document.getElementsByTagName("link");
         console.debug("styleList" , externalStyleList);
         if (externalStyleList != undefined) {
@@ -1017,6 +1057,9 @@ define(["dojo/_base/declare",
         });
         }
 
+        /*
+        unload previously loaded subform-specific Javascripts
+         */
         var scriptList = document.getElementsByTagName("script");
         //console.debug("scriptList" , scriptList);
         if (scriptList != undefined) {
@@ -1037,8 +1080,10 @@ define(["dojo/_base/declare",
             widgetID = "widgetId"
         }
 
+        /*
+        destroy all child dijits within subform tree
+         */
         var widgets = dojo.query("*[" + widgetID + "]", htmlEntryPoint);
-
         dojo.forEach(widgets,
                 function(item) {
                     if (item != undefined) {
@@ -1062,7 +1107,11 @@ define(["dojo/_base/declare",
         }
     },
 
-
+    /*
+         ******************************************************************************************************
+         * handles XForms message actions
+         ******************************************************************************************************
+     */
     _handleBetterFormRenderMessage:function(/*XMLEvent*/ xmlEvent) {
         var message = xmlEvent.contextInfo.message;
         var level = xmlEvent.contextInfo.level;
@@ -1126,6 +1175,11 @@ define(["dojo/_base/declare",
         }
     },
 
+    /*
+         ******************************************************************************************************
+         * handles XForms xforms-out-of-range events
+         ******************************************************************************************************
+     */
     _handleOutOfRange:function(xmlEvent) {
         /*
          var message = "Value for ui control '" + xmlEvent.contextInfo.targetName + "' (id:"+xmlEvent.contextInfo.targetId+") is out of range";
@@ -1145,6 +1199,11 @@ define(["dojo/_base/declare",
         }
     },
 
+    /*
+         ******************************************************************************************************
+         * handles XForms xforms-in-range events
+         ******************************************************************************************************
+     */
     _handleInRange:function(xmlEvent) {
         var uiControl = dojo.byId(xmlEvent.contextInfo.targetId + "-value");
         if (uiControl != undefined) {
@@ -1172,12 +1231,14 @@ define(["dojo/_base/declare",
         messageDiv.appendChild(messageText);
         log.appendChild(messageDiv);
     },
+
     //todo: is this function needed any more???
     _countMessages:function (log) {
         var logMessagesCount = log.getElementsByTagName('message').length;
         return logMessagesCount;
     },
 
+    //todo: probably to be merged with '_handleSubmitDone'?
     _handleBetterFormReplaceAll:function() {
         fluxProcessor.skipshutdown = true;
 
@@ -1199,6 +1260,8 @@ define(["dojo/_base/declare",
         window.open(path, "_self");
     },
 
+
+    //todo: should be moved into a behavior
     _handleBetterFormDialogOpen:function(/*XMLEvent*/ xmlEvent) {
        // console.debug("XFProcessor._handleBetterformDialogOpen: targetId: '",xmlEvent.contextInfo.targetId,"' parentId: " , xmlEvent.contextInfo.parentId);
        var xfControlId =xmlEvent.contextInfo.targetId;
@@ -1210,6 +1273,7 @@ define(["dojo/_base/declare",
        }
     },
 
+    //todo: should be moved into a behavior
     _handleBetterFormDialogClose:function(/*XMLEvent*/ xmlEvent) {
        // console.debug("XFProcessor._handleBetterformDialogClose: targetId: '",xmlEvent.contextInfo.targetId,"' parentId: " , xmlEvent.contextInfo.parentId);
        var xfControlId =xmlEvent.contextInfo.targetId;
@@ -1227,6 +1291,7 @@ define(["dojo/_base/declare",
 
 
         // new implementation code
+        //todo: review - control specific code should be here!
         var parentId = xmlEvent.contextInfo.parentId;
         if(parentId) {
             var parentNode = dojo.byId(parentId);
@@ -1452,7 +1517,8 @@ define(["dojo/_base/declare",
     },
 
 
-
+    //todo: should be moved to a behavior
+    //todo: note that xforms-insert might not target repeat or itemset
     _handleBetterFormInsertRepeatItem:function(xmlEvent) {
         // console.debug("betterform-insert-repeatitem [id: '", xmlEvent.contextInfo.targetId, "'] xmlEvent:",xmlEvent);
         var repeatToInsertIntoDOM = dojo.query("*[repeatId='" + xmlEvent.contextInfo.targetId + "']");
@@ -1468,6 +1534,7 @@ define(["dojo/_base/declare",
 
     },
 
+    //todo: should be moved to a behavior
     _handleBetterFormInsertItemset:function(xmlEvent) {
         console.debug("betterform-insert-itemset [id: '", xmlEvent.contextInfo.targetId, " / contextInfo:",xmlEvent.contextInfo,']' );
         var selectDijit = dijit.byId(xmlEvent.contextInfo.parentId + "-value");
@@ -1546,12 +1613,15 @@ define(["dojo/_base/declare",
         }
 */
     },
+
+    //todo: move to repeat behavior
     _handleBetterFormIndexChanged:function(xmlEvent) {
         // console.debug("_handleBetterFormIndexChanged xmlEvent:",xmlEvent);
         var repeat = this._getRepeatObject(xmlEvent.contextInfo.targetId);
         console.debug("XFProcessor.betterform-index-changed Repeat: ", repeat, " targetId: ", xmlEvent.contextInfo.targetId);
         repeat.handleSetRepeatIndex(xmlEvent.contextInfo);
     },
+
 
     _getRepeatObject: function (targetId){
         var repeatElement = dojo.query("*[repeatId='" + targetId + "']");
