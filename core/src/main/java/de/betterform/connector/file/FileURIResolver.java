@@ -86,6 +86,7 @@ public class FileURIResolver extends AbstractConnector implements URIResolver {
             return document;
         }
         catch (Exception e) {
+            //todo: improve error handling as files might fail due to missing DTDs or Schemas - this won't be detected very well
             throw new XFormsException(e);
         }
     }
