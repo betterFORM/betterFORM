@@ -1,5 +1,5 @@
-define(["dojo/dom", "dojo/dom-class", "dojo/behavior", "dojo/_base/xhr","dijit/form/ComboBox"],
-    function(dom, domClass, behavior, xhr,ComboBox) {
+define(["dojo/dom", "dojo/dom-class", "dojo/behavior", "dojo/_base/xhr"],
+    function(dom, domClass, behavior, xhr) {
 /*
  * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
@@ -157,7 +157,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
             var xfValue = new Date(dojo.attr(n,"schemavalue"));
 
             if(appearance && appearance.indexOf("bf:dropdowndate") != -1){
-                require(["bf/DropDownDate","dijit/form/ComboBox", "dojo/domReady!"], function(DropDownDate,ComboBox) {
+                require(["bf/DropDownDate", "dojo/domReady!"], function(DropDownDate) {
                     var dropDownDate = new DropDownDate({
                             value:dojo.attr(n,"schemavalue"),
                             appearance:appearance,

@@ -951,7 +951,6 @@
         <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         -->
         <script type="text/javascript">
-            dojo.require("dijit.form.ComboBox");
             dojo.require("dojox.widget.Toaster");
         </script>
         <xsl:text>
