@@ -25,192 +25,143 @@
 				<link type="text/css" rel="stylesheet" href="{$params/context}/bfResources/scripts/syntaxhighlighter/styles/shCoreDefault.css"/>
 				<script type="text/javascript">SyntaxHighlighter.all();</script><xsl:text>
 </xsl:text>
-                <script type="text/javascript" defer="defer">
-                     function getHighlightedDiv(cssClass){
-                        var divList, i, results = [], curClass;
-                        divList = document.getElementsByTagName('div');
-                        for( i=0; i != divList.length; i+=1 ){
-                            curClass = divList[i].classList;
-                            if(curClass != null){
-                                for( j=0; j != curClass.length; j+=1){
-                                    if(curClass[j] === cssClass){
-                                        return(divList[i]);
-                                     }
-                                 }
-                            }
-                        }
-                     };
 
-                    function getDivPosition(obj) {
-                        var curtop = 0;
-                        if(obj.offsetParent) {
-                            do {
-                                curtop += obj.offsetTop;
-                            } while (obj = obj.offsetParent);
-                            return [curtop];
-                        }
-                    };
-
-                    function scrollToError() {
-                        var highlightedDiv = getHighlightedDiv('highlighted');
-                        console.log("highlightedDiv:", highlightedDiv);
-                        var positionToJumpTo = getDivPosition(highlightedDiv);
-                        console.log("positionToJumpTo:", positionToJumpTo);
-                        window.scroll(0,positionToJumpTo);
+                <style type="text/css">
+                    body{
+                        font-family:Tahoma;
+                        font-size:14pt;
+                        background:url('<xsl:value-of select="$params/context"/>/bfResources/images/bgOne.gif') repeat-x scroll;
+                        font-family: san-serif;
+                        color:#4682b4;
+                    }
+                    table{
+                        margin:10px 0;
+                        width: 750px;
+                    }
+                    td{
+                        padding: 5px;
+                        background: whitesmoke;
+                    }
+                    #errorBody{
+                        width: 750px;
+                        margin-left: auto;
+                        margin-right: auto;
+                        margin-top: 50px;
+                    }
+                    #errorIcon{
+                        float: left;
+                        margin-right: 10px;
+                    }
+                    .message1{
+                        display:block;
+                        color:steelblue;
+                        font-weight:bold;
+                    }
+                    .message2{
+                        display:block;
+                        color:darkred;
+                        font-size:16pt;
+                        padding-top:30px;
+                        font-weight:bold;
                     }
 
+                    .syntaxhighlighter{
+                        border:thin solid #999999;
+                        margin: 20px 50px;
+                        font-size: 10pt !important;
+                    }
+                </style>
+			</head>
+
+			<body>
+                <div id="errorBody">
+                    <img id="errorIcon" src="{$params/context}/bfResources/images/error.png" width="24" height="24" alt="Error"/>
+                    <div class="message1">Oops, an error occured...<br/></div>
+                    <div class="message2"><xsl:value-of select="$params/message"/></div>
+                    <table>
+                        <tr>
+                            <td>URL</td>
+                            <td><xsl:value-of select="$params/url"/></td>
+                        </tr>
+                        <tr>
+                            <td>XPath</td>
+                            <td><xsl:value-of select="$params/xpath"/></td>
+                        </tr>
+                    </table>
+                    <pre class="brush: xml; highlight:[{$params//lineNumber}]">
+                        <xsl:copy>
+                            <xsl:apply-templates />
+                        </xsl:copy>
+                    </pre>
+                    <div style="float:right;text-align:right;font-size:8pt;font-family: san-serif;" id="copyright">
+                        <a href="http://www.betterform.de">
+                            <img style="vertical-align:text-bottom; margin-right:5px;"
+                                 src="{$params/context}/bfResources/images/betterform_icon16x16.png" alt="betterFORM project"/>
+                        </a>
+                        <span>&#xA9; 2012 betterFORM</span>
+                    </div>
+                </div>
+			</body>
+		</html>
+	</xsl:template>
+
+	<xsl:variable name="nl">
+		<xsl:text></xsl:text>
+	</xsl:variable>
+	<xsl:variable name="indent-increment" select="''"/>
+
+	<xsl:template name="write-starttag">
+		<xsl:text>&lt;</xsl:text>
+		<xsl:value-of select="name()"/>
+		<xsl:for-each select="@*">
+			<xsl:call-template name="write-attribute"/>
+		</xsl:for-each>
+		<xsl:if test="not(*|text()|comment()|processing-instruction())">/</xsl:if>
+		<xsl:text>&gt;</xsl:text>
+	</xsl:template>
+
+	<xsl:template name="write-endtag">
+		<xsl:text>&lt;/</xsl:text>
+		<xsl:value-of select="name()"/>
+		<xsl:text>&gt;</xsl:text>
+	</xsl:template>
+
+	<xsl:template name="write-attribute">
+		<xsl:text> </xsl:text>
+		<xsl:value-of select="name()"/>
+		<xsl:text>="</xsl:text>
+		<xsl:value-of select="."/>
+		<xsl:text>"</xsl:text>
+	</xsl:template>
+
+	<xsl:template match="*">
+		<xsl:param name="indent-string" select="$indent-increment"/>
+		<xsl:value-of select="$indent-string"/>
+		<xsl:call-template name="write-starttag"/>
+		<xsl:if test="*">
+			<xsl:value-of select="$nl"/>
+		</xsl:if>
+		<xsl:apply-templates>
+			<xsl:with-param name="indent-string" select="concat($indent-string, $indent-increment)"/>
+		</xsl:apply-templates>
+		<xsl:if test="*">
+			<xsl:value-of select="$indent-string"/>
+		</xsl:if>
+		<xsl:if test="*|text()|comment()|processing-instruction()">
+			<xsl:call-template name="write-endtag"/>
+		</xsl:if>
+		<xsl:value-of select="$nl"/>
+	</xsl:template>
+
+	<xsl:template match="comment()"/>
+	<xsl:template match="@*|text()">
+        <xsl:copy>
+            <xsl:apply-templates select="*|@*|text()"/>
+        </xsl:copy>
+    </xsl:template>
 
 
-
-
-
-                 </script><xsl:text>
- </xsl:text>
-
-                 <style type="text/css">
-                     body{
-                         font-family:Tahoma;
-                         font-size:14pt;
-                         background:url('<xsl:value-of select="$params/context"/>/bfResources/images/bgOne.gif') repeat-x scroll;
-                         font-family: san-serif;
-                         color:#4682b4;
-                     }
-                     table{
-                         margin:10px 0;
-                         width: 750px;
-                     }
-                     td{
-                         padding: 5px;
-                         background: whitesmoke;
-                     }
-                     #errorBody{
-                         width: 750px;
-                         margin-left: auto;
-                         margin-right: auto;
-                         margin-top: 50px;
-                     }
-                     #errorIcon{
-                         float: left;
-                         margin-right: 10px;
-                     }
-                     .message1{
-                         display:block;
-                         color:steelblue;
-                         font-weight:bold;
-                     }
-                     .message2{
-                         display:block;
-                         color:darkred;
-                         font-size:16pt;
-                         padding-top:30px;
-                         font-weight:bold;
-                     }
-
-                     .syntaxhighlighter{
-                         border:thin solid #999999;
-                         margin: 20px 50px;
-                         font-size: 10pt !important;
-                     }
-                 </style>
-             </head>
-
-             <body>
-                 <div id="errorBody">
-                     <img id="errorIcon" src="{$params/context}/bfResources/images/error.png" width="24" height="24" alt="Error"/>
-                     <div class="message1">Oops, an error occured...<br/></div>
-                     <div class="message2"><xsl:value-of select="$params/message"/></div>
-                     <table>
-                         <tr>
-                             <td>URL</td>
-                             <td><xsl:value-of select="$params/url"/></td>
-                         </tr>
-                         <tr>
-                             <td>XPath</td>
-                             <td><xsl:value-of select="$params/xpath"/></td>
-                         </tr>
-                         <tr>
-                             <td> </td>
-                             <td>
-                                 <input type="button" onclick="scrollToError()"
-                                        value="Jump to error"> </input>
-                             </td>
-
-                         </tr>
-                     </table>
-                     <pre class="brush: xml; highlight:[{$params//lineNumber}]">
-                         <xsl:copy>
-                             <xsl:apply-templates />
-                         </xsl:copy>
-                     </pre>
-                     <div style="float:right;text-align:right;font-size:8pt;font-family: san-serif;" id="copyright">
-                         <a href="http://www.betterform.de">
-                             <img style="vertical-align:text-bottom; margin-right:5px;"
-                                  src="{$params/context}/bfResources/images/betterform_icon16x16.png" alt="betterFORM project"/>
-                         </a>
-                         <span>&#xA9; 2012 betterFORM</span>
-                     </div>
-                 </div>
-             </body>
-         </html>
-     </xsl:template>
-
-     <xsl:variable name="nl">
-         <xsl:text></xsl:text>
-     </xsl:variable>
-     <xsl:variable name="indent-increment" select="''"/>
-
-     <xsl:template name="write-starttag">
-         <xsl:text>&lt;</xsl:text>
-         <xsl:value-of select="name()"/>
-         <xsl:for-each select="@*">
-             <xsl:call-template name="write-attribute"/>
-         </xsl:for-each>
-         <xsl:if test="not(*|text()|comment()|processing-instruction())">/</xsl:if>
-         <xsl:text>&gt;</xsl:text>
-     </xsl:template>
-
-     <xsl:template name="write-endtag">
-         <xsl:text>&lt;/</xsl:text>
-         <xsl:value-of select="name()"/>
-         <xsl:text>&gt;</xsl:text>
-     </xsl:template>
-
-     <xsl:template name="write-attribute">
-         <xsl:text> </xsl:text>
-         <xsl:value-of select="name()"/>
-         <xsl:text>="</xsl:text>
-         <xsl:value-of select="."/>
-         <xsl:text>"</xsl:text>
-     </xsl:template>
-
-     <xsl:template match="*">
-         <xsl:param name="indent-string" select="$indent-increment"/>
-         <xsl:value-of select="$indent-string"/>
-         <xsl:call-template name="write-starttag"/>
-         <xsl:if test="*">
-             <xsl:value-of select="$nl"/>
-         </xsl:if>
-         <xsl:apply-templates>
-             <xsl:with-param name="indent-string" select="concat($indent-string, $indent-increment)"/>
-         </xsl:apply-templates>
-         <xsl:if test="*">
-             <xsl:value-of select="$indent-string"/>
-         </xsl:if>
-         <xsl:if test="*|text()|comment()|processing-instruction()">
-             <xsl:call-template name="write-endtag"/>
-         </xsl:if>
-         <xsl:value-of select="$nl"/>
-     </xsl:template>
-
-     <xsl:template match="comment()"/>
-     <xsl:template match="@*|text()">
-         <xsl:copy>
-             <xsl:apply-templates select="*|@*|text()"/>
-         </xsl:copy>
-     </xsl:template>
-
-
-     <!--<xsl:template match="bf:data" priority="10"/>-->
+	<!--<xsl:template match="bf:data" priority="10"/>-->
 	<!--<xsl:template match="xf:group[@appearance='repeated']"/>-->
 	<!--<xsl:template match="@src"/>-->
 
