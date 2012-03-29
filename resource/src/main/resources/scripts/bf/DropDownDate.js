@@ -58,7 +58,7 @@ define(["dojo/_base/declare",
                 rangeEnd = parseInt(rangeEnd, "10");
 
                 // console.debug("DropDownDate: Range Start: ", rangeStart, " End: ", rangeEnd);
-                this.templateString = "<div class='xfDropDownDateControl'><input class='xfValue' type='hidden' data-dojo-attach-point='bfValue' value=''/><" +
+                this.templateString = "<div class='xfDropDownDateControl'><input type='hidden' data-dojo-attach-point='bfValue' value=''/><" +
                     "span class='xfDropDownDate'><select size='1'  data-dojo-attach-point='daysFacet' class='xfDropDownDateDays'><option></option><" +
                     "option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><" +
                     "option>09</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><" +
@@ -99,7 +99,7 @@ define(["dojo/_base/declare",
             },
 
             postCreate:function() {
-                console.debug("DropDownDate.postCreate: before this.inherited");
+                // console.debug("DropDownDate.postCreate: before this.inherited");
                 this.inherited(arguments);
 
                 this.daysDijit = new ComboBox({},this.daysFacet);
@@ -114,16 +114,16 @@ define(["dojo/_base/declare",
                 dojo.attr(this.bfValue, "value", this.value);
                 this.applyValues(this.value);
 
-                console.debug("postCreate: this.daysDijit:",this.daysDijit);
+                // console.debug("postCreate: this.daysDijit:",this.daysDijit);
                 dojo.connect(this.daysDijit, "onChange", this, "onDaysChanged");
                 dojo.connect(this.monthDijit, "onChange", this, "onMonthsChanged");
                 dojo.connect(this.yearDijit, "onChange", this, "onYearsChanged");
             },
 
             applyValues:function(value) {
-                console.debug("DropDownDate.applyValues value:",value);
+                // console.debug("DropDownDate.applyValues value:",value);
                 if(this.daysDijit == undefined) {
-                    console.debug("DropDownDate.applyValues this.daysDijit==undefined: return");
+                    // console.debug("DropDownDate.applyValues this.daysDijit==undefined: return");
                     return;
                 }
 
@@ -134,13 +134,13 @@ define(["dojo/_base/declare",
                         console.warn("DropDownDate.applyValues: value: ", value ," can't be applied");
                         return;
                     }
-                    console.debug("DropDownDate.applyValues this.timeContainer:", splittedValue);
+                    // console.debug("DropDownDate.applyValues this.timeContainer:", splittedValue);
 
                     this.years = splittedValue[0];
                     this.months = splittedValue[1];
                     this.days = splittedValue[2];
 
-                    console.debug("DropDownDate.applyValues this.daysDijit:", this.daysDijit);
+                    // console.debug("DropDownDate.applyValues this.daysDijit:", this.daysDijit);
                     this.daysDijit.set('value', this.days);
                     this.monthDijit.set('value', this.monthsArray[parseInt(this.months, "10") - 1]);
                     //this.monthDijit.set('displayValue', this.monthsArray[parseInt(months)-1]);
@@ -149,7 +149,7 @@ define(["dojo/_base/declare",
             },
 
             onDaysChanged:function(evt) {
-                console.debug("DropDownDate.onDaysChanged.");
+                // console.debug("DropDownDate.onDaysChanged.");
                 var selectedItem = this.daysDijit.get("item");
                 if (selectedItem != undefined && selectedItem.value != "") {
                     this.days = selectedItem.value;
@@ -160,7 +160,7 @@ define(["dojo/_base/declare",
             },
 
             onMonthsChanged:function(evt) {
-                console.debug("DropDownDate.onMonthsChanged.");
+                // console.debug("DropDownDate.onMonthsChanged.");
                 var selectedItem = this.monthDijit.get("item");
                 var value;
                 if (selectedItem != undefined) {
@@ -187,7 +187,7 @@ define(["dojo/_base/declare",
             },
 
             onYearsChanged:function(evt) {
-                console.debug("DropDownDate.onYearsChanged oldYear: " , this.years);
+                // console.debug("DropDownDate.onYearsChanged oldYear: " , this.years);
                 var selectedItem = this.yearDijit.get('item');
                 var year;
 
@@ -236,7 +236,7 @@ define(["dojo/_base/declare",
 
 
             set:function(attrName, value){
-                console.debug("DropDownDate.set: attrName: "+ attrName+ "  value",value);
+                // console.debug("DropDownDate.set: attrName: "+ attrName+ "  value",value);
                 if(attrName == "value"){
                     this.applyValues(value);
                 }else if(attrName == "readOnly"){

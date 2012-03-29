@@ -1,5 +1,5 @@
-define([],
-    function() {
+define(["dojo/dom", "dojo/dom-class", "dojo/behavior", "dojo/_base/xhr","bf/XFControl"],
+    function(dom, domClass, behavior, xhr, XFControl) {
 
     /*
     * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
@@ -15,10 +15,9 @@ define([],
          created. Thus this behavior must be loaded before any other control behavior file.
          */
         '.xfControl':function(n) {
-            // console.debug("ControlBehaviour: XFControl found: ",n);
-
+            console.debug("ControlBehaviour: XFControl found: ",n);
             var controlId = dojo.attr(n,"id");
-            new bf.XFControl({
+            new XFControl({
                 id:controlId,
                 controlType:"generic"
             }, n);

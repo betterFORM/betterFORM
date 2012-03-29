@@ -665,11 +665,21 @@ define(["dojo/_base/declare",
                  "bf/InputBehavior",
                  "dojo/domReady!"],
                  function(behavior, ControlBehavior,InputBehavior) {
-            console.debug("ControlBehavior:",ControlBehavior);
-            console.debug("InputBehaviour:",InputBehavior);
+            console.debug("ControlBehavior:",ControlBehavior,InputBehavior);
             behavior.add(ControlBehavior);
             behavior.add(InputBehavior);
+            behavior.apply();
         });
+/*
+        require(["dojo/behavior",
+                 "bf/InputBehavior",
+                 "dojo/domReady!"],
+                 function(behavior,InputBehavior) {
+            console.debug("InputBehaviour:",InputBehavior);
+            behavior.add(InputBehavior);
+            behavior.apply();
+        });
+*/
 
 /*
         dojo.behavior.add(inputBehavior);
@@ -684,7 +694,6 @@ define(["dojo/_base/declare",
         // Container
         dojo.behavior.add(bf.repeatBehavior);
 */
-        dojo.behavior.apply();
     },
 
     _handleAVTChanged:function(xmlEvent){

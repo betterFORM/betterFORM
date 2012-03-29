@@ -902,8 +902,8 @@
 
     <xsl:template name="addLocalScript">
         <script type="text/javascript" defer="defer">
-            require(["dojo/ready", "dojo/parser", "dijit/registry", "dijit/Dialog","bf/BfRequiredXHTML"],
-                function(ready, parser, registry){
+            require(["dojo/ready", "dojo/parser", "dijit/registry", "dijit/Dialog","bf/XFProcessor","bf/XFormsModelElement"],
+                function(ready, parser, registry, XFProcessor, XFormsModelElement){
                     ready(function(){
                         console.debug("ready");
                         console.debug("parser parse start");
@@ -951,7 +951,7 @@
         <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         -->
         <script type="text/javascript">
-            dojo.require("bf.XFProcessor");
+            dojo.require("dijit.form.ComboBox");
             dojo.require("dojox.widget.Toaster");
         </script>
         <xsl:text>
