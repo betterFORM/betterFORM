@@ -16,8 +16,8 @@ dependencies = {
             // saved as an actual layer output. The important property
             // is the "discard" property. If set to true, then the layer
             // will not be a saved layer in the release directory.
-            name: "betterform.discard",
-            resourceName: "betterform.discard",
+            name: "bf.discard",
+            resourceName: "bf.discard",
             discard: true,
             // Path to the copyright file must be relative to
             // the util/buildscripts directory, or an absolute path.
@@ -51,81 +51,11 @@ dependencies = {
             ]
         },
 
-        // WARNING: MINIMAL AND COMPACT PROFILES ARE NOT AVAILABLE YET
-        // WARNING: MINIMAL AND COMPACT PROFILES ARE NOT AVAILABLE YET
-        // WARNING: MINIMAL AND COMPACT PROFILES ARE NOT AVAILABLE YET
-        /** betterFORM Minimal Release Resource */
-  /*      {
-            name: "../betterform/betterform-Minimal.js",
-            resourceName: "betterform.minimal",
-            layerDependencies: [
-                "dijit.dijit"
-            ],
-
-            dependencies: [
-                "betterform.BfRequiredMinimal"
-            ]
-        },
-
-        *//** betterFORM Compact Release  **//*
         {
-            name: "../betterform/betterform-Compact.js",
-            resourceName: "betterform.compact",
-            layerDependencies: [
-                "betterform.minimal"
-            ],
+            name: "../bf/betterform-XHTML.js",
+            resourceName: "bf.xhtml",
             dependencies: [
-                "betterform.BfRequiredCompact"
-            ]
-        },
-*/
-        /** betterFORM Full Release  **/
-        {
-            name: "../betterform/betterform-Full.js",
-            resourceName: "betterform.full",
-            layerDependencies: [
-                "betterform.compact"
-            ],
-            dependencies: [
-                "betterform.BfRequiredFull"
-            ]
-        },
-        /** betterFORM Timetracker  Release  **/
-		{
-		name: "../betterform/betterform-TimeTracker.js",
-		resourceName: "betterform.timetracker",
-		layerDependencies: [
-			"betterform.compact"
-		],
-		dependencies: [
-			"betterform.BfRequiredTimeTracker"
-		]
-		},
-
-        /** betterFORM Dashboard Release  **/
-		{
-			name: "../betterform/betterform-Dashboard.js",
-			resourceName: "betterform.dashboard",
-			dependencies: [
-               "betterform.BfRequiredDashboard"
-			]
-		},
-            
-            
-        /** betterFORM XFormsFeatureExplorer Release  **/
-        {
-            name: "../betterform/betterform-XFormsFeatureExplorer.js",
-            resourceName: "betterform.feature.explorer",
-            dependencies: [
-                "betterform.BfRequiredXFormsFeatureExplorer"
-            ]
-        },
-        /** betterFORM Editor Release  **/
-        {
-            name: "../betterform/betterform-XFormsEditor.js",
-            resourceName: "betterform.editor",
-            dependencies: [
-                "betterform.BfRequiredXFormsEditor"
+                "bf.BfRequiredXHTML"
             ]
         }
     ],
@@ -136,7 +66,7 @@ dependencies = {
         // are, at a minimum, copied to the build directory.
         [ "dijit", "../dijit" ],
         [ "dojox", "../dojox" ],
-        [ "betterform", "../betterform", "license.txt" ]
+        [ "bf", "../bf", "license.txt" ]
     ]
 }
 

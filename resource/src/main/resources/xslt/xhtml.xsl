@@ -276,9 +276,13 @@
                 </xsl:variable>
 
                 <style type="text/css">
+
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dijit/themes/', $cssTheme, '/', $cssTheme,'.css')"/>";
+<!--
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojo/resources/dojo.css')"/>";
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/widget/Toaster/Toaster.css')"/>";
+-->
+
                 </style><xsl:text>
 </xsl:text>
     </xsl:template>
@@ -328,13 +332,15 @@
             of the window
             <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             -->
-            <div dojoType="dojox.widget.Toaster"
+<!--
+            <div data-dojo-type="dojox.widget.Toaster"
                  id="betterformMessageToaster"
                  positionDirection="bl-up"
                  duration="8000"
                  separator="&lt;div style='height:1px;border-top:thin dotted;width:100%;'&gt;&lt;/div&gt;"
                  messageTopic="testMessageTopic">
             </div>
+-->
 
             <!--
             >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -924,7 +930,8 @@
             debugAtAllCosts:<xsl:value-of select="$debug-enabled"/>,
             locale:'<xsl:value-of select="$locale"/>',
             isDebug:<xsl:value-of select="$debug-enabled"/>,
-            parseOnLoad:false
+            parseOnLoad:false,
+            async:true
         </xsl:variable>
 
         <xsl:choose>
@@ -950,9 +957,6 @@
         todo: should be moved out again once xslts are completely refactored or another build option is established
         <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         -->
-        <script type="text/javascript">
-            dojo.require("dojox.widget.Toaster");
-        </script>
         <xsl:text>
 </xsl:text>
 

@@ -2,8 +2,8 @@ define({ root:
 //begin v1.x content
     ({
         january:"January",
-        february:"Februaryyy",
-        march:"Marchhh",
+        february:"February",
+        march:"March",
         april:"April",
         may:"May",
         june:"June",
