@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-class","bf/util"],
-    function(declare, _Widget, domClass){
+define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo/query","bf/util"],
+    function(declare, _Widget, dom, domClass,query){
         return declare("bf.XFControl",_Widget, {
 
 
@@ -122,7 +122,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-class","bf/util"],
                 this.readonly = contextInfo["readonly"];
                 this.required = contextInfo["required"];
                 this.relevant = contextInfo["enabled"];
-                // console.debug("Control.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " contextInfo:",contextInfo);
+                console.debug("Control.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " contextInfo:",contextInfo);
 
                 if (contextInfo["targetName"] == "input" && this.value != null) {
                     var noNSType = bf.util.removeNamespace(contextInfo["type"]);
@@ -497,6 +497,12 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-class","bf/util"],
             return this.widget;
         }
     });
+    bf.XFControl.getXfId = function(/*Node*/n){
+        var tmp = n.id.substring(0,n.id.lastIndexOf("-"));
+        console.debug("returning xfId: ",tmp);
+        return tmp;
+    };
+
 });
 
 

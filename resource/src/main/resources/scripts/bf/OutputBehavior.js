@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior"],
-    function(behavior) {
+define(["dojo/behavior","dojo/dom-attr","dijit/registry","bf/util"],
+    function(behavior,domAttr,registry) {
 
 
     return {
@@ -12,10 +12,10 @@ define(["dojo/behavior"],
         // ############################## OUTPUT MAPPINGS ############################################################
         // ############################## OUTPUT MAPPINGS ############################################################
         '.xfOutput.mediatypeText .xfValue': function(n) {
-            // console.debug("FOUN.xfOutput.mediatypeText .xfValuelue ",n);
+            // console.debug("FOUND .xfOutput.mediatypeText .xfValuelue ",n);
 
-            var xfId = bf.XFControl.getXfId(n);
-            var xfControl = dijit.byId(xfId);
+            var xfId = bf.util.getXfId(n);
+            var xfControl = registry.byId(xfId);
 
             xfControl.setValue = function(value) {
                 // console.debug("xfControl.setValue: .xfOutput.mediatypeText .xfValue")
@@ -26,10 +26,10 @@ define(["dojo/behavior"],
         '.xfOutput.mediatypeImage .xfValue': function(n) {
             // console.debug("FOUND: output mediatype image: ",n);
 
-            var xfControl = dijit.byId(bf.XFControl.getXfId(n));
+            var xfControl = registry.byId(bf.util.getXfId(n));
 
             xfControl.setValue = function(value) {
-                dojo.attr(n, "src", value);
+                domAttr.set(n, "src", value);
             };
 
         },
@@ -37,29 +37,29 @@ define(["dojo/behavior"],
         '.xfOutput.xsdAnyURI .xfValue': function(n) {
             // console.debug("FOUND: .xfOutput.xsdAnyURI .xfValue",n);
 
-            var xfControl = dijit.byId(bf.XFControl.getXfId(n));
+            var xfControl = registry.byId(bf.util.getXfId(n));
 
             //todo: this solution works in FF - others have to be tested
             //todo: use dojo.style
             xfControl.setReadonly = function(){
-                dojo.attr(n,"style","pointer-events:none;cursor:default;")
+                domAttr.set(n,"style","pointer-events:none;cursor:default;")
             };
 
             xfControl.setReadwrite = function(){
                 //todo: this is dirty - there might be a style already
                 n.removeAttribute("style");
-            }
+            };
 
             xfControl.setValue = function(value) {
                 // console.debug("xfControl.setValue: .xfOutput.xsdAnyURI .xfValue")
-                dojo.attr(n, "href", value);
+                domAttr.set(n, "href", value);
                 n.innerHTML = value;
-            }
+            };
         },
         '.xfOutput.mediatypeHtml .xfValue': function(n) {
             // console.debug("FOUND: output mediatype HTML: ",n);
 
-            dijit.byId(bf.XFControl.getXfId(n)).setValue = function(value) {
+            registry.byId(bf.util.getXfId(n)).setValue = function(value) {
                 n.innerHTML = value;
             };
         }

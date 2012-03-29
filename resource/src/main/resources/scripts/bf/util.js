@@ -149,4 +149,10 @@ require(['dojo/_base/declare',"dojo/dom-class"], function(declare,domClass){
         */
         query(".xfSelect1 .dijitComboBox",htmlCase).forEach("dijit.byId(dojo.attr(item, 'widgetid'))._hideResultList()");
     };
+
+    bf.util.getXfId = function(/*Node*/n){
+            var tmp = n.id.substring(0,n.id.lastIndexOf("-"));
+            console.debug("returning xfId: ",tmp);
+            return tmp;
+    };
 });

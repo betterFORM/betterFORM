@@ -3,12 +3,14 @@ define(["dojo/_base/declare",
         "bf/ClientServerEvent",
         "dojo/behavior",
         "bf/ControlBehavior",
+        "bf/OutputBehavior",
         "bf/InputBehavior",
+        "bf/TriggerBehavior",
         "dojo/dom",
         "dojo/query",
         "dojo/dom-class",
         "dojo/_base/window",
-        "dojo/domReady!"], function(declare, XFormsProcessor,ClientServerEvent,behavior, ControlBehavior,InputBehavior,dom,query,domClass,win){
+        "dojo/domReady!"], function(declare, XFormsProcessor,ClientServerEvent,behavior, ControlBehavior, OutputBehavior, InputBehavior,TriggerBehavior,dom,query,domClass,win){
     return declare("bf.XFProcessor",XFormsProcessor, {
 
 /**
@@ -681,7 +683,9 @@ define(["dojo/_base/declare",
     _buildUI : function(){
         console.debug("XFProcessor._buildUI ControlBehavior:",ControlBehavior, " InputBehavior:",InputBehavior);
         behavior.add(ControlBehavior);
+        behavior.add(OutputBehavior);
         behavior.add(InputBehavior);
+        behavior.add(TriggerBehavior);
         behavior.apply();
     },
 

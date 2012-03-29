@@ -1,5 +1,5 @@
-define(["dojo/behavior"],
-    function(behavior) {
+define(["dojo/behavior","dojo/_base/connect","dojo/dom-attr","bf/util"],
+    function(behavior,connect,domAttr) {
 /*
  * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
@@ -16,11 +16,25 @@ todo: dependencies must be imported for foreign (non-dojo) components
     Component Definition File which is the central for mapping XForms controls to client-side controls.
     todo:see newJSLayer-readme.txt
 */
-    function getXfId(/*Node*/n){
-            var tmp = n.id.substring(0,n.id.lastIndexOf("-"));
-            console.debug("returning xfId: ",tmp);
-            return tmp;
+    function sendDate(xfControlDijit, dateWidget, attrName, value){
+        if((attrName == "focused" &&  !value) || attrName == "value") {
+            var dateValue;
+            if(dateWidget.serialize){
+                dateValue = dateWidget.serialize(dateWidget.get("value")).substring(0, 10);
+            }else{
+                dateValue = dateWidget.get("value");
+            }
+            var evt = new Object();
+            if(attrName == "focused"){
+                evt.type ="blur";
+                xfControlDijit.sendValue(dateValue,evt);
+            }else {
+                evt.type = "change";
+                xfControlDijit.sendValue(dateValue,evt);
+            }
+        }
     };
+
 
     return {
 
@@ -38,7 +52,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
              xfId is the id of the parent element in the DOM that matches the id of the original XForms
              element.
             */
-            var xfId = getXfId(n);
+            var xfId = bf.util.getXfId(n);
 
             /*
             xfControl is an instance of the XFControl class. This is the generic class that handles all interactions
@@ -60,12 +74,12 @@ todo: dependencies must be imported for foreign (non-dojo) components
             be aware that the order of registration can be significant for proper operation.
             */
 
-            dojo.connect(n,"onkeyup",function(evt){
+            connect.connect(n,"onkeyup",function(evt){
                 // console.debug("onkeypress",n);
                 xfControlDijit.sendValue(n.value,evt);
             });
 
-            dojo.connect(n,"onblur",function(evt){
+            connect.connect(n,"onblur",function(evt){
                 // console.debug("onblur",n);
                 xfControlDijit.sendValue(n.value, evt);
             });
@@ -88,13 +102,13 @@ todo: dependencies must be imported for foreign (non-dojo) components
              */
             xfControlDijit.setReadonly = function() {
                 console.debug("overwritten checkbox function");
-                dojo.attr(n, "disabled","disabled");
+                domAttr.set(n, "disabled","disabled");
             };
             xfControlDijit.setReadwrite = function() {
                 n.removeAttribute("disabled");
             };
 
-            dojo.connect(n,"onblur",function(evt){
+            connect.connect(n,"onblur",function(evt){
     //            console.debug("onblur",n);
     //            console.debug("xfId",xfId);
     //            console.debug("checked",n.checked);
@@ -102,7 +116,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
                     xfControlDijit.sendValue(n.checked,evt);
                 }
             });
-            dojo.connect(n,"onclick",function(evt){
+            connect.connect(n,"onclick",function(evt){
     //            console.debug("onclick",n);
     //            console.debug("xfId",xfId);
     //            console.debug("value",n.value);
@@ -120,17 +134,17 @@ todo: dependencies must be imported for foreign (non-dojo) components
 
         /*  rendering HTML5 input type="date" control for mobiles and tablets  */
         '.uaMobile .xfInput.xsdDate .xfValue, .uaTablet .xfInput.xsdDate .xfValue': function(n) {
-            var xfControlDijit = dijit.byId(getXfId(n));
+            var xfControlDijit = dijit.byId(bf.util.getXfId(n));
 
-            dojo.connect(n,"onkeyup",function(evt){
+            connect.connect(n,"onkeyup",function(evt){
                 xfControlDijit.sendValue(n.value,evt);
             });
 
-            dojo.connect(n,"onblur",function(evt){
+            connect.connect(n,"onblur",function(evt){
                 xfControlDijit.sendValue(n.value, evt);
             });
     /*
-            dojo.connect(n,"onchange",function(evt){
+            connect.connect(n,"onchange",function(evt){
                 console.debug("Mobile Date  onchange",n);
                 xfControl.sendValue(n.value, evt);
             });
@@ -142,9 +156,9 @@ todo: dependencies must be imported for foreign (non-dojo) components
         '.uaDesktop .xfInput.xsdDate .xfValue':function (n) {
             console.debug("InputBehaviour: found: .uaDesktop .xfInput.xsdDate .xfValue",n);
 
-            var xfId = getXfId(n);
+            var xfId = bf.util.getXfId(n);
             var xfControlDijit = dijit.byId(xfId);
-            var appearance = dojo.attr(n,"appearance");
+            var appearance = domAttr.get(n,"appearance");
             var datePattern;
            if (appearance && appearance.indexOf("iso8601:") != -1) {
                 datePattern = appearance.substring(appearance.indexOf("iso8601:")+8);
@@ -154,64 +168,49 @@ todo: dependencies must be imported for foreign (non-dojo) components
                 }
             }
             // console.debug("input type=date appearance:",appearance, " datePattern:",datePattern);
-            var xfValue = new Date(dojo.attr(n,"schemavalue"));
-
+            var xfValue = new Date(domAttr.get(n,"schemavalue"));
+            var dateWidget = undefined;
             if(appearance && appearance.indexOf("bf:dropdowndate") != -1){
-                require(["bf/DropDownDate", "dojo/domReady!"], function(DropDownDate) {
-                    var dropDownDate = new DropDownDate({
-                            value:dojo.attr(n,"schemavalue"),
+                require(["bf/DropDownDate"], function(DropDownDate) {
+                    dateWidget = new DropDownDate({
+                            value:domAttr.get(n,"schemavalue"),
                             appearance:appearance,
                             constraints:{
                                 selector:'date'
                             }
                         },n);
-
-                    dojo.connect(dropDownDate, "set", function (attrName, value) {
-                        var evt = new Object();
-                        if(attrName == "focused" &&  !value){
-                            evt.type ="blur";
-                            xfControlDijit.sendValue(dropDownDate.get("value"),evt);
-                        }else if(attrName == "value"){
-                            evt.type = "change";
-                            xfControlDijit.sendValue(dropDownDate.get("value"),evt);
-                        }
-                    });
-                    dojo.connect(dropDownDate, "onChange", function (attrName, value) {
-                        console.debug("onChanged called on DropDownDate arguments:",arguments);
+                    connect.connect(dateWidget, "set", function (attrName, value) {
+                        sendDate(xfControlDijit,dateWidget, attrName,value);
                     });
 
                 });
-            }
-            else {
-                var dateWidget = undefined;
-                if (datePattern) {
-                    require(["dijit/form/DateTextBox", "dojo/domReady!"], function(DateTextBox) {
-                        dateWidget = new DateTextBox({
-                                            value:xfValue,
-                                            required:false,
-                                            constraints:{
-                                                selector:'date',
-                                                datePattern:datePattern
-                                            } },n);
+            } else if (datePattern) {
+                require(["dijit/form/DateTextBox"], function(DateTextBox) {
+                    dateWidget = new DateTextBox({
+                                        value:xfValue,
+                                        required:false,
+                                        constraints:{
+                                            selector:'date',
+                                            datePattern:datePattern
+                                        } },n);
+                    connect.connect(dateWidget, "set", function (attrName, value) {
+                        sendDate(xfControlDijit,dateWidget, attrName,value);
                     });
-                } else {
-                    require(["dijit/form/DateTextBox", "dojo/domReady!"], function(DateTextBox) {
-                        dateWidget = new DateTextBox({
-                                            value:xfValue,
-                                            required:false,
-                                            constraints:{
-                                                selector:'date'
-                                            }}, n);
+
+                });
+            } else {
+                require(["dijit/form/DateTextBox"], function(DateTextBox) {
+                    dateWidget = new DateTextBox({
+                                        value:xfValue,
+                                        required:false,
+                                        constraints:{
+                                            selector:'date'
+                                        }}, n);
+                    connect.connect(dateWidget, "set", function (attrName, value) {
+                        sendDate(xfControlDijit,dateWidget, attrName,value);
                     });
-                }
-                dojo.connect(dateWidget, "onChange", function (value) {
-                    console.debug("dateWidget onChanged");
-                    var dateValue = dateWidget.serialize(dateWidget.get("value")).substring(0, 10);
-                    xfControlDijit.sendValue(dateValue);
-                })
-
+                });
             }
-
             xfControlDijit.setValue = function(value) {
                 dateWidget.set('value', value);
             };

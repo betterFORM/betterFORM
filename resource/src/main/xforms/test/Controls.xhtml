@@ -67,7 +67,7 @@
                     <label>output[2] image</label>
                 </output>
                 <output>
-                    <value>http://www.google.com</value>
+                    <value>http://www.betterform.de</value>
                     <label>output[3] anyURI</label>
                 </output>
                 <output>
@@ -229,7 +229,7 @@
 
 <body class="tundra">
     <xf:group appearance="minimal">
-<!--
+
         <xf:group>
             <div style="margin:4px;padding:4px;border:thin dotted #808080">
                 <span>MIPS:</span>
@@ -309,7 +309,7 @@
                 </xf:trigger>
                 <xf:trigger>
                     <xf:label>Value[3]</xf:label>
-                    <xf:setvalue ref="instance()/output[3]/value" value="'http://www.betterform.de'"/>
+                    <xf:setvalue ref="instance()/output[3]/value" value="'http://exist-db.org/'"/>
                 </xf:trigger>
             </div>
             <div style="margin:4px;padding:4px;border:thin dotted #808080">
@@ -357,10 +357,8 @@
 
             </div>
         </xf:group>
--->
 
         <xf:group ref="instance()" appearance="full" id="eventListener" class="xfFullGroup">
-<!--
             <xf:group ref="group[1]" id="groupWithEventListener">
                 <xf:action ev:event="customEvent">
                     <xf:message>custom event arrived</xf:message>
@@ -373,14 +371,12 @@
                 </p>
                 <span>Group with to labels listening to custom event 'customEvent'</span>
             </xf:group>
--->
 
             <hr/>
             <!--################### SELECT1 SAMPLES #############################-->
             <!--################### SELECT1 SAMPLES #############################-->
             <!--################### SELECT1 SAMPLES #############################-->
-<!--
-            <xf:select1 ref="select1[1]/value" id="colorselecter" incremental="false">
+<!--            <xf:select1 ref="select1[1]/value" id="colorselecter" incremental="false">
                 <xf:label>Select1 minimal</xf:label>
                 <xf:itemset nodeset="instance('colors')/color">
                     <xf:label ref="name"/>
@@ -428,24 +424,25 @@
                 <xf:label>Select1 full value:</xf:label>
             </xf:output>
 
-            <hr/>
-            &lt;!&ndash;################### SELECT SAMPLES #############################&ndash;&gt;
-            &lt;!&ndash;################### SELECT SAMPLES #############################&ndash;&gt;
-            &lt;!&ndash;################### SELECT SAMPLES #############################&ndash;&gt;
+            <hr/>-->
+            <!--################### SELECT SAMPLES #############################-->
+            <!--################### SELECT SAMPLES #############################-->
+            <!--################### SELECT SAMPLES #############################-->
 
-            <xf:select ref="select[1]/value" appearance="minimal" incremental="true">
+<!--            <xf:select ref="select[1]/value" appearance="minimal" incremental="true">
                 <xf:label>Select minimal</xf:label>
                 <xf:itemset nodeset="instance('colors')/color">
                     <xf:label ref="name"/>
                     <xf:value ref="value"/>
                 </xf:itemset>
-            </xf:select>
-&lt;!&ndash;
+            </xf:select>-->
+<!--
             <xf:output ref="select[1]/value">
                 <xf:label>Select minimal value:</xf:label>
             </xf:output>
-&ndash;&gt;
+-->
 
+<!--
             <xf:select ref="select[1]/value" appearance="full" incremental="false">
                 <xf:label>Select1 full</xf:label>
                 <xf:itemset nodeset="instance('colors')/color">
@@ -459,62 +456,79 @@
             </xf:output>
 
             <hr/>
-            &lt;!&ndash;################### INPUT SAMPLES #############################&ndash;&gt;
-            &lt;!&ndash;################### INPUT SAMPLES #############################&ndash;&gt;
-            &lt;!&ndash;################### INPUT SAMPLES #############################&ndash;&gt;
 -->
-<!--
+            <!--################### INPUT SAMPLES #############################-->
+            <!--################### INPUT SAMPLES #############################-->
+            <!--################### INPUT SAMPLES #############################-->
+            <xf:group>
+                <xf:label>Input Controls</xf:label>
+                <xf:input ref="input[1]/value">
+                    <xf:label ref="../label"/>
+                </xf:input>
 
-            <xf:input ref="input[1]/value">
-                <xf:label ref="../label"/>
-            </xf:input>
-
-            <xf:input ref="input[2]/value">
-                <xf:label ref="../label"/>
-                <xf:alert ref="../alert"/>
-                <xf:action ev:event="xforms-value-changed">
-                    <script type="text/javascript">
-                        console.debug("xforms-value-changed input[2]");
-                    </script>
-                </xf:action>
-            </xf:input>
--->
+                <xf:input ref="input[2]/value">
+                    <xf:label ref="../label"/>
+                    <xf:alert ref="../alert"/>
+                    <xf:action ev:event="xforms-value-changed">
+                        <script type="text/javascript">
+                            console.debug("xforms-value-changed input[2]");
+                        </script>
+                    </xf:action>
+                </xf:input>
 
 
-            <xf:input ref="input[3]/value" appearance="bf:dropdowndate">
-                <xf:label ref="../label"/>
-<!--
-                <xf:alert ref="../alert"/>
-                <xf:hint>
-                    <span class="help-title"><xf:output ref="../hint[1]"/></span>
-                    <span class="help-body"><xf:output ref="../hint[2]"/></span>
-                </xf:hint>
--->
-            </xf:input>
+                <xf:input ref="input[3]/value" appearance="bf:dropdowndate">
+                    <xf:label ref="../label"/>
+    <!--
+                    <xf:alert ref="../alert"/>
+                    <xf:hint>
+                        <span class="help-title"><xf:output ref="../hint[1]"/></span>
+                        <span class="help-body"><xf:output ref="../hint[2]"/></span>
+                    </xf:hint>
+    -->
+                </xf:input>
 
-<!--
 
-            <xf:input ref="input[3]/value" appearance="bf:dropdowndate=-17:-100">
-                <xf:label>dropdowndate bound to the same node as above date control</xf:label>
-                <xf:alert ref="../alert"/>
-                <xf:hint>
-                    <span class="help-title"><xf:output ref="../hint[1]"/></span>
-                    <span class="help-body"><xf:output ref="../hint[2]"/></span>
-                </xf:hint>
-            </xf:input>
--->
-<!--
+                <xf:input ref="input[3]/value" appearance="bf:dropdowndate=-17:-100">
+                    <xf:label>dropdowndate bound to the same node as above date control</xf:label>
+                    <xf:alert ref="../alert"/>
+                    <xf:hint>
+                        <span class="help-title"><xf:output ref="../hint[1]"/></span>
+                        <span class="help-body"><xf:output ref="../hint[2]"/></span>
+                    </xf:hint>
+                </xf:input>
 
-            <xf:input ref="input[4]/value" appearance="iso8601:dd-MM-yyyy">
-                <xf:label ref="../label"/>
-                <xf:alert ref="../alert"/>
-                <xf:hint>input 4 hint</xf:hint>
-            </xf:input>
-            <xf:input ref="input[5]/value">
-                <xf:label ref="../label"/>
-                <xf:alert ref="../alert"/>
-                <xf:hint>input 5 hint</xf:hint>
-            </xf:input>
+                <xf:input ref="input[4]/value" appearance="iso8601:dd-MM-yyyy">
+                    <xf:label ref="../label"/>
+                    <xf:alert ref="../alert"/>
+                    <xf:hint>input 4 hint</xf:hint>
+                </xf:input>
+
+                <xf:input ref="input[5]/value">
+                    <xf:label ref="../label"/>
+                    <xf:alert ref="../alert"/>
+                    <xf:hint>input 5 hint</xf:hint>
+                </xf:input>
+            </xf:group>
+
+            <xf:group>
+                <xf:label>Input Value Controls</xf:label>
+                <xf:output ref="input[1]/value">
+                    <xf:label>Input[1]</xf:label>
+                </xf:output>
+                <xf:output ref="input[2]/value">
+                    <xf:label>Input[2]</xf:label>
+                </xf:output>
+                <xf:output ref="input[3]/value">
+                    <xf:label>Input[3]</xf:label>
+                </xf:output>
+                <xf:output ref="input[4]/value">
+                    <xf:label>Input[4]</xf:label>
+                </xf:output>
+                <xf:output ref="input[5]/value">
+                    <xf:label>Input[5]</xf:label>
+                </xf:output>
+            </xf:group>
 
             <hr/>
 
@@ -532,7 +546,7 @@
                 <xf:label ref="../label"/>
             </xf:output>
             <hr/>
--->
+
 <!--            <xf:textarea ref="textarea[1]/value" mediatype="text/html">
                 <xf:label ref="../label"/>
             </xf:textarea>
