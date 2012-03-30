@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/_base/declare","bf/Alert","dojo/dom-style","dojo/_base/connect","dojo/_base/lang","dojo/dom-class","dijit/registry"],
-    function(declare, Alert,domStyle,connect,lang,domClass,registry){
+define(["dojo/_base/declare","bf/Alert","dojo/dom-style","dojo/_base/connect","dojo/_base/lang","dojo/dom-class","dijit/registry", "dojo/NodeList-fx"],
+    function(declare, Alert,domStyle,connect,lang,domClass,registry,nodeListFx){
         return declare(Alert, {
 
         displayDuration:3000,
@@ -87,7 +87,7 @@ define(["dojo/_base/declare","bf/Alert","dojo/dom-style","dojo/_base/connect","d
             var valueNode = query('.xfValue', dom.byId(id))[0];
             // console.debug("ToolTipAlert._fadeOutAndHide  [id: " + id + " - alertTooltip:" , alertTooltip ,"]");
             var speed = this.hideSpeed;
-            dojo.fadeOut({
+            nodeListFx.fadeOut({
                 node:alertTooltip.domNode,
                 duration:speed,
                 onEnd:function() {

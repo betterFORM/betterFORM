@@ -911,8 +911,8 @@ define(["dojo/_base/declare",
             if(cssToLoad != undefined && cssToLoad != ""){
                 //console.debug("adding Style: ", cssToLoad);
                 var stylesheet1 = document.createElement('style');
-                stylesheet1.setAttribute("type", "text/css");
-                stylesheet1.setAttribute("name", xlinkTarget);
+                domAttr.set(stylesheet1,"type", "text/css");
+                domAttr.set(stylesheet1,"name", xlinkTarget);
                 var head1 = document.getElementsByTagName('head')[0];
                 head1.appendChild(stylesheet1);
                 if (stylesheet1.styleSheet) {   // IE
@@ -932,10 +932,11 @@ define(["dojo/_base/declare",
                     if (styles[i] != undefined && styles[i] != "") {
                         //console.debug("adding Style: ", styles[i]);
                         var stylesheet2 = document.createElement('link');
-                        stylesheet2.setAttribute("rel","stylesheet");
-                        stylesheet2.setAttribute("type","text/css");
-                        stylesheet2.setAttribute("href",styles[i]);
-                        stylesheet2.setAttribute("name",xlinkTarget);
+
+                        domAttr.set(stylesheet1,"rel","stylesheet");
+                        domAttr.set(stylesheet1,"type","text/css");
+                        domAttr.set(stylesheet1,"href",styles[i]);
+                        domAttr.set(stylesheet1,"name",xlinkTarget);
                         head2.appendChild(stylesheet2);
                     }
                 }
@@ -945,8 +946,8 @@ define(["dojo/_base/declare",
             if (inlineJavaScriptToLoad != undefined && inlineJavaScriptToLoad != "") {
                 //console.debug("adding script: ", inlineJavaScriptToLoad);
                 var javascript1 = document.createElement('script');
-                javascript1.setAttribute("type", "text/javascript");
-                javascript1.setAttribute("name", xlinkTarget);
+                domAttr.set(javascript1,"type", "text/javascript");
+                domAttr.set(javascript1,"name", xlinkTarget);
                 var head3 = document.getElementsByTagName('head')[0];
                 head3.appendChild(javascript1);
                 javascript1.text = inlineJavaScriptToLoad;
@@ -960,9 +961,9 @@ define(["dojo/_base/declare",
                     if (scripts[z] != undefined && scripts[z] != "") {
                         //console.debug("adding script: ", scripts[z]);
                         var javascript2 = document.createElement('script');
-                        javascript2.setAttribute("type","text/javascript");
-                        javascript2.setAttribute("src",scripts[z]);
-                        javascript2.setAttribute("name",xlinkTarget);
+                        domAttr.set(javascript2,"type","text/javascript");
+                        domAttr.set(javascript2,"src",scripts[z]);
+                        domAttr.set(javascript2,"name",xlinkTarget);
                         head4.appendChild(javascript2);
                     }
                 }

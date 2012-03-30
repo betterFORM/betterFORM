@@ -22,8 +22,6 @@ define(["dojo/_base/declare",
             monthsArray:null,
 
             postMixInProperties:function() {
-                // this._msg = dojo.i18n.getLocalization("bf", "DropDownDate", this.lang);
-                console.debug("i18n:",resources);
                 this.monthsArray = new Array(resources.january, resources.february, resources.march, resources.april,
                                              resources.may, resources.june, resources.july, resources.august,
                                              resources.september, resources.october, resources.november,

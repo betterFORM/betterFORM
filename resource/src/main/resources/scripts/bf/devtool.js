@@ -2,21 +2,20 @@
  * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
-require(['dojo/_base/declare',"dojo/dom-style","dojo/dom-attr","dojo/_base/connect",dojo/dom-class],
-    function(declare,domStyle,domAttr,connect,domClass){
+require(['dojo/_base/declare',"dojo/dom-style","dojo/dom-attr","dojo/_base/connect","dojo/dom-class","dojo/dnd/Moveable"],
+    function(declare,domStyle,domAttr,connect,domClass,Moveable){
         declare(null, {
 
     /*
         // TODO substitute dojo.fx and dojo.dnd.Moveable requires with new AMD loading
             dojo.require("dojox.fx");
-             dojo.require("dojo.dnd.Moveable");
     */
         });
 
         bf.devtool.inprogress=false;
 
         bf.devtool.toggleLog = function(){
-            var dnd = new dojo.dnd.Moveable(dom.byId("evtLogContainer"));
+            var dnd = new Moveable(dom.byId("evtLogContainer"));
             var evtContainer = dom.byId("evtLogContainer");
             var logStyle = domAttr.get(evtContainer,"style");
             if(logStyle.length != 0 ){
