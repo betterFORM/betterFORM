@@ -870,14 +870,15 @@
 
     <xsl:template name="addLocalScript">
         <script type="text/javascript" defer="defer">
-            require(["dojo/ready", "dojo/parser", "dijit/registry","dojo/dom","bf/XFProcessor","bf/XFormsModelElement"],
-                function(ready, parser, registry, dom, XFProcessor, XFormsModelElement){
+            require(["dojo/ready", "dojo/parser", "dijit/registry", "dijit/Dialog","bf/XFProcessor","bf/XFormsModelElement"],
+                function(ready, parser, registry, XFProcessor, XFormsModelElement){
                     ready(function(){
                         console.debug("ready");
+                        console.debug("parser parse start");
                         parser.parse();
-                        Flux._path = dojo.attr(dom.byId("fluxProcessor"), "contextroot") + "/Flux";
+                        Flux._path = dojo.attr(dojo.byId("fluxProcessor"), "contextroot") + "/Flux";
                         console.debug("calling init");
-                        Flux.init( dojo.attr(dom.byId("fluxProcessor"),"sessionkey"),
+                        Flux.init( dojo.attr(dojo.byId("fluxProcessor"),"sessionkey"),
                                     dojo.hitch(fluxProcessor,fluxProcessor.applyChanges));
                     });
                 }
@@ -888,11 +889,20 @@
 
     <xsl:template name="addDojoImport">
         <xsl:variable name="dojoConfig">
+            has: {
+                "dojo-firebug": <xsl:value-of select="$debug-enabled"/>
+            },
             debugAtAllCosts:<xsl:value-of select="$debug-enabled"/>,
             locale:'<xsl:value-of select="$locale"/>',
             isDebug:<xsl:value-of select="$debug-enabled"/>,
             parseOnLoad:false,
-            async:true
+            async:true,
+            bf:{
+                sessionkey: <xsl:value-of select="$sessionKey"/>,
+                contextroot:<xsl:value-of select="$contextroot"/>,
+                useDOMFocusIN:<xsl:value-of select="$uses-DOMFocusIn"/>,
+                logEvents:<xsl:value-of select="$debug-enabled"/>
+            }
         </xsl:variable>
 
         <xsl:choose>
