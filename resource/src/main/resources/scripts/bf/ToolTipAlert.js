@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/_base/declare","bf/Alert","dojo/dom-style"],
-    function(declare, Alert,domStyle){
+define(["dojo/_base/declare","bf/Alert","dojo/dom-style","dojo/_base/connect"],
+    function(declare, Alert,domStyle,connect){
         return declare(Alert, {
 
         displayDuration:3000,
@@ -28,7 +28,7 @@ define(["dojo/_base/declare","bf/Alert","dojo/dom-style"],
                     alertTooltip = new dijit._MasterTooltip({id:toolTipId});
 
 
-                    dojo.connect(alertTooltip, "onClick", this, dojo.hitch(this, function() {
+                    connect.connect(alertTooltip, "onClick", this, dojo.hitch(this, function() {
                             alertTooltip.hide(valueNode);
                     }));
                 }

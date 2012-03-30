@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior"],
-    function(behavior) {
+define(["dojo/behavior","dojo/_base/connect"],
+    function(behavior,connect) {
 
 
     return {
@@ -17,11 +17,11 @@ define(["dojo/behavior"],
 
             var xfControl = dijit.byId( bf.XFControl.getXfId(n));
 
-            dojo.connect(n,"onkeyup",function(evt){
+            connect.connect(n,"onkeyup",function(evt){
                 xfControl.sendValue(n.value,evt);
             });
 
-            dojo.connect(n,"onblur",function(evt){
+            connect.connect(n,"onblur",function(evt){
                 xfControl.sendValue(n.value, evt);
             });
         }

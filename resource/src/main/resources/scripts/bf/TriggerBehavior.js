@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior"],
-    function(behavior) {
+define(["dojo/behavior","dojo/_base/connect"],
+    function(behavior,connect) {
         return {
 
 
@@ -14,7 +14,7 @@ define(["dojo/behavior"],
 
         '.xfTrigger .xfValue': function(n) {
             var parentId = n.id.substring(0,n.id.lastIndexOf("-"));
-            dojo.connect(n, "onclick", function(){
+            connect.connect(n, "onclick", function(){
                 fluxProcessor.dispatchEvent(parentId);
             });
         }

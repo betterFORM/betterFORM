@@ -1,5 +1,5 @@
-define(["dojo/behavior","dojo/dom-attr"],
-    function(behavior,domAttr) {
+define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect"],
+    function(behavior,domAttr,connect) {
         return {
 
         /*
@@ -13,7 +13,7 @@ define(["dojo/behavior","dojo/dom-attr"],
 
         '.xfRepeat .xfRepeatItem':function(n) {
 
-            dojo.connect(n,"onclick",function(evt){
+            connect.connect(n,"onclick",function(evt){
                 // console.debug("clicked on repeat Item ",n);
                 if(domClass.contains(n, "xfRepeatIndex")){
                     // console.debug("repeat item " + n.id + " allready selected");

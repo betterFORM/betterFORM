@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior","dojo/dom-attr"],
-    function(behavior,domAttr) {
+define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect"],
+    function(behavior,domAttr,connect) {
 
             return {
 
@@ -23,12 +23,12 @@ define(["dojo/behavior","dojo/dom-attr"],
             /*
              if incremental support is needed this eventhandler has to be added for the widget
              */
-            dojo.connect(n,"onchange",function(evt){
+            connect.connect(n,"onchange",function(evt){
                 // console.debug("onchange",n);
                 xfControl.sendValue(n.value,evt);
             });
 
-            dojo.connect(n,"onblur",function(evt){
+            connect.connect(n,"onblur",function(evt){
                 // console.debug("onblur",n);
                 xfControl.sendValue(n.value, evt);
             });
@@ -42,10 +42,10 @@ define(["dojo/behavior","dojo/dom-attr"],
             var xfId = bf.XFControl.getXfId(n);
             var xfControl = dijit.byId(xfId);
 
-            dojo.connect(n,"onblur",function(evt){
+            connect.connect(n,"onblur",function(evt){
                 xfControl.sendValue(n.value, evt);
             });
-            dojo.connect(n,"onchange",function(evt){
+            connect.connect(n,"onchange",function(evt){
                 xfControl.sendValue(n.value,evt);
             });
             require(["bf/Select1ComboBox"], function(Select1ComboBox) {
@@ -71,7 +71,7 @@ define(["dojo/behavior","dojo/dom-attr"],
                 });
             };
     /*
-            dojo.connect(n,"onblur",function(evt){
+            connect.connect(n,"onblur",function(evt){
                 console.debug("handle on blur for select1 full");
                 // xfControl.sendValue(n.value, evt);
             });

@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior"],
-    function(behavior) {
+define(["dojo/behavior","dojo/_base/connect"],
+    function(behavior,connect) {
 
         return {
 
@@ -16,11 +16,11 @@ define(["dojo/behavior"],
             var xfId = bf.XFControl.getXfId(n);
             var xfControl = dijit.byId(xfId);
 
-            dojo.connect(n,"onchange",function(evt){
+            connect.connect(n,"onchange",function(evt){
                 bf.SelectBehavior.selectMinimalSendValue(xfControl, n,evt);
             });
 
-            dojo.connect(n,"onblur",function(evt){
+            connect.connect(n,"onblur",function(evt){
                 bf.SelectBehavior.selectMinimalSendValue(xfControl, n,evt);
             });
 
@@ -34,7 +34,7 @@ define(["dojo/behavior"],
             var xfId = bf.XFControl.getXfId(n);
             var xfControl = dijit.byId(xfId);
 
-            dojo.connect(n,"onchange",function(evt){
+            connect.connect(n,"onchange",function(evt){
                 bf.SelectBehavior.selectFullSendValue(xfControl, n,evt);
             });
 

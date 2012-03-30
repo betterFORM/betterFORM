@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior","dijit/form/HorizontalSlider","dijit/form/HorizontalRuleLabels","dojo/dom-attr"],
-    function(behavior,domAttr) {
+define(["dojo/behavior","dijit/form/HorizontalSlider","dijit/form/HorizontalRuleLabels","dojo/dom-attr","dojo/_base/connect"],
+    function(behavior,domAttr,connect) {
 
         return {
 
@@ -85,7 +85,7 @@ define(["dojo/behavior","dijit/form/HorizontalSlider","dijit/form/HorizontalRule
                 slider.set('readOnly', false);
             };
 
-            dojo.connect(slider, "_setValueAttr", function(/*Number*/ value, /*Boolean?*/ priorityChange) {
+            connect.connect(slider, "_setValueAttr", function(/*Number*/ value, /*Boolean?*/ priorityChange) {
                 if(priorityChange){
                     xfControl.sendValue(value);
                 }

@@ -12,9 +12,10 @@ define(["dojo/_base/declare",
         "dojo/_base/window",
         "dojo/dom-style",
         "dojo/dom-attr",
+        "dojo/_base/connect",
         "dojo/domReady!"], function(declare, XFormsProcessor,ClientServerEvent,
                                     behavior, ControlBehavior, OutputBehavior, InputBehavior,TriggerBehavior,
-                                    dom,query,domClass,win,domStyle,domAttr){
+                                    dom,query,domClass,win,domStyle,domAttr,connect){
     return declare("bf.XFProcessor",XFormsProcessor, {
 
 /**
@@ -72,8 +73,8 @@ define(["dojo/_base/declare",
         // Initialize the clientServerEventQueue for immediately being able to append Elements
         this.clientServerEventQueue = new Array();
         if (this.webtest != 'true') {
-            dojo.connect(window, "onbeforeunload", this, "handleUnload");
-            dojo.connect(window, "onunload", this, "close");
+            connect.connect(window, "onbeforeunload", this, "handleUnload");
+            connect.connect(window, "onunload", this, "close");
         }
         this.skipshutdown = false;
 
