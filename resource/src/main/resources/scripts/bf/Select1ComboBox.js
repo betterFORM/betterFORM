@@ -1,5 +1,5 @@
-define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr"],
-    function(declare, _Widget,domAttr){
+define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class"],
+    function(declare, _Widget,domAttr,domClass){
         return declare(_Widget, {
 
             handleInsertItem:function(contextInfo) {
@@ -13,7 +13,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr"],
                     var item = undefined;
                     if(position == 1){
                         item = dojo.create("option", {id:generatedItemId}, referenzedNode, "before");
-                        dojoAttr.set(item, "data-bf-itemset", itemsetId);
+                        domAttr.set(item, "data-bf-itemset", itemsetId);
                         dojo.removeAttr(referenzedNode, "data-bf-itemset");
                     }
                     else {
@@ -57,7 +57,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr"],
                 if(targetName == "label" && option){
                     option.innerHTML = contextInfo.value;
                 }else if(targetName == "value" && option){
-                    dojoAttr.set(option,"value",contextInfo.value);
+                    domAttr.set(option,"value",contextInfo.value);
                 }else {
                     console.warn("OptGroup.handleStateChanged: no action taken for contextInfo: ",contextInfo);
                 }

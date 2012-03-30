@@ -1,5 +1,5 @@
-define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect"],
-    function(behavior,domAttr,connect) {
+define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dojo/dom-class"],
+    function(behavior,domAttr,connect,domClass) {
         return {
 
         /*

@@ -14,9 +14,10 @@ define(["dojo/_base/declare",
         "dojo/dom-attr",
         "dojo/_base/connect",
         "dojo/_base/lang",
+        "dojo/dom-construct",
         "dojo/domReady!"], function(declare, XFormsProcessor,ClientServerEvent,
                                     behavior, ControlBehavior, OutputBehavior, InputBehavior,TriggerBehavior,
-                                    dom,query,domClass,win,domStyle,domAttr,connect,lang){
+                                    dom,query,domClass,win,domStyle,domAttr,connect,lang,domConstruct){
     return declare("bf.XFProcessor",XFormsProcessor, {
 
 /**
@@ -151,8 +152,9 @@ define(["dojo/_base/declare",
         console.debug("setToolTipAlertHandler");
         // this.hideAllCommonChilds(win.body());
         this.unsubscribeFromAlertHandler();
-        dojo.require("bf.ToolTipAlert");
-        this.defaultAlertHandler = new bf.ToolTipAlert({});
+        // TODO: Lars: new implementation needed
+        // dojo.require("bf.ToolTipAlert");
+        // this.defaultAlertHandler = new bf.ToolTipAlert({});
         this.subscribers[0] = connect.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
         this.subscribers[1] = connect.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");
         this.showAllCommonChilds(win.body(),"changeAlertType");
@@ -886,7 +888,7 @@ define(["dojo/_base/declare",
 
             // dojo.parser.parse(htmlEntryPoint);
 
-            dojo.place(nodesToEmbed, htmlEntryPoint, "before");
+            domConstruct.place(nodesToEmbed, htmlEntryPoint, "before");
 //            dojo.fx.wipeIn({node: nodesToEmbed,duration: 500}).play();
             domStyle.set(nodesToEmbed,"display","block");
 

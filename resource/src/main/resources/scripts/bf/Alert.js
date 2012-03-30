@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/_base/declare","dojo/_base/window"],
-    function(declare,win){
+define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class"],
+    function(declare,win,domClass){
         return declare(null, {
 
         alert:"alert",

@@ -2,8 +2,8 @@
  * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
-require(['dojo/_base/declare',"dojo/dom-style","dojo/dom-attr","dojo/_base/connect"],
-    function(declare,domStyle,domAttr,connect){
+require(['dojo/_base/declare',"dojo/dom-style","dojo/dom-attr","dojo/_base/connect",dojo/dom-class],
+    function(declare,domStyle,domAttr,connect,domClass){
         declare("bf.devtool", null, {
 
     /*
@@ -67,7 +67,7 @@ require(['dojo/_base/declare',"dojo/dom-style","dojo/dom-attr","dojo/_base/conne
 
         bf.devtool.toggleDebug = function(){
             var debugpane = dom.byId("debug-pane");
-            if(dojo.hasClass(debugpane,"open")){
+            if(domClass.contains(debugpane,"open")){
                 var closeAnim = dojo.animateProperty({
                     node:debugpane,
                     properties: {
@@ -80,8 +80,8 @@ require(['dojo/_base/declare',"dojo/dom-style","dojo/dom-attr","dojo/_base/conne
                     domStyle.set(node,"display", "none");
                 });
                 closeAnim.play();
-                dojo.removeClass(debugpane,"open");
-                dojo.addClass(debugpane,"closed");
+                domClass.remove(debugpane,"open");
+                domClass.add(debugpane,"closed");
 
             }else{
                 domStyle.set(debugpane,"display", "block");
@@ -97,8 +97,8 @@ require(['dojo/_base/declare',"dojo/dom-style","dojo/dom-attr","dojo/_base/conne
 
                 });
                 openAnim.play();
-                dojo.removeClass(debugpane,"closed");
-                dojo.addClass(debugpane,"open");
+                domClass.remove(debugpane,"closed");
+                domClass.add(debugpane,"open");
             }
         }
 });

@@ -1,5 +1,5 @@
-define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr"],
-    function(declare, _Widget,domAttr){
+define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class"],
+    function(declare, _Widget,domAttr,domClass){
         return declare(_Widget, {
             controlId:undefined,
             _onBlur:function() {

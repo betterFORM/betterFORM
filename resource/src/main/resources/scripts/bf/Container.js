@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/_base/declare", "dijit/_Widget"],
-    function(declare, _Widget){
+define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-class"],
+    function(declare, _Widget,domClass){
         return declare(_Widget, {
 
         handleStateChanged:function(contextInfo){

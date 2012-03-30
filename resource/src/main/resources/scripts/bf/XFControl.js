@@ -3,8 +3,9 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo/query","bf/util","dojo/dom-attr","dojo/_base/connect"],
-    function(declare, _Widget, dom, domClass,query,domAttr,connect){
+define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo/query",
+        "dojo/dom-attr","dojo/_base/connect","dojo/dom-construct","bf/util"],
+    function(declare, _Widget, dom, domClass,query,domAttr,connect,domConstruct){
         return declare("bf.XFControl",_Widget, {
 
 
@@ -277,7 +278,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
 
                 this.controlValue.destroy();
                 this.controlValue = fluxProcessor.factory.createWidget(controlValueNode, this.id);
-                dojo.place(this.controlValue.domNode, this.domNode);
+                domConstruct.place(this.controlValue.domNode, this.domNode);
             }
             this.dataType = dataType;
         },

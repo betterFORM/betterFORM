@@ -1,5 +1,5 @@
-define(["dojo/_base/declare","bf/Container","dojo/dom-style","dojo/dom-attr"],
-    function(declare, Container,domStyle,domAttr){
+define(["dojo/_base/declare","bf/Container","dojo/dom-style","dojo/dom-attr","dojo/dom-class","dojo/dom-construct"],
+    function(declare, Container,domStyle,domAttr,domClass){
         return declare(Container, {
 
             handleSetRepeatIndex:function(/*Map*/ contextInfo) {
@@ -192,7 +192,7 @@ define(["dojo/_base/declare","bf/Container","dojo/dom-style","dojo/dom-attr"],
                     } else {
                         targetNode = query("> .xfRepeatItem", this.domNode)[0];
                     }
-                    dojo.place(node, targetNode, "before");
+                    domConstruct.place(node, targetNode, "before");
 
                 } else if (position == 1 && repeatItemCount == 0) {
 
@@ -201,11 +201,11 @@ define(["dojo/_base/declare","bf/Container","dojo/dom-style","dojo/dom-attr"],
                         var tbodyNode = query("tbody", this.domNode)[0];
                         if (tbodyNode == undefined) {
                             tbodyNode = dojo.doc.createElement("tbody");
-                            dojo.place(tbodyNode, this.domNode);
+                            domConstruct.place(tbodyNode, this.domNode);
                         }
-                        dojo.place(node, tbodyNode);
+                        domConstruct.place(node, tbodyNode);
                     } else {
-                        dojo.place(node.domNode, this.domNode);
+                        domConstruct.place(node.domNode, this.domNode);
                     }
 
 
@@ -220,7 +220,7 @@ define(["dojo/_base/declare","bf/Container","dojo/dom-style","dojo/dom-attr"],
                         targetNode = query("> .xfRepeatItem", this.domNode)[position - 2];
                     }
                     // console.debug("RepeatItem._createRepeatItem targetNode: ", targetNode , " repeatItem: ", repeatItemDijit);
-                    dojo.place(node, targetNode, "after");
+                    domConstruct.place(node, targetNode, "after");
                 }
                 // console.debug("RepeatItem._createRepeatItem Insert at Position "+ position + " of  :"+(repeatItemCount+1));
                 return node;

@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/_base/declare","bf/Alert","dojo/dom-style","dojo/_base/connect","dojo/_base/lang"],
-    function(declare, Alert,domStyle,connect,lang){
+define(["dojo/_base/declare","bf/Alert","dojo/dom-style","dojo/_base/connect","dojo/_base/lang","dojo/dom-class"],
+    function(declare, Alert,domStyle,connect,lang,domClass){
         return declare(Alert, {
 
         displayDuration:3000,
