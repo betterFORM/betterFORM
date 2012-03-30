@@ -2,11 +2,13 @@ define(["dojo/_base/declare",
         "dijit/_WidgetBase",
         "dijit/_TemplatedMixin",
         "dojo/text!./DropDownDate.html",
+        "dojo/i18n!bf/nls/DropDownDate",
         "dijit/form/ComboBox",
         "dojo/dom-class",
         "dojo/dom-attr",
-        "dojo/_base/connect"],
-    function(declare, WidgetBase, TemplatedMixin, template,ComboBox,domClass, domAttr,connect){
+        "dojo/_base/connect",
+        "dojo/_base/array"],
+    function(declare, WidgetBase, TemplatedMixin, template,resources, ComboBox,domClass, domAttr,connect,array){
         return declare([WidgetBase, TemplatedMixin], {
 
             templateString: template,
@@ -20,11 +22,12 @@ define(["dojo/_base/declare",
             monthsArray:null,
 
             postMixInProperties:function() {
-                this._msg = dojo.i18n.getLocalization("bf", "DropDownDate", this.lang);
-                this.monthsArray = new Array(this._msg["january"], this._msg["february"], this._msg["march"], this._msg["april"],
-                                             this._msg["may"], this._msg["june"], this._msg["july"], this._msg["august"],
-                                             this._msg["september"], this._msg["october"], this._msg["november"],
-                                             this._msg["december"]);
+                // this._msg = dojo.i18n.getLocalization("bf", "DropDownDate", this.lang);
+                console.debug("i18n:",resources);
+                this.monthsArray = new Array(resources.january, resources.february, resources.march, resources.april,
+                                             resources.may, resources.june, resources.july, resources.august,
+                                             resources.september, resources.october, resources.november,
+                                             resources.december);
                 var rangeStart;
                 var rangeEnd;
                 var now = new Date().getFullYear();
@@ -68,10 +71,10 @@ define(["dojo/_base/declare",
                     "option>17</option><option>18</option><option>19</option><option>20</option><option>21</option><option>22</option><option>23</option><option>24</option><" +
                     "option>25</option><option>26</option><option>27</option><option>28</option><option>29</option><option>30</option><option>31</option></select><" +
                     "select size='1'  data-dojo-attach-point='monthsFacet' class='xfDropDownDateMonths'><option value=''></option><" +
-                    "option value='01'>"+this._msg["january"]+"</option><option value='02'>"+this._msg["february"]+"</option><option value='03'>"+this._msg["march"]+"<" +
-                    "/option><option value='04'>"+this._msg["april"]+"</option><option value='05'>"+this._msg["may"]+"</option><option value='06'>"+this._msg["june"]+"<" +
-                    "/option><option value='07'>"+this._msg["july"]+"</option><option value='08'>"+this._msg["august"]+"</option><option value='09'>"+this._msg["september"]+"<" +
-                    "/option><option value='10'>"+this._msg["october"]+"</option><option value='11'>"+this._msg["november"]+"</option><option value='12'>"+this._msg["december"]+"<" +
+                    "option value='01'>"+resources.january+"</option><option value='02'>"+resources.february+"</option><option value='03'>"+resources.march+"<" +
+                    "/option><option value='04'>"+resources.april+"</option><option value='05'>"+resources.may+"</option><option value='06'>"+resources.june+"<" +
+                    "/option><option value='07'>"+resources.july+"</option><option value='08'>"+resources.august+"</option><option value='09'>"+resources.september+"<" +
+                    "/option><option value='10'>"+resources.october+"</option><option value='11'>"+resources.november+"</option><option value='12'>"+resources.december+"<" +
                     "/option></select><select size='1'  data-dojo-attach-point='yearsFacet' class='xfDropDownDateYears'>";
 
                 var end = "</select></span></div>";
@@ -172,7 +175,7 @@ define(["dojo/_base/declare",
                 } else {
                     var month = this.monthDijit.get("value");
                     if (isNaN(month)) {
-                        value = parseInt(dojo.indexOf(this.monthsArray,month) + 1, "10");
+                        value = parseInt(array.indexOf(this.monthsArray,month) + 1, "10");
                     } else {
                         value = parseInt(month, "10");
                     }

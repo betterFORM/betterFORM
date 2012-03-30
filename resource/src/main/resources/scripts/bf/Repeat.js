@@ -1,5 +1,5 @@
-define(["dojo/_base/declare","bf/Container","dojo/dom-style","dojo/dom-attr","dojo/dom-class","dojo/dom-construct"],
-    function(declare, Container,domStyle,domAttr,domClass){
+define(["dojo/_base/declare","bf/Container","dojo/dom-style","dojo/dom-attr","dojo/dom-class","dojo/dom-construct","dojo/_base/window","dojo/behavior"],
+    function(declare, Container,domStyle,domAttr,domClass,win,behavior){
         return declare(Container, {
 
             handleSetRepeatIndex:function(/*Map*/ contextInfo) {
@@ -58,7 +58,7 @@ define(["dojo/_base/declare","bf/Container","dojo/dom-style","dojo/dom-attr","do
                         }
                     }
                 );
-                dojo.behavior.apply();
+                behavior.apply();
 
                 domStyle.set(repeatItemNode,"display", "block");
                 // console.debug("Inserted new Repeat Item", repeatItemNode);
@@ -200,7 +200,7 @@ define(["dojo/_base/declare","bf/Container","dojo/dom-style","dojo/dom-attr","do
                         // console.debug("RepeatItem._createRepeatItem for CompactRepeat domNode: ", this.domNode);
                         var tbodyNode = query("tbody", this.domNode)[0];
                         if (tbodyNode == undefined) {
-                            tbodyNode = dojo.doc.createElement("tbody");
+                            tbodyNode = win.doc.createElement("tbody");
                             domConstruct.place(tbodyNode, this.domNode);
                         }
                         domConstruct.place(node, tbodyNode);

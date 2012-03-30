@@ -14,7 +14,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
                     if(position == 1){
                         item = domConstruct.create("option", {id:generatedItemId}, referenzedNode, "before");
                         domAttr.set(item, "data-bf-itemset", itemsetId);
-                        dojo.removeAttr(referenzedNode, "data-bf-itemset");
+                        domAttr.remove(referenzedNode, "data-bf-itemset");
                     }
                     else {
                         var option = undefined;

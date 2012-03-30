@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-require(['dojo/_base/declare',"dojo/dom-class","dojo/dom-attr","dijit/registry"],
-    function(declare,domClass,domAttr,registry){
+require(['dojo/_base/declare',"dojo/dom-class","dojo/dom-attr","dijit/registry","dojo/_base/window"],
+    function(declare,domClass,domAttr,registry,win){
         declare("bf.util", null, {
 
         });
@@ -58,7 +58,7 @@ require(['dojo/_base/declare',"dojo/dom-class","dojo/dom-attr","dijit/registry"]
          */
 
         bf.util.getContainerByClass = function(/* node */ node, /*String*/ cssClass ){
-            var body = dojo.body();
+            var body = win.body();
             while(node && node != body && !domClass.contains(node, cssClass)) {
                 node = node.parentNode;
             }

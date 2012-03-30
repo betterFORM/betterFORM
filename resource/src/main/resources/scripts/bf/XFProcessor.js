@@ -17,9 +17,12 @@ define(["dojo/_base/declare",
         "dojo/dom-construct",
         "dojo/_base/array",
         "dijit/registry",
+        "dojo/_base/event",
+        "dojo/has",
+        "dojo/_base/sniff",
         "dojo/domReady!"], function(declare, XFormsProcessor,ClientServerEvent,
                                     behavior, ControlBehavior, OutputBehavior, InputBehavior,TriggerBehavior,
-                                    dom,query,domClass,win,domStyle,domAttr,connect,lang,domConstruct,array,registry){
+                                    dom,query,domClass,win,domStyle,domAttr,connect,lang,domConstruct,array,registry,event,has){
     return declare("bf.XFProcessor",XFormsProcessor, {
 
 /**
@@ -196,7 +199,7 @@ define(["dojo/_base/declare",
     handleUnload:function(evt) {
         console.debug("XFProcessor.handleUnload Event: ", evt);
         if (this.isDirty && !this.skipshutdown) {
-            dojo.stopEvent(evt);
+            event.stopEvent(evt);
             // console.debug(this.unloadMsg);
             // For IE
             evt.returnValue = this.unloadMsg;
@@ -1093,7 +1096,7 @@ define(["dojo/_base/declare",
         }
 
         var widgetID = "widgetid";
-        if (dojo.isIE) {
+        if (has("ie") >= 5) {
             widgetID = "widgetId"
         }
 
@@ -1156,7 +1159,7 @@ define(["dojo/_base/declare",
 /*
 
 
-                    var messageNode = domConstruct.create("div",  null, dojo.body());
+                    var messageNode = domConstruct.create("div",  null, win.body());
                     domAttr.set(messageNode, "title", "Message");
                     dojo.require("dijit.Dialog");
                     var messageDialog = new dijit.Dialog({
