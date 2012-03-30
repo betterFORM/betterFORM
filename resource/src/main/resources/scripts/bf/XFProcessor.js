@@ -15,9 +15,10 @@ define(["dojo/_base/declare",
         "dojo/_base/connect",
         "dojo/_base/lang",
         "dojo/dom-construct",
+        "dojo/_base/array",
         "dojo/domReady!"], function(declare, XFormsProcessor,ClientServerEvent,
                                     behavior, ControlBehavior, OutputBehavior, InputBehavior,TriggerBehavior,
-                                    dom,query,domClass,win,domStyle,domAttr,connect,lang,domConstruct){
+                                    dom,query,domClass,win,domStyle,domAttr,connect,lang,domConstruct,array){
     return declare("bf.XFProcessor",XFormsProcessor, {
 
 /**
@@ -568,7 +569,7 @@ define(["dojo/_base/declare",
             //eventLog writing
             var eventLog = dom.byId("eventLog");
 
-            dojo.forEach(data,
+            array.forEach(data,
                     function(xmlEvent) {
                         // *** DO NOT COMMENT THIS OUT !!! ***
                         console.debug("XFProcessor.applyChanges:", xmlEvent.type, " [", xmlEvent.contextInfo, "]");
@@ -732,7 +733,7 @@ define(["dojo/_base/declare",
 
     _handleValidity:function(validityEvents) {
         console.debug("XFProcessor._handleValidity validityEvents:",validityEvents);
-        dojo.forEach(validityEvents, function(xmlEvent) {
+        array.forEach(validityEvents, function(xmlEvent) {
             var control = dijit.byId(xmlEvent.contextInfo.targetId);
             if (control != undefined) {
                 if (xmlEvent.type == "xforms-valid") {
@@ -1042,7 +1043,7 @@ define(["dojo/_base/declare",
         var styleList = document.getElementsByTagName("style");
         //console.debug("styleList" , styleList);
         if (styleList != undefined) {
-        dojo.forEach(styleList, function(item) {
+        array.forEach(styleList, function(item) {
                 //console.debug("style: ", item);
                 if (item != undefined) {
             if(domAttr.get(item,"name") == target){
@@ -1060,7 +1061,7 @@ define(["dojo/_base/declare",
         var externalStyleList = document.getElementsByTagName("link");
         console.debug("styleList" , externalStyleList);
         if (externalStyleList != undefined) {
-        dojo.forEach(externalStyleList, function(item) {
+        array.forEach(externalStyleList, function(item) {
                 //console.debug("style: ", item);
                 if (item != undefined) {
             if(domAttr.get(item,"name") == target){
@@ -1078,7 +1079,7 @@ define(["dojo/_base/declare",
         var scriptList = document.getElementsByTagName("script");
         //console.debug("scriptList" , scriptList);
         if (scriptList != undefined) {
-            dojo.forEach(scriptList, function(item) {
+            array.forEach(scriptList, function(item) {
                 //console.debug("script: ", item);
                 if (item != undefined) {
                     if(domAttr.get(item,"name") == target){
@@ -1099,7 +1100,7 @@ define(["dojo/_base/declare",
         destroy all child dijits within subform tree
          */
         var widgets = query("*[" + widgetID + "]", htmlEntryPoint);
-        dojo.forEach(widgets,
+        array.forEach(widgets,
                 function(item) {
                     if (item != undefined) {
                         var childDijit = dijit.byId(domAttr.get(item, 'id'));

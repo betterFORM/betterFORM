@@ -1,5 +1,5 @@
-define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dojo/dom-class"],
-    function(behavior,domAttr,connect,domClass) {
+define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dojo/dom-class","dojo/_base/array"],
+    function(behavior,domAttr,connect,domClass,array) {
         return {
 
         /*
@@ -21,7 +21,7 @@ define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dojo/dom-class"],
                 }
                 var repeatItems = n.parentNode.childNodes;
                 // console.debug("repeatItems: ",repeatItems);
-                dojo.forEach(repeatItems,
+                array.forEach(repeatItems,
                     function(entry) {
                         if (domClass.contains(entry, "xfRepeatIndex")) { domClass.remove(entry, "xfRepeatIndex");}
                         if (domClass.contains(entry, "xfRepeatIndexPre")) { domClass.remove(entry, "xfRepeatIndexPre");}
@@ -31,7 +31,7 @@ define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dojo/dom-class"],
                 domAttr.set(n, "selected", "true");
 
                 var position = 0;
-                dojo.forEach(repeatItems,
+                array.forEach(repeatItems,
                     function(entry, index) {
                         if(domAttr.get(entry, "selected") == "true"){
                             entry.removeAttribute("selected");
