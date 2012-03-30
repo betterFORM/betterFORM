@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/_base/declare","bf/Alert","dojo/dom-style"],
-    function(declare, Alert, domStyle){
+define(["dojo/_base/declare","bf/Alert","dojo/dom-style","dijit/registry"],
+    function(declare, Alert, domStyle,registry){
         return declare(Alert, {
 
         // @Override
@@ -70,7 +70,7 @@ define(["dojo/_base/declare","bf/Alert","dojo/dom-style"],
 
         _roundBorders:function(id, state) {
             console.debug("InlineRoundBordersAlert._roundBorders: id:", id + "-value");
-            var controlValue = dijit.byId(id + "-value");
+            var controlValue = registry.byId(id + "-value");
             // console.debug("InlineRoundBordersAlert._roundBorders: value: ", controlValue);
             if (controlValue != undefined) {
                 domStyle.set(controlValue.domNode, "MozBorderRadiusTopright", "8px");
@@ -83,7 +83,7 @@ define(["dojo/_base/declare","bf/Alert","dojo/dom-style"],
 
         _angularBorders:function(id, state) {
             // console.debug("InlineRoundBordersAlert._angularBorders: id:", id + "-value");
-            var controlValue = dijit.byId(id + "-value");
+            var controlValue = registry.byId(id + "-value");
             // console.debug("InlineRoundBordersAlert._angularBorders: value: ", controlValue);
             if (controlValue != undefined) {
                 domStyle.set(controlValue.domNode, "MozBorderRadiusTopright", "0px");

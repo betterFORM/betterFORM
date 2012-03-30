@@ -16,9 +16,10 @@ define(["dojo/_base/declare",
         "dojo/_base/lang",
         "dojo/dom-construct",
         "dojo/_base/array",
+        "dijit/registry",
         "dojo/domReady!"], function(declare, XFormsProcessor,ClientServerEvent,
                                     behavior, ControlBehavior, OutputBehavior, InputBehavior,TriggerBehavior,
-                                    dom,query,domClass,win,domStyle,domAttr,connect,lang,domConstruct,array){
+                                    dom,query,domClass,win,domStyle,domAttr,connect,lang,domConstruct,array,registry){
     return declare("bf.XFProcessor",XFormsProcessor, {
 
 /**
@@ -269,7 +270,7 @@ define(["dojo/_base/declare",
             if(nextPendingClientServerEvent.getCallerFunction() == "setRepeatIndex"){
                 dijitObject = this._getRepeatObject(nextPendingClientServerEvent.getTargetId());
             }else {
-                dijitObject = dijit.byId(nextPendingClientServerEvent.getTargetId());
+                dijitObject = registry.byId(nextPendingClientServerEvent.getTargetId());
             }
 
 
@@ -734,7 +735,7 @@ define(["dojo/_base/declare",
     _handleValidity:function(validityEvents) {
         console.debug("XFProcessor._handleValidity validityEvents:",validityEvents);
         array.forEach(validityEvents, function(xmlEvent) {
-            var control = dijit.byId(xmlEvent.contextInfo.targetId);
+            var control = registry.byId(xmlEvent.contextInfo.targetId);
             if (control != undefined) {
                 if (xmlEvent.type == "xforms-valid") {
                     control.setValid();
@@ -825,7 +826,7 @@ define(["dojo/_base/declare",
         });
         query(".xfRequired", win.body()).forEach(function(control) {
             //if control has no value add CSS class xfRequiredEmpty
-            var xfControl = dijit.byId(control.id);
+            var xfControl = registry.byId(control.id);
             if(xfControl != undefined && xfControl.getControlValue === 'function'){
                 var xfValue = xfControl.getControlValue();
                 if(xfValue == undefined || xfValue == ''){
@@ -1103,13 +1104,13 @@ define(["dojo/_base/declare",
         array.forEach(widgets,
                 function(item) {
                     if (item != undefined) {
-                        var childDijit = dijit.byId(domAttr.get(item, 'id'));
+                        var childDijit = registry.byId(domAttr.get(item, 'id'));
                         if (childDijit != undefined) {
                             // console.debug("XFProcessor._unloadDOM: destroy ", childDijit);
                             childDijit.destroy();
                         } else {
                             // console.debug("XFProcessor._unloadDOM: ChildDijit is null ");
-                            childDijit = dijit.byId(domAttr.get(item, widgetID));
+                            childDijit = registry.byId(domAttr.get(item, widgetID));
                             if (childDijit != undefined) {
                                 childDijit.destroy();
                             }
@@ -1136,8 +1137,8 @@ define(["dojo/_base/declare",
         if (this.webtest != 'true') {
 
             if (level == "ephemeral") {
-                dijit.byId("betterformMessageToaster").setContent(message, 'message');
-                dijit.byId("betterformMessageToaster").show();
+                registry.byId("betterformMessageToaster").setContent(message, 'message');
+                registry.byId("betterformMessageToaster").show();
             }
             else {
                 var exception = xmlEvent.contextInfo.exception;
@@ -1201,8 +1202,8 @@ define(["dojo/_base/declare",
         /*
          var message = "Value for ui control '" + xmlEvent.contextInfo.targetName + "' (id:"+xmlEvent.contextInfo.targetId+") is out of range";
          if(this.webtest != 'true') {
-         dijit.byId("betterformMessageToaster").setContent(message,'message');
-         dijit.byId("betterformMessageToaster").show();
+         registry.byId("betterformMessageToaster").setContent(message,'message');
+         registry.byId("betterformMessageToaster").show();
          }else{
          this.logTestMessage(message);
          }
@@ -1287,8 +1288,8 @@ define(["dojo/_base/declare",
        console.debug("XFProcessor._handleBetterformDialogOpen: targetId: '",xmlEvent.contextInfo.targetId,"' parentId: " , xmlEvent.contextInfo.parentId);
        var xfControlId =xmlEvent.contextInfo.targetId;
        // if XForms Control Dijit allready exists call show on selected control
-       if(dijit.byId(xfControlId) != undefined){
-            dijit.byId(xfControlId).show();
+       if(registry.byId(xfControlId) != undefined){
+            registry.byId(xfControlId).show();
        }else {
             console.error("error during betterform-dialog-show-event: targetId '",xmlEvent.contextInfo.targetId, "', xfControlId: '", xfControlId,"' does not exist");
        }
@@ -1299,8 +1300,8 @@ define(["dojo/_base/declare",
        console.debug("XFProcessor._handleBetterformDialogClose: targetId: '",xmlEvent.contextInfo.targetId,"' parentId: " , xmlEvent.contextInfo.parentId);
        var xfControlId =xmlEvent.contextInfo.targetId;
        // if XForms Control Dijit allready exists call hide on selected control
-       if(dijit.byId(xfControlId) != undefined){
-            dijit.byId(xfControlId).hide();
+       if(registry.byId(xfControlId) != undefined){
+            registry.byId(xfControlId).hide();
        }else {
             console.error("error during betterform-dialog-hide-event: targetId '",xmlEvent.contextInfo.targetId,"' does not exist");
        }
@@ -1323,8 +1324,8 @@ define(["dojo/_base/declare",
                     selectParentId =domAttr.set(parentNode.parentNode.parentNode,"id");
                 }
                 // console.debug("XFProcessor._handleStateChanged: selectParentId: ",selectParentId);
-                if(dijit.byId(selectParentId)) {
-                    dijit.byId(selectParentId).handleStateChanged(xmlEvent.contextInfo);
+                if(registry.byId(selectParentId)) {
+                    registry.byId(selectParentId).handleStateChanged(xmlEvent.contextInfo);
                     return;
                 }
             }
@@ -1365,7 +1366,7 @@ define(["dojo/_base/declare",
         }
         else if (xmlEvent.contextInfo.targetName != undefined && xmlEvent.contextInfo.targetName == "group") {
             // console.debug("XFProcessor._handleBetterFormStateChanged for Group");
-            var group = dijit.byId(xmlEvent.contextInfo.targetId);
+            var group = registry.byId(xmlEvent.contextInfo.targetId);
 
             if (group == undefined && dom.byId(xmlEvent.contextInfo.targetId) != undefined) {
                 // console.debug("creating new Group: ",dom.byId(xmlEvent.contextInfo.targetId));
@@ -1380,7 +1381,7 @@ define(["dojo/_base/declare",
                 if (repeatItemNode != undefined && domClass.contains(repeatItemNode, "xfRepeatItem")) {
                     var repeatNode = repeatItemNode.parentNode;
                     console.debug("repeat: ",repeatNode);
-                    group = dijit.byId(repeatNode.id);
+                    group = registry.byId(repeatNode.id);
                 }
             }
             if (group != undefined) {
@@ -1424,9 +1425,9 @@ define(["dojo/_base/declare",
          * Else If:  XForms Control Dijit allready exists call handleStateChanged on selected control
          *
          * **/
-        else if (dijit.byId(xfControlId) != undefined) {
-            // console.debug("XFProcessor.handleStateChanged on existing Dijit [id: " + xfControlId + ", / object:",dijit.byId(xfControlId),+"]");
-            var xfControlDijit = dijit.byId(xfControlId);
+        else if (registry.byId(xfControlId) != undefined) {
+            // console.debug("XFProcessor.handleStateChanged on existing Dijit [id: " + xfControlId + ", / object:",registry.byId(xfControlId),+"]");
+            var xfControlDijit = registry.byId(xfControlId);
             // console.debug("_handleBetterFormStateChanged: ", xfControlDijit, " xmlEvent.contextInfo:",xmlEvent.contextInfo);
             xfControlDijit.handleStateChanged(xmlEvent.contextInfo);
         }
@@ -1459,7 +1460,7 @@ define(["dojo/_base/declare",
 
         else if (xmlEvent.contextInfo.parentId != undefined && xmlEvent.contextInfo.parentId != "") {
             // console.debug("XFProcessor.handleStateChanged: xmlEvent.contextInfo.parentId = " + xmlEvent.contextInfo.parentId);
-            var parentDijit = dijit.byId(xmlEvent.contextInfo.parentId);
+            var parentDijit = registry.byId(xmlEvent.contextInfo.parentId);
             // parent dijit does exist and executes handleStateChanged
             if (parentDijit != undefined) {
                 // console.debug("XFProcessor.handleStateChanged(ParentDijit" + parentDijit.id + ") no control found, execute handle state change on parent");
@@ -1475,8 +1476,8 @@ define(["dojo/_base/declare",
                 else if (domClass.contains(parentControlNode, "xfSelectorItem")) {
                     // console.debug("XFProcessor.handleStateChanged Target Node does not exist, Parent Control is SelectorItem (ParentSelector:" , parentControlNode , ")");
                     var selectParentId = domAttr.get(parentControlNode.parentNode, "id");
-                    if(dijit.byId(selectParentId)) {
-                        dijit.byId(selectParentId).handleStateChanged(xmlEvent.contextInfo);
+                    if(registry.byId(selectParentId)) {
+                        registry.byId(selectParentId).handleStateChanged(xmlEvent.contextInfo);
                     }else if (parentControlNode){
                         // DIJIT COULD NOT BE FOUND - SEARCH FOR PROTOTYPE SELECT OPTIONS
                         // console.debug("found Selector Item Node: ",parentControlNode);
@@ -1505,7 +1506,7 @@ define(["dojo/_base/declare",
 
 	        var possibleId = xmlEvent.contextInfo.targetId.substring(1,xmlEvent.contextInfo.targetId.length) -2 ;
             var warningMsg = "XFProcessor._handleBetterFormStateChanged: element for dynamic label " + xmlEvent.contextInfo.targetId + ": Control not found ";
-	        var control = dijit.byId("C"+possibleId);
+	        var control = registry.byId("C"+possibleId);
 	        if ((control != undefined) && (control.controlType == "trigger")) {
                 // console.debug("XFProcessor._handleBetterFormStateChanged for dynamic label on trigger control: " ,control, "controlType: ", control.controlType);
 		        xmlEvent.contextInfo.targetId = "C"+(possibleId-1);
@@ -1560,7 +1561,7 @@ define(["dojo/_base/declare",
     //todo: should be moved to a behavior
     _handleBetterFormInsertItemset:function(xmlEvent) {
         console.debug("betterform-insert-itemset [id: '", xmlEvent.contextInfo.targetId, " / contextInfo:",xmlEvent.contextInfo,']' );
-        var selectDijit = dijit.byId(xmlEvent.contextInfo.parentId + "-value");
+        var selectDijit = registry.byId(xmlEvent.contextInfo.parentId + "-value");
         console.debug("betterform-insert-itemset [selectDijit: '", selectDijit ,']' );
 
         if (selectDijit != undefined) {
@@ -1568,9 +1569,9 @@ define(["dojo/_base/declare",
         }
         // OLD CODE
 /*
-        if (dijit.byId(xmlEvent.contextInfo.targetId) != undefined) {
-            // console.debug("betterform-insert-itemset handle Insert [id: '", xmlEvent.contextInfo.targetId, " / dijit:",dijit.byId(xmlEvent.contextInfo.targetId),']' );
-            dijit.byId(xmlEvent.contextInfo.targetId).handleInsert(xmlEvent.contextInfo);
+        if (registry.byId(xmlEvent.contextInfo.targetId) != undefined) {
+            // console.debug("betterform-insert-itemset handle Insert [id: '", xmlEvent.contextInfo.targetId, " / dijit:",registry.byId(xmlEvent.contextInfo.targetId),']' );
+            registry.byId(xmlEvent.contextInfo.targetId).handleInsert(xmlEvent.contextInfo);
         } else {
             var itemsetDOM = dom.byId(xmlEvent.contextInfo.targetId);
             // console.debug("betterform-insert-itemset [id: '", xmlEvent.contextInfo.targetId, " / dom:'",dom.byId(xmlEvent.contextInfo.targetId),"']");
@@ -1614,7 +1615,7 @@ define(["dojo/_base/declare",
     _handleBetterFormItemDeleted:function(xmlEvent) {
         console.debug("handle betterform-item-deleted for ", xmlEvent.contextInfo.targetName, " [id: '", xmlEvent.contextInfo.targetId, "'] xmlEvent:", xmlEvent);
         if (xmlEvent.contextInfo.targetName == "itemset") {
-            var selectDijit = dijit.byId(xmlEvent.contextInfo.parentId + "-value");
+            var selectDijit = registry.byId(xmlEvent.contextInfo.parentId + "-value");
             console.debug("handle betterform-item-deleted [selectDijit: '", selectDijit ,']' );
             if (selectDijit != undefined) {
                 selectDijit.handleDeleteItem(xmlEvent.contextInfo);
@@ -1624,7 +1625,7 @@ define(["dojo/_base/declare",
         // OLD CODE
 /*
         if (xmlEvent.contextInfo.targetName == "itemset") {
-            dijit.byId(xmlEvent.contextInfo.targetId).handleDelete(xmlEvent.contextInfo);
+            registry.byId(xmlEvent.contextInfo.targetId).handleDelete(xmlEvent.contextInfo);
         }
         else if (xmlEvent.contextInfo.targetName == "repeat" || xmlEvent.contextInfo.targetName == "tbody") {
             var repeatObject = _getRepeatObject(xmlEvent);
@@ -1649,7 +1650,7 @@ define(["dojo/_base/declare",
     _getRepeatObject: function (targetId){
         console.debug("XFProcessor._getRepeatObject targetId:",targetId);        
         var repeatElement = query("*[repeatId='" + targetId + "']");
-        var repeatObject = dijit.byId(domAttr.get(repeatElement[0], "id"));
+        var repeatObject = registry.byId(domAttr.get(repeatElement[0], "id"));
         return repeatObject;
     },
 
@@ -1657,8 +1658,8 @@ define(["dojo/_base/declare",
         console.debug("XFProcessor._handleUploadProgressEvent: xmlEvent:",xmlEvent);
         var xfControlId = xmlEvent.contextInfo.targetid;
         // if XForms Control Dijit allready exists call handleStateChanged on selected control
-        if (dijit.byId(xfControlId) != undefined) {
-            dijit.byId(xfControlId).updateProgress(xmlEvent.contextInfo.progress);
+        if (registry.byId(xfControlId) != undefined) {
+            registry.byId(xfControlId).updateProgress(xmlEvent.contextInfo.progress);
         } else {
             console.error("error during upload-progress-event: targetId " + xmlEvent.contextInfo.targetId + " does not exist");
         }
@@ -1668,7 +1669,7 @@ define(["dojo/_base/declare",
         try {
             var targetName = xmlEvent.contextInfo.targetName;
             if (targetName != "group" && targetName != "repeat" && targetName != "switch" && targetName != "case") {
-                var controlToFocus = dijit.byId(xmlEvent.contextInfo.targetId + "-value");
+                var controlToFocus = registry.byId(xmlEvent.contextInfo.targetId + "-value");
                 if(controlToFocus && controlToFocus.focus){
                    controlToFocus.focus();
                 }else if(dom.byId(xmlEvent.contextInfo.targetId)){
@@ -1688,9 +1689,9 @@ define(["dojo/_base/declare",
     _handleDOMFocusIn:function(xmlEvent) {
         console.debug("XFProcessor._handleDOMFocusIn xmlEvent:",xmlEvent);
         xfControlId = xmlEvent.contextInfo.targetId + "-value";
-        if (dijit.byId(xfControlId) != undefined) {
+        if (registry.byId(xfControlId) != undefined) {
         	// console.debug("dom-focus-in-dijit control: ",xfControlId);
-            dijit.byId(xfControlId)._handleDOMFocusIn();
+            registry.byId(xfControlId)._handleDOMFocusIn();
         } else if (dom.byId(xfControlId) != undefined) {
         	// console.debug("dom-focus-in-dojo control: ",xfControlId);
             var domControlValue = dom.byId(xfControlId);
@@ -1704,8 +1705,8 @@ define(["dojo/_base/declare",
         console.debug("XFProcessor._handleXFormsHint xmlEvent:",xmlEvent);
         var xfControlId = xmlEvent.contextInfo.targetId;
         var message = domAttr.get(dom.byId(xfControlId + "-value"), "title");
-        dijit.byId("betterformMessageToaster").setContent(message, 'message');
-        dijit.byId("betterformMessageToaster").show();
+        registry.byId("betterformMessageToaster").setContent(message, 'message');
+        registry.byId("betterformMessageToaster").show();
         if (this.webtest == 'true') {
             //only for testing purposes
             this.logTestMessage(message);
@@ -1731,7 +1732,7 @@ define(["dojo/_base/declare",
 
     _handleSwitchToggled:function(xmlEvent) {
         console.debug("XFProcessor._handleSwitchToggled xmlEvent:", xmlEvent);
-        var tmpSwitch = dijit.byId(xmlEvent.contextInfo.targetId);
+        var tmpSwitch = registry.byId(xmlEvent.contextInfo.targetId);
         if (tmpSwitch == undefined && dom.byId(xmlEvent.contextInfo.targetId) != undefined) {
             // console.debug("create new switch: ", xmlEvent);
             // TODO: Lars: new implementation needed

@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-class"],
-    function(declare, _Widget,domClass){
+define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-class","dijit/registry"],
+    function(declare, _Widget,domClass,registry){
         return declare(_Widget, {
 
         handleStateChanged:function(contextInfo){
@@ -149,7 +149,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-class"],
          _setHint:function( value) {
              console.warn("TBD: Container._setHint value:"+ value);
     /*
-           var hint = dijit.byId(this.target.id + "-hint");
+           var hint = registry.byId(this.target.id + "-hint");
            hint.label = value;
     */
          },

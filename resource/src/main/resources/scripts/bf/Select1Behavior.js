@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect"],
-    function(behavior,domAttr,connect) {
+define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dijit/registry"],
+    function(behavior,domAttr,connect,registry) {
 
             return {
 
@@ -18,7 +18,7 @@ define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect"],
 
         '.xfSelect1.aMinimal .xfValue, .xfSelect1.aDefault .xfValue': function(n) {
             var xfId = bf.XFControl.getXfId(n);
-            var xfControl = dijit.byId(xfId);
+            var xfControl = registry.byId(xfId);
 
             /*
              if incremental support is needed this eventhandler has to be added for the widget
@@ -40,7 +40,7 @@ define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect"],
         },
         '.xfSelect1.aCompact .xfValue': function(n) {
             var xfId = bf.XFControl.getXfId(n);
-            var xfControl = dijit.byId(xfId);
+            var xfControl = registry.byId(xfId);
 
             connect.connect(n,"onblur",function(evt){
                 xfControl.sendValue(n.value, evt);
@@ -55,7 +55,7 @@ define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect"],
         },
         '.xfSelect1.aFull .xfValue': function(n) {
             var xfId = bf.XFControl.getXfId(n);
-            var xfControl = dijit.byId(xfId);
+            var xfControl = registry.byId(xfId);
 
             query(".xfRadioValue", n).forEach(function(radioValue){
                 radioValue.onclick = function(evt) {

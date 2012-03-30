@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior","dojo/_base/connect"],
-    function(behavior,connect) {
+define(["dojo/behavior","dojo/_base/connect","dijit/registry"],
+    function(behavior,connect,registry) {
 
 
     return {
@@ -15,7 +15,7 @@ define(["dojo/behavior","dojo/_base/connect"],
         '.xfSecret .xfValue':function(n){
             console.debug("FOUND: secret input: ",n);
 
-            var xfControl = dijit.byId( bf.XFControl.getXfId(n));
+            var xfControl = registry.byId( bf.XFControl.getXfId(n));
 
             connect.connect(n,"onkeyup",function(evt){
                 xfControl.sendValue(n.value,evt);

@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class"],
-    function(declare,win,domClass){
+define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registry"],
+    function(declare,win,domClass,registry){
         return declare(null, {
 
         alert:"alert",
@@ -18,7 +18,7 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class"],
 
             // console.debug("Alert.handleValid[id:" + id , " action: " + action + "]");
 
-            var control = dijit.byId(id);
+            var control = registry.byId(id);
             if(control == null) {
                 console.warn("control '" +id +"' does not exist");
                 return;
@@ -53,7 +53,7 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class"],
             // console.debug("Alert.handleInvalid [id:" + id , " action: " + action + "]");
 
             //##### SHOW NOTHING ON INIT #######
-            var control = dijit.byId(id);
+            var control = registry.byId(id);
             if(control == null) {
                 console.info("control '" +id +"' does not exist");
                 return;

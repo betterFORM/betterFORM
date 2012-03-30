@@ -3,8 +3,9 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior","dijit/form/HorizontalSlider","dijit/form/HorizontalRuleLabels","dojo/dom-attr","dojo/_base/connect"],
-    function(behavior,domAttr,connect) {
+define(["dojo/behavior","dijit/form/HorizontalSlider","dijit/form/HorizontalRuleLabels",
+        "dojo/dom-attr","dojo/_base/connect","dijit/registry"],
+    function(behavior,domAttr,connect,registry) {
 
         return {
 
@@ -15,7 +16,7 @@ define(["dojo/behavior","dijit/form/HorizontalSlider","dijit/form/HorizontalRule
         '.xfRange.xsdInteger .xfValue':function(n){
             // console.debug("Found xf:range: node:",n);
             var xfId = n.id.substring(0,n.id.lastIndexOf("-"));
-            var xfControl = dijit.byId(xfId);
+            var xfControl = registry.byId(xfId);
 
             var xfValue = domAttr.get(n,"value");
             if (xfValue == "") {

@@ -4,8 +4,8 @@
  */
 
 define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo/query",
-        "dojo/dom-attr","dojo/_base/connect","dojo/dom-construct","bf/util"],
-    function(declare, _Widget, dom, domClass,query,domAttr,connect,domConstruct){
+        "dojo/dom-attr","dojo/_base/connect","dojo/dom-construct","dijit/registry","bf/util"],
+    function(declare, _Widget, dom, domClass,query,domAttr,connect,domConstruct,registry){
         return declare("bf.XFControl",_Widget, {
 
 
@@ -431,7 +431,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
             // Container for storing the hint-node if it exists
             var hintNode = dom.byId(this.id + "-hint");
             // Container for storing the node which contains a title attribute
-            var valueNode = dijit.byId(this.id + "-value");
+            var valueNode = registry.byId(this.id + "-value");
 
             // Value for: Is a title-Attribute availabel at the current DOM-structure
             var titleAttributeFound = false;

@@ -1,5 +1,5 @@
-define(["dojo/behavior","dojo/_base/connect","dojo/dom-attr","bf/util"],
-    function(behavior,connect,domAttr) {
+define(["dojo/behavior","dojo/_base/connect","dojo/dom-attr","dijit/registry","bf/util"],
+    function(behavior,connect,domAttr,registry) {
 /*
  * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
@@ -59,7 +59,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
             with the XForms processor implementation. The concrete native browser or javascript controls are called
             'widgets' in the context of the client side. They are the concrete representations the user interacts with.
              */
-            var xfControlDijit = dijit.byId(xfId);
+            var xfControlDijit = registry.byId(xfId);
 
             /*
             ###########################################################################################
@@ -92,7 +92,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
         '.xfInput.xsdBoolean .xfValue': function(n) {
             console.debug("FOUND: boolean input field: ",n);
             var xfId = n.id.substring(0,n.id.lastIndexOf("-"));
-            var xfControlDijit = dijit.byId(xfId);
+            var xfControlDijit = registry.byId(xfId);
 
             /*
              input type="checkbox" fails to honor readonly attribute and thus is overwritten here. It seems this is
@@ -134,7 +134,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
 
         /*  rendering HTML5 input type="date" control for mobiles and tablets  */
         '.uaMobile .xfInput.xsdDate .xfValue, .uaTablet .xfInput.xsdDate .xfValue': function(n) {
-            var xfControlDijit = dijit.byId(bf.util.getXfId(n));
+            var xfControlDijit = registry.byId(bf.util.getXfId(n));
 
             connect.connect(n,"onkeyup",function(evt){
                 xfControlDijit.sendValue(n.value,evt);
@@ -157,7 +157,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
             console.debug("InputBehaviour: found: .uaDesktop .xfInput.xsdDate .xfValue",n);
 
             var xfId = bf.util.getXfId(n);
-            var xfControlDijit = dijit.byId(xfId);
+            var xfControlDijit = registry.byId(xfId);
             var appearance = domAttr.get(n,"appearance");
             var datePattern;
            if (appearance && appearance.indexOf("iso8601:") != -1) {

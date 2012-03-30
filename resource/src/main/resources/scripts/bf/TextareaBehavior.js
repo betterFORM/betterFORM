@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior","dojo/_base/connect"],
-    function(behavior,connect) {
+define(["dojo/behavior","dojo/_base/connect","dijit/registry"],
+    function(behavior,connect,registry) {
 
         return {
 
@@ -13,7 +13,7 @@ define(["dojo/behavior","dojo/_base/connect"],
         // ############################## TEXTAREA MAPPINGS ############################################################
         // xfControl xfTextarea aDefault xsdString xfEnabled xfReadWrite xfOptional xfValid mediatypeHtml
         '.xfTextarea.mediatypeHtml .xfValue' : function (n) {
-            var xfControl = dijit.byId(bf.XFControl.getXfId(n));
+            var xfControl = registry.byId(bf.XFControl.getXfId(n));
 
             xfControl.setValue = function (value) {
                 n.innerHTML = value;

@@ -1,5 +1,5 @@
-define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","dojo/dom-construct"],
-    function(declare, _Widget,domAttr,domClass,domConstruct){
+define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","dojo/dom-construct","dijit/registry"],
+    function(declare, _Widget,domAttr,domClass,domConstruct,registry){
         return declare(_Widget, {
             controlId:undefined,
             _onBlur:function() {
@@ -15,7 +15,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
                 if(checkedRadioItemValue != undefined) {
                     var evt=new Object();
                     evt.type = "blur";
-                    dijit.byId(this.controlId).sendValue(checkedRadioItemValue,evt);
+                    registry.byId(this.controlId).sendValue(checkedRadioItemValue,evt);
                 }
 
 
@@ -47,7 +47,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
                     domAttr.set(xfSelectorItemValue, "tabindex", "0");
                     var xfControlId = this.controlId;
                     xfSelectorItemValue.onclick = function(evt) {
-                        dijit.byId(xfControlId).sendValue(xfSelectorItemValue.value,evt);
+                        registry.byId(xfControlId).sendValue(xfSelectorItemValue.value,evt);
                     };
 
                     var xfSelectorItemLabel = domConstruct.create("label", {id:generatedItemId+"-label"}, xfSelectorItemValue, "after");

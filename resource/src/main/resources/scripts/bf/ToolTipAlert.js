@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/_base/declare","bf/Alert","dojo/dom-style","dojo/_base/connect","dojo/_base/lang","dojo/dom-class"],
-    function(declare, Alert,domStyle,connect,lang,domClass){
+define(["dojo/_base/declare","bf/Alert","dojo/dom-style","dojo/_base/connect","dojo/_base/lang","dojo/dom-class","dijit/registry"],
+    function(declare, Alert,domStyle,connect,lang,domClass,registry){
         return declare(Alert, {
 
         displayDuration:3000,
@@ -21,7 +21,7 @@ define(["dojo/_base/declare","bf/Alert","dojo/dom-style","dojo/_base/connect","d
                 // console.debug("ToolTipAlert._show: [id:" + id , " commonChildNode: " + commonChildNode + "]");
 
                 var toolTipId = id+"-MasterToolTip-" +commonChild;
-                var alertTooltip = dijit.byId(toolTipId);
+                var alertTooltip = registry.byId(toolTipId);
 
                 var valueNode = query('.xfValue', dom.byId(id))[0];
                 if(alertTooltip == undefined) {
@@ -56,7 +56,7 @@ define(["dojo/_base/declare","bf/Alert","dojo/dom-style","dojo/_base/connect","d
 
             if (commonChildNode != undefined && commonChild == this.alert) {
                 var controlValue = query('.xfValue', dom.byId(id))[0];
-                var alertDijit = dijit.byId(id+"-MasterToolTip-" +commonChild);
+                var alertDijit = registry.byId(id+"-MasterToolTip-" +commonChild);
                 if (alertDijit != undefined && controlValue != undefined) {
                     alertDijit.hide(controlValue);
                 }
@@ -82,7 +82,7 @@ define(["dojo/_base/declare","bf/Alert","dojo/dom-style","dojo/_base/connect","d
 
 
         _fadeOutAndHide:function(id,commonChild) {
-            var alertTooltip = dijit.byId(id+"-MasterToolTip-" +commonChild);
+            var alertTooltip = registry.byId(id+"-MasterToolTip-" +commonChild);
             // No need to check if tooltip exists since this function is only called if (after a check before) it exists
             var valueNode = query('.xfValue', dom.byId(id))[0];
             // console.debug("ToolTipAlert._fadeOutAndHide  [id: " + id + " - alertTooltip:" , alertTooltip ,"]");

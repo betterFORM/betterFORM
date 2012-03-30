@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-require(['dojo/_base/declare',"dojo/dom-class","dojo/dom-attr"],
-    function(declare,domClass,domAttr){
+require(['dojo/_base/declare',"dojo/dom-class","dojo/dom-attr","dijit/registry"],
+    function(declare,domClass,domAttr,registry){
         declare("bf.util", null, {
 
         });
@@ -144,12 +144,12 @@ require(['dojo/_base/declare',"dojo/dom-class","dojo/dom-attr"],
             console.debug("bf.util.closeSelect1 select: ", selectList);
             var id = domAttr.get(selectList[0],"widgetid");
             console.debug("bf.util.closeSelect1 id: ", id);
-            var dijitValue = dijit.byId(id);
+            var dijitValue = registry.byId(id);
             console.debug("bf.util.closeSelect1 dijit: ", dijitValue);
             dijitValue._hideResultList();
             */
             query(".xfSelect1 .dijitComboBox",htmlCase).forEach(
-                dijit.byId(domAttr.get(item, 'widgetid'))._hideResultList()
+                registry.byId(domAttr.get(item, 'widgetid'))._hideResultList()
             );
         };
 

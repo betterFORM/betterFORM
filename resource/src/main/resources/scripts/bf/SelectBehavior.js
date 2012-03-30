@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior","dojo/_base/connect"],
-    function(behavior,connect) {
+define(["dojo/behavior","dojo/_base/connect","dijit/registry"],
+    function(behavior,connect,registry) {
 
         return {
 
@@ -14,7 +14,7 @@ define(["dojo/behavior","dojo/_base/connect"],
 
         '.xfSelect.aMinimal .xfValue, .xfSelect.aDefault .xfValue, .xfSelect.aCompact .xfValue': function(n) {
             var xfId = bf.XFControl.getXfId(n);
-            var xfControl = dijit.byId(xfId);
+            var xfControl = registry.byId(xfId);
 
             connect.connect(n,"onchange",function(evt){
                 bf.SelectBehavior.selectMinimalSendValue(xfControl, n,evt);
@@ -32,7 +32,7 @@ define(["dojo/behavior","dojo/_base/connect"],
         },
         '.xfSelect.aFull .xfValue': function(n) {
             var xfId = bf.XFControl.getXfId(n);
-            var xfControl = dijit.byId(xfId);
+            var xfControl = registry.byId(xfId);
 
             connect.connect(n,"onchange",function(evt){
                 bf.SelectBehavior.selectFullSendValue(xfControl, n,evt);
