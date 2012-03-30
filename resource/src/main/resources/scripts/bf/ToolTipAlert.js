@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/_base/declare","bf/Alert","dojo/dom-style","dojo/_base/connect"],
-    function(declare, Alert,domStyle,connect){
+define(["dojo/_base/declare","bf/Alert","dojo/dom-style","dojo/_base/connect","dojo/_base/lang"],
+    function(declare, Alert,domStyle,connect,lang){
         return declare(Alert, {
 
         displayDuration:3000,
@@ -28,7 +28,7 @@ define(["dojo/_base/declare","bf/Alert","dojo/dom-style","dojo/_base/connect"],
                     alertTooltip = new dijit._MasterTooltip({id:toolTipId});
 
 
-                    connect.connect(alertTooltip, "onClick", this, dojo.hitch(this, function() {
+                    connect.connect(alertTooltip, "onClick", this, lang.hitch(this, function() {
                             alertTooltip.hide(valueNode);
                     }));
                 }
@@ -42,7 +42,7 @@ define(["dojo/_base/declare","bf/Alert","dojo/dom-style","dojo/_base/connect"],
                 domClass.add(valueNode, "bfInvalidControl");
 
     /*        if (action == "applyChanges" && (!controlValueIsEmpty || domClass.contains(controlValue.domNode, "xsdBoolean"))) {
-                setTimeout(dojo.hitch(this,function() {this._fadeOutAndHide(id,commonChild)}),this.displayDuration);
+                setTimeout(lang.hitch(this,function() {this._fadeOutAndHide(id,commonChild)}),this.displayDuration);
               }
     */
             }

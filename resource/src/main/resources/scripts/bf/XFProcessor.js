@@ -13,9 +13,10 @@ define(["dojo/_base/declare",
         "dojo/dom-style",
         "dojo/dom-attr",
         "dojo/_base/connect",
+        "dojo/_base/lang",
         "dojo/domReady!"], function(declare, XFormsProcessor,ClientServerEvent,
                                     behavior, ControlBehavior, OutputBehavior, InputBehavior,TriggerBehavior,
-                                    dom,query,domClass,win,domStyle,domAttr,connect){
+                                    dom,query,domClass,win,domStyle,domAttr,connect,lang){
     return declare("bf.XFProcessor",XFormsProcessor, {
 
 /**
@@ -160,7 +161,7 @@ define(["dojo/_base/declare",
     //todo: move to XFControl?
     // Hide commonChilds 'alert', 'hint', 'info'
     hideAllCommonChilds:function(node) {
-        query(".xfControl", node).forEach(dojo.hitch(this, function(control) {
+        query(".xfControl", node).forEach(lang.hitch(this, function(control) {
             console.debug("hide commonChild for control: ", control);
             this.defaultAlertHandler._displayNone(domAttr.get(control,"id"),"applyChanges");
         }));
@@ -170,7 +171,7 @@ define(["dojo/_base/declare",
    // Show commonChilds 'alert', 'hint', 'info'
     showAllCommonChilds:function(node,event) {
         console.debug("FluxProcessor.showAllCommonChilds");
-        query(".xfControl", node).forEach(dojo.hitch(this, function(control) {
+        query(".xfControl", node).forEach(lang.hitch(this, function(control) {
             // console.debug("hide/show commonChild for control: ", control, " control valid state is:", domClass.contains(control),"xfValid");
             if(domClass.contains(control,"xfValid")){
                 this.defaultAlertHandler.handleValid(domAttr.get(control,"id"),event);
@@ -184,7 +185,7 @@ define(["dojo/_base/declare",
     unsubscribeFromAlertHandler:function() {
         console.debug("XFProcessor.unsubscribeFromAlertHandler");
         for (var i = 0; i < this.subscribers.length; i++) {
-            dojo.unsubscribe(this.subscribers[i]);
+            connect.unsubscribe(this.subscribers[i]);
         }
     },
 
@@ -201,7 +202,7 @@ define(["dojo/_base/declare",
     },
 
     close:function() {
-        var tmpSkipShutdown = dojo.hitch(this, fluxProcessor.skipShutdown).skipshutdown;
+        var tmpSkipShutdown = lang.hitch(this, fluxProcessor.skipShutdown).skipshutdown;
         if (!tmpSkipShutdown) {
             fluxProcessor.closeSession();
         }
@@ -419,9 +420,9 @@ define(["dojo/_base/declare",
             dwr.engine.setErrorHandler(this._handleExceptions);
             dwr.engine.setOrdered(true);
             if (contextInfo == undefined) {
-                Flux.dispatchEventType(targetId, eventType, this.sessionKey, dojo.hitch(this, this.applyChanges));
+                Flux.dispatchEventType(targetId, eventType, this.sessionKey, lang.hitch(this, this.applyChanges));
             } else {
-                Flux.dispatchEventTypeWithContext(targetId, eventType, this.sessionKey, contextInfo, dojo.hitch(this, this.applyChanges));
+                Flux.dispatchEventTypeWithContext(targetId, eventType, this.sessionKey, contextInfo, lang.hitch(this, this.applyChanges));
             }
         }
         catch(ex) {
@@ -1365,8 +1366,9 @@ define(["dojo/_base/declare",
 
             if (group == undefined && dom.byId(xmlEvent.contextInfo.targetId) != undefined) {
                 // console.debug("creating new Group: ",dom.byId(xmlEvent.contextInfo.targetId));
-                dojo.require("betterform.ui.container.Group");
-                group = new betterform.ui.container.Group({}, dom.byId(xmlEvent.contextInfo.targetId));
+                // TODO: Lars: new implementation needed
+                // dojo.require("betterform.ui.container.Group");
+                // group = new betterform.ui.container.Group({}, dom.byId(xmlEvent.contextInfo.targetId));
             }
             /* group markup does not exist in ui, check if targetid references an repeatItem */
             else if (xmlEvent.contextInfo.targetId != undefined) {
@@ -1544,8 +1546,9 @@ define(["dojo/_base/declare",
         if (repeatObject == undefined) {
             // console.debug("XFProcessor._handleBetterFormInsertRepeatItem ",repeatToInsertIntoDOM);
             // console.dirxml(repeatToInsertIntoDOM[0]);
-            dojo.require("betterform.ui.container.Repeat");
-            repeatObject = new betterform.ui.container.Repeat({}, repeatToInsertIntoDOM[0]);
+            // TODO: Lars: new implementation needed
+            // dojo.require("betterform.ui.container.Repeat");
+            // repeatObject = new betterform.ui.container.Repeat({}, repeatToInsertIntoDOM[0]);
         }
         repeatObject.handleInsert(xmlEvent.contextInfo);
 
@@ -1728,8 +1731,9 @@ define(["dojo/_base/declare",
         var tmpSwitch = dijit.byId(xmlEvent.contextInfo.targetId);
         if (tmpSwitch == undefined && dom.byId(xmlEvent.contextInfo.targetId) != undefined) {
             // console.debug("create new switch: ", xmlEvent);
-            dojo.require("betterform.ui.container.Switch");
-            tmpSwitch = new betterform.ui.container.Switch({}, dom.byId(xmlEvent.contextInfo.targetId));
+            // TODO: Lars: new implementation needed
+            // dojo.require("betterform.ui.container.Switch");
+            // tmpSwitch = new betterform.ui.container.Switch({}, dom.byId(xmlEvent.contextInfo.targetId));
         }
         tmpSwitch.toggleCase(xmlEvent.contextInfo);
     },
