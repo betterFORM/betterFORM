@@ -1,7 +1,7 @@
 dojo.provide("bf.Repeat");
 
-define(["dojo/_base/declare","bf/Container"],
-    function(declare, Container){
+define(["dojo/_base/declare","bf/Container","dojo/dom-style","dojo/dom-attr"],
+    function(declare, Container,domStyle,domAttr){
         return declare(Container, {
 
             handleSetRepeatIndex:function(/*Map*/ contextInfo) {
@@ -25,14 +25,14 @@ define(["dojo/_base/declare","bf/Container"],
                 var generatedIds = "";
                 if (contextInfo.prototypeId != undefined) {
                     generatedIds = contextInfo.generatedIds;
-                    dojo.attr(insertedNode, "id", generatedIds[contextInfo.prototypeId]);
+                    domAttr.set(insertedNode, "id", generatedIds[contextInfo.prototypeId]);
                     // replace prototype ids with generated ones
 
                 } else if (contextInfo.repeatedSelects) {
                     generatedIds = contextInfo.repeatedSelects[0].generatedIds;
                     // console.debug("Generated Ids: ", generatedIds);
                     var clonedNodeId = contextInfo.repeatedSelects[0].generatedIds[0];
-                    dojo.attr(insertedNode, "id", clonedNodeId);
+                    domAttr.set(insertedNode, "id", clonedNodeId);
                 }
                 this._replacePrototypeIds(insertedNode, generatedIds);
 
@@ -45,8 +45,8 @@ define(["dojo/_base/declare","bf/Container"],
                 var repeatItemNode = undefined;
                 if (repeatItemExists[0] != null ) {
                     // console.warn("Skipping already present repeatItem: ", repeatItemExists);
-                    // console.debug("repeatItemExists.id: " , dojo.attr(repeatItemExists[0], "id"));
-                    repeatItemNode = dom.byId(dojo.attr(repeatItemExists[0], "id"));
+                    // console.debug("repeatItemExists.id: " , domAttr.get(repeatItemExists[0], "id"));
+                    repeatItemNode = dom.byId(domAttr.get(repeatItemExists[0], "id"));
                 }else {
                     repeatItemNode = this._createRepeatItem(insertedNode, position);
                 }
@@ -62,7 +62,7 @@ define(["dojo/_base/declare","bf/Container"],
                 );
                 dojo.behavior.apply();
 
-                dojo.style(repeatItemNode,"display", "block");
+                domStyle.set(repeatItemNode,"display", "block");
                 // console.debug("Inserted new Repeat Item", repeatItemNode);
             },
 
@@ -131,14 +131,14 @@ define(["dojo/_base/declare","bf/Container"],
 
                 query("*", node).forEach(
                     function(xfNode) {
-                        var idAtt = dojo.attr(xfNode, "id");
-                        var repeatId = dojo.attr(xfNode, "repeatid");
+                        var idAtt = domAttr.get(xfNode, "id");
+                        var repeatId = domAttr.get(xfNode, "repeatid");
                         if (repeatId != undefined && generatedIds[repeatId] != undefined) {
-                            dojo.attr(xfNode, "repeatid", generatedIds[idAtt]);
+                            domAttr.set(xfNode, "repeatid", generatedIds[idAtt]);
                         }
 
                         if (idAtt != undefined && generatedIds[idAtt] != undefined) {
-                            dojo.attr(xfNode, "id", generatedIds[idAtt]);
+                            domAttr.set(xfNode, "id", generatedIds[idAtt]);
                         }
 
                         else if (idAtt != undefined) {
@@ -168,7 +168,7 @@ define(["dojo/_base/declare","bf/Container"],
                             //console.debug("original Id: " + idAtt + " prefix:: " + idPrefix + " appendix:" +idAppendix);;
                             var generatedId = generatedIds[idPrefix] + idAppendix;
                             // console.debug("original Id: " + idAtt + " generatedId: " + generatedId);
-                            dojo.attr(xfNode, "id", generatedId);
+                            domAttr.set(xfNode, "id", generatedId);
                         }
                     }
                 );
@@ -185,7 +185,7 @@ define(["dojo/_base/declare","bf/Container"],
                 }
                 // var repeatItemDijit = new bf.ui.container.RepeatItem({repeatId:this.id,appearance:appearance}, node);
                 // repeatItemDijit.hideRepeatItem();
-                dojo.style(node, "display","none");
+                domStyle.set(node, "display","none");
 
                 var targetNode = null;
                 if (position == 1 && repeatItemCount > 0) {

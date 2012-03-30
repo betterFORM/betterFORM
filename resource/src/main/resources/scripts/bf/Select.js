@@ -1,6 +1,6 @@
 define(["dojo/_base/declare", "dijit/_Widget"],
     function(declare, _Widget){
-        return declare("bf.XFormsProcessor",_Widget, {
+        return declare(_Widget, {
             control:undefined,
 
             _onBlur:function() {

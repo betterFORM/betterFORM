@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior","dijit/form/HorizontalSlider","dijit/form/HorizontalRuleLabels"],
-    function(behavior) {
+define(["dojo/behavior","dijit/form/HorizontalSlider","dijit/form/HorizontalRuleLabels","dojo/dom-attr"],
+    function(behavior,domAttr) {
 
         return {
 
@@ -17,7 +17,7 @@ define(["dojo/behavior","dijit/form/HorizontalSlider","dijit/form/HorizontalRule
             var xfId = n.id.substring(0,n.id.lastIndexOf("-"));
             var xfControl = dijit.byId(xfId);
 
-            var xfValue = dojo.attr(n,"value");
+            var xfValue = domAttr.get(n,"value");
             if (xfValue == "") {
                 xfValue = 0;
             } else {
@@ -25,15 +25,15 @@ define(["dojo/behavior","dijit/form/HorizontalSlider","dijit/form/HorizontalRule
             }
             // console.debug("createRangeSliderWidget: xfValue:",xfValue);
             var start = 0; var end = 10; var step = 1;
-            var minAttr = dojo.attr(n,"min");
+            var minAttr = domAttr.get(n,"min");
             if(minAttr != ""){ start = parseInt(minAttr , "10"); }
-            var maxAttr = dojo.attr(n,"max");
+            var maxAttr = domAttr.get(n,"max");
             if(maxAttr!= ""){
                 end = parseInt(maxAttr , "10");
             } else if (maxAttr == "" && minAttr != "") {
                 end = parseInt(minAttr, "10") + end;
             }
-            var stepAttr = dojo.attr(n,"step");
+            var stepAttr = domAttr.get(n,"step");
 
             if(stepAttr != ""){step = parseInt(stepAttr, "10");}
             if(xfValue > end) {xfValue = end;}

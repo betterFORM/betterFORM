@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/_base/declare","bf/Alert"],
-    function(declare, Alert){
+define(["dojo/_base/declare","bf/Alert","dojo/dom-style"],
+    function(declare, Alert,domStyle){
         return declare(Alert, {
 
         displayDuration:3000,
@@ -36,8 +36,8 @@ define(["dojo/_base/declare","bf/Alert"],
                 // console.debug("ToolTipAlert: controlValueNode:",valueNode);
                 alertTooltip.show(commonChildNode.innerHTML, valueNode);
 
-                dojo.style(alertTooltip.domNode, "opacity", "1");
-                dojo.style(alertTooltip.domNode, "cursor", "pointer");
+                domStyle.set(alertTooltip.domNode, "opacity", "1");
+                domStyle.set(alertTooltip.domNode, "cursor", "pointer");
                 domClass.add(alertTooltip.domNode, "bfToolTipAlert");
                 domClass.add(valueNode, "bfInvalidControl");
 
@@ -73,7 +73,7 @@ define(["dojo/_base/declare","bf/Alert"],
             // console.debug("ToolTipAlert._render [id:'",id,"' commonChild:'", commonChild," ' show:'",show, "']");
             var mip = dom.byId(id + "-" + commonChild);
             if (mip != undefined && mip.innerHTML != '') {
-                dojo.style(mip, "display", show);
+                domStyle.set(mip, "display", show);
             } else {
                 console.info(id + "-" + commonChild + " is not defined for Control " + id);
             }

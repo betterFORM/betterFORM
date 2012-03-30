@@ -10,7 +10,11 @@ define(["dojo/_base/declare",
         "dojo/query",
         "dojo/dom-class",
         "dojo/_base/window",
-        "dojo/domReady!"], function(declare, XFormsProcessor,ClientServerEvent,behavior, ControlBehavior, OutputBehavior, InputBehavior,TriggerBehavior,dom,query,domClass,win){
+        "dojo/dom-style",
+        "dojo/dom-attr",
+        "dojo/domReady!"], function(declare, XFormsProcessor,ClientServerEvent,
+                                    behavior, ControlBehavior, OutputBehavior, InputBehavior,TriggerBehavior,
+                                    dom,query,domClass,win,domStyle,domAttr){
     return declare("bf.XFProcessor",XFormsProcessor, {
 
 /**
@@ -57,7 +61,7 @@ define(["dojo/_base/declare",
         console.debug("FluxProcessor.constructor");
         /*
          var fluxAttribute = function(attribute) {
-         return dojo.attr(dom.byId("fluxProcessor"), attribute);
+         return domAttr.get(dom.byId("fluxProcessor"), attribute);
          };
          */
         // This is used for referencing this object from within ajax-callback-functions
@@ -157,7 +161,7 @@ define(["dojo/_base/declare",
     hideAllCommonChilds:function(node) {
         query(".xfControl", node).forEach(dojo.hitch(this, function(control) {
             console.debug("hide commonChild for control: ", control);
-            this.defaultAlertHandler._displayNone(dojo.attr(control,"id"),"applyChanges");
+            this.defaultAlertHandler._displayNone(domAttr.get(control,"id"),"applyChanges");
         }));
     },
 
@@ -168,9 +172,9 @@ define(["dojo/_base/declare",
         query(".xfControl", node).forEach(dojo.hitch(this, function(control) {
             // console.debug("hide/show commonChild for control: ", control, " control valid state is:", domClass.contains(control),"xfValid");
             if(domClass.contains(control,"xfValid")){
-                this.defaultAlertHandler.handleValid(dojo.attr(control,"id"),event);
+                this.defaultAlertHandler.handleValid(domAttr.get(control,"id"),event);
             }else {
-                this.defaultAlertHandler.handleInvalid(dojo.attr(control,"id"),event);
+                this.defaultAlertHandler.handleInvalid(domAttr.get(control,"id"),event);
             }
         }));
     },
@@ -267,15 +271,15 @@ define(["dojo/_base/declare",
             // console.debug("EventFifoReader dijitObject:",dijitObject, " targetId: ",nextPendingClientServerEvent.getTargetId());
 
             if (dijitObject == null) {
-                console.warn("Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: OBJECT is NULL");
+                console.warn("XFProcessor.eventFifoReader: Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: OBJECT is NULL");
                 continue;
             }
 
             // Test if this dijit-control has an isReadonly() method
-            console.debug("EventFifoReader check if Object is readonly:",dijitObject, " reaondly: ",dijitObject.isReadonly());
+            console.debug("XFProcessor.eventFifoReader: check if Object is readonly:",dijitObject, " reaondly: ",dijitObject.isReadonly());
 
             if (dijitObject && dijitObject.isReadonly()) {
-                console.warn("Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: READ-ONLY");
+                console.warn("XFProcessor.eventFifoReader: Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: READ-ONLY");
                 continue;
             }
 
@@ -287,7 +291,7 @@ define(["dojo/_base/declare",
                     if (this.clientServerEventQueue[0].getTargetId() == nextPendingClientServerEvent.getTargetId()) {
                         // Test if the CallerFunction of the next Event is also setControlValue
                         if (this.clientServerEventQueue[0].getCallerFunction() == "setControlValue") {
-                            console.debug("Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: superseeded by following value-change of same Control");
+                            console.debug("XFProcessor.eventFifoReader: Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: superseeded by following value-change of same Control");
                             continue;
                         }
                         else {
@@ -364,11 +368,11 @@ define(["dojo/_base/declare",
         //insert the new clientServerEvent at the beginning of the Buffer
         this.clientServerEventQueue.push(clientServerEvent);
         switch (clientServerEvent) {
-            case "dispatchEvent":                console.info("FIFO-WRITE: dispatchEvent(" + clientServerEvent.getTargetId() + ")"); break;
-            case "dispatchEventType":        console.info("FIFO-WRITE: dispatchEventType(" + clientServerEvent.getTargetId() + ", " + clientServerEvent.getEventType() + ", " + clientServerEvent.getContextInfo() + ")"); break;
-            case "setControlValue":            console.info("FIFO-WRITE: setControlValue(" + clientServerEvent.getTargetId() + ", " + clientServerEvent.getValue() + ")"); break;
-            case "setRepeatIndex":            console.info("FIFO-WRITE: setRepeatIndex(" + clientServerEvent.getTargetId() + ", " + clientServerEvent.getValue() + ")"); break;
-            default:                                        break;
+            case "dispatchEvent":      console.info("FIFO-WRITE: dispatchEvent(" + clientServerEvent.getTargetId() + ")"); break;
+            case "dispatchEventType":  console.info("FIFO-WRITE: dispatchEventType(" + clientServerEvent.getTargetId() + ", " + clientServerEvent.getEventType() + ", " + clientServerEvent.getContextInfo() + ")"); break;
+            case "setControlValue":    console.info("FIFO-WRITE: setControlValue(" + clientServerEvent.getTargetId() + ", " + clientServerEvent.getValue() + ")"); break;
+            case "setRepeatIndex":     console.info("FIFO-WRITE: setRepeatIndex(" + clientServerEvent.getTargetId() + ", " + clientServerEvent.getValue() + ")"); break;
+            default:                   break;
         }
         //schedule the next try for reading the next pending Event of the FIFO-Buffer
         clearTimeout(this.fifoReaderTimer);
@@ -691,7 +695,7 @@ define(["dojo/_base/declare",
 
     _handleAVTChanged:function(xmlEvent){
         console.debug("XFProcessor._handleAVTChanged xmlEvent:",xmlEvent);
-        dojo.attr(xmlEvent.contextInfo.targetId,xmlEvent.contextInfo.attribute,xmlEvent.contextInfo.value);
+        domAttr.set(xmlEvent.contextInfo.targetId, xmlEvent.contextInfo.attribute, xmlEvent.contextInfo.value);
     },
 
     _handleInstanceCreated:function(xmlEvent){
@@ -702,11 +706,11 @@ define(["dojo/_base/declare",
         var debugPane = dom.byId("debug-pane-links");
 
         if(debugPane != null){
-            var contextroot = dojo.attr(dom.byId("debug-pane"),"context");
+            var contextroot = domAttr.get(dom.byId("debug-pane"),"context");
             var newLink = document.createElement("a");
-            dojo.attr(newLink,"href",contextroot + xmlEvent.contextInfo.modelId + "/" + xmlEvent.contextInfo.instanceId);
-            dojo.attr(newLink,"target","_blank");
-            dojo.attr(newLink,"modelId",xmlEvent.contextInfo.modelId);
+            domAttr.set(newLink,"href",contextroot + xmlEvent.contextInfo.modelId + "/" + xmlEvent.contextInfo.instanceId);
+            domAttr.set(newLink,"target","_blank");
+            domAttr.set(newLink,"modelId",xmlEvent.contextInfo.modelId);
             var linkText = document.createTextNode("Model:" + xmlEvent.contextInfo.modelId + " :: " + "Instance:" + xmlEvent.contextInfo.instanceId);
             newLink.appendChild(linkText);
             debugPane.appendChild(newLink);
@@ -812,7 +816,7 @@ define(["dojo/_base/declare",
         console.warn("xforms-submit-error at ", xmlEvent.contextInfo);
         query(".xfInvalid", win.body()).forEach(function(control) {
             // console.debug("_handleSubmitError: invalid control: ", control);
-            dojo.publish("/xf/invalid", [dojo.attr(control, "id"),"submitError"]);
+            dojo.publish("/xf/invalid", [domAttr.get(control, "id"),"submitError"]);
         });
         query(".xfRequired", win.body()).forEach(function(control) {
             //if control has no value add CSS class xfRequiredEmpty
@@ -871,7 +875,7 @@ define(["dojo/_base/declare",
             //get original Element in master DOM
             var htmlEntryPoint = dom.byId(targetid);
             htmlEntryPoint.innerHTML = xmlEvent.contextInfo.targetElement;
-            dojo.attr(htmlEntryPoint, "id", xlinkTarget + "Old");
+            domAttr.set(htmlEntryPoint, "id", xlinkTarget + "Old");
             var nodesToEmbed = dom.byId(targetid);
 
             require("dojo/parser", function(parser){
@@ -882,11 +886,11 @@ define(["dojo/_base/declare",
 
             dojo.place(nodesToEmbed, htmlEntryPoint, "before");
 //            dojo.fx.wipeIn({node: nodesToEmbed,duration: 500}).play();
-            dojo.style(nodesToEmbed,"display","block");
+            domStyle.set(nodesToEmbed,"display","block");
 
             //copy classes from mountpoint
-            var classes = dojo.attr(htmlEntryPoint, "class");
-            dojo.attr(nodesToEmbed, "class", classes);
+            var classes = domAttr.get(htmlEntryPoint, "class");
+            domAttr.set(nodesToEmbed, "class", classes);
             htmlEntryPoint.parentNode.removeChild(htmlEntryPoint);
 
             // finally dynamically load the CSS (if some) form the embedded form
@@ -1037,7 +1041,7 @@ define(["dojo/_base/declare",
         dojo.forEach(styleList, function(item) {
                 //console.debug("style: ", item);
                 if (item != undefined) {
-            if(dojo.attr(item,"name") == target){
+            if(domAttr.get(item,"name") == target){
                         //console.debug("removing style: ", item);
                         //console.debug("parentNode: ", item.parentNode);
                 item.parentNode.removeChild(item);
@@ -1055,7 +1059,7 @@ define(["dojo/_base/declare",
         dojo.forEach(externalStyleList, function(item) {
                 //console.debug("style: ", item);
                 if (item != undefined) {
-            if(dojo.attr(item,"name") == target){
+            if(domAttr.get(item,"name") == target){
                         console.debug("removing style: ", item);
                         console.debug("parentNode: ", item.parentNode);
                 item.parentNode.removeChild(item);
@@ -1073,7 +1077,7 @@ define(["dojo/_base/declare",
             dojo.forEach(scriptList, function(item) {
                 //console.debug("script: ", item);
                 if (item != undefined) {
-                    if(dojo.attr(item,"name") == target){
+                    if(domAttr.get(item,"name") == target){
                         //console.debug("removing: ", item);
                         //console.debug("parentNode: ", item.parentNode);
                         item.parentNode.removeChild(item);
@@ -1094,13 +1098,13 @@ define(["dojo/_base/declare",
         dojo.forEach(widgets,
                 function(item) {
                     if (item != undefined) {
-                        var childDijit = dijit.byId(dojo.attr(item, 'id'));
+                        var childDijit = dijit.byId(domAttr.get(item, 'id'));
                         if (childDijit != undefined) {
                             // console.debug("XFProcessor._unloadDOM: destroy ", childDijit);
                             childDijit.destroy();
                         } else {
                             // console.debug("XFProcessor._unloadDOM: ChildDijit is null ");
-                            childDijit = dijit.byId(dojo.attr(item, widgetID));
+                            childDijit = dijit.byId(domAttr.get(item, widgetID));
                             if (childDijit != undefined) {
                                 childDijit.destroy();
                             }
@@ -1147,7 +1151,7 @@ define(["dojo/_base/declare",
 
 
                     var messageNode = dojo.create("div",  null, dojo.body());
-                    dojo.attr(messageNode, "title", "Message");
+                    domAttr.set(messageNode, "title", "Message");
                     dojo.require("dijit.Dialog");
                     var messageDialog = new dijit.Dialog({
                         title: "Message: ",
@@ -1157,13 +1161,13 @@ define(["dojo/_base/declare",
 
                     var closeBtnWrapper = dojo.create("div", null , messageDialog.domNode);
 
-                    dojo.style(closeBtnWrapper, "position","relative");
-                    dojo.style(closeBtnWrapper, "right","5px");
-                    dojo.style(closeBtnWrapper, "text-align","right");
-                    dojo.style(closeBtnWrapper, "width","40px;");
+                    domStyle.set(closeBtnWrapper, "position","relative");
+                    domStyle.set(closeBtnWrapper, "right","5px");
+                    domStyle.set(closeBtnWrapper, "text-align","right");
+                    domStyle.set(closeBtnWrapper, "width","40px;");
 
                     var emptySpace= dojo.create("div", null , messageDialog.domNode);
-                    dojo.style(emptySpace,"height","10px");
+                    domStyle.set(emptySpace,"height","10px");
                     var closeBtnNode = dojo.create("div", null , closeBtnWrapper);
                     var closeBtnDijit = new dijit.form.Button({label: "OK",
                                                    onClick: function() {
@@ -1309,9 +1313,9 @@ define(["dojo/_base/declare",
             var parentNode = dom.byId(parentId);
             // console.debug("XFProcessor._handleBetterFormStateChanged: parentNode: ",parentNode);
             if (domClass.contains(parentNode, "xfSelectorItem")) {
-                var selectParentId = dojo.attr(parentNode.parentNode, "id");
+                var selectParentId = domAttr.set(parentNode.parentNode, "id");
                 if(domClass.contains(parentNode.parentNode,"xfRadioItemset")){
-                    selectParentId =dojo.attr(parentNode.parentNode.parentNode,"id");
+                    selectParentId =domAttr.set(parentNode.parentNode.parentNode,"id");
                 }
                 // console.debug("XFProcessor._handleStateChanged: selectParentId: ",selectParentId);
                 if(dijit.byId(selectParentId)) {
@@ -1391,7 +1395,7 @@ define(["dojo/_base/declare",
                     var selectItems = query(".xfSelectorItem", select1);
                     var itemSelected = false;
                     for (var i = 0; i < selectItems.length; i++) {
-                        if (dojo.attr(selectItems[i], "id") == selectedItemId) {
+                        if (domAttr.get(selectItems[i], "id") == selectedItemId) {
                             // console.debug("SelectedItem: ", selectItems[i]);
                             select1.selectedIndex = (i);
                             itemSelected = true;
@@ -1464,7 +1468,7 @@ define(["dojo/_base/declare",
                 //  special handling for Select controls, check if parent node is selector item
                 else if (domClass.contains(parentControlNode, "xfSelectorItem")) {
                     // console.debug("XFProcessor.handleStateChanged Target Node does not exist, Parent Control is SelectorItem (ParentSelector:" , parentControlNode , ")");
-                    var selectParentId = dojo.attr(parentControlNode.parentNode, "id");
+                    var selectParentId = domAttr.get(parentControlNode.parentNode, "id");
                     if(dijit.byId(selectParentId)) {
                         dijit.byId(selectParentId).handleStateChanged(xmlEvent.contextInfo);
                     }else if (parentControlNode){
@@ -1476,7 +1480,7 @@ define(["dojo/_base/declare",
                         }
                         else if(xmlEvent.contextInfo.targetName == "value") {
                             // console.debug("Update value of option - value: ",xmlEvent.contextInfo.value);
-                            dojo.attr(parentControlNode,"value",xmlEvent.contextInfo.value);
+                            domAttr.set(parentControlNode,"value",xmlEvent.contextInfo.value);
                         }else {
                             console.warn("XFProcessor betterform-state-changed: : error updating xfSelector item ",xmlEvent.contextInfo);
                         }
@@ -1563,10 +1567,10 @@ define(["dojo/_base/declare",
         } else {
             var itemsetDOM = dom.byId(xmlEvent.contextInfo.targetId);
             // console.debug("betterform-insert-itemset [id: '", xmlEvent.contextInfo.targetId, " / dom:'",dom.byId(xmlEvent.contextInfo.targetId),"']");
-            var itemsetType = dojo.attr(itemsetDOM, "dojoType");
+            var itemsetType = domAttr.get(itemsetDOM, "dojoType");
             // Prototypes don't have a dojoType, search for controlType instead
             if(itemsetType == undefined) {
-                var controlType = dojo.attr(itemsetDOM, "controlType");
+                var controlType = domAttr.get(itemsetDOM, "controlType");
                 if(controlType == "optGroup") {
                     itemsetType = "betterform.ui.select.OptGroup";
                 }
@@ -1638,7 +1642,7 @@ define(["dojo/_base/declare",
     _getRepeatObject: function (targetId){
         console.debug("XFProcessor._getRepeatObject targetId:",targetId);        
         var repeatElement = query("*[repeatId='" + targetId + "']");
-        var repeatObject = dijit.byId(dojo.attr(repeatElement[0], "id"));
+        var repeatObject = dijit.byId(domAttr.get(repeatElement[0], "id"));
         return repeatObject;
     },
 
@@ -1692,7 +1696,7 @@ define(["dojo/_base/declare",
     _handleXFormsHint:function(xmlEvent) {
         console.debug("XFProcessor._handleXFormsHint xmlEvent:",xmlEvent);
         var xfControlId = xmlEvent.contextInfo.targetId;
-        var message = dojo.attr(dom.byId(xfControlId + "-value"), "title");
+        var message = domAttr.get(dom.byId(xfControlId + "-value"), "title");
         dijit.byId("betterformMessageToaster").setContent(message, 'message');
         dijit.byId("betterformMessageToaster").show();
         if (this.webtest == 'true') {
@@ -1765,12 +1769,12 @@ define(["dojo/_base/declare",
         }
 
         var helpText = dom.byId(id + "-help-text");
-        var currentState = dojo.style(helpText,"display");
+        var currentState = domStyle.get(helpText,"display");
 
         if(currentState == "none"){
-            dojo.style(helpText, { "display":"inline-block"});
+            domStyle.set(helpText, "display","inline-block");
         }else{
-            dojo.style(helpText, { "display":"none"});
+            domStyle.set(helpText, "display","none");
         }
         //make sure that the input control at work does not loose the focus
 //        dom.byId(id).focus();

@@ -1,5 +1,5 @@
-define(["dojo/behavior", "bf/XFControl"],
-    function(behavior, XFControl) {
+define(["dojo/behavior", "bf/XFControl","dojo/dom-attr"],
+    function(behavior, XFControl,domAttr) {
 
     /*
     * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
@@ -16,7 +16,7 @@ define(["dojo/behavior", "bf/XFControl"],
          */
         '.xfControl':function(n) {
             console.debug("ControlBehaviour: XFControl found: ",n);
-            var controlId = dojo.attr(n,"id");
+            var controlId = domAttr.get(n,"id");
             new XFControl({
                 id:controlId,
                 controlType:"generic"

@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo/query","bf/util"],
-    function(declare, _Widget, dom, domClass,query){
+define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo/query","bf/util","dojo/dom-attr"],
+    function(declare, _Widget, dom, domClass,query,domAttr){
         return declare("bf.XFControl",_Widget, {
 
 
@@ -253,8 +253,8 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
                     return;
                 }
                 else {
-                    dojo.attr(controlValueTemplate, "dataType", dataType);
-                    dojo.attr(controlValueTemplate, "id", this.id + "-value");
+                    domAttr.set(controlValueTemplate, "dataType", dataType);
+                    domAttr.set(controlValueTemplate, "id", this.id + "-value");
     //                this.controlValue = fluxProcessor.factory.createWidget(controlValueTemplate, this.id);
 
                 }
@@ -263,9 +263,9 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
                 // console.debug("datatype for existing dijit changed this.dataType: " , this.dataType + "  dataType: ", dataType);
 
                 var controlValueNode = document.createElement("span");
-                dojo.attr(controlValueNode, "dataType", dataType);
-                dojo.attr(controlValueNode, "controlType", this.controlType);
-                dojo.attr(controlValueNode, "id", this.id + "-value");
+                domAttr.set(controlValueNode, "dataType", dataType);
+                domAttr.set(controlValueNode, "controlType", this.controlType);
+                domAttr.set(controlValueNode, "id", this.id + "-value");
 
                 domClass.add(controlValueNode, "xfValue");
                 var formerTypeClass = "xsd" + this.dataType.replace(/^[a-z]/, this.dataType.substring(0, 1).toUpperCase());
@@ -289,7 +289,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
                 this.currentValue = value;
                 var valueNode = dom.byId(this.id + "-value");
                 if (valueNode != undefined) {
-                    dojo.attr(valueNode, "value", value);
+                    domAttr.set(valueNode, "value", value);
                 }
                 else {
                     console.error("Failure updating value for Control '" + this.id + "-alert' with value: " + value);
@@ -314,7 +314,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
 
         setReadonly:function() {
             bf.util.replaceClass(this.domNode, "xfReadWrite", "xfReadOnly");
-            dojo.attr(this.getWidget(), "readonly","readonly");
+            domAttr.set(this.getWidget(), "readonly","readonly");
         },
 
         setReadwrite:function() {

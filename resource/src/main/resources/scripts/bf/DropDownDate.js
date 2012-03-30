@@ -3,8 +3,10 @@ define(["dojo/_base/declare",
         "dijit/_TemplatedMixin",
         "dojo/text!./DropDownDate.html",
         "dijit/form/ComboBox",
-        "dojo/dom-class"],
-    function(declare, WidgetBase, TemplatedMixin, template,ComboBox,domClass){
+        "dojo/dom-class",
+        "dojo/dom-attr",
+        "dojo/_base/connect"],
+    function(declare, WidgetBase, TemplatedMixin, template,ComboBox,domClass, domAttr,connect){
         return declare("bf.DropDownDate",[WidgetBase, TemplatedMixin], {
 
             templateString: template,
@@ -112,13 +114,13 @@ define(["dojo/_base/declare",
 
                 // console.debug("DropDownData.postMixInProperties this.daysDijit:",this.daysDijit);
 
-                dojo.attr(this.bfValue, "value", this.value);
+                domAttr.set(this.bfValue, "value", this.value);
                 this.applyValues(this.value);
 
                 // console.debug("postCreate: this.daysDijit:",this.daysDijit);
-                dojo.connect(this.daysDijit, "onChange", this, "onDaysChanged");
-                dojo.connect(this.monthDijit, "onChange", this, "onMonthsChanged");
-                dojo.connect(this.yearDijit, "onChange", this, "onYearsChanged");
+                connect.connect(this.daysDijit, "onChange", this, "onDaysChanged");
+                connect.connect(this.monthDijit, "onChange", this, "onMonthsChanged");
+                connect.connect(this.yearDijit, "onChange", this, "onYearsChanged");
             },
 
             applyValues:function(value) {
@@ -231,7 +233,7 @@ define(["dojo/_base/declare",
             getControlValue:function() {
                 this.value = this.years + "-" + this.months + "-" + this.days;
                 // console.debug("bf.ui.input.DropDownDate.getControlValue currentDate: ", this.value);
-                dojo.attr(this.bfValue, "value", this.value);
+                domAttr.set(this.bfValue, "value", this.value);
                 return this.value;
             },
 

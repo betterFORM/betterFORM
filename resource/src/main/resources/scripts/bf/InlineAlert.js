@@ -2,8 +2,8 @@
  * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
-define(["dojo/_base/declare","bf/Alert"],
-    function(declare, Alert){
+define(["dojo/_base/declare","bf/Alert","dojo/dom-style"],
+    function(declare, Alert,domStyle){
     return declare(Alert, {
 
         // @Override
@@ -34,14 +34,14 @@ define(["dojo/_base/declare","bf/Alert"],
             if (mip != undefined && mip.innerHTML != '') {
                 // add onclick handler to alerts to close them by mouse click
                 if(commonChild == "alert" && show=="inline") {
-                    dojo.style(mip, "cursor", "pointer");
+                    domStyle.set(mip, "cursor", "pointer");
                     mip.onclick = dojo.hitch(this, function(evt) {
                         // console.debug("Alert clicked id: ", id, " commonChild: ", commonChild, " show: " , show);
                         this._hide(id,commonChild);
                        // this._show(id,"hint");
                     });
                 }
-                dojo.style(mip, "display", show);
+                domStyle.set(mip, "display", show);
             } else {
                 console.info(id + "-" + commonChild + " is not defined for Control " + id);
             }

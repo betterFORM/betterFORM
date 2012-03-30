@@ -2,13 +2,14 @@
  * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
-require(['dojo/_base/declare'], function(declare){
+require(['dojo/_base/declare',"dojo/dom-style","dojo/dom-attr"], function(declare,domStyle,domAttr){
     declare("bf.devtool", null, {
 
-        /*
+/*
+    // TODO substitute dojo.fx and dojo.dnd.Moveable requires with new AMD loading
         dojo.require("dojox.fx");
          dojo.require("dojo.dnd.Moveable");
-        */
+*/
     });
 
     bf.devtool.inprogress=false;
@@ -16,11 +17,11 @@ require(['dojo/_base/declare'], function(declare){
     bf.devtool.toggleLog = function(){
         var dnd = new dojo.dnd.Moveable(dom.byId("evtLogContainer"));
         var evtContainer = dom.byId("evtLogContainer");
-        var logStyle = dojo.attr(evtContainer,"style");
+        var logStyle = domAttr.get(evtContainer,"style");
         if(logStyle.length != 0 ){
-            dojo.attr(evtContainer,"style","");
+            domAttr.set(evtContainer,"style","");
         }else{
-            dojo.attr(evtContainer,"style","width:26px;height:26px;overflow:hidden;");
+            domAttr.set(evtContainer,"style","width:26px;height:26px;overflow:hidden;");
 
         }
     };
@@ -35,18 +36,18 @@ require(['dojo/_base/declare'], function(declare){
         var id = node.innerHTML;
         var tNode = dom.byId(id);
         if(tNode !=undefined && bf.devtool.inprogress==false){
-            var currPadding = dojo.style(tNode,"padding");
+            var currPadding = domStyle.get(tNode,"padding");
             console.debug("padding >>> ", currPadding);
             dojox.fx.highlight({
                 node:tNode,
                 color:'#0066FF',
                 duration:1000,
                 onBegin:function(){
-                    dojo.style(tNode,"padding","10px");
+                    domStyle.set(tNode,"padding","10px");
                     bf.devtool.inprogress=true;
                 },
                 onEnd:function(){
-                    dojo.style(tNode,"padding",currPadding);
+                    domStyle.set(tNode,"padding",currPadding);
                     bf.devtool.inprogress=false;
                 }
             }).play();
@@ -55,11 +56,11 @@ require(['dojo/_base/declare'], function(declare){
 
     bf.devtool.toggleEntry=function(node){
         var entry = query(".eventLogTable",node.parentNode)[0];
-        var entryStyle = dojo.attr(entry,"style");
+        var entryStyle = domAttr.get(entry,"style");
         if(entryStyle == undefined || entryStyle.length == 0 ){
-            dojo.style(entry,"display","none");
+            domStyle.set(entry,"display","none");
         }else{
-            dojo.style(entry,"display","");
+            domStyle.set(entry,"display","");
         }
     };
 
@@ -74,15 +75,15 @@ require(['dojo/_base/declare'], function(declare){
                 }
             });
             dojo.connect(closeAnim, "onEnd", function(node){
-                dojo.style(node,"opacity", 0);
-                dojo.style(node,"display", "none");
+                domStyle.set(node,"opacity", 0);
+                domStyle.set(node,"display", "none");
             });
             closeAnim.play();
             dojo.removeClass(debugpane,"open");
             dojo.addClass(debugpane,"closed");
 
         }else{
-            dojo.style(debugpane,"display", "block");
+            domStyle.set(debugpane,"display", "block");
             var openAnim = dojo.animateProperty({
                 node:debugpane,
                 properties: {
@@ -91,7 +92,7 @@ require(['dojo/_base/declare'], function(declare){
                 }
             });
             dojo.connect(openAnim, "onEnd", function(node){
-                dojo.style(node,"opacity", 1.0);
+                domStyle.set(node,"opacity", 1.0);
 
             });
             openAnim.play();

@@ -40,7 +40,7 @@ define(["dojo/behavior","dojo/dom-attr","dijit/registry","bf/util"],
             var xfControl = registry.byId(bf.util.getXfId(n));
 
             //todo: this solution works in FF - others have to be tested
-            //todo: use dojo.style
+            //todo: use domStyle.set
             xfControl.setReadonly = function(){
                 domAttr.set(n,"style","pointer-events:none;cursor:default;")
             };

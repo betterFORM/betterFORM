@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior","bf/Select1"],
-    function(behavior,Select1) {
+define(["dojo/behavior","dojo/dom-attr"],
+    function(behavior,domAttr) {
 
             return {
 
@@ -32,8 +32,10 @@ define(["dojo/behavior","bf/Select1"],
                 // console.debug("onblur",n);
                 xfControl.sendValue(n.value, evt);
             });
+            require(["bf/Select1ComboBox"], function(Select1ComboBox) {
+                new Select1ComboBox({id:n.id}, n);
+            })
 
-            new bf.Select1Minimal({id:n.id}, n);
 
         },
         '.xfSelect1.aCompact .xfValue': function(n) {
@@ -46,9 +48,9 @@ define(["dojo/behavior","bf/Select1"],
             dojo.connect(n,"onchange",function(evt){
                 xfControl.sendValue(n.value,evt);
             });
-
-
-            new bf.Select1Compact({id:n.id}, n);
+            require(["bf/Select1ComboBox"], function(Select1ComboBox) {
+                new Select1ComboBox({id:n.id}, n);
+            });
 
         },
         '.xfSelect1.aFull .xfValue': function(n) {
@@ -64,7 +66,7 @@ define(["dojo/behavior","bf/Select1"],
             xfControl.setValue = function(value) {
                 query(".xfRadioValue", n).forEach(function(radioValue){
                     if(radioValue.value == value){
-                        dojo.attr(radioValue,"checked", true);
+                        domAttr.set(radioValue,"checked", true);
                     }
                 });
             };
@@ -75,9 +77,9 @@ define(["dojo/behavior","bf/Select1"],
             });
     */
 
-
-            new bf.Select1Full({id:n.id,controlId:xfId}, n);
-
+            require(["bf/Select1Radio"], function(Select1Radio) {
+                new Select1Radio({id:n.id,controlId:xfId}, n);
+            });
         }
     }
 });

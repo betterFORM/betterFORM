@@ -1,5 +1,5 @@
-define(["dojo/behavior"],
-    function(behavior) {
+define(["dojo/behavior","dojo/dom-attr"],
+    function(behavior,domAttr) {
         return {
 
         /*
@@ -28,12 +28,12 @@ define(["dojo/behavior"],
                     }
                 );
                 domClass.add(n, "xfRepeatIndexPre");
-                dojo.attr(n, "selected", "true");
+                domAttr.set(n, "selected", "true");
 
                 var position = 0;
                 dojo.forEach(repeatItems,
                     function(entry, index) {
-                        if(dojo.attr(entry, "selected") == "true"){
+                        if(domAttr.get(entry, "selected") == "true"){
                             entry.removeAttribute("selected");
                             position = index + 1;
 
@@ -42,7 +42,7 @@ define(["dojo/behavior"],
                 );
                 // console.debug("Position is: " + position);
                 // console.debug("Repeat Node is: " , n.parentNode);
-                var repeatId = dojo.attr(n.parentNode,"repeatid");
+                var repeatId = domAttr.set(n.parentNode,"repeatid");
                 // console.debug("Repeat Id is: " + repeatId);
 
                 fluxProcessor.setRepeatIndex(repeatId, position);

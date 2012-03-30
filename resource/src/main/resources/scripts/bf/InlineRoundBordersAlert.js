@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/_base/declare","bf/Alert"],
-    function(declare, Alert){
+define(["dojo/_base/declare","bf/Alert","dojo/dom-style"],
+    function(declare, Alert, domStyle){
         return declare(Alert, {
 
         // @Override
@@ -73,10 +73,10 @@ define(["dojo/_base/declare","bf/Alert"],
             var controlValue = dijit.byId(id + "-value");
             // console.debug("InlineRoundBordersAlert._roundBorders: value: ", controlValue);
             if (controlValue != undefined) {
-                dojo.style(controlValue.domNode, "MozBorderRadiusTopright", "8px");
-                dojo.style(controlValue.domNode, "MozBorderRadiusBottomright", "8px");
-                dojo.style(controlValue.domNode, "WebkitBorderTopRightRadius", "8px");
-                dojo.style(controlValue.domNode, "WebkitBorderBottomRightRadius", "8px");
+                domStyle.set(controlValue.domNode, "MozBorderRadiusTopright", "8px");
+                domStyle.set(controlValue.domNode, "MozBorderRadiusBottomright", "8px");
+                domStyle.set(controlValue.domNode, "WebkitBorderTopRightRadius", "8px");
+                domStyle.set(controlValue.domNode, "WebkitBorderBottomRightRadius", "8px");
 
             }
         },
@@ -86,10 +86,10 @@ define(["dojo/_base/declare","bf/Alert"],
             var controlValue = dijit.byId(id + "-value");
             // console.debug("InlineRoundBordersAlert._angularBorders: value: ", controlValue);
             if (controlValue != undefined) {
-                dojo.style(controlValue.domNode, "MozBorderRadiusTopright", "0px");
-                dojo.style(controlValue.domNode, "MozBorderRadiusBottomright", "0px");
-                dojo.style(controlValue.domNode, "WebkitBorderTopRightRadius", "0px");
-                dojo.style(controlValue.domNode, "WebkitBorderBottomRightRadius", "0px");
+                domStyle.set(controlValue.domNode, "MozBorderRadiusTopright", "0px");
+                domStyle.set(controlValue.domNode, "MozBorderRadiusBottomright", "0px");
+                domStyle.set(controlValue.domNode, "WebkitBorderTopRightRadius", "0px");
+                domStyle.set(controlValue.domNode, "WebkitBorderBottomRightRadius", "0px");
             } else {
                 this._roundBorders(state);
             }
