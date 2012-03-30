@@ -1,11 +1,6 @@
 define(["dojo/_base/declare",
         "bf/XFormsProcessor",
         "bf/ClientServerEvent",
-        "dojo/behavior",
-        "bf/ControlBehavior",
-        "bf/OutputBehavior",
-        "bf/InputBehavior",
-        "bf/TriggerBehavior",
         "dojo/dom",
         "dojo/query",
         "dojo/dom-class",
@@ -19,9 +14,7 @@ define(["dojo/_base/declare",
         "dijit/registry",
         "dojo/_base/event",
         "dojo/has",
-        "dojo/_base/sniff",
-        "dojo/domReady!"], function(declare, XFormsProcessor,ClientServerEvent,
-                                    behavior, ControlBehavior, OutputBehavior, InputBehavior,TriggerBehavior,
+        "dojo/_base/sniff"], function(declare, XFormsProcessor,ClientServerEvent,
                                     dom,query,domClass,win,domStyle,domAttr,connect,lang,domConstruct,array,registry,event,has){
     return declare("bf.XFProcessor",XFormsProcessor, {
 
@@ -83,25 +76,6 @@ define(["dojo/_base/declare",
         //#########    ALERT IMPLEMENTATION  #############
         //#########    ALERT IMPLEMENTATION  #############
 /*
-        var globalAlertEnabled = query(".GlobalAlert", win.body())[0];
-        if (globalAlertEnabled != undefined) {
-            dojo.require("bf.GlobalAlert");
-            this.defaultAlertHandler = new bf.GlobalAlert({});
-            console.warn("!! WARNING: GLOBAL ALERT HANDLER NOT IMPLEMENTED YET !!!");
-        }
-
-        var bowlAlertEnabled = query(".BowlAlert", win.body())[0];
-        if (bowlAlertEnabled != undefined) {
-            dojo.require("bf.BowlAlert");
-            this.defaultAlertHandler = new bf.BowlAlert({});
-            console.warn("!! WARNING: BOWL ALERT HANDLER NOT IMPLEMENTED YET !!!");
-        }
-
-        var inlineRoundBordersAlertEnabled = query(".InlineRoundBordersAlert", win.body())[0];
-        if (inlineRoundBordersAlertEnabled != undefined) {
-            this.defaultAlertHandler = new bf.InlineRoundBordersAlert({});
-        }
-
         var toolTipAlertEnabled = query(".ToolTipAlert", win.body())[0];
         if (toolTipAlertEnabled != undefined ) {
             dojo.require("bf.ToolTipAlert");
@@ -109,7 +83,7 @@ define(["dojo/_base/declare",
             // console.debug("Enabled ToolTipAlert Handler ", this.defaultAlertHandler);
         }
 */
-        // TODO: Lars: implement Alerts as behaviour
+        // TODO: Lars: implement Alerts as behavior
 /*
         var inlineAlertEnabled = query(".InlineAlert", win.body())[0];
         if (inlineAlertEnabled != undefined || this.defaultAlertHandler == undefined) {
@@ -684,12 +658,19 @@ define(["dojo/_base/declare",
     },
 
     _buildUI : function(){
-        console.debug("XFProcessor._buildUI ControlBehavior:",ControlBehavior, " InputBehavior:",InputBehavior);
-        behavior.add(ControlBehavior);
-        behavior.add(OutputBehavior);
-        behavior.add(InputBehavior);
-        behavior.add(TriggerBehavior);
-        behavior.apply();
+        require(["dojo/behavior","bf/ControlBehavior","bf/OutputBehavior","bf/InputBehavior","bf/TriggerBehavior","bf/AlertBehavior"],
+            function(behavior,ControlBehavior,OutputBehavior,InputBehavior,TriggerBehavior,AlertBehavior){
+                console.debug("XFProcessor._buildUI ControlBehavior:",ControlBehavior, " InputBehavior:",InputBehavior);
+                behavior.add(ControlBehavior);
+                behavior.add(OutputBehavior);
+                behavior.add(InputBehavior);
+                behavior.add(TriggerBehavior);
+                behavior.add(AlertBehavior);
+
+            });
+        require(["dojo/behavior", "dojo/domReady!"],function(behavior) {
+            behavior.apply();
+        });
     },
 
     _handleAVTChanged:function(xmlEvent){
@@ -1406,7 +1387,7 @@ define(["dojo/_base/declare",
          *
          * **/
 
-        // TODO: old code to initialize controls after insert, happens with "apply behaviour" now
+        // TODO: old code to initialize controls after insert, happens with "apply behavior" now
         /**
         else if (dom.byId(xfControlId) != undefined) {
             // console.debug("XFProcessor.handleStateChanged on existing DOM  [id: " + xfControlId + ", / xmlEvent:",xmlEvent,+"]");

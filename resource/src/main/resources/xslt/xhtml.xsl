@@ -290,7 +290,15 @@
             </xsl:choose>
         </xsl:variable>
 
-        <body class="{$theme} bf {$client-device}">
+        <xsl:variable name="alert">
+            <xsl:choose>
+                <xsl:when test="contains(@class,'ToolTipAlert')">ToolTipAlert</xsl:when>
+                <xsl:otherwise>InlineAlert</xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
+        <body class="{$theme} bf {$client-device} {$alert}">
+            <!-- TODO: Lars: keep original CSS classes on body-->
             <xsl:copy-of select="@*[name() != 'class']"/>
             <xsl:message>Useragent is <xsl:value-of select="$user-agent"/></xsl:message>
             <xsl:message>Client Device: <xsl:value-of select="$client-device"/></xsl:message>
@@ -870,15 +878,15 @@
                 function(ready, dom, XFProcessor, XFormsModelElement){
                     ready(function(){
                         console.debug("ready - new Session with key:", dojo.config.bf.sessionkey);
+                        <!-- create a XForms Processor for the form -->
                         fluxProcessor = new XFProcessor();
+
+                        <!-- initialize DWR -->
                         Flux._path = dojo.config.bf.fluxPath;
                         console.debug("calling init");
                         Flux.init(dojo.config.bf.sessionkey, dojo.hitch(fluxProcessor,fluxProcessor.applyChanges));
-                        <!--
-                        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                        create a XFormsModelElement class for each model in the form
-                        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                        -->
+
+                        <!-- create a XFormsModelElement class for each model in the form -->
                         <xsl:for-each select="//xf:model">
                             <xsl:value-of select="@id"/> = new XFormsModelElement({id:"<xsl:value-of select="@id"/>"});
                         </xsl:for-each>
