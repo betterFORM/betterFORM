@@ -15,7 +15,7 @@ define(["dojo/behavior", "bf/XFControl","dojo/dom-attr"],
          created. Thus this behavior must be loaded before any other control behavior file.
          */
         '.xfControl':function(n) {
-            console.debug("ControlBehaviour: XFControl found: ",n);
+            // console.debug("ControlBehaviour: XFControl found: ",n);
             var controlId = domAttr.get(n,"id");
             new XFControl({
                 id:controlId,

@@ -68,7 +68,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
          sends an updated value of a widget to the server
          */
         sendValue:function(/* String */ value, evt) {
-            console.debug("XFControl: sendValue: currentvalue:", this.currentValue, " - newValue:",value);
+            // console.debug("XFControl: sendValue: currentvalue:", this.currentValue, " - newValue:",value);
             if(this.isReadonly()){
                 console.debug("XFControl sendValue - control is readonly - ignoring event");
                 return;
@@ -498,12 +498,6 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
             return this.widget;
         }
     });
-    bf.XFControl.getXfId = function(/*Node*/n){
-        var tmp = n.id.substring(0,n.id.lastIndexOf("-"));
-        console.debug("returning xfId: ",tmp);
-        return tmp;
-    };
-
 });
 
 

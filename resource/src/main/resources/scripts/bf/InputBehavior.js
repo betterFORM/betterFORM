@@ -45,7 +45,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
 
         // a default input control (TextField) bound to a string
         '.xfInput.xsdString .xfValue': function(n) {
-            console.debug("FOUND: string input field: ",n);
+            // console.debug("FOUND: string input field: ",n);
 
             /*
              ###########################################################################################
@@ -90,7 +90,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
         // ############################## BOOLEAN INPUT ##############################
         // ############################## BOOLEAN INPUT ##############################
         '.xfInput.xsdBoolean .xfValue': function(n) {
-            console.debug("FOUND: boolean input field: ",n);
+            // console.debug("FOUND: boolean input field: ",n);
             var xfId = n.id.substring(0,n.id.lastIndexOf("-"));
             var xfControlDijit = registry.byId(xfId);
 
@@ -101,7 +101,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
              here instead.
              */
             xfControlDijit.setReadonly = function() {
-                console.debug("overwritten checkbox function");
+                // console.debug("overwritten checkbox function");
                 domAttr.set(n, "disabled","disabled");
             };
             xfControlDijit.setReadwrite = function() {
@@ -154,7 +154,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
 
         /*  rendering dijit.formDateTextBox (DropdownDatePicker) for desktop browser */
         '.uaDesktop .xfInput.xsdDate .xfValue':function (n) {
-            console.debug("InputBehaviour: found: .uaDesktop .xfInput.xsdDate .xfValue",n);
+            // console.debug("InputBehaviour: found: .uaDesktop .xfInput.xsdDate .xfValue",n);
 
             var xfId = bf.util.getXfId(n);
             var xfControlDijit = registry.byId(xfId);

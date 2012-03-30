@@ -13,7 +13,7 @@ define(["dojo/behavior","dojo/_base/connect","dijit/registry"],
         // ############################## SELECT MAPPINGS ############################################################
 
         '.xfSelect.aMinimal .xfValue, .xfSelect.aDefault .xfValue, .xfSelect.aCompact .xfValue': function(n) {
-            var xfId = bf.XFControl.getXfId(n);
+            var xfId = bf.util.getXfId(n);
             var xfControl = registry.byId(xfId);
 
             connect.connect(n,"onchange",function(evt){
@@ -31,7 +31,7 @@ define(["dojo/behavior","dojo/_base/connect","dijit/registry"],
             };
         },
         '.xfSelect.aFull .xfValue': function(n) {
-            var xfId = bf.XFControl.getXfId(n);
+            var xfId = bf.util.getXfId(n);
             var xfControl = registry.byId(xfId);
 
             connect.connect(n,"onchange",function(evt){

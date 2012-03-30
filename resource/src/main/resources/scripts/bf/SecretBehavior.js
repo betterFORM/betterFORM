@@ -15,7 +15,7 @@ define(["dojo/behavior","dojo/_base/connect","dijit/registry"],
         '.xfSecret .xfValue':function(n){
             console.debug("FOUND: secret input: ",n);
 
-            var xfControl = registry.byId( bf.XFControl.getXfId(n));
+            var xfControl = registry.byId( bf.util.getXfId(n));
 
             connect.connect(n,"onkeyup",function(evt){
                 xfControl.sendValue(n.value,evt);

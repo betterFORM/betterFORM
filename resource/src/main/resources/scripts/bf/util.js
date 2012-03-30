@@ -155,7 +155,7 @@ require(['dojo/_base/declare',"dojo/dom-class","dojo/dom-attr","dijit/registry",
 
         bf.util.getXfId = function(/*Node*/n){
                 var tmp = n.id.substring(0,n.id.lastIndexOf("-"));
-                console.debug("returning xfId: ",tmp);
+                // console.debug("returning xfId: ",tmp);
                 return tmp;
         };
     }

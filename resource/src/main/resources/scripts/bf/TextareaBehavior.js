@@ -13,7 +13,7 @@ define(["dojo/behavior","dojo/_base/connect","dijit/registry"],
         // ############################## TEXTAREA MAPPINGS ############################################################
         // xfControl xfTextarea aDefault xsdString xfEnabled xfReadWrite xfOptional xfValid mediatypeHtml
         '.xfTextarea.mediatypeHtml .xfValue' : function (n) {
-            var xfControl = registry.byId(bf.XFControl.getXfId(n));
+            var xfControl = registry.byId(bf.util.getXfId(n));
 
             xfControl.setValue = function (value) {
                 n.innerHTML = value;

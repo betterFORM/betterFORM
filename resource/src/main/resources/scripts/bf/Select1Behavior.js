@@ -17,7 +17,7 @@ define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dijit/registry"],
         // ############################## SELECT1 MAPPINGS ############################################################
 
         '.xfSelect1.aMinimal .xfValue, .xfSelect1.aDefault .xfValue': function(n) {
-            var xfId = bf.XFControl.getXfId(n);
+            var xfId = bf.util.getXfId(n);
             var xfControl = registry.byId(xfId);
 
             /*
@@ -39,7 +39,7 @@ define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dijit/registry"],
 
         },
         '.xfSelect1.aCompact .xfValue': function(n) {
-            var xfId = bf.XFControl.getXfId(n);
+            var xfId = bf.util.getXfId(n);
             var xfControl = registry.byId(xfId);
 
             connect.connect(n,"onblur",function(evt){
@@ -54,7 +54,7 @@ define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dijit/registry"],
 
         },
         '.xfSelect1.aFull .xfValue': function(n) {
-            var xfId = bf.XFControl.getXfId(n);
+            var xfId = bf.util.getXfId(n);
             var xfControl = registry.byId(xfId);
 
             query(".xfRadioValue", n).forEach(function(radioValue){

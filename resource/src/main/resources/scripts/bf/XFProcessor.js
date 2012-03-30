@@ -41,7 +41,6 @@ define(["dojo/_base/declare",
     isDirty:false,
     currentControlId:"",
     unloadMsg:"You are about to leave this XForms application",
-    webtest:'@WEBTEST@',//todo: deprecated?
     isReady:false,
     contextroot:"",
     defaultAlertHandler:null,//todo: change to use behavior
@@ -79,10 +78,8 @@ define(["dojo/_base/declare",
 
         // Initialize the clientServerEventQueue for immediately being able to append Elements
         this.clientServerEventQueue = new Array();
-        if (this.webtest != 'true') {
-            connect.connect(window, "onbeforeunload", this, "handleUnload");
-            connect.connect(window, "onunload", this, "close");
-        }
+        connect.connect(window, "onbeforeunload", this, "handleUnload");
+        connect.connect(window, "onunload", this, "close");
         this.skipshutdown = false;
 
         //#########    ALERT IMPLEMENTATION  #############
@@ -554,12 +551,7 @@ define(["dojo/_base/declare",
             console.error(msg, ' - Exception: ', exception);
         } else if (msg != undefined) {
             console.error(msg);
-            if (this.webtest != 'true') {
-                alert(msg);
-            } else {
-                //only for testing purposes
-                this.logTestMessage(xmlEvent.contextInfo.errorinformation);
-            }
+            alert(msg);
         } else {
             console.error("Unknown exception occured! arguments: ", arguments);
         }
@@ -758,13 +750,7 @@ define(["dojo/_base/declare",
     _handleBindingException:function(xmlEvent) {
         //todo: must be reviewed completely
         console.debug("XFProcessor._handleBindingException xmlEvent:",xmlEvent);
-
-        if (this.webtest != 'true') {
-            console.warn("xforms-binding-exception at " + xmlEvent.contextInfo.targetId + " - " + xmlEvent.contextInfo.defaultinfo);
-        } else {
-            //only for testing purposes
-            this.logTestMessage("xforms-binding-exception");
-        }
+        console.warn("xforms-binding-exception at " + xmlEvent.contextInfo.targetId + " - " + xmlEvent.contextInfo.defaultinfo);
     },
 
     /*
@@ -774,12 +760,7 @@ define(["dojo/_base/declare",
      */
     _handleVersionException:function(xmlEvent) {
         //todo: must be reviewed completely
-        if (this.webtest != 'true') {
-            console.error(xmlEvent.contextInfo.errorinformation);
-        } else {
-            //only for testing purposes
-            this.logTestMessage(xmlEvent.contextInfo.errorinformation);
-        }
+        console.error(xmlEvent.contextInfo.errorinformation);
     },
 
     /*
@@ -789,29 +770,24 @@ define(["dojo/_base/declare",
      */
      _handleBetterformException:function(xmlEvent) {
         console.debug("XFProcessor._handleBetterformException xmlEvent:",xmlEvent);
-        if (this.webtest != 'true') {
-            var description = xmlEvent.contextInfo.message;
-            console.error(xmlEvent.contextInfo.message);
-            var exception = dom.byId('betterFORM-exception');
-            var log;
-            var exceptionText;
-            if (!exception) {
-                log = document.createElement('div');
-                log.id = 'betterFORM-exceptionLog';
-                document.body.appendChild(log);
-                exception = document.createElement('exception');
-                exception.id = 'betterFORM-exception';
-                exceptionText = document.createTextNode(description);
-                exception.appendChild(exceptionText);
-                log.appendChild(exception);
-            } else {
-                exception.removeChild(exception.firstChild);
-                exceptionText = document.createTextNode(description);
-                exception.appendChild(exceptionText);
-            }
+        var description = xmlEvent.contextInfo.message;
+        console.error(xmlEvent.contextInfo.message);
+        var exception = dom.byId('betterFORM-exception');
+        var log;
+        var exceptionText;
+        if (!exception) {
+            log = document.createElement('div');
+            log.id = 'betterFORM-exceptionLog';
+            document.body.appendChild(log);
+            exception = document.createElement('exception');
+            exception.id = 'betterFORM-exception';
+            exceptionText = document.createTextNode(description);
+            exception.appendChild(exceptionText);
+            log.appendChild(exception);
         } else {
-            //only for testing purposes
-            fluxProcessor.logTestMessage(xmlEvent.contextInfo.message);
+            exception.removeChild(exception.firstChild);
+            exceptionText = document.createTextNode(description);
+            exception.appendChild(exceptionText);
         }
     },
 
@@ -1138,62 +1114,56 @@ define(["dojo/_base/declare",
         var message = xmlEvent.contextInfo.message;
         var level = xmlEvent.contextInfo.level;
         //console.debug("XFProcessor.handleRenderMessage: message='" + message + "', level='" + level + "'");
-        if (this.webtest != 'true') {
-
-            if (level == "ephemeral") {
-                registry.byId("betterformMessageToaster").setContent(message, 'message');
-                registry.byId("betterformMessageToaster").show();
-            }
-            else {
-                var exception = xmlEvent.contextInfo.exception;
-                if (exception != undefined) {
-                    console.warn("An Exception occured in Facade: ", exception);
-                } else {
-                    alert(message);
-                    // the following code had to be disabled because of focusing problems:
-                    // when dialog is opened by a DOMFocusIn event the behavior of Dialog cause an endless loop
-                    // of focusIn events as the Dialog will send the focus back to the control that had focus before
-                    // opening the Dialog. This effectively causes the page to 'hang'. Focusing can be disabled in
-                    // Dialog but then the original focus will be lost. The standard alert does not have these
-                    // problems.
+        if (level == "ephemeral") {
+            registry.byId("betterformMessageToaster").setContent(message, 'message');
+            registry.byId("betterformMessageToaster").show();
+        }
+        else {
+            var exception = xmlEvent.contextInfo.exception;
+            if (exception != undefined) {
+                console.warn("An Exception occured in Facade: ", exception);
+            } else {
+                alert(message);
+                // the following code had to be disabled because of focusing problems:
+                // when dialog is opened by a DOMFocusIn event the behavior of Dialog cause an endless loop
+                // of focusIn events as the Dialog will send the focus back to the control that had focus before
+                // opening the Dialog. This effectively causes the page to 'hang'. Focusing can be disabled in
+                // Dialog but then the original focus will be lost. The standard alert does not have these
+                // problems.
 
 /*
 
 
-                    var messageNode = domConstruct.create("div",  null, win.body());
-                    domAttr.set(messageNode, "title", "Message");
-                    dojo.require("dijit.Dialog");
-                    var messageDialog = new dijit.Dialog({
-                        title: "Message: ",
-                        content: message
+                var messageNode = domConstruct.create("div",  null, win.body());
+                domAttr.set(messageNode, "title", "Message");
+                dojo.require("dijit.Dialog");
+                var messageDialog = new dijit.Dialog({
+                    title: "Message: ",
+                    content: message
 
-                    }, messageNode);
+                }, messageNode);
 
-                    var closeBtnWrapper = domConstruct.create("div", null , messageDialog.domNode);
+                var closeBtnWrapper = domConstruct.create("div", null , messageDialog.domNode);
 
-                    domStyle.set(closeBtnWrapper, "position","relative");
-                    domStyle.set(closeBtnWrapper, "right","5px");
-                    domStyle.set(closeBtnWrapper, "text-align","right");
-                    domStyle.set(closeBtnWrapper, "width","40px;");
+                domStyle.set(closeBtnWrapper, "position","relative");
+                domStyle.set(closeBtnWrapper, "right","5px");
+                domStyle.set(closeBtnWrapper, "text-align","right");
+                domStyle.set(closeBtnWrapper, "width","40px;");
 
-                    var emptySpace= domConstruct.create("div", null , messageDialog.domNode);
-                    domStyle.set(emptySpace,"height","10px");
-                    var closeBtnNode = domConstruct.create("div", null , closeBtnWrapper);
-                    var closeBtnDijit = new dijit.form.Button({label: "OK",
-                                                   onClick: function() {
-                                                       messageDialog.hide();
-                                                       messageDialog.destroy();
-                                                       dojo.empty(messageNode);
-                                                   }
-                                                },
-                                                closeBtnNode);
-                    messageDialog.show();
+                var emptySpace= domConstruct.create("div", null , messageDialog.domNode);
+                domStyle.set(emptySpace,"height","10px");
+                var closeBtnNode = domConstruct.create("div", null , closeBtnWrapper);
+                var closeBtnDijit = new dijit.form.Button({label: "OK",
+                                               onClick: function() {
+                                                   messageDialog.hide();
+                                                   messageDialog.destroy();
+                                                   dojo.empty(messageNode);
+                                               }
+                                            },
+                                            closeBtnNode);
+                messageDialog.show();
 */
-                }
             }
-        } else {
-            //only for testing purposes
-            this.logTestMessage(message);
         }
     },
 
@@ -1205,12 +1175,8 @@ define(["dojo/_base/declare",
     _handleOutOfRange:function(xmlEvent) {
         /*
          var message = "Value for ui control '" + xmlEvent.contextInfo.targetName + "' (id:"+xmlEvent.contextInfo.targetId+") is out of range";
-         if(this.webtest != 'true') {
          registry.byId("betterformMessageToaster").setContent(message,'message');
          registry.byId("betterformMessageToaster").show();
-         }else{
-         this.logTestMessage(message);
-         }
          */
         var uiControl = dom.byId(xmlEvent.contextInfo.targetId + "-value");
         if (uiControl != undefined) {
@@ -1711,10 +1677,6 @@ define(["dojo/_base/declare",
         var message = domAttr.get(dom.byId(xfControlId + "-value"), "title");
         registry.byId("betterformMessageToaster").setContent(message, 'message');
         registry.byId("betterformMessageToaster").show();
-        if (this.webtest == 'true') {
-            //only for testing purposes
-            this.logTestMessage(message);
-        }
     },
 
     _handleShowHelp:function(xmlEvent) {
@@ -1725,12 +1687,7 @@ define(["dojo/_base/declare",
 
     _handleLinkException:function(xmlEvent) {
         console.debug("XFProcessor._handleLinkException xmlEvent:",xmlEvent);
-        if (this.webtest != 'true') {
-            console.error("Fatal error - " + xmlEvent.type + ": Failed to load resource: " + xmlEvent.contextInfo.resourceUri);
-        } else {
-            //only for testing purposes
-            fluxProcessor.logTestMessage("Fatal error - " + xmlEvent.type + ": Failed to load resource: " + xmlEvent.contextInfo.resourceUri);
-        }
+        console.error("Fatal error - " + xmlEvent.type + ": Failed to load resource: " + xmlEvent.contextInfo.resourceUri);
         //        fluxProcessor.closeSession();
     },
 
@@ -1773,14 +1730,11 @@ define(["dojo/_base/declare",
 
     showHelp:function(id) {
         console.debug("showng help for:", id);
-
-
         var helpCtrl = dom.byId(id + '-help');
         if (helpCtrl == undefined) {
             console.warn("No help available for Control Id: '" + id + "'");
             return;
         }
-
         var helpText = dom.byId(id + "-help-text");
         var currentState = domStyle.get(helpText,"display");
 
@@ -1801,7 +1755,7 @@ define(["dojo/_base/declare",
 
     printInstance:function(data){
         console.debug("XFProcessor.printInstance data:", data);
-        console.dirxml(data);
+        // console.dirxml(data);
         dom.byId("debugFrame").innerHTML=data;
     }
     })
