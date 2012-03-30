@@ -616,7 +616,7 @@ define(["dojo/_base/declare",
                                 }
                             }
                             //create output
-                            dojo.create("li", {
+                            domConstruct.create("li", {
                                 innerHTML: "<a href='#' onclick='bf.devtool.toggleEntry(this);'><span>"+xmlEvent.type+"</span></a><table class='eventLogTable'>" + tableCells + "</table>"
                             }, eventLog);
                         }
@@ -669,7 +669,7 @@ define(["dojo/_base/declare",
 
             if(fluxProcessor.logEvents){
                 // add a devider for eventLogViewer
-                dojo.create("li", {
+                domConstruct.create("li", {
                     innerHTML: "<span class='logDevider'/>"
                 }, eventLog);
             }
@@ -1154,7 +1154,7 @@ define(["dojo/_base/declare",
 /*
 
 
-                    var messageNode = dojo.create("div",  null, dojo.body());
+                    var messageNode = domConstruct.create("div",  null, dojo.body());
                     domAttr.set(messageNode, "title", "Message");
                     dojo.require("dijit.Dialog");
                     var messageDialog = new dijit.Dialog({
@@ -1163,16 +1163,16 @@ define(["dojo/_base/declare",
 
                     }, messageNode);
 
-                    var closeBtnWrapper = dojo.create("div", null , messageDialog.domNode);
+                    var closeBtnWrapper = domConstruct.create("div", null , messageDialog.domNode);
 
                     domStyle.set(closeBtnWrapper, "position","relative");
                     domStyle.set(closeBtnWrapper, "right","5px");
                     domStyle.set(closeBtnWrapper, "text-align","right");
                     domStyle.set(closeBtnWrapper, "width","40px;");
 
-                    var emptySpace= dojo.create("div", null , messageDialog.domNode);
+                    var emptySpace= domConstruct.create("div", null , messageDialog.domNode);
                     domStyle.set(emptySpace,"height","10px");
-                    var closeBtnNode = dojo.create("div", null , closeBtnWrapper);
+                    var closeBtnNode = domConstruct.create("div", null , closeBtnWrapper);
                     var closeBtnDijit = new dijit.form.Button({label: "OK",
                                                    onClick: function() {
                                                        messageDialog.hide();

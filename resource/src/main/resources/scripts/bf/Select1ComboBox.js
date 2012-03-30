@@ -1,5 +1,5 @@
-define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class"],
-    function(declare, _Widget,domAttr,domClass){
+define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","dojo/dom-construct"],
+    function(declare, _Widget,domAttr,domClass,domConstruct){
         return declare(_Widget, {
 
             handleInsertItem:function(contextInfo) {
@@ -12,7 +12,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class"],
                 if(referenzedNode){
                     var item = undefined;
                     if(position == 1){
-                        item = dojo.create("option", {id:generatedItemId}, referenzedNode, "before");
+                        item = domConstruct.create("option", {id:generatedItemId}, referenzedNode, "before");
                         domAttr.set(item, "data-bf-itemset", itemsetId);
                         dojo.removeAttr(referenzedNode, "data-bf-itemset");
                     }
@@ -23,7 +23,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class"],
                         }else {
                             option = this.getNthSiblingOption(position-2, referenzedNode);
                         }
-                        item = dojo.create("option", {id:generatedItemId}, option, "after");
+                        item = domConstruct.create("option", {id:generatedItemId}, option, "after");
                     }
                     domClass.add(item, "xfSelectorItem");
                 }else {

@@ -1,5 +1,5 @@
-define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class"],
-    function(declare, _Widget,domAttr,domClass){
+define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","dojo/dom-construct"],
+    function(declare, _Widget,domAttr,domClass,domConstruct){
         return declare(_Widget, {
             controlId:undefined,
             _onBlur:function() {
@@ -37,9 +37,9 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class"],
                      console.debug("checkedRadioItemValue: ",checkedRadioItemValue);
                      */
 
-                    var xfSelectorItem = dojo.create("span", {id:generatedItemId}, selectedItemset, "last");
+                    var xfSelectorItem = domConstruct.create("span", {id:generatedItemId}, selectedItemset, "last");
                     domClass.add(xfSelectorItem, "xfSelectorItem");
-                    var xfSelectorItemValue = dojo.create("input", {id:generatedItemId+"-value"}, xfSelectorItem, "first");
+                    var xfSelectorItemValue = domConstruct.create("input", {id:generatedItemId+"-value"}, xfSelectorItem, "first");
                     domClass.add(xfSelectorItemValue, "xfRadioValue");
                     domAttr.set(xfSelectorItemValue, "type", "radio");
                     domAttr.set(xfSelectorItemValue, "name", "d_" + this.controlId);
@@ -50,7 +50,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class"],
                         dijit.byId(xfControlId).sendValue(xfSelectorItemValue.value,evt);
                     };
 
-                    var xfSelectorItemLabel = dojo.create("label", {id:generatedItemId+"-label"}, xfSelectorItemValue, "after");
+                    var xfSelectorItemLabel = domConstruct.create("label", {id:generatedItemId+"-label"}, xfSelectorItemValue, "after");
                     domAttr.set(xfSelectorItemLabel, "for", generatedItemId+"-value");
                     domClass.add(xfSelectorItemLabel, "xfRadioLabel");
 
