@@ -55,7 +55,6 @@ define(["dojo/_base/declare",
      },
      */
     constructor:function() {
-        console.debug("XFProcessor.constructor");
         console.debug("XFProcessor.constructor sessionKey:",this.sessionKey);
 
         // initialize DWR
@@ -78,9 +77,6 @@ define(["dojo/_base/declare",
         connect.connect(window, "onbeforeunload", this, "handleUnload");
         connect.connect(window, "onunload", this, "close");
         this.skipshutdown = false;
-
-        //#########    ALERT IMPLEMENTATION  #############
-        //#########    ALERT IMPLEMENTATION  #############
 /*
         var toolTipAlertEnabled = query(".ToolTipAlert", win.body())[0];
         if (toolTipAlertEnabled != undefined ) {
@@ -93,61 +89,20 @@ define(["dojo/_base/declare",
 /*
         var inlineAlertEnabled = query(".InlineAlert", win.body())[0];
         if (inlineAlertEnabled != undefined || this.defaultAlertHandler == undefined) {
-            require(["bf/InlineAlert","dojo/domReady!"],
-                function(InlineAlert) {
-                    new InlineAlert({});
-                });
 
             this.defaultAlertHandler = new bf.InlineAlert({});
             // console.debug("Enabled InlineAlert Handler ", this.defaultAlertHandler);
 
         }
 
-        this.subscribers[0] = connect.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
-        this.subscribers[1] = connect.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");
 */
 
-        //#########    ALERT IMPLEMENTATION  END #############
-        //#########    ALERT IMPLEMENTATION  END #############
 
         // Browser Detection
         this.userAgent = navigator.userAgent;
         console.debug("userAgent: ",this.userAgent);
     },
 
-    //todo: deprecated? -> change to behavior
-    setInlineRoundBorderAlertHandler:function() {
-        console.debug("XFProcessor.setInlineRoundBorderAlertHandler");
-        // this.hideAllCommonChilds(win.body());
-        this.unsubscribeFromAlertHandler();
-        this.defaultAlertHandler = new bf.InlineRoundBordersAlert({});
-        this.subscribers[0] = connect.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
-        this.subscribers[1] = connect.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");
-        this.showAllCommonChilds(win.body(), "changeAlertType");
-
-    },
-
-    //todo: deprecated? -> change to behavior
-    setToolTipAlertHandler:function() {
-        console.debug("setToolTipAlertHandler");
-        // this.hideAllCommonChilds(win.body());
-        this.unsubscribeFromAlertHandler();
-        // TODO: Lars: new implementation needed
-        // dojo.require("bf.ToolTipAlert");
-        // this.defaultAlertHandler = new bf.ToolTipAlert({});
-        this.subscribers[0] = connect.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
-        this.subscribers[1] = connect.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");
-        this.showAllCommonChilds(win.body(),"changeAlertType");
-    },
-
-    //todo: move to XFControl?
-    // Hide commonChilds 'alert', 'hint', 'info'
-    hideAllCommonChilds:function(node) {
-        query(".xfControl", node).forEach(lang.hitch(this, function(control) {
-            console.debug("hide commonChild for control: ", control);
-            this.defaultAlertHandler._displayNone(domAttr.get(control,"id"),"applyChanges");
-        }));
-    },
 
     //todo: move to XFControl?
    // Show commonChilds 'alert', 'hint', 'info'

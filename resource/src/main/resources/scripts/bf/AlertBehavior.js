@@ -3,16 +3,39 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior"],
-    function(behavior) {
+define(["dojo/behavior","dojo/_base/connect"],
+    function(behavior,connect) {
 
-    return {
-        'body.ToolTipAlert': function(n) {
-            console.debug("AlertBehaviour.found: ToolTipAlert");
-        },
-        'body.InlineAlert': function(n) {
-            console.debug("AlertBehaviour.found: InlineAlert");
+        function subscribe(alert){
+            connect.subscribe("/xf/valid", alert, "handleValid");
+            connect.subscribe("/xf/invalid", alert, "handleInvalid");
+
+        };
+
+        return {
+            'body.ToolTipAlert': function(n) {
+                console.debug("AlertBehaviour.found: ToolTipAlert");
+
+                require(["bf/AlertToolTip","dojo/domReady!"],
+                    function(AlertToolTip) {
+                        var alertToolTip = new AlertToolTip({});
+                        subscribe(alertToolTip);
+                        console.debug("created ToolTipAlert:",alertToolTip);
+
+                    });
+
+            },
+            'body.InlineAlert': function(n) {
+                console.debug("AlertBehaviour.found: InlineAlert");
+
+                require(["bf/AlertInline","dojo/domReady!"],
+                    function(AlertInline) {
+                        var alertInline= new AlertInline({});
+                        subscribe(alertInline);
+                        console.debug("created InlineAlert:",alertInline);
+
+                    });
+            }
         }
-    }
 });
 

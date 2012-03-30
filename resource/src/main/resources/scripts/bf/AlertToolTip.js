@@ -1,16 +1,11 @@
-/*
- * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
- * Licensed under the terms of BSD License
- */
-
-define(["dojo/_base/declare","bf/Alert","dojo/dom-style","dojo/_base/connect","dojo/_base/lang","dojo/dom-class","dijit/registry", "dojo/NodeList-fx"],
-    function(declare, Alert,domStyle,connect,lang,domClass,registry,nodeListFx){
+define(["dojo/_base/declare","bf/Alert","dojo/dom", "dojo/dom-style","dojo/_base/connect","dojo/_base/lang","dojo/dom-class","dijit/registry", "dojo/NodeList-fx","dojo/query"],
+    function(declare, Alert,dom,domStyle,connect,lang,domClass,registry,nodeListFx,query){
         return declare(Alert, {
 
         displayDuration:3000,
         hideSpeed:1000,
 
-        _show:function(id, commonChild,action) {
+        _show:function(id, commonChild, action) {
             // console.debug("ToolTipAlert._show: [id:" + id , " commonChild: " + commonChild + "]");
             var commonChildNode = dom.byId(id + '-' + commonChild);
 
@@ -25,12 +20,14 @@ define(["dojo/_base/declare","bf/Alert","dojo/dom-style","dojo/_base/connect","d
 
                 var valueNode = query('.xfValue', dom.byId(id))[0];
                 if(alertTooltip == undefined) {
-                    alertTooltip = new dijit._MasterTooltip({id:toolTipId});
+                    require(["dijit/_MasterTooltip"],function(_MasterTooltip) {
+                        alertTooltip = new _MasterTooltip({id:toolTipId});
 
-
-                    connect.connect(alertTooltip, "onClick", this, lang.hitch(this, function() {
+                        connect.connect(alertTooltip, "onClick", this, lang.hitch(this, function() {
                             alertTooltip.hide(valueNode);
-                    }));
+                        }));
+
+                    });
                 }
 
                 // console.debug("ToolTipAlert: controlValueNode:",valueNode);

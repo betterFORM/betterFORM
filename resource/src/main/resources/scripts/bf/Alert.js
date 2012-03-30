@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registry"],
-    function(declare,win,domClass,registry){
+define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registry","dojo/query","dojo/dom"],
+    function(declare,win,domClass,registry,query,dom){
         return declare(null, {
 
         alert:"alert",
