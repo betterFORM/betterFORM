@@ -101,14 +101,6 @@
 
     <!--
     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    CDN support is disabled by default
-    todo: check if this param is passed from processor
-    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    -->
-    <xsl:param name="useCDN" select="'false'"/>
-
-    <!--
-    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     locale Parameter for setting current language
     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     -->
@@ -216,15 +208,7 @@
             with JS but is it worth the effort?
             <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             -->
-            <xsl:choose>
-                <xsl:when test="$useCDN='true'">
-                    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/resources/dojo.css"/>
-                    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dijit/themes/tundra/tundra.css"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:call-template name="addDojoCSS"/>
-                </xsl:otherwise>
-            </xsl:choose>
+            <xsl:call-template name="addDojoCSS"/>
 
             <!--
             >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -274,15 +258,12 @@
                         <xsl:otherwise><xsl:value-of select="$defaultTheme"/></xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
-
                 <style type="text/css">
-
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dijit/themes/', $cssTheme, '/', $cssTheme,'.css')"/>";
 <!--
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojo/resources/dojo.css')"/>";
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/widget/Toaster/Toaster.css')"/>";
 -->
-
                 </style><xsl:text>
 </xsl:text>
     </xsl:template>
@@ -365,6 +346,7 @@
                 creates the client-side processor
                 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                 -->
+<!--
                 <div    id="fluxProcessor"
                         jsId="fluxProcessor"
                         dojotype="bf.XFProcessor"
@@ -373,6 +355,7 @@
                         usesDOMFocusIN="{$uses-DOMFocusIn}"
                         dataPrefix="{$data-prefix}"
                         logEvents="{$debug-enabled}">
+-->
 
                     <!--
                     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -431,8 +414,9 @@
                     <div id="bfCopyright">
                         <xsl:text disable-output-escaping="yes">powered by betterFORM, &amp;copy; 2011</xsl:text>
                     </div>
--->
+
                 </div>
+-->
             </div>
             <!--
             <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -867,26 +851,6 @@
     <!-- ####################################### NAMED HELPER TEMPLATES ########################################## -->
     <!-- ####################################### NAMED HELPER TEMPLATES ########################################## -->
 
-
-    <xsl:template name="addLocalScript">
-        <script type="text/javascript" defer="defer">
-            require(["dojo/ready", "dojo/parser", "dijit/registry", "dijit/Dialog","bf/XFProcessor","bf/XFormsModelElement"],
-                function(ready, parser, registry, XFProcessor, XFormsModelElement){
-                    ready(function(){
-                        console.debug("ready");
-                        console.debug("parser parse start");
-                        parser.parse();
-                        Flux._path = dojo.attr(dojo.byId("fluxProcessor"), "contextroot") + "/Flux";
-                        console.debug("calling init");
-                        Flux.init( dojo.attr(dojo.byId("fluxProcessor"),"sessionkey"),
-                                    dojo.hitch(fluxProcessor,fluxProcessor.applyChanges));
-                    });
-                }
-            );
-        </script><xsl:text>
-</xsl:text>
-    </xsl:template>
-
     <xsl:template name="addDojoImport">
         <xsl:variable name="dojoConfig">
             has: {
@@ -898,38 +862,35 @@
             parseOnLoad:false,
             async:true,
             bf:{
-                sessionkey: <xsl:value-of select="$sessionKey"/>,
-                contextroot:<xsl:value-of select="$contextroot"/>,
+                sessionkey: "<xsl:value-of select="$sessionKey"/>",
+                contextroot:"<xsl:value-of select="$contextroot"/>",
+                fluxPath:"<xsl:value-of select="concat($contextroot,'/Flux')"/>",
                 useDOMFocusIN:<xsl:value-of select="$uses-DOMFocusIn"/>,
                 logEvents:<xsl:value-of select="$debug-enabled"/>
             }
         </xsl:variable>
 
-        <xsl:choose>
-            <xsl:when test="$useCDN='true'">
-                <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js"> </script><xsl:text>
+        <script type="text/javascript" src="{concat($contextroot,$scriptPath,'dojo/dojo.js')}">
+            <xsl:attribute name="data-dojo-config"><xsl:value-of select="normalize-space($dojoConfig)"/></xsl:attribute>
+        </script><xsl:text>
 </xsl:text>
-            </xsl:when>
-            <xsl:otherwise>
-                <script type="text/javascript" src="{concat($contextroot,$scriptPath,'dojo/dojo.js')}">
-                    <xsl:attribute name="data-dojo-config"><xsl:value-of select="normalize-space($dojoConfig)"/></xsl:attribute>
-                </script><xsl:text>
-</xsl:text>
-            </xsl:otherwise>
-        </xsl:choose>
-
-
-        <!--<script type="text/javascript" src="{concat($contextroot,$scriptPath,'bf/betterform-XHTML.js')}">&#160;</script>-->
-        <xsl:text>
-</xsl:text>
-        <!--
-        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        Dojo require statements here
-        todo: should be moved out again once xslts are completely refactored or another build option is established
-        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        -->
-        <xsl:text>
-</xsl:text>
-
     </xsl:template>
+
+    <xsl:template name="addLocalScript">
+        <script type="text/javascript" defer="defer">
+            require(["dojo/ready","dojo/dom","bf/XFProcessor","bf/XFormsModelElement"],
+                function(ready, dom, XFProcessor, XFormsModelElement){
+                    ready(function(){
+                        console.debug("ready - new Session with key:", dojo.config.bf.sessionkey);
+                        fluxProcessor = new XFProcessor();
+                        Flux._path = dojo.config.bf.fluxPath;
+                        console.debug("calling init");
+                        Flux.init(dojo.config.bf.sessionkey, dojo.hitch(fluxProcessor,fluxProcessor.applyChanges));
+                    });
+                }
+            );
+        </script><xsl:text>
+</xsl:text>
+    </xsl:template>
+
 </xsl:stylesheet>

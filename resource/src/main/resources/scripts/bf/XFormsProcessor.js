@@ -1,6 +1,6 @@
-define(["dojo/_base/declare", "dijit/_Widget"],
-    function(declare, _Widget){
-        return declare(_Widget, {
+define(["dojo/_base/declare"],
+    function(declare){
+        return declare(null, {
     /*
      * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
      * Licensed under the terms of BSD License

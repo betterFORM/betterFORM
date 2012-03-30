@@ -35,24 +35,21 @@ define(["dojo/_base/declare",
  de.betterform.web.betterform.FluxFacade.
  **/
 
-    sessionKey:"",
-    dataPrefix:"",
+    sessionKey:dojo.config.bf.sessionkey,
     skipshutdown:false,
     isDirty:false,
-    currentControlId:"",
+    currentControlId:"", // todo: only used for help, refactor later
     unloadMsg:"You are about to leave this XForms application",
     isReady:false,
-    contextroot:"",
+    contextroot:dojo.config.bf.contextroot,
     defaultAlertHandler:null,//todo: change to use behavior
     subscribers:[], //todo:see line above
     clientServerEventQueue:[],
     requestPending:false,
     fifoReaderTimer:null,
     lastServerClientFocusEvent:null,
-    _earlyTemplatedStartup:true,
-    widgetsInTemplate:true, //todo: still needed?
-    usesDOMFocusIN:false,
-    logEvents:false,
+    usesDOMFocusIN:dojo.config.bf.useDOMFocusIN,
+    logEvents:dojo.config.bf.logEvents,
 
 
     /*
@@ -65,7 +62,8 @@ define(["dojo/_base/declare",
      },
      */
     constructor:function() {
-        console.debug("FluxProcessor.constructor");
+        console.debug("XFProcessor.constructor");
+        console.debug("XFProcessor.constructor sessionKey:",this.sessionKey);
         /*
          var fluxAttribute = function(attribute) {
          return domAttr.get(dom.byId("fluxProcessor"), attribute);
