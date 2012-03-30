@@ -6,7 +6,7 @@
 define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo/query",
         "dojo/dom-attr","dojo/_base/connect","dojo/dom-construct","dijit/registry","bf/util"],
     function(declare, _Widget, dom, domClass,query,domAttr,connect,domConstruct,registry){
-        return declare("bf.XFControl",_Widget, {
+        return declare(_Widget, {
 
 
     /**

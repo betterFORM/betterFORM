@@ -4,7 +4,7 @@
  */
 
 define(["dojo/_base/declare"], function(declare){
-    return declare("ClientServerEvent", null,{
+    return declare(null,{
 
         /*
          This class represents the interface to the XForms processor (aka 'betterForm Web'). It is the only class

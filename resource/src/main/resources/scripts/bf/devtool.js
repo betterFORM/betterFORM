@@ -4,7 +4,7 @@
  */
 require(['dojo/_base/declare',"dojo/dom-style","dojo/dom-attr","dojo/_base/connect",dojo/dom-class],
     function(declare,domStyle,domAttr,connect,domClass){
-        declare("bf.devtool", null, {
+        declare(null, {
 
     /*
         // TODO substitute dojo.fx and dojo.dnd.Moveable requires with new AMD loading

@@ -7,7 +7,7 @@ define(["dojo/_base/declare",
         "dojo/dom-attr",
         "dojo/_base/connect"],
     function(declare, WidgetBase, TemplatedMixin, template,ComboBox,domClass, domAttr,connect){
-        return declare("bf.DropDownDate",[WidgetBase, TemplatedMixin], {
+        return declare([WidgetBase, TemplatedMixin], {
 
             templateString: template,
             widgetsInTemplate:true,
