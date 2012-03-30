@@ -57,6 +57,12 @@ define(["dojo/_base/declare",
     constructor:function() {
         console.debug("XFProcessor.constructor");
         console.debug("XFProcessor.constructor sessionKey:",this.sessionKey);
+
+        // initialize DWR
+        Flux._path = dojo.config.bf.fluxPath;
+        console.debug("calling init");
+        Flux.init(dojo.config.bf.sessionkey, dojo.hitch(this,this.applyChanges));
+
         /*
          var fluxAttribute = function(attribute) {
          return domAttr.get(dom.byId("fluxProcessor"), attribute);

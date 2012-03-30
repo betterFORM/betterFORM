@@ -873,25 +873,16 @@
     </xsl:template>
 
     <xsl:template name="addLocalScript">
-        <script type="text/javascript" defer="defer">
-            require(["dojo/ready","dojo/dom","bf/XFProcessor","bf/XFormsModelElement"],
-                function(ready, dom, XFProcessor, XFormsModelElement){
-                    ready(function(){
+        <script type="text/javascript">
+            require(["bf/XFProcessor","bf/XFormsModelElement"],
+                function(XFProcessor, XFormsModelElement){
                         console.debug("ready - new Session with key:", dojo.config.bf.sessionkey);
                         <!-- create a XForms Processor for the form -->
                         fluxProcessor = new XFProcessor();
-
-                        <!-- initialize DWR -->
-                        Flux._path = dojo.config.bf.fluxPath;
-                        console.debug("calling init");
-                        Flux.init(dojo.config.bf.sessionkey, dojo.hitch(fluxProcessor,fluxProcessor.applyChanges));
-
                         <!-- create a XFormsModelElement class for each model in the form -->
                         <xsl:for-each select="//xf:model">
                             <xsl:value-of select="@id"/> = new XFormsModelElement({id:"<xsl:value-of select="@id"/>"});
                         </xsl:for-each>
-
-                    });
                 }
             );
         </script><xsl:text>

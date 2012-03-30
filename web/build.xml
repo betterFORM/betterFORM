@@ -284,6 +284,19 @@
         </ant>
     </target>
 
+    <target name="deploy-exploded-resources" description="only deployed resources in resources/src/main/resources">
+
+        <echo>
+        ************************************************************************************
+        deploying classes + resources tree to WEB-INF/classes (developer mode)
+        ************************************************************************************
+        </echo>
+        <antcall target="copy-src-resources"/>
+        <ant antfile="${resource.module.dir}/build-dojo.xml" target="copy-src-resources-scripts" usenativebasedir="true">
+            <property name="scripts.target" value="${resources.dir}/scripts"/>
+        </ant>
+    </target>
+
     <target name="deploy" depends="compile, exploded-webapp-base, create-single-jar" description="default deployment as single jar">
         <echo>
         ************************************************************************************
