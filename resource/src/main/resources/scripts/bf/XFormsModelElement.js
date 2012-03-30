@@ -3,9 +3,9 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/_base/declare", "dijit/_Widget"],
-    function(declare, _Widget){
-        return declare("bf.XFormsModelElement",_Widget, {
+define(["dojo/_base/declare"],
+    function(declare){
+        return declare("bf.XFormsModelElement",null, {
 
     /**
         All Rights Reserved.

@@ -357,18 +357,6 @@
                         logEvents="{$debug-enabled}">
 -->
 
-                    <!--
-                    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                    create a XFormsModelElement class for each model in the form
-                    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                    -->
-                    <xsl:for-each select="//xf:model">
-                        <div    id="{@id}"
-                                jsId="{@id}"
-                                class="xfModel"
-                                style="display:none"
-                                dojoType="bf.XFormsModelElement"/>
-                    </xsl:for-each>
 
                     <!--
                     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -886,6 +874,15 @@
                         Flux._path = dojo.config.bf.fluxPath;
                         console.debug("calling init");
                         Flux.init(dojo.config.bf.sessionkey, dojo.hitch(fluxProcessor,fluxProcessor.applyChanges));
+                        <!--
+                        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                        create a XFormsModelElement class for each model in the form
+                        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                        -->
+                        <xsl:for-each select="//xf:model">
+                            <xsl:value-of select="@id"/> = new XFormsModelElement({id:"<xsl:value-of select="@id"/>"});
+                        </xsl:for-each>
+
                     });
                 }
             );
