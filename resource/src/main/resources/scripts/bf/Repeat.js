@@ -1,5 +1,3 @@
-dojo.provide("bf.Repeat");
-
 define(["dojo/_base/declare","bf/Container","dojo/dom-style","dojo/dom-attr"],
     function(declare, Container,domStyle,domAttr){
         return declare(Container, {

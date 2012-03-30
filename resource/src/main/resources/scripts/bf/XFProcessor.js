@@ -121,8 +121,8 @@ define(["dojo/_base/declare",
 
         }
 
-        this.subscribers[0] = dojo.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
-        this.subscribers[1] = dojo.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");
+        this.subscribers[0] = connect.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
+        this.subscribers[1] = connect.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");
 */
 
         //#########    ALERT IMPLEMENTATION  END #############
@@ -139,8 +139,8 @@ define(["dojo/_base/declare",
         // this.hideAllCommonChilds(win.body());
         this.unsubscribeFromAlertHandler();
         this.defaultAlertHandler = new bf.InlineRoundBordersAlert({});
-        this.subscribers[0] = dojo.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
-        this.subscribers[1] = dojo.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");
+        this.subscribers[0] = connect.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
+        this.subscribers[1] = connect.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");
         this.showAllCommonChilds(win.body(), "changeAlertType");
 
     },
@@ -152,8 +152,8 @@ define(["dojo/_base/declare",
         this.unsubscribeFromAlertHandler();
         dojo.require("bf.ToolTipAlert");
         this.defaultAlertHandler = new bf.ToolTipAlert({});
-        this.subscribers[0] = dojo.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
-        this.subscribers[1] = dojo.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");
+        this.subscribers[0] = connect.subscribe("/xf/valid", this.defaultAlertHandler, "handleValid");
+        this.subscribers[1] = connect.subscribe("/xf/invalid", this.defaultAlertHandler, "handleInvalid");
         this.showAllCommonChilds(win.body(),"changeAlertType");
     },
 
@@ -655,7 +655,7 @@ define(["dojo/_base/declare",
                             case "DOMFocusOut"                   : break;
                             case "xforms-model-construct"        : break;
                             case "xforms-model-construct-done"   : fluxProcessor._buildUI();  break;
-                            case "xforms-ready"                  : this.isReady = true;dojo.publish("/xf/ready", []);break; //not perfect - should be on XFormsModelElement
+                            case "xforms-ready"                  : this.isReady = true;connect.publish("/xf/ready", []);break; //not perfect - should be on XFormsModelElement
                             case "xforms-submit"                 : break;
                             case "xforms-submit-done"            : fluxProcessor._handleSubmitDone(xmlEvent);break;
                             /* Unknow XMLEvent: */
@@ -817,7 +817,7 @@ define(["dojo/_base/declare",
         console.warn("xforms-submit-error at ", xmlEvent.contextInfo);
         query(".xfInvalid", win.body()).forEach(function(control) {
             // console.debug("_handleSubmitError: invalid control: ", control);
-            dojo.publish("/xf/invalid", [domAttr.get(control, "id"),"submitError"]);
+            connect.publish("/xf/invalid", [domAttr.get(control, "id"),"submitError"]);
         });
         query(".xfRequired", win.body()).forEach(function(control) {
             //if control has no value add CSS class xfRequiredEmpty

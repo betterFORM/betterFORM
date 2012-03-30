@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo/query","bf/util","dojo/dom-attr"],
-    function(declare, _Widget, dom, domClass,query,domAttr){
+define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo/query","bf/util","dojo/dom-attr","dojo/_base/connect"],
+    function(declare, _Widget, dom, domClass,query,domAttr,connect){
         return declare("bf.XFControl",_Widget, {
 
 
@@ -56,9 +56,9 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
            Controls publish their validity state to the processor which will pass it to the selected alertHandler
             */
             if (this.isValid()) {
-                dojo.publish("/xf/valid", [this.id,"init"]);
+                connect.publish("/xf/valid", [this.id,"init"]);
             } else {
-                dojo.publish("/xf/invalid", [this.id,"init"]);
+                connect.publish("/xf/invalid", [this.id,"init"]);
             }
 
         },
@@ -86,9 +86,9 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
                     this.currentValue = value;
                     //handle validity and dispatch events if necessary
                     if(this.isValid()){
-                        dojo.publish("/xf/valid",[this.id,"onBlur"]);
+                        connect.publish("/xf/valid",[this.id,"onBlur"]);
                     }else {
-                        dojo.publish("/xf/invalid",[this.id,"onBlur"]);
+                        connect.publish("/xf/invalid",[this.id,"onBlur"]);
                     }
 
                     fluxProcessor.sendValue(this.id, value);
@@ -298,18 +298,18 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
                 // this._handleRequiredEmpty();
 
             }
-            // dojo.publish("/xf/valueChanged",[this,value])
+            // connect.publish("/xf/valueChanged",[this,value])
         },
 
         setValid:function() {
             bf.util.replaceClass(this.domNode, "xfInvalid", "xfValid");
-            dojo.publish("/xf/valid", [this.id,"applyChanges"]);
+            connect.publish("/xf/valid", [this.id,"applyChanges"]);
 
         },
 
         setInvalid:function() {
             bf.util.replaceClass(this.domNode, "xfValid", "xfInvalid");
-            dojo.publish("/xf/invalid", [this.id,"applyChanges"]);
+            connect.publish("/xf/invalid", [this.id,"applyChanges"]);
         },
 
         setReadonly:function() {
@@ -342,9 +342,9 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
             bf.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");
 
             if (this.isValid()) {
-                dojo.publish("/xf/valid", [this.id, "xfDisabled"]);
+                connect.publish("/xf/valid", [this.id, "xfDisabled"]);
             } else {
-                dojo.publish("/xf/invalid", [this.id, "xfDisabled"]);
+                connect.publish("/xf/invalid", [this.id, "xfDisabled"]);
             }
         },
 
@@ -359,9 +359,9 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
             }
             bf.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");
             if (this.isValid()) {
-                dojo.publish("/xf/valid", [this.id, "xfDisabled"]);
+                connect.publish("/xf/valid", [this.id, "xfDisabled"]);
             } else {
-                dojo.publish("/xf/invalid", [this.id, "xfDisabled"]);
+                connect.publish("/xf/invalid", [this.id, "xfDisabled"]);
             }
         },
 
