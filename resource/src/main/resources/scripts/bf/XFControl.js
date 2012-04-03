@@ -123,31 +123,6 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
                 this.relevant = contextInfo["enabled"];
                 console.debug("Control.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " contextInfo:",contextInfo);
 
-/*
-                if (contextInfo["targetName"] == "input" && this.value != null) {
-                    var noNSType = bf.util.removeNamespace(contextInfo["type"]);
-                    this._checkForDataTypeChange(noNSType);
-
-                    if (noNSType == "date" || noNSType == "dateTime") {
-                        this.setValue(contextInfo["schemaValue"]);
-                    } else {
-                        this.setValue(this.value);
-                    }
-                    if(this.currentValue != value) {
-                        this.currentValue = value;
-                        var valueNode = dom.byId(this.id + "-value");
-                        if (valueNode != undefined) {
-                            domAttr.set(valueNode, "value", value);
-                        }
-                        else {
-                            console.error("Failure updating value for Control '" + this.id + " value: " + value);
-                        }
-
-                        // this._handleRequiredEmpty();
-
-                    }
-*/
-
                 // Set value handling
                 if (this.value != null) {
                     this.currentValue = value;
