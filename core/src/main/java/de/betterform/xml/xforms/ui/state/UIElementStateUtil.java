@@ -18,6 +18,7 @@ import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.ModelItem;
 import de.betterform.xml.xforms.model.bind.RefreshView;
 import de.betterform.xml.xforms.ui.BindingElement;
+import de.betterform.xml.xforms.ui.Item;
 import de.betterform.xml.xforms.ui.UIElementState;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -283,7 +284,12 @@ public class UIElementStateUtil {
             // dispatch internal betterform event to update presentation context
             Container container = bindingElement.getContainerObject();
             EventTarget eventTarget = bindingElement.getTarget();
-            container.dispatch(eventTarget, BetterFormEventNames.STATE_CHANGED, context);
+            if(bindingElement.getParentObject() instanceof Item){
+                container.dispatch(eventTarget, BetterFormEventNames.ITEM_CHANGED, context);
+            }else {
+                container.dispatch(eventTarget, BetterFormEventNames.STATE_CHANGED, context);
+            }
+
         }
     }
 

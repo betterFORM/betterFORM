@@ -1,6 +1,10 @@
-define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","dojo/dom-construct"],
-    function(declare, _Widget,domAttr,domClass,domConstruct){
+define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","dojo/dom-construct","dojo/_base/connect","dojo/query","dojo/dom"],
+    function(declare, _Widget,domAttr,domClass,domConstruct,connect,query,dom){
         return declare(_Widget, {
+
+            postCreate:function() {
+                connect.subscribe("xforms-item-changed-" + this.id , this, "handleStateChanged");
+            },
 
             handleInsertItem:function(contextInfo) {
                 console.debug("bf.Select1Minimal.handleInsertItem: ", contextInfo);
@@ -51,7 +55,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
             },
 
             handleStateChanged:function(contextInfo) {
-                console.debug("Select1Minimal.handleStateChanged contextInfo:",contextInfo);
+                // console.debug("Select1Minimal.handleStateChanged contextInfo:",contextInfo);
                 var targetName = contextInfo.targetName;
                 var option = dom.byId(contextInfo.parentId);
                 if(targetName == "label" && option){

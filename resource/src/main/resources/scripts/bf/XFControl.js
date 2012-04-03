@@ -57,11 +57,11 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
            Controls publish their validity state to the processor which will pass it to the selected alertHandler
             */
             if (this.isValid()) {
-                connect.publish("/xf/valid", [this.id,"init"]);
+                connect.publish("xforms-valid", [this.id,"init"]);
             } else {
-                connect.publish("/xf/invalid", [this.id,"init"]);
+                connect.publish("xforms-invalid", [this.id,"init"]);
             }
-            connect.subscribe("/xf/state-change/"+ this.id, this, "handleStateChanged");
+            connect.subscribe("bf-state-change-"+ this.id, this, "handleStateChanged");
 
         },
 
@@ -88,16 +88,13 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
                     this.currentValue = value;
                     //handle validity and dispatch events if necessary
                     if(this.isValid()){
-                        connect.publish("/xf/valid",[this.id,"onBlur"]);
+                        connect.publish("xforms-valid",[this.id,"onBlur"]);
                     }else {
-                        connect.publish("/xf/invalid",[this.id,"onBlur"]);
+                        connect.publish("xforms-invalid",[this.id,"onBlur"]);
                     }
-
                     fluxProcessor.sendValue(this.id, value);
                 }
-
                 this._handleRequiredEmpty();
-
             }
 
             if(evt && evt.type == "blur"){
@@ -305,13 +302,13 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
 
         setValid:function() {
             bf.util.replaceClass(this.domNode, "xfInvalid", "xfValid");
-            connect.publish("/xf/valid", [this.id,"applyChanges"]);
+            connect.publish("xforms-valid", [this.id,"applyChanges"]);
 
         },
 
         setInvalid:function() {
             bf.util.replaceClass(this.domNode, "xfValid", "xfInvalid");
-            connect.publish("/xf/invalid", [this.id,"applyChanges"]);
+            connect.publish("xforms-invalid", [this.id,"applyChanges"]);
         },
 
         setReadonly:function() {
@@ -344,9 +341,9 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
             bf.util.replaceClass(this.domNode, "xfDisabled", "xfEnabled");
 
             if (this.isValid()) {
-                connect.publish("/xf/valid", [this.id, "xfDisabled"]);
+                connect.publish("xforms-valid", [this.id, "xfDisabled"]);
             } else {
-                connect.publish("/xf/invalid", [this.id, "xfDisabled"]);
+                connect.publish("xforms-invalid", [this.id, "xfDisabled"]);
             }
         },
 
@@ -361,9 +358,9 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
             }
             bf.util.replaceClass(this.domNode, "xfEnabled", "xfDisabled");
             if (this.isValid()) {
-                connect.publish("/xf/valid", [this.id, "xfDisabled"]);
+                connect.publish("xforms-valid", [this.id, "xfDisabled"]);
             } else {
-                connect.publish("/xf/invalid", [this.id, "xfDisabled"]);
+                connect.publish("xforms-invalid", [this.id, "xfDisabled"]);
             }
         },
 

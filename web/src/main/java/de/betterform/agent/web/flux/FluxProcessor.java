@@ -80,6 +80,7 @@ public class FluxProcessor extends WebProcessor {
         this.root.addEventListener(BetterFormEventNames.ID_GENERATED, this, true);
         this.root.addEventListener(BetterFormEventNames.ITEM_INSERTED, this, true);
         this.root.addEventListener(BetterFormEventNames.ITEM_DELETED, this, true);
+        this.root.addEventListener(BetterFormEventNames.ITEM_CHANGED, this, true);
         this.root.addEventListener(BetterFormEventNames.INDEX_CHANGED, this, true);
         this.root.addEventListener(BetterFormEventNames.SWITCH_TOGGLED, this, true);
         this.root.addEventListener(BetterFormEventNames.AVT_CHANGED, this, true);
@@ -280,6 +281,7 @@ public class FluxProcessor extends WebProcessor {
             this.root.removeEventListener(BetterFormEventNames.ID_GENERATED, this, true);
             this.root.removeEventListener(BetterFormEventNames.ITEM_INSERTED, this, true);
             this.root.removeEventListener(BetterFormEventNames.ITEM_DELETED, this, true);
+            this.root.removeEventListener(BetterFormEventNames.ITEM_CHANGED, this, true);
             this.root.removeEventListener(BetterFormEventNames.INDEX_CHANGED, this, true);
             this.root.removeEventListener(BetterFormEventNames.SWITCH_TOGGLED, this, true);            
             this.root.removeEventListener(BetterFormEventNames.AVT_CHANGED, this, true);

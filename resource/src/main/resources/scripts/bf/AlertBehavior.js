@@ -7,10 +7,10 @@ define(["dojo/behavior","dojo/_base/connect"],
     function(behavior,connect) {
 
         function subscribe(alert){
-            connect.subscribe("/xf/valid", alert, "handleValid");
-            connect.subscribe("/xf/invalid", alert, "handleInvalid");
+            connect.subscribe("xforms-valid", alert, "handleValid");
+            connect.subscribe("xforms-invalid", alert, "handleInvalid");
 
-        };
+        }
 
         return {
             'body.ToolTipAlert': function(n) {
@@ -20,7 +20,7 @@ define(["dojo/behavior","dojo/_base/connect"],
                     function(AlertToolTip) {
                         var alertToolTip = new AlertToolTip({});
                         subscribe(alertToolTip);
-                        console.debug("created ToolTipAlert:",alertToolTip);
+                        // console.debug("created ToolTipAlert:",alertToolTip);
 
                     });
 
@@ -32,7 +32,7 @@ define(["dojo/behavior","dojo/_base/connect"],
                     function(AlertInline) {
                         var alertInline= new AlertInline({});
                         subscribe(alertInline);
-                        console.debug("created InlineAlert:",alertInline);
+                        // console.debug("created InlineAlert:",alertInline);
 
                     });
             }

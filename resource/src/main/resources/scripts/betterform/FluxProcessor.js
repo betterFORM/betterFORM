@@ -595,6 +595,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
                             case "betterform-render-message"     : fluxProcessor._handleBetterFormRenderMessage(xmlEvent); break;
                             case "betterform-replace-all"        : fluxProcessor._handleBetterFormReplaceAll(); break;
                             case "betterform-state-changed"      : fluxProcessor._handleBetterFormStateChanged(xmlEvent); break;
+                            case "betterform-item-changed"      : fluxProcessor._handleBetterFormStateChanged(xmlEvent); break;
                             case "betterform-dialog-open"        : fluxProcessor._handleBetterFormDialogOpen(xmlEvent); break;
                             case "betterform-dialog-close"       : fluxProcessor._handleBetterFormDialogClose(xmlEvent); break;
                             case "betterform-AVT-changed"        : fluxProcessor._handleAVTChanged(xmlEvent);break;

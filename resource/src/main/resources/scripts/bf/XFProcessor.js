@@ -404,7 +404,7 @@ define(["dojo/_base/declare",
     },
 
     _useLoadingMessage:function(dojoObject) {
-        console.debug("XFProcessor._useLoadingMessage dojoObject:",dojoObject);
+        console.debug("XFProcessor._useLoadingMessage dojoObject:" + dojoObject);
         if (fluxProcessor.indicatorObjectTimer) {
             clearTimeout(fluxProcessor.indicatorObjectTimer);
         }
@@ -512,6 +512,7 @@ define(["dojo/_base/declare",
                             case "betterform-render-message"     : fluxProcessor._handleBetterFormRenderMessage(xmlEvent); break;
                             case "betterform-replace-all"        : fluxProcessor._handleBetterFormReplaceAll(); break;
                             case "betterform-state-changed"      : fluxProcessor._handleBetterFormStateChanged(xmlEvent); break;
+                            case "betterform-item-changed"      : fluxProcessor._handleBetterFormItemChanged(xmlEvent); break;
                             case "betterform-dialog-open"        : fluxProcessor._handleBetterFormDialogOpen(xmlEvent); break;
                             case "betterform-dialog-close"       : fluxProcessor._handleBetterFormDialogClose(xmlEvent); break;
                             case "betterform-AVT-changed"        : fluxProcessor._handleAVTChanged(xmlEvent);break;
@@ -541,7 +542,7 @@ define(["dojo/_base/declare",
                             case "DOMFocusOut"                   : break;
                             case "xforms-model-construct"        : break;
                             case "xforms-model-construct-done"   : fluxProcessor._buildUI();  break;
-                            case "xforms-ready"                  : this.isReady = true;connect.publish("/xf/ready", []);break; //not perfect - should be on XFormsModelElement
+                            case "xforms-ready"                  : this.isReady = true;connect.publish("xforms-ready", []);break; //not perfect - should be on XFormsModelElement
                             case "xforms-submit"                 : break;
                             case "xforms-submit-done"            : fluxProcessor._handleSubmitDone(xmlEvent);break;
                             /* Unknow XMLEvent: */
@@ -702,7 +703,7 @@ define(["dojo/_base/declare",
 
     /*
          ******************************************************************************************************
-         * handles XForms submit error by publishing /xf/invalid to all invalid controls and adding
+         * handles XForms submit error by publishing xforms-invalid to all invalid controls and adding
          * a class 'xfRequiredEmpty' to required controls that have no value
          ******************************************************************************************************
      */
@@ -710,7 +711,7 @@ define(["dojo/_base/declare",
         console.warn("xforms-submit-error at ", xmlEvent.contextInfo);
         query(".xfInvalid", win.body()).forEach(function(control) {
             // console.debug("_handleSubmitError: invalid control: ", control);
-            connect.publish("/xf/invalid", [domAttr.get(control, "id"),"submitError"]);
+            connect.publish("xforms-invalid", [domAttr.get(control, "id"),"submitError"]);
         });
         query(".xfRequired", win.body()).forEach(function(control) {
             //if control has no value add CSS class xfRequiredEmpty
@@ -1163,240 +1164,31 @@ define(["dojo/_base/declare",
 
     _handleBetterFormStateChanged:function(/*XMLEvent*/ xmlEvent) {
         console.debug("XFProcessor._handleBetterFormStateChanged: targetId: " + xmlEvent.contextInfo.targetId , " xmlEvent: " , xmlEvent);
-
-
-        // new implementation code
-        //todo: review - control specific code should be here!
         var parentId = xmlEvent.contextInfo.parentId;
+
+        // if contextInfo.parentId is present dojo must publish to this id instead of targetid (e.g. used for value changes of labels)
         if(parentId) {
-            var parentNode = dom.byId(parentId);
-            console.debug("XFProcessor._handleBetterFormStateChanged: parentNode: ",parentNode);
-            if (domClass.contains(parentNode, "xfSelectorItem")) {
-                var selectParentId = domAttr.set(parentNode.parentNode, "id");
-                if(domClass.contains(parentNode.parentNode,"xfRadioItemset")){
-                    selectParentId =domAttr.set(parentNode.parentNode.parentNode,"id");
-                }
-                console.debug("XFProcessor._handleStateChanged: selectParentId: ",selectParentId);
-                if(registry.byId(selectParentId)) {
-                    registry.byId(selectParentId).handleStateChanged(xmlEvent.contextInfo);
-                    return;
-                }else {
-                    console.warn("XFProcessor._handleBetterFormStateChanged: could not find selectParentId: ",selectParentId);
-                }
-            }else {
-                console.warn("XFProcessor._handleBetterFormStateChanged: no handling for not xfSelectorItem implemented: ");
-            }
-        }else {
-            connect.publish("/xf/state-change/"+ xmlEvent.contextInfo.targetId,xmlEvent.contextInfo);
-            return;
+            connect.publish("bf-state-change-"+ parentId, xmlEvent.contextInfo);
+
         }
-
-         /*
-         console.debug("XFProcessor._handleStateChanged this:", this,
-         "\n\txmlEvent: ",xmlEvent,
-         "\n\tcontextInfo: ",xmlEvent.contextInfo,
-         "\n\tparentId: ",xmlEvent.contextInfo.parentId,
-         "\n\ttargetId: ",xmlEvent.contextInfo.targetId,
-         "\n\tvalue: ",xmlEvent.contextInfo.value,
-         "\n\ttargetName: ",xmlEvent.contextInfo.targetName,
-         "\n\tmip:readonly: ",xmlEvent.contextInfo.readonly,
-         "\n\tmip:required: ",xmlEvent.contextInfo.required,
-         "\n\tmip:valid: ",xmlEvent.contextInfo.valid,
-         "\n\tmip:enabled: ",xmlEvent.contextInfo.enabled
-         );
-
-         */
-
-        var xfControlId = xmlEvent.contextInfo.targetId;
-
-        /**
-         *
-         * If:  StateChange Target is a XForms Repeat
-         *
-         * **/
-        if (xmlEvent.contextInfo.targetName != undefined && xmlEvent.contextInfo.targetName == "repeat") {
-            // console.debug("XFProcessor._handleBetterFormStateChanged for Repeat");
-            var repeat = this._getRepeatObject(xfControlId);
-            if (repeat != undefined) {
-                repeat.handleStateChanged(xmlEvent.contextInfo);
-            }
-            else if (repeat == undefined) {
-                console.error("Repeat [id:'", xfControlId, "'] does not exist");
-            }
+        else {
+            connect.publish("bf-state-change-"+ xmlEvent.contextInfo.targetId,xmlEvent.contextInfo);
         }
-        else if (xmlEvent.contextInfo.targetName != undefined && xmlEvent.contextInfo.targetName == "group") {
-            // console.debug("XFProcessor._handleBetterFormStateChanged for Group");
-            var group = registry.byId(xmlEvent.contextInfo.targetId);
+    },
 
-            if (group == undefined && dom.byId(xmlEvent.contextInfo.targetId) != undefined) {
-                // console.debug("creating new Group: ",dom.byId(xmlEvent.contextInfo.targetId));
-                // TODO: Lars: new implementation needed
-                // dojo.require("betterform.ui.container.Group");
-                // group = new betterform.ui.container.Group({}, dom.byId(xmlEvent.contextInfo.targetId));
+    _handleBetterFormItemChanged:function(/*XMLEvent*/ xmlEvent) {
+        console.debug("XFProcessor._handleBetterFormItemChanged: targetId: " + xmlEvent.contextInfo.targetId , " xmlEvent: " , xmlEvent);
+        var parentDOMNode = dom.byId(xmlEvent.contextInfo.parentId);
+        try {
+            while(!domClass.contains(parentDOMNode, "xfValue")){
+                parentDOMNode = parentDOMNode.parentNode;
             }
-            /* group markup does not exist in ui, check if targetid references an repeatItem */
-            else if (xmlEvent.contextInfo.targetId != undefined) {
-                // console.debug("creating new Group (xmlEvent.contextInfo.targetId = undefined) : ",xmlEvent.contextInfo.targetId);
-                var repeatItemNode = query("*[repeatItemId='" + xmlEvent.contextInfo.targetId + "']")[0];
-                if (repeatItemNode != undefined && domClass.contains(repeatItemNode, "xfRepeatItem")) {
-                    var repeatNode = repeatItemNode.parentNode;
-                    console.debug("repeat: ",repeatNode);
-                    group = registry.byId(repeatNode.id);
-                }
-            }
-            if (group != undefined) {
-                group.handleStateChanged(xmlEvent.contextInfo);
-            } else {
-                console.warn("XFProcessor._handleBetterFormStateChanged: don't know how to handle xmlEvent: ", xmlEvent, " for target: " + xmlEvent.contextInfo.targetId + " [", xmlEvent.contextInfo.targetName, "]");
-            }
+            console.debug("XFProcessor._handleBetterFormItemChanged: id: ", domAttr.get(parentDOMNode, "id"), " parentNode: ",parentDOMNode);
+            var selectParentId = domAttr.get(parentDOMNode, "id");
+            connect.publish("xforms-item-changed-"+ selectParentId, xmlEvent.contextInfo);
+        } catch(e) {
+            console.error("XFProcessor._handleBetterFormItemChanged: No Select(1) found for item: ", xmlEvent.contextInfo.parentId, " error:",e);
         }
-        // HANDLING XF:COPY FOR ALL SELECTS
-        else if (xmlEvent.contextInfo.targetName != undefined && xmlEvent.contextInfo.targetName == "select1" && xmlEvent.contextInfo.copyItem != undefined) {
-            // console.debug("XFProcessor._handleBetterFormStateChanged xf:copy handling: xmlEvent: ",xmlEvent, " contextInfo: ", xmlEvent.contextInfo);
-            var warningMsgXFCopy = "XFProcessor._handleBetterFormStateChanged: Select1 ControlValue " + xmlEvent.contextInfo.targetId + "-value: No item selected"
-            var select1 = dom.byId(xmlEvent.contextInfo.targetId + "-value");
-            if (select1 != undefined) {
-                var selectedItemId = xmlEvent.contextInfo.selectedItem;
-                // console.debug("XFProcessor._handleBetterFormStateChanged xf:copy: selectedItem: ", selectedItemId);
-                if (selectedItemId != undefined && selectedItemId != "") {
-                    var selectItems = query(".xfSelectorItem", select1);
-                    var itemSelected = false;
-                    for (var i = 0; i < selectItems.length; i++) {
-                        if (domAttr.get(selectItems[i], "id") == selectedItemId) {
-                            // console.debug("SelectedItem: ", selectItems[i]);
-                            select1.selectedIndex = (i);
-                            itemSelected = true;
-                        }
-                    }
-                    if (!itemSelected) {
-                        console.warn(warningMsgXFCopy);
-                    }
-                }
-                else {
-                    console.warn(warningMsgXFCopy);
-                }
-            } else {
-                console.warn(warningMsgXFCopy);
-            }
-        }
-
-        /**
-         *
-         * Else If:  XForms Control Dijit allready exists call handleStateChanged on selected control
-         *
-         * **/
-        else if (registry.byId(xfControlId) != undefined) {
-            // console.debug("XFProcessor.handleStateChanged on existing Dijit [id: " + xfControlId + ", / object:",registry.byId(xfControlId),+"]");
-            var xfControlDijit = registry.byId(xfControlId);
-            // console.debug("_handleBetterFormStateChanged: ", xfControlDijit, " xmlEvent.contextInfo:",xmlEvent.contextInfo);
-            xfControlDijit.handleStateChanged(xmlEvent.contextInfo);
-        }
-        /**
-         *
-         * Else If: XForms Control Dijit does not yet exist but a DOM Prototype Template is allready present
-         *          represent state-changed-events directly after betterform-item-inserted event
-         *
-         * **/
-
-        // TODO: old code to initialize controls after insert, happens with "apply behavior" now
-        /**
-        else if (dom.byId(xfControlId) != undefined) {
-            // console.debug("XFProcessor.handleStateChanged on existing DOM  [id: " + xfControlId + ", / xmlEvent:",xmlEvent,+"]");
-            var controlNodeCreated = new betterform.ui.Control({contextInfo:xmlEvent.contextInfo}, dom.byId(xfControlId));
-            if(controlNodeCreated.handleStateChanged) {
-                controlNodeCreated.handleStateChanged(xmlEvent.contextInfo);
-            }else  {
-                console.warn("controlNodeCreated.handleStateChanged does not exist for widget ", controlNodeCreated);
-            }
-
-        } **/
-
-        /**
-         *
-         * Else If: No XForms Control for the given id exist at all, e.q. inserting into repeats / itemsets,
-         *          Algorithm relies on parent id of the given XForms Control
-         * **/
-
-
-        else if (xmlEvent.contextInfo.parentId != undefined && xmlEvent.contextInfo.parentId != "") {
-            // console.debug("XFProcessor.handleStateChanged: xmlEvent.contextInfo.parentId = " + xmlEvent.contextInfo.parentId);
-            var parentDijit = registry.byId(xmlEvent.contextInfo.parentId);
-            // parent dijit does exist and executes handleStateChanged
-            if (parentDijit != undefined) {
-                // console.debug("XFProcessor.handleStateChanged(ParentDijit" + parentDijit.id + ") no control found, execute handle state change on parent");
-                parentDijit.handleStateChanged(xmlEvent.contextInfo);
-            }
-            // parent dijit does not(!!) exist yet
-            else {
-                var parentControlNode = dom.byId(xmlEvent.contextInfo.parentId);
-                if (parentControlNode == undefined) {
-                    console.error("XFProcessor betterform-state-changed  Warning: Neither Target nor its Parent does exist [xmlEvent", xmlEvent, "]");
-                }
-                //  special handling for Select controls, check if parent node is selector item
-                else if (domClass.contains(parentControlNode, "xfSelectorItem")) {
-                    // console.debug("XFProcessor.handleStateChanged Target Node does not exist, Parent Control is SelectorItem (ParentSelector:" , parentControlNode , ")");
-                    var selectParentId = domAttr.get(parentControlNode.parentNode, "id");
-                    if(registry.byId(selectParentId)) {
-                        registry.byId(selectParentId).handleStateChanged(xmlEvent.contextInfo);
-                    }else if (parentControlNode){
-                        // DIJIT COULD NOT BE FOUND - SEARCH FOR PROTOTYPE SELECT OPTIONS
-                        // console.debug("found Selector Item Node: ",parentControlNode);
-                        if(xmlEvent.contextInfo.targetName == "label") {
-                            // console.debug("Update label of option - value: ",xmlEvent.contextInfo.value);
-                            parentControlNode.innerHTML = xmlEvent.contextInfo.value;
-                        }
-                        else if(xmlEvent.contextInfo.targetName == "value") {
-                            // console.debug("Update value of option - value: ",xmlEvent.contextInfo.value);
-                            domAttr.set(parentControlNode,"value",xmlEvent.contextInfo.value);
-                        }else {
-                            console.warn("XFProcessor betterform-state-changed: : error updating xfSelector item ",xmlEvent.contextInfo);
-                        }
-                    }else {
-                        console.warn("XFProcessor betterform-state-changed: : can't find xfSelectorItem ", selectParentId);
-                    }
-                }
-                else {
-                    console.warn("XFProcessor betterform-state-changed: No handleStateChanged implementation availabled for contextinfo: ", xmlEvent.contextInfo);
-                }
-            }
-        }
-        // Check if it is a nested output in a trigger label. If so, (really quick hack: chance xmlEvent.contextInfo)
-        else if(xmlEvent.contextInfo.targetName != undefined  && xmlEvent.contextInfo.targetName == "output"){
-            // console.debug("XFProcessor._handleBetterFormStateChanged xf:output inside label handling: xmlEvent: ",xmlEvent, " contextInfo: ", xmlEvent.contextInfo);
-
-	        var possibleId = xmlEvent.contextInfo.targetId.substring(1,xmlEvent.contextInfo.targetId.length) -2 ;
-            var warningMsg = "XFProcessor._handleBetterFormStateChanged: element for dynamic label " + xmlEvent.contextInfo.targetId + ": Control not found ";
-	        var control = registry.byId("C"+possibleId);
-	        if ((control != undefined) && (control.controlType == "trigger")) {
-                // console.debug("XFProcessor._handleBetterFormStateChanged for dynamic label on trigger control: " ,control, "controlType: ", control.controlType);
-		        xmlEvent.contextInfo.targetId = "C"+(possibleId-1);
-		        xmlEvent.contextInfo.parentId = "C"+(possibleId-2);
-		        xmlEvent.contextInfo.targetName = "label";
-                control.handleStateChanged(xmlEvent.contextInfo);
-            } else if (control != undefined) {
-		        // There was a dijit, so currently assuming it is either an output, input or group. Try setting it...
-		        // target ID does not change, parent does
-                // console.debug("XFProcessor._handleBetterFormStateChanged input/output/group control: " ,control, "controlType: ", control.controlType);
-		        xmlEvent.contextInfo.parentId = "C"+(possibleId);
-		        xmlEvent.contextInfo.targetName = "label";
-                control.handleStateChanged(xmlEvent.contextInfo);
-  	        } else {
-		        // Currently the only case encountered where this is needed is for a selectorItem
-	            control = dom.byId("C"+possibleId-2);
-	            if (control != undefined) {
-                    // console.debug("XFProcessor._handleBetterFormStateChanged selectorItem control: " ,control, "controlType: ", control.controlType);
-		            // targetId stays the same
-		            xmlEvent.contextInfo.targetName = "label";
-		            xmlEvent.contextInfo.parentId = "C"+(possibleId-2);
-                    this._handleBetterFormStateChanged(xmlEvent);
-	    	    } else {
-	 	            console.warn(warningMsg);
-		        }
-	        }
-	    } else {
-            console.error("XFProcessor betterform-state-changed Error: Processor does not know how to handle betterform-state-changed based on xmlEvent ", xmlEvent.contextInfo.targetId);
-        }
-
     },
 
 

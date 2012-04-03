@@ -1,7 +1,12 @@
-define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","dojo/dom-construct","dijit/registry","dojo/query",],
-    function(declare, _Widget,domAttr,domClass,domConstruct,registry,query){
+define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","dojo/dom-construct","dijit/registry","dojo/query","dojo/_base/connect","dojo/dom"],
+    function(declare, _Widget,domAttr,domClass,domConstruct,registry,query,connect,dom){
         return declare(_Widget, {
             controlId:undefined,
+
+            postCreate:function() {
+                connect.subscribe("xforms-item-changed-" + this.id , this, "handleStateChanged");
+            },
+
             _onBlur:function() {
                 console.debug("bf.Select1Full._onBlur arguments:",arguments);
                 var checkedRadioItemValue = undefined;
@@ -75,13 +80,14 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
             },
 
             handleStateChanged:function(contextInfo) {
+                // console.debug("Select1Radio.handleStateChanged: contextInfo:",contextInfo);
                 var targetName = contextInfo.targetName;
                 if(targetName == "label"){
-                    dom.byId(contextInfo.parentId+"-label").innerHTML = contextInfo.value;
+                    dom.byId(contextInfo.parentId + "-label").innerHTML = contextInfo.value;
                 }else if(targetName == "value"){
                     domAttr.set(dom.byId(contextInfo.parentId+"-value"),"value",contextInfo.value);
                 }else {
-                    console.warn("OptGroup.handleStateChanged: no action taken for contextInfo: ",contextInfo);
+                    console.warn("Select1Radio.handleStateChanged: no action taken for contextInfo: ",contextInfo);
                 }
             }
         });
