@@ -292,6 +292,10 @@
                     <xf:label>Value[4]</xf:label>
                     <xf:setvalue ref="instance()/input[4]/value" value="'2011-11-11'"/>
                 </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[5]</xf:label>
+                    <xf:setvalue ref="instance()/input[5]/value" value="true()"/>
+                </xf:trigger>
             </div>
             <div style="margin:4px;padding:4px;border:thin dotted #808080">
                 <span>Output:</span>
@@ -320,7 +324,18 @@
                 </xf:trigger>
             </div>
             <div style="margin:4px;padding:4px;border:thin dotted #808080">
+                <span>Textarea:</span>
+                <xf:trigger>
+                    <xf:label>Value[1]</xf:label>
+                    <xf:setvalue ref="instance()/textarea[1]/value" value="'new html markup with &lt;b&gt;Bold&lt;/b&gt; and &lt;i&gt;italic&lt;/i&gt; text'"/>
+                </xf:trigger>
+            </div>
+            <div style="margin:4px;padding:4px;border:thin dotted #808080">
                 <span>Select1:</span>
+                <xf:trigger>
+                    <xf:label>Item Label[2]</xf:label>
+                    <xf:setvalue ref="instance('colors')/color[2]/name" value="'BLACK'"/>
+                </xf:trigger>
                 <xf:trigger>
                     <xf:label>Value[1]</xf:label>
                     <xf:setvalue ref="instance()/select1[1]/value" value="'0000FF'"/>
@@ -352,7 +367,7 @@
                 </xf:trigger>
                 <xf:trigger>
                     <xf:label>Value[2]</xf:label>
-                    <xf:setvalue ref="instance()/select[1]/value" value="'00FF00'"/>
+                    <xf:setvalue ref="instance()/select[2]/value" value="'00FF00 FF0000'"/>
                 </xf:trigger>
 
             </div>
@@ -434,21 +449,8 @@
                 <!--################### SELECT SAMPLES #############################-->
                 <!--################### SELECT SAMPLES #############################-->
 
-    <!--            <xf:select ref="select[1]/value" appearance="minimal" incremental="true">
+                <xf:select ref="select[1]/value" appearance="minimal" incremental="true">
                     <xf:label>Select minimal</xf:label>
-                    <xf:itemset nodeset="instance('colors')/color">
-                        <xf:label ref="name"/>
-                        <xf:value ref="value"/>
-                    </xf:itemset>
-                </xf:select>-->
-    <!--
-                <xf:output ref="select[1]/value">
-                    <xf:label>Select minimal value:</xf:label>
-                </xf:output>
-    -->
-
-                <xf:select ref="select[1]/value" appearance="full" incremental="false">
-                    <xf:label>Select1 full</xf:label>
                     <xf:itemset nodeset="instance('colors')/color">
                         <xf:label ref="name"/>
                         <xf:value ref="value"/>
@@ -456,6 +458,18 @@
                 </xf:select>
 
                 <xf:output ref="select[1]/value">
+                    <xf:label>Select minimal value:</xf:label>
+                </xf:output>
+
+                <xf:select ref="select[2]/value" appearance="full" incremental="false">
+                    <xf:label>Select full</xf:label>
+                    <xf:itemset nodeset="instance('colors')/color">
+                        <xf:label ref="name"/>
+                        <xf:value ref="value"/>
+                    </xf:itemset>
+                </xf:select>
+
+                <xf:output ref="select[2]/value">
                     <xf:label>Select value(s):</xf:label>
                 </xf:output>
             </xf:group>
@@ -560,7 +574,7 @@
             </xf:group>
             <hr/>
             <xf:group>
-                <xf:label>Textarea</xf:label>
+                <xf:label>Range</xf:label>
                 <xf:range ref="range[1]/value" start="1" step="1" end="10" incremental="true">
                     <xf:label ref="../label"/>
                     <xf:hint ref="../hint"/>

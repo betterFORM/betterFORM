@@ -16,6 +16,18 @@ todo: dependencies must be imported for foreign (non-dojo) components
     Component Definition File which is the central for mapping XForms controls to client-side controls.
     todo:see newJSLayer-readme.txt
 */
+
+    /**
+     *  Overwriten "abstract" API function on XFControl to handle updating of control values
+     * @param xfControlDijit
+     * @param node
+     */
+    function overwriteSetValue(xfControlDijit, node) {
+        xfControlDijit.setValue = function(value, schemavalue) {
+            domAttr.set(node, "value", value);
+        };
+    }
+
     function sendDate(xfControlDijit, dateWidget, attrName, value){
         if((attrName == "focused" &&  !value) || attrName == "value") {
             var dateValue;
@@ -33,7 +45,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
                 xfControlDijit.sendValue(dateValue,evt);
             }
         }
-    };
+    }
 
 
     return {
@@ -60,6 +72,9 @@ todo: dependencies must be imported for foreign (non-dojo) components
             'widgets' in the context of the client side. They are the concrete representations the user interacts with.
              */
             var xfControlDijit = registry.byId(xfId);
+
+            /* Overwriten "abstract" API function on XFControl to handle updating of control values */
+            overwriteSetValue(xfControlDijit,n);
 
             /*
             ###########################################################################################
@@ -94,12 +109,18 @@ todo: dependencies must be imported for foreign (non-dojo) components
             var xfId = n.id.substring(0,n.id.lastIndexOf("-"));
             var xfControlDijit = registry.byId(xfId);
 
+            /* overwritten "abstract" API function of XFControl */
+            xfControlDijit.setValue = function(value, schemavalue) {
+                console.debug("xsdBoolean setValue value:",value);
+                n.checked = value || value == 'true';
+            };
+
             /*
-             input type="checkbox" fails to honor readonly attribute and thus is overwritten here. It seems this is
-             rather a HTML Spec issue as e.g. comboxes behave the same. You can visibly change the value though
-             the control is readonly. As this seems rather contra intuitive for users we have chosen to use 'disabled'
-             here instead.
-             */
+            input type="checkbox" fails to honor readonly attribute and thus is overwritten here. It seems this is
+            rather a HTML Spec issue as e.g. comboxes behave the same. You can visibly change the value though
+            the control is readonly. As this seems rather contra intuitive for users we have chosen to use 'disabled'
+            here instead.
+            */
             xfControlDijit.setReadonly = function() {
                 // console.debug("overwritten checkbox function");
                 domAttr.set(n, "disabled","disabled");
@@ -135,6 +156,8 @@ todo: dependencies must be imported for foreign (non-dojo) components
         /*  rendering HTML5 input type="date" control for mobiles and tablets  */
         '.uaMobile .xfInput.xsdDate .xfValue, .uaTablet .xfInput.xsdDate .xfValue': function(n) {
             var xfControlDijit = registry.byId(bf.util.getXfId(n));
+
+            overwriteSetValue(xfControlDijit,n);
 
             connect.connect(n,"onkeyup",function(evt){
                 xfControlDijit.sendValue(n.value,evt);
@@ -211,8 +234,8 @@ todo: dependencies must be imported for foreign (non-dojo) components
                     });
                 });
             }
-            xfControlDijit.setValue = function(value) {
-                dateWidget.set('value', value);
+            xfControlDijit.setValue = function(value,schemavalue) {
+                dateWidget.set('value', schemavalue);
             };
             xfControlDijit.setReadonly = function() {
                 dateWidget.set('readOnly', true);

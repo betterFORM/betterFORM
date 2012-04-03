@@ -123,6 +123,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
                 this.relevant = contextInfo["enabled"];
                 console.debug("Control.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " contextInfo:",contextInfo);
 
+/*
                 if (contextInfo["targetName"] == "input" && this.value != null) {
                     var noNSType = bf.util.removeNamespace(contextInfo["type"]);
                     this._checkForDataTypeChange(noNSType);
@@ -132,10 +133,28 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
                     } else {
                         this.setValue(this.value);
                     }
+                    if(this.currentValue != value) {
+                        this.currentValue = value;
+                        var valueNode = dom.byId(this.id + "-value");
+                        if (valueNode != undefined) {
+                            domAttr.set(valueNode, "value", value);
+                        }
+                        else {
+                            console.error("Failure updating value for Control '" + this.id + " value: " + value);
+                        }
 
-                } else if (this.value != null) {
-                    this.setValue(this.value);
+                        // this._handleRequiredEmpty();
+
+                    }
+*/
+
+                // Set value handling
+                if (this.value != null) {
+                    this.currentValue = value;
+                    this.setValue(this.value, contextInfo["schemaValue"]);
                 }
+
+                // Validity handling
                 if(this.valid != undefined){
                     if (this.valid == "true") {
                         this.setValid();
@@ -281,23 +300,13 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
             this.dataType = dataType;
         },
 
-        setValue:function(value) {
-            console.debug("XFControl.setValue: " + this.currentValue + " value: " + value);
-
-            if(this.currentValue != value) {
-                this.currentValue = value;
-                var valueNode = dom.byId(this.id + "-value");
-                if (valueNode != undefined) {
-                    domAttr.set(valueNode, "value", value);
-                }
-                else {
-                    console.error("Failure updating value for Control '" + this.id + "-alert' with value: " + value);
-                }
-
-                // this._handleRequiredEmpty();
-
-            }
-            // connect.publish("/xf/valueChanged",[this,value])
+        /**
+         * "Abstract" API Function to update the value of the corresponding Widget
+         * @param value localized value
+         * @param schemavalue optional / original schema value (not localized)
+         */
+        setValue:function(value, schemavalue) {
+            console.error("XFControl.setValue must be overwritten by it's accoring ControlValue Widget [id:", this.id + "-value]");
         },
 
         setValid:function() {

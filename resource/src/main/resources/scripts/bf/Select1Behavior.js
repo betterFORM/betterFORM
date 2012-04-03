@@ -6,7 +6,18 @@
 define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dijit/registry","dojo/query"],
     function(behavior,domAttr,connect,registry,query) {
 
-            return {
+        /**
+         *  Overwriten "abstract" API function on XFControl to handle updating of control values
+         * @param xfControlDijit
+         * @param node
+         */
+        function overwriteSetValue(xfControlDijit, node) {
+            xfControlDijit.setValue = function(value, schemavalue) {
+                domAttr.set(node, "value", value);
+            };
+        }
+
+        return {
 
 
         // ############################## SELECT1 MAPPINGS ############################################################
@@ -20,6 +31,7 @@ define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dijit/registry","d
             var xfId = bf.util.getXfId(n);
             var xfControl = registry.byId(xfId);
 
+            overwriteSetValue(xfControl,n);
             /*
              if incremental support is needed this eventhandler has to be added for the widget
              */
@@ -41,6 +53,8 @@ define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dijit/registry","d
         '.xfSelect1.aCompact .xfValue': function(n) {
             var xfId = bf.util.getXfId(n);
             var xfControl = registry.byId(xfId);
+
+            overwriteSetValue(xfControl,n);
 
             connect.connect(n,"onblur",function(evt){
                 xfControl.sendValue(n.value, evt);
