@@ -61,6 +61,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
             } else {
                 connect.publish("/xf/invalid", [this.id,"init"]);
             }
+            connect.subscribe("/xf/state-change/"+ this.id, this, "handleStateChanged");
 
         },
 

@@ -3,8 +3,23 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior","dojo/_base/connect","dijit/registry"],
-    function(behavior,connect,registry) {
+define(["dojo/behavior","dojo/_base/connect","dijit/registry","dojo/query"],
+    function(behavior,connect,registry,query) {
+
+        function selectMinimalSendValue(xfControl,n,evt) {
+            var selectedValue = "";
+            query(".xfSelectorItem",n).forEach(function(item){
+                if(item.selected){
+                    if(selectedValue  == ""){
+                        selectedValue = item.value;
+                    }else {
+                        selectedValue += " " + item.value;
+                    }
+                }
+            });
+            xfControl.sendValue(selectedValue, evt);
+        };
+
 
         return {
 
@@ -17,11 +32,11 @@ define(["dojo/behavior","dojo/_base/connect","dijit/registry"],
             var xfControl = registry.byId(xfId);
 
             connect.connect(n,"onchange",function(evt){
-                bf.SelectBehavior.selectMinimalSendValue(xfControl, n,evt);
+                selectMinimalSendValue(xfControl, n,evt);
             });
 
             connect.connect(n,"onblur",function(evt){
-                bf.SelectBehavior.selectMinimalSendValue(xfControl, n,evt);
+                selectMinimalSendValue(xfControl, n,evt);
             });
 
             xfControl.setValue=function(value) {
@@ -34,8 +49,13 @@ define(["dojo/behavior","dojo/_base/connect","dijit/registry"],
             var xfId = bf.util.getXfId(n);
             var xfControl = registry.byId(xfId);
 
-            connect.connect(n,"onchange",function(evt){
-                bf.SelectBehavior.selectFullSendValue(xfControl, n,evt);
+            require(["bf/Select"], function(Select) {
+                var selectFull = new Select({id:n.id,xfControl:xfControl}, n);
+
+                connect.connect(n,"onchange",function(evt){
+                    selectFull.selectFullSendValue(xfControl, n,evt);
+                });
+
             });
 
             xfControl.setValue=function(value) {
@@ -43,37 +63,6 @@ define(["dojo/behavior","dojo/_base/connect","dijit/registry"],
                     item.checked = value.indexOf(item.value) != -1;
                 });
             };
-
-            new bf.Select({id:n.id,control:xfControl}, n);
         }
     };
-
-
-    bf.SelectBehavior.selectMinimalSendValue = function(xfControl,n,evt) {
-        var selectedValue = "";
-        query(".xfSelectorItem",n).forEach(function(item){
-            if(item.selected){
-                if(selectedValue  == ""){
-                    selectedValue = item.value;
-                }else {
-                    selectedValue += " " + item.value;
-                }
-            }
-        });
-        xfControl.sendValue(selectedValue, evt);
-    }
-
-    bf.SelectBehavior.selectFullSendValue = function(xfControl,n,evt) {
-        var selectedValue = "";
-        query(".xfCheckBoxValue",n).forEach(function(item){
-            if(item.checked){
-                if(selectedValue  == ""){
-                    selectedValue = item.value;
-                }else {
-                    selectedValue += " " + item.value;
-                }
-            }
-        });
-        xfControl.sendValue(selectedValue, evt);
-    }
 });

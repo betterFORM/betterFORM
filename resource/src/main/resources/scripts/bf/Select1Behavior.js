@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dijit/registry"],
-    function(behavior,domAttr,connect,registry) {
+define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dijit/registry","dojo/query"],
+    function(behavior,domAttr,connect,registry,query) {
 
             return {
 

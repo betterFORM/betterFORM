@@ -109,7 +109,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
             };
 
             connect.connect(n,"onblur",function(evt){
-    //            console.debug("onblur",n);
+                console.debug("onblur",n);
     //            console.debug("xfId",xfId);
     //            console.debug("checked",n.checked);
                 if(n.checked != undefined){
@@ -117,7 +117,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
                 }
             });
             connect.connect(n,"onclick",function(evt){
-    //            console.debug("onclick",n);
+                  console.debug("onclick",n);
     //            console.debug("xfId",xfId);
     //            console.debug("value",n.value);
     //            console.debug("checked",n.checked);

@@ -6,37 +6,54 @@ define(["dojo/_base/declare","bf/Alert","dojo/dom", "dojo/dom-style","dojo/_base
         hideSpeed:1000,
 
         _show:function(id, commonChild, action) {
-            // console.debug("ToolTipAlert._show: [id:" + id , " commonChild: " + commonChild + "]");
+            console.debug("ToolTipAlert._show: [id:" + id , " commonChild: " + commonChild + "]");
             var commonChildNode = dom.byId(id + '-' + commonChild);
 
             if(commonChild != undefined && commonChild == this.hint) {
                 this._render(id, commonChild,"inline");
             }
             else if(commonChildNode != undefined && commonChild == this.alert) {
-                // console.debug("ToolTipAlert._show: [id:" + id , " commonChildNode: " + commonChildNode + "]");
+                console.debug("ToolTipAlert._show: [id:" + id , " commonChildNode: ", commonChildNode ,"]");
 
-                var toolTipId = id+"-MasterToolTip-" +commonChild;
-                var alertTooltip = registry.byId(toolTipId);
-
+                // var toolTipId = id+"-MasterToolTip-" +commonChild;
+                // var alertTooltip = registry.byId(toolTipId);
+                var alertTooltip = undefined;
                 var valueNode = query('.xfValue', dom.byId(id))[0];
+                // console.debug("\n\nalert exists:",alertTooltip);
                 if(alertTooltip == undefined) {
-                    require(["dijit/_MasterTooltip"],function(_MasterTooltip) {
-                        alertTooltip = new _MasterTooltip({id:toolTipId});
+                    console.debug("\n\ncreate Tooltip\n\n");
 
+                    require(["dijit/Tooltip"],function(Tooltip) {
+                        console.debug("commonChildNode.innerHTML: ",commonChildNode);
+                        console.debug("valueNode.id",valueNode.id);
+
+                        alertTooltip = new Tooltip({
+                            label:commonChildNode.innerHTML,
+                            connectId:[valueNode.id]
+                        });
+
+                        console.debug("Tooltip: ",alertTooltip);
+                        // alertTooltip.open();
+/*
                         connect.connect(alertTooltip, "onClick", this, lang.hitch(this, function() {
-                            alertTooltip.hide(valueNode);
+                            alertTooltip.hideTooltip(valueNode);
                         }));
+*/
+                        // console.debug("ToolTipAlert: controlValueNode:",valueNode);
+/*
+                        alertTooltip.showTooltip(commonChildNode.innerHTML, valueNode);
+*/
+
+/*
+                        domStyle.set(alertTooltip.domNode, "opacity", "1");
+                        domStyle.set(alertTooltip.domNode, "cursor", "pointer");
+                        domClass.add(alertTooltip.domNode, "bfToolTipAlert");
+                        domClass.add(valueNode, "bfInvalidControl");
+*/
 
                     });
                 }
 
-                // console.debug("ToolTipAlert: controlValueNode:",valueNode);
-                alertTooltip.show(commonChildNode.innerHTML, valueNode);
-
-                domStyle.set(alertTooltip.domNode, "opacity", "1");
-                domStyle.set(alertTooltip.domNode, "cursor", "pointer");
-                domClass.add(alertTooltip.domNode, "bfToolTipAlert");
-                domClass.add(valueNode, "bfInvalidControl");
 
     /*        if (action == "applyChanges" && (!controlValueIsEmpty || domClass.contains(controlValue.domNode, "xsdBoolean"))) {
                 setTimeout(lang.hitch(this,function() {this._fadeOutAndHide(id,commonChild)}),this.displayDuration);

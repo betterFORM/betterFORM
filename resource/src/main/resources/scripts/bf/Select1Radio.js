@@ -1,5 +1,5 @@
-define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","dojo/dom-construct","dijit/registry"],
-    function(declare, _Widget,domAttr,domClass,domConstruct,registry){
+define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","dojo/dom-construct","dijit/registry","dojo/query",],
+    function(declare, _Widget,domAttr,domClass,domConstruct,registry,query){
         return declare(_Widget, {
             controlId:undefined,
             _onBlur:function() {

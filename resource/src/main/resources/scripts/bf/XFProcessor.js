@@ -47,84 +47,37 @@ define(["dojo/_base/declare",
 
     /*
      keepAlive: function() {
-     if(dwr.engine){
-     dwr.engine.setErrorHandler(this._handleExceptions);
-     dwr.engine.setOrdered(true);
-     Flux.keepAlive(this.sessionKey);
-     }
+         if(dwr.engine){
+             dwr.engine.setErrorHandler(this._handleExceptions);
+            dwr.engine.setOrdered(true);
+            Flux.keepAlive(this.sessionKey);
+        }
      },
      */
+
     constructor:function() {
         console.debug("XFProcessor.constructor sessionKey:",this.sessionKey);
-
         // initialize DWR
+
         Flux._path = dojo.config.bf.fluxPath;
         console.debug("calling init");
         Flux.init(dojo.config.bf.sessionkey, dojo.hitch(this,this.applyChanges));
 
-        /*
-         var fluxAttribute = function(attribute) {
-         return domAttr.get(dom.byId("fluxProcessor"), attribute);
-         };
-         */
         // This is used for referencing this object from within ajax-callback-functions
-        this.indicatorContainer = document.getElementById('bfLoading');
-        this.indicatorImage = document.getElementById('indicator');
+        this.indicatorContainer = dom.byId('bfLoading');
+        this.indicatorImage = dom.byId('indicator');
         this.indicatorImage.className = 'xfDisabled';
-
         // Initialize the clientServerEventQueue for immediately being able to append Elements
         this.clientServerEventQueue = new Array();
+
         connect.connect(window, "onbeforeunload", this, "handleUnload");
         connect.connect(window, "onunload", this, "close");
         this.skipshutdown = false;
-/*
-        var toolTipAlertEnabled = query(".ToolTipAlert", win.body())[0];
-        if (toolTipAlertEnabled != undefined ) {
-            dojo.require("bf.ToolTipAlert");
-            this.defaultAlertHandler = new bf.ToolTipAlert({});
-            // console.debug("Enabled ToolTipAlert Handler ", this.defaultAlertHandler);
-        }
-*/
-        // TODO: Lars: implement Alerts as behavior
-/*
-        var inlineAlertEnabled = query(".InlineAlert", win.body())[0];
-        if (inlineAlertEnabled != undefined || this.defaultAlertHandler == undefined) {
-
-            this.defaultAlertHandler = new bf.InlineAlert({});
-            // console.debug("Enabled InlineAlert Handler ", this.defaultAlertHandler);
-
-        }
-
-*/
-
 
         // Browser Detection
         this.userAgent = navigator.userAgent;
-        console.debug("userAgent: ",this.userAgent);
     },
 
-
-    //todo: move to XFControl?
-   // Show commonChilds 'alert', 'hint', 'info'
-    showAllCommonChilds:function(node,event) {
-        console.debug("FluxProcessor.showAllCommonChilds");
-        query(".xfControl", node).forEach(lang.hitch(this, function(control) {
-            // console.debug("hide/show commonChild for control: ", control, " control valid state is:", domClass.contains(control),"xfValid");
-            if(domClass.contains(control,"xfValid")){
-                this.defaultAlertHandler.handleValid(domAttr.get(control,"id"),event);
-            }else {
-                this.defaultAlertHandler.handleInvalid(domAttr.get(control,"id"),event);
-            }
-        }));
-    },
-
-    //todo: deprecated -> move to behavior
-    unsubscribeFromAlertHandler:function() {
-        console.debug("XFProcessor.unsubscribeFromAlertHandler");
-        for (var i = 0; i < this.subscribers.length; i++) {
-            connect.unsubscribe(this.subscribers[i]);
-        }
-    },
 
     handleUnload:function(evt) {
         console.debug("XFProcessor.handleUnload Event: ", evt);
@@ -619,13 +572,29 @@ define(["dojo/_base/declare",
     },
 
     _buildUI : function(){
-        require(["dojo/behavior","bf/ControlBehavior","bf/OutputBehavior","bf/InputBehavior","bf/TriggerBehavior","bf/AlertBehavior"],
-            function(behavior,ControlBehavior,OutputBehavior,InputBehavior,TriggerBehavior,AlertBehavior){
-                console.debug("XFProcessor._buildUI ControlBehavior:",ControlBehavior, " InputBehavior:",InputBehavior);
+        require(["dojo/behavior",
+                    "bf/ControlBehavior",
+                    "bf/OutputBehavior",
+                    "bf/InputBehavior",
+                    "bf/RangeBehavior",
+                    "bf/SecretBehavior",
+                    "bf/Select1Behavior",
+                    "bf/SelectBehavior",
+                    "bf/TextareaBehavior",
+                    "bf/TriggerBehavior",
+                    "bf/UploadBehavior",
+                    "bf/AlertBehavior"],
+            function(behavior,ControlBehavior,OutputBehavior,InputBehavior,RangeBehavior, SecretBehavior, Select1Behavior, SelectBehavior, TextareaBehavior,TriggerBehavior,UploadBehavior, AlertBehavior){
                 behavior.add(ControlBehavior);
                 behavior.add(OutputBehavior);
                 behavior.add(InputBehavior);
+                behavior.add(RangeBehavior);
+                behavior.add(SecretBehavior);
+                behavior.add(Select1Behavior);
+                behavior.add(SelectBehavior);
+                behavior.add(TextareaBehavior);
                 behavior.add(TriggerBehavior);
+                behavior.add(UploadBehavior);
                 behavior.add(AlertBehavior);
 
             });
@@ -1143,32 +1112,6 @@ define(["dojo/_base/declare",
         }
     },
 
-    /*
-     * function for testing purpose to avoid usage of JS alerts that can cause problems with Selenium
-     */
-    //todo: is this function needed any more???
-    logTestMessage:function(message) {
-        console.debug("XFProcessor.logTestMessage message:", message);
-        var log = dom.byId('messageLog');
-        if (!log) {
-            log = document.createElement('div');
-            log.id = 'messageLog';
-            document.body.appendChild(log);
-        }
-        var messageDiv = document.createElement('message');
-        messageDiv.id = 'message' + ( this._countMessages(log) + 1);
-        var messageText = document.createTextNode(message);
-        messageDiv.appendChild(messageText);
-        log.appendChild(messageDiv);
-    },
-
-    //todo: is this function needed any more???
-    _countMessages:function (log) {
-        console.debug("XFProcessor.logTestMessage message:", log);
-        var logMessagesCount = log.getElementsByTagName('message').length;
-        return logMessagesCount;
-    },
-
     //todo: probably to be merged with '_handleSubmitDone'?
     _handleBetterFormReplaceAll:function() {
         console.debug("XFProcessor._handleBetterFormReplaceAll");
@@ -1227,18 +1170,25 @@ define(["dojo/_base/declare",
         var parentId = xmlEvent.contextInfo.parentId;
         if(parentId) {
             var parentNode = dom.byId(parentId);
-            // console.debug("XFProcessor._handleBetterFormStateChanged: parentNode: ",parentNode);
+            console.debug("XFProcessor._handleBetterFormStateChanged: parentNode: ",parentNode);
             if (domClass.contains(parentNode, "xfSelectorItem")) {
                 var selectParentId = domAttr.set(parentNode.parentNode, "id");
                 if(domClass.contains(parentNode.parentNode,"xfRadioItemset")){
                     selectParentId =domAttr.set(parentNode.parentNode.parentNode,"id");
                 }
-                // console.debug("XFProcessor._handleStateChanged: selectParentId: ",selectParentId);
+                console.debug("XFProcessor._handleStateChanged: selectParentId: ",selectParentId);
                 if(registry.byId(selectParentId)) {
                     registry.byId(selectParentId).handleStateChanged(xmlEvent.contextInfo);
                     return;
+                }else {
+                    console.warn("XFProcessor._handleBetterFormStateChanged: could not find selectParentId: ",selectParentId);
                 }
+            }else {
+                console.warn("XFProcessor._handleBetterFormStateChanged: no handling for not xfSelectorItem implemented: ");
             }
+        }else {
+            connect.publish("/xf/state-change/"+ xmlEvent.contextInfo.targetId,xmlEvent.contextInfo);
+            return;
         }
 
          /*

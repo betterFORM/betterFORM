@@ -3,8 +3,7 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior","dijit/form/HorizontalSlider","dijit/form/HorizontalRuleLabels",
-        "dojo/dom-attr","dojo/_base/connect","dijit/registry"],
+define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dijit/registry", "dijit/form/HorizontalSlider","dijit/form/HorizontalRuleLabels"],
     function(behavior,domAttr,connect,registry) {
 
         return {
