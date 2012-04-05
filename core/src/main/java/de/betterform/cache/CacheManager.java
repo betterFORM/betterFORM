@@ -50,7 +50,7 @@ public class CacheManager {
         return (InputStream) elem.getObjectValue();
     }
 
-    private static Element getElementFromFileCache(File file) throws XFormsException {
+    public static Element getElementFromFileCache(File file) {
         if(LOGGER.isDebugEnabled()){
             LOGGER.debug("search xfFileCache for key: " + file.getAbsolutePath() + file.lastModified());
         }
