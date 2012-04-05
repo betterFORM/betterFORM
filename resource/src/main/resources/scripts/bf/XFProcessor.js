@@ -584,6 +584,9 @@ define(["dojo/_base/declare",
                     "bf/TextareaBehavior",
                     "bf/TriggerBehavior",
                     "bf/UploadBehavior",
+                    /* Container */
+                    "bf/RepeatBehavior",
+                    /* Common Childs */
                     "bf/AlertBehavior"],
             function(behavior,ControlBehavior,OutputBehavior,InputBehavior,RangeBehavior, SecretBehavior, Select1Behavior, SelectBehavior, TextareaBehavior,TriggerBehavior,UploadBehavior, AlertBehavior){
                 behavior.add(ControlBehavior);

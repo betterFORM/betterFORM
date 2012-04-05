@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dijit/registry", "dijit/form/HorizontalSlider","dijit/form/HorizontalRuleLabels"],
-    function(behavior,domAttr,connect,registry) {
+define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dijit/registry", "dijit/form/HorizontalSlider","dijit/form/HorizontalRuleLabels","dijit/form/HorizontalRule"],
+    function(behavior,domAttr,connect,registry, HorizontalSlider, HorizontalRuleLabels,HorizontalRule) {
 
         return {
 
@@ -43,7 +43,7 @@ define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dijit/registry", "
             var rulesNode = document.createElement('div');
 
             n.appendChild(rulesNode);
-            var sliderRules = new dijit.form.HorizontalRule({
+            var sliderRules = new HorizontalRule({
                 count: discreteValues,
                 container: "topDecoration",
                 style:"height:4px;"
@@ -53,17 +53,17 @@ define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dijit/registry", "
             n.appendChild(labelNode);
 
             // setup the labels
-            var sliderLabels = new dijit.form.HorizontalRuleLabels({
+            var sliderLabels = new HorizontalRuleLabels({
                 count: 5,
                 style: "height:1.2em;font-size:75%;color:gray;",
                 labels: [start,end]
             },labelNode);
             // Create Slider
-            var slider = new dijit.form.HorizontalSlider({
+            var slider = new HorizontalSlider({
                 value:xfValue,
                 slideDuration:0,
                 minimum:start,
-                class:"xfValue",
+                className:"xfValue",
                 maximum:end,
                 discreteValues:discreteValues,
                 intermediateChanges:"true",

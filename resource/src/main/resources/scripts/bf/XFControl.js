@@ -4,8 +4,8 @@
  */
 
 define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo/query",
-        "dojo/dom-attr","dojo/_base/connect","dojo/dom-construct","dijit/registry","bf/util"],
-    function(declare, _Widget, dom, domClass,query,domAttr,connect,domConstruct,registry){
+        "dojo/dom-attr","dojo/_base/connect","dojo/dom-construct","dijit/registry","dojo/behavior","bf/util"],
+    function(declare, _Widget, dom, domClass,query,domAttr,connect,domConstruct,registry,behavior){
         return declare(_Widget, {
 
 
@@ -121,9 +121,21 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
                 this.readonly = contextInfo["readonly"];
                 this.required = contextInfo["required"];
                 this.relevant = contextInfo["enabled"];
-                console.debug("Control.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " contextInfo:",contextInfo);
+                console.debug("Control.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " targetName:",contextInfo["targetName"]," type:",contextInfo["type"], " contextInfo:",contextInfo);
 
-                // Set value handling
+                // check xsd type and adjust if needed
+                if(domClass.contains(this.domNode, "bfPrototype")){
+                    // console.warn("XFControl.handleStateChange widget not initialized yet");
+                    domClass.remove(this.domNode, "bfPrototype");
+                    var type = contextInfo["type"];
+                    var xsdType = "xsd" + type.replace(/^[a-z]/, type.substring(0, 1).toUpperCase());
+                    // console.debug("apply new type: ",xsdType, " to Control Widget");
+                    domClass.add(this.domNode, xsdType);
+                    behavior.apply();
+
+                }
+
+            // Set value handling
                 if (this.value != null) {
                     this.currentValue = value;
                     this.setValue(this.value, contextInfo["schemaValue"]);

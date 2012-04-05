@@ -92,6 +92,7 @@
                         type="text"
                         class="xfValue"
                         tabindex="{$navindex}"
+                        appearance="{@appearance}"
                         value="{bf:data/text()}"
                         placeholder="{xf:hint}">
                     <xsl:if test="bf:data/@bf:readonly='true'">

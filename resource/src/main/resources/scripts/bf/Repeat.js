@@ -1,9 +1,16 @@
-define(["dojo/_base/declare","bf/Container","dojo/dom-style","dojo/dom-attr","dojo/dom-class","dojo/dom-construct","dojo/_base/window","dojo/behavior"],
-    function(declare, Container,domStyle,domAttr,domClass,win,behavior){
+define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-style","dojo/dom-attr","dojo/dom-class","dojo/dom-construct","dojo/_base/window","dojo/behavior"],
+    function(declare, Container,query, dom, domStyle, domAttr, domClass, domConstruct, win, behavior){
         return declare(Container, {
 
+/*
+            constructor:function(){
+                console.debug("Repeat.constructor created new instace");
+                this.inherited(arguments);
+            },
+*/
+
             handleSetRepeatIndex:function(/*Map*/ contextInfo) {
-                // console.debug("Repeat.handleSetRepeatIndex: contextInfo'",contextInfo, " for Repeat id: ", this.id);
+                console.debug("Repeat.handleSetRepeatIndex: contextInfo'",contextInfo, " for Repeat id: ", this.id);
                 if(contextInfo != undefined && contextInfo.index != undefined ){
                     this._handleSetRepeatIndex(contextInfo.index);
                 }
@@ -48,7 +55,7 @@ define(["dojo/_base/declare","bf/Container","dojo/dom-style","dojo/dom-attr","do
                 }else {
                     repeatItemNode = this._createRepeatItem(insertedNode, position);
                 }
-                // console.debug("repeatItemNode",repeatItemNode);
+                console.debug("repeatItemNode",repeatItemNode);
 
                 query(".repeated", repeatItemNode).forEach(
                     function(item) {
@@ -66,7 +73,7 @@ define(["dojo/_base/declare","bf/Container","dojo/dom-style","dojo/dom-attr","do
 
             _handleSetRepeatIndex:function(index) {
                 // console.debug("Repeat._handleSetRepeatIndex: position='", index,"' for Repeat id: ", this.id);
-                var intIndex = eval(index)
+                var intIndex = eval(index);
                 if (intIndex == 0) {
                     //this.setFocusOnChild(this.domNode);
                     return;
@@ -82,12 +89,11 @@ define(["dojo/_base/declare","bf/Container","dojo/dom-style","dojo/dom-attr","do
                 // console.debug("handleSetRepeatIndex for repeatIndexNode",repeatIndexNode);
                 if (repeatIndexNode != undefined) {
                     domClass.add(repeatIndexNode, "xfRepeatIndex");
-                    //this.setFocusOnChild(repeatIndexNode);
-
                 }
             },
 
             _removeRepeatIndexClasses:function() {
+                // console.debug("Repeat._removeRepeatIndexClasses: this.domNode:",this.domNode, " this:",this);
                 if (domClass.contains(this.domNode, "xfCompactRepeat")) {
                     query("> tbody > .xfRepeatIndexPre", this.domNode).forEach(
                         function(repeatIndexItem) {

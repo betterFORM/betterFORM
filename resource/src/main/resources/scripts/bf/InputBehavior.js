@@ -1,5 +1,5 @@
-define(["dojo/behavior","dojo/_base/connect","dojo/dom-attr","dijit/registry","bf/util"],
-    function(behavior,connect,domAttr,registry) {
+define(["dojo/behavior","dojo/_base/connect","dojo/dom-attr","dijit/registry","dojo/query","dojo/dom-class", "bf/util"],
+    function(behavior,connect,domAttr,registry,query,domClass) {
 /*
  * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
@@ -27,24 +27,37 @@ todo: dependencies must be imported for foreign (non-dojo) components
             domAttr.set(node, "value", value);
         };
     }
+    function connectDateDijit(xfControlDijit, dateWidget){
+        domClass.add(dateWidget.domNode,"xfValue");
 
-    function sendDate(xfControlDijit, dateWidget, attrName, value){
-        if((attrName == "focused" &&  !value) || attrName == "value") {
-            var dateValue;
-            if(dateWidget.serialize){
-                dateValue = dateWidget.serialize(dateWidget.get("value")).substring(0, 10);
-            }else{
-                dateValue = dateWidget.get("value");
+        connect.connect(dateWidget, "set", function (attrName, value) {
+            if((attrName == "focused" &&  !value) || attrName == "value") {
+                var dateValue;
+                if(dateWidget.serialize){
+                    dateValue = dateWidget.serialize(dateWidget.get("value")).substring(0, 10);
+                }else{
+                    dateValue = dateWidget.get("value");
+                }
+                var evt = new Object();
+                if(attrName == "focused"){
+                    evt.type ="blur";
+                    xfControlDijit.sendValue(dateValue,evt);
+                }else {
+                    evt.type = "change";
+                    xfControlDijit.sendValue(dateValue,evt);
+                }
             }
-            var evt = new Object();
-            if(attrName == "focused"){
-                evt.type ="blur";
-                xfControlDijit.sendValue(dateValue,evt);
-            }else {
-                evt.type = "change";
-                xfControlDijit.sendValue(dateValue,evt);
-            }
-        }
+        });
+        xfControlDijit.setValue = function(value,schemavalue) {
+            dateWidget.set('value', schemavalue);
+        };
+        xfControlDijit.setReadonly = function() {
+            dateWidget.set('readOnly', true);
+        };
+        xfControlDijit.setReadwrite = function() {
+            dateWidget.set('readOnly', false);
+        };
+
     }
 
 
@@ -56,7 +69,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
         // ############################## INPUT MAPPINGS ############################################################
 
         // a default input control (TextField) bound to a string
-        '.xfInput.xsdString .xfValue': function(n) {
+        '.xfControl.xfInput.xsdString .xfValue': function(n) {
             // console.debug("FOUND: string input field: ",n);
 
             /*
@@ -104,15 +117,17 @@ todo: dependencies must be imported for foreign (non-dojo) components
         // ############################## BOOLEAN INPUT ##############################
         // ############################## BOOLEAN INPUT ##############################
         // ############################## BOOLEAN INPUT ##############################
-        '.xfInput.xsdBoolean .xfValue': function(n) {
+        '.xfControl.xfInput.xsdBoolean .xfValue': function(n) {
             // console.debug("FOUND: boolean input field: ",n);
             var xfId = n.id.substring(0,n.id.lastIndexOf("-"));
             var xfControlDijit = registry.byId(xfId);
 
+            if(domAttr.get(n,"type") != "checkbox"){
+                domAttr.set(n,"type","checkbox");
+            }
             /* overwritten "abstract" API function of XFControl */
             xfControlDijit.setValue = function(value, schemavalue) {
-                console.debug("xsdBoolean setValue value:",value);
-                n.checked = value || value == 'true';
+                domAttr.set(n,"checked",value  == true || value == 'true');
             };
 
             /*
@@ -176,14 +191,19 @@ todo: dependencies must be imported for foreign (non-dojo) components
         },
 
         /*  rendering dijit.formDateTextBox (DropdownDatePicker) for desktop browser */
-        '.uaDesktop .xfInput.xsdDate .xfValue':function (n) {
-            // console.debug("InputBehaviour: found: .uaDesktop .xfInput.xsdDate .xfValue",n);
+        /* WARNING: xfValue must not be matched here due to templated widgets, this would end in an
+        *  infinite loop */
+        '.uaDesktop .xfControl.xfInput.xsdDate .widgetContainer':function (node) {
+            // console.debug("InputBehaviour: found: .uaDesktop .xfInput.xsdDate .widgetContainer",node);
+            var n = query(".xfValue",node)[0];
+            // console.debug("found date value node: n:",n);
 
             var xfId = bf.util.getXfId(n);
             var xfControlDijit = registry.byId(xfId);
             var appearance = domAttr.get(n,"appearance");
+            // console.debug("create new date for xfId:",xfId ," with appearance:",appearance);
             var datePattern;
-           if (appearance && appearance.indexOf("iso8601:") != -1) {
+            if (appearance && appearance.indexOf("iso8601:") != -1) {
                 datePattern = appearance.substring(appearance.indexOf("iso8601:")+8);
                 if(datePattern.indexOf(" ") != -1) {
                     datePattern = datePattern.substring(0,datePattern.indexOf(" ")).trim();
@@ -202,10 +222,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
                                 selector:'date'
                             }
                         },n);
-                    connect.connect(dateWidget, "set", function (attrName, value) {
-                        sendDate(xfControlDijit,dateWidget, attrName,value);
-                    });
-
+                    connectDateDijit(xfControlDijit, dateWidget);
                 });
             } else if (datePattern) {
                 require(["dijit/form/DateTextBox"], function(DateTextBox) {
@@ -216,10 +233,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
                                             selector:'date',
                                             datePattern:datePattern
                                         } },n);
-                    connect.connect(dateWidget, "set", function (attrName, value) {
-                        sendDate(xfControlDijit,dateWidget, attrName,value);
-                    });
-
+                    connectDateDijit(xfControlDijit, dateWidget);
                 });
             } else {
                 require(["dijit/form/DateTextBox"], function(DateTextBox) {
@@ -229,20 +243,9 @@ todo: dependencies must be imported for foreign (non-dojo) components
                                         constraints:{
                                             selector:'date'
                                         }}, n);
-                    connect.connect(dateWidget, "set", function (attrName, value) {
-                        sendDate(xfControlDijit,dateWidget, attrName,value);
-                    });
+                    connectDateDijit(xfControlDijit, dateWidget);
                 });
             }
-            xfControlDijit.setValue = function(value,schemavalue) {
-                dateWidget.set('value', schemavalue);
-            };
-            xfControlDijit.setReadonly = function() {
-                dateWidget.set('readOnly', true);
-            };
-            xfControlDijit.setReadwrite = function() {
-                dateWidget.set('readOnly', false);
-            };
         },
 
 

@@ -576,7 +576,7 @@
                     <xsl:with-param name="label-elements" select="xf:label"/>
                 </xsl:call-template>
             </label>
-            <span class="bfValueWrapper">
+            <span class="widgetContainer">
                 <xsl:call-template name="buildControl"/>
                 <xsl:apply-templates select="xf:alert"/>
                 <xsl:apply-templates select="xf:hint"/>
@@ -850,13 +850,24 @@
     <xsl:template name="addDojoImport">
         <xsl:variable name="dojoConfig">
             has: {
-                "dojo-firebug": <xsl:value-of select="$debug-enabled"/>
+                "dojo-firebug": <xsl:value-of select="$debug-enabled"/>,
+                "dojo-debug-messages": <xsl:value-of select="$debug-enabled"/>
             },
             debugAtAllCosts:<xsl:value-of select="$debug-enabled"/>,
-            locale:'<xsl:value-of select="$locale"/>',
             isDebug:<xsl:value-of select="$debug-enabled"/>,
+            locale:'<xsl:value-of select="$locale"/>',
+            baseUrl: '<xsl:value-of select="concat($contextroot,$scriptPath)"/>',
+
             parseOnLoad:false,
             async:true,
+
+            packages: [
+                'dojo',
+                'dijit',
+                'dojox',
+                'bf'
+            ],
+
             bf:{
                 sessionkey: "<xsl:value-of select="$sessionKey"/>",
                 contextroot:"<xsl:value-of select="$contextroot"/>",

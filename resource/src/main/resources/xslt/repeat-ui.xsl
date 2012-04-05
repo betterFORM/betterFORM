@@ -184,8 +184,7 @@
 
         <xsl:element name="span">
             <xsl:attribute name="id" select="$id"/>
-            <xsl:attribute name="class" select="concat(substring-after($control-classes,'xfControl'),' xfRepeated')"/>
-            <xsl:attribute name="controlType" select="local-name()"/>
+            <xsl:attribute name="class" select="concat(substring-after($control-classes,'xfControl'),' xfRepeated bfPrototype')"/>
             <xsl:attribute name="appearance" select="@appearance"/>
             <xsl:attribute name="title" select="normalize-space(xf:hint)"/>
 
@@ -199,7 +198,7 @@
             </label>
 
             <!--<xsl:apply-templates select="xf:alert"/>-->
-            <span class="bfValueWrapper">
+            <span class="widgetContainer">
                 <xsl:call-template name="buildControl"/>
                 <xsl:apply-templates select="xf:alert"/>
                 <xsl:apply-templates select="xf:hint"/>
