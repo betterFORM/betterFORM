@@ -562,7 +562,10 @@ alert + hints should always be aligned with the control.
         text-align: left;
         width: 160px;
         vertical-align: top;
-        display: block; /*float:left;*/
+        display: block;
+        /*Commenting this out breaks fullgroup layout*/
+        float: left;
+        margin-top: 0;
     }
 
 
