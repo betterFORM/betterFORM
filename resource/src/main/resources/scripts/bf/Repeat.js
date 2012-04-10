@@ -37,7 +37,6 @@ define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-s
                 if (contextInfo.prototypeId != undefined) {
                     generatedIds = contextInfo.generatedIds;
                     domAttr.set(insertedNode, "id", generatedIds[contextInfo.prototypeId]);
-                    // replace prototype ids with generated ones
 
                 } else if (contextInfo.repeatedSelects) {
                     generatedIds = contextInfo.repeatedSelects[0].generatedIds;
@@ -45,6 +44,7 @@ define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-s
                     var clonedNodeId = contextInfo.repeatedSelects[0].generatedIds[0];
                     domAttr.set(insertedNode, "id", clonedNodeId);
                 }
+                // replace prototype ids with generated ones
                 this._replacePrototypeIds(insertedNode, generatedIds);
 
 
@@ -56,12 +56,11 @@ define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-s
                 var repeatItemNode = undefined;
                 if (repeatItemExists[0] != null ) {
                     // console.warn("Skipping already present repeatItem: ", repeatItemExists);
-                    // console.debug("repeatItemExists.id: " , domAttr.get(repeatItemExists[0], "id"));
                     repeatItemNode = dom.byId(domAttr.get(repeatItemExists[0], "id"));
                 }else {
                     repeatItemNode = this._createRepeatItem(insertedNode, position);
                 }
-                console.debug("repeatItemNode",repeatItemNode);
+                // console.debug("repeatItemNode",repeatItemNode);
 
                 query(".repeated", repeatItemNode).forEach(
                     function(item) {
@@ -89,7 +88,7 @@ define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-s
                 this._removeRepeatIndexClasses();
 
                 var repeatIndexNode;
-                if (domClass.contains(this.domNode, "aCompact")) {
+                if (this.appearance == "compact") {
                     repeatIndexNode = query("> tbody > .xfRepeatItem", this.domNode)[intIndex - 1];
                 } else {
                     repeatIndexNode = query("> .xfRepeatItem", this.domNode)[intIndex - 1];
@@ -102,7 +101,7 @@ define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-s
 
             _removeRepeatIndexClasses:function() {
                 // console.debug("Repeat._removeRepeatIndexClasses: this.domNode:",this.domNode, " this:",this);
-                if (domClass.contains(this.domNode, "aCompact")) {
+                if (this.appearance == "compact") {
                     query("> tbody > .xfRepeatIndexPre", this.domNode).forEach(
                         function(repeatIndexItem) {
                             domClass.remove(repeatIndexItem, "xfRepeatIndexPre");
@@ -194,7 +193,7 @@ define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-s
 
                 var targetNode = null;
                 if (position == 1 && repeatItemCount > 0) {
-                    if (domClass.contains(this.domNode, "aCompact")) {
+                    if (this.appearance == "compact") {
                         targetNode = query("> tbody > .xfRepeatItem", this.domNode)[0];
                     } else {
                         targetNode = query("> .xfRepeatItem", this.domNode)[0];
@@ -203,7 +202,7 @@ define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-s
 
                 } else if (position == 1 && repeatItemCount == 0) {
 
-                    if (domClass.contains(this.domNode, "aCompact")) {
+                    if (this.appearance == "compact") {
                         // console.debug("RepeatItem._createRepeatItem for CompactRepeat domNode: ", this.domNode);
                         var tbodyNode = query("tbody", this.domNode)[0];
                         if (tbodyNode == undefined) {
@@ -221,7 +220,7 @@ define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-s
                     //  1. XForms Position 1 = JavaScript Array Position 1 and
                     //  2. Default Insert happens after the targetNode
 
-                    if (domClass.contains(this.domNode, "aCompact")) {
+                    if (this.appearance == "compact") {
                         targetNode = query("> tbody > .xfRepeatItem", this.domNode)[position - 2];
                     } else {
                         targetNode = query("> .xfRepeatItem", this.domNode)[position - 2];
@@ -235,7 +234,7 @@ define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-s
 
             _getSize:function() {
                 var size;
-                if (domClass.contains(this.domNode, "aCompact")) {
+                if (this.appearance == "compact") {
                     size = query("> tbody > .xfRepeatItem", this.domNode).length;
                 } else {
                     size = query("> .xfRepeatItem", this.domNode).length;
