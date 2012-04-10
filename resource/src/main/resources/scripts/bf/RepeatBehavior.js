@@ -6,13 +6,9 @@ define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dojo/dom-class","d
          ###########################################################################################
          matching all elements with .xfRepeat and instanciate a Repeat Object for each of them.
          */
-        '.xfRepeat.aFull,.xfRepeat.aDefault,.xfRepeat.aMinimal':function(n) {
-            // console.debug("\n\nRepeatBehaviour: found xfFullRepeat: ",n, " \n\n");
-            new Repeat({id:n.id}, n);
-        },
-        '.xfRepeat.aCompact':function(n) {
-            // console.debug("\n\nRepeatBehaviour: found xfCompactRepeat: ",n, " \n\n");
-            new Repeat({id:n.id}, n);
+        '.xfRepeat':function(n) {
+            // console.debug("\n\nRepeatBehaviour: found Repeat: ",n, " \n\n");
+            new Repeat({repeatId:domAttr.get(n,"repeatId")}, n);
         },
 
         '.xfRepeat .xfRepeatItem':function(n) {

@@ -120,7 +120,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
         // ############################## BOOLEAN INPUT ##############################
         '.xfControl.xfInput.xsdBoolean .xfValue': function(n) {
             // console.debug("FOUND: boolean input field: ",n);
-            var xfId = n.id.substring(0,n.id.lastIndexOf("-"));
+            var xfId = bf.util.getXfId(n);
             var xfControlDijit = registry.byId(xfId);
 
             if(domAttr.get(n,"type") != "checkbox"){

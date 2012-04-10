@@ -154,7 +154,9 @@ define(["dojo/_base/declare",
             }
 
             if(nextPendingClientServerEvent.getCallerFunction() == "setRepeatIndex"){
-                dijitObject = this._getRepeatObject(nextPendingClientServerEvent.getTargetId());
+                var repeatElement = query("*[repeatId='" + nextPendingClientServerEvent.getTargetId() + "']");
+                dijitObject = registry.byId(domAttr.get(repeatElement[0], "id"));
+
             }else {
                 dijitObject = registry.byId(nextPendingClientServerEvent.getTargetId());
             }
@@ -1198,19 +1200,8 @@ define(["dojo/_base/declare",
     //todo: should be moved to a behavior
     //todo: note that xforms-insert might not target repeat or itemset
     _handleBetterFormInsertRepeatItem:function(xmlEvent) {
-        console.debug("XFProcessor.betterform-insert-repeatitem [id: '", xmlEvent.contextInfo.targetId, "'] xmlEvent:",xmlEvent);
-        var repeatToInsertIntoDOM = query("*[repeatId='" + xmlEvent.contextInfo.targetId + "']");
-
-        var repeatObject = this._getRepeatObject(xmlEvent.contextInfo.targetId);
-        if (repeatObject == undefined) {
-            // console.debug("XFProcessor._handleBetterFormInsertRepeatItem ",repeatToInsertIntoDOM);
-            // console.dirxml(repeatToInsertIntoDOM[0]);
-            // TODO: Lars: new implementation needed
-            // dojo.require("betterform.ui.container.Repeat");
-            // repeatObject = new betterform.ui.container.Repeat({}, repeatToInsertIntoDOM[0]);
-        }
-        repeatObject.handleInsert(xmlEvent.contextInfo);
-
+        // console.debug("XFProcessor.betterform-insert-repeatitem [id: '", xmlEvent.contextInfo.targetId, "'] xmlEvent:",xmlEvent);
+        connect.publish("betterform-insert-repeatitem-"+ xmlEvent.contextInfo.targetId, xmlEvent.contextInfo);
     },
 
     //todo: should be moved to a behavior
@@ -1222,91 +1213,26 @@ define(["dojo/_base/declare",
         if (selectDijit != undefined) {
             selectDijit.handleInsertItem(xmlEvent.contextInfo);
         }
-        // OLD CODE
-/*
-        if (registry.byId(xmlEvent.contextInfo.targetId) != undefined) {
-            // console.debug("betterform-insert-itemset handle Insert [id: '", xmlEvent.contextInfo.targetId, " / dijit:",registry.byId(xmlEvent.contextInfo.targetId),']' );
-            registry.byId(xmlEvent.contextInfo.targetId).handleInsert(xmlEvent.contextInfo);
-        } else {
-            var itemsetDOM = dom.byId(xmlEvent.contextInfo.targetId);
-            // console.debug("betterform-insert-itemset [id: '", xmlEvent.contextInfo.targetId, " / dom:'",dom.byId(xmlEvent.contextInfo.targetId),"']");
-            var itemsetType = domAttr.get(itemsetDOM, "dojoType");
-            // Prototypes don't have a dojoType, search for controlType instead
-            if(itemsetType == undefined) {
-                var controlType = domAttr.get(itemsetDOM, "controlType");
-                if(controlType == "optGroup") {
-                    itemsetType = "betterform.ui.select.OptGroup";
-                }
-            }
-
-            var itemsetDijit;
-            if(itemsetType != undefined) {
-                if (itemsetType == "betterform.ui.select.OptGroup") {
-                    itemsetDijit = new betterform.ui.select.OptGroup({contextInfo:xmlEvent.contextInfo}, itemsetDOM);
-                }
-                else if (itemsetType == "betterform.ui.select1.RadioItemset") {
-                    itemsetDijit = new betterform.ui.select1.RadioItemset({contextInfo:xmlEvent.contextInfo}, itemsetDOM);
-                }
-                else if (itemsetType == "betterform.ui.select.CheckBoxItemset") {
-                    itemsetDijit = new betterform.ui.select.CheckBoxItemset({contextInfo:xmlEvent.contextInfo}, itemsetDOM);
-                }
-                else {
-                    console.warn("XFProcessor apply betterform-insert-itemset: Itemset Type " + itemsetType + " not supported yet");
-                }
-            } else {
-                console.warn("XFProcessor apply betterform-insert-itemset: ItemSet Type is null");
-                return;
-            }
-            // console.debug("betterform-insert-itemset [id: '", xmlEvent.contextInfo.targetId, " / dojotype:'",itemsetType,"']");
-            if (itemsetDijit != undefined) {
-                itemsetDijit.handleInsert(xmlEvent.contextInfo);
-            } else {
-                console.warn("XFProcessor apply betterform-insert-itemset: Error during itemset creation: ItemsetId " + xmlEvent.contextInfo.targetId + " itemsetType: " + itemsetType + " not supported yet");
-            }
-        }
-*/
 
     },
     _handleBetterFormItemDeleted:function(xmlEvent) {
-        console.debug("handle betterform-item-deleted for ", xmlEvent.contextInfo.targetName, " [id: '", xmlEvent.contextInfo.targetId, "'] xmlEvent:", xmlEvent);
+        // console.debug("handle betterform-item-deleted for ", xmlEvent.contextInfo.targetName, " [id: '", xmlEvent.contextInfo.targetId, "'] xmlEvent:", xmlEvent);
         if (xmlEvent.contextInfo.targetName == "itemset") {
             var selectDijit = registry.byId(xmlEvent.contextInfo.parentId + "-value");
             console.debug("handle betterform-item-deleted [selectDijit: '", selectDijit ,']' );
             if (selectDijit != undefined) {
                 selectDijit.handleDeleteItem(xmlEvent.contextInfo);
             }
+        }else if (xmlEvent.contextInfo.targetName == "repeat") {
+            connect.publish("betterform-item-deleted-"+ xmlEvent.contextInfo.targetId, xmlEvent.contextInfo);
         }
-
-        // OLD CODE
-/*
-        if (xmlEvent.contextInfo.targetName == "itemset") {
-            registry.byId(xmlEvent.contextInfo.targetId).handleDelete(xmlEvent.contextInfo);
-        }
-        else if (xmlEvent.contextInfo.targetName == "repeat" || xmlEvent.contextInfo.targetName == "tbody") {
-            var repeatObject = _getRepeatObject(xmlEvent);
-            repeatObject.handleDelete(xmlEvent.contextInfo);
-            var positionOfDeletedItem = xmlEvent.contextInfo.position;
-            if(positionOfDeletedItem <= repeatObject._getSize()){
-                repeatObject._handleSetRepeatIndex(positionOfDeletedItem);
-            }
-        }
-*/
     },
 
     //todo: move to repeat behavior
     _handleBetterFormIndexChanged:function(xmlEvent) {
-        console.debug("XFProcessor._handleBetterFormIndexChanged xmlEvent:",xmlEvent);
-        var repeat = this._getRepeatObject(xmlEvent.contextInfo.targetId);
-        console.debug("XFProcessor.betterform-index-changed Repeat: ", repeat, " targetId: ", xmlEvent.contextInfo.targetId);
-        repeat.handleSetRepeatIndex(xmlEvent.contextInfo);
-    },
+        // console.debug("XFProcessor._handleBetterFormIndexChanged xmlEvent:",xmlEvent);
+        connect.publish("betterform-index-changed-"+xmlEvent.contextInfo.targetId, xmlEvent.contextInfo);
 
-
-    _getRepeatObject: function (targetId){
-        console.debug("XFProcessor._getRepeatObject targetId:",targetId);        
-        var repeatElement = query("*[repeatId='" + targetId + "']");
-        var repeatObject = registry.byId(domAttr.get(repeatElement[0], "id"));
-        return repeatObject;
     },
 
     _handleUploadProgressEvent:function(xmlEvent) {

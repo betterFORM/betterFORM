@@ -1,5 +1,5 @@
-define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-style","dojo/dom-attr","dojo/dom-class","dojo/dom-construct","dojo/_base/window","dojo/behavior"],
-    function(declare, Container,query, dom, domStyle, domAttr, domClass, domConstruct, win, behavior){
+define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-style","dojo/dom-attr","dojo/dom-class","dojo/dom-construct","dojo/_base/window","dojo/behavior","dojo/_base/connect"],
+    function(declare, Container,query, dom, domStyle, domAttr, domClass, domConstruct, win, behavior,connect){
         return declare(Container, {
 
 
@@ -13,13 +13,34 @@ define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-s
                     this.appearance = "full";
                 }
                 // console.debug("Repeat.postCreate appearance:",this.appearance);
+
+                connect.subscribe("betterform-insert-repeatitem-"+ this.repeatId, this, "handleInsert");
+                connect.subscribe("betterform-item-deleted-"+ this.repeatId,      this, "handleDelete");
+                connect.subscribe("betterform-index-changed-"+ this.repeatId,     this, "handleSetRepeatIndex");
             },
 
             handleSetRepeatIndex:function(/*Map*/ contextInfo) {
                 // console.debug("Repeat.handleSetRepeatIndex: contextInfo'",contextInfo, " for Repeat id: ", this.id);
-                if(contextInfo != undefined && contextInfo.index != undefined ){
-                    this._handleSetRepeatIndex(contextInfo.index);
+                var intIndex = parseInt(contextInfo.index,"10");
+                // TODO: Lars this can never happen?!?
+                if (intIndex == 0) {
+                    console.warn("Repeat.handleSetRepeatIndex index is 0");
+                    return;
                 }
+
+                this._removeRepeatIndexClasses();
+
+                var repeatIndexNode;
+                if (this.appearance == "compact") {
+                    repeatIndexNode = query("> tbody > .xfRepeatItem", this.domNode)[intIndex - 1];
+                } else {
+                    repeatIndexNode = query("> .xfRepeatItem", this.domNode)[intIndex - 1];
+                }
+                // console.debug("handleSetRepeatIndex for repeatIndexNode",repeatIndexNode);
+                if (repeatIndexNode != undefined) {
+                    domClass.add(repeatIndexNode, "xfRepeatIndex");
+                }
+
             },
 
             handleInsert:function(/*Map*/ contextInfo) {
@@ -49,7 +70,7 @@ define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-s
 
 
                 // create dijit and place it within repeat
-                var position = eval(contextInfo.position);
+                var position = parseInt(contextInfo.position,"10");
 
                 // console.debug("InsertedNode: " + insertedNode.id );
                 var repeatItemExists = query("*[repeatItemId='" + insertedNode.id + "']");
@@ -78,24 +99,16 @@ define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-s
                 // console.debug("Inserted new Repeat Item", repeatItemNode);
             },
 
-            _handleSetRepeatIndex:function(index) {
-                // console.debug("Repeat._handleSetRepeatIndex: position='", index,"' for Repeat id: ", this.id);
-                var intIndex = eval(index);
-                if (intIndex == 0) {
-                    //this.setFocusOnChild(this.domNode);
-                    return;
-                }
-                this._removeRepeatIndexClasses();
-
-                var repeatIndexNode;
+            handleDelete:function(/*Map*/ contextInfo) {
+                // console.debug("Repeat.handleDelete contextInfo:",contextInfo);
+                var position = parseInt(contextInfo.position,"10");
+                var itemToRemove;
                 if (this.appearance == "compact") {
-                    repeatIndexNode = query("> tbody > .xfRepeatItem", this.domNode)[intIndex - 1];
+                    itemToRemove = dojo.query("> tbody > .xfRepeatItem", this.domNode)[position - 1];
+                    dojo.query("> tbody", this.domNode)[0].removeChild(itemToRemove);
                 } else {
-                    repeatIndexNode = query("> .xfRepeatItem", this.domNode)[intIndex - 1];
-                }
-                // console.debug("handleSetRepeatIndex for repeatIndexNode",repeatIndexNode);
-                if (repeatIndexNode != undefined) {
-                    domClass.add(repeatIndexNode, "xfRepeatIndex");
+                    itemToRemove = dojo.query("> .xfRepeatItem", this.domNode)[position - 1];
+                    this.domNode.removeChild(itemToRemove);
                 }
             },
 
