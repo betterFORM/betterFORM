@@ -28,6 +28,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
         };
     }
     function connectDateDijit(xfControlDijit, dateWidget){
+        // console.debug("connectDateDijit: xfControlDijit:",xfControlDijit," dateWidget:",dateWidget);
         domClass.add(dateWidget.domNode,"xfValue");
 
         connect.connect(dateWidget, "set", function (attrName, value) {

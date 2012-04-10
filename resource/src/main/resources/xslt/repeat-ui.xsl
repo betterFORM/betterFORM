@@ -594,8 +594,8 @@
 
         <xsl:element name="{$htmlElem}">
             <xsl:attribute name="id" select="$id"/>
-            <xsl:attribute name="class" select="concat($control-classes,' xfRepeated')"/>
-            <xsl:attribute name="controlType" select="local-name()"/>
+            <!--<xsl:attribute name="class" select="concat($control-classes,' xfRepeated')"/>-->
+            <xsl:attribute name="class" select="concat(substring-after($control-classes,'xfControl'),' xfRepeated bfPrototype')"/>
             <xsl:attribute name="appearance" select="@appearance"/>
             <xsl:if test="$incrementaldelay ne 'undef'">
                 <xsl:message>
@@ -606,21 +606,16 @@
 
             <xsl:call-template name="copy-style-attribute"/>
 
-            <xsl:choose>
-                <xsl:when test="exists(@mediatype)">
-                    <xsl:attribute name="mediatype" select="@mediatype"/>
-                </xsl:when>
-                <xsl:when test="'select' = local-name()">
-                    <xsl:call-template name="select"/>
-                </xsl:when>
-                <xsl:when test="'select1' = local-name()">
-                    <xsl:call-template name="select1"/>
-                </xsl:when>
-            </xsl:choose>
-            <xsl:apply-templates select="xf:alert"/>
-            <xsl:apply-templates select="xf:hint"/>
-            <xsl:apply-templates select="xf:help"/>
+            <xsl:if test="exists(@mediatype)">
+                <xsl:attribute name="mediatype" select="@mediatype"/>
+            </xsl:if>
 
+            <span class="widgetContainer">
+                <xsl:call-template name="buildControl"/>
+                <xsl:apply-templates select="xf:alert"/>
+                <xsl:apply-templates select="xf:hint"/>
+                <xsl:apply-templates select="xf:help"/>
+            </span>
         </xsl:element>
 
     </xsl:template>
@@ -762,12 +757,12 @@
                     <xsl:with-param name="label-elements" select="xf:label"/>
                 </xsl:call-template>
             </label>
-
-            <xsl:call-template name="buildControl"/>
-            <xsl:apply-templates select="xf:alert"/>
-            <xsl:apply-templates select="xf:hint"/>
-            <xsl:apply-templates select="xf:help"/>
-
+            <span class="widgetContainer">
+                <xsl:call-template name="buildControl"/>
+                <xsl:apply-templates select="xf:alert"/>
+                <xsl:apply-templates select="xf:hint"/>
+                <xsl:apply-templates select="xf:help"/>
+            </span>
 
         </div>
     </xsl:template>

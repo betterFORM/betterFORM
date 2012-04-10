@@ -2,15 +2,21 @@ define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-s
     function(declare, Container,query, dom, domStyle, domAttr, domClass, domConstruct, win, behavior){
         return declare(Container, {
 
-/*
-            constructor:function(){
-                console.debug("Repeat.constructor created new instace");
+
+            postCreate:function(){
+                // console.debug("Repeat.postCreate created new instace");
                 this.inherited(arguments);
+                this.appearance = undefined;
+                if (domClass.contains(this.srcNodeRef, "aCompact")) {
+                    this.appearance = "compact";
+                } else {
+                    this.appearance = "full";
+                }
+                // console.debug("Repeat.postCreate appearance:",this.appearance);
             },
-*/
 
             handleSetRepeatIndex:function(/*Map*/ contextInfo) {
-                console.debug("Repeat.handleSetRepeatIndex: contextInfo'",contextInfo, " for Repeat id: ", this.id);
+                // console.debug("Repeat.handleSetRepeatIndex: contextInfo'",contextInfo, " for Repeat id: ", this.id);
                 if(contextInfo != undefined && contextInfo.index != undefined ){
                     this._handleSetRepeatIndex(contextInfo.index);
                 }
@@ -66,8 +72,10 @@ define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-s
                     }
                 );
                 behavior.apply();
+                if(domStyle.get(repeatItemNode,"display") == "none"){
+                    repeatItemNode.removeAttribute("style");
+                }
 
-                domStyle.set(repeatItemNode,"display", "block");
                 // console.debug("Inserted new Repeat Item", repeatItemNode);
             },
 
@@ -81,7 +89,7 @@ define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-s
                 this._removeRepeatIndexClasses();
 
                 var repeatIndexNode;
-                if (domClass.contains(this.domNode, "xfCompactRepeat")) {
+                if (domClass.contains(this.domNode, "aCompact")) {
                     repeatIndexNode = query("> tbody > .xfRepeatItem", this.domNode)[intIndex - 1];
                 } else {
                     repeatIndexNode = query("> .xfRepeatItem", this.domNode)[intIndex - 1];
@@ -94,7 +102,7 @@ define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-s
 
             _removeRepeatIndexClasses:function() {
                 // console.debug("Repeat._removeRepeatIndexClasses: this.domNode:",this.domNode, " this:",this);
-                if (domClass.contains(this.domNode, "xfCompactRepeat")) {
+                if (domClass.contains(this.domNode, "aCompact")) {
                     query("> tbody > .xfRepeatIndexPre", this.domNode).forEach(
                         function(repeatIndexItem) {
                             domClass.remove(repeatIndexItem, "xfRepeatIndexPre");
@@ -129,7 +137,7 @@ define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-s
 
             _replacePrototypeIds:function(node, generatedIds) {
                 var compactRepeat = false;
-                if(domClass.contains(this.domNode,"xfCompactRepeat")) {
+                if(domClass.contains(this.domNode,"aCompact")) {
                     compactRepeat = true;
                 }
 
@@ -181,19 +189,12 @@ define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-s
             _createRepeatItem:function(/*Dijit*/node, /* int */position) {
                 // console.debug("RepeatItem._createRepeatItem node:",node, " at position " + position);
                 var repeatItemCount = this._getSize();
-                var appearance;
-                if (domClass.contains(this.domNode, "xfFullRepeat")) {
-                    appearance = "full";
-                } else {
-                    appearance = "compact";
-                }
-                // var repeatItemDijit = new bf.ui.container.RepeatItem({repeatId:this.id,appearance:appearance}, node);
                 // repeatItemDijit.hideRepeatItem();
                 domStyle.set(node, "display","none");
 
                 var targetNode = null;
                 if (position == 1 && repeatItemCount > 0) {
-                    if (domClass.contains(this.domNode, "xfCompactRepeat")) {
+                    if (domClass.contains(this.domNode, "aCompact")) {
                         targetNode = query("> tbody > .xfRepeatItem", this.domNode)[0];
                     } else {
                         targetNode = query("> .xfRepeatItem", this.domNode)[0];
@@ -202,7 +203,7 @@ define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-s
 
                 } else if (position == 1 && repeatItemCount == 0) {
 
-                    if (domClass.contains(this.domNode, "xfCompactRepeat")) {
+                    if (domClass.contains(this.domNode, "aCompact")) {
                         // console.debug("RepeatItem._createRepeatItem for CompactRepeat domNode: ", this.domNode);
                         var tbodyNode = query("tbody", this.domNode)[0];
                         if (tbodyNode == undefined) {
@@ -220,7 +221,7 @@ define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-s
                     //  1. XForms Position 1 = JavaScript Array Position 1 and
                     //  2. Default Insert happens after the targetNode
 
-                    if (domClass.contains(this.domNode, "xfCompactRepeat")) {
+                    if (domClass.contains(this.domNode, "aCompact")) {
                         targetNode = query("> tbody > .xfRepeatItem", this.domNode)[position - 2];
                     } else {
                         targetNode = query("> .xfRepeatItem", this.domNode)[position - 2];
@@ -234,7 +235,7 @@ define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-s
 
             _getSize:function() {
                 var size;
-                if (domClass.contains(this.domNode, "xfCompactRepeat")) {
+                if (domClass.contains(this.domNode, "aCompact")) {
                     size = query("> tbody > .xfRepeatItem", this.domNode).length;
                 } else {
                     size = query("> .xfRepeatItem", this.domNode).length;

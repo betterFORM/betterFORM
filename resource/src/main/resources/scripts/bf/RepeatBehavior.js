@@ -1,13 +1,17 @@
-define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dojo/dom-class","dojo/_base/array","bf/Repeat"],
-    function(behavior,domAttr,connect,domClass,array,Repeat) {
+define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dojo/dom-class","dojo/_base/array","dojo/query","bf/Repeat"],
+    function(behavior,domAttr,connect,domClass,array,query, Repeat) {
         return {
 
         /*
          ###########################################################################################
          matching all elements with .xfRepeat and instanciate a Repeat Object for each of them.
          */
-        '.xfRepeat.aFull':function(n) {
+        '.xfRepeat.aFull,.xfRepeat.aDefault,.xfRepeat.aMinimal':function(n) {
             // console.debug("\n\nRepeatBehaviour: found xfFullRepeat: ",n, " \n\n");
+            new Repeat({id:n.id}, n);
+        },
+        '.xfRepeat.aCompact':function(n) {
+            // console.debug("\n\nRepeatBehaviour: found xfCompactRepeat: ",n, " \n\n");
             new Repeat({id:n.id}, n);
         },
 
@@ -15,12 +19,12 @@ define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dojo/dom-class","d
             // console.debug("\n\nRepeatBehaviour:  found xfRepeatItem: ",n, " \n\n");
 
             connect.connect(n,"onclick",function(evt){
-                 // console.debug("clicked on repeat Item ",n);
+                // console.debug("clicked on repeat Item ",n);
                 if(domClass.contains(n, "xfRepeatIndex")){
                     // console.debug("repeat item " + n.id + " allready selected");
                     return;
                 }
-                var repeatItems = n.parentNode.childNodes;
+                var repeatItems = query(".xfRepeatItem", n.parentNode);
                 // console.debug("repeatItems: ",repeatItems);
                 array.forEach(repeatItems,
                     function(entry) {
@@ -42,8 +46,13 @@ define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dojo/dom-class","d
                     }
                 );
                 // console.debug("Position is: " + position);
-                // console.debug("Repeat Node is: " , n.parentNode);
-                var repeatId = domAttr.get(n.parentNode,"repeatid");
+                var repeat = n.parentNode;
+                while (domAttr.get(repeat,"repeatId") == undefined && repeat != undefined) {
+                    repeat = repeat.parentNode;
+                }
+                // console.debug("Repeat Node is: " , repeat);
+
+                var repeatId = domAttr.get(repeat,"repeatId");
                 // console.debug("Repeat Id is: " + repeatId);
 
                 fluxProcessor.setRepeatIndex(repeatId, position);
