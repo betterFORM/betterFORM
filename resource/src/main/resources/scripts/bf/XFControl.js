@@ -61,6 +61,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
             } else {
                 connect.publish("xforms-invalid", [this.id,"init"]);
             }
+            // console.debug("connect.subscribe('bf-state-change-"+ this.id + "', this, 'handleStateChanged')");
             connect.subscribe("bf-state-change-"+ this.id, this, "handleStateChanged");
 
         },
@@ -121,7 +122,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
                 this.readonly = contextInfo["readonly"];
                 this.required = contextInfo["required"];
                 this.relevant = contextInfo["enabled"];
-                console.debug("Control.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " targetName:",contextInfo["targetName"]," type:",contextInfo["type"], " contextInfo:",contextInfo);
+                // console.debug("XFControl.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " targetName:",contextInfo["targetName"]," type:",contextInfo["type"], " contextInfo:",contextInfo);
 
                 // check xsd type and adjust if needed
                 if(domClass.contains(this.domNode, "bfPrototype")){
@@ -137,7 +138,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
 
             // Set value handling
                 if (this.value != null) {
-                    this.currentValue = value;
+                    this.currentValue = this.value;
                     this.setValue(this.value, contextInfo["schemaValue"]);
                 }
 

@@ -70,8 +70,8 @@ todo: dependencies must be imported for foreign (non-dojo) components
         // ############################## INPUT MAPPINGS ############################################################
 
         // a default input control (TextField) bound to a string
-        '.xfInput.xsdString .xfValue, .xfInput.xsdDefault .xfValue': function(n) {
-            // console.debug("FOUND: string input field: ",n);
+        '.xfInput.xsdString > * > .xfValue, .xfInput.xsdDefault > * >  .xfValue': function(n) {
+            console.debug("FOUND: string input field: ",n);
 
             /*
              ###########################################################################################
@@ -118,7 +118,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
         // ############################## BOOLEAN INPUT ##############################
         // ############################## BOOLEAN INPUT ##############################
         // ############################## BOOLEAN INPUT ##############################
-        '.xfControl.xfInput.xsdBoolean .xfValue': function(n) {
+        '.xfControl.xfInput.xsdBoolean > * >  .xfValue': function(n) {
             // console.debug("FOUND: boolean input field: ",n);
             var xfId = bf.util.getXfId(n);
             var xfControlDijit = registry.byId(xfId);
@@ -170,7 +170,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
         // ############################## DATE INPUT ##############################
 
         /*  rendering HTML5 input type="date" control for mobiles and tablets  */
-        '.uaMobile .xfInput.xsdDate .xfValue, .uaTablet .xfInput.xsdDate .xfValue': function(n) {
+        '.uaMobile .xfInput.xsdDate > * >  .xfValue, .uaTablet .xfInput.xsdDate > * >  .xfValue': function(n) {
             var xfControlDijit = registry.byId(bf.util.getXfId(n));
 
             overwriteSetValue(xfControlDijit,n);
@@ -254,7 +254,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
         // ############################## DATETIME INPUT ##############################
         // ############################## DATETIME INPUT ##############################
         // ############################## DATETIME INPUT ##############################
-        '.xfInput.xsdDateTime .xfValue': function(n) {
+        '.xfInput.xsdDateTime > * > .xfValue': function(n) {
             //todo: implement
         }
     }

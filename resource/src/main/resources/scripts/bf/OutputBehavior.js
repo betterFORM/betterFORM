@@ -12,13 +12,14 @@ define(["dojo/behavior","dojo/dom-attr","dijit/registry","bf/util"],
         // ############################## OUTPUT MAPPINGS ############################################################
         // ############################## OUTPUT MAPPINGS ############################################################
         '.xfOutput.mediatypeText .xfValue': function(n) {
-            // console.debug("FOUND .xfOutput.mediatypeText .xfValuelue ",n);
+            console.debug("FOUND .xfOutput.mediatypeText .xfValuelue ",n);
 
             var xfId = bf.util.getXfId(n);
             var xfControl = registry.byId(xfId);
+            console.debug("overwrite XFControl.setValue for ", xfControl);
 
-            xfControl.setValue = function(value) {
-                // console.debug("xfControl.setValue: .xfOutput.mediatypeText .xfValue")
+            xfControl.setValue = function(value,schematype) {
+                console.debug("xfControl.setValue: .xfOutput.mediatypeText .xfValue");
                 n.innerHTML = value;
             };
 
