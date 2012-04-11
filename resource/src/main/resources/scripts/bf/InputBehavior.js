@@ -70,7 +70,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
         // ############################## INPUT MAPPINGS ############################################################
 
         // a default input control (TextField) bound to a string
-        '.xfControl.xfInput.xsdString .xfValue': function(n) {
+        '.xfInput.xsdString .xfValue, .xfInput.xsdDefault .xfValue': function(n) {
             // console.debug("FOUND: string input field: ",n);
 
             /*
