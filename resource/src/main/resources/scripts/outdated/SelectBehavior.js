@@ -3,7 +3,7 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior","dojo/_base/connect","dijit/registry","dojo/query"],
+define(["../../../lib/dojo-release-1.6.1-src/dojo/behavior","dojo/_base/connect","dijit/registry","dojo/query"],
     function(behavior,connect,registry,query) {
 
         function selectMinimalSendValue(xfControl,n,evt) {
@@ -49,7 +49,7 @@ define(["dojo/behavior","dojo/_base/connect","dijit/registry","dojo/query"],
             var xfId = bf.util.getXfId(n);
             var xfControl = registry.byId(xfId);
 
-            require(["bf/Select"], function(Select) {
+            require(["."], function(Select) {
                 var selectFull = new Select({id:n.id,xfControl:xfControl}, n);
 
                 connect.connect(n,"onchange",function(evt){

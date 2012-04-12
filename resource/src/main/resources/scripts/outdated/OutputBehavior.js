@@ -3,7 +3,7 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior","dojo/dom-attr","dijit/registry","bf/util"],
+define(["../../../lib/dojo-release-1.6.1-src/dojo/behavior","dojo/dom-attr","dijit/registry","bf/util"],
     function(behavior,domAttr,registry) {
 
 

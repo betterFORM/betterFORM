@@ -1,4 +1,4 @@
-define(["dojo/behavior","dojo/_base/connect","dojo/dom-attr","dijit/registry","dojo/query","dojo/dom-class", "bf/util"],
+define(["../../../lib/dojo-release-1.6.1-src/dojo/behavior","dojo/_base/connect","dojo/dom-attr","dijit/registry","dojo/query","dojo/dom-class", "bf/util"],
     function(behavior,connect,domAttr,registry,query,domClass) {
 /*
  * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
@@ -215,7 +215,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
             var xfValue = new Date(domAttr.get(n,"schemavalue"));
             var dateWidget = undefined;
             if(appearance && appearance.indexOf("bf:dropdowndate") != -1){
-                require(["bf/DropDownDate"], function(DropDownDate) {
+                require(["../bf/DropDownDate"], function(DropDownDate) {
                     dateWidget = new DropDownDate({
                             value:domAttr.get(n,"schemavalue"),
                             appearance:appearance,
@@ -226,7 +226,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
                     connectDateDijit(xfControlDijit, dateWidget);
                 });
             } else if (datePattern) {
-                require(["dijit/form/DateTextBox"], function(DateTextBox) {
+                require(["../../../lib/dojo-release-1.7.2-src/dijit/form/DateTextBox"], function(DateTextBox) {
                     dateWidget = new DateTextBox({
                                         value:xfValue,
                                         required:false,
@@ -237,7 +237,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
                     connectDateDijit(xfControlDijit, dateWidget);
                 });
             } else {
-                require(["dijit/form/DateTextBox"], function(DateTextBox) {
+                require(["../../../lib/dojo-release-1.7.2-src/dijit/form/DateTextBox"], function(DateTextBox) {
                     dateWidget = new DateTextBox({
                                         value:xfValue,
                                         required:false,

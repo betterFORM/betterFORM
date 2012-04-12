@@ -3,7 +3,7 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dijit/registry","dojo/query"],
+define(["../../../lib/dojo-release-1.6.1-src/dojo/behavior","dojo/dom-attr","dojo/_base/connect","dijit/registry","dojo/query"],
     function(behavior,domAttr,connect,registry,query) {
 
         /**
@@ -84,13 +84,6 @@ define(["dojo/behavior","dojo/dom-attr","dojo/_base/connect","dijit/registry","d
                     }
                 });
             };
-    /*
-            connect.connect(n,"onblur",function(evt){
-                console.debug("handle on blur for select1 full");
-                // xfControl.sendValue(n.value, evt);
-            });
-    */
-
             require(["bf/Select1Radio"], function(Select1Radio) {
                 new Select1Radio({id:n.id,controlId:xfId}, n);
             });

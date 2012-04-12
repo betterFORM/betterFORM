@@ -576,47 +576,17 @@ define(["dojo/_base/declare",
 
     _buildUI : function(){
 
-        require(["bf/ControlMappingNew"],
-            function(ControlMappingNew){
-                new ControlMappingNew();
-                //inputFactory.createSubscribers();
-            });
-
-/*
+        require(["bf/RoleMappingProcessor"],function(RoleMappingProcessor){
+                new RoleMappingProcessor();
+        });
         require(["dojo/behavior",
-                    "bf/ControlBehavior",
-                    "bf/OutputBehavior",
-                    "bf/InputBehavior",
-                    "bf/RangeBehavior",
-                    "bf/SecretBehavior",
-                    "bf/Select1Behavior",
-                    "bf/SelectBehavior",
-                    "bf/TextareaBehavior",
-                    "bf/TriggerBehavior",
-                    "bf/UploadBehavior",
-                    */
-/* Container *//*
-
-                    "bf/RepeatBehavior",
-                    */
-/* Common Childs *//*
-
-                    "bf/AlertBehavior"],
-            function(behavior,ControlBehavior,OutputBehavior,InputBehavior,RangeBehavior, SecretBehavior, Select1Behavior, SelectBehavior, TextareaBehavior,TriggerBehavior,UploadBehavior, AlertBehavior){
-                behavior.add(ControlBehavior);
-                behavior.add(OutputBehavior);
-                behavior.add(InputBehavior);
-                behavior.add(RangeBehavior);
-                behavior.add(SecretBehavior);
-                behavior.add(Select1Behavior);
-                behavior.add(SelectBehavior);
-                behavior.add(TextareaBehavior);
-                behavior.add(TriggerBehavior);
-                behavior.add(UploadBehavior);
-                behavior.add(AlertBehavior);
-
-            });
-*/
+             "bf/RepeatBehavior",
+             "bf/AlertBehavior"],
+             function(behavior,RepeatBehavior, AlertBehavior){
+                 behavior.add(RepeatBehavior);
+                 behavior.add(AlertBehavior);
+             }
+        );
         require(["dojo/behavior", "dojo/domReady!"],function(behavior) {
             behavior.apply();
         });

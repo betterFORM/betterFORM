@@ -1,4 +1,4 @@
-define(["dojo/_base/declare","bf/Container","dojo/query","dojo/dom", "dojo/dom-style","dojo/dom-attr","dojo/dom-class","dojo/dom-construct","dojo/_base/window","dojo/behavior","dojo/_base/connect"],
+define(["dojo/_base/declare","bf/container/Container","dojo/query","dojo/dom", "dojo/dom-style","dojo/dom-attr","dojo/dom-class","dojo/dom-construct","dojo/_base/window","dojo/behavior","dojo/_base/connect"],
     function(declare, Container,query, dom, domStyle, domAttr, domClass, domConstruct, win, behavior,connect){
         return declare(Container, {
 

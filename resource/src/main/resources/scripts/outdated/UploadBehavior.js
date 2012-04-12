@@ -3,7 +3,7 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior"],
+define(["../../../lib/dojo-release-1.6.1-src/dojo/behavior"],
     function(behavior) {
         return {
 

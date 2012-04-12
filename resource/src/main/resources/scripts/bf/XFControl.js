@@ -72,7 +72,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
          sends an updated value of a widget to the server
          */
         sendValue:function(/* String */ value, evt) {
-            // console.debug("XFControl: sendValue: currentvalue:", this.currentValue, " - newValue:",value);
+            console.debug("XFControl: sendValue: currentvalue:", this.currentValue, " - newValue:",value);
             if(this.isReadonly()){
                 console.debug("XFControl sendValue - control is readonly - ignoring event");
                 return;
@@ -134,6 +134,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
                     var xsdType = "xsd" + type.replace(/^[a-z]/, type.substring(0, 1).toUpperCase());
                     // console.debug("apply new type: ",xsdType, " to Control Widget");
                     domClass.add(this.domNode, xsdType);
+                    this.domNode.className = this.domNode.className.replace(/(\sxf.*)Tmpl/g,"$1");
                     behavior.apply();
 
                 }

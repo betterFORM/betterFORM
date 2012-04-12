@@ -3,7 +3,7 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/behavior","dojo/_base/connect","dijit/registry"],
+define(["../../../lib/dojo-release-1.6.1-src/dojo/behavior","dojo/_base/connect","dijit/registry"],
     function(behavior,connect,registry) {
 
         return {

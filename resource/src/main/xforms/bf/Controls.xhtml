@@ -58,6 +58,11 @@
                     <label>input[5]</label>
                     <alert>Alert for input[5]</alert>
                 </input>
+                <secret>
+                    <value>foo</value>
+                    <label>secret[1]</label>
+                    <alert>Alert for secret[1]</alert>
+                </secret>
                 <output>
                     <value>output value</value>
                     <label>output[1]</label>
@@ -549,6 +554,21 @@
 
             <hr/>
             <xf:group>
+                <xf:label>Secret</xf:label>
+                <xf:secret ref="secret[1]/value">
+                    <xf:label ref="../label"/>
+                </xf:secret>
+            </xf:group>
+            <xf:group appearance="minimal">
+                <xf:label>Secret Controls Values</xf:label>
+                <xf:output ref="secret[1]/value">
+                    <xf:label>secret[1]</xf:label>
+                </xf:output>
+            </xf:group>
+            <hr/>
+
+
+            <xf:group>
                 <xf:label>Output</xf:label>
 
                 <xf:output ref="output[1]/value">
@@ -572,6 +592,13 @@
                     <xf:label ref="../label"/>
                 </xf:textarea>
             </xf:group>
+            <xf:group appearance="minimal">
+                <xf:label>Textarea Controls Values</xf:label>
+                <xf:output ref="textarea[1]/value">
+                    <xf:label>textarea[1]</xf:label>
+                </xf:output>
+            </xf:group>
+
             <hr/>
             <xf:group>
                 <xf:label>Range</xf:label>

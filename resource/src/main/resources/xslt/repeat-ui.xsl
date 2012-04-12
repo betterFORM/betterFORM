@@ -184,7 +184,9 @@
 
         <xsl:element name="span">
             <xsl:attribute name="id" select="$id"/>
-            <xsl:attribute name="class" select="concat(substring-after($control-classes,'xfControl'),' xfRepeated bfPrototype')"/>
+            <xsl:variable name="modifiedClasses" select="replace($control-classes, '^(xfControl).*?(xf.*?)\s+','$1 $2Tmpl ')"/>
+            <xsl:message select="$modifiedClasses"/>
+            <xsl:attribute name="class" select="concat($modifiedClasses,' xfRepeated bfPrototype')"/>
             <xsl:attribute name="appearance" select="@appearance"/>
             <xsl:attribute name="title" select="normalize-space(xf:hint)"/>
 
@@ -594,8 +596,10 @@
 
         <xsl:element name="{$htmlElem}">
             <xsl:attribute name="id" select="$id"/>
-            <!--<xsl:attribute name="class" select="concat($control-classes,' xfRepeated')"/>-->
-            <xsl:attribute name="class" select="concat(substring-after($control-classes,'xfControl'),' xfRepeated bfPrototype')"/>
+            <!--    xfControl xfInput aDefault repeat1-1 repeated mediatypeText xfRepeated bfPrototype -->
+            <xsl:variable name="modifiedClasses" select="replace($control-classes, '^xfControl.*?(xf.*?)\s+','xfControl $1Tmpl ')"/>
+            <xsl:message select="$modifiedClasses"/>
+            <xsl:attribute name="class" select="concat($modifiedClasses,' xfRepeated bfPrototype')"/>
             <xsl:attribute name="appearance" select="@appearance"/>
             <xsl:if test="$incrementaldelay ne 'undef'">
                 <xsl:message>

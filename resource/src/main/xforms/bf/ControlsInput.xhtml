@@ -29,6 +29,10 @@
                     <value>input value</value>
                     <label>input[1]</label>
                 </input>
+                <input>
+                    <value>true</value>
+                    <label>input[2]</label>
+                </input>
             </data>
         </xf:instance>
 
@@ -37,6 +41,10 @@
                      relevant="boolean-from-string(instance()/@relevant)"
                      constraint="boolean-from-string(instance()/@valid)"
                      readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="input[2]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)" type="boolean"/>
         </xf:bind>
     </xf:model>
 </head>
@@ -80,6 +88,12 @@
         <xf:group ref="instance()" appearance="full" id="eventListener" class="xfFullGroup">
             <xf:label>Input</xf:label>
             <xf:input ref="input[1]/value">
+                <xf:label ref="../label"/>
+                <xf:hint>Input hint</xf:hint>
+                <xf:help>Input help</xf:help>
+                <xf:alert>Input Alert</xf:alert>
+            </xf:input>
+            <xf:input ref="input[2]/value">
                 <xf:label ref="../label"/>
                 <xf:hint>Input hint</xf:hint>
                 <xf:help>Input help</xf:help>
