@@ -1,5 +1,5 @@
-define(["dojo/behavior","dojo/_base/connect","dojo/dom-attr","dijit/registry","dojo/query","dojo/dom-class", "bf/util"],
-    function(behavior,connect,domAttr,registry,query,domClass) {
+define(["dojo/behavior","dojo/_base/connect","dojo/dom-attr","dijit/registry","bf/XFControl","bf/util"],
+    function(behavior,connect,domAttr,registry,XFControl) {
 /*
  * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
@@ -75,12 +75,14 @@ todo: dependencies must be imported for foreign (non-dojo) components
          created. Thus this behavior must be loaded before any other control behavior file.
          */
         '.xfControl':function(n) {
-            // console.debug("ControlBehaviour: XFControl found: ",n);
+            console.debug("ControlBehaviour: XFControl found: ",n);
             var controlId = domAttr.get(n,"id");
-            new XFControl({
+            console.debug("ControlBehaviour: controlId:",controlId);
+            var xfControl = new XFControl({
                 id:controlId,
                 controlType:"generic"
             }, n);
+            console.debug("created new XFControl: ",xfControl);
         },
 
         /*
@@ -118,7 +120,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
         // ############################## INPUT MAPPINGS ############################################################
         '.xfInput.xsdString .xfValue, .xfInput.xsdDefault .xfValue': function(n) {
             console.debug("FOUND: string input field: ",n);
-            //connect.publish("/xfInput/xsdString/-/-",n);
+            connect.publish("/xfInput/xsdString/-/-",n);
         },
         '.xfInput.xsdBoolean .xfValue': function(n) {
             console.debug("FOUND: boolean input field: ",n);
@@ -208,7 +210,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
             connect.connect(n, "onclick", function(){
                 fluxProcessor.dispatchEvent(parentId);
             });
-        },
+        }
 
 
         // ############################## UPLOAD MAPPINGS #########################################################
@@ -220,13 +222,14 @@ todo: dependencies must be imported for foreign (non-dojo) components
         // ############################## ALERT BEHAVIORS #########################################################
         // ############################## ALERT BEHAVIORS #########################################################
         // ############################## ALERT BEHAVIORS #########################################################
+/*
         'body.ToolTipAlert': function(n) {
             console.debug("AlertBehaviour.found: ToolTipAlert");
 
             require(["bf/AlertToolTip","dojo/domReady!"],
                 function(AlertToolTip) {
                     var alertToolTip = new AlertToolTip({});
-                    subscribe(alertToolTip);
+                    connect.subscribe(alertToolTip);
                     // console.debug("created ToolTipAlert:",alertToolTip);
 
                 });
@@ -239,11 +242,12 @@ todo: dependencies must be imported for foreign (non-dojo) components
             require(["bf/AlertInline","dojo/domReady!"],
                 function(AlertInline) {
                     var alertInline= new AlertInline({});
-                    subscribe(alertInline);
+                    connect.subscribe(alertInline);
                     // console.debug("created InlineAlert:",alertInline);
 
                 });
-        },
+        }
+*/
 
 
 

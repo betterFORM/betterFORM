@@ -29,14 +29,16 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
      **/
 
         id:"",
-        controlType:"",
+        controlType:"generic",
         controlValue:null,
         currentValue:null,
         bfFocus:false,
         incremental:false,
 
 
-        constructor:function() {
+        constructor:function(properties, node) {
+            this.id = node.id;
+
         },
 
         buildRendering: function() {

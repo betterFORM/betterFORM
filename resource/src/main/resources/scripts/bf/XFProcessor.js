@@ -575,6 +575,14 @@ define(["dojo/_base/declare",
     },
 
     _buildUI : function(){
+
+        require(["bf/ControlMappingNew"],
+            function(ControlMappingNew){
+                new ControlMappingNew();
+                //inputFactory.createSubscribers();
+            });
+
+/*
         require(["dojo/behavior",
                     "bf/ControlBehavior",
                     "bf/OutputBehavior",
@@ -586,9 +594,13 @@ define(["dojo/_base/declare",
                     "bf/TextareaBehavior",
                     "bf/TriggerBehavior",
                     "bf/UploadBehavior",
-                    /* Container */
+                    */
+/* Container *//*
+
                     "bf/RepeatBehavior",
-                    /* Common Childs */
+                    */
+/* Common Childs *//*
+
                     "bf/AlertBehavior"],
             function(behavior,ControlBehavior,OutputBehavior,InputBehavior,RangeBehavior, SecretBehavior, Select1Behavior, SelectBehavior, TextareaBehavior,TriggerBehavior,UploadBehavior, AlertBehavior){
                 behavior.add(ControlBehavior);
@@ -604,6 +616,7 @@ define(["dojo/_base/declare",
                 behavior.add(AlertBehavior);
 
             });
+*/
         require(["dojo/behavior", "dojo/domReady!"],function(behavior) {
             behavior.apply();
         });

@@ -118,7 +118,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
         // ############################## BOOLEAN INPUT ##############################
         // ############################## BOOLEAN INPUT ##############################
         // ############################## BOOLEAN INPUT ##############################
-        '.xfControl.xfInput.xsdBoolean > * >  .xfValue': function(n) {
+        '.xfInput.xsdBoolean > * >  .xfValue': function(n) {
             // console.debug("FOUND: boolean input field: ",n);
             var xfId = bf.util.getXfId(n);
             var xfControlDijit = registry.byId(xfId);
@@ -194,7 +194,7 @@ todo: dependencies must be imported for foreign (non-dojo) components
         /*  rendering dijit.formDateTextBox (DropdownDatePicker) for desktop browser */
         /* WARNING: xfValue must not be matched here due to templated widgets, this would end in an
         *  infinite loop */
-        '.uaDesktop .xfControl.xfInput.xsdDate .widgetContainer':function (node) {
+        '.uaDesktop .xfInput.xsdDate .widgetContainer':function (node) {
             // console.debug("InputBehaviour: found: .uaDesktop .xfInput.xsdDate .widgetContainer",node);
             var n = query(".xfValue",node)[0];
             // console.debug("found date value node: n:",n);
