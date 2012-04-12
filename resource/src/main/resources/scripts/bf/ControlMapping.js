@@ -12,6 +12,56 @@ todo: dependencies must be imported for foreign (non-dojo) components
 <style type="text/css" src="..."/>
 */
 
+        /*
+
+        /xfInput/xsdString/-/-
+        /xfInput/xsdBoolean/-/-
+
+        /xfInput/xsdDate/-/-
+        /xfInput/xsdDateTime/-/-
+        /xfOutput/-/mediatypeText/-
+        /xfOutput/-/mediatypeImage/-
+        /xfOutput/-/mediatypeHtml/-
+        /xfOutputU/xsdAnyURI/-/-
+        ...
+
+        ... somewhere ...
+
+         connect.subscribe("/xfInput/xsdString/-/-", function(n){
+
+            require(["dijit/registry"], function(connect){
+                 var xfId = bf.util.getXfId(n);
+                 var xfControlDijit = registry.byId(xfId);
+                 xfControlDijit.setValue = function(value) {
+                     domAttr.set(node, "value", value);
+                 };
+                 connect.connect(n,"onkeyup",function(evt){
+                 // console.debug("onkeypress",n);
+                 xfControlDijit.sendValue(n.value,evt);
+                 });
+
+                 connect.connect(n,"onblur",function(evt){
+                 // console.debug("onblur",n);
+                 xfControlDijit.sendValue(n.value, evt);
+                 });
+             };
+
+         });
+
+        var mappings = {
+            ['.xfInput.xsdString.aDefault.mediatype', 'Input.createString'],
+            ['.xfInput.xsdString.aDefault.mediatype', 'Input.createDate'],
+            ['.xfInput.xsdString.aDefault.mediatype', '/asdasdas],
+        }
+
+        dojo.forEach(mappings, function(mapping){
+                mapping : function(n) {
+                    dojo.publish(
+                }
+        }
+         */
+
+
 /*
     Component Definition File which is the central for mapping XForms controls to client-side controls.
     todo:see newJSLayer-readme.txt
@@ -63,39 +113,28 @@ todo: dependencies must be imported for foreign (non-dojo) components
             // console.debug("\n\nRepeatBehaviour:  found xfRepeatItem: ",n, " \n\n");
         },
 
-
-
-
         // ############################## INPUT MAPPINGS ############################################################
         // ############################## INPUT MAPPINGS ############################################################
         // ############################## INPUT MAPPINGS ############################################################
-
-
-        // ############################## STRING  INPUT ##############################
-        '.xfInput.xsdString > * > .xfValue, .xfInput.xsdDefault > * >  .xfValue': function(n) {
+        '.xfInput.xsdString .xfValue, .xfInput.xsdDefault .xfValue': function(n) {
             console.debug("FOUND: string input field: ",n);
-
+            //connect.publish("/xfInput/xsdString/-/-",n);
         },
-
-        // ############################## BOOLEAN INPUT ##############################
-        '.xfControl.xfInput.xsdBoolean > * >  .xfValue': function(n) {
+        '.xfInput.xsdBoolean .xfValue': function(n) {
             console.debug("FOUND: boolean input field: ",n);
         },
-
-        // ############################## DATE INPUT MOBILE ##############################
-        /*  rendering HTML5 input type="date" control for mobiles and tablets  */
-        '.uaMobile .xfInput.xsdDate > * >  .xfValue, .uaTablet .xfInput.xsdDate > * >  .xfValue': function(n) {
+        '.uaMobile .xfInput.xsdDate .xfValue, .uaTablet .xfInput.xsdDate .xfValue': function(n) {
         },
 
         // ############################## DATE INPUT DESKTOP ##############################
         /*  rendering dijit.formDateTextBox (DropdownDatePicker) for desktop browser */
         /* WARNING: xfValue must not be matched here due to templated widgets, this would end in an
         *  infinite loop */
-        '.uaDesktop .xfControl.xfInput.xsdDate .widgetContainer':function (node) {
+        '.uaDesktop .xfInput.xsdDate .widgetContainer':function (node) {
         },
 
         // ############################## DATETIME INPUT ##############################
-        '.xfInput.xsdDateTime > * > .xfValue': function(n) {
+        '.xfInput.xsdDateTime .xfValue': function(n) {
             //todo: implement
         },
 
