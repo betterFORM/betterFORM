@@ -1,11 +1,14 @@
-define(["dojo/_base/declare","bf/container/Container","dojo/query","dojo/dom", "dojo/dom-style","dojo/dom-attr","dojo/dom-class","dojo/dom-construct","dojo/_base/window","dojo/behavior","dojo/_base/connect"],
-    function(declare, Container,query, dom, domStyle, domAttr, domClass, domConstruct, win, behavior,connect){
+define(["dojo/_base/declare","bf/container/Container","dojo/query","dojo/dom", "dojo/dom-style","dojo/dom-attr","dojo/dom-class","dojo/dom-construct","dojo/_base/window","dojo/behavior","dojo/_base/connect","dojo/_base/array"],
+    function(declare, Container,query, dom, domStyle, domAttr, domClass, domConstruct, win, behavior,connect,array){
         return declare(Container, {
 
 
             postCreate:function(){
-                // console.debug("Repeat.postCreate created new instace");
+                console.debug("Repeat.postCreate created new instace this.srcNodeRef:", this.srcNodeRef);
                 this.inherited(arguments);
+                this.repeatId = domAttr.get(this.srcNodeRef,"repeatId");
+                console.debug("Repeat.postCreate this.repeatId:", this.repeatId);
+
                 this.appearance = undefined;
                 if (domClass.contains(this.srcNodeRef, "aCompact")) {
                     this.appearance = "compact";
@@ -17,6 +20,36 @@ define(["dojo/_base/declare","bf/container/Container","dojo/query","dojo/dom", "
                 connect.subscribe("betterform-insert-repeatitem-"+ this.repeatId, this, "handleInsert");
                 connect.subscribe("betterform-item-deleted-"+ this.repeatId,      this, "handleDelete");
                 connect.subscribe("betterform-index-changed-"+ this.repeatId,     this, "handleSetRepeatIndex");
+
+                this._initializeRepeatItems();
+            },
+
+            /**
+             * Set up onclick handler for RepeatItems to support setRepeatIndex
+             * @private
+             */
+            _initializeRepeatItems:function() {
+                var currentRepeatId = this.repeatId;
+                query(".xfRepeatItem", this.srcNodeRef).forEach(function(repeatItem,index,repeatItems){
+                    connect.connect(repeatItem,"onclick",function(){
+                        // check if RepeatItem is already selected
+
+                        if(domClass.contains(repeatItem, "xfRepeatIndex")){ return; }
+                        var position = repeatItems.indexOf(repeatItem) + 1;
+
+                        // remove former xfRepeatIndex / xfRepeatIndexPre classes
+                        query(".xfRepeatIndex", this.srcNodeRef).forEach(function(node){
+                            domClass.remove(node, "xfRepeatIndex")
+                        });
+                        query(".xfRepeatIndexPre", this.srcNodeRef).forEach(function(node){
+                            domClass.remove(node, "xfRepeatIndexPre")
+                        });
+
+                        // add xfRepeatIndexPre CSS Class to selected RepeatItem and send setRepeatIndex to the server
+                        domClass.add(repeatItem, "xfRepeatIndexPre");
+                        fluxProcessor.setRepeatIndex(currentRepeatId, position);
+                    });
+                });
             },
 
             handleSetRepeatIndex:function(/*Map*/ contextInfo) {

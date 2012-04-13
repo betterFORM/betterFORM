@@ -580,10 +580,8 @@ define(["dojo/_base/declare",
                 new RoleMappingProcessor();
         });
         require(["dojo/behavior",
-             "bf/RepeatBehavior",
              "bf/AlertBehavior"],
-             function(behavior,RepeatBehavior, AlertBehavior){
-                 behavior.add(RepeatBehavior);
+             function(behavior, AlertBehavior){
                  behavior.add(AlertBehavior);
              }
         );

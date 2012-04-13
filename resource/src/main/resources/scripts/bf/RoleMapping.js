@@ -37,10 +37,15 @@ require(['dojo/_base/declare'],
             ['.xfTextarea.mediatypeHtml .xfValue',    "bf/factory/FactoryTextarea", "html"],
 
             // TRIGGER
-            ['.xfTrigger .xfValue',    "bf/factory/FactoryTrigger", "plain"],
+            ['.xfTrigger .xfValue',   "bf/factory/FactoryTrigger", "plain"],
 
             // UPLOAD
-            ['.xfUpload .xfValue',    "bf/factory/FactoryUpload", "anyURI"]
+            ['.xfUpload .xfValue',    "bf/factory/FactoryUpload", "anyURI"],
+
+
+            ['.xfRepeat',             "bf/factory/FactoryContainer", "repeat"]
+
+
         ];
     }
 );
