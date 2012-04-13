@@ -2,7 +2,7 @@
  * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
-define(["dojo/_base/declare","bf/Alert","dojo/dom","dojo/dom-style","dojo/_base/lang"],
+define(["dojo/_base/declare","bf/common/Alert","dojo/dom","dojo/dom-style","dojo/_base/lang"],
     function(declare, Alert,dom,domStyle,lang){
     return declare(Alert, {
 

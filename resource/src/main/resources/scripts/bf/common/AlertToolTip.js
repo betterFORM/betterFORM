@@ -1,4 +1,4 @@
-define(["dojo/_base/declare","bf/Alert","dojo/dom", "dojo/dom-style","dojo/_base/connect","dojo/_base/lang","dojo/dom-class","dijit/registry", "dojo/NodeList-fx","dojo/query"],
+define(["dojo/_base/declare","bf/common/Alert","dojo/dom", "dojo/dom-style","dojo/_base/connect","dojo/_base/lang","dojo/dom-class","dijit/registry", "dojo/NodeList-fx","dojo/query"],
     function(declare, Alert,dom,domStyle,connect,lang,domClass,registry,nodeListFx,query){
         return declare(Alert, {
 
@@ -23,7 +23,7 @@ define(["dojo/_base/declare","bf/Alert","dojo/dom", "dojo/dom-style","dojo/_base
                 if(alertTooltip == undefined) {
                     console.debug("\n\ncreate Tooltip\n\n");
 
-                    require(["dijit/Tooltip"],function(Tooltip) {
+                    require(["../../../../lib/dojo-release-1.7.2-src/dijit/Tooltip"],function(Tooltip) {
                         console.debug("commonChildNode.innerHTML: ",commonChildNode);
                         console.debug("valueNode.id",valueNode.id);
 

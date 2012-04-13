@@ -42,8 +42,12 @@ require(['dojo/_base/declare'],
             // UPLOAD
             ['.xfUpload .xfValue',    "bf/factory/FactoryUpload", "anyURI"],
 
+            // CONTAINER
+            ['.xfRepeat',             "bf/factory/FactoryContainer", "repeat"],
 
-            ['.xfRepeat',             "bf/factory/FactoryContainer", "repeat"]
+            // COMMON CHILDS
+            ['body.ToolTipAlert',     "bf/common/AlertToolTip"],
+            ['body.InlineAlert',      "bf/common/AlertInline"]
 
 
         ];

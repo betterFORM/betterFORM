@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registry","dojo/query","dojo/dom"],
-    function(declare,win,domClass,registry,query,dom){
+define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registry","dojo/query","dojo/dom","dojo/_base/connect"],
+    function(declare,win,domClass,registry,query,dom,connect){
         return declare(null, {
 
         alert:"alert",
@@ -13,7 +13,15 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registr
         none:"none",
         alwaysShowHint: query(".bfAlwaysShowHint", win.body())[0],
 
-        handleValid:function(id,action){
+            constructor:function() {
+                console.debug("Alert.constructor this:",this);
+                connect.subscribe("xforms-valid", this, "handleValid");
+                connect.subscribe("xforms-invalid", this, "handleInvalid");
+
+            },
+
+
+            handleValid:function(id,action){
             // TODO: applyChanges must remove an existing alert
 
             // console.debug("Alert.handleValid[id:" + id , " action: " + action + "]");

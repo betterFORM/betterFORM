@@ -579,12 +579,7 @@ define(["dojo/_base/declare",
         require(["bf/RoleMappingProcessor"],function(RoleMappingProcessor){
                 new RoleMappingProcessor();
         });
-        require(["dojo/behavior",
-             "bf/AlertBehavior"],
-             function(behavior, AlertBehavior){
-                 behavior.add(AlertBehavior);
-             }
-        );
+
         require(["dojo/behavior", "dojo/domReady!"],function(behavior) {
             behavior.apply();
         });
