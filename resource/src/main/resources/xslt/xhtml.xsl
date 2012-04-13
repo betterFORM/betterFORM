@@ -260,9 +260,11 @@
                 </xsl:variable>
                 <style type="text/css">
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dijit/themes/', $cssTheme, '/', $cssTheme,'.css')"/>";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/widget/Toaster/Toaster.css')"/>";
 <!--
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojo/resources/dojo.css')"/>";
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/widget/Toaster/Toaster.css')"/>";
+
+
 -->
                 </style><xsl:text>
 </xsl:text>
@@ -321,15 +323,9 @@
             of the window
             <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             -->
-<!--
-            <div data-dojo-type="dojox.widget.Toaster"
-                 id="betterformMessageToaster"
-                 positionDirection="bl-up"
-                 duration="8000"
-                 separator="&lt;div style='height:1px;border-top:thin dotted;width:100%;'&gt;&lt;/div&gt;"
-                 messageTopic="testMessageTopic">
-            </div>
--->
+
+            <div id="betterformMessageToaster"> </div>
+
 
             <!--
             >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

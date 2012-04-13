@@ -118,6 +118,12 @@
                 <trigger>
                     <label>trigger[3] customEvent</label>
                 </trigger>
+                <trigger>
+                    <label>message modal</label>
+                </trigger>
+                <trigger>
+                    <label>message ephemeral</label>
+                </trigger>
             </data>
         </xf:instance>
 
@@ -616,9 +622,7 @@
                 <xf:label>XF:Trigger</xf:label>
                 <xf:trigger ref="trigger[1]/label" appearance="minimal">
                     <xf:label ref="."/>
-                    <xf:action>
-                        <xf:message>trigger works</xf:message>
-                    </xf:action>
+                    <xf:message>trigger works</xf:message>
                 </xf:trigger>
 
                 <xf:trigger ref="trigger[2]/label">
@@ -635,6 +639,14 @@
                 <xf:trigger ref="trigger[3]/label">
                     <xf:label ref="."/>
                     <xf:dispatch name="customEvent" targetid="groupWithEventListener"/>
+                </xf:trigger>
+                <xf:trigger ref="trigger[4]">
+                    <xf:label ref="label"/>
+                    <xf:message level="modal">showing modal xf:message</xf:message>
+                </xf:trigger>
+                <xf:trigger ref="trigger[5]">
+                    <xf:label ref="label"/>
+                    <xf:message level="ephemeral">showing ephemeral xf:message</xf:message>
                 </xf:trigger>
             </xf:group>
         </xf:group>

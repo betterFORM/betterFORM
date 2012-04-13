@@ -1006,8 +1006,21 @@ define(["dojo/_base/declare",
         var level = xmlEvent.contextInfo.level;
         //console.debug("XFProcessor.handleRenderMessage: message='" + message + "', level='" + level + "'");
         if (level == "ephemeral") {
-            registry.byId("betterformMessageToaster").setContent(message, 'message');
-            registry.byId("betterformMessageToaster").show();
+            require(["dojox/widget/Toaster"],function(Toaster) {
+                if(registry.byId("betterformMessageToaster") == undefined) {
+                    new Toaster({id:"betterformMessageToaster",
+                                positionDirection:"bl-up",
+                                duration:"8000",
+                                separator:"&lt;div style='height:1px;border-top:thin dotted;width:100%;'&gt;&lt;/div&gt;",
+                                messageTopic:'bfMessageTopic'
+                                },"betterformMessageToaster");
+                }
+                connect.publish("bfMessageTopic", [ {
+                                        message: message,
+                                        type: "fatal",
+                                        duration: 8000
+                }]);
+            })
         }
         else {
             var exception = xmlEvent.contextInfo.exception;
