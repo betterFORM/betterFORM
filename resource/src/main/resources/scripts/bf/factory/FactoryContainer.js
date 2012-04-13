@@ -42,6 +42,26 @@ define(["dojo/_base/declare","bf/util"],
                                 new Repeat({}, n);
                             });
                             break;
+                        case "switch":
+                            console.debug("FactoryContainer (switch) n: ",n);
+                            require(["dojo/dom-class","dojo/_base/connect"], function(domClass,connect) {
+                                // connect and overwrite 'handleStateChanged' since it is not supported by switch
+                                connect.subscribe("bf-state-change-"+ n.id, function(contextInfo) {
+                                    console.debug("FactoryContain (switch) handleStateChanged: nothing to do here");
+                                });
+
+                                connect.subscribe("bf-switch-toggled-"+ n.id, function(contextInfo) {
+                                    console.debug("FactoryContain (switch) bf-switch-toggled contextInfo:",contextInfo);
+                                    if(contextInfo.deselected != undefined) {
+                                        domClass.replace(contextInfo.deselected, "xfDeselectedCase", "xfSelectedCase");
+                                    }
+                                    if(contextInfo.selected){
+                                        // console.debug("betterform.ui.container.Switch.toggleCase: Case to select:",caseToSelect);
+                                        domClass.replace(contextInfo.selected, "xfSelectedCase", "xfDeselectedCase");
+                                    }
+                                });
+                            });
+                            break;
                         default:
                             console.warn("FactoryContainer unknonw type: ",type);
                     }

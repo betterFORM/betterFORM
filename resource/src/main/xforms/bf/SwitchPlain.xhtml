@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml">
+   
+   <head>
+      <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
+      <title>XForms switch</title>
+      
+      <!--
+            ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+            ~ Licensed under the terms of BSD License
+        -->
+      
+      
+      <style type="text/css">
+            .caseContent{
+				height:100px;
+				border-style:groove;
+			}
+			.caseContent h2{
+				margin-top:3px;
+			}
+        </style>
+   </head>
+   
+   <body class="soria" style="margin:30px">
+      <div id="xforms">
+         <div style="display:none">
+            <xf:model>
+               <xf:instance xmlns="">
+                  <data>
+                  </data>
+               </xf:instance>
+            </xf:model>
+         </div>
+         <div class="pageintro">
+            <h1>XForms switch</h1>
+            <xf:group>
+               <xf:label class="blockLabel">Switch / Case</xf:label>
+               <xf:group id="menu" appearance="minimal">
+                  <xf:label class="blockLabel">Triggers outside Switch / Case</xf:label>
+                  <xf:trigger style="clear:none">
+                     <xf:label>Case 1</xf:label>
+                     <xf:toggle case="switch1-case1"></xf:toggle>
+                  </xf:trigger>
+                  <xf:trigger style="clear:none">
+                     <xf:label>Case 2</xf:label>
+                     <xf:toggle case="switch1-case2"></xf:toggle>
+                  </xf:trigger>
+                  <xf:trigger style="clear:none">
+                     <xf:label>Case 3</xf:label>
+                     <xf:toggle case="switch1-case3"></xf:toggle>
+                  </xf:trigger>
+                  <xf:trigger style="clear:none">
+                     <xf:label>Case 4</xf:label>
+                     <xf:toggle case="switch1-case4"></xf:toggle>
+                  </xf:trigger>
+               </xf:group>
+               <xf:switch id="switch1">
+                  <xf:case id="switch1-case1" selected="true">
+                     <div class="caseContent" style="background:#bbbbff">
+                        <h2>CASE 1</h2>
+                        <p>This is some content for the first case</p>
+                     </div>
+                  </xf:case>
+                  <xf:case id="switch1-case2">
+                     <div class="caseContent" style="background:#ccccff">
+                        <h2>CASE 2</h2>
+                        <p>This is some content for the second case</p>
+                     </div>
+                  </xf:case>
+                  <xf:case id="switch1-case3">
+                     <div class="caseContent" style="background:#ddddff">
+                        <h2>CASE 3</h2>
+                        <p>This is some content for the third case</p>
+                     </div>
+                  </xf:case>
+                  <xf:case id="switch1-case4">
+                     <div class="caseContent" style="background:#eeeeff">
+                        <h2>CASE 4</h2>
+                        <p>This is some content for the fourth case</p>
+                     </div>
+                  </xf:case>
+               </xf:switch>
+            </xf:group>
+         </div>
+    </div>
+</body>
+</html>

@@ -43,8 +43,9 @@ require(['dojo/_base/declare'],
             ['.xfUpload .xfValue',    "bf/factory/FactoryUpload", "anyURI"],
 
             // CONTAINER
-            ['.xfGroup',             "bf/factory/FactoryContainer",  "group"],
-            ['.xfRepeat',             "bf/factory/FactoryContainer", "repeat"],
+            ['.xfGroup',            "bf/factory/FactoryContainer", "group"],
+            ['.xfRepeat',           "bf/factory/FactoryContainer", "repeat"],
+            ['.xfSwitch.aDefault',  "bf/factory/FactoryContainer", "switch"],
 
             // COMMON CHILDS
             ['body.ToolTipAlert',     "bf/common/AlertToolTip"],

@@ -527,7 +527,7 @@ define(["dojo/_base/declare",
                             case "xforms-help"                   : fluxProcessor._handleShowHelp(xmlEvent); break;
                             case "xforms-hint"                   : fluxProcessor._handleXFormsHint(xmlEvent); break;
                             case "xforms-link-exception"         : fluxProcessor._handleLinkException(xmlEvent); break;
-                            case "betterform-switch-toggled"     : fluxProcessor._handleSwitchToggled(xmlEvent); break;
+                            case "betterform-switch-toggled"     : connect.publish("bf-switch-toggled-" + xmlEvent.contextInfo.targetId, xmlEvent.contextInfo); break;
                             case "betterform-script-action"      : eval(xmlEvent.contextInfo["script"]); break;
                             case "xforms-value-changed"          : /* console.debug(xmlEvent); */ break;
                             case "xforms-version-exception"      : fluxProcessor._handleVersionException(xmlEvent); break;
@@ -1290,18 +1290,6 @@ define(["dojo/_base/declare",
         console.debug("XFProcessor._handleLinkException xmlEvent:",xmlEvent);
         console.error("Fatal error - " + xmlEvent.type + ": Failed to load resource: " + xmlEvent.contextInfo.resourceUri);
         //        fluxProcessor.closeSession();
-    },
-
-    _handleSwitchToggled:function(xmlEvent) {
-        console.debug("XFProcessor._handleSwitchToggled xmlEvent:", xmlEvent);
-        var tmpSwitch = registry.byId(xmlEvent.contextInfo.targetId);
-        if (tmpSwitch == undefined && dom.byId(xmlEvent.contextInfo.targetId) != undefined) {
-            // console.debug("create new switch: ", xmlEvent);
-            // TODO: Lars: new implementation needed
-            // dojo.require("betterform.ui.container.Switch");
-            // tmpSwitch = new betterform.ui.container.Switch({}, dom.byId(xmlEvent.contextInfo.targetId));
-        }
-        tmpSwitch.toggleCase(xmlEvent.contextInfo);
     },
 
     fetchProgress:function(id, fileName) {
