@@ -491,11 +491,13 @@
         </xsl:variable>
 -->
 
-        <div style="display:none">
+<!--
+        <div style="display:none" class="switch-toggles">
             <xsl:for-each select="xf:case[@name='switch-toggles']/xf:trigger">
                 <xsl:call-template name="trigger"/>
             </xsl:for-each>
         </div>
+-->
         <div id="{$switch-id}" class="xfSwitch bfTabContainer">
             <xsl:call-template name="copy-style-attribute"/>
             <xsl:for-each select="xf:case[./xf:label]">

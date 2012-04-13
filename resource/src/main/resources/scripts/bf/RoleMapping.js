@@ -46,6 +46,7 @@ require(['dojo/_base/declare'],
             ['.xfGroup',            "bf/factory/FactoryContainer", "group"],
             ['.xfRepeat',           "bf/factory/FactoryContainer", "repeat"],
             ['.xfSwitch.aDefault',  "bf/factory/FactoryContainer", "switch"],
+            ['.xfSwitch.bfTabContainer',"bf/factory/FactoryContainer", "tabswitch"],
 
             // COMMON CHILDS
             ['body.ToolTipAlert',     "bf/common/AlertToolTip"],
