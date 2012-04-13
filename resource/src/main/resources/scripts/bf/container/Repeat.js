@@ -2,10 +2,10 @@ define(["dojo/_base/declare","bf/container/Container","dojo/query","dojo/dom", "
     function(declare, Container,query, dom, domStyle, domAttr, domClass, domConstruct, win, behavior,connect,array){
         return declare(Container, {
 
-
-            postCreate:function(){
-                console.debug("Repeat.postCreate created new instace this.srcNodeRef:", this.srcNodeRef);
+            constructor:function(properties, node){
+                console.debug("Repeat.postCreate created new instace node:", node);
                 this.inherited(arguments);
+
                 this.repeatId = domAttr.get(this.srcNodeRef,"repeatId");
                 console.debug("Repeat.postCreate this.repeatId:", this.repeatId);
 
@@ -65,9 +65,9 @@ define(["dojo/_base/declare","bf/container/Container","dojo/query","dojo/dom", "
 
                 var repeatIndexNode;
                 if (this.appearance == "compact") {
-                    repeatIndexNode = query("> tbody > .xfRepeatItem", this.domNode)[intIndex - 1];
+                    repeatIndexNode = query("> tbody > .xfRepeatItem", this.srcNodeRef)[intIndex - 1];
                 } else {
-                    repeatIndexNode = query("> .xfRepeatItem", this.domNode)[intIndex - 1];
+                    repeatIndexNode = query("> .xfRepeatItem", this.srcNodeRef)[intIndex - 1];
                 }
                 // console.debug("handleSetRepeatIndex for repeatIndexNode",repeatIndexNode);
                 if (repeatIndexNode != undefined) {
@@ -137,34 +137,34 @@ define(["dojo/_base/declare","bf/container/Container","dojo/query","dojo/dom", "
                 var position = parseInt(contextInfo.position,"10");
                 var itemToRemove;
                 if (this.appearance == "compact") {
-                    itemToRemove = dojo.query("> tbody > .xfRepeatItem", this.domNode)[position - 1];
-                    dojo.query("> tbody", this.domNode)[0].removeChild(itemToRemove);
+                    itemToRemove = dojo.query("> tbody > .xfRepeatItem", this.srcNodeRef)[position - 1];
+                    dojo.query("> tbody", this.srcNodeRef)[0].removeChild(itemToRemove);
                 } else {
-                    itemToRemove = dojo.query("> .xfRepeatItem", this.domNode)[position - 1];
-                    this.domNode.removeChild(itemToRemove);
+                    itemToRemove = dojo.query("> .xfRepeatItem", this.srcNodeRef)[position - 1];
+                    this.srcNodeRef.removeChild(itemToRemove);
                 }
             },
 
             _removeRepeatIndexClasses:function() {
-                // console.debug("Repeat._removeRepeatIndexClasses: this.domNode:",this.domNode, " this:",this);
+                // console.debug("Repeat._removeRepeatIndexClasses: this.srcNodeRef:",this.srcNodeRef, " this:",this);
                 if (this.appearance == "compact") {
-                    query("> tbody > .xfRepeatIndexPre", this.domNode).forEach(
+                    query("> tbody > .xfRepeatIndexPre", this.srcNodeRef).forEach(
                         function(repeatIndexItem) {
                             domClass.remove(repeatIndexItem, "xfRepeatIndexPre");
                         }
                     );
-                    query("> tbody > .xfRepeatIndex", this.domNode).forEach(
+                    query("> tbody > .xfRepeatIndex", this.srcNodeRef).forEach(
                         function(repeatIndexItem) {
                             domClass.remove(repeatIndexItem, "xfRepeatIndex");
                         }
                     );
                 } else {
-                    query("> .xfRepeatIndexPre", this.domNode).forEach(
+                    query("> .xfRepeatIndexPre", this.srcNodeRef).forEach(
                         function(repeatIndexItem) {
                             domClass.remove(repeatIndexItem, "xfRepeatIndexPre");
                         }
                     );
-                    query("> .xfRepeatIndex", this.domNode).forEach(
+                    query("> .xfRepeatIndex", this.srcNodeRef).forEach(
                         function(repeatIndexItem) {
                             domClass.remove(repeatIndexItem, "xfRepeatIndex");
                         }
@@ -182,7 +182,7 @@ define(["dojo/_base/declare","bf/container/Container","dojo/query","dojo/dom", "
 
             _replacePrototypeIds:function(node, generatedIds) {
                 var compactRepeat = false;
-                if(domClass.contains(this.domNode,"aCompact")) {
+                if(domClass.contains(this.srcNodeRef,"aCompact")) {
                     compactRepeat = true;
                 }
 
@@ -240,24 +240,24 @@ define(["dojo/_base/declare","bf/container/Container","dojo/query","dojo/dom", "
                 var targetNode = null;
                 if (position == 1 && repeatItemCount > 0) {
                     if (this.appearance == "compact") {
-                        targetNode = query("> tbody > .xfRepeatItem", this.domNode)[0];
+                        targetNode = query("> tbody > .xfRepeatItem", this.srcNodeRef)[0];
                     } else {
-                        targetNode = query("> .xfRepeatItem", this.domNode)[0];
+                        targetNode = query("> .xfRepeatItem", this.srcNodeRef)[0];
                     }
                     domConstruct.place(node, targetNode, "before");
 
                 } else if (position == 1 && repeatItemCount == 0) {
 
                     if (this.appearance == "compact") {
-                        // console.debug("RepeatItem._createRepeatItem for CompactRepeat domNode: ", this.domNode);
-                        var tbodyNode = query("tbody", this.domNode)[0];
+                        // console.debug("RepeatItem._createRepeatItem for CompactRepeat domNode: ", this.srcNodeRef);
+                        var tbodyNode = query("tbody", this.srcNodeRef)[0];
                         if (tbodyNode == undefined) {
                             tbodyNode = win.doc.createElement("tbody");
-                            domConstruct.place(tbodyNode, this.domNode);
+                            domConstruct.place(tbodyNode, this.srcNodeRef);
                         }
                         domConstruct.place(node, tbodyNode);
                     } else {
-                        domConstruct.place(node.domNode, this.domNode);
+                        domConstruct.place(node.domNode, this.srcNodeRef);
                     }
 
 
@@ -267,9 +267,9 @@ define(["dojo/_base/declare","bf/container/Container","dojo/query","dojo/dom", "
                     //  2. Default Insert happens after the targetNode
 
                     if (this.appearance == "compact") {
-                        targetNode = query("> tbody > .xfRepeatItem", this.domNode)[position - 2];
+                        targetNode = query("> tbody > .xfRepeatItem", this.srcNodeRef)[position - 2];
                     } else {
-                        targetNode = query("> .xfRepeatItem", this.domNode)[position - 2];
+                        targetNode = query("> .xfRepeatItem", this.srcNodeRef)[position - 2];
                     }
                     // console.debug("RepeatItem._createRepeatItem targetNode: ", targetNode , " repeatItem: ", repeatItemDijit);
                     domConstruct.place(node, targetNode, "after");
@@ -281,9 +281,9 @@ define(["dojo/_base/declare","bf/container/Container","dojo/query","dojo/dom", "
             _getSize:function() {
                 var size;
                 if (this.appearance == "compact") {
-                    size = query("> tbody > .xfRepeatItem", this.domNode).length;
+                    size = query("> tbody > .xfRepeatItem", this.srcNodeRef).length;
                 } else {
-                    size = query("> .xfRepeatItem", this.domNode).length;
+                    size = query("> .xfRepeatItem", this.srcNodeRef).length;
                 }
                 return size;
             }

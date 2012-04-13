@@ -3,9 +3,18 @@
  * Licensed under the terms of BSD License
  */
 
-define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-class","dijit/registry"],
-    function(declare, _Widget,domClass,registry){
-        return declare(_Widget, {
+define(["dojo/_base/declare" ,"dojo/dom-class","dojo/dom"],
+    function(declare, domClass,dom){
+        return declare(null, {
+
+        srcNodeRef:null,
+        id:null,
+
+        constructor:function(properites, node) {
+            this.srcNodeRef = node;
+            this.id = node.id;
+            console.debug("Container.constructor srcNodeRef:",this.srcNodeRef, " id: ",this.id);
+        },
 
         handleStateChanged:function(contextInfo){
               console.debug("Container.handleStateChanged: ",contextInfo);
@@ -148,10 +157,6 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-class","dijit/registry"]
 
          _setHint:function( value) {
              console.warn("TBD: Container._setHint value:"+ value);
-    /*
-           var hint = registry.byId(this.target.id + "-hint");
-           hint.label = value;
-    */
          },
 
          _setAlert:function( value) {

@@ -43,6 +43,7 @@ require(['dojo/_base/declare'],
             ['.xfUpload .xfValue',    "bf/factory/FactoryUpload", "anyURI"],
 
             // CONTAINER
+            ['.xfGroup',             "bf/factory/FactoryContainer",  "group"],
             ['.xfRepeat',             "bf/factory/FactoryContainer", "repeat"],
 
             // COMMON CHILDS

@@ -130,59 +130,60 @@ define(["dojo/_base/declare",
         //Loop as long as Pending Events are being skipped (as long as no Request is being initiated)
         while ((!this.requestPending) && (this.clientServerEventQueue.length != 0)) {
             nextPendingClientServerEvent = this.clientServerEventQueue.shift();
-            switch (nextPendingClientServerEvent.getCallerFunction()) {
-                case "dispatchEvent":       console.info("FIFO-READ:  dispatchEvent(" + nextPendingClientServerEvent.getTargetId() + ")"); break;
-                case "dispatchEventType":   console.info("FIFO-READ:  dispatchEventType(" + nextPendingClientServerEvent.getTargetId() + ", " + nextPendingClientServerEvent.getEventType() + ", " + nextPendingClientServerEvent.getContextInfo() + ")"); break;
-                case "setControlValue":     console.info("FIFO-READ:  setControlValue(" + nextPendingClientServerEvent.getTargetId() + ", " + nextPendingClientServerEvent.getValue() + ")"); break;
-                case "setRepeatIndex":      console.info("FIFO-READ: setRepeatIndex(" + nextPendingClientServerEvent.getTargetId() + ", " + nextPendingClientServerEvent.getValue() + ")"); break;
-                default:                                        break;
+
+            var callerFunction = nextPendingClientServerEvent.getCallerFunction();
+            var nextPendingTargetId = nextPendingClientServerEvent.getTargetId();
+            switch (callerFunction) {
+                case "dispatchEvent":       console.info("FIFO-READ:  dispatchEvent(" + nextPendingTargetId + ")"); break;
+                case "dispatchEventType":   console.info("FIFO-READ:  dispatchEventType(" + nextPendingTargetId + ", " + nextPendingClientServerEvent.getEventType() + ", " + nextPendingClientServerEvent.getContextInfo() + ")"); break;
+                case "setControlValue":     console.info("FIFO-READ:  setControlValue(" + nextPendingTargetId + ", " + nextPendingClientServerEvent.getValue() + ")"); break;
+                case "setRepeatIndex":      console.info("FIFO-READ: setRepeatIndex(" + nextPendingTargetId + ", " + nextPendingClientServerEvent.getValue() + ")"); break;
+                default:break;
             }
 
             //*****************************************************************************
             // START: skip this pending Event, if one of the following conditions occurred:
             //*****************************************************************************
 
-            if(nextPendingClientServerEvent.getCallerFunction() == "setRepeatIndex"){
-                dojoObject = query("*[repeatId='" + nextPendingClientServerEvent.getTargetId() + "']")[0];
+            if(callerFunction == "setRepeatIndex"){
+                dojoObject = query("*[repeatId='" + nextPendingTargetId + "']")[0];
             }else {
-                dojoObject = dom.byId(nextPendingClientServerEvent.getTargetId());
+                dojoObject = dom.byId(nextPendingTargetId);
             }
-            // console.debug("EventFifoReader dojoObject:",dojoObject, " targetId: ",nextPendingClientServerEvent.getTargetId());
+            // console.debug("EventFifoReader dojoObject:",dojoObject, " targetId: ",nextPendingTargetId);
             if (dojoObject == null) {
-                console.warn("Event (Client to Server) for Dojo Control " + dojoObject + " skipped. CAUSE: OBJECT is NULL",nextPendingClientServerEvent.getTargetId());
+                console.warn("Event (Client to Server) for Dojo Control " + dojoObject + " skipped. CAUSE: OBJECT is NULL",nextPendingTargetId);
                 continue;
             }
 
-            if(nextPendingClientServerEvent.getCallerFunction() == "setRepeatIndex"){
-                var repeatElement = query("*[repeatId='" + nextPendingClientServerEvent.getTargetId() + "']");
-                dijitObject = registry.byId(domAttr.get(repeatElement[0], "id"));
-
-            }else {
-                dijitObject = registry.byId(nextPendingClientServerEvent.getTargetId());
+            if(callerFunction != "setRepeatIndex"){
+                dijitObject = registry.byId(nextPendingTargetId);
             }
 
+            // console.debug("EventFifoReader dijitObject:",dijitObject, " targetId: ",nextPendingTargetId);
 
-            // console.debug("EventFifoReader dijitObject:",dijitObject, " targetId: ",nextPendingClientServerEvent.getTargetId());
-
-            if (dijitObject == null) {
+            if (dijitObject == null && callerFunction != "setRepeatIndex") {
                 console.warn("XFProcessor.eventFifoReader: Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: OBJECT is NULL");
                 continue;
+
+            }else if(callerFunction != "setRepeatIndex"){
+                // Test if this dijit-control has an isReadonly() method
+                console.debug("XFProcessor.eventFifoReader: check if Object is readonly:",dijitObject, " reaondly: ",dijitObject.isReadonly());
+
+                if (dijitObject && dijitObject.isReadonly()) {
+                    console.warn("XFProcessor.eventFifoReader: Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: READ-ONLY");
+                    continue;
+                }
+
             }
 
-            // Test if this dijit-control has an isReadonly() method
-            console.debug("XFProcessor.eventFifoReader: check if Object is readonly:",dijitObject, " reaondly: ",dijitObject.isReadonly());
-
-            if (dijitObject && dijitObject.isReadonly()) {
-                console.warn("XFProcessor.eventFifoReader: Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: READ-ONLY");
-                continue;
-            }
 
             // Test if the Control's event was a setControlValue
-            if (nextPendingClientServerEvent.getCallerFunction() == "setControlValue") {
+            if (callerFunction == "setControlValue") {
                 // Test if the next Control-Value-Change originates from the same Control as this Control-Value-Change
                 if (this.clientServerEventQueue[0] != null) {
                     // Test if the targetId of this event and the next one are equal
-                    if (this.clientServerEventQueue[0].getTargetId() == nextPendingClientServerEvent.getTargetId()) {
+                    if (this.clientServerEventQueue[0].getTargetId() == nextPendingTargetId) {
                         // Test if the CallerFunction of the next Event is also setControlValue
                         if (this.clientServerEventQueue[0].getCallerFunction() == "setControlValue") {
                             console.debug("XFProcessor.eventFifoReader: Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: superseeded by following value-change of same Control");
@@ -207,9 +208,9 @@ define(["dojo/_base/declare",
             // Further processing of setRepeatIndex events
             // TODO: check if really not needed anymore
 /*
-            if (nextPendingClientServerEvent.getCallerFunction() == "setRepeatIndex") {
+            if (callerFunction == "setRepeatIndex") {
                 if (nextPendingClientServerEvent.getRepeatItem() == null) {
-                    console.warn("Event (Client to Server) for Dijit Control " + nextPendingClientServerEvent.getTargetId() + " skipped. CAUSE: Repeat-Item for being selected has disappeared");
+                    console.warn("Event (Client to Server) for Dijit Control " + nextPendingTargetId + " skipped. CAUSE: Repeat-Item for being selected has disappeared");
                     continue;
                 }
 
@@ -229,13 +230,13 @@ define(["dojo/_base/declare",
                 this._useLoadingMessage(dojoObject);
             }
 
-            // console.debug("XFProcessor.dispatch event for ",nextPendingClientServerEvent.getCallerFunction());
-            switch (nextPendingClientServerEvent.getCallerFunction()) {
-                case "dispatchEvent":                this.requestPending = true; this._dispatchEvent(nextPendingClientServerEvent.getTargetId()); break;
-                case "dispatchEventType":        this.requestPending = true; this._dispatchEventType(nextPendingClientServerEvent.getTargetId(), nextPendingClientServerEvent.getEventType(), nextPendingClientServerEvent.getContextInfo()); break;
-                case "setControlValue":            this.requestPending = true; this._setControlValue(nextPendingClientServerEvent.getTargetId(), nextPendingClientServerEvent.getValue()); break;
+            // console.debug("XFProcessor.dispatch event for ",callerFunction);
+            switch (callerFunction) {
+                case "dispatchEvent":                this.requestPending = true; this._dispatchEvent(nextPendingTargetId); break;
+                case "dispatchEventType":        this.requestPending = true; this._dispatchEventType(nextPendingTargetId, nextPendingClientServerEvent.getEventType(), nextPendingClientServerEvent.getContextInfo()); break;
+                case "setControlValue":            this.requestPending = true; this._setControlValue(nextPendingTargetId, nextPendingClientServerEvent.getValue()); break;
                 //Re-transform the dojo-Id to repeat-Id
-                case "setRepeatIndex":            this.requestPending = true; this._setRepeatIndex(nextPendingClientServerEvent.getTargetId(), nextPendingClientServerEvent.getValue()); break;
+                case "setRepeatIndex":            this.requestPending = true; this._setRepeatIndex(nextPendingTargetId, nextPendingClientServerEvent.getValue()); break;
                 default:                                        break;
             }
         }
