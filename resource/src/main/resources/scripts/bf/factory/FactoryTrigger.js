@@ -3,9 +3,11 @@ define(["dojo/_base/declare","dojo/_base/connect"],
         return declare(null,
             {
                 /**
+                 * This rule matches plain standard <input type="button", a trigger rendered with image and
+                 * a trigger represented as a link.
                  *
                  * @param type
-                 * @param node
+                 * @param node the node to map to a concrete widget
                  */
                 create:function(type, node){
                     switch(type){

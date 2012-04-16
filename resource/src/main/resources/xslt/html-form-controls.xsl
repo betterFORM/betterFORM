@@ -530,28 +530,53 @@
         <xsl:variable name="name" select="concat($trigger-prefix,$id)"/>
         <xsl:variable name="navindex" select="@navindex" />
 
+
+        <xsl:choose>
+            <xsl:when test="exists(@src)">
+                <button id="{$id}-value"
+                        name="{$name}"
+                        class="xfValue"
+                        tabindex="{$navindex}"
+                        title="{xf:hint/text()}"
+                        type="button">
+                    <img src="{@src}" alt="image"/>
+                </button>
+            </xsl:when>
+            <xsl:when test="@appearance='minimal'">
+                <a      id="{$id}-value"
+                        href="javascript:return false;"
+                        name="{$name}"
+                        class="xfValue"
+                        tabindex="{$navindex}"
+                        title="{xf:hint/text()}">
+                    <xsl:value-of select="xf:label"/>
+                </a>
+            </xsl:when>
+            <xsl:otherwise>
+                <input  id="{$id}-value"
+                        name="{$name}"
+                        class="xfValue"
+                        tabindex="{$navindex}"
+                        title="{xf:hint/text()}"
+                        type="button"
+                        value="{xf:label}"
+                        >
+                    <xsl:if test="bf:data/@bf:readonly='true'">
+                        <xsl:attribute name="readonly">readonly</xsl:attribute>
+                    </xsl:if>
+                    <!-- todo: does this still apply? -->
+                    <xsl:if test="@accesskey">
+                        <xsl:attribute name="accesskey">
+                            <xsl:value-of select="@accesskey"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="title">
+                            <xsl:value-of select="normalize-space(xf:hint)"/>- KEY: [ALT]+ <xsl:value-of select="@accesskey"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                </input>
+            </xsl:otherwise>
+        </xsl:choose>
             <!-- minimal appearance only supported in scripted mode -->
-        <input  id="{$id}-value"
-                name="{$name}"
-                class="xfValue"
-                tabindex="{$navindex}"
-                title="{xf:hint/text()}"
-                type="submit"
-                value="{xf:label}"
-                >
-            <xsl:if test="bf:data/@bf:readonly='true'">
-                <xsl:attribute name="readonly">readonly</xsl:attribute>
-            </xsl:if>
-            <!-- todo: does this still apply? -->
-            <xsl:if test="@accesskey">
-                <xsl:attribute name="accesskey">
-                    <xsl:value-of select="@accesskey"/>
-                </xsl:attribute>
-                <xsl:attribute name="title">
-                    <xsl:value-of select="normalize-space(xf:hint)"/>- KEY: [ALT]+ <xsl:value-of select="@accesskey"/>
-                </xsl:attribute>
-            </xsl:if>
-        </input>
         <!--
         >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         the hint will be applied as html title attribute and additionally output

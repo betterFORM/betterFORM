@@ -791,7 +791,10 @@
                 <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
             <xsl:when test="local-name()='submit'">
-                <xsl:call-template name="submit"/>
+                <!-- map to trigger for now - does there need to be a difference? -->
+                <xsl:call-template name="trigger"/>
+
+                <!--<xsl:call-template name="submit"/>-->
                 <!-- xf:hint is handled by widget itself -->
                 <!--<xsl:apply-templates select="xf:help"/>-->
                 <!--<xsl:apply-templates select="xf:alert"/>-->
@@ -844,11 +847,18 @@
     <!-- ####################################### NAMED HELPER TEMPLATES ########################################## -->
 
     <xsl:template name="addDojoImport">
+        <!--
+        todo: allow re-definition of dojoConfig: if a dojoConfig is present in the page use that instead of the code below.
+        Or to be more precise - it should be possible to define your own package locations. Alternatively of course
+        this template might be overwritten by a custom stylesheet. Which is better?
+        -->
+        <!-- todo: should we use explicit package locations and a baseUrl ? -->
         <xsl:variable name="dojoConfig">
             has: {
                 "dojo-firebug": <xsl:value-of select="$debug-enabled"/>,
                 "dojo-debug-messages": <xsl:value-of select="$debug-enabled"/>
             },
+            <!-- todo: check if debugAtAllCosts is deprecated -->
             debugAtAllCosts:<xsl:value-of select="$debug-enabled"/>,
             isDebug:<xsl:value-of select="$debug-enabled"/>,
             locale:'<xsl:value-of select="$locale"/>',
@@ -881,9 +891,14 @@
 
     <xsl:template name="addLocalScript">
         <script type="text/javascript">
-            require(["bf/XFProcessor","bf/XFormsModelElement"],
-                function(XFProcessor, XFormsModelElement){
+            require(["bf/XFProcessor","bf/XFormsModelElement","dojo/_base/connect"],
+                function(XFProcessor, XFormsModelElement, connect){
                         console.debug("ready - new Session with key:", dojo.config.bf.sessionkey);
+                        // subscribe ControlMapping here
+                        connect.subscribe("load-control-mapping", function(){
+                            //load controlmapping module
+                        });
+
                         <!-- create a XForms Processor for the form -->
                         fluxProcessor = new XFProcessor();
                         <!-- create a XFormsModelElement class for each model in the form -->
