@@ -16,6 +16,8 @@ define(["dojo/_base/declare","dojo/_base/connect"],
                                 found: function(n){
                                     var JS_CLASS_NAME = mapping[1];
                                     var param= mapping[2];
+                                    console.debug("FOUND: ", n);
+                                    console.debug("map to: ", JS_CLASS_NAME, " param: ", param);
                                     require([JS_CLASS_NAME],
                                         function(JS_CLASS_NAME){
                                             // console.debug('found', n);

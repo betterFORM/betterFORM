@@ -3,6 +3,13 @@ require(['dojo/_base/declare'],
         declare("bf.RoleMapping",null, { });
 
         bf.RoleMapping.data = [
+            // CONTAINER
+            ['.xfGroup',            "bf/factory/FactoryContainer", "group"],
+            ['.xfRepeat',           "bf/factory/FactoryContainer", "repeat"],
+            ['.xfSwitch.aDefault',  "bf/factory/FactoryContainer", "switch"],
+            ['.xfSwitch.bfTabContainer',"bf/factory/FactoryContainer", "tabswitch"],
+
+
             // INPUTS
             ['.xfControl',                                                "bf/XFControl"],
             ['.xfInput.xsdString .xfValue, .xfInput.xsdDefault .xfValue', "bf/factory/FactoryInput", "plain"],
@@ -41,12 +48,6 @@ require(['dojo/_base/declare'],
 
             // UPLOAD
             ['.xfUpload .xfValue',    "bf/factory/FactoryUpload", "anyURI"],
-
-            // CONTAINER
-            ['.xfGroup',            "bf/factory/FactoryContainer", "group"],
-            ['.xfRepeat',           "bf/factory/FactoryContainer", "repeat"],
-            ['.xfSwitch.aDefault',  "bf/factory/FactoryContainer", "switch"],
-            ['.xfSwitch.bfTabContainer',"bf/factory/FactoryContainer", "tabswitch"],
 
             // COMMON CHILDS
             ['body.ToolTipAlert',     "bf/common/AlertToolTip"],

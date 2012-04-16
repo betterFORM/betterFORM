@@ -43,6 +43,7 @@ define(["dojo/_base/declare",
     lastServerClientFocusEvent:null,
     usesDOMFocusIN:dojo.config.bf.useDOMFocusIN,
     logEvents:dojo.config.bf.logEvents,
+    roleMappingProcessor:null,
 
 
     /*
@@ -576,14 +577,17 @@ define(["dojo/_base/declare",
     },
 
     _buildUI : function(){
+            require(["bf/RoleMappingProcessor"],function(RoleMappingProcessor){
+                if (this.roleMappingProcessor == undefined) {
+                    this.roleMappingProcessor = new RoleMappingProcessor();
+                }
+            });
 
-        require(["bf/RoleMappingProcessor"],function(RoleMappingProcessor){
-                new RoleMappingProcessor();
-        });
-
-        require(["dojo/behavior", "dojo/domReady!"],function(behavior) {
-            behavior.apply();
-        });
+            require(["dojo/behavior", "dojo/domReady!"],function(behavior) {
+                if(!this.isReady){
+                    behavior.apply();
+                }
+            });
     },
 
     _handleAVTChanged:function(xmlEvent){
@@ -615,8 +619,9 @@ define(["dojo/_base/declare",
     _handleModelRemoved:function(xmlEvent){
         console.debug("XFProcessor._handleModelRemoved xmlEvent:",xmlEvent);
         var modelId = xmlEvent.contextInfo.modelId;
-        query("#debug-pane a[modelId='" + modelId +"']").orphan();
-
+        require(["dojo/query", "dojo/NodeList-manipulate"], function(query){
+            query("#debug-pane a[modelId='" + modelId +"']").remove();
+        });
     },
 
     _handleValidity:function(validityEvents) {
@@ -755,10 +760,9 @@ define(["dojo/_base/declare",
             domAttr.set(htmlEntryPoint, "id", xlinkTarget + "Old");
             var nodesToEmbed = dom.byId(targetid);
 
-            require("dojo/parser", function(parser){
-                parser.parse(htmlEntryPoint);
-            });
-
+//            require("dojo/parser", function(parser){
+//                parser.parse(htmlEntryPoint);
+//            });
             // dojo.parser.parse(htmlEntryPoint);
 
             domConstruct.place(nodesToEmbed, htmlEntryPoint, "before");
@@ -768,7 +772,14 @@ define(["dojo/_base/declare",
             //copy classes from mountpoint
             var classes = domAttr.get(htmlEntryPoint, "class");
             domAttr.set(nodesToEmbed, "class", classes);
+
             htmlEntryPoint.parentNode.removeChild(htmlEntryPoint);
+
+
+            require(["dojo/behavior"],function(behavior) {
+             behavior.apply();
+             });
+
 
             // finally dynamically load the CSS (if some) form the embedded form
             var cssToLoad = xmlEvent.contextInfo.inlineCSS;
@@ -848,8 +859,100 @@ define(["dojo/_base/declare",
         else {
             console.error("betterform-load-uri show='" + xmlEvent.contextInfo.show + "' unknown!");
         }
+
+
     },
 
+    _unloadDOM:function(target) {
+
+        //delete CSS specific to subform
+        var htmlEntryPoint = dom.byId(target);
+        if (htmlEntryPoint == undefined) {
+            return;
+        }
+
+        var styleList = document.getElementsByTagName("style");
+        //console.debug("styleList" , styleList);
+        if (styleList != undefined) {
+            array.forEach(styleList, function(item) {
+                //console.debug("style: ", item);
+                if (item != undefined) {
+                    if(domAttr.get(item,"name") == target){
+                        //console.debug("removing style: ", item);
+                        //console.debug("parentNode: ", item.parentNode);
+                        item.parentNode.removeChild(item);
+                    }
+                }
+            });
+        }
+
+        /*
+         unload previously loaded subform-specific stylesheets
+         */
+        var externalStyleList = document.getElementsByTagName("link");
+        console.debug("styleList" , externalStyleList);
+        if (externalStyleList != undefined) {
+            array.forEach(externalStyleList, function(item) {
+                //console.debug("style: ", item);
+                if (item != undefined) {
+                    if(domAttr.get(item,"name") == target){
+                        console.debug("removing style: ", item);
+                        console.debug("parentNode: ", item.parentNode);
+                        item.parentNode.removeChild(item);
+                    }
+                }
+            });
+        }
+
+        /*
+         unload previously loaded subform-specific Javascripts
+         */
+        var scriptList = document.getElementsByTagName("script");
+        //console.debug("scriptList" , scriptList);
+        if (scriptList != undefined) {
+            array.forEach(scriptList, function(item) {
+                //console.debug("script: ", item);
+                if (item != undefined) {
+                    if(domAttr.get(item,"name") == target){
+                        //console.debug("removing: ", item);
+                        //console.debug("parentNode: ", item.parentNode);
+                        item.parentNode.removeChild(item);
+                    }
+                }
+            });
+        }
+
+        var widgetID = "widgetid";
+        if (has("ie") >= 5) {
+            widgetID = "widgetId"
+        }
+
+        /*
+         destroy all child dijits within subform tree
+         */
+        var widgets = query("*[" + widgetID + "]", htmlEntryPoint);
+        array.forEach(widgets,
+            function(item) {
+                if (item != undefined) {
+                    var childDijit = registry.byId(domAttr.get(item, 'id'));
+                    if (childDijit != undefined) {
+                         console.debug("XFProcessor._unloadDOM: destroy ", childDijit);
+                        childDijit.destroy();
+                    } else {
+                         console.debug("XFProcessor._unloadDOM: ChildDijit is null ");
+                        childDijit = registry.byId(domAttr.get(item, widgetID));
+                        if (childDijit != undefined) {
+                            childDijit.destroy();
+                        }
+                    }
+
+                }
+            }
+        );
+        while (htmlEntryPoint.hasChildNodes()) {
+            htmlEntryPoint.removeChild(htmlEntryPoint.firstChild);
+        }
+    },
     /*
          ******************************************************************************************************
          * handles XForms xforms-submit-done events
@@ -900,99 +1003,6 @@ define(["dojo/_base/declare",
 
 //            dojo.require("dojo.parser");
 //            dojo.parser.parse(htmlEntryPoint);
-        }
-    },
-
-    //todo: see above '_handleBetterFormLoadURI'  - should be moved behind handleLoadURI function
-    _unloadDOM:function(target) {
-        console.debug("XFProcessor._unloadDOM xmlEvent:",xmlEvent);
-
-        //delete CSS specific to subform
-        var htmlEntryPoint = dom.byId(target);
-        if (htmlEntryPoint == undefined) {
-            return;
-        }
-
-        var styleList = document.getElementsByTagName("style");
-        //console.debug("styleList" , styleList);
-        if (styleList != undefined) {
-        array.forEach(styleList, function(item) {
-                //console.debug("style: ", item);
-                if (item != undefined) {
-            if(domAttr.get(item,"name") == target){
-                        //console.debug("removing style: ", item);
-                        //console.debug("parentNode: ", item.parentNode);
-                item.parentNode.removeChild(item);
-            }
-                }
-        });
-        }
-
-        /*
-        unload previously loaded subform-specific stylesheets
-         */
-        var externalStyleList = document.getElementsByTagName("link");
-        console.debug("styleList" , externalStyleList);
-        if (externalStyleList != undefined) {
-        array.forEach(externalStyleList, function(item) {
-                //console.debug("style: ", item);
-                if (item != undefined) {
-            if(domAttr.get(item,"name") == target){
-                        console.debug("removing style: ", item);
-                        console.debug("parentNode: ", item.parentNode);
-                item.parentNode.removeChild(item);
-            }
-                }
-        });
-        }
-
-        /*
-        unload previously loaded subform-specific Javascripts
-         */
-        var scriptList = document.getElementsByTagName("script");
-        //console.debug("scriptList" , scriptList);
-        if (scriptList != undefined) {
-            array.forEach(scriptList, function(item) {
-                //console.debug("script: ", item);
-                if (item != undefined) {
-                    if(domAttr.get(item,"name") == target){
-                        //console.debug("removing: ", item);
-                        //console.debug("parentNode: ", item.parentNode);
-                        item.parentNode.removeChild(item);
-                    }
-                }
-            });
-        }
-
-        var widgetID = "widgetid";
-        if (has("ie") >= 5) {
-            widgetID = "widgetId"
-        }
-
-        /*
-        destroy all child dijits within subform tree
-         */
-        var widgets = query("*[" + widgetID + "]", htmlEntryPoint);
-        array.forEach(widgets,
-                function(item) {
-                    if (item != undefined) {
-                        var childDijit = registry.byId(domAttr.get(item, 'id'));
-                        if (childDijit != undefined) {
-                            // console.debug("XFProcessor._unloadDOM: destroy ", childDijit);
-                            childDijit.destroy();
-                        } else {
-                            // console.debug("XFProcessor._unloadDOM: ChildDijit is null ");
-                            childDijit = registry.byId(domAttr.get(item, widgetID));
-                            if (childDijit != undefined) {
-                                childDijit.destroy();
-                            }
-                        }
-
-                    }
-                }
-                );
-        while (htmlEntryPoint.hasChildNodes()) {
-            htmlEntryPoint.removeChild(htmlEntryPoint.firstChild);
         }
     },
 
