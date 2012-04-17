@@ -39,13 +39,6 @@ import java.util.StringTokenizer;
  */
 
 public class SchemaValidator {
-
-    /**
-     * XMLSchema and XMLSchema-instance namespaces
-     */
-    private final static String XMLSCHEMA_INSTANCE_NS = "http://www.w3.org/2001/XMLSchema-instance";
-    private final static String XMLSCHEMA_NS = "http://www.w3.org/2001/XMLSchema";
-
     /**
      * The logger.
      */
@@ -82,7 +75,7 @@ public class SchemaValidator {
                     LOGGER.debug("instance node type is: " + instance.getNodeType());
             }
 
-            String prefix = NamespaceResolver.getPrefix(el, XMLSCHEMA_INSTANCE_NS);
+            String prefix = NamespaceResolver.getPrefix(el, NamespaceConstants.XMLSCHEMA_INSTANCE_NS);
             //test if with targetNamespace or not
             //if more than one schema : namespaces are mandatory ! (optional only for 1)
             StringTokenizer tokenizer = new StringTokenizer(schemas, " ", false);
@@ -132,9 +125,9 @@ public class SchemaValidator {
             }
             //write schemaLocations found
             if (schemaLocations != null && !schemaLocations.equals(""))
-                el.setAttributeNS(XMLSCHEMA_INSTANCE_NS, prefix + ":schemaLocation", schemaLocations);
+                el.setAttributeNS(NamespaceConstants.XMLSCHEMA_INSTANCE_NS, prefix + ":schemaLocation", schemaLocations);
             if (noNamespaceSchemaLocation != null)
-                el.setAttributeNS(XMLSCHEMA_INSTANCE_NS, prefix + ":noNamespaceSchemaLocation", noNamespaceSchemaLocation);
+                el.setAttributeNS(NamespaceConstants.XMLSCHEMA_INSTANCE_NS, prefix + ":noNamespaceSchemaLocation", noNamespaceSchemaLocation);
 
             //save and parse the doc
             ValidationErrorHandler handler = null;
@@ -206,7 +199,7 @@ public class SchemaValidator {
         Document doc = DOMUtil.parseXmlFile(schemaFile, true, false);
         if (doc != null) {
             Element schema = doc.getDocumentElement();
-            ns = schema.getAttributeNS(XMLSCHEMA_NS, "targetNamespace");
+            ns = schema.getAttributeNS(NamespaceConstants.XMLSCHEMA_NS, "targetNamespace");
             if (ns == null || ns.equals("")) //try without NS !
                 ns = schema.getAttribute("targetNamespace");
         } else

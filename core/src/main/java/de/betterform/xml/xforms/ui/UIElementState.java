@@ -26,6 +26,7 @@ public interface UIElementState {
     static final String P3PTYPE_ATTRIBUTE = "p3ptype";
     static final String VALUE = "value";
     static final String SCHEMA_VALUE = "schema-value";
+    static final String BASE_TYPE = "base-type";
 
     /**
      * Sets the owning element.
