@@ -27,7 +27,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                 domAttr.set(n, "src", value);
                             };
                             break;
-                        case "anyURI":
+                        case "link":
                             console.debug("FOUND .xfOutput.xsdAnyURI .xfValue",n);
                             //todo: this solution works in FF - others have to be tested
                             //todo: use domStyle.set

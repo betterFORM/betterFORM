@@ -10,7 +10,7 @@ define(["dojo/_base/declare","dojo/_base/connect"],
                 create:function(type, node){
                     var n = node;
                     switch(type){
-                        case "plain":
+                        case "slider":
                             require(["dojo/dom-attr","dijit/registry", "dijit/form/HorizontalSlider","dijit/form/HorizontalRuleLabels","dijit/form/HorizontalRule"],
                                 function(domAttr, registry, HorizontalSlider, HorizontalRuleLabels,HorizontalRule){
                                     console.debug("Found xf:range: node:",n);

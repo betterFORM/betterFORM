@@ -13,7 +13,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                     var xfControlDijit = registry.byId(xfId);
                     var self = this;
                     switch(type){
-                        case "minimal":
+                        case "listcontrol":
                             connect.connect(n,"onchange",function(evt){
                                 var value = self.getSelectMinimalValue(n);
                                 xfControlDijit.sendValue(value,evt);
@@ -30,7 +30,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                                 });
                             };
                             break;
-                        case "full":
+                        case "checkboxes":
                             require(["bf/select/Select"], function(Select) {
                                 var selectFull = new Select({id:n.id,xfControl:xfControlDijit}, n);
 

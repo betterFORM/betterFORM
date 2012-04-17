@@ -13,8 +13,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     var xfControlDijit = registry.byId(xfId);
 
                     switch(type){
-                        case "minimal":
-                        case "compact":
+                        case "combobox":
                             console.debug("FactorySelect (minimal/compact) id:",xfId);
                             xfControlDijit.setValue = function(value, schemavalue) {
                                 domAttr.set(n, "value", value);
@@ -36,7 +35,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                 new Select1ComboBox({id:n.id}, n);
                             });
                             break;
-                        case "full":
+                        case "radiobuttons":
                             require(["dojo/query", "bf/select/Select1Radio"], function(query, Select1Radio) {
                                 query(".xfRadioValue", n).forEach(function(radioValue){
                                     radioValue.onclick = function(evt) {

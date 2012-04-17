@@ -14,7 +14,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","bf/util"],
 
                     switch(type){
 
-                        case "plain":
+                        case "password":
                             console.debug("FactorySecret: secret input: ",n);
                             connect.connect(n,"onkeyup",function(evt){
                                 xfControlDijit.sendValue(n.value,evt);

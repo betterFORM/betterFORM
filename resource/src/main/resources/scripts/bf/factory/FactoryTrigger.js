@@ -11,7 +11,7 @@ define(["dojo/_base/declare","dojo/_base/connect"],
                  */
                 create:function(type, node){
                     switch(type){
-                        case "plain":
+                        case "buttonOrLink":
                             var parentId = node.id.substring(0,node.id.lastIndexOf("-"));
                             console.debug("FactoryTrigger (plain) parentId: ", parentId);
                             connect.connect(node, "onclick", function(){

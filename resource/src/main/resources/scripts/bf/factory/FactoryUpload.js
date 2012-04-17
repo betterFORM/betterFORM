@@ -13,7 +13,7 @@ define(["dojo/_base/declare","dojo/_base/connect","bf/util"],
 
                     switch(type){
 
-                        case "anyURI":
+                        case "fileUpload":
                             console.warn("TBD: FactoryUpload (anyURI)",node);
                             break;
                         case "base64binary":

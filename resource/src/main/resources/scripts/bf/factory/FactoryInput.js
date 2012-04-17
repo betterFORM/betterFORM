@@ -21,7 +21,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     /**
                      * INPUT TYPE STRING
                      */
-                        case "plain":
+                        case "text":
                             console.debug("FactoryInput.createInputPlain");
                             /* Overwriten "abstract" API function on XFControl to handle updating of control values */
                             xfControlDijit.setValue = function(value, schemavalue) {
@@ -54,7 +54,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     /**
                      * INPUT TYPE BOOLEAN
                      */
-                        case "boolean":
+                        case "checkbox":
                             console.debug("FactoryInput.createInputBoolean");
                             // console.debug("FOUND: boolean input field: ",n);
                             if(domAttr.get(n,"type") != "checkbox"){

@@ -10,7 +10,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","bf/util"],
                 create:function(type, node){
                     var n = node;
                     switch(type){
-                        case "html":
+                        case "htmleditor":
                             var xfControl = registry.byId(bf.util.getXfId(n));
 
                             xfControl.setValue = function (value) {

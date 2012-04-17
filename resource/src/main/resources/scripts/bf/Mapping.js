@@ -32,51 +32,51 @@ require(['dojo/_base/declare'],
 
             // INPUTS
             ['.xfControl',                                                "bf/XFControl"],
-            ['.xfInput.xsdString .xfValue, .xfInput.xsdDefault .xfValue', "bf/factory/FactoryInput", "plain"],
-            ['.xfInput.xsdBoolean > * >  .xfValue',                       "bf/factory/FactoryInput", "boolean"],
+            ['.xfInput.xsdString .xfValue, .xfInput.xsdDefault .xfValue', "bf/factory/FactoryInput", "text"],
+            ['.xfInput.xsdBoolean > * >  .xfValue',                       "bf/factory/FactoryInput", "checkbox"],
             /*
             the following rule is special in that it matches for 'widgetContainer' and not 'xfValue'. The reason
             for this is the behavior of Dojo Dijits that replace the DOM Node they are applied to. But this creates
             problems with state handling which relies on the existence of these classes which Dojo does not preserver.
             Therefore here the Dijit is created as a child of 'widgetContainer'.
              */
+            //todo: use descriptive names for the different types of controls
             ['.uaDesktop .xfInput.xsdDate .widgetContainer',              "bf/factory/FactoryInput", "date"],
             ['.xfInput.xsdDateTime > * > .xfValue',                       "bf/factory/FactoryInput", "tbd"],
+            ['.xfInput.xsdTime > * >  .xfValue',                          "bf/factory/FactoryInput", "time"],
             //DateTime support for mobile might still be a problem and must be solved by a combination of controls
             ['.uaMobile .xfInput.xsdDate > * >  .xfValue, .uaTablet .xfInput.xsdDate > * >  .xfValue', "bf/factory/FactoryInput", "mobileDate"],
-            ['.xfInput.xsdTime > * >  .xfValue',  "bf/factory/FactoryInput", "time"],
 
             // SECRET
-            ['.xfSecret .xfValue', "bf/factory/FactorySecret", "plain"],
+            ['.xfSecret .xfValue', "bf/factory/FactorySecret", "password"],
 
             // SELECT1
-            ['.xfSelect1.aMinimal .xfValue, .xfSelect1.aDefault .xfValue', "bf/factory/FactorySelect1", "minimal"],
-            ['.xfSelect1.aCompact .xfValue',                               "bf/factory/FactorySelect1", "compact"],
-            ['.xfSelect1.aFull .xfValue',                                  "bf/factory/FactorySelect1", "full"],
+            ['.xfSelect1.aMinimal .xfValue, .xfSelect1.aDefault .xfValue , .xfSelect1.aCompact .xfValue', "bf/factory/FactorySelect1", "combobox"],
+            ['.xfSelect1.aFull .xfValue',                                                                 "bf/factory/FactorySelect1", "radiobuttons"],
 
-            // SELECT1
-            ['.xfSelect.aMinimal .xfValue, .xfSelect.aDefault .xfValue, .xfSelect.aCompact .xfValue',   "bf/factory/FactorySelect", "minimal"],
-            ['.xfSelect.aFull .xfValue',                                                                "bf/factory/FactorySelect", "full"],
+            // SELECT
+            ['.xfSelect.aMinimal .xfValue, .xfSelect.aDefault .xfValue, .xfSelect.aCompact .xfValue',   "bf/factory/FactorySelect", "listcontrol"],
+            ['.xfSelect.aFull .xfValue',                                                                "bf/factory/FactorySelect", "checkboxes"],
 
 
             // OUTPUT
             ['.xfOutput.mediatypeText .xfValue',    "bf/factory/FactoryOutput", "text"],
             ['.xfOutput.mediatypeImage .xfValue',   "bf/factory/FactoryOutput", "image"],
-            ['.xfOutput.xsdAnyURI .xfValue',        "bf/factory/FactoryOutput", "anyURI"],
+            ['.xfOutput.xsdAnyURI .xfValue',        "bf/factory/FactoryOutput", "link"],
             ['.xfOutput.mediatypeHtml .xfValue',    "bf/factory/FactoryOutput", "html"],
 
             // RANGE
-            ['.xfRange .xfValue',    "bf/factory/FactoryRange", "plain"],
+            ['.xfRange .xfValue',    "bf/factory/FactoryRange", "slider"],
 
             // TEXTAREA
-            ['.xfTextarea.mediatypeHtml .xfValue',    "bf/factory/FactoryTextarea", "html"],
+            ['.xfTextarea.mediatypeHtml .xfValue',    "bf/factory/FactoryTextarea", "htmleditor"],
 
             // TRIGGER
             // this matcher handles several types of triggers like standard button, image button and link at once
-            ['.xfTrigger .xfValue',   "bf/factory/FactoryTrigger", "plain"],
+            ['.xfTrigger .xfValue',   "bf/factory/FactoryTrigger", "buttonOrLink"],
 
             // UPLOAD
-            ['.xfUpload .xfValue',    "bf/factory/FactoryUpload", "anyURI"],
+            ['.xfUpload .xfValue',    "bf/factory/FactoryUpload", "fileUpload"],
             ['.xfUpload .xfValue',    "bf/factory/FactoryUpload", "base64encoded"],
             ['.xfUpload .xfValue',    "bf/factory/FactoryUpload", "hexBinary"],
 
