@@ -16,6 +16,12 @@ define(["dojo/_base/declare","dojo/_base/connect","bf/util"],
                         case "anyURI":
                             console.warn("TBD: FactoryUpload (anyURI)",node);
                             break;
+                        case "base64binary":
+                            console.warn("TBD: FactoryUpload (base64binary)",node);
+                            break;
+                        case "hexBinary":
+                            console.warn("TBD: FactoryUpload (hexBinary)",node);
+                            break;
                         default:
                             console.warn("FactoryInput.default");
 

@@ -22,6 +22,7 @@ require(['dojo/_base/declare'],
          * applied first to the rendered DOM.
          */
         bf.Mapping.data = [
+            //todo: is there any reason why first entry of triple used single quotes while others use double quotes?
             // CONTAINER
             ['.xfGroup',            "bf/factory/FactoryContainer", "group"],
             ['.xfRepeat',           "bf/factory/FactoryContainer", "repeat"],
@@ -33,9 +34,17 @@ require(['dojo/_base/declare'],
             ['.xfControl',                                                "bf/XFControl"],
             ['.xfInput.xsdString .xfValue, .xfInput.xsdDefault .xfValue', "bf/factory/FactoryInput", "plain"],
             ['.xfInput.xsdBoolean > * >  .xfValue',                       "bf/factory/FactoryInput", "boolean"],
+            /*
+            the following rule is special in that it matches for 'widgetContainer' and not 'xfValue'. The reason
+            for this is the behavior of Dojo Dijits that replace the DOM Node they are applied to. But this creates
+            problems with state handling which relies on the existence of these classes which Dojo does not preserver.
+            Therefore here the Dijit is created as a child of 'widgetContainer'.
+             */
             ['.uaDesktop .xfInput.xsdDate .widgetContainer',              "bf/factory/FactoryInput", "date"],
             ['.xfInput.xsdDateTime > * > .xfValue',                       "bf/factory/FactoryInput", "tbd"],
+            //DateTime support for mobile might still be a problem and must be solved by a combination of controls
             ['.uaMobile .xfInput.xsdDate > * >  .xfValue, .uaTablet .xfInput.xsdDate > * >  .xfValue', "bf/factory/FactoryInput", "mobileDate"],
+            ['.xfInput.xsdTime > * >  .xfValue',  "bf/factory/FactoryInput", "time"],
 
             // SECRET
             ['.xfSecret .xfValue', "bf/factory/FactorySecret", "plain"],
@@ -63,10 +72,13 @@ require(['dojo/_base/declare'],
             ['.xfTextarea.mediatypeHtml .xfValue',    "bf/factory/FactoryTextarea", "html"],
 
             // TRIGGER
+            // this matcher handles several types of triggers like standard button, image button and link at once
             ['.xfTrigger .xfValue',   "bf/factory/FactoryTrigger", "plain"],
 
             // UPLOAD
             ['.xfUpload .xfValue',    "bf/factory/FactoryUpload", "anyURI"],
+            ['.xfUpload .xfValue',    "bf/factory/FactoryUpload", "base64encoded"],
+            ['.xfUpload .xfValue',    "bf/factory/FactoryUpload", "hexBinary"],
 
             // COMMON CHILDS
             ['body.ToolTipAlert',     "bf/common/AlertToolTip"],

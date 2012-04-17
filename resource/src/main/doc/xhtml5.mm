@@ -262,5 +262,19 @@
 <icon BUILTIN="full-2"/>
 </node>
 </node>
+<node CREATED="1334659564359" HGAP="19" ID="ID_1404496236" MODIFIED="1334659659456" POSITION="left" TEXT="allow multiple values for appearance just like CSS does for classes" VSHIFT="34">
+<richcontent TYPE="NOTE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      this would solve the issue with iso8601 appearance which is a combination of a switch with some parameterization. These could be split into 2 values and normal matching would apply again.
+    </p>
+  </body>
+</html>
+</richcontent>
+<icon BUILTIN="idea"/>
+</node>
 </node>
 </map>

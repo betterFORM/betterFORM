@@ -151,6 +151,12 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                 }
                             });
                             break;
+                        case "dateTime":
+                            console.warn("tbd: input dateTime");
+                            break;
+                        case "time":
+                            console.warn("tbd: input Time");
+                            break;
                         case "mobileDate":
                             xfControlDijit.setValue = function(value, schemavalue) {
                                 domAttr.set(node, "value", value);
