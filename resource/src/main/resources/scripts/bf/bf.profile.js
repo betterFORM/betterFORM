@@ -91,6 +91,7 @@ var profile = {
                         'bf/container/Container',
                         'bf/container/Repeat',
 
+                        'bf/factory/FactoryContainer',
                         'bf/factory/FactoryInput',
                         'bf/factory/FactoryOutput',
                         'bf/factory/FactoryRange',

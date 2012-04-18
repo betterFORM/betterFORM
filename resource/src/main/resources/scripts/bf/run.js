@@ -1,5 +1,5 @@
     require({
-    baseUrl: '',
+    baseUrl: '..',
 
     packages: [
         'dojo',
