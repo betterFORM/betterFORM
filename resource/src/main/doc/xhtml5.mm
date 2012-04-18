@@ -174,7 +174,7 @@
 <icon BUILTIN="button_ok"/>
 </node>
 </node>
-<node CREATED="1334313240637" ID="ID_1908766117" MODIFIED="1334655516385" TEXT="Outputs as Labels">
+<node CREATED="1334313240637" ID="ID_1908766117" MODIFIED="1334757168924" TEXT="Outputs as Labels">
 <icon BUILTIN="full-2"/>
 <node CREATED="1334313244807" HGAP="13" ID="ID_1971874188" MODIFIED="1334743758886" TEXT="Using Outputs within Labels (e.g. of a trigger) does not work failsave yet" VSHIFT="-34">
 <richcontent TYPE="NOTE"><html>
@@ -200,8 +200,8 @@
 </html></richcontent>
 </node>
 </node>
-<node CREATED="1334587687721" ID="ID_715812072" MODIFIED="1334655571981" TEXT="repair debug bar - instance links not working">
-<icon BUILTIN="full-2"/>
+<node CREATED="1334587687721" ID="ID_715812072" MODIFIED="1334758484606" TEXT="repair debug bar - instance links not working">
+<icon BUILTIN="button_ok"/>
 </node>
 <node CREATED="1334319297739" ID="ID_903626495" MODIFIED="1334735813504" TEXT="Group">
 <node CREATED="1334319300019" ID="ID_1046566464" MODIFIED="1334655528353" TEXT="Group: bf:horizontalTable does not render correctly">

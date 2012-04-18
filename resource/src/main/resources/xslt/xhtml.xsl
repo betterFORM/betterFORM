@@ -433,7 +433,7 @@
                     </ul>
                 </div>
                 <div id="openclose">
-                    <a href="javascript:bf.devtool.toggleDebug();" ><img class="debug-icon" src="{concat($contextroot,'/bfResources/images/collapse.png')}" alt=""/></a>
+                    <a href="javascript:bf.util.toggleDebug();" ><img class="debug-icon" src="{concat($contextroot,'/bfResources/images/collapse.png')}" alt=""/></a>
                 </div>
                     <div id="debug-pane" class="open" context="{concat($contextroot,'/inspector/',$sessionKey,'/')}">
                         <div style="float:right;margin-right:20px;text-align:right;" id="copyright">

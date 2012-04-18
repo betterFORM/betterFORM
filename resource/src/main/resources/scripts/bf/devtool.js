@@ -4,7 +4,7 @@
  */
 require(['dojo/_base/declare',"dojo/dom-style","dojo/dom-attr","dojo/_base/connect","dojo/dom-class","dojo/dnd/Moveable"],
     function(declare,domStyle,domAttr,connect,domClass,Moveable){
-        declare(null, {
+        declare("bf.devtool", null, {
 
     /*
         // TODO substitute dojo.fx and dojo.dnd.Moveable requires with new AMD loading
@@ -63,42 +63,5 @@ require(['dojo/_base/declare',"dojo/dom-style","dojo/dom-attr","dojo/_base/conne
                 domStyle.set(entry,"display","");
             }
         };
-
-        bf.devtool.toggleDebug = function(){
-            var debugpane = dom.byId("debug-pane");
-            if(domClass.contains(debugpane,"open")){
-                var closeAnim = dojo.animateProperty({
-                    node:debugpane,
-                    properties: {
-                        width:{start:100,end:0,unit:"%"},
-                        opacity:{start:1.0, end:0}
-                    }
-                });
-                connect.connect(closeAnim, "onEnd", function(node){
-                    domStyle.set(node,"opacity", 0);
-                    domStyle.set(node,"display", "none");
-                });
-                closeAnim.play();
-                domClass.remove(debugpane,"open");
-                domClass.add(debugpane,"closed");
-
-            }else{
-                domStyle.set(debugpane,"display", "block");
-                var openAnim = dojo.animateProperty({
-                    node:debugpane,
-                    properties: {
-                        width:{start:0,end:100,units:"%"},
-                        opacity:{start:0, end:1.0}
-                    }
-                });
-                connect.connect(openAnim, "onEnd", function(node){
-                    domStyle.set(node,"opacity", 1.0);
-
-                });
-                openAnim.play();
-                domClass.remove(debugpane,"closed");
-                domClass.add(debugpane,"open");
-            }
-        }
 });
 
