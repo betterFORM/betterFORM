@@ -34,8 +34,7 @@
       List is incomplete, must be compared with existing dojo controls / reference form
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <font NAME="SansSerif" SIZE="18"/>
 <node CREATED="1334312798004" ID="ID_1306089" MODIFIED="1334660177850" TEXT="Input">
 <font NAME="SansSerif" SIZE="16"/>
@@ -75,8 +74,7 @@
       der HTML Editor ist ein gutes Beispiel f&#252;r eine optionale Komponente und sollte ggf. in einem eigenen Layer untergebracht werden.
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <icon BUILTIN="full-3"/>
 </node>
 </node>
@@ -84,8 +82,8 @@
 <node CREATED="1334591579152" ID="ID_39599196" MODIFIED="1334591587399" TEXT="plain">
 <icon BUILTIN="button_ok"/>
 </node>
-<node CREATED="1334591614239" ID="ID_1320494923" MODIFIED="1334655238488" TEXT="TabContainer">
-<icon BUILTIN="full-4"/>
+<node CREATED="1334591614239" ID="ID_1320494923" MODIFIED="1334756485186" TEXT="TabContainer">
+<icon BUILTIN="button_ok"/>
 </node>
 </node>
 <node CREATED="1334312844816" ID="ID_293627423" MODIFIED="1334589065991" TEXT="Trigger">
@@ -140,14 +138,12 @@
 </html></richcontent>
 <node CREATED="1334313130454" ID="ID_679663838" MODIFIED="1334584766391" TEXT="ClientSide: if not absolut needed, don&apos;t send events to the server for every change but in packages"/>
 <node CREATED="1334313147336" ID="ID_1252702002" MODIFIED="1334313147336" TEXT="if DOMFocus (in/out) is not used, don&apos;t send the events"/>
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334756365382" ID="ID_1563768542" MODIFIED="1334756370429" TEXT="Select(1)">
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334756371015" ID="ID_127309674" MODIFIED="1334756407306" TEXT="only fire DOMActivate to trigger xforms-select from the Client to the Server if an xforms-select event listener is present"/>
 </node>
 </node>
-<node CREATED="1334312937269" ID="ID_658451491" MODIFIED="1334319295924" POSITION="left" TEXT="known bugs / issues">
-<node CREATED="1334313201936" ID="ID_143705202" MODIFIED="1334735802431" TEXT="Select(1)">
-<node CREATED="1334313204801" ID="ID_196888749" MODIFIED="1334655507769" TEXT="xforms-select events within itemsets do not work">
-<icon BUILTIN="full-1"/>
 </node>
-</node>
+<node CREATED="1334312937269" ID="ID_658451491" MODIFIED="1334756474359" POSITION="left" TEXT="known bugs / issues">
 <node CREATED="1334312684148" ID="ID_552097956" MODIFIED="1334655158523" TEXT="behaviors &amp; xsdTypes">
 <richcontent TYPE="NOTE"><html>
   <head>
@@ -158,8 +154,7 @@
       ist noch zu kl&#228;ren, wie der baseType konkret in den Matchingrules verwendet wird. Zun&#228;chst ist sicher der baseType als default zu verwenden. Muss noch gekl&#228;rt werden, wie eine abweichende Regel definiert wird.
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <font NAME="SansSerif" SIZE="15"/>
 <icon BUILTIN="full-2"/>
 <icon BUILTIN="help"/>
@@ -169,14 +164,14 @@
 <node CREATED="1334313164226" ID="ID_1049424695" MODIFIED="1334654880234" TEXT="Repeat: the RepeatIndex does not get changed correctly if the index(&apos;repeatId&apos;) function is used for insert / delete actions">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
-<node CREATED="1334313228123" ID="ID_1787087565" MODIFIED="1334654871468" TEXT="Switching a RepeatFull to readonly does not work correctly, handleStateChanged events are only present for repeat items but not the repeat itself.">
+<node CREATED="1334313228123" ID="ID_1787087565" MODIFIED="1334756337837" TEXT="Switching a RepeatFull to readonly does not work correctly, handleStateChanged events are only present for repeat items but not the repeat itself.">
 <font NAME="SansSerif" SIZE="15"/>
 </node>
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334756708329" ID="ID_1419870828" MODIFIED="1334756759312" TEXT="Nested FullRepeats do not seem to work (see xforms/bf/RepeatFullNested.xhtml)"/>
 </node>
 <node CREATED="1334313201936" ID="ID_143705202" MODIFIED="1334313204266" TEXT="Select(1)">
-<node BACKGROUND_COLOR="#ffff00" CREATED="1334313204801" ID="ID_196888749" MODIFIED="1334745518877" TEXT="xforms-select events within itemsets do not work">
-<icon BUILTIN="full-1"/>
-<node BACKGROUND_COLOR="#ffff00" CREATED="1334745519902" ID="ID_216688287" MODIFIED="1334745649456" TEXT="fixed for itemsets in xf:select1. Suggestion: let the select know if there is a xforms-select listener. If there is no listener the select does not need to call the server for any option changes"/>
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334313204801" ID="ID_196888749" MODIFIED="1334756345477" TEXT="xforms-select events within itemsets do not work">
+<icon BUILTIN="button_ok"/>
 </node>
 </node>
 <node CREATED="1334313240637" ID="ID_1908766117" MODIFIED="1334655516385" TEXT="Outputs as Labels">
@@ -202,8 +197,7 @@
       </li>
     </ul>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
 <node CREATED="1334587687721" ID="ID_715812072" MODIFIED="1334655571981" TEXT="repair debug bar - instance links not working">
@@ -229,15 +223,14 @@
       validation of DropDownDate (if bf:dropdowndata=xyz is used there must be a corresponding constraint on the bind)
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <icon BUILTIN="full-5"/>
 </node>
 <node CREATED="1334751173443" ID="ID_1352252306" MODIFIED="1334751180285" TEXT="fix Dashboard"/>
 <node CREATED="1334751180763" ID="ID_1828418739" MODIFIED="1334751189241" TEXT="fix FeatureExplorer"/>
 <node CREATED="1334751190898" ID="ID_579145778" MODIFIED="1334751196689" TEXT="fix Reference Forms"/>
 </node>
-<node CREATED="1334332332449" ID="ID_476499108" MODIFIED="1334655171213" POSITION="right" TEXT="build (Dojo Release)">
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334332332449" ID="ID_476499108" MODIFIED="1334756262303" POSITION="right" TEXT="build (Dojo Release)">
 <font NAME="SansSerif" SIZE="28"/>
 <icon BUILTIN="full-1"/>
 </node>
@@ -251,8 +244,7 @@
       was ist hier zu tun? Showcase f&#252;r Date z.B. (Featuredetection?
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 <node CREATED="1334332352766" ID="ID_1492704790" MODIFIED="1334655314860" POSITION="right" TEXT="Performance" VSHIFT="24">
 <font NAME="SansSerif" SIZE="16"/>
@@ -285,8 +277,7 @@
       this would solve the issue with iso8601 appearance which is a combination of a switch with some parameterization. These could be split into 2 values and normal matching would apply again.
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <icon BUILTIN="idea"/>
 </node>
 </node>
