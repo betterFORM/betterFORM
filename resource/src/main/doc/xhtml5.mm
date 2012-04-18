@@ -24,7 +24,7 @@
 <icon BUILTIN="full-5"/>
 </node>
 </node>
-<node CREATED="1334312729819" ID="ID_1850248356" MODIFIED="1334568175291" POSITION="left" TEXT="missing controls">
+<node CREATED="1334312729819" ID="ID_1850248356" MODIFIED="1334660210244" POSITION="left" TEXT="missing controls">
 <richcontent TYPE="NOTE"><html>
   <head>
     
@@ -34,12 +34,24 @@
       List is incomplete, must be compared with existing dojo controls / reference form
     </p>
   </body>
-</html></richcontent>
+</html>
+</richcontent>
 <font NAME="SansSerif" SIZE="18"/>
-<node CREATED="1334312734193" ID="ID_1891416982" MODIFIED="1334312736849" TEXT="Groups"/>
-<node CREATED="1334312737851" ID="ID_625967465" MODIFIED="1334655292052" TEXT="Range (Star)">
-<icon BUILTIN="full-5"/>
+<node CREATED="1334312798004" ID="ID_1306089" MODIFIED="1334660177850" TEXT="Input">
+<font NAME="SansSerif" SIZE="16"/>
+<node CREATED="1334312802428" ID="ID_910667397" MODIFIED="1334662285168" TEXT="DateTime">
+<font NAME="SansSerif" SIZE="10"/>
+<icon BUILTIN="full-1"/>
 </node>
+<node CREATED="1334312808230" ID="ID_692743157" MODIFIED="1334655257928" TEXT="Time">
+<icon BUILTIN="full-2"/>
+</node>
+</node>
+<node CREATED="1334312812169" ID="ID_1301387691" MODIFIED="1334660191424" TEXT="Select(1)">
+<icon BUILTIN="full-2"/>
+<node CREATED="1334312823037" ID="ID_459754586" MODIFIED="1334312829540" TEXT="Open Select(1)"/>
+</node>
+<node CREATED="1334312734193" ID="ID_1891416982" MODIFIED="1334312736849" TEXT="Groups"/>
 <node CREATED="1334312746737" ID="ID_1267714804" MODIFIED="1334654749179" TEXT="Uploads">
 <font NAME="SansSerif" SIZE="15"/>
 <node CREATED="1334312762791" ID="ID_823972280" MODIFIED="1334655276581" TEXT="anyURI">
@@ -68,19 +80,6 @@
 <icon BUILTIN="full-3"/>
 </node>
 </node>
-<node CREATED="1334312798004" ID="ID_1306089" MODIFIED="1334587024623" TEXT="Input">
-<font NAME="SansSerif" SIZE="16"/>
-<node CREATED="1334312802428" ID="ID_910667397" MODIFIED="1334655254028" TEXT="DateTime">
-<icon BUILTIN="full-1"/>
-</node>
-<node CREATED="1334312808230" ID="ID_692743157" MODIFIED="1334655257928" TEXT="Time">
-<icon BUILTIN="full-2"/>
-</node>
-</node>
-<node CREATED="1334312812169" ID="ID_1301387691" MODIFIED="1334655222292" TEXT="Select(1)">
-<icon BUILTIN="full-2"/>
-<node CREATED="1334312823037" ID="ID_459754586" MODIFIED="1334312829540" TEXT="Open Select(1)"/>
-</node>
 <node CREATED="1334312830618" ID="ID_319478051" MODIFIED="1334312832588" TEXT="Switch">
 <node CREATED="1334591579152" ID="ID_39599196" MODIFIED="1334591587399" TEXT="plain">
 <icon BUILTIN="button_ok"/>
@@ -97,7 +96,13 @@
 <icon BUILTIN="button_ok"/>
 </node>
 </node>
-<node CREATED="1334312855954" ID="ID_1986927603" MODIFIED="1334589178938" TEXT="Submit">
+<node CREATED="1334660322555" ID="ID_324514992" MODIFIED="1334662582206" TEXT="Dialog">
+<icon BUILTIN="full-4"/>
+</node>
+<node CREATED="1334312737851" ID="ID_625967465" MODIFIED="1334662588441" TEXT="Range (Star)">
+<icon BUILTIN="full-5"/>
+</node>
+<node CREATED="1334312855954" ID="ID_1986927603" MODIFIED="1334662559367" TEXT="Submit">
 <richcontent TYPE="NOTE"><html>
   <head>
     
@@ -107,8 +112,7 @@
       do we really need this? Seems that it is equally well covered by plain trigger and xhtml.xsl will call trigger template for submit
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <icon BUILTIN="help"/>
 <icon BUILTIN="button_ok"/>
 </node>
@@ -139,6 +143,11 @@
 </node>
 </node>
 <node CREATED="1334312937269" ID="ID_658451491" MODIFIED="1334319295924" POSITION="left" TEXT="known bugs / issues">
+<node CREATED="1334313201936" ID="ID_143705202" MODIFIED="1334735802431" TEXT="Select(1)">
+<node CREATED="1334313204801" ID="ID_196888749" MODIFIED="1334655507769" TEXT="xforms-select events within itemsets do not work">
+<icon BUILTIN="full-1"/>
+</node>
+</node>
 <node CREATED="1334312684148" ID="ID_552097956" MODIFIED="1334655158523" TEXT="behaviors &amp; xsdTypes">
 <richcontent TYPE="NOTE"><html>
   <head>
@@ -154,7 +163,7 @@
 <font NAME="SansSerif" SIZE="15"/>
 <icon BUILTIN="full-2"/>
 <icon BUILTIN="help"/>
-<node CREATED="1334312706034" ID="ID_1685225063" MODIFIED="1334312722403" TEXT="we need to have the xsd basetype for unknown xsd types"/>
+<node CREATED="1334312706034" HGAP="24" ID="ID_1685225063" MODIFIED="1334735733845" TEXT="we need to have the xsd basetype for unknown xsd types" VSHIFT="-36"/>
 </node>
 <node CREATED="1334313161965" ID="ID_1775336959" MODIFIED="1334313168472" TEXT="Repeat">
 <node CREATED="1334313164226" ID="ID_1049424695" MODIFIED="1334654880234" TEXT="Repeat: the RepeatIndex does not get changed correctly if the index(&apos;repeatId&apos;) function is used for insert / delete actions">
@@ -172,7 +181,7 @@
 </node>
 <node CREATED="1334313240637" ID="ID_1908766117" MODIFIED="1334655516385" TEXT="Outputs as Labels">
 <icon BUILTIN="full-2"/>
-<node CREATED="1334313244807" ID="ID_1971874188" MODIFIED="1334587327150" TEXT="Using Outputs within Labels (e.g. of a trigger) does not work failsave yet">
+<node CREATED="1334313244807" HGAP="13" ID="ID_1971874188" MODIFIED="1334743758886" TEXT="Using Outputs within Labels (e.g. of a trigger) does not work failsave yet" VSHIFT="-34">
 <richcontent TYPE="NOTE"><html>
   <head>
     
@@ -197,15 +206,15 @@
 </richcontent>
 </node>
 </node>
-<node CREATED="1334319297739" ID="ID_903626495" MODIFIED="1334319300018" TEXT="Group">
+<node CREATED="1334587687721" ID="ID_715812072" MODIFIED="1334655571981" TEXT="repair debug bar - instance links not working">
+<icon BUILTIN="full-2"/>
+</node>
+<node CREATED="1334319297739" ID="ID_903626495" MODIFIED="1334735813504" TEXT="Group">
 <node CREATED="1334319300019" ID="ID_1046566464" MODIFIED="1334655528353" TEXT="Group: bf:horizontalTable does not render correctly">
 <icon BUILTIN="full-3"/>
 </node>
 <node CREATED="1334319336715" ID="ID_1431910970" MODIFIED="1334319342036" TEXT="Test Groups within Repeats"/>
 <node CREATED="1334319415445" ID="ID_244483394" MODIFIED="1334319440522" TEXT="Relevance does not work for bf:horizontalTable and bf:verticalTable"/>
-</node>
-<node CREATED="1334587687721" ID="ID_715812072" MODIFIED="1334655571981" TEXT="repair debug bar - instance links not working">
-<icon BUILTIN="full-2"/>
 </node>
 <node CREATED="1334587726182" ID="ID_1658748963" MODIFIED="1334655576539" TEXT="repair devtool">
 <icon BUILTIN="full-3"/>
@@ -224,6 +233,9 @@
 </richcontent>
 <icon BUILTIN="full-5"/>
 </node>
+<node CREATED="1334751173443" ID="ID_1352252306" MODIFIED="1334751180285" TEXT="fix Dashboard"/>
+<node CREATED="1334751180763" ID="ID_1828418739" MODIFIED="1334751189241" TEXT="fix FeatureExplorer"/>
+<node CREATED="1334751190898" ID="ID_579145778" MODIFIED="1334751196689" TEXT="fix Reference Forms"/>
 </node>
 <node CREATED="1334332332449" ID="ID_476499108" MODIFIED="1334655171213" POSITION="right" TEXT="build (Dojo Release)">
 <font NAME="SansSerif" SIZE="28"/>
