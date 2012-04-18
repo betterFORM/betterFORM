@@ -890,8 +890,9 @@
     </xsl:template>
 
     <xsl:template name="addLocalScript">
+        <xsl:variable name="requires">"bf/XFProcessor","bf/XFormsModelElement","dojo/_base/connect"<xsl:if test="$debug-enabled = 'true'">,"bf/devtool"</xsl:if></xsl:variable>
         <script type="text/javascript">
-            require(["bf/XFProcessor","bf/XFormsModelElement","dojo/_base/connect"],
+            require([<xsl:value-of select="$requires"/>],
                 function(XFProcessor, XFormsModelElement, connect){
                         console.debug("ready - new Session with key:", dojo.config.bf.sessionkey);
                         // subscribe ControlMapping here

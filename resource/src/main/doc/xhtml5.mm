@@ -142,9 +142,22 @@
 <node BACKGROUND_COLOR="#ffff00" CREATED="1334756371015" ID="ID_127309674" MODIFIED="1334756407306" TEXT="only fire DOMActivate to trigger xforms-select from the Client to the Server if an xforms-select event listener is present"/>
 </node>
 </node>
+<node CREATED="1334659564359" HGAP="19" ID="ID_1404496236" MODIFIED="1334659659456" TEXT="allow multiple values for appearance just like CSS does for classes" VSHIFT="34">
+<richcontent TYPE="NOTE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      this would solve the issue with iso8601 appearance which is a combination of a switch with some parameterization. These could be split into 2 values and normal matching would apply again.
+    </p>
+  </body>
+</html></richcontent>
+<icon BUILTIN="idea"/>
+</node>
 </node>
 <node CREATED="1334312937269" ID="ID_658451491" MODIFIED="1334756474359" POSITION="left" TEXT="known bugs / issues">
-<node CREATED="1334312684148" ID="ID_552097956" MODIFIED="1334655158523" TEXT="behaviors &amp; xsdTypes">
+<node CREATED="1334312684148" FOLDED="true" ID="ID_552097956" MODIFIED="1334759703242" TEXT="behaviors &amp; xsdTypes">
 <richcontent TYPE="NOTE"><html>
   <head>
     
@@ -160,7 +173,7 @@
 <icon BUILTIN="help"/>
 <node CREATED="1334312706034" HGAP="24" ID="ID_1685225063" MODIFIED="1334735733845" TEXT="we need to have the xsd basetype for unknown xsd types" VSHIFT="-36"/>
 </node>
-<node CREATED="1334313161965" ID="ID_1775336959" MODIFIED="1334313168472" TEXT="Repeat">
+<node CREATED="1334313161965" FOLDED="true" ID="ID_1775336959" MODIFIED="1334759701674" TEXT="Repeat">
 <node CREATED="1334313164226" ID="ID_1049424695" MODIFIED="1334654880234" TEXT="Repeat: the RepeatIndex does not get changed correctly if the index(&apos;repeatId&apos;) function is used for insert / delete actions">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
@@ -210,8 +223,8 @@
 <node CREATED="1334319336715" ID="ID_1431910970" MODIFIED="1334319342036" TEXT="Test Groups within Repeats"/>
 <node CREATED="1334319415445" ID="ID_244483394" MODIFIED="1334319440522" TEXT="Relevance does not work for bf:horizontalTable and bf:verticalTable"/>
 </node>
-<node CREATED="1334587726182" ID="ID_1658748963" MODIFIED="1334655576539" TEXT="repair devtool">
-<icon BUILTIN="full-3"/>
+<node CREATED="1334587726182" ID="ID_1658748963" MODIFIED="1334759613461" TEXT="repair devtool">
+<icon BUILTIN="button_ok"/>
 </node>
 <node CREATED="1334313177759" ID="ID_1196653002" MODIFIED="1334655490163" TEXT="DropDownDate">
 <richcontent TYPE="NOTE"><html>
@@ -266,19 +279,6 @@
 <node CREATED="1334655538643" ID="ID_285195655" MODIFIED="1334655554390" TEXT="nested repeats">
 <icon BUILTIN="full-2"/>
 </node>
-</node>
-<node CREATED="1334659564359" HGAP="19" ID="ID_1404496236" MODIFIED="1334659659456" POSITION="left" TEXT="allow multiple values for appearance just like CSS does for classes" VSHIFT="34">
-<richcontent TYPE="NOTE"><html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      this would solve the issue with iso8601 appearance which is a combination of a switch with some parameterization. These could be split into 2 values and normal matching would apply again.
-    </p>
-  </body>
-</html></richcontent>
-<icon BUILTIN="idea"/>
 </node>
 </node>
 </map>
