@@ -7,12 +7,9 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/query"],
                 console.debug("bf.SelectFull._onBlur arguments:",arguments, " control:",this.xfControl);
                 var evt=new Object();
                 evt.type = "blur";
-                this.selectFullSendValue(this.xfControl,this.domNode,evt);
-            },
 
-            selectFullSendValue:function(xfControl,n,evt) {
                 var selectedValue = "";
-                query(".xfCheckBoxValue",n).forEach(function(item){
+                query(".xfCheckBoxValue",this.domNode).forEach(function(item){
                     if(item.checked){
                         if(selectedValue  == ""){
                             selectedValue = item.value;
@@ -21,9 +18,8 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/query"],
                         }
                     }
                 });
-                xfControl.sendValue(selectedValue, evt);
+                this.xfControl.sendValue(selectedValue,evt);
             }
-
     });
 });
 

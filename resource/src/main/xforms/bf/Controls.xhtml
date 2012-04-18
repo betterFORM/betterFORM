@@ -456,12 +456,14 @@
                 <!--################### SELECT SAMPLES #############################-->
                 <!--################### SELECT SAMPLES #############################-->
 
-                <xf:select ref="select[1]/value" appearance="minimal" incremental="true">
+                <xf:select ref="select[1]/value" appearance="minimal">
                     <xf:label>Select minimal</xf:label>
                     <xf:itemset nodeset="instance('colors')/color">
                         <xf:label ref="name"/>
                         <xf:value ref="value"/>
+                        <!--<xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>-->
                     </xf:itemset>
+<!--                    <xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>-->
                 </xf:select>
 
                 <xf:output ref="select[1]/value">
@@ -473,6 +475,7 @@
                     <xf:itemset nodeset="instance('colors')/color">
                         <xf:label ref="name"/>
                         <xf:value ref="value"/>
+                        <!--<xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>-->
                     </xf:itemset>
                 </xf:select>
 
