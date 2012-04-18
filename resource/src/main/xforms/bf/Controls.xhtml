@@ -411,30 +411,23 @@
                     <xf:itemset nodeset="instance('colors')/color">
                         <xf:label ref="name"/>
                         <xf:value ref="value"/>
-                        <xf:action ev:event="xforms-select">
-                            <xf:message>xf:message: xforms-select</xf:message>
-                            <script type="text/javascript">
-                                alert("js:message: xforms-select");
-                            </script>
-                        </xf:action>
+                        <xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>
                     </xf:itemset>
-                    <xf:action ev:event="xforms-value-changed">
-                        <script type="text/javascript">
-                            alert("js:message: xforms-value-changed");
-                        </script>
-                    </xf:action>
+                    <xf:message ev:event="xforms-value-changed" level="ephemeral">xf:message: xforms-value-changed</xf:message>
                 </xf:select1>
                 <xf:output ref="select1[1]/value">
                     <xf:label>Select1 minimal value:</xf:label>
                 </xf:output>
 
 
-                <xf:select1 ref="select1[2]/value" appearance="compact" incremental="true">
+                <xf:select1 ref="select1[2]/value" appearance="compact">
                     <xf:label>Select1 compact</xf:label>
                     <xf:itemset nodeset="instance('colors')/color">
                         <xf:label ref="name"/>
                         <xf:value ref="value"/>
+<!--                        <xf:message ev:event="xforms-select">xf:message: xforms-select</xf:message>-->
                     </xf:itemset>
+                    <!--<xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>-->
                 </xf:select1>
 
                 <xf:output ref="select1[2]/value">
@@ -447,8 +440,11 @@
                     <xf:itemset nodeset="instance('colors')/color">
                         <xf:label ref="name"/>
                         <xf:value ref="value"/>
+<!--                        <xf:message ev:event="xforms-select">xf:message: xforms-select</xf:message>-->
                     </xf:itemset>
+<!--                    <xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>-->
                 </xf:select1>
+
                 <xf:output ref="select1[3]/value">
                     <xf:label>Select1 full value:</xf:label>
                 </xf:output>

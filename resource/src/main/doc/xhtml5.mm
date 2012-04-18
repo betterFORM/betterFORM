@@ -165,8 +165,9 @@
 </node>
 </node>
 <node CREATED="1334313201936" ID="ID_143705202" MODIFIED="1334313204266" TEXT="Select(1)">
-<node CREATED="1334313204801" ID="ID_196888749" MODIFIED="1334655507769" TEXT="xforms-select events within itemsets do not work">
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334313204801" ID="ID_196888749" MODIFIED="1334745518877" TEXT="xforms-select events within itemsets do not work">
 <icon BUILTIN="full-1"/>
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334745519902" ID="ID_216688287" MODIFIED="1334745649456" TEXT="fixed for itemsets in xf:select1. Suggestion: let the select know if there is a xforms-select listener. If there is no listener the select does not need to call the server for any option changes"/>
 </node>
 </node>
 <node CREATED="1334313240637" ID="ID_1908766117" MODIFIED="1334655516385" TEXT="Outputs as Labels">
