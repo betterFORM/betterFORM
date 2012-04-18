@@ -1,5 +1,5 @@
-define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-attr","bf/util"],
-    function(declare,connect,registry,domAttr) {
+define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-attr","dojo/dom-style","bf/util"],
+    function(declare,connect,registry,domAttr,domStyle) {
         return declare(null,
             {
                 /**
@@ -11,24 +11,30 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     var n = node;
                     var xfId = bf.util.getXfId(n);
                     var xfControlDijit = registry.byId(xfId);
+                    if(xfControlDijit.domNode.parentNode.localName == "label"){
+                        // console.debug("output is placed within label");
+                        domStyle.set(xfControlDijit.domNode, "display","inline");
+                        domStyle.set(xfControlDijit.domNode, "border",0);
+                        domStyle.set(xfControlDijit.domNode, "padding",0);
+                    }
 
                     switch(type){
 
                         case "text":
                             // console.debug("FOUND .xfOutput.mediatypeText .xfValue ",n);
                             xfControlDijit.setValue = function(value,schematype) {
-                                console.debug("xfControl.setValue: .xfOutput.mediatypeText .xfValue");
+                                // console.debug("xfControl.setValue: .xfOutput.mediatypeText .xfValue");
                                 n.innerHTML = value;
                             };
                             break;
                         case "image":
-                            console.debug("FOUND .xfOutput.mediatypeImage .xfValue:",n);
+                            // console.debug("FOUND .xfOutput.mediatypeImage .xfValue:",n);
                             xfControlDijit.setValue = function(value) {
                                 domAttr.set(n, "src", value);
                             };
                             break;
                         case "link":
-                            console.debug("FOUND .xfOutput.xsdAnyURI .xfValue",n);
+                            // console.debug("FOUND .xfOutput.xsdAnyURI .xfValue",n);
                             //todo: this solution works in FF - others have to be tested
                             //todo: use domStyle.set
                             xfControlDijit.setReadonly = function(){

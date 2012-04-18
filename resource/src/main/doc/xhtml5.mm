@@ -2,7 +2,7 @@
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
 <node CREATED="1334312641624" ID="ID_532793562" MODIFIED="1334587335917" TEXT="xhtml5">
 <hook NAME="accessories/plugins/RevisionPlugin.properties"/>
-<node CREATED="1334654899187" HGAP="50" ID="ID_687230137" MODIFIED="1334655029162" POSITION="left" TEXT="Symbole" VSHIFT="-74">
+<node CREATED="1334654899187" HGAP="50" ID="ID_687230137" MODIFIED="1334763012196" POSITION="left" TEXT="Symbole" VSHIFT="-74">
 <font NAME="SansSerif" SIZE="15"/>
 <node CREATED="1334654908889" ID="ID_181491995" MODIFIED="1334654983093" TEXT="bitte besondere beachten - priorit&#xe4;r bearbeiten">
 <icon BUILTIN="yes"/>
@@ -10,7 +10,7 @@
 <node CREATED="1334654925576" ID="ID_1746094778" MODIFIED="1334654934241" TEXT="done">
 <icon BUILTIN="button_ok"/>
 </node>
-<node CREATED="1334654999780" ID="ID_1311051311" MODIFIED="1334655008982" TEXT="open question">
+<node CREATED="1334654999780" ID="ID_1311051311" MODIFIED="1334763027215" TEXT="open question">
 <icon BUILTIN="help"/>
 </node>
 <node CREATED="1334655013690" ID="ID_515562240" MODIFIED="1334655023489" TEXT="Idee (f&#xfc;r sp&#xe4;ter)">
@@ -22,6 +22,9 @@
 <icon BUILTIN="full-3"/>
 <icon BUILTIN="full-4"/>
 <icon BUILTIN="full-5"/>
+</node>
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334763014404" ID="ID_1667870196" MODIFIED="1334763030305" TEXT="in Bearbeitung">
+<icon BUILTIN="messagebox_warning"/>
 </node>
 </node>
 <node CREATED="1334312729819" ID="ID_1850248356" MODIFIED="1334660210244" POSITION="left" TEXT="missing controls">
@@ -187,8 +190,9 @@
 <icon BUILTIN="button_ok"/>
 </node>
 </node>
-<node CREATED="1334313240637" ID="ID_1908766117" MODIFIED="1334757168924" TEXT="Outputs as Labels">
+<node CREATED="1334313240637" ID="ID_1908766117" MODIFIED="1334763039878" TEXT="Outputs as Labels">
 <icon BUILTIN="full-2"/>
+<icon BUILTIN="messagebox_warning"/>
 <node CREATED="1334313244807" HGAP="13" ID="ID_1971874188" MODIFIED="1334743758886" TEXT="Using Outputs within Labels (e.g. of a trigger) does not work failsave yet" VSHIFT="-34">
 <richcontent TYPE="NOTE"><html>
   <head>

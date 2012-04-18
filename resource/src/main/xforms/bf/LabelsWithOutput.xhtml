@@ -41,14 +41,21 @@
         <xf:output ref="instance()/output">
             <xf:label>Output Value: </xf:label>
         </xf:output>
+        <xf:trigger appearance="minimal">
+            <xf:label><xf:output value="concat('Output value = ', instance()/output)"/></xf:label>
+            <xf:setvalue ref="instance()/output" value="not(boolean-from-string(instance()/output))" />
+        </xf:trigger>
         <xf:trigger>
             <xf:label><xf:output value="concat('Output value = ', instance()/output)"/></xf:label>
             <xf:setvalue ref="instance()/output" value="not(boolean-from-string(instance()/output))" />
         </xf:trigger>
 
         <xf:input ref="input">
-            <xf:label>Input Label with output: <xf:output value="instance()/output"/></xf:label>
+            <xf:label>inner xf:output: <xf:output value="instance()/output"/></xf:label>
         </xf:input>
+        <xf:output ref="input">
+            <xf:label>Input1 Value: </xf:label>
+        </xf:output>
 
         <xf:trigger>
             <xf:label>Message</xf:label>

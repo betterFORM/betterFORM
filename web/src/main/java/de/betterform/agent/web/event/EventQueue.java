@@ -68,6 +68,15 @@ public class EventQueue {
 	            String parentId = ((Element) target.getParentNode()).getAttributeNS(null, "id");
 	            clonedEvent.addProperty("parentId", parentId);
 	        }
+            else if(BetterFormEventNames.STATE_CHANGED.equals(clonedEvent.getType()) &&
+                    XFormsConstants.OUTPUT.equals(targetName) &&
+                    XFormsConstants.LABEL.equals(target.getParentNode().getLocalName()) &&
+                    XFormsConstants.TRIGGER.equals(target.getParentNode().getParentNode().getLocalName())) {
+                // for outputs within labels of triggers add the trigger id as parentId and 'label' as targetName to the event
+                String parentId = ((Element) target.getParentNode().getParentNode()).getAttributeNS(null, "id");
+                clonedEvent.addProperty("parentId", parentId);
+                clonedEvent.addProperty("targetName", XFormsConstants.LABEL);
+            }
 	
 	        ((XercesXMLEvent) clonedEvent).target=null;
 	        ((XercesXMLEvent) clonedEvent).currentTarget=null;
@@ -179,6 +188,9 @@ public class EventQueue {
             else if(xmlEvent.getType().equals(XFormsEventNames.FOCUS)){
                 aggregatedFocusList.push(xmlEvent);
             }
+            /* else if(xmlEvent.getType().equals(BetterFormEventNames.INDEX_CHANGED)){
+                aggregatedFocusList.push(xmlEvent);
+            }*/
             // all other events within eventList are simply copied to the new eventlist
             else {
                 aggregatedEventList.add(xmlEvent);
