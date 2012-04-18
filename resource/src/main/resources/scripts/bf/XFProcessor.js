@@ -43,7 +43,7 @@ define(["dojo/_base/declare",
     lastServerClientFocusEvent:null,
     usesDOMFocusIN:dojo.config.bf.useDOMFocusIN,
     logEvents:dojo.config.bf.logEvents,
-    roleMappingProcessor:null,
+    mappingProcessor:null,
 
 
     /*
@@ -577,9 +577,9 @@ define(["dojo/_base/declare",
     },
 
     _buildUI : function(){
-            require(["bf/RoleMappingProcessor"],function(RoleMappingProcessor){
-                if (this.roleMappingProcessor == undefined) {
-                    this.roleMappingProcessor = new RoleMappingProcessor();
+            require(["bf/MappingProcessor"],function(MappingProcessor){
+                if (this.mappingProcessor == undefined) {
+                    this.mappingProcessor = new MappingProcessor();
                 }
             });
 

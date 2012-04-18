@@ -104,8 +104,8 @@ var profile = {
                         'bf/input/DropDownDate',
 
                         'bf/RepeatBehavior',
-                        'bf/RoleMapping',
-                        'bf/RoleMappingProcessor',
+                        'bf/Mapping',
+                        'bf/MappingProcessor',
 
                         'bf/util',
                         'bf/XFControl',

@@ -11,10 +11,10 @@ define(["dojo/_base/declare","dojo/_base/connect"],
             constructor:function() {
                 var widgetFactories = this.factories;
 
-                require(["dojo/behavior","dojo/dom-attr","dojo/_base/array","bf/XFControl","bf/RoleMapping"],
+                require(["dojo/behavior","dojo/dom-attr","dojo/_base/array","bf/XFControl","bf/Mapping"],
                     function(behavior,domAttr,array){
                         // read all mappings and iterate them
-                        var mappings = bf.RoleMapping.data;
+                        var mappings = bf.Mapping.data;
                         array.forEach(mappings, function(mapping){
                             var widgetBehavior = {};
                             var behaviorString = mapping[0];
