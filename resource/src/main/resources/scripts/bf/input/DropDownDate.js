@@ -160,7 +160,7 @@ define(["dojo/_base/declare",
                 } else {
                     this.days = this.daysDijit.get("value");
                 }
-                this.set("value", this.getControlValue());
+                this.set("value", this._getControlValue());
             },
 
             onMonthsChanged:function(evt) {
@@ -187,7 +187,7 @@ define(["dojo/_base/declare",
                 }
 
                 this.months = value;
-                this.set("value", this.getControlValue());
+                this.set("value", this._getControlValue());
             },
 
             onYearsChanged:function(evt) {
@@ -220,7 +220,7 @@ define(["dojo/_base/declare",
                     console.warn("DropDownDate.onYearsChanged: selected year is invalid, " + year + " is not >= " + this.minimumYear + " and <= " + this.maximumYear);
                 }
                 this.years = year;
-                this.set("value", this.getControlValue());
+                this.set("value", this._getControlValue());
                 // console.debug("DropDownDate.onYearsChanged newYear: " , this.years);
             },
 
@@ -231,9 +231,9 @@ define(["dojo/_base/declare",
                 this.applyValues(value);
             },
         */
-            getControlValue:function() {
+            _getControlValue:function() {
                 this.value = this.years + "-" + this.months + "-" + this.days;
-                // console.debug("bf.ui.input.DropDownDate.getControlValue currentDate: ", this.value);
+                // console.debug("bf.ui.input.DropDownDate._getControlValue currentDate: ", this.value);
                 domAttr.set(this.bfValue, "value", this.value);
                 return this.value;
             },
@@ -253,7 +253,7 @@ define(["dojo/_base/declare",
             get:function(attrName) {
                 // console.debug("DropDownDate.get: attrName",attrName);
                 if(attrName == "value"){
-                    return this.getControlValue();
+                    return this._getControlValue();
                 }
             }
     });

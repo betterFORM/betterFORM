@@ -42,10 +42,12 @@ require(['dojo/_base/declare'],
              */
             //todo: use descriptive names for the different types of controls
             ['.uaDesktop .xfInput.xsdDate .widgetContainer',              "bf/factory/FactoryInput", "date"],
-            ['.xfInput.xsdDateTime > * > .xfValue',                       "bf/factory/FactoryInput", "tbd"],
-            ['.xfInput.xsdTime > * >  .xfValue',                          "bf/factory/FactoryInput", "time"],
+            ['.uaDesktop .xfInput.xsdDateTime > * > .xfValue',                       "bf/factory/FactoryInput", "dateTime"],
+            ['.uaDesktop .xfInput.xsdTime > * >  .xfValue',                          "bf/factory/FactoryInput", "time"],
             //DateTime support for mobile might still be a problem and must be solved by a combination of controls
             ['.uaMobile .xfInput.xsdDate > * >  .xfValue, .uaTablet .xfInput.xsdDate > * >  .xfValue', "bf/factory/FactoryInput", "mobileDate"],
+            ['.uaMobile .xfInput.xsdDateTime > * > .xfValue',                       "bf/factory/FactoryInput", "mobileDateTime"],
+            ['.uaMobile .xfInput.xsdTime > * >  .xfValue',                          "bf/factory/FactoryInput", "mobileTime"],
 
             // SECRET
             ['.xfSecret .xfValue', "bf/factory/FactorySecret", "password"],

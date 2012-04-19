@@ -66,7 +66,7 @@
                     <xsl:apply-templates select="xf:hint"/>
                 </input>
             </xsl:when>
-            <xsl:when test="$type='date'">
+            <xsl:when test="$type='date' or $type='dateTime'">
                 <input  id="{$id}-value"
                         name="{$name}"
                         type="date"
@@ -93,8 +93,8 @@
                         class="xfValue"
                         tabindex="{$navindex}"
                         appearance="{@appearance}"
-                        value="{bf:data/text()}"
-                        placeholder="{xf:hint}">
+                        placeholder="{xf:hint}"
+                        value="{bf:data/text()}">
                     <xsl:if test="bf:data/@bf:readonly='true'">
                         <xsl:attribute name="disabled">disabled</xsl:attribute>
                     </xsl:if>

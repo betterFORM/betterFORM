@@ -1,5 +1,5 @@
-define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-attr","bf/util"],
-    function(declare,connect,registry,domAttr) {
+define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-attr","dojo/dom-class","bf/util"],
+    function(declare,connect,registry,domAttr,domClass) {
         return declare(null,
             {
                 /**
@@ -153,8 +153,62 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             break;
                         case "dateTime":
                             console.warn("tbd: input dateTime");
+                            var controlId =domAttr.get(n,"id");
+                            var xfValue = domAttr.get(n,"schemavalue");
+                            console.debug("FactoryInput dateTime: id: ", controlId, " xfValue: ",xfValue, " node:",n);
+                            require(["bf/input/DateTime"], function(DateTime) {
+                                var dateTimeWidget = new DateTime({
+                                    name:controlId,
+                                    value:xfValue,
+                                    miliseconds:false,
+                                    appearance:"minimal",
+                                    dateConstraints:{
+                                        datePattern:'M/d/yyyy'
+                                    },
+                                    timeConstraints:{
+                                        timePattern:'HH:mm:ss',
+                                        clickableIncrement: 'T00:15:00',
+                                        visibleIncrement: 'T00:15:00',
+                                        visibleRange: 'T01:00:00'
+
+                                    },
+                                    title:domAttr.get(n, "title"),
+                                    xfControlId:xfId
+                                },n);
+
+                                connect.connect(dateTimeWidget, "set", function (attrName, value) {
+                                    if((attrName == "focused" &&  !value) || attrName == "value") {
+                                        var dateTimeValue = dateTimeWidget.get("value");
+                                        var evt = new Object();
+                                        if(attrName == "focused"){
+                                            evt.type ="blur";
+                                            xfControlDijit.sendValue(dateTimeValue, evt);
+                                        }else {
+                                            evt.type = "change";
+                                            xfControlDijit.sendValue(dateTimeValue, evt);
+                                        }
+                                    }
+                                });
+
+                                xfControlDijit.setValue = function(value,schemavalue) {
+                                    dateTimeWidget.set('value', schemavalue);
+                                };
+                                xfControlDijit.setReadonly = function() {
+                                    dateTimeWidget.set('readOnly', true);
+                                };
+                                xfControlDijit.setReadwrite = function() {
+                                    dateTimeWidget.set('readOnly', false);
+                                };
+                            });
                             break;
                         case "time":
+                            console.warn("tbd: input Time");
+                            break;
+                        case "mobileDateTime":
+                            console.warn("tbd: input dateTime");
+
+                            break;
+                        case "mobileTime":
                             console.warn("tbd: input Time");
                             break;
                         case "mobileDate":
@@ -186,40 +240,35 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                  * @private
                  */
                 _connectDateDijit:function(xfControlDijit, dateWidget){
-                    var xfControlDijitTmp = xfControlDijit;
-                    var dateWidgetTmp = dateWidget;
-                    // console.debug("connectDateDijit: xfControlDijitTmp:",xfControlDijitTmp," dateWidgetTmp:",dateWidgetTmp);
-                    require(["dojo/dom-class"],function(domClass){
-                        domClass.add(dateWidgetTmp.domNode,"xfValue");
-                        connect.connect(dateWidgetTmp, "set", function (attrName, value) {
-                            if((attrName == "focused" &&  !value) || attrName == "value") {
-                                var dateValue;
-                                if(dateWidgetTmp.serialize){
-                                    dateValue = dateWidgetTmp.serialize(dateWidgetTmp.get("value")).substring(0, 10);
-                                }else{
-                                    dateValue = dateWidgetTmp.get("value");
-                                }
-                                var evt = new Object();
-                                if(attrName == "focused"){
-                                    evt.type ="blur";
-                                    xfControlDijitTmp.sendValue(dateValue,evt);
-                                }else {
-                                    evt.type = "change";
-                                    xfControlDijitTmp.sendValue(dateValue,evt);
-                                }
+                    // console.debug("connectDateDijit: xfControlDijit:",xfControlDijit," dateWidget:",dateWidget);
+                    domClass.add(dateWidget.domNode,"xfValue");
+                    connect.connect(dateWidget, "set", function (attrName, value) {
+                        if((attrName == "focused" &&  !value) || attrName == "value") {
+                            var dateValue;
+                            if(dateWidget.serialize){
+                                dateValue = dateWidget.serialize(dateWidget.get("value")).substring(0, 10);
+                            }else{
+                                dateValue = dateWidget.get("value");
                             }
-                        });
-                        xfControlDijitTmp.setValue = function(value,schemavalue) {
-                            dateWidgetTmp.set('value', schemavalue);
+                            var evt = new Object();
+                            if(attrName == "focused"){
+                                evt.type ="blur";
+                                xfControlDijit.sendValue(dateValue,evt);
+                            }else {
+                                evt.type = "change";
+                                xfControlDijit.sendValue(dateValue,evt);
+                            }
+                        }
+                        xfControlDijit.setValue = function(value,schemavalue) {
+                            dateWidget.set('value', schemavalue);
                         };
-                        xfControlDijitTmp.setReadonly = function() {
-                            dateWidgetTmp.set('readOnly', true);
+                        xfControlDijit.setReadonly = function() {
+                            dateWidget.set('readOnly', true);
                         };
-                        xfControlDijitTmp.setReadwrite = function() {
-                            dateWidgetTmp.set('readOnly', false);
+                        xfControlDijit.setReadwrite = function() {
+                            dateWidget.set('readOnly', false);
                         };
                     });
-
                 }
             }
         );

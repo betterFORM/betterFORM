@@ -16,6 +16,9 @@
             font-weight: bold;
             padding-top: 6px;
         }
+        .bf .xfControl .xfLabel {
+            width:200px;
+        }
 
         .xfGroup .xfControl .xfLabel {
             float: left;
@@ -26,12 +29,16 @@
         <xf:instance xmlns="">
             <data required="true" relevant="true" valid="true" readonly="false">
                 <input>
-                    <value>input value</value>
-                    <label>input[1]</label>
+                    <value>2012-04-19T17:08:00</value>
+                    <label>2012-04-19T17:08:00</label>
                 </input>
                 <input>
-                    <value>true</value>
-                    <label>input[2]</label>
+                    <value>2012-04-19T17:08:00Z</value>
+                    <label>2012-04-19T17:08:00Z:</label>
+                </input>
+                <input>
+                    <value>2012-04-19T17:08:00+04:00</value>
+                    <label>2012-04-19T17:08:00+04:00</label>
                 </input>
             </data>
         </xf:instance>
@@ -40,11 +47,21 @@
             <xf:bind nodeset="input[1]/value" required="boolean-from-string(instance()/@required)"
                      relevant="boolean-from-string(instance()/@relevant)"
                      constraint="boolean-from-string(instance()/@valid)"
-                     readonly="boolean-from-string(instance()/@readonly)"/>
+                     readonly="boolean-from-string(instance()/@readonly)" type="dateTime"/>
+            <xf:bind nodeset="input[2]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)" type="dateTime"/>
+            <xf:bind nodeset="input[3]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)" type="dateTime"/>
+<!--
             <xf:bind nodeset="input[2]/value" required="boolean-from-string(instance()/@required)"
                      relevant="boolean-from-string(instance()/@relevant)"
                      constraint="boolean-from-string(instance()/@valid)"
                      readonly="boolean-from-string(instance()/@readonly)" type="boolean"/>
+-->
         </xf:bind>
     </xf:model>
 </head>
@@ -93,12 +110,30 @@
                 <xf:help>Input help</xf:help>
                 <xf:alert>Input Alert</xf:alert>
             </xf:input>
+
+            <xf:output ref="input[1]/value">
+                <xf:label>Input 1:</xf:label>
+            </xf:output>
             <xf:input ref="input[2]/value">
                 <xf:label ref="../label"/>
                 <xf:hint>Input hint</xf:hint>
                 <xf:help>Input help</xf:help>
                 <xf:alert>Input Alert</xf:alert>
             </xf:input>
+            <xf:output ref="input[2]/value">
+                <xf:label>Input 2:</xf:label>
+            </xf:output>
+
+            <xf:input ref="input[3]/value">
+                <xf:label ref="../label"/>
+                <xf:hint>Input hint</xf:hint>
+                <xf:help>Input help</xf:help>
+                <xf:alert>Input Alert</xf:alert>
+            </xf:input>
+            <xf:output ref="input[3]/value">
+                <xf:label>Input 3:</xf:label>
+            </xf:output>
+
         </xf:group>
     </xf:group>
 </body>
