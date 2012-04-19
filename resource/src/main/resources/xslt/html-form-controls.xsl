@@ -338,49 +338,27 @@
             </xsl:when>
             <xsl:otherwise>
                 <!-- No appearance or appearance='minimal'-->
-                <xsl:choose>
-                    <!--
-                    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                    a minimal select1 with OpenSelection
-                    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                    -->
-                    <xsl:when test="@selection='open'">
-                        <select id="{concat($id,'-value')}"
-                                name="{$name}"
-                                class="xfValue"
-                                size="1"
-                                dataType="{$datatype}"
-                                title=""
-                                tabindex="{$navindex}"
-                                schemaValue="{bf:data/@bf:schema-value}"
-                                autocomplete="true"
-                                incremental="{$incremental}">
-                            <xsl:call-template name="build-items">
-                                <xsl:with-param name="parent" select="$parent"/>
-                            </xsl:call-template>
-                        </select>
-                    </xsl:when>
                     <!--
                     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                     a minimal select1 is rendered as a DROPDOWN
                     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                     -->
-                    <xsl:otherwise>
-<!--                        <span class="select1wrapper">-->
-                            <select id="{$id}-value"
-                                    name="{$name}"
-                                    class="xfValue"
-                                    title=""
-                                    tabindex="{$navindex}"
-                                    schemaValue="{bf:data/@bf:schema-value}"
-                                    incremental="{$incremental}">
-                                <xsl:call-template name="build-items">
-                                    <xsl:with-param name="parent" select="$parent"/>
-                                </xsl:call-template>
-                            </select>
-<!--                        </span>-->
-                    </xsl:otherwise>
-                </xsl:choose>
+                    <xsl:variable name="isOpenSelection" select="@selection='open'" as="xsd:boolean"/>
+<!--            <span class="select1wrapper">-->
+                    <select id="{$id}-value"
+                            name="{$name}"
+                            class="xfValue"
+                            size="1"
+                            title=""
+                            tabindex="{$navindex}"
+                            openselection="{$isOpenSelection}"
+                            autocomplete="{$isOpenSelection}"
+                            incremental="{$incremental}">
+                        <xsl:call-template name="build-items">
+                            <xsl:with-param name="parent" select="$parent"/>
+                        </xsl:call-template>
+                    </select>
+<!--            </span>-->
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -713,7 +691,7 @@
             </xsl:choose>
         </xsl:variable>
         <option id="{xf:item[1]/@id}" value="{$itemValue}" class="xfSelectorItem" data-bf-itemset="{@id}">
-            <xsl:if test="xf:item/@selected='true'">
+            <xsl:if test="xf:item[1]/@selected='true'">
                 <xsl:attribute name="selected">selected</xsl:attribute>
             </xsl:if>
             <xsl:call-template name="create-label">

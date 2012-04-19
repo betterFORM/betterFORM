@@ -11,7 +11,11 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     var n = node;
                     var xfId = bf.util.getXfId(n);
                     var xfControlDijit = registry.byId(xfId);
-                    // console.debug("FactorySelect1 [type:",type," id:",xfId,"]");
+                    var openselection = domAttr.get(n,"openselection") == "true";
+                    if(openselection){
+                        type = "open";
+                    }
+
 
                     switch(type){
                         case "combobox":
@@ -63,6 +67,33 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                     });
                                 };
                                 new Select1Radio({id:n.id,controlId:xfId}, n);
+                            });
+                            break;
+                        case "open":
+                            require(["dijit/form/ComboBox"],function(ComboBox){
+                                // TODO: Lars: differt onChange and onBlur?!?
+                                var isIncremental = domAttr.get(n,"incremental") != "false";
+                                var comboBox = new ComboBox({
+                                    id:n.id,
+                                    name:n.name,
+                                    onChange: function(value){
+                                        // console.log("combobox onchange ", value);
+                                        var result = this.item ? this.item.value : value;
+                                        // console.debug("send result:",result);
+                                        xfControlDijit.sendValue(result);
+                                    }
+                                }, n);
+
+                                xfControlDijit.setValue = function(value) {
+                                    var items = comboBox.store.query({ value: value });
+                                    // console.debug("items:",items);
+                                    if(items[0]){
+                                        comboBox.set("item",items[0]);
+                                    }else {
+                                        comboBox.set("value",value);
+                                    }
+
+                                }
                             });
                             break;
                         default:

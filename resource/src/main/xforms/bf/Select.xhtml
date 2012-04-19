@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:bf="http://betterform.sourceforge.net/xforms">
+<head>
+    <title>Control Tests</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+
+    -->
+
+
+    <style type="text/css">
+        .xfFullGroup .xfGroupLabel {
+            font-size: large;
+            font-weight: bold;
+            padding-top: 20px;
+        }
+
+        .xfGroup .xfControl .xfLabel {
+            float: left;
+        }
+    </style>
+
+    <xf:model>
+        <xf:instance xmlns="">
+            <data required="true" relevant="true" valid="true" readonly="false">
+                <select>
+                    <value>00FF00</value>
+                    <label>select minimal</label>
+                </select>
+                <select>
+                    <value>FF0000</value>
+                    <label>select full</label>
+                </select>
+                <select1>
+                    <value>FF0000</value>
+                    <label>select1 minimal</label>
+                </select1>
+                <select1>
+                    <value>00FF00</value>
+                    <label>select1 compact</label>
+                </select1>
+                <select1>
+                    <value>0000FF</value>
+                    <label>select1 full</label>
+                </select1>
+                <select1>
+                    <value>FF0000</value>
+                    <label>select1 open</label>
+                </select1>
+
+            </data>
+        </xf:instance>
+
+        <xf:bind nodeset="instance()">
+            <xf:bind nodeset="select[1]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="select[2]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="select1[1]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="select1[2]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="select1[3]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="select1[4]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+        </xf:bind>
+
+        <xf:instance id="colors">
+            <items xmlns="">
+                <color>
+                    <name>RED</name>
+                    <value>00FF00</value>
+                </color>
+                <color>
+                    <name>GREEN</name>
+                    <value>0000FF</value>
+                </color>
+                <color>
+                    <name>BLUE</name>
+                    <value>FF0000</value>
+                </color>
+            </items>
+        </xf:instance>
+        <xf:instance id="origin">
+            <items xmlns="">
+                <color>
+                    <name>BLACK</name>
+                    <value>000000</value>
+                </color>
+            </items>
+        </xf:instance>
+
+    </xf:model>
+</head>
+
+<body class="tundra">
+    <xf:group appearance="minimal">
+
+        <xf:group>
+            <div style="margin:4px;padding:4px;border:thin dotted #808080">
+                <span>MIPS:</span>
+                <xf:trigger>
+                    <xf:label>Required</xf:label>
+                    <xf:setvalue ref="instance()/@required" value="not(boolean-from-string(instance()/@required))"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Relevant</xf:label>
+                    <xf:setvalue ref="instance()/@relevant" value="not(boolean-from-string(instance()/@relevant))"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Valid</xf:label>
+                    <xf:setvalue ref="instance()/@valid" value="not(boolean-from-string(instance()/@valid))"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Readonly</xf:label>
+                    <xf:setvalue ref="instance()/@readonly" value="not(boolean-from-string(instance()/@readonly))"/>
+                </xf:trigger>
+            </div>
+            <div style="margin:4px;padding:4px;border:thin dotted #808080">
+                <span>Select:</span>
+                <xf:trigger>
+                    <xf:label>Value[1]</xf:label>
+                    <xf:setvalue ref="instance()/select[1]/value" value="'0000FF FF0000'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[2]</xf:label>
+                    <xf:setvalue ref="instance()/select[2]/value" value="'00FF00 FF0000'"/>
+                </xf:trigger>
+            </div>
+        </xf:group>
+
+        <xf:group ref="instance()" appearance="full" id="eventListener" class="xfFullGroup">
+            <!--<xf:group>
+                <xf:label>Select</xf:label>
+                &lt;!&ndash;################### SELECT SAMPLES #############################&ndash;&gt;
+                &lt;!&ndash;################### SELECT SAMPLES #############################&ndash;&gt;
+                &lt;!&ndash;################### SELECT SAMPLES #############################&ndash;&gt;
+
+                <xf:select ref="select[1]/value" appearance="minimal">
+                    <xf:label ref="../label"/>
+                    <xf:itemset nodeset="instance('colors')/color">
+                        <xf:label ref="name"/>
+                        <xf:value ref="value"/>
+                        &lt;!&ndash;<xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>&ndash;&gt;
+                    </xf:itemset>
+&lt;!&ndash;                    <xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>&ndash;&gt;
+
+                </xf:select>
+
+                <xf:output ref="select[1]/value">
+                    <xf:label>select[1] value(s):</xf:label>
+                </xf:output>
+
+                <xf:select ref="select[2]/value" appearance="full" >
+                    <xf:label ref="../label"/>
+                    <xf:itemset nodeset="instance('colors')/color">
+                        <xf:label ref="name"/>
+                        <xf:value ref="value"/>
+                        &lt;!&ndash;<xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>&ndash;&gt;
+                    </xf:itemset>
+                    &lt;!&ndash;                    <xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>&ndash;&gt;
+                </xf:select>
+                <xf:output ref="select[2]/value">
+                    <xf:label>select[2] value(s):</xf:label>
+                </xf:output>
+            </xf:group>-->
+            <xf:group>
+                <xf:label>Select1</xf:label>
+                <!--################### SELECT1 SAMPLES #############################-->
+                <!--################### SELECT1 SAMPLES #############################-->
+                <!--################### SELECT1 SAMPLES #############################-->
+
+<!--
+                <xf:select1 ref="select1[1]/value" appearance="minimal">
+                    <xf:label ref="../label"/>
+                    <xf:itemset nodeset="instance('colors')/color">
+                        <xf:label ref="name"/>
+                        <xf:value ref="value"/>
+                        &lt;!&ndash;<xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>&ndash;&gt;
+                    </xf:itemset>
+&lt;!&ndash;                    <xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>&ndash;&gt;
+
+                </xf:select1>
+
+                <xf:output ref="select1[1]/value">
+                    <xf:label>select1[1] value:</xf:label>
+                </xf:output>
+
+                <xf:select1 ref="select1[2]/value" appearance="compact" >
+                    <xf:label ref="../label"/>
+                    <xf:itemset nodeset="instance('colors')/color">
+                        <xf:label ref="name"/>
+                        <xf:value ref="value"/>
+                        &lt;!&ndash;<xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>&ndash;&gt;
+                    </xf:itemset>
+&lt;!&ndash;                    <xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>&ndash;&gt;
+                </xf:select1>
+                <xf:output ref="select1[2]/value">
+                    <xf:label>select1[2] value:</xf:label>
+                </xf:output>
+
+                <xf:select1 ref="select1[3]/value" appearance="full" >
+                    <xf:label ref="../label"/>
+                    <xf:itemset nodeset="instance('colors')/color">
+                        <xf:label ref="name"/>
+                        <xf:value ref="value"/>
+                        &lt;!&ndash;<xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>&ndash;&gt;
+                    </xf:itemset>
+                    &lt;!&ndash;                    <xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>&ndash;&gt;
+                </xf:select1>
+                <xf:output ref="select1[3]/value">
+                    <xf:label>select1[3] value:</xf:label>
+                </xf:output>
+-->
+
+                
+                <xf:select1 ref="select1[4]/value"  selection="open" incremental="false">
+                    <xf:label ref="../label"/>
+                    <xf:itemset nodeset="instance('colors')/color">
+                        <xf:label ref="name"/>
+                        <xf:value ref="value"/>
+                        <!--<xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>-->
+                    </xf:itemset>
+                    <!--                    <xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>-->
+                </xf:select1>
+                <xf:output ref="select1[4]/value">
+                    <xf:label>select1[4] value:</xf:label>
+                </xf:output>
+                <xf:input ref="select1[4]/value">
+                    <xf:label>select1[4] value:</xf:label>
+                </xf:input>
+
+            </xf:group>
+
+
+        </xf:group>
+    </xf:group>
+</body>
+</html>
