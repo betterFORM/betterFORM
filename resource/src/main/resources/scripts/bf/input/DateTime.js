@@ -20,14 +20,21 @@ define(["dojo/_base/declare",
                 dateDijit:null,
                 timeDijit:null,
                 timezone:null,
+                zulu:false,
                 currentValue:null,
+
+
 
                 postCreate:function() {
                     this.inherited(arguments);
-                    console.debug("DateTime.postCreate: this.value:",this.value);
-                    // domAttr.set(this.domNode, "value", this.value);
-                    // console.debug("DateTime.postCreate: value:",this.value);
+
+                    if(this.value.indexOf("+") !=-1){
+                        this.timezone = this.value.substring(this.value.indexOf("+"),this.value.length);
+                    }
+                    this.zulu = (this.value.indexOf("Z") !=-1);
+                    console.debug("DateTime.postCreate: value:",this.value, " timezone:",this.timezone, " zulu:",this.zulu);
                     this.applyValues(this.value);
+
                 },
 
                 applyValues:function(value) {
@@ -35,41 +42,28 @@ define(["dojo/_base/declare",
                     if(this.currentValue == value){
                        return;
                     }
-
-                    console.debug("\n\nDateTime.setControlValue 1: ",stamp.fromISOString(value));
-                    console.debug("DateTime.setControlValue 2: ",stamp.fromISOString(value,{selector:"time"}));
-                    console.debug("DateTime.setControlValue 3: ",stamp.fromISOString(value,{zulu:true}));
-                    console.debug("DateTime.setControlValue 4: ",stamp.fromISOString(value,{zulu:false}),"\n\n");
-
                     this.currentValue = value;
 
-                    if(value.indexOf("+") !=-1){
-                        this.timezone = value.substring(value.indexOf("+"),value.length);
-                        console.info("DateTime: timezone is: ",this.timezone);
-                    }
-                    if(value.indexOf("Z") !=-1){
-                        this.timezone = "Z";
-                        console.info("DateTime: timezone is: ",this.timezone);
-                    }
                     // handle date part
-                    if(this.dateDijit == undefined) {
-                        this.dateDijit = new DateTextBox({constraints:this.dateConstraints},this.dateFacet);
-                    }
                     var dateValue = "";
                     if(value != undefined && value != ""){
-                        dateValue = stamp.fromISOString(value,{selector: "date",zulu:this.timezone == "Z"});
+                        dateValue = stamp.fromISOString(value,{selector: "date",zulu:this.zulu});
                     }
                     console.debug("DateTime.applyValues: Schema Value: '", value, "' dateValue:'",dateValue,"'");
 
+                    if(this.dateDijit == undefined) {
+                        this.dateDijit = new DateTextBox({value:dateValue, constraints:this.dateConstraints},this.dateFacet);
+                    }
                     this.dateDijit.set("value", dateValue);
 
                     // handle time part
-                    if(this.timeDijit == undefined) {
-                        this.timeDijit = new TimeTextBox({constraints:this.timeConstraints},this.timeFacet);
-                    }
                     var timeValue = "";
                     if(value != undefined && value != ""){
-                        timeValue = stamp.fromISOString(value,{selector: "time",zulu:this.timezone == "Z"});
+                        timeValue = stamp.fromISOString(value,{zulu:this.zulu});
+                    }
+
+                    if(this.timeDijit == undefined) {
+                        this.timeDijit = new TimeTextBox({value:timeValue,constraints:this.timeConstraints},this.timeFacet);
                     }
                     this.timeDijit.set("value",timeValue);
 
@@ -80,41 +74,25 @@ define(["dojo/_base/declare",
                 },
 
                 _getControlValue:function(){
+                    console.debug("DateTime._getControlValue timezone: ", this.timezone, " zulu:",this.zulu);
                     var notISODate = this.dateDijit.get("value");
-                    var currentDate = undefined;
-
+                    var currentDate = "";
                     if(notISODate){
                         currentDate = stamp.toISOString(notISODate,{ selector: "date" });
-                    }else {
-                        currentDate= "";
                     }
                     console.debug("DateTime._getControlValue currentDate: ",currentDate);
 
                     var notISOTime = this.timeDijit.get("value");
-
-                    console.debug("\n\nDateTime._getControlValue 1: ",stamp.toISOString(notISOTime));
-                    console.debug("DateTime._getControlValue 2: ",stamp.toISOString(notISOTime,{selector:"time"}));
-                    console.debug("DateTime._getControlValue 3: ",stamp.toISOString(notISOTime,{zulu:true}));
-                    console.debug("DateTime._getControlValue 4: ",stamp.toISOString(notISOTime,{zulu:false}),"\n\n");
-
-                    console.debug("notISOTime: ",notISOTime);
-                    console.debug("notISOTime offset: ",notISOTime.getTimezoneOffset());
-                    var currentTime = undefined;
+                    console.debug("notISOTime: ",notISOTime, " notISOTime.toUTCString()", notISOTime.toISOString());
+                    var currentTime = "";
                     if(notISOTime){
-                        if(this.timezone && this.timezone != "Z"){
-                            currentTime = stamp.toISOString(notISOTime,{ selector: "time", zulu:false });
+                        if(this.zulu || this.timezone){
+                            var zuluDT = stamp.toISOString(notISOTime, {zulu:this.zulu});
+                            currentTime = zuluDT.substring(zuluDT.indexOf("T"),zuluDT.length);
                         }
                         else {
-                            currentTime = stamp.toISOString(notISOTime,{ selector: "time",zulu: this.timezone == "Z" });
-                            console.debug("currentTimeXYZ:",currentTime);
-                            if(currentTime.indexOf("+") != -1){
-                                currentTime = currentTime.substring(0,currentTime.indexOf("+"));
-                            }
-                            console.debug("currentTimeABC:",currentTime);
+                            currentTime = stamp.toISOString(notISOTime,{ selector:"time", zulu:false });
                         }
-
-                    }else {
-                        currentTime= "";
                     }
                     console.debug("DateTime._getControlValue currentTime: ",currentTime);
                     this.currentValue = currentDate  + currentTime;

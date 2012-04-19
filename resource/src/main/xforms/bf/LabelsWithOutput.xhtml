@@ -42,7 +42,7 @@
             <xf:label>Output Value: </xf:label>
         </xf:output>
         <xf:trigger appearance="minimal">
-            <xf:label><xf:output value="concat('Output value = ', instance()/output)"/></xf:label>
+            <xf:label>hallo <xf:output value="concat('Output value = ', instance()/output)"/></xf:label>
             <xf:setvalue ref="instance()/output" value="not(boolean-from-string(instance()/output))" />
         </xf:trigger>
         <xf:trigger>
