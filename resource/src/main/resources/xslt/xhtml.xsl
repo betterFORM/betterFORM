@@ -132,6 +132,13 @@
     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     -->
     <xsl:variable name="uses-DOMFocusIn" select="exists(//*[@ev:event='DOMFocusIn'])"/>
+    <!--
+    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    checks, whether this form uses the DOMFocusOut event. Used for optimizing
+    the client-side processor execution
+    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    -->
+    <xsl:variable name="uses-DOMFocusOut" select="exists(//*[@ev:event='DOMFocusOut'])"/>
 
     <!--
     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -879,6 +886,7 @@
                 contextroot:"<xsl:value-of select="$contextroot"/>",
                 fluxPath:"<xsl:value-of select="concat($contextroot,'/Flux')"/>",
                 useDOMFocusIN:<xsl:value-of select="$uses-DOMFocusIn"/>,
+                useDOMFocusOUT:<xsl:value-of select="$uses-DOMFocusOut"/>,
                 logEvents:<xsl:value-of select="$debug-enabled"/>
             }
         </xsl:variable>
@@ -894,12 +902,7 @@
         <script type="text/javascript">
             require([<xsl:value-of select="$requires"/>],
                 function(XFProcessor, XFormsModelElement, connect){
-                        console.debug("ready - new Session with key:", dojo.config.bf.sessionkey);
-                        // subscribe ControlMapping here
-                        connect.subscribe("load-control-mapping", function(){
-                            //load controlmapping module
-                        });
-
+                        // console.debug("ready - new Session with key:", dojo.config.bf.sessionkey);
                         <!-- create a XForms Processor for the form -->
                         fluxProcessor = new XFProcessor();
                         <!-- create a XFormsModelElement class for each model in the form -->

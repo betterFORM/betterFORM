@@ -42,6 +42,7 @@ define(["dojo/_base/declare",
     fifoReaderTimer:null,
     lastServerClientFocusEvent:null,
     usesDOMFocusIN:dojo.config.bf.useDOMFocusIN,
+    usesDOMFocusOUT:dojo.config.bf.useDOMFocusOUT,
     logEvents:dojo.config.bf.logEvents,
     mappingProcessor:null,
 
@@ -61,7 +62,7 @@ define(["dojo/_base/declare",
         // initialize DWR
 
         Flux._path = dojo.config.bf.fluxPath;
-        console.debug("calling init");
+        // console.debug("calling Flux.init");
         Flux.init(dojo.config.bf.sessionkey, dojo.hitch(this,this.applyChanges));
 
         // This is used for referencing this object from within ajax-callback-functions
@@ -134,6 +135,8 @@ define(["dojo/_base/declare",
 
             var callerFunction = nextPendingClientServerEvent.getCallerFunction();
             var nextPendingTargetId = nextPendingClientServerEvent.getTargetId();
+            // TODO: Lars: not need anymore due to devtool!?!
+/*
             switch (callerFunction) {
                 case "dispatchEvent":       console.info("FIFO-READ:  dispatchEvent(" + nextPendingTargetId + ")"); break;
                 case "dispatchEventType":   console.info("FIFO-READ:  dispatchEventType(" + nextPendingTargetId + ", " + nextPendingClientServerEvent.getEventType() + ", " + nextPendingClientServerEvent.getContextInfo() + ")"); break;
@@ -141,6 +144,7 @@ define(["dojo/_base/declare",
                 case "setRepeatIndex":      console.info("FIFO-READ: setRepeatIndex(" + nextPendingTargetId + ", " + nextPendingClientServerEvent.getValue() + ")"); break;
                 default:break;
             }
+*/
 
             //*****************************************************************************
             // START: skip this pending Event, if one of the following conditions occurred:
@@ -295,10 +299,18 @@ define(["dojo/_base/declare",
         } catch(ex) {
             fluxProcessor._handleExceptions("Failure executing Flux.dispatchEvent", ex);
         }
-        return false;
+        // TODO: really needed?
+        // return false;
     },
 
     dispatchEventType:function(targetId, eventType, contextInfo) {
+        console.debug("this.usesDOMFocusOUT:",this.usesDOMFocusOUT);
+        if((this.usesDOMFocusOUT == false && "DOMFocusOut" == eventType) ||
+           (this.usesDOMFocusIN == false && "DOMFocusIn" == eventType)){
+            console.debug("Event: ", eventType , " not used in form");
+            return;
+
+        }
         console.debug("XFProcessor.dispatchEventType(",targetId,") this: ", this, " eventType:",eventType, " contextInfo:",contextInfo);
         var newClientServerEvent = new ClientServerEvent();
         newClientServerEvent.setTargetId(targetId);

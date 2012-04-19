@@ -11,11 +11,13 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     var n = node;
                     var xfId = bf.util.getXfId(n);
                     var xfControlDijit = registry.byId(xfId);
-                    if(xfControlDijit.domNode.parentNode.localName == "label"){
+                    // TODO: TBR: Lars: special handling for outputs within labels
+                    var xfControlNode = xfControlDijit.domNode;
+                    if(xfControlNode.parentNode.localName == "label"){
                         // console.debug("output is placed within label");
-                        domStyle.set(xfControlDijit.domNode, "display","inline");
-                        domStyle.set(xfControlDijit.domNode, "border",0);
-                        domStyle.set(xfControlDijit.domNode, "padding",0);
+                        domStyle.set(xfControlNode, "display","inline");
+                        domStyle.set(xfControlNode, "border",0);
+                        domStyle.set(xfControlNode, "padding",0);
                     }
 
                     switch(type){
