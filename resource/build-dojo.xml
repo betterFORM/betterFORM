@@ -147,14 +147,26 @@
             <arg value="profile=${scripts.target}/bf/bf.profile.js"/>
         </java>
 
-        <delete dir="${scripts.target}/../release" excludes="dojo/dojo.js" includeemptydirs="true"/>
 
-        <copy file="${src.dir}/main/lib/dwr.js.optimized" tofile="${scripts.target}/../release/dojo/dwr.js"/>
+        <delete dir="${scripts.target}/../release" excludes="dojo/dojo.js bf/dashboard.js **/highlight.css **/soria.css **/tundra.css **/Toaster.css" includeemptydirs="true"/>
+
+        <copy file="${src.dir}/main/lib/dwr.js.optimized" tofile="${scripts.target}/../release/dwr.js"/>
 
         <zip description="create optimized JavaScript zip"
              zipfile="${src.dir}/main/lib/${app.name}-js-optimized.zip"
              basedir="${scripts.target}/../release"/>
 
+
+    </target>
+
+    <target name="test">
+        <delete dir="${scripts.target}/../release" excludes="dojo/dojo.js bf/dashboard.js" includeemptydirs="true"/>
+
+        <copy file="${src.dir}/main/lib/dwr.js.optimized" tofile="${scripts.target}/../release/dojo/dwr.js"/>
+
+    <zip description="create optimized JavaScript zip"
+         zipfile="${src.dir}/main/lib/${app.name}-js-optimized.zip"
+         basedir="${scripts.target}/../release"/>
     </target>
 
     <target name="clean">

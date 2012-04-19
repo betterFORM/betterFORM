@@ -83,9 +83,15 @@ var profile = {
                         'dojo/has',
                         'dojo/_base/sniff',
 
-                        'bf/Alert',
-                        'bf/AlertBehavior',
-                        'bf/AlertInline',
+                        'dojox/form/Uploader',
+                        'dojox/form/uploader/FileList',
+                        'dojox/form/uploader/plugins/HTML5',
+                        'dojox/form/uploader/plugins/IFrame',
+                        'dojox/form/uploader/plugins/Flash',
+                
+                        'bf/common/Alert',
+                        'bf/common/AlertInline',
+                        'bf/common/AlertToolTip',
                         'bf/ClientServerEvent',
 
                         'bf/container/Container',
@@ -113,12 +119,31 @@ var profile = {
                         'bf/XFormsModelElement',
                         'bf/XFormsProcessor',
                         'bf/XFProcessor'],
-
             // By default, the build system will try to include dojo/main in the built dojo/dojo layer, which adds a
             // bunch of stuff we don’t want or need. We want the initial script load to be as small and quick as
             // possible, so we configure it as a custom, bootable base.
             boot: true,
             customBase: true
+        },
+
+        'bf/dashboard': {
+            include: [
+                'dojo/fx',
+                'dojox/fx',
+                'dojo/parser',
+                'dojo/fx/easing',
+                'dijit/form/Form',
+                'dijit/form/Button',
+                'dojo/io/iframe',
+                'dijit/form/TextBox',
+                'dijit/form/DropDownButton',
+                'dijit/TooltipDialog',
+                'dijit/Dialog',
+                'dijit/Tooltip',
+                'dojo/NodeList-fx',
+                'dojox/widget/Toaster',
+                'dojox/layout/FloatingPane'
+            ]
         }
 
         // In the demo application, we conditionally require bf/Dialog on the client-side, so we’re building a
