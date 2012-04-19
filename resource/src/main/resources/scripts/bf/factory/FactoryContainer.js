@@ -11,7 +11,7 @@ define(["dojo/_base/declare","bf/util"],
                     var n = node;
                     switch(type){
                         case "group":
-                            console.debug("FactoryContainer (group)");
+                            // console.debug("FactoryContainer (group)");
                             require(["bf/container/Container","dojo/dom","dojo/dom-attr","dojo/_base/connect"], function(Container,dom,domAttr,connect) {
                                 // repeatId:domAttr.get(n,"repeatId")
                                 var group = new Container({}, n);

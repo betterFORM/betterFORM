@@ -115,6 +115,7 @@ var profile = {
                         'bf/MappingProcessor',
 
                         'bf/util',
+                        'bf/devtool',
                         'bf/XFControl',
                         'bf/XFormsModelElement',
                         'bf/XFormsProcessor',

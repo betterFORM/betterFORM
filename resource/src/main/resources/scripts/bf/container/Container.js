@@ -13,11 +13,11 @@ define(["dojo/_base/declare" ,"dojo/dom-class","dojo/dom"],
         constructor:function(properites, node) {
             this.srcNodeRef = node;
             this.id = node.id;
-            console.debug("Container.constructor srcNodeRef:",this.srcNodeRef, " id: ",this.id);
+            // console.debug("Container.constructor srcNodeRef:",this.srcNodeRef, " id: ",this.id);
         },
 
         handleStateChanged:function(contextInfo){
-              console.debug("Container.handleStateChanged: ",contextInfo);
+              // console.debug("Container.handleStateChanged: ",contextInfo);
 
              if (contextInfo["parentId"]) {
                  this._handleHelperChanged(contextInfo);
@@ -26,7 +26,7 @@ define(["dojo/_base/declare" ,"dojo/dom-class","dojo/dom"],
                  this.readonly = contextInfo["readonly"];
                  this.required = contextInfo["required"];
                  this.relevant = contextInfo["enabled"];
-                  console.debug("Container.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " contextInfo:",contextInfo);
+                 // console.debug("Container.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " contextInfo:",contextInfo);
 
                  if (this.valid != null) {
                      this._handleSetValidProperty(eval(this.valid));
@@ -54,7 +54,7 @@ define(["dojo/_base/declare" ,"dojo/dom-class","dojo/dom"],
 
          },
          _handleSetReadonlyProperty: function(readonly){
-             console.debug("Container._handleSetReadonlyProperty readonly = " , (this.readonly == false));
+             // console.debug("Container._handleSetReadonlyProperty readonly = " , (this.readonly == false));
              if (readonly) {
                  bf.util.replaceClass(this.domNode, "xfReadWrite", "xfReadOnly");
              }
@@ -88,7 +88,7 @@ define(["dojo/_base/declare" ,"dojo/dom-class","dojo/dom"],
          },
 
          _handleHelperChanged: function(properties){
-             console.debug("Container.handleHelperChanged: type='" + properties["type"] + "',  value='" + properties["value"] + "'");
+             // console.debug("Container.handleHelperChanged: type='" + properties["type"] + "',  value='" + properties["value"] + "'");
              switch (properties["targetName"]) {
                  case "label":
                      this._setLabel( properties["value"]);
@@ -116,7 +116,7 @@ define(["dojo/_base/declare" ,"dojo/dom-class","dojo/dom"],
          },
 
          isReadonly:function(){
-             console.debug("Container.isReadonly",this.id);
+             // console.debug("Container.isReadonly",this.id);
              if(domClass.contains(this.domNode,"xfReadWrite")){
                  return false;
              }else if(domClass.contains(this.domNode,"xfReadOnly")){
@@ -127,7 +127,7 @@ define(["dojo/_base/declare" ,"dojo/dom-class","dojo/dom"],
          },
 
          isRelevant:function(){
-             console.debug("Container.isRelevant",this.domNode);
+             // console.debug("Container.isRelevant",this.domNode);
              if(domClass.contains(this.domNode,"xfDisabled")){
                  return false;
              }else if(domClass.contains(this.domNode,"xfEnabled")){

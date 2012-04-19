@@ -14,7 +14,7 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registr
         alwaysShowHint: query(".bfAlwaysShowHint", win.body())[0],
 
             constructor:function() {
-                console.debug("Alert.constructor this:",this);
+                // console.debug("Alert.constructor this:",this);
                 connect.subscribe("xforms-valid", this, "handleValid");
                 connect.subscribe("xforms-invalid", this, "handleInvalid");
 

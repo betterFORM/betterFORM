@@ -22,7 +22,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                      * INPUT TYPE STRING
                      */
                         case "text":
-                            console.debug("FactoryInput.createInputPlain");
+                            // console.debug("FactoryInput.createInputPlain");
                             /* Overwriten "abstract" API function on XFControl to handle updating of control values */
                             xfControlDijit.setValue = function(value, schemavalue) {
                                 domAttr.set(n, "value", value);
@@ -55,7 +55,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                      * INPUT TYPE BOOLEAN
                      */
                         case "checkbox":
-                            console.debug("FactoryInput.createInputBoolean");
+                            // console.debug("FactoryInput.createInputBoolean");
                             // console.debug("FOUND: boolean input field: ",n);
                             if(domAttr.get(n,"type") != "checkbox"){
                                 domAttr.set(n,"type","checkbox");
@@ -80,13 +80,13 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             };
 
                             connect.connect(node,"onblur",function(evt){
-                                console.debug("onblur",n);
+                                // console.debug("onblur",n);
                                 if(node.checked != undefined){
                                     xfControlDijit.sendValue(node.checked,evt);
                                 }
                             });
                             connect.connect(node,"onclick",function(evt){
-                                console.debug("FactoryInput (boolean) onclick node.checked:",node.checked);
+                                // console.debug("FactoryInput (boolean) onclick node.checked:",node.checked);
                                 if(node.checked != undefined){
                                     xfControlDijit.sendValue(node.checked,evt);
                                 }

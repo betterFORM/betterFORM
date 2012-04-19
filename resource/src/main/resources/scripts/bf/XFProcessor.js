@@ -299,7 +299,7 @@ define(["dojo/_base/declare",
         } catch(ex) {
             fluxProcessor._handleExceptions("Failure executing Flux.dispatchEvent", ex);
         }
-        // TODO: really needed?
+        // TODO: TBR: Lars really needed?
         // return false;
     },
 

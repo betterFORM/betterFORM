@@ -72,9 +72,9 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
          sends an updated value of a widget to the server
          */
         sendValue:function(/* String */ value, evt) {
-            console.debug("XFControl: sendValue: currentvalue:", this.currentValue, " - newValue:",value);
+            // console.debug("XFControl: sendValue: currentvalue:", this.currentValue, " - newValue:",value);
             if(this.isReadonly()){
-                console.debug("XFControl sendValue - control is readonly - ignoring event");
+                // console.debug("XFControl sendValue - control is readonly - ignoring event");
                 return;
             }
 
@@ -113,7 +113,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
         between client and server.
          */
         handleStateChanged:function(contextInfo) {
-            console.debug("XFControl.handleStateChanged: ",contextInfo);
+            // console.debug("XFControl.handleStateChanged: ",contextInfo);
 
             if (contextInfo["parentId"]) {
                 // console.debug("Control._handleHelperChanged: ",contextInfo);
@@ -382,7 +382,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
         },
 
         _handleHelperChanged: function(properties) {
-           console.debug("Control.handleHelperChanged: this.id: "+this.id+ "type='" + properties["targetName"] + "',  value='" + properties["value"] + "'");
+           // console.debug("Control.handleHelperChanged: this.id: "+this.id+ "type='" + properties["targetName"] + "',  value='" + properties["value"] + "'");
             switch (properties["targetName"]) {
                 case "label":
                     this.setLabel(properties["value"]);
@@ -411,7 +411,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
                 labelNode.innerHTML = value;
             }
             else {
-                console.warn("Failure updating help for Control '" + this.id + "-help' with value: " + value);
+                console.warn("Failure updating label for Control '" + this.id + "-help' with value: " + value);
             }
         },
         setHelp:function(value) {
