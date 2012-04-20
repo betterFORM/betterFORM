@@ -122,7 +122,13 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                                     freeTextDijit.set("bfValue", textValue);
                                     freeTextDijit.set("value",textValue);
                                 };
-
+                                // READONLY HANDLING
+                                connect.connect(xfControlDijit,"setReadonly",function(evt){
+                                    freeTextDijit.set("disabled",true);
+                                });
+                                connect.connect(xfControlDijit,"setReadwrite",function(evt){
+                                    freeTextDijit.set("disabled",false);
+                                });
                             });
                             break;
                         default:

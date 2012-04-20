@@ -322,12 +322,14 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
 
         setReadonly:function() {
             bf.util.replaceClass(this.domNode, "xfReadWrite", "xfReadOnly");
-            domAttr.set(this.getWidget(), "readonly","readonly");
+            // domAttr.set(this.getWidget(), "readonly","readonly");
+            domAttr.set(this.getWidget(), "disabled","disabled");
         },
 
         setReadwrite:function() {
             bf.util.replaceClass(this.domNode,"xfReadOnly","xfReadWrite");
-            this.getWidget().removeAttribute("readonly");
+            // this.getWidget().removeAttribute("readonly");
+            this.getWidget().removeAttribute("disabled");
         },
 
         setRequired:function() {

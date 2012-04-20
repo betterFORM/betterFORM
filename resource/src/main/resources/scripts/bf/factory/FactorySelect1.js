@@ -102,7 +102,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                 var initialItems = comboBox.store.query({ value: initialValue });
                                 if(initialItems[0]){
                                     comboBox.set("item",initialItems[0]);
-                                }else {
+                                } else {
                                     comboBox.set("value",initialValue);
                                 }
 
@@ -115,19 +115,18 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                     }else {
                                         comboBox.set("value",value);
                                     }
-                                }
+                                };
 
                                 // READONLY HANDLING
-                                xfControl.setReadonly = function() {
+                                xfControlDijit.setReadonly = function() {
                                     bf.util.replaceClass(n,"xfReadOnly","xfReadWrite");
                                     comboBox.set("disabled",true);
                                 };
-                                xfControl.setReadwrite=function() {
+
+                                xfControlDijit.setReadwrite=function() {
                                     bf.util.replaceClass(n,"xfReadOnly","xfReadWrite");
                                     comboBox.set("disabled",false);
                                 };
-
-
                             });
                             break;
                         default:
