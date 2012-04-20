@@ -109,9 +109,11 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                      */
                     xfControlDijit.setReadonly = function() {
                         // console.debug("overwritten checkbox function");
+                        bf.util.replaceClass(node,"xfReadWrite","xfReadOnly");
                         domAttr.set(node, "disabled","disabled");
                     };
                     xfControlDijit.setReadwrite = function() {
+                        bf.util.replaceClass(node,"xfReadOnly","xfReadWrite");
                         node.removeAttribute("disabled");
                     };
 
@@ -234,9 +236,11 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             dateTimeWidget.set('value', schemavalue);
                         };
                         xfControlDijit.setReadonly = function() {
+                            bf.util.replaceClass(n,"xfReadWrite","xfReadOnly");
                             dateTimeWidget.set('readOnly', true);
                         };
                         xfControlDijit.setReadwrite = function() {
+                            bf.util.replaceClass(n,"xfReadOnly","xfReadWrite");
                             dateTimeWidget.set('readOnly', false);
                         };
                     });
@@ -274,9 +278,11 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             dateWidget.set('value', schemavalue);
                         };
                         xfControlDijit.setReadonly = function() {
+                            bf.util.replaceClass(xfControlDijit.domNode,"xfReadWrite","xfReadOnly");
                             dateWidget.set('readOnly', true);
                         };
                         xfControlDijit.setReadwrite = function() {
+                            bf.util.replaceClass(xfControlDijit.domNode,"xfReadOnly","xfReadWrite");
                             dateWidget.set('readOnly', false);
                         };
                     });

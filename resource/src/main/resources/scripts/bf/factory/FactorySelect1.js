@@ -11,9 +11,14 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     var n = node;
                     var xfId = bf.util.getXfId(n);
                     var xfControlDijit = registry.byId(xfId);
-                    var openselection = domAttr.get(n,"openselection") == "true";
-                    if(openselection){
+                    var initialValue = domAttr.get(n,"data-bf-value");
+                    xfControlDijit.setCurrentValue(initialValue);
+
+                    var openselection = domAttr.get(n,"selection") == "open";
+                    if(type == "combobox" && openselection){
                         type = "open";
+                    }else if(openselection){
+                        console.warn("selection = 'open' not support for xf:select with appearance='full'");
                     }
 
 
@@ -71,19 +76,37 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             break;
                         case "open":
                             require(["dijit/form/ComboBox"],function(ComboBox){
-                                // TODO: Lars: differt onChange and onBlur?!?
-                                var isIncremental = domAttr.get(n,"incremental") != "false";
                                 var comboBox = new ComboBox({
                                     id:n.id,
                                     name:n.name,
                                     onChange: function(value){
-                                        // console.log("combobox onchange ", value);
+                                        console.log("combobox onchange ", value);
                                         var result = this.item ? this.item.value : value;
                                         // console.debug("send result:",result);
-                                        xfControlDijit.sendValue(result);
+                                        var evt = {};
+                                        evt.type = "change";
+                                        xfControlDijit.sendValue(result,evt);
+                                    },
+                                    onBlur:function(){
+                                        var items = this.store.query({ name: this.get("value") });
+                                        // console.debug("item:",items);
+                                        var result = items[0] ? items[0].value : this.get("value");
+                                        // console.debug("result:",result);
+                                        var evt = {};
+                                        evt.type = "blur";
+                                        xfControlDijit.sendValue(result,evt);
                                     }
                                 }, n);
 
+                                // handle initial value
+                                var initialItems = comboBox.store.query({ value: initialValue });
+                                if(initialItems[0]){
+                                    comboBox.set("item",initialItems[0]);
+                                }else {
+                                    comboBox.set("value",initialValue);
+                                }
+
+                                // override xfControl.setValue
                                 xfControlDijit.setValue = function(value) {
                                     var items = comboBox.store.query({ value: value });
                                     // console.debug("items:",items);
@@ -92,8 +115,19 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                     }else {
                                         comboBox.set("value",value);
                                     }
-
                                 }
+
+                                // READONLY HANDLING
+                                xfControl.setReadonly = function() {
+                                    bf.util.replaceClass(n,"xfReadOnly","xfReadWrite");
+                                    comboBox.set("disabled",true);
+                                };
+                                xfControl.setReadwrite=function() {
+                                    bf.util.replaceClass(n,"xfReadOnly","xfReadWrite");
+                                    comboBox.set("disabled",false);
+                                };
+
+
                             });
                             break;
                         default:

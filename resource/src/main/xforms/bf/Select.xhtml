@@ -33,6 +33,10 @@
                     <value>FF0000</value>
                     <label>select full</label>
                 </select>
+                <select>
+                    <value>0000FF Test</value>
+                    <label>select open</label>
+                </select>
                 <select1>
                     <value>FF0000</value>
                     <label>select1 minimal</label>
@@ -46,7 +50,7 @@
                     <label>select1 full</label>
                 </select1>
                 <select1>
-                    <value>FF0000</value>
+                    <value>0000FF</value>
                     <label>select1 open</label>
                 </select1>
 
@@ -59,6 +63,10 @@
                      constraint="boolean-from-string(instance()/@valid)"
                      readonly="boolean-from-string(instance()/@readonly)"/>
             <xf:bind nodeset="select[2]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="select[3]/value" required="boolean-from-string(instance()/@required)"
                      relevant="boolean-from-string(instance()/@relevant)"
                      constraint="boolean-from-string(instance()/@valid)"
                      readonly="boolean-from-string(instance()/@readonly)"/>
@@ -145,21 +153,20 @@
         </xf:group>
 
         <xf:group ref="instance()" appearance="full" id="eventListener" class="xfFullGroup">
-            <!--<xf:group>
+            <xf:group>
                 <xf:label>Select</xf:label>
-                &lt;!&ndash;################### SELECT SAMPLES #############################&ndash;&gt;
-                &lt;!&ndash;################### SELECT SAMPLES #############################&ndash;&gt;
-                &lt;!&ndash;################### SELECT SAMPLES #############################&ndash;&gt;
+                <!--################### SELECT SAMPLES #############################-->
+                <!--################### SELECT SAMPLES #############################-->
+                <!--################### SELECT SAMPLES #############################-->
 
                 <xf:select ref="select[1]/value" appearance="minimal">
                     <xf:label ref="../label"/>
                     <xf:itemset nodeset="instance('colors')/color">
                         <xf:label ref="name"/>
                         <xf:value ref="value"/>
-                        &lt;!&ndash;<xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>&ndash;&gt;
+                        <!--<xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>-->
                     </xf:itemset>
-&lt;!&ndash;                    <xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>&ndash;&gt;
-
+<!--                    <xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>-->
                 </xf:select>
 
                 <xf:output ref="select[1]/value">
@@ -171,29 +178,39 @@
                     <xf:itemset nodeset="instance('colors')/color">
                         <xf:label ref="name"/>
                         <xf:value ref="value"/>
-                        &lt;!&ndash;<xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>&ndash;&gt;
+                        <!--<xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>-->
                     </xf:itemset>
-                    &lt;!&ndash;                    <xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>&ndash;&gt;
+                    <!--                    <xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>-->
                 </xf:select>
                 <xf:output ref="select[2]/value">
                     <xf:label>select[2] value(s):</xf:label>
                 </xf:output>
-            </xf:group>-->
+
+                <xf:select ref="select[3]/value" appearance="minimal" selection="open">
+                    <xf:label ref="../label"/>
+                    <xf:itemset nodeset="instance('colors')/color">
+                        <xf:label ref="name"/>
+                        <xf:value ref="value"/>
+                        <!--<xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>-->
+                    </xf:itemset>
+                    <!--                    <xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>-->
+                </xf:select>
+
+            </xf:group>
             <xf:group>
                 <xf:label>Select1</xf:label>
                 <!--################### SELECT1 SAMPLES #############################-->
                 <!--################### SELECT1 SAMPLES #############################-->
                 <!--################### SELECT1 SAMPLES #############################-->
 
-<!--
                 <xf:select1 ref="select1[1]/value" appearance="minimal">
                     <xf:label ref="../label"/>
                     <xf:itemset nodeset="instance('colors')/color">
                         <xf:label ref="name"/>
                         <xf:value ref="value"/>
-                        &lt;!&ndash;<xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>&ndash;&gt;
+                        <!--<xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>-->
                     </xf:itemset>
-&lt;!&ndash;                    <xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>&ndash;&gt;
+<!--                    <xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>-->
 
                 </xf:select1>
 
@@ -206,9 +223,9 @@
                     <xf:itemset nodeset="instance('colors')/color">
                         <xf:label ref="name"/>
                         <xf:value ref="value"/>
-                        &lt;!&ndash;<xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>&ndash;&gt;
+                        <!--<xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>-->
                     </xf:itemset>
-&lt;!&ndash;                    <xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>&ndash;&gt;
+<!--                    <xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>-->
                 </xf:select1>
                 <xf:output ref="select1[2]/value">
                     <xf:label>select1[2] value:</xf:label>
@@ -219,16 +236,14 @@
                     <xf:itemset nodeset="instance('colors')/color">
                         <xf:label ref="name"/>
                         <xf:value ref="value"/>
-                        &lt;!&ndash;<xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>&ndash;&gt;
+                        <!--<xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>-->
                     </xf:itemset>
-                    &lt;!&ndash;                    <xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>&ndash;&gt;
+                    <!--                    <xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>-->
                 </xf:select1>
                 <xf:output ref="select1[3]/value">
                     <xf:label>select1[3] value:</xf:label>
                 </xf:output>
--->
 
-                
                 <xf:select1 ref="select1[4]/value"  selection="open" incremental="false">
                     <xf:label ref="../label"/>
                     <xf:itemset nodeset="instance('colors')/color">
@@ -241,10 +256,6 @@
                 <xf:output ref="select1[4]/value">
                     <xf:label>select1[4] value:</xf:label>
                 </xf:output>
-                <xf:input ref="select1[4]/value">
-                    <xf:label>select1[4] value:</xf:label>
-                </xf:input>
-
             </xf:group>
 
 

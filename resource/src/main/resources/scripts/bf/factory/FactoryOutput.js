@@ -38,14 +38,16 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         case "link":
                             // console.debug("FOUND .xfOutput.xsdAnyURI .xfValue",n);
                             //todo: this solution works in FF - others have to be tested
-                            //todo: use domStyle.set
                             xfControlDijit.setReadonly = function(){
-                                domAttr.set(n,"style","pointer-events:none;cursor:default;")
+                                bf.util.replaceClass(n,"xfReadWrite","xfReadOnly");
+                                domStyle.set(n, "pointerEvents","none");
+                                domStyle.set(n, "cursor","default");
                             };
 
                             xfControlDijit.setReadwrite = function(){
-                                //todo: this is dirty - there might be a style already
-                                n.removeAttribute("style");
+                                bf.util.replaceClass(n,"xfReadOnly","xfReadWrite");
+                                domStyle.set(n, "pointerEvents","auto");
+                                domStyle.set(n, "cursor","pointer");
                             };
 
                             xfControlDijit.setValue = function(value) {
