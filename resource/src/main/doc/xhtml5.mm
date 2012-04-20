@@ -56,7 +56,7 @@
 <icon BUILTIN="button_ok"/>
 </node>
 </node>
-<node CREATED="1334312734193" ID="ID_1891416982" MODIFIED="1334312736849" TEXT="Groups"/>
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334312734193" ID="ID_1891416982" MODIFIED="1334910117816" TEXT="Groups"/>
 <node CREATED="1334312746737" ID="ID_1267714804" MODIFIED="1334654749179" TEXT="Uploads">
 <font NAME="SansSerif" SIZE="15"/>
 <node CREATED="1334312762791" ID="ID_823972280" MODIFIED="1334655276581" TEXT="anyURI">
@@ -145,7 +145,7 @@
 <node CREATED="1334313130454" ID="ID_679663838" MODIFIED="1334584766391" TEXT="ClientSide: if not absolut needed, don&apos;t send events to the server for every change but in packages"/>
 <node CREATED="1334313147336" ID="ID_1252702002" MODIFIED="1334313147336" TEXT="if DOMFocus (in/out) is not used, don&apos;t send the events"/>
 <node BACKGROUND_COLOR="#ffff00" CREATED="1334756365382" ID="ID_1563768542" MODIFIED="1334756370429" TEXT="Select(1)">
-<node BACKGROUND_COLOR="#ffff00" CREATED="1334756371015" ID="ID_127309674" MODIFIED="1334756407306" TEXT="only fire DOMActivate to trigger xforms-select from the Client to the Server if an xforms-select event listener is present"/>
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334756371015" ID="ID_127309674" MODIFIED="1334912116164" TEXT="only fire DOMActivate to trigger xforms-select from the Client to the Server if an xforms-select event listener is present"/>
 </node>
 </node>
 <node CREATED="1334659564359" HGAP="19" ID="ID_1404496236" MODIFIED="1334659659456" TEXT="allow multiple values for appearance just like CSS does for classes" VSHIFT="34">
@@ -193,7 +193,7 @@
 <icon BUILTIN="button_ok"/>
 </node>
 </node>
-<node CREATED="1334313240637" ID="ID_1908766117" MODIFIED="1334763039878" TEXT="Outputs as Labels">
+<node CREATED="1334313240637" FOLDED="true" ID="ID_1908766117" MODIFIED="1334910519097" TEXT="Outputs as Labels">
 <icon BUILTIN="full-2"/>
 <icon BUILTIN="messagebox_warning"/>
 <node CREATED="1334313244807" HGAP="13" ID="ID_1971874188" MODIFIED="1334743758886" TEXT="Using Outputs within Labels (e.g. of a trigger) does not work failsave yet" VSHIFT="-34">
@@ -223,12 +223,12 @@
 <node CREATED="1334587687721" ID="ID_715812072" MODIFIED="1334758484606" TEXT="repair debug bar - instance links not working">
 <icon BUILTIN="button_ok"/>
 </node>
-<node CREATED="1334319297739" ID="ID_903626495" MODIFIED="1334735813504" TEXT="Group">
-<node CREATED="1334319300019" ID="ID_1046566464" MODIFIED="1334655528353" TEXT="Group: bf:horizontalTable does not render correctly">
+<node CREATED="1334319297739" ID="ID_903626495" MODIFIED="1334910904850" TEXT="Group">
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334319300019" ID="ID_1046566464" MODIFIED="1334910907829" TEXT="Group: bf:horizontalTable does not render correctly">
 <icon BUILTIN="full-3"/>
 </node>
-<node CREATED="1334319336715" ID="ID_1431910970" MODIFIED="1334319342036" TEXT="Test Groups within Repeats"/>
-<node CREATED="1334319415445" ID="ID_244483394" MODIFIED="1334319440522" TEXT="Relevance does not work for bf:horizontalTable and bf:verticalTable"/>
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334319336715" ID="ID_1431910970" MODIFIED="1334910914414" TEXT="Test Groups within Repeats"/>
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334319415445" ID="ID_244483394" MODIFIED="1334910919959" TEXT="Relevance does not work for bf:horizontalTable and bf:verticalTable"/>
 </node>
 <node CREATED="1334587726182" ID="ID_1658748963" MODIFIED="1334759613461" TEXT="repair devtool">
 <icon BUILTIN="button_ok"/>
@@ -257,7 +257,7 @@
 <font NAME="SansSerif" SIZE="28"/>
 <icon BUILTIN="full-1"/>
 </node>
-<node CREATED="1334332341302" ID="ID_1942386648" MODIFIED="1334655344720" POSITION="right" TEXT="Mobile" VSHIFT="11">
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334332341302" ID="ID_1942386648" MODIFIED="1334911991496" POSITION="right" TEXT="Mobile" VSHIFT="11">
 <richcontent TYPE="NOTE"><html>
   <head>
     
@@ -268,6 +268,7 @@
     </p>
   </body>
 </html></richcontent>
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334911998293" ID="ID_1041888451" MODIFIED="1334912010420" TEXT="implement DateTime Control for Mobile"/>
 </node>
 <node CREATED="1334332352766" ID="ID_1492704790" MODIFIED="1334655314860" POSITION="right" TEXT="Performance" VSHIFT="24">
 <font NAME="SansSerif" SIZE="16"/>
@@ -288,6 +289,34 @@
 </node>
 <node CREATED="1334655538643" ID="ID_285195655" MODIFIED="1334655554390" TEXT="nested repeats">
 <icon BUILTIN="full-2"/>
+</node>
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334913315092" ID="ID_1453339566" MODIFIED="1334913377494" TEXT="Howto Test">
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334913321642" FOLDED="true" ID="ID_1629358416" MODIFIED="1334914070871" TEXT="xfControl must be tested">
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334913327829" ID="ID_384499752" MODIFIED="1334914068842" TEXT="MIP Handling"/>
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334913334722" ID="ID_164186865" MODIFIED="1334913355906" TEXT="look for special cases and test them!"/>
+</node>
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334913379968" ID="ID_1111899764" MODIFIED="1334914062268" TEXT="test each Control Widget">
+<node CREATED="1334913441619" ID="ID_1009921235" MODIFIED="1334913441619">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      test set and send value
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334913445627" FOLDED="true" ID="ID_1903228206" MODIFIED="1334914101895" TEXT="test creation">
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334913894038" ID="ID_1817346187" MODIFIED="1334913895245" TEXT="behavior within repeats (full and compact)"/>
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334913896109" ID="ID_494550443" MODIFIED="1334914101219" TEXT="insert / delete "/>
+</node>
+</node>
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334913877390" ID="ID_366760697" MODIFIED="1334913882920" TEXT="test Container Controls"/>
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334913883743" ID="ID_1518789159" MODIFIED="1334913926890" TEXT="generate Test forms of reference forms"/>
+<node BACKGROUND_COLOR="#ffff00" CREATED="1334915079200" ID="ID_754381623" MODIFIED="1334915082416" TEXT="Test CSS???"/>
 </node>
 </node>
 </node>
