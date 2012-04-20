@@ -1248,8 +1248,8 @@ define(["dojo/_base/declare",
         console.debug("XFProcessor._handleUploadProgressEvent: xmlEvent:",xmlEvent);
         var xfControlId = xmlEvent.contextInfo.targetid;
         // if XForms Control Dijit allready exists call handleStateChanged on selected control
-        if (registry.byId(xfControlId) != undefined) {
-            registry.byId(xfControlId).updateProgress(xmlEvent.contextInfo.progress);
+        if (registry.byId(xfControlId+"-value") != undefined) {
+            registry.byId(xfControlId+"-value").updateProgress(xmlEvent.contextInfo.progress);
         } else {
             console.error("error during upload-progress-event: targetId " + xmlEvent.contextInfo.targetId + " does not exist");
         }

@@ -71,6 +71,7 @@ require(['dojo/_base/declare'],
             ['.xfRange .xfValue',    "bf/factory/FactoryRange", "slider"],
 
             // TEXTAREA
+            ['.xfTextarea.mediatypeText .xfValue',    "bf/factory/FactoryTextarea", "htmltextarea"],
             ['.xfTextarea.mediatypeHtml .xfValue',    "bf/factory/FactoryTextarea", "htmleditor"],
 
             // TRIGGER
@@ -79,9 +80,9 @@ require(['dojo/_base/declare'],
             ['.xfTrigger.aDefault .xfValue,.xfTrigger.aCompact .xfValue,.xfTrigger.aFull .xfValue',   "bf/factory/FactoryTrigger", "button"],
 
             // UPLOAD
-            ['.xfUpload .xfValue',    "bf/factory/FactoryUpload", "fileUpload"],
-            ['.xfUpload .xfValue',    "bf/factory/FactoryUpload", "base64encoded"],
-            ['.xfUpload .xfValue',    "bf/factory/FactoryUpload", "hexBinary"],
+            ['.xfUpload.xsdAnyURI .widgetContainer',    "bf/factory/FactoryUpload", "fileUpload"],
+            ['.xfUpload.xsdBase64Binary .widgetContainer',    "bf/factory/FactoryUpload", "base64encoded"],
+            ['.xfUpload.xsdHexBinary .widgetContainer',    "bf/factory/FactoryUpload", "hexBinary"],
 
             // COMMON CHILDS
             ['body.ToolTipAlert',     "bf/common/AlertToolTip"],

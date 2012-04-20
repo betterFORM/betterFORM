@@ -596,10 +596,12 @@
         <xsl:if test="xf:filename">
             <input type="hidden" id="{xf:filename/@id}" value="{xf:filename/bf:data}"/>
         </xsl:if>
+        <!-- create hidden parameter for destination -->
+<!--
         <xsl:if test="@bf:destination">
-            <!-- create hidden parameter for destination -->
             <input type="hidden" id="{$id}-destination" value="{@bf:destination}"/>
         </xsl:if>
+-->
         <!--
         >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         the hint will be applied as html title attribute and additionally output

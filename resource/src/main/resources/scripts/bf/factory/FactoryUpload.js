@@ -1,5 +1,5 @@
-define(["dojo/_base/declare","dojo/_base/connect","bf/util"],
-    function(declare,connect) {
+define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-attr", "bf/util"],
+    function(declare,connect,registry,domAttr) {
         return declare(null,
             {
                 /**
@@ -8,24 +8,35 @@ define(["dojo/_base/declare","dojo/_base/connect","bf/util"],
                  * @param node
                  */
                 create:function(type, node){
-                    var xfId = bf.util.getXfId(node);
-                    var xfControlDijit = registry.byId(xfId);
+//                    var xfControlDijit = registry.byId(xfId);
+                    require(["dojo/query"],function(query){
+                        n = query(".xfValue",node)[0];
+                        var xfId = bf.util.getXfId(n);
 
-                    switch(type){
+                        switch(type){
 
-                        case "fileUpload":
-                            console.warn("TBD: FactoryUpload (anyURI)",node);
-                            break;
-                        case "base64binary":
-                            console.warn("TBD: FactoryUpload (base64binary)",node);
-                            break;
-                        case "hexBinary":
-                            console.warn("TBD: FactoryUpload (hexBinary)",node);
-                            break;
-                        default:
-                            console.warn("FactoryInput.default");
+                            case "fileUpload":
 
-                    }
+                                require(["bf/upload/Upload"], function(Upload) {
+                                    console.debug("upload created bald: ",xfId);
+                                    uploadWidget = new Upload({
+                                        xfControlId : xfId,
+                                        name:domAttr.get(n,'name')
+                                    },n);
+                                });
+
+                                break;
+                            case "base64binary":
+                                console.warn("TBD: FactoryUpload (base64binary)",node);
+                                break;
+                            case "hexBinary":
+                                console.warn("TBD: FactoryUpload (hexBinary)",node);
+                                break;
+                            default:
+                                console.warn("FactoryInput.default");
+
+                        }
+                    });
                 }
 
             }
