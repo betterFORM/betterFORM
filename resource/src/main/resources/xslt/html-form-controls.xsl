@@ -265,7 +265,7 @@
         <xsl:variable name="parent" select="."/>
         <xsl:variable name="incremental" select="if (exists(@incremental)) then @incremental else 'true'"/>
         <xsl:variable name="size" select="if(exists(@size)) then @size else 5"/>
-        <xsl:variable name="datatype"><xsl:call-template name="getType"/></xsl:variable>
+        <xsl:variable name="isOpenSelection" select="@selection='open'" as="xsd:boolean"/>
 
         <xsl:if test="exists(.//xf:itemset)"><xsl:text>
 </xsl:text>
@@ -282,10 +282,14 @@
                         name="{$name}"
                         size="{$size}"
                         class="xfValue"
-                        title=""
+                        title="{xf:hint/text()}"
                         tabindex="{$navindex}"
-                        schemaValue="{bf:data/@bf:schema-value}"
+                        data-bf-value="{bf:data/@bf:schema-value}"
                         incremental="{$incremental}">
+                    <xsl:if test="$isOpenSelection">
+                        <xsl:attribute name="selection">open</xsl:attribute>
+                        <xsl:attribute name="autocomplete">true</xsl:attribute>
+                    </xsl:if>
                     <xsl:call-template name="build-items">
                         <xsl:with-param name="parent" select="$parent"/>
                     </xsl:call-template>
@@ -311,6 +315,7 @@
             <xsl:when test="@appearance='full'">
                 <span id="{$id}-value"
                       class="xfValue"
+                      data-bf-value="{bf:data/@bf:schema-value}"
                       incremental="{$incremental}">
                     <xsl:call-template name="build-radiobuttons">
                         <xsl:with-param name="id" select="$id"/>
@@ -343,17 +348,19 @@
                     a minimal select1 is rendered as a DROPDOWN
                     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                     -->
-                    <xsl:variable name="isOpenSelection" select="@selection='open'" as="xsd:boolean"/>
 <!--            <span class="select1wrapper">-->
                     <select id="{$id}-value"
                             name="{$name}"
                             class="xfValue"
                             size="1"
-                            title=""
+                            title="{xf:hint/text()}"
                             tabindex="{$navindex}"
-                            openselection="{$isOpenSelection}"
-                            autocomplete="{$isOpenSelection}"
+                            data-bf-value="{bf:data/@bf:schema-value}"
                             incremental="{$incremental}">
+                        <xsl:if test="$isOpenSelection">
+                            <xsl:attribute name="selection">open</xsl:attribute>
+                            <xsl:attribute name="autocomplete">true</xsl:attribute>
+                        </xsl:if>
                         <xsl:call-template name="build-items">
                             <xsl:with-param name="parent" select="$parent"/>
                         </xsl:call-template>
@@ -369,11 +376,11 @@
     <xsl:template name="select">
         <xsl:variable name="navindex" select="if (exists(@navindex)) then @navindex else '0'"/>
         <xsl:variable name="id" select="@id"/>
-        <xsl:variable name="selection" select="@selection"/>
+        <xsl:variable name="size" select="if(exists(@size)) then @size else 5"/>
         <xsl:variable name="name" select="concat($data-prefix,$id)"/>
         <xsl:variable name="parent" select="."/>
         <xsl:variable name="incremental" select="if (exists(@incremental)) then @incremental else 'true'"/>
-        <xsl:variable name="datatype"><xsl:call-template name="getType"/></xsl:variable>
+        <xsl:variable name="isOpenSelection" select="@selection='open'" as="xsd:boolean"/>
         <xsl:choose>
             <!-- only 'full' is supported as explicit case and renders a group of checkboxes. All other values
             of appearance will be matched and represented as a list control. -->
@@ -381,10 +388,9 @@
                 <span id="{$parent/@id}-value"
                       name="{$name}"
                       class="xfValue bfCheckBoxGroup"
-                      selection="{$selection}"
-                      dataType="{$datatype}"
-                      title=""
-                      schemaValue="{bf:data/@bf:schema-value}"
+                      title="{xf:hint/text()}"
+                      data-bf-value="{bf:data/@bf:schema-value}"
+                      tabindex="{$navindex}"
                       incremental="{$incremental}">
                     <xsl:for-each select="$parent/xf:item|$parent/xf:choices|$parent/xf:itemset">
                         <xsl:call-template name="build-checkboxes-list">
@@ -416,14 +422,16 @@
             <xsl:otherwise>
                 <select id="{concat($id,'-value')}"
                         name="{$name}"
-                        size="{@size}"
+                        size="{$size}"
                         multiple="true"
                         class="xfValue"
-                        title=""
+                        title="{xf:hint/text()}"
                         tabindex="{$navindex}"
-                        schemaValue="{bf:data/@bf:schema-value}"
-                        selection="{$selection}"
+                        data-bf-value="{bf:data/@bf:schema-value}"
                         incremental="{$incremental}">
+                    <xsl:if test="$isOpenSelection">
+                        <xsl:attribute name="selection">open</xsl:attribute>
+                    </xsl:if>
                     <xsl:call-template name="build-items">
                         <xsl:with-param name="parent" select="$parent"/>
                     </xsl:call-template>

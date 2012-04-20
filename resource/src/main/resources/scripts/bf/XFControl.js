@@ -67,6 +67,15 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom", "dojo/dom-class","dojo
             connect.subscribe("bf-state-change-"+ this.id, this, "handleStateChanged");
 
         },
+        /**
+         * function to update the currentValue of XFControl (important
+         * @param value
+         */
+        setCurrentValue:function(value){
+            console.debug("XFControl.setCurrentValue value:", value, " currentValue:",this.currentValue);
+            this.currentValue = value;
+
+        },
 
         /*
          sends an updated value of a widget to the server

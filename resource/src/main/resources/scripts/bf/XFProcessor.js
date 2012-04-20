@@ -304,10 +304,9 @@ define(["dojo/_base/declare",
     },
 
     dispatchEventType:function(targetId, eventType, contextInfo) {
-        console.debug("this.usesDOMFocusOUT:",this.usesDOMFocusOUT);
         if((this.usesDOMFocusOUT == false && "DOMFocusOut" == eventType) ||
            (this.usesDOMFocusIN == false && "DOMFocusIn" == eventType)){
-            console.debug("Event: ", eventType , " not used in form");
+            console.warn("XFProcessor.dispatchEventType(",targetId,") this: ", this, " eventType:",eventType, " is disabled in form!! contextInfo:",contextInfo);
             return;
 
         }
