@@ -7,7 +7,9 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                  * @param type
                  * @param node
                  */
-                create:function(type, node){
+                create:function(cssType, n){
+                    var type = cssType;
+                    var node = n;
                     var xfControlDijit = registry.byId(bf.util.getXfId(node));
                     /*
                      xfControl is an instance of the XFControl class. This is the generic class that handles all interactions
@@ -16,6 +18,13 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                      @see: _createText() for more information about how to connect xfControl and a concrete Widget
                      */
 
+                    var appearance = domAttr.get(node,"appearance");
+                    if("bf:dropdowntime" == appearance){
+                        type = "dropDownTime"
+                    }
+                    else if("bf:timetextbox" == appearance){
+                        type = "timeTextBox"
+                    }
 
 
                     switch(type){
@@ -37,8 +46,11 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             this._createDateTime(xfControlDijit,node);
                             break;
                         //INPUT TYPE TIME
-                        case "time":
-                            console.warn("tbd: input Time");
+                        case "timeTextBox":
+                            this._createTimeTextBox(xfControlDijit,node);
+                            break;
+                        case "dropDownTime":
+                            this._createDropDownTime(xfControlDijit,node);
                             break;
                         case "mobileDate":
                             this._createMobileDate(xfControlDijit, node);
@@ -222,13 +234,8 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             if((attrName == "focused" &&  !value) || attrName == "value") {
                                 var dateTimeValue = dateTimeWidget.get("value");
                                 var evt = new Object();
-                                if(attrName == "focused"){
-                                    evt.type ="blur";
-                                    xfControlDijit.sendValue(dateTimeValue, evt);
-                                }else {
-                                    evt.type = "change";
-                                    xfControlDijit.sendValue(dateTimeValue, evt);
-                                }
+                                evt.type = attrName == "focused" ? "blur" : "focus";
+                                xfControlDijit.sendValue(dateTimeValue, evt);
                             }
                         });
 
@@ -246,9 +253,99 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     });
 
                 },
+                _createTimeTextBox:function(controlDijit, n){
+                    var xfControlDijit = controlDijit;
+                    var node = n;
+                    console.info("FactoryInput Time");
+                    require(["dijit/form/TimeTextBox","dojo/date/stamp"],function(TimeTextBox,stamp){
+                        var value = domAttr.get(node,"value");
+                        console.debug("FactoryInput TimeValue1:",value, " node:",node);
+                        var timezone = undefined;
+                        if(value.indexOf("+") !=-1){
+                            timezone = value.substring(value.indexOf("+"),value.length);
+                        }
+                        var zulu = (value.indexOf("Z") !=-1);
+                        if(value != undefined && value != "" && value.indexOf("T")==-1){
+                            value = "T"+value
+                        }
+                        console.debug("FactoryInput TimeValue2:",value, " node:",node);
+                        var timeTextBox = new TimeTextBox({ value:value,
+                            constraints: {
+                                timePattern:'HH:mm:ss',
+                                clickableIncrement: 'T00:15:00',
+                                visibleIncrement: 'T00:15:00',
+                                visibleRange: 'T02:00:00'
+                            }
+                        },node);
+                        connect.connect(timeTextBox, "set", function (attrName, value) {
+                            console.debug("InputFactor (timeTextBox.set value:",value);
+                            if((attrName == "focused" &&  !value) || attrName == "value") {
+                                var textboxTime = timeTextBox.get("value");
+                                if(textboxTime != undefined && textboxTime != ""){
+                                    textboxTime = stamp.toISOString(textboxTime,{selector:"time",zulu:zulu});
+                                    console.debug("toISOString:",textboxTime);
+                                    if(textboxTime.indexOf("T") != -1){
+                                        console.debug("cut off T");
+                                        textboxTime = textboxTime.substring(1,textboxTime.length);
+                                    }
+                                }
+                                console.debug("textboxTime:",textboxTime);
+                                var evt = new Object();
+                                evt.type = attrName == "focused" ? "blur" : "focus";
+                                xfControlDijit.sendValue(textboxTime, evt);
+                            }
+                        });
+                        xfControlDijit.setValue = function(value,schemavalue) {
+                            console.debug("value:",value);
+                            if(value != undefined && value != "" && value.indexOf("T")==-1){
+                                value = "T"+value
+                            }
+                            timeTextBox.set('value', value);
+                        };
+                        xfControlDijit.setReadonly = function() {
+                            bf.util.replaceClass(n,"xfReadWrite","xfReadOnly");
+                            timeTextBox.set('readOnly', true);
+                        };
+                        xfControlDijit.setReadwrite = function() {
+                            bf.util.replaceClass(n,"xfReadOnly","xfReadWrite");
+                            timeTextBox.set('readOnly', false);
+                        };
+                    });
+                },
+
+                _createDropDownTime:function(controlDijit, n){
+                    var xfControlDijit = controlDijit;
+                    var node = n;
+                    require(["bf/input/Time","dojo/date/stamp"],function(Time,stamp){
+                        var value = domAttr.get(node,"value");
+                        var time = new Time({ value:value}, node);
+                        connect.connect(time, "set", function (attrName, value) {
+                            console.debug("InputFactor (dropDownTime.set value:",value);
+                            if((attrName == "focused" &&  !value) || attrName == "value") {
+                                var dateTimeValue = time.get("value");
+                                var evt = new Object();
+                                evt.type = attrName == "focused" ? "blur" : "focus";
+                                xfControlDijit.sendValue(dateTimeValue, evt);
+                            }
+                        });
+
+                        xfControlDijit.setValue = function(value,schemavalue) {
+                            console.debug("value:",value);
+                            time.set('value', value);
+                        };
+                        xfControlDijit.setReadonly = function() {
+                            bf.util.replaceClass(n,"xfReadWrite","xfReadOnly");
+                            time.set('readOnly', true);
+                        };
+                        xfControlDijit.setReadwrite = function() {
+                            bf.util.replaceClass(n,"xfReadOnly","xfReadWrite");
+                            time.set('readOnly', false);
+                        };
+                    });
+                },
 
 
-                /**
+        /**
                  *
                  * @param xfControlDijit
                  * @param dateWidget
@@ -266,13 +363,8 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                 dateValue = dateWidget.get("value");
                             }
                             var evt = new Object();
-                            if(attrName == "focused"){
-                                evt.type ="blur";
-                                xfControlDijit.sendValue(dateValue,evt);
-                            }else {
-                                evt.type = "change";
-                                xfControlDijit.sendValue(dateValue,evt);
-                            }
+                            evt.type = attrName == "focused" ? "blur" : "focus";
+                            xfControlDijit.sendValue(dateValue,evt);
                         }
                         xfControlDijit.setValue = function(value,schemavalue) {
                             dateWidget.set('value', schemavalue);
