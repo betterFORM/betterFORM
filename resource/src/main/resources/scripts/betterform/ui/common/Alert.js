@@ -140,13 +140,16 @@ dojo.declare("betterform.ui.common.Alert",
     _controlValueIsEmpty:function(controlDijit){
 
         var controlValueIsEmpty = false;
-        var controlValue = controlDijit.getControlValue();
-        if (controlValue == undefined ||  controlValue == '') {
-            controlValueIsEmpty =  true;
-        }else if (dojo.hasClass(controlDijit.domNode, "xsdBoolean") && !controlValue) {
-            controlValueIsEmpty = true;
-        } else if (dojo.hasClass(controlDijit.domNode, "xfRange") && (controlValue == 0 || controlValue == "0")){
-            controlValueIsEmpty = true;
+        if (typeof controlDijit.getControlValue == 'function') {
+
+            var controlValue = controlDijit.getControlValue();
+            if (controlValue == undefined ||  controlValue == '') {
+                controlValueIsEmpty =  true;
+            }else if (dojo.hasClass(controlDijit.domNode, "xsdBoolean") && !controlValue) {
+                controlValueIsEmpty = true;
+            } else if (dojo.hasClass(controlDijit.domNode, "xfRange") && (controlValue == 0 || controlValue == "0")){
+                controlValueIsEmpty = true;
+            }
         }
         // console.debug("Alert._controlValueIsEmpty: ",controlValueIsEmpty, " controlValue is: ",controlValue, " controlDOMNode: ", controlDijit.domNode);
         return controlValueIsEmpty;
