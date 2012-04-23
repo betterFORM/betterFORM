@@ -21,41 +21,41 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registr
             },
 
 
-            handleValid:function(id,action){
-            // TODO: applyChanges must remove an existing alert
+            handleValid:function (id, action) {
+                // TODO: applyChanges must remove an existing alert
 
-            // console.debug("Alert.handleValid[id:" + id , " action: " + action + "]");
+                // console.debug("Alert.handleValid[id:" + id, " action: " + action + "]");
 
-            var control = registry.byId(id);
-            if(control == null) {
-                console.warn("control '" +id +"' does not exist");
-                return;
-            }
-            // console.debug("control: ",control);
-            var controlValueIsEmpty = this._controlValueIsEmpty(control);
+                var control = registry.byId(id);
+                if (control == null) {
+                    console.warn("control '" + id + "' does not exist");
+                    return;
+                }
+                // console.debug("control: ",control);
+                var controlValueIsEmpty = this._controlValueIsEmpty(control);
 
-            // console.debug("controlValueIsEmpty:",controlValueIsEmpty, " control.getControlValue(): ",control.getControlValue());
+                // console.debug("controlValueIsEmpty:",controlValueIsEmpty, " control.getControlValue(): ",control.getControlValue());
 
-            if(action == "init") {
-                // do nothing on init
-                return;
-            }
-            else if(action == "xfDisabled"|| action == "changeAlertType" || ((action =="applyChanges" || action=="onBlur") && controlValueIsEmpty)) {
-                this._displayNone(id,action);
-            }
-            if(action =="onFocus" && (controlValueIsEmpty || this.alwaysShowHint != undefined)){
-                this._displayHint(id,action);
-            }
-            else if((action =="applyChanges" || action=="onBlur") && !controlValueIsEmpty) {
-                this._displayInfo(id,action);
-            }else {
-                console.info("Alert.handleValid: action:'", action , "' unknown, commonChild handling for control '", id, "', execution stopped");
-            }
+                if(action == "init") {
+                    // do nothing on init
+                    return;
+                }
+                else if(action == "xfDisabled" || action == "changeAlertType" || ((action == "applyChanges" || action == "onBlur") && controlValueIsEmpty)) {
+                    this._displayNone(id, action);
+                }
+                if(action == "onFocus" && (controlValueIsEmpty || this.alwaysShowHint != undefined)) {
+                    this._displayHint(id, action);
+                }
+                else if((action == "applyChanges" || action == "onBlur") && !controlValueIsEmpty) {
+                    this._displayInfo(id, action);
+                }else {
+                    console.info("Alert.handleValid: action:'", action, "' unknown, commonChild handling for control '", id, "', execution stopped");
+                }
 
-            if(domClass.contains(control.domNode,"bfInvalidControl")) {
-                domClass.remove(control.domNode,"bfInvalidControl");
-            }
-        },
+                if(domClass.contains(control.domNode, "bfInvalidControl")) {
+                    domClass.remove(control.domNode, "bfInvalidControl");
+                }
+            },
 
         handleInvalid:function(id,action) {
             // console.debug("Alert.handleInvalid [id:" + id , " action: " + action + "]");

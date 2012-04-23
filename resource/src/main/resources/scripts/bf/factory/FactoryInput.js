@@ -187,6 +187,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                         selector:'date',
                                         datePattern:datePattern
                                     } },n);
+                                dateWidget.validate = function(/*Boolean*/ isFocused){ return true; };
                                 self._connectDateDijit(xfControlDijit, dateWidget);
                             });
                         } else {
@@ -197,6 +198,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                     constraints:{
                                         selector:'date'
                                     }}, n);
+                                dateWidget.validate = function(/*Boolean*/ isFocused){ return true; };
                                 self._connectDateDijit(xfControlDijit, dateWidget);
                             });
                         }
@@ -358,7 +360,14 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         if((attrName == "focused" &&  !value) || attrName == "value") {
                             var dateValue;
                             if(dateWidget.serialize){
-                                dateValue = dateWidget.serialize(dateWidget.get("value")).substring(0, 10);
+                                try {
+                                    dateValue = dateWidget.serialize(dateWidget.get("value")).substring(0, 10);
+                                }
+                                catch(e){
+                                    dateValue = dateWidget.get("displayedValue");
+                                    console.debug("Error serializing date: dateValue:",dateValue, " dateWidget:",dateWidget);
+                                }
+
                             }else{
                                 dateValue = dateWidget.get("value");
                             }
