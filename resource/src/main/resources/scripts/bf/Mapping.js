@@ -41,9 +41,14 @@ require(['dojo/_base/declare'],
             Therefore here the Dijit is created as a child of 'widgetContainer'.
              */
             //todo: use descriptive names for the different types of controls
-            ['.uaDesktop .xfInput.xsdDate .widgetContainer',              "bf/factory/FactoryInput", "date"],
-            ['.uaDesktop .xfInput.xsdDateTime > * > .xfValue',            "bf/factory/FactoryInput", "dateTime"],
-            ['.uaDesktop .xfInput.xsdTime > * >  .xfValue',               "bf/factory/FactoryInput", "text"],
+            ['.uaDesktop .xfInput.xsdDate.aDefault .widgetContainer,' +
+             '.uaDesktop .xfInput.xsdDate.aBfIso8601 .widgetContainer',          "bf/factory/FactoryInput", "date"],
+            ['.uaDesktop .xfInput.xsdDate.aBfDropdowndate .widgetContainer',   "bf/factory/FactoryInput", "dropDownDate"],
+
+            ['.uaDesktop .xfInput.xsdDateTime > * > .xfValue',              "bf/factory/FactoryInput", "dateTime"],
+            ['.uaDesktop .xfInput.xsdTime.aDefault > * >  .xfValue',        "bf/factory/FactoryInput", "text"],
+            ['.uaDesktop .xfInput.xsdTime.aBfTimetextbox > * >  .xfValue',  "bf/factory/FactoryInput", "timeTextBox"],
+            ['.uaDesktop .xfInput.xsdTime.aBfDropdowntime > * >  .xfValue', "bf/factory/FactoryInput", "dropDownTime"],
             //DateTime support for mobile might still be a problem and must be solved by a combination of controls
             ['.uaMobile .xfInput.xsdDate > * >  .xfValue, .uaTablet .xfInput.xsdDate > * >  .xfValue', "bf/factory/FactoryInput", "mobileDate"],
             ['.uaMobile .xfInput.xsdDateTime > * > .xfValue',             "bf/factory/FactoryInput", "mobileDateTime"],

@@ -7,25 +7,17 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                  * @param type
                  * @param node
                  */
-                create:function(cssType, n){
-                    var type = cssType;
-                    var node = n;
+                create:function(type, node){
                     var xfControlDijit = registry.byId(bf.util.getXfId(node));
+                    if(xfControlDijit){
+                        xfControlDijit.setCurrentValue(domAttr.get(node,"value"));
+                    }
                     /*
                      xfControl is an instance of the XFControl class. This is the generic class that handles all interactions
                      with the XForms processor implementation. The concrete native browser or javascript controls are called
                      'widgets' in the context of the client side. They are the concrete representations the user interacts with.
                      @see: _createText() for more information about how to connect xfControl and a concrete Widget
                      */
-
-                    var appearance = domAttr.get(node,"appearance");
-                    if("bf:dropdowntime" == appearance){
-                        type = "dropDownTime"
-                    }
-                    else if("bf:timetextbox" == appearance){
-                        type = "timeTextBox"
-                    }
-
 
                     switch(type){
                     //INPUT TYPE STRING
@@ -40,6 +32,10 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                        case "date":
                             // console.debug("FactoryInput: found: .uaDesktop .xfInput.xsdDate .widgetContainer",node);
                             this._createDate(xfControlDijit, node);
+                            break;
+                       case "dropDownDate":
+                            // console.debug("FactoryInput: found: .uaDesktop .xfInput.xsdDate .widgetContainer",node);
+                            this._createDropDownDate(xfControlDijit, node);
                             break;
                         //INPUT TYPE DATE TIME
                         case "dateTime":
@@ -144,64 +140,52 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
 
                 },
 
+                _createDropDownDate:function(xfControlDijit, node){
+                    var n = node;
+                    var self = this;
+                    require(["dojo/query","bf/input/DropDownDate","dojo/_base/json"],function(query,DropDownDate,json){
+                        n = query(".xfValue",node)[0];
+                        var xfId = bf.util.getXfId(n);
+                        var xfControlDijit = registry.byId(xfId);
+                        var dataObj = bf.util.parseDataAttribute(n,"data-bf-params");
+                        var dateFormat = dataObj.date;
+                        var value = domAttr.get(n,"schemavalue");
+                        xfControlDijit.setCurrentValue(value);
+                        var dateWidget = new DropDownDate({
+                            value:value,
+                            dateFormat:dateFormat
+                        },n);
+                        self._connectDateDijit(xfControlDijit, dateWidget);
+                    });
+                },
+
+
                 _createDate:function(xfControlDijit, node){
                     var n = node;
                     var self = this;
-                    require(["dojo/query"],function(query){
-
+                    require(["dojo/query","dijit/form/DateTextBox","dojo/_base/json"],function(query,DateTextBox,json){
                         n = query(".xfValue",node)[0];
                         // console.debug("found date value node: n:",n);
-
                         var xfId = bf.util.getXfId(n);
                         var xfControlDijit = registry.byId(xfId);
-                        var appearance = domAttr.get(n,"appearance");
-                        // console.debug("create new date for xfId:",xfId ," with appearance:",appearance);
-                        var datePattern;
-                        if (appearance && appearance.indexOf("iso8601:") != -1) {
-                            datePattern = appearance.substring(appearance.indexOf("iso8601:")+8);
-                            if(datePattern.indexOf(" ") != -1) {
-                                datePattern = datePattern.substring(0,datePattern.indexOf(" ")).trim();
 
-                            }
+                        var dataObj = bf.util.parseDataAttribute(n,"data-bf-params");
+                        var datePattern = dataObj.date;
+                        if(!datePattern || datePattern == ""){
+                            datePattern = "MM/dd/yyyy"
                         }
-                        // console.debug("input type=date appearance:",appearance, " datePattern:",datePattern);
+                        // console.debug("input type=date datePattern:",datePattern);
                         var xfValue = new Date(domAttr.get(n,"schemavalue"));
-                        var dateWidget = undefined;
-                        if(appearance && appearance.indexOf("bf:dropdowndate") != -1){
-                            require(["bf/input/DropDownDate"], function(DropDownDate) {
-                                dateWidget = new DropDownDate({
-                                    value:domAttr.get(n,"schemavalue"),
-                                    appearance:appearance,
-                                    constraints:{
-                                        selector:'date'
-                                    }
-                                },n);
-                                self._connectDateDijit(xfControlDijit, dateWidget);
-                            });
-                        } else if (datePattern) {
-                            require(["dijit/form/DateTextBox"], function(DateTextBox) {
-                                dateWidget = new DateTextBox({
-                                    value:xfValue,
-                                    required:false,
-                                    constraints:{
-                                        selector:'date',
-                                        datePattern:datePattern
-                                    } },n);
-                                dateWidget.validate = function(/*Boolean*/ isFocused){ return true; };
-                                self._connectDateDijit(xfControlDijit, dateWidget);
-                            });
-                        } else {
-                            require(["dijit/form/DateTextBox"], function(DateTextBox) {
-                                dateWidget = new DateTextBox({
-                                    value:xfValue,
-                                    required:false,
-                                    constraints:{
-                                        selector:'date'
-                                    }}, n);
-                                dateWidget.validate = function(/*Boolean*/ isFocused){ return true; };
-                                self._connectDateDijit(xfControlDijit, dateWidget);
-                            });
-                        }
+                        xfControlDijit.setCurrentValue(xfValue);
+                        var dateWidget = new DateTextBox({
+                                value:xfValue,
+                                required:false,
+                                constraints:{
+                                    selector:'date',
+                                    datePattern:datePattern
+                                } },n);
+                        dateWidget.validate = function(/*Boolean*/ isFocused){ return true; };
+                        self._connectDateDijit(xfControlDijit, dateWidget);
                     });
                 },
 
@@ -210,8 +194,10 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     var xfControlDijit = controlDijit;
                     var controlId =domAttr.get(n,"id");
                     var xfValue = domAttr.get(n,"schemavalue");
+                    xfControlDijit.setCurrentValue(xfValue);
+
                     var xfId = bf.util.getXfId(n);
-                    console.debug("FactoryInput dateTime: id: ", controlId, " xfValue: ",xfValue, " node:",n);
+                    // console.debug("FactoryInput dateTime: id: ", controlId, " xfValue: ",xfValue, " node:",n);
                     require(["bf/input/DateTime"], function(DateTime) {
                         var dateTimeWidget = new DateTime({
                             name:controlId,
@@ -261,7 +247,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     console.info("FactoryInput Time");
                     require(["dijit/form/TimeTextBox","dojo/date/stamp"],function(TimeTextBox,stamp){
                         var value = domAttr.get(node,"value");
-                        console.debug("FactoryInput TimeValue1:",value, " node:",node);
+                        // console.debug("FactoryInput TimeValue1:",value, " node:",node);
                         var timezone = undefined;
                         if(value.indexOf("+") !=-1){
                             timezone = value.substring(value.indexOf("+"),value.length);
@@ -270,7 +256,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         if(value != undefined && value != "" && value.indexOf("T")==-1){
                             value = "T"+value
                         }
-                        console.debug("FactoryInput TimeValue2:",value, " node:",node);
+                        // console.debug("FactoryInput TimeValue2:",value, " node:",node);
                         var timeTextBox = new TimeTextBox({ value:value,
                             constraints: {
                                 timePattern:'HH:mm:ss',
@@ -280,25 +266,25 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             }
                         },node);
                         connect.connect(timeTextBox, "set", function (attrName, value) {
-                            console.debug("InputFactor (timeTextBox.set value:",value);
+                            // console.debug("InputFactor (timeTextBox.set value:",value);
                             if((attrName == "focused" &&  !value) || attrName == "value") {
                                 var textboxTime = timeTextBox.get("value");
                                 if(textboxTime != undefined && textboxTime != ""){
                                     textboxTime = stamp.toISOString(textboxTime,{selector:"time",zulu:zulu});
-                                    console.debug("toISOString:",textboxTime);
+                                    // console.debug("toISOString:",textboxTime);
                                     if(textboxTime.indexOf("T") != -1){
-                                        console.debug("cut off T");
+                                        // console.debug("cut off T");
                                         textboxTime = textboxTime.substring(1,textboxTime.length);
                                     }
                                 }
-                                console.debug("textboxTime:",textboxTime);
+                                // console.debug("textboxTime:",textboxTime);
                                 var evt = new Object();
                                 evt.type = attrName == "focused" ? "blur" : "focus";
                                 xfControlDijit.sendValue(textboxTime, evt);
                             }
                         });
                         xfControlDijit.setValue = function(value,schemavalue) {
-                            console.debug("value:",value);
+                            // console.debug("value:",value);
                             if(value != undefined && value != "" && value.indexOf("T")==-1){
                                 value = "T"+value
                             }
@@ -322,7 +308,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         var value = domAttr.get(node,"value");
                         var time = new Time({ value:value}, node);
                         connect.connect(time, "set", function (attrName, value) {
-                            console.debug("InputFactor (dropDownTime.set value:",value);
+                            // console.debug("InputFactor (dropDownTime.set value:",value);
                             if((attrName == "focused" &&  !value) || attrName == "value") {
                                 var dateTimeValue = time.get("value");
                                 var evt = new Object();
@@ -332,7 +318,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         });
 
                         xfControlDijit.setValue = function(value,schemavalue) {
-                            console.debug("value:",value);
+                            // console.debug("value:",value);
                             time.set('value', value);
                         };
                         xfControlDijit.setReadonly = function() {
@@ -353,7 +339,8 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                  * @param dateWidget
                  * @private
                  */
-                _connectDateDijit:function(xfControlDijit, dateWidget){
+                _connectDateDijit:function(controlDijit, dateWidget){
+                    var xfControlDijit =controlDijit;
                     // console.debug("connectDateDijit: xfControlDijit:",xfControlDijit," dateWidget:",dateWidget);
                     domClass.add(dateWidget.domNode,"xfValue");
                     connect.connect(dateWidget, "set", function (attrName, value) {
@@ -364,8 +351,9 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                     dateValue = dateWidget.serialize(dateWidget.get("value")).substring(0, 10);
                                 }
                                 catch(e){
+                                    // if the value could not be parsed (e.g. cause it's invalid) simply return the displayed value
                                     dateValue = dateWidget.get("displayedValue");
-                                    console.debug("Error serializing date: dateValue:",dateValue, " dateWidget:",dateWidget);
+                                    // console.debug("Error serializing date: dateValue:",dateValue, " dateWidget:",dateWidget);
                                 }
 
                             }else{

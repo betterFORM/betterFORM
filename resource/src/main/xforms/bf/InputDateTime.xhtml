@@ -173,7 +173,7 @@
                 <xf:label>Input 1:</xf:label>
             </xf:output>
 
-            <xf:input ref="input[2]/value" appearance="iso8601:dd-MM-yyyy">
+            <xf:input ref="input[2]/value" appearance="bf:iso8601" data-bf-params="date:'dd-MM-yyyy',time:'hh:mm:ss'">
                 <xf:label ref="../label"/>
                 <xf:hint ref="../hint"/>
                 <xf:alert ref="../alert"/>
@@ -182,7 +182,7 @@
                 <xf:label>Input 2:</xf:label>
             </xf:output>
 
-            <xf:input ref="input[3]/value" appearance="bf:dropdowndate">
+            <xf:input ref="input[3]/value" appearance="bf:dropdowndate" data-bf-params="date:'-17:-100'">
                 <xf:label ref="../label"/>
                 <xf:hint ref="../hint"/>
                 <xf:alert ref="../alert"/>
@@ -195,7 +195,7 @@
 
         <xf:group ref="instance()" appearance="full" class="xfFullGroup">
             <xf:label>Input DateTime</xf:label>
-            <xf:input ref="input[4]/value">
+            <xf:input ref="input[4]/value" data-bf-params="date:'dd-MM-yyyy',time:'hh:mm:ss'">
                 <xf:label ref="../label"/>
                 <xf:hint ref="../hint"/>
                 <xf:alert ref="../alert"/>

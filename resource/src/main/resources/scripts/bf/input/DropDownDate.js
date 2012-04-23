@@ -18,7 +18,7 @@ define(["dojo/_base/declare",
             years:'',
             months:'',
             days:'',
-            appearance:null,
+            dateFormat:null,
             monthsArray:null,
 
             postMixInProperties:function() {
@@ -29,8 +29,8 @@ define(["dojo/_base/declare",
                 var rangeStart;
                 var rangeEnd;
                 var now = new Date().getFullYear();
-                if (this.appearance.indexOf("=") != -1) {
-                    rangeStart = this.appearance.substring(this.appearance.indexOf("=") + 1);
+                if (this.dateFormat) {
+                    rangeStart = this.dateFormat;
 
                     if (rangeStart.indexOf(":") != -1) {
                         rangeEnd = rangeStart.substring(rangeStart.indexOf(":") + 1);
@@ -61,7 +61,7 @@ define(["dojo/_base/declare",
                 rangeStart = parseInt(rangeStart, "10");
                 rangeEnd = parseInt(rangeEnd, "10");
 
-                // console.debug("DropDownDate: Range Start: ", rangeStart, " End: ", rangeEnd);
+                console.debug("DropDownDate: Range Start: ", rangeStart, " End: ", rangeEnd);
                 this.templateString = "<div class='xfDropDownDateControl xfValue'><input type='hidden' data-dojo-attach-point='bfValue' value=''/><" +
                     "span class='xfDropDownDate'><select size='1'  data-dojo-attach-point='daysFacet' class='xfDropDownDateDays'><option></option><" +
                     "option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><" +

@@ -208,5 +208,15 @@ require(['dojo/_base/declare',"dojo/dom-class","dojo/dom-attr"],
             });
         }
 
+        bf.util.parseDataAttribute = function(node, dataAttributeName){
+            var n = node;
+            var attrName = dataAttributeName;
+            var result = undefined;
+            require(["dojo/dom-attr","dojo/_base/json"],function(domAttr,json){
+                var dataAttrString = domAttr.get(n,attrName);
+                result =  json.fromJson("{" + dataAttrString +  "}");
+            });
+            return result;
+        }
     }
 );
