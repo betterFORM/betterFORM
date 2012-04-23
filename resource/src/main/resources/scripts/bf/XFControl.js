@@ -40,6 +40,12 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/XFBinding","dojo/dom", "dojo/d
 
         },
 
+        postCreate:function() {
+            if(this.isIncremental()){
+                this.incremental = true;
+            }
+        },
+
         /*
          sends an updated value of a widget to the server
          */
