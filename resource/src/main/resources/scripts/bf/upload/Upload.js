@@ -73,7 +73,7 @@ define(["dojo/_base/declare",
                 query(".xfUpload.xfReadWrite .xfValue").forEach(function(item) {
                     if(item != me){
                         //console.debug("Disable Upload Item: ", item);
-                        domAttr(item, "disabled", "disabled");
+                        domAttr.set(item, "disabled", "disabled");
                     }
                 });
 
@@ -125,11 +125,11 @@ define(["dojo/_base/declare",
 
 
                     // reset disabled controls
-/*
+
                     query(".xfUpload.xfReadWrite .xfValue:disabled").forEach(function(item) {
-                        item.removeAttribute("disabled");
+                        domAttr.remove(item, "disabled");
                     });
-*/
+
 
 
 
