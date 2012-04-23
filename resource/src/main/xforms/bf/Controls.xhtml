@@ -238,7 +238,7 @@
     </xf:model>
 </head>
 
-<body class="tundra">
+<body class="tundra ToolTipAlert">
     <xf:group appearance="minimal">
 
         <xf:group>
@@ -516,7 +516,7 @@
                 </xf:input>
 
 
-                <xf:input ref="input[3]/value" appearance="bf:dropdowndate=-17:-100">
+                <xf:input ref="input[3]/value" appearance="bf:dropdowndate" data-bf-params="date:'17:-100'">
                     <xf:label>dropdowndate bound to the same node as above date control</xf:label>
                     <xf:alert ref="../alert"/>
                     <xf:hint>
@@ -525,7 +525,7 @@
                     </xf:hint>
                 </xf:input>
 
-                <xf:input ref="input[4]/value" appearance="iso8601:dd-MM-yyyy">
+                <xf:input ref="input[4]/value" appearance="bf:iso8601" data-bf-params="date:'dd-MM-yyyy'">
                     <xf:label ref="../label"/>
                     <xf:alert ref="../alert"/>
                     <xf:hint>input 4 hint</xf:hint>
