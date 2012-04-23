@@ -227,10 +227,15 @@
          <h2>Example</h2>
          <div class="Section sample">
             <xf:output id="output1" ref="output1/value" mediatype="image/gif" incremental="true">
+               
                <xf:label>a label:</xf:label>
+               
                <xf:hint>a Hint for this control</xf:hint>
+               
                <xf:help>help for output1</xf:help>
+               
                <xf:alert>invalid</xf:alert>
+               
             </xf:output>
          </div>
          <div class="MIPS">
@@ -303,21 +308,29 @@
                
             </p>
             
-         </div><script type="text/javascript">
+         </div><script type="text/javascript" defer="defer">
+
                     function showClass(cssClass){
-                        dojo.query('.sample .'+ cssClass).forEach(function(item){
-                            dojo.addClass(item,'showClass');
+                        require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                            query('.sample .'+ cssClass).forEach(function(item){
+                                domClass.add(item,'showClass');
+                            });
                         });
                     }
                     function hideClass(cssClass){
-                        dojo.query('.sample .'+ cssClass).forEach(function(item){
-                            dojo.removeClass(item,'showClass');
+                        require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                            query('.sample .'+ cssClass).forEach(function(item){
+                                domClass.remove(item,'showClass');
+                            });
                         });
-                    }                    
+                    }
                 </script></div><script type="text/javascript">
-                dojo.subscribe("/xf/ready", function(){
+
+            require(["dojo/_base/connect"], function(connect){
+                connect.subscribe("/xf/ready", function(){
                     fluxProcessor.skipshutdown=true;
                 });
-            </script></body>
+            });
+        </script></body>
    
 </html>

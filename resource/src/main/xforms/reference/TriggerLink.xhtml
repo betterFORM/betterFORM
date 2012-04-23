@@ -263,21 +263,29 @@
     &lt;xf:help&gt;help for trigger1&lt;/xf:help&gt;
     &lt;xf:message&gt;The link trigger was clicked&lt;/xf:message&gt;
 &lt;/xf:trigger&gt;
-</code></pre></div><script type="text/javascript">
+</code></pre></div><script type="text/javascript" defer="defer">
+
                     function showClass(cssClass){
-                        dojo.query('.sample .'+ cssClass).forEach(function(item){
-                            dojo.addClass(item,'showClass');
+                        require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                            query('.sample .'+ cssClass).forEach(function(item){
+                                domClass.add(item,'showClass');
+                            });
                         });
                     }
                     function hideClass(cssClass){
-                        dojo.query('.sample .'+ cssClass).forEach(function(item){
-                            dojo.removeClass(item,'showClass');
+                        require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                            query('.sample .'+ cssClass).forEach(function(item){
+                                domClass.remove(item,'showClass');
+                            });
                         });
-                    }                    
+                    }
                 </script></div><script type="text/javascript">
-                dojo.subscribe("/xf/ready", function(){
+
+            require(["dojo/_base/connect"], function(connect){
+                connect.subscribe("/xf/ready", function(){
                     fluxProcessor.skipshutdown=true;
                 });
-            </script></body>
+            });
+        </script></body>
    
 </html>

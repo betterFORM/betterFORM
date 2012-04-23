@@ -347,21 +347,29 @@
             'bfTabContainer' class sets a fixed width in betterform.css. I you like to change the size you should
             overwrite this rule. E.g. the example above sets a height of 300px.
             
-         </div><script type="text/javascript">
+         </div><script type="text/javascript" defer="defer">
+
                     function showClass(cssClass){
-                        dojo.query('.sample .'+ cssClass).forEach(function(item){
-                            dojo.addClass(item,'showClass');
+                        require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                            query('.sample .'+ cssClass).forEach(function(item){
+                                domClass.add(item,'showClass');
+                            });
                         });
                     }
                     function hideClass(cssClass){
-                        dojo.query('.sample .'+ cssClass).forEach(function(item){
-                            dojo.removeClass(item,'showClass');
+                        require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                            query('.sample .'+ cssClass).forEach(function(item){
+                                domClass.remove(item,'showClass');
+                            });
                         });
-                    }                    
+                    }
                 </script></div><script type="text/javascript">
-                dojo.subscribe("/xf/ready", function(){
+
+            require(["dojo/_base/connect"], function(connect){
+                connect.subscribe("/xf/ready", function(){
                     fluxProcessor.skipshutdown=true;
                 });
-            </script></body>
+            });
+        </script></body>
    
 </html>
