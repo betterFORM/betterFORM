@@ -72,7 +72,7 @@ require(['dojo/_base/declare'],
 
             // TEXTAREA
             ['.xfTextarea.mediatypeText .xfValue',    "bf/factory/FactoryTextarea", "htmltextarea"],
-            ['.xfTextarea.mediatypeHtml .xfValue',    "bf/factory/FactoryTextarea", "htmleditor"],
+            // ['.xfTextarea.mediatypeHtml .xfValue',    "bf/factory/FactoryTextarea", "htmleditor"],
 
             // TRIGGER
             // this matcher handles several types of triggers like standard button, image button and link at once

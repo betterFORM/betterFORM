@@ -12,11 +12,11 @@ define(["dojo/_base/declare","bf/util"],
                     switch(type){
                         case "group":
                             // console.debug("FactoryContainer (group)");
-                            require(["bf/container/Container","dojo/dom","dojo/dom-attr","dojo/_base/connect"], function(Container,dom,domAttr,connect) {
+                            require(["dojo/dom","dojo/dom-attr","dojo/_base/connect","bf/XFBinding"], function(dom,domAttr,connect,XFBinding) {
                                 // repeatId:domAttr.get(n,"repeatId")
-                                var group = new Container({}, n);
-                                connect.subscribe("bf-state-change-"+ group.id, group, "handleStateChanged");
-                                group._setLabel = function( value) {
+                                var group = new XFBinding({}, n);
+//                                connect.subscribe("bf-state-change-"+ group.id, group, "handleStateChanged");
+                                group.setLabel = function( value) {
                                     // console.debug("FactoryContainer (group) _setLabel: ",this.id);
                                     var targetId = this.id;
                                     var labelNode = dom.byId(targetId + "-label");
@@ -40,7 +40,7 @@ define(["dojo/_base/declare","bf/util"],
                             });
                             break;
 
-                   case "switch":
+                        case "switch":
                             console.debug("FactoryContainer (switch) n: ",n);
                             require(["dojo/dom-class","dojo/_base/connect"], function(domClass,connect) {
                                 connect.subscribe("bf-switch-toggled-"+ n.id, function(contextInfo) {

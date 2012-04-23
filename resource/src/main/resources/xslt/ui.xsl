@@ -204,7 +204,7 @@
             <xsl:call-template name="get-mip-classes"/>
         </xsl:variable>
 
-        <table cellspacing="0" cellpadding="0" class="xfContainer appBfVerticalTable bfVerticalTable {$mip-classes}" id="{$group-id}">
+        <table cellspacing="0" cellpadding="0" class="xfContainer xfGroup appBfVerticalTable bfVerticalTable {$mip-classes}" id="{$group-id}">
             <xsl:if test="exists(xf:label)">
                 <caption class="xfGroupLabel">
                     <xsl:apply-templates select="./xf:label"/>
@@ -321,41 +321,87 @@
 
     <!-- this template is used for horizontalTable AND for ColumnLeft appearance -->
     <xsl:template match="xf:group[@appearance='bf:horizontalTable']" priority="15" name="horizontalTable">
-        
         <xsl:variable name="mip-classes">
             <xsl:call-template name="get-mip-classes"/>
         </xsl:variable>
 
+        <xsl:message>$$$$$$$$$$$$ Count of children: <xsl:value-of select="bf:childCount(.)"/></xsl:message>
+<!--
+        <xsl:message>$$$$$$$$$$$$ Count of label childs: <xsl:value-of select="count(child::xf:label)"/> </xsl:message>
+        <xsl:message>$$$$$$$$$$$$ Count of text() childs: <xsl:value-of select="count(child::text())"/> </xsl:message>
+-->
 
-        <table id="{@id}" class="xfContainer appBfHorizontalTable bfHorizontalTable {$mip-classes}">
-            <tr>
-                <td colspan="{count(*[position() &gt; 1])}" class="xfGroupLabel">
-                    <xsl:if test="exists(xf:label) and @appearance !='bf:GroupLabelLeft'">
-                        <xsl:apply-templates select="./xf:label"/>
-                    </xsl:if>
-                </td>
-            </tr>
-            <tr>
-                <xsl:for-each select="*[position() &gt; 1]">
-                    <td class="appBfHorizontalTableLabel bfHorizontalTableLabel  appBfTableCol{position()} bfTableCol{position()}">
-                        <xsl:if test="local-name(.) != 'trigger'">
-                            <label id="{@id}-label" for="{@id}-value" class="appBfTableLabel bfTableLabel">
-                                <xsl:apply-templates select="xf:label"/>
-                            </label>
+        <!-- todo: should we really have appBFHorizontalTable AND bfHorizontalTable ? -->
+        <table id="{@id}" class="xfContainer xfGroup appBfHorizontalTable bfHorizontalTable {$mip-classes}">
+
+            <xsl:message>$$$$$$$$ has group label:<xsl:value-of select="bf:hasGroupLabel(.)"/></xsl:message>
+
+            <xsl:if test="bf:hasGroupLabel(.)=true()">
+                <tr>
+                    <td colspan="{bf:childCount(.)}" class="xfGroupLabel">
+                        <xsl:if test="exists(xf:label) and @appearance !='bf:GroupLabelLeft'">
+                            <xsl:apply-templates select="./xf:label"/>
                         </xsl:if>
                     </td>
+                </tr>
+            </xsl:if>
+
+
+            <tr>
+                <!--<xsl:for-each select="*[position() &gt; 1]">-->
+                <xsl:for-each select="*">
+                    <xsl:if test="bf:isGroupOutput(.)=true()">
+                        <td class="appBfHorizontalTableLabel bfHorizontalTableLabel  appBfTableCol{position()} bfTableCol{position()}">
+                            <xsl:if test="local-name(.) != 'trigger'">
+                                <label id="{@id}-label" for="{@id}-value" class="appBfTableLabel bfTableLabel">
+                                    <xsl:apply-templates select="xf:label"/>
+                                </label>
+                            </xsl:if>
+                        </td>
+                    </xsl:if>
                 </xsl:for-each>
             </tr>
             <tr>
-                <xsl:for-each select="*[position() &gt; 1 and *[position() != last()]]">
-                    <td class="appBfHorizontalTableValue bfHorizontalTableValue">
-                        <xsl:apply-templates select="."/>
-                    </td>
+                <xsl:for-each select="*">
+                    <xsl:if test="bf:isGroupOutput(.)=true()">
+                        <td class="appBfHorizontalTableValue bfHorizontalTableValue">
+                            <xsl:apply-templates select="."/>
+                        </td>
+                    </xsl:if>
                 </xsl:for-each>
             </tr>
         </table>
     </xsl:template>
+    <xsl:function name="bf:childCount">
+        <xsl:param name="parent" />
+        <xsl:choose>
+            <xsl:when test="bf:hasGroupLabel($parent)">
+                <xsl:value-of select="count($parent/*) - count($parent/bf:*) -1"/>
+            "</xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="count($parent/xf:*) - count($parent/bf:*)"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
 
+    <xsl:function name="bf:hasGroupLabel">
+        <xsl:param name="group"/>
+        <xsl:value-of select="if(namespace-uri($group/*[1])='http://www.w3.org/2002/xforms' and local-name($group/*[1])='label') then true() else false()"/>
+    </xsl:function>
+
+    <xsl:function name="bf:isGroupLabel">
+        <xsl:param name="elem"/>
+        <xsl:value-of select="if(namespace-uri($elem)='http://www.w3.org/2002/xforms' and local-name($elem)='label') then true() else false()"/>
+    </xsl:function>
+
+    <xsl:function name="bf:isGroupOutput">
+        <xsl:param name="elem"/>
+        <xsl:choose>
+            <xsl:when test="bf:isGroupLabel($elem)=true()"><xsl:value-of select="false()"/></xsl:when>
+            <xsl:when test="name($elem)='bf:data'"><xsl:value-of select="false()"/></xsl:when>
+            <xsl:otherwise><xsl:value-of select="true()"/></xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
     <!-- ############################## BF:DATA ############################## -->
     <!-- ############################## BF:DATA ############################## -->
     <!-- ############################## BF:DATA ############################## -->

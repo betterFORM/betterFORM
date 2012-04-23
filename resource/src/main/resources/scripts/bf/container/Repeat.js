@@ -1,6 +1,6 @@
-define(["dojo/_base/declare","bf/container/Container","dojo/query","dojo/dom", "dojo/dom-style","dojo/dom-attr","dojo/dom-class","dojo/dom-construct","dojo/_base/window","dojo/behavior","dojo/_base/connect","dojo/_base/array"],
-    function(declare, Container,query, dom, domStyle, domAttr, domClass, domConstruct, win, behavior,connect,array){
-        return declare(Container, {
+define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-style","dojo/dom-attr","dojo/dom-class","dojo/dom-construct","dojo/_base/window","dojo/behavior","dojo/_base/connect","dojo/_base/array"],
+    function(declare, XFBinding,query, dom, domStyle, domAttr, domClass, domConstruct, win, behavior,connect,array){
+        return declare(XFBinding, {
 
             constructor:function(properties, node){
                 console.debug("Repeat.postCreate created new instace node:", node);

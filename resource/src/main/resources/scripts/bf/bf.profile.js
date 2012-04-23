@@ -94,7 +94,6 @@ var profile = {
                         'bf/common/AlertToolTip',
                         'bf/ClientServerEvent',
 
-                        'bf/container/Container',
                         'bf/container/Repeat',
 
                         'bf/factory/FactoryContainer',
@@ -116,6 +115,7 @@ var profile = {
 
                         'bf/util',
                         'bf/devtool',
+                        'bf/XFBinding',
                         'bf/XFControl',
                         'bf/XFormsModelElement',
                         'bf/XFormsProcessor',

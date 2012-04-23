@@ -197,7 +197,6 @@
                 name="{$name}"
                 class="xfValue"
                 type="range"
-                incremental="{@incremental}"
                 min="{@start}"
                 max="{@end}"
                 value="{bf:data/text()}"
@@ -284,8 +283,7 @@
                         class="xfValue"
                         title="{xf:hint/text()}"
                         tabindex="{$navindex}"
-                        data-bf-value="{bf:data/@bf:schema-value}"
-                        incremental="{$incremental}">
+                        data-bf-value="{bf:data/@bf:schema-value}">
                     <xsl:if test="$isOpenSelection">
                         <xsl:attribute name="selection">open</xsl:attribute>
                         <xsl:attribute name="autocomplete">true</xsl:attribute>
@@ -315,8 +313,7 @@
             <xsl:when test="@appearance='full'">
                 <span id="{$id}-value"
                       class="xfValue"
-                      data-bf-value="{bf:data/@bf:schema-value}"
-                      incremental="{$incremental}">
+                      data-bf-value="{bf:data/@bf:schema-value}">
                     <xsl:call-template name="build-radiobuttons">
                         <xsl:with-param name="id" select="$id"/>
                         <xsl:with-param name="name" select="$name"/>
@@ -355,8 +352,7 @@
                             size="1"
                             title="{xf:hint/text()}"
                             tabindex="{$navindex}"
-                            data-bf-value="{bf:data/@bf:schema-value}"
-                            incremental="{$incremental}">
+                            data-bf-value="{bf:data/@bf:schema-value}">
                         <xsl:if test="$isOpenSelection">
                             <xsl:attribute name="selection">open</xsl:attribute>
                             <xsl:attribute name="autocomplete">true</xsl:attribute>
@@ -390,8 +386,7 @@
                       class="xfValue bfCheckBoxGroup"
                       title="{xf:hint/text()}"
                       data-bf-value="{bf:data/@bf:schema-value}"
-                      tabindex="{$navindex}"
-                      incremental="{$incremental}">
+                      tabindex="{$navindex}">
                     <xsl:for-each select="$parent/xf:item|$parent/xf:choices|$parent/xf:itemset">
                         <xsl:call-template name="build-checkboxes-list">
                             <xsl:with-param name="name" select="$name"/>
@@ -427,8 +422,7 @@
                         class="xfValue"
                         title="{xf:hint/text()}"
                         tabindex="{$navindex}"
-                        data-bf-value="{bf:data/@bf:schema-value}"
-                        incremental="{$incremental}">
+                        data-bf-value="{bf:data/@bf:schema-value}">
                     <xsl:if test="$isOpenSelection">
                         <xsl:attribute name="selection">open</xsl:attribute>
                     </xsl:if>
