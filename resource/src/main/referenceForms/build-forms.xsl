@@ -110,24 +110,30 @@
                     <h2><xsl:value-of select="@title"/></h2>
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
-                <script type="text/javascript">
+                <script type="text/javascript" defer="defer">
+
                     function showClass(cssClass){
-                        dojo.query('.sample .'+ cssClass).forEach(function(item){
-                            dojo.addClass(item,'showClass');
+                        require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                            query('.sample .'+ cssClass).forEach(function(item){
+                                domClass.add(item,'showClass');
+                            });
                         });
                     }
                     function hideClass(cssClass){
-                        dojo.query('.sample .'+ cssClass).forEach(function(item){
-                            dojo.removeClass(item,'showClass');
+                        require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                            query('.sample .'+ cssClass).forEach(function(item){
+                                domClass.remove(item,'showClass');
+                            });
                         });
-                    }                    
-                </script>
-            </div>
-            <script type="text/javascript">
-                dojo.subscribe("/xf/ready", function(){
+                    }
+                </script></div><script type="text/javascript">
+
+            require(["dojo/_base/connect"], function(connect){
+                connect.subscribe("/xf/ready", function(){
                     fluxProcessor.skipshutdown=true;
                 });
-            </script>
+            });
+        </script>
 
         </xsl:copy>
     </xsl:template>
