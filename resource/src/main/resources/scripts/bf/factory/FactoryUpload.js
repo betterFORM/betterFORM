@@ -10,7 +10,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                 create:function(type, node){
 //                    var xfControlDijit = registry.byId(xfId);
                     require(["dojo/query"],function(query){
-                        n = query(".xfValue",node)[0];
+                        var n = query("> .xfValue",node)[0];
                         var xfId = bf.util.getXfId(n);
 
                         switch(type){
