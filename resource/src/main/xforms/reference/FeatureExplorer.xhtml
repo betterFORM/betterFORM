@@ -85,7 +85,7 @@
 <body class="tundra">
 
     <div style="display:none">
-        <xf:model id="model-1">
+        <xf:model id="model1">
             <xf:instance>
                 <data xmlns="">
                 </data>
@@ -489,172 +489,172 @@
 <!-- ######################### Content here ################################## -->
 <!-- ######################### Content here ################################## -->
 
-    <div dojoType="dijit.MenuBar" id="navMenu">
+    <div data-dojo-type="dijit.MenuBar" id="navMenu">
 
-        <div dojoType="dijit.PopupMenuBarItem" label="Controls">
-            <div dojoType="dijit.Menu" id="controls">
+        <div data-dojo-type="dijit.PopupMenuBarItem" label="Controls">
+            <div data-dojo-type="dijit.Menu" id="controls">
 <!--
-                <div dojoType="dijit.MenuItem"
+                <div data-dojo-type="dijit.MenuItem"
                      onClick="showStatic();dijit.byId('static').attr('href','control-overview.html');">
                     Overview
                 </div>
 -->
-                <div dojotype="dijit.PopupMenuItem" label="input">
+                <div data-dojo-type="dijit.PopupMenuItem" label="input">
 
 
-                    <div dojotype="dijit.Menu">
-                        <div dojoType="dijit.MenuItem"
+                    <div data-dojo-type="dijit.Menu">
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="fluxProcessor.dispatchEvent('inputTextTrigger');hideStatic();" label="Text"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('inputCheckboxTrigger');" label="Checkbox"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('inputCalendarTrigger');" label="Calendar"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('inputCalendarAndTimeTrigger');" label="Date and Time"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('inputCalendarPatternTrigger');" label="Calendar with date pattern"/>
                     </div>
                 </div>
 
-                <div dojotype="dijit.PopupMenuItem" label="Output">
-                    <div dojotype="dijit.Menu">
-                        <div dojoType="dijit.MenuItem"
+                <div data-dojo-type="dijit.PopupMenuItem" label="Output">
+                    <div data-dojo-type="dijit.Menu">
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('outputDefaultTrigger');" label="Simple"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('outputHTMLTrigger');" label="HTML"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('outputImageTrigger');" label="Image"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('outputLinkTrigger');" label="Link"/>
-                        <!--<div dojoType="dijit.MenuItem" onClick="hideStatic();fluxProcessor.dispatchEvent('outputTrigger');">
+                        <!--<div data-dojo-type="dijit.MenuItem" onClick="hideStatic();fluxProcessor.dispatchEvent('outputTrigger');">
                             output
                         </div>-->
                     </div>
                 </div>
 
 
-                <div dojoType="dijit.PopupMenuItem" label="Range">
-                    <div dojotype="dijit.Menu">
-                        <div dojoType="dijit.MenuItem"
+                <div data-dojo-type="dijit.PopupMenuItem" label="Range">
+                    <div data-dojo-type="dijit.Menu">
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('rangeSliderTrigger');" label="Slider"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('rangeRatingTrigger');" label="Rating"/>
                     </div>
                 </div>
-                <div dojoType="dijit.MenuItem" onClick="hideStatic();fluxProcessor.dispatchEvent('secretTrigger');" label="Secret"/>
+                <div data-dojo-type="dijit.MenuItem" onClick="hideStatic();fluxProcessor.dispatchEvent('secretTrigger');" label="Secret"/>
 
 
 
-                <div dojoType="dijit.PopupMenuItem" label="Select1">
-                    <div dojotype="dijit.Menu">
-                        <div dojoType="dijit.MenuItem"
+                <div data-dojo-type="dijit.PopupMenuItem" label="Select1">
+                    <div data-dojo-type="dijit.Menu">
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('select1ComboboxTrigger');" label="Combobox"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('select1ListTrigger');" label="List control"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('select1RadioTrigger');" label="Radio control"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('select1OpenTrigger');" label="List + input for user-provided value"/>
                     </div>
                 </div>
 
-                <div dojoType="dijit.PopupMenuItem" label="Select">
+                <div data-dojo-type="dijit.PopupMenuItem" label="Select">
 
-                    <div dojotype="dijit.Menu">
-                        <div dojoType="dijit.MenuItem"
+                    <div data-dojo-type="dijit.Menu">
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('selectCheckboxesTrigger');" label="Checkboxes"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('selectListTrigger');" label="List control"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('selectListOpenTrigger');" label="List + input for user-provided value"/>
                     </div>
                 </div>
 
-                <div dojoType="dijit.PopupMenuItem" label="Textarea">
+                <div data-dojo-type="dijit.PopupMenuItem" label="Textarea">
 
-                    <div dojotype="dijit.Menu">
-                        <div dojoType="dijit.MenuItem"
+                    <div data-dojo-type="dijit.Menu">
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('textareaGrowingTrigger');" label="growing textarea"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('textareaHTMLTrigger');" label="simple HTML editor"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('textareaSimpleTrigger');" label="simple textarea"/>
                     </div>
                 </div>
 
-                <div dojoType="dijit.PopupMenuItem" label="Trigger">
-                    <div dojotype="dijit.Menu">
-                        <div dojoType="dijit.MenuItem"
+                <div data-dojo-type="dijit.PopupMenuItem" label="Trigger">
+                    <div data-dojo-type="dijit.Menu">
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('triggerButtonTrigger');" label="button"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('triggerCSSImageTrigger');" label="CSS-styled button"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('triggerImageTrigger');" label="image button"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('triggerLinkTrigger');" label="link"/>
                     </div>
                 </div>
 
-                <div dojoType="dijit.PopupMenuItem" label="Upload">
-                    <div dojotype="dijit.Menu">
-                        <div dojoType="dijit.MenuItem"
+                <div data-dojo-type="dijit.PopupMenuItem" label="Upload">
+                    <div data-dojo-type="dijit.Menu">
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('uploadbase64Trigger');" label="base64-encoded upload"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('uploadFileTrigger');" label="file upload"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('uploadhexBinaryTrigger');" label="hexBinary-encoded upload"/>
                     </div>
                 </div>
 
             </div>
         </div>
-        <div dojoType="dijit.PopupMenuBarItem" label="Container">
-            <div dojoType="dijit.Menu" id="editMenu">
+        <div data-dojo-type="dijit.PopupMenuBarItem" label="Container">
+            <div data-dojo-type="dijit.Menu" id="editMenu">
 <!--
-                <div dojoType="dijit.MenuItem"
+                <div data-dojo-type="dijit.MenuItem"
                      onClick="showStatic();dijit.byId('static').attr('href','container-overview.html');">
                     Overview
                 </div>
 -->
 
-                <div dojotype="dijit.PopupMenuItem" label="Group">
+                <div data-dojo-type="dijit.PopupMenuItem" label="Group">
 
-                    <div dojotype="dijit.Menu">
-                        <div dojoType="dijit.MenuItem"
+                    <div data-dojo-type="dijit.Menu">
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('groupDefaultTrigger');" label="default"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('groupMinimalTrigger');" label="minimal"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('groupCompactTrigger');" label="compact"/>
-                        <div dojoType="dijit.MenuItem" onClick="hideStatic();fluxProcessor.dispatchEvent('groupFullTrigger');" label="full"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem" onClick="hideStatic();fluxProcessor.dispatchEvent('groupFullTrigger');" label="full"/>
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('groupHorizontalTableTrigger');" label="horizontal table"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('groupVerticalTableTrigger');" label="vertical table"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('groupVerticalTableComplexTrigger');" label="complex vertical table"/>
                     </div>
                 </div>
 
-                <div dojotype="dijit.PopupMenuItem" label="Repeat">
+                <div data-dojo-type="dijit.PopupMenuItem" label="Repeat">
 
-                    <div dojotype="dijit.Menu">
-                        <div dojoType="dijit.MenuItem"
+                    <div data-dojo-type="dijit.Menu">
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('repeatCompactTrigger');" label="compact"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('repeatFullTrigger');" label="full"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('repeatTableTrigger');" label="via attributes (table)"/>
                     </div>
                 </div>
 
 
-                <div dojotype="dijit.PopupMenuItem" label="Switch">
+                <div data-dojo-type="dijit.PopupMenuItem" label="Switch">
 
-                    <div dojotype="dijit.Menu">
-                        <div dojoType="dijit.MenuItem"
+                    <div data-dojo-type="dijit.Menu">
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('switchPlainTrigger');" label="plain"/>
-                        <div dojoType="dijit.MenuItem"
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('switchTabContainerTrigger');" label="Tabcontainer"/>
                     </div>
                 </div>
@@ -662,66 +662,66 @@
 
 
         </div>
-		<div dojoType="dijit.PopupMenuBarItem" label="Child Elements">
-			<div dojoType="dijit.Menu" id="childelements">
-				<div dojotype="dijit.PopupMenuItem" label="Alert">
+		<div data-dojo-type="dijit.PopupMenuBarItem" label="Child Elements">
+			<div data-dojo-type="dijit.Menu" id="childelements">
+				<div data-dojo-type="dijit.PopupMenuItem" label="Alert">
 
-					<div dojotype="dijit.Menu">
-						<div dojoType="dijit.MenuItem"
+					<div data-dojo-type="dijit.Menu">
+						<div data-dojo-type="dijit.MenuItem"
 							 onClick="hideStatic();fluxProcessor.dispatchEvent('alertDefaultTrigger');" label="inline alert (default)"/>
-						<div dojoType="dijit.MenuItem" label="Popups must be allowed for external links"/>
-                        <div dojoType="dijit.MenuItem" iconClass="externalLink"
+						<div data-dojo-type="dijit.MenuItem" label="Popups must be allowed for external links"/>
+                        <div data-dojo-type="dijit.MenuItem" iconClass="externalLink"
 							 onClick="hideStatic();fluxProcessor.dispatchEvent('alertTooltipTrigger');" label="Tooltip alert"/>
 					</div>
 				</div>
 			</div>
 		</div>
-        <div dojoType="dijit.PopupMenuBarItem" label="Action/Event">
-            <div dojoType="dijit.Menu" id="submission">
-                <div dojoType="dijit.MenuItem" onClick="hideStatic();fluxProcessor.dispatchEvent('LoadNewTrigger');" label="Load new"/>
-                <div dojoType="dijit.MenuItem" onClick="hideStatic();fluxProcessor.dispatchEvent('GroupFocusTrigger');" label="Group Focus Event"/>
+        <div data-dojo-type="dijit.PopupMenuBarItem" label="Action/Event">
+            <div data-dojo-type="dijit.Menu" id="submission">
+                <div data-dojo-type="dijit.MenuItem" onClick="hideStatic();fluxProcessor.dispatchEvent('LoadNewTrigger');" label="Load new"/>
+                <div data-dojo-type="dijit.MenuItem" onClick="hideStatic();fluxProcessor.dispatchEvent('GroupFocusTrigger');" label="Group Focus Event"/>
 
             </div>
         </div>
-		<div dojoType="dijit.PopupMenuBarItem" label="Extensions">
-			<div dojoType="dijit.Menu" id="extensions">
-                <div dojoType="dijit.MenuItem" label="Popups must be allowed for external links"/>
-                <div dojoType="dijit.MenuItem" iconClass="externalLink"
+		<div data-dojo-type="dijit.PopupMenuBarItem" label="Extensions">
+			<div data-dojo-type="dijit.Menu" id="extensions">
+                <div data-dojo-type="dijit.MenuItem" label="Popups must be allowed for external links"/>
+                <div data-dojo-type="dijit.MenuItem" iconClass="externalLink"
 					 onClick="hideStatic();fluxProcessor.dispatchEvent('AVTThemeSwitcherTrigger');" label="AVT Theme Switcher"/>
-				<div dojoType="dijit.MenuItem" iconClass="externalLink"
+				<div data-dojo-type="dijit.MenuItem" iconClass="externalLink"
 					 onClick="hideStatic();fluxProcessor.dispatchEvent('DialogTrigger');" label="Dialog"/>
-                <div dojoType="dijit.MenuItem"
+                <div data-dojo-type="dijit.MenuItem"
 					 onClick="hideStatic();fluxProcessor.dispatchEvent('LoadEmbedTrigger');" label="Load embed (XForms)"/>
-                <div dojoType="dijit.MenuItem"
+                <div data-dojo-type="dijit.MenuItem"
                      onClick="hideStatic();fluxProcessor.dispatchEvent('EmbedHTMLTrigger');" label="Load embed (HTML)"/>
-                <div dojoType="dijit.MenuItem"
+                <div data-dojo-type="dijit.MenuItem"
                      onClick="hideStatic();fluxProcessor.dispatchEvent('ModelToModelTrigger');" label="Model to Model submission"/>
 			</div>
 		</div>
-		<div dojoType="dijit.PopupMenuBarItem" label="Documentation">
-			<div dojoType="dijit.Menu" id="documentation">
-                <div dojoType="dijit.MenuItem" label="Popups must be allowed for external links"/>
-				<div dojoType="dijit.MenuItem" iconClass="externalLink"
+		<div data-dojo-type="dijit.PopupMenuBarItem" label="Documentation">
+			<div data-dojo-type="dijit.Menu" id="documentation">
+                <div data-dojo-type="dijit.MenuItem" label="Popups must be allowed for external links"/>
+				<div data-dojo-type="dijit.MenuItem" iconClass="externalLink"
 					 onClick="window.open('http://betterform.wordpress.com/documentation/');" label="betterFORM Online Documentation"/>
-				<div dojoType="dijit.MenuItem" iconClass="externalLink"
+				<div data-dojo-type="dijit.MenuItem" iconClass="externalLink"
 					 onClick="window.open('http://betterform.wordpress.com/');" label="betterFORM Blog"/>
-                <div dojoType="dijit.MenuItem" iconClass="externalLink"
+                <div data-dojo-type="dijit.MenuItem" iconClass="externalLink"
 					 onClick="window.open('../../../../../documentation.xml');" label="eXist Main Documentation"/>
-                <div dojoType="dijit.MenuItem" iconClass="externalLink"
+                <div data-dojo-type="dijit.MenuItem" iconClass="externalLink"
 					 onClick="window.open('http://exist.sf.net/');" label="eXist-db Open Source Native XML Database"/>
-				<div dojoType="dijit.MenuItem" iconClass="externalLink"
+				<div data-dojo-type="dijit.MenuItem" iconClass="externalLink"
 					 onClick="window.open('http://en.wikibooks.org/wiki/XForms');" label="XForms Wikibook"/>
-				<div dojoType="dijit.MenuItem" iconClass="externalLink"
+				<div data-dojo-type="dijit.MenuItem" iconClass="externalLink"
 					 onClick="window.open('http://en.wikibooks.org/wiki/XQuery');" label="XQuery Wikibook"/>
-				<div dojoType="dijit.MenuItem" iconClass="externalLink"
+				<div data-dojo-type="dijit.MenuItem" iconClass="externalLink"
 					 onClick="window.open('http://www.w3.org/MarkUp/Forms/');" label="W3C XForms Working Group"/>
 			</div>
 		</div>
-		<!--<div dojoType="dijit.Menu" label="Documentation" onClick="showStatic();dijit.byId('static').attr('href','Documentation.html');"/>-->
+		<!--<div data-dojo-type="dijit.Menu" label="Documentation" onClick="showStatic();dijit.byId('static').attr('href','Documentation.html');"/>-->
 
 	   <!--<img src="../../bfResources/images/icons/external_link.png" alt="^"/>-->
 	 	<!--
-        <div dojoType="dijit.PopupMenuBarItem">
+        <div data-dojo-type="dijit.PopupMenuBarItem">
 			<span>
 				MENUNAME on toobar
 			</span>
@@ -731,19 +731,34 @@
     </div>
 
     <div id="contentBody">
-        <div id="static" dojotype="dijit.layout.ContentPane" href="intro.html">
-            <script type="dojo/connect" event="onDownloadEnd">
-                dojo.connect(dojo.byId("menuHint"), "onclick", function(n) {
-                    dojo.style(dojo.byId("menuHint"), "display","none");
-                });
-                var anim1 = dojo.fadeIn({ node: "menuHint",delay:500,duration:1500 });
-                var anim2 = dojo.fadeOut({ node:"menuHint",delay:5000,duration:2000 });
-                 dojo.connect(anim2, "onEnd", function(node){
-                     dojo.style(node, "display","none");
-                 });
-                dojo.fx.chain([anim1, anim2]).play();
-            </script>
+        <div id="static" data-dojo-type="dijit.layout.ContentPane" href="./intro.html">
+           <!-- <script type="dojo/on" data-dojo-event="downloadEnd">
+                require(["dojo/on","dijit/registry", "dojo/dom-style", "dojo/_base/fx"], function(on, registry, domStyle, fx) {
+                    on(registry.byId("menuHint"),"click", function(n) {
+                        domStyle.set(registry.byId("menuHint"), "display","none");
+                    });
 
+
+                    fx.fadeOut({
+                        node: this.progress,
+                        duration:2000,
+                        onEnd: dojo.hitch(this,function() {
+                            domStyle.set(this.progress, 'display', 'none');
+
+                        })
+                    }).play();
+
+                    var anim1 = fx.fadeIn({ node: "menuHint",delay:500,duration:1500 });
+                    var anim2 = fx.fadeOut({ node:"menuHint",delay:5000,duration:2000 });
+
+                    on(anim2,"end", function(node) {
+                        domStyle(node, "display","none");
+                    });
+
+                    fx.chain([anim1, anim2]).play();
+                    });
+            </script>
+            -->
         </div>
         <div id="xforms" class="InlineAlert"></div>
     </div>
@@ -751,7 +766,7 @@
 <!--
 
     <div id="cssWindow"
-        dojoType="dojox.layout.FloatingPane"
+        data-dojo-type="dojox.layout.FloatingPane"
         title="CSS"
         resizable="true"
         dockable="false"
@@ -765,37 +780,39 @@
 <!-- ######################### Content end ################################## -->
 <!-- ######################### Content end ################################## -->
 
-    <script type="text/javascript" defer="defer" src="../../bfResources/scripts/betterform/betterform-XFormsFeatureExplorer.js"> </script>
+    <!-- <script type="text/javascript" defer="defer" src="../../bfResources/scripts/betterform/betterform-XFormsFeatureExplorer.js"> </script>-->
+
 
     <script type="text/javascript" defer="defer">
-        function addToDocument(id) {
-            var model = dojo.query(".xfModel", dojo.doc)[0];
-            dijit.byId(dojo.attr(model, "id")).getInstanceAsString(id,
-                function(data) {
-                    dojo.byId("instanceData").innerHTML = data;
-                }
-            );
-        }
-        function hideStatic() {
-            dojo.byId('static').style.display = "none";
-            dojo.byId('xforms').style.display = "block";
+        require(["dojo/on", "dijit/registry", "dojo/query", "dojo/dom", "dojo/dom-attr","dojo/dom-class", "dojo/dom-style", 'dijit/Menu', 'dijit/MenuBar', 'dijit/MenuItem', 'dijit/PopupMenuBarItem', 'dijit/Tooltip', 'dijit/layout/ContentPane'], function(on, registry, query, dom, domAttr, domClass, domStyle) {
+            function addToDocument(id) {
+                var model = query(".xfModel", dojo.doc)[0];
+                registry.byId(domAttr.get(model, "id")).getInstanceAsString(id,
+                    function(data) {
+                        dom.byId("instanceData").innerHTML = data;
+                    }
+                );
+            }
+            function hideStatic() {
+                domStyle.set(dom.byId('static'), 'display','none');
+                domStyle.set(dom.byId('xforms'), 'display','block');
+            }
+            function showStatic() {
+                domStyle.set(dom.byId('xforms'), 'display','none');
+                domStyle.set(dom.byId('static'), 'display','block');
+            }
 
-        }
-        function showStatic() {
-            dojo.byId('xforms').style.display = "none";
-            dojo.byId('static').style.display = "block";
-        }
-
-		function showClass(cssClass){
-			dojo.query('.sample .'+ cssClass).forEach(function(item){
-				dojo.addClass(item,'showClass');
-			});
-		}
-		function hideClass(cssClass){
-			dojo.query('.sample .'+ cssClass).forEach(function(item){
-				dojo.removeClass(item,'showClass');
-			});
-		}
+		    function showClass(cssClass){
+			    query('.sample .'+ cssClass).forEach(function(item){
+				    domClass.add(item,'showClass');
+			    });
+		    }
+		    function hideClass(cssClass){
+			    query('.sample .'+ cssClass).forEach(function(item){
+				    domClass.remove(item,'showClass');
+			    });
+		    }
+        });
 
 /*
 		dojo.addOnLoad(function(){
