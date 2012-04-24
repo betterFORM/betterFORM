@@ -5,7 +5,7 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
             repeatId:null,
 
             constructor:function(properties, node){
-                // console.debug("Repeat.postCreate created new instace node:", node);
+                console.debug("\n\nRepeat.constructor created new instace node:", node, "\n\n");
                 this.inherited(arguments);
 
                 this.repeatId = domAttr.get(this.srcNodeRef,"repeatId");
@@ -34,8 +34,13 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
 
             },
             handleStateChanged:function(contextInfo) {
-                // console.debug("Repeat.handleStateChanged: contextInfo:",contextInfo);
-                var repeatItem = query(".xfRepeatItem[repeatItemId='" + contextInfo.targetId + "']")[0];
+                console.debug("Repeat.handleStateChanged: contextInfo:",contextInfo);
+                // TODO: REMOVE repeatId && repeatitemid
+                var repeatItem = dom.byId(contextInfo.targetId);
+                if(!repeatItem){
+                    repeatItem = query("> .xfRepeatItem[repeatItemId='" + contextInfo.targetId + "']",dom.byId(this.repeatId))[0];
+                }
+                console.debug("found repeatItem:",repeatItem);
                 if(contextInfo["readonly"] == "true"){
                     domClass.replace(repeatItem, "xfReadOnly","xfReadWrite");
                 }else {
@@ -101,11 +106,13 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                 // console.debug("handleInsert contextInfo: ",contextInfo);
                 // search for former repeat-index and remove it
                 this._removeRepeatIndexClasses();
-                // console.debug("handleInsert replace prototype ids");
+                console.debug("handleInsert replace prototype ids - clone prototype: ",contextInfo.originalId + "-prototype");
 
                 // clone prototype and manipulate classes of repeat item
                 var prototype = dom.byId(contextInfo.originalId + "-prototype");
+                console.debug("found prototype:",prototype);
                 var insertedNode = prototype.cloneNode(true);
+                console.debug("insert Node :",insertedNode);
                 this._replaceRepeatItemClasses(insertedNode);
 
                 // replace prototype ids with generated ones
@@ -120,11 +127,15 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                     var clonedNodeId = contextInfo.repeatedSelects[0].generatedIds[0];
                     domAttr.set(insertedNode, "id", clonedNodeId);
                 }
+                console.debug("updated id of insertedNode:",insertedNode);
                 // replace prototype ids with generated ones
+
                 this._replacePrototypeIds(insertedNode, generatedIds);
+                console.debug("replaced prototype ids");
+
                 // create dijit and place it within repeat
                 var position = parseInt(contextInfo.position,"10");
-
+                console.debug("position to insert node is:",position);
                 // console.debug("InsertedNode: " + insertedNode.id );
                 var repeatItemExists = query("*[repeatItemId='" + insertedNode.id + "']");
                 var repeatItemNode = undefined;
@@ -134,19 +145,22 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                 }else {
                     repeatItemNode = this._createRepeatItem(insertedNode, position);
                 }
-                // console.debug("repeatItemNode",repeatItemNode);
-                // console.debug("handleInsert fix inserted controls repeatItemNode:",repeatItemNode);
+                console.debug("repeatItemNode:",repeatItemNode);
+                console.debug("handleInsert fix inserted controls repeatItemNode:",repeatItemNode);
 
                 // rename data-bf-class to class
                 query("*[data-bf-class]",repeatItemNode).forEach(function(item){
-                    console.debug("\n\nrename data-bf-class to class");
+                    // console.debug("\n\nrename data-bf-class to class");
                     var cssClass = domAttr.get(item,"data-bf-class");
+                    if(cssClass && cssClass != ""){
+                        domAttr.set(item,"class", cssClass);
+                    }
                     item.removeAttribute("data-bf-class");
-                    domAttr.set(item,"class", cssClass);
                     console.debug("item after replacing class: ",item);
                 });
-
+                console.debug("before behavior apply");
                 behavior.apply();
+
                 if(domStyle.get(repeatItemNode,"display") == "none"){
                     repeatItemNode.removeAttribute("style");
                 }
@@ -256,14 +270,16 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                 );
 
             },
-            _createRepeatItem:function(/*Dijit*/node, /* int */position) {
-                // console.debug("RepeatItem._createRepeatItem node:",node, " at position " + position);
+            _createRepeatItem:function(node, /* int */position) {
+                console.debug("RepeatItem._createRepeatItem node:",node, " at position " + position);
                 var repeatItemCount = this._getSize();
+                console.debug("repeatItemCount: ",repeatItemCount);
                 // repeatItemDijit.hideRepeatItem();
                 domStyle.set(node, "display","none");
 
                 var targetNode = null;
-                var repeatNode = dom.byId(this.repeatId)
+                var repeatNode = dom.byId(this.repeatId);
+                console.debug("_createRepeatItem: repeatNode:",repeatNode);
                 if (position == 1 && repeatItemCount > 0) {
                     if (this.appearance == "compact") {
                         targetNode = query("> tbody > .xfRepeatItem", repeatNode)[0];
@@ -276,14 +292,15 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
 
                     if (this.appearance == "compact") {
                         // console.debug("RepeatItem._createRepeatItem for CompactRepeat domNode: ", repeatNode);
-                        var tbodyNode = query("tbody", repeatNode)[0];
+                        var tbodyNode = query("> tbody", repeatNode)[0];
                         if (tbodyNode == undefined) {
                             tbodyNode = win.doc.createElement("tbody");
                             domConstruct.place(tbodyNode, repeatNode);
                         }
                         domConstruct.place(node, tbodyNode);
                     } else {
-                        domConstruct.place(node.domNode, repeatNode);
+                        console.debug("place repeatItemNode:",node, " at ",repeatNode);
+                        domConstruct.place(node, repeatNode);
                     }
 
 
@@ -306,7 +323,7 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
 
             _getSize:function() {
                 var size;
-                var repeatNode = dom.byId(this.repeatId)
+                var repeatNode = dom.byId(this.repeatId);
                 if (this.appearance == "compact") {
                     size = query("> tbody > .xfRepeatItem", repeatNode).length;
                 } else {

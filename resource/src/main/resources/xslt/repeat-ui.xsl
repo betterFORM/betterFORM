@@ -56,11 +56,9 @@
                 </xsl:call-template>
             </xsl:for-each>
             <!-- ***** has become unnecessary as handled by above template ***** -->
-<!--
             <xsl:for-each select="bf:data/xf:group[@appearance='repeated']//xf:repeat">
                 <xsl:call-template name="processRepeatPrototype"/>
             </xsl:for-each>
--->
             <xsl:for-each select="bf:data/xf:group[@appearance='repeated']//xf:itemset">
                 <xsl:call-template name="processItemsetPrototype"/>
             </xsl:for-each>
@@ -199,14 +197,14 @@
                   mode="repeated-full-prototype"
                   priority="10">
         <xsl:variable name="id" select="@id"/>
-        <xsl:variable name="control-classes">
-            <xsl:call-template name="assemble-control-classes">
-                <xsl:with-param name="appearance" select="@appearance"/>
+        <xsl:variable name="repeat-classes">
+            <xsl:call-template name="assemble-compound-classes">
+                <xsl:with-param name="appearance" select="'full'"/>
             </xsl:call-template>
         </xsl:variable>
 
-        <div id="{$id}" class="{$control-classes} xfRepeated" repeatId="{$id}">
-            <xsl:apply-templates select="*" mode="repeated-full-prototype"/>
+        <div id="{$id}" data-bf-class="{$repeat-classes}" repeatId="{$id}">
+            <!--<xsl:apply-templates select="*" mode="repeated-full-prototype"/>-->
         </div>
     </xsl:template>
 
@@ -668,13 +666,14 @@
 
     <xsl:template match="xf:repeat" mode="repeated-compact-prototype" priority="10">
         <xsl:variable name="id" select="@id"/>
-        <xsl:variable name="control-classes">
-            <xsl:call-template name="assemble-control-classes">
-                <xsl:with-param name="appearance" select="@appearance"/>
+        <xsl:variable name="repeat-classes">
+            <xsl:call-template name="assemble-compound-classes">
+                <xsl:with-param name="appearance" select="'full'"/>
             </xsl:call-template>
         </xsl:variable>
+
         <table id="{$id}"
-               dojoAttachEvent='onfocus:_onFocus' repeatId="{$id}">
+               dojoAttachEvent='onfocus:_onFocus' repeatId="{$id}" data-bf-class="{$repeat-classes}">
             <tr class="xfRepeatHeader">
                 <xsl:call-template name="processCompactHeader"/>
             </tr>
