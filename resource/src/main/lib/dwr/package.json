@@ -1,0 +1,17 @@
+{
+    "name": "",
+    "version": "1.0",
+    "dependencies": {
+    },
+    "description": "betterFORM XForms Toolkit / optimized dwr.js",
+    "licenses": [
+        {
+            "type": "BSD",
+            "url": "http://trac.dojotoolkit.org/browser/dojo/trunk/LICENSE#L13"
+        }
+    ],
+    "bugs": "https://betterform.de/trac",
+    "keywords": ["XForms", "Dojo", "XRX", "betterFORM"],
+    "homepage": "http://www.betterform.de",
+    "dojoBuild": "dwr.profile.js"
+}

@@ -16,7 +16,9 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         switch(type){
 
                             case "fileUpload":
-
+                            case "base64binary":
+                            case "hexBinary":
+                                console.warn("FactoryUpload.[file|base64|hex]");
                                 require(["bf/upload/Upload"], function(Upload) {
                                     console.debug("upload created bald: ",xfId);
                                     uploadWidget = new Upload({
@@ -24,17 +26,9 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                         name:domAttr.get(n,'name')
                                     },n);
                                 });
-
-                                break;
-                            case "base64binary":
-                                console.warn("TBD: FactoryUpload (base64binary)",node);
-                                break;
-                            case "hexBinary":
-                                console.warn("TBD: FactoryUpload (hexBinary)",node);
                                 break;
                             default:
-                                console.warn("FactoryInput.default");
-
+                                console.warn("FactoryUpload.default");
                         }
                     });
                 }

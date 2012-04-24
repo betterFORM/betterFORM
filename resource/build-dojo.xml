@@ -42,7 +42,7 @@
             <cutdirsmapper dirs="1"/>
         </unzip>
         -->
-        <copy file="${src.dir}/main/lib/dwr.js.optimized" tofile="${scripts.target}/dwr.js"/>
+        <copy file="${src.dir}/main/lib/dwr/dwr.js" tofile="${scripts.target}/dwr.js"/>
     </target>
 
     <!-- check if Dojo is allready unpacked and call unpack target if not -->
@@ -121,11 +121,12 @@
         </condition>
     </target>
 
-    <!-- Do we need this depends: unpack-betterform-js-release, ?? -->
     <target name="build-dojo"
             description="create a custom Javascript build of betterFORM"
             depends="prepare-dojo, copy-src-resources-scripts,  check-if-js-is-up-to-date"
             unless="build-js-required" >
+
+        <copy file="${script.src}/util/buildscripts/profiles/release.profile.js" todir="${scripts.target}"/>
 
         <java classname="org.mozilla.javascript.tools.shell.Main"
               dir="${scripts.target}/util/buildscripts"
@@ -138,24 +139,26 @@
                 <pathelement location="${scripts.target}/util/shrinksafe/shrinksafe.jar"/>
             </classpath>
 
-
-
             <arg value="${scripts.target}/dojo/dojo.js"/>
             <arg value="baseUrl=${scripts.target}/dojo"/>
             <arg value="load=build"/>
-            <arg value="require=${scripts.target}/bf/run.js"/>
-            <arg value="profile=${scripts.target}/bf/bf.profile.js"/>
+            <arg value="profile=${scripts.target}/release.profile.js"/>
         </java>
 
 
-        <delete dir="${scripts.target}/../release" excludes="dojo/dojo.js bf/dashboard.js **/highlight.css **/soria.css **/tundra.css **/Toaster.css" includeemptydirs="true"/>
+        <delete dir="${scripts.target}/release" excludes="dojo/dojo.js bf/dashboard.js bf/featureExplorer.js **/*.css **/*.gif **/*.png dojo/cldr/**" includeemptydirs="true"/>
 
-        <copy file="${src.dir}/main/lib/dwr.js.optimized" tofile="${scripts.target}/../release/dwr.js"/>
+        <copy todir="${scripts.target}/release">
+            <fileset file="${src.dir}/main/lib/dwr/dwr.js"/>
+        </copy>
+
+        <copy todir="${scripts.target}/release/syntaxhighlighter" flatten="false">
+            <fileset dir="${script.src}/syntaxhighlighter" includes="**/*"/>
+        </copy>
 
         <zip description="create optimized JavaScript zip"
              zipfile="${src.dir}/main/lib/${app.name}-js-optimized.zip"
-             basedir="${scripts.target}/../release"/>
-
+             basedir="${scripts.target}/release"/>
 
     </target>
 
