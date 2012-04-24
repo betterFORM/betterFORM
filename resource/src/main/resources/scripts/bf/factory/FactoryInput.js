@@ -118,11 +118,11 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                      */
                     xfControlDijit.setReadonly = function() {
                         // console.debug("overwritten checkbox function");
-                        bf.util.replaceClass(node,"xfReadWrite","xfReadOnly");
+                        domClass.replace(node,"xfReadOnly","xfReadWrite");
                         domAttr.set(node, "disabled","disabled");
                     };
                     xfControlDijit.setReadwrite = function() {
-                        bf.util.replaceClass(node,"xfReadOnly","xfReadWrite");
+                        domClass.replace(node,"xfReadWrite","xfReadOnly");
                         node.removeAttribute("disabled");
                     };
 
@@ -232,11 +232,11 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             dateTimeWidget.set('value', schemavalue);
                         };
                         xfControlDijit.setReadonly = function() {
-                            bf.util.replaceClass(n,"xfReadWrite","xfReadOnly");
+                            domClass.replace(n,"xfReadOnly","xfReadWrite");
                             dateTimeWidget.set('readOnly', true);
                         };
                         xfControlDijit.setReadwrite = function() {
-                            bf.util.replaceClass(n,"xfReadOnly","xfReadWrite");
+                            domClass.replace(n,"xfReadWrite","xfReadOnly");
                             dateTimeWidget.set('readOnly', false);
                         };
                     });
@@ -292,11 +292,11 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             timeTextBox.set('value', value);
                         };
                         xfControlDijit.setReadonly = function() {
-                            bf.util.replaceClass(n,"xfReadWrite","xfReadOnly");
+                            domClass.replace(n,"xfReadOnly","xfReadWrite");
                             timeTextBox.set('readOnly', true);
                         };
                         xfControlDijit.setReadwrite = function() {
-                            bf.util.replaceClass(n,"xfReadOnly","xfReadWrite");
+                            domClass.replace(n,"xfReadWrite","xfReadOnly");
                             timeTextBox.set('readOnly', false);
                         };
                     });
@@ -323,11 +323,11 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             time.set('value', value);
                         };
                         xfControlDijit.setReadonly = function() {
-                            bf.util.replaceClass(n,"xfReadWrite","xfReadOnly");
+                            domClass.replace(n,"xfReadOnly","xfReadWrite");
                             time.set('readOnly', true);
                         };
                         xfControlDijit.setReadwrite = function() {
-                            bf.util.replaceClass(n,"xfReadOnly","xfReadWrite");
+                            domClass.replace(n,"xfReadWrite","xfReadOnly");
                             time.set('readOnly', false);
                         };
                     });
@@ -369,11 +369,11 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         dateWidget.set('value', schemavalue);
                     };
                     xfControlDijit.setReadonly = function() {
-                        bf.util.replaceClass(xfControlDijit.domNode,"xfReadWrite","xfReadOnly");
+                        domClass.replace(xfControlDijit.domNode,"xfReadOnly","xfReadWrite");
                         dateWidget.set('readOnly', true);
                     };
                     xfControlDijit.setReadwrite = function() {
-                        bf.util.replaceClass(xfControlDijit.domNode,"xfReadOnly","xfReadWrite");
+                        domClass.replace(xfControlDijit.domNode,"xfReadWrite","xfReadOnly");
                         dateWidget.set('readOnly', false);
                     };
                 },

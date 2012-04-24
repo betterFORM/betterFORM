@@ -1,5 +1,5 @@
-define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-attr","bf/util"],
-    function(declare,connect,registry,domAttr) {
+define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-attr","dojo/dom-class","bf/util"],
+    function(declare,connect,registry,domAttr,domClass) {
         return declare(null,
             {
                 /**
@@ -119,12 +119,12 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
 
                                 // READONLY HANDLING
                                 xfControlDijit.setReadonly = function() {
-                                    bf.util.replaceClass(n,"xfReadOnly","xfReadWrite");
+                                    domClass.replace(n,"xfReadWrite","xfReadOnly");
                                     comboBox.set("disabled",true);
                                 };
 
                                 xfControlDijit.setReadwrite=function() {
-                                    bf.util.replaceClass(n,"xfReadOnly","xfReadWrite");
+                                    domClass.replace(n,"xfReadWrite", "xfReadOnly");
                                     comboBox.set("disabled",false);
                                 };
                             });

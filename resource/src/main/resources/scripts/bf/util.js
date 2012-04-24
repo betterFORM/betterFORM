@@ -32,32 +32,6 @@ require(['dojo/_base/declare',"dojo/dom-class","dojo/dom-attr"],
         */
         };
 
-
-        /**
-         * replaces a CSS class within the css attribute of given element. 'current' class will be replaced by 'update'.
-         */
-        /*
-         // TODO: Lars: function 'replaceClass' is never called, remove?
-         bf.util.replaceClass = function (element, current, update) {
-             if (!element || !element.className) {
-                 return false;
-             }
-             if(domClass.contains(element,current)){
-                domClass.remove(element,current);
-             } else {
-                 console.warn("Element ", element , " does not have class ", current);
-                 return false;
-                 }
-
-             if(domClass.contains(element,update)){
-                 console.warn("Element ", element , " class ", update, " allready present");
-                 return false;
-             } else {
-                 domClass.add(element,update);
-             }
-             return true;
-         };
-         */
         // TODO: Lars: function 'getContainerByClass' is never called, remove?
 /*
         bf.util.getContainerByClass = function(n, cssString ){
@@ -88,6 +62,7 @@ require(['dojo/_base/declare',"dojo/dom-class","dojo/dom-attr"],
          */
         bf.util.replaceClass = function (element, current, update) {
             //console.debug("bf.util.replaceClass " + current + " with " +  update + " for Control ", element);
+            console.warn("WARNING: bf.util.replaceClass is deprecated, use domClass.replace instead!!");
             if (!element || !element.className) {
                 return false;
             }
@@ -206,7 +181,7 @@ require(['dojo/_base/declare',"dojo/dom-class","dojo/dom-attr"],
                 }
 
             });
-        }
+        };
 
         bf.util.parseDataAttribute = function(node, dataAttributeName){
             // console.debug("bf.util.parseDataAttribute: node:",node, " dataAttributeName:",dataAttributeName);

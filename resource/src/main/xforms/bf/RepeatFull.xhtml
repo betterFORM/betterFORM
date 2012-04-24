@@ -98,13 +98,13 @@
         <div>
             <span>MIPS</span>
             <xf:trigger>
-                <xf:label>Readonly: <xf:output ref="instance()/repeat/@readonly"/></xf:label>
+                <xf:label><xf:output value="concat('Readonly:',instance()/repeat/@readonly)"/></xf:label>
                 <xf:action>
                     <xf:setvalue ref="instance()/repeat/@readonly" value="not(boolean-from-string(instance()/repeat/@readonly))" />
                 </xf:action>
             </xf:trigger>
             <xf:trigger>
-                <xf:label>Relevant: <xf:output ref="instance()/repeat/@relevant"/></xf:label>
+                <xf:label><xf:output value="concat('Relevant:',instance()/repeat/@relevant)"/></xf:label>
                 <xf:action>
                     <xf:setvalue ref="instance()/repeat/@relevant" value="not(boolean-from-string(instance()/repeat/@relevant))" />
                 </xf:action>
@@ -114,15 +114,19 @@
         <xf:repeat id="repeat1" nodeset="repeat/items" appearance="full">
             <xf:input ref="item[1]">
                 <xf:label>String:</xf:label>
+                <xf:alert>Alert String</xf:alert>
             </xf:input>
             <xf:input ref="item[2]">
                 <xf:label>Date:</xf:label>
+                <xf:alert>Alert Date</xf:alert>
             </xf:input>
             <xf:input ref="item[3]" appearance="bf:dropdowndate">
                 <xf:label>DropDownDate:</xf:label>
+                <xf:alert>Alert DropDownDate</xf:alert>
             </xf:input>
             <xf:input ref="item[4]">
                 <xf:label>Boolean:</xf:label>
+                <xf:alert>Alert Boolean</xf:alert>
             </xf:input>
         </xf:repeat>
 

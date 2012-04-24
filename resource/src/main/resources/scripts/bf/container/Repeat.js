@@ -1,4 +1,4 @@
-define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-style","dojo/dom-attr","dojo/dom-class","dojo/dom-construct","dojo/_base/window","dojo/behavior","dojo/_base/connect","dojo/on","dojo/_base/lang"],
+define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-style","dojo/dom-attr","dojo/dom-class","dojo/dom-construct","dojo/_base/window","dojo/behavior","dojo/_base/connect","dojo/on","dojo/_base/lang","bf/util"],
     function(declare, XFBinding,query, dom, domStyle, domAttr, domClass, domConstruct, win, behavior,connect,on,lang){
         return declare(XFBinding, {
 
@@ -26,9 +26,22 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                 connect.subscribe("betterform-insert-repeatitem-"+ this.repeatId, this, "handleInsert");
                 connect.subscribe("betterform-item-deleted-"+ this.repeatId,      this, "handleDelete");
                 connect.subscribe("betterform-index-changed-"+ this.repeatId,     this, "handleSetRepeatIndex");
-                query(".xfRepeatItem",this.srcNodeRef).on("click", lang.hitch(this,this._onClickRepeatItem));
-            },
+                var self = this;
+                query(".xfRepeatItem",this.srcNodeRef).forEach(function(repeatItem){
+                    on(repeatItem, "click", lang.hitch(self, self._onClickRepeatItem));
+                    connect.subscribe("bf-state-change-"+ domAttr.get(repeatItem,"repeatItemId"), self.handleStateChanged);
+                });
 
+            },
+            handleStateChanged:function(contextInfo) {
+                // console.debug("Repeat.handleStateChanged: contextInfo:",contextInfo);
+                var repeatItem = query(".xfRepeatItem[repeatItemId='" + contextInfo.targetId + "']")[0];
+                if(contextInfo["readonly"] == "true"){
+                    domClass.replace(repeatItem, "xfReadOnly","xfReadWrite");
+                }else {
+                    domClass.replace(repeatItem, "xfReadWrite","xfReadOnly");
+                }
+            },
 
             _onClickRepeatItem:function(evt){
                 if(!evt || (!evt.currentTarget && !evt.srcElement)){
@@ -36,7 +49,11 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                 }
                 var repeatItem = (evt.currentTarget) ? evt.currentTarget : evt.srcElement;
                 // console.debug("onClickRepeatItem: repeatItem:",repeatItem);
-                if(domClass.contains(repeatItem, "xfRepeatIndex")){
+                if(domClass.contains(repeatItem,"xfReadOnly")){
+                    console.warn("repeatItem ", repeatItem, " is readonly");
+                    return;
+                }
+                if(domClass.contains(repeatItem, "xfRepeatIndex") || domClass.contains(repeatItem, "xfRepeatIndexPre")){
                     return;
                 }
                 var repeatNode = dom.byId(this.repeatId);

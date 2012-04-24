@@ -1,5 +1,5 @@
-define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-attr","dojo/dom-style","bf/util"],
-    function(declare,connect,registry,domAttr,domStyle) {
+define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-attr","dojo/dom-style","dojo/dom-class","bf/util"],
+    function(declare,connect,registry,domAttr,domStyle,domClass) {
         return declare(null,
             {
                 /**
@@ -39,13 +39,13 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             // console.debug("FOUND .xfOutput.xsdAnyURI .xfValue",n);
                             //todo: this solution works in FF - others have to be tested
                             xfControlDijit.setReadonly = function(){
-                                bf.util.replaceClass(n,"xfReadWrite","xfReadOnly");
+                                domClass.replace(n,"xfReadOnly","xfReadWrite");
                                 domStyle.set(n, "pointerEvents","none");
                                 domStyle.set(n, "cursor","default");
                             };
 
                             xfControlDijit.setReadwrite = function(){
-                                bf.util.replaceClass(n,"xfReadOnly","xfReadWrite");
+                                domClass.replace(n,"xfReadWrite", "xfReadOnly");
                                 domStyle.set(n, "pointerEvents","auto");
                                 domStyle.set(n, "cursor","pointer");
                             };

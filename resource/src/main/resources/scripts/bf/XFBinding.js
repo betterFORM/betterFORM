@@ -163,44 +163,44 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
         },
 
         setValid:function() {
-            bf.util.replaceClass(this.srcNodeRef, "xfInvalid", "xfValid");
+            domClass.replace(this.srcNodeRef, "xfValid","xfInvalid");
             connect.publish("xforms-valid", [this.id,"applyChanges"]);
 
         },
 
         setInvalid:function() {
-            bf.util.replaceClass(this.srcNodeRef, "xfValid", "xfInvalid");
+            domClass.replace(this.srcNodeRef, "xfInvalid", "xfValid");
             connect.publish("xforms-invalid", [this.id,"applyChanges"]);
         },
 
         setReadonly:function() {
-            bf.util.replaceClass(this.srcNodeRef, "xfReadWrite", "xfReadOnly");
+            domClass.replace(this.srcNodeRef, "xfReadOnly", "xfReadWrite");
             domAttr.set(this.getWidget(), "readonly","readonly");
         },
 
         setReadwrite:function() {
-            bf.util.replaceClass(this.srcNodeRef,"xfReadOnly","xfReadWrite");
+            domClass.replace(this.srcNodeRef,"xfReadWrite", "xfReadOnly");
             this.getWidget().removeAttribute("readonly");
         },
 
         setRequired:function() {
-            bf.util.replaceClass(this.srcNodeRef, "xfOptional", "xfRequired");
+            domClass.replace(this.srcNodeRef, "xfRequired", "xfOptional");
         },
 
         setOptional:function() {
-            bf.util.replaceClass(this.srcNodeRef, "xfRequired", "xfOptional");
+            domClass.replace(this.srcNodeRef, "xfOptional", "xfRequired");
         },
 
         setEnabled:function() {
             var label = dom.byId(this.id + "-label");
             if (label != undefined) {
                 if (domClass.contains(label, "xfDisabled")) {
-                    bf.util.replaceClass(label, "xfDisabled", "xfEnabled");
+                    domClass.replace(label, "xfEnabled", "xfDisabled");
                 } else {
                     domClass.add(label, "xfEnabled");
                 }
             }
-            bf.util.replaceClass(this.srcNodeRef, "xfDisabled", "xfEnabled");
+            domClass.replace(this.srcNodeRef, "xfEnabled","xfDisabled");
 
             if (this.isValid()) {
                 connect.publish("xforms-valid", [this.id, "xfDisabled"]);
@@ -213,12 +213,12 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
             var label = dom.byId(this.id + "-label");
             if (label != undefined) {
                 if (domClass.contains(label, "xfEnabled")) {
-                    bf.util.replaceClass(label, "xfEnabled", "xfDisabled");
+                    domClass.replace(label,"xfDisabled", "xfEnabled");
                 } else {
                     domClass.add(label, "xfDisabled");
                 }
             }
-            bf.util.replaceClass(this.srcNodeRef, "xfEnabled", "xfDisabled");
+            domClass.replace(this.srcNodeRef, "xfDisabled", "xfEnabled");
             if (this.isValid()) {
                 connect.publish("xforms-valid", [this.id, "xfDisabled"]);
             } else {
