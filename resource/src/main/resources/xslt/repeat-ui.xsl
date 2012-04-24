@@ -77,7 +77,7 @@
 
                 <xsl:variable name="group-label" select="true()"/>
 
-                <div repeatItemId="{$repeat-item-id}"
+                <div id="{$repeat-item-id}"
                      class="{$repeat-item-classes}"
                      tabindex="0">
                     <div class="legend">
@@ -464,7 +464,7 @@
                     </xsl:call-template>
                 </xsl:variable>
 
-                <tr repeatItemId="{$id}"
+                <tr id="{$id}"
                     class="{$repeat-item-classes}">
                     <xsl:call-template name="processCompactChildren"/>
                 </tr>
@@ -829,7 +829,7 @@
 
                 <xsl:for-each select="xhtml:tr">
 
-                    <tr repeatItemId="{$id}"
+                    <tr id="{$id}"
                         class="{$repeat-item-classes}"
                         appearance="appCompact compact">
                         <xsl:apply-templates select="*" mode="compact-repeat"/>

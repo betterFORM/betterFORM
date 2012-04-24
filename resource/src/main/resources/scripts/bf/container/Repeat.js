@@ -5,7 +5,7 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
             id:null,
 
             constructor:function(properties, node){
-                console.debug("\n\nRepeat.constructor created new instace node:", node, "\n\n");
+                // console.debug("\n\nRepeat.constructor created new instace node:", node, "\n\n");
                 this.inherited(arguments);
 
                 this.id = domAttr.get(this.srcNodeRef,"id");
@@ -25,18 +25,14 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                 var self = this;
                 query(".xfRepeatItem",this.srcNodeRef).forEach(function(repeatItem){
                     on(repeatItem, "click", lang.hitch(self, self._onClickRepeatItem));
-                    connect.subscribe("bf-state-change-"+ domAttr.get(repeatItem,"repeatItemId"), self.handleStateChanged);
+                    connect.subscribe("bf-state-change-"+ domAttr.get(repeatItem,"id"), self.handleStateChanged);
                 });
 
             },
             handleStateChanged:function(contextInfo) {
-                console.debug("Repeat.handleStateChanged: contextInfo:",contextInfo);
-                // TODO: REMOVE id && repeatitemid
+                // console.debug("Repeat.handleStateChanged: contextInfo:",contextInfo);
                 var repeatItem = dom.byId(contextInfo.targetId);
-                if(!repeatItem){
-                    repeatItem = query("> .xfRepeatItem[repeatItemId='" + contextInfo.targetId + "']",dom.byId(this.id))[0];
-                }
-                console.debug("found repeatItem:",repeatItem);
+                // console.debug("found repeatItem:",repeatItem);
                 if(contextInfo["readonly"] == "true"){
                     domClass.replace(repeatItem, "xfReadOnly","xfReadWrite");
                 }else {
@@ -102,13 +98,11 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                 // console.debug("handleInsert contextInfo: ",contextInfo);
                 // search for former repeat-index and remove it
                 this._removeRepeatIndexClasses();
-                console.debug("handleInsert replace prototype ids - clone prototype: ",contextInfo.originalId + "-prototype");
+                // console.debug("handleInsert replace prototype ids - clone prototype: ",contextInfo.originalId + "-prototype");
 
                 // clone prototype and manipulate classes of repeat item
                 var prototype = dom.byId(contextInfo.originalId + "-prototype");
-                console.debug("found prototype:",prototype);
                 var insertedNode = prototype.cloneNode(true);
-                console.debug("insert Node :",insertedNode);
                 this._replaceRepeatItemClasses(insertedNode);
 
                 // replace prototype ids with generated ones
@@ -123,26 +117,23 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                     var clonedNodeId = contextInfo.repeatedSelects[0].generatedIds[0];
                     domAttr.set(insertedNode, "id", clonedNodeId);
                 }
-                console.debug("updated id of insertedNode:",insertedNode);
+                // console.debug("updated id of insertedNode:",insertedNode);
                 // replace prototype ids with generated ones
 
                 this._replacePrototypeIds(insertedNode, generatedIds);
-                console.debug("replaced prototype ids");
 
                 // create dijit and place it within repeat
                 var position = parseInt(contextInfo.position,"10");
-                console.debug("position to insert node is:",position);
                 // console.debug("InsertedNode: " + insertedNode.id );
-                var repeatItemExists = query("*[repeatItemId='" + insertedNode.id + "']");
                 var repeatItemNode = undefined;
-                if (repeatItemExists[0] != null ) {
-                    // console.warn("Skipping already present repeatItem: ", repeatItemExists);
-                    repeatItemNode = dom.byId(domAttr.get(repeatItemExists[0], "id"));
+                if (dom.byId(insertedNode.id) != null ) {
+                    console.warn("Skipping already present repeatItem: ", repeatItemExists);
+                    repeatItemNode = dom.byId(insertedNode.id);
                 }else {
                     repeatItemNode = this._createRepeatItem(insertedNode, position);
                 }
-                console.debug("repeatItemNode:",repeatItemNode);
-                console.debug("handleInsert fix inserted controls repeatItemNode:",repeatItemNode);
+                // console.debug("repeatItemNode:",repeatItemNode);
+                // console.debug("handleInsert fix inserted controls repeatItemNode:",repeatItemNode);
 
                 // rename data-bf-class to class
                 query("*[data-bf-class]",repeatItemNode).forEach(function(item){
@@ -152,9 +143,7 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                         domAttr.set(item,"class", cssClass);
                     }
                     item.removeAttribute("data-bf-class");
-                    console.debug("item after replacing class: ",item);
                 });
-                console.debug("before behavior apply");
                 behavior.apply();
 
                 if(domStyle.get(repeatItemNode,"display") == "none"){
@@ -258,15 +247,14 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
 
             },
             _createRepeatItem:function(node, /* int */position) {
-                console.debug("RepeatItem._createRepeatItem node:",node, " at position " + position);
+                // console.debug("RepeatItem._createRepeatItem node:",node, " at position " + position);
                 var repeatItemCount = this._getSize();
-                console.debug("repeatItemCount: ",repeatItemCount);
                 // repeatItemDijit.hideRepeatItem();
                 domStyle.set(node, "display","none");
 
                 var targetNode = null;
                 var repeatNode = dom.byId(this.id);
-                console.debug("_createRepeatItem: repeatNode:",repeatNode);
+                // console.debug("_createRepeatItem: repeatNode:",repeatNode);
                 if (position == 1 && repeatItemCount > 0) {
                     if (this.appearance == "compact") {
                         targetNode = query("> tbody > .xfRepeatItem", repeatNode)[0];
@@ -286,7 +274,7 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                         }
                         domConstruct.place(node, tbodyNode);
                     } else {
-                        console.debug("place repeatItemNode:",node, " at ",repeatNode);
+                        // console.debug("place repeatItemNode:",node, " at ",repeatNode);
                         domConstruct.place(node, repeatNode);
                     }
 
