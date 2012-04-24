@@ -136,6 +136,16 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                 }
                 // console.debug("repeatItemNode",repeatItemNode);
                 // console.debug("handleInsert fix inserted controls repeatItemNode:",repeatItemNode);
+
+                // rename data-bf-class to class
+                query("*[data-bf-class]",repeatItemNode).forEach(function(item){
+                    console.debug("\n\nrename data-bf-class to class");
+                    var cssClass = domAttr.get(item,"data-bf-class");
+                    item.removeAttribute("data-bf-class");
+                    domAttr.set(item,"class", cssClass);
+                    console.debug("item after replacing class: ",item);
+                });
+
                 behavior.apply();
                 if(domStyle.get(repeatItemNode,"display") == "none"){
                     repeatItemNode.removeAttribute("style");

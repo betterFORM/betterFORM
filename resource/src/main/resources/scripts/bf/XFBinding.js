@@ -60,17 +60,16 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
                 this.readonly = contextInfo["readonly"];
                 this.required = contextInfo["required"];
                 this.relevant = contextInfo["enabled"];
-                // console.debug("XFControl.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " targetName:",contextInfo["targetName"]," type:",contextInfo["type"], " contextInfo:",contextInfo);
+                this.type = contextInfo["type"];
+
+                console.debug("XFControl.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " targetName:",contextInfo["targetName"]," type:",contextInfo["type"], " contextInfo:",contextInfo);
 
                 // check xsd type and adjust if needed
-                if(domClass.contains(this.srcNodeRef, "bfPrototype")){
-                    // console.warn("XFControl.handleStateChange widget not initialized yet");
-                    domClass.remove(this.srcNodeRef, "bfPrototype");
-                    var type = contextInfo["type"];
-                    var xsdType = "xsd" + type.replace(/^[a-z]/, type.substring(0, 1).toUpperCase());
+                if(this.type != undefined && this.type != ""){
+                    // console.warn("XFControl.handleStateChange type changed");
+                    var xsdType = "xsd" + this.type.replace(/^[a-z]/, this.type.substring(0, 1).toUpperCase());
                     // console.debug("apply new type: ",xsdType, " to Control Widget");
                     domClass.add(this.srcNodeRef, xsdType);
-                    this.srcNodeRef.className = this.srcNodeRef.className.replace(/(\sxf.*)Tmpl/g,"$1");
                     behavior.apply();
 
                 }

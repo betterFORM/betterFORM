@@ -81,7 +81,6 @@
 
                 <div repeatItemId="{$repeat-item-id}"
                      class="{$repeat-item-classes}"
-                     appearance="appFull full"
                      tabindex="0">
                     <div class="legend">
                         <xsl:choose>
@@ -173,22 +172,9 @@
             </xsl:call-template>
         </xsl:variable>
 
-        <!--
-                <xsl:variable name="htmlElem">
-                    <xsl:choose>
-                        <xsl:when test="local-name()='output'">span</xsl:when>
-                        <xsl:otherwise>div</xsl:otherwise>
-                    </xsl:choose>
-                </xsl:variable>
-        -->
-
         <xsl:element name="span">
             <xsl:attribute name="id" select="$id"/>
-            <xsl:variable name="modifiedClasses" select="replace($control-classes, '^(xfControl).*?(xf.*?)\s+','$1 $2Tmpl ')"/>
-            <xsl:message select="$modifiedClasses"/>
-            <xsl:attribute name="class" select="concat($modifiedClasses,' xfRepeated bfPrototype')"/>
-            <xsl:attribute name="appearance" select="@appearance"/>
-            <xsl:attribute name="title" select="normalize-space(xf:hint)"/>
+            <xsl:attribute name="data-bf-class" select="$control-classes"/>
 
             <xsl:if test="exists(@mediatype)">
                 <xsl:attribute name="mediatype" select="@mediatype"/>
@@ -219,7 +205,7 @@
             </xsl:call-template>
         </xsl:variable>
 
-        <div id="{$id}" class="{$control-classes} xfRepeated" appearance="{@appearance}" repeatId="{$id}">
+        <div id="{$id}" class="{$control-classes} xfRepeated" repeatId="{$id}">
             <xsl:apply-templates select="*" mode="repeated-full-prototype"/>
         </div>
     </xsl:template>
@@ -247,7 +233,7 @@
             <xsl:attribute name="id" select="$id"/>
             <xsl:attribute name="class" select="concat($group-classes,' xfRepeated dijitContentPane')"/>
             <xsl:attribute name="controlType" select="local-name()"/>
-            <xsl:attribute name="appearance" select="$appearance"/>
+
 
             <xsl:element name="{$htmlElem}">
                 <xsl:attribute name="class">xfGroupLabel</xsl:attribute>
@@ -458,7 +444,6 @@
         <table repeatId="{$repeat-id}"
                jsId="{$repeat-id}"
                class="{$repeat-classes}"
-               appearance="appCompact compact"
                border="0"
                cellpadding="0"
                cellspacing="0"
@@ -482,8 +467,7 @@
                 </xsl:variable>
 
                 <tr repeatItemId="{$id}"
-                    class="{$repeat-item-classes}"
-                    appearance="appCompact compact">
+                    class="{$repeat-item-classes}">
                     <xsl:call-template name="processCompactChildren"/>
                 </tr>
             </xsl:for-each>
@@ -580,7 +564,9 @@
             mode="repeated-compact-prototype" priority="10">
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="control-classes">
-            <xsl:call-template name="assemble-control-classes"/>
+            <xsl:call-template name="assemble-control-classes">
+                <xsl:with-param name="appearance" select="@appearance"/>
+            </xsl:call-template>
         </xsl:variable>
 
         <xsl:variable name="htmlElem">
@@ -596,11 +582,7 @@
 
         <xsl:element name="{$htmlElem}">
             <xsl:attribute name="id" select="$id"/>
-            <!--    xfControl xfInput aDefault repeat1-1 repeated mediatypeText xfRepeated bfPrototype -->
-            <xsl:variable name="modifiedClasses" select="replace($control-classes, '^xfControl.*?(xf.*?)\s+','xfControl $1Tmpl ')"/>
-            <xsl:message select="$modifiedClasses"/>
-            <xsl:attribute name="class" select="concat($modifiedClasses,' xfRepeated bfPrototype')"/>
-            <xsl:attribute name="appearance" select="@appearance"/>
+            <xsl:attribute name="data-bf-class" select="$control-classes"/>
             <xsl:if test="$incrementaldelay ne 'undef'">
                 <xsl:message>
                     <xsl:value-of select="concat(' incremental-delay: ', $incrementaldelay)"/>
@@ -627,7 +609,9 @@
     <xsl:template match="xf:group" mode="repeated-compact-prototype" priority="10">
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="control-classes">
-            <xsl:call-template name="assemble-control-classes"/>
+            <xsl:call-template name="assemble-control-classes">
+                <xsl:with-param name="appearance" select="@appearance"/>
+            </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="appearance" select="@appearance"/>
 
@@ -643,7 +627,7 @@
             <xsl:attribute name="id" select="$id"/>
             <xsl:attribute name="class" select="concat($control-classes,' xfRepeated')"/>
             <xsl:attribute name="controlType" select="local-name()"/>
-            <xsl:attribute name="appearance" select="$appearance"/>
+            <!--<xsl:attribute name="appearance" select="$appearance"/>-->
             <xsl:call-template name="copy-style-attribute"/>
             <!-- prevent xf:label for groups within compact repeat-->
             <xsl:apply-templates select="*[not(self::xf:label)]" mode="repeated-compact-prototype"/>
@@ -685,7 +669,9 @@
     <xsl:template match="xf:repeat" mode="repeated-compact-prototype" priority="10">
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="control-classes">
-            <xsl:call-template name="assemble-control-classes"/>
+            <xsl:call-template name="assemble-control-classes">
+                <xsl:with-param name="appearance" select="@appearance"/>
+            </xsl:call-template>
         </xsl:variable>
         <table id="{$id}"
                dojoAttachEvent='onfocus:_onFocus' repeatId="{$id}">
@@ -707,7 +693,10 @@
         </xsl:variable>
 
         <xsl:variable name="control-classes">
-            <xsl:call-template name="assemble-control-classes"/>
+            <xsl:call-template name="assemble-control-classes">
+                <xsl:with-param name="appearance" select="@appearance"/>
+            </xsl:call-template>
+
         </xsl:variable>
         <xsl:choose>
             <xsl:when test="exists(@ref) or exists(@bind)">
@@ -751,7 +740,9 @@
             mode="compact-repeat">
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="control-classes">
-            <xsl:call-template name="assemble-control-classes"/>
+            <xsl:call-template name="assemble-control-classes">
+                <xsl:with-param name="appearance" select="@appearance"/>
+            </xsl:call-template>
         </xsl:variable>
 
         <div id="{$id}" class="{$control-classes} xfRepeated">

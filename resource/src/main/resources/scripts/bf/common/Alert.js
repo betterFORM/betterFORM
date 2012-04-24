@@ -28,7 +28,7 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registr
                     // do nothing on init
                     return;
                 }
-                console.debug("Alert.handleValid[id:" + id, " action: " + action + "]");
+                // console.debug("Alert.handleValid[id:" + id, " action: " + action + "]");
 
                 var control = registry.byId(id);
                 if (control == null) {
@@ -58,7 +58,7 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registr
             },
 
         handleInvalid:function(id,action) {
-            console.debug("Alert.handleInvalid [id:" + id , " action: " + action + "]");
+            // console.debug("Alert.handleInvalid [id:" + id , " action: " + action + "]");
 
             //##### SHOW NOTHING ON INIT #######
             var control = registry.byId(id);
@@ -154,7 +154,7 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registr
             } else if (domClass.contains(controlDijit.domNode, "xfRange") && (controlValue == 0 || controlValue == "0")){
                 controlValueIsEmpty = true;
             }
-            console.debug("Alert._controlValueIsEmpty: ",controlValueIsEmpty, " controlValue is: ",controlValue, " controlDOMNode: ", controlDijit.domNode);
+            // console.debug("Alert._controlValueIsEmpty: ",controlValueIsEmpty, " controlValue is: ",controlValue, " controlDOMNode: ", controlDijit.domNode);
             return controlValueIsEmpty;
         }
 
