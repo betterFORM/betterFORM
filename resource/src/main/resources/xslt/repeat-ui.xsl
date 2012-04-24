@@ -65,7 +65,7 @@
         </xsl:if>
 
 
-        <div repeatId="{$repeat-id}" class="{$repeat-classes}">
+        <div id="{$repeat-id}" class="{$repeat-classes}">
             <!-- loop repeat entries -->
             <xsl:for-each select="xf:group[@appearance='repeated']">
                 <xsl:variable name="repeat-item-id" select="@id"/>
@@ -203,7 +203,7 @@
             </xsl:call-template>
         </xsl:variable>
 
-        <div id="{$id}" data-bf-class="{$repeat-classes}" repeatId="{$id}">
+        <div id="{$id}" data-bf-class="{$repeat-classes}">
             <!--<xsl:apply-templates select="*" mode="repeated-full-prototype"/>-->
         </div>
     </xsl:template>
@@ -439,7 +439,7 @@
         </xsl:if>
 
 
-        <table repeatId="{$repeat-id}"
+        <table id="{$repeat-id}"
                jsId="{$repeat-id}"
                class="{$repeat-classes}"
                border="0"
@@ -673,7 +673,7 @@
         </xsl:variable>
 
         <table id="{$id}"
-               dojoAttachEvent='onfocus:_onFocus' repeatId="{$id}" data-bf-class="{$repeat-classes}">
+               dojoAttachEvent='onfocus:_onFocus' data-bf-class="{$repeat-classes}">
             <tr class="xfRepeatHeader">
                 <xsl:call-template name="processCompactHeader"/>
             </tr>
@@ -798,7 +798,7 @@
         </xsl:variable>
 
         <xsl:element name="{local-name(.)}" namespace="">
-            <xsl:attribute name="repeatId"><xsl:value-of select="$repeat-id"/></xsl:attribute>
+            <xsl:attribute name="id"><xsl:value-of select="$repeat-id"/></xsl:attribute>
             <xsl:attribute name="jsId"><xsl:value-of select="@id"/></xsl:attribute>
             <xsl:attribute name="class"><xsl:value-of select="$repeat-classes"/></xsl:attribute>
             <xsl:copy-of select="@*"/>
@@ -907,7 +907,7 @@
             </xsl:for-each>
 
 
-            <div id="{$repeat-id}" repeatId="{$repeat-id}" class="{$repeat-classes}" dojoType="betterform.ui.container.RepeatTabContainer" doLayout="false">
+            <div id="{$repeat-id}" class="{$repeat-classes}" dojoType="betterform.ui.container.RepeatTabContainer" doLayout="false">
 
                 <xsl:for-each select="xf:group[@appearance='repeated']">
                     <xsl:variable name="repeat-item-id" select="@id"/>

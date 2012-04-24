@@ -150,11 +150,7 @@ define(["dojo/_base/declare",
             // START: skip this pending Event, if one of the following conditions occurred:
             //*****************************************************************************
 
-            if(callerFunction == "setRepeatIndex"){
-                dojoObject = query("*[repeatId='" + nextPendingTargetId + "']")[0];
-            }else {
-                dojoObject = dom.byId(nextPendingTargetId);
-            }
+            dojoObject = dom.byId(nextPendingTargetId);
             // console.debug("EventFifoReader dojoObject:",dojoObject, " targetId: ",nextPendingTargetId);
             if (dojoObject == null) {
                 console.warn("Event (Client to Server) for Dojo Control " + dojoObject + " skipped. CAUSE: OBJECT is NULL",nextPendingTargetId);

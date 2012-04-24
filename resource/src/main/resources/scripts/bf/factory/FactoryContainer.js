@@ -13,7 +13,6 @@ define(["dojo/_base/declare","bf/util"],
                         case "group":
                             // console.debug("FactoryContainer (group)");
                             require(["dojo/dom","dojo/dom-attr","dojo/_base/connect","bf/XFBinding"], function(dom,domAttr,connect,XFBinding) {
-                                // repeatId:domAttr.get(n,"repeatId")
                                 var group = new XFBinding({}, n);
 //                                connect.subscribe("bf-state-change-"+ group.id, group, "handleStateChanged");
                                 group.setLabel = function( value) {
