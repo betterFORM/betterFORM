@@ -11,11 +11,12 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                     var n = node;
                     var xfId = bf.util.getXfId(n);
                     var xfControlDijit = registry.byId(xfId);
-                    var initialValue = domAttr.get(n,"data-bf-value");
+                    var dataObj = bf.util.parseDataAttribute(n,"data-bf-params");
+                    var initialValue = dataObj.value;
                     xfControlDijit.setCurrentValue(initialValue);
 
                     var self = this;
-                    var openselection = domAttr.get(n,"selection") == "open";
+                    var openselection = dataObj.selection == "open";
                     if(type == "listcontrol" && openselection){
                         type = "open";
                     }else if(openselection){
@@ -90,7 +91,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                                 dojo.connect(freeTextDijit, "_onBlur" ,function(e){
                                     // console.debug("freeTextDijit._onBlur: ");
                                     var bfValue = freeTextDijit.get("bfValue");
-                                    var value = freeTextDijit.get("value")
+                                    var value = freeTextDijit.get("value");
                                     freeTextDijit.set("bfValue", value);
                                     var result = lang.trim(self.getSelectMinimalValue(n) + " " + value);
                                     var evt = {};

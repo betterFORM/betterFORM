@@ -281,17 +281,19 @@
             <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             -->
             <xsl:when test="@appearance='compact'">
+                <xsl:variable name="dataBfParam">
+                    <xsl:choose>
+                        <xsl:when test="$isOpenSelection">value:'<xsl:value-of select="bf:data/@bf:schema-value"/>',selection:'open',autocomplete:true</xsl:when>
+                        <xsl:otherwise>value:'<xsl:value-of select="bf:data/@bf:schema-value"/>'</xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
                 <select id="{$id}-value"
                         name="{$name}"
                         size="{$size}"
                         class="xfValue"
                         title="{xf:hint/text()}"
                         tabindex="{$navindex}"
-                        data-bf-value="{bf:data/@bf:schema-value}">
-                    <xsl:if test="$isOpenSelection">
-                        <xsl:attribute name="selection">open</xsl:attribute>
-                        <xsl:attribute name="autocomplete">true</xsl:attribute>
-                    </xsl:if>
+                        data-bf-params="{$dataBfParam}">
                     <xsl:call-template name="build-items">
                         <xsl:with-param name="parent" select="$parent"/>
                     </xsl:call-template>
@@ -317,7 +319,7 @@
             <xsl:when test="@appearance='full'">
                 <span id="{$id}-value"
                       class="xfValue"
-                      data-bf-value="{bf:data/@bf:schema-value}">
+                      data-bf-params="value:'{bf:data/@bf:schema-value}'">
                     <xsl:call-template name="build-radiobuttons">
                         <xsl:with-param name="id" select="$id"/>
                         <xsl:with-param name="name" select="$name"/>
@@ -350,17 +352,20 @@
                     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                     -->
 <!--            <span class="select1wrapper">-->
-                    <select id="{$id}-value"
+                <xsl:variable name="dataBfParam">
+                    <xsl:choose>
+                        <xsl:when test="$isOpenSelection">value:'<xsl:value-of select="bf:data/@bf:schema-value"/>',selection:'open',autocomplete:true</xsl:when>
+                        <xsl:otherwise>value:'<xsl:value-of select="bf:data/@bf:schema-value"/>'</xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+
+                <select id="{$id}-value"
                             name="{$name}"
                             class="xfValue"
                             size="1"
                             title="{xf:hint/text()}"
                             tabindex="{$navindex}"
-                            data-bf-value="{bf:data/@bf:schema-value}">
-                        <xsl:if test="$isOpenSelection">
-                            <xsl:attribute name="selection">open</xsl:attribute>
-                            <xsl:attribute name="autocomplete">true</xsl:attribute>
-                        </xsl:if>
+                            data-bf-params="{$dataBfParam}">
                         <xsl:call-template name="build-items">
                             <xsl:with-param name="parent" select="$parent"/>
                         </xsl:call-template>
@@ -389,7 +394,7 @@
                       name="{$name}"
                       class="xfValue bfCheckBoxGroup"
                       title="{xf:hint/text()}"
-                      data-bf-value="{bf:data/@bf:schema-value}"
+                      data-bf-params="value:'{bf:data/@bf:schema-value}'"
                       tabindex="{$navindex}">
                     <xsl:for-each select="$parent/xf:item|$parent/xf:choices|$parent/xf:itemset">
                         <xsl:call-template name="build-checkboxes-list">
@@ -419,6 +424,13 @@
             <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             -->
             <xsl:otherwise>
+                <xsl:variable name="dataBfParam">
+                    <xsl:choose>
+                        <xsl:when test="$isOpenSelection">value:'<xsl:value-of select="bf:data/@bf:schema-value"/>',selection:'open'</xsl:when>
+                        <xsl:otherwise>value:'<xsl:value-of select="bf:data/@bf:schema-value"/>'</xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+
                 <select id="{concat($id,'-value')}"
                         name="{$name}"
                         size="{$size}"
@@ -426,10 +438,7 @@
                         class="xfValue"
                         title="{xf:hint/text()}"
                         tabindex="{$navindex}"
-                        data-bf-value="{bf:data/@bf:schema-value}">
-                    <xsl:if test="$isOpenSelection">
-                        <xsl:attribute name="selection">open</xsl:attribute>
-                    </xsl:if>
+                        data-bf-params="{$dataBfParam}">
                     <xsl:call-template name="build-items">
                         <xsl:with-param name="parent" select="$parent"/>
                     </xsl:call-template>

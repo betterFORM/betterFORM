@@ -11,10 +11,12 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     var n = node;
                     var xfId = bf.util.getXfId(n);
                     var xfControlDijit = registry.byId(xfId);
-                    var initialValue = domAttr.get(n,"data-bf-value");
+                    var dataObj = bf.util.parseDataAttribute(n,"data-bf-params");
+                    var initialValue = dataObj.value;
+
                     xfControlDijit.setCurrentValue(initialValue);
 
-                    var openselection = domAttr.get(n,"selection") == "open";
+                    var openselection = dataObj.selection == "open";
                     if(type == "combobox" && openselection){
                         type = "open";
                     }else if(openselection){
@@ -79,6 +81,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                 var comboBox = new ComboBox({
                                     id:n.id,
                                     name:n.name,
+                                    autocomplete:true,
                                     onChange: function(value){
                                         console.log("combobox onchange ", value);
                                         var result = this.item ? this.item.value : value;
