@@ -67,14 +67,19 @@
                 </input>
             </xsl:when>
             <xsl:when test="$type='date' or $type='dateTime' or $type='dateTime'">
+                <xsl:variable name="dataBfParams">
+                    <xsl:choose>
+                        <xsl:when test="exists(@data-bf-params) and string-length(@data-bf-params) &gt; 0"><xsl:value-of select="@data-bf-params"/>,value:'<xsl:value-of select="bf:data/@bf:schema-value"/>'</xsl:when>
+                        <xsl:otherwise>value:'<xsl:value-of select="bf:data/@bf:schema-value"/>'</xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
                 <input  id="{$id}-value"
                         name="{$name}"
                         type="{$type}"
                         class="xfValue"
                         tabindex="{$navindex}"
-                        data-bf-params="{@data-bf-params}"
+                        data-bf-params="{$dataBfParams}"
                         placeholder="{xf:hint/text()}"
-                        schemaValue="{bf:data/@bf:schema-value}"
                         value="{bf:data/text()}">
                     <xsl:if test="bf:data/@bf:readonly='true'">
                         <xsl:attribute name="disabled">disabled</xsl:attribute>

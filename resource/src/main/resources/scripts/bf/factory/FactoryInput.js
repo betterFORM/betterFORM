@@ -150,7 +150,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         var xfControlDijit = registry.byId(xfId);
                         var dataObj = bf.util.parseDataAttribute(n,"data-bf-params");
                         var dateFormat = dataObj.date;
-                        var value = domAttr.get(n,"schemavalue");
+                        var value = dataObj.value;
                         xfControlDijit.setCurrentValue(value);
                         var dateWidget = new DropDownDate({
                             value:value,
@@ -176,7 +176,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             datePattern = "MM/dd/yyyy"
                         }
                         // console.debug("input type=date datePattern:",datePattern);
-                        var xfValue = new Date(domAttr.get(n,"schemavalue"));
+                        var xfValue = new Date(dataObj.value);
                         xfControlDijit.setCurrentValue(xfValue);
                         var dateWidget = new DateTextBox({
                                 value:xfValue,
@@ -194,7 +194,9 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     var n = node;
                     var xfControlDijit = controlDijit;
                     var controlId =domAttr.get(n,"id");
-                    var xfValue = domAttr.get(n,"schemavalue");
+                    var dataObj = bf.util.parseDataAttribute(n,"data-bf-params");
+                    // console.debug("createDateTime: dataObj:",dataObj);
+                    var xfValue = dataObj.value;
                     xfControlDijit.setCurrentValue(xfValue);
 
                     var xfId = bf.util.getXfId(n);

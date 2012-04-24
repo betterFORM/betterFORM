@@ -3,8 +3,8 @@
  * Licensed under the terms of BSD License
  */
 
-require(['dojo/_base/declare',"dojo/dom-class","dojo/dom-attr"],
-    function(declare,domClass,domAttr){
+require(['dojo/_base/declare',"dojo/dom-class","dojo/dom-attr","dojo/_base/json"],
+    function(declare,domClass,domAttr,json){
         declare("bf.util", null, {
 
         });
@@ -184,16 +184,13 @@ require(['dojo/_base/declare',"dojo/dom-class","dojo/dom-attr"],
         };
 
         bf.util.parseDataAttribute = function(node, dataAttributeName){
-            // console.debug("bf.util.parseDataAttribute: node:",node, " dataAttributeName:",dataAttributeName);
-            var n = node;
-            var attrName = dataAttributeName;
+            console.debug("bf.util.parseDataAttribute: node:",node, " dataAttributeName:",dataAttributeName);
             var result = {};
-            require(["dojo/dom-attr","dojo/_base/json"],function(domAttr,json){
-                var dataAttrString = domAttr.get(n,attrName);
-                if(dataAttrString && dataAttrString != ""){
-                    result =  json.fromJson("{" + dataAttrString +  "}");
-                }
-            });
+            var dataAttrString = domAttr.get(node,dataAttributeName);
+            console.debug("dataAttrString: ",dataAttrString);
+            if(dataAttrString && dataAttrString != ""){
+                result =  json.fromJson("{" + dataAttrString +  "}");
+            }
             return result;
         }
     }
