@@ -1027,7 +1027,6 @@ define(["dojo/_base/declare",
                     new Toaster({id:"betterformMessageToaster",
                                 positionDirection:"bl-up",
                                 duration:"8000",
-                                separator:"&lt;div style='height:1px;border-top:thin dotted;width:100%;'&gt;&lt;/div&gt;",
                                 messageTopic:'bfMessageTopic'
                                 },"betterformMessageToaster");
                 }
