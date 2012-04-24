@@ -24,7 +24,11 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registr
             handleValid:function (id, action) {
                 // TODO: applyChanges must remove an existing alert
 
-                // console.debug("Alert.handleValid[id:" + id, " action: " + action + "]");
+                if(action == "init") {
+                    // do nothing on init
+                    return;
+                }
+                console.debug("Alert.handleValid[id:" + id, " action: " + action + "]");
 
                 var control = registry.byId(id);
                 if (control == null) {
@@ -36,11 +40,7 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registr
 
                 // console.debug("controlValueIsEmpty:",controlValueIsEmpty, " control.getControlValue(): ",control.getControlValue());
 
-                if(action == "init") {
-                    // do nothing on init
-                    return;
-                }
-                else if(action == "xfDisabled" || action == "changeAlertType" || ((action == "applyChanges" || action == "onBlur") && controlValueIsEmpty)) {
+                if(action == "xfDisabled" || action == "changeAlertType" || ((action == "applyChanges" || action == "onBlur") && controlValueIsEmpty)) {
                     this._displayNone(id, action);
                 }
                 if(action == "onFocus" && (controlValueIsEmpty || this.alwaysShowHint != undefined)) {
@@ -58,7 +58,7 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registr
             },
 
         handleInvalid:function(id,action) {
-            // console.debug("Alert.handleInvalid [id:" + id , " action: " + action + "]");
+            console.debug("Alert.handleInvalid [id:" + id , " action: " + action + "]");
 
             //##### SHOW NOTHING ON INIT #######
             var control = registry.byId(id);
@@ -154,7 +154,7 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registr
             } else if (domClass.contains(controlDijit.domNode, "xfRange") && (controlValue == 0 || controlValue == "0")){
                 controlValueIsEmpty = true;
             }
-            // console.debug("Alert._controlValueIsEmpty: ",controlValueIsEmpty, " controlValue is: ",controlValue, " controlDOMNode: ", controlDijit.domNode);
+            console.debug("Alert._controlValueIsEmpty: ",controlValueIsEmpty, " controlValue is: ",controlValue, " controlDOMNode: ", controlDijit.domNode);
             return controlValueIsEmpty;
         }
 

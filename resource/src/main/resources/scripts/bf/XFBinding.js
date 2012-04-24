@@ -23,22 +23,22 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
 
 
         constructor:function(properties, node) {
-            console.debug("XFBinding.constructor");
+            // console.debug("XFBinding.constructor");
             this.srcNodeRef = node;
             this.id = node.id;
-            console.debug("XFBinding.constructor setDefaultClasses");
+            // console.debug("XFBinding.constructor setDefaultClasses");
             bf.util.setDefaultClasses(this.srcNodeRef);
 
             /*
              Controls publish their validity state to the processor which will pass it to the selected alertHandler
              */
-            console.debug("XFBinding.constructor handleValid");
+            // console.debug("XFBinding.constructor handleValid");
             if (this.isValid()) {
                 connect.publish("xforms-valid", [this.id,"init"]);
             } else {
                 connect.publish("xforms-invalid", [this.id,"init"]);
             }
-            console.debug("XFBinding.constructor subscribe state change");
+            // console.debug("XFBinding.constructor subscribe state change");
             // console.debug("connect.subscribe('bf-state-change-"+ this.id + "', this, 'handleStateChanged')");
             connect.subscribe("bf-state-change-"+ this.id, this, "handleStateChanged");
         },
@@ -49,7 +49,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
         between client and server.
          */
         handleStateChanged:function(contextInfo) {
-            console.debug("BoundElement.handleStateChanged: ",contextInfo);
+            // console.debug("BoundElement.handleStateChanged: ",contextInfo);
 
             if (contextInfo["parentId"]) {
                 // console.debug("Control._handleHelperChanged: ",contextInfo);
@@ -245,7 +245,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
         },
 
         setLabel:function(value) {
-             console.debug("Control.setLabel value:"+ value);
+             // console.debug("Control.setLabel value:"+ value);
 
             var labelNode = dom.byId(this.id + "-label");
             if (labelNode != undefined) {
@@ -290,7 +290,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
                     titleAttributeFound = titleAttribute != undefined && titleAttribute != "";
                 }
                 catch(exception) {
-                    console.debug("title attribute for hint " +  this.id + "-hint" + " is empty");
+                    console.warn("title attribute for hint " +  this.id + "-hint" + " is empty");
                 }
             }
 

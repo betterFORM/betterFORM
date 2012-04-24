@@ -209,12 +209,15 @@ require(['dojo/_base/declare',"dojo/dom-class","dojo/dom-attr"],
         }
 
         bf.util.parseDataAttribute = function(node, dataAttributeName){
+            // console.debug("bf.util.parseDataAttribute: node:",node, " dataAttributeName:",dataAttributeName);
             var n = node;
             var attrName = dataAttributeName;
-            var result = undefined;
+            var result = {};
             require(["dojo/dom-attr","dojo/_base/json"],function(domAttr,json){
                 var dataAttrString = domAttr.get(n,attrName);
-                result =  json.fromJson("{" + dataAttrString +  "}");
+                if(dataAttrString && dataAttrString != ""){
+                    result =  json.fromJson("{" + dataAttrString +  "}");
+                }
             });
             return result;
         }

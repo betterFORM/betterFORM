@@ -8,6 +8,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                  * @param node
                  */
                 create:function(type, node){
+                    // console.debug("FactoryInput: type",type, " node:",node);
                     var xfControlDijit = registry.byId(bf.util.getXfId(node));
                     if(xfControlDijit){
                         xfControlDijit.setCurrentValue(domAttr.get(node,"value"));
@@ -100,7 +101,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
 
                 _createCheckbox:function(xfControlDijit, node){
                     // console.debug("FactoryInput.createInputBoolean");
-                    // console.debug("FOUND: boolean input field: ",n);
+                    // console.debug("FOUND: boolean input field: ",node);
                     if(domAttr.get(node,"type") != "checkbox"){
                         domAttr.set(node,"type","checkbox");
                     }
@@ -126,7 +127,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     };
 
                     connect.connect(node,"onblur",function(evt){
-                        // console.debug("onblur",n);
+                        // console.debug("onblur",node, " node.checked:",node.checked);
                         if(node.checked != undefined){
                             xfControlDijit.sendValue(node.checked,evt);
                         }
@@ -163,7 +164,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                 _createDate:function(xfControlDijit, node){
                     var n = node;
                     var self = this;
-                    require(["dojo/query","dijit/form/DateTextBox","dojo/_base/json"],function(query,DateTextBox,json){
+                    require(["dojo/query","dijit/form/DateTextBox"],function(query,DateTextBox){
                         n = query(".xfValue",node)[0];
                         // console.debug("found date value node: n:",n);
                         var xfId = bf.util.getXfId(n);
@@ -339,10 +340,10 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                  * @param dateWidget
                  * @private
                  */
-                _connectDateDijit:function(controlDijit, dateWidget){
-                    var xfControlDijit =controlDijit;
+                _connectDateDijit:function(xfControlDijit, dateWidget){
                     // console.debug("connectDateDijit: xfControlDijit:",xfControlDijit," dateWidget:",dateWidget);
                     domClass.add(dateWidget.domNode,"xfValue");
+
                     connect.connect(dateWidget, "set", function (attrName, value) {
                         if((attrName == "focused" &&  !value) || attrName == "value") {
                             var dateValue;
@@ -363,18 +364,18 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             evt.type = attrName == "focused" ? "blur" : "focus";
                             xfControlDijit.sendValue(dateValue,evt);
                         }
-                        xfControlDijit.setValue = function(value,schemavalue) {
-                            dateWidget.set('value', schemavalue);
-                        };
-                        xfControlDijit.setReadonly = function() {
-                            bf.util.replaceClass(xfControlDijit.domNode,"xfReadWrite","xfReadOnly");
-                            dateWidget.set('readOnly', true);
-                        };
-                        xfControlDijit.setReadwrite = function() {
-                            bf.util.replaceClass(xfControlDijit.domNode,"xfReadOnly","xfReadWrite");
-                            dateWidget.set('readOnly', false);
-                        };
                     });
+                    xfControlDijit.setValue = function(value,schemavalue) {
+                        dateWidget.set('value', schemavalue);
+                    };
+                    xfControlDijit.setReadonly = function() {
+                        bf.util.replaceClass(xfControlDijit.domNode,"xfReadWrite","xfReadOnly");
+                        dateWidget.set('readOnly', true);
+                    };
+                    xfControlDijit.setReadwrite = function() {
+                        bf.util.replaceClass(xfControlDijit.domNode,"xfReadOnly","xfReadWrite");
+                        dateWidget.set('readOnly', false);
+                    };
                 },
 
                 _createMobileDate:function(xfControlDijit, dateWidget){
