@@ -34,14 +34,14 @@ define(["dojo/_base/declare","bf/util"],
                             break;
 
                         case "repeat":
-                            console.debug("FactoryContainer (repeat)");
+                            // console.debug("FactoryContainer (repeat)");
                             require(["bf/container/Repeat"], function(Repeat) {
                                 new Repeat({}, n);
                             });
                             break;
 
                         case "switch":
-                            console.debug("FactoryContainer (switch) n: ",n);
+                            // console.debug("FactoryContainer (switch) n: ",n);
                             require(["dojo/dom-class","dojo/_base/connect"], function(domClass,connect) {
                                 connect.subscribe("bf-switch-toggled-"+ n.id, function(contextInfo) {
                                     // console.debug("FactoryContain (switch) bf-switch-toggled contextInfo:",contextInfo);
@@ -55,7 +55,7 @@ define(["dojo/_base/declare","bf/util"],
                             });
                             break;
                         case "tabswitch":
-                            console.debug("FactoryContainer (tabswitch) n: ",n);
+                            // console.debug("FactoryContainer (tabswitch) n: ",n);
                             require(["dijit/layout/ContentPane","dijit/layout/TabContainer","dojo/query","dojo/aspect","dojo/_base/array","dojo/dom","dojo/dom-attr","dojo/_base/connect"], function(ContentPane, TabContainer, query,aspect,array,dom,domAttr,connect) {
                                 // connect and overwrite 'handleStateChanged' since it is not supported by switch
                                 var xfCases = query(".xfCase",n);

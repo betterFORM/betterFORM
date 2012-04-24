@@ -35,7 +35,7 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/XFBinding","dojo/dom", "dojo/d
          * @param value
          */
         setCurrentValue:function(value){
-            console.debug("XFControl.setCurrentValue value:", value, " currentValue:",this.currentValue);
+            // console.debug("XFControl.setCurrentValue value:", value, " currentValue:",this.currentValue);
             this.currentValue = value;
 
         },
