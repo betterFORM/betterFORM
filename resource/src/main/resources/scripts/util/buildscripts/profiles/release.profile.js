@@ -71,6 +71,7 @@ var profile = {
             // conditional dependencies in bf/main (the other being bf/Dialog) but we don’t want to have to make
             // extra HTTP requests for such tiny files.
             include: [
+                //Start braucht man glaub ich nicht//
                 'dojo/dojo',
                 'dojo/i18n',
                 'dojo/domReady',
@@ -90,6 +91,9 @@ var profile = {
                 'dojo/_base/sniff',
 
                 'dijit/registry',
+                //Stop braucht man glaub ich nicht//
+
+                'dojo/_firebug/firebug',
                 'dijit/form/HorizontalRuleLabels',
                 'dijit/form/HorizontalSlider',
                 'dijit/form/HorizontalRule',

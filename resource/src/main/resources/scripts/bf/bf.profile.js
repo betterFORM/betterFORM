@@ -9,14 +9,6 @@ var profile = (function(){
     };
 
     return {
-        cssOptimize: 'comments',
-        mini: true,
-        optimize: 'closure',
-        layerOptimize: 'closure',
-        stripConsole: 'all',
-        selectorEngine: 'acme',
-        action: 'release',
-
         resourceTags:{
             test: function(filename, mid){
                 return false;

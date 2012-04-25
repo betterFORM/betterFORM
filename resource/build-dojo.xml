@@ -123,7 +123,7 @@
 
     <target name="build-dojo"
             description="create a custom Javascript build of betterFORM"
-            depends="prepare-dojo, copy-src-resources-scripts,  check-if-js-is-up-to-date"
+            depends="clean, prepare-dojo, copy-src-resources-scripts,  check-if-js-is-up-to-date"
             unless="build-js-required" >
 
         <copy file="${script.src}/util/buildscripts/profiles/release.profile.js" todir="${scripts.target}"/>
@@ -160,16 +160,6 @@
              zipfile="${src.dir}/main/lib/${app.name}-js-optimized.zip"
              basedir="${scripts.target}/release"/>
 
-    </target>
-
-    <target name="test">
-        <delete dir="${scripts.target}/../release" excludes="dojo/dojo.js bf/dashboard.js" includeemptydirs="true"/>
-
-        <copy file="${src.dir}/main/lib/dwr.js.optimized" tofile="${scripts.target}/../release/dojo/dwr.js"/>
-
-    <zip description="create optimized JavaScript zip"
-         zipfile="${src.dir}/main/lib/${app.name}-js-optimized.zip"
-         basedir="${scripts.target}/../release"/>
     </target>
 
     <target name="clean">
