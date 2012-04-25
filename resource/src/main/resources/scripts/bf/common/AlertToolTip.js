@@ -14,8 +14,10 @@ define(["dojo/_base/declare","bf/common/Alert","dojo/dom", "dojo/dom-style","doj
             if(commonChild != undefined && commonChild == this.hint) {
                 this._render(id, commonChild,"inline");
             }
+
             else if(commonChildNode != undefined && commonChild == this.alert) {
                 console.debug("ToolTipAlert._show: [id:" + id , " commonChildNode: ", commonChildNode ,"]");
+                var commonChildId = domAttr.get(commonChildNode,"id");
                 var alertTooltip = registry.byId(domAttr.get(commonChildNode,"id"));
                 //var alertTooltip = undefined;
                 var valueNode = query('.xfValue', dom.byId(id))[0];
@@ -28,10 +30,18 @@ define(["dojo/_base/declare","bf/common/Alert","dojo/dom", "dojo/dom-style","doj
                     // console.debug("valueNode.id",valueNode.id);
 
                     alertTooltip = new Tooltip({
-                        id:commonChildNode.id,
-                        label:commonChildNode.innerHTML
+                        id:commonChildId,
+                        // Delay before showing the Tooltip (in milliseconds)
+                        showDelay: 250,
+                        // The nodes to attach the Tooltip to
+                        // Can be an array of strings or domNodes
+                        connectId: [id],
 
-                    });
+                        label:commonChildNode.innerHTML,
+
+                        defaultPosition:"after"
+
+                    },commonChildNode);
 
                     /*connectId:[valueNode.id]*/
                     alertTooltip.startup();
@@ -52,8 +62,9 @@ define(["dojo/_base/declare","bf/common/Alert","dojo/dom", "dojo/dom-style","doj
 
 
             }
+/*
             else if (commonChild == "info" && action == "applyChanges") {
-                var alertTooltip = registry.byId(id + "-alert");
+                alertTooltip = registry.byId(id + "-alert");
                 if(alertTooltip){
                     console.debug("\n\ndestroy tooltip: ",alertTooltip);
                     alertTooltip.destroy();
@@ -62,6 +73,7 @@ define(["dojo/_base/declare","bf/common/Alert","dojo/dom", "dojo/dom-style","doj
                 }
                 // setTimeout(lang.hitch(this,function() {this._fadeOutAndHide(id,commonChild)}),this.displayDuration);
             }
+*/
         },
 
 

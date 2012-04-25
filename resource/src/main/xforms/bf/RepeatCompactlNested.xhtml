@@ -104,22 +104,9 @@
                 </xf:action>
             </xf:trigger>
             <xf:trigger>
-                <xf:label>Add index into selected outer [index]</xf:label>
-                <xf:action>
-                    <xf:insert nodeset="repeat/items[index('repeat1')]/items" at="index('nested-repeat1')" position="before"/>
-                </xf:action>
-            </xf:trigger>
-
-            <xf:trigger>
                 <xf:label>Add first into selected outer</xf:label>
                 <xf:action>
                     <xf:insert nodeset="repeat/items[index('repeat1')]/items" at="1" position="before"/>
-                </xf:action>
-            </xf:trigger>
-            <xf:trigger>
-                <xf:label>Add last into selected outer</xf:label>
-                <xf:action>
-                    <xf:insert nodeset="repeat/items[index('repeat1')]/items" at="last()" position="after"/>
                 </xf:action>
             </xf:trigger>
         </div>
@@ -167,7 +154,7 @@
             </xf:trigger>
         </div>
 
-        <xf:repeat id="repeat1" nodeset="repeat/items" appearance="full">
+        <xf:repeat id="repeat1" nodeset="repeat/items" appearance="compact">
             <xf:input ref="item[1]">
                 <xf:label>String:</xf:label>
             </xf:input>
@@ -180,7 +167,7 @@
             <xf:input ref="item[4]">
                 <xf:label>Boolean:</xf:label>
             </xf:input>
-            <xf:repeat id="nested-repeat1" nodeset="items" appearance="full">
+            <xf:repeat id="nested-repeat1" nodeset="items" appearance="compact">
                 <xf:input ref="item[1]">
                     <xf:label>Nested String:</xf:label>
                 </xf:input>

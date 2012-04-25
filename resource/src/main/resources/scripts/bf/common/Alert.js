@@ -17,7 +17,6 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registr
                 // console.debug("Alert.constructor this:",this);
                 connect.subscribe("xforms-valid", this, "handleValid");
                 connect.subscribe("xforms-invalid", this, "handleInvalid");
-
             },
 
 
@@ -28,7 +27,7 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registr
                     // do nothing on init
                     return;
                 }
-                // console.debug("Alert.handleValid[id:" + id, " action: " + action + "]");
+                console.debug("Alert.handleValid[id:" + id, " action: " + action + "]");
 
                 var control = registry.byId(id);
                 if (control == null) {
@@ -58,7 +57,7 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registr
             },
 
         handleInvalid:function(id,action) {
-            // console.debug("Alert.handleInvalid [id:" + id , " action: " + action + "]");
+            console.debug("Alert.handleInvalid [id:" + id , " action: " + action + "]");
 
             //##### SHOW NOTHING ON INIT #######
             var control = registry.byId(id);

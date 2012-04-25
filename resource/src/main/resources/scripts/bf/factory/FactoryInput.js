@@ -95,6 +95,10 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         // console.debug("onblur",n);
                         xfControlDijit.sendValue(node.value, evt);
                     });
+                    connect.connect(node,"onfocus",function(evt){
+                        // console.debug("onblur",n);
+                        xfControlDijit.handleOnFocus();
+                    });
 
                 },
 
@@ -138,6 +142,11 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             xfControlDijit.sendValue(node.checked,evt);
                         }
                     });
+                    connect.connect(node,"onfocus",function(evt){
+                        // console.debug("onblur",n);
+                        xfControlDijit.handleOnFocus();
+                    });
+
 
                 },
 
@@ -229,6 +238,11 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                 xfControlDijit.sendValue(dateTimeValue, evt);
                             }
                         });
+                        connect.connect(dateTimeWidget,"_onFocus",function(evt){
+                            console.debug("dateTimeWidget:",dateTimeWidget, " handle onFocus");
+                            xfControlDijit.handleOnFocus();
+                        });
+
 
                         xfControlDijit.setValue = function(value,schemavalue) {
                             dateTimeWidget.set('value', schemavalue);
@@ -301,6 +315,11 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             domClass.replace(n,"xfReadWrite","xfReadOnly");
                             timeTextBox.set('readOnly', false);
                         };
+                        connect.connect(timeTextBox,"_onFocus",function(evt){
+                            console.debug("timeTextBox:",timeTextBox, " handle onFocus");
+                            xfControlDijit.handleOnFocus();
+                        });
+
                     });
                 },
 
@@ -332,6 +351,10 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             domClass.replace(n,"xfReadWrite","xfReadOnly");
                             time.set('readOnly', false);
                         };
+                        connect.connect(time,"_onFocus",function(evt){
+                            console.debug("time:",time, " handle onFocus");
+                            xfControlDijit.handleOnFocus();
+                        });
                     });
                 },
 
@@ -345,6 +368,11 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                 _connectDateDijit:function(xfControlDijit, dateWidget){
                     // console.debug("connectDateDijit: xfControlDijit:",xfControlDijit," dateWidget:",dateWidget);
                     domClass.add(dateWidget.domNode,"xfValue");
+
+                    connect.connect(dateWidget,"_onFocus",function(evt){
+                        console.debug("dateWidget",dateWidget, " onFocus");
+                        xfControlDijit.handleOnFocus();
+                    });
 
                     connect.connect(dateWidget, "set", function (attrName, value) {
                         if((attrName == "focused" &&  !value) || attrName == "value") {

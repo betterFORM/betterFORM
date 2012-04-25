@@ -190,7 +190,26 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/XFBinding","dojo/dom", "dojo/d
                 this.widget = dom.byId(this.id+"-value");
             }
             return this.widget;
+        },
+
+        handleOnFocus:function() {
+            //storing current control id for handling help
+            console.debug("ControlValue.handleOnFocus storing current control id:", this.id, " value: ",this.currentValue);
+
+            fluxProcessor.currentControlId = this.id;
+
+            if (!this.bfFocus && fluxProcessor.usesDOMFocusIN) {
+                // console.debug("ControlValue: dispatch DOMFocusIn to ",this.xfControl.id);
+                fluxProcessor.dispatchEventType(this.id,"DOMFocusIn");
+            }
+            this.bfFocus = true;
+            if(this.isValid()){
+                dojo.publish("xforms-valid",[this.id,"onFocus"]);
+            }else {
+                dojo.publish("xforms-invalid",[this.id,"onFocus"]);
+            }
         }
+
     });
 });
 
