@@ -79,6 +79,15 @@ define(["dojo/_base/declare","bf/util"],
 
                             });
                             break;
+                        case "dialog":
+                            require(["dojo/dom","dojo/dom-attr","dijit/Dialog"], function(dom,domAttr,Dialog) {
+                                console.debug("create new Dialog",n);
+                                new Dialog({
+                                    id:domAttr.get(n,"id"),
+                                    title: domAttr.get(n,"title")
+                                },n);
+                            });
+                            break;
                         default:
                             console.warn("FactoryContainer unknonw type: ",type);
                     }

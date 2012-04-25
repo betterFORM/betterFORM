@@ -28,6 +28,7 @@ require(['dojo/_base/declare'],
             ['.xfRepeat',           "bf/factory/FactoryContainer", "repeat"],
             ['.xfSwitch.aDefault',  "bf/factory/FactoryContainer", "switch"],
             ['.xfSwitch.bfTabContainer',"bf/factory/FactoryContainer", "tabswitch"],
+            ['.xfDialog',            "bf/factory/FactoryContainer", "dialog"],
 
 
             // INPUTS
