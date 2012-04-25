@@ -15,7 +15,7 @@ define(["dojo/_base/declare",
             appearance:null,
 
             postCreate:function() {
-                console.debug("Time.postCreate: before this.inherited");
+                // console.debug("Time.postCreate: before this.inherited");
                 this.inherited(arguments);
                 this.hoursWidget = new ComboBox({},this.hoursFacet);
                 this.minutesWidget = new ComboBox({},this.minutesFacet);
@@ -28,7 +28,7 @@ define(["dojo/_base/declare",
             },
 
             applyValues:function(value) {
-                console.debug("Time.applyValues value:",value);
+                // console.debug("Time.applyValues value:",value);
                 var timeContainer = value.split(":");
                 if(timeContainer.length != 3) {
                     return;
@@ -90,7 +90,7 @@ define(["dojo/_base/declare",
             },
 
             set:function(attrName, value){
-                console.debug("Time.set: attrName: "+ attrName+ "  value",value);
+                // console.debug("Time.set: attrName: "+ attrName+ "  value",value);
                 if(attrName == "value" && value != this.value){
                     this.value = value;
                     this.applyValues(value);
@@ -103,7 +103,7 @@ define(["dojo/_base/declare",
             },
 
             get:function(attrName) {
-                console.debug("Time.get: attrName",attrName);
+                // console.debug("Time.get: attrName",attrName);
                 if(attrName == "value"){
                     return this._getControlValue();
                 }

@@ -32,13 +32,13 @@ define(["dojo/_base/declare",
                         this.timezone = this.value.substring(this.value.indexOf("+"),this.value.length);
                     }
                     this.zulu = (this.value.indexOf("Z") !=-1);
-                    console.debug("DateTime.postCreate: value:",this.value, " timezone:",this.timezone, " zulu:",this.zulu);
+                    // console.debug("DateTime.postCreate: value:",this.value, " timezone:",this.timezone, " zulu:",this.zulu);
                     this.applyValues(this.value);
 
                 },
 
                 applyValues:function(value) {
-                    console.debug("DateTime.applyValues value",value);
+                    // console.debug("DateTime.applyValues value",value);
                     if(this.currentValue == value){
                        return;
                     }
@@ -49,7 +49,7 @@ define(["dojo/_base/declare",
                     if(value != undefined && value != ""){
                         dateValue = stamp.fromISOString(value,{selector: "date",zulu:this.zulu});
                     }
-                    console.debug("DateTime.applyValues: Schema Value: '", value, "' dateValue:'",dateValue,"'");
+                    // console.debug("DateTime.applyValues: Schema Value: '", value, "' dateValue:'",dateValue,"'");
 
                     if(this.dateDijit == undefined) {
                         this.dateDijit = new DateTextBox({value:dateValue, constraints:this.dateConstraints},this.dateFacet);
@@ -74,16 +74,16 @@ define(["dojo/_base/declare",
                 },
 
                 _getControlValue:function(){
-                    console.debug("DateTime._getControlValue timezone: ", this.timezone, " zulu:",this.zulu);
+                    // console.debug("DateTime._getControlValue timezone: ", this.timezone, " zulu:",this.zulu);
                     var notISODate = this.dateDijit.get("value");
                     var currentDate = "";
                     if(notISODate){
                         currentDate = stamp.toISOString(notISODate,{ selector: "date" });
                     }
-                    console.debug("DateTime._getControlValue currentDate: ",currentDate);
+                    // console.debug("DateTime._getControlValue currentDate: ",currentDate);
 
                     var notISOTime = this.timeDijit.get("value");
-                    console.debug("notISOTime: ",notISOTime, " notISOTime.toUTCString()", notISOTime.toISOString());
+                    // console.debug("notISOTime: ",notISOTime, " notISOTime.toUTCString()", notISOTime.toISOString());
                     var currentTime = "";
                     if(notISOTime){
                         if(this.zulu || this.timezone){
@@ -94,9 +94,9 @@ define(["dojo/_base/declare",
                             currentTime = stamp.toISOString(notISOTime,{ selector:"time", zulu:false });
                         }
                     }
-                    console.debug("DateTime._getControlValue currentTime: ",currentTime);
+                    // console.debug("DateTime._getControlValue currentTime: ",currentTime);
                     this.currentValue = currentDate  + currentTime;
-                    console.info("DateTime._getControlValue value: ",this.currentValue);
+                    // console.info("DateTime._getControlValue value: ",this.currentValue);
                     return this.currentValue;
 
                 },
@@ -105,7 +105,7 @@ define(["dojo/_base/declare",
                     // console.warn("DateTime.set WARNING: Function must be overwritten by any class creating an instance of DateTime");
                     // console.debug("DateTime.set: attrName: "+ attrName+ "  value",value);
                     if(attrName == "value"){
-                        console.debug("DateTime._handleSetControlValue value",value);
+                        // console.debug("DateTime._handleSetControlValue value",value);
                         if(this.miliseconds && value.indexOf(".") != -1){
                             value = value.substring(0,value.indexOf("."));
                         }

@@ -61,7 +61,7 @@ define(["dojo/_base/declare",
                 rangeStart = parseInt(rangeStart, "10");
                 rangeEnd = parseInt(rangeEnd, "10");
 
-                console.debug("DropDownDate: Range Start: ", rangeStart, " End: ", rangeEnd);
+                // console.debug("DropDownDate: Range Start: ", rangeStart, " End: ", rangeEnd);
                 this.templateString = "<div class='xfDropDownDateControl xfValue'><input type='hidden' data-dojo-attach-point='bfValue' value=''/><" +
                     "span class='xfDropDownDate'><select size='1'  data-dojo-attach-point='daysFacet' class='xfDropDownDateDays'><option></option><" +
                     "option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><" +

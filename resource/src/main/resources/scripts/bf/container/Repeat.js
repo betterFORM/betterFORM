@@ -28,7 +28,7 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
 
             },
             handleStateChanged:function(contextInfo) {
-                console.debug("Repeat.handleStateChanged: contextInfo:",contextInfo);
+                // console.debug("Repeat.handleStateChanged: contextInfo:",contextInfo);
                 var repeatItem = dom.byId(contextInfo.targetId);
                 // console.debug("found repeatItem:",repeatItem);
                 if(contextInfo["readonly"] == "true"){
@@ -43,9 +43,9 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                     return;
                 }
                 var repeatItem = (evt.currentTarget) ? evt.currentTarget : evt.srcElement;
-                console.debug("onClickRepeatItem: repeatItem:",repeatItem);
+                // console.debug("onClickRepeatItem: repeatItem:",repeatItem);
                 if(domClass.contains(repeatItem,"xfReadOnly")){
-                    console.warn("repeatItem ", repeatItem, " is readonly");
+                    console.warn("Repeat._onClickRepeatItem: repeatItem ", repeatItem, " is readonly");
                     return;
                 }
                 if(domClass.contains(repeatItem, "xfRepeatIndex") || domClass.contains(repeatItem, "xfRepeatIndexPre")){
@@ -115,7 +115,7 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                 // console.debug("InsertedNode: " + insertedNode.id );
                 var repeatItemNode = undefined;
                 if (dom.byId(insertedNode.id) != null ) {
-                    console.warn("Skipping already present repeatItem: ", repeatItemExists);
+                    console.warn("Repeat.handleInsert Skipping already present repeatItem: ", repeatItemExists);
                     repeatItemNode = dom.byId(insertedNode.id);
                 }else {
                     repeatItemNode = this._createRepeatItem(insertedNode, position);
@@ -288,8 +288,8 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                 }
                 return repeatItems;
             }
-
-    });
+        }
+    );
 });
 
 

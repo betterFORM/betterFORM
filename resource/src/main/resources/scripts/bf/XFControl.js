@@ -50,7 +50,7 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/XFBinding","dojo/dom", "dojo/d
          sends an updated value of a widget to the server
          */
         sendValue:function(/* String */ value, evt) {
-            // console.debug("XFControl: sendValue: currentvalue:", this.currentValue, " - newValue:",value);
+            // console.debug("XFControl.sendValue: currentvalue:", this.currentValue, " - newValue:",value);
             if(this.isReadonly()){
                 // console.debug("XFControl sendValue - control is readonly - ignoring event");
                 return;
@@ -94,6 +94,7 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/XFBinding","dojo/dom", "dojo/d
         handleStateChanged:function(contextInfo) {
             this.inherited(arguments);
             if (this.value != null) {
+                console.debug("XFControl.handleStateChange this.value:",this.value);
                 this.currentValue = this.value;
                 this.setValue(this.value, contextInfo["schemaValue"]);
             }
@@ -124,7 +125,7 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/XFBinding","dojo/dom", "dojo/d
                     controlValueTemplate = query(".xfValue", this.domNode)[0];
                 }
                 if (controlValueTemplate == undefined) {
-                    console.error("Control.handleStateChanged Error: XFControl " + this.id + " has no ControlValue node");
+                    console.error("Control._checkForDataTypeChange Error: XFControl " + this.id + " has no ControlValue node");
                     return;
                 }
                 else {
@@ -194,7 +195,7 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/XFBinding","dojo/dom", "dojo/d
 
         handleOnFocus:function() {
             //storing current control id for handling help
-            console.debug("ControlValue.handleOnFocus storing current control id:", this.id, " value: ",this.currentValue);
+            // console.debug("ControlValue.handleOnFocus storing current control id:", this.id, " value: ",this.currentValue);
 
             fluxProcessor.currentControlId = this.id;
 

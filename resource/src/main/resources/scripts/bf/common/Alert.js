@@ -37,7 +37,7 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registr
                     if(control != undefined){
                         controlValueIsEmpty = true;
                     }else {
-                        console.warn("Alert.handleValid: control '" + id + "' does not exist");
+                        // console.warn("Alert.handleValid: control '" + id + "' does not exist");
                         return;
                     }
                 }else {
@@ -57,7 +57,7 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registr
                 else if((action == "applyChanges" || action == "onBlur") && !controlValueIsEmpty) {
                     this._displayInfo(id, action);
                 }else {
-                    console.info("Alert.handleValid: action:'", action, "' unknown, commonChild handling for control '", id, "', execution stopped");
+                    // console.info("Alert.handleValid: action:'", action, "' unknown, commonChild handling for control '", id, "', execution stopped");
                 }
 
                 var domNode = (control.domNode) ? control.domNode : control;
@@ -109,7 +109,7 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registr
             }
     */
             else {
-                console.info("Alert.handleInvalid: action:'", action , "' unknown, commonChild handling for control '", id, "', execution stopped");
+                // console.info("Alert.handleInvalid: action:'", action , "' unknown, commonChild handling for control '", id, "', execution stopped");
             }
 
             if(!domClass.contains(control.domNode,"bfInvalidControl")) {

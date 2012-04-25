@@ -62,7 +62,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
                 this.relevant = contextInfo["enabled"];
                 this.type = contextInfo["type"];
 
-                console.debug("XFControl.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " targetName:",contextInfo["targetName"]," type:",contextInfo["type"], " contextInfo:",contextInfo);
+                // console.debug("XFControl.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " targetName:",contextInfo["targetName"]," type:",contextInfo["type"], " contextInfo:",contextInfo);
 
                 // check xsd type and adjust if needed
                 if(this.type != undefined && this.type != ""){
@@ -123,7 +123,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
             } else if (domClass.contains(this.srcNodeRef, "xfRequired")) {
                 return true;
             } else {
-                console.error("No required state found")
+                console.error("XFBinding.isRequired No required state found")
             }
         },
 
@@ -134,7 +134,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
             } else if (domClass.contains(this.srcNodeRef, "xfReadOnly")) {
                 return true;
             } else {
-                console.error("No readonly state found")
+                console.error("XFBinding.isReadonly No readonly state found")
             }
         },
 
@@ -145,7 +145,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
             } else if (domClass.contains(this.srcNodeRef, "xfEnabled")) {
                 return true;
             } else {
-                console.error("No relevant state found")
+                console.error("XFBinding.isRelevant: No relevant state found")
             }
         },
 
@@ -157,7 +157,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
             } else if (domClass.contains(this.srcNodeRef, "xfValid")) {
                 return true;
             } else {
-                console.error("No validate state found for " + this.id);
+                console.error("XFBinding.isValid No validate state found for " + this.id);
             }
         },
 
@@ -252,7 +252,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
                 labelNode.innerHTML = value;
             }
             else {
-                console.warn("Failure updating label for Control '" + this.id + "-help' with value: " + value);
+                console.warn("XFBinding.setLabel Failure updating label for Control '" + this.id + "-help' with value: " + value);
             }
         },
         setHelp:function(value) {
@@ -262,7 +262,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
                 helpNode.innerHTML = value;
             }
             else {
-                console.warn("Failure updating help for Control '" + this.id + "-help' with value: " + value);
+                console.warn("XFBinding.setHelp Failure updating help for Control '" + this.id + "-help' with value: " + value);
             }
         },
 
@@ -290,7 +290,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
                     titleAttributeFound = titleAttribute != undefined && titleAttribute != "";
                 }
                 catch(exception) {
-                    console.warn("title attribute for hint " +  this.id + "-hint" + " is empty");
+                    console.warn("XFBinding.setHint title attribute for hint " +  this.id + "-hint" + " is empty");
                 }
             }
 
@@ -309,7 +309,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
             // If no hint-node was found and no title-attribute was found
             if (!hintNodeFound && !titleAttributeFound) {
                 // Print an error to the console
-                console.warn("Failure updating hint for Control '" + this.id + " with value: " + value + " ... neither found '" + this.id + "-hint' nor '" + this.id + "-value");
+                console.warn("XFBinding.setHint Failure updating hint for Control '" + this.id + " with value: " + value + " ... neither found '" + this.id + "-hint' nor '" + this.id + "-value");
             }
         },
 
@@ -319,7 +319,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
                 alertNode.innerHTML = value;
             }
             else {
-                console.error("Failure updating alert for Control '" + this.id + "-alert' with value: " + value);
+                console.error("XFBinding.setAlert Failure updating alert for Control '" + this.id + "-alert' with value: " + value);
             }
 
         },
