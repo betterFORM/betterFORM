@@ -124,13 +124,13 @@ a:link, a:visited, a:active {
 .bf .xsdDateTime .dijitError {
   background: #ffffff url("../images/validationInputBg.png") repeat-x scroll left top;
 }
-.bf .bfValueWrapper .xfTimeControl {
+.bf .widgetContainer .xfTimeControl {
   display: inline-block;
 }
-.bf .bfValueWrapper .xfTimeControl .dijitComboBox {
+.bf .widgetContainer .xfTimeControl .dijitComboBox {
   width: 18px;
 }
-.bf .bfValueWrapper .xfTimeControl .dijitButtonNode {
+.bf .widgetContainer .xfTimeControl .dijitButtonNode {
   display: none;
 }
 .dijitError .dijitValidationIcon, .dijitError .dijitValidationIconText {
@@ -180,7 +180,7 @@ a:link, a:visited, a:active {
 /* ***************************************************************************** */
 /* ********************* GENERAL betterFORM STYLES ************ */
 /* ***************************************************************************** */
-.bfValueWrapper {
+.widgetContainer {
   display: inline-block;
   margin: 0;
   padding: 0;
@@ -248,7 +248,7 @@ a:link, a:visited, a:active {
 special handling for alerts and hints in compact groups as the label is above control and changes the situation.
 alert + hints should always be aligned with the control.
 */
-.xfCompactGroup .bfValueWrapper .xfAlert, .xfCompactGroup .bfValueWrapper .xfHint {
+.xfCompactGroup .widgetContainer .xfAlert, .xfCompactGroup .widgetContainer .xfHint {
   top: 0;
 }
 .xfAlert {

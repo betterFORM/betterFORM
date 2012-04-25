@@ -1227,7 +1227,7 @@ define(["dojo/_base/declare",
             if (selectDijit != undefined) {
                 selectDijit.handleDeleteItem(xmlEvent.contextInfo);
             }
-        }else if (xmlEvent.contextInfo.targetName == "repeat") {
+        }else {
             connect.publish("betterform-item-deleted-"+ xmlEvent.contextInfo.targetId, xmlEvent.contextInfo);
         }
     },

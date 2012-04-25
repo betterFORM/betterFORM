@@ -25,7 +25,7 @@ require(['dojo/_base/declare'],
             //todo: is there any reason why first entry of triple used single quotes while others use double quotes?
             // CONTAINER
             ['.xfGroup',            "bf/factory/FactoryContainer", "group"],
-            ['.xfRepeat',           "bf/factory/FactoryContainer", "repeat"],
+            ['.xfRepeat, .xfTbody',   "bf/factory/FactoryContainer", "repeat"],
             ['.xfSwitch.aDefault',  "bf/factory/FactoryContainer", "switch"],
             ['.xfSwitch.bfTabContainer',"bf/factory/FactoryContainer", "tabswitch"],
             ['.xfDialog',            "bf/factory/FactoryContainer", "dialog"],

@@ -18,8 +18,11 @@ define(["dojo/_base/declare",
                 // console.debug("Time.postCreate: before this.inherited");
                 this.inherited(arguments);
                 this.hoursWidget = new ComboBox({},this.hoursFacet);
+                domClass.add(this.hoursWidget.domNode, "xfTimeHours");
                 this.minutesWidget = new ComboBox({},this.minutesFacet);
+                domClass.add(this.minutesWidget.domNode, "xfTimeMinutes");
                 this.secondsWidget = new ComboBox({},this.secondsFacet);
+                domClass.add(this.secondsWidget.domNode, "xfTimeSeconds");
                 this.applyValues(this.value);
 
                 // console.debug("postCreate: this.daysDijit:",this.daysDijit);

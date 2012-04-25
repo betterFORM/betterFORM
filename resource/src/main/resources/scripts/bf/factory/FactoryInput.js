@@ -141,6 +141,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         }
                     });
                     connect.connect(node,"onfocus",function(evt){
+                        // console.debug("FactoryInput (boolean) onfocus node.checked:",node.checked);
                         xfControlDijit.handleOnFocus();
                     });
 

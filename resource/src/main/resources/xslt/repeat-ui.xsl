@@ -838,35 +838,6 @@
         </xsl:for-each>
     </xsl:template>
 
-    <xsl:template match="*|@*|text()|comment()" mode="repeated-compact-prototype">
-        <xsl:choose>
-            <xsl:when test="namespace-uri(.)='http://www.w3.org/1999/xhtml'">
-                <xsl:element name="{local-name(.)}" namespace="">
-                    <xsl:apply-templates select="*|@*|text()|comment()" mode="repeated-compact-prototype"/>
-                </xsl:element>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:copy>
-                    <xsl:apply-templates select="*|@*|text()|comment()" mode="repeated-compact-prototype"/>
-                </xsl:copy>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
-
-    <xsl:template match="*|@*|text()|comment()" mode="compact-repeat">
-        <xsl:choose>
-            <xsl:when test="namespace-uri(.)='http://www.w3.org/1999/xhtml'">
-                <xsl:element name="{local-name(.)}" namespace="">
-                    <xsl:apply-templates select="*|@*|text()|comment()" mode="compact-repeat"/>
-                </xsl:element>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:copy>
-                    <xsl:apply-templates select="*|@*|text()|comment()" mode="compact-repeat"/>
-                </xsl:copy>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
 
     <!--
         <xsl:template match="xf:repeat[@appearance='caRepeatedTab']">
