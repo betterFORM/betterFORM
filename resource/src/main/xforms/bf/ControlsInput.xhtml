@@ -82,6 +82,18 @@
                     <alert>Alert for input[9]</alert>
                     <hint>Alert for input[9]</hint>
                 </input>
+                <input>
+                    <value>free text</value>
+                    <label>Text</label>
+                    <alert>Free Text Alert[10]</alert>
+                    <hint>Free Text Hint[10]</hint>
+                </input>
+                <input>
+                    <value>true</value>
+                    <label>Boolean</label>
+                    <alert>Boolean Alert[11]</alert>
+                    <hint>Boolean Hint[11]</hint>
+                </input>
             </data>
         </xf:instance>
 
@@ -123,6 +135,14 @@
                      relevant="boolean-from-string(instance()/@relevant)"
                      constraint="boolean-from-string(instance()/@valid)"
                      readonly="boolean-from-string(instance()/@readonly)" type="time"/>
+            <xf:bind nodeset="input[10]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)" />
+            <xf:bind nodeset="input[11]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"  type="boolean"/>
         </xf:bind>
     </xf:model>
 </head>
@@ -238,18 +258,40 @@
                 <xf:hint ref="../hint"/>
                 <xf:alert ref="../alert"/>
             </xf:input>
-            <xf:input ref="input[8]/value" >
+            <xf:output ref="input[8]/value" >
                 <xf:label>Input 8:</xf:label>
-            </xf:input>
+            </xf:output>
 
             <xf:input ref="input[9]/value" appearance="bf:timetextbox">
                 <xf:label ref="../label"/>
                 <xf:hint ref="../hint"/>
                 <xf:alert ref="../alert"/>
             </xf:input>
-            <xf:input ref="input[9]/value" >
+            <xf:output ref="input[8]/value" >
                 <xf:label>Input 9:</xf:label>
+            </xf:output>
+        </xf:group>
+
+        <xf:group appearance="full" class="xfFullGroup">
+            <xf:label>Text / Boolean</xf:label>
+            <xf:input ref="input[10]/value" >
+                <xf:label ref="../label"/>
+                <xf:hint ref="../hint"/>
+                <xf:alert ref="../alert"/>
             </xf:input>
+            <xf:output ref="input[10]/value" >
+                <xf:label>Input 10:</xf:label>
+            </xf:output>
+
+            <xf:input ref="input[11]/value" >
+                <xf:label ref="../label"/>
+                <xf:hint ref="../hint"/>
+                <xf:alert ref="../alert"/>
+            </xf:input>
+            <xf:output ref="input[11]/value" >
+                <xf:label>Input 11:</xf:label>
+            </xf:output>
+
         </xf:group>
     </xf:group>
 </body>

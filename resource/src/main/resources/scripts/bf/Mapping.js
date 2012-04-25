@@ -32,9 +32,9 @@ require(['dojo/_base/declare'],
 
 
             // INPUTS
-            ['.xfControl',                                                "bf/XFControl"],
-            ['.xfInput.xsdString .xfValue, .xfInput.xsdDefault .xfValue', "bf/factory/FactoryInput", "text"],
-            ['.xfInput.xsdBoolean > * >  .xfValue',                       "bf/factory/FactoryInput", "checkbox"],
+            ['.xfControl', "bf/XFControl"],
+            ['.xfInput:not(.xsdDate):not(.xsdDateTime):not(xsdTime):not(.xsdBoolean) .xfValue',     "bf/factory/FactoryInput", "text"],
+            ['.xfInput.xsdBoolean > * >  .xfValue',                                                 "bf/factory/FactoryInput", "checkbox"],
             /*
             the following rule is special in that it matches for 'widgetContainer' and not 'xfValue'. The reason
             for this is the behavior of Dojo Dijits that replace the DOM Node they are applied to. But this creates
@@ -42,12 +42,12 @@ require(['dojo/_base/declare'],
             Therefore here the Dijit is created as a child of 'widgetContainer'.
              */
             //todo: use descriptive names for the different types of controls
-            ['.uaDesktop .xfInput.xsdDate.aDefault .widgetContainer,' +
-             '.uaDesktop .xfInput.xsdDate.aBfIso8601 .widgetContainer',          "bf/factory/FactoryInput", "date"],
-            ['.uaDesktop .xfInput.xsdDate.aBfDropdowndate .widgetContainer',   "bf/factory/FactoryInput", "dropDownDate"],
+            ['.uaDesktop .xfInput.xsdDate:not(.aBfDropdowndate) .widgetContainer', "bf/factory/FactoryInput", "date"],
+            ['.uaDesktop .xfInput.xsdDate.aBfDropdowndate .widgetContainer',       "bf/factory/FactoryInput", "dropDownDate"],
 
             ['.uaDesktop .xfInput.xsdDateTime > * > .xfValue',              "bf/factory/FactoryInput", "dateTime"],
-            ['.uaDesktop .xfInput.xsdTime.aDefault > * >  .xfValue',        "bf/factory/FactoryInput", "text"],
+
+            ['.uaDesktop .xfInput.xsdTime:not(.aBfTimetextbox):not(.aBfDropdowntime) > * >  .xfValue',        "bf/factory/FactoryInput", "text"],
             ['.uaDesktop .xfInput.xsdTime.aBfTimetextbox > * >  .xfValue',  "bf/factory/FactoryInput", "timeTextBox"],
             ['.uaDesktop .xfInput.xsdTime.aBfDropdowntime > * >  .xfValue', "bf/factory/FactoryInput", "dropDownTime"],
             //DateTime support for mobile might still be a problem and must be solved by a combination of controls
@@ -68,7 +68,7 @@ require(['dojo/_base/declare'],
 
 
             // OUTPUT
-            ['.xfOutput.mediatypeText .xfValue',    "bf/factory/FactoryOutput", "text"],
+            ['.xfOutput.mediatypeText:not(.xsdAnyURI) .xfValue',    "bf/factory/FactoryOutput", "text"],
             ['.xfOutput.mediatypeImage .xfValue',   "bf/factory/FactoryOutput", "image"],
             ['.xfOutput.xsdAnyURI .xfValue',        "bf/factory/FactoryOutput", "link"],
             ['.xfOutput.mediatypeHtml .xfValue',    "bf/factory/FactoryOutput", "html"],
