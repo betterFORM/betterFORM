@@ -214,26 +214,19 @@
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="appearance" select="@appearance"/>
 
-        <xsl:variable name="htmlElem">
-            <xsl:choose>
-                <xsl:when test="$appearance='minimal'">span</xsl:when>
-                <xsl:otherwise>div</xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-
         <xsl:variable name="group-classes">
             <xsl:call-template name="assemble-compound-classes">
                 <xsl:with-param name="appearance" select="@appearance"/>
             </xsl:call-template>
         </xsl:variable>
 
-        <xsl:element name="{$htmlElem}">
+        <xsl:element name="span">
             <xsl:attribute name="id" select="$id"/>
             <xsl:attribute name="class" select="concat($group-classes,' xfRepeated dijitContentPane')"/>
             <xsl:attribute name="controlType" select="local-name()"/>
 
 
-            <xsl:element name="{$htmlElem}">
+            <xsl:element name="span">
                 <xsl:attribute name="class">xfGroupLabel</xsl:attribute>
                 <xsl:call-template name="create-label">
                     <xsl:with-param name="label-elements" select="xf:label"/>
@@ -567,18 +560,11 @@
             </xsl:call-template>
         </xsl:variable>
 
-        <xsl:variable name="htmlElem">
-            <xsl:choose>
-                <xsl:when test="local-name()='output'">span</xsl:when>
-                <xsl:otherwise>div</xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-
         <xsl:variable name="incrementaldelay">
             <xsl:value-of select="if (exists(@bf:incremental-delay)) then @bf:incremental-delay else 'undef'"/>
         </xsl:variable>
 
-        <xsl:element name="{$htmlElem}">
+        <xsl:element name="span">
             <xsl:attribute name="id" select="$id"/>
             <xsl:attribute name="data-bf-class" select="$control-classes"/>
             <xsl:if test="$incrementaldelay ne 'undef'">
@@ -613,15 +599,7 @@
         </xsl:variable>
         <xsl:variable name="appearance" select="@appearance"/>
 
-        <xsl:variable name="htmlElem">
-            <xsl:choose>
-                <xsl:when test="$appearance='minimal'">span</xsl:when>
-                <xsl:otherwise>div</xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-
-
-        <xsl:element name="{$htmlElem}">
+        <xsl:element name="span">
             <xsl:attribute name="id" select="$id"/>
             <xsl:attribute name="class" select="concat($control-classes,' xfRepeated')"/>
             <xsl:attribute name="controlType" select="local-name()"/>

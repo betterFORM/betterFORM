@@ -269,9 +269,11 @@
         </xsl:variable>
         <!--<xsl:message>fullName:<xsl:value-of select="$fullName"/> appearance:<xsl:value-of select="$appearance"/> DisplayAppearance:<xsl:value-of select="$displayAppearance"/></xsl:message>-->
         <xsl:choose>
+            <xsl:when test="@appearance and $name = 'group'">
+                <xsl:value-of select="concat($xf,$fullName, ' ', $xf,$displayAppearance,$fullName)"/>
+            </xsl:when>
             <xsl:when test="@appearance">
                 <!--<xsl:value-of select="concat($xf,$name, ' ', $appearance, '-',$name)"/>-->
-                <!--<xsl:value-of select="concat($xf,$fullName, ' ', $xf,$displayAppearance,$fullName)"/>-->
                 <xsl:value-of select="concat($xf,$fullName, ' a',$displayAppearance)"/>
                 <!--<xsl:message>computedClassAppearance : <xsl:value-of select="concat($xf,$fullName, ' ', $xf,$displayAppearance,$fullName)"/></xsl:message>-->
             </xsl:when>

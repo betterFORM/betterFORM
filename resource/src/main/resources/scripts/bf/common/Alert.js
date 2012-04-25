@@ -27,15 +27,24 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registr
                     // do nothing on init
                     return;
                 }
-                console.debug("Alert.handleValid[id:" + id, " action: " + action + "]");
+                // console.debug("Alert.handleValid[id:" + id, " action: " + action + "]");
 
                 var control = registry.byId(id);
+                var controlValueIsEmpty;
                 if (control == null) {
-                    console.warn("control '" + id + "' does not exist");
-                    return;
+                    // check if controls is a XFContainer
+                    control = dom.byId(id);
+                    if(control != undefined){
+                        controlValueIsEmpty = true;
+                    }else {
+                        console.warn("Alert.handleValid: control '" + id + "' does not exist");
+                        return;
+                    }
+                }else {
+                    controlValueIsEmpty = this._controlValueIsEmpty(control);
                 }
                 // console.debug("control: ",control);
-                var controlValueIsEmpty = this._controlValueIsEmpty(control);
+
 
                 // console.debug("controlValueIsEmpty:",controlValueIsEmpty, " control.getControlValue(): ",control.getControlValue());
 
@@ -51,18 +60,19 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registr
                     console.info("Alert.handleValid: action:'", action, "' unknown, commonChild handling for control '", id, "', execution stopped");
                 }
 
-                if(domClass.contains(control.domNode, "bfInvalidControl")) {
-                    domClass.remove(control.domNode, "bfInvalidControl");
+                var domNode = (control.domNode) ? control.domNode : control;
+                if(domClass.contains(domNode, "bfInvalidControl")) {
+                    domClass.remove(domNode, "bfInvalidControl");
                 }
             },
 
         handleInvalid:function(id,action) {
-            console.debug("Alert.handleInvalid [id:" + id , " action: " + action + "]");
+            // console.debug("Alert.handleInvalid [id:" + id , " action: " + action + "]");
 
             //##### SHOW NOTHING ON INIT #######
             var control = registry.byId(id);
             if(control == null) {
-                console.info("control '" +id +"' does not exist");
+                console.info("Alert.handleInvalid: control '" +id +"' does not exist");
                 return;
             }
 

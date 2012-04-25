@@ -31,7 +31,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
                     }
                     domClass.add(item, "xfSelectorItem");
                 }else {
-                    console.warn("itemset '",itemsetId,"' does not exist for Select1 [id:'",this.id ,"']");
+                    console.warn("Select1ComboBox: itemset '",itemsetId,"' does not exist for Select1 [id:'",this.id ,"']");
                 }
             },
 
@@ -50,7 +50,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
                     }
                     this.domNode.removeChild(option2remove);
                 }else {
-                    console.warn("itemset '",itemsetId,"' does not exist for Select1 [id:'",this.id ,"']");
+                    console.warn("Select1ComboBox: itemset '",itemsetId,"' does not exist for Select1 [id:'",this.id ,"']");
                 }
             },
 

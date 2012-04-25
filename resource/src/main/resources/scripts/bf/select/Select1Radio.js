@@ -65,7 +65,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
                      domAttr.set(radioItemToCheck,"checked", true);
                      */
                 }else {
-                    console.warn("itemset '",itemsetId,"' does not exist for Select1 [id:'",this.id ,"']");
+                    console.warn("Select1Radio: itemset '",itemsetId,"' does not exist for Select1 [id:'",this.id ,"']");
                 }
             },
 

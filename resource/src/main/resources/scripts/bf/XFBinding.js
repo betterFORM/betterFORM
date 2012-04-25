@@ -178,6 +178,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
         },
 
         setReadwrite:function() {
+            // console.debug("this.getWidget():",this.getWidget(), " this.srcNodeRef:",this.srcNodeRef);
             domClass.replace(this.srcNodeRef,"xfReadWrite", "xfReadOnly");
             this.getWidget().removeAttribute("readonly");
         },
@@ -324,10 +325,18 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
         },
 
         getWidget:function() {
-            if(this.widget == undefined) {
-                this.widget = dom.byId(this.id+"-value");
+            if(domClass.contains(this.srcNodeRef,"xfContainer")){
+                if(this.widget == undefined) {
+                    this.widget = this.srcNodeRef;
+                }
+                return this.widget;
+
+            }else {
+                if(this.widget == undefined) {
+                    this.widget = dom.byId(this.id+"-value");
+                }
+                return this.widget;
             }
-            return this.widget;
         }
     });
 });

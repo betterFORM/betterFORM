@@ -92,9 +92,7 @@ debug bar at bottom of screen if debug is enabled by betterform config
   width: 50%;
   height: 50%;
 }
-a:link,
-a:visited,
-a:active {
+a:link, a:visited, a:active {
   color: #444444;
 }
 /*
@@ -135,8 +133,7 @@ a:active {
 .bf .bfValueWrapper .xfTimeControl .dijitButtonNode {
   display: none;
 }
-.dijitError .dijitValidationIcon,
-.dijitError .dijitValidationIconText {
+.dijitError .dijitValidationIcon, .dijitError .dijitValidationIconText {
   visibility: hidden;
 }
 /* #################### SPECIAL CONTROL APPEARANCE STYLES #################### */
@@ -148,8 +145,7 @@ a:active {
 .xsdDateTime .xfDateTextBox {
   width: 90px;
 }
-.xfTextarea .xfValue,
-.xfRange .xfValue {
+.xfTextarea .xfValue, .xfRange .xfValue {
   display: inline-block;
 }
 /* matches Rating control (range) */
@@ -218,15 +214,13 @@ a:active {
   padding-bottom: 4px;
 }
 /* Keep styling for Selects even if invalid */
-.bf .bfInvalidControl .select1wrapper .xfValue,
-.bf .bfInvalidControl .xfValue .xfSelectorItem .xfRadioValue {
+.bf .bfInvalidControl .select1wrapper .xfValue, .bf .bfInvalidControl .xfValue .xfSelectorItem .xfRadioValue {
   border: 0 none !important;
 }
 .bf .bfInvalidControl .xfValue .xfSelectorItem .xfCheckBoxValue {
   border: 1px solid gray !important;
 }
-.xfAlert,
-.xfHint {
+.xfAlert, .xfHint {
   position: absolute;
   top: 0;
   /*bottom:2px;*/
@@ -254,8 +248,7 @@ a:active {
 special handling for alerts and hints in compact groups as the label is above control and changes the situation.
 alert + hints should always be aligned with the control.
 */
-.xfCompactGroup .bfValueWrapper .xfAlert,
-.xfCompactGroup .bfValueWrapper .xfHint {
+.xfCompactGroup .bfValueWrapper .xfAlert, .xfCompactGroup .bfValueWrapper .xfHint {
   top: 0;
 }
 .xfAlert {
@@ -264,15 +257,13 @@ alert + hints should always be aligned with the control.
   vertical-align: middle;
   background: #ffcfcf url("../images/error.png") 5px 50% no-repeat;
 }
-.xfAlert,
-.bfToolTipAlert {
+.xfAlert, .bfToolTipAlert {
   z-index: 200;
 }
 .xfAlert .closeAlertIcon {
   background: #f2f2f2 url("../images/tabClose.gif") right center no-repeat;
 }
-.xfCompactGroup .xfHint,
-.xfCompactGroup .xfAlert {
+.xfCompactGroup .xfHint, .xfCompactGroup .xfAlert {
   top: 19px;
 }
 .bfHelpWrapper {
@@ -302,8 +293,7 @@ alert + hints should always be aligned with the control.
   z-index: 800;
 }
 /* for tundra checkboxes */
-.bf .dijitCheckBox,
-.bf .dijitCheckBoxIcon {
+.bf .dijitCheckBox, .bf .dijitCheckBoxIcon {
   background-image: url("../images/checkmarkNoBorder.png");
   border: 1px solid gray;
   height: 14px;
@@ -478,8 +468,10 @@ alert + hints should always be aligned with the control.
   width: 160px;
   vertical-align: top;
   display: block;
-  /*float:left;*/
+  /*Commenting this out breaks fullgroup layout*/
 
+  float: left;
+  margin-top: 0;
 }
 .bfCheckBoxGroup .xfSelectorItem {
   margin-right: 6px;
@@ -489,12 +481,10 @@ alert + hints should always be aligned with the control.
   display: inline;
   float: none;
 }
-.select1Comp .xfOptGroup .xfSelectorItem,
-.selectMin .xfOptGroup .xfSelectorItem {
+.select1Comp .xfOptGroup .xfSelectorItem, .selectMin .xfOptGroup .xfSelectorItem {
   padding-left: 5px;
 }
-.xfSelect .xfOptGroupLabelFull,
-.xfSelect1 .xfOptGroupLabelFull {
+.xfSelect .xfOptGroupLabelFull, .xfSelect1 .xfOptGroupLabelFull {
   font-weight: bold;
   font-style: italic;
   text-align: left;
@@ -524,8 +514,7 @@ alert + hints should always be aligned with the control.
   width: 120px;
 }
 /* reset top:5px for horizontal layout */
-.bf .bfHorizontalTableValue .select1Min .select1wrapper,
-.bf .xfCompactRepeat .xfSelect1 .select1wrapper {
+.bf .bfHorizontalTableValue .select1Min .select1wrapper, .bf .xfCompactRepeat .xfSelect1 .select1wrapper {
   top: 0;
 }
 .bf .xfSelect1 .select1wrapper select {
@@ -604,12 +593,13 @@ alert + hints should always be aligned with the control.
 .xfRepeatIndex {
   background-color: #dfdfdf;
 }
-.bf .xsdBoolean .xfValue,
-.bf .bfCheckBoxGroup .xfValue {
+.xfRepeatIndex .xfRepeatIndex {
+  background-color: #ffffe0;
+}
+.bf .xsdBoolean .xfValue, .bf .bfCheckBoxGroup .xfValue {
   background-color: #FFFFFF;
 }
-.bf .bfCheckBoxGroup .dijitDisabled,
-.bf .xfReadOnly .dijitCheckBoxReadOnly {
+.bf .bfCheckBoxGroup .dijitDisabled, .bf .xfReadOnly .dijitCheckBoxReadOnly {
   background-color: #F3F3F3 !important;
 }
 .xfMinimalRepeat {
@@ -652,6 +642,9 @@ alert + hints should always be aligned with the control.
   clear: none;
   display: inline-block;
 }
+.xfFullRepeat .xfRepeatItem .xfRepeatIndex {
+  background-color: transparent;
+}
 /* this rule is for tables using repeat Attributes - a display:block will otherwise break the table layout */
 table .xfContainer {
   display: table-row-group;
@@ -686,8 +679,7 @@ table .xfContainer {
 /* ***************************************************************************** */
 /* ***************************************************************************** */
 /* ***************************************************************************** */
-.xfReadWrite .dijitRadio,
-.xfReadWrite .xfReadWrite .dijitRadioIcon {
+.xfReadWrite .dijitRadio, .xfReadWrite .xfReadWrite .dijitRadioIcon {
   background: url("../images/checkmark.png") no-repeat -112px 50%;
   height: 16px;
   margin: 0;
@@ -701,8 +693,7 @@ table .xfContainer {
   padding: 0;
   width: 16px;
 }
-.xfReadWrite .dijitCheckBox,
-.xfReadWrite .dijitCheckBoxIcon {
+.xfReadWrite .dijitCheckBox, .xfReadWrite .dijitCheckBoxIcon {
   background: url("../images/checkmarkNoBorder.png") no-repeat -16px 50%;
   height: 14px;
   width: 14px;
@@ -714,8 +705,7 @@ table .xfContainer {
   height: 14px;
   width: 14px;
 }
-.xfReadOnly .dijitRadio,
-.xfReadOnly .xfReadOnly .dijitRadioIcon {
+.xfReadOnly .dijitRadio, .xfReadOnly .xfReadOnly .dijitRadioIcon {
   background: url("../images/checkmark.png") no-repeat -144px 50%;
   height: 16px;
   margin: 0;
@@ -725,8 +715,7 @@ table .xfContainer {
 .xfReadOnly .dijitRadioChecked {
   background-position: -129px 50%;
 }
-.xfReadOnly .dijitCheckBox,
-.xfReadOnly .dijitCheckBoxIcon {
+.xfReadOnly .dijitCheckBox, .xfReadOnly .dijitCheckBoxIcon {
   background: url("../images/checkmarkNoBorder.png") no-repeat -48px 50%;
   height: 14px;
   width: 14px;

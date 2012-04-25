@@ -1154,7 +1154,7 @@ define(["dojo/_base/declare",
        if(registry.byId(xfControlId) != undefined){
             registry.byId(xfControlId).show();
        }else {
-            console.error("error during betterform-dialog-show-event: targetId '",xmlEvent.contextInfo.targetId, "', xfControlId: '", xfControlId,"' does not exist");
+            console.error("XFProcessor: error during betterform-dialog-show-event: targetId '",xmlEvent.contextInfo.targetId, "', xfControlId: '", xfControlId,"' does not exist");
        }
     },
 
@@ -1166,7 +1166,7 @@ define(["dojo/_base/declare",
        if(registry.byId(xfControlId) != undefined){
             registry.byId(xfControlId).hide();
        }else {
-            console.error("error during betterform-dialog-hide-event: targetId '",xmlEvent.contextInfo.targetId,"' does not exist");
+            console.error("XFProcessor: error during betterform-dialog-hide-event: targetId '",xmlEvent.contextInfo.targetId,"' does not exist");
        }
     },
 
