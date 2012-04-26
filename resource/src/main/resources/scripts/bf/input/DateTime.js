@@ -8,8 +8,10 @@ define(["dojo/_base/declare",
     "dojo/text!./DateTime.html",
     "dijit/form/DateTextBox",
     "dijit/form/TimeTextBox",
-    "dojo/date/stamp"],
-    function(declare, WidgetBase, TemplatedMixin, template,DateTextBox, TimeTextBox,stamp) {
+    "dojo/date/stamp",
+    "dojo/_base/connect",
+    "dojo/_base/lang"],
+    function(declare, WidgetBase, TemplatedMixin, template,DateTextBox, TimeTextBox,stamp,connect,lang) {
         return declare([WidgetBase, TemplatedMixin],
             {
 
@@ -22,7 +24,7 @@ define(["dojo/_base/declare",
                 timezone:null,
                 zulu:false,
                 currentValue:null,
-
+                xfControlDijit:null,
 
 
                 postCreate:function() {
@@ -33,15 +35,20 @@ define(["dojo/_base/declare",
                     }
                     this.zulu = (this.value.indexOf("Z") !=-1);
                     // console.debug("DateTime.postCreate: value:",this.value, " timezone:",this.timezone, " zulu:",this.zulu);
-                    this.applyValues(this.value);
+
+                },
+                _sendValue:function(eventName){
+                    // console.debug("DateTime._sendValue");
+                    var dateTimeValue = this.get("value");
+                    var evt = new Object();
+                    evt.type = eventName;
+                    this.xfControlDijit.sendValue(dateTimeValue, evt);
 
                 },
 
+
                 applyValues:function(value) {
-                    // console.debug("DateTime.applyValues value",value);
-                    if(this.currentValue == value){
-                       return;
-                    }
+                    // console.debug("DateTime.applyValues value",value, " this.id:",this.id);
                     this.currentValue = value;
 
                     // handle date part
@@ -49,10 +56,12 @@ define(["dojo/_base/declare",
                     if(value != undefined && value != ""){
                         dateValue = stamp.fromISOString(value,{selector: "date",zulu:this.zulu});
                     }
-                    // console.debug("DateTime.applyValues: Schema Value: '", value, "' dateValue:'",dateValue,"'");
-
-                    if(this.dateDijit == undefined) {
-                        this.dateDijit = new DateTextBox({value:dateValue, constraints:this.dateConstraints},this.dateFacet);
+                    var init = false;
+                    if(this.dateDijit == undefined){
+                        init = true;
+                        this.dateDijit = new DateTextBox({"value":dateValue, constraints:this.dateConstraints},this.dateFacet);
+                        // overwritten Dojo functions to avoid validation by Dojo
+                        this.dateDijit.validate = function(/*Boolean*/ isFocused){ return true; };
                     }
                     this.dateDijit.set("value", dateValue);
 
@@ -61,16 +70,24 @@ define(["dojo/_base/declare",
                     if(value != undefined && value != ""){
                         timeValue = stamp.fromISOString(value,{zulu:this.zulu});
                     }
-
-                    if(this.timeDijit == undefined) {
-                        this.timeDijit = new TimeTextBox({value:timeValue,constraints:this.timeConstraints},this.timeFacet);
+                    if(this.timeDijit == undefined){
+                        this.timeDijit = new TimeTextBox({"value":timeValue, constraints:this.timeConstraints},this.timeFacet);
+                        this.timeDijit.validate = function(/*Boolean*/ isFocused){ return true; };
                     }
                     this.timeDijit.set("value",timeValue);
 
-                    // overwritten Dojo functions to avoid validation by Dojo
-                    this.dateDijit.validate = function(/*Boolean*/ isFocused){ return true; };
-                    this.timeDijit.validate = function(/*Boolean*/ isFocused){ return true; };
-
+                    if(init == true){
+                        connect.connect(this.dateDijit,"set",lang.hitch(this, function(attrName, value) {
+                            if(attrName == "value") {
+                                this._sendValue("click");
+                            }
+                        }));
+                        connect.connect(this.timeDijit,"set",lang.hitch(this, function(attrName, value) {
+                            if(attrName == "value") {
+                                this._sendValue("click");
+                            }
+                        }));
+                    }
                 },
 
                 _getControlValue:function(){

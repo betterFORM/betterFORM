@@ -26,7 +26,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     //INPUT TYPE BOOLEAN
                         case "checkbox":
                             this._createCheckbox(xfControlDijit, node);
-                            xfControlDijit.setCurrentValue(domAttr.get(node,"checked")=="true");
+
                             break;
                     //INPUT TYPE DATE
                        case "date":
@@ -102,8 +102,9 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
 
 
                 _createCheckbox:function(xfControlDijit, node){
-                    // console.debug("FactoryInput.createInputBoolean");
-                    // console.debug("FOUND: boolean input field: ",node);
+                     console.debug("FactoryInput.createInputBoolean");
+                     console.debug("FOUND: boolean input field: ",node, " node.checked:",node.checked);
+                    xfControlDijit.setCurrentValue(node.checked);
                     if(domAttr.get(node,"type") != "checkbox"){
                         domAttr.set(node,"type","checkbox");
                     }
@@ -129,19 +130,19 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     };
 
                     connect.connect(node,"onblur",function(evt){
-                        // console.debug("onblur",node, " node.checked:",node.checked);
+                        console.debug("onblur",node, " node.checked:",node.checked);
                         if(node.checked != undefined){
                             xfControlDijit.sendValue(node.checked,evt);
                         }
                     });
                     connect.connect(node,"onclick",function(evt){
-                        // console.debug("FactoryInput (boolean) onclick node.checked:",node.checked);
+                         console.debug("FactoryInput (boolean) onclick node.checked:",node.checked);
                         if(node.checked != undefined){
                             xfControlDijit.sendValue(node.checked,evt);
                         }
                     });
                     connect.connect(node,"onfocus",function(evt){
-                        // console.debug("FactoryInput (boolean) onfocus node.checked:",node.checked);
+                        console.debug("FactoryInput (boolean) onfocus node.checked:",node.checked);
                         xfControlDijit.handleOnFocus();
                     });
 
@@ -212,6 +213,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         var dateTimeWidget = new DateTime({
                             name:controlId,
                             value:xfValue,
+                            xfControlDijit:xfControlDijit,
                             miliseconds:false,
                             appearance:"minimal",
                             dateConstraints:{
@@ -229,11 +231,9 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         },n);
 
                         connect.connect(dateTimeWidget, "set", function (attrName, value) {
+                            // console.debug("dateTimeWidget: set attrName:",attrName, " value:",value);
                             if((attrName == "focused" &&  !value) || attrName == "value") {
-                                var dateTimeValue = dateTimeWidget.get("value");
-                                var evt = new Object();
-                                evt.type = attrName == "focused" ? "blur" : "focus";
-                                xfControlDijit.sendValue(dateTimeValue, evt);
+                                dateTimeWidget._sendValue("focused");
                             }
                         });
                         connect.connect(dateTimeWidget,"_onFocus",function(evt){
@@ -276,7 +276,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             }
                         },node);
                         connect.connect(timeTextBox, "set", function (attrName, value) {
-                            // console.debug("InputFactor (timeTextBox.set value:",value);
+                            console.debug("InputFactor (timeTextBox).set attrName:",attrName," value:",value);
                             if((attrName == "focused" &&  !value) || attrName == "value") {
                                 var textboxTime = timeTextBox.get("value");
                                 if(textboxTime != undefined && textboxTime != ""){
@@ -289,7 +289,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                 }
                                 // console.debug("textboxTime:",textboxTime);
                                 var evt = new Object();
-                                evt.type = attrName == "focused" ? "blur" : "focus";
+                                evt.type = attrName == "focused" ? "blur" : "click";
                                 xfControlDijit.sendValue(textboxTime, evt);
                             }
                         });
@@ -320,10 +320,10 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         connect.connect(time, "set", function (attrName, value) {
                             // console.debug("InputFactor (dropDownTime.set value:",value);
                             if ((attrName == "focused" && !value) || attrName == "value") {
-                                var dateTimeValue = time.get("value");
+                                var timeValue= time.get("value");
                                 var evt = new Object();
-                                evt.type = attrName == "focused" ? "blur" : "focus";
-                                xfControlDijit.sendValue(dateTimeValue, evt);
+                                evt.type = attrName == "focused" ? "blur" : "click";
+                                xfControlDijit.sendValue(timeValue, evt);
                             }
                         });
 
@@ -368,6 +368,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     });
 
                     connect.connect(controlWidget, "set", function (attrName, value) {
+                        // console.debug("controlWidget.set attrName:",attrName, " value:",value);
                         if((attrName == "focused" &&  !value) || attrName == "value") {
                             var controlValue;
                             if(controlWidget.serialize){
@@ -384,7 +385,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                 controlValue = controlWidget.get("value");
                             }
                             var evt = new Object();
-                            evt.type = attrName == "focused" ? "blur" : "focus";
+                            evt.type = attrName == "focused" ? "blur" : "click";
                             xfControlDijit.sendValue(controlValue,evt);
                         }
                     });

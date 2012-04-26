@@ -107,6 +107,7 @@ var profile = {
                 'dojo/_firebug/firebug',
 
                 'dijit/registry',
+                'dijit/nls/en/loading',
                 'dijit/nls/de/loading',
 
                 'bf/common/Alert',
@@ -172,6 +173,7 @@ var profile = {
                 'dijit/TooltipDialog',
                 'dijit/Dialog',
                 'dijit/nls/de/loading',
+                'dijit/nls/en/loading',
                 'dojox/fx'
             ],
             boot: true,
@@ -184,7 +186,6 @@ var profile = {
                 'dijit/MenuBar',
                 'dijit.MenuItem',
                 'dijit/PopupMenuBarItem',
-
                 'dijit/Tooltip'
             ],
             boot: true,

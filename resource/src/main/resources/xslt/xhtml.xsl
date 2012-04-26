@@ -895,6 +895,8 @@
             <xsl:attribute name="data-dojo-config"><xsl:value-of select="normalize-space($dojoConfig)"/></xsl:attribute>
         </script><xsl:text>
 </xsl:text>
+        <script type="text/javascript" src="{concat($contextroot,$scriptPath,'bf/dojo.js')}">&#160;</script><xsl:text>
+</xsl:text>
     </xsl:template>
 
     <xsl:template name="addLocalScript">

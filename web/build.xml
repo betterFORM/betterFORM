@@ -232,7 +232,10 @@
               filtering="true">
             <fileset dir="${basedir}/src/main/webapp/WEB-INF"/>
         </copy>
-
+        <mkdir dir="${webapp.dir}/resources"/>
+        <copy description="copy resources dir"
+              todir="${webapp.dir}/resources"
+              file="${resource.src.dir}/main/resources/images/blank.gif"/>
     </target>
 
     <target name="copy-libs" unless="should.not.copy.libs">
