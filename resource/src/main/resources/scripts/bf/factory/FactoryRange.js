@@ -1,5 +1,5 @@
-define(["dojo/_base/declare","dojo/_base/connect"],
-    function(declare,connect) {
+define(["dojo/_base/declare","dojo/_base/connect","dojo/query"],
+    function(declare,connect,query) {
         return declare(null,
             {
                 /**
@@ -8,7 +8,7 @@ define(["dojo/_base/declare","dojo/_base/connect"],
                  * @param node
                  */
                 create:function(type, node){
-                    var n = node;
+                    var n = query(".xfValue",node)[0];
                     switch(type){
                         case "slider":
                             require(["dojo/dom-attr","dijit/registry", "dijit/form/HorizontalSlider","dijit/form/HorizontalRuleLabels","dijit/form/HorizontalRule"],

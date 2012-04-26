@@ -65,13 +65,17 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
                 // console.debug("XFControl.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " targetName:",contextInfo["targetName"]," type:",contextInfo["type"], " contextInfo:",contextInfo);
 
                 // check xsd type and adjust if needed
+
                 if(this.type != undefined && this.type != ""){
                     // console.warn("XFControl.handleStateChange type changed");
                     var xsdType = "xsd" + this.type.replace(/^[a-z]/, this.type.substring(0, 1).toUpperCase());
+                    // TODO: existing types must be removed in case of type switch
                     // console.debug("apply new type: ",xsdType, " to Control Widget");
-                    domClass.add(this.srcNodeRef, xsdType);
-                    behavior.apply();
-
+                    if(!domClass.contains(this.srcNodeRef, xsdType)){
+                        console.debug("XFBinding.handleStateChange behavior.apply");
+                        domClass.add(this.srcNodeRef, xsdType);
+                        behavior.apply();
+                    }
                 }
 
                 // Validity handling
