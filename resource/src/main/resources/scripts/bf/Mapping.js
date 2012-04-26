@@ -33,7 +33,7 @@ require(['dojo/_base/declare'],
 
             // INPUTS
             ['.xfControl', "bf/XFControl"],
-            ['.xfInput:not(.xsdDate):not(.xsdDateTime):not(xsdTime):not(.xsdBoolean) .xfValue',     "bf/factory/FactoryInput", "text"],
+            ['.xfInput:not(.xsdDate):not(.xsdDateTime):not(.xsdTime):not(.xsdBoolean) .xfValue',     "bf/factory/FactoryInput", "text"],
             ['.xfInput.xsdBoolean > * >  .xfValue',                                                 "bf/factory/FactoryInput", "checkbox"],
             /*
             the following rule is special in that it matches for 'widgetContainer' and not 'xfValue'. The reason
