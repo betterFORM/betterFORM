@@ -1,4 +1,4 @@
-define(["../../../lib/dojo-release-1.6.1-src/dojo/behavior","dojo/_base/connect","dojo/dom-attr","dijit/registry","dojo/query","dojo/dom-class", "bf/util"],
+define(["../../../lib/dojo-release-1.6.1-src/dojo/behavior","../main/lib/dojo-release-1.7.2-src/dojo/_base/connect","dojo/dom-attr","dijit/registry","dojo/query","dojo/dom-class", "bf/util"],
     function(behavior,connect,domAttr,registry,query,domClass) {
 /*
  * Copyright (c) 2012. betterFORM Project - http://www.betterform.de

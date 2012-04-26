@@ -1,4 +1,4 @@
-define(["../../../lib/dojo-release-1.6.1-src/dojo/behavior","dojo/dom-attr","dojo/_base/connect","dojo/dom-class","dojo/_base/array","dojo/query","bf/container/Repeat"],
+define(["../../../lib/dojo-release-1.6.1-src/dojo/behavior","../main/lib/dojo-release-1.7.2-src/dojo/dom-attr","dojo/_base/connect","dojo/dom-class","dojo/_base/array","dojo/query","bf/container/Repeat"],
     function(behavior,domAttr,connect,domClass,array,query, Repeat) {
         return {
 

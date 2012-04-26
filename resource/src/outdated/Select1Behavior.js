@@ -3,7 +3,7 @@
  * Licensed under the terms of BSD License
  */
 
-define(["../../../lib/dojo-release-1.6.1-src/dojo/behavior","dojo/dom-attr","dojo/_base/connect","dijit/registry","dojo/query"],
+define(["../../../lib/dojo-release-1.6.1-src/dojo/behavior","../main/lib/dojo-release-1.7.2-src/dojo/dom-attr","dojo/_base/connect","dijit/registry","dojo/query"],
     function(behavior,domAttr,connect,registry,query) {
 
         /**

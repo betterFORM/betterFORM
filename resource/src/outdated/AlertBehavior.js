@@ -3,7 +3,7 @@
  * Licensed under the terms of BSD License
  */
 
-define(["../../../lib/dojo-release-1.6.1-src/dojo/behavior","dojo/_base/connect"],
+define(["../../../lib/dojo-release-1.6.1-src/dojo/behavior","../main/lib/dojo-release-1.7.2-src/dojo/_base/connect"],
     function(behavior,connect) {
 
         function subscribe(alert){

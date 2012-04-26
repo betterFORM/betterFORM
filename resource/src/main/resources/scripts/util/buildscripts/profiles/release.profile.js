@@ -29,7 +29,7 @@ var profile = {
 
     // Strips all calls to console functions within the code. You can also set this to "warn" to strip everything
     // but console.error, and any other truthy value to strip everything but console.warn and console.error.
-    stripConsole: 'all',
+    stripConsole: 'normal',
 
     // The default selector engine is not included by default in a dojo.js build in order to make mobile builds
     // smaller. We add it back here to avoid that extra HTTP request. There is also a "lite" selector available; if
@@ -55,7 +55,7 @@ var profile = {
             name: "bf",
             location: "./bf"
         }
-        /*,
+/*,
         {
             name: "dwr",
             location: "./dwr"
@@ -64,47 +64,55 @@ var profile = {
     ],
 
     layers: {
-
         'dojo/dojo': {
             // In addition to the loader (dojo/dojo) and the loader configuration file (bf/run), we’re also including
             // the main application (bf/main) and the dojo/i18n and dojo/domReady modules because they are one of the
             // conditional dependencies in bf/main (the other being bf/Dialog) but we don’t want to have to make
             // extra HTTP requests for such tiny files.
-            include: [
-                //Start braucht man glaub ich nicht//
-                'dojo/dojo',
-                'dojo/i18n',
-                'dojo/domReady',
-                'dojo/_base/declare',
+            include:[
+                'dojo/require',
+                'dojo/parser',
                 'dojo/dom',
-                'dojo/query',
-                'dojo/dom-class',
-                'dojo/_base/window',
                 'dojo/dom-style',
                 'dojo/dom-attr',
+                'dojo/query',
+                'dojo/fx',
+                'dojo/fx/easing',
+                'dojo/io/iframe',
+                'dojo/_base/window'
+
+            ],
+            boot: true,
+            customBase: true
+        },
+        'bf/dojo': {
+        // In addition to the loader (dojo/dojo) and the loader configuration file (bf/run), we’re also including
+        // the main application (bf/main) and the dojo/i18n and dojo/domReady modules because they are one of the
+        // conditional dependencies in bf/main (the other being bf/Dialog) but we don’t want to have to make
+        // extra HTTP requests for such tiny files.
+            include:[
+                'dojo/dojo',
+                'dojo/i18n',
+                'dojo/has',
+                'dojo/dom-class',
+                'dojo/dom-construct',
+                'dojo/domReady',
+                'dojo/NodeList-fx',
+                'dojo/_base/sniff',
                 'dojo/_base/connect',
                 'dojo/_base/lang',
-                'dojo/dom-construct',
                 'dojo/_base/array',
                 'dojo/_base/event',
-                'dojo/has',
-                'dojo/_base/sniff',
+                'dojo/_base/declare',
+                'dojo/_firebug/firebug',
 
                 'dijit/registry',
-                //Stop braucht man glaub ich nicht//
-
-                'dojo/_firebug/firebug',
-                'dijit/form/HorizontalRuleLabels',
-                'dijit/form/HorizontalSlider',
-                'dijit/form/HorizontalRule',
-                'dijit/layout/ContentPane',
-                'dijit/layout/TabContainer',
+                'dijit/nls/de/loading',
 
                 'bf/common/Alert',
                 'bf/common/AlertInline',
                 'bf/common/AlertToolTip',
 
-                'bf/container/Container',
                 'bf/container/Repeat',
 
                 'bf/factory/FactoryContainer',
@@ -118,63 +126,69 @@ var profile = {
                 'bf/factory/FactoryTrigger',
                 'bf/factory/FactoryUpload',
 
+
                 'bf/input/DateTime',
                 'bf/input/DropDownDate',
                 'bf/input/Time',
 
+                 'bf/select/Select',
+                 'bf/select/Select1Radio',
+                 'bf/select/Select1ComboBox',
 
-                'bf/select/Select',
-                'bf/select/Select1Radio',
-                'bf/select/Select1ComboBox',
+                 'bf/upload/Upload',
 
-                'bf/upload/Upload',
 
                 'bf/ClientServerEvent',
                 'bf/devtool',
-                'bf/XFBinding',
                 'bf/Mapping',
                 'bf/MappingProcessor',
                 'bf/util',
+                'bf/XFBinding',
                 'bf/XFControl',
                 'bf/XFormsModelElement',
                 'bf/XFormsProcessor',
-                'bf/XFProcessor'
+                'bf/XFProcessor',
+
+                // dijits used by betterFORM Controls
+                'dijit/form/HorizontalSlider',
+                'dijit/form/HorizontalRuleLabels',
+                'dijit/form/HorizontalRule',
+
+                'dijit/layout/ContentPane',
+                'dijit/layout/TabContainer',
+
+                'dijit/form/DateTextBox',
+                'dijit/form/TimeTextBox'
             ],
-            // By default, the build system will try to include dojo/main in the built dojo/dojo layer, which adds a
-            // bunch of stuff we don’t want or need. We want the initial script load to be as small and quick as
-            // possible, so we configure it as a custom, bootable base.
             boot: true,
             customBase: true
         },
-        'bf/dashboard': {
-            include: [
-                'dojo/fx',
-                'dojox/fx',
-                'dojo/parser',
-                'dojo/fx/easing',
-
-                'dijit/form/Form',
+        'bf/dashboard':{
+            include:[
+                'dojo/dojo',
                 'dijit/form/Button',
-                'dojo/io/iframe',
                 'dijit/form/TextBox',
                 'dijit/form/DropDownButton',
                 'dijit/TooltipDialog',
                 'dijit/Dialog',
-                'dijit/Tooltip',
                 'dijit/nls/de/loading',
-
-                'dojo/NodeList-fx',
-                'dojox/widget/Toaster',
-                'dojox/layout/FloatingPane'
-
-            ]
+                'dojox/fx'
+            ],
+            boot: true,
+            customBase: true
         },
         'bf/featureExplorer': {
             include: [
+                'dojo/dojo',
+                'dijit/Menu',
                 'dijit/MenuBar',
+                'dijit.MenuItem',
                 'dijit/PopupMenuBarItem',
+
                 'dijit/Tooltip'
-            ]
+            ],
+            boot: true,
+            customBase: true
         }
 
         // In the demo application, we conditionally require bf/Dialog on the client-side, so we’re building a

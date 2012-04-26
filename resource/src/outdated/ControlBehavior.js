@@ -1,4 +1,4 @@
-define(["../../../lib/dojo-release-1.6.1-src/dojo/behavior", "bf/XFControl","dojo/dom-attr"],
+define(["../../../lib/dojo-release-1.6.1-src/dojo/behavior", "../main/resources/scripts/bf/XFControl","dojo/dom-attr"],
     function(behavior, XFControl,domAttr) {
 
     /*

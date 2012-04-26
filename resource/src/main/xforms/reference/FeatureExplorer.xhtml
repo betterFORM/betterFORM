@@ -491,8 +491,8 @@
 
     <div data-dojo-type="dijit.MenuBar" id="navMenu">
 
-        <div data-dojo-type="dijit.PopupMenuBarItem" label="Controls">
-            <div data-dojo-type="dijit.Menu" id="controls">
+        <div data-dojo-type="dijit.PopupMenuBarItem" label="Controls" id="controls">
+            <div data-dojo-type="dijit.Menu">
 <!--
                 <div data-dojo-type="dijit.MenuItem"
                      onClick="showStatic();dijit.byId('static').attr('href','control-overview.html');">
@@ -608,7 +608,7 @@
 
             </div>
         </div>
-        <div data-dojo-type="dijit.PopupMenuBarItem" label="Container">
+        <div data-dojo-type="dijit.PopupMenuBarItem" label="Container" id="container">
             <div data-dojo-type="dijit.Menu" id="editMenu">
 <!--
                 <div data-dojo-type="dijit.MenuItem"
@@ -718,117 +718,112 @@
 			</div>
 		</div>
 		<!--<div data-dojo-type="dijit.Menu" label="Documentation" onClick="showStatic();dijit.byId('static').attr('href','Documentation.html');"/>-->
-
-	   <!--<img src="../../bfResources/images/icons/external_link.png" alt="^"/>-->
-	 	<!--
-        <div data-dojo-type="dijit.PopupMenuBarItem">
-			<span>
-				MENUNAME on toobar
-			</span>
-
-		</div>
-	 	-->
     </div>
 
     <div id="contentBody">
-        <div id="static" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="href:'./intro.html'">
-           <!-- <script type="dojo/on" data-dojo-event="downloadEnd">
-                require(["dojo/on","dijit/registry", "dojo/dom-style", "dojo/_base/fx"], function(on, registry, domStyle, fx) {
-                    on(registry.byId("menuHint"),"click", function(n) {
-                        domStyle.set(registry.byId("menuHint"), "display","none");
-                    });
-
-
-                    fx.fadeOut({
-                        node: this.progress,
-                        duration:2000,
-                        onEnd: dojo.hitch(this,function() {
-                            domStyle.set(this.progress, 'display', 'none');
-
-                        })
-                    }).play();
-
-                    var anim1 = fx.fadeIn({ node: "menuHint",delay:500,duration:1500 });
-                    var anim2 = fx.fadeOut({ node:"menuHint",delay:5000,duration:2000 });
-
-                    on(anim2,"end", function(node) {
-                        domStyle(node, "display","none");
-                    });
-
-                    fx.chain([anim1, anim2]).play();
-                    });
-            </script>
-            -->
+        <div id="static" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="href:'intro.html'">
         </div>
         <div id="xforms" class="InlineAlert"></div>
     </div>
 
-<!--
-
-    <div id="cssWindow"
-        data-dojo-type="dojox.layout.FloatingPane"
-        title="CSS"
-        resizable="true"
-        dockable="false"
-        style="position:absolute;top:0;right:0;width:250px;height:400px;visibility:hidden;">
-
-    </div>
--->
 <!-- ######################### Content end ################################## -->
 <!-- ######################### Content end ################################## -->
 <!-- ######################### Content end ################################## -->
 <!-- ######################### Content end ################################## -->
 <!-- ######################### Content end ################################## -->
-
-    <!-- <script type="text/javascript" defer="defer" src="../../bfResources/scripts/betterform/betterform-XFormsFeatureExplorer.js"> </script>-->
-
 
     <script type="text/javascript" src="../../bfResources/scripts/bf/featureExplorer.js">&#160;</script>
 
-    <script type="text/javascript" defer="defer">
-        require(["dojo/on", "dijit/registry", "dojo/query", "dojo/dom", "dojo/dom-attr","dojo/dom-class", "dojo/dom-style", 'dijit/Menu', 'dijit/MenuBar', 'dijit/MenuItem', 'dijit/PopupMenuBarItem', 'dijit/Tooltip', 'dijit/layout/ContentPane'], function(on, registry, query, dom, domAttr, domClass, domStyle) {
-            function addToDocument(id) {
-                var model = query(".xfModel", dojo.doc)[0];
-                registry.byId(domAttr.get(model, "id")).getInstanceAsString(id,
-                    function(data) {
-                        dom.byId("instanceData").innerHTML = data;
-                    }
-                );
-            }
-            function hideStatic() {
-                domStyle.set(dom.byId('static'), 'display','none');
-                domStyle.set(dom.byId('xforms'), 'display','block');
-            }
-            function showStatic() {
-                domStyle.set(dom.byId('xforms'), 'display','none');
-                domStyle.set(dom.byId('static'), 'display','block');
-            }
+    <script type="text/javascript">
 
-		    function showClass(cssClass){
-			    query('.sample .'+ cssClass).forEach(function(item){
-				    domClass.add(item,'showClass');
-			    });
-		    }
-		    function hideClass(cssClass){
-			    query('.sample .'+ cssClass).forEach(function(item){
-				    domClass.remove(item,'showClass');
-			    });
-		    }
-        });
+        require(["dojo/_base/connect", "dojo/dom", "dojo/parser","dijit/registry",'dijit/Tooltip',"dojo/dom-style","dojo/_base/array", "dojo/_base/fx", 'dijit/Menu', 'dijit/MenuBar', 'dijit/MenuItem', 'dijit/PopupMenuBarItem', 'dijit/layout/ContentPane', "dojo/domReady!"],function(connect, dom, parser,registry, Tooltip,domStyle, array,fx){
+            var widgets = parser.parse();
+            array.forEach(widgets, function(w){
+                if(w.startup){
+                    w.startup();
+                }
+            });
 
 /*
-		dojo.addOnLoad(function(){
-			  new dijit.Tooltip({
-				 connectId: ["navMenu"],
-				 label: "use the menu to select forms"
-			  });
-
-//			dijit.byId("navMenu").focus();
-		});
+            new Tooltip({
+                connectId: ["controls","container"],
+                label: "use the menu to select forms"
+            });
 */
 
+            // registry.byId("navMenu").focus();
+
+            var contentPane = registry.byId("static");
+            connect.connect(contentPane, "onDownloadEnd", function(){
+                var animation = fx.fadeIn({
+                    node:"menuHint",
+                    delay:500,
+                    duration:1500,
+                    onBegin: function(){
+
+                    }
+                });
+                connect.connect(animation, "onEnd", function(){
+                    // console.debug("execute fade out");
+                    fx.fadeOut({
+                        node:"menuHint",
+                        delay:500,
+                        duration:1500
+                    }).play();
+                });
+                animation.play();
+            });
+        });
+
+
+        function addToDocument(modelId) {
+            // console.debug("FeatureExplorer.addToDocument: modelId:",modelId);
+            var id = modelId;
+            require(["dojo/query","dijit/registry","dojo/dom", "dojo/dom-attr"],
+                    function(query, registry, dom, domAttr) {
+                        var model = query(".xfModel", dojo.doc)[0];
+                        registry.byId(domAttr.get(model, "id")).getInstanceAsString(id,
+                        function(data) {
+                            dom.byId("instanceData").innerHTML = data;
+                        }
+                );
+            });
+        }
+
+
+        function hideStatic() {
+            // console.debug("FeatureExplorer.hideStatic");
+            require(["dojo/dom", "dojo/dom-style"], function(dom, domStyle) {
+                domStyle.set(dom.byId('static'), 'display','none');
+                domStyle.set(dom.byId('xforms'), 'display','block');
+            });
+        }
+        function showStatic() {
+            // console.debug("FeatureExplorer.showStatic");
+            require(["dojo/dom", "dojo/dom-style"], function(dom, domStyle) {
+                domStyle.set(dom.byId('xforms'), 'display','none');
+                domStyle.set(dom.byId('static'), 'display','block');
+            });
+        }
+
+        function showClass(cssClassName){
+            // console.debug("FeatureExplorer.showClass cssClass:",cssClassName);
+            var cssClass = cssClassName;
+            require(["dojo/query", "dojo/dom"], function(query, dom) {
+                query('.sample .'+ cssClass).forEach(function(item){
+                    domClass.add(item,'showClass');
+                });
+            });
+        }
+        function hideClass(cssClassName){
+            // console.debug("FeatureExplorer.hideClass cssClass:",cssClassName);
+            var cssClass = cssClassName;
+            require(["dojo/query", "dojo/dom"], function(query, dom) {
+                query('.sample .'+ cssClass).forEach(function(item){
+                    domClass.remove(item,'showClass');
+                });
+            });
+        }
     </script>
-
-
 </body>
 </html>

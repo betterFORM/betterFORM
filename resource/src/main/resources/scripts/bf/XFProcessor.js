@@ -782,8 +782,8 @@ define(["dojo/_base/declare",
 
 
             require(["dojo/behavior"],function(behavior) {
-             behavior.apply();
-             });
+                behavior.apply();
+            });
 
 
             // finally dynamically load the CSS (if some) form the embedded form
@@ -814,13 +814,12 @@ define(["dojo/_base/declare",
                 var head2 = document.getElementsByTagName('head')[0];
                 for (var i = 0; i <= styles.length; i = i+1) {
                     if (styles[i] != undefined && styles[i] != "") {
-                        //console.debug("adding Style: ", styles[i]);
+                        // console.debug("adding Style: ", styles[i]);
                         var stylesheet2 = document.createElement('link');
-
-                        domAttr.set(stylesheet1,"rel","stylesheet");
-                        domAttr.set(stylesheet1,"type","text/css");
-                        domAttr.set(stylesheet1,"href",styles[i]);
-                        domAttr.set(stylesheet1,"name",xlinkTarget);
+                        domAttr.set(stylesheet2,"rel","stylesheet");
+                        domAttr.set(stylesheet2,"type","text/css");
+                        domAttr.set(stylesheet2,"href",styles[i]);
+                        domAttr.set(stylesheet2,"name",xlinkTarget);
                         head2.appendChild(stylesheet2);
                     }
                 }
@@ -895,7 +894,7 @@ define(["dojo/_base/declare",
          unload previously loaded subform-specific stylesheets
          */
         var externalStyleList = document.getElementsByTagName("link");
-        console.debug("styleList" , externalStyleList);
+        // console.debug("XFProcessor._unloadDOM: styleList" , externalStyleList);
         if (externalStyleList != undefined) {
             array.forEach(externalStyleList, function(item) {
                 //console.debug("style: ", item);
