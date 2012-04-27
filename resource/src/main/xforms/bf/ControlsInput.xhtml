@@ -94,6 +94,12 @@
                     <alert>Boolean Alert[11]</alert>
                     <hint>Boolean Hint[11]</hint>
                 </input>
+                <secret>
+                    <value>true</value>
+                    <label>Boolean</label>
+                    <alert>Boolean Alert[11]</alert>
+                    <hint>Boolean Hint[11]</hint>
+                </secret>
             </data>
         </xf:instance>
 
@@ -143,6 +149,10 @@
                      relevant="boolean-from-string(instance()/@relevant)"
                      constraint="boolean-from-string(instance()/@valid)"
                      readonly="boolean-from-string(instance()/@readonly)"  type="boolean"/>
+            <xf:bind nodeset="secret[1]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)" />
         </xf:bind>
     </xf:model>
 </head>
@@ -292,6 +302,17 @@
                 <xf:label>Input 11:</xf:label>
             </xf:output>
 
+        </xf:group>
+        <xf:group appearance="full">
+            <xf:label>Secret</xf:label>
+            <xf:secret ref="secret[1]/value" incremental="true">
+                <xf:label ref="../label"/>
+                <xf:hint ref="../hint"/>
+                <xf:alert ref="../alert"/>
+            </xf:secret>
+            <xf:output ref="secret[1]/value" >
+                <xf:label>Secret 1:</xf:label>
+            </xf:output>
         </xf:group>
     </xf:group>
 </body>

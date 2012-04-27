@@ -205,9 +205,9 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/XFBinding","dojo/dom", "dojo/d
             }
             this.bfFocus = true;
             if(this.isValid()){
-                dojo.publish("xforms-valid",[this.id,"onFocus"]);
+                connect.publish("xforms-valid",[this.id,"onFocus"]);
             }else {
-                dojo.publish("xforms-invalid",[this.id,"onFocus"]);
+                connect.publish("xforms-invalid",[this.id,"onFocus"]);
             }
         }
 

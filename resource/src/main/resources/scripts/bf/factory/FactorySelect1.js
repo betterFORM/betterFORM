@@ -37,9 +37,9 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             connect.connect(n,"onchange",function(evt){
                                 // console.debug("onchange",n);
                                 // get selected option node
-                                var selectedOption = n.options[n.selectedIndex];
                                 // trigger xforms-select event by sending DOMActivate to the XFormsProcessor
                                 // TODO: Lars: should the factory call the fluxProcessor directly or do we need something else here?
+                                var selectedOption = n.options[n.selectedIndex];
                                 fluxProcessor.dispatchEventType(xfId, "DOMActivate", domAttr.get(selectedOption,"id"));
                                 xfControlDijit.sendValue(n.value,evt);
                             });

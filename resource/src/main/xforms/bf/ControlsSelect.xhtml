@@ -159,7 +159,7 @@
                 <!--################### SELECT SAMPLES #############################-->
                 <!--################### SELECT SAMPLES #############################-->
 
-                <xf:select ref="select[1]/value" appearance="minimal">
+                <xf:select ref="select[1]/value" appearance="minimal" incremental="true">
                     <xf:label ref="../label"/>
                     <xf:itemset nodeset="instance('colors')/color">
                         <xf:label ref="name"/>
@@ -173,7 +173,7 @@
                     <xf:label>select[1] value(s):</xf:label>
                 </xf:output>
 
-                <xf:select ref="select[2]/value" appearance="full" >
+                <xf:select ref="select[2]/value" appearance="full" incremental="true">
                     <xf:label ref="../label"/>
                     <xf:itemset nodeset="instance('colors')/color">
                         <xf:label ref="name"/>
@@ -186,7 +186,7 @@
                     <xf:label>select[2] value(s):</xf:label>
                 </xf:output>
 
-                <xf:select ref="select[3]/value" appearance="minimal" selection="open">
+                <xf:select ref="select[3]/value" appearance="minimal" selection="open" incremental="true">
                     <xf:label ref="../label"/>
                     <xf:itemset nodeset="instance('colors')/color">
                         <xf:label ref="name"/>
@@ -195,6 +195,9 @@
                     </xf:itemset>
                     <!--                    <xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>-->
                 </xf:select>
+                <xf:output ref="select[3]/value">
+                    <xf:label>select[3] value(s):</xf:label>
+                </xf:output>
 
             </xf:group>
             <xf:group>
@@ -203,7 +206,7 @@
                 <!--################### SELECT1 SAMPLES #############################-->
                 <!--################### SELECT1 SAMPLES #############################-->
 
-                <xf:select1 ref="select1[1]/value" appearance="minimal">
+                <xf:select1 ref="select1[1]/value" appearance="minimal" incremental="true">
                     <xf:label ref="../label"/>
                     <xf:itemset nodeset="instance('colors')/color">
                         <xf:label ref="name"/>
@@ -218,7 +221,7 @@
                     <xf:label>select1[1] value:</xf:label>
                 </xf:output>
 
-                <xf:select1 ref="select1[2]/value" appearance="compact" >
+                <xf:select1 ref="select1[2]/value" appearance="compact" incremental="true">
                     <xf:label ref="../label"/>
                     <xf:itemset nodeset="instance('colors')/color">
                         <xf:label ref="name"/>
@@ -231,7 +234,7 @@
                     <xf:label>select1[2] value:</xf:label>
                 </xf:output>
 
-                <xf:select1 ref="select1[3]/value" appearance="full" >
+                <xf:select1 ref="select1[3]/value" appearance="full" incremental="true">
                     <xf:label ref="../label"/>
                     <xf:itemset nodeset="instance('colors')/color">
                         <xf:label ref="name"/>
@@ -244,7 +247,7 @@
                     <xf:label>select1[3] value:</xf:label>
                 </xf:output>
 
-                <xf:select1 ref="select1[4]/value"  selection="open" incremental="false">
+                <xf:select1 ref="select1[4]/value"  selection="open" incremental="true" >
                     <xf:label ref="../label"/>
                     <xf:itemset nodeset="instance('colors')/color">
                         <xf:label ref="name"/>

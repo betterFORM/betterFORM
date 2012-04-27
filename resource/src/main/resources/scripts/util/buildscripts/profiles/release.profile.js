@@ -81,8 +81,8 @@ var profile = {
                 'dojo/fx/easing',
                 'dojo/io/iframe',
                 'dojo/_base/window',
+                'dojo/has',
                 'dojo/_firebug/firebug'
-
             ],
             boot: true,
             customBase: true
@@ -94,7 +94,6 @@ var profile = {
         // extra HTTP requests for such tiny files.
             include:[
                 'dojo/dojo',
-                'dojo/has',
                 'dojo/dom-class',
                 'dojo/dom-construct',
                 'dojo/domReady',

@@ -184,6 +184,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                     // console.debug("MultiSelect.onChange SelectedItem Ids: ", ids, " value: ", selectedValue);
                     // trigger xforms-select event
                     fluxProcessor.dispatchEventType(selectId, "DOMActivate", ids);
+                    return selectedValue;
                 },
 
                 getSelectedFullOptions:function(n) {
