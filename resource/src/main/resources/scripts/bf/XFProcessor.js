@@ -14,8 +14,9 @@ define(["dojo/_base/declare",
         "dijit/registry",
         "dojo/_base/event",
         "dojo/has",
+        "dojo/_base/json",
         "dojo/_base/sniff"], function(declare, XFormsProcessor,ClientServerEvent,
-                                    dom,query,domClass,win,domStyle,domAttr,connect,lang,domConstruct,array,registry,event,has){
+                                    dom,query,domClass,win,domStyle,domAttr,connect,lang,domConstruct,array,registry,event,has,json){
     return declare("bf.XFProcessor",XFormsProcessor, {
 
 /**
@@ -43,6 +44,7 @@ define(["dojo/_base/declare",
     lastServerClientFocusEvent:null,
     usesDOMFocusIN:dojo.config.bf.useDOMFocusIN,
     usesDOMFocusOUT:dojo.config.bf.useDOMFocusOUT,
+    useXFSelect:dojo.config.bf.useXFSelect,
     logEvents:dojo.config.bf.logEvents,
     mappingProcessor:null,
 
@@ -301,10 +303,15 @@ define(["dojo/_base/declare",
 
     dispatchEventType:function(targetId, eventType, contextInfo) {
         if((this.usesDOMFocusOUT == false && "DOMFocusOut" == eventType) ||
-           (this.usesDOMFocusIN == false && "DOMFocusIn" == eventType)){
-            console.warn("XFProcessor.dispatchEventType(",targetId,") this: ", this, " eventType:",eventType, " is disabled in form!! contextInfo:",contextInfo);
+           (this.usesDOMFocusIN == false && "DOMFocusIn" == eventType) ||
+            (this.useXFSelect == false && "xformsSelect" == eventType)){
+            console.info("XFProcessor.dispatchEventType: event:",eventType, " is disabled in form!! targetId is: ",targetId);
             return;
 
+        }
+        // change clientside eventType xformsSelect to DOMActivate for the Java processor
+        if(eventType == "xformsSelect"){
+            eventType = "DOMActivate";
         }
         console.debug("XFProcessor.dispatchEventType(",targetId,") this: ", this, " eventType:",eventType, " contextInfo:",contextInfo);
         var newClientServerEvent = new ClientServerEvent();
@@ -785,6 +792,22 @@ define(["dojo/_base/declare",
                 behavior.apply();
             });
 
+
+            var utilizedEvents = xmlEvent.contextInfo.utilizedEvents;
+            // console.debug("xmlEvent.contextInfo.utilizedEvents:",xmlEvent.contextInfo.utilizedEvents);
+            if(utilizedEvents && utilizedEvents != ""){
+                var utilizedEventsObj =  json.fromJson("{" + utilizedEvents +  "}");
+                // console.debug("utilizedEventsObj:",utilizedEventsObj);
+                if(utilizedEventsObj.useXFSelect){
+                    this.useXFSelect = true;
+                }
+                if(utilizedEventsObj.useDOMFocusIN){
+                    this.useDOMFocusIN = true;
+                }
+                if(utilizedEventsObj.useDOMFocusOUT){
+                    this.useDOMFocusOUT = true;
+                }
+            }
 
             // finally dynamically load the CSS (if some) form the embedded form
             var cssToLoad = xmlEvent.contextInfo.inlineCSS;

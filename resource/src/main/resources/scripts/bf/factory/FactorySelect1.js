@@ -40,7 +40,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                 // trigger xforms-select event by sending DOMActivate to the XFormsProcessor
                                 // TODO: Lars: should the factory call the fluxProcessor directly or do we need something else here?
                                 var selectedOption = n.options[n.selectedIndex];
-                                fluxProcessor.dispatchEventType(xfId, "DOMActivate", domAttr.get(selectedOption,"id"));
+                                fluxProcessor.dispatchEventType(xfId, "xformsSelect", domAttr.get(selectedOption,"id"));
                                 xfControlDijit.sendValue(n.value,evt);
                             });
 
@@ -61,7 +61,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                         // console.debug("xfRadioValue.onClick:",radioValue);
                                         var selectedOptionId = bf.util.getXfId(radioValue);
                                         // console.debug("selected option id: ", selectedOptionId);
-                                        fluxProcessor.dispatchEventType(xfId, "DOMActivate", selectedOptionId);
+                                        fluxProcessor.dispatchEventType(xfId, "xformsSelect", selectedOptionId);
                                         xfControlDijit.sendValue(radioValue.value,evt );
                                     }
                                 });

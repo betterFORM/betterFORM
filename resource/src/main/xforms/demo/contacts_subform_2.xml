@@ -51,6 +51,61 @@
         </xf:submission>
 
         <xf:send ev:event="xforms-ready" submission="s-load-from-master"/>
+
+        <xf:instance id="i-countries" xmlns="">
+            <countries>
+                <country >
+                    <name>Albania</name>
+                    <value>Albania</value>
+                </country>
+                <country >
+                    <name>Belgium</name>
+                    <value>Belgium</value>
+                </country>
+                <country >
+                    <name>Cuba</name>
+                    <value>Cuba</value>
+                </country>
+                <country >
+                    <name>Denmark</name>
+                    <value>Denmark</value>
+                </country>
+                <country >
+                    <name>Estonia</name>
+                    <value>Estonia</value>
+                </country>
+                <country >
+                    <name>France</name>
+                    <value>France</value>
+                </country>
+                <country>
+                    <name>Germany</name>
+                    <value>Germany</value>
+                </country>
+                <country >
+                    <name>Gibraltar</name>
+                    <value>Gibraltar</value>
+                </country>
+                <country >
+                    <name>Hungary</name>
+                    <value>Hungary</value>
+                </country>
+                <country >
+                    <name>Italy</name>
+                    <value>Italy</value>
+                </country>
+                <country >
+                    <name>Japan</name>
+                    <value>Japan</value>
+                </country>
+                <country >
+                    <name>Spain</name>
+                    <value>Spain</value>
+                </country>
+
+            </countries>
+        </xf:instance>
+
     </xf:model>
     <xf:group appearance="full">
         <xf:action ev:event="betterform-variable-changed" ev:observer="contact">
@@ -79,57 +134,13 @@
         </xf:input>
         <xf:select1 appearance="minimal" ref="country">
             <xf:label id="country">Country</xf:label>
-            <xf:choices>
-                <xf:item selected="false">
-                    <xf:label>Albania</xf:label>
-                    <xf:value>Albania</xf:value>
-                </xf:item>
-                <xf:item selected="false">
-                    <xf:label>Belgium</xf:label>
-                    <xf:value>Belgium</xf:value>
-                </xf:item>
-                <xf:item selected="false">
-                    <xf:label>Cuba</xf:label>
-                    <xf:value>Cuba</xf:value>
-                </xf:item>
-                <xf:item selected="false">
-                    <xf:label>Denmark</xf:label>
-                    <xf:value>Denmark</xf:value>
-                </xf:item>
-                <xf:item selected="false">
-                    <xf:label>Estonia</xf:label>
-                    <xf:value>Estonia</xf:value>
-                </xf:item>
-                <xf:item selected="false">
-                    <xf:label>France</xf:label>
-                    <xf:value>France</xf:value>
-                </xf:item>
-                <xf:item selected="true">
-                    <xf:label>Germany</xf:label>
-                    <xf:value>Germany</xf:value>
-                </xf:item>
-                <xf:item selected="false">
-                    <xf:label>Gibraltar</xf:label>
-                    <xf:value>Gibraltar</xf:value>
-                </xf:item>
-                <xf:item selected="false">
-                    <xf:label>Hungary</xf:label>
-                    <xf:value>Hungary</xf:value>
-                </xf:item>
-                <xf:item selected="false">
-                    <xf:label>Italy</xf:label>
-                    <xf:value>Italy</xf:value>
-                </xf:item>
-                <xf:item selected="false">
-                    <xf:label>Japan</xf:label>
-                    <xf:value>Japan</xf:value>
-                </xf:item>
-                <xf:item selected="false">
-                    <xf:label>Spain</xf:label>
-                    <xf:value>Spain</xf:value>
-                </xf:item>
-            </xf:choices>
+            <xf:itemset nodeset="instance('i-countries')/country">
+                <xf:label ref="name"/>
+                <xf:value ref="value"/>
+                <xf:message ev:event="xforms-select" level="ephemeral">changed country</xf:message>
+            </xf:itemset>
         </xf:select1>
+
         <xf:trigger class="contactsUpdateMasterTrigger">
             <xf:label>update table</xf:label>
             <xf:hint>This button will update the table above with the data from the subform</xf:hint>

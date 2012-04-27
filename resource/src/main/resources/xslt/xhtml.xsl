@@ -142,6 +142,14 @@
 
     <!--
     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    checks, whether this form uses the xforms-select event. Used for optimizing
+    the client-side processor execution
+    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    -->
+    <xsl:variable name="uses-xforms-select" select="exists(//*[@ev:event='xforms-select'])"/>
+
+    <!--
+    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     the following 2 vars select the default css files
     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     -->
@@ -887,6 +895,7 @@
                 fluxPath:"<xsl:value-of select="concat($contextroot,'/Flux')"/>",
                 useDOMFocusIN:<xsl:value-of select="$uses-DOMFocusIn"/>,
                 useDOMFocusOUT:<xsl:value-of select="$uses-DOMFocusOut"/>,
+                useXFSelect:<xsl:value-of select="$uses-xforms-select"/>,
                 logEvents:<xsl:value-of select="$debug-enabled"/>
             }
         </xsl:variable>

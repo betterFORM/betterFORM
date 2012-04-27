@@ -57,7 +57,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                                         selectedValue = (selectedValue == "") ? item.value : selectedValue + " " + item.value;
                                     });
                                     // console.debug("MultiSelectFull.onChange SelectedItem Ids: ", ids, " value: ", selectedValue);
-                                    fluxProcessor.dispatchEventType(xfId, "DOMActivate", ids);
+                                    fluxProcessor.dispatchEventType(xfId, "xformsSelect", ids);
                                     xfControlDijit.sendValue(selectedValue,evt);
                                 });
 
@@ -183,7 +183,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                     });
                     // console.debug("MultiSelect.onChange SelectedItem Ids: ", ids, " value: ", selectedValue);
                     // trigger xforms-select event
-                    fluxProcessor.dispatchEventType(selectId, "DOMActivate", ids);
+                    fluxProcessor.dispatchEventType(selectId, "xformsSelect", ids);
                     return selectedValue;
                 },
 
