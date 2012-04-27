@@ -76,10 +76,12 @@ var profile = {
                 'dojo/dom-style',
                 'dojo/dom-attr',
                 'dojo/query',
+                'dojo/i18n',
                 'dojo/fx',
                 'dojo/fx/easing',
                 'dojo/io/iframe',
-                'dojo/_base/window'
+                'dojo/_base/window',
+                'dojo/_firebug/firebug'
 
             ],
             boot: true,
@@ -92,7 +94,6 @@ var profile = {
         // extra HTTP requests for such tiny files.
             include:[
                 'dojo/dojo',
-                'dojo/i18n',
                 'dojo/has',
                 'dojo/dom-class',
                 'dojo/dom-construct',
@@ -104,7 +105,6 @@ var profile = {
                 'dojo/_base/array',
                 'dojo/_base/event',
                 'dojo/_base/declare',
-                'dojo/_firebug/firebug',
 
                 'dijit/registry',
                 'dijit/nls/en/loading',
@@ -161,7 +161,7 @@ var profile = {
                 'dijit/form/DateTextBox',
                 'dijit/form/TimeTextBox'
             ],
-            boot: true,
+            boot: false,
             customBase: true
         },
         'bf/dashboard':{
@@ -176,25 +176,30 @@ var profile = {
                 'dijit/nls/en/loading',
                 'dojox/fx'
             ],
-            boot: true,
+            boot: false,
             customBase: true
         },
         'bf/featureExplorer': {
             include: [
-                'dojo/dojo',
                 'dijit/Menu',
                 'dijit/MenuBar',
                 'dijit.MenuItem',
                 'dijit/PopupMenuBarItem',
                 'dijit/Tooltip'
             ],
-            boot: true,
+            exclude: [
+                "dojo/dojo",
+                "bf/dojo"
+            ],
+            boot: false,
             customBase: true
         }
+    },
 
-        // In the demo application, we conditionally require bf/Dialog on the client-side, so we’re building a
-        // separate layer containing just that client-side code. (Practically speaking, you’d probably just want
-        // to roll everything into a single layer, but I wanted to make sure to illustrate multi-layer builds.)
+    resourceTags: {
+        amd: function (filename, mid) {
+            return /\.js$/.test(filename);
+        }
     },
 
     // Providing hints to the build system allows code to be conditionally removed on a more granular level than
