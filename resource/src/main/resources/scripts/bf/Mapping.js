@@ -75,7 +75,8 @@ require(['dojo/_base/declare'],
 
             // RANGE
             // matching widgetContainer instead of xfValue due to slider is a dijit control (see comments above)
-            ['.xfRange .widgetContainer',    "bf/factory/FactoryRange", "slider"],
+            ['.xfRange:not(.aBfRating) .widgetContainer',    "bf/factory/FactoryRange", "slider"],
+            ['.xfRange.aBfRating .widgetContainer',    "bf/factory/FactoryRange", "rating"],
 
             // TEXTAREA
             ['.xfTextarea.mediatypeText .xfValue',    "bf/factory/FactoryTextarea", "htmltextarea"],

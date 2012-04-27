@@ -197,20 +197,16 @@
         <!--
         todo: review: start and end are optional attributes in XForms but how can we make sense of that?
         -->
+        <xsl:variable name="dataBfParam" select="concat('start:',@start,',end:',@end,',step:',@step,',value:',bf:data/text())"/>
         <input  id="{$id}-value"
                 name="{$name}"
                 class="xfValue"
                 type="range"
-                min="{@start}"
-                max="{@end}"
-                value="{bf:data/text()}"
+                data-bf-params="{$dataBfParam}"
                 tabindex="{$navindex}"
                 title="{xf:hint/text()}">
             <xsl:if test="bf:data/@bf:readonly='true'">
                 <xsl:attribute name="readonly">readonly</xsl:attribute>
-            </xsl:if>
-            <xsl:if test="string-length(@step) != 0">
-                <xsl:attribute name="step" select="@step"/>
             </xsl:if>
         </input>
             <!--

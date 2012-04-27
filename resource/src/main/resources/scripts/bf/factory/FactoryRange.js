@@ -1,5 +1,5 @@
-define(["dojo/_base/declare","dojo/_base/connect","dojo/query"],
-    function(declare,connect,query) {
+define(["dojo/_base/declare","dojo/_base/connect","dojo/query","dijit/registry", "bf/util"],
+    function(declare,connect,query,registry) {
         return declare(null,
             {
                 /**
@@ -9,36 +9,35 @@ define(["dojo/_base/declare","dojo/_base/connect","dojo/query"],
                  */
                 create:function(type, node){
                     var n = query(".xfValue",node)[0];
+                    var xfId = n.id.substring(0,n.id.lastIndexOf("-"));
+                    var xfControl = registry.byId(xfId);
+
+                    var dataObj = bf.util.parseDataAttribute(n,"data-bf-params");
+                    var xfValue = (dataObj.value && dataObj.value != "") ? parseInt(dataObj.value,"10") : 0;
+                    var start = 0; var end = 10; var step = 1;
+
+
+                    var minAttr = dataObj.start;
+                    if(minAttr && minAttr != ""){ start = parseInt(minAttr , "10"); }
+                    var maxAttr = dataObj.end;
+                    if(maxAttr && maxAttr!= ""){
+                        end = parseInt(maxAttr , "10");
+                    } else if (maxAttr && maxAttr == "" && minAttr && minAttr != "") {
+                        end = parseInt(minAttr, "10") + end;
+                    }
+                    var stepAttr = dataObj.step;
+                    if(stepAttr && stepAttr != ""){ step = parseInt(stepAttr, "10"); }
+                    if(xfValue > end) {xfValue = end;}
+                    if(xfValue < start) {xfValue = start;}
+                    var discreteValues = ((end - start) / step) +1;
+
+
                     switch(type){
                         case "slider":
-                            require(["dojo/dom-attr","dijit/registry", "dijit/form/HorizontalSlider","dijit/form/HorizontalRuleLabels","dijit/form/HorizontalRule"],
-                                function(domAttr, registry, HorizontalSlider, HorizontalRuleLabels,HorizontalRule){
+                            require(["dojo/dom-attr", "dijit/form/HorizontalSlider","dijit/form/HorizontalRuleLabels","dijit/form/HorizontalRule"],
+                                function(domAttr, HorizontalSlider, HorizontalRuleLabels,HorizontalRule){
                                     console.debug("Found xf:range: node:",n);
-                                    var xfId = n.id.substring(0,n.id.lastIndexOf("-"));
-                                    var xfControl = registry.byId(xfId);
-
-                                    var xfValue = domAttr.get(n,"value");
-                                    if (xfValue == "") {
-                                        xfValue = 0;
-                                    } else {
-                                        xfValue = parseInt(xfValue, "10");
-                                    }
                                     // console.debug("createRangeSliderWidget: xfValue:",xfValue);
-                                    var start = 0; var end = 10; var step = 1;
-                                    var minAttr = domAttr.get(n,"min");
-                                    if(minAttr != ""){ start = parseInt(minAttr , "10"); }
-                                    var maxAttr = domAttr.get(n,"max");
-                                    if(maxAttr!= ""){
-                                        end = parseInt(maxAttr , "10");
-                                    } else if (maxAttr == "" && minAttr != "") {
-                                        end = parseInt(minAttr, "10") + end;
-                                    }
-                                    var stepAttr = domAttr.get(n,"step");
-
-                                    if(stepAttr != ""){step = parseInt(stepAttr, "10");}
-                                    if(xfValue > end) {xfValue = end;}
-                                    if(xfValue < start) {xfValue = start;}
-                                    var discreteValues = ((end - start) / step) +1;
                                     // create and setup Range Rules
                                     var rulesNode = document.createElement('div');
 
@@ -96,6 +95,37 @@ define(["dojo/_base/declare","dojo/_base/connect","dojo/query"],
 
 
 
+                            break;
+                        case "rating":
+                            require(["dojox/form/Rating","dojo/dom-attr"],
+                                function(Rating){
+                                    console.debug("create Rating node:",n, " value: ",xfValue);
+                                    var ratingControl = Rating({
+                                        name:n.id,
+                                        value:xfValue,
+                                        numStars:end
+                                    }, n);
+                                    xfControl.setValue = function(value){
+                                        ratingControl.set("value", value);
+                                    };
+
+                                    xfControl.setReadonly = function() {
+                                        ratingControl.set('readOnly', true);
+                                        ratingControl.set('disabled', true);
+                                    };
+                                    xfControl.setReadwrite = function() {
+                                        ratingControl.set('disabled', false);
+                                    };
+
+                                    connect.connect(ratingControl, "set", function(attrName, value) {
+                                        // console.debug("ratingControl.set: attrName:",attrName, " value:",value);
+                                        if(attrName == "value"){
+                                            xfControl.sendValue(value);
+                                        }
+                                    });
+
+                                }
+                            );
                             break;
                         default:
                             console.warn("FactoryTrigger.default");
