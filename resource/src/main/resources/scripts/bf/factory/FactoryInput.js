@@ -240,12 +240,10 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                     xfControlDijit.sendValue(this.get("value"),false);
                                 }
 
+                            }else if(attrName == "focused" &&  value){
+                                xfControlDijit.handleOnFocus();
                             }
                         });
-                        connect.connect(dateTimeWidget,"_onFocus",function(evt){
-                            xfControlDijit.handleOnFocus();
-                        });
-
 
                         xfControlDijit.setValue = function(value,schemavalue) {
                             dateTimeWidget.set('value', schemavalue);
@@ -331,6 +329,8 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                 xfControlDijit.sendValue(time.get("value"), true);
                             }else if(attrName == "value" && xfControlDijit.isIncremental()){
                                 xfControlDijit.sendValue(time.get("value"), false);
+                            }else if(attrName == "focused" && value){
+                                xfControlDijit.handleOnFocus();
                             }
                         });
 
@@ -339,10 +339,6 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             time.set('value', value);
                         };
                         self._overwriteReadonly(xfControlDijit,time);
-
-                        connect.connect(time,"_onFocus",function(evt){
-                            xfControlDijit.handleOnFocus();
-                        });
                     });
                 },
 
@@ -370,10 +366,6 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         domClass.add(controlWidget.domNode,"xfValue");
                     }
 
-                    connect.connect(controlWidget,"_onFocus",function(evt){
-                        xfControlDijit.handleOnFocus();
-                    });
-
                     connect.connect(controlWidget, "set", function (attrName, value) {
                         // console.debug("controlWidget.set attrName:",attrName, " value:",value, " incremental: ",xfControlDijit.isIncremental());
                         if((attrName == "focused" &&  !value) || attrName == "value") {
@@ -400,6 +392,8 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             }
 
 
+                        }else if(attrName == "focused" &&  value){
+                            xfControlDijit.handleOnFocus();
                         }
                     });
                     xfControlDijit.setValue = function(value,schemavalue) {

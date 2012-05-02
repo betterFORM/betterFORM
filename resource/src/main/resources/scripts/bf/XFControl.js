@@ -188,7 +188,7 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/XFBinding","dojo/dom", "dojo/d
 
         handleOnFocus:function() {
             //storing current control id for handling help
-            // console.debug("ControlValue.handleOnFocus storing current control id:", this.id, " value: ",this.currentValue);
+            console.debug("ControlValue.handleOnFocus storing current control id:", this.id, " value: ",this.currentValue);
 
             fluxProcessor.currentControlId = this.id;
 

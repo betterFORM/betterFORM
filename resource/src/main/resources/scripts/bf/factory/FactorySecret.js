@@ -27,6 +27,11 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             connect.connect(n,"onblur",function(evt){
                                 xfControlDijit.sendValue(domAttr.get(n,"value"), true);
                             });
+
+                            connect.connect(node,"onfocus",function(evt){
+                                xfControlDijit.handleOnFocus();
+                            });
+
                             break;
                         default:
                             console.warn();
