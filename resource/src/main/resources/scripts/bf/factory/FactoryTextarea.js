@@ -17,14 +17,14 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","bf/util"],
                             };
 
                             connect.connect(node,"onkeyup",function(evt){
-                                console.debug("onkeypress",node);
+                                //console.debug("onkeypress",node);
                                 if(xfControlDijit.isIncremental()){
                                     xfControlDijit.sendValue(node.value,false);
                                 }
                             });
 
                             connect.connect(node,"onblur",function(evt){
-                                console.debug("onblur",node);
+                                //console.debug("onblur",node);
                                 if(!xfControlDijit.isIncremental()){
                                     xfControlDijit.sendValue(node.value,true);
                                 }

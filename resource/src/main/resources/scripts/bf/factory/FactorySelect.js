@@ -8,10 +8,10 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                  * @param node
                  */
                 create:function(type, node){
-                    var n = node;
-                    var xfId = bf.util.getXfId(n);
+                    var node = node;
+                    var xfId = bf.util.getXfId(node);
                     var xfControlDijit = registry.byId(xfId);
-                    var dataObj = bf.util.parseDataAttribute(n,"data-bf-params");
+                    var dataObj = bf.util.parseDataAttribute(node,"data-bf-params");
                     var initialValue = dataObj.value;
                     xfControlDijit.setCurrentValue(initialValue);
 
@@ -25,26 +25,26 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
 
                     switch(type){
                         case "listcontrol":
-                            connect.connect(n,"onchange",function(evt){
-                                var value = self._handleOnChangeMinimal(xfId,n);
+                            connect.connect(node,"onchange",function(evt){
+                                var value = self._handleOnChangeMinimal(xfId,node);
                                 xfControlDijit.sendValue(value, evt);
                             });
 
-                            connect.connect(n,"onblur",function(evt){
-                                var value = self.getSelectMinimalValue(n);
+                            connect.connect(node,"onblur",function(evt){
+                                var value = self.getSelectMinimalValue(node);
                                 xfControlDijit.sendValue(value,evt);
                             });
 
                             xfControlDijit.setValue=function(value) {
-                                query(".xfSelectorItem",n).forEach(function(item){
+                                query(".xfSelectorItem",node).forEach(function(item){
                                     item.selected = value.indexOf(item.value) != -1;
                                 });
                             };
                             break;
                         case "checkboxes":
                             require(["bf/select/Select"], function(Select) {
-                                var selectFull = new Select({id:n.id,xfControl:xfControlDijit}, n);
-                                connect.connect(n,"onchange",function(evt){
+                                var selectFull = new Select({id:node.id,xfControl:xfControlDijit}, node);
+                                connect.connect(node,"onchange",function(evt){
                                     var selectedValues  = self.getSelectedFullOptions();
                                     // console.debug("selectedValues:",selectedValues);
                                     var ids = "";
@@ -63,7 +63,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
 
 
                                 xfControlDijit.setValue=function(value) {
-                                    query(".xfCheckBoxValue",n).forEach(function(item){
+                                    query(".xfCheckBoxValue",node).forEach(function(item){
                                         item.checked = value.indexOf(item.value) != -1;
                                     });
                                 };
@@ -73,53 +73,65 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                         case "open":
                             require(["dojo/dom-construct","dojo/dom-class","dijit/form/TextBox","dojo/_base/lang"], function(domConstruct,domClass,TextBox,lang){
                                 domClass.add(xfControlDijit.domNode,"xfSelectOpen");
-                                var textNode = domConstruct.place("<div>", n, "before");
+                                var textNode = domConstruct.place("<div>", node, "before");
                                 var freeTextDijit = new TextBox({},textNode);
-                                var textValue =  self._getOpenSelectValuePartition(initialValue, n);
+                                var textValue =  self._getOpenSelectValuePartition(initialValue, node);
                                 // save textValue as bfValue on dijit for later processing
                                 freeTextDijit.set("bfValue", textValue);
                                 freeTextDijit.set("value",textValue);
 
-                                dojo.connect(freeTextDijit, "_handleOnChange",function(value){
-                                    var bfValue = freeTextDijit.get("bfValue");
-                                    freeTextDijit.set("bfValue", value);
-                                    var result = lang.trim(self.getSelectMinimalValue(n) + " " + value);
-                                    var evt = {};
-                                    evt.type = "change";
-                                    xfControlDijit.sendValue(result, evt);
-                                });
-                                dojo.connect(freeTextDijit, "_onBlur" ,function(e){
-                                    // console.debug("freeTextDijit._onBlur: ");
+                                dojo.connect(freeTextDijit, "onKeyUp",function(event){
+                                    //console.debug("freeTextDijit._onKeyUp: event:", event);
                                     var bfValue = freeTextDijit.get("bfValue");
                                     var value = freeTextDijit.get("value");
                                     freeTextDijit.set("bfValue", value);
-                                    var result = lang.trim(self.getSelectMinimalValue(n) + " " + value);
-                                    var evt = {};
-                                    evt.type = "blur";
-                                    xfControlDijit.sendValue(result, evt);
+                                    var result = lang.trim(self.getSelectMinimalValue(node) + " " + value);
+                                    //console.debug("OpenSelect.freeTextDijit._handleOnChange: value:",result, " incremental:" , xfControlDijit.isIncremental());
+                                    if(xfControlDijit.isIncremental()){
+                                        xfControlDijit.sendValue(result,false);
+                                    }
+                                });
+                                dojo.connect(freeTextDijit, "onBlur" ,function(event){
+                                    //console.debug("freeTextDijit._onBlur: event:", event);
+                                    var bfValue = freeTextDijit.get("bfValue");
+                                    var value = freeTextDijit.get("value");
+                                    freeTextDijit.set("bfValue", value);
+                                    var result = lang.trim(self.getSelectMinimalValue(node) + " " + value);
+                                    //console.debug("OpenSelect.freeTextDijit._onblur: value:",result, " incremental:" , xfControlDijit.isIncremental());
+                                    if(!xfControlDijit.isIncremental()){
+                                        xfControlDijit.sendValue(result,true);
+                                    }
                                 });
 
                                 // onChange handler for select part
-                                connect.connect(n,"onchange",function(evt){
-                                    var selectValue = self._handleOnChangeMinimal(xfId,n);
+                                connect.connect(node,"onchange",function(evt){
+                                    var selectValue = self._handleOnChangeMinimal(xfId,node);
                                     var result = lang.trim(selectValue + " " + freeTextDijit.get("value"));
-                                    // console.debug("OpenSelect.onChange: value:",result);
-                                    xfControlDijit.sendValue(result, evt);
+                                    console.debug("OpenSelect.onChange: value:",result);
+                                    if(xfControlDijit.isIncremental()){
+                                        xfControlDijit.sendValue(result,false);
+                                    }
                                 });
 
-                                connect.connect(n,"onblur",function(evt){
-                                    var selectValue = self.getSelectMinimalValue(n);
+                                connect.connect(node,"onblur",function(evt){
+                                    var selectValue = self.getSelectMinimalValue(node);
                                     var result = lang.trim(selectValue + " " + freeTextDijit.get("value"));
-                                    // console.debug("OpenSelect.onChange: value:",result);
-                                    xfControlDijit.sendValue(result, evt);
+                                    console.debug("OpenSelect.onblur: value:",result);
+                                    if(!xfControlDijit.isIncremental()){
+                                        xfControlDijit.sendValue(result,true);
+                                    }
+                                });
+
+                                connect.connect(node,"onfocus",function(evt){
+                                    xfControlDijit.handleOnFocus();
                                 });
 
                                 xfControlDijit.setValue=function(value) {
                                     // console.debug("SelectOpen.setValue:",value);
-                                    query(".xfSelectorItem",n).forEach(function(item){
+                                    query(".xfSelectorItem",node).forEach(function(item){
                                         item.selected = value.indexOf(item.value) != -1;
                                     });
-                                    var textValue =  self._getOpenSelectValuePartition(value, n);
+                                    var textValue =  self._getOpenSelectValuePartition(value, node);
                                     freeTextDijit.set("bfValue", textValue);
                                     freeTextDijit.set("value",textValue);
                                 };
@@ -155,9 +167,9 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                     return "";
                 },
 
-                getSelectMinimalValue:function(n) {
+                getSelectMinimalValue:function(node) {
                     var selectedValue = "";
-                    query(".xfSelectorItem",n).forEach(function(item){
+                    query(".xfSelectorItem",node).forEach(function(item){
                         if(item.selected){
                             selectedValue  = (selectedValue  == "") ? item.value : selectedValue + " " + item.value;
                         }
@@ -165,9 +177,9 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                     return selectedValue;
                 },
 
-                _handleOnChangeMinimal:function(selectId, n) {
+                _handleOnChangeMinimal:function(selectId, node) {
                     var selectedOptions = new Array();
-                    query(".xfSelectorItem",n).forEach(function(item){
+                    query(".xfSelectorItem",node).forEach(function(item){
                         if(item.selected){
                             selectedOptions.push(item);
                         }
@@ -187,9 +199,9 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                     return selectedValue;
                 },
 
-                getSelectedFullOptions:function(n) {
+                getSelectedFullOptions:function(node) {
                     var selectedOptions = new Array();
-                    query(".xfCheckBoxValue",n).forEach(function(item){
+                    query(".xfCheckBoxValue",node).forEach(function(item){
                         if(item.checked){
                             selectedOptions.push(item);
                         }
