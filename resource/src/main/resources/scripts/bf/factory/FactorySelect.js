@@ -44,6 +44,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                         case "checkboxes":
                             require(["bf/select/Select"], function(Select) {
                                 var selectFull = new Select({id:node.id,xfControl:xfControlDijit}, node);
+/*
                                 connect.connect(node,"onchange",function(evt){
                                     var selectedValues  = self.getSelectedFullOptions();
                                     // console.debug("selectedValues:",selectedValues);
@@ -58,8 +59,58 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                                     });
                                     // console.debug("MultiSelectFull.onChange SelectedItem Ids: ", ids, " value: ", selectedValue);
                                     fluxProcessor.dispatchEventType(xfId, "xformsSelect", ids);
-                                    xfControlDijit.sendValue(selectedValue,evt);
+                                    if(!xfControlDijit.isIncremental()){
+                                        xfControlDijit.sendValue(selectedValue,evt);
+                                    }
+
                                 });
+*/
+
+
+                                connect.connect(node,"onblur",function(evt){
+                                    var selectedValues  = self.getSelectedFullOptions();
+                                    // console.debug("selectedValues:",selectedValues);
+                                    var ids = "";
+                                    var selectedValue = "";
+                                    array.forEach(selectedValues, function(item) {
+                                        // concat ids of selected options
+                                        var optionId = bf.util.getXfId(item);
+                                        ids =  (ids == "") ? optionId : ids + ";" + optionId;
+                                        // concat values of selected options
+                                        selectedValue = (selectedValue == "") ? item.value : selectedValue + " " + item.value;
+                                    });
+                                    // console.debug("MultiSelectFull.onChange SelectedItem Ids: ", ids, " value: ", selectedValue);
+                                    fluxProcessor.dispatchEventType(xfId, "xformsSelect", ids);
+
+                                    if(!xfControlDijit.isIncremental()){
+                                        xfControlDijit.sendValue(selectedValue,true);
+                                    }
+                                });
+
+                                connect.connect(node,"onclick",function(evt){
+                                    var selectedValues  = self.getSelectedFullOptions();
+                                    // console.debug("selectedValues:",selectedValues);
+                                    var ids = "";
+                                    var selectedValue = "";
+                                    array.forEach(selectedValues, function(item) {
+                                        // concat ids of selected options
+                                        var optionId = bf.util.getXfId(item);
+                                        ids =  (ids == "") ? optionId : ids + ";" + optionId;
+                                        // concat values of selected options
+                                        selectedValue = (selectedValue == "") ? item.value : selectedValue + " " + item.value;
+                                    });
+                                    // console.debug("MultiSelectFull.onChange SelectedItem Ids: ", ids, " value: ", selectedValue);
+                                    fluxProcessor.dispatchEventType(xfId, "xformsSelect", ids);
+
+                                    if(xfControlDijit.isIncremental()){
+                                        xfControlDijit.sendValue(selectedValue,false);
+                                    }
+                                });
+
+                                connect.connect(node,"onfocus",function(evt){
+                                    xfControlDijit.handleOnFocus();
+                                });
+
 
 
                                 xfControlDijit.setValue=function(value) {
