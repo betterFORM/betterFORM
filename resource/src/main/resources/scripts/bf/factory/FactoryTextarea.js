@@ -26,9 +26,8 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
 
                             connect.connect(node,"onblur",function(evt){
                                 //console.debug("onblur",node);
-                                if(!xfControlDijit.isIncremental()){
-                                    xfControlDijit.sendValue(node.value,true);
-                                }
+
+                                xfControlDijit.sendValue(node.value,true);
                             });
 
                             connect.connect(node,"onfocus",function(evt){

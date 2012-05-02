@@ -36,9 +36,11 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                             connect.connect(node,"onblur",function(evt){
                                 var value = self.getSelectMinimalValue(node);
 
-                                if(!xfControlDijit.isIncremental()){
-                                    xfControlDijit.sendValue(value,true);
-                                }
+                                xfControlDijit.sendValue(value,true);
+                            });
+
+                            connect.connect(node,"onfocus",function(evt){
+                                xfControlDijit.handleOnFocus();
                             });
 
                             xfControlDijit.setValue=function(value) {
@@ -88,9 +90,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                                     // console.debug("MultiSelectFull.onChange SelectedItem Ids: ", ids, " value: ", selectedValue);
                                     fluxProcessor.dispatchEventType(xfId, "xformsSelect", ids);
 
-                                    if(!xfControlDijit.isIncremental()){
-                                        xfControlDijit.sendValue(selectedValue,true);
-                                    }
+                                    xfControlDijit.sendValue(selectedValue,true);
                                 });
 
                                 connect.connect(node,"onclick",function(evt){
@@ -138,7 +138,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                                 freeTextDijit.set("bfValue", textValue);
                                 freeTextDijit.set("value",textValue);
 
-                                dojo.connect(freeTextDijit, "onKeyUp",function(event){
+                                connect.connect(freeTextDijit, "onKeyUp",function(event){
                                     //console.debug("freeTextDijit._onKeyUp: event:", event);
                                     var bfValue = freeTextDijit.get("bfValue");
                                     var value = freeTextDijit.get("value");
@@ -149,43 +149,43 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                                         xfControlDijit.sendValue(result,false);
                                     }
                                 });
-                                dojo.connect(freeTextDijit, "onBlur" ,function(event){
+
+                                connect.connect(freeTextDijit, "onBlur" ,function(event){
                                     //console.debug("freeTextDijit._onBlur: event:", event);
                                     var bfValue = freeTextDijit.get("bfValue");
                                     var value = freeTextDijit.get("value");
                                     freeTextDijit.set("bfValue", value);
                                     var result = lang.trim(self.getSelectMinimalValue(node) + " " + value);
                                     //console.debug("OpenSelect.freeTextDijit._onblur: value:",result, " incremental:" , xfControlDijit.isIncremental());
-                                    if(!xfControlDijit.isIncremental()){
-                                        xfControlDijit.sendValue(result,true);
-                                    }
+                                    xfControlDijit.sendValue(result,true);
                                 });
 
                                 // onChange handler for select part
                                 connect.connect(node,"onchange",function(evt){
                                     var selectValue = self._handleOnChangeMinimal(xfId,node);
                                     var result = lang.trim(selectValue + " " + freeTextDijit.get("value"));
-                                    console.debug("OpenSelect.onChange: value:",result);
+                                    //console.debug("OpenSelect.onChange: value:",result);
                                     if(xfControlDijit.isIncremental()){
                                         xfControlDijit.sendValue(result,false);
                                     }
                                 });
 
+
                                 connect.connect(node,"onblur",function(evt){
                                     var selectValue = self.getSelectMinimalValue(node);
                                     var result = lang.trim(selectValue + " " + freeTextDijit.get("value"));
-                                    console.debug("OpenSelect.onblur: value:",result);
-                                    if(!xfControlDijit.isIncremental()){
-                                        xfControlDijit.sendValue(result,true);
-                                    }
+                                    //console.debug("OpenSelect.onblur: value:",result);
+
+                                    xfControlDijit.sendValue(result,true);
                                 });
+
 
                                 var widgetContainer = node.parentNode;
                                 if(domClass.contains(widgetContainer,"widgetContainer")){
-                                    console.debug("found widgetContainer:",widgetContainer);
+                                    //console.debug("found widgetContainer:",widgetContainer);
                                     domAttr.set(widgetContainer,"tabindex",0);
                                     connect.connect(widgetContainer,"onfocus",function(evt){
-                                        console.debug("widgetContainer onfocus");
+                                        //console.debug("widgetContainer onfocus");
                                         xfControlDijit.handleOnFocus();
                                     });
                                 }
