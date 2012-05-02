@@ -8,22 +8,30 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","bf/util"],
                  * @param node
                  */
                 create:function(type, node){
-                    var n = node;
-                    var xfControl = registry.byId(bf.util.getXfId(n));
+                    var xfControlDijit = registry.byId(bf.util.getXfId(node));
                     switch(type){
                         case "htmltextarea":
-                            xfControl.setValue = function (value) {
-                                n.innerHTML = value;
+                            //console.debug("text textarea");
+                            xfControlDijit.setValue = function (value) {
+                                node.innerHTML = value;
                             };
 
-                            connect.connect(n,"onkeyup",function(evt){
-                                // console.debug("onkeypress",n);
-                                xfControl.sendValue(n.value,evt);
+                            connect.connect(node,"onkeyup",function(evt){
+                                console.debug("onkeypress",node);
+                                if(xfControlDijit.isIncremental()){
+                                    xfControlDijit.sendValue(node.value,false);
+                                }
                             });
 
-                            connect.connect(n,"onblur",function(evt){
-                                // console.debug("onblur",n);
-                                xfControl.sendValue(n.value, evt);
+                            connect.connect(node,"onblur",function(evt){
+                                console.debug("onblur",node);
+                                if(!xfControlDijit.isIncremental()){
+                                    xfControlDijit.sendValue(node.value,true);
+                                }
+                            });
+
+                            connect.connect(node,"onfocus",function(evt){
+                                xfControlDijit.handleOnFocus();
                             });
                             break;
                         case "htmleditor":
@@ -31,28 +39,28 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","bf/util"],
                             var ckPath = dojo.config.baseUrl + "ckeditor/ckeditor.js";
                             console.debug("ckPath",ckPath);
 
-                            var ckInstance = "CKEDITOR.instances." + n.id;
+                            var ckInstance = "CKEDITOR.instances." + node.id;
                             console.debug("CKEditor instance: ", ckInstance);
 
                             require([ckPath], function(baz) {
-                                console.debug("ckeditor loaded for node: ",n.id);
-                                CKEDITOR.replace( n.id );
+                                console.debug("ckeditor loaded for node: ",node.id);
+                                CKEDITOR.replace( node.id );
 
-                                xfControl.setValue = function (value) {
+                                xfControlDijit.setValue = function (value) {
 
                                     n.innerHTML = value;
                                 };
 
                                 CKEDITOR.instances['textarea-value'].on('blur',function(evt){
                                     console.debug("onblur",n);
-                                    xfControl.sendValue(ckInstance.getData(), evt);
+                                    xfControlDijit.sendValue(ckInstance.getData(), evt);
                                 });
 
 
 /*
-                                connect.connect(n,"onblur",function(evt){
-                                    // console.debug("onblur",n);
-                                    xfControl.sendValue(ckInstance.getData(), evt);
+                                connect.connect(node,"onblur",function(evt){
+                                    // console.debug("onblur",node);
+                                        xfControlDijit.sendValue(ckInstance.getData(), evt);
                                 });
 */
                             });
@@ -60,15 +68,15 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","bf/util"],
 
 /*
 
-                            connect.connect(n,"onkeyup",function(evt){
-                                // console.debug("onkeypress",n);
-                                xfControl.sendValue(n.value,evt);
+                            connect.connect(node,"onkeyup",function(evt){
+                                // console.debug("onkeypress",node);
+                                    xfControlDijit.sendValue(node.value,evt);
                             });
 
 */
                             break;
                         default:
-                            console.warn("no mapping found for Node: ", n);
+                            console.warn("no mapping found for Node: ", node);
 
                     }
                 }

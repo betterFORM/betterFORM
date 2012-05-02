@@ -80,8 +80,12 @@
                     <label>output[4] html</label>
                 </output>
                 <textarea>
+                    <value>Some text</value>
+                    <label>textarea[1] text</label>
+                </textarea>
+                <textarea>
                     <value><![CDATA[<b>Bold</b> and <i>italic</i> text]]></value>
-                    <label>textarea[1] html</label>
+                    <label>textarea[2] html</label>
                 </textarea>
                 <select1>
                     <value>00FF00</value>
@@ -189,6 +193,10 @@
                      constraint="boolean-from-string(instance()/@valid)"
                      readonly="boolean-from-string(instance()/@readonly)"/>
             <xf:bind nodeset="textarea[1]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="textarea[2]/value" required="boolean-from-string(instance()/@required)"
                      relevant="boolean-from-string(instance()/@relevant)"
                      constraint="boolean-from-string(instance()/@valid)"
                      readonly="boolean-from-string(instance()/@readonly)"/>
@@ -335,10 +343,17 @@
                 </xf:trigger>
             </div>
             <div style="margin:4px;padding:4px;border:thin dotted #808080">
-                <span>Textarea:</span>
+                <span>Textarea Text:</span>
                 <xf:trigger>
                     <xf:label>Value[1]</xf:label>
-                    <xf:setvalue ref="instance()/textarea[1]/value" value="'new html markup with &lt;b&gt;Bold&lt;/b&gt; and &lt;i&gt;italic&lt;/i&gt; text'"/>
+                    <xf:setvalue ref="instance()/textarea[1]/value" value="'new text'"/>
+                </xf:trigger>
+            </div>
+            <div style="margin:4px;padding:4px;border:thin dotted #808080">
+                <span>Textarea HTML:</span>
+                <xf:trigger>
+                    <xf:label>Value[1]</xf:label>
+                    <xf:setvalue ref="instance()/textarea[2]/value" value="'new html markup with &lt;b&gt;Bold&lt;/b&gt; and &lt;i&gt;italic&lt;/i&gt; text'"/>
                 </xf:trigger>
             </div>
             <div style="margin:4px;padding:4px;border:thin dotted #808080">
@@ -592,8 +607,8 @@
             </xf:group>
             <hr/>
             <xf:group>
-                <xf:label>Textarea</xf:label>
-                <xf:textarea ref="textarea[1]/value" mediatype="text/html">
+                <xf:label>Textarea TEXT</xf:label>
+                <xf:textarea ref="textarea[1]/value">
                     <xf:label ref="../label"/>
                 </xf:textarea>
             </xf:group>
@@ -601,6 +616,19 @@
                 <xf:label>Textarea Controls Values</xf:label>
                 <xf:output ref="textarea[1]/value">
                     <xf:label>textarea[1]</xf:label>
+                </xf:output>
+            </xf:group>
+
+            <xf:group>
+                <xf:label>Textarea HTML</xf:label>
+                <xf:textarea ref="textarea[2]/value" mediatype="text/html">
+                    <xf:label ref="../label"/>
+                </xf:textarea>
+            </xf:group>
+            <xf:group appearance="minimal">
+                <xf:label>Textarea Controls Values</xf:label>
+                <xf:output ref="textarea[2]/value">
+                    <xf:label>textarea[2]</xf:label>
                 </xf:output>
             </xf:group>
 
