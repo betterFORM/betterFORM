@@ -8,27 +8,20 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
             },
 
             _onBlur:function() {
-                console.debug("bf.Select1Full._onBlur arguments:",arguments);
+                // console.debug("bf.Select1Full._onBlur arguments:",arguments);
                 var checkedRadioItemValue = undefined;
                 query(".xfRadioValue", this.domNode).forEach(function(item) {
-                    console.debug("analysing radioitem:",item);
+                    // console.debug("analysing radioitem:",item);
                     if(item.checked){
                         checkedRadioItemValue = item.value;
-                        console.debug("selected radioitem:",checkedRadioItemValue);
+                        // console.debug("selected radioitem:",checkedRadioItemValue);
                     }
                 });
-                if(checkedRadioItemValue != undefined) {
-                    var evt=new Object();
-                    evt.type = "blur";
-                    registry.byId(this.controlId).sendValue(checkedRadioItemValue,evt);
-                }
-
-
+                registry.byId(this.controlId).sendValue(checkedRadioItemValue,true);
             },
 
             handleInsertItem:function(contextInfo) {
-                console.debug("bf.Select1Full.handleInsertItem: ", contextInfo);
-                var position = contextInfo.position;
+                // console.debug("bf.Select1Full.handleInsertItem: ", contextInfo);
                 var itemsetId = contextInfo.targetId;
                 var generatedItemId =  contextInfo.generatedIds[contextInfo.prototypeId];
 
@@ -70,7 +63,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
             },
 
             handleDeleteItem:function(contextInfo){
-                console.debug("handleDeleteItem for id:",this.id, " contextInfo:",contextInfo);
+                // console.debug("handleDeleteItem for id:",this.id, " contextInfo:",contextInfo);
                 var itemsetNode = dom.byId(contextInfo.originalId);
                 var selectorItems  = query(".xfSelectorItem", itemsetNode);
 

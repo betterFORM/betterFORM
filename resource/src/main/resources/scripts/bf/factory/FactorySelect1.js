@@ -26,43 +26,50 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
 
                     switch(type){
                         case "combobox":
-                            // console.debug("FactorySelect (minimal/compact) id:",xfId);
-                            xfControlDijit.setValue = function(value, schemavalue) {
-                                domAttr.set(n, "value", value);
-                            };
-
-                            /*
-                             if incremental support is needed this eventhandler has to be added for the widget
-                             */
-                            connect.connect(n,"onchange",function(evt){
-                                // console.debug("onchange",n);
-                                // get selected option node
-                                // trigger xforms-select event by sending DOMActivate to the XFormsProcessor
-                                // TODO: Lars: should the factory call the fluxProcessor directly or do we need something else here?
-                                var selectedOption = n.options[n.selectedIndex];
-                                fluxProcessor.dispatchEventType(xfId, "xformsSelect", domAttr.get(selectedOption,"id"));
-                                xfControlDijit.sendValue(n.value,evt);
-                            });
-
-                            connect.connect(n,"onblur",function(evt){
-                                // console.debug("onblur",n);
-                                xfControlDijit.sendValue(n.value, evt);
-                            });
                             require(["bf/select/Select1ComboBox"], function(Select1ComboBox) {
-                                new Select1ComboBox({id:n.id}, n);
+                                // console.debug("FactorySelect (minimal/compact) id:",xfId);
+                                var select1Widget = new Select1ComboBox({id:n.id}, n);
+
+                                xfControlDijit.setValue = function(value, schemavalue) {
+                                    domAttr.set(n, "value", value);
+                                };
+
+                                connect.connect(n,"onchange",function(evt){
+                                    // console.debug("FactorySelect1 comboBox: onchange",n);
+                                    // trigger xforms-select event by sending DOMActivate to the XFormsProcessor
+                                    // TODO: Lars: should the factory call the fluxProcessor directly or do we need something else here?
+                                    var selectedOption = n.options[n.selectedIndex];
+                                    fluxProcessor.dispatchEventType(xfId, "xformsSelect", domAttr.get(selectedOption,"id"));
+                                    if(xfControlDijit.isIncremental()){
+                                        xfControlDijit.sendValue(n.value,false);
+                                    }
+
+                                });
+
+                                connect.connect(n,"onblur",function(evt){
+                                    xfControlDijit.sendValue(n.value, true);
+                                });
+                                connect.connect(n,"onfocus",function(evt){
+                                    xfControlDijit.handleOnFocus();
+                                });
                             });
                             break;
                         case "radiobuttons":
                             // console.debug("FactorySelect (full) id:",xfId);
 
                             require(["dojo/query", "bf/select/Select1Radio"], function(query, Select1Radio) {
+
+                                var select1RadioWidget = new Select1Radio({id:n.id,controlId:xfId}, n);
+
                                 query(".xfRadioValue", n).forEach(function(radioValue){
                                     radioValue.onclick = function(evt) {
                                         // console.debug("xfRadioValue.onClick:",radioValue);
                                         var selectedOptionId = bf.util.getXfId(radioValue);
                                         // console.debug("selected option id: ", selectedOptionId);
                                         fluxProcessor.dispatchEventType(xfId, "xformsSelect", selectedOptionId);
-                                        xfControlDijit.sendValue(radioValue.value,evt );
+                                        if(xfControlDijit.isIncremental()){
+                                            xfControlDijit.sendValue(radioValue.value,false );
+                                        }
                                     }
                                 });
 
@@ -73,7 +80,9 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                         }
                                     });
                                 };
-                                new Select1Radio({id:n.id,controlId:xfId}, n);
+                                connect.connect(select1RadioWidget, "onFocus",function() {
+                                    xfControlDijit.handleOnFocus();
+                                });
                             });
                             break;
                         case "open":
@@ -83,21 +92,20 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                     name:n.name,
                                     autocomplete:true,
                                     onChange: function(value){
-                                        console.log("combobox onchange ", value);
+                                        // console.log("combobox onchange ", value);
                                         var result = this.item ? this.item.value : value;
                                         // console.debug("send result:",result);
-                                        var evt = {};
-                                        evt.type = "change";
-                                        xfControlDijit.sendValue(result,evt);
+                                        xfControlDijit.sendValue(result,false);
                                     },
                                     onBlur:function(){
                                         var items = this.store.query({ name: this.get("value") });
                                         // console.debug("item:",items);
                                         var result = items[0] ? items[0].value : this.get("value");
                                         // console.debug("result:",result);
-                                        var evt = {};
-                                        evt.type = "blur";
-                                        xfControlDijit.sendValue(result,evt);
+                                        xfControlDijit.sendValue(result,true);
+                                    },
+                                    onFocus:function(){
+                                        xfControlDijit.handleOnFocus();
                                     }
                                 }, n);
 
