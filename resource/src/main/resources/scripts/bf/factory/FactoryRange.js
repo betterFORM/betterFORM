@@ -30,13 +30,13 @@ define(["dojo/_base/declare","dojo/_base/connect","dojo/query","dijit/registry",
                     if(xfValue > end) {xfValue = end;}
                     if(xfValue < start) {xfValue = start;}
                     var discreteValues = ((end - start) / step) +1;
-
+                    xfControl.setCurrentValue(xfValue);
 
                     switch(type){
                         case "slider":
                             require(["dojo/dom-attr", "dijit/form/HorizontalSlider","dijit/form/HorizontalRuleLabels","dijit/form/HorizontalRule"],
                                 function(domAttr, HorizontalSlider, HorizontalRuleLabels,HorizontalRule){
-                                    console.debug("Found xf:range: node:",n);
+                                    // console.debug("Found xf:range: node:",n);
                                     // console.debug("createRangeSliderWidget: xfValue:",xfValue);
                                     // create and setup Range Rules
                                     var rulesNode = document.createElement('div');
@@ -53,25 +53,39 @@ define(["dojo/_base/declare","dojo/_base/connect","dojo/query","dijit/registry",
 
                                     // setup the labels
                                     var sliderLabels = new HorizontalRuleLabels({
-                                        count: 5,
+                                        count: discreteValues,
                                         style: "height:1.2em;font-size:75%;color:gray;",
-                                        labels: [start,end]
+                                        labels: [start,end/2,end]
                                     },labelNode);
                                     // Create Slider
                                     var slider = new HorizontalSlider({
                                         value:xfValue,
                                         slideDuration:0,
                                         minimum:start,
-                                        className:"xfValue",
                                         maximum:end,
                                         discreteValues:discreteValues,
-                                        intermediateChanges:"true",
-                                        showButtons:"true",
-                                        style: "width:200px;display:inline-block;"
+                                        intermediateChanges:true,
+                                        showButtons:true,
+                                        style: "width:200px;",
+                                        onBlur:function(){
+                                            xfControl.sendValue(this.get("value"), true);
+                                        },
+                                        onChange:function(value){
+                                            if(xfControl.isIncremental()){
+                                                xfControl.sendValue(value, false);
+                                            }
+                                        },
+                                        onFocus:function(){
+                                            xfControl.handleOnFocus();
+                                        }
+
                                     },n);
+
                                     // and start them both
                                     slider.startup();
                                     sliderRules.startup();
+                                    sliderLabels.startup();
+
 
                                     xfControl.setValue = function(value){
                                         slider._setValueAttr(value, true);
@@ -83,12 +97,6 @@ define(["dojo/_base/declare","dojo/_base/connect","dojo/query","dijit/registry",
                                     xfControl.setReadwrite = function() {
                                         slider.set('readOnly', false);
                                     };
-
-                                    connect.connect(slider, "_setValueAttr", function(/*Number*/ value, /*Boolean?*/ priorityChange) {
-                                        if(priorityChange){
-                                            xfControl.sendValue(value);
-                                        }
-                                    });
                                 }
                             );
 
@@ -99,7 +107,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dojo/query","dijit/registry",
                         case "rating":
                             require(["dojox/form/Rating","dojo/dom-attr"],
                                 function(Rating){
-                                    console.debug("create Rating node:",n, " value: ",xfValue);
+                                    // console.debug("create Rating node:",n, " value: ",xfValue);
                                     var ratingControl = Rating({
                                         name:n.id,
                                         value:xfValue,
