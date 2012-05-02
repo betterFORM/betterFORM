@@ -26,8 +26,9 @@ define(["dojo/_base/declare",
                 this.applyValues(this.value);
 
                 // console.debug("postCreate: this.daysDijit:",this.daysDijit);
-                connect.connect(this.hoursWidget, "onChange", this, "_onHoursChanged");
-                connect.connect(this.minutesWidget, "onChange", this, "_onMinutesChanged");
+                connect.connect(this.hoursWidget, "onChange", this, "_onTimeChanged");
+                connect.connect(this.minutesWidget, "onChange", this, "_onTimeChanged");
+                connect.connect(this.secondsWidget, "onChange", this, "_onTimeChanged");
             },
 
             applyValues:function(value) {
@@ -42,21 +43,9 @@ define(["dojo/_base/declare",
                 domAttr.set(this.secondsWidget.focusNode, "value", timeContainer[2]);
             },
 
-            _onHoursChanged:function(evt) {
-                // console.debug("DropDownTime.onHoursChanged: evt:",evt, " keyCode: ", evt.keyCode);
-                var hours = domAttr.get(this.hoursWidget.focusNode,"value");
-                // console.debug("constraint:", evt.keyCode != 16 && evt.keyCode != 9 && hours.length == "2");
-                if(evt.keyCode != 16 && evt.keyCode != 9 && hours.length == "2"){
-                    this.minutesWidget.focusNode.focus();
-                }
-            },
-
-            _onMinutesChanged:function(evt) {
-                // console.debug("DropDownTime.onMinutesChanged: evt:",evt, " keyCode: ", evt.keyCode);
-                var minutes = domAttr.get(this.minutesWidget.focusNode,"value");
-                if(evt.keyCode != 16 && evt.keyCode != 9 && minutes.length == "2"){
-                    this.secondsWidget.focus();
-                }
+            _onTimeChanged:function(keyCode) {
+                // console.debug("Time._onTimeChanged: keyCode: ", keyCode);
+                this.set("value", this._getControlValue());
             },
 
             _onFocus:function() {

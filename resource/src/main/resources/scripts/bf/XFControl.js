@@ -65,6 +65,11 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/XFBinding","dojo/dom", "dojo/d
                 fluxProcessor.sendValue(this.id, value);
                 this._handleRequiredEmpty();
             }
+            if(this.isValid()){
+                connect.publish("xforms-valid",[this.id,"onBlur"]);
+            }else {
+                connect.publish("xforms-invalid",[this.id,"onBlur"]);
+            }
 
             if(changeFocus){
                 this.bfFocus = false;

@@ -70,13 +70,15 @@ define(["dojo/_base/declare",
 
                     if(init == true){
                         connect.connect(this.dateDijit,"set",lang.hitch(this, function(attrName, value) {
-                            if(attrName == "value" && this.xfControlDijit.isIncremental()) {
-                                this.xfControlDijit.sendValue(this.get("value"));
+                            // console.debug("DateTime: dateDijit.set: attrName: ", attrName, " value: ",value, " incremental: ",this.xfControlDijit.isIncremental());
+                            if(((attrName == "focused" && !value)  || attrName == "value") && this.xfControlDijit.isIncremental()) {
+                                this.xfControlDijit.sendValue(this.get("value"),false);
                             }
                         }));
 
                         connect.connect(this.timeDijit,"set",lang.hitch(this, function(attrName, value) {
-                            if(attrName == "value" && this.xfControlDijit.isIncremental()) {
+                            // console.debug("DateTime: timeDijit.set: attrName: ", attrName, " value: ",value, " incremental: ",this.xfControlDijit.isIncremental());
+                            if(((attrName == "focused" && !value)  || attrName == "value") && this.xfControlDijit.isIncremental()) {
                                 this.xfControlDijit.sendValue(this.get("value"));
                             }
                         }));
