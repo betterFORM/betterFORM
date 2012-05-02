@@ -46,43 +46,31 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/XFBinding","dojo/dom", "dojo/d
             }
         },
 
-        /*
-         sends an updated value of a widget to the server
+        /**
+         * sends an updated value of a widget to the server
+         * @param value - the current Widget value to be send to the server
+         * @param changeFocus - notifies xfControl if DOMFocusOut must be fired
          */
-        sendValue:function(/* String */ value, evt) {
+
+        sendValue:function(value, /*Boolean*/ changeFocus) {
             // console.debug("XFControl.sendValue: currentvalue:", this.currentValue, " - newValue:",value);
             if(this.isReadonly()){
                 // console.debug("XFControl sendValue - control is readonly - ignoring event");
                 return;
             }
 
-            if(evt && evt.type == "blur"){
-                // control has lost focus
-                this.bfFocus = false;
-            }
-
             if (value != undefined && this.currentValue != value) {
-                //do not send update to server if in mode 'incremental' as value already has been passed
-                // console.debug("XFControl: sendValue: evt.type:", evt ? evt.type:undefined, " - this.incremental:",this.incremental);
-                if( evt == undefined || (!this.incremental && evt.type == "blur") || (this.incremental && evt.type == "keyup") || (this.incremental && evt.type == "change") || (this.incremental && evt.type == "click")){
-                    //update internal value
-                    this.currentValue = value;
-                    //handle validity and dispatch events if necessary
-                    if(this.isValid()){
-                        connect.publish("xforms-valid",[this.id,"onBlur"]);
-                    }else {
-                        connect.publish("xforms-invalid",[this.id,"onBlur"]);
-                    }
-                    fluxProcessor.sendValue(this.id, value);
-                }
+                //update internal value
+                this.currentValue = value;
+                fluxProcessor.sendValue(this.id, value);
                 this._handleRequiredEmpty();
             }
 
-            if(evt && evt.type == "blur"){
+            if(changeFocus){
+                this.bfFocus = false;
                 //notify server of lost focus
                 fluxProcessor.dispatchEventType(this.id,"DOMFocusOut");
             }
-
         },
 
         /*

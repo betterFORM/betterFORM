@@ -37,14 +37,6 @@ define(["dojo/_base/declare",
                     // console.debug("DateTime.postCreate: value:",this.value, " timezone:",this.timezone, " zulu:",this.zulu);
 
                 },
-                _sendValue:function(eventName){
-                    // console.debug("DateTime._sendValue");
-                    var dateTimeValue = this.get("value");
-                    var evt = new Object();
-                    evt.type = eventName;
-                    this.xfControlDijit.sendValue(dateTimeValue, evt);
-
-                },
 
 
                 applyValues:function(value) {
@@ -78,13 +70,14 @@ define(["dojo/_base/declare",
 
                     if(init == true){
                         connect.connect(this.dateDijit,"set",lang.hitch(this, function(attrName, value) {
-                            if(attrName == "value") {
-                                this._sendValue("click");
+                            if(attrName == "value" && this.xfControlDijit.isIncremental()) {
+                                this.xfControlDijit.sendValue(this.get("value"));
                             }
                         }));
+
                         connect.connect(this.timeDijit,"set",lang.hitch(this, function(attrName, value) {
-                            if(attrName == "value") {
-                                this._sendValue("click");
+                            if(attrName == "value" && this.xfControlDijit.isIncremental()) {
+                                this.xfControlDijit.sendValue(this.get("value"));
                             }
                         }));
                     }

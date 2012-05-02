@@ -13,7 +13,7 @@
                 exclude-result-prefixes="xf bf"
                 xpath-default-namespace="http://www.w3.org/1999/xhtml">
 
-    <xsl:import href="common.xsl"/>
+    <xsl:import href="common-ui.xsl"/>
     <xsl:include href="html-form-controls.xsl"/>
     <xsl:include href="ui.xsl"/>
 
