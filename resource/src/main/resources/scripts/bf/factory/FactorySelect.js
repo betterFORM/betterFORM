@@ -130,6 +130,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                         case "open":
                             require(["dojo/dom-construct","dojo/dom-class","dijit/form/TextBox","dojo/_base/lang"], function(domConstruct,domClass,TextBox,lang){
                                 domClass.add(xfControlDijit.domNode,"xfSelectOpen");
+
                                 var textNode = domConstruct.place("<div>", node, "before");
                                 var freeTextDijit = new TextBox({},textNode);
                                 var textValue =  self._getOpenSelectValuePartition(initialValue, node);
@@ -179,9 +180,16 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                                     }
                                 });
 
-                                connect.connect(node,"onfocus",function(evt){
-                                    xfControlDijit.handleOnFocus();
-                                });
+                                var widgetContainer = node.parentNode;
+                                if(domClass.contains(widgetContainer,"widgetContainer")){
+                                    console.debug("found widgetContainer:",widgetContainer);
+                                    domAttr.set(widgetContainer,"tabindex",0);
+                                    connect.connect(widgetContainer,"onfocus",function(evt){
+                                        console.debug("widgetContainer onfocus");
+                                        xfControlDijit.handleOnFocus();
+                                    });
+                                }
+
 
                                 xfControlDijit.setValue=function(value) {
                                     // console.debug("SelectOpen.setValue:",value);
