@@ -27,12 +27,18 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                         case "listcontrol":
                             connect.connect(node,"onchange",function(evt){
                                 var value = self._handleOnChangeMinimal(xfId,node);
-                                xfControlDijit.sendValue(value, evt);
+
+                                if(xfControlDijit.isIncremental()){
+                                    xfControlDijit.sendValue(value,false);
+                                }
                             });
 
                             connect.connect(node,"onblur",function(evt){
                                 var value = self.getSelectMinimalValue(node);
-                                xfControlDijit.sendValue(value,evt);
+
+                                if(!xfControlDijit.isIncremental()){
+                                    xfControlDijit.sendValue(value,true);
+                                }
                             });
 
                             xfControlDijit.setValue=function(value) {
