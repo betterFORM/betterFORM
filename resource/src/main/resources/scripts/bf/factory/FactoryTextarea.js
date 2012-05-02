@@ -1,5 +1,5 @@
-define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","bf/util"],
-    function(declare,connect,registry) {
+define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-attr","bf/util"],
+    function(declare,connect,registry, domAttr) {
         return declare(null,
             {
                 /**
@@ -11,7 +11,8 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","bf/util"],
                     var xfControlDijit = registry.byId(bf.util.getXfId(node));
                     switch(type){
                         case "htmltextarea":
-                            //console.debug("text textarea");
+                            xfControlDijit.setCurrentValue(domAttr.get(node,"value"));
+
                             xfControlDijit.setValue = function (value) {
                                 node.innerHTML = value;
                             };
