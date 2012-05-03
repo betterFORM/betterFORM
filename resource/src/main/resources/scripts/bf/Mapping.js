@@ -59,8 +59,8 @@ require(['dojo/_base/declare'],
             ['.xfSecret .xfValue', "bf/factory/FactorySecret", "password"],
 
             // SELECT1
-            ['.xfSelect1.aMinimal .xfValue, .xfSelect1.aDefault .xfValue , .xfSelect1.aCompact .xfValue', "bf/factory/FactorySelect1", "combobox"],
-            ['.xfSelect1.aFull .xfValue',                                                                 "bf/factory/FactorySelect1", "radiobuttons"],
+            ['.xfSelect1:not(.aFull) .widgetContainer', "bf/factory/FactorySelect1", "combobox"],
+            ['.xfSelect1.aFull .widgetContainer',       "bf/factory/FactorySelect1", "radiobuttons"],
 
             // SELECT
             ['.xfSelect.aMinimal .xfValue, .xfSelect.aDefault .xfValue, .xfSelect.aCompact .xfValue',   "bf/factory/FactorySelect", "listcontrol"],

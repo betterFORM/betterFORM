@@ -1218,7 +1218,7 @@ define(["dojo/_base/declare",
             var selectParentId = domAttr.get(parentDOMNode, "id");
             connect.publish("xforms-item-changed-"+ selectParentId, xmlEvent.contextInfo);
         } catch(e) {
-            console.error("XFProcessor._handleBetterFormItemChanged: No Select(1) found for item: ", xmlEvent.contextInfo.parentId, " error:",e);
+            console.warn("XFProcessor._handleBetterFormItemChanged: Select(1) or  item [", xmlEvent.contextInfo.parentId, "] not found! Error:",e);
         }
     },
 
@@ -1230,25 +1230,14 @@ define(["dojo/_base/declare",
         connect.publish("betterform-insert-repeatitem-"+ xmlEvent.contextInfo.targetId, xmlEvent.contextInfo);
     },
 
-    //todo: should be moved to a behavior
     _handleBetterFormInsertItemset:function(xmlEvent) {
-        console.debug("betterform-insert-itemset [id: '", xmlEvent.contextInfo.targetId, " / contextInfo:",xmlEvent.contextInfo,']' );
-        var selectDijit = registry.byId(xmlEvent.contextInfo.parentId + "-value");
-        console.debug("betterform-insert-itemset [selectDijit: '", selectDijit ,']' );
-
-        if (selectDijit != undefined) {
-            selectDijit.handleInsertItem(xmlEvent.contextInfo);
-        }
-
+        // console.debug("betterform-insert-itemset [id: '", xmlEvent.contextInfo.parentId+"-value", " / contextInfo:",xmlEvent.contextInfo,']' );
+        connect.publish("betterform-insert-item-"+ xmlEvent.contextInfo.parentId + "-value", xmlEvent.contextInfo);
     },
     _handleBetterFormItemDeleted:function(xmlEvent) {
         // console.debug("handle betterform-item-deleted for ", xmlEvent.contextInfo.targetName, " [id: '", xmlEvent.contextInfo.targetId, "'] xmlEvent:", xmlEvent);
         if (xmlEvent.contextInfo.targetName == "itemset") {
-            var selectDijit = registry.byId(xmlEvent.contextInfo.parentId + "-value");
-            console.debug("handle betterform-item-deleted [selectDijit: '", selectDijit ,']' );
-            if (selectDijit != undefined) {
-                selectDijit.handleDeleteItem(xmlEvent.contextInfo);
-            }
+            connect.publish("betterform-delte-item-"+ xmlEvent.contextInfo.parentId + "-value", xmlEvent.contextInfo);
         }else {
             connect.publish("betterform-item-deleted-"+ xmlEvent.contextInfo.targetId, xmlEvent.contextInfo);
         }

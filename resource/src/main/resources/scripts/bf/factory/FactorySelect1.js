@@ -1,5 +1,5 @@
-define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-attr","dojo/dom-class","bf/util"],
-    function(declare,connect,registry,domAttr,domClass) {
+define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-attr","dojo/dom-class","dojo/query","bf/util"],
+    function(declare,connect,registry,domAttr,domClass,query) {
         return declare(null,
             {
                 /**
@@ -8,7 +8,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                  * @param node
                  */
                 create:function(type, node){
-                    var n = node;
+                    var n = query(".xfValue",node)[0];
                     var xfId = bf.util.getXfId(n);
                     var xfControlDijit = registry.byId(xfId);
                     var dataObj = bf.util.parseDataAttribute(n,"data-bf-params");
@@ -90,6 +90,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                 var comboBox = new ComboBox({
                                     id:n.id,
                                     name:n.name,
+                                    class:"xfValue",
                                     autocomplete:true,
                                     onChange: function(value){
                                         // console.log("combobox onchange ", value);
@@ -127,6 +128,17 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                         comboBox.set("value",value);
                                     }
                                 };
+
+                                connect.subscribe("xforms-item-changed-" + n.id , function(contextInfo){
+                                    console.warn("TBD: FactorySelect1 (open) xforms-item-changed contextInfo:",contextInfo)
+                                });
+                                connect.subscribe("betterform-insert-item-" + n.id , function(contextInfo){
+                                    console.warn("TBD: FactorySelect1 (open) betterform-insert-item contextInfo:",contextInfo)
+                                });
+                                connect.subscribe("betterform-delte-item-" + n.id , function(contextInfo){
+                                    console.warn("TBD: FactorySelect1 (open) betterform-delete-item contextInfo:",contextInfo)
+                                });
+
 
                                 // READONLY HANDLING
                                 xfControlDijit.setReadonly = function() {

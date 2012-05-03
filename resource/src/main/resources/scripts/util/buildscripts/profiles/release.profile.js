@@ -131,7 +131,7 @@ var profile = {
                 'bf/input/DropDownDate',
                 'bf/input/Time',
 
-                 'bf/select/Select',
+                 'bf/select/SelectCheckBox',
                  'bf/select/Select1Radio',
                  'bf/select/Select1ComboBox',
 

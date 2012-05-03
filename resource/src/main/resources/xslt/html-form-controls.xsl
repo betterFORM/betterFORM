@@ -854,7 +854,7 @@
     	<xsl:param name="name"/>
         <xsl:param name="parent"/>
         <xsl:param name="navindex"/>
-		<span id="{@id}" >
+		<span id="{@id}" class="xfItemset">
 			<xsl:for-each select="xf:item">
 				<xsl:call-template name="build-checkboxes-item">
 	           		<xsl:with-param name="name" select="$name"/>

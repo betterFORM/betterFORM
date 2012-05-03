@@ -6,6 +6,9 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
 
             postCreate:function() {
                 connect.subscribe("xforms-item-changed-" + this.id , this, "handleStateChanged");
+                connect.subscribe("betterform-insert-item-" + this.id , this, "handleInsertItem");
+                connect.subscribe("betterform-delte-item-" + this.id , this, "handleDeleteItem");
+
             },
 
             _onBlur:function() {

@@ -1,5 +1,5 @@
-define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query","dojo/_base/array", "dojo/dom-attr", "bf/util"],
-    function(declare,connect,registry,query,array,domAttr) {
+define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query","dojo/_base/array", "dojo/dom-attr","dojo/dom-construct", "dojo/dom-class","dojo/dom", "bf/util"],
+    function(declare,connect,registry,query,array,domAttr,domConstruct,domClass,dom) {
         return declare(null,
             {
                 /**
@@ -7,8 +7,8 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                  * @param type
                  * @param node
                  */
-                create:function(type, node){
-                    var node = node;
+                create:function(type, n){
+                    var node = n;
                     var xfId = bf.util.getXfId(node);
                     var xfControlDijit = registry.byId(xfId);
                     var dataObj = bf.util.parseDataAttribute(node,"data-bf-params");
@@ -25,73 +25,41 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
 
                     switch(type){
                         case "listcontrol":
-                            connect.connect(node,"onchange",function(evt){
-                                var value = self._handleOnChangeMinimal(xfId,node);
 
-                                if(xfControlDijit.isIncremental()){
-                                    xfControlDijit.sendValue(value,false);
-                                }
-                            });
-
-                            connect.connect(node,"onblur",function(evt){
-                                var value = self.getSelectMinimalValue(node);
-
-                                xfControlDijit.sendValue(value,true);
-                            });
-
-                            connect.connect(node,"onfocus",function(evt){
-                                xfControlDijit.handleOnFocus();
-                            });
-
-                            xfControlDijit.setValue=function(value) {
-                                query(".xfSelectorItem",node).forEach(function(item){
-                                    item.selected = value.indexOf(item.value) != -1;
-                                });
-                            };
-                            break;
-                        case "checkboxes":
-                            require(["bf/select/Select"], function(Select) {
-                                var selectFull = new Select({id:node.id,xfControl:xfControlDijit}, node);
-/*
+                            require(["bf/select/Select1ComboBox"], function(Select1ComboBox) {
+                                // console.debug("FactorySelect (minimal/compact) id:",xfId);
+                                var selectWidget = new Select1ComboBox({id:n.id,value:initialValue}, n);
                                 connect.connect(node,"onchange",function(evt){
-                                    var selectedValues  = self.getSelectedFullOptions();
-                                    // console.debug("selectedValues:",selectedValues);
-                                    var ids = "";
-                                    var selectedValue = "";
-                                    array.forEach(selectedValues, function(item) {
-                                        // concat ids of selected options
-                                        var optionId = bf.util.getXfId(item);
-                                        ids =  (ids == "") ? optionId : ids + ";" + optionId;
-                                        // concat values of selected options
-                                        selectedValue = (selectedValue == "") ? item.value : selectedValue + " " + item.value;
-                                    });
-                                    // console.debug("MultiSelectFull.onChange SelectedItem Ids: ", ids, " value: ", selectedValue);
-                                    fluxProcessor.dispatchEventType(xfId, "xformsSelect", ids);
-                                    if(!xfControlDijit.isIncremental()){
-                                        xfControlDijit.sendValue(selectedValue,evt);
+                                    var value = self._handleOnChangeMinimal(xfId,node);
+
+                                    if(xfControlDijit.isIncremental()){
+                                        xfControlDijit.sendValue(value,false);
                                     }
-
                                 });
-*/
-
 
                                 connect.connect(node,"onblur",function(evt){
-                                    var selectedValues  = self.getSelectedFullOptions();
-                                    // console.debug("selectedValues:",selectedValues);
-                                    var ids = "";
-                                    var selectedValue = "";
-                                    array.forEach(selectedValues, function(item) {
-                                        // concat ids of selected options
-                                        var optionId = bf.util.getXfId(item);
-                                        ids =  (ids == "") ? optionId : ids + ";" + optionId;
-                                        // concat values of selected options
-                                        selectedValue = (selectedValue == "") ? item.value : selectedValue + " " + item.value;
-                                    });
-                                    // console.debug("MultiSelectFull.onChange SelectedItem Ids: ", ids, " value: ", selectedValue);
-                                    fluxProcessor.dispatchEventType(xfId, "xformsSelect", ids);
+                                    var value = self.getSelectMinimalValue(node);
 
-                                    xfControlDijit.sendValue(selectedValue,true);
+                                    xfControlDijit.sendValue(value,true);
                                 });
+
+                                connect.connect(node,"onfocus",function(evt){
+                                    xfControlDijit.handleOnFocus();
+                                });
+
+                                xfControlDijit.setValue=function(value) {
+                                    query(".xfSelectorItem",node).forEach(function(item){
+                                        item.selected = value.indexOf(item.value) != -1;
+                                    });
+                                };
+
+                            });
+
+                            break;
+                        case "checkboxes":
+                            require(["bf/select/SelectCheckBox"], function(SelectCheckBox) {
+                                var selectFull = new SelectCheckBox({id:node.id,xfControl:xfControlDijit}, node);
+
 
                                 connect.connect(node,"onclick",function(evt){
                                     var selectedValues  = self.getSelectedFullOptions();
@@ -116,8 +84,6 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                                 connect.connect(node,"onfocus",function(evt){
                                     xfControlDijit.handleOnFocus();
                                 });
-
-
 
                                 xfControlDijit.setValue=function(value) {
                                     query(".xfCheckBoxValue",node).forEach(function(item){
