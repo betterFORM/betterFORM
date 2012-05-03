@@ -24,10 +24,19 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
 
                         case "text":
                             // console.debug("FOUND .xfOutput.mediatypeText .xfValue ",n);
+                            xfControlDijit.setCurrentValue(n.innerHTML);
                             xfControlDijit.setValue = function(value,schematype) {
                                 // console.debug("xfControl.setValue: .xfOutput.mediatypeText .xfValue");
                                 n.innerHTML = value;
                             };
+                            connect.connect(n,"onblur",function(evt){
+                                xfControlDijit.sendValue(n.innerHTML,true);
+                            });
+
+                            connect.connect(n,"onfocus",function(evt){
+                                xfControlDijit.handleOnFocus();
+                            });
+
                             break;
                         case "image":
                             // console.debug("FOUND .xfOutput.mediatypeImage .xfValue:",n);
@@ -37,6 +46,15 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             break;
                         case "link":
                             // console.debug("FOUND .xfOutput.xsdAnyURI .xfValue",n);
+                            xfControlDijit.setCurrentValue(n.innerHTML);
+                            connect.connect(n,"onblur",function(evt){
+                                xfControlDijit.sendValue(n.innerHTML,true);
+                            });
+
+                            connect.connect(n,"onfocus",function(evt){
+                                xfControlDijit.handleOnFocus();
+                            });
+
                             //todo: this solution works in FF - others have to be tested
                             xfControlDijit.setReadonly = function(){
                                 domClass.replace(n,"xfReadOnly","xfReadWrite");

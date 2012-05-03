@@ -15,6 +15,7 @@
     <property name="src.dir" value="${basedir}/src"/>
     <property name="dojo.version" value="${properties.dojo}"/>
     <property name="timeline.version" value="${properties.timeline}" />
+    <property name="ckeditor.version" value="${properties.ckeditor}" />
     <property name="syntaxhighlighter.version" value="${properties.timeline}" />
 
     <property name="scripts.target" value="${target.dir}/scripts"/>
@@ -34,6 +35,11 @@
         <unzip src="src/main/lib/${timeline.version}.zip" dest="${scripts.target}/simile/timeline">
             <cutdirsmapper dirs="1"/>
         </unzip>
+
+        <untar src="src/main/lib/${ckeditor.version}.tar.gz" dest="${scripts.target}/ckeditor" compression="gzip">
+            <cutdirsmapper dirs="1"/>
+        </untar>
+
         <!-- TODO: integrate sytaxhighlighter into build
              TODO: check for changed files in resources/src/../syntaxhighlighter ...
          -->

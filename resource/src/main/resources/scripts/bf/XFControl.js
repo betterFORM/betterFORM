@@ -71,6 +71,7 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/XFBinding","dojo/dom", "dojo/d
                 connect.publish("xforms-invalid",[this.id,"onBlur"]);
             }
 
+            /*if(changeFocus && fluxProcessor.usesDOMFocusOUT){*/
             if(changeFocus){
                 this.bfFocus = false;
                 //notify server of lost focus
@@ -188,11 +189,12 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/XFBinding","dojo/dom", "dojo/d
 
         handleOnFocus:function() {
             //storing current control id for handling help
-            console.debug("ControlValue.handleOnFocus storing current control id:", this.id, " value: ",this.currentValue);
+            // console.debug("XFControl.handleOnFocus storing current control id:", this.id, " value: ",this.currentValue);
 
             fluxProcessor.currentControlId = this.id;
 
-            if (!this.bfFocus && fluxProcessor.usesDOMFocusIN) {
+            /*if (!this.bfFocus && fluxProcessor.usesDOMFocusIN) {*/
+            if (!this.bfFocus) {
                 // console.debug("ControlValue: dispatch DOMFocusIn to ",this.xfControl.id);
                 fluxProcessor.dispatchEventType(this.id,"DOMFocusIn");
             }
