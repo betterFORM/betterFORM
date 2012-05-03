@@ -293,14 +293,34 @@ public class LoadAction extends AbstractBoundAction {
         if(embed instanceof Document){
             embed = ((Document) embed).getDocumentElement();
         }
-        if (XPathUtil.evaluate((Element) embed, "//*[@ev:event='xforms-select']").size() != 0) {
-            events.append("useXFSelect:true");
+        try {
+            if (XPathUtil.evaluate((Element) embed, "//*[@ev:event='xforms-select']").size() != 0) {
+                events.append("useXFSelect:true");
+            }
+        }catch(Exception e){
+            if(LOGGER.isDebugEnabled()){
+                LOGGER.debug("no xforms-select event listener in form");
+            }
         }
-        if (XPathUtil.evaluate((Element) embed, "//*[@ev:event='DOMFocusIn']").size() != 0) {
-            events.append("useDOMFocusIN:true");
+        try {
+            if (XPathUtil.evaluate((Element) embed, "//*[@ev:event='DOMFocusIn']").size() != 0) {
+                events.append("useDOMFocusIN:true");
+            }
         }
-        if (XPathUtil.evaluate((Element) embed, "//*[@ev:event='DOMFocusOut']").size() != 0) {
-            events.append("useDOMFocusOUT:true");
+        catch(Exception e){
+            if(LOGGER.isDebugEnabled()){
+                LOGGER.debug("no DOMFocusIn event listener in form");
+            }
+        }
+        try {
+            if (XPathUtil.evaluate((Element) embed, "//*[@ev:event='DOMFocusOut']").size() != 0) {
+                events.append("useDOMFocusOUT:true");
+            }
+        }
+        catch(Exception e){
+            if(LOGGER.isDebugEnabled()){
+                LOGGER.debug("no DOMFocusOut event listener in form");
+            }
         }
         return events.toString();
     }
