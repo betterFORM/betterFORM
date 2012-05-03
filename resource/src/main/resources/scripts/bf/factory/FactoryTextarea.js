@@ -15,7 +15,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             xfControlDijit.setCurrentValue(node.value);
 
                             xfControlDijit.setValue = function (value) {
-                                console.debug("textarea xfControlDijit: value:",value);
+                                // console.debug("textarea xfControlDijit: value:",value);
                                 node.value   = value;
                             };
 
@@ -40,7 +40,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             var ckPath = dojo.config.baseUrl + "ckeditor/ckeditor.js";
 
                             require([ckPath], function() {
-                                console.debug("ckPath",ckPath, " CKEDITOR:",CKEDITOR);
+                                // console.debug("ckPath",ckPath, " CKEDITOR:",CKEDITOR);
                                 // CKEDITOR.config.scayt_autoStartup = false;
                                 // console.debug("load ckeditor for node: ",node.id);
 
@@ -66,7 +66,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
 
 
                                     ckInstance.document.on( 'keyup', function(evt){
-                                        console.debug("ckInstance change value:",ckInstance.getData());
+                                        // console.debug("ckInstance change value:",ckInstance.getData());
                                         // Do not capture CTRL hotkeys.
                                         if ( !evt.data.$.ctrlKey && !evt.data.$.metaKey){
                                             if(xfControlDijit.isIncremental()){
