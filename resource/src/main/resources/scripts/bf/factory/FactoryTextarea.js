@@ -1,5 +1,5 @@
-define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-attr","bf/util"],
-    function(declare,connect,registry, domAttr) {
+define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","bf/util"],
+    function(declare,connect,registry) {
         return declare(null,
             {
                 /**
@@ -39,7 +39,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             //todo: support incremental behavior - this shouldn't be simple keyup updating but interval-based updating
                             var ckPath = dojo.config.baseUrl + "ckeditor/ckeditor.js";
 
-                            require([ckPath], function() {
+                            require(["dojo/dom-class",ckPath], function(domClass) {
                                 // console.debug("ckPath",ckPath, " CKEDITOR:",CKEDITOR);
                                 // CKEDITOR.config.scayt_autoStartup = false;
                                 // console.debug("load ckeditor for node: ",node.id);
@@ -75,6 +75,17 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
 
                                         }
                                     });
+
+                                    xfControlDijit.setReadonly = function(){
+                                        ckInstance.setReadOnly(true);
+                                        domClass.replace(node,"xfReadOnly","xfReadWrite");
+                                    };
+
+                                    xfControlDijit.setReadwrite = function(){
+                                        ckInstance.setReadOnly(false);
+                                        domClass.replace(node,"xfReadWrite", "xfReadOnly");
+                                    };
+
 
                                 });
 
