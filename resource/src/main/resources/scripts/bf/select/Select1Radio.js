@@ -1,7 +1,8 @@
 define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","dojo/dom-construct","dijit/registry","dojo/query","dojo/_base/connect","dojo/dom"],
     function(declare, _Widget,domAttr,domClass,domConstruct,registry,query,connect,dom){
         return declare(_Widget, {
-            controlId:undefined,
+            controlId:null,
+            currentValue:null,
 
             postCreate:function() {
                 connect.subscribe("xforms-item-changed-" + this.id , this, "handleStateChanged");
@@ -22,6 +23,17 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
 
             handleInsertItem:function(contextInfo) {
                 // console.debug("bf.Select1Full.handleInsertItem: ", contextInfo);
+                var checkedRadioItemValue;
+                query(".xfRadioValue", this.domNode).forEach(function(item) {
+                    // console.debug("analysing radioitem:",item);
+                    if(item.checked){
+                        checkedRadioItemValue = item.value;
+                        // console.debug("selected radioitem:",checkedRadioItemValue);
+                    }
+                });
+                this.currentValue = checkedRadioItemValue;
+                // console.debug("Select1Radio.handleInsert this.currentValue:",this.currentValue);
+
                 var itemsetId = contextInfo.targetId;
                 var generatedItemId =  contextInfo.generatedIds[contextInfo.prototypeId];
 
@@ -78,7 +90,12 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
                 if(targetName == "label"){
                     dom.byId(contextInfo.parentId + "-label").innerHTML = contextInfo.value;
                 }else if(targetName == "value"){
-                    domAttr.set(dom.byId(contextInfo.parentId+"-value"),"value",contextInfo.value);
+                    var radioValue = dom.byId(contextInfo.parentId+"-value");
+                    domAttr.set(radioValue,"value",contextInfo.value);
+                    if(this.currentValue == contextInfo.value){
+                        // console.debug("\n\nverify that value is the same as before the insert this.currentValue: ",this.currentValue);
+                        domAttr.set(radioValue,"checked", true);
+                    }
                 }else {
                     console.warn("Select1Radio.handleStateChanged: no action taken for contextInfo: ",contextInfo);
                 }

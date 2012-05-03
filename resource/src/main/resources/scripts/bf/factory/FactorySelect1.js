@@ -28,7 +28,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         case "combobox":
                             require(["bf/select/Select1ComboBox"], function(Select1ComboBox) {
                                 // console.debug("FactorySelect (minimal/compact) id:",xfId);
-                                var select1Widget = new Select1ComboBox({id:n.id}, n);
+                                var select1Widget = new Select1ComboBox({id:n.id,value:initialValue}, n);
 
                                 xfControlDijit.setValue = function(value, schemavalue) {
                                     domAttr.set(n, "value", value);

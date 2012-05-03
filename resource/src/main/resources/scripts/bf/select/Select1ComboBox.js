@@ -2,12 +2,16 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
     function(declare, _Widget,domAttr,domClass,domConstruct,connect,query,dom){
         return declare(_Widget, {
 
+            currentValue:null,
+
             postCreate:function() {
                 connect.subscribe("xforms-item-changed-" + this.id , this, "handleStateChanged");
+                this.currentValue = this.domNode.value;
             },
 
             handleInsertItem:function(contextInfo) {
-                console.debug("bf.Select1Minimal.handleInsertItem: ", contextInfo);
+                // console.debug("bf.Select1Minimal.handleInsertItem: ", contextInfo, " currentValue: ", this.domNode.value);
+                this.currentValue = this.domNode.value;
                 var position = contextInfo.position;
                 var itemsetId = contextInfo.targetId;
                 var generatedItemId =  contextInfo.generatedIds[contextInfo.prototypeId];
@@ -62,6 +66,10 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
                     option.innerHTML = contextInfo.value;
                 }else if(targetName == "value" && option){
                     domAttr.set(option,"value",contextInfo.value);
+                    // verify that value is the same as before the insert
+                    if(this.currentValue == contextInfo.value){
+                        domAttr.set(this.domNode,"value", contextInfo.value);
+                    }
                 }else {
                     console.warn("OptGroup.handleStateChanged: no action taken for contextInfo: ",contextInfo);
                 }
