@@ -415,6 +415,7 @@
                 <div id="openclose">
                     <a href="javascript:toggleDebug();" ><img class="debug-icon" src="{concat($contextroot,'/bfResources/images/collapse.png')}" alt=""/></a>
                 </div>
+                    <!-- todo: won't work with new xhtml.xsl: id changed to 'bfDebug' instead of 'debug-pane' -->
                     <div id="debug-pane" class="open" context="{concat($contextroot,'/inspector/',$sessionKey,'/')}">
                         <div style="float:right;margin-right:20px;text-align:right;" id="copyright">
                             <a href="http://www.betterform.de">
@@ -423,6 +424,8 @@
                             </a>
                             <span>&#xA9; 2012 betterFORM</span>
                         </div>
+
+                        <!-- todo: won't work with new xhtml.xsl: id changed to 'bfDebugLinks' instead of 'debug-pane-links' -->
                         <div id="debug-pane-links">
                             <a href="{concat($contextroot,'/inspector/',$sessionKey,'/','hostDOM')}" target="_blank">Host Document</a>
                         </div>

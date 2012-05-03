@@ -613,10 +613,10 @@ define(["dojo/_base/declare",
         console.debug("XFProcessor._handleInstanceCreated xmlEvent:",xmlEvent);
         // TODO: Lars: add animation again
         // dojo.require("dojox.fx");
-        var debugPane = dom.byId("debug-pane-links");
+        var debugPane = dom.byId("bfDebugLinks");
 
         if(debugPane != null){
-            var contextroot = domAttr.get(dom.byId("debug-pane"),"context");
+            var contextroot = domAttr.get(dom.byId("bfDebug"),"context");
             var newLink = document.createElement("a");
             domAttr.set(newLink,"href",contextroot + xmlEvent.contextInfo.modelId + "/" + xmlEvent.contextInfo.instanceId);
             domAttr.set(newLink,"target","_blank");
@@ -632,7 +632,7 @@ define(["dojo/_base/declare",
         console.debug("XFProcessor._handleModelRemoved xmlEvent:",xmlEvent);
         var modelId = xmlEvent.contextInfo.modelId;
         require(["dojo/query", "dojo/NodeList-manipulate"], function(query){
-            query("#debug-pane a[modelId='" + modelId +"']").remove();
+            query("#bfDebug a[modelId='" + modelId +"']").remove();
         });
     },
 

@@ -144,10 +144,10 @@ require(['dojo/_base/declare',"dojo/dom-class","dojo/dom-attr","dojo/_base/json"
         };
 
         bf.util.toggleDebug = function(){
-            require(["dojo/dom","dojo/dom-style","dojo/_base/connect"],function(dom,domStyle,connect){
-                var debugpane = dom.byId("debug-pane");
+            require(["dojo/dom","dojo/dom-style","dojo/_base/connect","dojo/_base/fx"],function(dom,domStyle,connect,fx){
+                var debugpane = dom.byId("bfDebug");
                 if(domClass.contains(debugpane,"open")){
-                    var closeAnim = dojo.animateProperty({
+                    var closeAnim = fx.animateProperty({
                         node:debugpane,
                         properties: {
                             width:{start:100,end:0,unit:"%"},
@@ -164,7 +164,7 @@ require(['dojo/_base/declare',"dojo/dom-class","dojo/dom-attr","dojo/_base/json"
 
                 }else{
                     domStyle.set(debugpane,"display", "block");
-                    var openAnim = dojo.animateProperty({
+                    var openAnim = fx.animateProperty({
                         node:debugpane,
                         properties: {
                             width:{start:0,end:100,units:"%"},

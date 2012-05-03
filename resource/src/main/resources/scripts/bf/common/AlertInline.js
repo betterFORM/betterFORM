@@ -30,6 +30,7 @@ define(["dojo/_base/declare","bf/common/Alert","dojo/dom","dojo/dom-style","dojo
 
         _render:function(id, commonChild, show) {
             // console.debug("InlineAlert._render [id:'",id,"' commonChild:'", commonChild," ' show:'",show, "']");
+            //todo: jt: searching the node again seems unnecessary as it's already accessed from caller ('_show')
             var mip = dom.byId(id + "-" + commonChild);
             if (mip != undefined && mip.innerHTML != '') {
                 // add onclick handler to alerts to close them by mouse click

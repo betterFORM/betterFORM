@@ -447,18 +447,18 @@
                     <ul id="eventLog">
                     </ul>
                 </div>
-                <div id="openclose">
+                <div id="bfDebugOpenClose">
                     <a href="javascript:bf.util.toggleDebug();" ><img class="debug-icon" src="{concat($contextroot,'/bfResources/images/collapse.png')}" alt=""/></a>
                 </div>
-                    <div id="debug-pane" class="open" context="{concat($contextroot,'/inspector/',$sessionKey,'/')}">
-                        <div style="float:right;margin-right:20px;text-align:right;" id="copyright">
+                    <div id="bfDebug" class="open" context="{concat($contextroot,'/inspector/',$sessionKey,'/')}">
+                        <div id="bfCopyright">
                             <a href="http://www.betterform.de">
                                 <img style="vertical-align:text-bottom; margin-right:5px;"
                                      src="{concat($contextroot,'/bfResources/images/betterform_icon16x16.png')}" alt="betterFORM project"/>
                             </a>
                             <span>&#xA9; 2012 betterFORM</span>
                         </div>
-                        <div id="debug-pane-links">
+                        <div id="bfDebugLinks">
                             <a href="{concat($contextroot,'/inspector/',$sessionKey,'/','hostDOM')}" target="_blank">Host Document</a>
                         </div>
                     </div>

@@ -73,8 +73,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d7e141" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
-                     <div dojoType="dijit.Tooltip" connectId="d7e141">matches any Element that represents a XForms
+                  <td id="d2e145" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
+                     <div dojoType="dijit.Tooltip" connectId="d2e145">matches any Element that represents a XForms
                         group
                         |
                         repeat
@@ -86,8 +86,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d7e159" onmouseover="showClass('xfCompactGroup');" onmouseout="hideClass('xfCompactGroup');">xfCompactGroup
-                     <div dojoType="dijit.Tooltip" connectId="d7e159">matches an Element that represents a XForms
+                  <td id="d2e163" onmouseover="showClass('xfCompactGroup');" onmouseout="hideClass('xfCompactGroup');">xfCompactGroup
+                     <div dojoType="dijit.Tooltip" connectId="d2e163">matches an Element that represents a XForms
                         group
                         element with
                         'compact'
@@ -97,8 +97,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d7e174" onmouseover="showClass('xfGroupLabel');" onmouseout="hideClass('xfGroupLabel');">xfGroupLabel
-                     <div dojoType="dijit.Tooltip" connectId="d7e174">matches the  label of a group</div>
+                  <td id="d2e178" onmouseover="showClass('xfGroupLabel');" onmouseout="hideClass('xfGroupLabel');">xfGroupLabel
+                     <div dojoType="dijit.Tooltip" connectId="d2e178">matches the  label of a group</div>
                   </td>
                </tr>
                <tr>
@@ -244,6 +244,8 @@
                
                <xf:label>Group with compact appearance</xf:label>
                
+               <xf:alert>invalid group</xf:alert>
+               
                <xf:input id="input1" ref="a">
                   
                   <xf:label>A-label</xf:label>
@@ -306,6 +308,7 @@
          <h2>XForms Markup</h2>
          <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:group id="group1" ref="grouped-data/group" appearance="compact"&gt;
     &lt;xf:label&gt;Group with compact appearance&lt;/xf:label&gt;
+    &lt;xf:alert&gt;invalid group&lt;/xf:alert&gt;
     &lt;xf:input id="input1" ref="a"&gt;
         &lt;xf:label&gt;A-label&lt;/xf:label&gt;
     &lt;/xf:input&gt;

@@ -25,7 +25,8 @@
 @link-color:#444444;     
 @repeat-index-color:#DFDFDF;  
 @gray:#999999;
-@debugPaneColor:#999999;
+@debugPaneColor:#777777;
+@debugPaneFontColor:#DEDEDE;
 @borderColor1:#999999;
 
 
@@ -34,17 +35,21 @@
   -moz-border-radius: @radius;
   -webkit-border-radius: @radius;
 }
-
+/*
+    ################################## global betterFORM styles ##############################
+*/
 body {
     background: url("@{image-url}/bgOne.gif") repeat-x scroll;
     margin: 30px;
+    font-family: san-serif;
     padding: 0; /*overflow: hidden;*/
+    font-size: 100%;
 }
 
+/*
 .bfHelpWrapper a:active{
 	border:none;
 }
-/*
 #fluxProcessor {
     width: 100%;
     height: 100%;
@@ -60,6 +65,7 @@ body {
     position: absolute; /*bottom:0;*/
     right: 0;
     font-size: 8pt;
+    font-family: sans-serif;
     padding-right: 20px;
 
 }
@@ -75,7 +81,7 @@ body {
 /*
 debug bar at bottom of screen if debug is enabled by betterform config
 */
-#debug-pane{
+#bfDebug{
     opacity:0.7;
 	position:fixed;
     bottom: 0;
@@ -85,19 +91,21 @@ debug bar at bottom of screen if debug is enabled by betterform config
 	width:100%;
 	padding:5px;
 	text-align:left;
+    color:@debugPaneFontColor;
 
     a{
         padding:2px 10px 2px 10px;
-        color:black;
         font-weight:bold;
         display:inline-block;
+        font-size:  0.8em;
         .border-radius(5px);
+        color:@debugPaneFontColor;
     }
-    #debug-pane-links{
+    #bfDebugLinks{
         padding-left: 30px;
     }
 }
-#openclose{
+#bfDebugOpenClose{
     position: fixed;
     width:30px;
     height: 30px;
@@ -674,43 +682,43 @@ alert + hints should always be aligned with the control.
 }
 
 
-.bfHorizontalTable {
+.bf .bfHorizontalTable {
     overflow: auto;
 
     td {
         vertical-align: top;
     }
 
-    .xfLabel {
+
+    /* hide duplicate group-labels for horizontal groups */
+    .xfContainer .xfGroupLabel {
         display: none;
+    }
+
+    .bfHorizontalTableLabel{
+
+        .bfTableLabel {
+            padding-left: 2px;
+        }
+    }
+
+    .bfHorizontalTableValue{
+        .bfHorizontalTableHeader {
+            display: none;
+        }
+    }
+
+    .bfHorizontalTableValue > .xfControl > .xfLabel {
+        display:none; //hide control labels as these are displayed in a separate header row
+
+    }
+
+    .bfHorizontalTableValue .xfControl {
+        padding:0;
+        margin: 0;
     }
 }
 
-
-.bfHorizontalTableValue {
-
-}
-.bf .bfHorizontalTable .bfHorizontalTableValue .xfControl {
-    padding:0;
-    margin: 0;
-}
-
-.bf .bfHorizontalTableLabel .bfTableLabel {
-    padding-left: 2px;
-}
-
-.bfHorizontalTableValue .bfHorizontalTableHeader {
-    display: none;
-}
-
-.bfHorizontalTableValue .bfHorizontalTableLabel {
-/*display:none;*/
-}
-
-/* hide duplicate group-labels for horizontal groups */
-.bfHorizontalTable .xfContainer .xfGroupLabel {
-    display: none;
-}
 
 /* ***************************************************************************** */
 /* ***************************************************************************** */

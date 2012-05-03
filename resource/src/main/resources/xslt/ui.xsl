@@ -158,6 +158,7 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </span>
+            <xsl:apply-templates select="xf:alert"/>
 
             <xsl:apply-templates select="*[not(self::xf:label)] | text()"/>
         </span>
@@ -208,6 +209,7 @@
             <xsl:if test="exists(xf:label)">
                 <caption class="xfGroupLabel">
                     <xsl:apply-templates select="./xf:label"/>
+                    <xsl:apply-templates select="xf:alert"/>
                 </caption>
             </xsl:if>
             <tbody>
@@ -336,6 +338,7 @@
 
             <xsl:message>$$$$$$$$ has group label:<xsl:value-of select="bf:hasGroupLabel(.)"/></xsl:message>
 
+            <!-- todo: need a hook to integrate xf:alert for horizontal group -->
             <xsl:if test="bf:hasGroupLabel(.)=true()">
                 <tr>
                     <td colspan="{bf:childCount(.)}" class="xfGroupLabel">
