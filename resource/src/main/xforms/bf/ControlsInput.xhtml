@@ -94,11 +94,17 @@
                     <alert>Boolean Alert[11]</alert>
                     <hint>Boolean Hint[11]</hint>
                 </input>
+                <input>
+                    <value>10.14</value>
+                    <label>Decimal</label>
+                    <alert>Decimal Alert[12]</alert>
+                    <hint>Decimal Hint[12]</hint>
+                </input>
                 <secret>
-                    <value>true</value>
-                    <label>Boolean</label>
-                    <alert>Boolean Alert[11]</alert>
-                    <hint>Boolean Hint[11]</hint>
+                    <value>secret phrase</value>
+                    <label>Secret</label>
+                    <alert>Secret Alert[1]</alert>
+                    <hint>Secret Hint[1]</hint>
                 </secret>
             </data>
         </xf:instance>
@@ -149,6 +155,10 @@
                      relevant="boolean-from-string(instance()/@relevant)"
                      constraint="boolean-from-string(instance()/@valid)"
                      readonly="boolean-from-string(instance()/@readonly)"  type="boolean"/>
+            <xf:bind nodeset="input[12]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"  type="decimal"/>
             <xf:bind nodeset="secret[1]/value" required="boolean-from-string(instance()/@required)"
                      relevant="boolean-from-string(instance()/@relevant)"
                      constraint="boolean-from-string(instance()/@valid)"
@@ -300,6 +310,15 @@
             </xf:input>
             <xf:output ref="input[11]/value" >
                 <xf:label>Input 11:</xf:label>
+            </xf:output>
+
+            <xf:input ref="input[12]/value" incremental="true">
+                <xf:label ref="../label"/>
+                <xf:hint ref="../hint"/>
+                <xf:alert ref="../alert"/>
+            </xf:input>
+            <xf:output ref="input[12]/value" >
+                <xf:label>Input 12:</xf:label>
             </xf:output>
 
         </xf:group>

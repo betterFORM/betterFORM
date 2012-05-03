@@ -91,6 +91,29 @@
 -->
                 </input>
             </xsl:when>
+            <xsl:when test="$type='byte' or $type='decimal'
+                            or $type='int' or $type='integer'
+                            or $type='float' or $type='double'
+                            or $type='long' or $type='negativeInteger'
+                            or $type='nonNegativeInteger' or $type='nonPositiveInteger'
+                            or $type='positiveInteger' or $type='short'
+                            or $type='unsignedLong' or $type='unsignedInt'
+                            or $type='unsignedShort' or $type='unsignedByte'">
+                <input  id="{$id}-value"
+                        name="{$name}"
+                        type="number"
+                        class="xfValue"
+                        tabindex="{$navindex}"
+                        placeholder="{xf:hint}"
+                        value="{bf:data/text()}">
+                    <xsl:if test="bf:data/@bf:readonly='true'">
+                        <xsl:attribute name="disabled">disabled</xsl:attribute>
+                    </xsl:if>
+                </input>
+
+
+
+            </xsl:when>
             <xsl:otherwise>
                 <input  id="{$id}-value"
                         name="{$name}"
