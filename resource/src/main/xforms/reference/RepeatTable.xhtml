@@ -115,57 +115,57 @@
                </tr>
                <tr>
                   <td id="d35e225" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
-                     <div dojoType="dijit.Tooltip" connectId="d35e225">matches any Element that represents a XForms group | repeat | switch element</div>
+                     <div data-dojo-type="dijit.Tooltip" connectId="d35e225">matches any Element that represents a XForms group | repeat | switch element</div>
                   </td>
                </tr>
                <tr>
                   <td id="d35e243" onmouseover="showClass('xfRepeatItem');" onmouseout="hideClass('xfRepeatItem');">xfRepeatItem
-                     <div dojoType="dijit.Tooltip" connectId="d35e243">matches all repeat items
+                     <div data-dojo-type="dijit.Tooltip" connectId="d35e243">matches all repeat items
                         
                      </div>
                   </td>
                </tr>
                <tr>
                   <td id="d35e255" onmouseover="showClass('xfRepeatIndex');" onmouseout="hideClass('xfRepeatIndex');">xfRepeatIndex
-                     <div dojoType="dijit.Tooltip" connectId="d35e255">matches the currently selected repeat item
+                     <div data-dojo-type="dijit.Tooltip" connectId="d35e255">matches the currently selected repeat item
                         
                      </div>
                   </td>
                </tr>
                <tr>
                   <td id="d35e267" onmouseover="showClass('xfTbody');" onmouseout="hideClass('xfTbody');">xfTbody
-                     <div dojoType="dijit.Tooltip" connectId="d35e267">matches the element wearing the repeat attributes</div>
+                     <div data-dojo-type="dijit.Tooltip" connectId="d35e267">matches the element wearing the repeat attributes</div>
                   </td>
                </tr>
                <tr>
                   <td id="d35e279" onmouseover="showClass('one');" onmouseout="hideClass('one');">one
-                     <div dojoType="dijit.Tooltip" connectId="d35e279">matches a cells that have the author class 'one' on them</div>
+                     <div data-dojo-type="dijit.Tooltip" connectId="d35e279">matches a cells that have the author class 'one' on them</div>
                   </td>
                </tr>
                <tr>
                   <td id="d35e289" onmouseover="showClass('two');" onmouseout="hideClass('two');">two
-                     <div dojoType="dijit.Tooltip" connectId="d35e289">matches a cells that have the author class 'two' on them</div>
+                     <div data-dojo-type="dijit.Tooltip" connectId="d35e289">matches a cells that have the author class 'two' on them</div>
                   </td>
                </tr>
                <tr>
                   <td id="d35e298" onmouseover="showClass('three');" onmouseout="hideClass('three');">three
-                     <div dojoType="dijit.Tooltip" connectId="d35e298">matches a cells that have the author class 'three' on them</div>
+                     <div data-dojo-type="dijit.Tooltip" connectId="d35e298">matches a cells that have the author class 'three' on them</div>
                   </td>
                </tr>
                <tr>
                   <td id="d35e307" onmouseover="showClass('four');" onmouseout="hideClass('four');">four
-                     <div dojoType="dijit.Tooltip" connectId="d35e307">matches a cells that have the author class 'four' on them</div>
+                     <div data-dojo-type="dijit.Tooltip" connectId="d35e307">matches a cells that have the author class 'four' on them</div>
                   </td>
                </tr>
                <tr>
                   <td id="d35e316" onmouseover="showClass('five');" onmouseout="hideClass('five');">five
-                     <div dojoType="dijit.Tooltip" connectId="d35e316">matches a cells that have the author class 'five' on them</div>
+                     <div data-dojo-type="dijit.Tooltip" connectId="d35e316">matches a cells that have the author class 'five' on them</div>
                   </td>
                </tr>
                <tr>
                   <td id="xfcontrol" onmouseover="showClass('xfControl');" onmouseout="hideClass('xfControl');">xfControl
                      
-                     <div dojoType="dijit.Tooltip" connectId="xfcontrol">
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfcontrol">
                         matches an Element that represents a XForms control
                         
                      </div>
@@ -174,7 +174,7 @@
                <tr>
                   <td id="xflabel" onmouseover="showClass('xfLabel');" onmouseout="hideClass('xfLabel');">xfLabel
                      
-                     <div dojoType="dijit.Tooltip" connectId="xflabel">
+                     <div data-dojo-type="dijit.Tooltip" connectId="xflabel">
                         matches the label part of an XForms control
                         
                      </div>
@@ -183,7 +183,7 @@
                <tr>
                   <td id="xfvalue" onmouseover="showClass('xfValue');" onmouseout="hideClass('xfValue');">xfValue
                      
-                     <div dojoType="dijit.Tooltip" connectId="xfvalue">
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfvalue">
                         matches the widget part of an XForms control
                         
                      </div>
@@ -331,7 +331,7 @@
             </table>
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:instance&gt;
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:instance&gt;
     &lt;data&gt;
         &lt;items&gt;
             &lt;item1&gt;item 11&lt;/item1&gt;
@@ -427,29 +427,34 @@
          <div class="Notes">
             Please note that if you use a display:block for class xfContainer you should add a rule
             
-         </div><script type="text/javascript" defer="defer">
+         </div>
+      </div><script type="text/javascript">
+                function showClass(cssClass){
+                    require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                        query('.sample .'+ cssClass).forEach(function(item){
+                            domClass.add(item,'showClass');
+                        });
+                    });
+                }
 
-                    function showClass(cssClass){
-                        require(["dojo/query", "dojo/dom-class"], function(query, domClass){
-                            query('.sample .'+ cssClass).forEach(function(item){
-                                domClass.add(item,'showClass');
-                            });
+                function hideClass(cssClass){
+                    require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                        query('.sample .'+ cssClass).forEach(function(item){
+                            domClass.remove(item,'showClass');
+                        });
+                    });
+                }
+
+                require(["dojo/parser","dojo/_base/connect", "dijit/Tooltip", "dojo/dom", "dojox/highlight", "dojox/highlight/languages/_all", "dojox/highlight/widget/Code", "dojo/domReady!"],
+                    function(parser,connect, Tooltip,dom) {
+                        var xforms = dom.byId("xforms");
+                        console.debug("parse ",xforms);
+                        parser.parse(xforms);
+                        connect.subscribe("/xf/ready", function(){
+                            fluxProcessor.skipshutdown=true;
                         });
                     }
-                    function hideClass(cssClass){
-                        require(["dojo/query", "dojo/dom-class"], function(query, domClass){
-                            query('.sample .'+ cssClass).forEach(function(item){
-                                domClass.remove(item,'showClass');
-                            });
-                        });
-                    }
-                </script></div><script type="text/javascript">
-
-            require(["dojo/_base/connect"], function(connect){
-                connect.subscribe("/xf/ready", function(){
-                    fluxProcessor.skipshutdown=true;
-                });
-            });
-        </script></body>
+                );
+            </script></body>
    
 </html>

@@ -135,7 +135,7 @@
             </xf:group>
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;html bf:evalAVTs="class style"&gt;
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;html bf:evalAVTs="class style"&gt;
     &lt;body class="{theme}"&gt;...&lt;/body&gt;   
 &lt;/html&gt;
 
@@ -186,29 +186,34 @@
                
             </p>
             
-         </div><script type="text/javascript" defer="defer">
+         </div>
+      </div><script type="text/javascript">
+                function showClass(cssClass){
+                    require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                        query('.sample .'+ cssClass).forEach(function(item){
+                            domClass.add(item,'showClass');
+                        });
+                    });
+                }
 
-                    function showClass(cssClass){
-                        require(["dojo/query", "dojo/dom-class"], function(query, domClass){
-                            query('.sample .'+ cssClass).forEach(function(item){
-                                domClass.add(item,'showClass');
-                            });
+                function hideClass(cssClass){
+                    require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                        query('.sample .'+ cssClass).forEach(function(item){
+                            domClass.remove(item,'showClass');
+                        });
+                    });
+                }
+
+                require(["dojo/parser","dojo/_base/connect", "dijit/Tooltip", "dojo/dom", "dojox/highlight", "dojox/highlight/languages/_all", "dojox/highlight/widget/Code", "dojo/domReady!"],
+                    function(parser,connect, Tooltip,dom) {
+                        var xforms = dom.byId("xforms");
+                        console.debug("parse ",xforms);
+                        parser.parse(xforms);
+                        connect.subscribe("/xf/ready", function(){
+                            fluxProcessor.skipshutdown=true;
                         });
                     }
-                    function hideClass(cssClass){
-                        require(["dojo/query", "dojo/dom-class"], function(query, domClass){
-                            query('.sample .'+ cssClass).forEach(function(item){
-                                domClass.remove(item,'showClass');
-                            });
-                        });
-                    }
-                </script></div><script type="text/javascript">
-
-            require(["dojo/_base/connect"], function(connect){
-                connect.subscribe("/xf/ready", function(){
-                    fluxProcessor.skipshutdown=true;
-                });
-            });
-        </script></body>
+                );
+            </script></body>
    
 </html>

@@ -47,7 +47,7 @@
                </tr>
                <tr>
                   <td id="d5e133" onmouseover="showClass('xfDialog');" onmouseout="hideClass('xfDialog');">xfDialog
-                     <div dojoType="dijit.Tooltip" connectId="d5e133">matches an Element that represents a betterFORM
+                     <div data-dojo-type="dijit.Tooltip" connectId="d5e133">matches an Element that represents a betterFORM
                         Dialog
                         
                      </div>
@@ -56,7 +56,7 @@
                <tr>
                   <td id="xfcontrol" onmouseover="showClass('xfControl');" onmouseout="hideClass('xfControl');">xfControl
                      
-                     <div dojoType="dijit.Tooltip" connectId="xfcontrol">
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfcontrol">
                         matches an Element that represents a XForms control
                         
                      </div>
@@ -65,7 +65,7 @@
                <tr>
                   <td id="xflabel" onmouseover="showClass('xfLabel');" onmouseout="hideClass('xfLabel');">xfLabel
                      
-                     <div dojoType="dijit.Tooltip" connectId="xflabel">
+                     <div data-dojo-type="dijit.Tooltip" connectId="xflabel">
                         matches the label part of an XForms control
                         
                      </div>
@@ -74,7 +74,7 @@
                <tr>
                   <td id="xfvalue" onmouseover="showClass('xfValue');" onmouseout="hideClass('xfValue');">xfValue
                      
-                     <div dojoType="dijit.Tooltip" connectId="xfvalue">
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfvalue">
                         matches the widget part of an XForms control
                         
                      </div>
@@ -84,7 +84,7 @@
                   <td id="xfreadonly" onmouseover="showClass('xfReadOnly');" onmouseout="hideClass('xfReadOnly');">
                      xfReadOnly
                      
-                     <div dojoType="dijit.Tooltip" connectId="xfreadonly">
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfreadonly">
                         matches a xforms control that is currently readonly
                         
                      </div>
@@ -94,7 +94,7 @@
                   <td id="xfreadwrite" onmouseover="showClass('xfReadWrite');" onmouseout="hideClass('xfReadWrite');">
                      xfReadWrite
                      
-                     <div dojoType="dijit.Tooltip" connectId="xfreadwrite">
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfreadwrite">
                         matches a xforms control that is currently writable
                         
                      </div>
@@ -104,7 +104,7 @@
                   <td id="xfrequired" onmouseover="showClass('xfRequired');" onmouseout="hideClass('xfRequired');">
                      xfRequired
                      
-                     <div dojoType="dijit.Tooltip" connectId="xfrequired">
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfrequired">
                         matches a xforms control that is currently required
                         
                      </div>
@@ -114,7 +114,7 @@
                   <td id="xfoptional" onmouseover="showClass('xfOptional');" onmouseout="hideClass('xfOptional');">
                      xfOptional
                      
-                     <div dojoType="dijit.Tooltip" connectId="xfoptional">
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfoptional">
                         matches a xforms control that is currently optional
                         
                      </div>
@@ -124,7 +124,7 @@
                   <td id="xfenabled" onmouseover="showClass('xfEnabled');" onmouseout="hideClass('xfEnabled');">
                      xfEnabled
                      
-                     <div dojoType="dijit.Tooltip" connectId="xfenabled">
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfenabled">
                         matches a xforms control that is currently relevant (enabled)
                         
                      </div>
@@ -134,7 +134,7 @@
                   <td id="xfdisabled" onmouseover="showClass('xfDisabled');" onmouseout="hideClass('xfDisabled');">
                      xfDisabled
                      
-                     <div dojoType="dijit.Tooltip" connectId="xfdisabled">
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfdisabled">
                         matches a xforms control that is currently disabled (can't be visualized here as the control gets hidden)
                         
                      </div>
@@ -144,7 +144,7 @@
                   <td id="xfvalid" onmouseover="showClass('xfValid');" onmouseout="hideClass('xfValid');">
                      xfValid
                      
-                     <div dojoType="dijit.Tooltip" connectId="xfvalid">
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfvalid">
                         matches a xforms control that is currently valid
                         
                      </div>
@@ -154,7 +154,7 @@
                   <td id="xfinvalid" onmouseover="showClass('xfInvalid');" onmouseout="hideClass('xfInvalid');">
                      xfInvalid
                      
-                     <div dojoType="dijit.Tooltip" connectId="xfinvalid">
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfinvalid">
                         matches a xforms control that is currently invalid
                         
                      </div>
@@ -290,7 +290,7 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:trigger id="trigger1"&gt;
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:trigger id="trigger1"&gt;
     &lt;xf:label&gt;show dialog&lt;/xf:label&gt;
     &lt;bfc:show dialog="loginDialog" ev:event="DOMActivate"&gt;&lt;/bfc:show&gt;
 &lt;/xf:trigger&gt;
@@ -324,29 +324,34 @@
         &lt;/table&gt;
     &lt;/xf:group&gt;
 &lt;/bfc:dialog&gt;
-</code></pre></div><script type="text/javascript" defer="defer">
+</code></pre></div>
+      </div><script type="text/javascript">
+                function showClass(cssClass){
+                    require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                        query('.sample .'+ cssClass).forEach(function(item){
+                            domClass.add(item,'showClass');
+                        });
+                    });
+                }
 
-                    function showClass(cssClass){
-                        require(["dojo/query", "dojo/dom-class"], function(query, domClass){
-                            query('.sample .'+ cssClass).forEach(function(item){
-                                domClass.add(item,'showClass');
-                            });
+                function hideClass(cssClass){
+                    require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                        query('.sample .'+ cssClass).forEach(function(item){
+                            domClass.remove(item,'showClass');
+                        });
+                    });
+                }
+
+                require(["dojo/parser","dojo/_base/connect", "dijit/Tooltip", "dojo/dom", "dojox/highlight", "dojox/highlight/languages/_all", "dojox/highlight/widget/Code", "dojo/domReady!"],
+                    function(parser,connect, Tooltip,dom) {
+                        var xforms = dom.byId("xforms");
+                        console.debug("parse ",xforms);
+                        parser.parse(xforms);
+                        connect.subscribe("/xf/ready", function(){
+                            fluxProcessor.skipshutdown=true;
                         });
                     }
-                    function hideClass(cssClass){
-                        require(["dojo/query", "dojo/dom-class"], function(query, domClass){
-                            query('.sample .'+ cssClass).forEach(function(item){
-                                domClass.remove(item,'showClass');
-                            });
-                        });
-                    }
-                </script></div><script type="text/javascript">
-
-            require(["dojo/_base/connect"], function(connect){
-                connect.subscribe("/xf/ready", function(){
-                    fluxProcessor.skipshutdown=true;
-                });
-            });
-        </script></body>
+                );
+            </script></body>
    
 </html>
