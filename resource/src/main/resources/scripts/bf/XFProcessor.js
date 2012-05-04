@@ -789,6 +789,7 @@ define(["dojo/_base/declare",
 
 
             require(["dojo/behavior"],function(behavior) {
+                // console.debug("htmlEntryPoint:",nodesToEmbed);
                 behavior.apply();
             });
 

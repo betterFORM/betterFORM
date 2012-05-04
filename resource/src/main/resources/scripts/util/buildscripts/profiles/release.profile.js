@@ -104,11 +104,7 @@ var profile = {
                 'dojo/_base/array',
                 'dojo/_base/event',
                 'dojo/_base/declare',
-
                 'dijit/registry',
-                'dijit/nls/en/loading',
-                'dijit/nls/de/loading',
-
                 'bf/common/Alert',
                 'bf/common/AlertInline',
                 'bf/common/AlertToolTip',
@@ -158,7 +154,8 @@ var profile = {
                 'dijit/layout/TabContainer',
 
                 'dijit/form/DateTextBox',
-                'dijit/form/TimeTextBox'
+                'dijit/form/TimeTextBox',
+                "dijit/nls/en"
             ],
             boot: false,
             customBase: true
@@ -171,9 +168,9 @@ var profile = {
                 'dijit/form/DropDownButton',
                 'dijit/TooltipDialog',
                 'dijit/Dialog',
-                'dijit/nls/de/loading',
-                'dijit/nls/en/loading',
-                'dojox/fx'
+                'dojox/fx',
+                "dijit/nls/en",
+                'dijit/nls/en/loading'
             ],
             boot: false,
             customBase: true
@@ -182,9 +179,13 @@ var profile = {
             include: [
                 'dijit/Menu',
                 'dijit/MenuBar',
-                'dijit.MenuItem',
+                'dijit/MenuItem',
                 'dijit/PopupMenuBarItem',
-                'dijit/Tooltip'
+                'dijit/Tooltip',
+                "dojox/highlight",
+                "dojox/highlight/languages/_all",
+                "dojox/highlight/widget/Code",
+                "dijit/nls/en"
             ],
             exclude: [
                 "dojo/dojo",

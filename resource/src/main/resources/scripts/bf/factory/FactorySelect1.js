@@ -90,7 +90,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                 var comboBox = new ComboBox({
                                     id:n.id,
                                     name:n.name,
-                                    class:"xfValue",
+                                    className:"xfValue",
                                     autocomplete:true,
                                     onChange: function(value){
                                         // console.log("combobox onchange ", value);

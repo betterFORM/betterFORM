@@ -152,7 +152,7 @@
         </java>
 
 
-        <delete dir="${scripts.target}/release" excludes="dojo/dojo.js bf/dojo.js bf/dashboard.js bf/featureExplorer.js **/*.css **/*.gif **/*.png dojo/cldr/**" includeemptydirs="true"/>
+        <delete dir="${scripts.target}/release" excludes="dojo/dojo.js bf/dojo.js bf/dashboard.js bf/featureExplorer.js **/*.css **/*.gif **/*.png dojo/cldr/** build-report.txt" includeemptydirs="true"/>
 
         <copy todir="${scripts.target}/release">
             <fileset file="${src.dir}/main/lib/dwr/dwr.js"/>

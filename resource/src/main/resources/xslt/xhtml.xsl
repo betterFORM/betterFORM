@@ -868,6 +868,7 @@
         this template might be overwritten by a custom stylesheet. Which is better?
         -->
         <!-- todo: should we use explicit package locations and a baseUrl ? -->
+        <!-- todo: use locale again -->
         <xsl:variable name="dojoConfig">
             has: {
                 "dojo-firebug": <xsl:value-of select="$debug-enabled"/>,
@@ -876,7 +877,7 @@
             <!-- todo: check if debugAtAllCosts is deprecated -->
             debugAtAllCosts:<xsl:value-of select="$debug-enabled"/>,
             isDebug:<xsl:value-of select="$debug-enabled"/>,
-            locale:'<xsl:value-of select="$locale"/>',
+            locale:'en',
             baseUrl: '<xsl:value-of select="concat($contextroot,$scriptPath)"/>',
 
             parseOnLoad:false,

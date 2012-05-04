@@ -136,10 +136,8 @@
         unpacking optimized javascript library
         ************************************************************************************
         </echo>
-<!--
         <unzip src="${resource.src.dir}/main/lib/betterform-js-optimized.zip"
                dest="${target}/classes/META-INF/resources/scripts"/>
--->
         <echo>
         ************************************************************************************
         compressing classes plus resources into a single jar
