@@ -81,61 +81,44 @@ var profile = {
                 'dojo/fx/easing',
                 'dojo/io/iframe',
                 'dojo/_base/window',
-                'dojo/has',
-                'dojo/_firebug/firebug'
+                'dojo/has'
             ],
             boot: true,
             customBase: true
         },
-        'bf/dojo': {
-        // In addition to the loader (dojo/dojo) and the loader configuration file (bf/run), we’re also including
-        // the main application (bf/main) and the dojo/i18n and dojo/domReady modules because they are one of the
-        // conditional dependencies in bf/main (the other being bf/Dialog) but we don’t want to have to make
-        // extra HTTP requests for such tiny files.
+        'bf/core':{
             include:[
-                'dojo/dojo',
-                'dojo/dom-class',
-                'dojo/dom-construct',
-                'dojo/domReady',
-                'dojo/NodeList-fx',
-                'dojo/_base/sniff',
+                'dojo/_base/declare',
                 'dojo/_base/connect',
                 'dojo/_base/lang',
                 'dojo/_base/array',
-                'dojo/_base/event',
-                'dojo/_base/declare',
+
+                'dojo/dom-class',
+                'dojo/dom-construct',
+                'dojo/domReady',
+
                 'dijit/registry',
+
+                'bf/core',
+
                 'bf/common/Alert',
                 'bf/common/AlertInline',
-                'bf/common/AlertToolTip',
 
                 'bf/container/Repeat',
-
                 'bf/factory/FactoryContainer',
                 'bf/factory/FactoryInput',
                 'bf/factory/FactoryOutput',
-                'bf/factory/FactoryRange',
                 'bf/factory/FactorySecret',
                 'bf/factory/FactorySelect',
                 'bf/factory/FactorySelect1',
                 'bf/factory/FactoryTextarea',
                 'bf/factory/FactoryTrigger',
-                'bf/factory/FactoryUpload',
 
-
-                'bf/input/DateTime',
-                'bf/input/DropDownDate',
-                'bf/input/Time',
-
-                 'bf/select/SelectCheckBox',
-                 'bf/select/Select1Radio',
-                 'bf/select/Select1ComboBox',
-
-                 'bf/upload/Upload',
-
+                'bf/select/SelectCheckBox',
+                'bf/select/Select1Radio',
+                'bf/select/Select1ComboBox',
 
                 'bf/ClientServerEvent',
-                'bf/devtool',
                 'bf/Mapping',
                 'bf/MappingProcessor',
                 'bf/util',
@@ -143,23 +126,133 @@ var profile = {
                 'bf/XFControl',
                 'bf/XFormsModelElement',
                 'bf/XFormsProcessor',
-                'bf/XFProcessor',
+                'bf/XFProcessor'
 
-                // dijits used by betterFORM Controls
+            ],
+            boot: false,
+            customBase: true,
+            exclude: [
+                "dojo/dojo"
+            ]
+
+        },
+        'bf/slider':{
+            include:[
                 'dijit/form/HorizontalSlider',
                 'dijit/form/HorizontalRuleLabels',
                 'dijit/form/HorizontalRule',
-
+                'bf/factory/FactoryRange'
+            ],
+            boot: false,
+            customBase: true,
+            exclude: [
+                "dojo/dojo",
+                "bf/core"
+            ]
+        },
+        'bf/tabcontainer':{
+            include:[
                 'dijit/layout/ContentPane',
-                'dijit/layout/TabContainer',
+                'dijit/layout/TabContainer'
+            ],
+            boot: false,
+            customBase: true,
+            exclude: [
+                "dojo/dojo",
+                "bf/core",
+                "bf/slider"
+            ]
 
+        },
+        'bf/dates':{
+            include:[
                 'dijit/form/DateTextBox',
                 'dijit/form/TimeTextBox',
-                "dijit/nls/en"
+                'bf/input/DateTime',
+                'bf/input/DropDownDate',
+                'bf/input/Time'
+
+            ],
+            boot: false,
+            customBase: true,
+            exclude: [
+                "dojo/dojo",
+                "bf/core",
+                "bf/slider",
+                "bf/tabcontainer"
+            ]
+
+        },
+        'bf/upload':{
+            include:[
+                'bf/factory/FactoryUpload',
+                'bf/upload/Upload'
+
+            ],
+            boot: false,
+            customBase: true,
+            exclude: [
+                "dojo/dojo",
+                "bf/core",
+                "bf/slider",
+                "bf/tabcontainer",
+                "bf/dates"
+            ]
+
+        },
+        'bf/tooltipAlert':{
+            include:[
+                'dojo/NodeList-fx',
+                'bf/common/AlertToolTip'
+            ],
+            boot: false,
+            customBase: true,
+            exclude: [
+                "dojo/dojo",
+                "bf/core",
+                "bf/slider",
+                "bf/tabcontainer",
+                "bf/dates",
+                "bf/upload"
+            ]
+        },
+        'bf/debug': {
+            include:[
+                'dojo/_firebug/firebug',
+                'bf/devtool'
+            ],
+            exclude: [
+                "dojo/dojo",
+                "bf/core",
+                "bf/slider",
+                "bf/tabcontainer",
+                "bf/dates",
+                "bf/upload",
+                "bf/tooltipAlert"
             ],
             boot: false,
             customBase: true
         },
+
+
+        'bf/bfRelease': {
+            include:[
+                "bf/core",
+                "bf/slider",
+                "bf/tabcontainer",
+                "bf/dates",
+                "bf/upload",
+                "bf/tooltipAlert"
+            ],
+
+            boot: false,
+            customBase: true,
+            exclude: [
+                "dojo/dojo",
+                "bf/debug"
+            ]
+        },
+
         'bf/dashboard':{
             include:[
                 'dojo/dojo',
@@ -168,9 +261,7 @@ var profile = {
                 'dijit/form/DropDownButton',
                 'dijit/TooltipDialog',
                 'dijit/Dialog',
-                'dojox/fx',
-                "dijit/nls/en",
-                'dijit/nls/en/loading'
+                'dojox/fx'
             ],
             boot: false,
             customBase: true
@@ -184,12 +275,20 @@ var profile = {
                 'dijit/Tooltip',
                 "dojox/highlight",
                 "dojox/highlight/languages/_all",
-                "dojox/highlight/widget/Code",
-                "dijit/nls/en"
+                "dojox/highlight/widget/Code"
             ],
             exclude: [
                 "dojo/dojo",
-                "bf/dojo"
+                "bf/core",
+                "bf/slider",
+                "bf/tabcontainer",
+                "bf/dates",
+                "bf/upload",
+                "tooltipAlert",
+                "bf/debug",
+                "bf/bfRelease"
+
+
             ],
             boot: false,
             customBase: true

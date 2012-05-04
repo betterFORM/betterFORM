@@ -65,6 +65,8 @@
     <xsl:param name="form-id" select="'betterform'"/>
     <xsl:param name="form-name" select="//title"/>
     <xsl:param name="debug-enabled" select="'true'"/>
+    <!-- <xsl:variable name="isDebugEnabled" select="$debug-enabled eq 'true'" as="xsd:boolean"/> -->
+    <xsl:variable name="isDebugEnabled" select="true()" as="xsd:boolean"/>
 
     <!-- ### specifies the parameter prefix for repeat selectors ### -->
     <xsl:param name="selector-prefix" select="'s_'"/>
@@ -373,7 +375,7 @@
                         contextroot="{$contextroot}"
                         usesDOMFocusIN="{$uses-DOMFocusIn}"
                         dataPrefix="{$data-prefix}"
-                        logEvents="{$debug-enabled}">
+                        logEvents="{$isDebugEnabled}">
 -->
 
 
@@ -437,7 +439,7 @@
             in betterform-config.xml
             <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             -->
-            <xsl:if test="$debug-enabled='true'">
+            <xsl:if test="$isDebugEnabled">
                 <!-- z-index of 1000 so it is also in front of shim for modal dialogs -->
                 <div id="evtLogContainer" style="width:26px;height:26px;overflow:hidden;">
                     <div id="logControls">
@@ -871,12 +873,10 @@
         <!-- todo: use locale again -->
         <xsl:variable name="dojoConfig">
             has: {
-                "dojo-firebug": <xsl:value-of select="$debug-enabled"/>,
-                "dojo-debug-messages": <xsl:value-of select="$debug-enabled"/>
+                "dojo-firebug": <xsl:value-of select="$isDebugEnabled"/>,
+                "dojo-debug-messages": <xsl:value-of select="$isDebugEnabled"/>
             },
-            <!-- todo: check if debugAtAllCosts is deprecated -->
-            debugAtAllCosts:<xsl:value-of select="$debug-enabled"/>,
-            isDebug:<xsl:value-of select="$debug-enabled"/>,
+            isDebug:<xsl:value-of select="$isDebugEnabled"/>,
             locale:'en',
             baseUrl: '<xsl:value-of select="concat($contextroot,$scriptPath)"/>',
 
@@ -897,20 +897,27 @@
                 useDOMFocusIN:<xsl:value-of select="$uses-DOMFocusIn"/>,
                 useDOMFocusOUT:<xsl:value-of select="$uses-DOMFocusOut"/>,
                 useXFSelect:<xsl:value-of select="$uses-xforms-select"/>,
-                logEvents:<xsl:value-of select="$debug-enabled"/>
+                logEvents:<xsl:value-of select="$isDebugEnabled"/>
             }
         </xsl:variable>
-
+        <xsl:text>
+</xsl:text>
         <script type="text/javascript" src="{concat($contextroot,$scriptPath,'dojo/dojo.js')}">
             <xsl:attribute name="data-dojo-config"><xsl:value-of select="normalize-space($dojoConfig)"/></xsl:attribute>
         </script><xsl:text>
 </xsl:text>
-        <script type="text/javascript" src="{concat($contextroot,$scriptPath,'bf/dojo.js')}">&#160;</script><xsl:text>
+        <!--<script type="text/javascript" src="{concat($contextroot,$scriptPath,'bf/core.js')}">&#160;</script><xsl:text>-->
+        <script type="text/javascript" src="{concat($contextroot,$scriptPath,'bf/bfRelease.js')}">&#160;</script><xsl:text>
 </xsl:text>
+        <xsl:if test="$isDebugEnabled">
+            <script type="text/javascript" src="{concat($contextroot,$scriptPath,'bf/debug.js')}">&#160;</script><xsl:text>
+</xsl:text>
+        </xsl:if>
+
     </xsl:template>
 
     <xsl:template name="addLocalScript">
-        <xsl:variable name="requires">"bf/XFProcessor","bf/XFormsModelElement","dojo/_base/connect"<xsl:if test="$debug-enabled = 'true'">,"bf/devtool"</xsl:if></xsl:variable>
+        <xsl:variable name="requires">"bf/XFProcessor","bf/XFormsModelElement","dojo/_base/connect"<xsl:if test="$isDebugEnabled">,"bf/devtool"</xsl:if></xsl:variable>
         <script type="text/javascript">
             require([<xsl:value-of select="$requires"/>],
                 function(XFProcessor, XFormsModelElement, connect){

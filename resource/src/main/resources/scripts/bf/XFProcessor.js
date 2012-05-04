@@ -12,11 +12,9 @@ define(["dojo/_base/declare",
         "dojo/dom-construct",
         "dojo/_base/array",
         "dijit/registry",
-        "dojo/_base/event",
         "dojo/has",
-        "dojo/_base/json",
-        "dojo/_base/sniff"], function(declare, XFormsProcessor,ClientServerEvent,
-                                    dom,query,domClass,win,domStyle,domAttr,connect,lang,domConstruct,array,registry,event,has,json){
+        "dojo/_base/json"], function(declare, XFormsProcessor,ClientServerEvent,
+                                    dom,query,domClass,win,domStyle,domAttr,connect,lang,domConstruct,array,registry,has, json){
     return declare("bf.XFProcessor",XFormsProcessor, {
 
 /**
