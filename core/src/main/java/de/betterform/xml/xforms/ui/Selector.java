@@ -21,6 +21,7 @@ import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import net.sf.saxon.om.NodeInfo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.Event;
@@ -199,15 +200,21 @@ public class Selector extends AbstractFormControl {
                         Object xfCopyInstanceNode = xfCopy.getInstanceNode();
                         Instance instance = model.getInstance(getInstanceId());
                         Node instanceNode = getInstanceNode();
-                        if (instanceNode != null && xfCopyInstanceNode != null && xfCopyInstanceNode instanceof Element) {
+                        if (instanceNode != null && xfCopyInstanceNode != null) {
                             try {
-                                instance.setNode(instanceNode, (Element) xfCopyInstanceNode);
+                                if(xfCopyInstanceNode instanceof Element){
+                                    instance.setNode(instanceNode, (Element) xfCopyInstanceNode);
+                                }else if(xfCopyInstanceNode instanceof Attr){
+                                    instance.insertNode(instanceNode, (Attr)xfCopyInstanceNode, null);
+                                }else {
+
+                                }
                             } catch (Exception e) {
                                 this.container.dispatch(this.getTarget(), XFormsEventNames.BINDING_EXCEPTION, null);
                                 throw new XFormsBindingException("Node to copy does not exist", e, this.getTarget(), null);
 
                             }
-                        } else {
+                        }  else {
                             throw new XFormsException("error during Selector.setValue: instance: " + instance + " node to copy: " + xfCopyInstanceNode);
                         }
 
