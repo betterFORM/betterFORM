@@ -45,6 +45,8 @@ define(["dojo/_base/declare",
     useXFSelect:dojo.config.bf.useXFSelect,
     logEvents:dojo.config.bf.logEvents,
     mappingProcessor:null,
+    _uiReady:false,
+    initialEvents:new Array(),
 
 
     /*
@@ -468,14 +470,20 @@ define(["dojo/_base/declare",
             var eventLog = dom.byId("eventLog");
 
             array.forEach(data,
-                    function(xmlEvent) {
-                        // *** DO NOT COMMENT THIS OUT !!! ***
+                function(xmlEvent) {
+                    // *** DO NOT COMMENT THIS OUT !!! ***
+                    if(!fluxProcessor._uiReady && xmlEvent.type != "xforms-model-construct" &&
+                                                  xmlEvent.type != "betterform-instance-created" &&
+                                                  xmlEvent.type != "xforms-model-construct-done" &&
+                                                  xmlEvent.type != "xforms-ready"){
+                        fluxProcessor.initialEvents.push(xmlEvent);
+                    }else {
                         console.debug("XFProcessor.applyChanges:", xmlEvent.type, " [", xmlEvent.contextInfo, "]");
 
 /*
                         if 'logEvents' is true the eventlog from the server will be written
                         to DOM and can be viewed in a separate expandable section in the window.
-*/
+    */
                         //todo: the following code should be made a behavior only if debugging is available
                         //probably we have to add a private _applyChanges method to do the actual work to
                         //allow us to hook to this function and connect to it for outputting debug output.
@@ -519,6 +527,7 @@ define(["dojo/_base/declare",
                                 innerHTML: "<a href='#' onclick='bf.devtool.toggleEntry(this);'><span>"+xmlEvent.type+"</span></a><table class='eventLogTable'>" + tableCells + "</table>"
                             }, eventLog);
                         }
+
                         switch (xmlEvent.type) {
                             case "betterform-index-changed"      : fluxProcessor._handleBetterFormIndexChanged(xmlEvent); break;
                             case "betterform-insert-itemset"     : fluxProcessor._handleBetterFormInsertItemset(xmlEvent); break;
@@ -556,16 +565,18 @@ define(["dojo/_base/declare",
                             case "xforms-select"                 : break;
                             case "xforms-deselect"               : break;
                             case "DOMFocusOut"                   : break;
-                            case "xforms-model-construct"        : break;
-                            case "xforms-model-construct-done"   : fluxProcessor._buildUI();  break;
-                            case "xforms-ready"                  : this.isReady = true;connect.publish("xforms-ready", []);break; //not perfect - should be on XFormsModelElement
+                            case "xforms-model-construct"        : /*console.info("xforms-model-construct-done")*/;break;
+                            case "xforms-model-construct-done"   : /*console.info("xforms-model-construct-done");*/fluxProcessor._buildUI();  break;
+                            case "xforms-ready"                  : /*console.info("xforms-ready");*/fluxProcessor.isReady = true;connect.publish("xforms-ready", []);break; //not perfect - should be on XFormsModelElement
                             case "xforms-submit"                 : break;
                             case "xforms-submit-done"            : fluxProcessor._handleSubmitDone(xmlEvent);break;
                             /* Unknow XMLEvent: */
                             default                              : console.error("Event " + xmlEvent.type + " unknown [Event:", xmlEvent, "]"); break;
                         }
+
                     }
-                    );
+                }
+            );
 
             if(fluxProcessor.logEvents){
                 // add a devider for eventLogViewer
@@ -589,17 +600,25 @@ define(["dojo/_base/declare",
     },
 
     _buildUI : function(){
-            require(["bf/MappingProcessor"],function(MappingProcessor){
-                if (this.mappingProcessor == undefined) {
-                    this.mappingProcessor = new MappingProcessor();
-                }
-            });
+        require(["bf/MappingProcessor"],function(MappingProcessor){
+            if (this.mappingProcessor == undefined) {
+                this.mappingProcessor = new MappingProcessor();
+            }
+        });
 
-            require(["dojo/behavior", "dojo/domReady!"],function(behavior) {
-                if(!this.isReady){
-                    behavior.apply();
-                }
+
+        require(["dojo/behavior", "dojo/domReady!"],function(behavior) {
+            var behaviourResult= behavior.apply();
+        });
+        // fire remaining initial events
+        require(["dojo/ready"], function (ready) {
+            ready(function () {
+                // console.debug("missing initial Events:",fluxProcessor.initialEvents);
+                fluxProcessor._uiReady = true;
+                fluxProcessor.applyChanges(fluxProcessor.initialEvents);
+                fluxProcessor.initialEvents = null;
             });
+        });
     },
 
     _handleAVTChanged:function(xmlEvent){
@@ -1265,11 +1284,11 @@ define(["dojo/_base/declare",
             var targetName = xmlEvent.contextInfo.targetName;
             if (targetName != "group" && targetName != "repeat" && targetName != "switch" && targetName != "case") {
                 var controlToFocus = registry.byId(xmlEvent.contextInfo.targetId + "-value");
+                if(!controlToFocus){
+                    controlToFocus = dom.byId(xmlEvent.contextInfo.targetId + "-value");
+                }
                 if(controlToFocus && controlToFocus.focus){
                    controlToFocus.focus();
-                }else if(dom.byId(xmlEvent.contextInfo.targetId)){
-                    console.warn("Control is no dijit, focusing domNode: " + xmlEvent.contextInfo.targetId );
-                    controlToFocus.domNode.focus();
                 }else {
                     console.warn("Control " + xmlEvent.contextInfo.targetId + " does not exist");
                 }

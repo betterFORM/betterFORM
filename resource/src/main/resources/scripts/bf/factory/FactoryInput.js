@@ -98,6 +98,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     });
 
                     connect.connect(node,"onfocus",function(evt){
+                        // console.debug("xf:input text got focus");
                         xfControlDijit.handleOnFocus();
                     });
 
